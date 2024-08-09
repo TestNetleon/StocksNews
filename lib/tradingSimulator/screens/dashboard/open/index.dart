@@ -7,6 +7,7 @@ import 'package:stocks_news_new/tradingSimulator/screens/dashboard/tradeSheet.da
 import 'package:stocks_news_new/utils/constants.dart';
 
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
+import 'package:stocks_news_new/widgets/custom/refresh_indicator.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 class TsOpenList extends StatefulWidget {
@@ -25,9 +26,9 @@ class _TsOpenListState extends State<TsOpenList> {
   //   });
   // }
 
-  void _getData() {
+  Future _getData() async {
     TsOpenListProvider provider = context.read<TsOpenListProvider>();
-    provider.getData();
+    await provider.getData();
   }
 
   @override
@@ -45,24 +46,27 @@ class _TsOpenListState extends State<TsOpenList> {
           // provider.data==null
           //   ? const SummaryErrorWidget(title: "No open orders")
           //   :
-          ListView.separated(
-        itemBuilder: (context, index) {
-          TsOpenListRes item = provider.data![index];
-          return TsOpenListItem(
-            item: item,
-            onTap: () {
-              tradeSheet(
-                symbol: item.symbol,
-                doPop: false,
-                qty: item.quantity,
-              );
-            },
-          );
-        },
-        separatorBuilder: (context, index) {
-          return const SpacerVertical();
-        },
-        itemCount: provider.data?.length ?? 0,
+          CommonRefreshIndicator(
+        onRefresh: _getData,
+        child: ListView.separated(
+          itemBuilder: (context, index) {
+            TsOpenListRes item = provider.data![index];
+            return TsOpenListItem(
+              item: item,
+              onTap: () {
+                tradeSheet(
+                  symbol: item.symbol,
+                  doPop: false,
+                  qty: item.quantity,
+                );
+              },
+            );
+          },
+          separatorBuilder: (context, index) {
+            return const SpacerVertical();
+          },
+          itemCount: provider.data?.length ?? 0,
+        ),
       ),
     );
   }

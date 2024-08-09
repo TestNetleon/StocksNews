@@ -18,9 +18,13 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:stocks_news_new/utils/validations.dart';
 import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
+import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/theme_button.dart';
+import 'package:stocks_news_new/widgets/theme_checkbox.dart';
+import 'package:stocks_news_new/widgets/theme_input_field.dart';
 import '../../providers/trade_provider.dart';
 
 class BuySellContainer extends StatefulWidget {
@@ -41,14 +45,19 @@ class BuySellContainer extends StatefulWidget {
 
 class _BuySellContainerState extends State<BuySellContainer> {
   TextEditingController controller = TextEditingController();
+  TextEditingController limitController = TextEditingController();
+  TextEditingController targetController = TextEditingController();
+  TextEditingController stopLossController = TextEditingController();
+
   TypeTrade _selectedSegment = TypeTrade.shares;
   FocusNode focusNode = FocusNode();
   String _currentText = "0";
   String _lastEntered = "";
   String _previousText = "";
-
   int _keyCounter = 0;
   num _availableBalance = 0;
+  bool _limitOrder = false;
+  bool _bracketOrder = false;
 
   // String text = "";
   @override
@@ -64,6 +73,9 @@ class _BuySellContainerState extends State<BuySellContainer> {
   @override
   void dispose() {
     controller.clear();
+    limitController.clear();
+    targetController.clear();
+    stopLossController.clear();
     super.dispose();
   }
 
@@ -115,10 +127,11 @@ class _BuySellContainerState extends State<BuySellContainer> {
         popUpAlert(
           message: "Insufficient available balance to place this order.",
           title: "Alert",
+          icon: Images.alertPopGIF,
         );
         return;
       } else {
-        final request = {
+        final Map<String, dynamic> request = {
           "token":
               navigatorKey.currentContext!.read<UserProvider>().user?.token ??
                   "",
@@ -133,6 +146,19 @@ class _BuySellContainerState extends State<BuySellContainer> {
           "quantity": controller.text, //entered value
           "image": provider.tabRes?.companyInfo?.image, //entered value
         };
+
+        // Conditionally add optional parameters if they have values
+        if (limitController.text.isNotEmpty) {
+          request["limit_order"] = limitController.text;
+        }
+
+        if (targetController.text.isNotEmpty) {
+          request["target_price"] = targetController.text;
+        }
+
+        if (stopLossController.text.isNotEmpty) {
+          request["stop_loss"] = stopLossController.text;
+        }
 
         ApiResponse response =
             await tradeProviderNew.requestBuyShare(request, showProgress: true);
@@ -158,7 +184,6 @@ class _BuySellContainerState extends State<BuySellContainer> {
             invested: invested,
             buy: widget.buy,
           );
-
           Navigator.pop(context);
           Navigator.pop(context);
           Navigator.push(
@@ -173,7 +198,11 @@ class _BuySellContainerState extends State<BuySellContainer> {
               : tradeProviderNew.sellOrderData(order);
           await showTsOrderSuccessSheet(order, widget.buy);
         } else {
-          popUpAlert(message: "${response.message}", title: "Alert");
+          popUpAlert(
+            message: "${response.message}",
+            title: "Alert",
+            icon: Images.alertPopGIF,
+          );
           // popUpAlert(
           //   message: "New Message",
           //   title: "Alert",
@@ -724,6 +753,9 @@ class _BuySellContainerState extends State<BuySellContainer> {
                     counter: _keyCounter,
                     lastEntered: _lastEntered,
                   ),
+                  // AnimatedInput(
+                  //   controller: controller,
+                  // ),
                   if (widget.qty != null)
                     Container(
                       margin: EdgeInsets.only(top: 10),
@@ -732,6 +764,63 @@ class _BuySellContainerState extends State<BuySellContainer> {
                         style: styleGeorgiaBold(),
                       ),
                     ),
+                  SpacerVertical(),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      ThemeCheckbox(
+                        value: _limitOrder,
+                        onChanged: (value) {
+                          setState(() {
+                            _limitOrder = value;
+                          });
+                        },
+                        color: ThemeColors.themeGreen,
+                        label: "Limit Order",
+                      ),
+                      const SpacerHorizontal(),
+                      ThemeCheckbox(
+                        value: _bracketOrder,
+                        onChanged: (value) {
+                          setState(() {
+                            _bracketOrder = !_bracketOrder;
+                          });
+                        },
+                        color: ThemeColors.themeGreen,
+                        label: "Bracket Order",
+                      ),
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      SpacerVertical(),
+                      if (_limitOrder == true)
+                        ThemeInputField(
+                          controller: limitController,
+                          placeholder: "Enter price to limit order",
+                        ),
+                      if (_limitOrder == true) SpacerVertical(),
+                      if (_bracketOrder == true)
+                        Row(
+                          children: [
+                            Expanded(
+                              child: ThemeInputField(
+                                controller: targetController,
+                                placeholder: "Enter target price",
+                                inputFormatters: [priceFormatter],
+                              ),
+                            ),
+                            const SpacerHorizontal(width: 12),
+                            Expanded(
+                              child: ThemeInputField(
+                                controller: stopLossController,
+                                placeholder: "Enter stop loss",
+                              ),
+                            ),
+                          ],
+                        ),
+                    ],
+                  )
                 ],
               ),
             ),

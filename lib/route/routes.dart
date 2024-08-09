@@ -102,6 +102,7 @@ import 'package:stocks_news_new/screens/trendingIndustries/index.dart';
 import 'package:stocks_news_new/screens/watchlist/watchlist.dart';
 import 'package:stocks_news_new/tradingSimulator/providers/trading_search_provider.dart';
 import 'package:stocks_news_new/tradingSimulator/providers/ts_open_list_provider.dart';
+import 'package:stocks_news_new/tradingSimulator/providers/ts_pending_list_provider.dart';
 import 'package:stocks_news_new/tradingSimulator/providers/ts_portfollo_provider.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/utils.dart';
@@ -596,6 +597,7 @@ class Routes {
       ChangeNotifierProvider(create: (_) => TradingSimulatorProvider()),
       ChangeNotifierProvider(create: (_) => TradingSearchProvider()),
       ChangeNotifierProvider(create: (_) => TsOpenListProvider()),
+      ChangeNotifierProvider(create: (_) => TsPendingListProvider()),
       ChangeNotifierProvider(create: (_) => TsPortfolioProvider()),
       ChangeNotifierProvider(create: (_) => AdProvider()),
     ];

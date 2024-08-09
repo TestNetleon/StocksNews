@@ -13,6 +13,7 @@ Future popUpAlert({
   Function()? onTap,
   bool cancel = false,
   String? okText,
+  String? cancelText = "Cancel",
   bool canPop = true,
   bool showButton = true,
   bool showOk = true,
@@ -31,6 +32,7 @@ Future popUpAlert({
         onTap: onTap,
         cancel: cancel,
         okText: okText,
+        cancelText: cancelText,
         canPop: canPop,
         showButton: showButton,
         showOk: showOk,
@@ -48,7 +50,7 @@ class AlertPopupCustom extends StatelessWidget {
   final String? icon;
   final TextAlign? messageTextAlign;
   final EdgeInsets? padding;
-  final String? okText;
+  final String? okText, cancelText;
   final Function()? onTap;
   final bool cancel;
   final bool showButton;
@@ -56,21 +58,24 @@ class AlertPopupCustom extends StatelessWidget {
   final bool showOk;
   final Widget? iconWidget;
   final Widget? child;
-  const AlertPopupCustom(
-      {super.key,
-      this.message,
-      this.title,
-      this.iconWidget,
-      this.showOk = true,
-      this.padding,
-      this.icon,
-      this.showButton = true,
-      this.cancel = false,
-      this.onTap,
-      this.okText,
-      this.child,
-      this.canPop = true,
-      this.messageTextAlign});
+
+  const AlertPopupCustom({
+    super.key,
+    this.message,
+    this.title,
+    this.iconWidget,
+    this.showOk = true,
+    this.padding,
+    this.icon,
+    this.showButton = true,
+    this.cancel = false,
+    this.onTap,
+    this.okText,
+    this.child,
+    this.canPop = true,
+    this.messageTextAlign,
+    this.cancelText = "Cancel",
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -148,7 +153,7 @@ class AlertPopupCustom extends StatelessWidget {
                                     Navigator.of(context).pop();
                                   },
                                   child: Text(
-                                    "Cancel",
+                                    "$cancelText",
                                     style: stylePTSansBold(
                                         color: ThemeColors.background),
                                   ),

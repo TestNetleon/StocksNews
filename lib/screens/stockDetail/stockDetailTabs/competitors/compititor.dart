@@ -243,7 +243,9 @@ class _SdCompetitorState extends State<SdCompetitor> {
             );
           }
         }
-      } catch (e) {}
+      } catch (e) {
+        //
+      }
     }
   }
 }

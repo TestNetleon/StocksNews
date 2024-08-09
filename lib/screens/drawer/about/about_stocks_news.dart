@@ -227,7 +227,6 @@ class _AboutStocksNewsState extends State<AboutStocksNews> {
         ),
       );
     }
-
     // Refer and Earn
     if (provider.extra?.referral?.shwReferral == true) {
       visibleAboutTiles.add(

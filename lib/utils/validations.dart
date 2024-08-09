@@ -80,8 +80,9 @@ FilteringTextInputFormatter socialSecurityCardAllow =
     FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z0-9\-]'));
 final FilteringTextInputFormatter jobHistoryFormatter =
     FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z0-9\-., ]+'));
-
 FilteringTextInputFormatter nameFormatter =
     FilteringTextInputFormatter.allow(RegExp(r'^[a-zA-Z\s]*$'));
 FilteringTextInputFormatter usPhoneNumber = FilteringTextInputFormatter.allow(
     RegExp(r'^(\d{3}[-.\s]?\d{3}[-.\s]?\d{4})$'));
+FilteringTextInputFormatter priceFormatter =
+    FilteringTextInputFormatter.allow(RegExp(r'^\d*\.*$'));

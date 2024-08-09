@@ -187,6 +187,7 @@ class Apis {
   static const tsRequestBuy = "/simulator/buy";
   static const tsRequestSell = "/simulator/sell";
   static const tsSearchSymbol = "/simulator/search-symbol";
+  static const tsPendingList = "/simulator/order-pending";
   // static const tsRequestBuy = "/simulator/buy-share";
   // static const tsRequestSell = "/simulator/sell-share";
   static const tsOpenList = "/simulator/list-purchased-shares";
