@@ -4,8 +4,6 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 
-import 'linechart.dart';
-
 class TechnicalAnalysis extends StatefulWidget {
   const TechnicalAnalysis({super.key});
 
