@@ -120,12 +120,14 @@ String helpDeskResToJson(HelpDeskRes data) => json.encode(data.toJson());
 class HelpDeskRes {
   final String? noTicketMsg;
   final int? totalTickets;
+  final int? totalActive;
 
   final List<Ticket>? tickets;
   final List<Subject>? subjects;
 
   HelpDeskRes({
     this.noTicketMsg,
+    this.totalActive,
     this.totalTickets,
     this.tickets,
     this.subjects,
@@ -134,6 +136,7 @@ class HelpDeskRes {
   factory HelpDeskRes.fromJson(Map<String, dynamic> json) => HelpDeskRes(
         noTicketMsg: json["no_ticket_msg"],
         totalTickets: json["total_tickets"],
+        totalActive: json['total_active_tickets'],
         tickets: json["tickets"] == [] || json["tickets"] == null
             ? null
             : List<Ticket>.from(json["tickets"].map((x) => Ticket.fromJson(x))),
@@ -146,6 +149,7 @@ class HelpDeskRes {
   Map<String, dynamic> toJson() => {
         "no_ticket_msg": noTicketMsg,
         "total_tickets": totalTickets,
+        "total_active_tickets": totalActive,
         "tickets": tickets == [] || tickets == null
             ? null
             : List<dynamic>.from(tickets!.map((x) => x.toJson())),

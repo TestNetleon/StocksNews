@@ -22,6 +22,8 @@ class HelpDeskItemNew extends StatelessWidget {
   Widget build(BuildContext context) {
     NewHelpDeskProvider provider = context.watch<NewHelpDeskProvider>();
 
+    int status = provider.data?.tickets?[index].status ?? 0;
+
     return GestureDetector(
       onTap: () {
         Navigator.push(
@@ -121,13 +123,24 @@ class HelpDeskItemNew extends StatelessWidget {
                               vertical: 4, horizontal: 15),
                           decoration: BoxDecoration(
                             border: Border.all(
-                              color: provider.data?.tickets?[index].status == 1
-                                  ? ThemeColors.sos
-                                  : ThemeColors.blue,
+                              color: status == 0
+                                  ? ThemeColors.blue
+                                  : status == 1 || status == 3
+                                      ? ThemeColors.sos
+                                      : status == 2
+                                          ? Colors.orange
+                                          : ThemeColors.greyBorder,
                             ),
-                            color: provider.data?.tickets?[index].status == 1
-                                ? const Color(0xfff8abad)
-                                : const Color(0xffc6f6f4),
+                            // color: provider.data?.tickets?[index].status == 1
+                            //     ? const Color(0xfff8abad)
+                            //     : const Color(0xffc6f6f4),
+                            color: status == 0
+                                ? Color(0xffc6f6f4)
+                                : status == 1 || status == 3
+                                    ? Color(0xfff8abad)
+                                    : status == 2
+                                        ? Color(0xFFFFD089)
+                                        : ThemeColors.greyBorder,
                             borderRadius: const BorderRadius.all(
                               Radius.circular(4),
                             ),

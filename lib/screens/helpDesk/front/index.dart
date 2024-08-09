@@ -25,6 +25,10 @@ class _HelpDeskNewState extends State<HelpDeskNew> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      UserRes? user = context.read<UserProvider>().user;
+      if (user == null) {
+        return;
+      }
       context.read<NewHelpDeskProvider>().getTickets();
     });
   }

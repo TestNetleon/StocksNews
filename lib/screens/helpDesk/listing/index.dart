@@ -8,6 +8,7 @@ import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
+import 'package:stocks_news_new/widgets/custom/refresh_indicator.dart';
 import 'package:stocks_news_new/widgets/disclaimer_widget.dart';
 import 'package:stocks_news_new/widgets/helpdesk_error.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
@@ -66,32 +67,37 @@ class _HelpDeskAllRequestNewState extends State<HelpDeskAllRequestNew> {
             isFull: true,
             showPreparingText: true,
             onRefresh: () => provider.getTickets(),
-            child: SingleChildScrollView(
-              physics: AlwaysScrollableScrollPhysics(),
+            child: CommonRefreshIndicator(
+              onRefresh: () async {
+                provider.getTickets();
+              },
               child: SingleChildScrollView(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    ListView.separated(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemCount: provider.data?.tickets?.length ?? 0,
-                      itemBuilder: (context, index) {
-                        return HelpDeskItemNew(index: index);
-                      },
-                      separatorBuilder: (context, index) {
-                        return const Divider(color: Colors.white12);
-                      },
-                    ),
-                    const SpacerVertical(),
-                    if (context.read<HelpDeskProvider>().extra?.disclaimer !=
-                        null)
-                      DisclaimerWidget(
-                          data: context
-                              .read<HelpDeskProvider>()
-                              .extra!
-                              .disclaimer!)
-                  ],
+                physics: AlwaysScrollableScrollPhysics(),
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      ListView.separated(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: provider.data?.tickets?.length ?? 0,
+                        itemBuilder: (context, index) {
+                          return HelpDeskItemNew(index: index);
+                        },
+                        separatorBuilder: (context, index) {
+                          return const Divider(color: Colors.white12);
+                        },
+                      ),
+                      const SpacerVertical(),
+                      if (context.read<HelpDeskProvider>().extra?.disclaimer !=
+                          null)
+                        DisclaimerWidget(
+                            data: context
+                                .read<HelpDeskProvider>()
+                                .extra!
+                                .disclaimer!)
+                    ],
+                  ),
                 ),
               ),
             ),
