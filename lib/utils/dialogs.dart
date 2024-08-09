@@ -340,64 +340,55 @@ void showPlatformBottomSheet({
 //     }
 //   }
 // }
+
 class CustomSnackbar extends StatelessWidget {
   final String message;
   final Duration displayDuration;
   final VoidCallback? onTap;
+  final double bottomPosition;
 
   const CustomSnackbar({
     super.key,
     required this.message,
     this.displayDuration = const Duration(seconds: 2),
     this.onTap,
+    required this.bottomPosition,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Positioned(
-      bottom: 0,
+    return AnimatedPositioned(
+      duration: Duration(milliseconds: 300),
+      curve: Curves.easeInOut,
+      bottom: bottomPosition,
       left: 0,
       right: 0,
-      child: Material(
-        color: Colors.transparent,
-        child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 13, vertical: 4),
-          margin: EdgeInsets.symmetric(horizontal: 0, vertical: 0),
-          decoration: BoxDecoration(
-            border: Border.all(color: Color.fromARGB(255, 255, 5, 5)),
-            color: Color.fromARGB(255, 199, 5, 5),
-            // borderRadius: BorderRadius.circular(0),
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Expanded(
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 13, vertical: 4),
+        margin: EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+        decoration: BoxDecoration(
+          border: Border.all(color: Color.fromARGB(255, 255, 5, 5)),
+          color: Color.fromARGB(255, 199, 5, 5),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Expanded(
+              child: Text(
+                message,
+                style: TextStyle(color: Colors.white, fontSize: 17),
+              ),
+            ),
+            SpacerHorizontal(width: 5),
+            if (onTap != null)
+              ElevatedButton(
+                onPressed: onTap,
                 child: Text(
-                  message,
-                  style: TextStyle(color: Colors.white, fontSize: 17),
+                  'Enable',
+                  style: TextStyle(color: Colors.white),
                 ),
               ),
-              SpacerHorizontal(width: 5),
-              if (onTap != null)
-                ElevatedButton(
-                  onPressed: onTap,
-                  child: Text(
-                    'Enable',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                ),
-              // if (onTap == null)
-              //   TextButton(
-              //     onPressed: () {
-              //       // Handle close action
-              //     },
-              //     child: Text(
-              //       'Close',
-              //       style: TextStyle(color: Colors.white),
-              //     ),
-              //   ),
-            ],
-          ),
+          ],
         ),
       ),
     );

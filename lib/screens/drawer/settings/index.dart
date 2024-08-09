@@ -164,6 +164,7 @@ class _NotificationSettingState extends State<NotificationSetting>
           ),
           if (notifySnackbar && homeProvider.extra?.notifyTextMsg != null)
             CustomSnackbar(
+              bottomPosition: 0,
               message:
                   "${navigatorKey.currentContext!.watch<HomeProvider>().extra?.notifyTextMsg}",
               displayDuration: Duration(minutes: 1),

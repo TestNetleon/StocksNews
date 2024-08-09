@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
@@ -14,17 +16,19 @@ class ScrollControllerProvider extends ChangeNotifier {
   void _scrollListener() {
     if (_scrollController.position.userScrollDirection ==
         ScrollDirection.reverse) {
-      // User is scrolling up
-      if (isVisible) {
-        isVisible = false;
-        notifyListeners(); // Notify listeners when visibility changes
-      }
+      Timer(Duration(milliseconds: 500), () {
+        if (isVisible) {
+          isVisible = false;
+          notifyListeners();
+        }
+      });
     } else {
-      // User is scrolling down
-      if (!isVisible) {
-        isVisible = true;
-        notifyListeners(); // Notify listeners when visibility changes
-      }
+      Timer(Duration(milliseconds: 500), () {
+        if (!isVisible) {
+          isVisible = true;
+          notifyListeners();
+        }
+      });
     }
   }
 
