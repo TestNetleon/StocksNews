@@ -21,6 +21,7 @@ class CustomTabContainer extends StatefulWidget {
     this.onChange,
     this.showDivider = false,
     this.isScrollable = false,
+    this.initialIndex = 0,
     super.key,
   });
 //
@@ -32,6 +33,7 @@ class CustomTabContainer extends StatefulWidget {
   final List<Widget> widgets;
   final bool showDivider;
   final Function(int index)? onChange;
+  final int initialIndex;
 
   @override
   State<CustomTabContainer> createState() => _CustomState();
@@ -45,7 +47,11 @@ class _CustomState extends State<CustomTabContainer>
   @override
   void initState() {
     super.initState();
-    _controller = TabController(length: widget.tabs.length, vsync: this);
+    _controller = TabController(
+      length: widget.tabs.length,
+      vsync: this,
+      initialIndex: widget.initialIndex,
+    );
 
     _controller?.addListener(() {
       log("INDEX CHANGES -=> ${_controller?.index}");
@@ -128,148 +134,148 @@ class _CustomState extends State<CustomTabContainer>
   }
 }
 
-class CustomTabContainerNEW extends StatefulWidget {
-  const CustomTabContainerNEW({
-    required this.tabs,
-    required this.widgets,
-    this.rightWidget = const SizedBox(),
-    this.header,
-    this.onChange,
-    this.showDivider = false,
-    this.scrollable,
-    this.isTabWidget,
-    this.tabsPadding,
-    this.physics = const AlwaysScrollableScrollPhysics(),
-    this.onController,
-    super.key,
-  });
-//
-  final Widget rightWidget;
-  final Widget? header;
-  final List<String> tabs;
-  final List<Widget> widgets;
-  final List<Widget>? isTabWidget;
-  final EdgeInsets? tabsPadding;
-  final bool showDivider;
-  final bool? scrollable;
-  final ScrollPhysics physics;
-  final Function(int index)? onChange;
-  final Function(TabController? controller)? onController;
+// class CustomTabContainerNEW extends StatefulWidget {
+//   const CustomTabContainerNEW({
+//     required this.tabs,
+//     required this.widgets,
+//     this.rightWidget = const SizedBox(),
+//     this.header,
+//     this.onChange,
+//     this.showDivider = false,
+//     this.scrollable,
+//     this.isTabWidget,
+//     this.tabsPadding,
+//     this.physics = const AlwaysScrollableScrollPhysics(),
+//     this.onController,
+//     super.key,
+//   });
+// //
+//   final Widget rightWidget;
+//   final Widget? header;
+//   final List<String> tabs;
+//   final List<Widget> widgets;
+//   final List<Widget>? isTabWidget;
+//   final EdgeInsets? tabsPadding;
+//   final bool showDivider;
+//   final bool? scrollable;
+//   final ScrollPhysics physics;
+//   final Function(int index)? onChange;
+//   final Function(TabController? controller)? onController;
 
-  @override
-  State<CustomTabContainerNEW> createState() => _CustomTabContainerNEWState();
-}
+//   @override
+//   State<CustomTabContainerNEW> createState() => _CustomTabContainerNEWState();
+// }
 
-class _CustomTabContainerNEWState extends State<CustomTabContainerNEW>
-    with SingleTickerProviderStateMixin {
-  bool sync = true;
-  TabController? _controller;
-  int _selectedIndex = 0;
+// class _CustomTabContainerNEWState extends State<CustomTabContainerNEW>
+//     with SingleTickerProviderStateMixin {
+//   bool sync = true;
+//   TabController? _controller;
+//   int _selectedIndex = 0;
 
-  @override
-  void initState() {
-    super.initState();
-    _controller = TabController(length: widget.tabs.length, vsync: this);
-    _controller?.addListener(() {
-      setState(() {
-        _selectedIndex = _controller?.index ?? 0;
-      });
-      if (widget.onChange != null) {
-        widget.onChange!(_selectedIndex);
-      }
-      Utils().showLog("$_selectedIndex");
-    });
-  }
+//   @override
+//   void initState() {
+//     super.initState();
+//     _controller = TabController(length: widget.tabs.length, vsync: this);
+//     _controller?.addListener(() {
+//       setState(() {
+//         _selectedIndex = _controller?.index ?? 0;
+//       });
+//       if (widget.onChange != null) {
+//         widget.onChange!(_selectedIndex);
+//       }
+//       Utils().showLog("$_selectedIndex");
+//     });
+//   }
 
-  @override
-  void dispose() {
-    _controller?.dispose();
-    super.dispose();
-  }
+//   @override
+//   void dispose() {
+//     _controller?.dispose();
+//     super.dispose();
+//   }
 
-  @override
-  Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: widget.tabs.length,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const SpacerVertical(height: 5),
-          // Visibility(
-          //   child: Container(
-          //     decoration: const BoxDecoration(
-          //       border: Border(
-          //         bottom: BorderSide(
-          //           color: ThemeColors.greyBorder,
-          //         ),
-          //       ),
-          //     ),
-          //   ),
-          // ),
-          // SpacerVertical(height: 5),
-          Padding(
-            padding:
-                widget.tabsPadding ?? EdgeInsets.symmetric(horizontal: 10.sp),
-            child: TabBar(
-              tabAlignment: widget.scrollable == true
-                  ? TabAlignment.start
-                  : TabAlignment.fill,
-              physics: const BouncingScrollPhysics(),
-              isScrollable: widget.scrollable ?? true,
-              labelPadding: EdgeInsets.symmetric(
-                horizontal: 13.sp,
-                vertical: 2.sp,
-              ),
-              indicator: const BoxDecoration(
-                border: Border(
-                  bottom: BorderSide(color: ThemeColors.accent),
-                ),
-              ),
-              controller: _controller,
-              indicatorColor: ThemeColors.white,
-              automaticIndicatorColorAdjustment: true,
-              // enableFeedback: false,
-              onTap: (index) {
-                setState(() {
-                  _selectedIndex = index;
-                });
-              },
-              tabs: [
-                ...widget.tabs.asMap().entries.map((entry) {
-                  return CustomTabNEW(
-                    index: entry.key,
-                    label: entry.value,
-                    selectedIndex: _selectedIndex,
-                  );
-                }),
-              ],
-            ),
-          ),
-          // const SpacerVertical(height: 5),
-          // Visibility(
-          //   child: Container(
-          //     decoration: const BoxDecoration(
-          //       border: Border(
-          //         bottom: BorderSide(
-          //           color: ThemeColors.greyBorder,
-          //         ),
-          //       ),
-          //     ),
-          //   ),
-          // ),
-          Expanded(
-            child: TabBarView(
-              physics: widget.physics,
-              controller: _controller,
-              children: widget.widgets,
-            ),
-          )
-        ],
-      ),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return DefaultTabController(
+//       length: widget.tabs.length,
+//       child: Column(
+//         mainAxisSize: MainAxisSize.min,
+//         crossAxisAlignment: CrossAxisAlignment.start,
+//         children: [
+//           const SpacerVertical(height: 5),
+//           // Visibility(
+//           //   child: Container(
+//           //     decoration: const BoxDecoration(
+//           //       border: Border(
+//           //         bottom: BorderSide(
+//           //           color: ThemeColors.greyBorder,
+//           //         ),
+//           //       ),
+//           //     ),
+//           //   ),
+//           // ),
+//           // SpacerVertical(height: 5),
+//           Padding(
+//             padding:
+//                 widget.tabsPadding ?? EdgeInsets.symmetric(horizontal: 10.sp),
+//             child: TabBar(
+//               tabAlignment: widget.scrollable == true
+//                   ? TabAlignment.start
+//                   : TabAlignment.fill,
+//               physics: const BouncingScrollPhysics(),
+//               isScrollable: widget.scrollable ?? true,
+//               labelPadding: EdgeInsets.symmetric(
+//                 horizontal: 13.sp,
+//                 vertical: 2.sp,
+//               ),
+//               indicator: const BoxDecoration(
+//                 border: Border(
+//                   bottom: BorderSide(color: ThemeColors.accent),
+//                 ),
+//               ),
+//               controller: _controller,
+//               indicatorColor: ThemeColors.white,
+//               automaticIndicatorColorAdjustment: true,
+//               // enableFeedback: false,
+//               onTap: (index) {
+//                 setState(() {
+//                   _selectedIndex = index;
+//                 });
+//               },
+//               tabs: [
+//                 ...widget.tabs.asMap().entries.map((entry) {
+//                   return CustomTabNEW(
+//                     index: entry.key,
+//                     label: entry.value,
+//                     selectedIndex: _selectedIndex,
+//                   );
+//                 }),
+//               ],
+//             ),
+//           ),
+//           // const SpacerVertical(height: 5),
+//           // Visibility(
+//           //   child: Container(
+//           //     decoration: const BoxDecoration(
+//           //       border: Border(
+//           //         bottom: BorderSide(
+//           //           color: ThemeColors.greyBorder,
+//           //         ),
+//           //       ),
+//           //     ),
+//           //   ),
+//           // ),
+//           Expanded(
+//             child: TabBarView(
+//               physics: widget.physics,
+//               controller: _controller,
+//               children: widget.widgets,
+//             ),
+//           )
+//         ],
+//       ),
+//     );
+//   }
+// }
 
 class CommonTabContainer extends StatefulWidget {
   const CommonTabContainer({
@@ -283,6 +289,8 @@ class CommonTabContainer extends StatefulWidget {
     this.showDivider = false,
     this.scrollable = false,
     this.physics,
+    this.fillWidth = false,
+    this.initialIndex = 0,
     super.key,
   });
 //
@@ -292,11 +300,13 @@ class CommonTabContainer extends StatefulWidget {
   final EdgeInsets? padding;
   final bool tabPaddingNew;
 
+  final bool fillWidth;
   final bool scrollable;
   final List<Widget> widgets;
   final bool showDivider;
   final ScrollPhysics? physics;
   final Function(int index)? onChange;
+  final int initialIndex;
 
   @override
   State<CommonTabContainer> createState() => _CommonTabContainerState();
@@ -313,6 +323,7 @@ class _CommonTabContainerState extends State<CommonTabContainer>
     _controller = TabController(
       length: widget.tabs.length,
       vsync: this,
+      initialIndex: widget.initialIndex,
     );
 
     _controller?.addListener(() async {
@@ -325,13 +336,16 @@ class _CommonTabContainerState extends State<CommonTabContainer>
             bool isVibe = await Vibration.hasVibrator() ?? false;
             if (isVibe) {
               Vibration.vibrate(
-                  pattern: [50, 50, 79, 55], intensities: [1, 10]);
+                pattern: [50, 50, 79, 55],
+                intensities: [1, 10],
+              );
             }
           } else {
             HapticFeedback.lightImpact();
           }
-          // ignore: empty_catches
-        } catch (e) {}
+        } catch (e) {
+          //
+        }
         try {
           if (widget.onChange != null) {
             widget.onChange!(_selectedIndex);

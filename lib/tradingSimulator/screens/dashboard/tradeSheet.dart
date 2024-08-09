@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:stocks_news_new/tradingSimulator/providers/trade_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/tradingSimulator/screens/searchTradingTicker/index.dart';
-import 'package:stocks_news_new/tradingSimulator/screens/trade/sheet.dart';
 import 'package:stocks_news_new/tradingSimulator/screens/tradeBuySell/index.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/utils.dart';
@@ -12,13 +10,13 @@ import '../../../../../api/api_response.dart';
 import '../../../../../providers/stock_detail_new.dart';
 import '../../../../../utils/theme.dart';
 
-tradeSheet({String? symbol, bool doPop = true}) {
+tradeSheet({String? symbol, bool doPop = true, qty}) {
   showModalBottomSheet(
     useSafeArea: true,
     backgroundColor: Colors.transparent,
     context: navigatorKey.currentContext!,
     builder: (context) {
-      return SearchTicker(symbol: symbol, doPop: doPop);
+      return SearchTicker(symbol: symbol, doPop: doPop, qty: qty);
     },
   );
 }
@@ -26,11 +24,9 @@ tradeSheet({String? symbol, bool doPop = true}) {
 class SearchTicker extends StatelessWidget {
   final String? symbol;
   final bool doPop;
-  const SearchTicker({
-    super.key,
-    this.symbol,
-    this.doPop = true,
-  });
+  final dynamic qty;
+
+  const SearchTicker({super.key, this.symbol, this.doPop = true, this.qty});
 
   Future _onTap({String? symbol, bool buy = true}) async {
     try {
@@ -40,47 +36,49 @@ class SearchTicker extends StatelessWidget {
       ApiResponse response =
           await provider.getTabData(symbol: symbol, showProgress: true);
       if (response.status) {
-        SummaryOrderNew order = await Navigator.pushReplacement(
+        // SummaryOrderNew order =
+        // await
+        Navigator.pushReplacement(
           navigatorKey.currentContext!,
           MaterialPageRoute(
             builder: (context) => TradeBuySellIndex(
               buy: buy,
               doPop: doPop,
+              qty: qty,
             ),
           ),
         );
-        TradeProviderNew provider =
-            navigatorKey.currentContext!.read<TradeProviderNew>();
-
-        buy ? provider.addOrderData(order) : provider.sellOrderData(order);
-        await _showSheet(order, buy);
+        // TradeProviderNew provider =
+        //     navigatorKey.currentContext!.read<TradeProviderNew>();
+        // buy ? provider.addOrderData(order) : provider.sellOrderData(order);
+        // await showTsOrderSuccessSheet(order, buy);
       } else {}
     } catch (e) {
       //
     }
   }
 
-  Future _showSheet(SummaryOrderNew? order, bool buy) async {
-    await showModalBottomSheet(
-      useSafeArea: true,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(5),
-          topRight: Radius.circular(5),
-        ),
-      ),
-      backgroundColor: ThemeColors.transparent,
-      isScrollControlled: false,
-      context: navigatorKey.currentContext!,
-      builder: (context) {
-        return SuccessTradeSheet(
-          order: order,
-          buy: buy,
-          close: true,
-        );
-      },
-    );
-  }
+  // Future _showSheet(SummaryOrderNew? order, bool buy) async {
+  //   await showModalBottomSheet(
+  //     useSafeArea: true,
+  //     shape: const RoundedRectangleBorder(
+  //       borderRadius: BorderRadius.only(
+  //         topLeft: Radius.circular(5),
+  //         topRight: Radius.circular(5),
+  //       ),
+  //     ),
+  //     backgroundColor: ThemeColors.transparent,
+  //     isScrollControlled: false,
+  //     context: navigatorKey.currentContext!,
+  //     builder: (context) {
+  //       return SuccessTradeSheet(
+  //         order: order,
+  //         buy: buy,
+  //         close: true,
+  //       );
+  //     },
+  //   );
+  // }
 
   @override
   Widget build(BuildContext context) {

@@ -54,7 +54,6 @@ class ReferDialog extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.fromLTRB(16, 30, 16, 16),
             child: Column(
-              // crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 ClipRRect(
                   borderRadius: BorderRadius.circular(6),
@@ -64,7 +63,6 @@ class ReferDialog extends StatelessWidget {
                     height: 100,
                   ),
                 ),
-                // const SpacerVertical(height: 20),
                 const SpacerVertical(height: 15),
                 Text(
                   provider.extra?.referral?.message ?? "",

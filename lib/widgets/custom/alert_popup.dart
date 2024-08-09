@@ -112,11 +112,15 @@ class AlertPopupCustom extends StatelessWidget {
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 if (title != null && title != '')
-                                  Text(
-                                    title ?? "",
-                                    style: stylePTSansBold(
-                                      color: ThemeColors.background,
-                                      fontSize: 20,
+                                  Container(
+                                    margin: EdgeInsets.only(
+                                        top: icon == null ? 12 : 0),
+                                    child: Text(
+                                      title ?? "",
+                                      style: stylePTSansBold(
+                                        color: ThemeColors.background,
+                                        fontSize: 20,
+                                      ),
                                     ),
                                   ),
                                 const SpacerVertical(height: 8),

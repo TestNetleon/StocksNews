@@ -13,10 +13,13 @@ import '../../../../widgets/theme_image_view.dart';
 class TradeBuySellIndex extends StatelessWidget {
   final bool buy;
   final bool doPop;
+  final dynamic qty;
+
   const TradeBuySellIndex({
     super.key,
     this.buy = true,
     this.doPop = true,
+    this.qty,
   });
 
   @override
@@ -24,7 +27,6 @@ class TradeBuySellIndex extends StatelessWidget {
     StockDetailProviderNew provider = context.watch<StockDetailProviderNew>();
     KeyStats? keyStats = provider.tabRes?.keyStats;
     CompanyInfo? companyInfo = provider.tabRes?.companyInfo;
-
     return BaseContainer(
       appBar: AppBarHome(
         isPopback: true,
@@ -39,7 +41,11 @@ class TradeBuySellIndex extends StatelessWidget {
                   Container(
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: Colors.white,
+                      // color: Colors.white,
+                      border: Border.all(
+                        color: ThemeColors.themeGreen,
+                        width: 1,
+                      ),
                     ),
                     padding: const EdgeInsets.all(8),
                     width: 48,
@@ -90,7 +96,7 @@ class TradeBuySellIndex extends StatelessWidget {
                 ],
               ),
       ),
-      body: BuySellContainer(buy: buy, doPop: doPop),
+      body: BuySellContainer(buy: buy, doPop: doPop, qty: qty),
     );
   }
 }

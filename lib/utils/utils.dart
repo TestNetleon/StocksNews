@@ -264,7 +264,7 @@ easeOutBuilder(BuildContext context,
     context,
     PageRouteBuilder(
       opaque: opaque,
-      transitionDuration: duration ?? const Duration(milliseconds: 400),
+      transitionDuration: duration ?? const Duration(milliseconds: 300),
       transitionsBuilder: (BuildContext context, Animation<double> animation,
           Animation<double> secondaryAnimation, Widget child) {
         return SlideTransition(

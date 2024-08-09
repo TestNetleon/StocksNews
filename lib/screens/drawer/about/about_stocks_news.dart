@@ -1,5 +1,3 @@
-// ignore_for_file: use_build_context_synchronously
-
 import 'dart:io';
 
 import 'package:flutter/gestures.dart';
@@ -26,6 +24,7 @@ import 'package:stocks_news_new/screens/t&cAndPolicy/tc_policy.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/plaid/portfolio/index.dart';
 import 'package:stocks_news_new/screens/tabs/tabs.dart';
 import 'package:stocks_news_new/screens/whatWeDo/index.dart';
+import 'package:stocks_news_new/tradingSimulator/screens/dashboard/index.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/custom/refer.dart';
@@ -118,6 +117,10 @@ class _AboutStocksNewsState extends State<AboutStocksNews> {
   //   );
   // }
 
+  Future _closeDrawer() async {
+    Navigator.pop(navigatorKey.currentContext!);
+  }
+
   @override
   Widget build(BuildContext context) {
     UserRes? user = context.watch<UserProvider>().user;
@@ -130,6 +133,7 @@ class _AboutStocksNewsState extends State<AboutStocksNews> {
         iconData: Icons.person_2_outlined,
         text: "My Account",
         onTap: () {
+          _closeDrawer();
           Navigator.push(
             navigatorKey.currentContext!,
             MaterialPageRoute(builder: (_) => const MyAccount()),
@@ -144,6 +148,7 @@ class _AboutStocksNewsState extends State<AboutStocksNews> {
           iconData: Icons.wallet_membership,
           text: "My Membership",
           onTap: () {
+            _closeDrawer();
             Navigator.push(
               navigatorKey.currentContext!,
               MaterialPageRoute(builder: (_) => const MembershipIndex()),
@@ -159,6 +164,7 @@ class _AboutStocksNewsState extends State<AboutStocksNews> {
           iconData: Icons.library_books_sharp,
           text: "MORNINGSTAR Reports",
           onTap: () {
+            _closeDrawer();
             Navigator.push(
               navigatorKey.currentContext!,
               MaterialPageRoute(builder: (_) => const MorningStarTransaction()),
@@ -174,6 +180,7 @@ class _AboutStocksNewsState extends State<AboutStocksNews> {
           iconData: Icons.topic_sharp,
           text: "Points Transactions",
           onTap: () {
+            _closeDrawer();
             Navigator.push(
               navigatorKey.currentContext!,
               MaterialPageRoute(
@@ -193,6 +200,7 @@ class _AboutStocksNewsState extends State<AboutStocksNews> {
           iconData: Icons.person_pin_outlined,
           text: "Portfolio",
           onTap: () {
+            _closeDrawer();
             Navigator.push(
               navigatorKey.currentContext!,
               MaterialPageRoute(builder: (_) => const HomePlaidAdded()),
@@ -202,22 +210,23 @@ class _AboutStocksNewsState extends State<AboutStocksNews> {
       );
     }
     // Trading Simulator
-    // if (user != null) {
-    //   visibleAboutTiles.add(
-    //     DrawerRes(
-    //       iconData: Icons.bakery_dining_outlined,
-    //       text: "Trading Simulator",
-    //       onTap: () {
-    //         Navigator.push(
-    //           context,
-    //           MaterialPageRoute(
-    //             builder: (context) => const TsDashboard(),
-    //           ),
-    //         );
-    //       },
-    //     ),
-    //   );
-    // }
+    if (user != null) {
+      visibleAboutTiles.add(
+        DrawerRes(
+          iconData: Icons.bakery_dining_outlined,
+          text: "Trading Simulator",
+          onTap: () {
+            _closeDrawer();
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const TsDashboard(),
+              ),
+            );
+          },
+        ),
+      );
+    }
 
     // Refer and Earn
     if (provider.extra?.referral?.shwReferral == true) {
@@ -226,6 +235,7 @@ class _AboutStocksNewsState extends State<AboutStocksNews> {
           iconData: Icons.leaderboard_outlined,
           text: "Refer and Earn",
           onTap: () {
+            _closeDrawer();
             _onShareAppClick();
           },
         ),
@@ -237,6 +247,7 @@ class _AboutStocksNewsState extends State<AboutStocksNews> {
           iconData: Icons.settings,
           text: "Notification Settings",
           onTap: () {
+            _closeDrawer();
             Navigator.push(
               navigatorKey.currentContext!,
               MaterialPageRoute(
@@ -254,6 +265,7 @@ class _AboutStocksNewsState extends State<AboutStocksNews> {
           iconData: Icons.list_alt_rounded,
           text: "About Stocks.News",
           onTap: () {
+            _closeDrawer();
             Navigator.push(
               navigatorKey.currentContext!,
               MaterialPageRoute(builder: (_) {
@@ -274,6 +286,7 @@ class _AboutStocksNewsState extends State<AboutStocksNews> {
         iconData: Icons.featured_play_list_outlined,
         text: "What We Do",
         onTap: () {
+          _closeDrawer();
           Navigator.push(
             navigatorKey.currentContext!,
             MaterialPageRoute(builder: (_) => const WhatWeDoIndex()),
@@ -317,6 +330,7 @@ class _AboutStocksNewsState extends State<AboutStocksNews> {
           iconData: Icons.help_outline_rounded,
           text: "FAQ",
           onTap: () {
+            _closeDrawer();
             Navigator.push(
               navigatorKey.currentContext!,
               MaterialPageRoute(builder: (_) => const FAQ()),
@@ -335,6 +349,7 @@ class _AboutStocksNewsState extends State<AboutStocksNews> {
               const SpacerVertical(height: 30),
               GestureDetector(
                 onTap: () {
+                  _closeDrawer();
                   Navigator.pushAndRemoveUntil(
                       context,
                       MaterialPageRoute(builder: (context) => const Tabs()),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/tradingSimulator/providers/trade_provider.dart';
 import 'package:stocks_news_new/tradingSimulator/screens/dashboard/index.dart';
 import 'package:stocks_news_new/utils/constants.dart';
@@ -9,6 +10,28 @@ import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/theme_button.dart';
 
 import '../../../utils/colors.dart';
+
+Future showTsOrderSuccessSheet(SummaryOrderNew? order, bool buy) async {
+  await showModalBottomSheet(
+    useSafeArea: true,
+    shape: const RoundedRectangleBorder(
+      borderRadius: BorderRadius.only(
+        topLeft: Radius.circular(5),
+        topRight: Radius.circular(5),
+      ),
+    ),
+    backgroundColor: ThemeColors.transparent,
+    isScrollControlled: false,
+    context: navigatorKey.currentContext!,
+    builder: (context) {
+      return SuccessTradeSheet(
+        order: order,
+        buy: buy,
+        close: true,
+      );
+    },
+  );
+}
 
 class SuccessTradeSheet extends StatelessWidget {
   final SummaryOrderNew? order;

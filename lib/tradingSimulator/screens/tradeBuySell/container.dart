@@ -1,6 +1,8 @@
 import 'dart:async';
+import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/api/api_response.dart';
+import 'package:stocks_news_new/modals/stock_details_res.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/stock_detail_new.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
@@ -8,6 +10,8 @@ import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/stockDetail/stockDetailTabs/common_heading.dart';
 import 'package:stocks_news_new/tradingSimulator/providers/ts_open_list_provider.dart';
 import 'package:stocks_news_new/tradingSimulator/providers/ts_portfollo_provider.dart';
+import 'package:stocks_news_new/tradingSimulator/screens/dashboard/index.dart';
+import 'package:stocks_news_new/tradingSimulator/screens/trade/sheet.dart';
 import 'package:stocks_news_new/tradingSimulator/screens/tradeBuySell/text_field.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
@@ -22,11 +26,13 @@ import '../../providers/trade_provider.dart';
 class BuySellContainer extends StatefulWidget {
   final bool buy;
   final bool doPop;
+  final dynamic qty;
 
   const BuySellContainer({
     super.key,
     this.buy = true,
     this.doPop = true,
+    this.qty,
   });
 
   @override
@@ -63,6 +69,27 @@ class _BuySellContainerState extends State<BuySellContainer> {
 
   _onTap() async {
     StockDetailProviderNew provider = context.read<StockDetailProviderNew>();
+    KeyStats? keyStats = provider.tabRes?.keyStats;
+
+    if (keyStats?.marketStatus?.toLowerCase().contains("closed") ?? false) {
+      popUpAlert(
+        title: "Confirm Order",
+        message:
+            "You are making transaction when market is closed. Your transaction will be take place when market is open. This order will be pending util then.",
+        okText: "Continue",
+        onTap: () {
+          Navigator.pop(context);
+          _onContinue(isPending: true);
+        },
+        cancel: true,
+      );
+    } else {
+      _onContinue();
+    }
+  }
+
+  _onContinue({bool isPending = false}) async {
+    StockDetailProviderNew provider = context.read<StockDetailProviderNew>();
     TradeProviderNew tradeProviderNew = context.read<TradeProviderNew>();
 
     String cleanedString =
@@ -72,16 +99,6 @@ class _BuySellContainerState extends State<BuySellContainer> {
     num invested = _selectedSegment == TypeTrade.shares
         ? price * num.parse(_currentText)
         : num.parse(_currentText);
-
-    // Utils().showLog("Price is => $price");
-    // if (_selectedSegment == TypeTrade.shares) {
-    //   Utils().showLog("Shares bought in Shares => $_currentText");
-    // } else {
-    //   Utils().showLog(
-    //     "Shares bought in Dollars => ${(num.parse(_currentText) / price)}",
-    //   );
-    // }
-    // Utils().showLog("Invested Amount => $invested");
 
     closeKeyboard();
     if (controller.text.isEmpty || num.parse(controller.text) == 0.0) {
@@ -117,32 +134,44 @@ class _BuySellContainerState extends State<BuySellContainer> {
           "image": provider.tabRes?.companyInfo?.image, //entered value
         };
 
-        ApiResponse response = await tradeProviderNew.requestBuyShare(request);
+        ApiResponse response =
+            await tradeProviderNew.requestBuyShare(request, showProgress: true);
         if (response.status) {
           context.read<TsPortfolioProvider>().getDashboardData();
           context.read<TsOpenListProvider>().getData();
           // Navigator.pop(context);
-          Navigator.pop(
+
+          final order = SummaryOrderNew(
+            isShare: _selectedSegment == TypeTrade.shares,
+            change: provider.tabRes?.keyStats?.changeWithCur,
+            changePercentage: provider.tabRes?.keyStats?.changesPercentage,
+            dollars: _selectedSegment == TypeTrade.dollar
+                ? num.parse(_currentText)
+                : (num.parse(_currentText) * price),
+            shares: _selectedSegment == TypeTrade.shares
+                ? num.parse(_currentText)
+                : (num.parse(_currentText) / price),
+            image: provider.tabRes?.companyInfo?.image,
+            name: provider.tabRes?.keyStats?.name,
+            price: provider.tabRes?.keyStats?.price,
+            symbol: provider.tabRes?.keyStats?.symbol,
+            invested: invested,
+            buy: widget.buy,
+          );
+
+          Navigator.pop(context);
+          Navigator.pop(context);
+          Navigator.push(
             context,
-            SummaryOrderNew(
-              isShare: _selectedSegment == TypeTrade.shares,
-              change: provider.tabRes?.keyStats?.changeWithCur,
-              changePercentage: provider.tabRes?.keyStats?.changesPercentage,
-              dollars: _selectedSegment == TypeTrade.dollar
-                  ? num.parse(_currentText)
-                  : (num.parse(_currentText) * price),
-              shares: _selectedSegment == TypeTrade.shares
-                  ? num.parse(_currentText)
-                  : (num.parse(_currentText) / price),
-              image: provider.tabRes?.companyInfo?.image,
-              name: provider.tabRes?.keyStats?.name,
-              price: provider.tabRes?.keyStats?.price,
-              symbol: provider.tabRes?.keyStats?.symbol,
-              invested: invested,
-              buy: widget.buy,
+            MaterialPageRoute(
+              builder: (_) => TsDashboard(initialIndex: isPending ? 1 : 0),
             ),
           );
           _clear();
+          widget.buy
+              ? tradeProviderNew.addOrderData(order)
+              : tradeProviderNew.sellOrderData(order);
+          await showTsOrderSuccessSheet(order, widget.buy);
         } else {
           popUpAlert(message: "${response.message}", title: "Alert");
           // popUpAlert(
@@ -306,34 +335,98 @@ class _BuySellContainerState extends State<BuySellContainer> {
         "image": provider.tabRes?.companyInfo?.image, //entered value
       };
 
-      ApiResponse response = await tradeProviderNew.requestSellShare(request);
+      ApiResponse response =
+          await tradeProviderNew.requestSellShare(request, showProgress: true);
       if (response.status) {
         context.read<HomeProvider>().getHomeSlider();
         context.read<TsOpenListProvider>().getData();
-        // Navigator.pop(context);
-        Navigator.pop(
+        final order = SummaryOrderNew(
+          isShare: _selectedSegment == TypeTrade.shares,
+          change: provider.tabRes?.keyStats?.changeWithCur,
+          changePercentage: provider.tabRes?.keyStats?.changesPercentage,
+          dollars: _selectedSegment == TypeTrade.dollar
+              ? num.parse(_currentText)
+              : (num.parse(_currentText) * price),
+          shares: _selectedSegment == TypeTrade.shares
+              ? num.parse(_currentText)
+              : (num.parse(_currentText) / price),
+          image: provider.tabRes?.companyInfo?.image,
+          name: provider.tabRes?.keyStats?.name,
+          price: provider.tabRes?.keyStats?.price,
+          symbol: provider.tabRes?.keyStats?.symbol,
+          invested: invested,
+          buy: widget.buy,
+        );
+
+        // Navigator.pop(
+        //   context,
+        //   SummaryOrderNew(
+        //     isShare: _selectedSegment == TypeTrade.shares,
+        //     change: provider.tabRes?.keyStats?.changeWithCur,
+        //     changePercentage: provider.tabRes?.keyStats?.changesPercentage,
+        //     dollars: _selectedSegment == TypeTrade.dollar
+        //         ? num.parse(_currentText)
+        //         : (num.parse(_currentText) * price),
+        //     shares: _selectedSegment == TypeTrade.shares
+        //         ? num.parse(_currentText)
+        //         : (num.parse(_currentText) / price),
+        //     image: provider.tabRes?.companyInfo?.image,
+        //     name: provider.tabRes?.keyStats?.name,
+        //     price: provider.tabRes?.keyStats?.price,
+        //     symbol: provider.tabRes?.keyStats?.symbol,
+        //     invested: invested,
+        //     buy: widget.buy,
+        //   ),
+        // );
+        _clear();
+
+        Navigator.pop(context);
+        Navigator.pop(context);
+        Navigator.push(
           context,
-          SummaryOrderNew(
-            isShare: _selectedSegment == TypeTrade.shares,
-            change: provider.tabRes?.keyStats?.changeWithCur,
-            changePercentage: provider.tabRes?.keyStats?.changesPercentage,
-            dollars: _selectedSegment == TypeTrade.dollar
-                ? num.parse(_currentText)
-                : (num.parse(_currentText) * price),
-            shares: _selectedSegment == TypeTrade.shares
-                ? num.parse(_currentText)
-                : (num.parse(_currentText) / price),
-            image: provider.tabRes?.companyInfo?.image,
-            name: provider.tabRes?.keyStats?.name,
-            price: provider.tabRes?.keyStats?.price,
-            symbol: provider.tabRes?.keyStats?.symbol,
-            invested: invested,
-            buy: widget.buy,
+          MaterialPageRoute(
+            builder: (_) => TsDashboard(initialIndex: isPending ? 1 : 0),
           ),
         );
-        _clear();
+
+        widget.buy
+            ? tradeProviderNew.addOrderData(order)
+            : tradeProviderNew.sellOrderData(order);
+        await showTsOrderSuccessSheet(order, widget.buy);
       } else {
-        popUpAlert(message: "${response.message}", title: "Alert");
+        // TODO:
+        // popUpAlert(message: "${response.message}", title: "Alert");
+
+        final order = SummaryOrderNew(
+          isShare: _selectedSegment == TypeTrade.shares,
+          change: provider.tabRes?.keyStats?.changeWithCur,
+          changePercentage: provider.tabRes?.keyStats?.changesPercentage,
+          dollars: _selectedSegment == TypeTrade.dollar
+              ? num.parse(_currentText)
+              : (num.parse(_currentText) * price),
+          shares: _selectedSegment == TypeTrade.shares
+              ? num.parse(_currentText)
+              : (num.parse(_currentText) / price),
+          image: provider.tabRes?.companyInfo?.image,
+          name: provider.tabRes?.keyStats?.name,
+          price: provider.tabRes?.keyStats?.price,
+          symbol: provider.tabRes?.keyStats?.symbol,
+          invested: invested,
+          buy: widget.buy,
+        );
+        Navigator.pop(context);
+        Navigator.pop(context);
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (_) => TsDashboard(initialIndex: isPending ? 1 : 0),
+          ),
+        );
+
+        widget.buy
+            ? tradeProviderNew.addOrderData(order)
+            : tradeProviderNew.sellOrderData(order);
+        await showTsOrderSuccessSheet(order, widget.buy);
       }
     }
 
@@ -503,72 +596,6 @@ class _BuySellContainerState extends State<BuySellContainer> {
     });
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(Dimen.padding, 0, Dimen.padding, 0),
-      child: Column(
-        children: [
-          Expanded(
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  const SdCommonHeading(),
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(10),
-                    child: CupertinoSlidingSegmentedControl<TypeTrade>(
-                      backgroundColor: ThemeColors.greyBorder.withOpacity(0.4),
-                      thumbColor:
-                          widget.buy ? ThemeColors.accent : ThemeColors.sos,
-                      groupValue: _selectedSegment,
-                      onValueChanged: (TypeTrade? value) {
-                        if (value != null) {
-                          setState(() {
-                            _selectedSegment = value;
-                          });
-                          _clear();
-                        }
-                      },
-                      children: <TypeTrade, Widget>{
-                        TypeTrade.shares: Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 20),
-                          child: Text(
-                            widget.buy ? 'Buy in Shares' : 'Sell in Shares',
-                            style: styleGeorgiaBold(),
-                          ),
-                        ),
-                        TypeTrade.dollar: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 20),
-                          child: Text(
-                            widget.buy ? 'Buy in Dollars' : 'Sell in Dollars',
-                            style: styleGeorgiaBold(),
-                          ),
-                        ),
-                      },
-                    ),
-                  ),
-                  const SpacerVertical(),
-                  TextfieldTrade(
-                    controller: controller,
-                    focusNode: focusNode,
-                    text: _currentText.substring(
-                      0,
-                      _currentText.length - _lastEntered.length,
-                    ),
-                    change: _onChange,
-                    counter: _keyCounter,
-                    lastEntered: _lastEntered,
-                  ),
-                ],
-              ),
-            ),
-          ),
-          _newMethod(),
-        ],
-      ),
-    );
-  }
-
   Widget _newMethod() {
     StockDetailProviderNew stockDetailProviderNew =
         context.read<StockDetailProviderNew>();
@@ -636,6 +663,80 @@ class _BuySellContainerState extends State<BuySellContainer> {
                 ? () {}
                 : _onTap,
           ),
+        ],
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(Dimen.padding, 0, Dimen.padding, 0),
+      child: Column(
+        children: [
+          Expanded(
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  const SdCommonHeading(),
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(10),
+                    child: CupertinoSlidingSegmentedControl<TypeTrade>(
+                      backgroundColor: ThemeColors.greyBorder.withOpacity(0.4),
+                      thumbColor:
+                          widget.buy ? ThemeColors.accent : ThemeColors.sos,
+                      groupValue: _selectedSegment,
+                      onValueChanged: (TypeTrade? value) {
+                        if (value != null) {
+                          setState(() {
+                            _selectedSegment = value;
+                          });
+                          _clear();
+                        }
+                      },
+                      children: <TypeTrade, Widget>{
+                        TypeTrade.shares: Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          child: Text(
+                            widget.buy ? 'Buy in Shares' : 'Sell in Shares',
+                            style: styleGeorgiaBold(),
+                          ),
+                        ),
+                        TypeTrade.dollar: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          child: Text(
+                            widget.buy ? 'Buy in Dollars' : 'Sell in Dollars',
+                            style: styleGeorgiaBold(),
+                          ),
+                        ),
+                      },
+                    ),
+                  ),
+                  const SpacerVertical(),
+                  TextfieldTrade(
+                    controller: controller,
+                    focusNode: focusNode,
+                    text: _currentText.substring(
+                      0,
+                      _currentText.length - _lastEntered.length,
+                    ),
+                    change: _onChange,
+                    counter: _keyCounter,
+                    lastEntered: _lastEntered,
+                  ),
+                  if (widget.qty != null)
+                    Container(
+                      margin: EdgeInsets.only(top: 10),
+                      child: Text(
+                        'Available quantity - ${widget.qty}',
+                        style: styleGeorgiaBold(),
+                      ),
+                    ),
+                ],
+              ),
+            ),
+          ),
+          _newMethod(),
         ],
       ),
     );
