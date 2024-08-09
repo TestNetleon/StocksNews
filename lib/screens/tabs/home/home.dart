@@ -158,17 +158,12 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
                 if (scrollControllerProvider.isVisible &&
                     notifySnackbar &&
                     homeProvider.extra?.notifyTextMsg != null)
-                  Positioned(
-                    bottom: 0,
-                    right: 0,
-                    left: 0,
-                    child: CustomSnackbar(
-                      message: "${homeProvider.extra?.notifyTextMsg}",
-                      displayDuration: Duration(minutes: 1),
-                      onTap: () async {
-                        await openAppSettings();
-                      },
-                    ),
+                  CustomSnackbar(
+                    message: "${homeProvider.extra?.notifyTextMsg}",
+                    displayDuration: Duration(minutes: 1),
+                    onTap: () async {
+                      await openAppSettings();
+                    },
                   ),
               ],
             ),
