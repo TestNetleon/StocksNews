@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:stocks_news_new/screens/stockAnalysis/performance_tabbarview/overview_widgets/financial_tabbar/net_profit_chart.dart';
-import 'package:stocks_news_new/screens/stockAnalysis/performance_tabbarview/overview_widgets/financial_tabbar/quarterly_net_profit_chart.dart';
-import 'package:stocks_news_new/screens/stockAnalysis/performance_tabbarview/overview_widgets/financial_tabbar/quarterly_revenue_chart.dart';
-import 'package:stocks_news_new/screens/stockAnalysis/performance_tabbarview/overview_widgets/financial_tabbar/revenue_chart.dart';
+import 'package:stocks_news_new/screens/MsAnalysis/performance/performance_tabbarview/overview_widgets/financial_tabbar/net_profit_chart.dart';
+import 'package:stocks_news_new/screens/MsAnalysis/performance/performance_tabbarview/overview_widgets/financial_tabbar/quarterly_net_profit_chart.dart';
+import 'package:stocks_news_new/screens/MsAnalysis/performance/performance_tabbarview/overview_widgets/financial_tabbar/quarterly_revenue_chart.dart';
+import 'package:stocks_news_new/screens/MsAnalysis/performance/performance_tabbarview/overview_widgets/financial_tabbar/revenue_chart.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';

@@ -4,17 +4,21 @@ import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
-class PriceVolatility extends StatelessWidget {
-  const PriceVolatility({super.key});
+import 'title_tag.dart';
+
+class MsPriceVolatility extends StatelessWidget {
+  const MsPriceVolatility({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      Text('Price Volatility',
-          style: stylePTSansBold(fontSize: 18.0, color: Colors.white)),
-      const SpacerVertical(
-        height: 8.0,
-      ),
+      // Text('Price Volatility',
+      //     style: stylePTSansBold(fontSize: 18.0, color: Colors.white)),
+      // const SpacerVertical(
+      //   height: 8.0,
+      // ),
+      MsTitle(title: "Price Volatility"),
+
       Container(
         // height: 150,
         decoration: BoxDecoration(

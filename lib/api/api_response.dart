@@ -592,12 +592,15 @@ class PointsSummaryRes {
   final String? key;
   final String? icon;
   final String? text;
+  final String? txnType;
+
   final int? value;
 
   PointsSummaryRes({
     this.key,
     this.icon,
     this.text,
+    this.txnType,
     this.value,
   });
 
@@ -606,12 +609,14 @@ class PointsSummaryRes {
         key: json["key"],
         icon: json["icon"],
         text: json["text"],
+        txnType: json["txn_type"],
         value: json["value"],
       );
 
   Map<String, dynamic> toJson() => {
         "key": key,
         "icon": icon,
+        "txn_type": txnType,
         "text": text,
         "value": value,
       };

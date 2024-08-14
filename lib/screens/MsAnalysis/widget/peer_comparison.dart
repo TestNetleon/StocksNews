@@ -5,14 +5,14 @@
 // import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 // import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
-// class PeerComparison extends StatefulWidget {
-//   const PeerComparison({super.key});
+// class MsPeerComparison extends StatefulWidget {
+//   const MsPeerComparison({super.key});
 
 //   @override
-//   State<PeerComparison> createState() => _PeerComparisonState();
+//   State<MsPeerComparison> createState() => _MsPeerComparisonState();
 // }
 
-// class _PeerComparisonState extends State<PeerComparison> {
+// class _MsPeerComparisonState extends State<MsPeerComparison> {
 //   final List<Company> companies = [
 //     Company(image: Images.amazon, companyName: 'Amazon', comapanyDetails: [
 //       Companydetails(
@@ -267,16 +267,17 @@ import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
-import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
-class PeerComparison extends StatefulWidget {
-  const PeerComparison({super.key});
+import 'title_tag.dart';
+
+class MsPeerComparison extends StatefulWidget {
+  const MsPeerComparison({super.key});
 
   @override
-  State<PeerComparison> createState() => _PeerComparisonState();
+  State<MsPeerComparison> createState() => _MsPeerComparisonState();
 }
 
-class _PeerComparisonState extends State<PeerComparison> {
+class _MsPeerComparisonState extends State<MsPeerComparison> {
   final List<Company>? companies = [
     Company(image: Images.amazon, companyName: 'Amazon', companyDetails: [
       CompanyDetails(
@@ -342,11 +343,10 @@ class _PeerComparisonState extends State<PeerComparison> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Peer Comparison',
-            style: stylePTSansBold(fontSize: 16.0, color: Colors.white)),
-        SpacerVertical(
-          height: 10,
-        ),
+        // Text('Peer Comparison',
+        //     style: stylePTSansBold(fontSize: 16.0, color: Colors.white)),
+        MsTitle(title: "Peer Comparison"),
+
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           child: Container(

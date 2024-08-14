@@ -74,7 +74,7 @@ class _AffiliateTransactionState extends State<AffiliateTransaction> {
             },
             child: ListView.separated(
               padding: const EdgeInsets.symmetric(
-                horizontal: 15,
+                horizontal: 8,
                 vertical: 0,
               ),
               itemBuilder: (context, index) {
@@ -127,62 +127,21 @@ class AffiliateTranItem extends StatelessWidget {
           end: Alignment.bottomCenter,
           colors: [
             Color.fromARGB(255, 23, 23, 23),
-            // ThemeColors.greyBorder,
             Color.fromARGB(255, 39, 39, 39),
           ],
         ),
         borderRadius: BorderRadius.circular(10),
       ),
       child: Column(
-        // crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Visibility(
-          //   visible: data?.spent != null && data?.spent != 0,
-          //   child: Padding(
-          //     padding: const EdgeInsets.only(bottom: 5),
-          //     child: Row(
-          //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //       children: [
-          //         Text(
-          //           ((data?.spent ?? 0) > 1) ? "Points spent" : "Point spent",
-          //           style: styleGeorgiaBold(fontSize: 16),
-          //         ),
-          //         Text(
-          //           "-${data?.spent}",
-          //           style: styleGeorgiaBold(fontSize: 16),
-          //         ),
-          //       ],
-          //     ),
-          //   ),
-          // ),
-          // Visibility(
-          //   visible: data?.earn != null && data?.earn != 0,
-          //   child: Padding(
-          //     padding: const EdgeInsets.only(bottom: 5),
-          //     child: Row(
-          //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //       children: [
-          //         Text(
-          //           // "Point earned",
-          //           ((data?.earn ?? 0) > 1) ? "Points earned" : "Point earned",
-          //           style: styleGeorgiaBold(fontSize: 16),
-          //         ),
-          //         Text(
-          //           "+${data?.earn}",
-          //           style: styleGeorgiaBold(fontSize: 16),
-          //         ),
-          //       ],
-          //     ),
-          //   ),
-          // ),
           Row(
             children: [
               Expanded(
                 child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.only(top: 20.0),
+                      padding: const EdgeInsets.only(top: 0.0),
                       child: Image.network(data?.icon ?? "",
                           height: 30, color: Colors.green),
                     ),

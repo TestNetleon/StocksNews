@@ -227,8 +227,10 @@ import '../../auth/membershipAsk/ask.dart';
 class NewMembershipUpgradeCurrentPlan extends StatefulWidget {
   final bool withClickCondition;
 
-  const NewMembershipUpgradeCurrentPlan(
-      {super.key, this.withClickCondition = false});
+  const NewMembershipUpgradeCurrentPlan({
+    super.key,
+    this.withClickCondition = false,
+  });
 
   @override
   State<NewMembershipUpgradeCurrentPlan> createState() =>
@@ -251,7 +253,8 @@ class _NewMembershipUpgradeCurrentPlanState
 
       return;
     }
-    if (provider.user?.membership?.purchased == 1) {
+    if (provider.user?.membership?.purchased == 1 &&
+        provider.user?.membership?.canUpgrade == false) {
       Utils().showLog("---found user is already having membership----");
 
       Navigator.pop(context);
@@ -262,11 +265,12 @@ class _NewMembershipUpgradeCurrentPlanState
       await membershipLogin();
     }
 
-    if (provider.user?.phone != null &&
-        provider.user?.phone != '' &&
-        provider.user?.membership?.purchased == 0) {
+    if (provider.user?.phone != null && provider.user?.phone != ''
+        // && provider.user?.membership?.purchased == 0
+        ) {
       await RevenueCatService.initializeSubscription(type: type);
     }
+    // await RevenueCatService.initializeSubscription(type: "annual-with-trial");
   }
 
   // List<String>? features = [

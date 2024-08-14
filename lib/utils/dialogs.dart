@@ -574,19 +574,24 @@ void showMaintenanceDialog({title, description, onClick, log}) {
 // }
 
 Future<bool> openNotificationsSettings() async {
-  FirebaseMessaging messaging = FirebaseMessaging.instance;
-  NotificationSettings settings = await messaging.getNotificationSettings();
-  Utils()
-      .showLog("--Firebase Permission Status: ${settings.authorizationStatus}");
-  if (settings.authorizationStatus == AuthorizationStatus.authorized) {
+  try {
+    FirebaseMessaging messaging = FirebaseMessaging.instance;
+    NotificationSettings settings = await messaging.getNotificationSettings();
+    Utils().showLog(
+        "--Firebase Permission Status: ${settings.authorizationStatus}");
+    if (settings.authorizationStatus == AuthorizationStatus.authorized) {
+      return false;
+    } else if (settings.authorizationStatus == AuthorizationStatus.denied) {
+      return true;
+    } else if (settings.authorizationStatus ==
+            AuthorizationStatus.provisional ||
+        settings.authorizationStatus == AuthorizationStatus.notDetermined) {
+      return true;
+    }
+    return true;
+  } catch (e) {
     return false;
-  } else if (settings.authorizationStatus == AuthorizationStatus.denied) {
-    return true;
-  } else if (settings.authorizationStatus == AuthorizationStatus.provisional ||
-      settings.authorizationStatus == AuthorizationStatus.notDetermined) {
-    return true;
   }
-  return true;
 }
 
 closeSnackbar() {

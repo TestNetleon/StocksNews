@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:stocks_news_new/utils/colors.dart';
-import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
+import '../widget/title_tag.dart';
+import 'item.dart';
 
-class StockSubAnalysis extends StatelessWidget {
-  const StockSubAnalysis({super.key});
+class MsSwotAnalysis extends StatelessWidget {
+  const MsSwotAnalysis({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -19,14 +19,7 @@ class StockSubAnalysis extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          'SWOT analysis',
-          style: stylePTSansBold(
-            fontSize: 18.0,
-            color: Colors.white,
-          ),
-        ),
-        const SpacerVertical(height: 8.0),
+        MsTitle(title: 'SWOT analysis'),
         Container(
           decoration: const BoxDecoration(
             color: Color.fromARGB(255, 53, 53, 53),
@@ -41,7 +34,7 @@ class StockSubAnalysis extends StatelessWidget {
               children: const [
                 Row(
                   children: [
-                    ItemSWOT(
+                    MsSwotItem(
                       label: 'Strength',
                       value: '6',
                       keyword: 'S',
@@ -54,7 +47,7 @@ class StockSubAnalysis extends StatelessWidget {
                       ),
                     ),
                     SpacerHorizontal(width: 10),
-                    ItemSWOT(
+                    MsSwotItem(
                       label: 'Weakness',
                       value: '6',
                       keyword: 'W',
@@ -71,7 +64,7 @@ class StockSubAnalysis extends StatelessWidget {
                 SpacerVertical(height: 10),
                 Row(
                   children: [
-                    ItemSWOT(
+                    MsSwotItem(
                       label: 'Opportunity',
                       value: '6',
                       keyword: 'O',
@@ -84,7 +77,7 @@ class StockSubAnalysis extends StatelessWidget {
                       ),
                     ),
                     SpacerHorizontal(width: 10.0),
-                    ItemSWOT(
+                    MsSwotItem(
                       label: 'Threat',
                       value: '6',
                       keyword: 'T',
@@ -103,7 +96,6 @@ class StockSubAnalysis extends StatelessWidget {
           ),
         ),
         Container(
-          // width: MediaQuery.of(context).size.width * 0.96,
           decoration: const BoxDecoration(
             color: Color.fromARGB(255, 36, 32, 32),
             borderRadius: BorderRadius.only(
@@ -136,91 +128,6 @@ class StockSubAnalysis extends StatelessWidget {
           ),
         ),
       ],
-    );
-  }
-}
-
-class ItemSWOT extends StatelessWidget {
-  const ItemSWOT({
-    super.key,
-    required this.label,
-    required this.value,
-    required this.keyword,
-    required this.childRadius,
-    required this.crossAxisAlignment,
-    this.left,
-    this.right,
-    this.top,
-    this.bottom,
-  });
-
-  final String label, value, keyword;
-  final double? left, top, right, bottom;
-  final BorderRadius childRadius;
-  final CrossAxisAlignment crossAxisAlignment;
-
-  @override
-  Widget build(BuildContext context) {
-    return Expanded(
-      child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10.0),
-          color: const Color.fromARGB(255, 102, 100, 100),
-        ),
-        child: Stack(
-          fit: StackFit.passthrough,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: Column(
-                crossAxisAlignment: crossAxisAlignment,
-                children: [
-                  Text(
-                    label,
-                    style: stylePTSansBold(
-                      fontSize: 14.0,
-                      color: const Color.fromARGB(255, 195, 195, 195),
-                    ),
-                  ),
-                  const SpacerVertical(height: 8.0),
-                  Text(
-                    value,
-                    style: stylePTSansBold(
-                      fontSize: 14.0,
-                      color: ThemeColors.themeGreen,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Positioned(
-              bottom: bottom,
-              right: right,
-              left: left,
-              top: top,
-              child: Container(
-                width: 40,
-                height: 40,
-                decoration: BoxDecoration(
-                  color: Colors.black,
-                  borderRadius: childRadius,
-                ),
-                alignment: Alignment.center,
-                padding: EdgeInsets.only(
-                  top: bottom == 0 ? 8.0 : 0,
-                  left: right == 0 ? 8.0 : 0,
-                  right: left == 0 ? 8.0 : 0,
-                  bottom: top == 0 ? 8.0 : 0,
-                ),
-                child: Text(
-                  keyword,
-                  style: stylePTSansBold(fontSize: 14.0, color: Colors.white),
-                ),
-              ),
-            )
-          ],
-        ),
-      ),
     );
   }
 }

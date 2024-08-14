@@ -86,6 +86,16 @@ class UserProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  void onChangeCountryCode(String value) {
+    if ((value == _user?.phoneCode) &&
+        (_user?.phoneCode != null && _user?.phoneCode != '')) {
+      phoneVerified = true;
+    } else {
+      phoneVerified = false;
+    }
+    notifyListeners();
+  }
+
   void setStatus(status) {
     _status = status;
     notifyListeners();

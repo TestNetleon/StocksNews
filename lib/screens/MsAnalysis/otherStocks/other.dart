@@ -8,17 +8,16 @@ import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import '../../../modals/stock_details_res.dart';
 import '../../../providers/stock_detail_new.dart';
 import '../../../utils/colors.dart';
-import '../../../utils/constants.dart';
-import '../../../widgets/screen_title.dart';
+import '../widget/title_tag.dart';
 
-class PredictionOtherStocks extends StatefulWidget {
-  const PredictionOtherStocks({super.key});
+class MsOtherStocks extends StatefulWidget {
+  const MsOtherStocks({super.key});
 
   @override
-  State<PredictionOtherStocks> createState() => _PredictionOtherStocksState();
+  State<MsOtherStocks> createState() => _MsOtherStocksState();
 }
 
-class _PredictionOtherStocksState extends State<PredictionOtherStocks> {
+class _MsOtherStocksState extends State<MsOtherStocks> {
   @override
   Widget build(BuildContext context) {
     StockDetailProviderNew provider = context.watch<StockDetailProviderNew>();
@@ -26,15 +25,17 @@ class _PredictionOtherStocksState extends State<PredictionOtherStocks> {
     KeyStats? keyStats = provider.tabRes?.keyStats;
 
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Padding(
-          padding: const EdgeInsets.only(top: Dimen.padding),
-          child: ScreenTitle(
-            title: "Your other stocks",
-            style: styleSansBold(color: ThemeColors.white, fontSize: 18),
-            dividerPadding: EdgeInsets.only(bottom: 10),
-          ),
-        ),
+        // Padding(
+        //   padding: const EdgeInsets.only(top: Dimen.padding),
+        //   child: ScreenTitle(
+        //     title: "Your other stocks",
+        //     style: styleSansBold(color: ThemeColors.white, fontSize: 18),
+        //     dividerPadding: EdgeInsets.only(bottom: 10),
+        //   ),
+        // ),
+        MsTitle(title: "Your Other Stocks"),
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           physics: BouncingScrollPhysics(),

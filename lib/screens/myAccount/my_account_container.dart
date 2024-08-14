@@ -437,6 +437,7 @@ class _MyAccountContainerState extends State<MyAccountContainer>
                         child: CountryPickerWidget(
                           onChanged: (CountryCode value) {
                             countryCode = value.dialCode;
+                            provider.onChangeCountryCode("$value");
                           },
                           textColor: Colors.white,
                         )
@@ -521,6 +522,7 @@ class _MyAccountContainerState extends State<MyAccountContainer>
                   //   "+1 ",
                   //   style: stylePTSansBold(color: Colors.white, fontSize: 14),
                   // ),
+                  contentPadding: EdgeInsets.fromLTRB(8, 6, 0, 10),
                   style: stylePTSansRegular(color: Colors.white, height: 1.5),
                   fillColor: ThemeColors.primaryLight,
                   borderColor: ThemeColors.primaryLight,
@@ -538,7 +540,7 @@ class _MyAccountContainerState extends State<MyAccountContainer>
               ),
               Container(
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 10, vertical: 11.7),
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 13),
                 decoration: const BoxDecoration(
                   color: ThemeColors.primaryLight,
                   borderRadius: BorderRadius.only(
@@ -566,7 +568,7 @@ class _MyAccountContainerState extends State<MyAccountContainer>
                         : () =>
                             _onPhoneUpdateClick(mobileController.text.trim()),
                     child: Padding(
-                      padding: const EdgeInsets.fromLTRB(5, 5, 10, 5),
+                      padding: const EdgeInsets.fromLTRB(5, 5, 5, 5),
                       child: Row(
                         children: [
                           Visibility(

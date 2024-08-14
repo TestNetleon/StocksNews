@@ -11,6 +11,7 @@ import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import '../../api/api_response.dart';
+import '../../widgets/custom/update_membership.dart';
 import '../drawer/widgets/profile_image.dart';
 import 'item.dart';
 
@@ -44,6 +45,7 @@ class MembershipView extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const MyMembershipWidget(),
+                  UpdateMembershipCard(),
                   Text(
                     "Invoices",
                     style: stylePTSansBold(fontSize: 20),

@@ -64,6 +64,7 @@
 		331C80F3294D02FB00263BE5 /* RunnerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RunnerTests.m; sourceTree = "<group>"; };
 		3B3967151E833CAA004F5970 /* AppFrameworkInfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = AppFrameworkInfo.plist; path = Flutter/AppFrameworkInfo.plist; sourceTree = "<group>"; };
 		473D933A82194BEAAE5F2A84 /* Pods_Runner.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Runner.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		492B8DF82C6B7B1600C6367C /* Membership.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = Membership.storekit; sourceTree = "<group>"; };
 		49316EBD2C2FD7CB00D847D9 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		496FF35E2BFCE12B008DE4CD /* notifications.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = notifications.wav; path = ../../android/app/src/main/res/raw/notifications.wav; sourceTree = "<group>"; };
 		49775C5E2BE514D9009814B2 /* Runner.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Runner.entitlements; sourceTree = "<group>"; };
@@ -156,6 +157,7 @@
 		97C146E51CF9000F007C117D = {
 			isa = PBXGroup;
 			children = (
+				492B8DF82C6B7B1600C6367C /* Membership.storekit */,
 				9740EEB11CF90186004384FC /* Flutter */,
 				97C146F01CF9000F007C117D /* Runner */,
 				331C80F2294D02FB00263BE5 /* RunnerTests */,

@@ -13,6 +13,7 @@ import 'chart.dart';
 import 'company_brief.dart';
 import 'desclaimer.dart';
 import 'price_tag.dart';
+import 'range.dart';
 import 'top_widget.dart';
 
 class SdOverview extends StatefulWidget {
@@ -79,20 +80,26 @@ class _SdOverviewState extends State<SdOverview> {
                 //   text: "Prediction",
                 //   onPressed: () {
                 //     Navigator.push(
-                //         context,
-                //         MaterialPageRoute(
-                //             builder: (context) => StockAnalysis()));
+                //       context,
+                //       MaterialPageRoute(
+                //         builder: (context) => MsAnalysis(),
+                //       ),
+                //     );
                 //   },
                 // ),
                 // ThemeButtonSmall(
                 //   text: "RADAR",
                 //   onPressed: () {
-                //     Navigator.push(context,
-                //         MaterialPageRoute(builder: (context) => RadarIndex()));
+                //     Navigator.push(
+                //       context,
+                //       MaterialPageRoute(
+                //         builder: (context) => RadarIndex(),
+                //       ),
+                //     );
                 //   },
                 // ),
-                // const SpacerVertical(height: 4),
-                // const SdTopWidgetRange(),
+                const SpacerVertical(height: 4),
+                const SdTopWidgetRange(),
                 const SpacerVertical(height: 12),
                 Visibility(
                   visible: provider.overviewRes?.morningStart != null &&

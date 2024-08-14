@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:stocks_news_new/screens/MsAnalysis/widget/title_tag.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
-class PredictionFaqs extends StatefulWidget {
-  const PredictionFaqs({super.key});
+class MsFAQs extends StatefulWidget {
+  const MsFAQs({super.key});
 
   @override
-  State<PredictionFaqs> createState() => _PredictionFaqsState();
+  State<MsFAQs> createState() => _MsFAQsState();
 }
 
-class _PredictionFaqsState extends State<PredictionFaqs> {
+class _MsFAQsState extends State<MsFAQs> {
   List<Map<String, dynamic>> faqs = [
     {
       "question": "What factors should I consider before buying a stock?",
@@ -48,13 +49,14 @@ class _PredictionFaqsState extends State<PredictionFaqs> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Frequently asked question',
-            style: stylePTSansBold(fontSize: 18, color: Colors.white)),
+        // Text('Frequently asked question',
+        //     style: stylePTSansBold(fontSize: 18, color: Colors.white)),
+        MsTitle(title: "Frequently Asked Questions"),
         ListView.separated(
           itemCount: faqs.length,
           physics: const NeverScrollableScrollPhysics(),
           shrinkWrap: true,
-          padding: EdgeInsets.symmetric(vertical: 16.sp),
+          padding: EdgeInsets.only(bottom: 16),
           itemBuilder: (context, index) {
             return Container(
               decoration: BoxDecoration(

@@ -61,7 +61,6 @@ class _NotificationSettingState extends State<NotificationSetting>
 
   Future _check() async {
     notifySnackbar = await openNotificationsSettings();
-    Utils().showLog("OPEN SNACKBAR? $notifySnackbar");
     setState(() {});
   }
 

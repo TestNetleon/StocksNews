@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:stocks_news_new/screens/prediction/Widget/our_take.dart';
-import 'package:stocks_news_new/screens/stockAnalysis/faq/faq.dart';
-import 'package:stocks_news_new/screens/stockAnalysis/widget/main_tabbar.dart';
-import 'package:stocks_news_new/screens/stockAnalysis/widget/peer_comparison.dart';
-import 'package:stocks_news_new/screens/stockAnalysis/widget/price_volatility.dart';
+import 'package:stocks_news_new/screens/MsAnalysis/faq/faq.dart';
+import 'package:stocks_news_new/screens/MsAnalysis/widget/peer_comparison.dart';
+import 'package:stocks_news_new/screens/MsAnalysis/widget/price_volatility.dart';
 import 'package:stocks_news_new/screens/drawer/base_drawer.dart';
-import 'package:stocks_news_new/screens/stockAnalysis/widget/stock_analysis.dart';
-import 'package:stocks_news_new/screens/stockAnalysis/widget/stock_highlight.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
@@ -16,19 +12,23 @@ import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import '../../modals/stock_details_res.dart';
 import '../../providers/stock_detail_new.dart';
 import '../stockDetail/stockDetailTabs/overview/top_widget.dart';
+import 'highlights/index.dart';
 import 'otherStocks/other.dart';
+import 'ourTake/index.dart';
+import 'performance/tabs.dart';
 import 'predictionChart/chart.dart';
 import 'radar/radar.dart';
+import 'swot/index.dart';
 import 'widget/app_bar.dart';
 
-class StockAnalysis extends StatefulWidget {
-  const StockAnalysis({super.key});
+class MsAnalysis extends StatefulWidget {
+  const MsAnalysis({super.key});
 
   @override
-  State<StockAnalysis> createState() => _StockAnalysisState();
+  State<MsAnalysis> createState() => _MsAnalysisState();
 }
 
-class _StockAnalysisState extends State<StockAnalysis> {
+class _MsAnalysisState extends State<MsAnalysis> {
   @override
   Widget build(BuildContext context) {
     StockDetailProviderNew provider = context.watch<StockDetailProviderNew>();
@@ -51,23 +51,23 @@ class _StockAnalysisState extends State<StockAnalysis> {
             children: const [
               SdTopWidgetDetail(),
               // SpacerVertical(height: Dimen.padding),
-              PredictionRadarGraph(),
-              PredictionOtherStocks(),
+              MsRadarGraph(),
+              MsOtherStocks(),
               SpacerVertical(height: Dimen.padding),
-              PredictionOurTake(),
+              MsOurTake(),
               SpacerVertical(height: Dimen.padding),
-              StockHighlight(),
+              MsOurHighlights(),
               SpacerVertical(height: Dimen.padding),
-              StockSubAnalysis(),
+              MsSwotAnalysis(),
               SpacerVertical(height: Dimen.padding),
-              PriceVolatility(),
+              MsPriceVolatility(),
               SpacerVertical(height: Dimen.padding),
-              PerformanceTabBar(),
+              MsPerformanceTabs(),
               SpacerVertical(height: Dimen.padding),
-              PredictionForecastChart(),
-              PeerComparison(),
+              MsForecastChart(),
+              MsPeerComparison(),
               SpacerVertical(height: Dimen.padding),
-              PredictionFaqs(),
+              MsFAQs(),
             ],
           ),
         ),

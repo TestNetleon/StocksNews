@@ -2,15 +2,14 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 
-class PredictionForecastChart extends StatefulWidget {
-  const PredictionForecastChart({super.key});
+class MsForecastChart extends StatefulWidget {
+  const MsForecastChart({super.key});
 
   @override
-  State<PredictionForecastChart> createState() =>
-      _PredictionForecastChartState();
+  State<MsForecastChart> createState() => _MsForecastChartState();
 }
 
-class _PredictionForecastChartState extends State<PredictionForecastChart>
+class _MsForecastChartState extends State<MsForecastChart>
     with SingleTickerProviderStateMixin {
   final List<Map<String, dynamic>> data = [
     {'amount': 0.0, 'year': 2020},
