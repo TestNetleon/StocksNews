@@ -77,15 +77,40 @@ class UserProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void onChangePhone(String value) {
-    if ((value == _user?.phone) &&
-        (_user?.phone != null && _user?.phone != '')) {
+  void onChangePhoneAndCode({
+    required String phone,
+    required String countryCode,
+  }) {
+    if (((phone == _user?.phone) &&
+            (_user?.phone != null && _user?.phone != '')) &&
+        ((countryCode == _user?.phoneCode) &&
+            (_user?.phoneCode != null && _user?.phoneCode != ''))) {
       phoneVerified = true;
     } else {
       phoneVerified = false;
     }
     notifyListeners();
   }
+
+  // void onChangePhone(String value) {
+  //   if ((value == _user?.phone) &&
+  //       (_user?.phone != null && _user?.phone != '')) {
+  //     phoneVerified = true;
+  //   } else {
+  //     phoneVerified = false;
+  //   }
+  //   notifyListeners();
+  // }
+
+  // void onChangeCountryCode(String value) {
+  //   if ((value == _user?.phoneCode) &&
+  //       (_user?.phoneCode != null && _user?.phoneCode != '')) {
+  //     phoneVerified = true;
+  //   } else {
+  //     phoneVerified = false;
+  //   }
+  //   notifyListeners();
+  // }
 
   void setStatus(status) {
     _status = status;
@@ -978,6 +1003,18 @@ class UserProvider extends ChangeNotifier {
           affiliateStatus: affiliateStatus,
           countryCode: countryCode,
         );
+        try {
+          if (countryCode != null &&
+              countryCode != '' &&
+              phone != null &&
+              phone != '') {
+            navigatorKey.currentContext!
+                .read<HomeProvider>()
+                .clearExtraCountryCodeError();
+          }
+        } catch (e) {
+          //
+        }
         return ApiResponse(status: true, message: res.message);
       } else {
         setStatus(Status.loaded);

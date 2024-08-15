@@ -96,6 +96,11 @@ class HomeProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  clearExtraCountryCodeError() {
+    _extra?.phoneCodeError = null;
+    notifyListeners();
+  }
+
   List<String> benefitTabs = [
     'Earn Rewards',
     'Redeem Rewards',

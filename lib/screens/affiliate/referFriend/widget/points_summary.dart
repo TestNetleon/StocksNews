@@ -5,10 +5,10 @@ import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/cache_network_image.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
-
 import '../../../../utils/colors.dart';
 import '../../../../utils/constants.dart';
 import '../../pointsTransaction/trasnsaction.dart';
+import '../../seperatePoints/index.dart';
 
 // import '../../../../utils/colors.dart';
 // import '../../../../utils/constants.dart';
@@ -60,6 +60,9 @@ class PointsSummary extends StatelessWidget {
                     return Column(
                       children: [
                         PointSummaryItem(
+                          tnxType:
+                              provider.extra?.pointsSummary?[index].txnType ??
+                                  "",
                           icon: CachedNetworkImagesWidget(
                               provider.extra?.pointsSummary?[index].icon ?? "",
                               width: 24),
@@ -109,6 +112,8 @@ class PointsSummary extends StatelessWidget {
                   }
 
                   return PointSummaryItem(
+                    tnxType:
+                        provider.extra?.pointsSummary?[index].txnType ?? "",
                     icon: CachedNetworkImagesWidget(
                         provider.extra?.pointsSummary?[index].icon ?? "",
                         width: 24),
@@ -368,33 +373,80 @@ class PointSummaryItem extends StatelessWidget {
     required this.label,
     required this.value,
     required this.icon,
+    this.tnxType,
   });
 
   final String label;
   final String value;
+  final String? tnxType;
+
   final Widget icon;
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        // Icon(icon, color: Colors.green),
-        // Image.asset(icon, width: 24),
-        icon,
-        const SpacerHorizontal(width: 12),
-        Expanded(
-          child: Text(
-            label,
-            style: stylePTSansRegular(fontSize: 17),
+    return GestureDetector(
+      onTap: () {
+        if (tnxType == null || tnxType == '') {
+          return;
+        }
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => SeparatePointsIndex(
+              type: tnxType ?? "",
+              appbarHeading: "$label: $value",
+            ),
           ),
-        ),
-        const SpacerVertical(height: 10),
-        Text(
-          value,
-          style: stylePTSansBold(fontSize: 17),
-        ),
-      ],
+        );
+      },
+      child: Column(
+        children: [
+          Row(
+            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              // Icon(icon, color: Colors.green),
+              // Image.asset(icon, width: 24),
+              icon,
+              const SpacerHorizontal(width: 12),
+              Expanded(
+                child: Text(
+                  label,
+                  style: stylePTSansRegular(fontSize: 17),
+                ),
+              ),
+              const SpacerVertical(height: 10),
+              Text(
+                value,
+                style: stylePTSansBold(fontSize: 17),
+              ),
+            ],
+          ),
+          // Visibility(
+          //   visible: tnxType != null && tnxType != '',
+          //   child: Align(
+          //     alignment: Alignment.centerRight,
+          //     child: ThemeButtonSmall(
+          //       padding: EdgeInsets.symmetric(horizontal: 10, vertical: 0),
+          //       fontBold: true,
+          //       showArrow: false,
+          //       radius: 30,
+          //       text: "View Transactions",
+          //       onPressed: () {
+          //         Navigator.push(
+          //           context,
+          //           MaterialPageRoute(
+          //             builder: (context) => SeparatePointsIndex(
+          //               type: tnxType ?? "",
+          //               appbarHeading: "$label: $value",
+          //             ),
+          //           ),
+          //         );
+          //       },
+          //     ),
+          //   ),
+          // ),
+        ],
+      ),
     );
   }
 }

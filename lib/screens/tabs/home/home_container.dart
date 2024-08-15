@@ -23,6 +23,7 @@ import '../../../utils/colors.dart';
 import '../../../widgets/custom/refer.dart';
 import '../../AdManager/manager.dart';
 import '../news/news_item.dart';
+import 'updateCountryCode/update.dart';
 import 'widgets/home_inner_tabs.dart';
 import 'widgets/sliderNews/slider.dart';
 import 'widgets/stockBuzz/index.dart';
@@ -52,82 +53,20 @@ class HomeContainer extends StatelessWidget {
     }
     return Column(
       children: [
+        Visibility(
+          // visible: (userProvider.user?.phoneCode == null ||
+          //         userProvider.user?.phoneCode == '') &&
+          //     (userProvider.user?.phone != null &&
+          //         userProvider.user?.phone != '') &&
+          //     (provider.extra?.phoneCodeError != null &&
+          //         provider.extra?.phoneCodeError != ''),
+          visible: provider.extra?.phoneCodeError != null &&
+              provider.extra?.phoneCodeError != '',
+          child: HomeUpdateCountryCode(),
+        ),
         BlogItemHome(),
         const HomeTopNewsSlider(),
         const MembershipCoinsOption(),
-        // Visibility(
-        //   visible: showMembership && provider.homeSliderRes != null,
-        //   child: Container(
-        //     margin: const EdgeInsets.fromLTRB(
-        //       Dimen.padding,
-        //       Dimen.homeSpacing,
-        //       Dimen.padding,
-        //       0,
-        //     ),
-        //     child: userProvider.user?.membership?.purchased != 1
-        //         ? const UpdateMembershipCard()
-        //         :
-        //         //
-        //         const UpdateStoreCard(),
-        //   ),
-        // ),
-        // Container(
-        //   margin: const EdgeInsets.fromLTRB(
-        //     Dimen.padding,
-        //     Dimen.homeSpacing,
-        //     Dimen.padding,
-        //     0,
-        //   ),
-        //   child: const ReferPurchaseSlider(),
-        // ),
-        // Container(
-        //   margin: const EdgeInsets.fromLTRB(
-        //     Dimen.padding,
-        //     Dimen.padding,
-        //     Dimen.homeSpacing,
-        //     0,
-        //   ),
-        //   padding: EdgeInsets.all(12),
-        //   width: double.infinity,
-        //   decoration: BoxDecoration(
-        //     color: ThemeColors.themeGreen,
-        //     borderRadius: BorderRadius.circular(8),
-        //   ),
-        //   child: GestureDetector(
-        //       onTap: () {
-        //         Navigator.push(
-        //           context,
-        //           MaterialPageRoute(
-        //             builder: (_) => const radar(),
-        //           ),
-        //         );
-        //       },
-        //       child: const Text('Radar Screen')),
-        // ),
-        // Container(
-        //   margin: const EdgeInsets.fromLTRB(
-        //     Dimen.padding,
-        //     Dimen.padding,
-        //     Dimen.homeSpacing,
-        //     0,
-        //   ),
-        //   padding: EdgeInsets.all(12),
-        //   width: double.infinity,
-        //   decoration: BoxDecoration(
-        //     color: ThemeColors.themeGreen,
-        //     borderRadius: BorderRadius.circular(8),
-        //   ),
-        //   child: GestureDetector(
-        //       onTap: () {
-        //         Navigator.push(
-        //           context,
-        //           MaterialPageRoute(
-        //             builder: (_) => const StockAnalysis(),
-        //           ),
-        //         );
-        //       },
-        //       child: const Text('Stock Analysis')),
-        // ),
         Visibility(
           visible: provider.trendingExtra?.adManagers?.data?.place1 != null,
           child: AdManagerIndex(
@@ -191,7 +130,8 @@ class HomeContainer extends StatelessWidget {
                   );
                 },
                 child: Container(
-                  margin: const EdgeInsets.only(top: Dimen.homeSpacing),
+                  margin: const EdgeInsets.only(
+                      top: Dimen.padding, left: 15, right: 15),
                   decoration: BoxDecoration(
                     // color: Colors.transparent,
                     border: Border.all(
@@ -366,7 +306,6 @@ class HomeContainer extends StatelessWidget {
             ),
           ],
         ),
-
         Visibility(
           visible: provider.trendingExtra?.adManagers?.data?.place3 != null,
           child: AdManagerIndex(

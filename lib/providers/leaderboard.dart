@@ -247,4 +247,82 @@ class LeaderBoardProvider extends ChangeNotifier {
       setStatusT(Status.loaded);
     }
   }
+
+//Separate Points Transaction
+  Extra? _extraDetail;
+  Extra? get extraDetail => _extraDetail;
+
+  String? _errorDetail;
+  String? get errorDetail => _errorDetail ?? Const.errSomethingWrong;
+
+  Status _statusDetail = Status.ideal;
+  Status get statusDetail => _statusDetail;
+
+  bool get isLoadingDetail => _statusDetail == Status.loading;
+
+  List<AffiliateTransactionRes>? _dataDetail;
+  List<AffiliateTransactionRes>? get dataDetail => _dataDetail;
+
+  int _page = 1;
+
+  bool get canLoadMore => _page <= (_extraDetail?.totalPages ?? 1);
+  // bool get canLoadMore => _page < 5;
+
+  void setStatusSeparate(status) {
+    _statusDetail = status;
+    notifyListeners();
+  }
+
+  Future getData({
+    showProgress = false,
+    loadMore = false,
+    required String type,
+  }) async {
+    if (loadMore) {
+      _page++;
+      setStatusSeparate(Status.loadingMore);
+    } else {
+      _page = 1;
+      _dataDetail = null;
+      setStatusSeparate(Status.loading);
+    }
+
+    try {
+      Map request = {
+        "token":
+            navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
+        "page": "$_page",
+        "txn_type": type,
+      };
+
+      ApiResponse response = await apiRequest(
+        url: Apis.affiliateTnxList,
+        request: request,
+        showProgress: false,
+      );
+      if (response.status) {
+        _errorDetail = null;
+        if (_page == 1) {
+          _dataDetail =
+              affiliateTransactionResFromJson(jsonEncode(response.data));
+          _extraDetail =
+              (response.extra is Extra ? response.extra as Extra : null);
+        } else {
+          _dataDetail?.addAll(
+              affiliateTransactionResFromJson(jsonEncode(response.data)));
+        }
+      } else {
+        if (_page == 1) {
+          _errorDetail = response.message;
+          _dataDetail = null;
+        }
+      }
+      setStatusSeparate(Status.loaded);
+    } catch (e) {
+      _dataDetail = null;
+      _errorDetail = Const.errSomethingWrong;
+      Utils().showLog(e.toString());
+      setStatusSeparate(Status.loaded);
+    }
+  }
 }

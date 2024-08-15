@@ -215,7 +215,6 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
 
   Future _check() async {
     notifySnackbar = await openNotificationsSettings();
-    Utils().showLog("OPEN SNACKBAR? $notifySnackbar");
     setState(() {});
   }
 

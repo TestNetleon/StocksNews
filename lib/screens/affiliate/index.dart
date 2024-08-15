@@ -32,12 +32,7 @@ class ReferAFriend extends StatelessWidget {
         widgets: const [
           AffiliateReferFriend(),
           Padding(
-            padding: EdgeInsets.fromLTRB(
-              Dimen.padding,
-              0,
-              Dimen.padding,
-              0,
-            ),
+            padding: EdgeInsets.fromLTRB(Dimen.padding, 0, Dimen.padding, 0),
             child: AffiliateLeaderBoard(),
           ),
         ],

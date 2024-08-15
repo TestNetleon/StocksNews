@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/utils/validations.dart';
@@ -118,10 +116,10 @@ class ThemeInputField extends StatelessWidget {
                   // ),
                   contentPadding: contentPadding ??
                       EdgeInsets.fromLTRB(
-                        10.sp,
-                        10.sp,
-                        12.sp,
-                        10.sp,
+                        10,
+                        10,
+                        12,
+                        10,
                       ),
                   filled: true,
                   fillColor: fillColor,

@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -35,22 +34,6 @@ class RevenueCatService {
         ..appUserID = userRes?.userId ?? "";
     }
 
-    // if (configuration != null) {
-    //   await Purchases.configure(configuration);
-    //   Offerings? offerings;
-
-    //   offerings = await Purchases.getOfferings();
-    //   PaywallResult result = await RevenueCatUI.presentPaywall(
-    //       offering: offerings.getOffering('in-app'));
-
-    //   Utils().showLog("Result -> $result");
-
-    //   CustomerInfo customerInfo = await Purchases.getCustomerInfo();
-    //   Utils().showLog("Customer-->${customerInfo.managementURL}");
-
-    //   await _handlePaywallResult(result);
-    // }
-
     try {
       navigatorKey.currentContext!
           .read<MembershipProvider>()
@@ -64,24 +47,9 @@ class RevenueCatService {
 
         closeGlobalProgressDialog();
 
-        log("TYPE ==>> annual-membership   =>>  $type ");
-
         PaywallResult result = await RevenueCatUI.presentPaywall(
           offering: offerings.getOffering(type ?? 'access'),
-          // offering: offerings.getOffering("annual-membership"),
         );
-
-        // Offering? offering = offerings.getOffering(type ?? 'access');
-        // if (offering != null) {
-        //   Utils().showLog(
-        //       "PRICE ${offering.availablePackages.first.storeProduct.price}");
-        //   Utils().showLog(
-        //       "COUNTRY CODE ${offering.availablePackages.first.storeProduct.currencyCode}");
-        //   Utils().showLog(
-        //       "COUNTRY CODE ${offering.availablePackages.first.storeProduct.priceString}");
-        // } else {
-        //   //
-        // }
 
         await _handlePaywallResult(
           result,
@@ -97,36 +65,16 @@ class RevenueCatService {
     }
   }
 
-  // void fetchPrices() async {
-  //   try {
-  //     Offerings offerings = await Purchases.getOfferings();
-  //     if (offerings.current != null &&
-  //         offerings.current?.availablePackages.isNotEmpty == true) {
-  //       // Access the price
-  //       for (var package in offerings.current!.availablePackages) {
-  //         print('Price: ${package.storeProduct.priceString}');
-  //         print('Currency: ${package.storeProduct.currencyCode}');
-  //       }
-  //     }
-  //   } catch (e) {
-  //     print('Error fetching offerings: $e');
-  //   }
-  // }
-
   static Future _handlePaywallResult(PaywallResult result,
       {bool isMembership = false}) async {
     switch (result) {
       case PaywallResult.cancelled:
         break;
       case PaywallResult.error:
-        // Handle error
         break;
       case PaywallResult.notPresented:
-        // Handle not presented
         break;
       case PaywallResult.purchased:
-
-        // await _handlePurchaseSuccess(isMembership: isMembership);
         await Navigator.push(
           navigatorKey.currentContext!,
           MaterialPageRoute(
@@ -136,27 +84,8 @@ class RevenueCatService {
         );
         break;
       case PaywallResult.restored:
-        // Handle restore
         break;
       default:
     }
   }
-
-  // static Future _handlePurchaseSuccess({bool isMembership = false}) async {
-  //   await showModalBottomSheet(
-  //     useSafeArea: true,
-  //     shape: const RoundedRectangleBorder(
-  //       borderRadius: BorderRadius.only(
-  //         topLeft: Radius.circular(5),
-  //         topRight: Radius.circular(5),
-  //       ),
-  //     ),
-  //     backgroundColor: ThemeColors.transparent,
-  //     isScrollControlled: true,
-  //     context: navigatorKey.currentContext!,
-  //     builder: (context) {
-  //       return SubscriptionPurchased(isMembership: isMembership);
-  //     },
-  //   );
-  // }
 }

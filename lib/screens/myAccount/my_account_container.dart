@@ -10,6 +10,7 @@ import 'package:provider/provider.dart';
 import 'package:sms_autofill/sms_autofill.dart';
 import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/modals/user_res.dart';
+import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/leaderboard.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/screens/myAccount/widgets/my-account_header.dart';
@@ -23,7 +24,6 @@ import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
 import 'package:stocks_news_new/widgets/custom/country_code_picker_widget.dart';
 import 'package:stocks_news_new/widgets/theme_button.dart';
 import 'package:validators/validators.dart';
-
 import '../../utils/theme.dart';
 import '../../utils/utils.dart';
 import '../../utils/validations.dart';
@@ -103,7 +103,12 @@ class _MyAccountContainerState extends State<MyAccountContainer>
   }
 
   _callAPI() {
+    UserProvider userProvider = context.read<UserProvider>();
+    if (userProvider.user?.affiliateStatus == 0) {
+      return;
+    }
     LeaderBoardProvider provider = context.read<LeaderBoardProvider>();
+
     provider.getReferData(checkAppUpdate: false);
   }
 
@@ -250,6 +255,8 @@ class _MyAccountContainerState extends State<MyAccountContainer>
   @override
   Widget build(BuildContext context) {
     UserProvider provider = context.watch<UserProvider>();
+    HomeProvider homeProvider = context.watch<HomeProvider>();
+
     // final String locale = Intl.getCurrentLocale().split('_').last;
 
     // UserRes? user = context.read<UserProvider>().user;
@@ -366,7 +373,8 @@ class _MyAccountContainerState extends State<MyAccountContainer>
                         : () =>
                             _onEmailUpdateClick(emailController.text.trim()),
                     child: Padding(
-                      padding: const EdgeInsets.fromLTRB(5, 5, 10, 5),
+                      padding: EdgeInsets.fromLTRB(
+                          provider.emailVerified ? 0 : 5, 5, 5, 5),
                       child: Row(
                         children: [
                           Visibility(
@@ -436,6 +444,11 @@ class _MyAccountContainerState extends State<MyAccountContainer>
                         child: CountryPickerWidget(
                           onChanged: (CountryCode value) {
                             countryCode = value.dialCode;
+                            // provider.onChangeCountryCode("$value");
+                            provider.onChangePhoneAndCode(
+                              phone: mobileController.text,
+                              countryCode: "$countryCode",
+                            );
                           },
                           textColor: Colors.white,
                         )
@@ -514,12 +527,19 @@ class _MyAccountContainerState extends State<MyAccountContainer>
 
               Flexible(
                 child: ThemeInputField(
-                  onChanged: (value) => provider.onChangePhone(value),
+                  // onChanged: (value) => provider.onChangePhone(value),
+                  onChanged: (value) {
+                    provider.onChangePhoneAndCode(
+                      phone: value,
+                      countryCode: "$countryCode",
+                    );
+                  },
                   cursorColor: Colors.white,
                   // prefix: Text(
                   //   "+1 ",
                   //   style: stylePTSansBold(color: Colors.white, fontSize: 14),
                   // ),
+                  contentPadding: EdgeInsets.fromLTRB(8, 6, 0, 10),
                   style: stylePTSansRegular(color: Colors.white, height: 1.5),
                   fillColor: ThemeColors.primaryLight,
                   borderColor: ThemeColors.primaryLight,
@@ -537,7 +557,7 @@ class _MyAccountContainerState extends State<MyAccountContainer>
               ),
               Container(
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 10, vertical: 11.7),
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 12),
                 decoration: const BoxDecoration(
                   color: ThemeColors.primaryLight,
                   borderRadius: BorderRadius.only(
@@ -565,7 +585,8 @@ class _MyAccountContainerState extends State<MyAccountContainer>
                         : () =>
                             _onPhoneUpdateClick(mobileController.text.trim()),
                     child: Padding(
-                      padding: const EdgeInsets.fromLTRB(5, 5, 10, 5),
+                      padding: EdgeInsets.fromLTRB(
+                          provider.phoneVerified ? 0 : 5, 5, 5, 5),
                       child: Row(
                         children: [
                           Visibility(
@@ -597,7 +618,20 @@ class _MyAccountContainerState extends State<MyAccountContainer>
             ],
           ),
         ),
+        Visibility(
+          visible:
+              (provider.user?.phone != null && provider.user?.phone != '') &&
+                  (provider.user?.phoneCode == null ||
+                      provider.user?.phoneCode == '') &&
+                  (homeProvider.extra?.phoneCodeError != null &&
+                      homeProvider.extra?.phoneCodeError != ''),
+          child: Text(
+            "*${homeProvider.extra?.phoneCodeError ?? "*Please update your country code"}",
+            style: stylePTSansRegular(color: ThemeColors.sos),
+          ),
+        ),
         const SpacerVertical(height: 20),
+
         ThemeButton(
           onPressed: _onTap,
           text: "Update Profile",

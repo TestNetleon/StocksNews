@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/membership/membership_info_res.dart';
+import 'package:stocks_news_new/modals/user_res.dart';
 import 'package:stocks_news_new/providers/membership.dart';
 import 'package:stocks_news_new/screens/auth/login/login_sheet.dart';
 import 'package:stocks_news_new/screens/auth/login/login_sheet_tablet.dart';
@@ -227,8 +228,10 @@ import '../../auth/membershipAsk/ask.dart';
 class NewMembershipUpgradeCurrentPlan extends StatefulWidget {
   final bool withClickCondition;
 
-  const NewMembershipUpgradeCurrentPlan(
-      {super.key, this.withClickCondition = false});
+  const NewMembershipUpgradeCurrentPlan({
+    super.key,
+    this.withClickCondition = false,
+  });
 
   @override
   State<NewMembershipUpgradeCurrentPlan> createState() =>
@@ -251,7 +254,9 @@ class _NewMembershipUpgradeCurrentPlanState
 
       return;
     }
-    if (provider.user?.membership?.purchased == 1) {
+    if (provider.user?.membership?.purchased == 1 &&
+        (provider.user?.membership?.canUpgrade == false ||
+            provider.user?.membership?.canUpgrade == null)) {
       Utils().showLog("---found user is already having membership----");
 
       Navigator.pop(context);
@@ -262,42 +267,20 @@ class _NewMembershipUpgradeCurrentPlanState
       await membershipLogin();
     }
 
-    if (provider.user?.phone != null &&
-        provider.user?.phone != '' &&
-        provider.user?.membership?.purchased == 0) {
+    if (provider.user?.phone != null && provider.user?.phone != ''
+        // && provider.user?.membership?.purchased == 0
+        ) {
       await RevenueCatService.initializeSubscription(type: type);
     }
   }
-
-  // List<String>? features = [
-  //   "Get more with Membership",
-  //   "Add stocks alert and watchlist",
-  //   'Unlock "Morning Star Reports", "Insider Trades", "Congressional Trades", "High/Low PE", "Compare Stocks" and much more!',
-  // ];
-
-  // List<Plan> plans = [
-  //   Plan(
-  //     name: "MONTHLY",
-  //     price: "\$19.99",
-  //     description: "Get 10 complimentary points",
-  //     type: "monthly-premium",
-  //     billed: "Billed monthly",
-  //     selected: true,
-  //   ),
-  //   Plan(
-  //     name: "ANNUAL",
-  //     price: "\$199.00",
-  //     description: "Get 150 complimentary points",
-  //     type: "annual-membership",
-  //     billed: "Billed annually",
-  //     selected: false,
-  //   ),
-  // ];
 
   @override
   Widget build(BuildContext context) {
     MembershipProvider provider = context.watch<MembershipProvider>();
     MembershipInfoRes? data = provider.membershipInfoRes;
+
+    UserProvider userProvider = context.watch<UserProvider>();
+    UserRes? user = userProvider.user;
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -315,7 +298,7 @@ class _NewMembershipUpgradeCurrentPlanState
             child: ListView.separated(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
-              padding: EdgeInsets.symmetric(horizontal: 0, vertical: 5),
+              padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 5),
               itemBuilder: (context, index) {
                 return Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -323,29 +306,16 @@ class _NewMembershipUpgradeCurrentPlanState
                     Container(
                       height: 7,
                       width: 7,
-                      margin: EdgeInsets.only(top: 10),
+                      margin: const EdgeInsets.only(top: 10),
                       decoration: const BoxDecoration(
                         shape: BoxShape.circle,
                         color: ThemeColors.white,
                       ),
-                      // padding: const EdgeInsets.all(8),
-                      // child: const Center(
-                      //   child: Icon(
-                      //     Icons.check,
-                      //     color: Colors.green,
-                      //     size: 13,
-                      //   ),
-                      // ),
                     ),
                     const SpacerHorizontal(
                       width: 6,
                     ),
                     Flexible(
-                      // child: Text(
-                      //   '${data?.plan.features?[index]}',
-                      //   style: stylePTSansRegular(
-                      //       fontSize: 16, color: Colors.white),
-                      // ),
                       child: HtmlWidget(
                         '${data?.newFeatures?[index]}',
                         textStyle: const TextStyle(
@@ -365,7 +335,7 @@ class _NewMembershipUpgradeCurrentPlanState
               itemCount: data?.newFeatures?.length ?? 0,
             ),
           ),
-          SpacerVertical(height: 20),
+          const SpacerVertical(height: 20),
           Text(
             data?.selectTitle ?? "",
             style: styleSansBold(
@@ -383,117 +353,167 @@ class _NewMembershipUpgradeCurrentPlanState
           //     fontSize: 16,
           //   ),
           // ),
-          SpacerVertical(height: 25),
+          const SpacerVertical(height: 25),
           ListView.separated(
             shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
+            physics: const NeverScrollableScrollPhysics(),
             itemBuilder: (context, index) {
               return GestureDetector(
-                onTap: () {
-                  if (widget.withClickCondition) {
-                    _subscribe(type: data?.plans?[index].type);
-                  } else {
-                    RevenueCatService.initializeSubscription(
-                        type: data?.plans?[index].type);
-                  }
+                onTap: index == 0 && user?.membership?.canUpgrade == true
+                    ? null
+                    : () {
+                        if (widget.withClickCondition) {
+                          _subscribe(type: data?.plans?[index].type);
+                        } else {
+                          RevenueCatService.initializeSubscription(
+                              type: data?.plans?[index].type);
+                        }
 
-                  for (int i = 0; i < (data?.plans?.length ?? 0); i++) {
-                    data?.plans?[i].selected = false;
-                  }
+                        for (int i = 0; i < (data?.plans?.length ?? 0); i++) {
+                          data?.plans?[i].selected = false;
+                        }
 
-                  data?.plans?[index].selected = true;
+                        data?.plans?[index].selected = true;
 
-                  setState(() {});
-                },
-                child: Container(
-                  // width: MediaQuery.of(context).size.width / 1.05,
-                  decoration: BoxDecoration(
-                      gradient: const LinearGradient(
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                        stops: [0.2, 0.65],
-                        colors: [
-                          Color.fromARGB(255, 6, 78, 31),
-                          Color.fromARGB(255, 22, 22, 22),
-                        ],
-                      ),
-                      border: Border.all(color: Colors.green),
-                      borderRadius: BorderRadius.circular(10.0)),
-                  padding: const EdgeInsets.all(15),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            decoration: const BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(10.0),
-                                    topRight: Radius.circular(10.0),
-                                    bottomLeft: Radius.circular(10.0))),
-                            padding: const EdgeInsets.all(8.0),
-                            child: Center(
-                              child: Text(
-                                data?.plans?[index].name ?? "",
-                                style: stylePTSansBold(
-                                    fontSize: 17, color: Colors.black),
-                              ),
-                            ),
+                        setState(() {});
+                      },
+                child: Column(
+                  children: [
+                    Visibility(
+                      visible:
+                          index == 0 && user?.membership?.canUpgrade == true,
+                      child: Container(
+                        width: double.infinity,
+                        alignment: Alignment.center,
+                        margin: const EdgeInsets.symmetric(horizontal: 20),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 15,
+                          vertical: 4,
+                        ),
+                        decoration: const BoxDecoration(
+                          // color: Colors.yellow,
+                          gradient: LinearGradient(
+                            begin: Alignment.centerLeft,
+                            end: Alignment.centerRight,
+                            colors: [
+                              Color.fromARGB(255, 1, 101, 16),
+                              ThemeColors.accent
+                            ],
                           ),
-                          SpacerHorizontal(width: 10),
-                          Container(
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              border: Border.all(
-                                color: ThemeColors.white,
-                                width: 2,
-                              ),
-                            ),
-                            padding: EdgeInsets.all(5),
-                            child: Container(
-                              padding: EdgeInsets.all(6.7),
-                              decoration: BoxDecoration(
-                                color: data?.plans?[index].selected == true
-                                    ? ThemeColors.white
-                                    : null,
-                                shape: BoxShape.circle,
-                              ),
-                            ),
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(10),
+                            topRight: Radius.circular(10),
                           ),
-                        ],
-                      ),
-                      const SpacerVertical(height: 12),
-                      Text(
-                        data?.plans?[index].price ?? "",
-                        style: TextStyle(
-                          fontFamily: 'Roboto',
-                          fontSize: 30,
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
+                        ),
+                        child: Text(
+                          "Your current plan",
+                          style: styleSansBold(
+                              fontSize: 16, color: ThemeColors.white),
                         ),
                       ),
-                      const SpacerVertical(height: 10),
-                      HtmlWidget(
-                        data?.plans?[index].billed ?? "",
-                        textStyle: stylePTSansRegular(
-                            fontSize: 16, color: ThemeColors.greyText),
+                    ),
+                    Container(
+                      // width: MediaQuery.of(context).size.width / 1.05,
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          stops: const [0.2, 0.65],
+                          colors: [
+                            index == 0 && user?.membership?.canUpgrade == true
+                                ? const Color.fromARGB(255, 67, 67, 67)
+                                : const Color.fromARGB(255, 6, 78, 31),
+                            const Color.fromARGB(255, 22, 22, 22),
+                          ],
+                        ),
+                        border: Border.all(
+                          color:
+                              index == 0 && user?.membership?.canUpgrade == true
+                                  ? Colors.grey
+                                  : Colors.green,
+                        ),
+                        borderRadius: BorderRadius.circular(10.0),
                       ),
-                      const SpacerVertical(height: 10),
-                      Text(
-                        data?.plans?[index].description ?? "",
-                        style:
-                            stylePTSansBold(fontSize: 16, color: Colors.white),
+                      padding: const EdgeInsets.all(15),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                decoration: const BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(10.0),
+                                        topRight: Radius.circular(10.0),
+                                        bottomLeft: Radius.circular(10.0))),
+                                padding: const EdgeInsets.all(8.0),
+                                child: Center(
+                                  child: Text(
+                                    data?.plans?[index].name ?? "",
+                                    style: stylePTSansBold(
+                                        fontSize: 17, color: Colors.black),
+                                  ),
+                                ),
+                              ),
+                              const SpacerHorizontal(width: 10),
+                              index == 0 && user?.membership?.canUpgrade == true
+                                  ? SizedBox()
+                                  : Container(
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        border: Border.all(
+                                          color: ThemeColors.white,
+                                          width: 2,
+                                        ),
+                                      ),
+                                      padding: const EdgeInsets.all(5),
+                                      child: Container(
+                                        padding: const EdgeInsets.all(6.7),
+                                        decoration: BoxDecoration(
+                                          color: data?.plans?[index].selected ==
+                                                  true
+                                              ? ThemeColors.white
+                                              : null,
+                                          shape: BoxShape.circle,
+                                        ),
+                                      ),
+                                    ),
+                            ],
+                          ),
+                          const SpacerVertical(height: 12),
+                          Text(
+                            data?.plans?[index].price ?? "",
+                            style: const TextStyle(
+                              fontFamily: 'Roboto',
+                              fontSize: 30,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          const SpacerVertical(height: 10),
+                          HtmlWidget(
+                            data?.plans?[index].billed ?? "",
+                            textStyle: stylePTSansRegular(
+                                fontSize: 16, color: ThemeColors.greyText),
+                          ),
+                          const SpacerVertical(height: 10),
+                          Text(
+                            data?.plans?[index].description ?? "",
+                            style: stylePTSansBold(
+                                fontSize: 16, color: Colors.white),
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               );
             },
             separatorBuilder: (context, index) {
-              return SpacerVertical(height: 20);
+              return const SpacerVertical(height: 20);
             },
             itemCount: data?.plans?.length ?? 0,
           ),
