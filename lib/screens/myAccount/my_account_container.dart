@@ -310,7 +310,6 @@ class _MyAccountContainerState extends State<MyAccountContainer>
         ),
         const SpacerVertical(height: 13),
         showAsteriskText(text: "Email Address", bold: true),
-
         const SpacerVertical(height: 5),
         IntrinsicHeight(
           child: Row(

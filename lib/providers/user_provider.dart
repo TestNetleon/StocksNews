@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/api/api_requester.dart';
 import 'package:stocks_news_new/api/api_response.dart';
@@ -782,39 +783,20 @@ class UserProvider extends ChangeNotifier {
         _user = UserRes.fromJson(response.data);
         Preference.saveUser(response.data);
         isSVG = isSvgFromUrl(user?.image);
-
         navigatorKey.currentContext!.read<HomeProvider>().getHomeSlider();
         shareUri = await DynamicLinkService.instance.getDynamicLink();
-        // shareUri = await DynamicLinkService.instance
-        //     .getDynamicLink(_user?.referralCode);
-        // if (dontPop == null) {
-        //   // if (state == "compare") {
-        //   //   await compareProvider.getCompareStock();
-        //   // } else if (state == "alert") {
-        //   //   await alertProvider.getAlerts(showProgress: false);
-        //   // } else if (state == "watchList") {
-        //   //   await watchlistProvider.getData(showProgress: false);
-        //   // } else if (state == "notification") {
-        //   //   await notificationProvider.getData(showProgress: false);
-        //   // }
         Navigator.pop(navigatorKey.currentContext!);
         Navigator.pop(navigatorKey.currentContext!);
-        // } else {
-        // kDebugMode ? Preference.setShowIntro(true) : null;
         Preference.setShowIntro(false);
-        // Navigator.popUntil(
-        //   navigatorKey.currentContext!,
-        //   (route) => route.isFirst,
-        // );
-        // Navigator.pushReplacement(
-        //   navigatorKey.currentContext!,
-        //   MaterialPageRoute(builder: (_) => const Tabs()),
-        // );
-        // }
+        //--------
+        var tags = {
+          'email': "${_user?.email}",
+          'phone': "${_user?.phoneCode} ${_user?.phone}"
+        };
+        OneSignal.User.addTags(tags);
+        //--------
+
         notifyListeners();
-        // if ((_user?.phone == null || _user?.phone == "")) {
-        //   referLogin();
-        // }
       } else {
         // showErrorMessage(message: response.message);
         popUpAlert(
@@ -1227,20 +1209,48 @@ class UserProvider extends ChangeNotifier {
 
 //----check phone no---------
 
-  Future checkPhoneNo(phoneNo) async {
-    UserRes? user = navigatorKey.currentContext!.read<UserProvider>().user;
-    Map request = {
-      'token': user?.token ?? "",
-      'phone': phoneNo,
-    };
+  Future checkLogin(request) async {
+    // UserRes? user = navigatorKey.currentContext!.read<UserProvider>().user;
 
     try {
       ApiResponse response = await apiRequest(
-        url: Apis.checkPhoneNo,
+        url: Apis.loginNew,
         request: request,
         showProgress: true,
         removeForceLogin: true,
       );
+
+      if (response.status) {
+        //
+      } else {
+        popUpAlert(
+            message: response.message ?? "",
+            title: "Alert",
+            icon: Images.alertPopGIF);
+      }
+
+      return ApiResponse(status: response.status, message: response.message);
+    } catch (e) {
+      Utils().showLog("$e");
+      popUpAlert(
+          message: Const.errSomethingWrong,
+          title: "Alert",
+          icon: Images.alertPopGIF);
+      return ApiResponse(status: false, message: Const.errSomethingWrong);
+    }
+  }
+
+  Future completeRegistration(request) async {
+    // UserRes? user = navigatorKey.currentContext!.read<UserProvider>().user;
+
+    try {
+      ApiResponse response = await apiRequest(
+        url: Apis.loginNew,
+        request: request,
+        showProgress: true,
+        removeForceLogin: true,
+      );
+
       if (response.status) {
         //
       } else {

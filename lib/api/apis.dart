@@ -8,6 +8,7 @@ class Apis {
   // static const baseUrl = kDebugMode
   //     ? "https://notification.stocks.news/public/demo/public/api/v1"
   //     : "https://app.stocks.news/api/v1"; // live server
+  // live server
 
   static const signup = "/sign-up";
   static const verifySignupOtp = "/check-signup-otp";
@@ -193,6 +194,8 @@ class Apis {
   static const tsOpenList = "/simulator/list-purchased-shares";
 
   // ---------   Trading Simulator End --------------
+
+  static const loginNew = "/check-user";
 }
 
 class ApiKeys {

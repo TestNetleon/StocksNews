@@ -84,6 +84,8 @@ String? geoCountryCode;
 bool isSVG = false;
 bool showAdd = false;
 
+bool oneSignalInitialized = false;
+
 //------------ Ad API Globals
 
 Map<AdScreen, Map<AdPlaces, bool>> adVisibilityMap = {
