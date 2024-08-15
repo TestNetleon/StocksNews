@@ -124,6 +124,7 @@ class Extra {
   final AdManagerRes? adManager;
   final AdManagersRes? adManagers;
   final String? notifyTextMsg;
+  String? phoneCodeError;
 
   Extra({
     this.adManagers,
@@ -135,6 +136,7 @@ class Extra {
     this.showWatchlist,
     this.notifyTextMsg,
     this.showMostPurchased,
+    this.phoneCodeError,
     this.text1,
     this.text2,
     this.text3,
@@ -211,6 +213,7 @@ class Extra {
         storeTitle: json["store_title"],
         notifyTextMsg: json['notification_setting_txt'],
         storeSubTitle: json["store_subtitle"],
+        phoneCodeError: json['phone_code_error'],
         adManager: json["ad_manager"] == null
             ? null
             : AdManagerRes.fromJson(json["ad_manager"]),
@@ -353,7 +356,7 @@ class Extra {
 
   Map<String, dynamic> toJson() => {
         "ad_managers": adManagers?.toJson(),
-
+        "phone_code_error": phoneCodeError,
         "feeback_type": feebackType == null
             ? []
             : List<dynamic>.from(feebackType!.map((x) => x)),

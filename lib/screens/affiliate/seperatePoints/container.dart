@@ -29,7 +29,8 @@ class SeparatePointsContainer extends StatelessWidget {
         canLoadMore: provider.canLoadMore,
         onLoadMore: () async => provider.getData(loadMore: true, type: type),
         child: ListView.separated(
-          padding: EdgeInsets.symmetric(horizontal: Dimen.padding),
+          padding: EdgeInsets.fromLTRB(
+              Dimen.padding, 0, Dimen.padding, Dimen.padding),
           itemBuilder: (context, index) {
             AffiliateTransactionRes? data = provider.dataDetail?[index];
             return AffiliateTranItem(

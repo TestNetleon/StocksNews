@@ -265,7 +265,7 @@ class LeaderBoardProvider extends ChangeNotifier {
 
   int _page = 1;
 
-  bool get canLoadMore => _page < (_extraDetail?.totalPages ?? 1);
+  bool get canLoadMore => _page <= (_extraDetail?.totalPages ?? 1);
   // bool get canLoadMore => _page < 5;
 
   void setStatusSeparate(status) {
