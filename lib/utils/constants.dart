@@ -497,10 +497,20 @@ enum DeeplinkEnum {
   dividents,
   earnings,
   stocks,
+  outsider,
 }
 
 DeeplinkEnum containsSpecificPath(Uri uri) {
   Utils().showLog("-----contain path * $uri");
+
+  // Ensure the URI starts with the correct base URL
+
+  if (!(uri.toString().startsWith("https://app.stocks.news") ||
+      uri.toString().startsWith("http://app.stocks.news"))) {
+    Utils().showLog("returning Outsider URI");
+    return DeeplinkEnum.outsider;
+  }
+
   if (uri.path.contains('/blog/')) {
     // return "blog";
     return DeeplinkEnum.blogDetail;

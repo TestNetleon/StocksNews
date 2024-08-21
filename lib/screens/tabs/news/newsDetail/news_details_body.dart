@@ -1228,13 +1228,14 @@ class ListAlignment extends StatelessWidget {
 }
 
 iOSNavigate(event) {
-  DeeplinkEnum type = containsSpecificPath(event);
-  String slug = extractLastPathComponent(event);
+  // DeeplinkEnum type = containsSpecificPath(event);
+  // String slug = extractLastPathComponent(event);
 
-  handleNavigation(
-    uri: event,
-    slug: slug,
-    type: type,
-    setPopHome: false,
-  );
+  // handleNavigation(
+  //   uri: event,
+  //   slug: slug,
+  //   type: type,
+  //   setPopHome: false,
+  // );
+  handleDeepLinkNavigation(uri: event, conditionalCheck: true);
 }

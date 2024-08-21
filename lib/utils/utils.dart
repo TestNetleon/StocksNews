@@ -655,7 +655,10 @@ bool isValidUrl(String? url) {
 //   }
 // }
 
-void handleDeepLinkNavigation({required Uri? uri}) {
+void handleDeepLinkNavigation({
+  required Uri? uri,
+  bool conditionalCheck = false,
+}) {
   if (uri == null) {
     onDeepLinking = false;
     return;
@@ -673,6 +676,16 @@ void handleDeepLinkNavigation({required Uri? uri}) {
   // onDeepLinking = true;
   DeeplinkEnum type = containsSpecificPath(uri);
   String slug = extractLastPathComponent(uri);
+
+//EXTRA Condition for News, Blog, AI navigation started-------------
+  Utils().showLog(
+      "Conditional Check $conditionalCheck, Slug is Empty? ${slug == ''} Type $type");
+
+  if (conditionalCheck && type == DeeplinkEnum.outsider) {
+    openUrl("$uri");
+    return;
+  }
+//-------------------------------
 
   // here will be some conditions to handle in background
   // like if from background then add 4 sec else 1 sec
