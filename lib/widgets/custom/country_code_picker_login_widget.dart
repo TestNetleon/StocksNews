@@ -5,7 +5,7 @@ import 'package:stocks_news_new/modals/user_res.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
-import 'package:stocks_news_new/libs/country_code_picker/lib/country_code_picker.dart';
+import 'package:stocks_news_new/library/country_code_picker/lib/country_code_picker.dart';
 
 import '../../utils/theme.dart';
 
