@@ -377,15 +377,13 @@ class FirebaseApi {
     }
 
     await _firebaseMessaging.getToken().then((value) async {
-      // Utils().showLog("FCM TOKEN  ******   $value");
-      // String? address = await _getUserLocation();
-      // fcmTokenGlobal = value;
-      // if (!isShowingError) {
-      //   saveFCMapi(value: value, address: address);
-      // }
+      Utils().showLog("FCM TOKEN  ******   $value");
+      String? address = await _getUserLocation();
+      fcmTokenGlobal = value;
+      if (!isShowingError) {
+        saveFCMapi(value: value, address: address);
+      }
     });
-
-    // Stream<String> token = await _firebaseMessaging.onTokenRefresh;
 
     initPushNotification();
     initLocalNotifications();

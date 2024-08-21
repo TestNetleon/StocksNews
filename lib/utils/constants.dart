@@ -39,6 +39,7 @@ enum NotificationType {
   referRegistration,
   appUpdate,
   membership,
+  pointTransaction,
 }
 
 enum MembershipEnum {

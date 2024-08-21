@@ -1,5 +1,4 @@
 // import 'package:flutter/gestures.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -8,8 +7,6 @@ import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/auth/login/login_sheet.dart';
-import 'package:stocks_news_new/screens/auth/newFlow/complete_details.dart';
-import 'package:stocks_news_new/screens/auth/newFlow/login.dart';
 import 'package:stocks_news_new/screens/auth/signup/signup_sheet_tablet.dart';
 import 'package:stocks_news_new/screens/auth/login/login_sheet_tablet.dart';
 import 'package:stocks_news_new/screens/auth/signup/signup_sheet.dart';
@@ -147,27 +144,27 @@ class _BaseDrawerState extends State<BaseDrawer> {
                                     ),
                                   ],
                                 ),
-                                Visibility(
-                                  visible: kDebugMode,
-                                  child: Row(
-                                    children: [
-                                      Expanded(
-                                        child: ThemeButtonSmall(
-                                          showArrow: false,
-                                          text: "New Log in",
-                                          onPressed: () {
-                                            Scaffold.of(context).closeDrawer();
-                                            Navigator.push(
-                                              context,
-                                              createRoute(Login()),
-                                              // createRoute(CompleteDetails()),
-                                            );
-                                          },
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
+                                // Visibility(
+                                //   visible: kDebugMode,
+                                //   child: Row(
+                                //     children: [
+                                //       Expanded(
+                                //         child: ThemeButtonSmall(
+                                //           showArrow: false,
+                                //           text: "New Log in",
+                                //           onPressed: () {
+                                //             Scaffold.of(context).closeDrawer();
+                                //             Navigator.push(
+                                //               context,
+                                //               createRoute(Login()),
+                                //               // createRoute(CompleteDetails()),
+                                //             );
+                                //           },
+                                //         ),
+                                //       ),
+                                //     ],
+                                //   ),
+                                // ),
                               ],
                             ),
                           ),

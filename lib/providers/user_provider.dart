@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:onesignal_flutter/onesignal_flutter.dart';
+// import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/api/api_requester.dart';
 import 'package:stocks_news_new/api/api_response.dart';
@@ -814,11 +814,11 @@ class UserProvider extends ChangeNotifier {
         Navigator.pop(navigatorKey.currentContext!);
         Preference.setShowIntro(false);
         //--------
-        var tags = {
-          'email': "${_user?.email}",
-          'phone': "${_user?.phoneCode} ${_user?.phone}"
-        };
-        OneSignal.User.addTags(tags);
+        // var tags = {
+        //   'email': "${_user?.email}",
+        //   'phone': "${_user?.phoneCode} ${_user?.phone}"
+        // };
+        // OneSignal.User.addTags(tags);
         //--------
 
         notifyListeners();

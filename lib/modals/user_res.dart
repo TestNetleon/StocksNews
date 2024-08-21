@@ -122,6 +122,7 @@ class UserMembershipRes {
   final String? color;
   final bool? canUpgrade;
   final List<MembershipPermissionRes>? permissions;
+  final UpgradeMembershipTextRes? upgradeText;
 
   UserMembershipRes({
     this.purchased,
@@ -129,6 +130,7 @@ class UserMembershipRes {
     this.canUpgrade,
     this.color,
     this.permissions,
+    this.upgradeText,
   });
 
   factory UserMembershipRes.fromJson(Map<String, dynamic> json) =>
@@ -139,8 +141,13 @@ class UserMembershipRes {
         color: json["color"],
         permissions: json["permissionsNew"] == null
             ? []
-            : List<MembershipPermissionRes>.from(json["permissionsNew"]!
-                .map((x) => MembershipPermissionRes.fromJson(x))),
+            : List<MembershipPermissionRes>.from(
+                json["permissionsNew"]!
+                    .map((x) => MembershipPermissionRes.fromJson(x)),
+              ),
+        upgradeText: json["upgrade_text"] == null
+            ? null
+            : UpgradeMembershipTextRes.fromJson(json["upgrade_text"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -151,6 +158,7 @@ class UserMembershipRes {
         "permissionsNew": permissions == null
             ? []
             : List<dynamic>.from(permissions!.map((x) => x.toJson())),
+        "upgrade_text": upgradeText?.toJson(),
       };
 }
 
@@ -192,5 +200,23 @@ class TradeRes {
   Map<String, dynamic> toJson() => {
         "trade_amount": amount,
         "trade_paid": paid,
+      };
+}
+
+class UpgradeMembershipTextRes {
+  final String? text;
+  final String? button;
+
+  UpgradeMembershipTextRes({this.text, this.button});
+
+  factory UpgradeMembershipTextRes.fromJson(Map<String, dynamic> json) =>
+      UpgradeMembershipTextRes(
+        text: json["text"],
+        button: json['button'],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "text": text,
+        "button": button,
       };
 }
