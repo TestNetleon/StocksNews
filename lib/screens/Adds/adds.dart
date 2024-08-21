@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:stocks_news_new/screens/tabs/news/newsDetail/news_details_body.dart';
 import 'package:stocks_news_new/widgets/cache_network_image.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 
@@ -66,7 +67,9 @@ class _AddOnScreenState extends State<AddOnScreen> {
           //   Utils().showLog("---$e");
           // }
           if (Platform.isIOS) {
-            adIOSNavigate(
+            // adIOSNavigate(
+            //     Uri.parse(widget.adManager?.url ?? "https://app.stocks.news"));
+            iOSNavigate(
                 Uri.parse(widget.adManager?.url ?? "https://app.stocks.news"));
           } else {
             openUrl(widget.adManager?.url ?? "https://app.stocks.news");
@@ -105,21 +108,22 @@ class _AddOnScreenState extends State<AddOnScreen> {
   }
 }
 
-adIOSNavigate(Uri event) {
-  if (event.toString().startsWith("https://app.stocks.news")) {
-    DeeplinkEnum type = containsSpecificPath(event);
-    String slug = extractLastPathComponent(event);
+// adIOSNavigate(Uri event) {
+//   // if (event.toString().startsWith("https://app.stocks.news")) {
+//   //   DeeplinkEnum type = containsSpecificPath(event);
+//   //   String slug = extractLastPathComponent(event);
 
-    handleNavigation(
-      uri: event,
-      slug: slug,
-      type: type,
-      setPopHome: false,
-    );
-  } else {
-    openUrl("$event");
-  }
-}
+//   //   handleNavigation(
+//   //     uri: event,
+//   //     slug: slug,
+//   //     type: type,
+//   //     setPopHome: false,
+//   //   );
+//   // } else {
+//   //   openUrl("$event");
+//   // }
+//   handleDeepLinkNavigation(uri: event, conditionalCheck: true);
+// }
 
 addOnSheet({
   AdManagerRes? adManager,
@@ -138,7 +142,9 @@ addOnSheet({
             onTap: () {
               Navigator.pop(context);
               if (Platform.isIOS) {
-                adIOSNavigate(
+                // adIOSNavigate(
+                //     Uri.parse(adManager?.url ?? "https://app.stocks.news"));
+                iOSNavigate(
                     Uri.parse(adManager?.url ?? "https://app.stocks.news"));
               } else {
                 openUrl(adManager?.url ?? "https://app.stocks.news");
