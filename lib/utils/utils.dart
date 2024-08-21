@@ -678,9 +678,6 @@ void handleDeepLinkNavigation({
   String slug = extractLastPathComponent(uri);
 
 //EXTRA Condition for News, Blog, AI navigation started-------------
-  Utils().showLog(
-      "Conditional Check $conditionalCheck, Slug is Empty? ${slug == ''} Type $type");
-
   if (conditionalCheck && type == DeeplinkEnum.outsider) {
     openUrl("$uri");
     return;
