@@ -9,6 +9,9 @@ import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/custom/refresh_indicator.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import '../../../../widgets/disclaimer_widget.dart';
+import '../../../../widgets/theme_button_small.dart';
+import '../../../MsAnalysis/ms_analysis.dart';
+import '../../../prediction/radar.dart';
 import 'chart.dart';
 import 'company_brief.dart';
 import 'desclaimer.dart';
@@ -76,28 +79,28 @@ class _SdOverviewState extends State<SdOverview> {
                 const SdTopWidgetDetail(),
                 const SpacerVertical(height: 4),
                 const SdTopDisclaimer(),
-                // ThemeButtonSmall(
-                //   text: "Prediction",
-                //   onPressed: () {
-                //     Navigator.push(
-                //       context,
-                //       MaterialPageRoute(
-                //         builder: (context) => MsAnalysis(),
-                //       ),
-                //     );
-                //   },
-                // ),
-                // ThemeButtonSmall(
-                //   text: "RADAR",
-                //   onPressed: () {
-                //     Navigator.push(
-                //       context,
-                //       MaterialPageRoute(
-                //         builder: (context) => RadarIndex(),
-                //       ),
-                //     );
-                //   },
-                // ),
+                ThemeButtonSmall(
+                  text: "Prediction",
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => MsAnalysis(),
+                      ),
+                    );
+                  },
+                ),
+                ThemeButtonSmall(
+                  text: "RADAR",
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => RadarIndex(),
+                      ),
+                    );
+                  },
+                ),
                 const SpacerVertical(height: 4),
                 const SdTopWidgetRange(),
                 const SpacerVertical(height: 12),

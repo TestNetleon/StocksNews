@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/membership/membership_info_res.dart';
-import 'package:stocks_news_new/modals/user_res.dart';
 import 'package:stocks_news_new/providers/membership.dart';
 import 'package:stocks_news_new/screens/auth/login/login_sheet.dart';
 import 'package:stocks_news_new/screens/auth/login/login_sheet_tablet.dart';
@@ -243,33 +242,78 @@ class _NewMembershipUpgradeCurrentPlanState
   List<bool> isSelectedList = List.generate(3, (_) => false);
   int selectedIndex = -1;
 
-  Future _subscribe({type}) async {
-    UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
-    if (provider.user == null) {
-      Utils().showLog("---ask to login----");
-      isPhone ? await loginSheet() : await loginSheetTablet();
-    }
-    if (provider.user == null) {
-      Utils().showLog("---still user not found----");
+  // Future _subscribe({type}) async {
+  //   UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
+  //   if (provider.user == null) {
+  //     Utils().showLog("---ask to login----");
+  //     isPhone ? await loginSheet() : await loginSheetTablet();
+  //   }
+  //   if (provider.user == null) {
+  //     Utils().showLog("---still user not found----");
 
+  //     return;
+  //   }
+  //   // if (provider.user?.membership?.purchased == 1 &&
+  //   //     (provider.user?.membership?.canUpgrade == false ||
+  //   //         provider.user?.membership?.canUpgrade == null)) {
+  //   //   Utils().showLog("---found user is already having membership----");
+
+  //   //   Navigator.pop(context);
+  //   // }
+  //   if (provider.user?.membership?.purchased == 1 &&
+  //       (provider.user?.membership?.canUpgrade == false ||
+  //           provider.user?.membership?.canUpgrade == null)) {
+  //     Utils().showLog("---found user is already having membership----");
+
+  //     Navigator.pop(context);
+  //   }
+
+  //   if (provider.user?.phone == null || provider.user?.phone == '') {
+  //     Utils().showLog("---asking for phone number verification----");
+
+  //     await membershipLogin();
+  //   }
+
+  //   if (provider.user?.phone != null && provider.user?.phone != ''
+  //       // && provider.user?.membership?.purchased == 0
+  //       ) {
+  //     await RevenueCatService.initializeSubscription(type: type);
+  //   }
+  // }
+
+  Future _subscribe({type, required int index}) async {
+    UserProvider? provider = navigatorKey.currentContext!.read<UserProvider>();
+    MembershipProvider? membershipProvider =
+        navigatorKey.currentContext!.read<MembershipProvider>();
+
+    if (provider.user == null) {
+      Utils().showLog("Ask login-----");
+      isPhone ? await loginSheet() : await loginSheetTablet();
+
+      if (provider.user?.membership?.purchased == 1) {
+        Utils().showLog("---user already purchased membership----");
+        await membershipProvider.getMembershipInfo();
+        // membershipProvider.selectedIndex(index);
+      }
+    }
+    if (membershipProvider.membershipInfoRes?.plans?[index].activeText != '' &&
+        membershipProvider.membershipInfoRes?.plans?[index].activeText !=
+            null) {
+      Utils().showLog("---As this membership is already purchased----");
       return;
     }
-    if (provider.user?.membership?.purchased == 1 &&
-        (provider.user?.membership?.canUpgrade == false ||
-            provider.user?.membership?.canUpgrade == null)) {
-      Utils().showLog("---found user is already having membership----");
 
-      Navigator.pop(context);
+    if (provider.user == null) {
+      Utils().showLog("---still user not found----");
+      return;
     }
     if (provider.user?.phone == null || provider.user?.phone == '') {
-      Utils().showLog("---asking for phone number verification----");
-
+      Utils().showLog("Ask phone for membership-----");
       await membershipLogin();
     }
+    if (provider.user?.phone != null || provider.user?.phone != '') {
+      Utils().showLog("Open Paywall");
 
-    if (provider.user?.phone != null && provider.user?.phone != ''
-        // && provider.user?.membership?.purchased == 0
-        ) {
       await RevenueCatService.initializeSubscription(type: type);
     }
   }
@@ -279,8 +323,8 @@ class _NewMembershipUpgradeCurrentPlanState
     MembershipProvider provider = context.watch<MembershipProvider>();
     MembershipInfoRes? data = provider.membershipInfoRes;
 
-    UserProvider userProvider = context.watch<UserProvider>();
-    UserRes? user = userProvider.user;
+    // UserProvider userProvider = context.watch<UserProvider>();
+    // UserRes? user = userProvider.user;
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -358,30 +402,48 @@ class _NewMembershipUpgradeCurrentPlanState
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
             itemBuilder: (context, index) {
+              Plan? plan = data?.plans?[index];
+
               return GestureDetector(
-                onTap: index == 0 && user?.membership?.canUpgrade == true
+                // onTap: index == 0 && user?.membership?.canUpgrade == true
+                //     ? null
+                //     : () {
+                //         if (widget.withClickCondition) {
+                //           _subscribe(type: plan?.type);
+                //         } else {
+                //           RevenueCatService.initializeSubscription(
+                //               type: plan?.type);
+                //         }
+
+                //         for (int i = 0; i < (data?.plans?.length ?? 0); i++) {
+                //           data?.plans?[i].selected = false;
+                //         }
+
+                //         plan?.selected = true;
+
+                //         setState(() {});
+                //       },
+                onTap: plan?.activeText != null && plan?.activeText != ''
                     ? null
                     : () {
-                        if (widget.withClickCondition) {
-                          _subscribe(type: data?.plans?[index].type);
-                        } else {
-                          RevenueCatService.initializeSubscription(
-                              type: data?.plans?[index].type);
-                        }
+                        _subscribe(
+                          type: plan?.type,
+                          index: index,
+                        );
 
-                        for (int i = 0; i < (data?.plans?.length ?? 0); i++) {
-                          data?.plans?[i].selected = false;
-                        }
-
-                        data?.plans?[index].selected = true;
-
+                        provider.selectedIndex(index);
                         setState(() {});
                       },
+
                 child: Column(
                   children: [
                     Visibility(
+                      // visible:
+                      //     index == 0 && user?.membership?.canUpgrade == true,
+
                       visible:
-                          index == 0 && user?.membership?.canUpgrade == true,
+                          plan?.activeText != null && plan?.activeText != '',
+
                       child: Container(
                         width: double.infinity,
                         alignment: Alignment.center,
@@ -406,7 +468,7 @@ class _NewMembershipUpgradeCurrentPlanState
                           ),
                         ),
                         child: Text(
-                          "Your current plan",
+                          plan?.activeText ?? "Your current plan",
                           style: styleSansBold(
                               fontSize: 16, color: ThemeColors.white),
                         ),
@@ -420,15 +482,17 @@ class _NewMembershipUpgradeCurrentPlanState
                           end: Alignment.bottomCenter,
                           stops: const [0.2, 0.65],
                           colors: [
-                            index == 0 && user?.membership?.canUpgrade == true
-                                ? const Color.fromARGB(255, 67, 67, 67)
-                                : const Color.fromARGB(255, 6, 78, 31),
-                            const Color.fromARGB(255, 22, 22, 22),
+                            // index == 0 && user?.membership?.canUpgrade == true
+                            plan?.activeText != null && plan?.activeText != ''
+                                ? const Color(0xFF434343)
+                                : const Color(0xFF064E1F),
+                            const Color(0xFF161616),
                           ],
                         ),
                         border: Border.all(
                           color:
-                              index == 0 && user?.membership?.canUpgrade == true
+                              // index == 0 && user?.membership?.canUpgrade == true
+                              plan?.activeText != null && plan?.activeText != ''
                                   ? Colors.grey
                                   : Colors.green,
                         ),
@@ -452,40 +516,45 @@ class _NewMembershipUpgradeCurrentPlanState
                                 padding: const EdgeInsets.all(8.0),
                                 child: Center(
                                   child: Text(
-                                    data?.plans?[index].name ?? "",
+                                    plan?.name ?? "",
                                     style: stylePTSansBold(
                                         fontSize: 17, color: Colors.black),
                                   ),
                                 ),
                               ),
                               const SpacerHorizontal(width: 10),
-                              index == 0 && user?.membership?.canUpgrade == true
-                                  ? SizedBox()
-                                  : Container(
-                                      decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        border: Border.all(
-                                          color: ThemeColors.white,
-                                          width: 2,
-                                        ),
-                                      ),
-                                      padding: const EdgeInsets.all(5),
-                                      child: Container(
-                                        padding: const EdgeInsets.all(6.7),
-                                        decoration: BoxDecoration(
-                                          color: data?.plans?[index].selected ==
-                                                  true
-                                              ? ThemeColors.white
-                                              : null,
-                                          shape: BoxShape.circle,
-                                        ),
-                                      ),
+                              // index == 0 && user?.membership?.canUpgrade == true
+                              //     ? SizedBox()
+                              //     :
+
+                              Visibility(
+                                visible: plan?.activeText == null ||
+                                    plan?.activeText == '',
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    border: Border.all(
+                                      color: ThemeColors.white,
+                                      width: 2,
                                     ),
+                                  ),
+                                  padding: const EdgeInsets.all(5),
+                                  child: Container(
+                                    padding: const EdgeInsets.all(6.7),
+                                    decoration: BoxDecoration(
+                                      color: plan?.selected == true
+                                          ? ThemeColors.white
+                                          : null,
+                                      shape: BoxShape.circle,
+                                    ),
+                                  ),
+                                ),
+                              ),
                             ],
                           ),
                           const SpacerVertical(height: 12),
                           Text(
-                            data?.plans?[index].price ?? "",
+                            plan?.price ?? "",
                             style: const TextStyle(
                               fontFamily: 'Roboto',
                               fontSize: 30,
@@ -495,13 +564,13 @@ class _NewMembershipUpgradeCurrentPlanState
                           ),
                           const SpacerVertical(height: 10),
                           HtmlWidget(
-                            data?.plans?[index].billed ?? "",
+                            plan?.billed ?? "",
                             textStyle: stylePTSansRegular(
                                 fontSize: 16, color: ThemeColors.greyText),
                           ),
                           const SpacerVertical(height: 10),
                           Text(
-                            data?.plans?[index].description ?? "",
+                            plan?.description ?? "",
                             style: stylePTSansBold(
                                 fontSize: 16, color: Colors.white),
                           ),

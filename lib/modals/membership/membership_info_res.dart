@@ -78,6 +78,7 @@ class Plan {
   final String? billed;
   final String? description;
   bool selected;
+  String? activeText;
   final String? productId;
   final List<String>? features;
 
@@ -90,6 +91,7 @@ class Plan {
     this.billed,
     this.selected = false,
     this.features,
+    this.activeText,
   });
 
   factory Plan.fromJson(Map<String, dynamic> json) => Plan(
@@ -99,6 +101,7 @@ class Plan {
         description: json["description"],
         type: json["type"],
         billed: json["billed"],
+        activeText: json['active_text'],
         features: json["features"] == null
             ? []
             : List<String>.from(json["features"]!.map((x) => x)),
@@ -110,6 +113,7 @@ class Plan {
         "product_id": productId,
         "description": description,
         "type": type,
+        "active_text": activeText,
         "billed": billed,
         "features":
             features == null ? [] : List<dynamic>.from(features!.map((x) => x)),

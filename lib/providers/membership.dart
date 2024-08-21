@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -140,15 +141,25 @@ class MembershipProvider extends ChangeNotifier {
     }
   }
 
+  selectedIndex(index) {
+    Utils().showLog("Selected index $index");
+    for (int i = 0; i < (_membershipInfoRes?.plans?.length ?? 0); i++) {
+      _membershipInfoRes?.plans?[i].selected = false;
+    }
+    _membershipInfoRes?.plans?[index].selected = true;
+    notifyListeners();
+  }
+
   Future getMembershipInfo({
     String? inAppMsgId,
     String? notificationId,
+    bool showProgress = false,
   }) async {
     setStatus(Status.loading);
+    UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
     try {
       Map request = {
-        "token":
-            navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
+        "token": provider.user?.token ?? "",
       };
       if (inAppMsgId != null) {
         request.addAll({"in_app_id": inAppMsgId});
@@ -159,13 +170,21 @@ class MembershipProvider extends ChangeNotifier {
       ApiResponse response = await apiRequest(
         url: Apis.membershipInfo,
         request: request,
-        showProgress: false,
+        showProgress: showProgress,
       );
       //  setStatus(Status.loaded);
       if (response.status) {
         _membershipInfoRes = membershipInfoResFromJson(
           jsonEncode(response.data),
         );
+
+        //DEBUG ONLY
+        if (kDebugMode) {
+          if (provider.user != null) {
+            _membershipInfoRes?.plans?[0].activeText = "Your current plan";
+          }
+        }
+
         RevenueCatKeyRes? keys = navigatorKey.currentContext!
             .read<HomeProvider>()
             .extra
