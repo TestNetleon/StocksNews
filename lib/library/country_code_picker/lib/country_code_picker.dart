@@ -206,13 +206,13 @@ class CountryCodePickerState extends State<CountryCodePicker> {
                   ),
                 ),
               // if (widget.showDropDownButton)
-              Container(
+              const SizedBox(
                 width: 36,
                 // padding: widget.alignLeft
                 //     ? const EdgeInsets.only(right: 16.0, left: 8.0)
                 //     : const EdgeInsets.only(right: 16.0),
                 // padding: const EdgeInsets.only(left: 4),
-                child: const Icon(
+                child: Icon(
                   Icons.keyboard_arrow_down_rounded,
                   color: Colors.white,
                   size: 36,
