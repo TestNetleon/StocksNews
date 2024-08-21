@@ -51,7 +51,7 @@ class EditEmail extends StatelessWidget {
             ),
           ),
         ],
-        text: "Please enter the 4-digit verification code that was sent to ",
+        text: "Please enter the 6-digit verification code that was sent to ",
         style: stylePTSansRegular(
           height: 1.5,
         ),

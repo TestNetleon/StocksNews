@@ -44,6 +44,7 @@ import 'package:stocks_news_new/providers/stock_detail_new.dart';
 import 'package:stocks_news_new/providers/store_provider.dart';
 import 'package:stocks_news_new/providers/today_breackout_stocks_provider.dart';
 import 'package:stocks_news_new/providers/today_top_loser_provider.dart';
+import 'package:stocks_news_new/screens/auth/newFlow/login.dart';
 import 'package:stocks_news_new/tradingSimulator/providers/trade_provider.dart';
 import 'package:stocks_news_new/providers/unusual_trading_volume_provider.dart';
 import 'package:stocks_news_new/providers/most_volatile_stocks.dart';
@@ -122,13 +123,8 @@ import '../screens/whatWeDo/index.dart';
 class Routes {
   static var routes = {
     Splash.path: (_) => const Splash(),
-    // Login.path: (_) => const Login(),
-    // SignUp.path: (_) => const SignUp(),
-    // CreateAccount.path: (_) => const CreateAccount(),
+    Login.path: (_) => const Login(),
     SignUpSuccess.path: (_) => const SignUpSuccess(),
-    // Tabs.path: (_) => const Tabs(),
-    // OTPSignup.path: (_) => const OTPSignup(),
-    // OTPLogin.path: (_) => const OTPLogin(),
     Search.path: (_) => const Search(),
     FAQ.path: (_) => const FAQ(),
     Notifications.path: (_) => const Notifications(),
@@ -141,8 +137,6 @@ class Routes {
     ContactUs.path: (_) => const ContactUs(),
     CompareStocks.path: (_) => const CompareStocks(),
     QrScan.path: (_) => const QrScan(),
-    // StocksIndex.path: (_) => const StocksIndex(),
-    // IndexBlog.path: (_) => const IndexBlog(),
     TrendingIndustries.path: (_) => const TrendingIndustries(),
     HighLowPEIndex.path: (_) => const HighLowPEIndex(),
     FiftyTwoWeeksIndex.path: (_) => const FiftyTwoWeeksIndex(),
@@ -151,7 +145,6 @@ class Routes {
     MostActiveIndex.path: (_) => const MostActiveIndex(),
     WhatWeDoIndex.path: (_) => const WhatWeDoIndex(),
     HomeSplash.path: (_) => const HomeSplash(),
-
     // ServerErrorWidget.path: (_) => const ServerErrorWidget(),
     // InternetErrorWidget.path: (_) => const InternetErrorWidget(),
     DividendsScreen.path: (_) => const DividendsScreen(),

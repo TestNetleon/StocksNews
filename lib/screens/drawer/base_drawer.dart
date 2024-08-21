@@ -144,6 +144,27 @@ class _BaseDrawerState extends State<BaseDrawer> {
                                     ),
                                   ],
                                 ),
+                                // Visibility(
+                                //   visible: kDebugMode,
+                                //   child: Row(
+                                //     children: [
+                                //       Expanded(
+                                //         child: ThemeButtonSmall(
+                                //           showArrow: false,
+                                //           text: "New Log in",
+                                //           onPressed: () {
+                                //             Scaffold.of(context).closeDrawer();
+                                //             Navigator.push(
+                                //               context,
+                                //               createRoute(Login()),
+                                //               // createRoute(CompleteDetails()),
+                                //             );
+                                //           },
+                                //         ),
+                                //       ),
+                                //     ],
+                                //   ),
+                                // ),
                               ],
                             ),
                           ),

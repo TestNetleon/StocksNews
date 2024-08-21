@@ -37,6 +37,7 @@ class _AffiliateTransactionState extends State<AffiliateTransaction> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<LeaderBoardProvider>().getReferData();
       context.read<LeaderBoardProvider>().getTransactionData();
     });
   }

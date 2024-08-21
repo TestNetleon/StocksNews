@@ -45,6 +45,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       getInitialReferralsIfAny();
       getInitialDeeplinkWhenAppOpen();
       startListeningForDeepLinks();
+      oneSignalInitialized = true;
     });
     WidgetsBinding.instance.addObserver(this);
   }

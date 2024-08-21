@@ -23,6 +23,7 @@ class ThemeInputField extends StatelessWidget {
     this.placeholder,
     this.label,
     this.style,
+    this.hintStyle,
     this.child,
     this.inputFormatters,
     this.textCapitalization = TextCapitalization.sentences,
@@ -47,7 +48,7 @@ class ThemeInputField extends StatelessWidget {
   final bool filled;
   final bool isUnderline;
   final BorderRadius? borderRadiusOnly;
-  final TextStyle? style;
+  final TextStyle? style, hintStyle;
   final Color? borderColor;
   final double borderRadius;
   final Color fillColor;
@@ -107,7 +108,8 @@ class ThemeInputField extends StatelessWidget {
                   prefix: prefix,
                   suffix: suffix,
                   hintText: placeholder ?? '',
-                  hintStyle: stylePTSansRegular(color: ThemeColors.dividerDark),
+                  hintStyle: hintStyle ??
+                      stylePTSansRegular(color: ThemeColors.dividerDark),
                   // constraints: BoxConstraints(
                   //   minHeight: 0,
                   //   maxHeight: minLines > 1 ? 150.sp : 50.sp,

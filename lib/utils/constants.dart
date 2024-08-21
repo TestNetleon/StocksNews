@@ -39,6 +39,7 @@ enum NotificationType {
   referRegistration,
   appUpdate,
   membership,
+  pointTransaction,
 }
 
 enum MembershipEnum {
@@ -83,6 +84,8 @@ bool notifySnackbar = false;
 String? geoCountryCode;
 bool isSVG = false;
 bool showAdd = false;
+
+bool oneSignalInitialized = false;
 
 //------------ Ad API Globals
 

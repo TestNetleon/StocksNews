@@ -317,7 +317,6 @@ class _MyAccountContainerState extends State<MyAccountContainer>
         ),
         const SpacerVertical(height: 13),
         showAsteriskText(text: "Email Address", bold: true),
-
         const SpacerVertical(height: 5),
         IntrinsicHeight(
           child: Row(
@@ -725,11 +724,11 @@ class _MyAccountContainerState extends State<MyAccountContainer>
       codeSent: (String verificationId, int? resendToken) {
         closeGlobalProgressDialog();
         phoneOTP(
-          phone: phone,
-          verificationId: verificationId,
-          name: nameController.text,
-          countryCode: countryCode!,
-        );
+            phone: phone,
+            verificationId: verificationId,
+            name: nameController.text,
+            countryCode: countryCode!,
+            displayName: displayController.text);
         // referOTP(
         //   name: name.text,
         //   displayName: displayName.text,

@@ -110,11 +110,11 @@ Future<ApiResponse> apiRequest({
   }
 
   // *********** debug prints only **********
-  Future.delayed(Duration.zero, () {
-    if (showProgress) {
-      showGlobalProgressDialog(optionalParent: optionalParent);
-    }
-  });
+  // Future.delayed(Duration.zero, () {
+  if (showProgress) {
+    showGlobalProgressDialog(optionalParent: optionalParent);
+  }
+  // });
 
   try {
     late http.Response response;

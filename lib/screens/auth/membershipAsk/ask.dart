@@ -72,7 +72,6 @@ class _MembershipLoginAskState extends State<MembershipLoginAsk> {
   // TextEditingController displayName = TextEditingController(text: "");
   // bool affiliateStatus = false;
   bool numberVerified = true;
-
   String? countryCode;
   String appSignature = "";
   final TextInputFormatter _formatter = FilteringTextInputFormatter.digitsOnly;

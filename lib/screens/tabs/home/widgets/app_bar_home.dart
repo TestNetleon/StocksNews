@@ -20,7 +20,7 @@ import 'package:svg_flutter/svg_flutter.dart';
 
 class AppBarHome extends StatefulWidget implements PreferredSizeWidget {
   final bool isHome;
-  final bool showTrailing, isPopback, canSearch, showPortfolio;
+  final bool showTrailing, isPopback, canSearch, showPortfolio, showTitleLogo;
   final void Function()? onFilterClick;
   final void Function()? onTap;
   final String? title;
@@ -35,6 +35,7 @@ class AppBarHome extends StatefulWidget implements PreferredSizeWidget {
     this.isHome = false,
     this.canSearch = true,
     this.showPortfolio = false,
+    this.showTitleLogo = true,
     this.onTap,
     this.title,
     this.subTitle,
@@ -78,9 +79,7 @@ class _AppBarHomeState extends State<AppBarHome> {
                         //   MaterialPageRoute(builder: (_) => const Tabs(index: 0)),
                         // );
                         Navigator.popUntil(navigatorKey.currentContext!,
-                            (route) {
-                          return route.isFirst;
-                        });
+                            (route) => route.isFirst);
                         Navigator.pushReplacement(
                           navigatorKey.currentContext!,
                           MaterialPageRoute(builder: (_) => const Tabs()),
@@ -181,7 +180,6 @@ class _AppBarHomeState extends State<AppBarHome> {
                         //   imageSize: 24,
                         //   roundImage: true,
                         // ),
-
                         // Image.asset(
                         //   Images.dotsMenu,
                         //   color: ThemeColors.white,

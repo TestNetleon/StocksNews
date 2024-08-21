@@ -39,13 +39,13 @@ import '../widgets/custom/alert_popup.dart';
 Future<void> handleBackgroundMessage(RemoteMessage message) async {
   // UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
   // provider.user?.notificationSeen = false;
-  HomeProvider? provider = navigatorKey.currentContext?.read<HomeProvider>();
-  // provider.notificationSeen = false;
-  if (provider != null) {
-    provider.setNotification(false);
-    Utils().showLog("Data Payload: ${message.data}");
-    Utils().showLog("Notification Payload: ${message.notification}");
-  }
+  // HomeProvider? provider = navigatorKey.currentContext?.read<HomeProvider>();
+  // // provider.notificationSeen = false;
+  // if (provider != null) {
+  //   provider.setNotification(false);
+  //   Utils().showLog("Data Payload: ${message.data}");
+  //   Utils().showLog("Notification Payload: ${message.notification}");
+  // }
 }
 
 class FirebaseApi {
@@ -384,8 +384,6 @@ class FirebaseApi {
         saveFCMapi(value: value, address: address);
       }
     });
-
-    // Stream<String> token = await _firebaseMessaging.onTokenRefresh;
 
     initPushNotification();
     initLocalNotifications();

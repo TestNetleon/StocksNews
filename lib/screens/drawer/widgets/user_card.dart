@@ -304,7 +304,6 @@ import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import '../../../providers/leaderboard.dart';
 import '../../../utils/colors.dart';
-
 import '../../../utils/constants.dart';
 import '../../myAccount/widgets/my-account_header.dart';
 import 'profile_image.dart';
@@ -524,7 +523,8 @@ class _UserCardState extends State<UserCard> {
               children: [
                 Flexible(
                   child: Text(
-                    "Upgrade to Premium",
+                    userProvider.user?.membership?.upgradeText?.text ??
+                        "Upgrade to Premium",
                     style: stylePTSansBold(),
                   ),
                 ),
@@ -541,7 +541,8 @@ class _UserCardState extends State<UserCard> {
                     _upgradeSubscription();
                   },
                   child: Text(
-                    "UPGRADE",
+                    userProvider.user?.membership?.upgradeText?.button ??
+                        "UPGRADE",
                     style: stylePTSansBold(fontSize: 14),
                   ),
                 ),
