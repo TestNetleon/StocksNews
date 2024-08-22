@@ -36,6 +36,7 @@ ios/Flutter/Flutter.framework
 ios/Flutter/Flutter.podspec
 ios/Flutter/Flutter.podspec.json
 ios/Pods/
+ios/.symlinks/
 ios/Runner.xcworkspace/
 ios/Pods.xcodeproj/
 ios/Runner.xcodeproj/project.xcworkspace/
@@ -54,3 +55,6 @@ app.*.map.json
 
 *.lock
 *.zip
+*.apk
+*.aab
+*.exe
