@@ -62,9 +62,9 @@ class HomeContainer extends StatelessWidget {
           //         provider.extra?.phoneCodeError != ''),
           visible: provider.extra?.phoneCodeError != null &&
               provider.extra?.phoneCodeError != '',
-          child: HomeUpdateCountryCode(),
+          child: const HomeUpdateCountryCode(),
         ),
-        BlogItemHome(),
+        const BlogItemHome(),
         const HomeTopNewsSlider(),
         const MembershipCoinsOption(),
         Visibility(
@@ -73,6 +73,46 @@ class HomeContainer extends StatelessWidget {
               places: AdPlaces.place1,
               data: provider.trendingExtra?.adManagers?.data?.place1),
         ),
+
+        // Container(
+        //   height: 100,
+        //   width: 250,
+        //   decoration: const BoxDecoration(
+        //     borderRadius: BorderRadius.all(Radius.circular(10)),
+        //     boxShadow: [
+        //       BoxShadow(
+        //         color: Color(0xFFC97F11),
+        //       ),
+        //       BoxShadow(
+        //         color: Color(0xFFE9A136),
+        //         spreadRadius: -5.0,
+        //         blurRadius: 4.0,
+        //       ),
+        //     ],
+        //   ),
+        //   child: const Center(child: Text('Button')),
+        // ),
+
+        // ClipRRect(
+        //   borderRadius: BorderRadius.all(Radius.circular(10)),
+        //   child: InnerShadow(
+        //     blur: 40,
+        //     // offset: Offset(10, 2),
+
+        //     // color: const Color.fromARGB(0, 254, 255, 254).withOpacity(0.6),
+        //     color: Color(0xffC97F11),
+        //     child: Container(
+        //       width: 300,
+        //       height: 100,
+        //       decoration: const BoxDecoration(
+        //         borderRadius: BorderRadius.all(Radius.circular(10)),
+        //         color: Color(0xffE9A136),
+        //         shape: BoxShape.rectangle,
+        //       ),
+        //     ),
+        //   ),
+        // ),
+
         Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -118,6 +158,7 @@ class HomeContainer extends StatelessWidget {
                   places: AdPlaces.place2,
                   data: provider.trendingExtra?.adManagers?.data?.place2),
             ),
+
             Visibility(
               visible: provider.homeSliderRes?.affiliateAdv != null,
               child: GestureDetector(

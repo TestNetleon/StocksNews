@@ -499,9 +499,11 @@ class _UserCardState extends State<UserCard> {
           ),
         ),
         Visibility(
-          visible: ((userProvider.user?.membership?.purchased != null &&
-                      userProvider.user?.membership?.purchased == 0) ||
-                  userProvider.user?.membership?.canUpgrade == true) &&
+          // visible: ((userProvider.user?.membership?.purchased != null &&
+          //             userProvider.user?.membership?.purchased == 0) ||
+          //         userProvider.user?.membership?.canUpgrade == true) &&
+          //     showMembership,
+          visible: userProvider.user?.membership?.purchased != null &&
               showMembership,
           child: Container(
             margin: const EdgeInsets.symmetric(horizontal: 10),

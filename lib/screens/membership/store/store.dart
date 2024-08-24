@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/store_info_res.dart';
@@ -177,8 +176,16 @@ class _StoreState extends State<Store> {
                               points: "${data?.points[index].point}",
                               price: "${data?.points[index].price}",
                               onTap: () {
+                                // if (kDebugMode) {
+                                //   RevenueCatService.initializeSubscription(
+                                //     type: "1 Point Bundle",
+                                //   );
+                                // } else {
+
+                                // }
                                 RevenueCatService.initializeSubscription(
-                                    type: data?.points[index].lookupKey);
+                                  type: data?.points[index].lookupKey,
+                                );
                               },
                             );
                           },

@@ -179,11 +179,11 @@ class MembershipProvider extends ChangeNotifier {
         );
 
         //DEBUG ONLY
-        if (kDebugMode) {
-          if (provider.user != null) {
-            _membershipInfoRes?.plans?[0].activeText = "Your current plan";
-          }
-        }
+        // if (kDebugMode) {
+        //   if (provider.user != null) {
+        //     _membershipInfoRes?.plans?[0].activeText = "Your current plan";
+        //   }
+        // }
 
         RevenueCatKeyRes? keys = navigatorKey.currentContext!
             .read<HomeProvider>()

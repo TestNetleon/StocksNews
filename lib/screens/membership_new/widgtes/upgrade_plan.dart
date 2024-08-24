@@ -296,6 +296,12 @@ class _NewMembershipUpgradeCurrentPlanState
         // membershipProvider.selectedIndex(index);
       }
     }
+
+    if (provider.user == null) {
+      Utils().showLog("---still user not found----");
+      return;
+    }
+
     if (membershipProvider.membershipInfoRes?.plans?[index].activeText != '' &&
         membershipProvider.membershipInfoRes?.plans?[index].activeText !=
             null) {
@@ -303,17 +309,13 @@ class _NewMembershipUpgradeCurrentPlanState
       return;
     }
 
-    if (provider.user == null) {
-      Utils().showLog("---still user not found----");
-      return;
-    }
     if (provider.user?.phone == null || provider.user?.phone == '') {
       Utils().showLog("Ask phone for membership-----");
       await membershipLogin();
+      return;
     }
     if (provider.user?.phone != null || provider.user?.phone != '') {
-      Utils().showLog("Open Paywall");
-
+      Utils().showLog("Open Paywall-----");
       await RevenueCatService.initializeSubscription(type: type);
     }
   }
@@ -356,9 +358,7 @@ class _NewMembershipUpgradeCurrentPlanState
                         color: ThemeColors.white,
                       ),
                     ),
-                    const SpacerHorizontal(
-                      width: 6,
-                    ),
+                    const SpacerHorizontal(width: 6),
                     Flexible(
                       child: HtmlWidget(
                         '${data?.newFeatures?[index]}',
