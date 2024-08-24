@@ -25,6 +25,8 @@ class BlogsDetailRes {
   bool? readingStatus;
   String? readingTitle;
   String? readingSubtitle;
+  String? warningText;
+
   bool? balanceStatus;
   dynamic totalPoints;
   dynamic pointsRequired;
@@ -49,6 +51,7 @@ class BlogsDetailRes {
     this.readingStatus,
     this.readingTitle,
     this.readingSubtitle,
+    this.warningText,
     this.balanceStatus,
     this.totalPoints,
     this.pointsRequired,
@@ -64,6 +67,8 @@ class BlogsDetailRes {
             : List<NewsTicker>.from(
                 json["tickers"]!.map((x) => NewsTicker.fromJson(x))),
         description: json["description"],
+        warningText: json["warning_text"],
+
         slug: json["slug"],
         authors: json["authors"] == null
             ? []
@@ -93,6 +98,8 @@ class BlogsDetailRes {
         "name": name,
         "popup_message": popUpMessage,
         "popup_button": popUpButton,
+        "warning_text": warningText,
+
         "description": description,
         'published_date_string': postDateString,
         "slug": slug,

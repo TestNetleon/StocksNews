@@ -48,7 +48,6 @@ void main() async {
     );
 
     FirebaseInAppMessaging.instance.setAutomaticDataCollectionEnabled(true);
-
     Timer(const Duration(seconds: 8), () {
       Preference.setIsFirstOpen(false);
     });

@@ -53,9 +53,9 @@ class _BenefitsMarketingState extends State<BenefitsMarketing> {
                     child: const Text("How to Spend"),
                   ),
                 ],
-                widgets: [
-                  HowToEarn(onTap: () {}),
-                  HowToSpend(onTap: () {}),
+                widgets: const [
+                  HowToEarn(),
+                  HowToSpend(),
                 ],
               ),
             ),

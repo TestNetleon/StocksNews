@@ -19,6 +19,8 @@ import 'package:stocks_news_new/widgets/custom/confirmation_point_popup.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/theme_button_small.dart';
 
+import '../../../../../widgets/custom/warning_text.dart';
+
 class NewsDetailsLock extends StatefulWidget {
   final String? slug;
 
@@ -200,354 +202,357 @@ class _NewsDetailsLockState extends State<NewsDetailsLock> {
             ),
           ),
           Container(
-              height: height / 1.1,
-              alignment: Alignment.center,
-              decoration: const BoxDecoration(
-                color: ThemeColors.tabBack,
+            // height: height / 1.1,
+            alignment: Alignment.center,
+            decoration: const BoxDecoration(
+              color: ThemeColors.tabBack,
+            ),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 20,
+                vertical: 10,
               ),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 20,
-                  vertical: 10,
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Icon(Icons.lock, size: 40),
-                    const SpacerVertical(),
-                    Text(
-                      "${provider.data?.postDetail?.readingTitle}",
-                      style: stylePTSansBold(fontSize: 18),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Icon(Icons.lock, size: 40),
+                  const SpacerVertical(),
+                  Text(
+                    "${provider.data?.postDetail?.readingTitle}",
+                    style: stylePTSansBold(fontSize: 18),
+                  ),
+                  const SpacerVertical(height: 10),
+                  Text(
+                    "${provider.data?.postDetail?.readingSubtitle}",
+                    style: stylePTSansRegular(
+                      fontSize: 14,
+                      height: 1.3,
                     ),
-                    const SpacerVertical(height: 10),
-                    Text(
-                      "${provider.data?.postDetail?.readingSubtitle}",
-                      style: stylePTSansRegular(
-                        fontSize: 14,
-                        height: 1.3,
+                    textAlign: TextAlign.center,
+                  ),
+                  const SpacerVertical(height: 10),
+                  if (showLoginButton)
+                    ThemeButtonSmall(
+                      onPressed: () {
+                        _onLoginClick(context);
+                      },
+                      mainAxisSize: MainAxisSize.max,
+                      text: "Register/Login to Continue",
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 5,
+                        vertical: 11,
                       ),
-                      textAlign: TextAlign.center,
+                      textSize: 15,
+                      fontBold: true,
+                      iconFront: true,
+                      icon: Icons.lock,
+                      radius: 30,
+                      margin: const EdgeInsets.only(bottom: 10),
                     ),
-                    const SpacerVertical(height: 10),
-                    if (showLoginButton)
-                      ThemeButtonSmall(
-                        onPressed: () {
-                          _onLoginClick(context);
-                        },
-                        mainAxisSize: MainAxisSize.max,
-                        text: "Register/Login to Continue",
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 5,
-                          vertical: 11,
-                        ),
-                        textSize: 15,
-                        fontBold: true,
-                        iconFront: true,
-                        icon: Icons.lock,
-                        radius: 30,
-                        margin: const EdgeInsets.only(bottom: 10),
+                  if (showViewReport)
+                    ThemeButtonSmall(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 5,
+                        vertical: 11,
                       ),
-                    if (showViewReport)
-                      ThemeButtonSmall(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 5,
-                          vertical: 11,
-                        ),
-                        textSize: 15,
-                        iconFront: true,
-                        fontBold: true,
-                        radius: 30,
-                        icon: Icons.visibility,
-                        mainAxisSize: MainAxisSize.max,
-                        onPressed: () => _onViewNewsClick(context),
-                        text: "View News",
-                        margin: const EdgeInsets.only(bottom: 10),
+                      textSize: 15,
+                      iconFront: true,
+                      fontBold: true,
+                      radius: 30,
+                      icon: Icons.visibility,
+                      mainAxisSize: MainAxisSize.max,
+                      onPressed: () => _onViewNewsClick(context),
+                      text: "View News",
+                      margin: const EdgeInsets.only(bottom: 10),
+                    ),
+                  if (showRefer)
+                    ThemeButtonSmall(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 5,
+                        vertical: 11,
                       ),
-                    if (showRefer)
-                      ThemeButtonSmall(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 5,
-                          vertical: 11,
+                      textSize: 15,
+                      fontBold: true,
+                      iconWidget: Padding(
+                        padding: const EdgeInsets.only(right: 10),
+                        child: Image.asset(
+                          Images.referAndEarn,
+                          height: 18,
+                          width: 18,
+                          color: ThemeColors.white,
                         ),
-                        textSize: 15,
-                        fontBold: true,
-                        iconWidget: Padding(
-                          padding: const EdgeInsets.only(right: 10),
-                          child: Image.asset(
-                            Images.referAndEarn,
-                            height: 18,
-                            width: 18,
-                            color: ThemeColors.white,
-                          ),
-                        ),
-                        iconFront: true,
-                        icon: Icons.earbuds_rounded,
-                        mainAxisSize: MainAxisSize.max,
-                        radius: 30,
-                        onPressed: () async {
-                          await _onReferClick(context);
-                        },
-                        text: "Refer and Earn",
-                        margin: const EdgeInsets.only(bottom: 10),
                       ),
-                    if (showSubscribe)
-                      ThemeButtonSmall(
-                        color: const Color.fromARGB(
-                          255,
-                          194,
-                          216,
-                          51,
-                        ),
-                        textColor: Colors.black,
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 5,
-                          vertical: 11,
-                        ),
-                        textSize: 15,
-                        fontBold: true,
-                        iconFront: true,
-                        radius: 30,
-                        icon: Icons.card_membership,
-                        textAlign: TextAlign.start,
-                        iconWidget: Padding(
-                          padding: const EdgeInsets.only(
-                            right: 10,
-                          ),
-                          child: Image.asset(
-                            Images.membership,
-                            height: 18,
-                            width: 18,
-                            color: Colors.black,
-                          ),
-                        ),
-                        mainAxisSize: MainAxisSize.max,
-                        onPressed: () async {
-                          await _membership();
-                        },
-                        text: "Become a Premium Member",
-                        showArrow: false,
-                        margin: const EdgeInsets.only(bottom: 10),
+                      iconFront: true,
+                      icon: Icons.earbuds_rounded,
+                      mainAxisSize: MainAxisSize.max,
+                      radius: 30,
+                      onPressed: () async {
+                        await _onReferClick(context);
+                      },
+                      text: "Refer and Earn",
+                      margin: const EdgeInsets.only(bottom: 10),
+                    ),
+                  if (showSubscribe)
+                    ThemeButtonSmall(
+                      color: const Color.fromARGB(
+                        255,
+                        194,
+                        216,
+                        51,
                       ),
-                    if (showStore)
-                      ThemeButtonSmall(
-                        color: const Color.fromARGB(255, 255, 255, 255),
-                        textColor: Colors.black,
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 5,
-                          vertical: 7,
-                        ),
-                        textSize: 15,
-                        fontBold: true,
-                        iconFront: true,
-                        radius: 30,
-                        icon: Icons.card_membership,
-                        textAlign: TextAlign.start,
-                        iconWidget: Padding(
-                          padding: const EdgeInsets.only(
-                            right: 10,
-                          ),
-                          child: Image.asset(
-                            Images.pointIcon3,
-                            height: 28,
-                            width: 28,
-                            // color: Colors.black,
-                          ),
-                        ),
-                        mainAxisSize: MainAxisSize.max,
-                        onPressed: _navigateToStore,
-                        text: "Buy Points",
-                        showArrow: false,
-                        margin: const EdgeInsets.only(bottom: 10),
+                      textColor: Colors.black,
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 5,
+                        vertical: 11,
                       ),
-                  ],
-                ),
-              )
+                      textSize: 15,
+                      fontBold: true,
+                      iconFront: true,
+                      radius: 30,
+                      icon: Icons.card_membership,
+                      textAlign: TextAlign.start,
+                      iconWidget: Padding(
+                        padding: const EdgeInsets.only(
+                          right: 10,
+                        ),
+                        child: Image.asset(
+                          Images.membership,
+                          height: 18,
+                          width: 18,
+                          color: Colors.black,
+                        ),
+                      ),
+                      mainAxisSize: MainAxisSize.max,
+                      onPressed: () async {
+                        await _membership();
+                      },
+                      text: "Become a Premium Member",
+                      showArrow: false,
+                      margin: const EdgeInsets.only(bottom: 10),
+                    ),
+                  if (showStore)
+                    ThemeButtonSmall(
+                      color: const Color.fromARGB(255, 255, 255, 255),
+                      textColor: Colors.black,
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 5,
+                        vertical: 7,
+                      ),
+                      textSize: 15,
+                      fontBold: true,
+                      iconFront: true,
+                      radius: 30,
+                      icon: Icons.card_membership,
+                      textAlign: TextAlign.start,
+                      iconWidget: Padding(
+                        padding: const EdgeInsets.only(
+                          right: 10,
+                        ),
+                        child: Image.asset(
+                          Images.pointIcon3,
+                          height: 28,
+                          width: 28,
+                          // color: Colors.black,
+                        ),
+                      ),
+                      mainAxisSize: MainAxisSize.max,
+                      onPressed: _navigateToStore,
+                      text: "Buy Points",
+                      showArrow: false,
+                      margin: const EdgeInsets.only(bottom: 10),
+                    ),
+                  WarningTextOnLock(
+                    warningText: provider.data?.postDetail?.warningText,
+                  ),
+                ],
+              ),
+            ),
 
-              // child: context.watch<UserProvider>().user == null
-              //     ? Padding(
-              //         padding: const EdgeInsets.symmetric(
-              //           horizontal: 20,
-              //           vertical: 10,
-              //         ),
-              //         child: Column(
-              //           mainAxisAlignment: MainAxisAlignment.center,
-              //           children: [
-              //             const Icon(
-              //               Icons.lock,
-              //               size: 40,
-              //               color: ThemeColors.themeGreen,
-              //             ),
-              //             const SpacerVertical(height: 15),
-              //             Text(
-              //               "${provider.data?.postDetail?.readingTitle}",
-              //               style: stylePTSansBold(fontSize: 18),
-              //             ),
-              //             const SpacerVertical(height: 10),
-              //             Text(
-              //               "${provider.data?.postDetail?.readingSubtitle}",
-              //               style: stylePTSansRegular(
-              //                 fontSize: 14,
-              //                 height: 1.3,
-              //               ),
-              //               textAlign: TextAlign.center,
-              //             ),
-              //             const SpacerVertical(height: 10),
-              //             ThemeButtonSmall(
-              //               onPressed: () {
-              //                 _onLoginClick(context);
-              //               },
-              //               mainAxisSize: MainAxisSize.max,
-              //               text: "Register/Login to Continue",
-              //               padding: const EdgeInsets.symmetric(
-              //                 horizontal: 5,
-              //                 vertical: 11,
-              //               ),
-              //               textSize: 15,
-              //               fontBold: true,
-              //               iconFront: true,
-              //               icon: Icons.lock,
-              //               radius: 30,
-              //             ),
-              //             const SpacerVertical(),
-              //           ],
-              //         ),
-              //       )
-              //     : provider.data?.postDetail?.balanceStatus == null ||
-              //             provider.data?.postDetail?.balanceStatus == false
-              //         ? Padding(
-              //             padding: const EdgeInsets.symmetric(
-              //               horizontal: 20,
-              //               vertical: 10,
-              //             ),
-              //             child: Column(
-              //               mainAxisAlignment: MainAxisAlignment.center,
-              //               children: [
-              //                 const Icon(Icons.lock, size: 40),
-              //                 const SpacerVertical(),
-              //                 Text(
-              //                   "${provider.data?.postDetail?.readingTitle}",
-              //                   style: stylePTSansBold(fontSize: 18),
-              //                 ),
-              //                 const SpacerVertical(height: 10),
-              //                 Text(
-              //                   "${provider.data?.postDetail?.readingSubtitle}",
-              //                   style: stylePTSansRegular(
-              //                     fontSize: 14,
-              //                     height: 1.3,
-              //                   ),
-              //                   textAlign: TextAlign.center,
-              //                 ),
-              //                 const SpacerVertical(height: 10),
-              //                 ThemeButtonSmall(
-              //                   padding: const EdgeInsets.symmetric(
-              //                     horizontal: 5,
-              //                     vertical: 11,
-              //                   ),
-              //                   textSize: 15,
-              //                   fontBold: true,
-              //                   iconWidget: Padding(
-              //                     padding: const EdgeInsets.only(right: 10),
-              //                     child: Image.asset(
-              //                       Images.referAndEarn,
-              //                       height: 18,
-              //                       width: 18,
-              //                       color: ThemeColors.white,
-              //                     ),
-              //                   ),
-              //                   iconFront: true,
-              //                   icon: Icons.earbuds_rounded,
-              //                   mainAxisSize: MainAxisSize.max,
-              //                   radius: 30,
-              //                   onPressed: () async {
-              //                     await _onReferClick(context);
-              //                   },
-              //                   text: "Refer and Earn",
-              //                 ),
-              //                 const SpacerVertical(height: 10),
-              //                 Visibility(
-              //                   visible: showMembership,
-              //                   child: ThemeButtonSmall(
-              //                     color: const Color.fromARGB(
-              //                       255,
-              //                       194,
-              //                       216,
-              //                       51,
-              //                     ),
-              //                     textColor: Colors.black,
-              //                     padding: const EdgeInsets.symmetric(
-              //                       horizontal: 5,
-              //                       vertical: 11,
-              //                     ),
-              //                     textSize: 15,
-              //                     fontBold: true,
-              //                     iconFront: true,
-              //                     radius: 30,
-              //                     icon: Icons.card_membership,
-              //                     textAlign: TextAlign.start,
-              //                     iconWidget: Padding(
-              //                       padding: const EdgeInsets.only(
-              //                         right: 10,
-              //                       ),
-              //                       child: Image.asset(
-              //                         Images.membership,
-              //                         height: 18,
-              //                         width: 18,
-              //                         color: ThemeColors.white,
-              //                       ),
-              //                     ),
-              //                     mainAxisSize: MainAxisSize.max,
-              //                     onPressed: () async {
-              //                       await _membership();
-              //                     },
-              //                     text: "Upgrade Membership for more points",
-              //                     showArrow: false,
-              //                   ),
-              //                 ),
-              //               ],
-              //             ),
-              //           )
-              //         : Padding(
-              //             padding: const EdgeInsets.symmetric(
-              //               horizontal: 20,
-              //               vertical: 10,
-              //             ),
-              //             child: Column(
-              //               mainAxisAlignment: MainAxisAlignment.center,
-              //               children: [
-              //                 const Icon(Icons.lock, size: 40),
-              //                 const SpacerVertical(),
-              //                 Text(
-              //                   "${provider.data?.postDetail?.readingTitle}",
-              //                   style: stylePTSansBold(fontSize: 18),
-              //                 ),
-              //                 const SpacerVertical(height: 10),
-              //                 Text(
-              //                   "${provider.data?.postDetail?.readingSubtitle}",
-              //                   style: stylePTSansRegular(
-              //                     fontSize: 14,
-              //                     height: 1.3,
-              //                   ),
-              //                   textAlign: TextAlign.center,
-              //                 ),
-              //                 const SpacerVertical(height: 10),
-              //                 ThemeButtonSmall(
-              //                   padding: const EdgeInsets.symmetric(
-              //                     horizontal: 5,
-              //                     vertical: 11,
-              //                   ),
-              //                   textSize: 15,
-              //                   iconFront: true,
-              //                   fontBold: true,
-              //                   radius: 30,
-              //                   icon: Icons.visibility,
-              //                   mainAxisSize: MainAxisSize.max,
-              //                   onPressed: () => _onViewNewsClick(context),
-              //                   text: "View News",
-              //                 ),
-              //               ],
-              //             ),
-              //           ),
-              ),
+            // child: context.watch<UserProvider>().user == null
+            //     ? Padding(
+            //         padding: const EdgeInsets.symmetric(
+            //           horizontal: 20,
+            //           vertical: 10,
+            //         ),
+            //         child: Column(
+            //           mainAxisAlignment: MainAxisAlignment.center,
+            //           children: [
+            //             const Icon(
+            //               Icons.lock,
+            //               size: 40,
+            //               color: ThemeColors.themeGreen,
+            //             ),
+            //             const SpacerVertical(height: 15),
+            //             Text(
+            //               "${provider.data?.postDetail?.readingTitle}",
+            //               style: stylePTSansBold(fontSize: 18),
+            //             ),
+            //             const SpacerVertical(height: 10),
+            //             Text(
+            //               "${provider.data?.postDetail?.readingSubtitle}",
+            //               style: stylePTSansRegular(
+            //                 fontSize: 14,
+            //                 height: 1.3,
+            //               ),
+            //               textAlign: TextAlign.center,
+            //             ),
+            //             const SpacerVertical(height: 10),
+            //             ThemeButtonSmall(
+            //               onPressed: () {
+            //                 _onLoginClick(context);
+            //               },
+            //               mainAxisSize: MainAxisSize.max,
+            //               text: "Register/Login to Continue",
+            //               padding: const EdgeInsets.symmetric(
+            //                 horizontal: 5,
+            //                 vertical: 11,
+            //               ),
+            //               textSize: 15,
+            //               fontBold: true,
+            //               iconFront: true,
+            //               icon: Icons.lock,
+            //               radius: 30,
+            //             ),
+            //             const SpacerVertical(),
+            //           ],
+            //         ),
+            //       )
+            //     : provider.data?.postDetail?.balanceStatus == null ||
+            //             provider.data?.postDetail?.balanceStatus == false
+            //         ? Padding(
+            //             padding: const EdgeInsets.symmetric(
+            //               horizontal: 20,
+            //               vertical: 10,
+            //             ),
+            //             child: Column(
+            //               mainAxisAlignment: MainAxisAlignment.center,
+            //               children: [
+            //                 const Icon(Icons.lock, size: 40),
+            //                 const SpacerVertical(),
+            //                 Text(
+            //                   "${provider.data?.postDetail?.readingTitle}",
+            //                   style: stylePTSansBold(fontSize: 18),
+            //                 ),
+            //                 const SpacerVertical(height: 10),
+            //                 Text(
+            //                   "${provider.data?.postDetail?.readingSubtitle}",
+            //                   style: stylePTSansRegular(
+            //                     fontSize: 14,
+            //                     height: 1.3,
+            //                   ),
+            //                   textAlign: TextAlign.center,
+            //                 ),
+            //                 const SpacerVertical(height: 10),
+            //                 ThemeButtonSmall(
+            //                   padding: const EdgeInsets.symmetric(
+            //                     horizontal: 5,
+            //                     vertical: 11,
+            //                   ),
+            //                   textSize: 15,
+            //                   fontBold: true,
+            //                   iconWidget: Padding(
+            //                     padding: const EdgeInsets.only(right: 10),
+            //                     child: Image.asset(
+            //                       Images.referAndEarn,
+            //                       height: 18,
+            //                       width: 18,
+            //                       color: ThemeColors.white,
+            //                     ),
+            //                   ),
+            //                   iconFront: true,
+            //                   icon: Icons.earbuds_rounded,
+            //                   mainAxisSize: MainAxisSize.max,
+            //                   radius: 30,
+            //                   onPressed: () async {
+            //                     await _onReferClick(context);
+            //                   },
+            //                   text: "Refer and Earn",
+            //                 ),
+            //                 const SpacerVertical(height: 10),
+            //                 Visibility(
+            //                   visible: showMembership,
+            //                   child: ThemeButtonSmall(
+            //                     color: const Color.fromARGB(
+            //                       255,
+            //                       194,
+            //                       216,
+            //                       51,
+            //                     ),
+            //                     textColor: Colors.black,
+            //                     padding: const EdgeInsets.symmetric(
+            //                       horizontal: 5,
+            //                       vertical: 11,
+            //                     ),
+            //                     textSize: 15,
+            //                     fontBold: true,
+            //                     iconFront: true,
+            //                     radius: 30,
+            //                     icon: Icons.card_membership,
+            //                     textAlign: TextAlign.start,
+            //                     iconWidget: Padding(
+            //                       padding: const EdgeInsets.only(
+            //                         right: 10,
+            //                       ),
+            //                       child: Image.asset(
+            //                         Images.membership,
+            //                         height: 18,
+            //                         width: 18,
+            //                         color: ThemeColors.white,
+            //                       ),
+            //                     ),
+            //                     mainAxisSize: MainAxisSize.max,
+            //                     onPressed: () async {
+            //                       await _membership();
+            //                     },
+            //                     text: "Upgrade Membership for more points",
+            //                     showArrow: false,
+            //                   ),
+            //                 ),
+            //               ],
+            //             ),
+            //           )
+            //         : Padding(
+            //             padding: const EdgeInsets.symmetric(
+            //               horizontal: 20,
+            //               vertical: 10,
+            //             ),
+            //             child: Column(
+            //               mainAxisAlignment: MainAxisAlignment.center,
+            //               children: [
+            //                 const Icon(Icons.lock, size: 40),
+            //                 const SpacerVertical(),
+            //                 Text(
+            //                   "${provider.data?.postDetail?.readingTitle}",
+            //                   style: stylePTSansBold(fontSize: 18),
+            //                 ),
+            //                 const SpacerVertical(height: 10),
+            //                 Text(
+            //                   "${provider.data?.postDetail?.readingSubtitle}",
+            //                   style: stylePTSansRegular(
+            //                     fontSize: 14,
+            //                     height: 1.3,
+            //                   ),
+            //                   textAlign: TextAlign.center,
+            //                 ),
+            //                 const SpacerVertical(height: 10),
+            //                 ThemeButtonSmall(
+            //                   padding: const EdgeInsets.symmetric(
+            //                     horizontal: 5,
+            //                     vertical: 11,
+            //                   ),
+            //                   textSize: 15,
+            //                   iconFront: true,
+            //                   fontBold: true,
+            //                   radius: 30,
+            //                   icon: Icons.visibility,
+            //                   mainAxisSize: MainAxisSize.max,
+            //                   onPressed: () => _onViewNewsClick(context),
+            //                   text: "View News",
+            //                 ),
+            //               ],
+            //             ),
+            //           ),
+          ),
         ],
       );
     } else {

@@ -5,7 +5,7 @@ import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 
-import '../../../../providers/home_provider.dart';
+import '../../../../../providers/home_provider.dart';
 
 class HomeUpdateCountryCode extends StatelessWidget {
   const HomeUpdateCountryCode({super.key});
@@ -13,7 +13,6 @@ class HomeUpdateCountryCode extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     HomeProvider provider = context.watch<HomeProvider>();
-
     return GestureDetector(
       onTap: () {
         Navigator.push(

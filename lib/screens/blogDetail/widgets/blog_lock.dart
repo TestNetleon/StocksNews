@@ -19,6 +19,8 @@ import 'package:stocks_news_new/widgets/custom/confirmation_point_popup.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/theme_button_small.dart';
 
+import '../../../widgets/custom/warning_text.dart';
+
 class BlogDetailsLock extends StatefulWidget {
   final String? slug;
 
@@ -158,7 +160,7 @@ class _BlogDetailsLockState extends State<BlogDetailsLock> {
             ),
           ),
           Container(
-            height: height / 1.1,
+            // height: height / 1.1,
             alignment: Alignment.center,
             decoration: const BoxDecoration(
               color: ThemeColors.tabBack,
@@ -316,6 +318,9 @@ class _BlogDetailsLockState extends State<BlogDetailsLock> {
                       showArrow: false,
                       margin: const EdgeInsets.only(bottom: 10),
                     ),
+                  WarningTextOnLock(
+                    warningText: provider.blogsDetail?.warningText,
+                  ),
                 ],
               ),
             ),

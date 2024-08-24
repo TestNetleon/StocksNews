@@ -23,7 +23,8 @@ import '../../../utils/colors.dart';
 import '../../../widgets/custom/refer.dart';
 import '../../AdManager/manager.dart';
 import '../news/news_item.dart';
-import 'updateCountryCode/update.dart';
+import 'update/updateCountryCode/update.dart';
+import 'update/updatePhone/update.dart';
 import 'widgets/home_inner_tabs.dart';
 import 'widgets/sliderNews/slider.dart';
 import 'widgets/stockBuzz/index.dart';
@@ -64,6 +65,11 @@ class HomeContainer extends StatelessWidget {
               provider.extra?.phoneCodeError != '',
           child: const HomeUpdateCountryCode(),
         ),
+        Visibility(
+          visible: provider.extra?.phoneError != null &&
+              provider.extra?.phoneError != '',
+          child: HomeUpdatePhone(),
+        ),
         const BlogItemHome(),
         const HomeTopNewsSlider(),
         const MembershipCoinsOption(),
@@ -98,7 +104,6 @@ class HomeContainer extends StatelessWidget {
         //   child: InnerShadow(
         //     blur: 40,
         //     // offset: Offset(10, 2),
-
         //     // color: const Color.fromARGB(0, 254, 255, 254).withOpacity(0.6),
         //     color: Color(0xffC97F11),
         //     child: Container(

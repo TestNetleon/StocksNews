@@ -98,6 +98,7 @@ class HomeProvider extends ChangeNotifier {
 
   clearExtraCountryCodeError() {
     _extra?.phoneCodeError = null;
+    _extra?.phoneError = null;
     notifyListeners();
   }
 
