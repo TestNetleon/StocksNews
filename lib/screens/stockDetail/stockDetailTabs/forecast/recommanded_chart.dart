@@ -54,7 +54,7 @@ class RecommandedForcastingChart extends StatelessWidget {
                       children: [
                         Divider(
                           color: ThemeColors.greyBorder,
-                          height: 15.sp,
+                          height: 15,
                           thickness: 1,
                         ),
                         Padding(
@@ -317,7 +317,7 @@ class RecommandedForcastingChart extends StatelessWidget {
                   // return const SpacerVertical(height: 10);
                   return Divider(
                     color: ThemeColors.greyBorder,
-                    height: 20.sp,
+                    height: 20,
                   );
                 },
                 itemCount: data?.length ?? 0),

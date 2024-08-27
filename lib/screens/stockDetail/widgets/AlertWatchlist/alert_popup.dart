@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/all_stocks_provider.dart';
 import 'package:stocks_news_new/providers/congressional_detail_provider.dart';
@@ -177,7 +176,7 @@ class _AlertPopupState extends State<AlertPopup> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(18.sp),
+      padding: EdgeInsets.all(18),
       decoration: const BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topCenter,
@@ -207,7 +206,7 @@ class _AlertPopupState extends State<AlertPopup> {
           Divider(
             color: ThemeColors.border.withOpacity(0.4),
             thickness: 1,
-            height: 30.sp,
+            height: 30,
           ),
           _typeSelect(
             heading: "${widget.symbol} Sentiment Spike",
@@ -219,7 +218,7 @@ class _AlertPopupState extends State<AlertPopup> {
           Divider(
             color: ThemeColors.border.withOpacity(0.4),
             thickness: 1,
-            height: 30.sp,
+            height: 30,
           ),
           _typeSelect(
             heading: "${widget.symbol} Mentions Spike",
@@ -230,15 +229,15 @@ class _AlertPopupState extends State<AlertPopup> {
           Divider(
             color: ThemeColors.border.withOpacity(0.4),
             thickness: 1,
-            height: 30.sp,
+            height: 30,
           ),
           Text(
             "Choose sentiment spike or mentions spike or both to receive email alerts and app notification for the selected stock.",
             style: stylePTSansRegular(fontSize: 12),
           ),
           Container(
-            margin: EdgeInsets.symmetric(vertical: 10.sp),
-            padding: EdgeInsets.symmetric(vertical: 5.sp, horizontal: 5.sp),
+            margin: EdgeInsets.symmetric(vertical: 10),
+            padding: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
             decoration: const BoxDecoration(
                 color: ThemeColors.greyBorder,
                 border: Border(
@@ -255,7 +254,7 @@ class _AlertPopupState extends State<AlertPopup> {
           Divider(
             color: ThemeColors.border.withOpacity(0.4),
             thickness: 1,
-            height: 30.sp,
+            height: 30,
           ),
           ThemeButton(
             color: selectedOne == false && selectedTwo == false
@@ -838,7 +837,7 @@ class _AlertPopupState extends State<AlertPopup> {
         children: [
           Icon(
             isSelected ? Icons.check_box : Icons.check_box_outline_blank,
-            size: 35.sp,
+            size: 35,
             color: isSelected ? ThemeColors.accent : ThemeColors.border,
           ),
           const SpacerHorizontal(width: 10),
@@ -870,7 +869,7 @@ class _AlertPopupState extends State<AlertPopup> {
             children: [
               Icon(
                 Icons.add_alert_outlined,
-                size: 20.sp,
+                size: 20,
                 color: ThemeColors.accent,
               ),
               const SpacerHorizontal(width: 5),

@@ -349,155 +349,152 @@ class PointsItem extends StatelessWidget {
       child: Stack(
         alignment: Alignment.topCenter,
         children: [
-          AspectRatio(
-            aspectRatio: .88,
+          Container(
+            padding: const EdgeInsets.all(2),
+            margin: const EdgeInsets.only(top: 50),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              gradient: const LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [
+                  Color.fromARGB(255, 23, 254, 42),
+                  Color.fromARGB(255, 217, 159, 0),
+                ],
+              ),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.5), // Color of the shadow
+                  spreadRadius: 5, // Spread radius
+                  blurRadius: 7, // Blur radius
+                  offset: const Offset(0, 3), // Offset from the box
+                ),
+              ],
+            ),
             child: Container(
-              padding: const EdgeInsets.all(2),
-              margin: const EdgeInsets.only(top: 50),
+              width: double.infinity,
+              padding: const EdgeInsets.all(12),
+              // margin: const EdgeInsets.only(top: 50),
+              // constraints: const BoxConstraints(
+              //   maxWidth: 250,
+              //   minWidth: 150,
+              // ),
               decoration: BoxDecoration(
+                color: ThemeColors.tabBack,
                 borderRadius: BorderRadius.circular(10),
+                image: const DecorationImage(
+                  fit: BoxFit.cover,
+                  opacity: .5,
+                  image: AssetImage(Images.storeBack),
+                ),
                 gradient: const LinearGradient(
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                   colors: [
-                    Color.fromARGB(255, 23, 254, 42),
-                    Color.fromARGB(255, 217, 159, 0),
+                    Color.fromARGB(255, 1, 87, 15),
+                    Color.fromARGB(255, 128, 197, 151),
                   ],
                 ),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withOpacity(0.5), // Color of the shadow
-                    spreadRadius: 5, // Spread radius
-                    blurRadius: 7, // Blur radius
-                    offset: const Offset(0, 3), // Offset from the box
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // const SpacerVertical(height: 20),
+                  // Text(
+                  //   "Get",
+                  //   style: stylePTSansRegular(),
+                  //   textAlign: TextAlign.center,
+                  // ),
+                  // const SpacerVertical(height: 5),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            Text(
+                              points,
+                              style: stylePTSansBold(fontSize: 34).copyWith(
+                                height: 0,
+                                fontWeight: FontWeight.w900,
+                                shadows: [
+                                  Shadow(
+                                    blurRadius: 10.0,
+                                    color: Colors.black.withOpacity(0.5),
+                                    offset: const Offset(2.0, 2.0),
+                                  ),
+                                ],
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                            const SpacerHorizontal(width: 10),
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 5),
+                              child: Text(
+                                "Points",
+                                style:
+                                    stylePTSansRegular(fontSize: 16).copyWith(
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        // const SpacerVertical(height: 2),
+                        // Text(
+                        //   "Unlimited Validity",
+                        //   style: stylePTSansRegular(fontSize: 14),
+                        //   textAlign: TextAlign.center,
+                        // ),
+                      ],
+                    ),
+                  ),
+                  const SpacerVertical(height: 12),
+                  // Text(
+                  //   "Points",
+                  //   style: stylePTSansRegular(),
+                  //   textAlign: TextAlign.center,
+                  // ),
+                  // // const SpacerVertical(height: 2),
+                  // // Text(
+                  // //   "in Just",
+                  // //   style: stylePTSansRegular(),
+                  // //   textAlign: TextAlign.center,
+                  // // ),
+                  // const SpacerVertical(height: 5),
+                  Container(
+                    width: double.infinity,
+                    padding:
+                        const EdgeInsets.symmetric(vertical: 6, horizontal: 8),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(30),
+                      color: Colors.black,
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Flexible(
+                          child: Text(
+                              maxLines: 1,
+                              "Buy @ $price",
+                              overflow: TextOverflow.ellipsis,
+                              style: stylePTSansRegular(
+                                  fontSize: Platform.isAndroid ? 12 : 16)),
+                        ),
+                        const SpacerHorizontal(width: 2),
+                        Image.asset(
+                          Images.buyPoints,
+                          color: Colors.white,
+                          width: 15,
+                          height: 15,
+                        )
+                      ],
+                    ),
                   ),
                 ],
-              ),
-              child: Container(
-                width: double.infinity,
-                padding: const EdgeInsets.all(12),
-                // margin: const EdgeInsets.only(top: 50),
-                // constraints: const BoxConstraints(
-                //   maxWidth: 250,
-                //   minWidth: 150,
-                // ),
-                decoration: BoxDecoration(
-                  color: ThemeColors.tabBack,
-                  borderRadius: BorderRadius.circular(10),
-                  image: const DecorationImage(
-                    fit: BoxFit.cover,
-                    opacity: .5,
-                    image: AssetImage(Images.storeBack),
-                  ),
-                  gradient: const LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    colors: [
-                      Color.fromARGB(255, 1, 87, 15),
-                      Color.fromARGB(255, 128, 197, 151),
-                    ],
-                  ),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    // const SpacerVertical(height: 20),
-                    // Text(
-                    //   "Get",
-                    //   style: stylePTSansRegular(),
-                    //   textAlign: TextAlign.center,
-                    // ),
-                    // const SpacerVertical(height: 5),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [
-                              Text(
-                                points,
-                                style: stylePTSansBold(fontSize: 34).copyWith(
-                                  height: 0,
-                                  fontWeight: FontWeight.w900,
-                                  shadows: [
-                                    Shadow(
-                                      blurRadius: 10.0,
-                                      color: Colors.black.withOpacity(0.5),
-                                      offset: const Offset(2.0, 2.0),
-                                    ),
-                                  ],
-                                ),
-                                textAlign: TextAlign.center,
-                              ),
-                              const SpacerHorizontal(width: 10),
-                              Padding(
-                                padding: const EdgeInsets.only(bottom: 5),
-                                child: Text(
-                                  "Points",
-                                  style:
-                                      stylePTSansRegular(fontSize: 16).copyWith(
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          // const SpacerVertical(height: 2),
-                          // Text(
-                          //   "Unlimited Validity",
-                          //   style: stylePTSansRegular(fontSize: 14),
-                          //   textAlign: TextAlign.center,
-                          // ),
-                        ],
-                      ),
-                    ),
-                    const SpacerVertical(height: 12),
-                    // Text(
-                    //   "Points",
-                    //   style: stylePTSansRegular(),
-                    //   textAlign: TextAlign.center,
-                    // ),
-                    // // const SpacerVertical(height: 2),
-                    // // Text(
-                    // //   "in Just",
-                    // //   style: stylePTSansRegular(),
-                    // //   textAlign: TextAlign.center,
-                    // // ),
-                    // const SpacerVertical(height: 5),
-                    Container(
-                      width: double.infinity,
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 6, horizontal: 8),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(30),
-                        color: Colors.black,
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Flexible(
-                            child: Text(
-                                maxLines: 1,
-                                "Buy @ $price",
-                                overflow: TextOverflow.ellipsis,
-                                style: stylePTSansRegular(
-                                    fontSize: Platform.isAndroid ? 12 : 16)),
-                          ),
-                          const SpacerHorizontal(width: 2),
-                          Image.asset(
-                            Images.buyPoints,
-                            color: Colors.white,
-                            width: 15,
-                            height: 15,
-                          )
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
               ),
             ),
           ),

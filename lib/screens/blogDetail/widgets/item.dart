@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 
@@ -25,7 +24,7 @@ class BlogDetailClickItem extends StatelessWidget {
           visible: showTopDivider,
           child: Divider(
             color: ThemeColors.divider,
-            height: 10.sp,
+            height: 10,
           ),
         ),
         Row(
@@ -44,8 +43,8 @@ class BlogDetailClickItem extends StatelessWidget {
             Flexible(
               child: Wrap(
                 alignment: WrapAlignment.start,
-                spacing: fromNews ? 0 : 6.sp,
-                runSpacing: fromNews ? 0 : 6.sp,
+                spacing: fromNews ? 0 : 6,
+                runSpacing: fromNews ? 0 : 6,
                 children: children,
               ),
             ),
@@ -55,7 +54,7 @@ class BlogDetailClickItem extends StatelessWidget {
           visible: showBottomDivider,
           child: Divider(
             color: ThemeColors.divider,
-            height: 10.sp,
+            height: 10,
           ),
         ),
       ],

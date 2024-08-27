@@ -100,7 +100,7 @@ class _FeaturedNewsListState extends State<FeaturedNewsList> {
             // return const SpacerVertical(height: 16);
             return Divider(
               color: ThemeColors.greyBorder,
-              height: 20.sp,
+              height: 20,
             );
           },
         ),

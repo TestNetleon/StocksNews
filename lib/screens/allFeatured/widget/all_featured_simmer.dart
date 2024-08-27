@@ -84,7 +84,7 @@ class AllFeatureScreenSimmer extends StatelessWidget {
         // return const SpacerVertical(height: 12);
         return Divider(
           color: ThemeColors.greyBorder,
-          height: 12.sp,
+          height: 12,
         );
       },
     );

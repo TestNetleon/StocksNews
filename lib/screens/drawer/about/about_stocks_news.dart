@@ -532,7 +532,7 @@ class _AboutStocksNewsState extends State<AboutStocksNews> {
                           ),
                         ),
                       ),
-                      Divider(color: ThemeColors.greyBorder, height: 5.sp),
+                      Divider(color: ThemeColors.greyBorder, height: 5),
                     ],
                   ),
                 ),

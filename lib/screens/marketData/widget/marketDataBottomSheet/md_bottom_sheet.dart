@@ -26,7 +26,7 @@ class MdBottomSheet extends StatelessWidget {
       children: [
         Divider(
           color: ThemeColors.greyBorder,
-          height: 0.sp,
+          height: 0,
           thickness: 1,
         ),
         Container(

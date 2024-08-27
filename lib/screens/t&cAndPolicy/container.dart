@@ -107,10 +107,10 @@ class _TermsPolicyContainerState extends State<TermsPolicyContainer> {
           // ),
           Padding(
         padding: EdgeInsets.fromLTRB(
-          Dimen.padding.sp,
+          Dimen.padding,
           // Dimen.padding.sp,
           0,
-          Dimen.padding.sp,
+          Dimen.padding,
           0,
         ),
         child: Column(
@@ -160,7 +160,7 @@ class _TermsPolicyContainerState extends State<TermsPolicyContainer> {
                 ? SingleChildScrollView(
                     physics: const AlwaysScrollableScrollPhysics(),
                     child: Padding(
-                      padding: EdgeInsets.only(bottom: Dimen.padding.sp),
+                      padding: EdgeInsets.only(bottom: Dimen.padding),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [

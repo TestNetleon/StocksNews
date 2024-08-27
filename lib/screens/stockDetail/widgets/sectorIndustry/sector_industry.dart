@@ -98,9 +98,9 @@ class SectorIndustryBase extends StatelessWidget {
         onRefresh: onRefresh,
         child: Padding(
           padding: EdgeInsets.fromLTRB(
-            Dimen.padding.sp,
+            Dimen.padding,
             0,
-            Dimen.padding.sp,
+            Dimen.padding,
             0,
           ),
           child: Column(

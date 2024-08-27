@@ -20,14 +20,14 @@ class FAQItem extends StatelessWidget {
     if (faq == null) {
       return const SizedBox();
     }
-    
+
     return Container(
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(Dimen.radius.r),
+        borderRadius: BorderRadius.circular(Dimen.radius),
         border: Border.all(color: ThemeColors.greyBorder),
         // color: ThemeColors.background,
       ),
-      padding: EdgeInsets.all(Dimen.itemSpacing.sp),
+      padding: EdgeInsets.all(Dimen.itemSpacing),
       child: Column(
         children: [
           GestureDetector(

@@ -36,7 +36,7 @@ class SectorIndustryList extends StatelessWidget {
         onLoadMore: () async => provider.getStateIndustry(
             name: name, stockStates: stockStates, loadMore: true),
         child: ListView.separated(
-          padding: EdgeInsets.only(bottom: Dimen.padding.sp),
+          padding: EdgeInsets.only(bottom: Dimen.padding),
           itemCount: provider.data?.data.length ?? 0,
           itemBuilder: (context, index) {
             SectorIndustryData? data = provider.data?.data[index];

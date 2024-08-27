@@ -10,7 +10,7 @@ class NotificationScreenSimmer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.separated(
-      padding: EdgeInsets.only(bottom: Dimen.padding.sp),
+      padding: EdgeInsets.only(bottom: Dimen.padding),
       itemBuilder: (context, index) {
         return GradientContainerWidget(
           height: 300.sp,

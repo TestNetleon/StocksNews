@@ -23,9 +23,7 @@ class UpdateMembershipCard extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => const NewMembership(
-              withClickCondition: true,
-            ),
+            builder: (context) => const NewMembership(),
           ),
         );
       },

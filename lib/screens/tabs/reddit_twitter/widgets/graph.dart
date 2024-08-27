@@ -41,9 +41,9 @@ class SocialSentimentsGraph extends StatelessWidget {
       ),
       // padding: EdgeInsets.all(Dimen.padding.sp),
       padding: EdgeInsets.fromLTRB(
-        Dimen.padding.sp,
-        Dimen.padding.sp,
-        Dimen.padding.sp,
+        Dimen.padding,
+        Dimen.padding,
+        Dimen.padding,
         0,
       ),
       child: Column(

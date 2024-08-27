@@ -58,7 +58,7 @@ class DrawerBlogScreenSimmer extends StatelessWidget {
 
         return Divider(
           color: ThemeColors.greyBorder,
-          height: 20.sp,
+          height: 20,
         );
       },
     );

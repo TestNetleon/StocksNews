@@ -225,11 +225,8 @@ import '../../auth/membershipAsk/ask.dart';
 // }
 
 class NewMembershipUpgradeCurrentPlan extends StatefulWidget {
-  final bool withClickCondition;
-
   const NewMembershipUpgradeCurrentPlan({
     super.key,
-    this.withClickCondition = false,
   });
 
   @override
@@ -239,8 +236,8 @@ class NewMembershipUpgradeCurrentPlan extends StatefulWidget {
 
 class _NewMembershipUpgradeCurrentPlanState
     extends State<NewMembershipUpgradeCurrentPlan> {
-  List<bool> isSelectedList = List.generate(3, (_) => false);
-  int selectedIndex = -1;
+  // List<bool> isSelectedList = List.generate(3, (_) => false);
+  // int selectedIndex = -1;
 
   // Future _subscribe({type}) async {
   //   UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
@@ -285,7 +282,7 @@ class _NewMembershipUpgradeCurrentPlanState
     UserProvider? provider = navigatorKey.currentContext!.read<UserProvider>();
     MembershipProvider? membershipProvider =
         navigatorKey.currentContext!.read<MembershipProvider>();
-
+    withLoginMembership = false;
     if (provider.user == null) {
       Utils().showLog("Ask login-----");
       isPhone ? await loginSheet() : await loginSheetTablet();
@@ -296,6 +293,7 @@ class _NewMembershipUpgradeCurrentPlanState
         // membershipProvider.selectedIndex(index);
       }
     }
+    withLoginMembership = true;
 
     if (provider.user == null) {
       Utils().showLog("---still user not found----");
@@ -312,7 +310,6 @@ class _NewMembershipUpgradeCurrentPlanState
     if (provider.user?.phone == null || provider.user?.phone == '') {
       Utils().showLog("Ask phone for membership-----");
       await membershipLogin();
-      return;
     }
     if (provider.user?.phone != null || provider.user?.phone != '') {
       Utils().showLog("Open Paywall-----");

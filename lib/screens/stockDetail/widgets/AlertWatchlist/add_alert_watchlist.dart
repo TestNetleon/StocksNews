@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/stock_detail_new.dart';
@@ -91,7 +90,7 @@ class AddToAlertWatchlist extends StatelessWidget {
                 (element.key == "add-watchlist" && element.status == 1)) ??
         false;
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 10.sp),
+      padding: EdgeInsets.symmetric(vertical: 10),
       child: Row(
         children: [
           AlertWatchlistButton(

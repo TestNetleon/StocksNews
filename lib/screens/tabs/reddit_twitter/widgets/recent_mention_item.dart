@@ -24,8 +24,8 @@ class SocialSentimentMentions extends StatelessWidget {
       ),
       child: Container(
         padding: EdgeInsets.only(
-          left: Dimen.padding.sp,
-          right: Dimen.padding.sp,
+          left: Dimen.padding,
+          right: Dimen.padding,
           top: 10,
           bottom: 10,
         ),

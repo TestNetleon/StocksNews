@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 
@@ -66,11 +65,11 @@ class TechnicalAnalysisGaugeItem extends StatelessWidget {
               value: value, // -100 to max 100
               needleColor: Colors.white,
               needleStartWidth: 0,
-              needleEndWidth: 1.sp,
-              needleLength: .7.sp,
+              needleEndWidth: 1,
+              needleLength: .7,
               // tailStyle: TailStyle(color: Colors.white, length: .1, width: 9),
               knobStyle: KnobStyle(
-                knobRadius: .06.sp,
+                knobRadius: .06,
                 color: Colors.white,
               ),
             )

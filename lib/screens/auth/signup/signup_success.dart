@@ -56,7 +56,10 @@ class SignUpSuccess extends StatelessWidget {
                     Navigator.pushReplacement(
                       navigatorKey.currentContext!,
                       MaterialPageRoute(
-                        builder: (_) => const Tabs(showRef: true),
+                        builder: (_) => const Tabs(
+                          showRef: false,
+                          showMembership: true,
+                        ),
                       ),
                     );
                     Timer(const Duration(seconds: 1), () {

@@ -17,7 +17,8 @@ class SdTechnicalAnalysisBrief extends StatelessWidget {
     return Column(
       children: [
         Visibility(
-          visible: res?.technicalIndicatorArr.isNotEmpty == true && res?.movingAverageArr.isNotEmpty == true,
+          visible: res?.technicalIndicatorArr.isNotEmpty == true &&
+              res?.movingAverageArr.isNotEmpty == true,
           child: Padding(
             padding: EdgeInsets.only(top: 10.sp),
             child: const SummaryBlock(),
@@ -62,7 +63,7 @@ class SummaryBlock extends StatelessWidget {
         Divider(
           color: ThemeColors.white,
           thickness: 1,
-          height: 30.sp,
+          height: 30,
         ),
         RichText(
           text: TextSpan(
@@ -139,7 +140,7 @@ class SummaryBlock extends StatelessWidget {
         // const SpacerVertical(height: 10),
         Divider(
           color: ThemeColors.greyBorder,
-          height: 20.sp,
+          height: 20,
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -199,17 +200,19 @@ class TechnicalIndicatorsBlock extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<TechnicalIndicatorArr>? data = context.watch<StockDetailProviderNew>().techRes?.technicalIndicatorArr;
+    List<TechnicalIndicatorArr>? data =
+        context.watch<StockDetailProviderNew>().techRes?.technicalIndicatorArr;
 
-    MovingAverage? technicalIndicator = context.watch<StockDetailProviderNew>().techRes?.technicalIndicator;
-    
+    MovingAverage? technicalIndicator =
+        context.watch<StockDetailProviderNew>().techRes?.technicalIndicator;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Divider(
           color: ThemeColors.white,
           thickness: 1,
-          height: 30.sp,
+          height: 30,
         ),
         Text(
           "Technical Indicators",
@@ -233,7 +236,7 @@ class TechnicalIndicatorsBlock extends StatelessWidget {
                   children: [
                     Divider(
                       color: ThemeColors.greyBorder,
-                      height: 15.sp,
+                      height: 15,
                       thickness: 1,
                     ),
                     Row(
@@ -273,7 +276,7 @@ class TechnicalIndicatorsBlock extends StatelessWidget {
                     ),
                     Divider(
                       color: ThemeColors.greyBorder,
-                      height: 15.sp,
+                      height: 15,
                       thickness: 1,
                     ),
                     const SpacerVertical(height: 10),
@@ -347,7 +350,7 @@ class TechnicalIndicatorsBlock extends StatelessWidget {
               // return const SpacerVertical(height: 10);
               return Divider(
                 color: ThemeColors.greyBorder,
-                height: 20.sp,
+                height: 20,
               );
             },
             itemCount: data?.length ?? 0),
@@ -415,7 +418,7 @@ class TechnicalMovingAverages extends StatelessWidget {
         Divider(
           color: ThemeColors.white,
           thickness: 1,
-          height: 30.sp,
+          height: 30,
         ),
         Text(
           "Moving Averages",
@@ -439,7 +442,7 @@ class TechnicalMovingAverages extends StatelessWidget {
                   children: [
                     Divider(
                       color: ThemeColors.greyBorder,
-                      height: 15.sp,
+                      height: 15,
                       thickness: 1,
                     ),
                     Row(
@@ -492,7 +495,7 @@ class TechnicalMovingAverages extends StatelessWidget {
                     ),
                     Divider(
                       color: ThemeColors.greyBorder,
-                      height: 15.sp,
+                      height: 15,
                       thickness: 1,
                     ),
                     const SpacerVertical(height: 10),
@@ -545,7 +548,7 @@ class TechnicalMovingAverages extends StatelessWidget {
               // return const SpacerVertical(height: 10);
               return Divider(
                 color: ThemeColors.greyBorder,
-                height: 20.sp,
+                height: 20,
               );
             },
             itemCount: data?.length ?? 0),

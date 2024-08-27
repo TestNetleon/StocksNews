@@ -40,7 +40,7 @@ class SdTopWidgetRange extends StatelessWidget {
             ),
             // SpacerHorizontal(width: 10),
             VerticalDivider(
-              width: 10.sp,
+              width: 10,
               color: ThemeColors.gradientLight,
               thickness: 1,
             ),

@@ -284,8 +284,8 @@ class _LoginFirstState extends State<LoginFirst> {
                     children: [
                       Divider(
                         color: ThemeColors.dividerDark,
-                        height: 1.sp,
-                        thickness: 1.sp,
+                        height: 1,
+                        thickness: 1,
                       ),
                       Container(
                         color: ThemeColors.background,

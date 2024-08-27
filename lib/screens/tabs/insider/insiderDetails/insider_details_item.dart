@@ -245,7 +245,7 @@ class InnerRowItem extends StatelessWidget {
         // )
         Divider(
           color: ThemeColors.greyBorder,
-          height: 1.sp,
+          height: 1,
         )
       ],
     );

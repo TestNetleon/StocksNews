@@ -35,7 +35,7 @@ class TrendingMarketCapHeading extends StatelessWidget {
           ),
           Divider(
             color: ThemeColors.border,
-            height: 10.sp,
+            height: 10,
           ),
         ],
       ),

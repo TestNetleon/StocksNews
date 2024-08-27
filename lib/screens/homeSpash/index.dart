@@ -243,7 +243,6 @@ class _HomeSplashState extends State<HomeSplash> {
           MaterialPageRoute(
             builder: (_) => NewMembership(
               notificationId: notificationId,
-              withClickCondition: true,
             ),
           ),
         );

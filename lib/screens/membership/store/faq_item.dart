@@ -34,7 +34,7 @@ class FaqItem extends StatelessWidget {
         border: Border.all(color: ThemeColors.greyBorder),
         // border: Border.all(color: ThemeColors.divider),
       ),
-      padding: EdgeInsets.all(Dimen.itemSpacing.sp),
+      padding: EdgeInsets.all(Dimen.itemSpacing),
       child: Column(
         children: [
           GestureDetector(

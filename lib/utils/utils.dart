@@ -869,9 +869,7 @@ void handleNavigation({
       Navigator.push(
         navigatorKey.currentContext!,
         MaterialPageRoute(
-          builder: (_) => const NewMembership(
-            withClickCondition: true,
-          ),
+          builder: (_) => const NewMembership(),
         ),
       );
     } else {

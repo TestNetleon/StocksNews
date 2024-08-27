@@ -156,7 +156,6 @@
 // //
 
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/alert_provider.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
@@ -220,9 +219,9 @@ class _AlertBaseState extends State<AlertBase> {
       ),
       body: Padding(
         padding: EdgeInsets.fromLTRB(
-          Dimen.padding.sp,
+          Dimen.padding,
           0,
-          Dimen.padding.sp,
+          Dimen.padding,
           0,
         ),
         child: Column(
@@ -260,9 +259,9 @@ class _AlertBaseState extends State<AlertBase> {
                         Visibility(
                           visible: provider.textRes?.note != null,
                           child: Container(
-                            margin: EdgeInsets.symmetric(vertical: 10.sp),
+                            margin: EdgeInsets.symmetric(vertical: 10),
                             padding: EdgeInsets.symmetric(
-                                vertical: 5.sp, horizontal: 5.sp),
+                                vertical: 5, horizontal: 5),
                             decoration: const BoxDecoration(
                               color: ThemeColors.greyBorder,
                               border: Border(

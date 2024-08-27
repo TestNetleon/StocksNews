@@ -79,7 +79,7 @@ class ReviewAppPopUp extends StatelessWidget {
             ),
             Divider(
               color: ThemeColors.border,
-              height: 1.sp,
+              height: 1,
             ),
             SpacerVertical(height: 10.sp),
             GestureDetector(
@@ -156,7 +156,7 @@ class ReviewAppPopUp extends StatelessWidget {
             SpacerVertical(height: 10.sp),
             Divider(
               color: ThemeColors.border,
-              height: 1.sp,
+              height: 1,
             ),
             SpacerVertical(height: 10.sp),
             GestureDetector(

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/faq_provider.dart';
 import 'package:stocks_news_new/screens/faq/faq_container.dart';
@@ -43,10 +42,10 @@ class _FAQBaseState extends State<FAQBase> {
       ),
       body: Padding(
         padding: EdgeInsets.fromLTRB(
-          Dimen.padding.sp,
+          Dimen.padding,
           // Dimen.padding.sp,
           0,
-          Dimen.padding.sp,
+          Dimen.padding,
           0,
         ),
         child: Column(

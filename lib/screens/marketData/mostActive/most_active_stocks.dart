@@ -99,7 +99,7 @@ class _MostActiveStocksState extends State<MostActiveStocks> {
                           provider.getData(loadMore: true, type: 1),
                       child: ListView.separated(
                         padding: EdgeInsets.only(
-                          bottom: Dimen.padding.sp,
+                          bottom: Dimen.padding,
                         ),
                         itemBuilder: (context, index) {
                           if (data == null || data.isEmpty) {

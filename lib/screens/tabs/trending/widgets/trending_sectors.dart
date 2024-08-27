@@ -73,13 +73,13 @@ class TrendingSectors extends StatelessWidget {
                 children: [
                   Divider(
                     color: ThemeColors.greyBorder,
-                    height: 15.sp,
+                    height: 15,
                     thickness: 1,
                   ),
                   const TrendingSectorItemHeader(),
                   Divider(
                     color: ThemeColors.greyBorder,
-                    height: 15.sp,
+                    height: 15,
                     thickness: 1,
                   ),
                   TrendingSectorItem(data: sectorData),

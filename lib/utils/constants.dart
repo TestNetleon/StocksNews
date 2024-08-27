@@ -87,6 +87,8 @@ bool showAdd = false;
 
 bool oneSignalInitialized = false;
 
+bool withLoginMembership = true;
+
 //------------ Ad API Globals
 
 Map<AdScreen, Map<AdPlaces, bool>> adVisibilityMap = {

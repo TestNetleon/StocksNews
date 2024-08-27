@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/congressional_res.dart';
 import 'package:stocks_news_new/providers/congressional_provider.dart';
@@ -158,7 +157,7 @@ class _CongressionalContainerState extends State<CongressionalContainer> {
                         separatorBuilder: (context, index) {
                           return Divider(
                             color: ThemeColors.greyBorder,
-                            height: 15.sp,
+                            height: 15,
                           );
                         },
                         itemCount: provider.data?.length ?? 0),

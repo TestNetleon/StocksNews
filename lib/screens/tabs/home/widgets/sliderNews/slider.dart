@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:stocks_news_new/modals/home_slider_res.dart';
@@ -44,7 +43,7 @@ class _HomeTopNewsSliderState extends State<HomeTopNewsSlider> {
     return LayoutBuilder(
       builder: (context, constraints) {
         double imageHeight = constraints.maxWidth * 0.6;
-        double dotSize = 7.sp;
+        double dotSize = 7;
         return Stack(
           alignment: Alignment.center,
           children: [
@@ -73,7 +72,7 @@ class _HomeTopNewsSliderState extends State<HomeTopNewsSlider> {
                         ],
                       ),
                     ),
-                    width: 30.sp,
+                    width: 30,
                     height: double.infinity,
                   ),
                 ),
@@ -95,7 +94,7 @@ class _HomeTopNewsSliderState extends State<HomeTopNewsSlider> {
                       ),
                     ),
                     width: double.infinity,
-                    height: 30.sp,
+                    height: 30,
                   ),
                 ),
                 Positioned(
@@ -115,7 +114,7 @@ class _HomeTopNewsSliderState extends State<HomeTopNewsSlider> {
                         ],
                       ),
                     ),
-                    width: 20.sp,
+                    width: 20,
                     height: double.infinity,
                   ),
                 ),
@@ -134,7 +133,7 @@ class _HomeTopNewsSliderState extends State<HomeTopNewsSlider> {
                       ],
                     )),
                     width: double.infinity,
-                    height: 30.sp,
+                    height: 30,
                   ),
                 ),
               ],
@@ -164,8 +163,8 @@ class _HomeTopNewsSliderState extends State<HomeTopNewsSlider> {
                         child: Container(
                           width: constraints.maxWidth,
                           padding: EdgeInsets.symmetric(
-                            horizontal: 15.sp,
-                            vertical: 10.sp,
+                            horizontal: 15,
+                            vertical: 10,
                           ),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -179,7 +178,7 @@ class _HomeTopNewsSliderState extends State<HomeTopNewsSlider> {
                               ),
                               const SpacerVertical(height: 10),
                               Padding(
-                                padding: EdgeInsets.only(bottom: 3.sp),
+                                padding: EdgeInsets.only(bottom: 3),
                                 child: Row(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
@@ -217,7 +216,7 @@ class _HomeTopNewsSliderState extends State<HomeTopNewsSlider> {
                 }).toList(),
               ),
             Positioned(
-              bottom: 5.sp,
+              bottom: 5,
               child: AnimatedSmoothIndicator(
                 activeIndex: _activeIndex,
                 count: sliderPosts?.length ?? 0,

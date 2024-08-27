@@ -14,7 +14,7 @@ class TrendingSectorScreenSimmer extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView.separated(
       itemCount: 25,
-      padding: EdgeInsets.symmetric(horizontal: Dimen.padding.sp),
+      padding: EdgeInsets.symmetric(horizontal: Dimen.padding),
       itemBuilder: (context, index) {
         if (index == 0) {
           return Column(
@@ -23,7 +23,7 @@ class TrendingSectorScreenSimmer extends StatelessWidget {
               const SpacerVertical(),
               Divider(
                 color: ThemeColors.greyBorder,
-                height: 15.sp,
+                height: 15,
                 thickness: 1,
               ),
               Row(
@@ -51,7 +51,7 @@ class TrendingSectorScreenSimmer extends StatelessWidget {
               ),
               Divider(
                 color: ThemeColors.greyBorder,
-                height: 15.sp,
+                height: 15,
                 thickness: 1,
               ),
             ],

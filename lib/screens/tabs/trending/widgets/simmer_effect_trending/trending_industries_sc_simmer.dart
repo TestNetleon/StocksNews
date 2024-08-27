@@ -13,7 +13,7 @@ class TrendingIndustriesSimmer extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView.separated(
       itemCount: 10,
-      padding: EdgeInsets.symmetric(horizontal: Dimen.padding.sp),
+      padding: EdgeInsets.symmetric(horizontal: Dimen.padding),
       itemBuilder: (context, index) {
         if (index == 0) {
           return Column(

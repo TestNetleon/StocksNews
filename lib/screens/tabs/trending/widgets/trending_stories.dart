@@ -79,7 +79,7 @@ class TrendingStories extends StatelessWidget {
           separatorBuilder: (BuildContext context, int index) {
             return Divider(
               color: ThemeColors.greyBorder,
-              height: 20.sp,
+              height: 20,
             );
             // return const SpacerVertical(height: 12);
           },

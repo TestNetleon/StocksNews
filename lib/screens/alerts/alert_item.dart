@@ -126,7 +126,7 @@ class AlertsItem extends StatelessWidget {
                 child: Container(
                   width: 48,
                   height: 48,
-                  padding: EdgeInsets.all(5.sp),
+                  padding: EdgeInsets.all(5),
                   child: CachedNetworkImagesWidget(
                     data.image,
                     // width: 30,

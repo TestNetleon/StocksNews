@@ -135,9 +135,9 @@ class _RedditTwitterState extends State<RedditTwitter> {
               visible: provider.socialSentimentRes?.avgSentiment != null,
               child: Padding(
                   padding: EdgeInsets.fromLTRB(
-                    Dimen.padding.sp,
+                    Dimen.padding,
                     0,
-                    Dimen.padding.sp,
+                    Dimen.padding,
                     0,
                   ),
                   child: const SocialSentimentsGraph()),
@@ -145,9 +145,9 @@ class _RedditTwitterState extends State<RedditTwitter> {
             const SpacerVertical(),
             Padding(
               padding: EdgeInsets.fromLTRB(
-                Dimen.padding.sp,
+                Dimen.padding,
                 0,
-                Dimen.padding.sp,
+                Dimen.padding,
                 0,
               ),
               child: TextInputFieldSearch(
@@ -163,9 +163,9 @@ class _RedditTwitterState extends State<RedditTwitter> {
             const SpacerVertical(height: 10),
             Padding(
               padding: EdgeInsets.fromLTRB(
-                Dimen.padding.sp,
+                Dimen.padding,
                 0,
-                Dimen.padding.sp,
+                Dimen.padding,
                 0,
               ),
               child: Row(
@@ -182,9 +182,9 @@ class _RedditTwitterState extends State<RedditTwitter> {
             const SpacerVertical(height: 5),
             Padding(
               padding: EdgeInsets.fromLTRB(
-                Dimen.padding.sp,
+                Dimen.padding,
                 0,
-                Dimen.padding.sp,
+                Dimen.padding,
                 0,
               ),
               child: Row(
@@ -283,9 +283,9 @@ class _RedditTwitterState extends State<RedditTwitter> {
 
                 Padding(
                   padding: EdgeInsets.fromLTRB(
-                    Dimen.padding.sp,
+                    Dimen.padding,
                     0,
-                    Dimen.padding.sp,
+                    Dimen.padding,
                     0,
                   ),
                   child: ScreenTitle(

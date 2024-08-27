@@ -91,7 +91,7 @@ class InsiderScreenSimmer extends StatelessWidget {
         // return const SpacerVertical(height: 12);
         return Divider(
           color: ThemeColors.greyBorder,
-          height: 20.sp,
+          height: 20,
         );
       },
     );

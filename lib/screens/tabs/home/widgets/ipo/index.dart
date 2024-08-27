@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/ipo_res.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
@@ -24,7 +23,7 @@ class IpoIndex extends StatelessWidget {
         },
         separatorBuilder: (context, index) {
           return Divider(
-            height: 12.sp,
+            height: 12,
             color: ThemeColors.greyBorder,
           );
         },

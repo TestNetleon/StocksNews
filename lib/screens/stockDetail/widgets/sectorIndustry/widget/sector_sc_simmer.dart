@@ -12,8 +12,8 @@ class SectorScreenSimmer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.fromLTRB(
-          Dimen.padding.sp, Dimen.padding.sp, Dimen.padding.sp, 0),
+      padding:
+          EdgeInsets.fromLTRB(Dimen.padding, Dimen.padding, Dimen.padding, 0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

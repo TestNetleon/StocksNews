@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/stockDetailRes/sd_news.dart';
 import 'package:stocks_news_new/providers/stock_detail_new.dart';
@@ -178,7 +177,7 @@ class _SdNewsNState extends State<SdNewsN> {
                   separatorBuilder: (BuildContext context, int index) {
                     return Divider(
                       color: ThemeColors.greyBorder,
-                      height: 20.sp,
+                      height: 20,
                     );
                   },
                   itemCount: provider.newsResN?.topPosts?.length ?? 0,

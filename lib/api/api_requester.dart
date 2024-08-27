@@ -404,7 +404,6 @@ void navigateToRequiredScreen(InAppNotification? inAppMsg) {
       MaterialPageRoute(
         builder: (_) => NewMembership(
           inAppMsgId: inAppMsg?.id,
-          withClickCondition: true,
         ),
       ),
       // arguments: {"slug": inAppMsg?.slug, "inAppMsgId": inAppMsg?.id},
