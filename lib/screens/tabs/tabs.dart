@@ -28,6 +28,7 @@ import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:vibration/vibration.dart';
+import '../../utils/utils.dart';
 import '../membership_new/membership.dart';
 
 class Tabs extends StatefulWidget {
@@ -71,10 +72,16 @@ class _TabsState extends State<Tabs> {
   }
 
   _showMembership() {
+    // Navigator.push(
+    //   context,
+    //   MaterialPageRoute(
+    //     builder: (context) => NewMembership(cancle: true),
+    //   ),
+    // );
     Navigator.push(
       context,
-      MaterialPageRoute(
-        builder: (context) => NewMembership(),
+      createRoute(
+        NewMembership(cancel: true),
       ),
     );
   }

@@ -26,9 +26,11 @@ class AppBarHome extends StatefulWidget implements PreferredSizeWidget {
   final String? title;
   final String? subTitle;
   final Widget? widget;
+  final IconData? icon;
 //
   const AppBarHome({
     super.key,
+    this.icon,
     this.showTrailing = true,
     this.isPopback = false,
     this.onFilterClick,
@@ -139,8 +141,8 @@ class _AppBarHomeState extends State<AppBarHome> {
                                 }
                               }
                             },
-                        icon: const Icon(
-                          Icons.arrow_back_ios,
+                        icon: Icon(
+                          widget.icon ?? Icons.arrow_back_ios,
                           color: ThemeColors.white,
                         ),
                       )

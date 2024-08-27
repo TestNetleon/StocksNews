@@ -474,8 +474,8 @@ class UserProvider extends ChangeNotifier {
             Utils().showLog("----navigating from login verify---");
             Navigator.push(
               navigatorKey.currentContext!,
-              MaterialPageRoute(
-                builder: (context) => NewMembership(),
+              createRoute(
+                NewMembership(cancel: true),
               ),
             );
           }
@@ -586,10 +586,16 @@ class UserProvider extends ChangeNotifier {
                   _user?.membership?.purchased == 0) &&
               withLoginMembership) {
             Utils().showLog("----navigating from login verify---");
+            // Navigator.push(
+            //   navigatorKey.currentContext!,
+            //   MaterialPageRoute(
+            //     builder: (context) => NewMembership(cancle: true),
+            //   ),
+            // );
             Navigator.push(
               navigatorKey.currentContext!,
-              MaterialPageRoute(
-                builder: (context) => NewMembership(),
+              createRoute(
+                NewMembership(cancel: true),
               ),
             );
           }
@@ -854,8 +860,8 @@ class UserProvider extends ChangeNotifier {
           Utils().showLog("----navigating from login verify---");
           Navigator.push(
             navigatorKey.currentContext!,
-            MaterialPageRoute(
-              builder: (context) => NewMembership(),
+            createRoute(
+              NewMembership(cancel: true),
             ),
           );
         }

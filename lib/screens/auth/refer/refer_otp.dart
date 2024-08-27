@@ -91,10 +91,12 @@ class _OTPLoginBottomReferState extends State<OTPLoginBottomRefer> {
   @override
   void initState() {
     super.initState();
-    _listenCode();
-    _startTime();
-    verificationId = widget.verificationId;
-    _otpFocusNode.requestFocus();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _listenCode();
+      _startTime();
+      verificationId = widget.verificationId;
+      _otpFocusNode.requestFocus();
+    });
   }
 
   Future<void> _listenCode() async {
@@ -114,16 +116,25 @@ class _OTPLoginBottomReferState extends State<OTPLoginBottomRefer> {
   void _startTime() {
     startTiming = 30;
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-      setState(() {
-        startTiming = startTiming - 1;
-        Utils().showLog("Start Timer ? $startTiming");
-        if (startTiming == 0) {
-          startTiming = 30;
-          _timer?.cancel();
-          Utils().showLog("Timer Stopped ? $startTiming");
-        }
-      });
+      if (mounted) {
+        setState(() {
+          startTiming = startTiming - 1;
+          Utils().showLog("Start Timer ? $startTiming");
+          if (startTiming == 0) {
+            startTiming = 30;
+            _timer?.cancel();
+            Utils().showLog("Timer Stopped ? $startTiming");
+          }
+        });
+      }
     });
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    _otpFocusNode.dispose();
+    super.dispose();
   }
 
   // void _onVeryClick() async {

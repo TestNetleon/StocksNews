@@ -48,7 +48,7 @@ class _AffiliateBenefitsFAQsState extends State<AffiliateBenefitsFAQs> {
               openIndex: _faqOpenIndex,
               index: index,
               onTap: () {
-                setOpenIndex(index);
+                setOpenIndex(_faqOpenIndex == index ? -1 : index);
               },
               textColor: Colors.black,
             );

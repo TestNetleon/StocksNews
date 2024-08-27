@@ -311,7 +311,7 @@ class _NewMembershipUpgradeCurrentPlanState
       Utils().showLog("Ask phone for membership-----");
       await membershipLogin();
     }
-    if (provider.user?.phone != null || provider.user?.phone != '') {
+    if (provider.user?.phone != null && provider.user?.phone != '') {
       Utils().showLog("Open Paywall-----");
       await RevenueCatService.initializeSubscription(type: type);
     }
