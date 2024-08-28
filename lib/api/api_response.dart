@@ -126,10 +126,12 @@ class Extra {
   final String? notifyTextMsg;
   String? phoneCodeError;
   String? phoneError;
+  final String? recommendation;
 
   Extra({
     this.adManagers,
     this.adManager,
+    this.recommendation,
     this.storeTitle,
     this.storeSubTitle,
     this.showFeatured,
@@ -212,6 +214,8 @@ class Extra {
 
   factory Extra.fromJson(Map<String, dynamic> json) => Extra(
         search: json["search"],
+        recommendation: json["recommendation"],
+
         storeTitle: json["store_title"],
         notifyTextMsg: json['notification_setting_txt'],
         storeSubTitle: json["store_subtitle"],
@@ -377,6 +381,7 @@ class Extra {
         "show_membership": showMembership,
         "verify_identity_text": verifyIdentity,
         "show_morningstar": showMorningstar,
+        "recommendation": recommendation,
         "verify_membership_text": verifySubscription,
         "self_rank": selfRank,
         "earn_condition": earnCondition,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:stocks_news_new/providers/stockAnalysis/provider.dart';
 import 'package:stocks_news_new/screens/MsAnalysis/faq/faq.dart';
 import 'package:stocks_news_new/screens/MsAnalysis/widget/peer_comparison.dart';
 import 'package:stocks_news_new/screens/MsAnalysis/widget/price_volatility.dart';
@@ -29,6 +30,14 @@ class MsAnalysis extends StatefulWidget {
 }
 
 class _MsAnalysisState extends State<MsAnalysis> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<MSAnalysisProvider>().callAPIs();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     StockDetailProviderNew provider = context.watch<StockDetailProviderNew>();

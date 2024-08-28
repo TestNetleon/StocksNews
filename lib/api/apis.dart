@@ -194,10 +194,11 @@ class Apis {
   // static const tsRequestBuy = "/simulator/buy-share";
   // static const tsRequestSell = "/simulator/sell-share";
   static const tsOpenList = "/simulator/list-purchased-shares";
-
   // ---------   Trading Simulator End --------------
-
   static const loginNew = "/check-user";
+
+  // ---------   STock Analysis Screen --------------
+  static const msRadarChart = "/stock-analysis/radarChart";
 }
 
 class ApiKeys {

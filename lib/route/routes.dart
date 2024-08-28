@@ -114,6 +114,7 @@ import '../providers/high_low_pe.dart';
 import '../providers/low_prices_stocks.dart';
 import '../providers/notification_settings.dart';
 import '../providers/scroll_controller.dart';
+import '../providers/stockAnalysis/provider.dart';
 import '../tradingSimulator/providers/trading_simulator.dart';
 import '../providers/trending_industries.dart';
 import '../screens/marketData/congressionalData/index.dart';
@@ -596,6 +597,7 @@ class Routes {
       ChangeNotifierProvider(create: (_) => TsPortfolioProvider()),
       ChangeNotifierProvider(create: (_) => AdProvider()),
       ChangeNotifierProvider(create: (_) => NewHelpDeskProvider()),
+      ChangeNotifierProvider(create: (_) => MSAnalysisProvider()),
     ];
   }
 }

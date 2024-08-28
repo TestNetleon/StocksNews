@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:stocks_news_new/modals/watchlist_res.dart';
+import 'package:stocks_news_new/providers/watchlist_provider.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/cache_network_image.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
-
-import '../../../modals/stock_details_res.dart';
-import '../../../providers/stock_detail_new.dart';
 import '../../../utils/colors.dart';
 import '../widget/title_tag.dart';
 
@@ -20,9 +19,11 @@ class MsOtherStocks extends StatefulWidget {
 class _MsOtherStocksState extends State<MsOtherStocks> {
   @override
   Widget build(BuildContext context) {
-    StockDetailProviderNew provider = context.watch<StockDetailProviderNew>();
-    CompanyInfo? companyInfo = provider.tabRes?.companyInfo;
-    KeyStats? keyStats = provider.tabRes?.keyStats;
+    WatchlistProvider provider = context.watch<WatchlistProvider>();
+
+    if (provider.data == null || provider.data?.isEmpty == true) {
+      return SizedBox();
+    }
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -41,10 +42,14 @@ class _MsOtherStocksState extends State<MsOtherStocks> {
           physics: BouncingScrollPhysics(),
           child: Row(
             children: List.generate(
-              10,
+              provider.data?.length ?? 0,
               (index) {
+                WatchlistData? data = provider.data?[index];
+                if (data == null) {
+                  return SizedBox();
+                }
                 return Container(
-                  width: 150,
+                  width: 200,
                   padding: const EdgeInsets.only(right: 10),
                   child: Stack(
                     children: [
@@ -87,11 +92,14 @@ class _MsOtherStocksState extends State<MsOtherStocks> {
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 CachedNetworkImagesWidget(
-                                    height: 30, width: 30, companyInfo?.image),
+                                  height: 30,
+                                  width: 30,
+                                  data.image,
+                                ),
                                 SpacerHorizontal(width: 5),
                                 Flexible(
                                   child: Text(
-                                    keyStats?.symbol ?? "N/A",
+                                    data.symbol,
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
                                     style:
@@ -102,7 +110,7 @@ class _MsOtherStocksState extends State<MsOtherStocks> {
                             ),
                             SpacerVertical(height: 6),
                             Text(
-                              keyStats?.name ?? "N/A",
+                              data.name,
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: stylePTSansRegular(
@@ -118,7 +126,7 @@ class _MsOtherStocksState extends State<MsOtherStocks> {
                                 ),
                                 Flexible(
                                   child: Text(
-                                    " 0.38%",
+                                    "${data.changes} (${data.changesPercentage}%)",
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
                                     style: stylePTSansRegular(
