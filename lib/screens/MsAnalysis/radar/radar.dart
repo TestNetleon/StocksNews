@@ -3,6 +3,7 @@ import 'package:fl_chart/fl_chart.dart' as fl;
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/stockAnalysis/provider.dart';
 import 'package:stocks_news_new/utils/constants.dart';
+import 'package:stocks_news_new/widgets/loading.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import '../../../utils/colors.dart';
@@ -61,6 +62,7 @@ class _MsRadarGraphState extends State<MsRadarGraph> {
       return SizedBox(
         height: 350,
         width: double.infinity,
+        child: Loading(),
       );
     }
     if (!provider.isLoadingRadar &&

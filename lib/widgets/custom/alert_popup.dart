@@ -21,28 +21,30 @@ Future popUpAlert({
   Widget? iconWidget,
   TextAlign? messageTextAlign = TextAlign.center,
 }) async {
-  await showDialog(
-    context: navigatorKey.currentContext!,
-    barrierColor: ThemeColors.transparentDark,
-    builder: (context) {
-      return AlertPopupCustom(
-        message: message,
-        title: title,
-        icon: icon,
-        onTap: onTap,
-        cancel: cancel,
-        okText: okText,
-        cancelText: cancelText,
-        canPop: canPop,
-        showButton: showButton,
-        showOk: showOk,
-        messageTextAlign: messageTextAlign,
-        padding: padding,
-        iconWidget: iconWidget,
-        child: child,
-      );
-    },
-  );
+  if (navigatorKey.currentContext != null) {
+    await showDialog(
+      context: navigatorKey.currentContext!,
+      barrierColor: ThemeColors.transparentDark,
+      builder: (context) {
+        return AlertPopupCustom(
+          message: message,
+          title: title,
+          icon: icon,
+          onTap: onTap,
+          cancel: cancel,
+          okText: okText,
+          cancelText: cancelText,
+          canPop: canPop,
+          showButton: showButton,
+          showOk: showOk,
+          messageTextAlign: messageTextAlign,
+          padding: padding,
+          iconWidget: iconWidget,
+          child: child,
+        );
+      },
+    );
+  }
 }
 
 class AlertPopupCustom extends StatelessWidget {

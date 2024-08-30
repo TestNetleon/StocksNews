@@ -12,9 +12,7 @@ import 'package:stocks_news_new/screens/tabs/tabs.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
-
 import '../../database/preference.dart';
-import '../../widgets/custom/alert_popup.dart';
 import '../auth/refer/refer_code.dart';
 import '../blogDetail/index.dart';
 import '../deepLinkScreen/webscreen.dart';
@@ -186,10 +184,10 @@ class _HomeSplashState extends State<HomeSplash> {
           MaterialPageRoute(builder: (_) => const Tabs()),
         );
         if (await Preference.isLoggedIn()) {
-          popUpAlert(
-              message: "Welcome to the Home Screen!",
-              title: "Alert",
-              icon: Images.alertPopGIF);
+          // popUpAlert(
+          //     message: "Welcome to the Home Screen!",
+          //     title: "Alert",
+          //     icon: Images.alertPopGIF);
           return;
         }
         isPhone ? signupSheet() : signupSheetTablet();
@@ -238,6 +236,7 @@ class _HomeSplashState extends State<HomeSplash> {
           MaterialPageRoute(builder: (_) => const ReferAFriend()),
         );
       } else if (type == NotificationType.membership.name) {
+        // popUpAlert(message: "IN HERE IN HOME SPLASH");
         Navigator.pushReplacement(
           navigatorKey.currentContext!,
           MaterialPageRoute(

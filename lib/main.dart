@@ -56,7 +56,9 @@ void main() async {
   }
 
   FirebaseApi().initNotifications();
-
+  // Uri membershipURL =
+  //     await DynamicLinkService.instance.getMembershipDynamicLink();
+  // Utils().showLog("Membership URL $membershipURL");
   splashLoaded = false;
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
       .then((_) {

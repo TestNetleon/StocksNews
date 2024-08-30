@@ -12,8 +12,6 @@ import '../../../../widgets/disclaimer_widget.dart';
 // import '../../../../widgets/theme_button_small.dart';
 // import '../../../MsAnalysis/ms_analysis.dart';
 // import '../../../prediction/radar.dart';
-import '../../../../widgets/theme_button_small.dart';
-import '../../../MsAnalysis/ms_analysis.dart';
 import 'chart.dart';
 import 'company_brief.dart';
 import 'desclaimer.dart';
@@ -81,17 +79,17 @@ class _SdOverviewState extends State<SdOverview> {
                 const SdTopWidgetDetail(),
                 const SpacerVertical(height: 4),
                 const SdTopDisclaimer(),
-                ThemeButtonSmall(
-                  text: "Prediction",
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => MsAnalysis(),
-                      ),
-                    );
-                  },
-                ),
+                // ThemeButtonSmall(
+                //   text: "Prediction",
+                //   onPressed: () {
+                //     Navigator.push(
+                //       context,
+                //       MaterialPageRoute(
+                //         builder: (context) => MsAnalysis(),
+                //       ),
+                //     );
+                //   },
+                // ),
                 // ThemeButtonSmall(
                 //   text: "RADAR",
                 //   onPressed: () {

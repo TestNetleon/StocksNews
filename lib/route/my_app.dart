@@ -63,167 +63,226 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
 
   // -------- Initial Deeplinks For Referral STARTED ---------------
   void getInitialReferralsIfAny() async {
-    final PendingDynamicLinkData? initialLink =
-        await FirebaseDynamicLinks.instance.getInitialLink();
-    Utils().showLog(" FirebaseDynamicLinks.instance.getInitialLink CALLED");
-    if (initialLink != null) {
-      final Uri deepLink = initialLink.link;
-      if (deepLink.path.contains("page.link") ||
-          deepLink.path.contains("/install") ||
-          deepLink.path.contains("?code=") ||
-          deepLink.path.contains("?referrer=") ||
-          deepLink.path.contains("?ref=") ||
-          deepLink.path.contains("?referral_code=")) {
-        _initialDeepLinks = true;
-        await _handleReferralLink(deepLink);
-        Timer(const Duration(seconds: 2), () {
-          _initialDeepLinks = false;
-        });
+    try {
+      final PendingDynamicLinkData? initialLink =
+          await FirebaseDynamicLinks.instance.getInitialLink();
+      Utils().showLog(" FirebaseDynamicLinks.instance.getInitialLink CALLED");
+      if (initialLink != null) {
+        final Uri deepLink = initialLink.link;
+        if (deepLink.path.contains("page.link") ||
+            deepLink.path.contains("/install") ||
+            deepLink.path.contains("?code=") ||
+            deepLink.path.contains("?referrer=") ||
+            deepLink.path.contains("?ref=") ||
+            deepLink.path.contains("?referral_code=")) {
+          _initialDeepLinks = true;
+          await _handleReferralLink(deepLink);
+          Timer(const Duration(seconds: 2), () {
+            _initialDeepLinks = false;
+          });
+        } else {
+          // if (deepLink.path.contains('MEM')) {
+          //   // popUpAlert(message: "ELSE of 1st FUNCTION");
+          //   Timer(const Duration(seconds: 8), () {
+          //     Navigator.push(
+          //       navigatorKey.currentContext!,
+          //       createRoute(
+          //         NewMembership(),
+          //       ),
+          //     );
+          //   });
+          // }
+        }
+      } else {
+        bool isFirstOpen = await Preference.isFirstOpen();
+        if (isFirstOpen) {
+          Timer(const Duration(seconds: 8), () {
+            if (navigatorKey.currentContext!.read<UserProvider>().user ==
+                    null &&
+                !signUpVisible) {
+              signupSheet();
+            }
+          });
+        }
       }
-    } else {
+
+      FirebaseDynamicLinks.instance.onLink.listen(
+        (pendingDynamicLinkData) {
+          if (!_initialDeepLinks) {
+            final Uri deepLink = pendingDynamicLinkData.link;
+            // if (deepLink != null) {
+            if (deepLink.path.contains("page.link") ||
+                deepLink.path.contains("/install") ||
+                deepLink.path.contains("?code=") ||
+                deepLink.path.contains("?referrer=") ||
+                deepLink.path.contains("?ref=") ||
+                deepLink.path.contains("?referral_code=")) {
+              _initialDeepLinks = true;
+              _handleReferralLink(deepLink);
+              Timer(const Duration(seconds: 2), () {
+                _initialDeepLinks = false;
+              });
+            } else {
+              // popUpAlert(message: "2nd ELSE of 1st FUNCTION");
+            }
+          }
+        },
+      );
+    } catch (e) {
+      //
+    }
+  }
+
+  Future<void> _handleReferralLink(Uri deepLink) async {
+    try {
+      // Preference.saveDataList(
+      //   DeeplinkData(
+      //     from: "** _handleReferralLink " "\n" " ${deepLink.toString()} ",
+      //   ),
+      // );
+
+      String? referralCode = deepLink.queryParameters['code'];
+      if (referralCode == null || referralCode == '') {
+        referralCode = deepLink.queryParameters['referrer'];
+      }
+      if (referralCode == null || referralCode == '') {
+        referralCode = deepLink.queryParameters['ref'];
+      }
+      if (referralCode == null || referralCode == '') {
+        referralCode = deepLink.queryParameters['referral_code'];
+      }
+
       bool isFirstOpen = await Preference.isFirstOpen();
-      if (isFirstOpen) {
-        Timer(const Duration(seconds: 8), () {
+      String? code = await Preference.getReferral();
+
+      Utils().showLog("referralCode = $referralCode && "
+          "\n"
+          " code = $code &&  "
+          "\n"
+          " isFirstOpen = $isFirstOpen  "
+          "\n"
+          " deepLink = $deepLink");
+
+      if (referralCode != null &&
+          referralCode != "" &&
+          code == null &&
+          isFirstOpen) {
+        Preference.saveReferral(referralCode);
+        Timer(const Duration(seconds: 4), () {
           if (navigatorKey.currentContext!.read<UserProvider>().user == null &&
               !signUpVisible) {
             signupSheet();
           }
         });
+        FirebaseAnalytics.instance.logEvent(
+          name: 'referrals',
+          parameters: {'referral_code': referralCode},
+        );
       }
+      onDeepLinking = false;
+    } catch (e) {
+      //
     }
-
-    FirebaseDynamicLinks.instance.onLink.listen(
-      (pendingDynamicLinkData) {
-        if (!_initialDeepLinks) {
-          final Uri deepLink = pendingDynamicLinkData.link;
-          // if (deepLink != null) {
-          if (deepLink.path.contains("page.link") ||
-              deepLink.path.contains("/install") ||
-              deepLink.path.contains("?code=") ||
-              deepLink.path.contains("?referrer=") ||
-              deepLink.path.contains("?ref=") ||
-              deepLink.path.contains("?referral_code=")) {
-            _initialDeepLinks = true;
-            _handleReferralLink(deepLink);
-            Timer(const Duration(seconds: 2), () {
-              _initialDeepLinks = false;
-            });
-          }
-        }
-      },
-    );
-  }
-
-  Future<void> _handleReferralLink(Uri deepLink) async {
-    // Preference.saveDataList(
-    //   DeeplinkData(
-    //     from: "** _handleReferralLink " "\n" " ${deepLink.toString()} ",
-    //   ),
-    // );
-
-    String? referralCode = deepLink.queryParameters['code'];
-    if (referralCode == null || referralCode == '') {
-      referralCode = deepLink.queryParameters['referrer'];
-    }
-    if (referralCode == null || referralCode == '') {
-      referralCode = deepLink.queryParameters['ref'];
-    }
-    if (referralCode == null || referralCode == '') {
-      referralCode = deepLink.queryParameters['referral_code'];
-    }
-
-    // popUpAlert(message: "Referral code = $referralCode", title: "RECEIVED");
-    bool isFirstOpen = await Preference.isFirstOpen();
-    String? code = await Preference.getReferral();
-
-    Utils().showLog("referralCode = $referralCode && "
-        "\n"
-        " code = $code &&  "
-        "\n"
-        " isFirstOpen = $isFirstOpen  "
-        "\n"
-        " deepLink = $deepLink");
-
-    if (referralCode != null &&
-        referralCode != "" &&
-        code == null &&
-        isFirstOpen) {
-      Preference.saveReferral(referralCode);
-      Timer(const Duration(seconds: 4), () {
-        if (navigatorKey.currentContext!.read<UserProvider>().user == null &&
-            !signUpVisible) {
-          signupSheet();
-        }
-      });
-      FirebaseAnalytics.instance.logEvent(
-        name: 'referrals',
-        parameters: {'referral_code': referralCode},
-      );
-    }
-    onDeepLinking = false;
   }
   // -------- Initial Deeplinks For Referral Ended ---------------
 
   // -------- Initial Deeplinks when App Opened Started ---------------
   void getInitialDeeplinkWhenAppOpen() async {
-    Uri? initialUri = await _appLinks.getInitialLink();
-    Utils().showLog(" _appLinks.getInitialLink CALLED");
+    try {
+      Uri? initialUri = await _appLinks.getInitialLink();
+      Utils().showLog(" _appLinks.getInitialLink CALLED");
 
-    if (initialUri != null) {
-      final Uri deepLink = initialUri;
-      if (deepLink.path.contains("page.link") ||
-          deepLink.path.contains("/install") ||
-          deepLink.path.contains("?code=") ||
-          deepLink.path.contains("?referrer=") ||
-          deepLink.path.contains("?ref=") ||
-          deepLink.path.contains("?referral_code=")) {
-        // onDeepLinking = true;
-        await _handleReferralLink(deepLink);
-        return;
+      if (initialUri != null) {
+        final Uri deepLink = initialUri;
+        if (deepLink.path.contains("page.link") ||
+            deepLink.path.contains("/install") ||
+            deepLink.path.contains("?code=") ||
+            deepLink.path.contains("?referrer=") ||
+            deepLink.path.contains("?ref=") ||
+            deepLink.path.contains("?referral_code=")) {
+          // onDeepLinking = true;
+          await _handleReferralLink(deepLink);
+          return;
+        } else {
+          // popUpAlert(message: "ELSE of 2nd FUNCTION");
+
+          // if (deepLink.path.contains('membership')) {
+          //   Timer(const Duration(seconds: 8), () {
+          //     Navigator.push(
+          //       navigatorKey.currentContext!,
+          //       createRoute(
+          //         NewMembership(),
+          //       ),
+          //     );
+          //   });
+          // }
+        }
       }
-    }
 
-    if (initialUri != null) {
-      DeeplinkEnum type = containsSpecificPath(initialUri);
-      _initialDeepLinks = true;
-      onDeepLinking =
-          (type == DeeplinkEnum.login || type == DeeplinkEnum.signup)
-              ? false
-              : true;
-      handleDeepLinkNavigation(uri: initialUri);
-      Timer(const Duration(milliseconds: 200), () {
-        _initialDeepLinks = false;
-      });
+      if (initialUri != null) {
+        final Uri deepLink = initialUri;
+        DeeplinkEnum type = containsSpecificPath(initialUri);
+        _initialDeepLinks = true;
+        onDeepLinking =
+            (type == DeeplinkEnum.login || type == DeeplinkEnum.signup)
+                ? false
+                : true;
+
+        if (deepLink.path.contains("MEM")) {
+          onDeepLinking = false;
+        }
+        // popUpAlert(
+        //     message:
+        //         "2nd FUNCTION going for navigation: $onDeepLinking, $type, $popHome");
+        handleDeepLinkNavigation(uri: initialUri, duration: 5);
+        Timer(const Duration(milliseconds: 200), () {
+          _initialDeepLinks = false;
+        });
+      }
+    } catch (e) {
+      //
     }
   }
   // -------- Initial Deeplinks when App Opened Ended ---------------
 
   // -------- Listen for incoming deeplinks Started ---------------
   void startListeningForDeepLinks() {
-    _appLinks.uriLinkStream.listen((event) async {
-      if (onDeepLinking || _initialDeepLinks) return;
+    try {
+      _appLinks.uriLinkStream.listen((event) async {
+        if (onDeepLinking || _initialDeepLinks) return;
 
-      final Uri deepLink = event;
-      if (deepLink.path.contains("page.link") ||
-          deepLink.path.contains("/install") ||
-          deepLink.path.contains("?code=") ||
-          deepLink.path.contains("?referrer=") ||
-          deepLink.path.contains("?ref=") ||
-          deepLink.path.contains("?referral_code=")) {
-        await _handleReferralLink(deepLink);
-        return;
-      }
-      if (event.toString().contains("com.googleusercontent.apps")) {
-        return;
-      }
+        final Uri deepLink = event;
+        if (deepLink.path.contains("page.link") ||
+            deepLink.path.contains("/install") ||
+            deepLink.path.contains("?code=") ||
+            deepLink.path.contains("?referrer=") ||
+            deepLink.path.contains("?ref=") ||
+            deepLink.path.contains("?referral_code=")) {
+          await _handleReferralLink(deepLink);
+          return;
+        }
+        if (event.toString().contains("com.googleusercontent.apps") ||
+            event.toString().contains("app.stocks.news://google/link")) {
+          return;
+        }
 
-      DeeplinkEnum type = containsSpecificPath(event);
-      onDeepLinking =
-          (type == DeeplinkEnum.login || type == DeeplinkEnum.signup)
-              ? false
-              : true;
-      handleDeepLinkNavigation(uri: event);
-    });
+        DeeplinkEnum type = containsSpecificPath(event);
+
+        onDeepLinking =
+            (type == DeeplinkEnum.login || type == DeeplinkEnum.signup)
+                ? false
+                : true;
+        if (deepLink.path.contains("MEM")) {
+          onDeepLinking = false;
+        }
+        // popUpAlert(
+        //     message:
+        //         "3rd FUNCTION going for navigation: $onDeepLinking, $type, $popHome, ${deepLink.path}, $deepLink");
+        handleDeepLinkNavigation(uri: event);
+      });
+    } catch (e) {
+      //
+    }
   }
   // -------- Listen for incoming deeplinks Ended ---------------
 
