@@ -195,7 +195,7 @@ class MSAnalysisProvider extends ChangeNotifier {
     };
     try {
       ApiResponse response = await apiRequest(
-        url: Apis.msPriceVolatility,
+        url: Apis.msStockPricing,
         request: request,
         showProgress: false,
         removeForceLogin: true,
@@ -226,7 +226,7 @@ class MSAnalysisProvider extends ChangeNotifier {
     };
     try {
       ApiResponse response = await apiRequest(
-        url: Apis.msPriceVolatility,
+        url: Apis.msStockProfit,
         request: request,
         showProgress: false,
         removeForceLogin: true,

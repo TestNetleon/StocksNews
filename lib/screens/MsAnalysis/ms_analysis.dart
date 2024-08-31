@@ -12,6 +12,8 @@ import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 import '../../modals/stock_details_res.dart';
 import '../../providers/stock_detail_new.dart';
+import '../prediction/Widget/fundamental.dart';
+import '../prediction/Widget/technical.dart';
 import '../stockDetail/stockDetailTabs/overview/top_widget.dart';
 import 'highlights/index.dart';
 import 'otherStocks/other.dart';
@@ -76,6 +78,14 @@ class _MsAnalysisState extends State<MsAnalysis> {
               MsForecastChart(),
               MsPeerComparison(),
               SpacerVertical(height: Dimen.padding),
+              Padding(
+                padding: EdgeInsets.only(top: Dimen.padding),
+                child: FundamentalAnalysis(),
+              ),
+              Padding(
+                padding: EdgeInsets.only(top: Dimen.padding),
+                child: TechnicalAnalysis(),
+              ),
               MsFAQs(),
             ],
           ),

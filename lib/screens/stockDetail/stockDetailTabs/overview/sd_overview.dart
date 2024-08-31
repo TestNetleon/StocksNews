@@ -12,6 +12,8 @@ import '../../../../widgets/disclaimer_widget.dart';
 // import '../../../../widgets/theme_button_small.dart';
 // import '../../../MsAnalysis/ms_analysis.dart';
 // import '../../../prediction/radar.dart';
+import '../../../../widgets/theme_button_small.dart';
+import '../../../MsAnalysis/ms_analysis.dart';
 import 'chart.dart';
 import 'company_brief.dart';
 import 'desclaimer.dart';
@@ -79,27 +81,33 @@ class _SdOverviewState extends State<SdOverview> {
                 const SdTopWidgetDetail(),
                 const SpacerVertical(height: 4),
                 const SdTopDisclaimer(),
-                // ThemeButtonSmall(
-                //   text: "Prediction",
-                //   onPressed: () {
-                //     Navigator.push(
-                //       context,
-                //       MaterialPageRoute(
-                //         builder: (context) => MsAnalysis(),
-                //       ),
-                //     );
-                //   },
-                // ),
-                // ThemeButtonSmall(
-                //   text: "RADAR",
-                //   onPressed: () {
-                //     Navigator.push(
-                //       context,
-                //       MaterialPageRoute(
-                //         builder: (context) => RadarIndex(),
-                //       ),
-                //     );
-                //   },
+                Visibility(
+                  visible: provider.tabRes?.showAnalysis == true,
+                  child: ThemeButtonSmall(
+                    text: "Stock Analysis",
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => MsAnalysis(),
+                        ),
+                      );
+                    },
+                  ),
+                ),
+                // Visibility(
+                //   visible: provider.tabRes?.showAnalysis == true,
+                //   child: ThemeButtonSmall(
+                //     text: "Extra Analysis",
+                //     onPressed: () {
+                //       Navigator.push(
+                //         context,
+                //         MaterialPageRoute(
+                //           builder: (context) => RadarIndex(),
+                //         ),
+                //       );
+                //     },
+                //   ),
                 // ),
                 const SpacerVertical(height: 4),
                 const SdTopWidgetRange(),
