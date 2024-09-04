@@ -116,6 +116,8 @@ class _LoginBottomState extends State<LoginBottom> {
           "build_code": buildNumber,
           "fcm_permission": "$granted",
           "referral_code": referralCode ?? "",
+          "track_membership_link": memTrack ? "1" : "",
+
           // "serverAuthCode": account?.serverAuthCode,
         };
         provider.googleLogin(request, alreadySubmitted: false);
@@ -149,6 +151,7 @@ class _LoginBottomState extends State<LoginBottom> {
         "build_version": versionName,
         "build_code": buildNumber,
         "fcm_permission": "$granted",
+        "track_membership_link": memTrack ? "1" : "",
       };
       provider.appleLogin(request);
       // GoogleSignInAccount:{displayName: Netleon Family, email: testnetleon@gmail.com, id: 110041963646228833065, photoUrl: https://lh3.googleusercontent.com/a/ACg8ocJocVZ9k-umOKg7MEzLfpG4d_GBrUFYY8o84_r3Am95dA, serverAuthCode: null}

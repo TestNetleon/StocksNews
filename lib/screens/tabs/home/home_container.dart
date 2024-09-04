@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
@@ -22,6 +23,7 @@ import '../../../modals/home_insider_res.dart';
 import '../../../utils/colors.dart';
 import '../../../widgets/custom/refer.dart';
 import '../../AdManager/manager.dart';
+import '../../claimPoints/index.dart';
 import '../news/news_item.dart';
 import 'update/updateCountryCode/update.dart';
 import 'update/updatePhone/update.dart';
@@ -54,13 +56,25 @@ class HomeContainer extends StatelessWidget {
     }
     return Column(
       children: [
+        if (kDebugMode)
+          ThemeButtonSmall(
+            text: "Missions",
+            onPressed: () {
+              // showDialog(
+              //   context: context,
+              //   builder: (context) {
+              //     return CoinAnimationWidget();
+              //   },
+              // );
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ClaimPointsIndex(),
+                ),
+              );
+            },
+          ),
         Visibility(
-          // visible: (userProvider.user?.phoneCode == null ||
-          //         userProvider.user?.phoneCode == '') &&
-          //     (userProvider.user?.phone != null &&
-          //         userProvider.user?.phone != '') &&
-          //     (provider.extra?.phoneCodeError != null &&
-          //         provider.extra?.phoneCodeError != ''),
           visible: provider.extra?.phoneCodeError != null &&
               provider.extra?.phoneCodeError != '',
           child: const HomeUpdateCountryCode(),
@@ -79,45 +93,6 @@ class HomeContainer extends StatelessWidget {
               places: AdPlaces.place1,
               data: provider.trendingExtra?.adManagers?.data?.place1),
         ),
-
-        // Container(
-        //   height: 100,
-        //   width: 250,
-        //   decoration: const BoxDecoration(
-        //     borderRadius: BorderRadius.all(Radius.circular(10)),
-        //     boxShadow: [
-        //       BoxShadow(
-        //         color: Color(0xFFC97F11),
-        //       ),
-        //       BoxShadow(
-        //         color: Color(0xFFE9A136),
-        //         spreadRadius: -5.0,
-        //         blurRadius: 4.0,
-        //       ),
-        //     ],
-        //   ),
-        //   child: const Center(child: Text('Button')),
-        // ),
-
-        // ClipRRect(
-        //   borderRadius: BorderRadius.all(Radius.circular(10)),
-        //   child: InnerShadow(
-        //     blur: 40,
-        //     // offset: Offset(10, 2),
-        //     // color: const Color.fromARGB(0, 254, 255, 254).withOpacity(0.6),
-        //     color: Color(0xffC97F11),
-        //     child: Container(
-        //       width: 300,
-        //       height: 100,
-        //       decoration: const BoxDecoration(
-        //         borderRadius: BorderRadius.all(Radius.circular(10)),
-        //         color: Color(0xffE9A136),
-        //         shape: BoxShape.rectangle,
-        //       ),
-        //     ),
-        //   ),
-        // ),
-
         Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [

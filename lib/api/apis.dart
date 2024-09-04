@@ -203,6 +203,10 @@ class Apis {
   static const msStockHighlight = "/stock-analysis/stockHighLights";
   static const msStockPricing = "/stock-analysis/pricing";
   static const msStockProfit = "/stock-analysis/profit";
+
+  //----------   Missions
+  static const pointClaimList = "/point-claim-list";
+  static const pointsClaim = "/point-claim";
 }
 
 class ApiKeys {

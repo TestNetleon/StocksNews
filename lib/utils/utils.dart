@@ -667,6 +667,7 @@ void handleDeepLinkNavigation({
 
   try {
     if (uri.toString().contains('MEM')) {
+      memTrack = true;
       Utils().showLog("Going to membership page-------");
       Timer(Duration(seconds: duration ?? 0), () {
         Navigator.push(navigatorKey.currentContext!,

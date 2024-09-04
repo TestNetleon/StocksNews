@@ -185,6 +185,7 @@ class _StoreState extends State<Store> {
                                 // }
                                 RevenueCatService.initializeSubscription(
                                   type: data?.points[index].lookupKey,
+                                  fromMembership: false,
                                 );
                               },
                             );

@@ -15,7 +15,10 @@ import '../utils/utils.dart';
 import 'success.dart';
 
 class RevenueCatService {
-  static Future initializeSubscription({String? type}) async {
+  static Future initializeSubscription({
+    String? type,
+    bool fromMembership = true,
+  }) async {
     Utils().showLog("---TYPE $type");
     Purchases.setLogLevel(LogLevel.debug);
     RevenueCatKeyRes? keys =
@@ -37,7 +40,7 @@ class RevenueCatService {
     try {
       navigatorKey.currentContext!
           .read<MembershipProvider>()
-          .getMembershipSuccess(isMembership: type == null || type == '');
+          .getMembershipSuccess(isMembership: fromMembership);
       showGlobalProgressDialog();
       if (configuration != null) {
         await Purchases.configure(configuration);
@@ -51,10 +54,7 @@ class RevenueCatService {
           offering: offerings.getOffering(type ?? 'access'),
         );
 
-        await _handlePaywallResult(
-          result,
-          isMembership: type == null || type == '',
-        );
+        await _handlePaywallResult(result, isMembership: fromMembership);
       } else {
         closeGlobalProgressDialog();
       }

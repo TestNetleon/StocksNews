@@ -84,7 +84,7 @@ class _SdOverviewState extends State<SdOverview> {
                 Visibility(
                   visible: provider.tabRes?.showAnalysis == true,
                   child: ThemeButtonSmall(
-                    text: "Stock Analysis",
+                    text: "Stock Analysis Testing",
                     onPressed: () {
                       Navigator.push(
                         context,
@@ -95,20 +95,6 @@ class _SdOverviewState extends State<SdOverview> {
                     },
                   ),
                 ),
-                // Visibility(
-                //   visible: provider.tabRes?.showAnalysis == true,
-                //   child: ThemeButtonSmall(
-                //     text: "Extra Analysis",
-                //     onPressed: () {
-                //       Navigator.push(
-                //         context,
-                //         MaterialPageRoute(
-                //           builder: (context) => RadarIndex(),
-                //         ),
-                //       );
-                //     },
-                //   ),
-                // ),
                 const SpacerVertical(height: 4),
                 const SdTopWidgetRange(),
                 const SpacerVertical(height: 12),

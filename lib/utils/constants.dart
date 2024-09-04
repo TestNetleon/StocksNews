@@ -89,6 +89,8 @@ bool oneSignalInitialized = false;
 
 bool withLoginMembership = true;
 
+bool memTrack = false;
+
 //------------ Ad API Globals
 
 Map<AdScreen, Map<AdPlaces, bool>> adVisibilityMap = {

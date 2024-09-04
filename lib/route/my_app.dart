@@ -81,17 +81,9 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
             _initialDeepLinks = false;
           });
         } else {
-          // if (deepLink.path.contains('MEM')) {
-          //   // popUpAlert(message: "ELSE of 1st FUNCTION");
-          //   Timer(const Duration(seconds: 8), () {
-          //     Navigator.push(
-          //       navigatorKey.currentContext!,
-          //       createRoute(
-          //         NewMembership(),
-          //       ),
-          //     );
-          //   });
-          // }
+          if (deepLink.path.contains('MEM')) {
+            memTrack = true;
+          }
         }
       } else {
         bool isFirstOpen = await Preference.isFirstOpen();
@@ -123,7 +115,9 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
                 _initialDeepLinks = false;
               });
             } else {
-              // popUpAlert(message: "2nd ELSE of 1st FUNCTION");
+              if (deepLink.path.contains('MEM')) {
+                memTrack = true;
+              }
             }
           }
         },
@@ -204,18 +198,9 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
           await _handleReferralLink(deepLink);
           return;
         } else {
-          // popUpAlert(message: "ELSE of 2nd FUNCTION");
-
-          // if (deepLink.path.contains('membership')) {
-          //   Timer(const Duration(seconds: 8), () {
-          //     Navigator.push(
-          //       navigatorKey.currentContext!,
-          //       createRoute(
-          //         NewMembership(),
-          //       ),
-          //     );
-          //   });
-          // }
+          if (deepLink.path.contains('MEM')) {
+            memTrack = true;
+          }
         }
       }
 

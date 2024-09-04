@@ -41,8 +41,12 @@ class _CoinAnimationWidgetState extends State<CoinAnimationWidget>
     });
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
-    final initialPosition =
-        Offset(screenWidth / 2 - 17.5, screenHeight / 2 - 95);
+    final initialPosition = Offset(
+      // screenWidth / 2 - 17.5,
+      screenWidth / 2 - 17.5,
+
+      screenHeight / 2 - 95,
+    );
     _targetPosition = Offset(0, 0);
     for (int i = 0; i < _coinPositions.length; i++) {
       _coinPositions[i] = initialPosition;
