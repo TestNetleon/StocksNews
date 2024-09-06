@@ -10,7 +10,7 @@ import '../../api/api_response.dart';
 import '../../api/apis.dart';
 import '../../modals/missions/missions.dart';
 import '../../route/my_app.dart';
-import '../../screens/animation/Coin_animation.dart';
+import '../../screens/animation/coin_animation.dart';
 import '../../utils/constants.dart';
 
 class MissionProvider extends ChangeNotifier {
@@ -79,14 +79,17 @@ class MissionProvider extends ChangeNotifier {
   }
 
   // Claim Points
-  Future claimPoints(String type) async {
+  Future claimPoints({
+    String? type,
+    num? points,
+  }) async {
     notifyListeners();
 
     UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
 
     Map request = {
       "token": provider.user?.token ?? "",
-      "type": type,
+      "type": type ?? "",
     };
     try {
       ApiResponse response = await apiRequest(
@@ -101,7 +104,12 @@ class MissionProvider extends ChangeNotifier {
           useSafeArea: true,
           context: navigatorKey.currentContext!,
           builder: (context) {
-            return CoinAnimationWidget();
+            return CoinAnimationWidget(
+              data: CongoClaimRes(
+                points: points,
+                subtitle: response.message,
+              ),
+            );
           },
         );
         getMissions(showProgress: true);

@@ -5,7 +5,6 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/api/api_requester.dart';
 import 'package:stocks_news_new/api/apis.dart';
 import 'package:stocks_news_new/providers/stock_detail_new.dart';
-import 'package:stocks_news_new/providers/watchlist_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 
 import '../../api/api_response.dart';
@@ -15,6 +14,7 @@ import '../../modals/msAnalysis/stock_highlights.dart';
 import '../../utils/constants.dart';
 import '../../utils/utils.dart';
 import '../user_provider.dart';
+import '../watchlist_provider.dart';
 
 class MSAnalysisProvider extends ChangeNotifier {
   String? _errorRadar;
@@ -43,6 +43,7 @@ class MSAnalysisProvider extends ChangeNotifier {
           showProgress: false,
         );
     getPriceVolatilityData();
+    fetchAllStockHighlightData();
   }
 
   Future getRadarChartData() async {
@@ -141,14 +142,77 @@ class MSAnalysisProvider extends ChangeNotifier {
   Status _statusHighLight = Status.ideal;
   Status get statusHighLight => _statusHighLight;
 
-  bool get isLoadingHighLight => _statusPrice == Status.loading;
+  bool get isLoadingHighLight => _statusHighLight == Status.loading;
 
   List<MsStockHighlightsRes>? _stockHighlight;
   List<MsStockHighlightsRes>? get stockHighlight => _stockHighlight;
 
+  String? _errorHighlight;
+  String? get errorHighlight => _errorHighlight ?? Const.errSomethingWrong;
+
   void setStatusH(status) {
     _statusHighLight = status;
     notifyListeners();
+  }
+
+  Future<void> fetchAllStockHighlightData() async {
+    setStatusH(Status.loading);
+
+    UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
+    StockDetailProviderNew detailProvider =
+        navigatorKey.currentContext!.read<StockDetailProviderNew>();
+
+    final Map<String, dynamic> request = {
+      "token": provider.user?.token ?? "",
+      "symbol": detailProvider.tabRes?.keyStats?.symbol ?? "",
+      "start_date": "2024-08-01",
+      "end_date": "2024-08-21",
+    };
+
+    try {
+      final futures = [
+        apiRequest(
+            url: Apis.msStockHighlight,
+            request: request,
+            showProgress: false,
+            removeForceLogin: true),
+        apiRequest(
+            url: Apis.msStockPricing,
+            request: request,
+            showProgress: false,
+            removeForceLogin: true),
+        apiRequest(
+            url: Apis.msStockProfit,
+            request: request,
+            showProgress: false,
+            removeForceLogin: true),
+      ];
+
+      final responses = await Future.wait(futures);
+
+      List<MsStockHighlightsRes> combinedData = [];
+
+      for (var response in responses) {
+        if (response.status) {
+          var data = msStockHighlightsResFromJson(jsonEncode(response.data));
+
+          combinedData.add(data);
+          _errorHighlight = null;
+        } else {
+          _stockHighlight = null;
+          _errorHighlight = null;
+          combinedData = [];
+        }
+      }
+      _stockHighlight = combinedData;
+
+      setStatusH(Status.loaded);
+    } catch (e) {
+      _stockHighlight = null;
+      _errorHighlight = null;
+      setStatusH(Status.loaded);
+      Utils().showLog(e.toString());
+    }
   }
 
   Future getStockHighlightData() async {

@@ -4,6 +4,8 @@ import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 
+import '../../MsAnalysis/widget/title_tag.dart';
+
 class FundamentalAnalysis extends StatefulWidget {
   const FundamentalAnalysis({super.key});
 
@@ -19,11 +21,7 @@ class _FundamentalAnalysisState extends State<FundamentalAnalysis> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          'Fundamental Analysis Metrics',
-          style: stylePTSansBold(fontSize: 18),
-        ),
-        const SpacerVertical(height: 10),
+        MsTitle(title: "Fundamental Analysis Metrics"),
         Container(
           decoration: BoxDecoration(
             color: Colors.white,

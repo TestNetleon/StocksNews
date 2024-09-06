@@ -105,9 +105,10 @@ class ClaimPointsIndividual extends StatelessWidget {
                           if (data?.type == null || data?.type == '') {
                             return;
                           }
-                          context
-                              .read<MissionProvider>()
-                              .claimPoints(data?.type ?? "");
+                          context.read<MissionProvider>().claimPoints(
+                                type: data?.type ?? "",
+                                points: data?.claimPoints,
+                              );
 
                           // showDialog(
                           //   barrierDismissible: false,
@@ -116,7 +117,12 @@ class ClaimPointsIndividual extends StatelessWidget {
                           //   useSafeArea: true,
                           //   context: navigatorKey.currentContext!,
                           //   builder: (context) {
-                          //     return CoinAnimationWidget();
+                          //     return CoinAnimationWidget(
+                          //       data: CongoClaimRes(
+                          //         points: 1,
+                          //         subtitle: "Claimed 1 point from Daily Login",
+                          //       ),
+                          //     );
                           //   },
                           // );
                         },

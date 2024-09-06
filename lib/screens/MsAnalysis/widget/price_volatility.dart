@@ -260,7 +260,7 @@ class MsPriceVolatility extends StatelessWidget {
                       left:
                           (avg / 100) * ScreenUtil().screenWidth - 30, //STATIC
                       child: _barTypeWidget(
-                        title: "industry",
+                        title: "Industry",
                       ),
                     ),
                   ],

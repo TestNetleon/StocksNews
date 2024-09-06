@@ -61,7 +61,7 @@ class _MsAnalysisState extends State<MsAnalysis> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: const [
               SdTopWidgetDetail(),
-              // SpacerVertical(height: Dimen.padding),
+              SpacerVertical(height: Dimen.padding),
               MsRadarGraph(),
               MsOtherStocks(),
               SpacerVertical(height: Dimen.padding),
@@ -78,14 +78,10 @@ class _MsAnalysisState extends State<MsAnalysis> {
               MsForecastChart(),
               MsPeerComparison(),
               SpacerVertical(height: Dimen.padding),
-              Padding(
-                padding: EdgeInsets.only(top: Dimen.padding),
-                child: FundamentalAnalysis(),
-              ),
-              Padding(
-                padding: EdgeInsets.only(top: Dimen.padding),
-                child: TechnicalAnalysis(),
-              ),
+              FundamentalAnalysis(),
+              SpacerVertical(height: Dimen.padding),
+              TechnicalAnalysis(),
+              SpacerVertical(height: Dimen.padding),
               MsFAQs(),
             ],
           ),

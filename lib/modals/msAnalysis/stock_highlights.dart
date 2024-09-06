@@ -8,7 +8,7 @@ String msStockHighlightsResToJson(MsStockHighlightsRes data) =>
 
 class MsStockHighlightsRes {
   final String? label;
-  final String? value;
+  final dynamic value;
   final num? stockPe;
   final num? averagePeerPe;
   final String? description;

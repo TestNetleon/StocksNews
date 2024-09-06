@@ -31,14 +31,12 @@ class _MsRadarGraphState extends State<MsRadarGraph> {
               provider.extra?.recommendation != '',
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
-            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
                 "Stocks.News Verdict",
                 style: styleSansBold(
                   color: ThemeColors.white,
                   fontSize: 20,
-                  // color: ThemeColors.greyText,
                 ),
               ),
               SpacerHorizontal(width: 20),
@@ -75,7 +73,10 @@ class _MsRadarGraphState extends State<MsRadarGraph> {
         height: 350,
         child: fl.RadarChart(
           fl.RadarChartData(
-            radarTouchData: fl.RadarTouchData(enabled: false),
+            radarTouchData: fl.RadarTouchData(
+              enabled: true,
+              touchCallback: (event, response) {},
+            ),
             titlePositionPercentageOffset: 0.05,
             getTitle: (index, angle) {
               final labelAngle = angle - (90 * (3.1415926535897932 / 180));
