@@ -23,7 +23,6 @@ class MsPerformance extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
         child: MsOverviewHeader(
           leadingIcon: Icons.electric_bolt,
-          trailingIcon: Icons.ac_unit_outlined,
           label: 'Performance',
           onTap: provider.openPerformanceStatus,
         ),

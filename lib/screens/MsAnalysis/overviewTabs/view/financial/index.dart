@@ -126,7 +126,6 @@ class _MsFinancialState extends State<MsFinancial>
           onTap: provider.openFinancialsStatus,
           leadingIcon: Icons.price_check_outlined,
           label: "Financials",
-          trailingIcon: Icons.ac_unit_outlined,
         ),
       ),
       animatedChild: Column(

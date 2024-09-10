@@ -28,7 +28,6 @@ class _MsFundamentalState extends State<MsFundamental> {
           onTap: provider.openFundamentalsStatus,
           leadingIcon: Icons.note_add_sharp,
           label: 'Fundamentals',
-          trailingIcon: Icons.ac_unit_outlined,
         ),
       ),
       animatedChild: const Column(

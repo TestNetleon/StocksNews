@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 
 class MsOverviewHeader extends StatefulWidget {
@@ -10,7 +11,7 @@ class MsOverviewHeader extends StatefulWidget {
     super.key,
     this.leadingIcon,
     required this.label,
-    this.trailingIcon,
+    this.trailingIcon = Icons.info,
     required this.onTap,
   });
 
@@ -20,6 +21,7 @@ class MsOverviewHeader extends StatefulWidget {
 
 class _MsOverviewHeaderState extends State<MsOverviewHeader> {
   bool open = false;
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -59,7 +61,7 @@ class _MsOverviewHeaderState extends State<MsOverviewHeader> {
                     padding: const EdgeInsets.only(left: 8),
                     child: Icon(
                       widget.trailingIcon,
-                      color: Colors.orange,
+                      color: ThemeColors.greyBorder,
                       size: 20,
                     ),
                   ),

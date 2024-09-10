@@ -34,7 +34,6 @@ class _MsPriceVolumeState extends State<MsPriceVolume>
         child: MsOverviewHeader(
           leadingIcon: Icons.price_check_outlined,
           label: "Price & Volume",
-          trailingIcon: Icons.ac_unit_outlined,
           onTap: provider.openPriceVolumeStatus,
         ),
       ),
