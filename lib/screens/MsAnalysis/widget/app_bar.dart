@@ -42,9 +42,12 @@ class PredictionAppBar extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  Text(
-                    "${keyStats?.name}",
-                    style: stylePTSansBold(fontSize: 18),
+                  Flexible(
+                    child: Text(
+                      "${keyStats?.symbol}",
+                      maxLines: 1,
+                      style: stylePTSansBold(fontSize: 18),
+                    ),
                   ),
                   Container(
                     decoration: BoxDecoration(

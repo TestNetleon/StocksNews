@@ -160,6 +160,7 @@ import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
+import 'pointer_container.dart';
 import 'title_tag.dart';
 
 class MsPriceVolatility extends StatelessWidget {
@@ -250,7 +251,7 @@ class MsPriceVolatility extends StatelessWidget {
                       top: 0,
                       left:
                           (avg / 100) * ScreenUtil().screenWidth - 20, //STATIC
-                      child: _barTypeWidget(
+                      child: MsPointerContainer(
                         isDownwards: true,
                         title: "${keyStats?.symbol}",
                       ),
@@ -259,7 +260,7 @@ class MsPriceVolatility extends StatelessWidget {
                       top: 70,
                       left:
                           (avg / 100) * ScreenUtil().screenWidth - 30, //STATIC
-                      child: _barTypeWidget(
+                      child: MsPointerContainer(
                         title: "Industry",
                       ),
                     ),
@@ -302,72 +303,5 @@ class MsPriceVolatility extends StatelessWidget {
         borderRadius: BorderRadius.circular(5),
       ),
     );
-  }
-
-  Widget _barTypeWidget({
-    bool isDownwards = false,
-    required String title,
-  }) {
-    return Column(
-      children: [
-        Visibility(
-          visible: !isDownwards,
-          child: CustomPaint(
-            size: Size(10, 6),
-            painter: TrianglePointer(isDownwards: isDownwards),
-          ),
-        ),
-        Container(
-          width: 80,
-          decoration: BoxDecoration(
-            color: ThemeColors.greyText,
-            borderRadius: BorderRadius.circular(30),
-          ),
-          padding: EdgeInsets.symmetric(horizontal: 10, vertical: 3),
-          child: Text(
-            textAlign: TextAlign.center,
-            title,
-            style: styleGeorgiaRegular(color: ThemeColors.background),
-          ),
-        ),
-        Visibility(
-          visible: isDownwards,
-          child: CustomPaint(
-            size: Size(10, 6),
-            painter: TrianglePointer(isDownwards: isDownwards),
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class TrianglePointer extends CustomPainter {
-  final bool isDownwards;
-
-  TrianglePointer({this.isDownwards = true});
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    Paint paint = Paint()..color = ThemeColors.greyText;
-    Path path = Path();
-
-    if (isDownwards) {
-      path.moveTo(0, 0);
-      path.lineTo(size.width / 2, size.height);
-      path.lineTo(size.width, 0);
-    } else {
-      path.moveTo(0, size.height);
-      path.lineTo(size.width / 2, 0);
-      path.lineTo(size.width, size.height);
-    }
-
-    path.close();
-    canvas.drawPath(path, paint);
-  }
-
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) {
-    return false;
   }
 }

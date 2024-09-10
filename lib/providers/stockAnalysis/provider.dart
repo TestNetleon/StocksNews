@@ -17,6 +17,75 @@ import '../user_provider.dart';
 import '../watchlist_provider.dart';
 
 class MSAnalysisProvider extends ChangeNotifier {
+  // Clear Data
+  clearAll() {
+    _openFinancials = false;
+    _openFundamentals = false;
+    _openPerformance = false;
+    _openPriceVolume = false;
+    _openShareholdings = false;
+    notifyListeners();
+  }
+
+  // OPEN performance
+  bool _openPerformance = false;
+  bool get openPerformance => _openPerformance;
+
+  openPerformanceStatus(value) {
+    _openPerformance = value;
+    notifyListeners();
+  }
+
+  // OPEN fundamentals
+  bool _openFundamentals = false;
+  bool get openFundamentals => _openFundamentals;
+
+  openFundamentalsStatus(value) {
+    _openFundamentals = value;
+    notifyListeners();
+  }
+
+  // OPEN priceVolume
+  bool _openPriceVolume = false;
+  bool get openPriceVolume => _openPriceVolume;
+
+  openPriceVolumeStatus(value) {
+    _openPriceVolume = value;
+    notifyListeners();
+  }
+
+  // OPEN financials
+  bool _openFinancials = false;
+  bool get openFinancials => _openFinancials;
+
+  openFinancialsStatus(value) {
+    _openFinancials = value;
+    notifyListeners();
+  }
+
+  // OPEN shareholdings
+  bool _openShareholdings = false;
+  bool get openShareholdings => _openShareholdings;
+
+  openShareholdingsStatus(value) {
+    _openShareholdings = value;
+    notifyListeners();
+  }
+
+//---------------------------------------------------------------------------------------------------
+  callAPIs() {
+    clearAll();
+    getRadarChartData();
+    navigatorKey.currentContext!.read<WatchlistProvider>().getData(
+          loadMore: false,
+          showProgress: false,
+        );
+    getPriceVolatilityData();
+    fetchAllStockHighlightData();
+    getTechnicalAnalysisMetricsData();
+  }
+
+//---------------------------------------------------------------------------------------------------
   String? _errorRadar;
   String? get errorRadar => _errorRadar ?? Const.errSomethingWrong;
 
@@ -34,16 +103,6 @@ class MSAnalysisProvider extends ChangeNotifier {
   void setStatus(status) {
     _statusRadar = status;
     notifyListeners();
-  }
-
-  callAPIs() {
-    getRadarChartData();
-    navigatorKey.currentContext!.read<WatchlistProvider>().getData(
-          loadMore: false,
-          showProgress: false,
-        );
-    getPriceVolatilityData();
-    fetchAllStockHighlightData();
   }
 
   Future getRadarChartData() async {
@@ -83,7 +142,8 @@ class MSAnalysisProvider extends ChangeNotifier {
       Utils().showLog(e.toString());
     }
   }
-// Price Volatility
+
+// Price Volatility---------------------------------------------------------------------------------------------------
 
   String? _errorPrice;
   String? get errorPrice => _errorPrice ?? Const.errSomethingWrong;
@@ -137,7 +197,7 @@ class MSAnalysisProvider extends ChangeNotifier {
     }
   }
 
-  // Stock Highlights
+  // Stock Highlights---------------------------------------------------------------------------------------------------
 
   Status _statusHighLight = Status.ideal;
   Status get statusHighLight => _statusHighLight;
@@ -211,7 +271,7 @@ class MSAnalysisProvider extends ChangeNotifier {
       _stockHighlight = null;
       _errorHighlight = null;
       setStatusH(Status.loaded);
-      Utils().showLog(e.toString());
+      Utils().showLog("~~~~~~~~~$e");
     }
   }
 
@@ -307,4 +367,98 @@ class MSAnalysisProvider extends ChangeNotifier {
       Utils().showLog(e.toString());
     }
   }
+
+  // Stock Score---------------------------------------------------------------------------------------------------
+  bool scoreOn = false;
+  num stockScore = 0.5;
+  onChangeScore(value) {
+    scoreOn = value;
+    scoreOn ? stockScore = .8 : stockScore = 0.5;
+    notifyListeners();
+  }
+
+// Technical Analysis Metrics
+
+  Status _statusMetrics = Status.ideal;
+  Status get statusMetrics => _statusMetrics;
+
+  bool get isLoadingMetrics => _statusMetrics == Status.loading;
+
+  String? _errorMetrics;
+  String? get errorMetrics => _errorMetrics ?? Const.errSomethingWrong;
+
+  void setStatusMetrics(status) {
+    _statusMetrics = status;
+    notifyListeners();
+  }
+
+  List<TechAnalysisMetricsRes>? _metrics;
+  List<TechAnalysisMetricsRes>? get metrics => _metrics;
+
+  Future getTechnicalAnalysisMetricsData() async {
+    try {
+      List<TechAnalysisMetricsRes>? _data;
+
+      _data = [
+        TechAnalysisMetricsRes(
+          title: "Moving Averages (MA)",
+          subTitle: "Total contract value of bookings on a quarterly",
+          revenueOf: "Total Revenue of 2024",
+          revenue: "50.91M",
+          image: Images.graphBG3,
+        ),
+        TechAnalysisMetricsRes(
+          title: "Relative Strength Index (RSI)",
+          subTitle: "Total contract value of bookings on a quarterly",
+          revenueOf: "Total Revenue of 2024",
+          revenue: "50.91M",
+          image: Images.graphBG3,
+        ),
+        TechAnalysisMetricsRes(
+          title: "Bollinger Bands",
+          subTitle: "Total contract value of bookings on a quarterly",
+          revenueOf: "Total Revenue of 2024",
+          revenue: "50.91M",
+          image: Images.graphBG3,
+        ),
+        TechAnalysisMetricsRes(
+          title: "MACD (Moving Average Convergence Divergence)",
+          subTitle: "Total contract value of bookings on a quarterly",
+          revenueOf: "Total Revenue of 2024",
+          revenue: "50.91M",
+          image: Images.graphBG3,
+        ),
+      ];
+
+      _metrics = _data;
+      notifyListeners();
+    } catch (e) {
+      _errorMetrics = Const.errSomethingWrong;
+      setStatus(Status.loaded);
+    }
+  }
+}
+
+class TechAnalysisMetricsRes {
+  final String title;
+  final String subTitle;
+  final String revenueOf;
+  final String revenue;
+  final String image;
+  TechAnalysisMetricsRes({
+    required this.title,
+    required this.subTitle,
+    required this.revenueOf,
+    required this.revenue,
+    required this.image,
+  });
+}
+
+class TechAnalysisSummaryRes {
+  final String label;
+  final num value;
+  TechAnalysisSummaryRes({
+    required this.label,
+    required this.value,
+  });
 }

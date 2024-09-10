@@ -4,14 +4,14 @@
 // import 'package:stocks_news_new/utils/theme.dart';
 // import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 
-// class TechnicalAnalysis extends StatefulWidget {
-//   const TechnicalAnalysis({super.key});
+// class MsTechnicalAnalysis extends StatefulWidget {
+//   const MsTechnicalAnalysis({super.key});
 
 //   @override
-//   State<TechnicalAnalysis> createState() => _TechnicalAnalysisState();
+//   State<MsTechnicalAnalysis> createState() => _MsTechnicalAnalysisState();
 // }
 
-// class _TechnicalAnalysisState extends State<TechnicalAnalysis>
+// class _MsTechnicalAnalysisState extends State<MsTechnicalAnalysis>
 //     with SingleTickerProviderStateMixin {
 //   late TabController controller;
 
@@ -83,97 +83,97 @@
 //                 child: Column(
 //                   crossAxisAlignment: CrossAxisAlignment.start,
 //                   children: [
-//                     // Row(
-//                     //   mainAxisAlignment: MainAxisAlignment.start,
-//                     //   crossAxisAlignment: CrossAxisAlignment.start,
-//                     //   children: [
-//                     //     Expanded(
-//                     //       child: Column(
-//                     //         crossAxisAlignment: CrossAxisAlignment.start,
-//                     //         children: [
-//                     //           Text(
-//                     //               Technical[index]['title']
-//                     //                   .toString(), // Display the overall value here
-//                     //               style: stylePTSansBold(color: Colors.black)),
-//                     //           const SizedBox(
-//                     //             height: 10,
-//                     //           ),
-//                     //           Text(
-//                     //               'Total Contract value of bookings on a quartely basis', // Display the overall value here
-//                     //               style: stylePTSansRegular(
-//                     //                   fontSize: 12, color: Colors.black)),
-//                     //         ],
-//                     //       ),
-//                     //     ),
-//                     //     const SizedBox(
-//                     //       width: 20,
-//                     //     ),
-//                     //     Image.asset(
-//                     //       Images.download,
-//                     //       height: 20,
-//                     //     ),
-//                     //     const SizedBox(
-//                     //       width: 8,
-//                     //     ),
-//                     //     Image.asset(
-//                     //       Images.edit,
-//                     //       height: 20,
-//                     //     ),
-//                     //     const SizedBox(
-//                     //       width: 8,
-//                     //     ),
-//                     //     const Icon(
-//                     //       Icons.arrow_outward,
-//                     //       color: Colors.black,
-//                     //     )
-//                     //   ],
-//                     // ),
-//                     // const SizedBox(
-//                     //   height: 30.0,
-//                     // ),
-//                     // Row(
-//                     //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//                     //   children: [
-//                     //     Column(
-//                     //       crossAxisAlignment: CrossAxisAlignment.start,
-//                     //       children: [
-//                     //         Text(
-//                     //             'Total Revenue of 2024', // Display the overall value here
-//                     //             style: stylePTSansBold(
-//                     //                 fontSize: 14, color: colors[index])),
-//                     //         Row(
-//                     //           children: [
-//                     //             Text(
-//                     //                 Technical[index]['amount']
-//                     //                     .toString(), // Display the overall value here
-//                     //                 style: stylePTSansBold(
-//                     //                     color: colors[index], fontSize: 30)),
-//                     //             Icon(
-//                     //               colors[index] == "red"
-//                     //                   ? Icons.arrow_downward
-//                     //                   : Icons.arrow_upward,
-//                     //               color: colors[index],
-//                     //             )
-//                     //           ],
-//                     //         ),
-//                     //       ],
-//                     //     ),
-//                     //     const SpacerHorizontal(width: 20),
-//                     //     Expanded(
-//                     //       child: SizedBox(
-//                     //         height: 50,
-//                     //         child: Image.asset(
-//                     //           Images.graphBG3,
-//                     //           fit: BoxFit.cover,
-//                     //           color: Colors.green,
-//                     //         ),
-//                     //       ),
-//                     //     ),
-//                     //   ],
-//                     // ),
-//                     // const SizedBox(
-//                     //   height: 10.0,
-//                     // ),
+//                     Row(
+//                       mainAxisAlignment: MainAxisAlignment.start,
+//                       crossAxisAlignment: CrossAxisAlignment.start,
+//                       children: [
+//                         Expanded(
+//                           child: Column(
+//                             crossAxisAlignment: CrossAxisAlignment.start,
+//                             children: [
+//                               Text(
+//                                   Technical[index]['title']
+//                                       .toString(), // Display the overall value here
+//                                   style: stylePTSansBold(color: Colors.black)),
+//                               const SizedBox(
+//                                 height: 10,
+//                               ),
+//                               Text(
+//                                   'Total Contract value of bookings on a quartely basis', // Display the overall value here
+//                                   style: stylePTSansRegular(
+//                                       fontSize: 12, color: Colors.black)),
+//                             ],
+//                           ),
+//                         ),
+//                         const SizedBox(
+//                           width: 20,
+//                         ),
+//                         Image.asset(
+//                           Images.download,
+//                           height: 20,
+//                         ),
+//                         const SizedBox(
+//                           width: 8,
+//                         ),
+//                         Image.asset(
+//                           Images.edit,
+//                           height: 20,
+//                         ),
+//                         const SizedBox(
+//                           width: 8,
+//                         ),
+//                         const Icon(
+//                           Icons.arrow_outward,
+//                           color: Colors.black,
+//                         )
+//                       ],
+//                     ),
+//                     const SizedBox(
+//                       height: 30.0,
+//                     ),
+//                     Row(
+//                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                       children: [
+//                         Column(
+//                           crossAxisAlignment: CrossAxisAlignment.start,
+//                           children: [
+//                             Text(
+//                                 'Total Revenue of 2024', // Display the overall value here
+//                                 style: stylePTSansBold(
+//                                     fontSize: 14, color: colors[index])),
+//                             Row(
+//                               children: [
+//                                 Text(
+//                                     Technical[index]['amount']
+//                                         .toString(), // Display the overall value here
+//                                     style: stylePTSansBold(
+//                                         color: colors[index], fontSize: 30)),
+//                                 Icon(
+//                                   colors[index] == "red"
+//                                       ? Icons.arrow_downward
+//                                       : Icons.arrow_upward,
+//                                   color: colors[index],
+//                                 )
+//                               ],
+//                             ),
+//                           ],
+//                         ),
+//                         const SpacerHorizontal(width: 20),
+//                         Expanded(
+//                           child: SizedBox(
+//                             height: 50,
+//                             child: Image.asset(
+//                               Images.graphBG3,
+//                               fit: BoxFit.cover,
+//                               color: Colors.green,
+//                             ),
+//                           ),
+//                         ),
+//                       ],
+//                     ),
+//                     const SizedBox(
+//                       height: 10.0,
+//                     ),
 //                     Visibility(
 //                       visible: isSelectedList[index],
 //                       child: Column(
@@ -222,99 +222,97 @@
 //                                       //   child: LineChartSample2(),
 //                                       // ),
 
-//                                       // Padding(
-//                                       //   padding: const EdgeInsets.only(
-//                                       //       left: 6.0, right: 8.0),
-//                                       //   child: Row(
-//                                       //     mainAxisAlignment:
-//                                       //         MainAxisAlignment.spaceBetween,
-//                                       //     children: [
-//                                       //       Text(
-//                                       //           'open', // Display the overall value here
-//                                       //           style: stylePTSansBold(
-//                                       //             color: const Color.fromARGB(
-//                                       //                 255, 102, 105, 102),
-//                                       //           )),
-//                                       //       Text(
-//                                       //           'High', // Display the overall value here
-//                                       //           style: stylePTSansBold(
-//                                       //             color: const Color.fromARGB(
-//                                       //                 255, 102, 105, 102),
-//                                       //           )),
-//                                       //       Text(
-//                                       //           'Low', // Display the overall value here
-//                                       //           style: stylePTSansBold(
-//                                       //             color: const Color.fromARGB(
-//                                       //                 255, 102, 105, 102),
-//                                       //           )),
-//                                       //     ],
-//                                       //   ),
-//                                       // ),
-
-//                                       // Row(
-//                                       //   mainAxisAlignment:
-//                                       //       MainAxisAlignment.spaceBetween,
-//                                       //   children: [
-//                                       //     Text(
-//                                       //         '224.06', // Display the overall value here
-//                                       //         style: stylePTSansBold(
-//                                       //             color: Colors.green)),
-//                                       //     Text(
-//                                       //         '105.41', // Display the overall value here
-//                                       //         style: stylePTSansBold(
-//                                       //             color: Colors.red)),
-//                                       //     Text(
-//                                       //         '96.0374', // Display the overall value here
-//                                       //         style: stylePTSansBold(
-//                                       //             color: Colors.red)),
-//                                       //   ],
-//                                       // ),
-//                                       // const SizedBox(
-//                                       //   height: 10.0,
-//                                       // ),
-//                                       // Row(
-//                                       //   mainAxisAlignment:
-//                                       //       MainAxisAlignment.spaceBetween,
-//                                       //   children: [
-//                                       //     Text(
-//                                       //         'Volume', // Display the overall value here
-//                                       //         style: stylePTSansBold(
-//                                       //           color: const Color.fromARGB(
-//                                       //               255, 102, 105, 102),
-//                                       //         )),
-//                                       //     Text(
-//                                       //         'Avg. Volume', // Display the overall value here
-//                                       //         style: stylePTSansBold(
-//                                       //           color: const Color.fromARGB(
-//                                       //               255, 102, 105, 102),
-//                                       //         )),
-//                                       //     Text(
-//                                       //         'Market Cap', // Display the overall value here
-//                                       //         style: stylePTSansBold(
-//                                       //           color: const Color.fromARGB(
-//                                       //               255, 102, 105, 102),
-//                                       //         )),
-//                                       //   ],
-//                                       // ),
-
-//                                       // Row(
-//                                       //   mainAxisAlignment:
-//                                       //       MainAxisAlignment.spaceBetween,
-//                                       //   children: [
-//                                       //     Text(
-//                                       //         '63,6334', // Display the overall value here
-//                                       //         style: stylePTSansBold(
-//                                       //             color: Colors.green)),
-//                                       //     Text(
-//                                       //         '78,323', // Display the overall value here
-//                                       //         style: stylePTSansBold(
-//                                       //             color: Colors.red)),
-//                                       //     Text(
-//                                       //         '13,7435', // Display the overall value here
-//                                       //         style: stylePTSansBold(
-//                                       //             color: Colors.red)),
-//                                       //   ],
-//                                       // )
+//                                       Padding(
+//                                         padding: const EdgeInsets.only(
+//                                             left: 6.0, right: 8.0),
+//                                         child: Row(
+//                                           mainAxisAlignment:
+//                                               MainAxisAlignment.spaceBetween,
+//                                           children: [
+//                                             Text(
+//                                                 'open', // Display the overall value here
+//                                                 style: stylePTSansBold(
+//                                                   color: const Color.fromARGB(
+//                                                       255, 102, 105, 102),
+//                                                 )),
+//                                             Text(
+//                                                 'High', // Display the overall value here
+//                                                 style: stylePTSansBold(
+//                                                   color: const Color.fromARGB(
+//                                                       255, 102, 105, 102),
+//                                                 )),
+//                                             Text(
+//                                                 'Low', // Display the overall value here
+//                                                 style: stylePTSansBold(
+//                                                   color: const Color.fromARGB(
+//                                                       255, 102, 105, 102),
+//                                                 )),
+//                                           ],
+//                                         ),
+//                                       ),
+//                                       Row(
+//                                         mainAxisAlignment:
+//                                             MainAxisAlignment.spaceBetween,
+//                                         children: [
+//                                           Text(
+//                                               '224.06', // Display the overall value here
+//                                               style: stylePTSansBold(
+//                                                   color: Colors.green)),
+//                                           Text(
+//                                               '105.41', // Display the overall value here
+//                                               style: stylePTSansBold(
+//                                                   color: Colors.red)),
+//                                           Text(
+//                                               '96.0374', // Display the overall value here
+//                                               style: stylePTSansBold(
+//                                                   color: Colors.red)),
+//                                         ],
+//                                       ),
+//                                       const SizedBox(
+//                                         height: 10.0,
+//                                       ),
+//                                       Row(
+//                                         mainAxisAlignment:
+//                                             MainAxisAlignment.spaceBetween,
+//                                         children: [
+//                                           Text(
+//                                               'Volume', // Display the overall value here
+//                                               style: stylePTSansBold(
+//                                                 color: const Color.fromARGB(
+//                                                     255, 102, 105, 102),
+//                                               )),
+//                                           Text(
+//                                               'Avg. Volume', // Display the overall value here
+//                                               style: stylePTSansBold(
+//                                                 color: const Color.fromARGB(
+//                                                     255, 102, 105, 102),
+//                                               )),
+//                                           Text(
+//                                               'Market Cap', // Display the overall value here
+//                                               style: stylePTSansBold(
+//                                                 color: const Color.fromARGB(
+//                                                     255, 102, 105, 102),
+//                                               )),
+//                                         ],
+//                                       ),
+//                                       Row(
+//                                         mainAxisAlignment:
+//                                             MainAxisAlignment.spaceBetween,
+//                                         children: [
+//                                           Text(
+//                                               '63,6334', // Display the overall value here
+//                                               style: stylePTSansBold(
+//                                                   color: Colors.green)),
+//                                           Text(
+//                                               '78,323', // Display the overall value here
+//                                               style: stylePTSansBold(
+//                                                   color: Colors.red)),
+//                                           Text(
+//                                               '13,7435', // Display the overall value here
+//                                               style: stylePTSansBold(
+//                                                   color: Colors.red)),
+//                                         ],
+//                                       )
 //                                     ],
 //                                   ),
 //                                 ),
@@ -443,3 +441,40 @@
 //     );
 //   }
 // }
+
+import 'package:flutter/cupertino.dart';
+import 'package:provider/provider.dart';
+import 'package:stocks_news_new/providers/stockAnalysis/provider.dart';
+import 'package:stocks_news_new/screens/MsAnalysis/technicalAnalysis/item.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
+
+import '../widget/title_tag.dart';
+
+class MsTechnicalAnalysis extends StatelessWidget {
+  const MsTechnicalAnalysis({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    MSAnalysisProvider provider = context.watch<MSAnalysisProvider>();
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        MsTitle(title: "Technical Analysis Metrics"),
+        ListView.separated(
+          shrinkWrap: true,
+          physics: NeverScrollableScrollPhysics(),
+          itemBuilder: (context, index) {
+            TechAnalysisMetricsRes? metrics = provider.metrics?[index];
+            return MsTechnicalAnalysisItem(
+              metrics: metrics,
+            );
+          },
+          separatorBuilder: (context, index) {
+            return SpacerVertical(height: 12);
+          },
+          itemCount: 4,
+        ),
+      ],
+    );
+  }
+}

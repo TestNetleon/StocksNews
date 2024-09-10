@@ -1,39 +1,23 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:stocks_news_new/screens/MsAnalysis/performance/performance_tabbarview/overview.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 
-class MsPerformanceTabs extends StatefulWidget {
-  const MsPerformanceTabs({super.key});
+import 'view/overview.dart';
+
+class MsTabs extends StatefulWidget {
+  const MsTabs({super.key});
 
   @override
-  State<MsPerformanceTabs> createState() => _MsPerformanceTabsState();
+  State<MsTabs> createState() => _MsTabsState();
 }
 
-class _MsPerformanceTabsState extends State<MsPerformanceTabs>
-    with SingleTickerProviderStateMixin {
-  TabController? controller;
-
-  @override
-  void initState() {
-    super.initState();
-    controller = TabController(vsync: this, length: 3);
-  }
-
-  @override
-  void dispose() {
-    controller?.dispose();
-    super.dispose();
-  }
-
+class _MsTabsState extends State<MsTabs> with SingleTickerProviderStateMixin {
+  int selectedIndex = 0;
   List<String> menus = [
     'Overview',
     'News',
     'Events',
   ];
-
-  int selectedIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -46,13 +30,7 @@ class _MsPerformanceTabsState extends State<MsPerformanceTabs>
           backgroundColor: const Color.fromARGB(255, 28, 28, 28),
           onValueChanged: (int? index) {
             setState(() {
-              if (index == 0) {
-                selectedIndex = index!;
-              } else if (index == 1) {
-                selectedIndex = index!;
-              } else if (index == 2) {
-                selectedIndex = index!;
-              }
+              selectedIndex = index ?? 0;
             });
           },
           children: {
@@ -74,12 +52,12 @@ class _MsPerformanceTabsState extends State<MsPerformanceTabs>
           },
         ),
         selectedIndex == 0
-            ? PerformanceOverview()
+            ? MsOverview()
             : selectedIndex == 1
                 ? SizedBox()
                 : selectedIndex == 2
                     ? SizedBox()
-                    : PerformanceOverview(),
+                    : SizedBox(),
       ],
     );
   }

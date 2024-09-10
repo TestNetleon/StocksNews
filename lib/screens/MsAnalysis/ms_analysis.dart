@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/stockAnalysis/provider.dart';
@@ -9,19 +10,19 @@ import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
-
 import '../../modals/stock_details_res.dart';
 import '../../providers/stock_detail_new.dart';
-import '../prediction/Widget/fundamental.dart';
-import '../prediction/Widget/technical.dart';
+import '../../widgets/custom/refresh_indicator.dart';
 import '../stockDetail/stockDetailTabs/overview/top_widget.dart';
+import 'fundamentalMetrics/metrics.dart';
 import 'highlights/index.dart';
 import 'otherStocks/other.dart';
 import 'ourTake/index.dart';
-import 'performance/tabs.dart';
+import 'overviewTabs/ms_tabs.dart';
 import 'predictionChart/chart.dart';
 import 'radar/radar.dart';
 import 'swot/index.dart';
+import 'technicalAnalysis/index.dart';
 import 'widget/app_bar.dart';
 
 class MsAnalysis extends StatefulWidget {
@@ -43,6 +44,8 @@ class _MsAnalysisState extends State<MsAnalysis> {
   @override
   Widget build(BuildContext context) {
     StockDetailProviderNew provider = context.watch<StockDetailProviderNew>();
+    MSAnalysisProvider msAnalysisProvider = context.watch<MSAnalysisProvider>();
+
     KeyStats? keyStats = provider.tabRes?.keyStats;
     return BaseContainer(
       drawer: const BaseDrawer(resetIndex: true),
@@ -54,36 +57,41 @@ class _MsAnalysisState extends State<MsAnalysis> {
         subTitle: "",
         widget: keyStats == null ? null : const PredictionAppBar(),
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: const [
-              SdTopWidgetDetail(),
-              SpacerVertical(height: Dimen.padding),
-              MsRadarGraph(),
-              MsOtherStocks(),
-              SpacerVertical(height: Dimen.padding),
-              MsOurTake(),
-              SpacerVertical(height: Dimen.padding),
-              MsOurHighlights(),
-              SpacerVertical(height: Dimen.padding),
-              MsSwotAnalysis(),
-              SpacerVertical(height: Dimen.padding),
-              MsPriceVolatility(),
-              SpacerVertical(height: Dimen.padding),
-              MsPerformanceTabs(),
-              SpacerVertical(height: Dimen.padding),
-              MsForecastChart(),
-              MsPeerComparison(),
-              SpacerVertical(height: Dimen.padding),
-              FundamentalAnalysis(),
-              SpacerVertical(height: Dimen.padding),
-              TechnicalAnalysis(),
-              SpacerVertical(height: Dimen.padding),
-              MsFAQs(),
-            ],
+      body: CommonRefreshIndicator(
+        onRefresh: () async {
+          msAnalysisProvider.callAPIs();
+        },
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: const [
+                SdTopWidgetDetail(),
+                SpacerVertical(height: Dimen.padding),
+                MsRadarGraph(),
+                MsOtherStocks(),
+                SpacerVertical(height: Dimen.padding),
+                MsOurTake(),
+                SpacerVertical(height: Dimen.padding),
+                MsOurHighlights(),
+                SpacerVertical(height: Dimen.padding),
+                MsSwotAnalysis(),
+                SpacerVertical(height: Dimen.padding),
+                MsPriceVolatility(),
+                SpacerVertical(height: Dimen.padding),
+                MsTabs(),
+                SpacerVertical(height: Dimen.padding),
+                MsForecastChart(),
+                MsPeerComparison(),
+                SpacerVertical(height: Dimen.padding),
+                MsFundamentalAnalysisMetrics(),
+                SpacerVertical(height: Dimen.padding),
+                MsTechnicalAnalysis(),
+                SpacerVertical(height: Dimen.padding),
+                MsFAQs(),
+              ],
+            ),
           ),
         ),
       ),

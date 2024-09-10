@@ -119,6 +119,7 @@ class _MsForecastChartState extends State<MsForecastChart>
                 ),
                 bottomTitles: AxisTitles(
                   sideTitles: SideTitles(
+                    interval: 1,
                     showTitles: true,
                     getTitlesWidget: (value, meta) {
                       switch (value.toInt()) {

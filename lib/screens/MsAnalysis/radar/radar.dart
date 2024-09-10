@@ -8,6 +8,7 @@ import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import '../../../utils/colors.dart';
 import '../../../utils/theme.dart';
+import '../stockScore/score.dart';
 
 class MsRadarGraph extends StatefulWidget {
   const MsRadarGraph({super.key});
@@ -50,6 +51,10 @@ class _MsRadarGraphState extends State<MsRadarGraph> {
               ),
             ],
           ),
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 10),
+          child: MsStockScore(),
         ),
       ],
     );

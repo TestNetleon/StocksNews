@@ -24,6 +24,7 @@ import '../../../utils/colors.dart';
 import '../../../widgets/custom/refer.dart';
 import '../../AdManager/manager.dart';
 import '../../claimPoints/index.dart';
+import '../../testing/test.dart';
 import '../news/news_item.dart';
 import 'update/updateCountryCode/update.dart';
 import 'update/updatePhone/update.dart';
@@ -60,16 +61,22 @@ class HomeContainer extends StatelessWidget {
           ThemeButtonSmall(
             text: "Missions",
             onPressed: () {
-              // showDialog(
-              //   context: context,
-              //   builder: (context) {
-              //     return CoinAnimationWidget();
-              //   },
-              // );
               Navigator.push(
                 context,
                 MaterialPageRoute(
                   builder: (context) => ClaimPointsIndex(),
+                ),
+              );
+            },
+          ),
+        if (kDebugMode)
+          ThemeButtonSmall(
+            text: "TEST",
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => TestWidget(),
                 ),
               );
             },
