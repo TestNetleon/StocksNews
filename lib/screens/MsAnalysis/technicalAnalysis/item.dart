@@ -79,11 +79,14 @@ class MsTechnicalAnalysisItem extends StatelessWidget {
                 ),
               ),
               SpacerHorizontal(width: 10),
-              Image.asset(
-                metrics?.image ?? "",
-                width: 170,
-                fit: BoxFit.cover,
-                color: ThemeColors.accent,
+              Visibility(
+                visible: metrics?.image != null && metrics?.image != '',
+                child: Image.asset(
+                  metrics?.image ?? "",
+                  width: 170,
+                  fit: BoxFit.cover,
+                  color: ThemeColors.accent,
+                ),
               ),
             ],
           ),

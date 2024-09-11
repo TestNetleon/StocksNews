@@ -12,7 +12,6 @@ import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import '../../modals/msAnalysis/ms_top_res.dart';
 import '../../widgets/custom/refresh_indicator.dart';
-import '../stockDetail/stockDetailTabs/overview/top_widget.dart';
 import 'fundamentalMetrics/metrics.dart';
 import 'highlights/index.dart';
 import 'otherStocks/other.dart';
@@ -23,6 +22,7 @@ import 'radar/radar.dart';
 import 'swot/index.dart';
 import 'technicalAnalysis/index.dart';
 import 'widget/app_bar.dart';
+import 'widget/ms_top.dart';
 
 class MsAnalysis extends StatefulWidget {
   final String symbol;
@@ -65,7 +65,7 @@ class _MsAnalysisState extends State<MsAnalysis> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: const [
-                SdTopWidgetDetail(),
+                MsTopWidgetDetail(),
                 SpacerVertical(height: Dimen.padding),
                 MsRadarGraph(),
                 MsOtherStocks(),
