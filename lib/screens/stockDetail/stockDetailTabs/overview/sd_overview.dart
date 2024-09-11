@@ -89,7 +89,9 @@ class _SdOverviewState extends State<SdOverview> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => MsAnalysis(),
+                          builder: (context) => MsAnalysis(
+                            symbol: widget.symbol ?? "",
+                          ),
                         ),
                       );
                     },

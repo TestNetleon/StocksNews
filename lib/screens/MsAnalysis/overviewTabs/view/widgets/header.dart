@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 
+import '../../../widget/bottom_sheet.dart';
+
 class MsOverviewHeader extends StatefulWidget {
   final IconData? leadingIcon;
   final IconData? trailingIcon;
@@ -55,14 +57,19 @@ class _MsOverviewHeaderState extends State<MsOverviewHeader> {
                     color: Colors.white,
                   ),
                 ),
-                Visibility(
-                  visible: widget.trailingIcon != null,
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 8),
-                    child: Icon(
-                      widget.trailingIcon,
-                      color: ThemeColors.greyBorder,
-                      size: 20,
+                GestureDetector(
+                  onTap: () {
+                    msShowBottomSheet();
+                  },
+                  child: Visibility(
+                    visible: widget.trailingIcon != null,
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 8),
+                      child: Icon(
+                        widget.trailingIcon,
+                        color: ThemeColors.greyBorder,
+                        size: 20,
+                      ),
                     ),
                   ),
                 ),

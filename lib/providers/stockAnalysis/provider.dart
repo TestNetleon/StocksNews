@@ -1,20 +1,20 @@
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/api/api_requester.dart';
 import 'package:stocks_news_new/api/apis.dart';
-import 'package:stocks_news_new/providers/stock_detail_new.dart';
 import 'package:stocks_news_new/route/my_app.dart';
-
 import '../../api/api_response.dart';
+import '../../modals/msAnalysis/ms_top_res.dart';
+import '../../modals/msAnalysis/other_stocks.dart';
 import '../../modals/msAnalysis/price_volatility.dart';
 import '../../modals/msAnalysis/radar_chart.dart';
 import '../../modals/msAnalysis/stock_highlights.dart';
 import '../../utils/constants.dart';
 import '../../utils/utils.dart';
 import '../user_provider.dart';
-import '../watchlist_provider.dart';
 
 class MSAnalysisProvider extends ChangeNotifier {
   // Clear Data
@@ -73,19 +73,77 @@ class MSAnalysisProvider extends ChangeNotifier {
   }
 
 //---------------------------------------------------------------------------------------------------
-  callAPIs() {
+  callAPIs({required String symbol}) {
     clearAll();
-    getRadarChartData();
-    navigatorKey.currentContext!.read<WatchlistProvider>().getData(
-          loadMore: false,
-          showProgress: false,
-        );
-    getPriceVolatilityData();
-    fetchAllStockHighlightData();
-    getTechnicalAnalysisMetricsData();
+    getStockTopData(symbol: symbol);
+    getRadarChartData(symbol: symbol);
+    getOtherStocksData(symbol: symbol);
+    getPriceVolatilityData(symbol: symbol);
+    fetchAllStockHighlightData(symbol: symbol);
+    getTechnicalAnalysisMetricsData(symbol: symbol);
+  }
+// My Other Stocks---------------------------------------------------------------------------------------------------
+
+  String? _errorTop;
+  String? get errorTop => _errorTop ?? Const.errSomethingWrong;
+
+  Status _statusTop = Status.ideal;
+  Status get statusTop => _statusTop;
+
+  bool get isLoadingTop => _statusTop == Status.loading;
+
+  Extra? _extraTop;
+  Extra? get extraTop => _extraTop;
+
+  MsStockTopRes? _topData;
+  MsStockTopRes? get topData => _topData;
+
+  void setStatusTop(status) {
+    _statusTop = status;
+    notifyListeners();
   }
 
-//---------------------------------------------------------------------------------------------------
+  Future getStockTopData({required String symbol}) async {
+    setStatusTop(Status.loading);
+    UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
+
+    Map request = {
+      "token": provider.user?.token ?? "",
+      "symbol": symbol,
+      "start_date": "2024-08-01",
+      "end_date": "2024-08-21",
+    };
+    try {
+      ApiResponse response = await apiRequest(
+        url: Apis.msStockTop,
+        request: request,
+        baseUrl: Apis.baseUrlLocal, //TODO Remove after this api set to LIVE
+
+        showProgress: false,
+        removeForceLogin: true,
+      );
+      if (response.status) {
+        _topData = msStockTopResFromJson(jsonEncode(response.data));
+        _errorTop = null;
+        _extraTop = (response.extra is Extra ? response.extra as Extra : null);
+      } else {
+        _topData = null;
+        _errorTop = response.message;
+        _extraTop = null;
+      }
+
+      setStatusTop(Status.loaded);
+    } catch (e) {
+      _topData = null;
+
+      _extraTop = null;
+      _errorTop = Const.errSomethingWrong;
+      setStatusTop(Status.loaded);
+      Utils().showLog(e.toString());
+    }
+  }
+
+//Radar Chart----------------------------------------------------------------------------------------
   String? _errorRadar;
   String? get errorRadar => _errorRadar ?? Const.errSomethingWrong;
 
@@ -105,14 +163,13 @@ class MSAnalysisProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future getRadarChartData() async {
+  Future getRadarChartData({required String symbol}) async {
     setStatus(Status.loading);
     UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
-    StockDetailProviderNew detailProvider =
-        navigatorKey.currentContext!.read<StockDetailProviderNew>();
+
     Map request = {
       "token": provider.user?.token ?? "",
-      "symbol": detailProvider.tabRes?.keyStats?.symbol ?? "",
+      "symbol": symbol,
       "start_date": "2024-08-01",
       "end_date": "2024-08-21",
     };
@@ -161,14 +218,13 @@ class MSAnalysisProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future getPriceVolatilityData() async {
+  Future getPriceVolatilityData({required String symbol}) async {
     setStatusPrice(Status.loading);
     UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
-    StockDetailProviderNew detailProvider =
-        navigatorKey.currentContext!.read<StockDetailProviderNew>();
+
     Map request = {
       "token": provider.user?.token ?? "",
-      "symbol": detailProvider.tabRes?.keyStats?.symbol ?? "",
+      "symbol": symbol,
       "start_date": "2024-08-01",
       "end_date": "2024-08-21",
     };
@@ -215,16 +271,14 @@ class MSAnalysisProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> fetchAllStockHighlightData() async {
+  Future<void> fetchAllStockHighlightData({required String symbol}) async {
     setStatusH(Status.loading);
 
     UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
-    StockDetailProviderNew detailProvider =
-        navigatorKey.currentContext!.read<StockDetailProviderNew>();
 
     final Map<String, dynamic> request = {
       "token": provider.user?.token ?? "",
-      "symbol": detailProvider.tabRes?.keyStats?.symbol ?? "",
+      "symbol": symbol,
       "start_date": "2024-08-01",
       "end_date": "2024-08-21",
     };
@@ -275,14 +329,13 @@ class MSAnalysisProvider extends ChangeNotifier {
     }
   }
 
-  Future getStockHighlightData() async {
+  Future getStockHighlightData({required String symbol}) async {
     setStatusH(Status.loading);
     UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
-    StockDetailProviderNew detailProvider =
-        navigatorKey.currentContext!.read<StockDetailProviderNew>();
+
     Map request = {
       "token": provider.user?.token ?? "",
-      "symbol": detailProvider.tabRes?.keyStats?.symbol ?? "",
+      "symbol": symbol,
       "start_date": "2024-08-01",
       "end_date": "2024-08-21",
     };
@@ -306,14 +359,13 @@ class MSAnalysisProvider extends ChangeNotifier {
     }
   }
 
-  Future getStockHighlightPricingData() async {
+  Future getStockHighlightPricingData({required String symbol}) async {
     setStatusH(Status.loading);
     UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
-    StockDetailProviderNew detailProvider =
-        navigatorKey.currentContext!.read<StockDetailProviderNew>();
+
     Map request = {
       "token": provider.user?.token ?? "",
-      "symbol": detailProvider.tabRes?.keyStats?.symbol ?? "",
+      "symbol": symbol,
       "start_date": "2024-08-01",
       "end_date": "2024-08-21",
     };
@@ -337,14 +389,13 @@ class MSAnalysisProvider extends ChangeNotifier {
     }
   }
 
-  Future getStockHighlightProfitData() async {
+  Future getStockHighlightProfitData({required String symbol}) async {
     setStatusH(Status.loading);
     UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
-    StockDetailProviderNew detailProvider =
-        navigatorKey.currentContext!.read<StockDetailProviderNew>();
+
     Map request = {
       "token": provider.user?.token ?? "",
-      "symbol": detailProvider.tabRes?.keyStats?.symbol ?? "",
+      "symbol": symbol,
       "start_date": "2024-08-01",
       "end_date": "2024-08-21",
     };
@@ -377,7 +428,7 @@ class MSAnalysisProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-// Technical Analysis Metrics
+// Technical Analysis Metrics---------------------------------------------------------------------------------------------------
 
   Status _statusMetrics = Status.ideal;
   Status get statusMetrics => _statusMetrics;
@@ -395,11 +446,11 @@ class MSAnalysisProvider extends ChangeNotifier {
   List<TechAnalysisMetricsRes>? _metrics;
   List<TechAnalysisMetricsRes>? get metrics => _metrics;
 
-  Future getTechnicalAnalysisMetricsData() async {
+  Future getTechnicalAnalysisMetricsData({required String symbol}) async {
     try {
-      List<TechAnalysisMetricsRes>? _data;
+      List<TechAnalysisMetricsRes>? data;
 
-      _data = [
+      data = [
         TechAnalysisMetricsRes(
           title: "Moving Averages (MA)",
           subTitle: "Total contract value of bookings on a quarterly",
@@ -430,11 +481,66 @@ class MSAnalysisProvider extends ChangeNotifier {
         ),
       ];
 
-      _metrics = _data;
+      _metrics = data;
       notifyListeners();
     } catch (e) {
       _errorMetrics = Const.errSomethingWrong;
       setStatus(Status.loaded);
+    }
+  }
+
+// My Other Stocks---------------------------------------------------------------------------------------------------
+
+  Status _statusOtherStock = Status.ideal;
+  Status get statusOtherStock => _statusOtherStock;
+
+  bool get isLoadingOtherStock => _statusOtherStock == Status.loading;
+
+  String? _errorOtherStock;
+  String? get errorOtherStock => _errorOtherStock ?? Const.errSomethingWrong;
+
+  List<MsMyOtherStockRes>? _otherStocks;
+  List<MsMyOtherStockRes>? get otherStocks => _otherStocks;
+
+  void setStatusOtherStock(status) {
+    _statusOtherStock = status;
+    notifyListeners();
+  }
+
+  Future getOtherStocksData({required String symbol}) async {
+    setStatusOtherStock(Status.loading);
+    // UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
+
+    Map request = {
+      // "token": provider.user?.token ?? "",
+      "token": "8W9duDkUiWtfIfDUOAypbv3quY9AZC7s",
+
+      "symbol": symbol,
+      "start_date": "2024-08-01",
+      "end_date": "2024-08-21",
+    };
+    try {
+      ApiResponse response = await apiRequest(
+        url: Apis.msOtherStock,
+        baseUrl: Apis.baseUrlLocal, //TODO Remove after this api set to LIVE
+        request: request,
+        showProgress: false,
+        removeForceLogin: true,
+      );
+      if (response.status) {
+        _otherStocks = msMyOtherStockResFromJson(jsonEncode(response.data));
+        _errorOtherStock = null;
+      } else {
+        _otherStocks = null;
+        _errorOtherStock = null;
+      }
+
+      setStatusOtherStock(Status.loaded);
+    } catch (e) {
+      _otherStocks = null;
+      _errorOtherStock = null;
+      setStatusOtherStock(Status.loaded);
+      Utils().showLog(e.toString());
     }
   }
 }

@@ -79,15 +79,22 @@ class _MsRadarGraphState extends State<MsRadarGraph> {
         child: fl.RadarChart(
           fl.RadarChartData(
             radarTouchData: fl.RadarTouchData(
-              enabled: true,
-              touchCallback: (event, response) {},
+              enabled: false,
+              touchCallback: (event, response) {
+                // Utils()
+                //     .showLog("Direction -> ${event.localPosition?.direction}");
+                // Utils().showLog("Distance -> ${event.localPosition?.distance}");
+                // Utils().showLog(
+                //     "Distance Squared -> ${event.localPosition?.distanceSquared}");
+                // Utils().showLog("DX -> ${event.localPosition?.dx}");
+                // Utils().showLog("DY -> ${event.localPosition?.dy}");
+              },
             ),
             titlePositionPercentageOffset: 0.05,
             getTitle: (index, angle) {
-              final labelAngle = angle - (90 * (3.1415926535897932 / 180));
               return fl.RadarChartTitle(
                 text: (provider.radar?[index].label?.toUpperCase()) ?? "N/A",
-                angle: labelAngle + 2,
+                angle: angle,
               );
             },
             titleTextStyle: styleSansBold(color: ThemeColors.white),
@@ -111,10 +118,10 @@ class _MsRadarGraphState extends State<MsRadarGraph> {
             radarBorderData: const BorderSide(
               color: ThemeColors.greyBorder,
             ),
-            tickCount: 2,
+            tickCount: 3,
             tickBorderData: BorderSide(
               color: ThemeColors.greyBorder.withOpacity(0.5),
-              width: 25,
+              width: 15,
               style: BorderStyle.solid,
             ),
             ticksTextStyle: const TextStyle(color: Colors.transparent),

@@ -10,8 +10,7 @@ import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
-import '../../modals/stock_details_res.dart';
-import '../../providers/stock_detail_new.dart';
+import '../../modals/msAnalysis/ms_top_res.dart';
 import '../../widgets/custom/refresh_indicator.dart';
 import '../stockDetail/stockDetailTabs/overview/top_widget.dart';
 import 'fundamentalMetrics/metrics.dart';
@@ -26,7 +25,8 @@ import 'technicalAnalysis/index.dart';
 import 'widget/app_bar.dart';
 
 class MsAnalysis extends StatefulWidget {
-  const MsAnalysis({super.key});
+  final String symbol;
+  const MsAnalysis({super.key, required this.symbol});
 
   @override
   State<MsAnalysis> createState() => _MsAnalysisState();
@@ -37,29 +37,27 @@ class _MsAnalysisState extends State<MsAnalysis> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      context.read<MSAnalysisProvider>().callAPIs();
+      context.read<MSAnalysisProvider>().callAPIs(symbol: widget.symbol);
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    StockDetailProviderNew provider = context.watch<StockDetailProviderNew>();
-    MSAnalysisProvider msAnalysisProvider = context.watch<MSAnalysisProvider>();
-
-    KeyStats? keyStats = provider.tabRes?.keyStats;
+    MSAnalysisProvider provider = context.watch<MSAnalysisProvider>();
+    MsStockTopRes? topData = provider.topData;
     return BaseContainer(
       drawer: const BaseDrawer(resetIndex: true),
       appBar: AppBarHome(
         isPopback: true,
         showTrailing: false,
         canSearch: false,
-        title: keyStats?.name ?? "N/A",
+        title: topData?.name ?? "",
         subTitle: "",
-        widget: keyStats == null ? null : const PredictionAppBar(),
+        widget: topData == null ? null : const PredictionAppBar(),
       ),
       body: CommonRefreshIndicator(
         onRefresh: () async {
-          msAnalysisProvider.callAPIs();
+          provider.callAPIs(symbol: widget.symbol);
         },
         child: SingleChildScrollView(
           child: Padding(

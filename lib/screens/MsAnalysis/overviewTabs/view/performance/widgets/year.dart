@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:stocks_news_new/modals/stock_details_res.dart';
-import 'package:stocks_news_new/providers/stock_detail_new.dart';
+
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
+import '../../../../../../modals/msAnalysis/ms_top_res.dart';
+import '../../../../../../providers/stockAnalysis/provider.dart';
 import '../../../../widget/pointer_container.dart';
 import '../index.dart';
 import 'ms_range_bar.dart';
@@ -16,15 +17,15 @@ class MsPerformanceYear extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    StockDetailProviderNew provider = context.watch<StockDetailProviderNew>();
-    KeyStats? keyStats = provider.tabRes?.keyStats;
+    MSAnalysisProvider provider = context.watch<MSAnalysisProvider>();
+    MsStockTopRes? topData = provider.topData;
 
-    num weekLow = keyStats?.yearLowValue ?? 0;
-    num weekHigh = keyStats?.yearHighValue ?? 0;
-    num todayLow = keyStats?.dayLowValue ?? 0;
-    num todayHigh = keyStats?.dayHighValue ?? 0;
-    num currentPrice = keyStats?.priceValue ?? 0;
-    String price = keyStats?.price ?? "";
+    num weekLow = topData?.yearLowValue ?? 0;
+    num weekHigh = topData?.yearHighValue ?? 0;
+    num todayLow = topData?.dayLowValue ?? 0;
+    num todayHigh = topData?.dayHighValue ?? 0;
+    num currentPrice = topData?.priceValue ?? 0;
+    String price = topData?.price ?? "";
 
     // num weekLow = 0;
     // num weekHigh = 100;
@@ -44,8 +45,8 @@ class MsPerformanceYear extends StatelessWidget {
         ),
         SpacerVertical(height: 8),
         MsPerformanceTitleSubtitle(
-          leading: '${keyStats?.yearLow}',
-          trailing: '${keyStats?.yearHigh}',
+          leading: '${topData?.yearLow}',
+          trailing: '${topData?.yearHigh}',
           color: ThemeColors.white,
         ),
         SpacerVertical(height: 10),
@@ -61,7 +62,7 @@ class MsPerformanceYear extends StatelessWidget {
                 todayLow: todayLow,
                 todayHigh: todayHigh,
                 currentPrice: currentPrice,
-                color: (keyStats?.changesPercentage ?? 0) >= 0
+                color: (topData?.changesPercentage ?? 0) >= 0
                     ? ThemeColors.accent
                     : ThemeColors.sos,
               ),
@@ -71,7 +72,7 @@ class MsPerformanceYear extends StatelessWidget {
                 child: MsPointerContainer(
                   style: styleGeorgiaBold(color: ThemeColors.background),
                   title: price,
-                  color: (keyStats?.changesPercentage ?? 0) >= 0
+                  color: (topData?.changesPercentage ?? 0) >= 0
                       ? ThemeColors.accent
                       : ThemeColors.sos,
                 ),

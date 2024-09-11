@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:stocks_news_new/modals/watchlist_res.dart';
-import 'package:stocks_news_new/providers/watchlist_provider.dart';
+import 'package:stocks_news_new/providers/stockAnalysis/provider.dart';
+import 'package:stocks_news_new/widgets/base_ui_container.dart';
+import '../../../modals/msAnalysis/other_stocks.dart';
 import '../widget/title_tag.dart';
 import 'item.dart';
 
@@ -15,12 +16,35 @@ class MsOtherStocks extends StatefulWidget {
 class _MsOtherStocksState extends State<MsOtherStocks> {
   @override
   Widget build(BuildContext context) {
-    WatchlistProvider provider = context.watch<WatchlistProvider>();
+    MSAnalysisProvider provider = context.watch<MSAnalysisProvider>();
 
-    if (provider.data == null || provider.data?.isEmpty == true) {
-      return SizedBox();
-    }
+    // if (provider.otherStocks == null || provider.otherStocks?.isEmpty == true) {
+    //   return SizedBox();
+    // }
 
+    return BaseUiContainer(
+      hasData: !provider.isLoadingOtherStock && provider.otherStocks != null,
+      isLoading: provider.isLoadingOtherStock,
+      showPreparingText: true,
+      placeholder: _dataWidget(
+          otherStocks: List.generate(
+        3,
+        (index) {
+          return MsMyOtherStockRes(
+            change: "",
+            changesPercentage: null,
+            image: "",
+            name: "",
+            symbol: "",
+            validTicker: 0,
+          );
+        },
+      )),
+      child: _dataWidget(otherStocks: provider.otherStocks),
+    );
+  }
+
+  Column _dataWidget({List<MsMyOtherStockRes>? otherStocks}) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -30,12 +54,9 @@ class _MsOtherStocksState extends State<MsOtherStocks> {
           physics: BouncingScrollPhysics(),
           child: Row(
             children: List.generate(
-              provider.data?.length ?? 0,
+              otherStocks?.length ?? 0,
               (index) {
-                WatchlistData? data = provider.data?[index];
-                if (data == null) {
-                  return SizedBox();
-                }
+                MsMyOtherStockRes? data = otherStocks?[index];
                 return MsOtherStockItem(data: data);
               },
             ),
