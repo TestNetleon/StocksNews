@@ -122,10 +122,17 @@ class _MsFinancialState extends State<MsFinancial>
       open: provider.openFinancials,
       baseChild: Padding(
         padding: const EdgeInsets.all(12),
+        // child: MsOverviewHeader(
+        //   open: provider.openPerformance,
+        //   onTap: provider.openFinancialsStatus,
+        //   leadingIcon: Icons.price_check_outlined,
+        //   label: "Financials",
+        // ),
+
         child: MsOverviewHeader(
-          onTap: provider.openFinancialsStatus,
-          leadingIcon: Icons.price_check_outlined,
+          leadingIcon: Icons.pie_chart,
           label: "Financials",
+          stateKey: MsProviderKeys.financials,
         ),
       ),
       animatedChild: Column(

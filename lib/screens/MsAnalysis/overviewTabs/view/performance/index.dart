@@ -21,10 +21,16 @@ class MsPerformance extends StatelessWidget {
       open: provider.openPerformance,
       baseChild: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+        // child: MsOverviewHeader(
+        //   open: provider.openPerformance,
+        //   leadingIcon: Icons.electric_bolt,
+        //   label: 'Performance',
+        //   onTap: provider.openPerformanceStatus,
+        // ),
         child: MsOverviewHeader(
-          leadingIcon: Icons.electric_bolt,
-          label: 'Performance',
-          onTap: provider.openPerformanceStatus,
+          leadingIcon: Icons.pie_chart,
+          label: "Performance",
+          stateKey: MsProviderKeys.performance,
         ),
       ),
       animatedChild: const Column(

@@ -20,12 +20,16 @@ class MsPerformanceYear extends StatelessWidget {
     MSAnalysisProvider provider = context.watch<MSAnalysisProvider>();
     MsStockTopRes? topData = provider.topData;
 
-    num weekLow = topData?.yearLowValue ?? 0;
-    num weekHigh = topData?.yearHighValue ?? 0;
-    num todayLow = topData?.dayLowValue ?? 0;
-    num todayHigh = topData?.dayHighValue ?? 0;
-    num currentPrice = topData?.priceValue ?? 0;
-    String price = topData?.price ?? "";
+    if (topData == null) {
+      return SizedBox();
+    }
+
+    num weekLow = topData.yearLowValue ?? 0;
+    num weekHigh = topData.yearHighValue ?? 0;
+    num todayLow = topData.dayLowValue ?? 0;
+    num todayHigh = topData.dayHighValue ?? 0;
+    num currentPrice = topData.priceValue ?? 0;
+    String price = topData.price ?? "";
 
     // num weekLow = 0;
     // num weekHigh = 100;
@@ -45,8 +49,8 @@ class MsPerformanceYear extends StatelessWidget {
         ),
         SpacerVertical(height: 8),
         MsPerformanceTitleSubtitle(
-          leading: '${topData?.yearLow}',
-          trailing: '${topData?.yearHigh}',
+          leading: '${topData.yearLow}',
+          trailing: '${topData.yearHigh}',
           color: ThemeColors.white,
         ),
         SpacerVertical(height: 10),
@@ -62,7 +66,7 @@ class MsPerformanceYear extends StatelessWidget {
                 todayLow: todayLow,
                 todayHigh: todayHigh,
                 currentPrice: currentPrice,
-                color: (topData?.changesPercentage ?? 0) >= 0
+                color: (topData.changesPercentage ?? 0) >= 0
                     ? ThemeColors.accent
                     : ThemeColors.sos,
               ),
@@ -72,7 +76,7 @@ class MsPerformanceYear extends StatelessWidget {
                 child: MsPointerContainer(
                   style: styleGeorgiaBold(color: ThemeColors.background),
                   title: price,
-                  color: (topData?.changesPercentage ?? 0) >= 0
+                  color: (topData.changesPercentage ?? 0) >= 0
                       ? ThemeColors.accent
                       : ThemeColors.sos,
                 ),

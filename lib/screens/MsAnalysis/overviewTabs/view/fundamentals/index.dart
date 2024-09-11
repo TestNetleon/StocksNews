@@ -24,10 +24,16 @@ class _MsFundamentalState extends State<MsFundamental> {
       open: provider.openFundamentals,
       baseChild: Padding(
         padding: const EdgeInsets.all(12),
+        // child: MsOverviewHeader(
+        //   open: provider.openPerformance,
+        //   onTap: provider.openFundamentalsStatus,
+        //   leadingIcon: Icons.note_add_sharp,
+        //   label: 'Fundamentals',
+        // ),
         child: MsOverviewHeader(
-          onTap: provider.openFundamentalsStatus,
-          leadingIcon: Icons.note_add_sharp,
-          label: 'Fundamentals',
+          leadingIcon: Icons.pie_chart,
+          label: "Fundamentals",
+          stateKey: MsProviderKeys.fundamentals,
         ),
       ),
       animatedChild: const Column(

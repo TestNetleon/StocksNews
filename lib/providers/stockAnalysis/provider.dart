@@ -16,61 +16,50 @@ import '../../utils/constants.dart';
 import '../../utils/utils.dart';
 import '../user_provider.dart';
 
+enum MsProviderKeys {
+  performance,
+  fundamentals,
+  priceVolume,
+  financials,
+  shareHoldings
+}
+
 class MSAnalysisProvider extends ChangeNotifier {
-  // Clear Data
-  clearAll() {
-    _openFinancials = false;
-    _openFundamentals = false;
-    _openPerformance = false;
-    _openPriceVolume = false;
-    _openShareholdings = false;
+  final Map<MsProviderKeys, bool> _states = {
+    MsProviderKeys.performance: true,
+    MsProviderKeys.fundamentals: true,
+    MsProviderKeys.priceVolume: true,
+    MsProviderKeys.financials: true,
+    MsProviderKeys.shareHoldings: true,
+  };
+
+  void clearAll() {
+    _states.forEach((key, _) {
+      _states[key] = true;
+    });
     notifyListeners();
   }
 
-  // OPEN performance
-  bool _openPerformance = false;
-  bool get openPerformance => _openPerformance;
+  bool getState(MsProviderKeys key) => _states[key] ?? true;
 
-  openPerformanceStatus(value) {
-    _openPerformance = value;
-    notifyListeners();
+  void setState(MsProviderKeys key, bool value) {
+    if (_states.containsKey(key)) {
+      _states[key] = value;
+      notifyListeners();
+    }
   }
 
-  // OPEN fundamentals
-  bool _openFundamentals = false;
-  bool get openFundamentals => _openFundamentals;
-
-  openFundamentalsStatus(value) {
-    _openFundamentals = value;
-    notifyListeners();
+  void toggleState(MsProviderKeys key) {
+    if (_states.containsKey(key)) {
+      setState(key, !(_states[key] ?? true));
+    }
   }
 
-  // OPEN priceVolume
-  bool _openPriceVolume = false;
-  bool get openPriceVolume => _openPriceVolume;
-
-  openPriceVolumeStatus(value) {
-    _openPriceVolume = value;
-    notifyListeners();
-  }
-
-  // OPEN financials
-  bool _openFinancials = false;
-  bool get openFinancials => _openFinancials;
-
-  openFinancialsStatus(value) {
-    _openFinancials = value;
-    notifyListeners();
-  }
-
-  // OPEN shareholdings
-  bool _openShareholdings = false;
-  bool get openShareholdings => _openShareholdings;
-
-  openShareholdingsStatus(value) {
-    _openShareholdings = value;
-    notifyListeners();
-  }
+  bool get openPerformance => getState(MsProviderKeys.performance);
+  bool get openFundamentals => getState(MsProviderKeys.fundamentals);
+  bool get openPriceVolume => getState(MsProviderKeys.priceVolume);
+  bool get openFinancials => getState(MsProviderKeys.financials);
+  bool get openShareholdings => getState(MsProviderKeys.shareHoldings);
 
 //---------------------------------------------------------------------------------------------------
   callAPIs({required String symbol}) {
@@ -309,7 +298,6 @@ class MSAnalysisProvider extends ChangeNotifier {
       for (var response in responses) {
         if (response.status) {
           var data = msStockHighlightsResFromJson(jsonEncode(response.data));
-
           combinedData.add(data);
           _errorHighlight = null;
         } else {

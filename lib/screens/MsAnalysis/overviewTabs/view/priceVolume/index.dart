@@ -32,9 +32,9 @@ class _MsPriceVolumeState extends State<MsPriceVolume>
       baseChild: Padding(
         padding: EdgeInsets.all(12),
         child: MsOverviewHeader(
-          leadingIcon: Icons.price_check_outlined,
+          leadingIcon: Icons.pie_chart,
           label: "Price & Volume",
-          onTap: provider.openPriceVolumeStatus,
+          stateKey: MsProviderKeys.priceVolume,
         ),
       ),
       animatedChild: Column(

@@ -1,36 +1,31 @@
 import 'package:flutter/material.dart';
-import 'package:stocks_news_new/utils/colors.dart';
-import 'package:stocks_news_new/utils/theme.dart';
+import 'package:provider/provider.dart';
+import 'package:stocks_news_new/providers/stockAnalysis/provider.dart';
 
 import '../../../widget/bottom_sheet.dart';
 
-class MsOverviewHeader extends StatefulWidget {
+class MsOverviewHeader extends StatelessWidget {
   final IconData? leadingIcon;
   final IconData? trailingIcon;
-  final Function(bool) onTap;
   final String label;
+  final MsProviderKeys stateKey;
+
   const MsOverviewHeader({
     super.key,
     this.leadingIcon,
     required this.label,
     this.trailingIcon = Icons.info,
-    required this.onTap,
+    required this.stateKey,
   });
 
   @override
-  State<MsOverviewHeader> createState() => _MsOverviewHeaderState();
-}
-
-class _MsOverviewHeaderState extends State<MsOverviewHeader> {
-  bool open = false;
-
-  @override
   Widget build(BuildContext context) {
+    final MSAnalysisProvider provider = context.watch<MSAnalysisProvider>();
+    final bool isOpen = provider.getState(stateKey);
+
     return GestureDetector(
       onTap: () {
-        open = !open;
-        setState(() {});
-        widget.onTap(open);
+        provider.toggleState(stateKey);
       },
       child: Container(
         color: Colors.transparent,
@@ -40,19 +35,19 @@ class _MsOverviewHeaderState extends State<MsOverviewHeader> {
             Row(
               children: [
                 Visibility(
-                  visible: widget.leadingIcon != null,
+                  visible: leadingIcon != null,
                   child: Padding(
                     padding: const EdgeInsets.only(right: 8),
                     child: Icon(
-                      widget.leadingIcon,
+                      leadingIcon,
                       color: Colors.orange,
                       size: 20,
                     ),
                   ),
                 ),
                 Text(
-                  widget.label,
-                  style: stylePTSansRegular(
+                  label,
+                  style: TextStyle(
                     fontSize: 20.0,
                     color: Colors.white,
                   ),
@@ -62,12 +57,12 @@ class _MsOverviewHeaderState extends State<MsOverviewHeader> {
                     msShowBottomSheet();
                   },
                   child: Visibility(
-                    visible: widget.trailingIcon != null,
+                    visible: trailingIcon != null,
                     child: Padding(
                       padding: const EdgeInsets.only(left: 8),
                       child: Icon(
-                        widget.trailingIcon,
-                        color: ThemeColors.greyBorder,
+                        trailingIcon,
+                        color: Colors.grey,
                         size: 20,
                       ),
                     ),
@@ -76,7 +71,7 @@ class _MsOverviewHeaderState extends State<MsOverviewHeader> {
               ],
             ),
             Icon(
-              open
+              isOpen
                   ? Icons.keyboard_arrow_up_sharp
                   : Icons.keyboard_arrow_down_sharp,
               color: Colors.orange,

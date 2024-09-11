@@ -20,7 +20,6 @@ import 'overviewTabs/ms_tabs.dart';
 import 'predictionChart/chart.dart';
 import 'radar/radar.dart';
 import 'swot/index.dart';
-import 'technicalAnalysis/index.dart';
 import 'widget/app_bar.dart';
 import 'widget/ms_top.dart';
 
@@ -85,8 +84,8 @@ class _MsAnalysisState extends State<MsAnalysis> {
                 SpacerVertical(height: Dimen.padding),
                 MsFundamentalAnalysisMetrics(),
                 SpacerVertical(height: Dimen.padding),
-                MsTechnicalAnalysis(),
-                SpacerVertical(height: Dimen.padding),
+                // MsTechnicalAnalysis(),
+                // SpacerVertical(height: Dimen.padding),
                 MsFAQs(),
               ],
             ),

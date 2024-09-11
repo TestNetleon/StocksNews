@@ -80,7 +80,7 @@ class _MsShareholdingsState extends State<MsShareholdings>
         child: MsOverviewHeader(
           leadingIcon: Icons.pie_chart,
           label: "Shareholdings",
-          onTap: provider.openShareholdingsStatus,
+          stateKey: MsProviderKeys.shareHoldings,
         ),
       ),
       animatedChild: Column(

@@ -120,9 +120,12 @@ class MsPerformanceToday extends StatelessWidget {
   Widget build(BuildContext context) {
     MSAnalysisProvider provider = context.watch<MSAnalysisProvider>();
     MsStockTopRes? topData = provider.topData;
-    num todayLow = topData?.dayLowValue ?? 0;
-    num todayHigh = topData?.dayHighValue ?? 0;
-    num currentPrice = topData?.priceValue ?? 0;
+    if (topData == null) {
+      return SizedBox();
+    }
+    num todayLow = topData.dayLowValue ?? 0;
+    num todayHigh = topData.dayHighValue ?? 0;
+    num currentPrice = topData.priceValue ?? 0;
     String price = "\$$currentPrice";
 
     // num todayLow = 0;
@@ -142,8 +145,8 @@ class MsPerformanceToday extends StatelessWidget {
         ),
         SpacerVertical(height: 8),
         MsPerformanceTitleSubtitle(
-          leading: '${topData?.dayLow}',
-          trailing: '${topData?.dayHigh}',
+          leading: '${topData.dayLow}',
+          trailing: '${topData.dayHigh}',
           color: ThemeColors.white,
         ),
         SpacerVertical(height: 10),
@@ -158,7 +161,7 @@ class MsPerformanceToday extends StatelessWidget {
                   borderRadius: BorderRadius.circular(30),
                   minHeight: 8,
                   value: 1,
-                  color: (topData?.changesPercentage ?? 0) >= 0
+                  color: (topData.changesPercentage ?? 0) >= 0
                       ? ThemeColors.accent
                       : ThemeColors.sos,
                 ),
@@ -169,7 +172,7 @@ class MsPerformanceToday extends StatelessWidget {
                 child: MsPointerContainer(
                   style: styleGeorgiaBold(color: ThemeColors.background),
                   title: price,
-                  color: (topData?.changesPercentage ?? 0) >= 0
+                  color: (topData.changesPercentage ?? 0) >= 0
                       ? ThemeColors.accent
                       : ThemeColors.sos,
                 ),
