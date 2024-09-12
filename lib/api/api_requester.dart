@@ -76,6 +76,7 @@ Future<ApiResponse> apiRequest({
 }) async {
   // ConnectivityResult type = await _isConnected();
   // if (type == ConnectivityResult.none) {
+  //   popUpAlert();
   //   return ApiResponse(status: false, message: Const.noInternet);
   // }
 

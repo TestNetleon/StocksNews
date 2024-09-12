@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/stockAnalysis/provider.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import '../../../modals/msAnalysis/other_stocks.dart';
+import '../../../utils/constants.dart';
 import '../widget/title_tag.dart';
 import 'item.dart';
 
@@ -26,6 +27,7 @@ class _MsOtherStocksState extends State<MsOtherStocks> {
       hasData: !provider.isLoadingOtherStock && provider.otherStocks != null,
       isLoading: provider.isLoadingOtherStock,
       showPreparingText: true,
+      hideWidget: true,
       placeholder: _dataWidget(
           otherStocks: List.generate(
         3,
@@ -44,25 +46,28 @@ class _MsOtherStocksState extends State<MsOtherStocks> {
     );
   }
 
-  Column _dataWidget({List<MsMyOtherStockRes>? otherStocks}) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        MsTitle(title: "Your Other Stocks"),
-        SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          physics: BouncingScrollPhysics(),
-          child: Row(
-            children: List.generate(
-              otherStocks?.length ?? 0,
-              (index) {
-                MsMyOtherStockRes? data = otherStocks?[index];
-                return MsOtherStockItem(data: data);
-              },
+  Widget _dataWidget({List<MsMyOtherStockRes>? otherStocks}) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: Dimen.padding),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          MsTitle(title: "Your Other Stocks"),
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            physics: BouncingScrollPhysics(),
+            child: Row(
+              children: List.generate(
+                otherStocks?.length ?? 0,
+                (index) {
+                  MsMyOtherStockRes? data = otherStocks?[index];
+                  return MsOtherStockItem(data: data);
+                },
+              ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

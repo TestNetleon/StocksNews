@@ -31,7 +31,7 @@ class _MsFundamentalState extends State<MsFundamental> {
         //   label: 'Fundamentals',
         // ),
         child: MsOverviewHeader(
-          leadingIcon: Icons.pie_chart,
+          leadingIcon: Icons.file_open_sharp,
           label: "Fundamentals",
           stateKey: MsProviderKeys.fundamentals,
         ),

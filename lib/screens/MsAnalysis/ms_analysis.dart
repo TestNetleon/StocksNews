@@ -19,6 +19,7 @@ import 'ourTake/index.dart';
 import 'overviewTabs/ms_tabs.dart';
 import 'predictionChart/chart.dart';
 import 'radar/radar.dart';
+import 'stockScore/score.dart';
 import 'swot/index.dart';
 import 'widget/app_bar.dart';
 import 'widget/ms_top.dart';
@@ -67,16 +68,13 @@ class _MsAnalysisState extends State<MsAnalysis> {
                 MsTopWidgetDetail(),
                 SpacerVertical(height: Dimen.padding),
                 MsRadarGraph(),
+                MsStockScore(),
                 MsOtherStocks(),
-                SpacerVertical(height: Dimen.padding),
                 MsOurTake(),
-                SpacerVertical(height: Dimen.padding),
                 MsOurHighlights(),
-                SpacerVertical(height: Dimen.padding),
                 MsSwotAnalysis(),
                 SpacerVertical(height: Dimen.padding),
                 MsPriceVolatility(),
-                SpacerVertical(height: Dimen.padding),
                 MsTabs(),
                 SpacerVertical(height: Dimen.padding),
                 MsForecastChart(),

@@ -15,6 +15,7 @@ class BaseUiContainer extends StatelessWidget {
     required this.isLoading,
     this.errorDispCommon = false,
     this.showPreparingText = false,
+    this.hideWidget = false,
     this.onRefresh,
     this.onNavigate,
     this.navBtnText,
@@ -33,6 +34,7 @@ class BaseUiContainer extends StatelessWidget {
   final String? navBtnText;
   final Widget? placeholder;
   final bool? isOldApp;
+  final bool hideWidget;
   final dynamic Function()? onRefresh;
   final dynamic Function()? onNavigate;
 
@@ -62,8 +64,10 @@ class BaseUiContainer extends StatelessWidget {
                       navBtnText: navBtnText,
                     );
                   },
-                  child:
-                      error?.contains('Please update your application') == true
+                  child: hideWidget
+                      ? SizedBox()
+                      : error?.contains('Please update your application') ==
+                              true
                           ? UpdateError(error: error)
                           : ErrorDisplayNewWidget(
                               error: error ?? Const.errNoRecord,

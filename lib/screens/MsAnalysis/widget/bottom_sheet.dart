@@ -39,7 +39,7 @@ class _MsBottomSheetItemState extends State<MsBottomSheetItem> {
             return Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20),
-                color: const Color.fromARGB(255, 49, 49, 49),
+                color: const Color.fromARGB(255, 28, 28, 28),
               ),
               margin: EdgeInsets.only(top: 10, left: 10, right: 10),
             );

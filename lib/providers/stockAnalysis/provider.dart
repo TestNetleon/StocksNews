@@ -37,6 +37,7 @@ class MSAnalysisProvider extends ChangeNotifier {
     _states.forEach((key, _) {
       _states[key] = true;
     });
+    _showScore = true;
     notifyListeners();
   }
 
@@ -202,8 +203,21 @@ class MSAnalysisProvider extends ChangeNotifier {
   MsPriceVolatilityRes? _priceVolatility;
   MsPriceVolatilityRes? get priceVolatility => _priceVolatility;
 
+  bool _showScore = false;
+  bool get showScore => _showScore;
+
   void setStatusPrice(status) {
     _statusPrice = status;
+    notifyListeners();
+  }
+
+  void onChangeScore(bool value) {
+    // for (var i = 0; i < (_priceVolatility?.score?.length ?? 0); i++) {
+    //   _priceVolatility?.score?[i].selected = false;
+    // }
+    // _priceVolatility?.score?[index].selected = true;
+
+    _showScore = value;
     notifyListeners();
   }
 
@@ -408,13 +422,6 @@ class MSAnalysisProvider extends ChangeNotifier {
   }
 
   // Stock Score---------------------------------------------------------------------------------------------------
-  bool scoreOn = false;
-  num stockScore = 0.5;
-  onChangeScore(value) {
-    scoreOn = value;
-    scoreOn ? stockScore = .8 : stockScore = 0.5;
-    notifyListeners();
-  }
 
 // Technical Analysis Metrics---------------------------------------------------------------------------------------------------
 

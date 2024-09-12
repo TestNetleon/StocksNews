@@ -78,7 +78,7 @@ class _MsShareholdingsState extends State<MsShareholdings>
       baseChild: Padding(
         padding: const EdgeInsets.all(12.0),
         child: MsOverviewHeader(
-          leadingIcon: Icons.pie_chart,
+          leadingIcon: Icons.star_half_rounded,
           label: "Shareholdings",
           stateKey: MsProviderKeys.shareHoldings,
         ),

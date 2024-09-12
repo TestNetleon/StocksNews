@@ -684,12 +684,12 @@ class HomeProvider extends ChangeNotifier {
       } else {
         _fwData = null;
       }
-      apiKeyFMP = response.extra?.apiKeyFMP;
+      apiKeyFMP = response.extra?.apiKeyFMP ?? "";
       _updateFeaturedChartData();
     } catch (e) {
       _fwData = null;
       setStatusFW(Status.loading);
-      Utils().showLog("ERROR $e");
+      Utils().showLog("ERRORr $e");
     }
   }
 

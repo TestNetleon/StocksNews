@@ -28,7 +28,7 @@ class MsPerformance extends StatelessWidget {
         //   onTap: provider.openPerformanceStatus,
         // ),
         child: MsOverviewHeader(
-          leadingIcon: Icons.pie_chart,
+          leadingIcon: Icons.electric_bolt,
           label: "Performance",
           stateKey: MsProviderKeys.performance,
         ),

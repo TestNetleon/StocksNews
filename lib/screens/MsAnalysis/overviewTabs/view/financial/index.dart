@@ -130,7 +130,7 @@ class _MsFinancialState extends State<MsFinancial>
         // ),
 
         child: MsOverviewHeader(
-          leadingIcon: Icons.pie_chart,
+          leadingIcon: Icons.format_indent_increase_outlined,
           label: "Financials",
           stateKey: MsProviderKeys.financials,
         ),

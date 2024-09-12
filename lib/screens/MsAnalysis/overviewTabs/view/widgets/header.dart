@@ -57,7 +57,7 @@ class MsOverviewHeader extends StatelessWidget {
                     msShowBottomSheet();
                   },
                   child: Visibility(
-                    visible: trailingIcon != null,
+                    visible: trailingIcon != null && isOpen,
                     child: Padding(
                       padding: const EdgeInsets.only(left: 8),
                       child: Icon(
