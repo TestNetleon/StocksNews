@@ -23,9 +23,7 @@ class HelpDeskNewContainer extends StatelessWidget {
 
     return Column(
       children: [
-        ScreenTitle(
-          subTitle: provider.extraTickets?.subTitle ?? "",
-        ),
+        ScreenTitle(subTitle: provider.extraTickets?.subTitle ?? ""),
         Container(
           decoration: BoxDecoration(
             border: Border.all(color: ThemeColors.greyBorder.withOpacity(0.4)),
@@ -48,7 +46,9 @@ class HelpDeskNewContainer extends StatelessWidget {
                   children: [
                     Container(
                       decoration: const BoxDecoration(
-                          shape: BoxShape.circle, color: ThemeColors.accent),
+                        shape: BoxShape.circle,
+                        color: ThemeColors.accent,
+                      ),
                       padding: const EdgeInsets.all(5),
                       child: const Icon(
                         Icons.edit_note_outlined,

@@ -197,10 +197,11 @@ class _TermsPolicyContainerState extends State<TermsPolicyContainer> {
                                   null &&
                               widget.policyType != PolicyType.disclaimer)
                             DisclaimerWidget(
-                                data: context
-                                    .read<TermsAndPolicyProvider>()
-                                    .extra!
-                                    .disclaimer!)
+                              data: context
+                                  .read<TermsAndPolicyProvider>()
+                                  .extra!
+                                  .disclaimer!,
+                            )
                         ],
                       ),
                     ),

@@ -62,13 +62,6 @@ class _LoginState extends State<Login> {
       return;
     }
 
-    // UserProvider provider = context.read<UserProvider>();
-    // Map request = {
-    //   "username": _controller.text.toLowerCase(),
-    //   "type": "email",
-    // };
-    // provider.login(request, email: _controller.text);
-
     log("Entered NUmber => ${"$countryCode ${_controller.text}"}");
 
     showGlobalProgressDialog();

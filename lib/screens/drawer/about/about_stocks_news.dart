@@ -298,7 +298,6 @@ class _AboutStocksNewsState extends State<AboutStocksNews> {
     //     iconData: Icons.support_agent,
     //     text: "Helpdesk",
     //     onTap: () async {
-
     //       Navigator.push(
     //         navigatorKey.currentContext!,
     //         MaterialPageRoute(builder: (_) => const HelpDesk()),
@@ -306,7 +305,6 @@ class _AboutStocksNewsState extends State<AboutStocksNews> {
     //     },
     //   ),
     // );
-
     visibleAboutTiles.add(
       DrawerRes(
         iconData: Icons.support_agent,
@@ -336,6 +334,7 @@ class _AboutStocksNewsState extends State<AboutStocksNews> {
         ),
       );
     }
+
     return Scaffold(
       backgroundColor: ThemeColors.background,
       body: SafeArea(

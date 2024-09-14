@@ -9,6 +9,7 @@ class CommonCard extends StatelessWidget {
   final AlignmentGeometry begin;
   final AlignmentGeometry end;
   final List<Color>? colors;
+
   const CommonCard({
     super.key,
     this.gradient,

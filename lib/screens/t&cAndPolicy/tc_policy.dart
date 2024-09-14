@@ -12,7 +12,7 @@ class TCandPolicy extends StatelessWidget {
     required this.policyType,
     required this.slug,
   });
-//
+
   @override
   Widget build(BuildContext context) {
     return TermsPolicyContainer(
