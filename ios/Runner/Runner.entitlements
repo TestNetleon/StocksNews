@@ -13,5 +13,9 @@
 		<string>applinks:app.stocks.news</string>
 		<string>applinks:stocksnews.page.link</string>
 	</array>
+	<key>com.apple.security.application-groups</key>
+	<array>
+		<string>group.app.stocks.news.onesignal</string>
+	</array>
 </dict>
 </plist>

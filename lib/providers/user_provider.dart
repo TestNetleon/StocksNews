@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-// import 'package:onesignal_flutter/onesignal_flutter.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/api/api_requester.dart';
 import 'package:stocks_news_new/api/api_response.dart';
@@ -413,6 +413,11 @@ class UserProvider extends ChangeNotifier {
 
         shareUri = await DynamicLinkService.instance.getDynamicLink();
         Preference.setShowIntro(false);
+        var tags = {
+          'email': "${_user?.email}",
+          'phone': "${_user?.phoneCode} ${_user?.phone}"
+        };
+        OneSignal.User.addTags(tags);
         // Navigator.pushAndRemoveUntil(
         //     navigatorKey.currentContext!, Tabs.path, (route) => false);
 
@@ -533,13 +538,15 @@ class UserProvider extends ChangeNotifier {
         _user = UserRes.fromJson(response.data);
         Preference.saveUser(response.data);
         isSVG = isSvgFromUrl(_user?.image);
-
+        var tags = {
+          'email': "${_user?.email}",
+          'phone': "${_user?.phoneCode} ${_user?.phone}"
+        };
+        OneSignal.User.addTags(tags);
         shareUri = await DynamicLinkService.instance.getDynamicLink();
         // shareUri = await DynamicLinkService.instance
         //     .getDynamicLink(_user?.referralCode);
-
         Preference.setShowIntro(false);
-
         if (_user?.signupStatus ?? false) {
           String? referralCode = await Preference.getReferral();
           // if (alreadySubmitted) {
@@ -846,11 +853,11 @@ class UserProvider extends ChangeNotifier {
         Navigator.pop(navigatorKey.currentContext!);
         Preference.setShowIntro(false);
         //--------
-        // var tags = {
-        //   'email': "${_user?.email}",
-        //   'phone': "${_user?.phoneCode} ${_user?.phone}"
-        // };
-        // OneSignal.User.addTags(tags);
+        var tags = {
+          'email': "${_user?.email}",
+          'phone': "${_user?.phoneCode} ${_user?.phone}"
+        };
+        OneSignal.User.addTags(tags);
         //--------
 
         //CHECK MEMBERSHIP
