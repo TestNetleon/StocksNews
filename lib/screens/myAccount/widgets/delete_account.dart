@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/utils/colors.dart';
@@ -16,13 +15,13 @@ class MyAccountDelete extends StatelessWidget {
       visible: !context.watch<UserProvider>().isKeyboardVisible,
       child: Container(
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(30.sp),
+          borderRadius: BorderRadius.circular(30),
           border: Border.all(
-              color: ThemeColors.greyBorder.withOpacity(0.5), width: 2.sp),
+              color: ThemeColors.greyBorder.withOpacity(0.5), width: 2),
         ),
-        padding: EdgeInsets.all(4.sp),
+        padding: EdgeInsets.all(4),
         child: InkWell(
-          borderRadius: BorderRadius.circular(30.sp),
+          borderRadius: BorderRadius.circular(30),
           onTap: () {
             showDialog(
               context: context,
@@ -32,15 +31,15 @@ class MyAccountDelete extends StatelessWidget {
             );
           },
           child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 15.sp, vertical: 6.sp),
+            padding: EdgeInsets.symmetric(horizontal: 15, vertical: 6),
             decoration: BoxDecoration(
               color: ThemeColors.greyBorder.withOpacity(0.5),
-              borderRadius: BorderRadius.circular(30.sp),
+              borderRadius: BorderRadius.circular(30),
             ),
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Icon(Icons.delete_sweep, size: 20.sp),
+                Icon(Icons.delete_sweep, size: 20),
                 const SpacerHorizontal(width: 5),
                 Text(
                   "Delete Account",

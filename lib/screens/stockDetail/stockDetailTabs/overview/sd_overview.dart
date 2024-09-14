@@ -9,9 +9,11 @@ import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/custom/refresh_indicator.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import '../../../../widgets/disclaimer_widget.dart';
+// import '../../../../widgets/theme_button_small.dart';
+// import '../../../MsAnalysis/ms_analysis.dart';
+// import '../../../prediction/radar.dart';
 import '../../../../widgets/theme_button_small.dart';
 import '../../../MsAnalysis/ms_analysis.dart';
-import '../../../prediction/radar.dart';
 import 'chart.dart';
 import 'company_brief.dart';
 import 'desclaimer.dart';
@@ -79,27 +81,21 @@ class _SdOverviewState extends State<SdOverview> {
                 const SdTopWidgetDetail(),
                 const SpacerVertical(height: 4),
                 const SdTopDisclaimer(),
-                ThemeButtonSmall(
-                  text: "Prediction",
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => MsAnalysis(),
-                      ),
-                    );
-                  },
-                ),
-                ThemeButtonSmall(
-                  text: "RADAR",
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => RadarIndex(),
-                      ),
-                    );
-                  },
+                Visibility(
+                  visible: provider.tabRes?.showAnalysis == true,
+                  child: ThemeButtonSmall(
+                    text: "Stock Analysis Testing",
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => MsAnalysis(
+                            symbol: widget.symbol ?? "",
+                          ),
+                        ),
+                      );
+                    },
+                  ),
                 ),
                 const SpacerVertical(height: 4),
                 const SdTopWidgetRange(),

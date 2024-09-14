@@ -1,6 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/insider_trading_res.dart';
 import 'package:stocks_news_new/providers/insider_trading_company_provider.dart';
@@ -58,7 +57,7 @@ class InsiderCompanyContainer extends StatelessWidget {
             clear: false,
           ),
           child: ListView.separated(
-              padding: EdgeInsets.only(bottom: Dimen.padding.sp),
+              padding: EdgeInsets.only(bottom: Dimen.padding),
               itemBuilder: (context, index) {
                 InsiderTradingData? data = provider.companyData?.data[index];
 
@@ -72,7 +71,7 @@ class InsiderCompanyContainer extends StatelessWidget {
                           : const InsiderDetailGraph(),
                       Divider(
                         color: ThemeColors.greyBorder,
-                        height: 15.sp,
+                        height: 15,
                         thickness: 1,
                       ),
                       Row(
@@ -116,7 +115,7 @@ class InsiderCompanyContainer extends StatelessWidget {
                       ),
                       Divider(
                         color: ThemeColors.greyBorder,
-                        height: 15.sp,
+                        height: 15,
                         thickness: 1,
                       ),
                       InsidersDetailsItem(
@@ -222,7 +221,7 @@ class InsiderCompanyContainer extends StatelessWidget {
                 // return const SpacerVertical(height: 10);
                 return Divider(
                   color: ThemeColors.greyBorder,
-                  height: 12.sp,
+                  height: 12,
                 );
               },
               itemCount: provider.companyData?.data.length ?? 0),
@@ -271,7 +270,7 @@ class InsiderReportingContainer extends StatelessWidget {
               clear: false,
               reportingSlug: reportingSlug ?? ""),
           child: ListView.separated(
-              padding: EdgeInsets.only(bottom: Dimen.padding.sp),
+              padding: EdgeInsets.only(bottom: Dimen.padding),
               itemBuilder: (context, index) {
                 InsiderTradingData? data = provider.reporterData?.data[index];
 
@@ -286,7 +285,7 @@ class InsiderReportingContainer extends StatelessWidget {
                           : const InsiderDetailGraph(isCompany: false),
                       Divider(
                         color: ThemeColors.greyBorder,
-                        height: 15.sp,
+                        height: 15,
                         thickness: 1,
                       ),
                       Row(
@@ -356,7 +355,7 @@ class InsiderReportingContainer extends StatelessWidget {
                       ),
                       Divider(
                         color: ThemeColors.greyBorder,
-                        height: 15.sp,
+                        height: 15,
                         thickness: 1,
                       ),
                       InsidersDetailsItem(
@@ -446,7 +445,7 @@ class InsiderReportingContainer extends StatelessWidget {
                 // return const SpacerVertical(height: 10);
                 return Divider(
                   color: ThemeColors.greyBorder,
-                  height: 12.sp,
+                  height: 12,
                 );
               },
               itemCount: provider.reporterData?.data.length ?? 0),

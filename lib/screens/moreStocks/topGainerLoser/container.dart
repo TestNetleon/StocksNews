@@ -83,7 +83,7 @@ class _GainerLoserContainerState extends State<GainerLoserContainer> {
                     : provider.extraUpGainers?.title ?? "Popular Stocks",
       ),
       body: Padding(
-        padding: EdgeInsets.fromLTRB(Dimen.padding.sp, 0, Dimen.padding.sp, 0),
+        padding: EdgeInsets.fromLTRB(Dimen.padding, 0, Dimen.padding, 0),
         child: Column(
           children: [
             if (widget.type != StocksType.gainers &&
@@ -125,7 +125,7 @@ class _GainerLoserContainerState extends State<GainerLoserContainer> {
                     onLoadMore: () async => provider.getGainersLosers(
                         loadMore: true, type: widget.type.name),
                     child: ListView.separated(
-                      padding: EdgeInsets.only(bottom: Dimen.padding.sp),
+                      padding: EdgeInsets.only(bottom: Dimen.padding),
                       itemBuilder: (context, index) {
                         if (data == null || data.isEmpty) {
                           return const SizedBox();

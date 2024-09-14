@@ -30,6 +30,7 @@ import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
 
 import '../fcm/dynamic_links.service.dart';
+import '../screens/membership_new/membership.dart';
 import '../utils/dialogs.dart';
 import '../widgets/ios_emailerror.dart';
 
@@ -263,6 +264,7 @@ class UserProvider extends ChangeNotifier {
     provider.setTotalsAlerts(0);
     provider.setTotalsWatchList(0);
     // Reset login dialog visibility count
+    isSVG = false;
     DatabaseHelper helper = DatabaseHelper();
     helper.resetVisibilityCount();
     // Back to home and refresh Home and User
@@ -465,6 +467,19 @@ class UserProvider extends ChangeNotifier {
         } else {
           navigatorKey.currentContext!.read<HomeProvider>().getHomeSlider();
           Navigator.pop(navigatorKey.currentContext!);
+
+          if ((_user?.membership?.purchased != null &&
+                  _user?.membership?.purchased == 0) &&
+              withLoginMembership) {
+            Utils().showLog("----navigating from login verify---");
+            Navigator.push(
+              navigatorKey.currentContext!,
+              createRoute(
+                NewMembership(cancel: true),
+              ),
+            );
+          }
+
           // Navigator.popUntil(
           //     navigatorKey.currentContext!, (route) => route.isFirst);
           // Navigator.pushReplacement(
@@ -567,6 +582,23 @@ class UserProvider extends ChangeNotifier {
         } else {
           navigatorKey.currentContext!.read<HomeProvider>().getHomeSlider();
           Navigator.pop(navigatorKey.currentContext!);
+          if ((_user?.membership?.purchased != null &&
+                  _user?.membership?.purchased == 0) &&
+              withLoginMembership) {
+            Utils().showLog("----navigating from login verify---");
+            // Navigator.push(
+            //   navigatorKey.currentContext!,
+            //   MaterialPageRoute(
+            //     builder: (context) => NewMembership(cancle: true),
+            //   ),
+            // );
+            Navigator.push(
+              navigatorKey.currentContext!,
+              createRoute(
+                NewMembership(cancel: true),
+              ),
+            );
+          }
           // Navigator.popUntil(
           //   navigatorKey.currentContext!,
           //   (route) => route.isFirst,
@@ -807,7 +839,7 @@ class UserProvider extends ChangeNotifier {
       if (response.status) {
         _user = UserRes.fromJson(response.data);
         Preference.saveUser(response.data);
-        isSVG = isSvgFromUrl(user?.image);
+        isSVG = isSvgFromUrl(_user?.image);
         navigatorKey.currentContext!.read<HomeProvider>().getHomeSlider();
         shareUri = await DynamicLinkService.instance.getDynamicLink();
         Navigator.pop(navigatorKey.currentContext!);
@@ -821,6 +853,18 @@ class UserProvider extends ChangeNotifier {
         // OneSignal.User.addTags(tags);
         //--------
 
+        //CHECK MEMBERSHIP
+        if ((_user?.membership?.purchased != null &&
+                _user?.membership?.purchased == 0) &&
+            withLoginMembership) {
+          Utils().showLog("----navigating from login verify---");
+          Navigator.push(
+            navigatorKey.currentContext!,
+            createRoute(
+              NewMembership(cancel: true),
+            ),
+          );
+        }
         notifyListeners();
       } else {
         // showErrorMessage(message: response.message);

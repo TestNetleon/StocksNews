@@ -114,6 +114,7 @@ class _LoginBottomState extends State<LoginBottom> {
           "fcm_permission": "$granted",
           // "serverAuthCode": account?.serverAuthCode,
           "referral_code": referralCode ?? "",
+          "track_membership_link": memTrack ? "1" : "",
         };
         provider.googleLogin(request, alreadySubmitted: false);
       }
@@ -144,6 +145,7 @@ class _LoginBottomState extends State<LoginBottom> {
         "build_code": buildNumber,
         "fcm_token": fcmToken ?? "",
         "fcm_permission": "$granted",
+        "track_membership_link": memTrack ? "1" : "",
       };
 
       provider.appleLogin(request, id: id);
@@ -261,12 +263,12 @@ class _LoginBottomState extends State<LoginBottom> {
                       children: [
                         Divider(
                           color: ThemeColors.dividerDark,
-                          height: 1.sp,
-                          thickness: 1.sp,
+                          height: 1,
+                          thickness: 1,
                         ),
                         Container(
                           color: ThemeColors.background,
-                          padding: EdgeInsets.symmetric(horizontal: 8.sp),
+                          padding: EdgeInsets.symmetric(horizontal: 8),
                           child: Text(
                             "or continue with",
                             style: stylePTSansRegular(

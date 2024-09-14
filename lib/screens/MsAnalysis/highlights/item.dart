@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 
+import '../../../modals/msAnalysis/stock_highlights.dart';
 import '../../../utils/colors.dart';
 import '../../../utils/theme.dart';
 import '../../../widgets/spacer_horizontal.dart';
 import '../../../widgets/spacer_vertical.dart';
 
 class MsOurHighlightsItem extends StatelessWidget {
-  const MsOurHighlightsItem({super.key});
+  final MsStockHighlightsRes? data;
+  const MsOurHighlightsItem({super.key, this.data});
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +39,7 @@ class MsOurHighlightsItem extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'Stock Sentiment',
+                data?.label ?? "N/A",
                 style: stylePTSansRegular(
                   fontSize: 18.0,
                   color: Colors.grey,
@@ -49,15 +51,19 @@ class MsOurHighlightsItem extends StatelessWidget {
           ),
           const SpacerVertical(height: 8.0),
           Text(
-            'Bullish',
+            "${data?.value}",
             style: stylePTSansBold(
               fontSize: 18.0,
-              color: Colors.green,
+              color: data?.value is String
+                  ? Colors.green
+                  : data?.value > 0
+                      ? Colors.green
+                      : Colors.red,
             ),
           ),
           const SpacerVertical(height: 8.0),
           Text(
-            'Buyers are optimized about the price rise, Stock is up trend',
+            "${data?.description}",
             maxLines: 3,
             overflow: TextOverflow.ellipsis,
             style: stylePTSansRegular(

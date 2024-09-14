@@ -88,7 +88,7 @@ class _AINewsIndexState extends State<AINewsIndex> {
             );
           },
           separatorBuilder: (BuildContext context, int index) {
-            return Divider(color: ThemeColors.greyBorder, height: 20.sp);
+            return Divider(color: ThemeColors.greyBorder, height: 20);
           },
         ),
       ),

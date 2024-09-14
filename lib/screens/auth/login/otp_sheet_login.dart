@@ -119,6 +119,7 @@ class _OTPLoginBottomState extends State<OTPLoginBottom> {
         "build_code": buildNumber,
         "fcm_permission": "$granted",
         "apple_id": widget.id ?? "",
+        "track_membership_link": memTrack ? "1" : "",
       };
 
       provider.verifyLoginOtp(request);

@@ -11,13 +11,9 @@ import 'widgtes/upgrade_plan.dart';
 class NewMembershipContainer extends StatefulWidget {
   final String? inAppMsgId;
   final String? notificationId;
-  final bool withClickCondition;
 
   const NewMembershipContainer(
-      {super.key,
-      this.withClickCondition = false,
-      this.inAppMsgId,
-      this.notificationId});
+      {super.key, this.inAppMsgId, this.notificationId});
 
   @override
   State<NewMembershipContainer> createState() => _NewMembershipContainerState();
@@ -73,9 +69,7 @@ class _NewMembershipContainerState extends State<NewMembershipContainer> {
               padding: const EdgeInsets.only(bottom: 50),
               child: Column(
                 children: [
-                  NewMembershipUpgradeCurrentPlan(
-                    withClickCondition: widget.withClickCondition,
-                  ),
+                  NewMembershipUpgradeCurrentPlan(),
                   const SpacerVertical(height: 10),
                   Visibility(
                     visible: data?.testimonials != null,

@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'store_info_res.dart';
+
 BenefitsRes benefitsResFromJson(String str) =>
     BenefitsRes.fromJson(json.decode(str));
 
@@ -30,23 +32,29 @@ class Earn {
   final String subTitle;
   final BannerRes banner;
   final List<Point> points;
+  final List<Benefit>? faq;
 
   Earn({
     required this.title,
     required this.subTitle,
     required this.banner,
     required this.points,
+    required this.faq,
   });
 
   factory Earn.fromJson(Map<String, dynamic> json) => Earn(
         title: json["title"],
         subTitle: json["sub_title"],
+        faq: List<Benefit>.from(json["faq"].map((x) => Benefit.fromJson(x))),
         banner: BannerRes.fromJson(json["banner"]),
         points: List<Point>.from(json["points"].map((x) => Point.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
         "title": title,
+        "faq": faq == null
+            ? null
+            : List<dynamic>.from(faq!.map((x) => x.toJson())),
         "sub_title": subTitle,
         "banner": banner.toJson(),
         "points": List<dynamic>.from(points.map((x) => x.toJson())),

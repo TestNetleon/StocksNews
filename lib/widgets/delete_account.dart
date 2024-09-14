@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
@@ -22,7 +21,7 @@ class _DeleteAccountPopUpState extends State<DeleteAccountPopUp> {
   @override
   Widget build(BuildContext context) {
     return ThemeAlertDialog(
-      contentPadding: EdgeInsets.fromLTRB(18.sp, 16.sp, 10.sp, 10.sp),
+      contentPadding: EdgeInsets.fromLTRB(18, 16, 10, 10),
       children: [
         Text("Delete Account",
             style: stylePTSansBold(
@@ -38,20 +37,20 @@ class _DeleteAccountPopUpState extends State<DeleteAccountPopUp> {
             setState(() {});
           },
           child: Padding(
-            padding: EdgeInsets.symmetric(vertical: 10.sp),
+            padding: EdgeInsets.symmetric(vertical: 10),
             child: Row(
               children: [
                 Container(
-                  padding: EdgeInsets.all(1.sp),
+                  padding: EdgeInsets.all(1),
                   decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(5.sp),
+                      borderRadius: BorderRadius.circular(5),
                       color: isChecked
                           ? ThemeColors.border
                           : ThemeColors.background,
                       border: Border.all(color: ThemeColors.border)),
                   child: Icon(
                     Icons.check,
-                    size: 20.sp,
+                    size: 20,
                     color: ThemeColors.background,
                   ),
                 ),

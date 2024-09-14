@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/screens/auth/login/login_sheet.dart';
@@ -29,7 +28,7 @@ class MyAccount extends StatelessWidget {
     return BaseContainer(
       appBar: const AppBarHome(isPopback: true, title: "My Account"),
       body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: Dimen.padding.sp),
+        padding: EdgeInsets.symmetric(horizontal: Dimen.padding),
         child: provider.user == null
             ? Column(
                 children: [

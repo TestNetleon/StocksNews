@@ -70,7 +70,7 @@ class _NotificationsContainerState extends State<NotificationsContainer> {
         showTrailing: false,
       ),
       body: Padding(
-        padding: EdgeInsets.fromLTRB(Dimen.padding, 0, Dimen.padding.sp, 0),
+        padding: EdgeInsets.fromLTRB(Dimen.padding, 0, Dimen.padding, 0),
         child: Column(
           children: [
             // res == null
@@ -110,7 +110,7 @@ class _NotificationsContainerState extends State<NotificationsContainer> {
                         onLoadMore: () async =>
                             provider.getData(loadMore: true),
                         child: ListView.separated(
-                          padding: EdgeInsets.only(bottom: Dimen.padding.sp),
+                          padding: EdgeInsets.only(bottom: Dimen.padding),
                           itemBuilder: (context, index) {
                             if (data == null || data.isEmpty) {
                               return const SizedBox();

@@ -125,10 +125,13 @@ class Extra {
   final AdManagersRes? adManagers;
   final String? notifyTextMsg;
   String? phoneCodeError;
+  String? phoneError;
+  final String? recommendation;
 
   Extra({
     this.adManagers,
     this.adManager,
+    this.recommendation,
     this.storeTitle,
     this.storeSubTitle,
     this.showFeatured,
@@ -137,6 +140,7 @@ class Extra {
     this.notifyTextMsg,
     this.showMostPurchased,
     this.phoneCodeError,
+    this.phoneError,
     this.text1,
     this.text2,
     this.text3,
@@ -210,10 +214,14 @@ class Extra {
 
   factory Extra.fromJson(Map<String, dynamic> json) => Extra(
         search: json["search"],
+        recommendation: json["recommendation"],
+
         storeTitle: json["store_title"],
         notifyTextMsg: json['notification_setting_txt'],
         storeSubTitle: json["store_subtitle"],
         phoneCodeError: json['phone_code_error'],
+        phoneError: json['phone_error'],
+
         adManager: json["ad_manager"] == null
             ? null
             : AdManagerRes.fromJson(json["ad_manager"]),
@@ -357,6 +365,8 @@ class Extra {
   Map<String, dynamic> toJson() => {
         "ad_managers": adManagers?.toJson(),
         "phone_code_error": phoneCodeError,
+        "phone_error": phoneError,
+
         "feeback_type": feebackType == null
             ? []
             : List<dynamic>.from(feebackType!.map((x) => x)),
@@ -371,6 +381,7 @@ class Extra {
         "show_membership": showMembership,
         "verify_identity_text": verifyIdentity,
         "show_morningstar": showMorningstar,
+        "recommendation": recommendation,
         "verify_membership_text": verifySubscription,
         "self_rank": selfRank,
         "earn_condition": earnCondition,

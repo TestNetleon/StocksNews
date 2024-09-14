@@ -66,6 +66,7 @@ class PostDetail {
   bool? readingStatus;
   String? readingTitle;
   String? readingSubtitle;
+  String? warningText;
   bool? balanceStatus;
   final String? popUpMessage;
   final String? popUpButton;
@@ -103,6 +104,7 @@ class PostDetail {
     this.readingStatus,
     this.readingTitle,
     this.readingSubtitle,
+    this.warningText,
     this.balanceStatus,
     this.totalPoints,
     this.pointsRequired,
@@ -132,6 +134,8 @@ class PostDetail {
         summary: json['summary'],
         readingTitle: json["reading_title"],
         readingSubtitle: json["reading_subtitle"],
+        warningText: json["warning_text"],
+
         balanceStatus: json["balance_status"],
         postDateString: json['published_date_string'],
         slug: json["slug"],
@@ -186,6 +190,8 @@ class PostDetail {
         "reading_title": readingTitle,
         "source": source,
         "reading_subtitle": readingSubtitle,
+        "warning_text": warningText,
+
         "balance_status": balanceStatus,
         'summary': summary,
         'published_date_string': postDateString,

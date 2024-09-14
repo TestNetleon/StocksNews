@@ -148,7 +148,7 @@ class _SdChartsState extends State<SdCharts> {
                                       ),
                                       Divider(
                                         color: ThemeColors.greyBorder,
-                                        height: 20.sp,
+                                        height: 20,
                                         thickness: 1,
                                       )
                                     ],
@@ -168,7 +168,7 @@ class _SdChartsState extends State<SdCharts> {
                           separatorBuilder: (BuildContext context, int index) {
                             return Divider(
                               color: ThemeColors.greyBorder,
-                              height: 20.sp,
+                              height: 20,
                             );
                           },
                           itemCount:

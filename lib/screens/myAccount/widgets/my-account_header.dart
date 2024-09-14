@@ -82,14 +82,14 @@ class _MyAccountHeaderState extends State<MyAccountHeader> {
         croppedFile = await ImageCropper().cropImage(
           sourcePath: pickedFile.path,
           aspectRatio: const CropAspectRatio(ratioX: 1, ratioY: 1),
-          aspectRatioPresets: [CropAspectRatioPreset.square],
           uiSettings: [
             AndroidUiSettings(
-                toolbarTitle: "Image Cropper",
-                toolbarColor: ThemeColors.background,
-                toolbarWidgetColor: ThemeColors.border,
-                initAspectRatio: CropAspectRatioPreset.original,
-                lockAspectRatio: true),
+              toolbarTitle: "Image Cropper",
+              toolbarColor: ThemeColors.background,
+              toolbarWidgetColor: ThemeColors.border,
+              initAspectRatio: CropAspectRatioPreset.original,
+              lockAspectRatio: true,
+            ),
             IOSUiSettings(
               title: "Image Cropper",
             ),

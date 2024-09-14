@@ -560,9 +560,7 @@ class _UserCardState extends State<UserCard> {
     Navigator.push(
       navigatorKey.currentContext!,
       MaterialPageRoute(
-        builder: (_) => const NewMembership(
-          withClickCondition: true,
-        ),
+        builder: (_) => const NewMembership(),
       ),
     );
   }

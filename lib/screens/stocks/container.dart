@@ -97,9 +97,9 @@ class StocksContainer extends StatelessWidget {
         children: [
           Padding(
             padding: EdgeInsets.fromLTRB(
-              Dimen.padding.sp,
+              Dimen.padding,
               0,
-              Dimen.padding.sp,
+              Dimen.padding,
               0,
             ),
             child: Column(
@@ -153,7 +153,7 @@ class StocksContainer extends StatelessWidget {
                                 children: [
                                   Divider(
                                     color: ThemeColors.greyBorder,
-                                    height: 15.sp,
+                                    height: 15,
                                     thickness: 1,
                                   ),
                                   Row(
@@ -183,7 +183,7 @@ class StocksContainer extends StatelessWidget {
                                   ),
                                   Divider(
                                     color: ThemeColors.greyBorder,
-                                    height: 15.sp,
+                                    height: 15,
                                     thickness: 1,
                                   ),
                                   SlidableMenuWidget(

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 
@@ -48,13 +47,12 @@ class ThemeButton extends StatelessWidget {
           backgroundColor: color,
           elevation: 0,
           minimumSize: const Size.fromHeight(45),
-          padding: padding ??
-              EdgeInsets.symmetric(horizontal: 16.sp, vertical: 8.sp),
+          padding: padding ?? EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           // (fullWidth
           //     ? EdgeInsets.symmetric(horizontal: 16.sp, vertical: 8.sp)
           //     : EdgeInsets.symmetric(horizontal: 5.sp, vertical: 5.sp)),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(radius.sp),
+            borderRadius: BorderRadius.circular(radius),
           ),
         ),
         child: child ??

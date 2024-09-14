@@ -41,8 +41,8 @@ class _TrendingGraphTabsState extends State<TrendingGraphTabs> {
               ),
               VerticalDivider(
                 color: ThemeColors.accent,
-                width: 1.sp,
-                thickness: 1.sp,
+                width: 1,
+                thickness: 1,
               ),
               CustomTabLabel(
                 "NASDAQ",

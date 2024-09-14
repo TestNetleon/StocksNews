@@ -119,6 +119,8 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
   }
 
   Future _navigateToRequiredScreen() async {
+    // popUpAlert(message: "IN SPLASH UPPER: $onDeepLinking, $popHome");
+
     if (popHome) return;
     if (onDeepLinking) {
       popHome = true;
@@ -139,6 +141,8 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
     //   navigatorKey.currentContext!,
     //   MaterialPageRoute(builder: (_) => const Tabs()),
     // );
+    // popUpAlert(message: "IN SPLASH: $onDeepLinking, $popHome");
+
     Navigator.pushReplacement(
       navigatorKey.currentContext!,
       MaterialPageRoute(builder: (_) => const HomeSplash()),

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 
@@ -52,11 +51,11 @@ class ThemeButtonSmall extends StatelessWidget {
           elevation: 0,
           padding: padding ??
               EdgeInsets.symmetric(
-                horizontal: 16.sp,
-                vertical: 8.sp,
+                horizontal: 16,
+                vertical: 8,
               ),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(radius.sp),
+            borderRadius: BorderRadius.circular(radius),
           ),
         ),
         child: Row(
@@ -67,7 +66,7 @@ class ThemeButtonSmall extends StatelessWidget {
                 Visibility(
                   visible: showArrow && iconFront,
                   child: Container(
-                    margin: EdgeInsets.only(right: 8.sp),
+                    margin: EdgeInsets.only(right: 8),
                     child: Icon(
                       icon ?? Icons.arrow_forward,
                       size: 20,
@@ -93,7 +92,7 @@ class ThemeButtonSmall extends StatelessWidget {
             Visibility(
               visible: showArrow && !iconFront,
               child: Container(
-                margin: EdgeInsets.only(left: 8.sp),
+                margin: EdgeInsets.only(left: 8),
                 child: Icon(
                   icon ?? Icons.arrow_forward,
                   size: 20,

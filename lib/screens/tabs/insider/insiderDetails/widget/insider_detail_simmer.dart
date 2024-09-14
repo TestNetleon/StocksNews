@@ -22,7 +22,7 @@ class InsiderDetailScreenSimmer extends StatelessWidget {
               ),
               Divider(
                 color: ThemeColors.greyBorder,
-                height: 15.sp,
+                height: 15,
                 thickness: 1,
               ),
               Row(
@@ -40,7 +40,7 @@ class InsiderDetailScreenSimmer extends StatelessWidget {
               ),
               Divider(
                 color: ThemeColors.greyBorder,
-                height: 15.sp,
+                height: 15,
                 thickness: 1,
               ),
             ],
@@ -116,7 +116,7 @@ class InsiderDetailScreenSimmer extends StatelessWidget {
         }
         return Divider(
           color: ThemeColors.greyBorder,
-          height: 12.sp,
+          height: 12,
         );
       },
     );

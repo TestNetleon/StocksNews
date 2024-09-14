@@ -1,6 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/faqs_res.dart';
 import 'package:stocks_news_new/modals/stockDetailRes/earnings.dart';
@@ -126,7 +125,7 @@ class _SdOwnershipState extends State<SdOwnership> {
                               children: [
                                 Divider(
                                   color: ThemeColors.greyBorder,
-                                  height: 15.sp,
+                                  height: 15,
                                   thickness: 1,
                                 ),
                                 Row(
@@ -189,7 +188,7 @@ class _SdOwnershipState extends State<SdOwnership> {
                                 ),
                                 Divider(
                                   color: ThemeColors.greyBorder,
-                                  height: 15.sp,
+                                  height: 15,
                                   thickness: 1,
                                 ),
                                 data!.sharesNumber.toString() == "0" ||

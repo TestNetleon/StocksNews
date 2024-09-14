@@ -2,7 +2,6 @@
 
 import 'dart:developer';
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -28,14 +27,16 @@ import 'package:stocks_news_new/screens/tabs/trending/trending.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
-
 import 'package:vibration/vibration.dart';
+import '../../utils/utils.dart';
+import '../membership_new/membership.dart';
 
 class Tabs extends StatefulWidget {
   static const String path = "Tabs";
   final int index;
   final String? inAppMsgId;
   final bool showRef;
+  final bool showMembership;
   final int trendingIndex;
 
   const Tabs({
@@ -43,6 +44,7 @@ class Tabs extends StatefulWidget {
     this.index = 0,
     this.inAppMsgId,
     this.showRef = false,
+    this.showMembership = false,
     this.trendingIndex = 0,
   });
 
@@ -63,8 +65,25 @@ class _TabsState extends State<Tabs> {
         _selectedIndex = widget.index;
         activeContainerApiCalls(currentIndex: _selectedIndex);
       });
+      //Because we are asking membership thats why hiding refer
       if (widget.showRef) referLogin();
+      if (widget.showMembership) _showMembership();
     });
+  }
+
+  _showMembership() {
+    // Navigator.push(
+    //   context,
+    //   MaterialPageRoute(
+    //     builder: (context) => NewMembership(cancle: true),
+    //   ),
+    // );
+    Navigator.push(
+      context,
+      createRoute(
+        NewMembership(cancel: true),
+      ),
+    );
   }
 
   BottomNavigationBarItem bottomTab({icon, lable}) {

@@ -54,6 +54,28 @@ class DynamicLinkService {
     return dynamicLink.shortUrl;
   }
 
+  // Future<Uri> getMembershipDynamicLink() async {
+  //   final dynamicLinkParams = DynamicLinkParameters(
+  //     link: Uri.parse("https://app.stocks.news/membership100000"),
+  //     uriPrefix: "https://stocksnews.page.link",
+  //     androidParameters: AndroidParameters(
+  //       packageName: "com.stocks.news",
+  //       minimumVersion: 0,
+  //       fallbackUrl: Uri.parse(
+  //           "https://play.google.com/store/apps/details?id=com.stocks.news"),
+  //     ),
+  //     iosParameters: IOSParameters(
+  //       bundleId: "app.stocks.news",
+  //       fallbackUrl: Uri.parse(
+  //           "https://apps.apple.com/in/app/stocks-news-stock-market/id6476615803"),
+  //     ),
+  //   );
+
+  //   final dynamicLink =
+  //       await FirebaseDynamicLinks.instance.buildShortLink(dynamicLinkParams);
+  //   return dynamicLink.shortUrl;
+  // }
+
   // Future<Uri> getDynamicLink(code) async {
   //   UserRes? user = navigatorKey.currentContext!.read<UserProvider>().user;
   //   final dynamicLinkParams = DynamicLinkParameters(

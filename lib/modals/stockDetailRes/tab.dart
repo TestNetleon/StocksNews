@@ -19,11 +19,13 @@ class StockDetailTabRes {
   String? shareUrl;
   int? isAlertAdded;
   int? isWatchListAdded;
+  final bool? showAnalysis;
 
   StockDetailTabRes({
     this.keyStats,
     this.tabs,
     this.companyInfo,
+    this.showAnalysis,
     this.isAlertAdded,
     this.shareUrl,
     this.isWatchListAdded,
@@ -35,6 +37,7 @@ class StockDetailTabRes {
             ? null
             : KeyStats.fromJson(json["key_stats"]),
         shareUrl: json["share_url"],
+        showAnalysis: json['show_analysis'],
         companyInfo: json["company_info"] == null
             ? null
             : CompanyInfo.fromJson(json["company_info"]),
@@ -49,6 +52,7 @@ class StockDetailTabRes {
   Map<String, dynamic> toJson() => {
         "key_stats": keyStats?.toJson(),
         "company_info": companyInfo?.toJson(),
+        'show_analysis': showAnalysis,
         "tabs": tabs == null
             ? []
             : List<dynamic>.from(tabs!.map((x) => x.toJson())),

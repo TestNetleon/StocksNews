@@ -70,9 +70,9 @@ class Insider extends StatelessWidget {
         children: [
           Padding(
             padding: EdgeInsets.fromLTRB(
-              Dimen.padding.sp,
+              Dimen.padding,
               isPhone ? 0 : 8.sp,
-              Dimen.padding.sp,
+              Dimen.padding,
               0,
             ),
             child: Column(

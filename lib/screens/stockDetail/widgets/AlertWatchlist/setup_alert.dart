@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/utils/utils.dart';
@@ -39,7 +38,7 @@ class SetupPopup extends StatelessWidget {
             Divider(
               color: ThemeColors.border.withOpacity(0.4),
               thickness: 1,
-              height: 30.sp,
+              height: 30,
             ),
             Text(
               "Alert Name (Optional)",
@@ -50,7 +49,7 @@ class SetupPopup extends StatelessWidget {
             Divider(
               color: ThemeColors.border.withOpacity(0.4),
               thickness: 1,
-              height: 30.sp,
+              height: 30,
             ),
             // Text(
             //   "Stock",
@@ -100,7 +99,7 @@ class SetupPopup extends StatelessWidget {
             children: [
               Icon(
                 Icons.add_alert_outlined,
-                size: 20.sp,
+                size: 20,
                 color: ThemeColors.accent,
               ),
               const SpacerHorizontal(width: 5),
@@ -116,7 +115,7 @@ class SetupPopup extends StatelessWidget {
         ),
         InkWell(
           onTap: () => Navigator.pop(context),
-          child: Icon(Icons.close, size: 20.sp),
+          child: Icon(Icons.close, size: 20),
         )
       ],
     );

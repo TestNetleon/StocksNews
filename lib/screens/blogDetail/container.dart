@@ -132,9 +132,9 @@ class BlogDetailContainer extends StatelessWidget {
       children: [
         Padding(
           padding: EdgeInsets.fromLTRB(
-            Dimen.padding.sp,
+            Dimen.padding,
             0,
-            Dimen.padding.sp,
+            Dimen.padding,
             0,
           ),
           child: BaseUiContainer(

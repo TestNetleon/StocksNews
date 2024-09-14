@@ -46,9 +46,9 @@ class _TrendingIndustriesContainerState
     return BaseContainer(
       body: Padding(
         padding: EdgeInsets.fromLTRB(
-          Dimen.padding.sp,
+          Dimen.padding,
           5,
-          Dimen.padding.sp,
+          Dimen.padding,
           0,
         ),
         child: provider.isLoading
@@ -110,7 +110,7 @@ class _TrendingIndustriesContainerState
                                     // return const SpacerVertical(height: 10);
                                     return Divider(
                                       color: ThemeColors.greyBorder,
-                                      height: 12.sp,
+                                      height: 12,
                                     );
                                   },
                                   itemCount: provider.data?.length ?? 0,

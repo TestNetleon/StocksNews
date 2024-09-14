@@ -76,6 +76,7 @@ Future<ApiResponse> apiRequest({
 }) async {
   // ConnectivityResult type = await _isConnected();
   // if (type == ConnectivityResult.none) {
+  //   popUpAlert();
   //   return ApiResponse(status: false, message: Const.noInternet);
   // }
 
@@ -404,7 +405,6 @@ void navigateToRequiredScreen(InAppNotification? inAppMsg) {
       MaterialPageRoute(
         builder: (_) => NewMembership(
           inAppMsgId: inAppMsg?.id,
-          withClickCondition: true,
         ),
       ),
       // arguments: {"slug": inAppMsg?.slug, "inAppMsgId": inAppMsg?.id},

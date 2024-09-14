@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:stocks_news_new/providers/stockAnalysis/provider.dart';
 
-import '../../../modals/stock_details_res.dart';
-import '../../../providers/stock_detail_new.dart';
+import '../../../modals/msAnalysis/ms_top_res.dart';
+
 import '../../../utils/colors.dart';
 import '../../../utils/theme.dart';
 import '../../../widgets/cache_network_image.dart';
@@ -13,9 +14,8 @@ class PredictionAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    StockDetailProviderNew provider = context.watch<StockDetailProviderNew>();
-    KeyStats? keyStats = provider.tabRes?.keyStats;
-    CompanyInfo? companyInfo = provider.tabRes?.companyInfo;
+    MSAnalysisProvider provider = context.watch<MSAnalysisProvider>();
+    MsStockTopRes? topData = provider.topData;
 
     return Row(
       children: [
@@ -31,7 +31,7 @@ class PredictionAppBar extends StatelessWidget {
           width: 48,
           height: 48,
           child: CachedNetworkImagesWidget(
-            companyInfo?.image ?? "",
+            topData?.image ?? "",
             fit: BoxFit.contain,
           ),
         ),
@@ -42,9 +42,12 @@ class PredictionAppBar extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  Text(
-                    "${keyStats?.name}",
-                    style: stylePTSansBold(fontSize: 18),
+                  Flexible(
+                    child: Text(
+                      "${topData?.symbol}",
+                      maxLines: 1,
+                      style: stylePTSansBold(fontSize: 18),
+                    ),
                   ),
                   Container(
                     decoration: BoxDecoration(
@@ -54,7 +57,7 @@ class PredictionAppBar extends StatelessWidget {
                     padding: EdgeInsets.symmetric(vertical: 2, horizontal: 8),
                     margin: EdgeInsets.only(left: 5),
                     child: Text(
-                      "${keyStats?.exchange}",
+                      "${topData?.exchange}",
                       style: stylePTSansRegular(fontSize: 11),
                     ),
                   ),
@@ -70,7 +73,7 @@ class PredictionAppBar extends StatelessWidget {
                     ),
                     const SpacerHorizontal(width: 5),
                     Text(
-                      keyStats?.marketStatus ?? "",
+                      topData?.marketStatus ?? "",
                       style: stylePTSansRegular(
                         color: ThemeColors.greyText,
                         fontSize: 11,

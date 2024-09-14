@@ -87,6 +87,10 @@ bool showAdd = false;
 
 bool oneSignalInitialized = false;
 
+bool withLoginMembership = true;
+
+bool memTrack = false;
+
 //------------ Ad API Globals
 
 Map<AdScreen, Map<AdPlaces, bool>> adVisibilityMap = {
@@ -336,6 +340,9 @@ class Const {
       "https://play.google.com/store/apps/details?id=com.stocks.news";
   static const String iosAppUrl =
       "https://apps.apple.com/us/app/stocks-news/id6476615803";
+
+  static const String membershipLink =
+      "https://stocksnews.page.link/membership";
 
   // static const String errParse =
   //     "Unable to parse data, please check your response.";

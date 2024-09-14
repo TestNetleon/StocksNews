@@ -87,14 +87,32 @@ class MembershipProvider extends ChangeNotifier {
     }
   }
 
-  Future getMembershipSuccess({bool isMembership = false}) async {
+  Future getMembershipSuccess({
+    bool isMembership = false,
+    bool sendTrack = false,
+  }) async {
     notifyListeners();
     try {
-      FormData request = FormData.fromMap({
-        "token":
-            navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
-        "membership": "$isMembership",
-      });
+      FormData request = FormData.fromMap(
+        sendTrack
+            ? {
+                "token": navigatorKey.currentContext!
+                        .read<UserProvider>()
+                        .user
+                        ?.token ??
+                    "",
+                "membership": "$isMembership",
+                "track_membership_link": memTrack ? "1" : "",
+              }
+            : {
+                "token": navigatorKey.currentContext!
+                        .read<UserProvider>()
+                        .user
+                        ?.token ??
+                    "",
+                "membership": "$isMembership",
+              },
+      );
       ApiResponse response = await apiRequest(
         url: Apis.membershipSuccess,
         formData: request,

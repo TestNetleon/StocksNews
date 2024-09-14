@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/alerts_res.dart';
 import 'package:stocks_news_new/providers/alert_provider.dart';
@@ -20,7 +19,7 @@ class AlertContainer extends StatelessWidget {
       onLoadMore: () async => provider.getAlerts(loadMore: true),
       child: ListView.separated(
         itemCount: provider.data?.length ?? 0,
-        padding: EdgeInsets.only(top: 5.sp, bottom: 16.sp),
+        padding: EdgeInsets.only(top: 5, bottom: 16),
         physics: const AlwaysScrollableScrollPhysics(),
         itemBuilder: (context, index) {
           AlertData data = provider.data![index];

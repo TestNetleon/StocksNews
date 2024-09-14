@@ -169,7 +169,6 @@ class FirebaseApi {
           MaterialPageRoute(
               builder: (_) => NewMembership(
                     notificationId: notificationId,
-                    withClickCondition: true,
                   )),
         );
       } else if (type == NotificationType.appUpdate.name) {

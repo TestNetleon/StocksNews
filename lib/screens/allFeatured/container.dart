@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/api/api_response.dart';
@@ -121,8 +120,7 @@ class AllFeaturedContainer extends StatelessWidget {
           context: context,
           showClose: false,
           content: AlertPopup(
-            insetPadding:
-                EdgeInsets.symmetric(horizontal: 15.sp, vertical: 10.sp),
+            insetPadding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
             symbol: symbol,
             index: index ?? 0,
             homeFeatureStocks: true,
@@ -147,7 +145,7 @@ class AllFeaturedContainer extends StatelessWidget {
               showClose: false,
               content: AlertPopup(
                 insetPadding:
-                    EdgeInsets.symmetric(horizontal: 15.sp, vertical: 10.sp),
+                    EdgeInsets.symmetric(horizontal: 15, vertical: 10),
                 symbol: symbol,
                 index: index ?? 0,
                 homeFeatureStocks: true,

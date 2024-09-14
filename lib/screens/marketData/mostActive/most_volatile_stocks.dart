@@ -100,7 +100,7 @@ class _MostVolatileStocksState extends State<MostVolatileStocks> {
                           provider.getData(loadMore: true, type: 2),
                       child: ListView.separated(
                         padding: EdgeInsets.only(
-                          bottom: Dimen.padding.sp,
+                          bottom: Dimen.padding,
                         ),
                         itemBuilder: (context, index) {
                           if (data == null || data.isEmpty) {

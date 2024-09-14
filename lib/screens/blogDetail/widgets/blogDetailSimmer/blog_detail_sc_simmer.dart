@@ -13,7 +13,7 @@ class BlogDetailScreenSimmer extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SpacerVertical(height: Dimen.padding.sp),
+          SpacerVertical(height: Dimen.padding),
           const GradientContainerWidget(
             height: 60,
           ),

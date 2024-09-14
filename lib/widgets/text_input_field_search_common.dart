@@ -126,7 +126,7 @@ class _TextInputFieldSearchCommonState
                   enabled: widget.editable,
                   textCapitalization: TextCapitalization.sentences,
                   style: widget.style ??
-                      stylePTSansBold(fontSize: isPhone ? 14.sp : 7.sp),
+                      stylePTSansBold(fontSize: isPhone ? 14 : 7),
                   decoration: InputDecoration(
                     hintText: widget.hintText,
                     hintStyle: stylePTSansRegular(
@@ -191,8 +191,8 @@ class _TextInputFieldSearchCommonState
             Visibility(
               visible: provider.dataNew != null,
               child: Container(
-                padding: EdgeInsets.all(Dimen.padding.sp),
-                margin: EdgeInsets.only(top: 5.sp),
+                padding: EdgeInsets.all(Dimen.padding),
+                margin: EdgeInsets.only(top: 5),
                 decoration: BoxDecoration(
                   color: ThemeColors.primaryLight,
                   borderRadius: BorderRadius.only(
@@ -206,7 +206,7 @@ class _TextInputFieldSearchCommonState
                     Visibility(
                       visible: provider.dataNew?.symbols?.isNotEmpty == true,
                       child: Padding(
-                        padding: EdgeInsets.only(bottom: 10.sp),
+                        padding: EdgeInsets.only(bottom: 10),
                         child: Text(
                           "Symbols",
                           style: stylePTSansBold(color: ThemeColors.accent),
@@ -232,13 +232,13 @@ class _TextInputFieldSearchCommonState
                               );
                             },
                             child: Padding(
-                              padding: EdgeInsets.symmetric(vertical: 6.sp),
+                              padding: EdgeInsets.symmetric(vertical: 6),
                               child: Row(
                                 children: [
                                   Container(
-                                      width: 43.sp,
-                                      height: 43.sp,
-                                      padding: EdgeInsets.all(5.sp),
+                                      width: 43,
+                                      height: 43,
+                                      padding: EdgeInsets.all(5),
                                       child: CachedNetworkImagesWidget(
                                           data?.image)),
                                   const SpacerHorizontal(width: 6),
@@ -275,7 +275,7 @@ class _TextInputFieldSearchCommonState
                     Visibility(
                       visible: provider.dataNew?.news?.isNotEmpty == true,
                       child: Padding(
-                        padding: EdgeInsets.only(bottom: 10.sp, top: 10.sp),
+                        padding: EdgeInsets.only(bottom: 10, top: 10),
                         child: Text(
                           "News",
                           style: stylePTSansBold(color: ThemeColors.accent),
@@ -301,7 +301,7 @@ class _TextInputFieldSearchCommonState
                               );
                             },
                             child: Padding(
-                              padding: EdgeInsets.symmetric(vertical: 6.sp),
+                              padding: EdgeInsets.symmetric(vertical: 6),
                               child: Text(
                                 data?.title ?? '',
                                 style: stylePTSansRegular(fontSize: 14),
@@ -323,7 +323,7 @@ class _TextInputFieldSearchCommonState
               visible:
                   provider.dataNew == null && provider.statusS == Status.loaded,
               child: Padding(
-                padding: EdgeInsets.symmetric(vertical: 6.sp),
+                padding: EdgeInsets.symmetric(vertical: 6),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [

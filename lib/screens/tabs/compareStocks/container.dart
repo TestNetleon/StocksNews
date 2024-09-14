@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/compare_stock_res.dart';
 import 'package:stocks_news_new/providers/compare_stocks_provider.dart';
@@ -73,10 +72,10 @@ class CompareStocksContainer extends StatelessWidget {
       drawer: const BaseDrawer(),
       body: Padding(
         padding: EdgeInsets.fromLTRB(
-          Dimen.padding.sp,
+          Dimen.padding,
           // isPhone ? 0 : Dimen.paddingTablet.sp,
           0,
-          Dimen.padding.sp,
+          Dimen.padding,
           0,
         ),
         child: userProvider.user == null

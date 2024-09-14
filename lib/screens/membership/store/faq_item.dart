@@ -12,14 +12,16 @@ class FaqItem extends StatelessWidget {
   final String answer;
   final dynamic provider;
   final Color textColor;
+  final Function()? onTap;
 
   const FaqItem({
     super.key,
+    this.onTap,
     required this.question,
     required this.answer,
     required this.openIndex,
     required this.index,
-    required this.provider,
+    this.provider,
     this.textColor = Colors.white,
   });
 
@@ -32,12 +34,13 @@ class FaqItem extends StatelessWidget {
         border: Border.all(color: ThemeColors.greyBorder),
         // border: Border.all(color: ThemeColors.divider),
       ),
-      padding: EdgeInsets.all(Dimen.itemSpacing.sp),
+      padding: EdgeInsets.all(Dimen.itemSpacing),
       child: Column(
         children: [
           GestureDetector(
-            onTap: () => provider
-                .setOpenIndex(provider.faqOpenIndex == index ? -1 : index),
+            onTap: onTap ??
+                () => provider
+                    .setOpenIndex(provider.faqOpenIndex == index ? -1 : index),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

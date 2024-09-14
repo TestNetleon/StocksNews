@@ -48,7 +48,6 @@ void main() async {
     );
 
     FirebaseInAppMessaging.instance.setAutomaticDataCollectionEnabled(true);
-
     Timer(const Duration(seconds: 8), () {
       Preference.setIsFirstOpen(false);
     });
@@ -57,7 +56,9 @@ void main() async {
   }
 
   FirebaseApi().initNotifications();
-
+  // Uri membershipURL =
+  //     await DynamicLinkService.instance.getMembershipDynamicLink();
+  // Utils().showLog("Membership URL $membershipURL");
   splashLoaded = false;
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
       .then((_) {

@@ -32,9 +32,9 @@ class SentimentsGraph extends StatelessWidget {
         ),
       ),
       padding: EdgeInsets.fromLTRB(
-        Dimen.padding.sp,
-        Dimen.padding.sp,
-        Dimen.padding.sp,
+        Dimen.padding,
+        Dimen.padding,
+        Dimen.padding,
         0,
       ),
       child: Column(

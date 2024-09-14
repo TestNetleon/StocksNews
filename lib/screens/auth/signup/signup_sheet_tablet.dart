@@ -163,6 +163,7 @@ class _SignUpBottomState extends State<SignUpBottom> {
           "fcm_permission": "$granted",
           //  "referral_code": "$referralCode",
           "referral_code": referralCode ?? code ?? "",
+          "track_membership_link": memTrack ? "1" : "",
           // "referral_code": "8FELPC",
           // "serverAuthCode": account?.serverAuthCode,
         };
@@ -220,6 +221,7 @@ class _SignUpBottomState extends State<SignUpBottom> {
         "fcm_permission": "$granted",
         // "referral_code": "$referralCode",
         "referral_code": referralCode ?? code ?? "",
+        "track_membership_link": memTrack ? "1" : "",
       };
 
       provider.appleLogin(request, id: id);
@@ -332,13 +334,12 @@ class _SignUpBottomState extends State<SignUpBottom> {
                               children: [
                                 Divider(
                                   color: ThemeColors.dividerDark,
-                                  height: 1.sp,
-                                  thickness: 1.sp,
+                                  height: 1,
+                                  thickness: 1,
                                 ),
                                 Container(
                                   color: ThemeColors.background,
-                                  padding:
-                                      EdgeInsets.symmetric(horizontal: 8.sp),
+                                  padding: EdgeInsets.symmetric(horizontal: 8),
                                   child: Text(
                                     "or continue with",
                                     style: stylePTSansRegular(

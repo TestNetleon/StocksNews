@@ -1,13 +1,19 @@
 import 'dart:async';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'dart:math';
 
 class CoinAnimationWidget extends StatefulWidget {
-  const CoinAnimationWidget({super.key});
+  final CongoClaimRes? data;
+  const CoinAnimationWidget({
+    super.key,
+    this.data,
+  });
 
   @override
   State<CoinAnimationWidget> createState() => _CoinAnimationWidgetState();
@@ -41,9 +47,11 @@ class _CoinAnimationWidgetState extends State<CoinAnimationWidget>
     });
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
-    final initialPosition =
-        Offset(screenWidth / 2 - 17.5, screenHeight / 2 - 95);
-    _targetPosition = Offset(0, 0);
+    final initialPosition = Offset(
+      screenWidth / 2 - 17.5,
+      screenHeight / 2 - 95,
+    );
+    _targetPosition = Offset(ScreenUtil().screenWidth - 100, 100);
     for (int i = 0; i < _coinPositions.length; i++) {
       _coinPositions[i] = initialPosition;
       final controller = AnimationController(
@@ -71,9 +79,11 @@ class _CoinAnimationWidgetState extends State<CoinAnimationWidget>
       _animations.add(animation);
       _fadeAnimations.add(fadeAnimation);
     }
-    setState(() {
-      _animationsInitialized = true;
-    });
+    if (mounted) {
+      setState(() {
+        _animationsInitialized = true;
+      });
+    }
   }
 
   void _startAnimation() {
@@ -86,14 +96,20 @@ class _CoinAnimationWidgetState extends State<CoinAnimationWidget>
 
           if (i == _controllers.length - 1) {
             Future.delayed(const Duration(milliseconds: 50), () {
-              _coinsAnimationComplete = true;
-              setState(() {});
+              if (mounted) {
+                setState(() {
+                  _coinsAnimationComplete = true;
+                });
+              }
             });
             _player.play(AssetSource(AudioFiles.successCoin), volume: 4);
 
             Future.delayed(const Duration(seconds: 5), () {
-              showNormalCongo = true;
-              setState(() {});
+              if (mounted) {
+                setState(() {
+                  showNormalCongo = true;
+                });
+              }
             });
             _player.pause();
           }
@@ -118,7 +134,7 @@ class _CoinAnimationWidgetState extends State<CoinAnimationWidget>
       children: [
         GestureDetector(
           onTap: () {
-            Navigator.pop(context);
+            Navigator.pop(navigatorKey.currentContext!);
           },
           child: Dialog(
             insetPadding: EdgeInsets.zero,
@@ -139,7 +155,7 @@ class _CoinAnimationWidgetState extends State<CoinAnimationWidget>
                       ),
                       const SpacerVertical(height: 20),
                       Text(
-                        "2,696",
+                        "${widget.data?.subtitle ?? 0}",
                         style: stylePTSansBold(color: Colors.white),
                       ),
                     ],
@@ -183,4 +199,13 @@ class _CoinAnimationWidgetState extends State<CoinAnimationWidget>
       ],
     );
   }
+}
+
+class CongoClaimRes {
+  num? points;
+  String? subtitle;
+  CongoClaimRes({
+    this.points,
+    this.subtitle,
+  });
 }

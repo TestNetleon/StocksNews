@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stocks_news_new/modals/faqs_res.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
@@ -28,10 +27,10 @@ class SdFaqCard extends StatelessWidget {
       },
       child: Container(
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(Dimen.radius.r),
+          borderRadius: BorderRadius.circular(Dimen.radius),
           border: Border.all(color: ThemeColors.greyBorder),
         ),
-        padding: EdgeInsets.all(Dimen.itemSpacing.sp),
+        padding: EdgeInsets.all(Dimen.itemSpacing),
         child: Column(
           children: [
             Row(
@@ -55,7 +54,7 @@ class SdFaqCard extends StatelessWidget {
               alignment: Alignment.topCenter,
               child: Container(
                 height: isOpen ? null : 0,
-                padding: EdgeInsets.only(top: Dimen.itemSpacing.sp),
+                padding: EdgeInsets.only(top: Dimen.itemSpacing),
                 child: Text(
                   data?.answer ?? "",
                   style: stylePTSansRegular(

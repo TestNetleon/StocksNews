@@ -20,7 +20,7 @@ class StocksScreenSimmer extends StatelessWidget {
         }
         return Divider(
           color: ThemeColors.greyBorder,
-          height: 12.sp,
+          height: 12,
         );
       },
       itemBuilder: (context, index) {
@@ -29,7 +29,7 @@ class StocksScreenSimmer extends StatelessWidget {
             children: [
               Divider(
                 color: ThemeColors.greyBorder,
-                height: 15.sp,
+                height: 15,
                 thickness: 1,
               ),
               Row(
@@ -55,7 +55,7 @@ class StocksScreenSimmer extends StatelessWidget {
               ),
               Divider(
                 color: ThemeColors.greyBorder,
-                height: 15.sp,
+                height: 15,
                 thickness: 1,
               ),
             ],

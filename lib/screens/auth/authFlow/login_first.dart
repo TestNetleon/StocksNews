@@ -121,6 +121,7 @@ class _LoginFirstState extends State<LoginFirst> {
           "fcm_permission": "$granted",
           // "serverAuthCode": account?.serverAuthCode,
           "referral_code": referralCode ?? "",
+          "track_membership_link": memTrack ? "1" : "",
         };
         provider.googleLogin(request, alreadySubmitted: false);
       }
@@ -151,6 +152,7 @@ class _LoginFirstState extends State<LoginFirst> {
         "build_code": buildNumber,
         "fcm_token": fcmToken ?? "",
         "fcm_permission": "$granted",
+        "track_membership_link": memTrack ? "1" : "",
       };
 
       provider.appleLogin(request, id: id);
@@ -284,8 +286,8 @@ class _LoginFirstState extends State<LoginFirst> {
                     children: [
                       Divider(
                         color: ThemeColors.dividerDark,
-                        height: 1.sp,
-                        thickness: 1.sp,
+                        height: 1,
+                        thickness: 1,
                       ),
                       Container(
                         color: ThemeColors.background,

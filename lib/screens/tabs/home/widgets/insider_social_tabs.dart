@@ -53,8 +53,8 @@ class _InsiderSocialTabsState extends State<InsiderSocialTabs> {
               ),
               VerticalDivider(
                 color: ThemeColors.accent,
-                width: 1.sp,
-                thickness: 1.sp,
+                width: 1,
+                thickness: 1,
               ),
               CustomTabLabel(
                 "Reddit/X Mention",
@@ -216,7 +216,7 @@ class RedditTwitterHomeContentBase extends StatelessWidget {
                     // return const SpacerVertical(height: 12);
                     return Divider(
                       color: ThemeColors.greyBorder,
-                      height: 10.sp,
+                      height: 10,
                     );
                   },
                 ),

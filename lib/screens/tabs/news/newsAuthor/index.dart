@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/home_insider_res.dart';
@@ -36,10 +35,10 @@ class NewsAuthorIndex extends StatelessWidget {
       ),
       body: Padding(
         padding: EdgeInsets.fromLTRB(
-          Dimen.padding.sp,
+          Dimen.padding,
           // Dimen.padding.sp,
           0,
-          Dimen.padding.sp,
+          Dimen.padding,
           0,
         ),
         child: Column(
@@ -148,7 +147,7 @@ class _NewsAuthorContainerState extends State<NewsAuthorContainer> {
             separatorBuilder: (BuildContext context, int index) {
               return Divider(
                 color: ThemeColors.greyBorder,
-                height: 16.sp,
+                height: 16,
               );
             },
           )),

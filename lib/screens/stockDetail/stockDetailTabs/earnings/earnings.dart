@@ -1,6 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/faqs_res.dart';
 import 'package:stocks_news_new/modals/stockDetailRes/earnings.dart';
@@ -155,7 +154,7 @@ class _SdEarningsState extends State<SdEarnings> {
                                     ),
                                     Divider(
                                       color: ThemeColors.greyBorder,
-                                      height: 20.sp,
+                                      height: 20,
                                       thickness: 1,
                                     )
                                   ],
@@ -178,7 +177,7 @@ class _SdEarningsState extends State<SdEarnings> {
                         separatorBuilder: (BuildContext context, int index) {
                           return Divider(
                             color: ThemeColors.greyBorder,
-                            height: 20.sp,
+                            height: 20,
                           );
                         },
                         itemCount: provider.earnings?.epsEstimates?.length ?? 0,
@@ -238,7 +237,7 @@ class _SdEarningsState extends State<SdEarnings> {
                                       ),
                                       Divider(
                                         color: ThemeColors.greyBorder,
-                                        height: 20.sp,
+                                        height: 20,
                                         thickness: 1,
                                       )
                                     ],
@@ -264,7 +263,7 @@ class _SdEarningsState extends State<SdEarnings> {
                           separatorBuilder: (BuildContext context, int index) {
                             return Divider(
                               color: ThemeColors.greyBorder,
-                              height: 20.sp,
+                              height: 20,
                             );
                           },
                           itemCount:

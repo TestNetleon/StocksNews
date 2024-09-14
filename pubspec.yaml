@@ -16,8 +16,7 @@ publish_to: "none" # Remove this line if you wish to publish to pub.dev
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 # In Windows, build-name is used as the major, minor, and patch parts
 # of the product and file versions while build-number is used as the build suffix.
-version: 1.1.16+92 # android
-# version: 1.1.14+85 # ios
+version: 1.1.17+93
 
 environment:
   sdk: ">=3.2.0 <4.0.0"
@@ -49,6 +48,7 @@ dependencies:
   pull_to_refresh: ^2.0.0
   url_launcher: ^6.2.1
   provider: ^6.1.2
+  # package_info_plus: ^5.0.1
   package_info_plus: ^8.0.2
   syncfusion_flutter_gauges: 
   pinput: ^4.0.0
@@ -58,15 +58,17 @@ dependencies:
   google_sign_in: ^6.1.6
   google_sign_in_ios: ^5.6.5
   firebase_analytics: ^10.8.9
-  firebase_messaging: ^14.7.19
+  firebase_messaging: ^14.9.4
   # flutter_local_notifications: ^16.2.0 
   flutter_local_notifications: ^17.2.2
   webview_flutter: ^4.8.0
   image_picker: ^1.0.5
-  image_cropper: ^5.0.1
+  # image_cropper: ^5.0.1
+  image_cropper: ^8.0.2
   flutter_image_compress: ^2.1.0
   flutter_widget_from_html: ^0.14.9
-  fl_chart: ^0.68.0
+  # fl_chart: ^0.68.0
+  fl_chart: ^0.69.0
   auto_size_text: ^3.0.0
   path_provider: ^2.1.2
   flutter_keyboard_visibility: ^6.0.0
@@ -92,7 +94,7 @@ dependencies:
   readmore: ^3.0.0
   web_socket_channel: ^2.4.3
   flutter_html: ^3.0.0-beta.2
-  connectivity_plus: ^6.0.3
+  connectivity_plus: ^6.0.5
   photo_view: ^0.15.0
   plaid_flutter: ^3.1.8
   sqflite: ^2.3.3+1
@@ -122,7 +124,7 @@ dependencies:
   visibility_detector: ^0.4.0+2
   flutter_charts: ^0.5.2
   collection: ^1.18.0
-  inner_shadow_widget: ^0.0.3
+  animated_flip_counter: ^0.3.4
   # onesignal_flutter: ^5.2.2
 
 dev_dependencies:

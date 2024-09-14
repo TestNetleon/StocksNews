@@ -656,12 +656,29 @@ bool isValidUrl(String? url) {
 // }
 
 void handleDeepLinkNavigation({
-  required Uri? uri,
+  Uri? uri,
   bool conditionalCheck = false,
+  int? duration,
 }) {
   if (uri == null) {
     onDeepLinking = false;
     return;
+  }
+
+  try {
+    if (uri.toString().contains('MEM')) {
+      memTrack = true;
+      Utils().showLog("Going to membership page-------");
+      Timer(Duration(seconds: duration ?? 0), () {
+        Navigator.push(navigatorKey.currentContext!,
+            MaterialPageRoute(builder: (context) {
+          return NewMembership();
+        }));
+      });
+      return;
+    }
+  } catch (e) {
+    //
   }
 
   bool isRef = uri.toString().contains("/install") ||
@@ -721,7 +738,10 @@ void handleNavigation({
     return;
   }
 
-  if (setPopHome) popHome = true;
+  if (setPopHome && type != DeeplinkEnum.login && type != DeeplinkEnum.signup) {
+    popHome = true;
+  }
+
   Utils().showLog("----$userPresent---");
 
   // if (type == "blog") {
@@ -869,9 +889,7 @@ void handleNavigation({
       Navigator.push(
         navigatorKey.currentContext!,
         MaterialPageRoute(
-          builder: (_) => const NewMembership(
-            withClickCondition: true,
-          ),
+          builder: (_) => const NewMembership(),
         ),
       );
     } else {

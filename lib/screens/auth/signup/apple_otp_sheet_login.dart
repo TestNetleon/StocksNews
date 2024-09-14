@@ -140,6 +140,8 @@ class _OTPLoginBottomState extends State<OTPLoginBottom> {
         "fcm_permission": "$granted",
         "otp": _controller.text,
         "referral_code": "$referralCode",
+        "track_membership_link": memTrack ? "1" : "",
+
         // "referral_code": referralCode ?? widget.code ?? "",
       };
 

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/home_insider_res.dart';
 import 'package:stocks_news_new/modals/home_trending_res.dart';
@@ -75,7 +74,7 @@ class SearchContainer extends StatelessWidget {
           separatorBuilder: (BuildContext context, int index) {
             return Divider(
               color: ThemeColors.greyBorder,
-              height: 20.sp,
+              height: 20,
             );
           },
         ),

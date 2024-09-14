@@ -1,13 +1,10 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
-
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/api/api_requester.dart';
-
 import '../api/api_response.dart';
 import '../api/apis.dart';
 import '../modals/affiliate/refer_friend_res.dart';
@@ -154,13 +151,13 @@ class LeaderBoardProvider extends ChangeNotifier {
             message: response.message ?? "",
             title: "Success",
             icon: Images.otpSuccessGIT,
-            padding: EdgeInsets.fromLTRB(10.sp, 10, 10.sp, 0));
+            padding: EdgeInsets.fromLTRB(10, 10, 10, 0));
       } else {
         popUpAlert(
             message: response.message ?? "",
             title: "Alert",
             icon: Images.alertPopGIF,
-            padding: EdgeInsets.fromLTRB(10.sp, 10, 10.sp, 0));
+            padding: EdgeInsets.fromLTRB(10, 10, 10, 0));
       }
     } catch (e) {
       Utils().showLog("$e");
@@ -168,7 +165,7 @@ class LeaderBoardProvider extends ChangeNotifier {
           message: Const.errSomethingWrong,
           title: "Alert",
           icon: Images.alertPopGIF,
-          padding: EdgeInsets.fromLTRB(10.sp, 10, 10.sp, 0));
+          padding: EdgeInsets.fromLTRB(10, 10, 10, 0));
     }
   }
 

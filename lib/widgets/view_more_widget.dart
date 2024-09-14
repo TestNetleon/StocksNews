@@ -23,7 +23,7 @@ class ViewMoreWidget extends StatelessWidget {
       child: Column(
         children: [
           Divider(
-            height: 10.sp,
+            height: 10,
             color: ThemeColors.dividerDark,
           ),
           Padding(
@@ -45,7 +45,7 @@ class ViewMoreWidget extends StatelessWidget {
             ),
           ),
           Divider(
-            height: 10.sp,
+            height: 10,
             color: ThemeColors.divider,
           ),
         ],

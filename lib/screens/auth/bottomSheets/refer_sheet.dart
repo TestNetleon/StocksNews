@@ -30,8 +30,8 @@ referSheet({
     isScrollControlled: true,
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.only(
-        topLeft: Radius.circular(5.sp),
-        topRight: Radius.circular(5.sp),
+        topLeft: Radius.circular(5),
+        topRight: Radius.circular(5),
       ),
     ),
     context: navigatorKey.currentContext!,
@@ -105,13 +105,16 @@ class _ReferBottomSheetState extends State<ReferBottomSheet> {
         constraints: BoxConstraints(maxHeight: ScreenUtil().screenHeight - 30),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(10.sp),
-            topRight: Radius.circular(10.sp),
+            topLeft: Radius.circular(10),
+            topRight: Radius.circular(10),
           ),
           gradient: const LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: [ThemeColors.bottomsheetGradient, Colors.black],
+            colors: [
+              ThemeColors.bottomsheetGradient,
+              Colors.black,
+            ],
           ),
           // gradient: const RadialGradient(
           //   center: Alignment.bottomCenter,
@@ -137,11 +140,11 @@ class _ReferBottomSheetState extends State<ReferBottomSheet> {
           mainAxisSize: MainAxisSize.min,
           children: [
             Container(
-              height: 6.sp,
-              width: 50.sp,
-              margin: EdgeInsets.only(top: 8.sp),
+              height: 6,
+              width: 50,
+              margin: EdgeInsets.only(top: 8),
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10.sp),
+                borderRadius: BorderRadius.circular(10),
                 color: ThemeColors.greyBorder,
               ),
             ),

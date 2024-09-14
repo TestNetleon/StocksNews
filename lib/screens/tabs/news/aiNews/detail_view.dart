@@ -445,7 +445,7 @@ class _NewsDetailsBodyAIState extends State<NewsDetailsBodyAI> {
                                 // return const SpacerVertical(height: 16);
                                 return Divider(
                                   color: ThemeColors.greyBorder,
-                                  height: 16.sp,
+                                  height: 16,
                                 );
                               },
                             ),

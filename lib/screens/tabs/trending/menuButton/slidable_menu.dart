@@ -649,7 +649,6 @@ class _SlidableMenuWidgetState extends State<SlidableMenuWidget>
             (element) => (element.key == "add-alert" && element.status == 1),
           ) ??
           false;
-
       isLocked = !havePermissions;
       Utils().showLog("is Locked $isLocked");
     }

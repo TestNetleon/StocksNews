@@ -55,7 +55,7 @@ class ImagePickerSheetContent extends StatelessWidget {
               ),
             ),
           ),
-          Divider(color: Colors.grey, height: 1.sp, thickness: 1.sp),
+          Divider(color: Colors.grey, height: 1, thickness: 1),
           GestureDetector(
             onTap: onGalleryClick,
             child: Container(

@@ -161,7 +161,7 @@ class _SdInsiderTradeState extends State<SdInsiderTrade> {
                                     ),
                                     Divider(
                                       color: ThemeColors.greyBorder,
-                                      height: 20.sp,
+                                      height: 20,
                                       thickness: 1,
                                     )
                                   ],
@@ -186,7 +186,7 @@ class _SdInsiderTradeState extends State<SdInsiderTrade> {
                         separatorBuilder: (BuildContext context, int index) {
                           return Divider(
                             color: ThemeColors.greyBorder,
-                            height: 20.sp,
+                            height: 20,
                           );
                         },
                         itemCount:
@@ -252,7 +252,7 @@ class _SdInsiderTradeState extends State<SdInsiderTrade> {
                                     ),
                                     Divider(
                                       color: ThemeColors.greyBorder,
-                                      height: 20.sp,
+                                      height: 20,
                                       thickness: 1,
                                     )
                                   ],

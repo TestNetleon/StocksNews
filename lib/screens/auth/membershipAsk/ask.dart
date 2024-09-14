@@ -79,8 +79,10 @@ class _MembershipLoginAskState extends State<MembershipLoginAsk> {
   @override
   void initState() {
     super.initState();
-    if (Platform.isAndroid) _getAppSignature();
-    _checkProfile();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (Platform.isAndroid) _getAppSignature();
+      _checkProfile();
+    });
   }
 
   bool checkBox = false;

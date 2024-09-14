@@ -4,6 +4,8 @@ import 'package:flutter/foundation.dart';
 
 class Apis {
   static const baseUrl = "https://app.stocks.news/api/v1"; // live server
+  static const baseUrlLocal =
+      "https://notification.stocks.news/api/v1"; // Local server
 
   // static const baseUrl = kDebugMode
   //     ? "https://notification.stocks.news/public/demo/public/api/v1"
@@ -194,10 +196,21 @@ class Apis {
   // static const tsRequestBuy = "/simulator/buy-share";
   // static const tsRequestSell = "/simulator/sell-share";
   static const tsOpenList = "/simulator/list-purchased-shares";
-
   // ---------   Trading Simulator End --------------
-
   static const loginNew = "/check-user";
+
+  // ---------   STock Analysis Screen --------------
+  static const msRadarChart = "/stock-analysis/radarChart";
+  static const msPriceVolatility = "/stock-analysis/priceVolatility";
+  static const msStockHighlight = "/stock-analysis/stockHighLights";
+  static const msStockPricing = "/stock-analysis/pricing";
+  static const msStockProfit = "/stock-analysis/profit";
+  static const msOtherStock = "/stock-analysis/portfolio-stocks";
+  static const msStockTop = "/stock-analysis/stock-top-detail";
+
+  //----------   Missions
+  static const pointClaimList = "/point-claim-list";
+  static const pointsClaim = "/point-claim";
 }
 
 class ApiKeys {

@@ -56,7 +56,7 @@ class AboutTile extends StatelessWidget {
             ),
           ),
         ),
-        Divider(color: ThemeColors.greyBorder, height: 5.sp),
+        Divider(color: ThemeColors.greyBorder, height: 5),
       ],
     );
   }

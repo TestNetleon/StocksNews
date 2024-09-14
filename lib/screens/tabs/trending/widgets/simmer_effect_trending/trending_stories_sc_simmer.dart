@@ -16,8 +16,8 @@ class TrendingStoriesScreenSimmer extends StatelessWidget {
       padding: EdgeInsets.only(
         bottom: 12.sp,
         top: 20.sp,
-        left: Dimen.padding.sp,
-        right: Dimen.padding.sp,
+        left: Dimen.padding,
+        right: Dimen.padding,
       ),
       itemBuilder: (context, index) {
         return Row(
@@ -50,7 +50,7 @@ class TrendingStoriesScreenSimmer extends StatelessWidget {
       separatorBuilder: (BuildContext context, int index) {
         return Divider(
           color: ThemeColors.greyBorder,
-          height: 20.sp,
+          height: 20,
         );
       },
     );

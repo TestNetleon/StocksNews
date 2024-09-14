@@ -44,7 +44,7 @@ class BlogTypeData extends StatelessWidget {
             );
           },
           separatorBuilder: (BuildContext context, int index) {
-            return Divider(color: ThemeColors.greyBorder, height: 20.sp);
+            return Divider(color: ThemeColors.greyBorder, height: 20);
           },
         ),
       ),

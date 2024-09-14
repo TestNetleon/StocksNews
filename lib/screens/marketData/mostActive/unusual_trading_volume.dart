@@ -99,7 +99,7 @@ class _UnusualTradingVolumeState extends State<UnusualTradingVolume> {
                       onLoadMore: () async =>
                           provider.getData(loadMore: true, type: 3),
                       child: ListView.separated(
-                        padding: EdgeInsets.only(bottom: Dimen.padding.sp),
+                        padding: EdgeInsets.only(bottom: Dimen.padding),
                         itemBuilder: (context, index) {
                           if (data == null || data.isEmpty) {
                             return const SizedBox();

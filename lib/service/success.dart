@@ -33,6 +33,12 @@ class _SubscriptionPurchasedState extends State<SubscriptionPurchased> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       popHome = true;
       context.read<HomeProvider>().getHomeSlider();
+      navigatorKey.currentContext!
+          .read<MembershipProvider>()
+          .getMembershipSuccess(
+            isMembership: widget.isMembership,
+            sendTrack: true,
+          );
     });
   }
 

@@ -5,24 +5,27 @@ import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 
 class NewMembership extends StatelessWidget {
-  final bool withClickCondition;
   final String? inAppMsgId;
   final String? notificationId;
+  final bool cancel;
   const NewMembership({
     super.key,
-    this.withClickCondition = false,
     this.inAppMsgId,
     this.notificationId,
+    this.cancel = false,
   });
 
   @override
   Widget build(BuildContext context) {
     return BaseContainer(
       drawer: const BaseDrawer(resetIndex: true),
-      appBar: const AppBarHome(isPopback: true),
-      body: NewMembershipContainer(
-        withClickCondition: withClickCondition,
+      appBar: AppBarHome(
+        isPopback: true,
+        icon: cancel ? Icons.close : null,
+        canSearch: !cancel,
+        showTrailing: !cancel,
       ),
+      body: NewMembershipContainer(),
     );
   }
 }

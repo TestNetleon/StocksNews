@@ -69,10 +69,10 @@ class _WhatWeDoContainerState extends State<WhatWeDoContainer> {
               )
             : Padding(
                 padding: EdgeInsets.fromLTRB(
-                  Dimen.padding.sp,
+                  Dimen.padding,
                   // Dimen.padding.sp,
                   0,
-                  Dimen.padding.sp,
+                  Dimen.padding,
                   0,
                 ),
                 child: Column(

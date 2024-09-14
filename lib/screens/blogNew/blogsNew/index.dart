@@ -92,7 +92,9 @@ class _BlogIndexNewState extends State<BlogIndexNew> {
       onChange: (index) {
         provider.tabChange(index, provider.tabs![index].id);
       },
-      scrollable: provider.tabs?.length == 2 ? false : true,
+      scrollable: provider.tabs?.length == 2 || provider.tabs?.length == 1
+          ? false
+          : true,
       padding: const EdgeInsets.only(bottom: 10),
       tabs: List.generate(
         provider.tabs?.length ?? 0,

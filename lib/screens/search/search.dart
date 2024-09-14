@@ -69,7 +69,7 @@ class _SearchState extends State<Search> {
             ? const Loading()
             : SingleChildScrollView(
                 child: Padding(
-                  padding: EdgeInsets.all(Dimen.padding.sp),
+                  padding: EdgeInsets.all(Dimen.padding),
                   child: Column(
                     children: [
                       TextInputFieldSearchCommon(

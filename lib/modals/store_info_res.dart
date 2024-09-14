@@ -43,24 +43,24 @@ class StoreInfoRes {
 }
 
 class Benefit {
-  final String id;
+  // final String id;
   final String question;
   final String answer;
 
   Benefit({
-    required this.id,
+    // required this.id,
     required this.question,
     required this.answer,
   });
 
   factory Benefit.fromJson(Map<String, dynamic> json) => Benefit(
-        id: json["_id"],
+        // id: json["_id"],
         question: json["question"],
         answer: json["answer"],
       );
 
   Map<String, dynamic> toJson() => {
-        "_id": id,
+        // "_id": id,
         "question": question,
         "answer": answer,
       };

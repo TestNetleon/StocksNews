@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 
 //
@@ -17,10 +16,10 @@ class ThemeAlertDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      insetPadding: insetPadding ??
-          EdgeInsets.symmetric(horizontal: 35.sp, vertical: 20.sp),
+      insetPadding:
+          insetPadding ?? EdgeInsets.symmetric(horizontal: 35, vertical: 20),
       shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10.sp),
+          borderRadius: BorderRadius.circular(10),
           side: BorderSide(
               color: ThemeColors.greyText.withOpacity(0.5), width: 2)),
       elevation: 5,
@@ -38,8 +37,7 @@ class ThemeAlertDialog extends StatelessWidget {
             ],
           ),
         ),
-        padding:
-            contentPadding ?? EdgeInsets.fromLTRB(18.sp, 16.sp, 18.sp, 10.sp),
+        padding: contentPadding ?? EdgeInsets.fromLTRB(18, 16, 18, 10),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

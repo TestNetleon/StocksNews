@@ -595,7 +595,7 @@ class _NewsDetailsBodyState extends State<NewsDetailsBody> {
                                 // return const SpacerVertical(height: 16);
                                 return Divider(
                                   color: const Color.fromARGB(255, 98, 98, 98),
-                                  height: 16.sp,
+                                  height: 16,
                                 );
                               },
                             ),
