@@ -37,7 +37,8 @@ class _ClaimPointsIndexState extends State<ClaimPointsIndex> {
         isPopback: true,
         canSearch: true,
         showTrailing: true,
-        title: "Missions",
+        title: provider.extra?.title ?? "Rewards",
+        subTitle: provider.extra?.subTitle,
       ),
       body: BaseUiContainer(
         hasData: !provider.isLoading &&
@@ -55,30 +56,60 @@ class _ClaimPointsIndexState extends State<ClaimPointsIndex> {
             Dimen.padding,
             0,
           ),
+          // child: CommonRefreshIndicator(
+          //   onRefresh: () async {
+          //     provider.getMissions();
+          //   },
+          //   child: Column(
+          //     children: [
+          //       CurrentPointsItem(),
+          //       ListView.separated(
+          //         shrinkWrap: true,
+          //         padding: EdgeInsets.symmetric(vertical: 10),
+          //         physics: NeverScrollableScrollPhysics(),
+          //         itemBuilder: (context, index) {
+          //           ClaimPointsRes? data = provider.data?[index];
+          //           return ClaimPointsIndividual(data: data);
+          //         },
+          //         itemCount: provider.data?.length ?? 0,
+          //         separatorBuilder: (context, index) {
+          //           return SpacerVertical(height: 10);
+          //         },
+          //       ),
+          //     ],
+          //   ),
+          // ),
+
           child: CommonRefreshIndicator(
             onRefresh: () async {
               provider.getMissions();
             },
-            child: SingleChildScrollView(
-              physics: BouncingScrollPhysics(),
-              child: Column(
-                children: [
-                  CurrentPointsItem(),
-                  ListView.separated(
-                    shrinkWrap: true,
-                    padding: EdgeInsets.symmetric(vertical: 10),
-                    physics: NeverScrollableScrollPhysics(),
-                    itemBuilder: (context, index) {
-                      ClaimPointsRes? data = provider.data?[index];
-                      return ClaimPointsIndividual(data: data);
-                    },
-                    itemCount: provider.data?.length ?? 0,
-                    separatorBuilder: (context, index) {
-                      return SpacerVertical(height: 10);
-                    },
+            child: CustomScrollView(
+              slivers: [
+                SliverToBoxAdapter(
+                  child: Padding(
+                    padding: const EdgeInsets.only(bottom: 10),
+                    child: CurrentPointsItem(),
                   ),
-                ],
-              ),
+                ),
+                // ListView.separated(
+                //   shrinkWrap: true,
+                //   padding: EdgeInsets.symmetric(vertical: 10),
+                //   physics: NeverScrollableScrollPhysics(),
+                //   itemBuilder: (context, index) {},
+                //   separatorBuilder: (context, index) {},
+                // ),
+                SliverList.separated(
+                  itemCount: provider.data?.length ?? 0,
+                  itemBuilder: (context, index) {
+                    ClaimPointsRes? data = provider.data?[index];
+                    return ClaimPointsIndividual(data: data);
+                  },
+                  separatorBuilder: (context, index) {
+                    return SpacerVertical(height: 10);
+                  },
+                ),
+              ],
             ),
           ),
         ),

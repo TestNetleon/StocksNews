@@ -1,6 +1,7 @@
 // ignore_for_file: unused_element
 
 import 'dart:async';
+import 'dart:io';
 
 import 'package:app_links/app_links.dart';
 import 'package:country_code_picker/country_code_picker.dart';
@@ -9,6 +10,8 @@ import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 // import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:purchases_flutter/purchases_flutter.dart';
+import 'package:stocks_news_new/modals/user_res.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/navigation_observer.dart';
 // import 'package:stocks_news_new/dummy.dart';
@@ -42,6 +45,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      configureRevenueCatAttribute();
       getInitialReferralsIfAny();
       getInitialDeeplinkWhenAppOpen();
       startListeningForDeepLinks();
@@ -49,6 +53,32 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     });
     WidgetsBinding.instance.addObserver(this);
   }
+
+  // _configureRevenueCat() async {
+  //   try {
+  //     UserRes? user = await Preference.getUser();
+  //     if (user != null) {
+  //       PurchasesConfiguration? configuration;
+  //       if (Platform.isAndroid) {
+  //         configuration =
+  //             PurchasesConfiguration("goog_KXHVJRLChlyjoOamWsqCWQSJZfI")
+  //               ..appUserID = user.userId ?? "";
+  //       } else if (Platform.isIOS) {
+  //         configuration =
+  //             PurchasesConfiguration("appl_kHwXNrngqMNktkEZJqYhEgLjbcC")
+  //               ..appUserID = user.userId ?? "";
+  //       }
+  //       if (configuration != null) {
+  //         await Purchases.configure(configuration);
+  //         if (Platform.isIOS) {
+  //           await Purchases.enableAdServicesAttributionTokenCollection();
+  //         }
+  //       }
+  //     }
+  //   } catch (e) {
+  //     //
+  //   }
+  // }
 
   @override
   void dispose() {
@@ -293,5 +323,31 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       },
       child: const Splash(),
     );
+  }
+}
+
+configureRevenueCatAttribute() async {
+  try {
+    UserRes? user = await Preference.getUser();
+    if (user != null) {
+      PurchasesConfiguration? configuration;
+      if (Platform.isAndroid) {
+        configuration =
+            PurchasesConfiguration("goog_KXHVJRLChlyjoOamWsqCWQSJZfI")
+              ..appUserID = user.userId ?? "";
+      } else if (Platform.isIOS) {
+        configuration =
+            PurchasesConfiguration("appl_kHwXNrngqMNktkEZJqYhEgLjbcC")
+              ..appUserID = user.userId ?? "";
+      }
+      if (configuration != null) {
+        await Purchases.configure(configuration);
+        if (Platform.isIOS) {
+          await Purchases.enableAdServicesAttributionTokenCollection();
+        }
+      }
+    }
+  } catch (e) {
+    //
   }
 }

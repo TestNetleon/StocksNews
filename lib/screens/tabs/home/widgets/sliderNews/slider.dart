@@ -215,16 +215,19 @@ class _HomeTopNewsSliderState extends State<HomeTopNewsSlider> {
                   );
                 }).toList(),
               ),
-            Positioned(
-              bottom: 5,
-              child: AnimatedSmoothIndicator(
-                activeIndex: _activeIndex,
-                count: sliderPosts?.length ?? 0,
-                effect: WormEffect(
-                  activeDotColor: ThemeColors.accent,
-                  dotColor: ThemeColors.gradientLight,
-                  dotWidth: dotSize,
-                  dotHeight: dotSize,
+            Visibility(
+              visible: sliderPosts != null && sliderPosts.isNotEmpty == true,
+              child: Positioned(
+                bottom: 5,
+                child: AnimatedSmoothIndicator(
+                  activeIndex: _activeIndex,
+                  count: sliderPosts?.length ?? 0,
+                  effect: WormEffect(
+                    activeDotColor: ThemeColors.accent,
+                    dotColor: ThemeColors.gradientLight,
+                    dotWidth: dotSize,
+                    dotHeight: dotSize,
+                  ),
                 ),
               ),
             ),
@@ -255,7 +258,7 @@ class NewsDetailAuthorA extends StatelessWidget {
     // List<DetailListType>? authors =
     //     context.watch<NewsDetailProvider>().data?.postDetail?.authors;
     List<Widget> widgets = [];
-    if (data == null) {
+    if (data == null || data?.isEmpty == true) {
       return const SizedBox();
     }
 

@@ -497,6 +497,7 @@ class UserProvider extends ChangeNotifier {
         //     _user?.signupStatus == false) {
         //   referLogin();
         // }
+        configureRevenueCatAttribute();
       } else {
         // showErrorMessage(message: response.message);
         popUpAlert(
@@ -621,6 +622,7 @@ class UserProvider extends ChangeNotifier {
         //     _user?.signupStatus == false) {
         //   referLogin();
         // }
+        configureRevenueCatAttribute();
       } else {
         // showErrorMessage(message: response.message);
         if (response.message == "Invalid email address") {
@@ -814,6 +816,7 @@ class UserProvider extends ChangeNotifier {
         );
 
         notifyListeners();
+        configureRevenueCatAttribute();
       } else {
         // showErrorMessage(message: response.message);
         popUpAlert(
@@ -873,6 +876,7 @@ class UserProvider extends ChangeNotifier {
           );
         }
         notifyListeners();
+        configureRevenueCatAttribute();
       } else {
         // showErrorMessage(message: response.message);
         popUpAlert(

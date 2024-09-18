@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
@@ -23,7 +22,6 @@ import '../../../modals/home_insider_res.dart';
 import '../../../utils/colors.dart';
 import '../../../widgets/custom/refer.dart';
 import '../../AdManager/manager.dart';
-import '../../claimPoints/index.dart';
 import '../news/news_item.dart';
 import 'update/updateCountryCode/update.dart';
 import 'update/updatePhone/update.dart';
@@ -56,18 +54,18 @@ class HomeContainer extends StatelessWidget {
     }
     return Column(
       children: [
-        if (kDebugMode)
-          ThemeButtonSmall(
-            text: "Missions",
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => ClaimPointsIndex(),
-                ),
-              );
-            },
-          ),
+        // if (kDebugMode)
+        //   ThemeButtonSmall(
+        //     text: "Missions",
+        //     onPressed: () {
+        //       Navigator.push(
+        //         context,
+        //         MaterialPageRoute(
+        //           builder: (context) => ClaimPointsIndex(),
+        //         ),
+        //       );
+        //     },
+        //   ),
         // if (kDebugMode)
         //   ThemeButtonSmall(
         //     text: "TEST",

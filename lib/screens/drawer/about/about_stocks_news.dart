@@ -33,6 +33,7 @@ import '../../../utils/constants.dart';
 import '../../../utils/theme.dart';
 import '../../../widgets/spacer_vertical.dart';
 import '../../affiliate/index.dart';
+import '../../claimPoints/index.dart';
 import '../widgets/drawer_top_new.dart';
 import 'refer_dialog.dart';
 
@@ -234,6 +235,24 @@ class _AboutStocksNewsState extends State<AboutStocksNews> {
           onTap: () {
             _closeDrawer();
             _onShareAppClick();
+          },
+        ),
+      );
+    }
+
+    if (provider.extra?.showRewards == true) {
+      visibleAboutTiles.add(
+        DrawerRes(
+          iconData: Icons.star,
+          text: "Rewards",
+          onTap: () {
+            _closeDrawer();
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ClaimPointsIndex(),
+              ),
+            );
           },
         ),
       );

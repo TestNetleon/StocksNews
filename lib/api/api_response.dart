@@ -127,8 +127,10 @@ class Extra {
   String? phoneCodeError;
   String? phoneError;
   final String? recommendation;
+  final bool? showRewards;
 
   Extra({
+    this.showRewards,
     this.adManagers,
     this.adManager,
     this.recommendation,
@@ -215,7 +217,7 @@ class Extra {
   factory Extra.fromJson(Map<String, dynamic> json) => Extra(
         search: json["search"],
         recommendation: json["recommendation"],
-
+        showRewards: json['show_rewards'],
         storeTitle: json["store_title"],
         notifyTextMsg: json['notification_setting_txt'],
         storeSubTitle: json["store_subtitle"],
@@ -366,7 +368,7 @@ class Extra {
         "ad_managers": adManagers?.toJson(),
         "phone_code_error": phoneCodeError,
         "phone_error": phoneError,
-
+        "show_rewards": showRewards,
         "feeback_type": feebackType == null
             ? []
             : List<dynamic>.from(feebackType!.map((x) => x)),
