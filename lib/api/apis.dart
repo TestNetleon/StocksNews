@@ -207,6 +207,12 @@ class Apis {
   static const msStockProfit = "/stock-analysis/profit";
   static const msOtherStock = "/stock-analysis/portfolio-stocks";
   static const msStockTop = "/stock-analysis/stock-top-detail";
+  static const msFinancials = "/stock-analysis/financials";
+  static const msPeer = '/stock-analysis/peer-comparison';
+  static const msComplete = '/stock-analysis/complete-data';
+  static const msFaqs = '/stock-analysis/faqs';
+  static const pastReturn = "/stock-analysis/past-returns";
+  static const postVolume = "/stock-analysis/post-volume";
 
   //----------   Missions
   static const pointClaimList = "/point-claim-list";

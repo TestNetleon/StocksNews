@@ -37,7 +37,7 @@ class _ClaimPointsIndexState extends State<ClaimPointsIndex> {
         isPopback: true,
         canSearch: true,
         showTrailing: true,
-        title: provider.extra?.title ?? "Rewards",
+        title: "Rewards",
         subTitle: provider.extra?.subTitle,
       ),
       body: BaseUiContainer(

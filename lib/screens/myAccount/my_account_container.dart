@@ -323,86 +323,146 @@ class _MyAccountContainerState extends State<MyAccountContainer>
             mainAxisSize: MainAxisSize.min,
             children: [
               Expanded(
-                child: ThemeInputField(
-                  onChanged: (value) => provider.onChangeEmail(value),
-                  cursorColor: Colors.white,
-                  style: stylePTSansRegular(color: Colors.white),
-                  fillColor: ThemeColors.primaryLight,
-                  borderColor: ThemeColors.primaryLight,
-                  controller: emailController,
-                  maxLines: 1,
-                  placeholder: "Enter your email address",
-                  keyboardType: TextInputType.emailAddress,
-                  inputFormatters: [emailFormatter],
-                  textCapitalization: TextCapitalization.none,
-                  borderRadiusOnly: const BorderRadius.only(
-                    bottomLeft: Radius.circular(4),
-                    topLeft: Radius.circular(4),
-                  ),
-                ),
-              ),
-              Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 10, vertical: 11.7),
-                decoration: const BoxDecoration(
-                  color: ThemeColors.primaryLight,
-                  borderRadius: BorderRadius.only(
-                    topRight: Radius.circular(4),
-                    bottomRight: Radius.circular(4),
-                  ),
-                ),
-                child: Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 10,
-                    vertical: 0,
-                  ),
-                  decoration: BoxDecoration(
-                    color: provider.emailVerified
-                        ? ThemeColors.greyBorder
-                        : ThemeColors.accent,
-                    borderRadius: const BorderRadius.only(
-                      topRight: Radius.circular(20),
-                      bottomRight: Radius.circular(20),
-                      bottomLeft: Radius.circular(20),
-                      topLeft: Radius.circular(20),
-                    ),
-                  ),
-                  child: GestureDetector(
-                    onTap: provider.emailVerified
-                        ? null
-                        : () =>
-                            _onEmailUpdateClick(emailController.text.trim()),
-                    child: Padding(
-                      padding: EdgeInsets.fromLTRB(
-                          provider.emailVerified ? 0 : 5, 5, 5, 5),
-                      child: Row(
-                        children: [
-                          Visibility(
-                            visible: provider.emailVerified,
-                            child: const Padding(
-                              padding: EdgeInsets.only(right: 5),
-                              child: Icon(
-                                Icons.check,
-                                size: 15,
-                                color: ThemeColors.accent,
-                              ),
-                            ),
-                          ),
-                          Text(
-                            provider.emailVerified ? "Verified" : "Verify",
-                            style: stylePTSansBold(
-                              color: provider.emailVerified
-                                  ? ThemeColors.accent
-                                  : Colors.white,
-                              fontSize: 14,
-                            ),
-                          ),
-                        ],
+                child: Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    ThemeInputField(
+                      onChanged: (value) => provider.onChangeEmail(value),
+                      cursorColor: Colors.white,
+                      style: stylePTSansRegular(color: Colors.white),
+                      fillColor: ThemeColors.primaryLight,
+                      borderColor: ThemeColors.primaryLight,
+                      controller: emailController,
+                      maxLines: 1,
+                      placeholder: "Enter your email address",
+                      keyboardType: TextInputType.emailAddress,
+                      inputFormatters: [emailFormatter],
+                      textCapitalization: TextCapitalization.none,
+                      contentPadding: EdgeInsets.only(right: 90, left: 10),
+                      borderRadiusOnly: const BorderRadius.only(
+                        bottomLeft: Radius.circular(4),
+                        topLeft: Radius.circular(4),
                       ),
                     ),
-                  ),
+                    Positioned(
+                      right: 10,
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 10, vertical: 0),
+                        decoration: BoxDecoration(
+                          color: provider.emailVerified
+                              ? ThemeColors.greyBorder
+                              : ThemeColors.accent,
+                          borderRadius: const BorderRadius.only(
+                            topRight: Radius.circular(20),
+                            bottomRight: Radius.circular(20),
+                            bottomLeft: Radius.circular(20),
+                            topLeft: Radius.circular(20),
+                          ),
+                        ),
+                        child: GestureDetector(
+                          onTap: provider.emailVerified
+                              ? null
+                              : () => _onEmailUpdateClick(
+                                  emailController.text.trim()),
+                          child: Padding(
+                            padding: EdgeInsets.fromLTRB(
+                                provider.emailVerified ? 0 : 5, 5, 5, 5),
+                            child: Row(
+                              children: [
+                                Visibility(
+                                  visible: provider.emailVerified,
+                                  child: const Padding(
+                                    padding: EdgeInsets.only(right: 5),
+                                    child: Icon(
+                                      Icons.check,
+                                      size: 15,
+                                      color: ThemeColors.accent,
+                                    ),
+                                  ),
+                                ),
+                                Text(
+                                  provider.emailVerified
+                                      ? "Verified"
+                                      : "Verify",
+                                  style: stylePTSansBold(
+                                    color: provider.emailVerified
+                                        ? ThemeColors.accent
+                                        : Colors.white,
+                                    fontSize: 14,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
+              // Container(
+              //   padding:
+              //       const EdgeInsets.symmetric(horizontal: 10, vertical: 11.7),
+              //   decoration: const BoxDecoration(
+              //     color: ThemeColors.primaryLight,
+              //     borderRadius: BorderRadius.only(
+              //       topRight: Radius.circular(4),
+              //       bottomRight: Radius.circular(4),
+              //     ),
+              //   ),
+              //   child: Container(
+              //     padding: const EdgeInsets.symmetric(
+              //       horizontal: 10,
+              //       vertical: 0,
+              //     ),
+              //     decoration: BoxDecoration(
+              //       color: provider.emailVerified
+              //           ? ThemeColors.greyBorder
+              //           : ThemeColors.accent,
+              //       borderRadius: const BorderRadius.only(
+              //         topRight: Radius.circular(20),
+              //         bottomRight: Radius.circular(20),
+              //         bottomLeft: Radius.circular(20),
+              //         topLeft: Radius.circular(20),
+              //       ),
+              //     ),
+              //     child: GestureDetector(
+              //       onTap: provider.emailVerified
+              //           ? null
+              //           : () =>
+              //               _onEmailUpdateClick(emailController.text.trim()),
+              //       child: Padding(
+              //         padding: EdgeInsets.fromLTRB(
+              //             provider.emailVerified ? 0 : 5, 5, 5, 5),
+              //         child: Row(
+              //           children: [
+              //             Visibility(
+              //               visible: provider.emailVerified,
+              //               child: const Padding(
+              //                 padding: EdgeInsets.only(right: 5),
+              //                 child: Icon(
+              //                   Icons.check,
+              //                   size: 15,
+              //                   color: ThemeColors.accent,
+              //                 ),
+              //               ),
+              //             ),
+              //             Text(
+              //               provider.emailVerified ? "Verified" : "Verify",
+              //               style: stylePTSansBold(
+              //                 color: provider.emailVerified
+              //                     ? ThemeColors.accent
+              //                     : Colors.white,
+              //                 fontSize: 14,
+              //               ),
+              //             ),
+              //           ],
+              //         ),
+              //       ),
+              //     ),
+              //   ),
+              // ),
             ],
           ),
         ),
@@ -525,94 +585,94 @@ class _MyAccountContainerState extends State<MyAccountContainer>
               //   ],
               // ),
 
-              Flexible(
-                child: ThemeInputField(
-                  // onChanged: (value) => provider.onChangePhone(value),
-                  onChanged: (value) {
-                    provider.onChangePhoneAndCode(
-                      phone: value,
-                      countryCode: "$countryCode",
-                    );
-                  },
-                  cursorColor: Colors.white,
-                  // prefix: Text(
-                  //   "+1 ",
-                  //   style: stylePTSansBold(color: Colors.white, fontSize: 14),
-                  // ),
-                  contentPadding: EdgeInsets.fromLTRB(8, 6, 0, 10),
-                  style: stylePTSansRegular(color: Colors.white, height: 1.5),
-                  fillColor: ThemeColors.primaryLight,
-                  borderColor: ThemeColors.primaryLight,
-                  borderRadiusOnly: BorderRadius.zero,
-                  borderRadius: 0,
-                  controller: mobileController,
-                  placeholder: "Enter your phone number",
-                  keyboardType: TextInputType.phone,
-                  inputFormatters: [
-                    _formatter,
-                    LengthLimitingTextInputFormatter(15)
-                  ],
-                  textCapitalization: TextCapitalization.none,
-                ),
-              ),
-              Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 10, vertical: 12),
-                decoration: const BoxDecoration(
-                  color: ThemeColors.primaryLight,
-                  borderRadius: BorderRadius.only(
-                    topRight: Radius.circular(4),
-                    bottomRight: Radius.circular(4),
-                  ),
-                ),
-                child: Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 10, vertical: 0),
-                  decoration: BoxDecoration(
-                    color: provider.phoneVerified
-                        ? ThemeColors.greyBorder
-                        : ThemeColors.accent,
-                    borderRadius: const BorderRadius.only(
-                      topRight: Radius.circular(20),
-                      bottomRight: Radius.circular(20),
-                      bottomLeft: Radius.circular(20),
-                      topLeft: Radius.circular(20),
+              Expanded(
+                child: Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    ThemeInputField(
+                      // onChanged: (value) => provider.onChangePhone(value),
+                      onChanged: (value) {
+                        provider.onChangePhoneAndCode(
+                          phone: value,
+                          countryCode: "$countryCode",
+                        );
+                      },
+                      cursorColor: Colors.white,
+                      // prefix: Text(
+                      //   "+1 ",
+                      //   style: stylePTSansBold(color: Colors.white, fontSize: 14),
+                      // ),
+                      // contentPadding: EdgeInsets.fromLTRB(8, 6, 0, 10),
+                      style:
+                          stylePTSansRegular(color: Colors.white, height: 1.5),
+                      fillColor: ThemeColors.primaryLight,
+                      borderColor: ThemeColors.primaryLight,
+                      borderRadiusOnly: BorderRadius.zero,
+                      borderRadius: 0,
+                      controller: mobileController,
+                      placeholder: "Enter your phone number",
+                      keyboardType: TextInputType.phone,
+                      inputFormatters: [
+                        _formatter,
+                        LengthLimitingTextInputFormatter(15)
+                      ],
+                      textCapitalization: TextCapitalization.none,
                     ),
-                  ),
-                  child: GestureDetector(
-                    onTap: provider.phoneVerified
-                        ? null
-                        : () =>
-                            _onPhoneUpdateClick(mobileController.text.trim()),
-                    child: Padding(
-                      padding: EdgeInsets.fromLTRB(
-                          provider.phoneVerified ? 0 : 5, 5, 5, 5),
-                      child: Row(
-                        children: [
-                          Visibility(
-                            visible: provider.phoneVerified,
-                            child: const Padding(
-                              padding: EdgeInsets.only(right: 5),
-                              child: Icon(
-                                Icons.check,
-                                size: 15,
-                                color: ThemeColors.accent,
-                              ),
+                    Positioned(
+                      right: 10,
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 10, vertical: 0),
+                        decoration: BoxDecoration(
+                          color: provider.phoneVerified
+                              ? ThemeColors.greyBorder
+                              : ThemeColors.accent,
+                          borderRadius: const BorderRadius.only(
+                            topRight: Radius.circular(20),
+                            bottomRight: Radius.circular(20),
+                            bottomLeft: Radius.circular(20),
+                            topLeft: Radius.circular(20),
+                          ),
+                        ),
+                        child: GestureDetector(
+                          onTap: provider.phoneVerified
+                              ? null
+                              : () => _onPhoneUpdateClick(
+                                  mobileController.text.trim()),
+                          child: Padding(
+                            padding: EdgeInsets.fromLTRB(
+                                provider.phoneVerified ? 0 : 5, 5, 5, 5),
+                            child: Row(
+                              children: [
+                                Visibility(
+                                  visible: provider.phoneVerified,
+                                  child: const Padding(
+                                    padding: EdgeInsets.only(right: 5),
+                                    child: Icon(
+                                      Icons.check,
+                                      size: 15,
+                                      color: ThemeColors.accent,
+                                    ),
+                                  ),
+                                ),
+                                Text(
+                                  provider.phoneVerified
+                                      ? "Verified"
+                                      : "Verify",
+                                  style: stylePTSansBold(
+                                    color: provider.phoneVerified
+                                        ? ThemeColors.accent
+                                        : Colors.white,
+                                    fontSize: 14,
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
-                          Text(
-                            provider.phoneVerified ? "Verified" : "Verify",
-                            style: stylePTSansBold(
-                              color: provider.phoneVerified
-                                  ? ThemeColors.accent
-                                  : Colors.white,
-                              fontSize: 14,
-                            ),
-                          ),
-                        ],
+                        ),
                       ),
                     ),
-                  ),
+                  ],
                 ),
               ),
             ],
@@ -706,7 +766,7 @@ class _MyAccountContainerState extends State<MyAccountContainer>
         closeGlobalProgressDialog();
       },
       verificationFailed: (FirebaseAuthException e) {
-        // log("Error message ** => ${e.code} ${e.message} ${e.stackTrace}");
+        log("Error message ** => ${e.code} ${e.message} ${e.stackTrace}");
         closeGlobalProgressDialog();
         // log("Error message => ${e.code} ${e.message} ${e.stackTrace}");
         popUpAlert(

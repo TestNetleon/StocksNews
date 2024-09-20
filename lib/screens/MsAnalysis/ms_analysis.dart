@@ -9,15 +9,15 @@ import 'package:stocks_news_new/screens/drawer/base_drawer.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
+import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import '../../modals/msAnalysis/ms_top_res.dart';
+import '../../socket/socket.dart';
 import '../../widgets/custom/refresh_indicator.dart';
-import 'fundamentalMetrics/metrics.dart';
 import 'highlights/index.dart';
 import 'otherStocks/other.dart';
 import 'ourTake/index.dart';
 import 'overviewTabs/ms_tabs.dart';
-import 'predictionChart/chart.dart';
 import 'radar/radar.dart';
 import 'stockScore/score.dart';
 import 'swot/index.dart';
@@ -37,8 +37,50 @@ class _MsAnalysisState extends State<MsAnalysis> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      _addSocket();
       context.read<MSAnalysisProvider>().callAPIs(symbol: widget.symbol);
     });
+  }
+
+  WebSocketService? _webSocketService;
+
+  _addSocket() {
+    MSAnalysisProvider provider = context.read<MSAnalysisProvider>();
+    String? tickerPrice;
+    num? tickerChange;
+    num? tickerPercentage;
+    String? tickerChangeString;
+    try {
+      _webSocketService = WebSocketService(
+        url: 'wss://websockets.financialmodelingprep.com',
+        apiKey: apiKeyFMP,
+        ticker: widget.symbol,
+      );
+      _webSocketService?.connect();
+
+      _webSocketService?.onDataReceived =
+          (price, change, percentage, changeString) {
+        tickerPrice = price;
+        tickerChange = change;
+        tickerPercentage = percentage;
+        tickerChangeString = changeString;
+
+        provider.updateSocket(
+          change: tickerChange,
+          changePercentage: tickerPercentage,
+          changeString: tickerChangeString,
+          price: tickerPrice,
+        );
+      };
+    } catch (e) {
+//
+    }
+  }
+
+  @override
+  void dispose() {
+    _webSocketService?.disconnect();
+    super.dispose();
   }
 
   @override
@@ -59,33 +101,71 @@ class _MsAnalysisState extends State<MsAnalysis> {
         onRefresh: () async {
           provider.callAPIs(symbol: widget.symbol);
         },
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: const [
-                MsTopWidgetDetail(),
-                SpacerVertical(height: Dimen.padding),
-                MsRadarGraph(),
-                MsStockScore(),
-                MsOtherStocks(),
-                MsOurTake(),
-                MsOurHighlights(),
-                MsSwotAnalysis(),
-                SpacerVertical(height: Dimen.padding),
-                MsPriceVolatility(),
-                MsTabs(),
-                SpacerVertical(height: Dimen.padding),
-                MsForecastChart(),
-                MsPeerComparison(),
-                SpacerVertical(height: Dimen.padding),
-                MsFundamentalAnalysisMetrics(),
-                SpacerVertical(height: Dimen.padding),
-                // MsTechnicalAnalysis(),
-                // SpacerVertical(height: Dimen.padding),
-                MsFAQs(),
-              ],
+        child: BaseUiContainer(
+          hasData: !provider.isLoadingComplete && provider.completeData != null,
+          isLoading: provider.isLoadingComplete,
+          showPreparingText: true,
+          error: provider.errorComplete,
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  MsTopWidgetDetail(),
+                  SpacerVertical(height: Dimen.padding),
+                  Visibility(
+                    visible: provider.completeData?.radarChart != null &&
+                        provider.completeData?.radarChart?.isNotEmpty == true,
+                    child: MsRadarGraph(),
+                  ),
+                  Visibility(
+                    visible: provider.completeData?.score != null &&
+                        provider.completeData?.score?.isNotEmpty == true,
+                    child: MsStockScore(),
+                  ),
+                  MsOtherStocks(),
+                  Visibility(
+                    visible: provider.completeData?.score != null &&
+                        provider.completeData?.score?.isNotEmpty == true,
+                    child: MsOurTake(),
+                  ),
+                  Visibility(
+                    visible: provider.completeData?.stockHighLights != null &&
+                        provider.completeData?.stockHighLights?.isNotEmpty ==
+                            true,
+                    child: MsOurHighlights(),
+                  ),
+                  Visibility(
+                    visible: provider.completeData?.swot != null,
+                    child: MsSwotAnalysis(),
+                  ),
+                  Visibility(
+                    visible: provider.completeData?.priceVolatility != null,
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(vertical: Dimen.padding),
+                      child: MsPriceVolatility(),
+                    ),
+                  ),
+                  MsTabs(),
+                  SpacerVertical(height: Dimen.padding),
+                  // MsForecastChart(),
+                  Visibility(
+                    visible: provider.peerData != null,
+                    child: MsPeerComparison(),
+                  ),
+                  // SpacerVertical(height: Dimen.padding),
+                  // MsFundamentalAnalysisMetrics(),
+                  SpacerVertical(height: Dimen.padding),
+                  // MsTechnicalAnalysis(),
+                  // SpacerVertical(height: Dimen.padding),
+                  Visibility(
+                    visible: provider.faqData != null &&
+                        provider.faqData?.isNotEmpty == true,
+                    child: MsFAQs(),
+                  ),
+                ],
+              ),
             ),
           ),
         ),

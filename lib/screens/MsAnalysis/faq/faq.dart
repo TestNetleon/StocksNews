@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
+import 'package:stocks_news_new/providers/stockAnalysis/provider.dart';
 import 'package:stocks_news_new/screens/MsAnalysis/widget/title_tag.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
+
+import '../../../modals/msAnalysis/complete.dart';
 
 class MsFAQs extends StatefulWidget {
   const MsFAQs({super.key});
@@ -14,46 +18,26 @@ class MsFAQs extends StatefulWidget {
 }
 
 class _MsFAQsState extends State<MsFAQs> {
-  List<Map<String, dynamic>> faqs = [
-    {
-      "question": "What factors should I consider before buying a stock?",
-      "answer":
-          "Before buying a stock, consider factors such as the company's financial health, industry trends, market conditions, the company's competitive position, and your investment goals and risk tolerance.",
-    },
-    {
-      "question": 'How do I know when to sell a stock?',
-      "answer":
-          "Consider selling a stock if it no longer aligns with your investment goals, the company's fundamentals have deteriorated, you need to rebalance your portfolio, or you need to liquidate for cash. ",
-    },
-    {
-      "question": 'What does it mean to hold a stock?',
-      "answer":
-          'Holding a stock means keeping it in your portfolio without buying more or selling it. Investors often hold stocks they believe will grow over the long term or to avoid realizing capital gains taxes.',
-    },
-    {
-      "question": 'What is a market order?',
-      "answer":
-          ' A market order is a request to buy or sell a stock at the current market price. Market orders are executed immediately but do not guarantee the price.',
-    },
-    {
-      "question": 'How can I manage risk when buying or selling stocks?',
-      "answer":
-          'A stop-loss order is an order to sell a stock when it reaches a specific price. It helps limit losses by automatically selling the stock if its price falls to the predetermined level.',
-    },
-  ];
-
-  List<bool> isSelectedList = List.generate(5, (_) => false);
+  int openIndex = -1;
+  onChange(index) {
+    openIndex = index;
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
+    MSAnalysisProvider provider = context.watch<MSAnalysisProvider>();
+    MsTextRes? text = provider.completeData?.text;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // Text('Frequently asked question',
-        //     style: stylePTSansBold(fontSize: 18, color: Colors.white)),
-        MsTitle(title: "Frequently Asked Questions"),
+        MsTitle(
+          title: text?.faq?.title,
+          subtitle: text?.faq?.subTitle,
+        ),
         ListView.separated(
-          itemCount: faqs.length,
+          itemCount: provider.faqData?.length ?? 0,
           physics: const NeverScrollableScrollPhysics(),
           shrinkWrap: true,
           padding: EdgeInsets.only(bottom: 16),
@@ -70,22 +54,20 @@ class _MsFAQsState extends State<MsFAQs> {
                 children: [
                   GestureDetector(
                     onTap: () {
-                      setState(() {
-                        isSelectedList[index] = !isSelectedList[index];
-                      });
+                      onChange(openIndex == index ? -1 : index);
                     },
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Expanded(
                           child: Text(
-                            faqs[index]["question"].toString(),
+                            provider.faqData?[index].question ?? "",
                             style: stylePTSansBold(fontSize: 16),
                           ),
                         ),
                         const SpacerVertical(height: 5),
                         Icon(
-                          isSelectedList[index]
+                          openIndex == index
                               ? Icons.remove_rounded
                               : Icons.add_rounded,
                           color: ThemeColors.lightGreen,
@@ -97,10 +79,10 @@ class _MsFAQsState extends State<MsFAQs> {
                     duration: const Duration(milliseconds: 100),
                     alignment: Alignment.topCenter,
                     child: Container(
-                      height: isSelectedList[index] ? null : 0,
+                      height: openIndex == index ? null : 0,
                       padding: EdgeInsets.only(top: Dimen.itemSpacing.sp),
                       child: Text(
-                        faqs[index]["answer"].toString(),
+                        provider.faqData?[index].answer ?? "",
                         style: stylePTSansRegular(
                             fontSize: 14, color: ThemeColors.greyText),
                       ),

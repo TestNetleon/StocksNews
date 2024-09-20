@@ -4,16 +4,16 @@ import 'package:stocks_news_new/utils/colors.dart';
 import '../../../utils/theme.dart';
 
 class MsTitle extends StatelessWidget {
-  final String title;
-  final String subtitle;
+  final String? title;
+  final String? subtitle;
   final Function()? viewAll;
   final EdgeInsets? margin;
   const MsTitle({
     super.key,
-    required this.title,
+    this.title,
     this.margin,
     this.viewAll,
-    this.subtitle = "This is a short description",
+    this.subtitle,
   });
 
   @override
@@ -23,33 +23,39 @@ class MsTitle extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          GradientText(
-            title,
-            colors: const [
-              Color.fromARGB(255, 156, 131, 9),
-              Color.fromARGB(255, 153, 153, 5),
-              Color.fromARGB(255, 236, 232, 133),
-              Color.fromARGB(255, 228, 216, 89),
-            ],
-            style: styleSansBold(fontSize: 30).copyWith(
-              shadows: [
-                Shadow(
-                  offset: Offset(1.0, 3.0),
-                  blurRadius: 3.0,
-                  color: Colors.white.withOpacity(0.3),
-                ),
+          Visibility(
+            visible: title != null && title != '',
+            child: GradientText(
+              "$title",
+              colors: const [
+                Color.fromARGB(255, 156, 131, 9),
+                Color.fromARGB(255, 153, 153, 5),
+                Color.fromARGB(255, 236, 232, 133),
+                Color.fromARGB(255, 228, 216, 89),
               ],
+              style: styleSansBold(fontSize: 30).copyWith(
+                shadows: [
+                  Shadow(
+                    offset: Offset(1.0, 3.0),
+                    blurRadius: 3.0,
+                    color: Colors.white.withOpacity(0.3),
+                  ),
+                ],
+              ),
             ),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Flexible(
-                child: Padding(
-                  padding: const EdgeInsets.only(right: 10),
-                  child: Text(
-                    subtitle,
-                    style: stylePTSansRegular(color: ThemeColors.greyText),
+              Visibility(
+                visible: subtitle != null && subtitle != '',
+                child: Flexible(
+                  child: Padding(
+                    padding: const EdgeInsets.only(right: 10),
+                    child: Text(
+                      "$subtitle",
+                      style: stylePTSansRegular(color: ThemeColors.greyText),
+                    ),
                   ),
                 ),
               ),

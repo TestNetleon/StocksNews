@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:stocks_news_new/providers/stockAnalysis/provider.dart';
 import 'package:stocks_news_new/utils/colors.dart';
-import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
-
+import '../../../modals/msAnalysis/complete.dart';
+import '../../../widgets/cache_network_image.dart';
 import 'title_tag.dart';
 
 class MsPeerComparison extends StatefulWidget {
@@ -14,71 +16,83 @@ class MsPeerComparison extends StatefulWidget {
 }
 
 class _MsPeerComparisonState extends State<MsPeerComparison> {
-  final List<Company>? companies = [
-    Company(image: Images.amazon, companyName: 'Amazon', companyDetails: [
-      CompanyDetails(
-          peRatio: '20.0%',
-          returns: '12.40%',
-          salesGrowth: '8.90%',
-          profitGrowth: '0.5%',
-          roe: '0.2%')
-    ]),
-    Company(image: Images.netflix, companyName: 'Netflix', companyDetails: [
-      CompanyDetails(
-          peRatio: '20.0%',
-          returns: '12.40%',
-          salesGrowth: '8.90%',
-          profitGrowth: '0.5%',
-          roe: '0.2%')
-    ]),
-    Company(image: Images.microsoft, companyName: 'Microsoft', companyDetails: [
-      CompanyDetails(
-          peRatio: '20.0%',
-          returns: '12.40%',
-          salesGrowth: '8.90%',
-          profitGrowth: '0.5%',
-          roe: '0.2%')
-    ]),
-    Company(image: Images.telegram, companyName: 'Telegram', companyDetails: [
-      CompanyDetails(
-          peRatio: '20.0%',
-          returns: '12.40%',
-          salesGrowth: '8.90%',
-          profitGrowth: '0.5%',
-          roe: '0.2%')
-    ]),
-    Company(image: Images.twitter, companyName: 'Twitter', companyDetails: [
-      CompanyDetails(
-          peRatio: '20.0%',
-          returns: '12.40%',
-          salesGrowth: '8.90%',
-          profitGrowth: '0.5%',
-          roe: '0.2%')
-    ]),
-    Company(image: Images.spotify, companyName: 'Spotify', companyDetails: [
-      CompanyDetails(
-          peRatio: '20.0%',
-          returns: '12.40%',
-          salesGrowth: '8.90%',
-          profitGrowth: '0.5%',
-          roe: '0.2%')
-    ]),
-  ];
+  // final List<Company>? companies = [
+  //   Company(
+  //       image: Images.amazon,
+  //       companyName: 'Amazon',
+  //       companyDetails: CompanyDetails(
+  //           peRatio: '20.0%',
+  //           returns: '12.40%',
+  //           salesGrowth: '8.90%',
+  //           profitGrowth: '0.5%',
+  //           roe: '0.2%')),
+  //   Company(
+  //       image: Images.netflix,
+  //       companyName: 'Netflix',
+  //       companyDetails: CompanyDetails(
+  //           peRatio: '20.0%',
+  //           returns: '12.40%',
+  //           salesGrowth: '8.90%',
+  //           profitGrowth: '0.5%',
+  //           roe: '0.2%')),
+  //   Company(
+  //       image: Images.microsoft,
+  //       companyName: 'Microsoft',
+  //       companyDetails: CompanyDetails(
+  //           peRatio: '20.0%',
+  //           returns: '12.40%',
+  //           salesGrowth: '8.90%',
+  //           profitGrowth: '0.5%',
+  //           roe: '0.2%')),
+  //   Company(
+  //       image: Images.telegram,
+  //       companyName: 'Telegram',
+  //       companyDetails: CompanyDetails(
+  //           peRatio: '20.0%',
+  //           returns: '12.40%',
+  //           salesGrowth: '8.90%',
+  //           profitGrowth: '0.5%',
+  //           roe: '0.2%')),
+  //   Company(
+  //       image: Images.twitter,
+  //       companyName: 'Twitter',
+  //       companyDetails: CompanyDetails(
+  //           peRatio: '20.0%',
+  //           returns: '12.40%',
+  //           salesGrowth: '8.90%',
+  //           profitGrowth: '0.5%',
+  //           roe: '0.2%')),
+  //   Company(
+  //       image: Images.spotify,
+  //       companyName: 'Spotify',
+  //       companyDetails: CompanyDetails(
+  //           peRatio: '20.0%',
+  //           returns: '12.40%',
+  //           salesGrowth: '8.90%',
+  //           profitGrowth: '0.5%',
+  //           roe: '0.2%')),
+  // ];
 
-  List<String> headers = [
-    'P/E Ratio',
-    '3M returns',
-    '3Yr sales growth',
-    '3Yr profit growth',
-    '3Yr ROE'
-  ];
+  // List<String> headers = [
+  //   'P/E Ratio',
+  //   '3M returns',
+  //   '3Yr sales growth',
+  //   '3Yr profit growth',
+  //   '3Yr ROE'
+  // ];
 
   @override
   Widget build(BuildContext context) {
+    MSAnalysisProvider provider = context.watch<MSAnalysisProvider>();
+    MsTextRes? text = provider.completeData?.text;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        MsTitle(title: "Peer Comparison"),
+        MsTitle(
+          title: text?.peer?.title,
+          subtitle: text?.peer?.subTitle,
+        ),
         ClipRRect(
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(10),
@@ -107,41 +121,47 @@ class _MsPeerComparisonState extends State<MsPeerComparison> {
                   DataColumn(
                     label: Text(
                       'Company',
-                      style: stylePTSansRegular(fontSize: 12),
+                      style: styleGeorgiaBold(
+                        fontSize: 12,
+                        color: ThemeColors.greyText,
+                      ),
                     ),
                   ),
                 ],
-                rows: companies?.map((company) {
-                      return DataRow(cells: [
-                        DataCell(
-                          SizedBox(
-                            // width: 100,
-                            child: Row(
-                              children: [
-                                Container(
-                                  height: 30,
-                                  width: 30,
-                                  decoration: BoxDecoration(
-                                    // color: Colors.white,
-                                    shape: BoxShape.circle,
+                rows: provider.peerData?.peerComparison?.map((company) {
+                      return DataRow(
+                        cells: [
+                          DataCell(
+                            Container(
+                              padding: EdgeInsets.symmetric(horizontal: 10),
+                              // width: 100,
+                              child: Row(
+                                children: [
+                                  Container(
+                                    height: 30,
+                                    width: 30,
+                                    decoration: BoxDecoration(
+                                      // color: Colors.white,
+                                      shape: BoxShape.circle,
+                                    ),
+                                    child: CachedNetworkImagesWidget(
+                                      company.image ?? "",
+                                      fit: BoxFit.cover,
+                                    ),
                                   ),
-                                  child: Image.asset(
-                                    company.image!,
-                                    fit: BoxFit.cover,
+                                  SpacerHorizontal(width: 8.0),
+                                  Expanded(
+                                    child: Text(
+                                      company.symbol ?? "",
+                                      style: styleGeorgiaBold(fontSize: 12),
+                                    ),
                                   ),
-                                ),
-                                SpacerHorizontal(width: 8.0),
-                                Expanded(
-                                  child: Text(
-                                    company.companyName!,
-                                    style: stylePTSansRegular(fontSize: 12),
-                                  ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                           ),
-                        ),
-                      ]);
+                        ],
+                      );
                     }).toList() ??
                     [],
               ),
@@ -152,60 +172,54 @@ class _MsPeerComparisonState extends State<MsPeerComparison> {
                   scrollDirection: Axis.horizontal,
                   child: DataTable(
                     horizontalMargin: 10,
-                    border: TableBorder.all(
-                      color: ThemeColors.greyBorder,
-                      // borderRadius: BorderRadius.circular(10.0),
-                      borderRadius: BorderRadius.only(
-                        topRight: Radius.circular(10),
-                        bottomRight: Radius.circular(10),
+                    // border: TableBorder.all(
+                    //   color: ThemeColors.greyBorder,
+                    //   // borderRadius: BorderRadius.circular(10.0),
+                    //   borderRadius: BorderRadius.only(
+                    //     topRight: Radius.circular(10),
+                    //     bottomRight: Radius.circular(10),
+                    //   ),
+                    //   width: 0.9,
+                    // ),
+                    border: TableBorder(
+                      top: BorderSide(
+                        color: ThemeColors.greyBorder,
+                        width: 0.5,
                       ),
-                      width: 0.9,
+                      bottom: BorderSide(
+                        color: ThemeColors.greyBorder,
+                        width: 0.5,
+                      ),
+                      horizontalInside: BorderSide(
+                        color: ThemeColors.greyBorder,
+                        width: 0.5,
+                      ),
                     ),
-                    columns: headers.map((header) {
-                      return DataColumn(
-                        label: Text(
-                          header,
-                          style: stylePTSansRegular(fontSize: 12),
-                        ),
-                      );
-                    }).toList(),
-                    rows: companies?.map((company) {
-                          return DataRow(cells: [
-                            DataCell(
-                              Text(
-                                "${company.companyDetails[0].peRatio}",
-                                style: stylePTSansRegular(fontSize: 12),
+                    columns: provider.peerData?.headers?.map((header) {
+                          return DataColumn(
+                            label: Text(
+                              header,
+                              style: styleGeorgiaBold(
+                                fontSize: 12,
+                                color: ThemeColors.greyText,
                               ),
                             ),
-                            DataCell(
-                              Text(
-                                company.companyDetails[0].returns ?? "",
-                                style: stylePTSansRegular(
-                                    fontSize: 12, color: Colors.green),
+                          );
+                        }).toList() ??
+                        [],
+                    rows: provider.peerData?.peerComparison?.map((company) {
+                          return DataRow(
+                            cells: [
+                              _dataCell(
+                                text: company.peRatio ?? 0,
+                                userPercent: false,
                               ),
-                            ),
-                            DataCell(
-                              Text(
-                                company.companyDetails[0].salesGrowth ?? "",
-                                style: stylePTSansRegular(
-                                    fontSize: 12, color: Colors.green),
-                              ),
-                            ),
-                            DataCell(
-                              Text(
-                                company.companyDetails[0].profitGrowth ?? "",
-                                style: stylePTSansRegular(
-                                    fontSize: 12, color: Colors.green),
-                              ),
-                            ),
-                            DataCell(
-                              Text(
-                                company.companyDetails[0].roe ?? "",
-                                style: stylePTSansRegular(
-                                    fontSize: 12, color: Colors.green),
-                              ),
-                            ),
-                          ]);
+                              _dataCell(text: company.returns ?? 0),
+                              _dataCell(text: company.salesGrowth ?? 0),
+                              _dataCell(text: company.profitGrowth ?? 0),
+                              _dataCell(text: company.roe ?? 0),
+                            ],
+                          );
                         }).toList() ??
                         [],
                   ),
@@ -217,30 +231,43 @@ class _MsPeerComparisonState extends State<MsPeerComparison> {
       ],
     );
   }
+
+  DataCell _dataCell({required num text, bool userPercent = true}) {
+    return DataCell(
+      Center(
+        child: Text(
+          userPercent ? "$text%" : "$text",
+          style: styleGeorgiaBold(
+              fontSize: 12,
+              color: text >= 0 ? ThemeColors.accent : ThemeColors.sos),
+        ),
+      ),
+    );
+  }
 }
 
-class Company {
-  String? image;
-  String? companyName;
-  List<CompanyDetails> companyDetails;
+// class Company {
+//   String? image;
+//   String? companyName;
+//   CompanyDetails companyDetails;
 
-  Company(
-      {required this.image,
-      required this.companyName,
-      required this.companyDetails});
-}
+//   Company(
+//       {required this.image,
+//       required this.companyName,
+//       required this.companyDetails});
+// }
 
-class CompanyDetails {
-  String? peRatio;
-  String? returns;
-  String? salesGrowth;
-  String? profitGrowth;
-  String? roe;
+// class CompanyDetails {
+//   String? peRatio;
+//   String? returns;
+//   String? salesGrowth;
+//   String? profitGrowth;
+//   String? roe;
 
-  CompanyDetails(
-      {required this.peRatio,
-      required this.returns,
-      required this.salesGrowth,
-      required this.profitGrowth,
-      required this.roe});
-}
+//   CompanyDetails(
+//       {required this.peRatio,
+//       required this.returns,
+//       required this.salesGrowth,
+//       required this.profitGrowth,
+//       required this.roe});
+// }

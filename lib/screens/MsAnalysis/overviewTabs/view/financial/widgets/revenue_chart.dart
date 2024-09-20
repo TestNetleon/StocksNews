@@ -1,18 +1,23 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:stocks_news_new/screens/MsAnalysis/overviewTabs/view/financial/index.dart';
+import 'package:stocks_news_new/utils/theme.dart';
+import '../../../../../../modals/msAnalysis/financials.dart';
 
 class MsFinancialCharts extends StatelessWidget {
-  final List<MsBarChartRes> chart;
-  const MsFinancialCharts({super.key, required this.chart});
+  final List<MsFinancialsRes>? chart;
+  const MsFinancialCharts({super.key, this.chart});
 
   double _calculateMaxY() {
-    double maxValue = chart.fold<double>(
+    if (chart?.isEmpty == true || chart == null) {
+      return 0;
+    }
+
+    double? maxValue = chart?.fold<double>(
         0.0,
-        (previousValue, element) => element.value > previousValue
-            ? element.value.toDouble()
+        (previousValue, element) => (element.value ?? 0) > previousValue
+            ? element.value?.toDouble() ?? 0
             : previousValue);
-    return maxValue * 1.2;
+    return (maxValue ?? 0) * 1.2;
   }
 
   @override
@@ -48,11 +53,8 @@ class MsFinancialCharts extends StatelessWidget {
             int rodIndex,
           ) {
             return BarTooltipItem(
-              rod.toY.round().toString(),
-              const TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-              ),
+              "${chart?[groupIndex].formattedValue}",
+              styleGeorgiaBold(color: Colors.white, fontSize: 10),
             );
           },
         ),
@@ -65,8 +67,8 @@ class MsFinancialCharts extends StatelessWidget {
       fontSize: 12,
     );
 
-    if (value.toInt() >= 0 && value.toInt() < chart.length) {
-      String text = chart[value.toInt()].text;
+    if (value.toInt() >= 0 && value.toInt() < (chart?.length ?? 0)) {
+      String text = chart?[value.toInt()].key ?? '';
       return SideTitleWidget(
         axisSide: meta.axisSide,
         space: 10,
@@ -114,15 +116,15 @@ class MsFinancialCharts extends StatelessWidget {
       );
 
   List<BarChartGroupData> get barGroups => List.generate(
-        chart.length,
+        (chart?.length ?? 0),
         (index) {
           return BarChartGroupData(
             x: index,
             barRods: [
               BarChartRodData(
-                toY: chart[index].value.toDouble(),
+                toY: (chart?[index].value?.toDouble() ?? 0),
                 width: 25,
-                borderRadius: chart[index].value < 0
+                borderRadius: (chart?[index].value ?? 0) < 0
                     ? BorderRadius.only(
                         bottomLeft: Radius.circular(5),
                         bottomRight: Radius.circular(5),

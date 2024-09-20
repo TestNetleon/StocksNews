@@ -4,13 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:stocks_news_new/fcm/one_signal_service.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:stocks_news_new/firebase_options.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/database/preference.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:firebase_in_app_messaging/firebase_in_app_messaging.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
+
+import 'firebase_options.dart';
 
 void main() async {
   try {
@@ -42,6 +43,12 @@ void main() async {
   try {
     await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
+      // options: FirebaseOptions(
+      //   apiKey: ApiKeys.apiKey,
+      //   appId: ApiKeys.appId,
+      //   messagingSenderId: ApiKeys.messagingSenderId,
+      //   projectId: ApiKeys.projectId,
+      // ),
     );
 
     FirebaseInAppMessaging.instance.setAutomaticDataCollectionEnabled(true);

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-
 import '../../../../../utils/theme.dart';
 
 class MsFundamentalHeader extends StatelessWidget {
-  const MsFundamentalHeader({super.key});
+  final List<String>? header;
+  const MsFundamentalHeader({super.key, this.header});
 
   @override
   Widget build(BuildContext context) {
@@ -14,18 +14,36 @@ class MsFundamentalHeader extends StatelessWidget {
         runSpacing: 8,
         alignment: WrapAlignment.start,
         children: List.generate(
-          7,
+          header?.length ?? 0,
           (index) {
-            return MsFundamentalHeaderItem();
+            return MsFundamentalHeaderItem(
+              title: header?[index] ?? '',
+            );
           },
         ),
       ),
+      // child: Row(
+      //   children: [
+      //     Flexible(
+      //       child: MsFundamentalHeaderItem(
+      //         title: "${provider.completeData?.cap ?? 0}",
+      //       ),
+      //     ),
+      //     SpacerHorizontal(width: 8),
+      //     Flexible(
+      //       child: MsFundamentalHeaderItem(
+      //         title: "${provider.completeData?.sector ?? 0}",
+      //       ),
+      //     ),
+      //   ],
+      // ),
     );
   }
 }
 
 class MsFundamentalHeaderItem extends StatelessWidget {
-  const MsFundamentalHeaderItem({super.key});
+  final String title;
+  const MsFundamentalHeaderItem({super.key, required this.title});
 
   @override
   Widget build(BuildContext context) {
@@ -34,11 +52,11 @@ class MsFundamentalHeaderItem extends StatelessWidget {
         borderRadius: BorderRadius.circular(20.0),
         color: Color.fromARGB(255, 10, 10, 10),
       ),
-      padding: EdgeInsets.all(8.0),
+      padding: EdgeInsets.symmetric(horizontal: 15, vertical: 8),
       child: Text(
-        'Small-Cap',
+        title,
         style: stylePTSansRegular(
-          fontSize: 12.0,
+          fontSize: 14,
           color: Colors.grey,
         ),
       ),

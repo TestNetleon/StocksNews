@@ -1,12 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:stocks_news_new/providers/stockAnalysis/provider.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
+
+import '../../../../../../modals/msAnalysis/ms_top_res.dart';
 
 class MsPerformanceFooter extends StatelessWidget {
   const MsPerformanceFooter({super.key});
 
   @override
   Widget build(BuildContext context) {
+    MSAnalysisProvider provider = context.watch<MSAnalysisProvider>();
+    MsStockTopRes? topData = provider.topData;
+
     return Container(
       decoration: const BoxDecoration(
         color: Color.fromARGB(255, 36, 32, 32),
@@ -22,7 +29,7 @@ class MsPerformanceFooter extends StatelessWidget {
           children: [
             _widget(
               label: 'Open Price',
-              value: '341',
+              value: '${topData?.price}',
             ),
             SizedBox(
               height: 30,
@@ -33,7 +40,7 @@ class MsPerformanceFooter extends StatelessWidget {
             ),
             _widget(
               label: 'Prev. Close',
-              value: '341.8',
+              value: '${provider.completeData?.previousClose}',
             ),
             SizedBox(
               height: 30,
@@ -45,7 +52,7 @@ class MsPerformanceFooter extends StatelessWidget {
             ),
             _widget(
               label: 'Volume',
-              value: '42,390',
+              value: '${provider.completeData?.volume}',
             ),
           ],
         ),

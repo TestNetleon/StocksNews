@@ -9,21 +9,25 @@ String msRadarChartResToJson(List<MsRadarChartRes> data) =>
 
 class MsRadarChartRes {
   final String? label;
-  final num? value;
+  final dynamic value;
+  final String? description;
 
   MsRadarChartRes({
     this.label,
     this.value,
+    this.description,
   });
 
   factory MsRadarChartRes.fromJson(Map<String, dynamic> json) =>
       MsRadarChartRes(
         label: json["label"],
         value: json["value"],
+        description: json['description'],
       );
 
   Map<String, dynamic> toJson() => {
         "label": label,
         "value": value,
+        "description": description,
       };
 }

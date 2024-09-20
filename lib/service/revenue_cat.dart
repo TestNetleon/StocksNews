@@ -147,7 +147,6 @@ class RevenueCatService {
           _adServicesAttributionEnabled = true;
           Utils().showLog("Ad Services Attribution Enabled");
         }
-        Utils().showLog("asking for AD SERVICE");
         Offerings? offerings;
 
         offerings = await Purchases.getOfferings();

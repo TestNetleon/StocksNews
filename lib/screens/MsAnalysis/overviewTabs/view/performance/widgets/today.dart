@@ -130,11 +130,14 @@ class MsPerformanceToday extends StatelessWidget {
 
     // num todayLow = 0;
     // num todayHigh = 100;
-    // num currentPrice = 50;
+    // num currentPrice = 0;
     // String price = "\$$currentPrice";
 
-    double pricePosition =
-        (currentPrice - todayLow) / (todayHigh - todayLow) * msWidthPadding;
+    double pricePosition = (todayHigh > todayLow)
+        ? (currentPrice - todayLow) / (todayHigh - todayLow) * (msWidthPadding)
+        : 0;
+
+    pricePosition = pricePosition.clamp(0.0, msWidthPadding - 20);
 
     Utils().showLog("$pricePosition");
     return Column(
@@ -168,7 +171,7 @@ class MsPerformanceToday extends StatelessWidget {
               ),
               Positioned(
                 top: 12,
-                left: pricePosition - (currentPrice == todayLow ? 20 : 40),
+                left: pricePosition - 20,
                 child: MsPointerContainer(
                   style: styleGeorgiaBold(color: ThemeColors.background),
                   title: price,

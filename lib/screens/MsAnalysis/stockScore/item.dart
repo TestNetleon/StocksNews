@@ -15,12 +15,9 @@ class MsStockScoreItem extends StatelessWidget {
   Widget build(BuildContext context) {
     MSAnalysisProvider provider = context.watch<MSAnalysisProvider>();
 
-    final selectedIndex = provider.showScore ? 0 : 1;
+    final selectedIndex = provider.showScoreComplete ? 0 : 1;
     MsRadarChartRes? selectedScore =
-        provider.priceVolatility?.score?.isNotEmpty == true &&
-                provider.priceVolatility?.score != null
-            ? (provider.priceVolatility?.score?[selectedIndex])
-            : null;
+        provider.completeData?.score?[selectedIndex];
     return ClipRRect(
       borderRadius: BorderRadius.circular(12),
       child: Container(
@@ -100,10 +97,10 @@ class MsStockScoreItem extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: List.generate(
-                  provider.priceVolatility?.score?.length ?? 0,
+                  provider.completeData?.score?.length ?? 0,
                   (index) {
                     MsRadarChartRes? data =
-                        provider.priceVolatility?.score?[index];
+                        provider.completeData?.score?[index];
                     return Flexible(
                       child: IntrinsicHeight(
                         child: GestureDetector(
@@ -115,23 +112,24 @@ class MsStockScoreItem extends StatelessWidget {
                                   data?.label ?? "",
                                   textAlign: TextAlign.center,
                                   style: styleGeorgiaBold(
-                                    color: (provider.showScore && index == 0) ||
-                                            (!provider.showScore && index == 1)
+                                    color: (provider.showScoreComplete &&
+                                                index == 0) ||
+                                            (!provider.showScoreComplete &&
+                                                index == 1)
                                         ? ThemeColors.white
                                         : ThemeColors.greyText,
                                   ),
                                 ),
                               ),
                               if (index <
-                                  (provider.priceVolatility?.score?.length ??
-                                          0) -
+                                  (provider.completeData?.score?.length ?? 0) -
                                       1)
                                 Switch(
-                                  value: provider.showScore,
+                                  value: provider.showScoreComplete,
                                   inactiveThumbColor: ThemeColors.white,
                                   inactiveTrackColor: ThemeColors.greyBorder,
                                   activeColor: Colors.orange,
-                                  onChanged: provider.onChangeScore,
+                                  onChanged: provider.onChangeCompleteScore,
                                 ),
                             ],
                           ),

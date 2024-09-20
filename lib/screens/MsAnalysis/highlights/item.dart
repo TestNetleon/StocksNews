@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
-
-import '../../../modals/msAnalysis/stock_highlights.dart';
+import '../../../modals/msAnalysis/radar_chart.dart';
 import '../../../utils/colors.dart';
 import '../../../utils/theme.dart';
 import '../../../widgets/spacer_horizontal.dart';
 import '../../../widgets/spacer_vertical.dart';
 
 class MsOurHighlightsItem extends StatelessWidget {
-  final MsStockHighlightsRes? data;
+  final MsRadarChartRes? data;
   const MsOurHighlightsItem({super.key, this.data});
 
   @override
@@ -46,7 +45,11 @@ class MsOurHighlightsItem extends StatelessWidget {
                 ),
               ),
               const SpacerHorizontal(width: 8.0),
-              const Icon(Icons.ac_unit_rounded, size: 18)
+              const Icon(
+                Icons.info,
+                size: 18,
+                color: ThemeColors.greyText,
+              )
             ],
           ),
           const SpacerVertical(height: 8.0),
@@ -56,7 +59,7 @@ class MsOurHighlightsItem extends StatelessWidget {
               fontSize: 18.0,
               color: data?.value is String
                   ? Colors.green
-                  : data?.value > 0
+                  : (data?.value ?? 0) > 0
                       ? Colors.green
                       : Colors.red,
             ),

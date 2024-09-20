@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:stocks_news_new/providers/stockAnalysis/provider.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
+import '../../../modals/msAnalysis/complete.dart';
 import '../widget/title_tag.dart';
 import 'item.dart';
 
@@ -16,10 +19,16 @@ class MsSwotAnalysis extends StatelessWidget {
       ],
     ).createShader(const Rect.fromLTWH(0.0, 0.0, 250.0, 60.0));
 
+    MSAnalysisProvider provider = context.watch<MSAnalysisProvider>();
+    MsTextRes? text = provider.completeData?.text;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        MsTitle(title: 'SWOT analysis'),
+        MsTitle(
+          title: text?.swot?.title,
+          subtitle: text?.swot?.subTitle,
+        ),
         Container(
           decoration: const BoxDecoration(
             color: Color.fromARGB(255, 53, 53, 53),
@@ -31,12 +40,12 @@ class MsSwotAnalysis extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.all(25.0),
             child: Column(
-              children: const [
+              children: [
                 Row(
                   children: [
                     MsSwotItem(
                       label: 'Strength',
-                      value: '6',
+                      value: '${provider.completeData?.swot?.strength ?? 0}',
                       keyword: 'S',
                       bottom: 0,
                       right: 0,
@@ -49,7 +58,7 @@ class MsSwotAnalysis extends StatelessWidget {
                     SpacerHorizontal(width: 10),
                     MsSwotItem(
                       label: 'Weakness',
-                      value: '6',
+                      value: '${provider.completeData?.swot?.weaknesses ?? 0}',
                       keyword: 'W',
                       bottom: 0,
                       left: 0,
@@ -66,7 +75,7 @@ class MsSwotAnalysis extends StatelessWidget {
                   children: [
                     MsSwotItem(
                       label: 'Opportunity',
-                      value: '6',
+                      value: '${provider.completeData?.swot?.opportunity ?? 0}',
                       keyword: 'O',
                       top: 0,
                       right: 0,
@@ -79,7 +88,7 @@ class MsSwotAnalysis extends StatelessWidget {
                     SpacerHorizontal(width: 10.0),
                     MsSwotItem(
                       label: 'Threat',
-                      value: '6',
+                      value: '${provider.completeData?.swot?.threats ?? 0}',
                       keyword: 'T',
                       left: 0,
                       top: 0,

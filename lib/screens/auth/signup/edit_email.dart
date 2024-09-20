@@ -8,7 +8,6 @@ import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:validators/validators.dart';
-
 import '../../../utils/constants.dart';
 import '../../../utils/validations.dart';
 import '../../../widgets/theme_button.dart';
@@ -51,7 +50,7 @@ class EditEmail extends StatelessWidget {
             ),
           ),
         ],
-        text: "Please enter the 6-digit verification code that was sent to ",
+        text: "Please enter the 4-digit verification code that was sent to ",
         style: stylePTSansRegular(
           height: 1.5,
         ),

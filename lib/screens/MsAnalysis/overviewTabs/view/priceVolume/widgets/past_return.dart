@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:stocks_news_new/modals/msAnalysis/radar_chart.dart';
+import 'package:stocks_news_new/providers/stockAnalysis/provider.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
@@ -8,38 +11,40 @@ class MsPricePastReturns extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<Map<String, dynamic>> pastReturns = [
-      {
-        "title": "1 week",
-        "amount": "-5.0%",
-      },
-      {
-        "title": "1 month",
-        "amount": "3.7%",
-      },
-      {"title": "3 months", "amount": "13.9%"},
-      {"title": "1 year", "amount": "-8.4%"},
-      {"title": "4 years", "amount": "141.4%"},
-    ];
+    // List<Map<String, dynamic>> pastReturns = [
+    //   {
+    //     "title": "1 week",
+    //     "amount": "-5.0%",
+    //   },
+    //   {
+    //     "title": "1 month",
+    //     "amount": "3.7%",
+    //   },
+    //   {"title": "3 months", "amount": "13.9%"},
+    //   {"title": "1 year", "amount": "-8.4%"},
+    //   {"title": "4 years", "amount": "141.4%"},
+    // ];
+    MSAnalysisProvider provider = context.watch<MSAnalysisProvider>();
+
     return ListView.separated(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       itemBuilder: (context, index) {
         return MsPricePastReturnsItem(
           index: index,
-          pastReturns: pastReturns[index],
+          pastReturns: provider.pvData?[index],
         );
       },
       separatorBuilder: (context, index) {
         return const SpacerVertical(height: 0);
       },
-      itemCount: pastReturns.length,
+      itemCount: provider.pvData?.length ?? 0,
     );
   }
 }
 
 class MsPricePastReturnsItem extends StatelessWidget {
-  final Map<String, dynamic> pastReturns;
+  final MsRadarChartRes? pastReturns;
   final int index;
   const MsPricePastReturnsItem({
     super.key,
@@ -60,21 +65,23 @@ class MsPricePastReturnsItem extends StatelessWidget {
         children: [
           Flexible(
             child: Text(
-              "${pastReturns['title']}",
+              "${pastReturns?.label}",
               textAlign: TextAlign.center,
-              style: styleSansBold(
+              style: styleGeorgiaRegular(
                 color: ThemeColors.greyText,
-                fontSize: 12,
+                fontSize: 14,
               ),
             ),
           ),
           const SpacerVertical(height: 10),
           Text(
             textAlign: TextAlign.center,
-            "${pastReturns['amount']}",
-            style: stylePTSansRegular(
-              color: Colors.white,
-              fontSize: 12,
+            "${pastReturns?.value}%",
+            style: styleGeorgiaBold(
+              color: pastReturns?.value >= 0
+                  ? ThemeColors.accent
+                  : ThemeColors.sos,
+              fontSize: 14,
             ),
           ),
         ],

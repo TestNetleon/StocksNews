@@ -203,13 +203,6 @@ class _OTPLoginBottomState extends State<OTPLoginBottom> {
                     style: stylePTSansBold(fontSize: 22),
                   ),
                   const SpacerVertical(height: 8),
-                  // Text(
-                  //   "Please enter the 4-digit verification code that was sent to ${provider.user?.username}. The code is valid for 10 minutes.",
-                  //   style: stylePTSansRegular(
-                  //     fontSize: 14,
-                  //     color: Colors.white,
-                  //   ),
-                  // ),
                   EditEmail(email: widget.userName),
                   const SpacerVertical(),
                   CommonPinput(

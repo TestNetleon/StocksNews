@@ -60,7 +60,7 @@ class MsTopWidgetDetail extends StatelessWidget {
                     size: 20.sp,
                   ),
                   Text(
-                    "${topData?.changeWithCur} (${topData?.changesPercentage}%)",
+                    "${topData?.changeWithCur} (${topData?.changesPercentage?.toStringAsFixed(3)}%)",
                     style: stylePTSansBold(
                       fontSize: 12,
                       color: (topData?.changesPercentage ?? 0) > 0

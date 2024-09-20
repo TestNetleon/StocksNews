@@ -5,13 +5,15 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/api/api_requester.dart';
 import 'package:stocks_news_new/api/apis.dart';
+import 'package:stocks_news_new/modals/faqs_res.dart';
+import 'package:stocks_news_new/modals/msAnalysis/radar_chart.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import '../../api/api_response.dart';
+import '../../modals/msAnalysis/complete.dart';
+import '../../modals/msAnalysis/financials.dart';
 import '../../modals/msAnalysis/ms_top_res.dart';
 import '../../modals/msAnalysis/other_stocks.dart';
-import '../../modals/msAnalysis/price_volatility.dart';
-import '../../modals/msAnalysis/radar_chart.dart';
-import '../../modals/msAnalysis/stock_highlights.dart';
+import '../../modals/msAnalysis/peer_comparision.dart';
 import '../../utils/constants.dart';
 import '../../utils/utils.dart';
 import '../user_provider.dart';
@@ -37,7 +39,10 @@ class MSAnalysisProvider extends ChangeNotifier {
     _states.forEach((key, _) {
       _states[key] = true;
     });
-    _showScore = true;
+    // _showScore = true;
+    _showScoreComplete = true;
+    selectedTypeIndex = 0;
+    selectedPeriodIndex = 0;
     notifyListeners();
   }
 
@@ -66,12 +71,41 @@ class MSAnalysisProvider extends ChangeNotifier {
   callAPIs({required String symbol}) {
     clearAll();
     getStockTopData(symbol: symbol);
-    getRadarChartData(symbol: symbol);
+    // getRadarChartData(symbol: symbol);
     getOtherStocksData(symbol: symbol);
-    getPriceVolatilityData(symbol: symbol);
-    fetchAllStockHighlightData(symbol: symbol);
-    getTechnicalAnalysisMetricsData(symbol: symbol);
+    getPriceVolumeData(symbol: symbol);
+    // getPriceVolatilityData(symbol: symbol);
+    // fetchAllStockHighlightData(symbol: symbol);
+    // getTechnicalAnalysisMetricsData(symbol: symbol);
+    getFinancialsData(symbol: symbol, type: 'revenue', period: 'annual');
+    getPeerComparisonData(symbol: symbol);
+    getCompleteData(symbol: symbol);
+    getFaqData(symbol: symbol);
   }
+
+// Update Top Detail with Socket
+  void updateSocket({
+    String? price,
+    num? change,
+    num? changePercentage,
+    String? changeString,
+  }) {
+    if (change != null) {
+      _topData?.change = change;
+    }
+    if (price != null && price != '') {
+      _topData?.price = price;
+    }
+    if (changePercentage != null) {
+      _topData?.changesPercentage = changePercentage;
+    }
+    if (changeString != null && changeString != '') {
+      _topData?.changeWithCur = changeString;
+    }
+
+    notifyListeners();
+  }
+
 // My Other Stocks---------------------------------------------------------------------------------------------------
 
   String? _errorTop;
@@ -129,297 +163,261 @@ class MSAnalysisProvider extends ChangeNotifier {
       _extraTop = null;
       _errorTop = Const.errSomethingWrong;
       setStatusTop(Status.loaded);
-      Utils().showLog(e.toString());
+      Utils().showLog("ERROR in getStockTopData =>$e");
     }
   }
 
 //Radar Chart----------------------------------------------------------------------------------------
-  String? _errorRadar;
-  String? get errorRadar => _errorRadar ?? Const.errSomethingWrong;
 
-  Status _statusRadar = Status.ideal;
-  Status get statusRadar => _statusRadar;
+  // String? _errorRadar;
+  // String? get errorRadar => _errorRadar ?? Const.errSomethingWrong;
+  // Status _statusRadar = Status.ideal;
+  // Status get statusRadar => _statusRadar;
+  // bool get isLoadingRadar => _statusRadar == Status.loading;
+  // Extra? _extra;
+  // Extra? get extra => _extra;
+  // List<MsRadarChartRes>? _radar;
+  // List<MsRadarChartRes>? get radar => _radar;
+  // void setStatus(status) {
+  //   _statusRadar = status;
+  //   notifyListeners();
+  // }
 
-  bool get isLoadingRadar => _statusRadar == Status.loading;
-
-  Extra? _extra;
-  Extra? get extra => _extra;
-
-  List<MsRadarChartRes>? _radar;
-  List<MsRadarChartRes>? get radar => _radar;
-
-  void setStatus(status) {
-    _statusRadar = status;
-    notifyListeners();
-  }
-
-  Future getRadarChartData({required String symbol}) async {
-    setStatus(Status.loading);
-    UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
-
-    Map request = {
-      "token": provider.user?.token ?? "",
-      "symbol": symbol,
-      "start_date": "2024-08-01",
-      "end_date": "2024-08-21",
-    };
-    try {
-      ApiResponse response = await apiRequest(
-        url: Apis.msRadarChart,
-        request: request,
-        showProgress: false,
-        removeForceLogin: true,
-      );
-      if (response.status) {
-        _radar = msRadarChartResFromJson(jsonEncode(response.data));
-        _errorRadar = null;
-        _extra = (response.extra is Extra ? response.extra as Extra : null);
-      } else {
-        _radar = null;
-        _errorRadar = response.message;
-        _extra = null;
-      }
-
-      setStatus(Status.loaded);
-    } catch (e) {
-      _radar = null;
-      _extra = null;
-      _errorRadar = Const.errSomethingWrong;
-      setStatus(Status.loaded);
-      Utils().showLog(e.toString());
-    }
-  }
+  // Future getRadarChartData({required String symbol}) async {
+  //   setStatus(Status.loading);
+  //   UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
+  //   Map request = {
+  //     "token": provider.user?.token ?? "",
+  //     "symbol": symbol,
+  //     "start_date": "2024-08-01",
+  //     "end_date": "2024-08-21",
+  //   };
+  //   try {
+  //     ApiResponse response = await apiRequest(
+  //       url: Apis.msRadarChart,
+  //       request: request,
+  //       showProgress: false,
+  //       removeForceLogin: true,
+  //     );
+  //     if (response.status) {
+  //       _radar = msRadarChartResFromJson(jsonEncode(response.data));
+  //       _errorRadar = null;
+  //       _extra = (response.extra is Extra ? response.extra as Extra : null);
+  //     } else {
+  //       _radar = null;
+  //       _errorRadar = response.message;
+  //       _extra = null;
+  //     }
+  //     setStatus(Status.loaded);
+  //   } catch (e) {
+  //     _radar = null;
+  //     _extra = null;
+  //     _errorRadar = Const.errSomethingWrong;
+  //     setStatus(Status.loaded);
+  //     Utils().showLog("ERROR in getRadarChartData =>$e");
+  //   }
+  // }
 
 // Price Volatility---------------------------------------------------------------------------------------------------
 
-  String? _errorPrice;
-  String? get errorPrice => _errorPrice ?? Const.errSomethingWrong;
+  // String? _errorPrice;
+  // String? get errorPrice => _errorPrice ?? Const.errSomethingWrong;
+  // Status _statusPrice = Status.ideal;
+  // Status get statusPrice => _statusPrice;
+  // bool get isLoadingPrice => _statusPrice == Status.loading;
+  // MsPriceVolatilityRes? _priceVolatility;
+  // MsPriceVolatilityRes? get priceVolatility => _priceVolatility;
+  // // bool _showScore = false;
+  // // bool get showScore => _showScore;
+  // void setStatusPrice(status) {
+  //   _statusPrice = status;
+  //   notifyListeners();
+  // }
+  // // void onChangeScore(bool value) {
+  // //   _showScore = value;
+  // //   notifyListeners();
+  // // }
 
-  Status _statusPrice = Status.ideal;
-  Status get statusPrice => _statusPrice;
-
-  bool get isLoadingPrice => _statusPrice == Status.loading;
-
-  MsPriceVolatilityRes? _priceVolatility;
-  MsPriceVolatilityRes? get priceVolatility => _priceVolatility;
-
-  bool _showScore = false;
-  bool get showScore => _showScore;
-
-  void setStatusPrice(status) {
-    _statusPrice = status;
-    notifyListeners();
-  }
-
-  void onChangeScore(bool value) {
-    // for (var i = 0; i < (_priceVolatility?.score?.length ?? 0); i++) {
-    //   _priceVolatility?.score?[i].selected = false;
-    // }
-    // _priceVolatility?.score?[index].selected = true;
-
-    _showScore = value;
-    notifyListeners();
-  }
-
-  Future getPriceVolatilityData({required String symbol}) async {
-    setStatusPrice(Status.loading);
-    UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
-
-    Map request = {
-      "token": provider.user?.token ?? "",
-      "symbol": symbol,
-      "start_date": "2024-08-01",
-      "end_date": "2024-08-21",
-    };
-    try {
-      ApiResponse response = await apiRequest(
-        url: Apis.msPriceVolatility,
-        request: request,
-        showProgress: false,
-        removeForceLogin: true,
-      );
-      if (response.status) {
-        _priceVolatility =
-            msPriceVolatilityResFromJson(jsonEncode(response.data));
-        _errorPrice = null;
-      } else {
-        _priceVolatility = null;
-        _errorPrice = response.message;
-      }
-
-      setStatusPrice(Status.loaded);
-    } catch (e) {
-      _priceVolatility = null;
-      _errorPrice = Const.errSomethingWrong;
-      setStatusPrice(Status.loaded);
-      Utils().showLog(e.toString());
-    }
-  }
+  // Future getPriceVolatilityData({required String symbol}) async {
+  //   setStatusPrice(Status.loading);
+  //   UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
+  //   Map request = {
+  //     "token": provider.user?.token ?? "",
+  //     "symbol": symbol,
+  //     "start_date": "2024-08-01",
+  //     "end_date": "2024-08-21",
+  //   };
+  //   try {
+  //     ApiResponse response = await apiRequest(
+  //       url: Apis.msPriceVolatility,
+  //       request: request,
+  //       showProgress: false,
+  //       removeForceLogin: true,
+  //     );
+  //     if (response.status) {
+  //       _priceVolatility =
+  //           msPriceVolatilityResFromJson(jsonEncode(response.data));
+  //       _errorPrice = null;
+  //     } else {
+  //       _priceVolatility = null;
+  //       _errorPrice = response.message;
+  //     }
+  //     setStatusPrice(Status.loaded);
+  //   } catch (e) {
+  //     _priceVolatility = null;
+  //     _errorPrice = Const.errSomethingWrong;
+  //     setStatusPrice(Status.loaded);
+  //     Utils().showLog("ERROR in getPriceVolatilityData =>$e");
+  //   }
+  // }
 
   // Stock Highlights---------------------------------------------------------------------------------------------------
 
-  Status _statusHighLight = Status.ideal;
-  Status get statusHighLight => _statusHighLight;
+  // Status _statusHighLight = Status.ideal;
+  // Status get statusHighLight => _statusHighLight;
+  // bool get isLoadingHighLight => _statusHighLight == Status.loading;
+  // List<MsStockHighlightsRes>? _stockHighlight;
+  // List<MsStockHighlightsRes>? get stockHighlight => _stockHighlight;
+  // String? _errorHighlight;
+  // String? get errorHighlight => _errorHighlight ?? Const.errSomethingWrong;
+  // void setStatusH(status) {
+  //   _statusHighLight = status;
+  //   notifyListeners();
+  // }
 
-  bool get isLoadingHighLight => _statusHighLight == Status.loading;
+  // Future<void> fetchAllStockHighlightData({required String symbol}) async {
+  //   setStatusH(Status.loading);
+  //   UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
+  //   final Map<String, dynamic> request = {
+  //     "token": provider.user?.token ?? "",
+  //     "symbol": symbol,
+  //     "start_date": "2024-08-01",
+  //     "end_date": "2024-08-21",
+  //   };
+  //   try {
+  //     final futures = [
+  //       apiRequest(
+  //           url: Apis.msStockHighlight,
+  //           request: request,
+  //           showProgress: false,
+  //           removeForceLogin: true),
+  //       apiRequest(
+  //           url: Apis.msStockPricing,
+  //           request: request,
+  //           showProgress: false,
+  //           removeForceLogin: true),
+  //       apiRequest(
+  //           url: Apis.msStockProfit,
+  //           request: request,
+  //           showProgress: false,
+  //           removeForceLogin: true),
+  //     ];
+  //     final responses = await Future.wait(futures);
+  //     List<MsStockHighlightsRes> combinedData = [];
+  //     for (var response in responses) {
+  //       if (response.status) {
+  //         var data = msStockHighlightsResFromJson(jsonEncode(response.data));
+  //         combinedData.add(data);
+  //         _errorHighlight = null;
+  //       } else {
+  //         _stockHighlight = null;
+  //         _errorHighlight = null;
+  //         combinedData = [];
+  //       }
+  //     }
+  //     _stockHighlight = combinedData;
+  //     setStatusH(Status.loaded);
+  //   } catch (e) {
+  //     _stockHighlight = null;
+  //     _errorHighlight = null;
+  //     setStatusH(Status.loaded);
+  //     Utils().showLog("~~~~~~~~~$e");
+  //   }
+  // }
 
-  List<MsStockHighlightsRes>? _stockHighlight;
-  List<MsStockHighlightsRes>? get stockHighlight => _stockHighlight;
+  // Future getStockHighlightData({required String symbol}) async {
+  //   setStatusH(Status.loading);
+  //   UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
+  //   Map request = {
+  //     "token": provider.user?.token ?? "",
+  //     "symbol": symbol,
+  //     "start_date": "2024-08-01",
+  //     "end_date": "2024-08-21",
+  //   };
+  //   try {
+  //     ApiResponse response = await apiRequest(
+  //       url: Apis.msStockHighlight,
+  //       request: request,
+  //       showProgress: false,
+  //       removeForceLogin: true,
+  //     );
+  //     if (response.status) {
+  //       //
+  //     } else {
+  //       //
+  //     }
+  //     setStatusH(Status.loaded);
+  //   } catch (e) {
+  //     setStatusH(Status.loaded);
+  //     Utils().showLog("ERROR in getStockHighlightData =>$e");
+  //   }
+  // }
 
-  String? _errorHighlight;
-  String? get errorHighlight => _errorHighlight ?? Const.errSomethingWrong;
+  // Future getStockHighlightPricingData({required String symbol}) async {
+  //   setStatusH(Status.loading);
+  //   UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
+  //   Map request = {
+  //     "token": provider.user?.token ?? "",
+  //     "symbol": symbol,
+  //     "start_date": "2024-08-01",
+  //     "end_date": "2024-08-21",
+  //   };
+  //   try {
+  //     ApiResponse response = await apiRequest(
+  //       url: Apis.msStockPricing,
+  //       request: request,
+  //       showProgress: false,
+  //       removeForceLogin: true,
+  //     );
+  //     if (response.status) {
+  //       //
+  //     } else {
+  //       //
+  //     }
+  //     setStatusH(Status.loaded);
+  //   } catch (e) {
+  //     setStatusH(Status.loaded);
+  //     Utils().showLog("ERROR in getStockHighlightPricingData =>$e");
+  //   }
+  // }
 
-  void setStatusH(status) {
-    _statusHighLight = status;
-    notifyListeners();
-  }
-
-  Future<void> fetchAllStockHighlightData({required String symbol}) async {
-    setStatusH(Status.loading);
-
-    UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
-
-    final Map<String, dynamic> request = {
-      "token": provider.user?.token ?? "",
-      "symbol": symbol,
-      "start_date": "2024-08-01",
-      "end_date": "2024-08-21",
-    };
-
-    try {
-      final futures = [
-        apiRequest(
-            url: Apis.msStockHighlight,
-            request: request,
-            showProgress: false,
-            removeForceLogin: true),
-        apiRequest(
-            url: Apis.msStockPricing,
-            request: request,
-            showProgress: false,
-            removeForceLogin: true),
-        apiRequest(
-            url: Apis.msStockProfit,
-            request: request,
-            showProgress: false,
-            removeForceLogin: true),
-      ];
-
-      final responses = await Future.wait(futures);
-
-      List<MsStockHighlightsRes> combinedData = [];
-
-      for (var response in responses) {
-        if (response.status) {
-          var data = msStockHighlightsResFromJson(jsonEncode(response.data));
-          combinedData.add(data);
-          _errorHighlight = null;
-        } else {
-          _stockHighlight = null;
-          _errorHighlight = null;
-          combinedData = [];
-        }
-      }
-      _stockHighlight = combinedData;
-
-      setStatusH(Status.loaded);
-    } catch (e) {
-      _stockHighlight = null;
-      _errorHighlight = null;
-      setStatusH(Status.loaded);
-      Utils().showLog("~~~~~~~~~$e");
-    }
-  }
-
-  Future getStockHighlightData({required String symbol}) async {
-    setStatusH(Status.loading);
-    UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
-
-    Map request = {
-      "token": provider.user?.token ?? "",
-      "symbol": symbol,
-      "start_date": "2024-08-01",
-      "end_date": "2024-08-21",
-    };
-    try {
-      ApiResponse response = await apiRequest(
-        url: Apis.msStockHighlight,
-        request: request,
-        showProgress: false,
-        removeForceLogin: true,
-      );
-      if (response.status) {
-        //
-      } else {
-        //
-      }
-
-      setStatusH(Status.loaded);
-    } catch (e) {
-      setStatusH(Status.loaded);
-      Utils().showLog(e.toString());
-    }
-  }
-
-  Future getStockHighlightPricingData({required String symbol}) async {
-    setStatusH(Status.loading);
-    UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
-
-    Map request = {
-      "token": provider.user?.token ?? "",
-      "symbol": symbol,
-      "start_date": "2024-08-01",
-      "end_date": "2024-08-21",
-    };
-    try {
-      ApiResponse response = await apiRequest(
-        url: Apis.msStockPricing,
-        request: request,
-        showProgress: false,
-        removeForceLogin: true,
-      );
-      if (response.status) {
-        //
-      } else {
-        //
-      }
-
-      setStatusH(Status.loaded);
-    } catch (e) {
-      setStatusH(Status.loaded);
-      Utils().showLog(e.toString());
-    }
-  }
-
-  Future getStockHighlightProfitData({required String symbol}) async {
-    setStatusH(Status.loading);
-    UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
-
-    Map request = {
-      "token": provider.user?.token ?? "",
-      "symbol": symbol,
-      "start_date": "2024-08-01",
-      "end_date": "2024-08-21",
-    };
-    try {
-      ApiResponse response = await apiRequest(
-        url: Apis.msStockProfit,
-        request: request,
-        showProgress: false,
-        removeForceLogin: true,
-      );
-      if (response.status) {
-        //
-      } else {
-        //
-      }
-
-      setStatusH(Status.loaded);
-    } catch (e) {
-      setStatusH(Status.loaded);
-      Utils().showLog(e.toString());
-    }
-  }
+  // Future getStockHighlightProfitData({required String symbol}) async {
+  //   setStatusH(Status.loading);
+  //   UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
+  //   Map request = {
+  //     "token": provider.user?.token ?? "",
+  //     "symbol": symbol,
+  //     "start_date": "2024-08-01",
+  //     "end_date": "2024-08-21",
+  //   };
+  //   try {
+  //     ApiResponse response = await apiRequest(
+  //       url: Apis.msStockProfit,
+  //       request: request,
+  //       showProgress: false,
+  //       removeForceLogin: true,
+  //     );
+  //     if (response.status) {
+  //       //
+  //     } else {
+  //       //
+  //     }
+  //     setStatusH(Status.loaded);
+  //   } catch (e) {
+  //     setStatusH(Status.loaded);
+  //     Utils().showLog("ERROR in getStockHighlightProfitData =>$e");
+  //   }
+  // }
 
   // Stock Score---------------------------------------------------------------------------------------------------
 
@@ -480,7 +478,8 @@ class MSAnalysisProvider extends ChangeNotifier {
       notifyListeners();
     } catch (e) {
       _errorMetrics = Const.errSomethingWrong;
-      setStatus(Status.loaded);
+
+      Utils().showLog("ERROR in getTechnicalAnalysisMetricsData =>$e");
     }
   }
 
@@ -535,7 +534,302 @@ class MSAnalysisProvider extends ChangeNotifier {
       _otherStocks = null;
       _errorOtherStock = null;
       setStatusOtherStock(Status.loaded);
-      Utils().showLog(e.toString());
+      Utils().showLog("ERROR in getOtherStocksData =>$e");
+    }
+  }
+
+// Financials ---------------------------------------------------------------------------------------------------
+
+  Status _statusFinancials = Status.ideal;
+  Status get statusFinancials => _statusFinancials;
+
+  bool get isLoadingFinancials => _statusFinancials == Status.loading;
+
+  String? _errorFinancials;
+  String? get errorFinancials => _errorFinancials ?? Const.errSomethingWrong;
+
+  List<MsFinancialsRes>? _financialsData;
+  List<MsFinancialsRes>? get financialsData => _financialsData;
+
+  void setStatusFinancials(status) {
+    _statusFinancials = status;
+    notifyListeners();
+  }
+
+  int selectedTypeIndex = 0;
+  int selectedPeriodIndex = 0;
+
+  List<String> typeMenu = [
+    'Revenue',
+    'Net profit',
+  ];
+
+  List<String> periodMenu = [
+    'Annual',
+    'Quarterly',
+  ];
+
+  void onChangeFinancial({
+    int? typeIndex,
+    int? periodIndex,
+  }) {
+    if (typeIndex != null) {
+      selectedTypeIndex = typeIndex;
+    }
+    if (periodIndex != null) {
+      selectedPeriodIndex = periodIndex;
+    }
+    notifyListeners();
+    getFinancialsData(
+      symbol: topData?.symbol ?? "",
+      type: selectedTypeIndex == 0 ? 'revenue' : 'profit',
+      period: selectedPeriodIndex == 0 ? 'annual' : 'quarter',
+    );
+  }
+
+  Future getFinancialsData({
+    required String symbol,
+    required String period,
+    required String type,
+  }) async {
+    setStatusFinancials(Status.loading);
+    UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
+
+    Map request = {
+      "token": provider.user?.token ?? "",
+      "symbol": symbol,
+      "period": period,
+      "type": type,
+    };
+    try {
+      ApiResponse response = await apiRequest(
+        url: Apis.msFinancials,
+        request: request,
+        showProgress: false,
+        removeForceLogin: true,
+      );
+      if (response.status) {
+        _financialsData = msFinancialsResFromJson(jsonEncode(response.data));
+        _errorFinancials = null;
+      } else {
+        _financialsData = null;
+        _errorFinancials = null;
+      }
+
+      setStatusFinancials(Status.loaded);
+    } catch (e) {
+      _financialsData = null;
+      _errorFinancials = null;
+      setStatusFinancials(Status.loaded);
+      Utils().showLog("ERROR in getFinancialsData =>$e");
+    }
+  }
+
+//Peer Comparison ---------------------------------------------------------------------------------------------------
+
+  Status _statusPeer = Status.ideal;
+  Status get statusPeer => _statusPeer;
+
+  bool get isLoadingPeer => _statusPeer == Status.loading;
+
+  String? _errorPeer;
+  String? get errorPeer => _errorPeer ?? Const.errSomethingWrong;
+
+  MsPeerComparisonRes? _peerData;
+  MsPeerComparisonRes? get peerData => _peerData;
+
+  void setStatusPeer(status) {
+    _statusPeer = status;
+    notifyListeners();
+  }
+
+  Future getPeerComparisonData({required String symbol}) async {
+    setStatusPeer(Status.loading);
+    UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
+
+    Map request = {
+      "token": provider.user?.token ?? "",
+      "symbol": symbol,
+    };
+    try {
+      ApiResponse response = await apiRequest(
+        url: Apis.msPeer,
+        request: request,
+        showProgress: false,
+        removeForceLogin: true,
+      );
+      if (response.status) {
+        _peerData = msPeerComparisonResFromJson(jsonEncode(response.data));
+        _errorPeer = null;
+      } else {
+        _peerData = null;
+        _errorPeer = null;
+      }
+
+      setStatusPeer(Status.loaded);
+    } catch (e) {
+      _peerData = null;
+      _errorPeer = null;
+      setStatusPeer(Status.loaded);
+      Utils().showLog("ERROR in getPeerComparisonData =>$e");
+    }
+  }
+
+//FAQs ---------------------------------------------------------------------------------------------------
+
+  Status _statusFaqs = Status.ideal;
+  Status get statusFaqs => _statusFaqs;
+
+  bool get isLoadingFaqs => _statusFaqs == Status.loading;
+
+  String? _errorFaqs;
+  String? get errorFaqs => _errorFaqs ?? Const.errSomethingWrong;
+
+  List<FaQsRes>? _faqData;
+  List<FaQsRes>? get faqData => _faqData;
+
+  void setStatusFaqs(status) {
+    _statusFaqs = status;
+    notifyListeners();
+  }
+
+  Future getFaqData({required String symbol}) async {
+    setStatusFaqs(Status.loading);
+    UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
+
+    Map request = {
+      "token": provider.user?.token ?? "",
+      "symbol": symbol,
+    };
+    try {
+      ApiResponse response = await apiRequest(
+        url: Apis.msFaqs,
+        request: request,
+        showProgress: false,
+        removeForceLogin: true,
+      );
+      if (response.status) {
+        _faqData = faQsResFromJson(jsonEncode(response.data));
+        _errorFaqs = null;
+      } else {
+        _faqData = null;
+        _errorFaqs = null;
+      }
+
+      setStatusFaqs(Status.loaded);
+    } catch (e) {
+      _faqData = null;
+      _errorFaqs = null;
+      setStatusFaqs(Status.loaded);
+      Utils().showLog("ERROR in getFaqData =>$e");
+    }
+  }
+
+//Price And Volume ---------------------------------------------------------------------------------------------------
+
+  Status _statusPV = Status.ideal;
+  Status get statusPV => _statusPV;
+
+  bool get isLoadingPV => _statusPV == Status.loading;
+
+  String? _errorPV;
+  String? get errorPV => _errorPV ?? Const.errSomethingWrong;
+
+  List<MsRadarChartRes>? _pvData;
+  List<MsRadarChartRes>? get pvData => _pvData;
+
+  void setStatusPV(status) {
+    _statusPV = status;
+    notifyListeners();
+  }
+
+  Future getPriceVolumeData({required String symbol, selectedIndex = 0}) async {
+    setStatusPV(Status.loading);
+    UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
+
+    Map request = {
+      "token": provider.user?.token ?? "",
+      "symbol": symbol,
+    };
+    try {
+      ApiResponse response = await apiRequest(
+        url: selectedIndex == 0 ? Apis.pastReturn : Apis.postVolume,
+        request: request,
+        showProgress: false,
+        removeForceLogin: true,
+      );
+      if (response.status) {
+        _pvData = msRadarChartResFromJson(jsonEncode(response.data));
+        _errorPV = null;
+      } else {
+        _pvData = null;
+        _errorPV = null;
+      }
+
+      setStatusPV(Status.loaded);
+    } catch (e) {
+      _pvData = null;
+      _errorPV = null;
+      setStatusPV(Status.loaded);
+      Utils().showLog("ERROR in getPriceVolumeData =>$e");
+    }
+  }
+
+//Complete Data ---------------------------------------------------------------------------------------------------
+
+  Status _statusComplete = Status.ideal;
+  Status get statusComplete => _statusComplete;
+
+  bool get isLoadingComplete => _statusComplete == Status.loading;
+
+  String? _errorComplete;
+  String? get errorComplete => _errorComplete ?? Const.errSomethingWrong;
+
+  MsCompleteRes? _completeData;
+  MsCompleteRes? get completeData => _completeData;
+
+  void setStatusComplete(status) {
+    _statusComplete = status;
+    notifyListeners();
+  }
+
+  bool _showScoreComplete = false;
+  bool get showScoreComplete => _showScoreComplete;
+
+  void onChangeCompleteScore(bool value) {
+    _showScoreComplete = value;
+    notifyListeners();
+  }
+
+  Future getCompleteData({required String symbol}) async {
+    setStatusComplete(Status.loading);
+    UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
+
+    Map request = {
+      "token": provider.user?.token ?? "",
+      "symbol": symbol,
+    };
+    try {
+      ApiResponse response = await apiRequest(
+        url: Apis.msComplete,
+        request: request,
+        showProgress: false,
+        removeForceLogin: true,
+      );
+      if (response.status) {
+        _completeData = msCompleteResFromJson(jsonEncode(response.data));
+        _errorComplete = null;
+      } else {
+        _completeData = null;
+        _errorComplete = null;
+      }
+
+      setStatusComplete(Status.loaded);
+    } catch (e) {
+      _completeData = null;
+      _errorComplete = null;
+      setStatusComplete(Status.loaded);
+      Utils().showLog("ERROR in getCompleteData =>$e");
     }
   }
 }
@@ -563,3 +857,11 @@ class TechAnalysisSummaryRes {
     required this.value,
   });
 }
+
+
+// class FinancialChartDataHolder{
+//   int typeIndex;
+//   int periodIndex;
+//   List<MsFinancialsRes>? data;
+//   FinancialChartDataHolder({required this.data});
+// }

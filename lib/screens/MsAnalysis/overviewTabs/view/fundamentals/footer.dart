@@ -1,29 +1,13 @@
 import 'package:flutter/material.dart';
-
+import 'package:stocks_news_new/modals/msAnalysis/complete.dart';
 import '../../../../../utils/theme.dart';
 import '../../../../../widgets/custom_gridview.dart';
 import '../../../../../widgets/spacer_vertical.dart';
 
-class MsFundamentalFooter extends StatefulWidget {
-  const MsFundamentalFooter({super.key});
+class MsFundamentalFooter extends StatelessWidget {
+  final List<MsFundamentalsResBody>? body;
+  const MsFundamentalFooter({super.key, this.body});
 
-  @override
-  State<MsFundamentalFooter> createState() => _MsFundamentalFooterState();
-}
-
-class _MsFundamentalFooterState extends State<MsFundamentalFooter> {
-  List<Map<String, dynamic>> fundamental = [
-    {
-      "title": "P/E Ratio",
-      "amount": "-",
-    },
-    {
-      "title": "Sector P/E",
-      "amount": "119.07",
-    },
-    {"title": "Dividend yield", "amount": "0.6%"},
-    {"title": "Market Cap", "amount": "\$40Cr"},
-  ];
   @override
   Widget build(BuildContext context) {
     return CustomGridView(
@@ -32,7 +16,7 @@ class _MsFundamentalFooterState extends State<MsFundamentalFooter> {
       paddingHorizontal: 12,
       getChild: (index) {
         return MsFundamentalFooterItem(
-          data: fundamental[index],
+          data: body?[index],
         );
       },
     );
@@ -40,8 +24,8 @@ class _MsFundamentalFooterState extends State<MsFundamentalFooter> {
 }
 
 class MsFundamentalFooterItem extends StatelessWidget {
-  final Map<String, dynamic> data;
-  const MsFundamentalFooterItem({super.key, required this.data});
+  final MsFundamentalsResBody? data;
+  const MsFundamentalFooterItem({super.key, this.data});
 
   @override
   Widget build(BuildContext context) {
@@ -56,17 +40,17 @@ class MsFundamentalFooterItem extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            data['title'].toString(),
+            data?.label ?? "",
             style: stylePTSansRegular(
-              fontSize: 12.0,
+              fontSize: 14,
               color: Colors.grey,
             ),
           ),
           const SpacerVertical(height: 8.0),
           Text(
-            data['amount'].toString(),
+            "${data?.value ?? 0}",
             style: stylePTSansRegular(
-              fontSize: 12.0,
+              fontSize: 14,
               color: Colors.white,
             ),
           ),
