@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -12,6 +11,7 @@ import '../../api/api_response.dart';
 import '../../modals/msAnalysis/complete.dart';
 import '../../modals/msAnalysis/financials.dart';
 import '../../modals/msAnalysis/ms_top_res.dart';
+import '../../modals/msAnalysis/news.dart';
 import '../../modals/msAnalysis/other_stocks.dart';
 import '../../modals/msAnalysis/peer_comparision.dart';
 import '../../utils/constants.dart';
@@ -81,15 +81,22 @@ class MSAnalysisProvider extends ChangeNotifier {
     getPeerComparisonData(symbol: symbol);
     getCompleteData(symbol: symbol);
     getFaqData(symbol: symbol);
+    getNewsData(symbol: symbol);
+    getEventsData(symbol: symbol);
   }
 
 // Update Top Detail with Socket
   void updateSocket({
     String? price,
+    num? priceVal,
     num? change,
     num? changePercentage,
     String? changeString,
   }) {
+    if (priceVal != null) {
+      _topData?.priceValue = priceVal;
+    }
+
     if (change != null) {
       _topData?.change = change;
     }
@@ -141,7 +148,7 @@ class MSAnalysisProvider extends ChangeNotifier {
       ApiResponse response = await apiRequest(
         url: Apis.msStockTop,
         request: request,
-        baseUrl: Apis.baseUrlLocal, //TODO Remove after this api set to LIVE
+        // baseUrl: Apis.baseUrlLocal, //TODO Remove after this api set to LIVE
 
         showProgress: false,
         removeForceLogin: true,
@@ -516,7 +523,7 @@ class MSAnalysisProvider extends ChangeNotifier {
     try {
       ApiResponse response = await apiRequest(
         url: Apis.msOtherStock,
-        baseUrl: Apis.baseUrlLocal, //TODO Remove after this api set to LIVE
+        // baseUrl: Apis.baseUrlLocal, //TODO Remove after this api set to LIVE
         request: request,
         showProgress: false,
         removeForceLogin: true,
@@ -772,6 +779,106 @@ class MSAnalysisProvider extends ChangeNotifier {
       _errorPV = null;
       setStatusPV(Status.loaded);
       Utils().showLog("ERROR in getPriceVolumeData =>$e");
+    }
+  }
+
+//Latest News ---------------------------------------------------------------------------------------------------
+
+  Status _statusNews = Status.ideal;
+  Status get statusNews => _statusNews;
+
+  bool get isLoadingNews => _statusNews == Status.loading;
+
+  String? _errorNews;
+  String? get errorNews => _errorNews ?? Const.errSomethingWrong;
+
+  List<MsNewsRes>? _msNews;
+  List<MsNewsRes>? get msNews => _msNews;
+
+  void setStatusNews(status) {
+    _statusNews = status;
+    notifyListeners();
+  }
+
+  Future getNewsData({required String symbol}) async {
+    setStatusNews(Status.loading);
+    UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
+
+    Map request = {
+      "token": provider.user?.token ?? "",
+      "symbol": symbol,
+    };
+    try {
+      ApiResponse response = await apiRequest(
+        url: Apis.msNews,
+        request: request,
+        showProgress: false,
+        removeForceLogin: true,
+      );
+      if (response.status) {
+        _msNews = msNewsResFromJson(jsonEncode(response.data));
+        _errorNews = null;
+      } else {
+        _msNews = null;
+        _errorNews = null;
+      }
+
+      setStatusNews(Status.loaded);
+    } catch (e) {
+      _msNews = null;
+      _errorNews = null;
+      setStatusNews(Status.loaded);
+      Utils().showLog("ERROR in getNewsData =>$e");
+    }
+  }
+
+//Events ---------------------------------------------------------------------------------------------------
+
+  Status _statusEvents = Status.ideal;
+  Status get statusEvents => _statusEvents;
+
+  bool get isLoadingEvents => _statusEvents == Status.loading;
+
+  String? _errorEvents;
+  String? get errorEvents => _errorEvents ?? Const.errSomethingWrong;
+
+  List<MsRadarChartRes>? _msEvents;
+  List<MsRadarChartRes>? get msEvents => _msEvents;
+
+  void setStatusEvents(status) {
+    _statusEvents = status;
+    notifyListeners();
+  }
+
+  Future getEventsData({required String symbol}) async {
+    setStatusEvents(Status.loading);
+    UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
+
+    Map request = {
+      "token": provider.user?.token ?? "",
+      "symbol": symbol,
+    };
+    try {
+      ApiResponse response = await apiRequest(
+        url: Apis.msEvents,
+        request: request,
+        showProgress: false,
+        removeForceLogin: true,
+      );
+      if (response.status) {
+        _msEvents = msRadarChartResFromJson(jsonEncode(response.data));
+        _errorEvents = null;
+      } else {
+        _msEvents = null;
+        _errorEvents = null;
+      }
+
+      setStatusEvents(Status.loaded);
+    } catch (e) {
+      _msEvents = null;
+      _errorEvents = null;
+      setStatusEvents(Status.loaded);
+      Utils().showLog("ERROR in getEventsData =>$e");
     }
   }
 

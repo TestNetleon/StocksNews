@@ -17,7 +17,7 @@ class MsStockTopRes {
   final String? yearLow;
   final String? marketCap;
   final String? exchange;
-  final num? priceValue;
+  num? priceValue;
   final num? dayLowValue;
   final num? dayHighValue;
   final num? yearLowValue;
@@ -26,15 +26,15 @@ class MsStockTopRes {
   String? changeWithCur;
   // final num? previousCloseWithoutCur;
   final String? marketStatus;
-  final String? companyName;
+  // final String? companyName;
   // final String? sector;
   // final String? sectorSlug;
   // final String? industry;
   // final String? industrySlug;
   final String? image;
-  final num? isAlertAdded;
-  final num? isWatchlistAdded;
-  final String? shareUrl;
+  // final num? isAlertAdded;
+  // final num? isWatchlistAdded;
+  // final String? shareUrl;
 
   MsStockTopRes({
     this.symbol,
@@ -57,15 +57,15 @@ class MsStockTopRes {
     this.changeWithCur,
     // this.previousCloseWithoutCur,
     this.marketStatus,
-    this.companyName,
+    // this.companyName,
     // this.sector,
     // this.sectorSlug,
     // this.industry,
     // this.industrySlug,
     this.image,
-    this.isAlertAdded,
-    this.isWatchlistAdded,
-    this.shareUrl,
+    // this.isAlertAdded,
+    // this.isWatchlistAdded,
+    // this.shareUrl,
   });
 
   factory MsStockTopRes.fromJson(Map<String, dynamic> json) => MsStockTopRes(
@@ -89,15 +89,15 @@ class MsStockTopRes {
         changeWithCur: json["change_with_cur"],
         // previousCloseWithoutCur: json["previousClose_without_cur"],
         marketStatus: json["market_status"],
-        companyName: json["companyName"],
+        // companyName: json["companyName"],
         // sector: json["sector"],
         // sectorSlug: json["sector_slug"],
         // industry: json["industry"],
         // industrySlug: json["industry_slug"],
         image: json["image"],
-        isAlertAdded: json["is_alert_added"],
-        isWatchlistAdded: json["is_watchlist_added"],
-        shareUrl: json["share_url"],
+        // isAlertAdded: json["is_alert_added"],
+        // isWatchlistAdded: json["is_watchlist_added"],
+        // shareUrl: json["share_url"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -121,14 +121,14 @@ class MsStockTopRes {
         "change_with_cur": changeWithCur,
         // "previousClose_without_cur": previousCloseWithoutCur,
         "market_status": marketStatus,
-        "companyName": companyName,
+        // "companyName": companyName,
         // "sector": sector,
         // "sector_slug": sectorSlug,
         // "industry": industry,
         // "industry_slug": industrySlug,
         "image": image,
-        "is_alert_added": isAlertAdded,
-        "is_watchlist_added": isWatchlistAdded,
-        "share_url": shareUrl,
+        // "is_alert_added": isAlertAdded,
+        // "is_watchlist_added": isWatchlistAdded,
+        // "share_url": shareUrl,
       };
 }

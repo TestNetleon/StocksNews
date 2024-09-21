@@ -126,7 +126,7 @@ class MsPerformanceToday extends StatelessWidget {
     num todayLow = topData.dayLowValue ?? 0;
     num todayHigh = topData.dayHighValue ?? 0;
     num currentPrice = topData.priceValue ?? 0;
-    String price = "\$$currentPrice";
+    String price = topData.price ?? "";
 
     // num todayLow = 0;
     // num todayHigh = 100;

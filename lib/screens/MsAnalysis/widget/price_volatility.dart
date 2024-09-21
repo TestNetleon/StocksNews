@@ -126,7 +126,7 @@ class MsPriceVolatility extends StatelessWidget {
                   ),
                   Expanded(
                     child: Text(
-                        '${topData?.symbol} had lower price volatility then Industry in the last quarter',
+                        '${topData?.symbol} had higher price volatility then Industry in the last quarter',
                         style: stylePTSansRegular(
                             fontSize: 14.0, color: Colors.grey)),
                   ),

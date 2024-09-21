@@ -46,10 +46,7 @@ class _MsAnalysisState extends State<MsAnalysis> {
 
   _addSocket() {
     MSAnalysisProvider provider = context.read<MSAnalysisProvider>();
-    String? tickerPrice;
-    num? tickerChange;
-    num? tickerPercentage;
-    String? tickerChangeString;
+
     try {
       _webSocketService = WebSocketService(
         url: 'wss://websockets.financialmodelingprep.com',
@@ -58,18 +55,34 @@ class _MsAnalysisState extends State<MsAnalysis> {
       );
       _webSocketService?.connect();
 
-      _webSocketService?.onDataReceived =
-          (price, change, percentage, changeString) {
-        tickerPrice = price;
-        tickerChange = change;
-        tickerPercentage = percentage;
-        tickerChangeString = changeString;
+      // _webSocketService?.onDataReceived =
+      //     (price, change, percentage, changeString) {
+      //   tickerPrice = price;
+      //   tickerChange = change;
+      //   tickerPercentage = percentage;
+      //   tickerChangeString = changeString;
 
+      //   provider.updateSocket(
+      //     change: tickerChange,
+      //     changePercentage: tickerPercentage,
+      //     changeString: tickerChangeString,
+      //     price: tickerPrice,
+      //   );
+      // };
+
+      _webSocketService?.onDataReceived = ({
+        required String price,
+        required num change,
+        required num percentage,
+        required String changeString,
+        num? priceValue,
+      }) {
         provider.updateSocket(
-          change: tickerChange,
-          changePercentage: tickerPercentage,
-          changeString: tickerChangeString,
-          price: tickerPrice,
+          change: change,
+          changePercentage: percentage,
+          changeString: changeString,
+          price: price,
+          priceVal: priceValue,
         );
       };
     } catch (e) {

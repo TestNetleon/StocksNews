@@ -88,14 +88,35 @@ class _StockDetailState extends State<StockDetail> {
       );
       _webSocketService?.connect();
 
-      _webSocketService?.onDataReceived =
-          (price, change, percentage, changeString) {
+      // _webSocketService?.onDataReceived =
+      //     (price, change, percentage, changeString) {
+      //   setState(() {
+      //     tickerPrice = price;
+      //     tickerChange = change;
+      //     tickerPercentage = percentage;
+      //     tickerChangeString = changeString;
+      //   });
+      //   provider.updateSocket(
+      //     change: tickerChange,
+      //     changePercentage: tickerPercentage,
+      //     changeString: tickerChangeString,
+      //     price: tickerPrice,
+      //   );
+      // };
+      _webSocketService?.onDataReceived = ({
+        required String price,
+        required num change,
+        required num percentage,
+        required String changeString,
+        num? priceValue,
+      }) {
         setState(() {
           tickerPrice = price;
           tickerChange = change;
           tickerPercentage = percentage;
           tickerChangeString = changeString;
         });
+
         provider.updateSocket(
           change: tickerChange,
           changePercentage: tickerPercentage,

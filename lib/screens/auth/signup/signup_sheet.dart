@@ -107,6 +107,8 @@ class _SignUpBottomState extends State<SignUpBottom> {
   }
 
   void _handleSignIn() async {
+    closeKeyboard();
+
     if (await _googleSignIn.isSignedIn()) {
       await _googleSignIn.signOut();
     }
@@ -178,6 +180,8 @@ class _SignUpBottomState extends State<SignUpBottom> {
   }
 
   void _handleApple(id, displayName, email) async {
+    closeKeyboard();
+
     String? referralCode = await Preference.getReferral();
     bool isReferInput = await Preference.isReferInput();
 

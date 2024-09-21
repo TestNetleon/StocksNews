@@ -1,7 +1,10 @@
 import 'package:flutter/cupertino.dart';
+import 'package:provider/provider.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
-
+import '../../../providers/stockAnalysis/provider.dart';
+import 'events/index.dart';
+import 'posts/index.dart';
 import 'view/overview.dart';
 
 class MsTabs extends StatefulWidget {
@@ -19,8 +22,23 @@ class _MsTabsState extends State<MsTabs> with SingleTickerProviderStateMixin {
     'Events',
   ];
 
+  onChange(int index) {
+    setState(() {
+      selectedIndex = index;
+    });
+    MSAnalysisProvider provider = context.read<MSAnalysisProvider>();
+
+    if (selectedIndex == 1) {
+      provider.getNewsData(symbol: provider.topData?.symbol ?? "");
+    } else if (selectedIndex == 2) {
+      provider.getEventsData(symbol: provider.topData?.symbol ?? "");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    // return MsOverview();
+
     return Column(
       children: [
         CupertinoSlidingSegmentedControl<int>(
@@ -29,9 +47,10 @@ class _MsTabsState extends State<MsTabs> with SingleTickerProviderStateMixin {
           padding: const EdgeInsets.all(4),
           backgroundColor: const Color.fromARGB(255, 28, 28, 28),
           onValueChanged: (int? index) {
-            setState(() {
-              selectedIndex = index ?? 0;
-            });
+            // setState(() {
+            //   selectedIndex = index ?? 0;
+            // });
+            onChange(index ?? 0);
           },
           children: {
             for (int i = 0; i < menus.length; i++)
@@ -54,9 +73,9 @@ class _MsTabsState extends State<MsTabs> with SingleTickerProviderStateMixin {
         selectedIndex == 0
             ? MsOverview()
             : selectedIndex == 1
-                ? SizedBox()
+                ? MsNews()
                 : selectedIndex == 2
-                    ? SizedBox()
+                    ? MsEvents()
                     : SizedBox(),
       ],
     );

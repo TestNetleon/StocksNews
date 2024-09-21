@@ -213,6 +213,8 @@ class Apis {
   static const msFaqs = '/stock-analysis/faqs';
   static const pastReturn = "/stock-analysis/past-returns";
   static const postVolume = "/stock-analysis/post-volume";
+  static const msNews = '/stock-analysis/latest-news';
+  static const msEvents = '/stock-analysis/events';
 
   //----------   Missions
   static const pointClaimList = "/point-claim-list";
