@@ -28,6 +28,7 @@ import 'package:stocks_news_new/widgets/theme_button_small.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../widgets/cache_network_image.dart';
+import '../marketData/lock/common_lock.dart';
 import '../tabs/news/newsDetail/news_details_body.dart';
 import 'blog_mention_by.dart';
 
@@ -301,7 +302,10 @@ class BlogDetailContainer extends StatelessWidget {
             ),
           ),
         ),
+
         BlogDetailsLock(slug: slug),
+        if (provider.blogsDetail?.premiumReaderOnly == true)
+          CommonLock(isLocked: true),
         // if ((provider.blogsDetail?.readingStatus == false) &&
         //     !provider.isLoadingDetail)
         //   Column(

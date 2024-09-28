@@ -119,9 +119,11 @@ class _OTPSignupBottomState extends State<OTPSignupBottom> {
         "build_code": buildNumber,
         "fcm_permission": "$granted",
         "referral_code": referralCode ?? widget.referCode ?? "",
-        "track_membership_link": memTrack ? "1" : "",
+        // "track_membership_link": memTrack ? "1" : "",
       };
-
+      if (memCODE != null && memCODE != '') {
+        request['distributor_code'] = memCODE;
+      }
       provider.verifySignupOtp(request);
     }
   }

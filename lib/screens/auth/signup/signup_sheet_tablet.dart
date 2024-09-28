@@ -163,10 +163,13 @@ class _SignUpBottomState extends State<SignUpBottom> {
           "fcm_permission": "$granted",
           //  "referral_code": "$referralCode",
           "referral_code": referralCode ?? code ?? "",
-          "track_membership_link": memTrack ? "1" : "",
+          // "track_membership_link": memTrack ? "1" : "",
           // "referral_code": "8FELPC",
           // "serverAuthCode": account?.serverAuthCode,
         };
+        if (memCODE != null && memCODE != '') {
+          request['distributor_code'] = memCODE;
+        }
         provider.googleLogin(request, alreadySubmitted: false);
       }
     } catch (error) {
@@ -221,8 +224,11 @@ class _SignUpBottomState extends State<SignUpBottom> {
         "fcm_permission": "$granted",
         // "referral_code": "$referralCode",
         "referral_code": referralCode ?? code ?? "",
-        "track_membership_link": memTrack ? "1" : "",
+        // "track_membership_link": memTrack ? "1" : "",
       };
+      if (memCODE != null && memCODE != '') {
+        request['distributor_code'] = memCODE;
+      }
 
       provider.appleLogin(request, id: id);
 

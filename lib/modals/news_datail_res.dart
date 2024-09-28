@@ -72,6 +72,7 @@ class PostDetail {
   final String? popUpButton;
   dynamic totalPoints;
   dynamic pointsRequired;
+  final bool? premiumReaderOnly;
 
   // final int? status;
   // final String? sector;
@@ -110,6 +111,7 @@ class PostDetail {
     this.pointsRequired,
     this.popUpMessage,
     this.popUpButton,
+    this.premiumReaderOnly,
     // this.status,
     // this.sector,
     // this.mentionStatus,
@@ -122,6 +124,7 @@ class PostDetail {
   factory PostDetail.fromJson(Map<String, dynamic> json) => PostDetail(
         id: json["_id"],
         newsType: json['news_type'],
+        premiumReaderOnly: json['premium_readers_only'],
         // api: json["api"],
         // symbol: json["symbol"],
         publishedDate: json["published_date"] == null
@@ -184,6 +187,7 @@ class PostDetail {
         "published_date": publishedDate?.toIso8601String(),
         "title": title,
         "slug": slug,
+        'premium_readers_only': premiumReaderOnly,
         "news_type": newsType,
         "permalink": permalink,
         "reading_status": readingStatus,

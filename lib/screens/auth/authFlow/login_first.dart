@@ -121,8 +121,12 @@ class _LoginFirstState extends State<LoginFirst> {
           "fcm_permission": "$granted",
           // "serverAuthCode": account?.serverAuthCode,
           "referral_code": referralCode ?? "",
-          "track_membership_link": memTrack ? "1" : "",
+          // "track_membership_link": memTrack ? "1" : "",
         };
+        if (memCODE != null && memCODE != '') {
+          request['distributor_code'] = memCODE;
+        }
+
         provider.googleLogin(request, alreadySubmitted: false);
       }
     } catch (error) {
@@ -152,9 +156,11 @@ class _LoginFirstState extends State<LoginFirst> {
         "build_code": buildNumber,
         "fcm_token": fcmToken ?? "",
         "fcm_permission": "$granted",
-        "track_membership_link": memTrack ? "1" : "",
+        // "track_membership_link": memTrack ? "1" : "",
       };
-
+      if (memCODE != null && memCODE != '') {
+        request['distributor_code'] = memCODE;
+      }
       provider.appleLogin(request, id: id);
       // GoogleSignInAccount:{displayName: Netleon Family, email: testnetleon@gmail.com, id: 110041963646228833065, photoUrl: https://lh3.googleusercontent.com/a/ACg8ocJocVZ9k-umOKg7MEzLfpG4d_GBrUFYY8o84_r3Am95dA, serverAuthCode: null}
     } catch (error) {

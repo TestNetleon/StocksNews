@@ -119,6 +119,9 @@ class _MsAnalysisState extends State<MsAnalysis> {
           isLoading: provider.isLoadingComplete,
           showPreparingText: true,
           error: provider.errorComplete,
+          onRefresh: () {
+            provider.callAPIs(symbol: widget.symbol);
+          },
           child: SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.all(8.0),

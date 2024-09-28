@@ -405,6 +405,9 @@ class HomeProvider extends ChangeNotifier {
         "fcm_permission": "$granted",
         "platform": Platform.operatingSystem,
       };
+      if (memCODE != null && memCODE != '') {
+        request['distributor_code'] = memCODE;
+      }
       if (addId != null) {
         request.addAll({"ad_id": addId});
       }

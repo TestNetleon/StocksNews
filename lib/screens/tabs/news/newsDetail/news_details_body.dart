@@ -37,6 +37,7 @@ import '../../../../widgets/disclaimer_widget.dart';
 import '../../../../widgets/theme_button_small.dart';
 import '../../../auth/refer/refer_code.dart';
 import '../../../blogs/index.dart';
+import '../../../marketData/lock/common_lock.dart';
 import '../../../t&cAndPolicy/tc_policy.dart';
 import 'mentioned_by.dart';
 import 'news_details_list.dart';
@@ -623,6 +624,8 @@ class _NewsDetailsBodyState extends State<NewsDetailsBody> {
                       ),
                     ),
                     NewsDetailsLock(slug: widget.slug),
+                    if (provider.data?.postDetail?.premiumReaderOnly == true)
+                      CommonLock(isLocked: true),
                     // if ((provider.data?.postDetail?.readingStatus == false) &&
                     //     !provider.isLoading)
                     //   Column(

@@ -111,9 +111,13 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
             _initialDeepLinks = false;
           });
         } else {
-          if (deepLink.path.contains('MEM')) {
-            memTrack = true;
-          }
+          // if (deepLink.path.contains('MEM')) {
+          //   memTrack = true;
+          // }
+
+          extractCodeFromMEM(deepLink, "1");
+
+          Utils().showLog("MEM CODE get initial referrals => $memCODE");
         }
       } else {
         bool isFirstOpen = await Preference.isFirstOpen();
@@ -145,9 +149,11 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
                 _initialDeepLinks = false;
               });
             } else {
-              if (deepLink.path.contains('MEM')) {
-                memTrack = true;
-              }
+              // if (deepLink.path.contains('MEM')) {
+              //   memTrack = true;
+              // }
+              extractCodeFromMEM(deepLink, "2");
+              Utils().showLog("MEM CODE get initial referrals 1=> $memCODE");
             }
           }
         },
@@ -228,9 +234,11 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
           await _handleReferralLink(deepLink);
           return;
         } else {
-          if (deepLink.path.contains('MEM')) {
-            memTrack = true;
-          }
+          // if (deepLink.path.contains('MEM')) {
+          //   memTrack = true;
+          // }
+          extractCodeFromMEM(deepLink, "3");
+          Utils().showLog("MEM CODE get initial deep link => $memCODE");
         }
       }
 

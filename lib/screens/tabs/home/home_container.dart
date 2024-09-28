@@ -1,3 +1,4 @@
+// import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
@@ -11,6 +12,7 @@ import 'package:stocks_news_new/screens/tabs/home/widgets/membership_coins_optio
 import 'package:stocks_news_new/screens/tabs/home/widgets/plaid/index.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
+// import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/disclaimer_widget.dart';
 import 'package:stocks_news_new/widgets/error_display_common.dart';
 import 'package:stocks_news_new/widgets/loading.dart';
@@ -56,28 +58,31 @@ class HomeContainer extends StatelessWidget {
       children: [
         // if (kDebugMode)
         //   ThemeButtonSmall(
-        //     text: "Missions",
+        //     text: "Extract Code",
         //     onPressed: () {
-        //       Navigator.push(
-        //         context,
-        //         MaterialPageRoute(
-        //           builder: (context) => ClaimPointsIndex(),
-        //         ),
-        //       );
+        //       Uri uri = Uri.parse('https://stocksnews.page.link/MEM');
+        //       memCODE = extractCodeFromMEM(uri);
+        //       Utils().showLog("CODE => $memCODE");
         //     },
         //   ),
         // if (kDebugMode)
-        //   ThemeButtonSmall(
-        //     text: "TEST",
-        //     onPressed: () {
-        //       Navigator.push(
-        //         context,
-        //         MaterialPageRoute(
-        //           builder: (context) => TestWidget(),
-        //         ),
-        //       );
-        //     },
+        // Container(
+        //   color: Colors.amber,
+        //   width: double.infinity,
+        //   child: Column(
+        //     children: List.generate(
+        //       memPageList.length,
+        //       (index) {
+        //         return Padding(
+        //           padding: const EdgeInsets.all(5),
+        //           child: Text(
+        //               "${memPageList[index]['place']}, ${memPageList[index]['code']}"),
+        //         );
+        //       },
+        //     ),
         //   ),
+        // ),
+
         Visibility(
           visible: provider.extra?.phoneCodeError != null &&
               provider.extra?.phoneCodeError != '',

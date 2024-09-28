@@ -20,7 +20,9 @@ class MsPriceVolatility extends StatelessWidget {
     MSAnalysisProvider provider = context.watch<MSAnalysisProvider>();
     MsTextRes? text = provider.completeData?.text;
 
-    num avg = provider.completeData?.priceVolatility ?? 0;
+    num avg = provider.priceVolatility?.stockVolatility ?? 0;
+    double normalizedPosition = (avg / 100) * ScreenUtil().screenWidth;
+
     MsStockTopRes? topData = provider.topData;
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       MsTitle(
@@ -86,7 +88,7 @@ class MsPriceVolatility extends StatelessWidget {
                     ),
                   ),
                   Positioned(
-                    left: (avg / 100) * ScreenUtil().screenWidth,
+                    left: (ScreenUtil().screenWidth - 20) / 2,
                     child: Dash(
                       direction: Axis.vertical,
                       dashLength: 8,
@@ -96,19 +98,19 @@ class MsPriceVolatility extends StatelessWidget {
                   ),
                   Positioned(
                     top: 0,
-                    left: (avg / 100) * ScreenUtil().screenWidth - 20, //STATIC
+                    left: normalizedPosition - 20,
                     child: MsPointerContainer(
                       isDownwards: true,
                       title: "${topData?.symbol}",
                     ),
                   ),
-                  Positioned(
-                    top: 70,
-                    left: (avg / 100) * ScreenUtil().screenWidth - 30, //STATIC
-                    child: MsPointerContainer(
-                      title: "Industry",
-                    ),
-                  ),
+                  // Positioned(
+                  //   top: 70,
+                  //   left: (avg / 100) * ScreenUtil().screenWidth - 30, //STATIC
+                  //   child: MsPointerContainer(
+                  //     title: "Industry",
+                  //   ),
+                  // ),
                 ],
               ),
             ),
@@ -125,8 +127,7 @@ class MsPriceVolatility extends StatelessWidget {
                     width: 10.0,
                   ),
                   Expanded(
-                    child: Text(
-                        '${topData?.symbol} had higher price volatility then Industry in the last quarter',
+                    child: Text('${provider.priceVolatility?.text}',
                         style: stylePTSansRegular(
                             fontSize: 14.0, color: Colors.grey)),
                   ),

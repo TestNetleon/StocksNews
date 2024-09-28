@@ -32,6 +32,8 @@ class BlogsDetailRes {
   dynamic pointsRequired;
   final String? popUpMessage;
   final String? popUpButton;
+  final bool? premiumReaderOnly;
+
   BlogsDetailRes({
     required this.id,
     required this.name,
@@ -55,10 +57,12 @@ class BlogsDetailRes {
     this.balanceStatus,
     this.totalPoints,
     this.pointsRequired,
+    this.premiumReaderOnly,
   });
 
   factory BlogsDetailRes.fromJson(Map<String, dynamic> json) => BlogsDetailRes(
         id: json["_id"],
+        premiumReaderOnly: json['premium_readers_only'],
         name: json["name"],
         popUpMessage: json["popup_message"],
         popUpButton: json["popup_button"],
@@ -114,6 +118,7 @@ class BlogsDetailRes {
         "published_date": publishedDate?.toIso8601String(),
         "image": image,
         "feedback_msg": feedbackMsg,
+        'premium_readers_only': premiumReaderOnly,
         "feedback_exist_msg": feedbackExistMsg,
         "reading_status": readingStatus,
         "reading_title": readingTitle,

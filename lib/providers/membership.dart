@@ -59,13 +59,14 @@ class MembershipProvider extends ChangeNotifier {
     setStatus(Status.loading);
 
     try {
-      FormData request = FormData.fromMap({
+      Map request = {
         "token":
             navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
-      });
+      };
+
       ApiResponse response = await apiRequest(
         url: Apis.membership,
-        formData: request,
+        request: request,
         showProgress: false,
       );
       if (response.status) {
@@ -102,7 +103,8 @@ class MembershipProvider extends ChangeNotifier {
                         ?.token ??
                     "",
                 "membership": "$isMembership",
-                "track_membership_link": memTrack ? "1" : "",
+                // "track_membership_link": memTrack ? "1" : "",
+                'distributor_code': memCODE ?? '',
               }
             : {
                 "token": navigatorKey.currentContext!
@@ -185,11 +187,15 @@ class MembershipProvider extends ChangeNotifier {
       if (notificationId != null) {
         request.addAll({"notification_id": notificationId});
       }
+      if (memCODE != null && memCODE != '') {
+        request['distributor_code'] = memCODE;
+      }
       ApiResponse response = await apiRequest(
         url: Apis.membershipInfo,
         request: request,
         showProgress: showProgress,
       );
+
       //  setStatus(Status.loaded);
       if (response.status) {
         _membershipInfoRes = membershipInfoResFromJson(

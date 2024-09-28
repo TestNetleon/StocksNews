@@ -37,20 +37,6 @@ class CommonLock extends StatelessWidget {
       if (provider.user == null) {
         return;
       }
-
-      if (isLocked) {
-        if (provider.user?.phone == null || provider.user?.phone == '') {
-          // await referLogin();
-          await membershipLogin();
-        }
-        if (provider.user?.phone != null && provider.user?.phone != '') {
-          // await RevenueCatService.initializeSubscription();
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (_) => const NewMembership()),
-          );
-        }
-      }
     } else {
       if (isLocked) {
         if (provider.user?.phone == null || provider.user?.phone == '') {
@@ -58,7 +44,7 @@ class CommonLock extends StatelessWidget {
         }
         if (provider.user?.phone != null && provider.user?.phone != '') {
           // await RevenueCatService.initializeSubscription();
-          Navigator.push(
+          await Navigator.push(
             context,
             MaterialPageRoute(builder: (_) => const NewMembership()),
           );

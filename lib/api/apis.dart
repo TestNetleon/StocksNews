@@ -202,6 +202,8 @@ class Apis {
   // ---------   STock Analysis Screen --------------
   static const msRadarChart = "/stock-analysis/radarChart";
   static const msPriceVolatility = "/stock-analysis/priceVolatility";
+  static const msPriceVolatilityNew = "/stock-analysis/price-volatility-new";
+
   static const msStockHighlight = "/stock-analysis/stockHighLights";
   static const msStockPricing = "/stock-analysis/pricing";
   static const msStockProfit = "/stock-analysis/profit";

@@ -88,8 +88,9 @@ bool showAdd = false;
 bool oneSignalInitialized = false;
 
 bool withLoginMembership = true;
+String? memCODE;
 
-bool memTrack = false;
+// bool memTrack = false;
 
 //------------ Ad API Globals
 
@@ -663,6 +664,29 @@ String extractLastPathComponent(Uri uri) {
   }
 }
 
+// List<Map<String, String>> memPageList = [];
+
+extractCodeFromMEM(Uri uri, String place) {
+  Utils().showLog("PLACE $place");
+  try {
+    String uriString = uri.toString();
+
+    if (uriString.contains('MEM')) {
+      int startIndex = uriString.indexOf('MEM');
+      String code = uriString.substring(startIndex);
+      Utils().showLog("CODE => $code");
+
+      memCODE = code;
+
+      // memPageList.add({
+      //   'place': place,
+      //   'code': memCODE ?? "N/A",
+      // });
+    }
+  } catch (e) {
+    Utils().showLog("returning code error $e......");
+  }
+}
 // String extractSymbolValue(Uri uri) {
 //   if (uri.path.contains('/stock-detail')) {
 //     // Check if the query parameters contain 'symbol'
