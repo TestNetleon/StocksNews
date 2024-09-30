@@ -664,7 +664,7 @@ String extractLastPathComponent(Uri uri) {
   }
 }
 
-List<Map<String, String>> memPageList = [];
+// List<Map<String, String>> memPageList = [];
 
 extractCodeFromMEM(Uri uri, String place) {
   Utils().showLog("PLACE $place");
@@ -678,10 +678,10 @@ extractCodeFromMEM(Uri uri, String place) {
 
       memCODE = code;
 
-      memPageList.add({
-        'place': place,
-        'code': memCODE ?? "N/A",
-      });
+      // memPageList.add({
+      //   'place': place,
+      //   'code': memCODE ?? "N/A",
+      // });
     }
   } catch (e) {
     Utils().showLog("returning code error $e......");
