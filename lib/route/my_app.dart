@@ -99,6 +99,10 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       Utils().showLog(" FirebaseDynamicLinks.instance.getInitialLink CALLED");
       if (initialLink != null) {
         final Uri deepLink = initialLink.link;
+
+        extractCodeFromMEM(deepLink, "1");
+        Utils().showLog("MEM CODE get initial referrals => $memCODE");
+
         if (deepLink.path.contains("page.link") ||
             deepLink.path.contains("/install") ||
             deepLink.path.contains("?code=") ||
@@ -114,10 +118,6 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
           // if (deepLink.path.contains('MEM')) {
           //   memTrack = true;
           // }
-
-          extractCodeFromMEM(deepLink, "1");
-
-          Utils().showLog("MEM CODE get initial referrals => $memCODE");
         }
       } else {
         bool isFirstOpen = await Preference.isFirstOpen();
@@ -136,6 +136,8 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
         (pendingDynamicLinkData) {
           if (!_initialDeepLinks) {
             final Uri deepLink = pendingDynamicLinkData.link;
+            extractCodeFromMEM(deepLink, "2");
+            Utils().showLog("MEM CODE get initial referrals 1=> $memCODE");
             // if (deepLink != null) {
             if (deepLink.path.contains("page.link") ||
                 deepLink.path.contains("/install") ||
@@ -152,8 +154,6 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
               // if (deepLink.path.contains('MEM')) {
               //   memTrack = true;
               // }
-              extractCodeFromMEM(deepLink, "2");
-              Utils().showLog("MEM CODE get initial referrals 1=> $memCODE");
             }
           }
         },
@@ -224,6 +224,8 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
 
       if (initialUri != null) {
         final Uri deepLink = initialUri;
+        extractCodeFromMEM(deepLink, "3");
+        Utils().showLog("MEM CODE get initial deep link => $memCODE");
         if (deepLink.path.contains("page.link") ||
             deepLink.path.contains("/install") ||
             deepLink.path.contains("?code=") ||
@@ -237,8 +239,6 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
           // if (deepLink.path.contains('MEM')) {
           //   memTrack = true;
           // }
-          extractCodeFromMEM(deepLink, "3");
-          Utils().showLog("MEM CODE get initial deep link => $memCODE");
         }
       }
 
