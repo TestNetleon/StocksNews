@@ -65,6 +65,7 @@ enum AdScreen { home, newsDetail, aiNews }
 bool isPhone = true;
 bool isAppInForeground = false;
 bool isShowingError = false;
+bool callCheckServer = false;
 bool isAppUpdating = false;
 bool updateProfile = false;
 String apiKeyFMP = "";

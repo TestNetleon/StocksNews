@@ -62,17 +62,19 @@ class _ServerErrorState extends State<AppMaintenance> {
   }
 
   Future _checkForMaintenanceMode() async {
+    HomeProvider provider = context.read<HomeProvider>();
+
     setState(() {
       checking = true;
     });
-    bool isUnderMaintenance =
-        await context.read<HomeProvider>().checkMaintenanceMode() ?? true;
+    bool isUnderMaintenance = await provider.checkMaintenanceMode() ?? true;
 
     setState(() {
       checking = false;
     });
 
     if (!isUnderMaintenance) {
+      provider.refreshData(null);
       Navigator.popUntil(
           navigatorKey.currentContext!, (route) => route.isFirst);
       Navigator.pushReplacement(
@@ -85,6 +87,7 @@ class _ServerErrorState extends State<AppMaintenance> {
   @override
   void dispose() {
     isShowingError = false;
+    callCheckServer = false;
     super.dispose();
   }
 

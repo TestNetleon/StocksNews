@@ -12,6 +12,8 @@ class Apis {
   //     : "https://app.stocks.news/api/v1"; // live server
   // live server
 
+  static const checkServer = "/check-server-status";
+
   static const signup = "/sign-up";
   static const verifySignupOtp = "/check-signup-otp";
   static const resendOtp = "/resend-otp";

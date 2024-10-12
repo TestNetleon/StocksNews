@@ -10,6 +10,7 @@ import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/api/apis.dart';
 import 'package:stocks_news_new/database/database_helper.dart';
 import 'package:stocks_news_new/modals/in_app_msg_res.dart';
+import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/auth/login/login_sheet.dart';
@@ -145,6 +146,8 @@ Future<ApiResponse> apiRequest({
     }
 
     Utils().showLog("RESPONSE  =  ${response.body}");
+    ApiResponse res = ApiResponse.fromJson(jsonDecode(response.body));
+
     if (response.statusCode == 200) {
       if (showProgress) closeGlobalProgressDialog();
       bool session = jsonDecode(response.body)['status'] == false &&
@@ -164,10 +167,19 @@ Future<ApiResponse> apiRequest({
         );
       }
 
-      ApiResponse res = ApiResponse.fromJson(jsonDecode(response.body));
       if (res.extra is Extra && session) {
         InAppNotification? inAppMsg = (res.extra as Extra).inAppMsg;
         MaintenanceDialog? maintenanceDialog = (res.extra as Extra).maintenance;
+        MaintenanceDialog? maintenanceDialogNew;
+
+        if (url == Apis.checkServer) {
+          if (res.data is! List && !res.status) {
+            maintenanceDialogNew = MaintenanceDialog.fromJson(res.data);
+          } else {
+            print('set empty maintenanceDialog data');
+          }
+        }
+
         AdManagersRes? adManagerRes = (res.extra as Extra).adManagers;
         if (adManagerRes != null && adManagerRes.popUp != null) {
           addOnSheetManagers(popUp: adManagerRes.popUp);
@@ -193,11 +205,13 @@ Future<ApiResponse> apiRequest({
         // TO show in app messages only, comment this if want to hide
         // OR
         // DO NOT REMOVE THIS
-        if (maintenanceDialog != null && !isShowingError) {
+        if ((maintenanceDialog != null || maintenanceDialogNew != null) &&
+            !isShowingError) {
           isShowingError = true;
           showMaintenanceDialog(
-            title: maintenanceDialog.title,
-            description: maintenanceDialog.description,
+            title: maintenanceDialog?.title ?? maintenanceDialogNew?.title,
+            description: maintenanceDialog?.description ??
+                maintenanceDialogNew?.description,
           );
         } else if (inAppMsg != null) {
           checkForInAppMessage(inAppMsg);
@@ -217,12 +231,45 @@ Future<ApiResponse> apiRequest({
 
       return res;
     } else {
-      Utils().showLog('Status Code Error ${response.statusCode}');
       if (showProgress) closeGlobalProgressDialog();
+
+      bool isUnderMaintenance = false;
+      if (!callCheckServer) {
+        callCheckServer = true;
+        isUnderMaintenance = await navigatorKey.currentContext!
+            .read<HomeProvider>()
+            .checkMaintenanceMode();
+      }
+      Utils().showLog("is UnderMaintenance $isUnderMaintenance");
+      if (isUnderMaintenance) {
+        MaintenanceDialog? maintenanceDialog;
+
+        if (url == Apis.checkServer) {
+          if (res.data is! List && !res.status) {
+            maintenanceDialog = MaintenanceDialog.fromJson(res.data);
+          } else {
+            print('Data is a list, not a MaintenanceDialog');
+          }
+        }
+        if (maintenanceDialog != null && !isShowingError) {
+          isShowingError = true;
+          showMaintenanceDialog(
+            title: maintenanceDialog.title,
+            description: maintenanceDialog.description,
+          );
+        }
+      }
+
+      Utils().showLog('Status Code Error ${response.statusCode}');
+
       if (!isShowingError && showErrorOnFull) {}
       return ApiResponse(status: false, message: Const.errSomethingWrong);
     }
   } catch (e) {
+    if (!callCheckServer) {
+      callCheckServer = true;
+      navigatorKey.currentContext!.read<HomeProvider>().checkMaintenanceMode();
+    }
     Utils().showLog('Catch error => ${e.toString()}');
     Utils().showLog(e.toString());
     if (showProgress) closeGlobalProgressDialog();

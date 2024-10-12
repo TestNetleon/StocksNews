@@ -309,6 +309,9 @@ class HomeProvider extends ChangeNotifier {
 
     retryCount = 0;
     showAdd = true;
+    if (kDebugMode) {
+      checkMaintenanceMode();
+    }
 
     getHomePortfolio();
     // _getLastMarketOpen();
@@ -895,40 +898,42 @@ class HomeProvider extends ChangeNotifier {
   Future checkMaintenanceMode() async {
     _statusSlider = Status.loading;
     notifyListeners();
-    UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
-    String? fcmToken = await Preference.getFcmToken();
-    bool granted = await Permission.notification.isGranted;
+    // UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
+    // String? fcmToken = await Preference.getFcmToken();
+    // bool granted = await Permission.notification.isGranted;
 
     try {
-      fcmToken ??= await FirebaseMessaging.instance.getToken();
-      Map request = {
-        "token": provider.user?.token ?? "",
-        "fcm_token": fcmToken ?? "",
-        "fcm_permission": "$granted",
-      };
+      // fcmToken ??= await FirebaseMessaging.instance.getToken();
+      // Map request = {
+      //   "token": provider.user?.token ?? "",
+      //   "fcm_token": fcmToken ?? "",
+      //   "fcm_permission": "$granted",
+      // };
       ApiResponse response = await apiRequest(
-        url: Apis.homeSlider,
-        request: request,
+        // url: Apis.homeSlider,
+        url: Apis.checkServer,
+        baseUrl: Apis.baseUrlLocal,
+
+        // request: request,
         showProgress: false,
         onRefresh: () => refreshData(null),
       );
       _statusSlider = Status.loaded;
       notifyListeners();
-      if (response.status) {
-        _extra = (response.extra is Extra ? response.extra as Extra : null);
-        if (_extra?.messageObject != null) {
-          Preference.saveLocalDataBase(_extra?.messageObject);
-        }
-        if (_extra?.messageObject?.error != null) {
-          Const.errSomethingWrong = _extra?.messageObject?.error ?? "";
-          Const.loadingMessage = _extra?.messageObject?.loading ?? "";
-        }
-        MessageRes? localDataBase = await Preference.getLocalDataBase();
-        Utils().showLog("localDataBase  =========${localDataBase?.error}");
 
-        if ((response.extra as Extra).maintenance != null) return true;
+      _extra = (response.extra is Extra ? response.extra as Extra : null);
+
+      if (_extra?.messageObject != null) {
+        Preference.saveLocalDataBase(_extra?.messageObject);
       }
-      return false;
+      if (_extra?.messageObject?.error != null) {
+        Const.errSomethingWrong = _extra?.messageObject?.error ?? "";
+        Const.loadingMessage = _extra?.messageObject?.loading ?? "";
+      }
+      MessageRes? localDataBase = await Preference.getLocalDataBase();
+      Utils().showLog("localDataBase  =========${localDataBase?.error}");
+
+      return response.status ? false : true;
     } catch (e) {
       _statusSlider = Status.loaded;
       notifyListeners();
@@ -1245,4 +1250,22 @@ class HomeProvider extends ChangeNotifier {
       setStatusMostPurchased(Status.loaded);
     }
   }
+
+  // Maintenance API
+
+  // Future callMaintenance() async {
+  //   try {
+  //     ApiResponse response = await apiRequest(
+  //       url: Apis.checkServer,
+  //       baseUrl: Apis.baseUrlLocal,
+  //     );
+  //     if (response.status) {
+  //       //
+  //     } else {
+  //       //
+  //     }
+  //   } catch (e) {
+  //     //
+  //   }
+  // }
 }

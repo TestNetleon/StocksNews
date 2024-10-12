@@ -148,6 +148,8 @@ class _TabsState extends State<Tabs> {
     final insiderProvider = context.read<InsiderTradingProvider>();
     final redditTwitterProvider = context.read<RedditTwitterProvider>();
     final newsCatProvider = context.read<NewsCategoryProvider>();
+    // final homeProvider = context.read<HomeProvider>();
+    // homeProvider.callMaintenance();
 
     try {
       if (Platform.isAndroid) {
