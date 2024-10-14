@@ -110,6 +110,10 @@
 	</array>
 	<key>FirebaseAppDelegateProxyEnabled</key>
 	<true/>
+	<key>AppsFlyerDevKey</key>
+	<string>DdBBqNnwC3Xz2dwhbF7kJK</string> 
+	<key>AppID</key>
+	<string>6476615803</string>
 </dict>
 </plist>
 ß

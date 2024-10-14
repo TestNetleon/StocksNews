@@ -1,26 +1,21 @@
-// ignore_for_file: unused_element
-
 import 'dart:async';
 import 'dart:io';
-
 import 'package:app_links/app_links.dart';
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
-// import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:stocks_news_new/modals/user_res.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/navigation_observer.dart';
-// import 'package:stocks_news_new/dummy.dart';
 import 'package:stocks_news_new/route/routes.dart';
 import 'package:stocks_news_new/screens/auth/signup/signup_sheet.dart';
 import 'package:stocks_news_new/screens/splash/splash.dart';
+import 'package:stocks_news_new/service/appsFlyer/service.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/database/preference.dart';
-// import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/utils/utils.dart';
@@ -334,28 +329,36 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   }
 }
 
-configureRevenueCatAttribute() async {
+Future<void> configureRevenueCatAttribute() async {
   try {
     UserRes? user = await Preference.getUser();
-    if (user != null) {
-      PurchasesConfiguration? configuration;
-      if (Platform.isAndroid) {
-        configuration =
-            PurchasesConfiguration("goog_KXHVJRLChlyjoOamWsqCWQSJZfI")
-              ..appUserID = user.userId ?? "";
-      } else if (Platform.isIOS) {
-        configuration =
-            PurchasesConfiguration("appl_kHwXNrngqMNktkEZJqYhEgLjbcC")
-              ..appUserID = user.userId ?? "";
-      }
-      if (configuration != null) {
-        await Purchases.configure(configuration);
-        if (Platform.isIOS) {
-          await Purchases.enableAdServicesAttributionTokenCollection();
-        }
-      }
+    String? appUserId = user?.userId;
+
+    // Set the API keys based on the platform
+    String apiKey = Platform.isAndroid
+        ? "goog_KXHVJRLChlyjoOamWsqCWQSJZfI"
+        : "appl_kHwXNrngqMNktkEZJqYhEgLjbcC";
+
+    // Configure Purchases
+    PurchasesConfiguration configuration = PurchasesConfiguration(apiKey);
+    if (appUserId != null) {
+      configuration.appUserID = appUserId;
+    }
+
+    await Purchases.configure(configuration);
+    try {
+      AppsFlyerService(
+        "DdBBqNnwC3Xz2dwhbF7kJK",
+        "6476615803",
+      );
+    } catch (e) {
+      //
+    }
+
+    if (Platform.isIOS) {
+      await Purchases.enableAdServicesAttributionTokenCollection();
     }
   } catch (e) {
-    //
+    Utils().showLog("Error in configure RevenueCat: $e");
   }
 }
