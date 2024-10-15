@@ -68,31 +68,43 @@ class _MsPeerComparisonState extends State<MsPeerComparison> {
                       return DataRow(
                         cells: [
                           DataCell(
-                            Container(
-                              padding: EdgeInsets.symmetric(horizontal: 10),
-                              // width: 100,
-                              child: Row(
-                                children: [
-                                  Container(
-                                    height: 30,
-                                    width: 30,
-                                    decoration: BoxDecoration(
-                                      // color: Colors.white,
-                                      shape: BoxShape.circle,
+                            GestureDetector(
+                              // onTap: () {
+                              //   Navigator.pushReplacement(
+                              //     context,
+                              //     MaterialPageRoute(
+                              //       builder: (context) => StockDetail(
+                              //         symbol: company.symbol ?? "",
+                              //       ),
+                              //     ),
+                              //   );
+                              // },
+                              child: Container(
+                                padding: EdgeInsets.symmetric(horizontal: 10),
+                                // width: 100,
+                                child: Row(
+                                  children: [
+                                    Container(
+                                      height: 30,
+                                      width: 30,
+                                      decoration: BoxDecoration(
+                                        // color: Colors.white,
+                                        shape: BoxShape.circle,
+                                      ),
+                                      child: CachedNetworkImagesWidget(
+                                        company.image ?? "",
+                                        fit: BoxFit.cover,
+                                      ),
                                     ),
-                                    child: CachedNetworkImagesWidget(
-                                      company.image ?? "",
-                                      fit: BoxFit.cover,
+                                    SpacerHorizontal(width: 8.0),
+                                    Expanded(
+                                      child: Text(
+                                        company.symbol ?? "",
+                                        style: styleGeorgiaBold(fontSize: 12),
+                                      ),
                                     ),
-                                  ),
-                                  SpacerHorizontal(width: 8.0),
-                                  Expanded(
-                                    child: Text(
-                                      company.symbol ?? "",
-                                      style: styleGeorgiaBold(fontSize: 12),
-                                    ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             ),
                           ),

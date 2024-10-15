@@ -161,7 +161,7 @@ class _MsAnalysisState extends State<MsAnalysis> {
                     child: MsOurHighlights(),
                   ),
                   Visibility(
-                    visible: provider.completeData?.swot != null,
+                    visible: provider.completeData?.swotAnalysis != null,
                     child: MsSwotAnalysis(),
                   ),
                   Visibility(

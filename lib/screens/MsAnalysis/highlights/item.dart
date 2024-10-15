@@ -67,9 +67,11 @@ class MsOurHighlightsItem extends StatelessWidget {
                       ? Colors.orange
                       : data?.valueColor == 'green'
                           ? ThemeColors.accent
-                          : (data?.value ?? 0) > 0
-                              ? Colors.green
-                              : Colors.red,
+                          : data?.value is num
+                              ? (data?.value ?? 0) > 0
+                                  ? Colors.green
+                                  : Colors.red
+                              : ThemeColors.accent,
             ),
           ),
           const SpacerVertical(height: 8.0),

@@ -21,7 +21,7 @@ class MsCompleteRes {
   final MsPeerComparisonRes? peerComparison;
   List<FaQsRes>? faqData;
   final List<MsNewsRes>? latestNews;
-  final Swot? swot;
+  // final Swot? swot;
   final MsTextRes? text;
   String? open;
   String? previousClose;
@@ -44,7 +44,7 @@ class MsCompleteRes {
     this.latestNews,
     this.fundamentals,
     this.radarChart,
-    this.swot,
+    // this.swot,
     this.text,
     this.open,
     this.previousClose,
@@ -106,7 +106,7 @@ class MsCompleteRes {
             ? []
             : List<MsRadarChartRes>.from(
                 json["radar_chart"]!.map((x) => MsRadarChartRes.fromJson(x))),
-        swot: json["swot"] == null ? null : Swot.fromJson(json["swot"]),
+        // swot: json["swot"] == null ? null : Swot.fromJson(json["swot"]),
         text: json["text"] == null ? null : MsTextRes.fromJson(json["text"]),
 
         // cap: json["cap"],
@@ -148,7 +148,7 @@ class MsCompleteRes {
         "radar_chart": radarChart == null
             ? []
             : List<dynamic>.from(score!.map((x) => x.toJson())),
-        "swot": swot?.toJson(),
+        // "swot": swot?.toJson(),
         // "cap": cap,
         // "dividendYield": dividendYield,
         // "pe": pe,
@@ -342,33 +342,5 @@ class MsFundamentalsResBody {
   Map<String, dynamic> toJson() => {
         "label": label,
         "value": value,
-      };
-}
-
-class Swot {
-  final num? strength;
-  final num? weaknesses;
-  final num? opportunity;
-  final num? threats;
-
-  Swot({
-    this.strength,
-    this.weaknesses,
-    this.opportunity,
-    this.threats,
-  });
-
-  factory Swot.fromJson(Map<String, dynamic> json) => Swot(
-        strength: json["strength"],
-        weaknesses: json["weaknesses"],
-        opportunity: json["opportunitie"],
-        threats: json["threats"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "strength": strength,
-        "weaknesses": weaknesses,
-        "opportunitie": opportunity,
-        "threats": threats,
       };
 }
