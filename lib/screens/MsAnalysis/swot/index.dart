@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/stockAnalysis/provider.dart';
+import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import '../../../modals/msAnalysis/complete.dart';
 import '../widget/title_tag.dart';
+import 'detail.dart';
 import 'item.dart';
 
 class MsSwotAnalysis extends StatelessWidget {
@@ -45,7 +47,8 @@ class MsSwotAnalysis extends StatelessWidget {
                   children: [
                     MsSwotItem(
                       label: 'Strength',
-                      value: '${provider.completeData?.swot?.strength ?? 0}',
+                      value:
+                          '${provider.completeData?.swotAnalysis?.strengths?.length ?? 0}',
                       keyword: 'S',
                       bottom: 0,
                       right: 0,
@@ -58,7 +61,9 @@ class MsSwotAnalysis extends StatelessWidget {
                     SpacerHorizontal(width: 10),
                     MsSwotItem(
                       label: 'Weakness',
-                      value: '${provider.completeData?.swot?.weaknesses ?? 0}',
+                      color: Colors.orange,
+                      value:
+                          '${provider.completeData?.swotAnalysis?.weaknesses?.length ?? 0}',
                       keyword: 'W',
                       bottom: 0,
                       left: 0,
@@ -75,7 +80,8 @@ class MsSwotAnalysis extends StatelessWidget {
                   children: [
                     MsSwotItem(
                       label: 'Opportunity',
-                      value: '${provider.completeData?.swot?.opportunity ?? 0}',
+                      value:
+                          '${provider.completeData?.swotAnalysis?.opportunity?.length ?? 0}',
                       keyword: 'O',
                       top: 0,
                       right: 0,
@@ -88,7 +94,9 @@ class MsSwotAnalysis extends StatelessWidget {
                     SpacerHorizontal(width: 10.0),
                     MsSwotItem(
                       label: 'Threat',
-                      value: '${provider.completeData?.swot?.threats ?? 0}',
+                      color: ThemeColors.sos,
+                      value:
+                          '${provider.completeData?.swotAnalysis?.threats?.length ?? 0}',
                       keyword: 'T',
                       left: 0,
                       top: 0,
@@ -104,36 +112,46 @@ class MsSwotAnalysis extends StatelessWidget {
             ),
           ),
         ),
-        Container(
-          decoration: const BoxDecoration(
-            color: Color.fromARGB(255, 36, 32, 32),
-            borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(10.0),
-              bottomRight: Radius.circular(10.0),
+        GestureDetector(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => MsSwotAnalysisDetail(),
+              ),
+            );
+          },
+          child: Container(
+            decoration: const BoxDecoration(
+              color: Color.fromARGB(255, 36, 32, 32),
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(10.0),
+                bottomRight: Radius.circular(10.0),
+              ),
             ),
-          ),
-          padding: const EdgeInsets.all(12.0),
-          child: Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'View details',
-                    overflow: TextOverflow.fade,
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w800,
-                      foreground: Paint()..shader = textGradient,
+            padding: const EdgeInsets.all(12.0),
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'View details',
+                      overflow: TextOverflow.fade,
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w800,
+                        foreground: Paint()..shader = textGradient,
+                      ),
                     ),
-                  ),
-                  const Icon(
-                    Icons.arrow_forward_ios,
-                    color: Colors.orange,
-                  )
-                ],
-              )
-            ],
+                    const Icon(
+                      Icons.arrow_forward_ios,
+                      color: Colors.orange,
+                    )
+                  ],
+                )
+              ],
+            ),
           ),
         ),
       ],

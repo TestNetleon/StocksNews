@@ -32,21 +32,17 @@ class MsPricePostVolume extends StatelessWidget {
     // }
     MSAnalysisProvider provider = context.watch<MSAnalysisProvider>();
 
-    return Column(
-      children: [
-        ListView.builder(
-          itemCount: provider.pvData?.length,
-          shrinkWrap: true,
-          padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 8.0),
-          physics: NeverScrollableScrollPhysics(),
-          scrollDirection: Axis.vertical,
-          itemBuilder: (context, index) {
-            MsRadarChartRes? item = provider.pvData?[index];
+    return ListView.builder(
+      itemCount: provider.pvData?.length,
+      shrinkWrap: true,
+      padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 8.0),
+      physics: NeverScrollableScrollPhysics(),
+      scrollDirection: Axis.vertical,
+      itemBuilder: (context, index) {
+        MsRadarChartRes? item = provider.pvData?[index];
 
-            return MsPricePostVolumeItem(data: item);
-          },
-        ),
-      ],
+        return MsPricePostVolumeItem(data: item);
+      },
     );
   }
 }

@@ -87,7 +87,7 @@ class _MsPriceVolumeState extends State<MsPriceVolume>
     }
 
     return Visibility(
-      visible: provider.pvData != null && provider.pvData?.isNotEmpty == true,
+      // visible: provider.pvData != null && provider.pvData?.isNotEmpty == true,
       child: child,
     );
   }

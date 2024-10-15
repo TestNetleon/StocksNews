@@ -13,19 +13,20 @@ class MsEvents extends StatelessWidget {
   Widget build(BuildContext context) {
     MSAnalysisProvider provider = context.watch<MSAnalysisProvider>();
     return BaseUiContainer(
-      hasData:
-          provider.msEvents != null && provider.msEvents?.isNotEmpty == true,
-      isLoading: provider.isLoadingEvents &&
-          (provider.msEvents == null || provider.msEvents?.isEmpty == true),
-      error: provider.errorEvents,
+      hasData: provider.completeData?.msEvents != null &&
+          provider.completeData?.msEvents?.isNotEmpty == true,
+      isLoading: provider.isLoadingComplete &&
+          (provider.completeData?.msEvents == null ||
+              provider.completeData?.msEvents?.isEmpty == true),
+      error: provider.errorComplete,
       showPreparingText: true,
       child: ListView.separated(
         shrinkWrap: true,
         physics: NeverScrollableScrollPhysics(),
-        itemCount: provider.msEvents?.length ?? 0,
+        itemCount: provider.completeData?.msEvents?.length ?? 0,
         padding: EdgeInsets.only(bottom: 12, top: 10),
         itemBuilder: (context, index) {
-          MsRadarChartRes? data = provider.msEvents?[index];
+          MsRadarChartRes? data = provider.completeData?.msEvents?[index];
 
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,

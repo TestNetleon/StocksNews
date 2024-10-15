@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import '../../../modals/msAnalysis/radar_chart.dart';
 import '../../../utils/colors.dart';
 import '../../../utils/theme.dart';
-import '../../../widgets/spacer_horizontal.dart';
 import '../../../widgets/spacer_vertical.dart';
 
 class MsOurHighlightsItem extends StatelessWidget {
@@ -44,12 +43,17 @@ class MsOurHighlightsItem extends StatelessWidget {
                   color: Colors.grey,
                 ),
               ),
-              const SpacerHorizontal(width: 8.0),
-              const Icon(
-                Icons.info,
-                size: 18,
-                color: ThemeColors.greyText,
-              )
+              // const SpacerHorizontal(width: 8.0),
+              // GestureDetector(
+              //   onTap: () {
+              //     msShowBottomSheet();
+              //   },
+              //   child: const Icon(
+              //     Icons.info,
+              //     size: 18,
+              //     color: ThemeColors.greyText,
+              //   ),
+              // )
             ],
           ),
           const SpacerVertical(height: 8.0),

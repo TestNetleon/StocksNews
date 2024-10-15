@@ -1,4 +1,7 @@
 import 'dart:convert';
+import '../faqs_res.dart';
+import 'news.dart';
+import 'peer_comparision.dart';
 import 'radar_chart.dart';
 
 MsCompleteRes msCompleteResFromJson(String str) =>
@@ -13,7 +16,12 @@ class MsCompleteRes {
   final List<MsRadarChartRes>? stockHighLights;
   final List<MsRadarChartRes>? score;
   final List<MsRadarChartRes>? radarChart;
+  List<MsRadarChartRes>? msEvents;
+  final SwotAnalysis? swotAnalysis;
   final MsFundamentalsRes? fundamentals;
+  final MsPeerComparisonRes? peerComparison;
+  List<FaQsRes>? faqData;
+  final List<MsNewsRes>? latestNews;
   final Swot? swot;
   final MsTextRes? text;
   String? open;
@@ -28,10 +36,13 @@ class MsCompleteRes {
 
   MsCompleteRes({
     this.recommendation,
+    this.swotAnalysis,
     this.keyHighlights,
     this.priceVolatility,
     this.stockHighLights,
     this.score,
+    this.faqData,
+    this.latestNews,
     this.fundamentals,
     this.radarChart,
     this.swot,
@@ -39,6 +50,8 @@ class MsCompleteRes {
     this.open,
     this.previousClose,
     this.volume,
+    this.peerComparison,
+    this.msEvents,
     // this.cap,
     // this.dividendYield,
     // this.pe,
@@ -50,6 +63,27 @@ class MsCompleteRes {
         recommendation: json["recommendation"],
         open: json['open'],
         previousClose: json['previousClose'],
+        swotAnalysis: json["swotAnalysis"] == null
+            ? null
+            : SwotAnalysis.fromJson(json["swotAnalysis"]),
+
+        latestNews: json["latestNews"] == null
+            ? []
+            : List<MsNewsRes>.from(
+                json["latestNews"]!.map((x) => MsNewsRes.fromJson(x))),
+
+        faqData: json["faqs"] == null
+            ? []
+            : List<FaQsRes>.from(json["faqs"]!.map((x) => FaQsRes.fromJson(x))),
+
+        peerComparison: json["peerComparison"] == null
+            ? null
+            : MsPeerComparisonRes.fromJson(json["peerComparison"]),
+        msEvents: json["events"] == null
+            ? []
+            : List<MsRadarChartRes>.from(
+                json["events"]!.map((x) => MsRadarChartRes.fromJson(x))),
+
         volume: json['volume'],
         fundamentals: json["fundamentals"] == null
             ? null
@@ -82,6 +116,21 @@ class MsCompleteRes {
 
   Map<String, dynamic> toJson() => {
         "recommendation": recommendation,
+        "swotAnalysis": swotAnalysis?.toJson(),
+
+        "events": msEvents == null
+            ? []
+            : List<dynamic>.from(msEvents!.map((x) => x.toJson())),
+
+        "faqs": faqData == null
+            ? []
+            : List<dynamic>.from(faqData!.map((x) => x.toJson())),
+
+        "peerComparison": peerComparison?.toJson(),
+        "latestNews": latestNews == null
+            ? []
+            : List<dynamic>.from(latestNews!.map((x) => x.toJson())),
+
         "text": text?.toJson(),
         "fundamentals": fundamentals?.toJson(),
         "keyHighlights": keyHighlights == null
@@ -103,6 +152,49 @@ class MsCompleteRes {
         // "pe": pe,
         // "sector": sector,
         // "sector_pe": sectorPe,
+      };
+}
+
+class SwotAnalysis {
+  final List<String>? strengths;
+  final List<String>? weaknesses;
+  final List<String>? opportunity;
+  final List<String>? threats;
+
+  SwotAnalysis({
+    this.strengths,
+    this.weaknesses,
+    this.opportunity,
+    this.threats,
+  });
+
+  factory SwotAnalysis.fromJson(Map<String, dynamic> json) => SwotAnalysis(
+        strengths: json["strengths"] == null
+            ? []
+            : List<String>.from(json["strengths"]!.map((x) => x)),
+        weaknesses: json["weaknesses"] == null
+            ? []
+            : List<String>.from(json["weaknesses"]!.map((x) => x)),
+        opportunity: json["opportunity"] == null
+            ? []
+            : List<String>.from(json["opportunity"]!.map((x) => x)),
+        threats: json["threats"] == null
+            ? []
+            : List<String>.from(json["threats"]!.map((x) => x)),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "strengths": strengths == null
+            ? []
+            : List<dynamic>.from(strengths!.map((x) => x)),
+        "weaknesses": weaknesses == null
+            ? []
+            : List<dynamic>.from(weaknesses!.map((x) => x)),
+        "opportunity": opportunity == null
+            ? []
+            : List<dynamic>.from(opportunity!.map((x) => x)),
+        "threats":
+            threats == null ? [] : List<dynamic>.from(threats!.map((x) => x)),
       };
 }
 

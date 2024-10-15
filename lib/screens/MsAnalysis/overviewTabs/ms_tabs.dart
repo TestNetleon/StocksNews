@@ -1,8 +1,6 @@
 import 'package:flutter/cupertino.dart';
-import 'package:provider/provider.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
-import '../../../providers/stockAnalysis/provider.dart';
 import 'events/index.dart';
 import 'posts/index.dart';
 import 'view/overview.dart';
@@ -26,13 +24,12 @@ class _MsTabsState extends State<MsTabs> with SingleTickerProviderStateMixin {
     setState(() {
       selectedIndex = index;
     });
-    MSAnalysisProvider provider = context.read<MSAnalysisProvider>();
-
-    if (selectedIndex == 1) {
-      provider.getNewsData(symbol: provider.topData?.symbol ?? "");
-    } else if (selectedIndex == 2) {
-      provider.getEventsData(symbol: provider.topData?.symbol ?? "");
-    }
+    // MSAnalysisProvider provider = context.read<MSAnalysisProvider>();
+    // if (selectedIndex == 1) {
+    //   provider.getNewsData(symbol: provider.topData?.symbol ?? "");
+    // } else if (selectedIndex == 2) {
+    //   provider.getEventsData(symbol: provider.topData?.symbol ?? "");
+    // }
   }
 
   @override

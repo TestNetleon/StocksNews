@@ -6,7 +6,6 @@ import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import '../../../modals/msAnalysis/radar_chart.dart';
 import '../../../utils/colors.dart';
-import '../widget/bottom_sheet.dart';
 
 class MsStockScoreItem extends StatelessWidget {
   const MsStockScoreItem({super.key});
@@ -38,17 +37,17 @@ class MsStockScoreItem extends StatelessWidget {
                           "Stock Score",
                           style: stylePTSansBold(fontSize: 20),
                         ),
-                        const SpacerHorizontal(width: 10),
-                        GestureDetector(
-                          onTap: () {
-                            msShowBottomSheet();
-                          },
-                          child: const Icon(
-                            Icons.info_rounded,
-                            size: 20,
-                            color: ThemeColors.greyBorder,
-                          ),
-                        ),
+                        // const SpacerHorizontal(width: 10),
+                        // GestureDetector(
+                        //   onTap: () {
+                        //     msShowBottomSheet();
+                        //   },
+                        //   child: const Icon(
+                        //     Icons.info_rounded,
+                        //     size: 20,
+                        //     color: ThemeColors.greyBorder,
+                        //   ),
+                        // ),
                       ],
                     ),
                   ),

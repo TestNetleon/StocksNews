@@ -33,7 +33,7 @@ class MsRadarChartView extends StatelessWidget {
           getTitle: (index, angle) {
             return fl.RadarChartTitle(
               text: (data?[index].label?.toUpperCase()) ?? "N/A",
-              angle: angle,
+              // angle: angle,
             );
           },
           titleTextStyle: styleSansBold(color: ThemeColors.white),

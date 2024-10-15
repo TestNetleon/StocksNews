@@ -43,7 +43,13 @@ class _MsRadarGraphState extends State<MsRadarGraph> {
                 "${provider.completeData?.recommendation}",
                 style: stylePTSansRegular(
                   fontSize: 70,
-                  color: ThemeColors.accent,
+                  color: provider.completeData?.recommendation?.toLowerCase() ==
+                          'buy'
+                      ? ThemeColors.accent
+                      : provider.completeData?.recommendation?.toLowerCase() ==
+                              'sell'
+                          ? ThemeColors.sos
+                          : Colors.orange,
                   fontFamily: Fonts.merriWeather,
                 ),
               ),

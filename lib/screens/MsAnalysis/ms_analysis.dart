@@ -104,9 +104,6 @@ class _MsAnalysisState extends State<MsAnalysis> {
       drawer: const BaseDrawer(resetIndex: true),
       appBar: AppBarHome(
         isPopback: true,
-        showTrailing: false,
-        canSearch: false,
-        title: topData?.name ?? "",
         subTitle: "",
         widget: topData == null ? null : const PredictionAppBar(),
       ),
@@ -167,7 +164,7 @@ class _MsAnalysisState extends State<MsAnalysis> {
                   SpacerVertical(height: Dimen.padding),
                   // MsForecastChart(),
                   Visibility(
-                    visible: provider.peerData != null,
+                    visible: provider.completeData?.peerComparison != null,
                     child: MsPeerComparison(),
                   ),
                   // SpacerVertical(height: Dimen.padding),
@@ -176,8 +173,8 @@ class _MsAnalysisState extends State<MsAnalysis> {
                   // MsTechnicalAnalysis(),
                   // SpacerVertical(height: Dimen.padding),
                   Visibility(
-                    visible: provider.faqData != null &&
-                        provider.faqData?.isNotEmpty == true,
+                    visible: provider.completeData?.faqData != null &&
+                        provider.completeData?.faqData?.isNotEmpty == true,
                     child: MsFAQs(),
                   ),
                 ],

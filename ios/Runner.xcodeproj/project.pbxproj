@@ -65,7 +65,6 @@
 		3B3967151E833CAA004F5970 /* AppFrameworkInfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = AppFrameworkInfo.plist; path = Flutter/AppFrameworkInfo.plist; sourceTree = "<group>"; };
 		473D933A82194BEAAE5F2A84 /* Pods_Runner.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Runner.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		49316EBD2C2FD7CB00D847D9 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
-		49540D612C99A1E000FFBD12 /* AdServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdServices.framework; path = System/Library/Frameworks/AdServices.framework; sourceTree = SDKROOT; };
 		496FF35E2BFCE12B008DE4CD /* notifications.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = notifications.wav; path = ../../android/app/src/main/res/raw/notifications.wav; sourceTree = "<group>"; };
 		49775C5E2BE514D9009814B2 /* Runner.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Runner.entitlements; sourceTree = "<group>"; };
 		49775C632BE51A5E009814B2 /* ImageNotification.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ImageNotification.appex; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -138,7 +137,6 @@
 		7C750847DE5D5DDA4F8B545F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				49540D612C99A1E000FFBD12 /* AdServices.framework */,
 				49316EBD2C2FD7CB00D847D9 /* StoreKit.framework */,
 				D44598CD203CD401B5829255 /* Pods_ImageNotification.framework */,
 				473D933A82194BEAAE5F2A84 /* Pods_Runner.framework */,
@@ -248,8 +246,8 @@
 				B29AA55F95DCFF58620A61AD /* [CP] Check Pods Manifest.lock */,
 				9740EEB61CF901F6004384FC /* Run Script */,
 				97C146EA1CF9000F007C117D /* Sources */,
-				49775C6C2BE51A5E009814B2 /* Embed Foundation Extensions */,
 				97C146EB1CF9000F007C117D /* Frameworks */,
+				49775C6C2BE51A5E009814B2 /* Embed Foundation Extensions */,
 				97C146EC1CF9000F007C117D /* Resources */,
 				9705A1C41CF9048500538489 /* Embed Frameworks */,
 				3B06AD1E1E4923F5004D2608 /* Thin Binary */,
@@ -574,6 +572,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = CE544254931883F89DDF6F67 /* Pods-ImageNotification.debug.xcconfig */;
 			buildSettings = {
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CLANG_ENABLE_OBJC_WEAK = YES;
@@ -618,6 +617,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = E48A82268CDB4207A098398B /* Pods-ImageNotification.release.xcconfig */;
 			buildSettings = {
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CLANG_ENABLE_OBJC_WEAK = YES;
@@ -661,6 +661,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = C81320D8DCED5F6F6BB201F2 /* Pods-ImageNotification.profile.xcconfig */;
 			buildSettings = {
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CLANG_ENABLE_OBJC_WEAK = YES;

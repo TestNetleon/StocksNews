@@ -5,7 +5,6 @@ import '../../../../providers/stockAnalysis/provider.dart';
 import 'financial/index.dart';
 import 'performance/index.dart';
 import 'priceVolume/index.dart';
-import 'shareHoldings/index.dart';
 
 class MsOverview extends StatelessWidget {
   const MsOverview({super.key});
@@ -17,12 +16,12 @@ class MsOverview extends StatelessWidget {
       children: [
         MsPerformance(),
         if (provider.completeData?.fundamentals != null) MsFundamental(),
-        if (provider.pvData != null && provider.pvData?.isNotEmpty == true)
-          MsPriceVolume(),
+        // if (provider.pvData != null && provider.pvData?.isNotEmpty == true)
+        MsPriceVolume(),
         if (provider.financialsData != null &&
             provider.financialsData?.isNotEmpty == true)
           MsFinancial(),
-        MsShareholdings(),
+        // MsShareholdings(),
       ],
     );
   }

@@ -201,7 +201,6 @@ import 'package:stocks_news_new/modals/user_res.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/plaid.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
-import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
@@ -214,8 +213,7 @@ import 'package:stocks_news_new/widgets/loading.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
-
-import '../../../../../stockDetail/index.dart';
+import '../../../../../MsAnalysis/ms_analysis.dart';
 import 'item.dart';
 import 'usernot_present.dart';
 
@@ -375,11 +373,19 @@ class HomePlaidBase extends StatelessWidget {
               GestureDetector(
                 onTap: () {
                   if (data?.validTicker == 1) {
+                    // Navigator.push(
+                    //   navigatorKey.currentContext!,
+                    //   MaterialPageRoute(
+                    //     builder: (_) => StockDetail(
+                    //       symbol: data?.tickerSymbol,
+                    //     ),
+                    //   ),
+                    // );
                     Navigator.push(
-                      navigatorKey.currentContext!,
+                      context,
                       MaterialPageRoute(
-                        builder: (_) => StockDetail(
-                          symbol: data?.tickerSymbol,
+                        builder: (context) => MsAnalysis(
+                          symbol: data?.tickerSymbol ?? "",
                         ),
                       ),
                     );

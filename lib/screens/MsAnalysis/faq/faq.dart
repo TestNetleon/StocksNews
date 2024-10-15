@@ -37,7 +37,7 @@ class _MsFAQsState extends State<MsFAQs> {
           subtitle: text?.faq?.subTitle,
         ),
         ListView.separated(
-          itemCount: provider.faqData?.length ?? 0,
+          itemCount: provider.completeData?.faqData?.length ?? 0,
           physics: const NeverScrollableScrollPhysics(),
           shrinkWrap: true,
           padding: EdgeInsets.only(bottom: 16),
@@ -61,7 +61,8 @@ class _MsFAQsState extends State<MsFAQs> {
                       children: [
                         Expanded(
                           child: Text(
-                            provider.faqData?[index].question ?? "",
+                            provider.completeData?.faqData?[index].question ??
+                                "",
                             style: stylePTSansBold(fontSize: 16),
                           ),
                         ),
@@ -82,7 +83,7 @@ class _MsFAQsState extends State<MsFAQs> {
                       height: openIndex == index ? null : 0,
                       padding: EdgeInsets.only(top: Dimen.itemSpacing.sp),
                       child: Text(
-                        provider.faqData?[index].answer ?? "",
+                        provider.completeData?.faqData?[index].answer ?? "",
                         style: stylePTSansRegular(
                             fontSize: 14, color: ThemeColors.greyText),
                       ),

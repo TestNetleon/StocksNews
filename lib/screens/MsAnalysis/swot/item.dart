@@ -15,12 +15,14 @@ class MsSwotItem extends StatelessWidget {
     this.right,
     this.top,
     this.bottom,
+    this.color,
   });
 
   final String label, value, keyword;
   final double? left, top, right, bottom;
   final BorderRadius childRadius;
   final CrossAxisAlignment crossAxisAlignment;
+  final Color? color;
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +43,7 @@ class MsSwotItem extends StatelessWidget {
                   Text(
                     label,
                     style: stylePTSansBold(
-                      fontSize: 14.0,
+                      fontSize: 16,
                       color: const Color.fromARGB(255, 195, 195, 195),
                     ),
                   ),
@@ -49,8 +51,8 @@ class MsSwotItem extends StatelessWidget {
                   Text(
                     value,
                     style: stylePTSansBold(
-                      fontSize: 14.0,
-                      color: ThemeColors.themeGreen,
+                      fontSize: 16,
+                      color: color ?? ThemeColors.themeGreen,
                     ),
                   ),
                 ],

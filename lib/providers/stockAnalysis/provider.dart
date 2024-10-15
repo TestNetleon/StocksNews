@@ -4,16 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/api/api_requester.dart';
 import 'package:stocks_news_new/api/apis.dart';
-import 'package:stocks_news_new/modals/faqs_res.dart';
 import 'package:stocks_news_new/modals/msAnalysis/radar_chart.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import '../../api/api_response.dart';
 import '../../modals/msAnalysis/complete.dart';
 import '../../modals/msAnalysis/financials.dart';
 import '../../modals/msAnalysis/ms_top_res.dart';
-import '../../modals/msAnalysis/news.dart';
 import '../../modals/msAnalysis/other_stocks.dart';
-import '../../modals/msAnalysis/peer_comparision.dart';
 import '../../modals/msAnalysis/price_volatility.dart';
 import '../../utils/constants.dart';
 import '../../utils/utils.dart';
@@ -79,11 +76,11 @@ class MSAnalysisProvider extends ChangeNotifier {
     // fetchAllStockHighlightData(symbol: symbol);
     // getTechnicalAnalysisMetricsData(symbol: symbol);
     getFinancialsData(symbol: symbol, type: 'revenue', period: 'annual');
-    getPeerComparisonData(symbol: symbol);
+    // getPeerComparisonData(symbol: symbol);
     getCompleteData(symbol: symbol);
-    getFaqData(symbol: symbol);
-    getNewsData(symbol: symbol);
-    getEventsData(symbol: symbol);
+    // getFaqData(symbol: symbol);
+    // getNewsData(symbol: symbol);
+    // getEventsData(symbol: symbol);
   }
 
 // Update Top Detail with Socket
@@ -535,7 +532,7 @@ class MSAnalysisProvider extends ChangeNotifier {
         _errorOtherStock = null;
       } else {
         _otherStocks = null;
-        _errorOtherStock = null;
+        _errorOtherStock = response.message;
       }
 
       setStatusOtherStock(Status.loaded);
@@ -622,7 +619,7 @@ class MSAnalysisProvider extends ChangeNotifier {
         _errorFinancials = null;
       } else {
         _financialsData = null;
-        _errorFinancials = null;
+        _errorFinancials = response.message;
       }
 
       setStatusFinancials(Status.loaded);
@@ -636,103 +633,103 @@ class MSAnalysisProvider extends ChangeNotifier {
 
 //Peer Comparison ---------------------------------------------------------------------------------------------------
 
-  Status _statusPeer = Status.ideal;
-  Status get statusPeer => _statusPeer;
+  // Status _statusPeer = Status.ideal;
+  // Status get statusPeer => _statusPeer;
 
-  bool get isLoadingPeer => _statusPeer == Status.loading;
+  // bool get isLoadingPeer => _statusPeer == Status.loading;
 
-  String? _errorPeer;
-  String? get errorPeer => _errorPeer ?? Const.errSomethingWrong;
+  // String? _errorPeer;
+  // String? get errorPeer => _errorPeer ?? Const.errSomethingWrong;
 
-  MsPeerComparisonRes? _peerData;
-  MsPeerComparisonRes? get peerData => _peerData;
+  // MsPeerComparisonRes? _peerData;
+  // MsPeerComparisonRes? get peerData => _peerData;
 
-  void setStatusPeer(status) {
-    _statusPeer = status;
-    notifyListeners();
-  }
+  // void setStatusPeer(status) {
+  //   _statusPeer = status;
+  //   notifyListeners();
+  // }
 
-  Future getPeerComparisonData({required String symbol}) async {
-    setStatusPeer(Status.loading);
-    UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
+  // Future getPeerComparisonData({required String symbol}) async {
+  //   setStatusPeer(Status.loading);
+  //   UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
 
-    Map request = {
-      "token": provider.user?.token ?? "",
-      "symbol": symbol,
-    };
-    try {
-      ApiResponse response = await apiRequest(
-        url: Apis.msPeer,
-        request: request,
-        showProgress: false,
-        removeForceLogin: true,
-      );
-      if (response.status) {
-        _peerData = msPeerComparisonResFromJson(jsonEncode(response.data));
-        _errorPeer = null;
-      } else {
-        _peerData = null;
-        _errorPeer = null;
-      }
+  //   Map request = {
+  //     "token": provider.user?.token ?? "",
+  //     "symbol": symbol,
+  //   };
+  //   try {
+  //     ApiResponse response = await apiRequest(
+  //       url: Apis.msPeer,
+  //       request: request,
+  //       showProgress: false,
+  //       removeForceLogin: true,
+  //     );
+  //     if (response.status) {
+  //       _peerData = msPeerComparisonResFromJson(jsonEncode(response.data));
+  //       _errorPeer = null;
+  //     } else {
+  //       _peerData = null;
+  //       _errorPeer = null;
+  //     }
 
-      setStatusPeer(Status.loaded);
-    } catch (e) {
-      _peerData = null;
-      _errorPeer = null;
-      setStatusPeer(Status.loaded);
-      Utils().showLog("ERROR in getPeerComparisonData =>$e");
-    }
-  }
+  //     setStatusPeer(Status.loaded);
+  //   } catch (e) {
+  //     _peerData = null;
+  //     _errorPeer = null;
+  //     setStatusPeer(Status.loaded);
+  //     Utils().showLog("ERROR in getPeerComparisonData =>$e");
+  //   }
+  // }
 
 //FAQs ---------------------------------------------------------------------------------------------------
 
-  Status _statusFaqs = Status.ideal;
-  Status get statusFaqs => _statusFaqs;
+  // Status _statusFaqs = Status.ideal;
+  // Status get statusFaqs => _statusFaqs;
 
-  bool get isLoadingFaqs => _statusFaqs == Status.loading;
+  // bool get isLoadingFaqs => _statusFaqs == Status.loading;
 
-  String? _errorFaqs;
-  String? get errorFaqs => _errorFaqs ?? Const.errSomethingWrong;
+  // String? _errorFaqs;
+  // String? get errorFaqs => _errorFaqs ?? Const.errSomethingWrong;
 
-  List<FaQsRes>? _faqData;
-  List<FaQsRes>? get faqData => _faqData;
+  // List<FaQsRes>? _faqData;
+  // List<FaQsRes>? get faqData => _faqData;
 
-  void setStatusFaqs(status) {
-    _statusFaqs = status;
-    notifyListeners();
-  }
+  // void setStatusFaqs(status) {
+  //   _statusFaqs = status;
+  //   notifyListeners();
+  // }
 
-  Future getFaqData({required String symbol}) async {
-    setStatusFaqs(Status.loading);
-    UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
+  // Future getFaqData({required String symbol}) async {
+  //   setStatusFaqs(Status.loading);
+  //   UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
 
-    Map request = {
-      "token": provider.user?.token ?? "",
-      "symbol": symbol,
-    };
-    try {
-      ApiResponse response = await apiRequest(
-        url: Apis.msFaqs,
-        request: request,
-        showProgress: false,
-        removeForceLogin: true,
-      );
-      if (response.status) {
-        _faqData = faQsResFromJson(jsonEncode(response.data));
-        _errorFaqs = null;
-      } else {
-        _faqData = null;
-        _errorFaqs = null;
-      }
+  //   Map request = {
+  //     "token": provider.user?.token ?? "",
+  //     "symbol": symbol,
+  //   };
+  //   try {
+  //     ApiResponse response = await apiRequest(
+  //       url: Apis.msFaqs,
+  //       request: request,
+  //       showProgress: false,
+  //       removeForceLogin: true,
+  //     );
+  //     if (response.status) {
+  //       _faqData = faQsResFromJson(jsonEncode(response.data));
+  //       _errorFaqs = null;
+  //     } else {
+  //       _faqData = null;
+  //       _errorFaqs = null;
+  //     }
 
-      setStatusFaqs(Status.loaded);
-    } catch (e) {
-      _faqData = null;
-      _errorFaqs = null;
-      setStatusFaqs(Status.loaded);
-      Utils().showLog("ERROR in getFaqData =>$e");
-    }
-  }
+  //     setStatusFaqs(Status.loaded);
+  //   } catch (e) {
+  //     _faqData = null;
+  //     _errorFaqs = null;
+  //     setStatusFaqs(Status.loaded);
+  //     Utils().showLog("ERROR in getFaqData =>$e");
+  //   }
+  // }
 
 //Price And Volume ---------------------------------------------------------------------------------------------------
 
@@ -772,13 +769,13 @@ class MSAnalysisProvider extends ChangeNotifier {
         _errorPV = null;
       } else {
         _pvData = null;
-        _errorPV = null;
+        _errorPV = response.message;
       }
 
       setStatusPV(Status.loaded);
     } catch (e) {
       _pvData = null;
-      _errorPV = null;
+      _errorPV = Const.errSomethingWrong;
       setStatusPV(Status.loaded);
       Utils().showLog("ERROR in getPriceVolumeData =>$e");
     }
@@ -786,103 +783,103 @@ class MSAnalysisProvider extends ChangeNotifier {
 
 //Latest News ---------------------------------------------------------------------------------------------------
 
-  Status _statusNews = Status.ideal;
-  Status get statusNews => _statusNews;
+  // Status _statusNews = Status.ideal;
+  // Status get statusNews => _statusNews;
 
-  bool get isLoadingNews => _statusNews == Status.loading;
+  // bool get isLoadingNews => _statusNews == Status.loading;
 
-  String? _errorNews;
-  String? get errorNews => _errorNews ?? Const.errSomethingWrong;
+  // String? _errorNews;
+  // String? get errorNews => _errorNews ?? Const.errSomethingWrong;
 
-  List<MsNewsRes>? _msNews;
-  List<MsNewsRes>? get msNews => _msNews;
+  // List<MsNewsRes>? _msNews;
+  // List<MsNewsRes>? get msNews => _msNews;
 
-  void setStatusNews(status) {
-    _statusNews = status;
-    notifyListeners();
-  }
+  // void setStatusNews(status) {
+  //   _statusNews = status;
+  //   notifyListeners();
+  // }
 
-  Future getNewsData({required String symbol}) async {
-    setStatusNews(Status.loading);
-    UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
+  // Future getNewsData({required String symbol}) async {
+  //   setStatusNews(Status.loading);
+  //   UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
 
-    Map request = {
-      "token": provider.user?.token ?? "",
-      "symbol": symbol,
-    };
-    try {
-      ApiResponse response = await apiRequest(
-        url: Apis.msNews,
-        request: request,
-        showProgress: false,
-        removeForceLogin: true,
-      );
-      if (response.status) {
-        _msNews = msNewsResFromJson(jsonEncode(response.data));
-        _errorNews = null;
-      } else {
-        _msNews = null;
-        _errorNews = null;
-      }
+  //   Map request = {
+  //     "token": provider.user?.token ?? "",
+  //     "symbol": symbol,
+  //   };
+  //   try {
+  //     ApiResponse response = await apiRequest(
+  //       url: Apis.msNews,
+  //       request: request,
+  //       showProgress: false,
+  //       removeForceLogin: true,
+  //     );
+  //     if (response.status) {
+  //       _msNews = msNewsResFromJson(jsonEncode(response.data));
+  //       _errorNews = null;
+  //     } else {
+  //       _msNews = null;
+  //       _errorNews = null;
+  //     }
 
-      setStatusNews(Status.loaded);
-    } catch (e) {
-      _msNews = null;
-      _errorNews = null;
-      setStatusNews(Status.loaded);
-      Utils().showLog("ERROR in getNewsData =>$e");
-    }
-  }
+  //     setStatusNews(Status.loaded);
+  //   } catch (e) {
+  //     _msNews = null;
+  //     _errorNews = null;
+  //     setStatusNews(Status.loaded);
+  //     Utils().showLog("ERROR in getNewsData =>$e");
+  //   }
+  // }
 
 //Events ---------------------------------------------------------------------------------------------------
 
-  Status _statusEvents = Status.ideal;
-  Status get statusEvents => _statusEvents;
+  // Status _statusEvents = Status.ideal;
+  // Status get statusEvents => _statusEvents;
 
-  bool get isLoadingEvents => _statusEvents == Status.loading;
+  // bool get isLoadingEvents => _statusEvents == Status.loading;
 
-  String? _errorEvents;
-  String? get errorEvents => _errorEvents ?? Const.errSomethingWrong;
+  // String? _errorEvents;
+  // String? get errorEvents => _errorEvents ?? Const.errSomethingWrong;
 
-  List<MsRadarChartRes>? _msEvents;
-  List<MsRadarChartRes>? get msEvents => _msEvents;
+  // List<MsRadarChartRes>? _msEvents;
+  // List<MsRadarChartRes>? get msEvents => _msEvents;
 
-  void setStatusEvents(status) {
-    _statusEvents = status;
-    notifyListeners();
-  }
+  // void setStatusEvents(status) {
+  //   _statusEvents = status;
+  //   notifyListeners();
+  // }
 
-  Future getEventsData({required String symbol}) async {
-    setStatusEvents(Status.loading);
-    UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
+  // Future getEventsData({required String symbol}) async {
+  //   setStatusEvents(Status.loading);
+  //   UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
 
-    Map request = {
-      "token": provider.user?.token ?? "",
-      "symbol": symbol,
-    };
-    try {
-      ApiResponse response = await apiRequest(
-        url: Apis.msEvents,
-        request: request,
-        showProgress: false,
-        removeForceLogin: true,
-      );
-      if (response.status) {
-        _msEvents = msRadarChartResFromJson(jsonEncode(response.data));
-        _errorEvents = null;
-      } else {
-        _msEvents = null;
-        _errorEvents = null;
-      }
+  //   Map request = {
+  //     "token": provider.user?.token ?? "",
+  //     "symbol": symbol,
+  //   };
+  //   try {
+  //     ApiResponse response = await apiRequest(
+  //       url: Apis.msEvents,
+  //       request: request,
+  //       showProgress: false,
+  //       removeForceLogin: true,
+  //     );
+  //     if (response.status) {
+  //       _msEvents = msRadarChartResFromJson(jsonEncode(response.data));
+  //       _errorEvents = null;
+  //     } else {
+  //       _msEvents = null;
+  //       _errorEvents = null;
+  //     }
 
-      setStatusEvents(Status.loaded);
-    } catch (e) {
-      _msEvents = null;
-      _errorEvents = null;
-      setStatusEvents(Status.loaded);
-      Utils().showLog("ERROR in getEventsData =>$e");
-    }
-  }
+  //     setStatusEvents(Status.loaded);
+  //   } catch (e) {
+  //     _msEvents = null;
+  //     _errorEvents = null;
+  //     setStatusEvents(Status.loaded);
+  //     Utils().showLog("ERROR in getEventsData =>$e");
+  //   }
+  // }
 
 //Complete Data ---------------------------------------------------------------------------------------------------
 
@@ -930,13 +927,13 @@ class MSAnalysisProvider extends ChangeNotifier {
         _errorComplete = null;
       } else {
         _completeData = null;
-        _errorComplete = null;
+        _errorComplete = response.message;
       }
 
       setStatusComplete(Status.loaded);
     } catch (e) {
       _completeData = null;
-      _errorComplete = null;
+      _errorComplete = Const.errSomethingWrong;
       setStatusComplete(Status.loaded);
       Utils().showLog("ERROR in getCompleteData =>$e");
     }

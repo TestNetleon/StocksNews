@@ -16,71 +16,6 @@ class MsPeerComparison extends StatefulWidget {
 }
 
 class _MsPeerComparisonState extends State<MsPeerComparison> {
-  // final List<Company>? companies = [
-  //   Company(
-  //       image: Images.amazon,
-  //       companyName: 'Amazon',
-  //       companyDetails: CompanyDetails(
-  //           peRatio: '20.0%',
-  //           returns: '12.40%',
-  //           salesGrowth: '8.90%',
-  //           profitGrowth: '0.5%',
-  //           roe: '0.2%')),
-  //   Company(
-  //       image: Images.netflix,
-  //       companyName: 'Netflix',
-  //       companyDetails: CompanyDetails(
-  //           peRatio: '20.0%',
-  //           returns: '12.40%',
-  //           salesGrowth: '8.90%',
-  //           profitGrowth: '0.5%',
-  //           roe: '0.2%')),
-  //   Company(
-  //       image: Images.microsoft,
-  //       companyName: 'Microsoft',
-  //       companyDetails: CompanyDetails(
-  //           peRatio: '20.0%',
-  //           returns: '12.40%',
-  //           salesGrowth: '8.90%',
-  //           profitGrowth: '0.5%',
-  //           roe: '0.2%')),
-  //   Company(
-  //       image: Images.telegram,
-  //       companyName: 'Telegram',
-  //       companyDetails: CompanyDetails(
-  //           peRatio: '20.0%',
-  //           returns: '12.40%',
-  //           salesGrowth: '8.90%',
-  //           profitGrowth: '0.5%',
-  //           roe: '0.2%')),
-  //   Company(
-  //       image: Images.twitter,
-  //       companyName: 'Twitter',
-  //       companyDetails: CompanyDetails(
-  //           peRatio: '20.0%',
-  //           returns: '12.40%',
-  //           salesGrowth: '8.90%',
-  //           profitGrowth: '0.5%',
-  //           roe: '0.2%')),
-  //   Company(
-  //       image: Images.spotify,
-  //       companyName: 'Spotify',
-  //       companyDetails: CompanyDetails(
-  //           peRatio: '20.0%',
-  //           returns: '12.40%',
-  //           salesGrowth: '8.90%',
-  //           profitGrowth: '0.5%',
-  //           roe: '0.2%')),
-  // ];
-
-  // List<String> headers = [
-  //   'P/E Ratio',
-  //   '3M returns',
-  //   '3Yr sales growth',
-  //   '3Yr profit growth',
-  //   '3Yr ROE'
-  // ];
-
   @override
   Widget build(BuildContext context) {
     MSAnalysisProvider provider = context.watch<MSAnalysisProvider>();
@@ -128,7 +63,8 @@ class _MsPeerComparisonState extends State<MsPeerComparison> {
                     ),
                   ),
                 ],
-                rows: provider.peerData?.peerComparison?.map((company) {
+                rows: provider.completeData?.peerComparison?.peerComparison
+                        ?.map((company) {
                       return DataRow(
                         cells: [
                           DataCell(
@@ -195,7 +131,8 @@ class _MsPeerComparisonState extends State<MsPeerComparison> {
                         width: 0.5,
                       ),
                     ),
-                    columns: provider.peerData?.headers?.map((header) {
+                    columns: provider.completeData?.peerComparison?.headers
+                            ?.map((header) {
                           return DataColumn(
                             label: Text(
                               header,
@@ -207,7 +144,8 @@ class _MsPeerComparisonState extends State<MsPeerComparison> {
                           );
                         }).toList() ??
                         [],
-                    rows: provider.peerData?.peerComparison?.map((company) {
+                    rows: provider.completeData?.peerComparison?.peerComparison
+                            ?.map((company) {
                           return DataRow(
                             cells: [
                               _dataCell(

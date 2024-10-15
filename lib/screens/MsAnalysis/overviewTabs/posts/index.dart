@@ -14,18 +14,20 @@ class MsNews extends StatelessWidget {
   Widget build(BuildContext context) {
     MSAnalysisProvider provider = context.watch<MSAnalysisProvider>();
     return BaseUiContainer(
-      hasData: provider.msNews != null && provider.msNews?.isNotEmpty == true,
-      isLoading: provider.isLoadingNews &&
-          (provider.msNews == null || provider.msNews?.isEmpty == true),
-      error: provider.errorNews,
+      hasData: provider.completeData?.latestNews != null &&
+          provider.completeData?.latestNews?.isNotEmpty == true,
+      isLoading: provider.isLoadingComplete &&
+          (provider.completeData?.latestNews == null ||
+              provider.completeData?.latestNews?.isEmpty == true),
+      error: provider.errorComplete,
       showPreparingText: true,
       child: ListView.separated(
         shrinkWrap: true,
         physics: NeverScrollableScrollPhysics(),
-        itemCount: provider.msNews?.length ?? 0,
+        itemCount: provider.completeData?.latestNews?.length ?? 0,
         padding: EdgeInsets.only(bottom: 12, top: 10),
         itemBuilder: (context, index) {
-          MsNewsRes? newsItemData = provider.msNews?[index];
+          MsNewsRes? newsItemData = provider.completeData?.latestNews?[index];
           if (index == 0) {
             return NewsItemSeparated(
               fromAI: true,

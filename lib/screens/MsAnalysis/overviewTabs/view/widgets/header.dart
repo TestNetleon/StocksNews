@@ -52,22 +52,22 @@ class MsOverviewHeader extends StatelessWidget {
                     color: Colors.white,
                   ),
                 ),
-                GestureDetector(
-                  onTap: () {
-                    msShowBottomSheet();
-                  },
-                  child: Visibility(
-                    visible: trailingIcon != null && isOpen,
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 8),
-                      child: Icon(
-                        trailingIcon,
-                        color: Colors.grey,
-                        size: 20,
-                      ),
-                    ),
-                  ),
-                ),
+                // GestureDetector(
+                //   onTap: () {
+                //     msShowBottomSheet();
+                //   },
+                //   child: Visibility(
+                //     visible: trailingIcon != null && isOpen,
+                //     child: Padding(
+                //       padding: const EdgeInsets.only(left: 8),
+                //       child: Icon(
+                //         trailingIcon,
+                //         color: Colors.grey,
+                //         size: 20,
+                //       ),
+                //     ),
+                //   ),
+                // ),
               ],
             ),
             Icon(
