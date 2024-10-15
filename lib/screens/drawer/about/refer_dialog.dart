@@ -17,7 +17,7 @@ class ReferDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    HomeProvider provider = context.read<HomeProvider>();
+    HomeProvider provider = context.watch<HomeProvider>();
     // UserProvider userProvider = context.read<UserProvider>();
 
     return Container(

@@ -19,6 +19,7 @@ class BaseContainer extends StatefulWidget {
     this.bottomSafeAreaColor,
     this.floatingActionButton,
     this.isHome = false,
+    this.baseColor,
   });
 
   final Widget? drawer;
@@ -33,6 +34,7 @@ class BaseContainer extends StatefulWidget {
   final bool moreGradient;
   final Color? bottomSafeAreaColor;
   final bool isHome;
+  final Color? baseColor;
 
   @override
   State<BaseContainer> createState() => _BaseContainerState();
@@ -58,8 +60,8 @@ class _BaseContainerState extends State<BaseContainer> {
                     0.0,
                     0.9,
                   ],
-                  colors: const [
-                    Color.fromARGB(255, 0, 125, 17),
+                  colors: [
+                    widget.baseColor ?? Color.fromARGB(255, 0, 125, 17),
                     Colors.black,
                   ],
                 ),

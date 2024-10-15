@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -13,7 +14,7 @@ class MsPointerContainer extends StatelessWidget {
     this.isDownwards = false,
     required this.title,
     this.style,
-    this.width = 80,
+    this.width = 55,
     this.color = ThemeColors.greyText,
   });
 
@@ -38,8 +39,9 @@ class MsPointerContainer extends StatelessWidget {
             borderRadius: BorderRadius.circular(30),
           ),
           padding: EdgeInsets.symmetric(horizontal: 10, vertical: 3),
-          child: Text(
+          child: AutoSizeText(
             textAlign: TextAlign.center,
+            maxLines: 1,
             title,
             style: style ?? styleGeorgiaRegular(color: ThemeColors.background),
           ),

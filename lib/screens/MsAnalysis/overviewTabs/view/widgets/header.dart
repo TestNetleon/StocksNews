@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/stockAnalysis/provider.dart';
 
-import '../../../widget/bottom_sheet.dart';
-
 class MsOverviewHeader extends StatelessWidget {
   final IconData? leadingIcon;
   final IconData? trailingIcon;

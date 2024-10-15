@@ -1,6 +1,7 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:stocks_news_new/utils/theme.dart';
+import 'package:stocks_news_new/utils/utils.dart';
 import '../../../../../../modals/msAnalysis/financials.dart';
 
 class MsFinancialCharts extends StatelessWidget {
@@ -106,38 +107,66 @@ class MsFinancialCharts extends StatelessWidget {
         show: false,
       );
 
-  LinearGradient get _barsGradient => LinearGradient(
+  LinearGradient get _greenGradient => LinearGradient(
         colors: const [
+          Color.fromARGB(255, 0, 103, 22),
           Color.fromARGB(255, 123, 255, 0),
-          Color.fromARGB(255, 4, 131, 32),
         ],
         begin: Alignment.bottomCenter,
         end: Alignment.topCenter,
       );
 
-  List<BarChartGroupData> get barGroups => List.generate(
-        (chart?.length ?? 0),
-        (index) {
-          return BarChartGroupData(
-            x: index,
-            barRods: [
-              BarChartRodData(
-                toY: (chart?[index].value?.toDouble() ?? 0),
-                width: 25,
-                borderRadius: (chart?[index].value ?? 0) < 0
-                    ? BorderRadius.only(
-                        bottomLeft: Radius.circular(5),
-                        bottomRight: Radius.circular(5),
-                      )
-                    : BorderRadius.only(
-                        topLeft: Radius.circular(5),
-                        topRight: Radius.circular(5),
-                      ),
-                gradient: _barsGradient,
-              ),
-            ],
-            showingTooltipIndicators: [0],
-          );
-        },
+  LinearGradient get _redGradient => LinearGradient(
+        colors: const [
+          Color.fromARGB(255, 121, 1, 1),
+          Colors.red,
+        ],
+        begin: Alignment.bottomCenter,
+        end: Alignment.topCenter,
       );
+
+  List<BarChartGroupData> get barGroups {
+    if (chart == null || chart!.isEmpty) return [];
+
+    List<BarChartGroupData> groups = [];
+    double? previousValue;
+
+    for (int i = (chart?.length ?? 0) - 1; i >= 0; i--) {
+      LinearGradient barGradient;
+
+      double currentValue = chart![i].value?.toDouble() ?? 0;
+
+      if (previousValue == null || currentValue > previousValue) {
+        barGradient = _greenGradient;
+        Utils().showLog(
+            'GREEN Current Value => $currentValue, Previous Value => $previousValue');
+      } else {
+        barGradient = _redGradient;
+        Utils().showLog(
+            'RED Current Value => $currentValue, Previous Value => $previousValue');
+      }
+
+      previousValue = currentValue;
+
+      groups.add(
+        BarChartGroupData(
+          x: i,
+          barRods: [
+            BarChartRodData(
+              toY: currentValue,
+              width: 25,
+              borderRadius: BorderRadius.vertical(
+                top: Radius.circular(5),
+                bottom: Radius.circular(5),
+              ),
+              gradient: barGradient,
+            ),
+          ],
+          showingTooltipIndicators: [0],
+        ),
+      );
+    }
+
+    return groups.reversed.toList();
+  }
 }

@@ -46,6 +46,7 @@ class MsPerformanceYear extends StatelessWidget {
         MsPerformanceTitleSubtitle(
           leading: "52 Week Low",
           trailing: "52 Week High",
+          bold: true,
         ),
         SpacerVertical(height: 8),
         MsPerformanceTitleSubtitle(
@@ -55,7 +56,7 @@ class MsPerformanceYear extends StatelessWidget {
         ),
         SpacerVertical(height: 10),
         Container(
-          height: 70,
+          height: 60,
           margin: EdgeInsets.only(bottom: 10),
           child: Stack(
             alignment: Alignment.topCenter,
@@ -71,10 +72,11 @@ class MsPerformanceYear extends StatelessWidget {
                     : ThemeColors.sos,
               ),
               Positioned(
-                left: (msWidthPadding) * pointerPosition - 20,
+                left: (msWidthPadding) * pointerPosition - 10,
                 top: 12,
                 child: MsPointerContainer(
-                  style: styleGeorgiaBold(color: ThemeColors.background),
+                  style: styleGeorgiaBold(
+                      color: ThemeColors.background, fontSize: 12),
                   title: price,
                   color: (topData.changesPercentage ?? 0) >= 0
                       ? ThemeColors.accent

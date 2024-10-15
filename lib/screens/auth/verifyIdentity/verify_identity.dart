@@ -206,7 +206,7 @@ class _VerifyIdentityState extends State<VerifyIdentity> {
   Widget build(BuildContext context) {
     HomeProvider provider = context.watch<HomeProvider>();
     // final String locale = Intl.getCurrentLocale().split('_').last;
-    UserRes? user = context.read<UserProvider>().user;
+    UserRes? user = context.watch<UserProvider>().user;
 
     // String? locale;
     // if (user?.phoneCode != null && user?.phoneCode != "") {

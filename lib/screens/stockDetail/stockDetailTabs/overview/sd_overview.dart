@@ -84,7 +84,7 @@ class _SdOverviewState extends State<SdOverview> {
                 Visibility(
                   visible: provider.tabRes?.showAnalysis == true,
                   child: ThemeButtonSmall(
-                    text: "Stock Analysis Testing",
+                    text: "Stock Analysis",
                     onPressed: () {
                       Navigator.push(
                         context,

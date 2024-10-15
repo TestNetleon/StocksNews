@@ -11,7 +11,6 @@ import '../../modals/msAnalysis/complete.dart';
 import '../../modals/msAnalysis/financials.dart';
 import '../../modals/msAnalysis/ms_top_res.dart';
 import '../../modals/msAnalysis/other_stocks.dart';
-import '../../modals/msAnalysis/price_volatility.dart';
 import '../../utils/constants.dart';
 import '../../utils/utils.dart';
 import '../user_provider.dart';
@@ -33,7 +32,7 @@ class MSAnalysisProvider extends ChangeNotifier {
     MsProviderKeys.shareHoldings: true,
   };
 
-  void clearAll() {
+  void clearAll({bool reset = false}) {
     _states.forEach((key, _) {
       _states[key] = true;
     });
@@ -41,6 +40,10 @@ class MSAnalysisProvider extends ChangeNotifier {
     _showScoreComplete = true;
     selectedTypeIndex = 0;
     selectedPeriodIndex = 0;
+    if (reset) {
+      _topData = null;
+      _completeData = null;
+    }
     notifyListeners();
   }
 
@@ -66,13 +69,16 @@ class MSAnalysisProvider extends ChangeNotifier {
   bool get openShareholdings => getState(MsProviderKeys.shareHoldings);
 
 //---------------------------------------------------------------------------------------------------
-  callAPIs({required String symbol}) {
-    clearAll();
+  callAPIs({
+    required String symbol,
+    bool reset = false,
+  }) {
+    clearAll(reset: reset);
     getStockTopData(symbol: symbol);
     // getRadarChartData(symbol: symbol);
     getOtherStocksData(symbol: symbol);
     getPriceVolumeData(symbol: symbol);
-    getPriceVolatilityData(symbol: symbol);
+    // getPriceVolatilityData(symbol: symbol);
     // fetchAllStockHighlightData(symbol: symbol);
     // getTechnicalAnalysisMetricsData(symbol: symbol);
     getFinancialsData(symbol: symbol, type: 'revenue', period: 'annual');
@@ -225,57 +231,57 @@ class MSAnalysisProvider extends ChangeNotifier {
 
 // Price Volatility---------------------------------------------------------------------------------------------------
 
-  String? _errorPrice;
-  String? get errorPrice => _errorPrice ?? Const.errSomethingWrong;
-  Status _statusPrice = Status.ideal;
-  Status get statusPrice => _statusPrice;
-  bool get isLoadingPrice => _statusPrice == Status.loading;
-  MsPriceVolatilityRes? _priceVolatility;
-  MsPriceVolatilityRes? get priceVolatility => _priceVolatility;
-  // bool _showScore = false;
-  // bool get showScore => _showScore;
-  void setStatusPrice(status) {
-    _statusPrice = status;
-    notifyListeners();
-  }
-  // void onChangeScore(bool value) {
-  //   _showScore = value;
+  // String? _errorPrice;
+  // String? get errorPrice => _errorPrice ?? Const.errSomethingWrong;
+  // Status _statusPrice = Status.ideal;
+  // Status get statusPrice => _statusPrice;
+  // bool get isLoadingPrice => _statusPrice == Status.loading;
+  // MsPriceVolatilityRes? _priceVolatility;
+  // MsPriceVolatilityRes? get priceVolatility => _priceVolatility;
+  // // bool _showScore = false;
+  // // bool get showScore => _showScore;
+  // void setStatusPrice(status) {
+  //   _statusPrice = status;
   //   notifyListeners();
   // }
+  // // void onChangeScore(bool value) {
+  // //   _showScore = value;
+  // //   notifyListeners();
+  // // }
 
-  Future getPriceVolatilityData({required String symbol}) async {
-    setStatusPrice(Status.loading);
-    UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
-    Map request = {
-      "token": provider.user?.token ?? "",
-      "symbol": symbol,
-      // "start_date": "2024-08-01",
-      // "end_date": "2024-08-21",
-    };
-    try {
-      ApiResponse response = await apiRequest(
-        // url: Apis.msPriceVolatility,
-        url: Apis.msPriceVolatilityNew,
-        request: request,
-        showProgress: false,
-        removeForceLogin: true,
-      );
-      if (response.status) {
-        _priceVolatility =
-            msPriceVolatilityResFromJson(jsonEncode(response.data));
-        _errorPrice = null;
-      } else {
-        _priceVolatility = null;
-        _errorPrice = response.message;
-      }
-      setStatusPrice(Status.loaded);
-    } catch (e) {
-      _priceVolatility = null;
-      _errorPrice = Const.errSomethingWrong;
-      setStatusPrice(Status.loaded);
-      Utils().showLog("ERROR in getPriceVolatilityData =>$e");
-    }
-  }
+  // Future getPriceVolatilityData({required String symbol}) async {
+  //   setStatusPrice(Status.loading);
+  //   UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
+  //   Map request = {
+  //     "token": provider.user?.token ?? "",
+  //     "symbol": symbol,
+  //     // "start_date": "2024-08-01",
+  //     // "end_date": "2024-08-21",
+  //   };
+  //   try {
+  //     ApiResponse response = await apiRequest(
+  //       // url: Apis.msPriceVolatility,
+  //       url: Apis.msPriceVolatilityNew,
+  //       request: request,
+  //       showProgress: false,
+  //       removeForceLogin: true,
+  //     );
+  //     if (response.status) {
+  //       _priceVolatility =
+  //           msPriceVolatilityResFromJson(jsonEncode(response.data));
+  //       _errorPrice = null;
+  //     } else {
+  //       _priceVolatility = null;
+  //       _errorPrice = response.message;
+  //     }
+  //     setStatusPrice(Status.loaded);
+  //   } catch (e) {
+  //     _priceVolatility = null;
+  //     _errorPrice = Const.errSomethingWrong;
+  //     setStatusPrice(Status.loaded);
+  //     Utils().showLog("ERROR in getPriceVolatilityData =>$e");
+  //   }
+  // }
 
   // Stock Highlights---------------------------------------------------------------------------------------------------
 

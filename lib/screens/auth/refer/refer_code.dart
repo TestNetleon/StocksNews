@@ -234,7 +234,7 @@ class _ReferLoginState extends State<ReferLogin> {
 
   @override
   Widget build(BuildContext context) {
-    UserRes? user = context.read<UserProvider>().user;
+    UserRes? user = context.watch<UserProvider>().user;
     HomeProvider provider = context.watch<HomeProvider>();
 
     // String? locale;

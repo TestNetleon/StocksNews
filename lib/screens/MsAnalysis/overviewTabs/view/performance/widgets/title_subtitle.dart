@@ -6,11 +6,13 @@ class MsPerformanceTitleSubtitle extends StatelessWidget {
   final String leading;
   final String trailing;
   final Color? color;
+  final bool bold;
   const MsPerformanceTitleSubtitle({
     super.key,
     required this.leading,
     required this.trailing,
     this.color = Colors.grey,
+    this.bold = false,
   });
 
   @override
@@ -22,17 +24,27 @@ class MsPerformanceTitleSubtitle extends StatelessWidget {
         children: [
           Text(
             leading,
-            style: stylePTSansRegular(
-              fontSize: 16.0,
-              color: color,
-            ),
+            style: bold
+                ? styleGeorgiaBold(
+                    fontSize: 16.0,
+                    color: color,
+                  )
+                : stylePTSansRegular(
+                    fontSize: 16.0,
+                    color: color,
+                  ),
           ),
           Text(
             trailing,
-            style: stylePTSansRegular(
-              fontSize: 16.0,
-              color: color,
-            ),
+            style: bold
+                ? styleGeorgiaBold(
+                    fontSize: 16.0,
+                    color: color,
+                  )
+                : stylePTSansRegular(
+                    fontSize: 16.0,
+                    color: color,
+                  ),
           ),
         ],
       ),

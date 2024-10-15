@@ -10,11 +10,13 @@ String msRadarChartResToJson(List<MsRadarChartRes> data) =>
 class MsRadarChartRes {
   final String? label;
   final dynamic value;
+  final String? valueColor;
   final String? description;
 
   MsRadarChartRes({
     this.label,
     this.value,
+    this.valueColor,
     this.description,
   });
 
@@ -22,12 +24,14 @@ class MsRadarChartRes {
       MsRadarChartRes(
         label: json["label"],
         value: json["value"],
+        valueColor: json["value_color"],
         description: json['description'],
       );
 
   Map<String, dynamic> toJson() => {
         "label": label,
         "value": value,
+        "value_color": valueColor,
         "description": description,
       };
 }

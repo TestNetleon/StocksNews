@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/stockAnalysis/provider.dart';
@@ -7,11 +6,11 @@ import 'package:stocks_news_new/screens/MsAnalysis/widget/peer_comparison.dart';
 import 'package:stocks_news_new/screens/MsAnalysis/widget/price_volatility.dart';
 import 'package:stocks_news_new/screens/drawer/base_drawer.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
+import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
-import '../../modals/msAnalysis/ms_top_res.dart';
 import '../../socket/socket.dart';
 import '../../widgets/custom/refresh_indicator.dart';
 import 'highlights/index.dart';
@@ -38,7 +37,9 @@ class _MsAnalysisState extends State<MsAnalysis> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _addSocket();
-      context.read<MSAnalysisProvider>().callAPIs(symbol: widget.symbol);
+      context
+          .read<MSAnalysisProvider>()
+          .callAPIs(symbol: widget.symbol, reset: true);
     });
   }
 
@@ -99,13 +100,23 @@ class _MsAnalysisState extends State<MsAnalysis> {
   @override
   Widget build(BuildContext context) {
     MSAnalysisProvider provider = context.watch<MSAnalysisProvider>();
-    MsStockTopRes? topData = provider.topData;
+    // MsStockTopRes? topData = provider.topData;
+
+    String? recommendation = provider.completeData?.recommendation;
+
     return BaseContainer(
       drawer: const BaseDrawer(resetIndex: true),
+      baseColor: provider.isLoadingComplete && provider.completeData == null
+          ? Colors.black
+          : recommendation?.toLowerCase() == 'hold'
+              ? const Color.fromARGB(255, 255, 171, 44)
+              : recommendation?.toLowerCase() == 'sell'
+                  ? const Color.fromARGB(255, 163, 12, 1)
+                  : ThemeColors.accent,
       appBar: AppBarHome(
         isPopback: true,
         subTitle: "",
-        widget: topData == null ? null : const PredictionAppBar(),
+        widget: PredictionAppBar(),
       ),
       body: CommonRefreshIndicator(
         onRefresh: () async {
@@ -154,7 +165,7 @@ class _MsAnalysisState extends State<MsAnalysis> {
                     child: MsSwotAnalysis(),
                   ),
                   Visibility(
-                    visible: provider.completeData?.priceVolatility != null,
+                    visible: provider.completeData?.priceVolatilityNew != null,
                     child: Padding(
                       padding: EdgeInsets.symmetric(vertical: Dimen.padding),
                       child: MsPriceVolatility(),

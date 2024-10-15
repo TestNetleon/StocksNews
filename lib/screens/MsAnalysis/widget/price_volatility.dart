@@ -20,7 +20,7 @@ class MsPriceVolatility extends StatelessWidget {
     MSAnalysisProvider provider = context.watch<MSAnalysisProvider>();
     MsTextRes? text = provider.completeData?.text;
 
-    num avg = provider.priceVolatility?.stockVolatility ?? 0;
+    num avg = provider.completeData?.priceVolatilityNew?.stockVolatility ?? 0;
     double normalizedPosition = (avg / 100) * ScreenUtil().screenWidth;
 
     MsStockTopRes? topData = provider.topData;
@@ -39,7 +39,7 @@ class MsPriceVolatility extends StatelessWidget {
         child: Column(
           children: [
             SizedBox(
-              height: 150,
+              height: 100,
               child: Stack(
                 children: [
                   Positioned(
@@ -127,9 +127,13 @@ class MsPriceVolatility extends StatelessWidget {
                     width: 10.0,
                   ),
                   Expanded(
-                    child: Text('${provider.priceVolatility?.text}',
-                        style: stylePTSansRegular(
-                            fontSize: 14.0, color: Colors.grey)),
+                    child: Text(
+                      provider.completeData?.priceVolatilityNew?.text ?? '',
+                      style: stylePTSansRegular(
+                        fontSize: 14.0,
+                        color: Colors.grey,
+                      ),
+                    ),
                   ),
                 ],
               ),

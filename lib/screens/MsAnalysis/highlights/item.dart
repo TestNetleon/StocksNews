@@ -61,11 +61,15 @@ class MsOurHighlightsItem extends StatelessWidget {
             "${data?.value}",
             style: stylePTSansBold(
               fontSize: 18.0,
-              color: data?.value is String
-                  ? Colors.green
-                  : (data?.value ?? 0) > 0
-                      ? Colors.green
-                      : Colors.red,
+              color: data?.valueColor == 'red'
+                  ? Colors.red
+                  : data?.valueColor == 'orange'
+                      ? Colors.orange
+                      : data?.valueColor == 'green'
+                          ? ThemeColors.accent
+                          : (data?.value ?? 0) > 0
+                              ? Colors.green
+                              : Colors.red,
             ),
           ),
           const SpacerVertical(height: 8.0),

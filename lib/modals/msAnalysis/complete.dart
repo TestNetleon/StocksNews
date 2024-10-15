@@ -12,7 +12,6 @@ String msCompleteResToJson(MsCompleteRes data) => json.encode(data.toJson());
 class MsCompleteRes {
   final String? recommendation;
   final List<String>? keyHighlights;
-  final num? priceVolatility;
   final List<MsRadarChartRes>? stockHighLights;
   final List<MsRadarChartRes>? score;
   final List<MsRadarChartRes>? radarChart;
@@ -27,7 +26,7 @@ class MsCompleteRes {
   String? open;
   String? previousClose;
   String? volume;
-
+  final PriceVolatilityNew? priceVolatilityNew;
   // final String? cap;
   // final num? dividendYield;
   // final num? pe;
@@ -36,9 +35,9 @@ class MsCompleteRes {
 
   MsCompleteRes({
     this.recommendation,
+    this.priceVolatilityNew,
     this.swotAnalysis,
     this.keyHighlights,
-    this.priceVolatility,
     this.stockHighLights,
     this.score,
     this.faqData,
@@ -63,6 +62,10 @@ class MsCompleteRes {
         recommendation: json["recommendation"],
         open: json['open'],
         previousClose: json['previousClose'],
+        priceVolatilityNew: json["priceVolatilityNew"] == null
+            ? null
+            : PriceVolatilityNew.fromJson(json["priceVolatilityNew"]),
+
         swotAnalysis: json["swotAnalysis"] == null
             ? null
             : SwotAnalysis.fromJson(json["swotAnalysis"]),
@@ -91,7 +94,6 @@ class MsCompleteRes {
         keyHighlights: json["keyHighlights"] == null
             ? []
             : List<String>.from(json["keyHighlights"]!.map((x) => x)),
-        priceVolatility: json["priceVolatility"],
         stockHighLights: json["stockHighLights"] == null
             ? []
             : List<MsRadarChartRes>.from(json["stockHighLights"]!
@@ -117,6 +119,7 @@ class MsCompleteRes {
   Map<String, dynamic> toJson() => {
         "recommendation": recommendation,
         "swotAnalysis": swotAnalysis?.toJson(),
+        "priceVolatilityNew": priceVolatilityNew?.toJson(),
 
         "events": msEvents == null
             ? []
@@ -136,7 +139,6 @@ class MsCompleteRes {
         "keyHighlights": keyHighlights == null
             ? []
             : List<dynamic>.from(keyHighlights!.map((x) => x)),
-        "priceVolatility": priceVolatility,
         "stockHighLights": stockHighLights == null
             ? []
             : List<dynamic>.from(stockHighLights!.map((x) => x.toJson())),
@@ -152,6 +154,31 @@ class MsCompleteRes {
         // "pe": pe,
         // "sector": sector,
         // "sector_pe": sectorPe,
+      };
+}
+
+class PriceVolatilityNew {
+  final num? avg;
+  final num? stockVolatility;
+  final String? text;
+
+  PriceVolatilityNew({
+    this.avg,
+    this.stockVolatility,
+    this.text,
+  });
+
+  factory PriceVolatilityNew.fromJson(Map<String, dynamic> json) =>
+      PriceVolatilityNew(
+        avg: json["avg"],
+        stockVolatility: json["stock_volatility"],
+        text: json["text"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "avg": avg,
+        "stock_volatility": stockVolatility,
+        "text": text,
       };
 }
 

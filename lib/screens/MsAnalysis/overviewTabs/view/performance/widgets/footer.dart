@@ -71,7 +71,7 @@ class MsPerformanceFooter extends StatelessWidget {
         children: [
           Text(
             label,
-            style: stylePTSansRegular(
+            style: styleGeorgiaBold(
               fontSize: 14.0,
               color: Colors.grey,
             ),

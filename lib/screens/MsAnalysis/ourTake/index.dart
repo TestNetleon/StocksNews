@@ -33,11 +33,17 @@ class _MsOurTakeState extends State<MsOurTake> {
             shrinkWrap: true,
             physics: NeverScrollableScrollPhysics(),
             itemBuilder: (context, index) {
+              if (provider.completeData?.keyHighlights?[index] == '') {
+                return SizedBox();
+              }
               return MsOurTakeItem(
                 title: provider.completeData?.keyHighlights?[index],
               );
             },
             separatorBuilder: (context, index) {
+              if (provider.completeData?.keyHighlights?[index] == '') {
+                return SizedBox();
+              }
               return SpacerVertical(height: 10);
             },
             itemCount: provider.completeData?.keyHighlights?.length ?? 0,

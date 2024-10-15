@@ -145,6 +145,7 @@ class MsPerformanceToday extends StatelessWidget {
         MsPerformanceTitleSubtitle(
           leading: "Today's Low",
           trailing: "Today's High",
+          bold: true,
         ),
         SpacerVertical(height: 8),
         MsPerformanceTitleSubtitle(
@@ -171,9 +172,10 @@ class MsPerformanceToday extends StatelessWidget {
               ),
               Positioned(
                 top: 12,
-                left: pricePosition - 20,
+                left: pricePosition - 10,
                 child: MsPointerContainer(
-                  style: styleGeorgiaBold(color: ThemeColors.background),
+                  style: styleGeorgiaBold(
+                      color: ThemeColors.background, fontSize: 12),
                   title: price,
                   color: (topData.changesPercentage ?? 0) >= 0
                       ? ThemeColors.accent

@@ -30,40 +30,46 @@ class PredictionAppBar extends StatelessWidget {
           padding: const EdgeInsets.all(8),
           width: 48,
           height: 48,
-          child: CachedNetworkImagesWidget(
-            topData?.image ?? "",
-            fit: BoxFit.contain,
-          ),
+          child: provider.isLoadingComplete && provider.topData == null
+              ? null
+              : CachedNetworkImagesWidget(
+                  topData?.image ?? "",
+                  fit: BoxFit.contain,
+                ),
         ),
         SpacerHorizontal(width: 8),
         Flexible(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
-                children: [
-                  Flexible(
-                    child: Text(
-                      "${topData?.symbol}",
-                      maxLines: 1,
-                      style: stylePTSansBold(fontSize: 18),
+              Visibility(
+                visible: provider.topData != null,
+                child: Row(
+                  children: [
+                    Flexible(
+                      child: Text(
+                        topData?.symbol ?? "",
+                        maxLines: 1,
+                        style: stylePTSansBold(fontSize: 18),
+                      ),
                     ),
-                  ),
-                  Container(
-                    decoration: BoxDecoration(
-                      color: ThemeColors.greyBorder,
-                      borderRadius: BorderRadius.circular(30),
+                    Container(
+                      decoration: BoxDecoration(
+                        color: ThemeColors.greyBorder,
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                      padding: EdgeInsets.symmetric(vertical: 2, horizontal: 8),
+                      margin: EdgeInsets.only(left: 5),
+                      child: Text(
+                        topData?.exchange ?? "",
+                        style: stylePTSansRegular(fontSize: 11),
+                      ),
                     ),
-                    padding: EdgeInsets.symmetric(vertical: 2, horizontal: 8),
-                    margin: EdgeInsets.only(left: 5),
-                    child: Text(
-                      "${topData?.exchange}",
-                      style: stylePTSansRegular(fontSize: 11),
-                    ),
-                  ),
-                ],
+                  ],
+                ),
               ),
               Visibility(
+                visible: provider.topData != null,
                 child: Row(
                   children: [
                     const Icon(

@@ -37,7 +37,6 @@ class MsPerformance extends StatelessWidget {
         children: [
           SpacerVertical(height: 10),
           MsPerformanceYear(),
-          SpacerVertical(height: 10),
           MsPerformanceToday(),
           MsPerformanceFooter(),
         ],

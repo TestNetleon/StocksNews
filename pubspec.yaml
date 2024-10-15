@@ -135,6 +135,7 @@ dependencies:
   onesignal_flutter: ^5.2.2
   appsflyer_sdk: ^6.15.1
 
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

@@ -57,7 +57,7 @@ class _MsTabsState extends State<MsTabs> with SingleTickerProviderStateMixin {
                   child: Text(
                     menus[i],
                     style: styleGeorgiaRegular(
-                      fontSize: 13,
+                      fontSize: 16,
                       color: selectedIndex == i
                           ? ThemeColors.accent
                           : ThemeColors.white,
