@@ -20,9 +20,11 @@ class _MsOtherStocksState extends State<MsOtherStocks> {
   Widget build(BuildContext context) {
     MSAnalysisProvider provider = context.watch<MSAnalysisProvider>();
 
-    // if (provider.otherStocks == null || provider.otherStocks?.isEmpty == true) {
-    //   return SizedBox();
-    // }
+    if (!provider.isLoadingOtherStock &&
+        (provider.otherStocks == null ||
+            provider.otherStocks?.isEmpty == true)) {
+      return SizedBox();
+    }
 
     return BaseUiContainer(
       hasData: !provider.isLoadingOtherStock && provider.otherStocks != null,

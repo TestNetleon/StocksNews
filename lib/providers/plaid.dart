@@ -295,7 +295,6 @@ class PlaidProvider extends ChangeNotifier {
     } catch (e) {
       _data = null;
       _extra = null;
-
       _errorG = Const.errSomethingWrong;
       Utils().showLog(e.toString());
       setStatusG(Status.loaded);

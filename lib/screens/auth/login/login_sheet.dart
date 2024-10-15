@@ -83,6 +83,8 @@ class _LoginBottomState extends State<LoginBottom> {
   }
 
   void _handleSignIn() async {
+    closeKeyboard();
+
     UserProvider provider = context.read<UserProvider>();
     if (await _googleSignIn.isSignedIn()) {
       await _googleSignIn.signOut();
@@ -128,6 +130,8 @@ class _LoginBottomState extends State<LoginBottom> {
   }
 
   void _handleSignInApple(id, displayName, email) async {
+    closeKeyboard();
+
     try {
       String? fcmToken = await Preference.getFcmToken();
       String? address = await Preference.getLocation();

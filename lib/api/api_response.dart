@@ -128,6 +128,7 @@ class Extra {
   String? phoneError;
   final String? recommendation;
   final bool? showRewards;
+  final bool? showAnalysis;
 
   Extra({
     this.showRewards,
@@ -143,6 +144,7 @@ class Extra {
     this.showMostPurchased,
     this.phoneCodeError,
     this.phoneError,
+    this.showAnalysis,
     this.text1,
     this.text2,
     this.text3,
@@ -218,6 +220,7 @@ class Extra {
         search: json["search"],
         recommendation: json["recommendation"],
         showRewards: json['show_rewards'],
+        showAnalysis: json['show_analysis'],
         storeTitle: json["store_title"],
         notifyTextMsg: json['notification_setting_txt'],
         storeSubTitle: json["store_subtitle"],
@@ -368,6 +371,7 @@ class Extra {
         "ad_managers": adManagers?.toJson(),
         "phone_code_error": phoneCodeError,
         "phone_error": phoneError,
+        'show_analysis': showAnalysis,
         "show_rewards": showRewards,
         "feeback_type": feebackType == null
             ? []

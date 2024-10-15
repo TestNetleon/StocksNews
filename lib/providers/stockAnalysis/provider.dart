@@ -519,7 +519,7 @@ class MSAnalysisProvider extends ChangeNotifier {
 
     Map request = {
       "token": provider.user?.token ?? "",
-      // "token": "8W9duDkUiWtfIfDUOAypbv3quY9AZC7s",
+      // "token": "IuPHqxhAYNAorwoCYVOfGpXqg55vlSH2",
 
       "symbol": symbol,
       // "start_date": "2024-08-01",

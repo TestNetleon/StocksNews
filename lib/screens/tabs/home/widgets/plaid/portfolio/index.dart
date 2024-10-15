@@ -213,7 +213,9 @@ import 'package:stocks_news_new/widgets/loading.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
+import '../../../../../../route/my_app.dart';
 import '../../../../../MsAnalysis/ms_analysis.dart';
+import '../../../../../stockDetail/index.dart';
 import 'item.dart';
 import 'usernot_present.dart';
 
@@ -373,22 +375,25 @@ class HomePlaidBase extends StatelessWidget {
               GestureDetector(
                 onTap: () {
                   if (data?.validTicker == 1) {
-                    // Navigator.push(
-                    //   navigatorKey.currentContext!,
-                    //   MaterialPageRoute(
-                    //     builder: (_) => StockDetail(
-                    //       symbol: data?.tickerSymbol,
-                    //     ),
-                    //   ),
-                    // );
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => MsAnalysis(
-                          symbol: data?.tickerSymbol ?? "",
+                    if (provider.extra?.showAnalysis == true) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => MsAnalysis(
+                            symbol: data?.tickerSymbol ?? "",
+                          ),
                         ),
-                      ),
-                    );
+                      );
+                    } else {
+                      Navigator.push(
+                        navigatorKey.currentContext!,
+                        MaterialPageRoute(
+                          builder: (_) => StockDetail(
+                            symbol: data?.tickerSymbol,
+                          ),
+                        ),
+                      );
+                    }
                   } else {
                     popUpAlert(
                         message: "No information available for this ticker.",
