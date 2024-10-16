@@ -30,9 +30,11 @@ class ThemeInputField extends StatelessWidget {
     this.textInputAction,
     this.onChanged,
     this.suffix,
+    this.suffixIcon,
     this.prefix,
     this.contentPadding,
     this.cursorColor,
+    this.focusNode,
     super.key,
   });
 
@@ -60,6 +62,8 @@ class ThemeInputField extends StatelessWidget {
   final TextInputAction? textInputAction;
   final Function(String)? onChanged;
   final Widget? suffix;
+  final Widget? suffixIcon;
+  final FocusNode? focusNode;
   final Widget? prefix;
   final Color? cursorColor;
 
@@ -92,6 +96,7 @@ class ThemeInputField extends StatelessWidget {
           ),
           child ??
               TextField(
+                focusNode: focusNode,
                 cursorColor: cursorColor,
                 onChanged: onChanged,
                 textInputAction: textInputAction,
@@ -107,6 +112,7 @@ class ThemeInputField extends StatelessWidget {
                 decoration: InputDecoration(
                   prefix: prefix,
                   suffix: suffix,
+                  suffixIcon: suffixIcon,
                   hintText: placeholder ?? '',
                   hintStyle: hintStyle ??
                       stylePTSansRegular(color: ThemeColors.dividerDark),

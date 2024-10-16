@@ -310,7 +310,6 @@ String formatNumberString(String numberString) {
 
 void closeKeyboard() {
   SystemChannels.textInput.invokeMethod("TextInput.hide");
-
   // FocusScope.of(navigatorKey.currentContext!).requestFocus(FocusNode());
   FocusManager.instance.primaryFocus?.unfocus();
 }
