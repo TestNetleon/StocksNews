@@ -1,7 +1,6 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:stocks_news_new/utils/theme.dart';
-import 'package:stocks_news_new/utils/utils.dart';
 import '../../../../../../modals/msAnalysis/financials.dart';
 
 class MsFinancialCharts extends StatelessWidget {
@@ -55,7 +54,10 @@ class MsFinancialCharts extends StatelessWidget {
           ) {
             return BarTooltipItem(
               "${chart?[groupIndex].formattedValue}",
-              styleGeorgiaBold(color: Colors.white, fontSize: 10),
+              styleGeorgiaBold(
+                color: Colors.white,
+                fontSize: 13,
+              ),
             );
           },
         ),
@@ -138,12 +140,8 @@ class MsFinancialCharts extends StatelessWidget {
 
       if (previousValue == null || currentValue > previousValue) {
         barGradient = _greenGradient;
-        Utils().showLog(
-            'GREEN Current Value => $currentValue, Previous Value => $previousValue');
       } else {
         barGradient = _redGradient;
-        Utils().showLog(
-            'RED Current Value => $currentValue, Previous Value => $previousValue');
       }
 
       previousValue = currentValue;

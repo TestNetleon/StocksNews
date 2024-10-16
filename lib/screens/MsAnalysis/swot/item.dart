@@ -43,15 +43,15 @@ class MsSwotItem extends StatelessWidget {
                   Text(
                     label,
                     style: stylePTSansBold(
-                      fontSize: 16,
+                      fontSize: 17,
                       color: const Color.fromARGB(255, 195, 195, 195),
                     ),
                   ),
-                  const SpacerVertical(height: 8.0),
+                  const SpacerVertical(height: 5),
                   Text(
                     value,
                     style: stylePTSansBold(
-                      fontSize: 16,
+                      fontSize: 17,
                       color: color ?? ThemeColors.themeGreen,
                     ),
                   ),

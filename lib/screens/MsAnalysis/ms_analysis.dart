@@ -103,7 +103,11 @@ class _MsAnalysisState extends State<MsAnalysis> {
     // MsStockTopRes? topData = provider.topData;
 
     String? recommendation = provider.completeData?.recommendation;
-
+//------------------------------------------------------------------------------------
+    bool showStockScore = provider.completeData?.score != null &&
+        provider.completeData?.score?.isNotEmpty == true &&
+        provider.completeData?.text?.stockScore?.status == true;
+//------------------------------------------------------------------------------------
     return BaseContainer(
       drawer: const BaseDrawer(resetIndex: true),
       baseColor: provider.isLoadingComplete && provider.completeData == null
@@ -144,8 +148,7 @@ class _MsAnalysisState extends State<MsAnalysis> {
                     child: MsRadarGraph(),
                   ),
                   Visibility(
-                    visible: provider.completeData?.score != null &&
-                        provider.completeData?.score?.isNotEmpty == true,
+                    visible: showStockScore,
                     child: MsStockScore(),
                   ),
                   MsOtherStocks(),

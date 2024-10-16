@@ -58,7 +58,7 @@ class MsOurHighlightsItem extends StatelessWidget {
           ),
           const SpacerVertical(height: 8.0),
           Text(
-            "${data?.value}",
+            data?.value is num ? "${data?.value}%" : "${data?.value}",
             style: stylePTSansBold(
               fontSize: 18.0,
               color: data?.valueColor == 'red'

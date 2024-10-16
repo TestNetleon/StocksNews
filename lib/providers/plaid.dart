@@ -276,6 +276,8 @@ class PlaidProvider extends ChangeNotifier {
       FormData request = FormData.fromMap({
         "token":
             navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
+
+        // "token": "IuPHqxhAYNAorwoCYVOfGpXqg55vlSH2",
       });
       ApiResponse response = await apiRequest(
         url: Apis.plaidPortfolio,

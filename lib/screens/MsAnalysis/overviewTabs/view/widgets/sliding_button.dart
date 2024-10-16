@@ -55,7 +55,7 @@ class CustomSlidingSegmentedControl extends StatelessWidget {
                 menus[i],
                 style: style ??
                     styleGeorgiaBold(
-                      fontSize: 13,
+                      fontSize: 15,
                       color: selectedIndex == i
                           ? ThemeColors.white
                           : ThemeColors.greyText,

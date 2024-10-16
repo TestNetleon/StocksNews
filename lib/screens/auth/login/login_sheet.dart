@@ -325,6 +325,8 @@ class _LoginBottomState extends State<LoginBottom> {
                         padding: const EdgeInsets.only(top: Dimen.itemSpacing),
                         child: ThemeButton(
                           onPressed: () async {
+                            closeKeyboard();
+
                             try {
                               final AuthorizationCredentialAppleID credential =
                                   await SignInWithApple.getAppleIDCredential(

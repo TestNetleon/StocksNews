@@ -21,8 +21,8 @@ class _MsPriceVolumeState extends State<MsPriceVolume>
     with SingleTickerProviderStateMixin {
   int selectedIndex = 0;
   List<String> menus = [
-    'Past returns',
-    'Post volume',
+    'Past Returns',
+    'Post Volume',
   ];
 
   @override
@@ -57,9 +57,15 @@ class _MsPriceVolumeState extends State<MsPriceVolume>
           ),
           SpacerVertical(height: 10),
           if (selectedIndex == 0)
-            _getWidget(provider: provider, child: MsPricePastReturns()),
+            _getWidget(
+              provider: provider,
+              child: MsPricePastReturns(),
+            ),
           if (selectedIndex == 1)
-            _getWidget(provider: provider, child: MsPricePostVolume()),
+            _getWidget(
+              provider: provider,
+              child: MsPricePostVolume(),
+            ),
         ],
       ),
     );

@@ -46,7 +46,7 @@ class MsSwotAnalysis extends StatelessWidget {
                 Row(
                   children: [
                     MsSwotItem(
-                      label: 'Strength',
+                      label: 'STRENGTH',
                       value:
                           '${provider.completeData?.swotAnalysis?.strengths?.length ?? 0}',
                       keyword: 'S',
@@ -60,7 +60,7 @@ class MsSwotAnalysis extends StatelessWidget {
                     ),
                     SpacerHorizontal(width: 10),
                     MsSwotItem(
-                      label: 'Weakness',
+                      label: 'WEAKNESS',
                       color: Colors.orange,
                       value:
                           '${provider.completeData?.swotAnalysis?.weaknesses?.length ?? 0}',
@@ -79,7 +79,7 @@ class MsSwotAnalysis extends StatelessWidget {
                 Row(
                   children: [
                     MsSwotItem(
-                      label: 'Opportunity',
+                      label: 'OPPORTUNITY',
                       value:
                           '${provider.completeData?.swotAnalysis?.opportunity?.length ?? 0}',
                       keyword: 'O',
@@ -93,7 +93,7 @@ class MsSwotAnalysis extends StatelessWidget {
                     ),
                     SpacerHorizontal(width: 10.0),
                     MsSwotItem(
-                      label: 'Threat',
+                      label: 'THREAT',
                       color: ThemeColors.sos,
                       value:
                           '${provider.completeData?.swotAnalysis?.threats?.length ?? 0}',

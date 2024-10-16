@@ -573,7 +573,7 @@ class MSAnalysisProvider extends ChangeNotifier {
 
   List<String> typeMenu = [
     'Revenue',
-    'Net profit',
+    'Net Profit',
   ];
 
   List<String> periodMenu = [

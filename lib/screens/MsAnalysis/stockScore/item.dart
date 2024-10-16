@@ -6,6 +6,7 @@ import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import '../../../modals/msAnalysis/radar_chart.dart';
 import '../../../utils/colors.dart';
+import '../widget/bottom_sheet.dart';
 
 class MsStockScoreItem extends StatelessWidget {
   const MsStockScoreItem({super.key});
@@ -34,20 +35,31 @@ class MsStockScoreItem extends StatelessWidget {
                     child: Row(
                       children: [
                         Text(
-                          "Stock Score",
+                          provider.completeData?.text?.stockScore?.title ??
+                              "Stock Score",
                           style: stylePTSansBold(fontSize: 20),
                         ),
-                        // const SpacerHorizontal(width: 10),
-                        // GestureDetector(
-                        //   onTap: () {
-                        //     msShowBottomSheet();
-                        //   },
-                        //   child: const Icon(
-                        //     Icons.info_rounded,
-                        //     size: 20,
-                        //     color: ThemeColors.greyBorder,
-                        //   ),
-                        // ),
+                        const SpacerHorizontal(width: 10),
+                        Visibility(
+                          visible: provider
+                                      .completeData?.text?.stockScore?.info !=
+                                  null &&
+                              provider.completeData?.text?.stockScore?.info !=
+                                  '',
+                          child: GestureDetector(
+                            onTap: () {
+                              msShowBottomSheet(
+                                html: provider
+                                    .completeData?.text?.stockScore?.info,
+                              );
+                            },
+                            child: const Icon(
+                              Icons.info_rounded,
+                              size: 20,
+                              color: ThemeColors.greyBorder,
+                            ),
+                          ),
+                        ),
                       ],
                     ),
                   ),
@@ -93,50 +105,70 @@ class MsStockScoreItem extends StatelessWidget {
                 color: ThemeColors.greyBorder.withOpacity(0.4),
               ),
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: List.generate(
-                  provider.completeData?.score?.length ?? 0,
-                  (index) {
-                    MsRadarChartRes? data =
-                        provider.completeData?.score?[index];
-                    return Flexible(
-                      child: IntrinsicHeight(
-                        child: GestureDetector(
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Flexible(
-                                child: Text(
-                                  data?.label ?? "",
-                                  textAlign: TextAlign.center,
-                                  style: styleGeorgiaBold(
-                                    color: (provider.showScoreComplete &&
-                                                index == 0) ||
-                                            (!provider.showScoreComplete &&
-                                                index == 1)
-                                        ? ThemeColors.white
-                                        : ThemeColors.greyText,
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: List.generate(
+                      provider.completeData?.score?.length ?? 0,
+                      (index) {
+                        MsRadarChartRes? data =
+                            provider.completeData?.score?[index];
+                        return Flexible(
+                          child: IntrinsicHeight(
+                            child: GestureDetector(
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Flexible(
+                                    child: Text(
+                                      data?.label ?? "",
+                                      textAlign: TextAlign.center,
+                                      style: styleGeorgiaBold(
+                                        color: (provider.showScoreComplete &&
+                                                    index == 0) ||
+                                                (!provider.showScoreComplete &&
+                                                    index == 1)
+                                            ? ThemeColors.white
+                                            : ThemeColors.greyText,
+                                      ),
+                                    ),
                                   ),
-                                ),
+                                  if (index <
+                                      (provider.completeData?.score?.length ??
+                                              0) -
+                                          1)
+                                    Switch(
+                                      value: provider.showScoreComplete,
+                                      inactiveThumbColor: ThemeColors.white,
+                                      inactiveTrackColor:
+                                          ThemeColors.greyBorder,
+                                      activeColor: Colors.orange,
+                                      onChanged: provider.onChangeCompleteScore,
+                                    ),
+                                ],
                               ),
-                              if (index <
-                                  (provider.completeData?.score?.length ?? 0) -
-                                      1)
-                                Switch(
-                                  value: provider.showScoreComplete,
-                                  inactiveThumbColor: ThemeColors.white,
-                                  inactiveTrackColor: ThemeColors.greyBorder,
-                                  activeColor: Colors.orange,
-                                  onChanged: provider.onChangeCompleteScore,
-                                ),
-                            ],
+                            ),
                           ),
-                        ),
+                        );
+                      },
+                    ),
+                  ),
+                  Visibility(
+                    visible: provider
+                                .completeData?.text?.stockScore?.subTitle !=
+                            null &&
+                        provider.completeData?.text?.stockScore?.subTitle != '',
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 0, vertical: 10),
+                      child: Text(
+                        provider.completeData?.text?.stockScore?.subTitle ?? "",
+                        style: styleGeorgiaRegular(fontSize: 17),
                       ),
-                    );
-                  },
-                ),
+                    ),
+                  ),
+                ],
               ),
             ),
           ],

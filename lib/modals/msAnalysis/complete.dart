@@ -233,6 +233,7 @@ class MsTextRes {
   final MsTextDataRes? volatility;
   final MsTextDataRes? peer;
   final MsTextDataRes? faq;
+  final MsTextDataRes? stockScore;
 
   MsTextRes({
     this.otherStocks,
@@ -242,12 +243,16 @@ class MsTextRes {
     this.volatility,
     this.peer,
     this.faq,
+    this.stockScore,
   });
 
   factory MsTextRes.fromJson(Map<String, dynamic> json) => MsTextRes(
         otherStocks: json["other_stocks"] == null
             ? null
             : MsTextDataRes.fromJson(json["other_stocks"]),
+        stockScore: json["stock_score"] == null
+            ? null
+            : MsTextDataRes.fromJson(json["stock_score"]),
         ourTake: json["our_take"] == null
             ? null
             : MsTextDataRes.fromJson(json["our_take"]),
@@ -266,6 +271,7 @@ class MsTextRes {
 
   Map<String, dynamic> toJson() => {
         "other_stocks": otherStocks?.toJson(),
+        "stock_score": stockScore?.toJson(),
         "our_take": ourTake?.toJson(),
         "highlights": highlights?.toJson(),
         "swot": swot?.toJson(),
@@ -278,20 +284,27 @@ class MsTextRes {
 class MsTextDataRes {
   final String? title;
   final String? subTitle;
-
+  final bool? status;
+  final String? info;
   MsTextDataRes({
     this.title,
     this.subTitle,
+    this.status,
+    this.info,
   });
 
   factory MsTextDataRes.fromJson(Map<String, dynamic> json) => MsTextDataRes(
         title: json["title"],
         subTitle: json["sub_title"],
+        status: json["status"],
+        info: json["info"],
       );
 
   Map<String, dynamic> toJson() => {
         "title": title,
         "sub_title": subTitle,
+        "status": status,
+        "info": info,
       };
 }
 

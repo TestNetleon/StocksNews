@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:stocks_news_new/utils/constants.dart';
 import '../../../../../utils/theme.dart';
 
 class MsFundamentalHeader extends StatelessWidget {
@@ -17,7 +18,7 @@ class MsFundamentalHeader extends StatelessWidget {
           header?.length ?? 0,
           (index) {
             return MsFundamentalHeaderItem(
-              title: header?[index] ?? '',
+              title: header?[index].capitalizeWords() ?? '',
             );
           },
         ),
