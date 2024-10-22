@@ -223,6 +223,9 @@ class Apis {
   //----------   Missions
   static const pointClaimList = "/point-claim-list";
   static const pointsClaim = "/point-claim";
+
+  static const pointClaimLog = "/point-claim-log";
+  static const claimPointLog = "/referrals/claim-point-log";
 }
 
 class ApiKeys {

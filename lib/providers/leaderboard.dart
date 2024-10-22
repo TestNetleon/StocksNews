@@ -146,6 +146,7 @@ class LeaderBoardProvider extends ChangeNotifier {
         formData: request,
         showProgress: true,
       );
+
       if (response.status) {
         popUpAlert(
             message: response.message ?? "",
@@ -320,6 +321,87 @@ class LeaderBoardProvider extends ChangeNotifier {
       _errorDetail = Const.errSomethingWrong;
       Utils().showLog(e.toString());
       setStatusSeparate(Status.loaded);
+    }
+  }
+
+  // Claim Points
+  Extra? _extraClaim;
+  Extra? get extraClaim => _extraClaim;
+
+  String? _errorClaim;
+  String? get errorClaim => _errorClaim ?? Const.errSomethingWrong;
+
+  Status _statusClaim = Status.ideal;
+  Status get statusClaim => _statusClaim;
+
+  bool get isLoadingClaim => _statusClaim == Status.loading;
+
+  List<AffiliateTransactionRes>? _dataClaim;
+  List<AffiliateTransactionRes>? get dataClaim => _dataClaim;
+
+  int _pageClaim = 1;
+
+  bool get canLoadMoreClaim => _pageClaim <= (_extraClaim?.totalPages ?? 1);
+
+  void setStatusClaim(status) {
+    _statusClaim = status;
+    notifyListeners();
+  }
+
+  Future getUnclaimedData({
+    showProgress = false,
+    loadMore = false,
+    required String type,
+    id,
+  }) async {
+    if (loadMore) {
+      _pageClaim++;
+      setStatusClaim(Status.loadingMore);
+    } else {
+      _pageClaim = 1;
+      _dataClaim = null;
+      setStatusClaim(Status.loading);
+    }
+
+    try {
+      Map request = {
+        "token":
+            navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
+        "page": "$_page",
+        "txn_type": type,
+      };
+      if (id != null) {
+        request['id'] = "$id";
+      }
+
+      ApiResponse response = await apiRequest(
+        url: id == null ? Apis.pointClaimLog : Apis.claimPointLog,
+        request: request,
+        showProgress: false,
+      );
+      if (response.status) {
+        _errorClaim = null;
+        if (_pageClaim == 1) {
+          _dataClaim =
+              affiliateTransactionResFromJson(jsonEncode(response.data));
+          // _extraDetail =
+          //     (response.extra is Extra ? response.extra as Extra : null);
+        } else {
+          _dataClaim?.addAll(
+              affiliateTransactionResFromJson(jsonEncode(response.data)));
+        }
+      } else {
+        if (_page == 1) {
+          _errorClaim = response.message;
+          _dataClaim = null;
+        }
+      }
+      setStatusClaim(Status.loaded);
+    } catch (e) {
+      _dataClaim = null;
+      _errorClaim = Const.errSomethingWrong;
+      Utils().showLog(e.toString());
+      setStatusClaim(Status.loaded);
     }
   }
 }

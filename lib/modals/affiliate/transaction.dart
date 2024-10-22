@@ -19,6 +19,7 @@ class AffiliateTransactionRes {
   final int? spent;
   final dynamic label;
   final dynamic duration;
+  final dynamic id;
 
   AffiliateTransactionRes({
     this.createdAt,
@@ -32,6 +33,7 @@ class AffiliateTransactionRes {
     this.icon,
     this.label,
     this.duration,
+    this.id,
   });
 
   factory AffiliateTransactionRes.fromJson(Map<String, dynamic> json) =>
@@ -47,6 +49,7 @@ class AffiliateTransactionRes {
         icon: json["icon"],
         label: json["label"],
         duration: json["duration"],
+        id: json["id"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -61,5 +64,6 @@ class AffiliateTransactionRes {
         "icon": icon,
         "label": label,
         "duration": duration,
+        "id": id,
       };
 }

@@ -19,61 +19,6 @@ class AffiliateLeaderBoard extends StatefulWidget {
 }
 
 class _AffiliateLeaderBoardState extends State<AffiliateLeaderBoard> {
-  // List<AffiliateReferRes> listData = [
-  //   AffiliateReferRes(
-  //     points: 10,
-  //     displayName: "HavocToThisWorld",
-  //   ),
-  //   AffiliateReferRes(
-  //     points: 3,
-  //     displayName: "HavocToThisWorld",
-  //   ),
-  //   AffiliateReferRes(
-  //     points: 4,
-  //     displayName: "HavocToThisWorld",
-  //   ),
-  //   AffiliateReferRes(
-  //     points: 5,
-  //     displayName: "HavocToThisWorld",
-  //   ),
-  //   AffiliateReferRes(
-  //     points: 4,
-  //     displayName: "HavocToThisWorld",
-  //   ),
-  //   AffiliateReferRes(
-  //     points: 5,
-  //     displayName: "HavocToThisWorld",
-  //   ),
-  //   AffiliateReferRes(
-  //     points: 4,
-  //     displayName: "HavocToThisWorld",
-  //   ),
-  //   AffiliateReferRes(
-  //     points: 5,
-  //     displayName: "HavocToThisWorld",
-  //   ),
-  //   AffiliateReferRes(
-  //     points: 4,
-  //     displayName: "HavocToThisWorld",
-  //   ),
-  //   AffiliateReferRes(
-  //     points: 5,
-  //     displayName: "HavocToThisWorld",
-  //   ),
-  //   AffiliateReferRes(
-  //     points: 6,
-  //     displayName: "HavocToThisWorld",
-  //   ),
-  //   AffiliateReferRes(
-  //     points: 7,
-  //     displayName: "HavocToThisWorld",
-  //   ),
-  //   AffiliateReferRes(
-  //     points: 8,
-  //     displayName: "HavocToThisWorld",
-  //   ),
-  // ];
-
   @override
   void initState() {
     super.initState();
@@ -84,9 +29,6 @@ class _AffiliateLeaderBoardState extends State<AffiliateLeaderBoard> {
 
   _callAPI() {
     LeaderBoardProvider provider = context.read<LeaderBoardProvider>();
-    // if (provider.leaderBoard == null || provider.leaderBoard?.isEmpty == true) {
-    //   provider.getLeaderBoardData();
-    // }
     provider.getLeaderBoardData();
   }
 
@@ -114,32 +56,6 @@ class _AffiliateLeaderBoardState extends State<AffiliateLeaderBoard> {
             // AffiliateReferRes? data = listData[listIndex];
 
             if (listIndex == 0) {
-              // return const SizedBox(
-              //   // height: 200,
-              //   child: Row(
-              //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //     crossAxisAlignment: CrossAxisAlignment.start,
-              //     children: [
-              //       Flexible(
-              //         child: LeaderBoardTopItem(
-              //           index: 1,
-              //         ),
-              //       ),
-              //       Flexible(
-              //         flex: 2,
-              //         child: LeaderBoardTopItem(
-              //           index: 0,
-              //         ),
-              //       ),
-              //       Flexible(
-              //         child: LeaderBoardTopItem(
-              //           index: 2,
-              //         ),
-              //       ),
-              //     ],
-              //   ),
-              // );
-
               return Column(
                 children: [
                   const SizedBox(
@@ -151,22 +67,16 @@ class _AffiliateLeaderBoardState extends State<AffiliateLeaderBoard> {
                         Positioned(
                           left: 0,
                           top: 80,
-                          child: LeaderBoardTopItem(
-                            index: 1,
-                          ),
+                          child: LeaderBoardTopItem(index: 1),
                         ),
                         Positioned(
                           right: 0,
                           top: 80,
-                          child: LeaderBoardTopItem(
-                            index: 2,
-                          ),
+                          child: LeaderBoardTopItem(index: 2),
                         ),
                         Align(
                           alignment: Alignment.topCenter,
-                          child: LeaderBoardTopItem(
-                            index: 0,
-                          ),
+                          child: LeaderBoardTopItem(index: 0),
                         ),
                       ],
                     ),
@@ -174,7 +84,6 @@ class _AffiliateLeaderBoardState extends State<AffiliateLeaderBoard> {
                   Visibility(
                     visible: (provider.leaderBoard?.length ?? 0) > 3,
                     // visible: listData.length > 3,
-
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
