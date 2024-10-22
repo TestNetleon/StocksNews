@@ -8,6 +8,7 @@ import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/theme_button_small.dart';
 import '../../screens/membership_new/membership.dart';
 import '../../utils/constants.dart';
+import '../../utils/utils.dart';
 
 class UpdateMembershipCard extends StatelessWidget {
   const UpdateMembershipCard({super.key});
@@ -20,6 +21,8 @@ class UpdateMembershipCard extends StatelessWidget {
       isMembership: true,
       data: extra?.membershipText?.card,
       onTap: () {
+        closeKeyboard();
+
         Navigator.push(
           context,
           MaterialPageRoute(
@@ -41,6 +44,8 @@ class UpdateStoreCard extends StatelessWidget {
     return MembershipStoreCard(
       data: extra?.membershipText?.storeCard,
       onTap: () {
+        closeKeyboard();
+
         Navigator.push(
           context,
           MaterialPageRoute(

@@ -30,6 +30,8 @@ class NewsItem extends StatelessWidget {
   });
 
   void _gotoDetail(BuildContext context) {
+    closeKeyboard();
+
     if (fromAI && !fromMoreNews) {
       Utils().showLog("from AI true From more news false");
 

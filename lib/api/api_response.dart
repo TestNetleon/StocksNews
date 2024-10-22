@@ -129,8 +129,10 @@ class Extra {
   final String? recommendation;
   final bool? showRewards;
   final bool? showAnalysis;
+  final UpdateYourPhoneRes? updateYourPhone;
 
   Extra({
+    this.updateYourPhone,
     this.showRewards,
     this.adManagers,
     this.adManager,
@@ -218,6 +220,10 @@ class Extra {
 
   factory Extra.fromJson(Map<String, dynamic> json) => Extra(
         search: json["search"],
+        updateYourPhone: json["update_your_phone"] == null
+            ? null
+            : UpdateYourPhoneRes.fromJson(json["update_your_phone"]),
+
         recommendation: json["recommendation"],
         showRewards: json['show_rewards'],
         showAnalysis: json['show_analysis'],
@@ -388,6 +394,7 @@ class Extra {
         "verify_identity_text": verifyIdentity,
         "show_morningstar": showMorningstar,
         "recommendation": recommendation,
+        "update_your_phone": updateYourPhone?.toJson(),
         "verify_membership_text": verifySubscription,
         "self_rank": selfRank,
         "earn_condition": earnCondition,
@@ -466,6 +473,27 @@ class Extra {
         "show_faq": showFAQ,
         "old_app": isOldApp,
         "show_notification_setting": notificationSetting,
+      };
+}
+
+class UpdateYourPhoneRes {
+  final String? title;
+  final String? text;
+
+  UpdateYourPhoneRes({
+    this.title,
+    this.text,
+  });
+
+  factory UpdateYourPhoneRes.fromJson(Map<String, dynamic> json) =>
+      UpdateYourPhoneRes(
+        title: json["title"],
+        text: json["text"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "title": title,
+        "text": text,
       };
 }
 

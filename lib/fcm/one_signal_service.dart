@@ -214,8 +214,8 @@ class OneSignalService {
       }
     });
 
+    String? address = await _getUserLocation();
     if (fcmTokenGlobal != null) {
-      String? address = await _getUserLocation();
       if (!isShowingError) {
         saveFCMapi(value: fcmTokenGlobal, address: address);
       }

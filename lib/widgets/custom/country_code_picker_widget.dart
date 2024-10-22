@@ -93,11 +93,13 @@ class CountryPickerWidget extends StatefulWidget {
   final Function(CountryCode value) onChanged;
   final bool enabled;
   final Color textColor;
+  final bool showBox;
 
   const CountryPickerWidget({
     super.key,
     required this.onChanged,
     this.enabled = true,
+    this.showBox = true,
     this.textColor = Colors.black,
   });
 
@@ -117,6 +119,11 @@ class _CountryPickerWidgetState extends State<CountryPickerWidget> {
   }
 
   _change() {
+    if (!widget.showBox) {
+      _showOverlayNotifier.value = false;
+      return;
+    }
+
     UserProvider provider = context.read<UserProvider>();
     UserRes? user = provider.user;
     if ((user?.phoneCode == null || user?.phoneCode == '') &&
@@ -204,7 +211,13 @@ class _CountryPickerWidgetState extends State<CountryPickerWidget> {
                 child: IgnorePointer(
                   ignoring: true,
                   child: Container(
-                    color: ThemeColors.sos,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(5),
+                        bottomLeft: Radius.circular(5),
+                      ),
+                      color: ThemeColors.sos,
+                    ),
                     child: const Icon(Icons.arrow_circle_down_outlined),
                   ),
                 ),

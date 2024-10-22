@@ -970,8 +970,11 @@ class UserProvider extends ChangeNotifier {
     required String email,
     String? otp,
     String? displayName,
+    String? phone,
+    String? countryCode,
     bool verifyOTP = false,
   }) async {
+    Utils().showLog('got phone $phone');
     Map request = verifyOTP
         ? {
             "token": token,
@@ -981,9 +984,17 @@ class UserProvider extends ChangeNotifier {
         : {
             "token": token,
             "name": name,
-            "display_name": displayName,
+            "display_name": displayName ?? '',
             "email": email,
           };
+
+    if (phone != null && phone.isNotEmpty) {
+      request['phone'] = phone;
+    }
+    if (countryCode != null && countryCode.isNotEmpty) {
+      request['phone_code'] = countryCode;
+    }
+
     try {
       ApiResponse res = await apiRequest(
         url: verifyOTP ? Apis.updateProfileEmail : Apis.updateProfile,
@@ -1360,6 +1371,45 @@ class UserProvider extends ChangeNotifier {
           title: "Alert",
           icon: Images.alertPopGIF);
       return ApiResponse(status: false, message: Const.errSomethingWrong);
+    }
+  }
+
+  //BASE AUTH
+
+  Future checkPhoneExist({
+    required String phone,
+    required String countryCode,
+  }) async {
+    try {
+      Map request = {
+        'token': _user?.token ?? '',
+        'phone': phone,
+        'phone_code': countryCode,
+      };
+
+      ApiResponse response = await apiRequest(
+        url: Apis.checkPhoneExist,
+        request: request,
+        showProgress: true,
+      );
+      if (response.status) {
+        //
+      } else {
+        popUpAlert(
+          title: 'Alert',
+          message: response.message,
+          icon: Images.alertPopGIF,
+        );
+      }
+
+      return ApiResponse(status: response.status);
+    } catch (e) {
+      popUpAlert(
+        title: 'Alert',
+        message: Const.errSomethingWrong,
+        icon: Images.alertPopGIF,
+      );
+      return ApiResponse(status: false);
     }
   }
 }

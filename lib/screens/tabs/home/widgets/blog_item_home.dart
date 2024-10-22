@@ -10,6 +10,7 @@ import 'package:stocks_news_new/screens/blogs/index.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
+import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/theme_image_view.dart';
@@ -29,6 +30,7 @@ class BlogItemHome extends StatelessWidget {
 
     return InkWell(
       onTap: () async {
+        closeKeyboard();
         await Navigator.push(
           navigatorKey.currentContext!,
           MaterialPageRoute(builder: (_) => BlogDetail(slug: blogItem.slug)),

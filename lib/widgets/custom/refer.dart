@@ -16,6 +16,7 @@ import '../../providers/user_provider.dart';
 import '../../screens/affiliate/index.dart';
 import '../../screens/drawer/about/refer_dialog.dart';
 import '../../utils/constants.dart';
+import '../../utils/utils.dart';
 
 class ReferApp extends StatelessWidget {
   const ReferApp({super.key});
@@ -100,6 +101,8 @@ class ReferApp extends StatelessWidget {
     ReferralRes? referral = context.watch<HomeProvider>().extra?.referral;
     return GestureDetector(
       onTap: () {
+        closeKeyboard();
+
         _onShareAppClick();
 
         // Navigator.push(

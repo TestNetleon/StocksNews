@@ -89,8 +89,6 @@ class _VerifyOTPState extends State<VerifyOTP> {
     showGlobalProgressDialog();
 
     try {
-      // Sign the user in (or link) with the credential
-      // UserCredential result =
       await FirebaseAuth.instance.signInWithCredential(credential);
       closeGlobalProgressDialog();
       _requestLogin();

@@ -22,6 +22,7 @@ import 'package:stocks_news_new/widgets/theme_button_small.dart';
 // import 'package:upgrader/upgrader.dart';
 import '../../../modals/home_insider_res.dart';
 import '../../../utils/colors.dart';
+import '../../../utils/utils.dart';
 import '../../../widgets/custom/refer.dart';
 import '../../AdManager/manager.dart';
 import '../news/news_item.dart';
@@ -152,6 +153,8 @@ class HomeContainer extends StatelessWidget {
               visible: provider.homeSliderRes?.affiliateAdv != null,
               child: GestureDetector(
                 onTap: () {
+                  closeKeyboard();
+
                   Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -206,6 +209,8 @@ class HomeContainer extends StatelessWidget {
                             alignment: Alignment.centerLeft,
                             child: ThemeButtonSmall(
                               onPressed: () {
+                                closeKeyboard();
+
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(

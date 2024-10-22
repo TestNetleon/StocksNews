@@ -176,7 +176,7 @@ class _StockDetailState extends State<StockDetail> {
                           children: [
                             Text(
                               keyStats?.symbol ?? "",
-                              style: stylePTSansBold(fontSize: 18),
+                              style: stylePTSansBold(fontSize: 17),
                             ),
                             Container(
                               decoration: BoxDecoration(
@@ -188,7 +188,7 @@ class _StockDetailState extends State<StockDetail> {
                               margin: EdgeInsets.only(left: 5),
                               child: Text(
                                 keyStats?.exchange ?? "",
-                                style: stylePTSansRegular(fontSize: 11),
+                                style: stylePTSansRegular(fontSize: 10),
                               ),
                             ),
                           ],
@@ -196,7 +196,7 @@ class _StockDetailState extends State<StockDetail> {
                         Text(
                           keyStats?.name ?? "",
                           style: stylePTSansRegular(
-                            fontSize: 14,
+                            fontSize: 13,
                             color: ThemeColors.greyText,
                           ),
                           maxLines: 1,

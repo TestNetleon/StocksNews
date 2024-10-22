@@ -8,6 +8,7 @@ import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/cache_network_image.dart';
 import 'package:stocks_news_new/widgets/custom_gridview.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
+import '../../../../../utils/utils.dart';
 import '../../../../../widgets/spacer_horizontal.dart';
 import 'view_all.dart';
 
@@ -41,6 +42,8 @@ class TopPlaidIndex extends StatelessWidget {
               const SpacerHorizontal(width: 10),
               InkWell(
                 onTap: () {
+                  closeKeyboard();
+
                   Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -113,6 +116,8 @@ class TopPlaidItem extends StatelessWidget {
       child: InkWell(
         borderRadius: BorderRadius.circular(5),
         onTap: () {
+          closeKeyboard();
+
           Navigator.push(
             context,
             MaterialPageRoute(

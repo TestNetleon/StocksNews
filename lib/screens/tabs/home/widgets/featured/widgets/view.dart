@@ -10,6 +10,7 @@ import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 import '../../../../../../route/my_app.dart';
+import '../../../../../../utils/utils.dart';
 import '../../../../../allFeatured/index.dart';
 import '../../myAlerts/index_copy.dart' as mya;
 import 'item.dart';
@@ -59,6 +60,8 @@ class FeaturedWatchlistStockView extends StatelessWidget {
                     child: FeaturedWatchlistTitle(
                       title: extra?.featuredTitle ?? "Featured Stocks",
                       onTap: () {
+                        closeKeyboard();
+
                         Navigator.push(
                           context,
                           MaterialPageRoute(

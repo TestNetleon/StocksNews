@@ -22,6 +22,8 @@ class AdManagerItem extends StatelessWidget {
     this.data,
   });
   void _onTap() {
+    closeKeyboard();
+
     if (Platform.isIOS) {
       // adIOSNavigate(Uri.parse(data?.url ?? "https://app.stocks.news"));
       iOSNavigate(Uri.parse(data?.url ?? "https://app.stocks.news"));

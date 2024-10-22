@@ -11,6 +11,8 @@ import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/theme_image_view.dart';
 
+import '../../../../utils/utils.dart';
+
 class CommonItemUi extends StatefulWidget {
   const CommonItemUi({
     super.key,
@@ -39,6 +41,8 @@ class _CommonItemUiState extends State<CommonItemUi> {
               Expanded(
                 child: InkWell(
                   onTap: () {
+                    closeKeyboard();
+
                     Navigator.push(
                       navigatorKey.currentContext!,
                       MaterialPageRoute(

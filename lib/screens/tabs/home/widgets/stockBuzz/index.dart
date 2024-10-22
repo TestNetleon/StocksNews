@@ -7,6 +7,7 @@ import 'package:stocks_news_new/screens/moreStocks/index.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
+import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/cache_network_image.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
@@ -41,6 +42,8 @@ class StockInBuzz extends StatelessWidget {
                 ),
                 InkWell(
                   onTap: () {
+                    closeKeyboard();
+
                     Navigator.push(
                       context,
                       MaterialPageRoute(
