@@ -55,7 +55,6 @@ class _BaseVerifyOTPState extends State<BaseVerifyOTP> {
 
     String smsCode = _controller.text;
 
-    // Create a PhoneAuthCredential with the code
     PhoneAuthCredential credential = PhoneAuthProvider.credential(
       verificationId: _verificationId ?? widget.verificationId,
       smsCode: smsCode,

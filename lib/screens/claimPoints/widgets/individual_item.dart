@@ -12,10 +12,11 @@ import '../../../utils/constants.dart';
 
 class ClaimPointsIndividual extends StatelessWidget {
   final ClaimPointsRes? data;
-
+  final void Function(bool)? claimed;
   const ClaimPointsIndividual({
     super.key,
     this.data,
+    this.claimed,
   });
 
   @override
@@ -226,6 +227,9 @@ class ClaimPointsIndividual extends StatelessWidget {
                         type: data?.type ?? "",
                         points: data?.claimPoints,
                       );
+                  if (claimed != null) {
+                    claimed!(true);
+                  }
                 },
                 text: 'Claim',
                 showArrow: false,

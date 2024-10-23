@@ -20,6 +20,8 @@ class ClaimPointsIndex extends StatefulWidget {
 }
 
 class _ClaimPointsIndexState extends State<ClaimPointsIndex> {
+  bool claimed = false;
+
   @override
   void initState() {
     super.initState();
@@ -35,6 +37,9 @@ class _ClaimPointsIndexState extends State<ClaimPointsIndex> {
     return BaseContainer(
       appBar: AppBarHome(
         isPopback: true,
+        onTap: () {
+          Navigator.pop(context, claimed);
+        },
         canSearch: true,
         showTrailing: true,
         title: "Rewards",
@@ -103,7 +108,13 @@ class _ClaimPointsIndexState extends State<ClaimPointsIndex> {
                   itemCount: provider.data?.length ?? 0,
                   itemBuilder: (context, index) {
                     ClaimPointsRes? data = provider.data?[index];
-                    return ClaimPointsIndividual(data: data);
+                    return ClaimPointsIndividual(
+                      data: data,
+                      claimed: (p0) {
+                        claimed = p0;
+                        setState(() {});
+                      },
+                    );
                   },
                   separatorBuilder: (context, index) {
                     return SpacerVertical(height: 10);

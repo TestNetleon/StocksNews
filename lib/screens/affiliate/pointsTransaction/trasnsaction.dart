@@ -113,13 +113,17 @@ class _AffiliateTransactionState extends State<AffiliateTransaction> {
               ),
             ),
             ThemeButton(
-              onPressed: () {
-                Navigator.push(
+              onPressed: () async {
+                final result = await Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder: (context) => ClaimPointsIndex(),
                   ),
                 );
+                if (result == true) {
+                  provider.getReferData();
+                  provider.getTransactionData();
+                }
               },
               text: "Claim Your Rewards",
               margin: EdgeInsets.only(top: 5),
