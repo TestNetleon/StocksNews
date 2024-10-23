@@ -45,7 +45,7 @@ class ClaimPointsIndividual extends StatelessWidget {
             child: GestureDetector(
               behavior: HitTestBehavior.opaque,
               onTap: () {
-                if (data?.status == true) {
+                if ((data?.points ?? 0) > 0) {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
