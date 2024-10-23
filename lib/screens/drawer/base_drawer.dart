@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
+import 'package:stocks_news_new/providers/leaderboard.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/auth/login/login_sheet.dart';
@@ -44,6 +45,7 @@ class _BaseDrawerState extends State<BaseDrawer> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      _callAPI();
       _getData();
     });
   }
@@ -52,6 +54,11 @@ class _BaseDrawerState extends State<BaseDrawer> {
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
     version = packageInfo.version;
     setState(() {});
+  }
+
+  _callAPI() {
+    LeaderBoardProvider provider = context.read<LeaderBoardProvider>();
+    provider.getReferData(checkAppUpdate: false);
   }
 
   void _closeDrawer() {

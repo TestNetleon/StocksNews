@@ -103,10 +103,10 @@ class _MyAccountContainerState extends State<MyAccountContainer>
   }
 
   _callAPI() {
-    UserProvider userProvider = context.read<UserProvider>();
-    if (userProvider.user?.affiliateStatus == 0) {
-      return;
-    }
+    // UserProvider userProvider = context.read<UserProvider>();
+    // if (userProvider.user?.affiliateStatus == 0) {
+    //   return;
+    // }
     LeaderBoardProvider provider = context.read<LeaderBoardProvider>();
 
     provider.getReferData(checkAppUpdate: false);
