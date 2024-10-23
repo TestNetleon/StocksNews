@@ -478,21 +478,29 @@ class Extra {
 class UpdateYourPhoneRes {
   final String? title;
   final String? text;
+  final String? verifyButton;
+  final String? updateButton;
 
   UpdateYourPhoneRes({
     this.title,
     this.text,
+    this.verifyButton,
+    this.updateButton,
   });
 
   factory UpdateYourPhoneRes.fromJson(Map<String, dynamic> json) =>
       UpdateYourPhoneRes(
         title: json["title"],
         text: json["text"],
+        updateButton: json['update_btn_text'],
+        verifyButton: json['verify_btn_text'],
       );
 
   Map<String, dynamic> toJson() => {
         "title": title,
         "text": text,
+        'update_btn_text': updateButton,
+        'verify_btn_text': verifyButton,
       };
 }
 
