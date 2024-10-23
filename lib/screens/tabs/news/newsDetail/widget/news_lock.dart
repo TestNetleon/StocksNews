@@ -364,6 +364,7 @@ class _NewsDetailsLockState extends State<NewsDetailsLock> {
                   WarningTextOnLock(
                     warningText: provider.data?.postDetail?.warningText,
                   ),
+                  // SpacerVertical(height: ScreenUtil().scaleWidth + 200),
                 ],
               ),
             ),

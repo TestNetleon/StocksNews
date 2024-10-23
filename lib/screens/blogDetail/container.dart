@@ -28,6 +28,7 @@ import 'package:stocks_news_new/widgets/theme_button_small.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../widgets/cache_network_image.dart';
+import '../auth/base/base_auth.dart';
 import '../marketData/lock/common_lock.dart';
 import '../tabs/news/newsDetail/news_details_body.dart';
 import 'blog_mention_by.dart';
@@ -129,6 +130,9 @@ class BlogDetailContainer extends StatelessWidget {
     //     2.2;
 
     BlogProvider provider = context.watch<BlogProvider>();
+
+    HomeProvider homeProvider = context.watch<HomeProvider>();
+
     return Stack(
       children: [
         Padding(
@@ -149,113 +153,121 @@ class BlogDetailContainer extends StatelessWidget {
               onRefresh: () => provider.getBlogDetailData(slug: slug),
               child: Stack(
                 children: [
-                  SingleChildScrollView(
-                    physics: const AlwaysScrollableScrollPhysics(),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.max,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        // const SpacerVertical(height: 5),
-                        Text(
-                          provider.blogsDetail?.name ?? "",
-                          style: styleGeorgiaBold(fontSize: 25),
-                        ),
-                        const SpacerVertical(height: 5),
-                        // Padding(
-                        //   padding: EdgeInsets.only(bottom: 15.sp),
-                        //   child: ListAlignment(
-                        //     // date: DateFormat("MMMM dd, yyyy").format(
-                        //     //     provider.blogsDetail?.publishedDate ??
-                        //     //         DateTime.now()),
-                        //     date: provider.blogsDetail?.postDateString ?? "",
-                        //     list1: provider.blogsDetail?.authors,
-                        //     list2: const [],
-                        //     blog: true,
-                        //   ),
-                        // ),
-                        const SpacerVertical(height: 10),
-                        // SizedBox(
-                        //   width: double.infinity,
-                        //   // height: isPhone
-                        //   //     ? ScreenUtil().screenHeight * 0.3
-                        //   //     : ScreenUtil().screenHeight * 0.4,
-                        //   child: ThemeImageView(
-                        //     url: provider.blogsDetail?.image ?? "",
-                        //     // fit: BoxFit.contain,
-                        //   ),
-                        // ),
-                        CachedNetworkImagesWidget(
-                          provider.blogsDetail?.image ?? "",
-                          height: ScreenUtil().screenHeight * 0.27,
-                          width: double.infinity,
-                          fit: BoxFit.contain,
-                          // fit: BoxFit.contain,
-                        ),
-                        const SpacerVertical(height: 10),
-                        Padding(
-                          padding: EdgeInsets.only(bottom: 0.sp),
-                          child: ListAlignment(
-                            date: provider.blogsDetail?.postDateString ?? "",
-                            list1: provider.blogsDetail?.authors,
-                            list2: const [],
-                            blog: true,
-                          ),
-                        ),
-                        SpacerVertical(height: Dimen.itemSpacing.sp),
-                        //Text("shwoing ticker Data", style: TextStyle(color: Colors.white),),
-                        //New Blog Tickers Widget
-                        const BlogDetailMentionBy(),
-                        SpacerVertical(height: Dimen.itemSpacing.sp),
-                        // const BlogDetailAuthor(),
-                        // const SpacerVertical(height: 5),
-                        // const BlogDetailCategory(),
-                        // const SpacerVertical(height: 5),
-                        // const BlogDetailTags(),
-                        HtmlWidget(
-                          onTapImage: (data) {
-                            Utils().showLog(data.sources.first.url);
-                          },
-                          onTapUrl: (url) async {
-                            bool a = false;
-                            if (Platform.isAndroid) {
-                              a = await launchUrl(Uri.parse(url));
-                              // Utils().showLog("clicked ur---$url, return value $a");
-                            } else {
-                              a = true;
-                              Uri uri = Uri.parse(url);
-                              iOSNavigate(uri);
-                              // Utils().showLog("iOS navigation");
-                            }
-                            return a;
-                          },
+                  Column(
+                    children: [
+                      Expanded(
+                        child: SingleChildScrollView(
+                          physics: const AlwaysScrollableScrollPhysics(),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.max,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              // const SpacerVertical(height: 5),
+                              Text(
+                                provider.blogsDetail?.name ?? "",
+                                style: styleGeorgiaBold(fontSize: 25),
+                              ),
+                              const SpacerVertical(height: 5),
+                              // Padding(
+                              //   padding: EdgeInsets.only(bottom: 15.sp),
+                              //   child: ListAlignment(
+                              //     // date: DateFormat("MMMM dd, yyyy").format(
+                              //     //     provider.blogsDetail?.publishedDate ??
+                              //     //         DateTime.now()),
+                              //     date: provider.blogsDetail?.postDateString ?? "",
+                              //     list1: provider.blogsDetail?.authors,
+                              //     list2: const [],
+                              //     blog: true,
+                              //   ),
+                              // ),
+                              const SpacerVertical(height: 10),
+                              // SizedBox(
+                              //   width: double.infinity,
+                              //   // height: isPhone
+                              //   //     ? ScreenUtil().screenHeight * 0.3
+                              //   //     : ScreenUtil().screenHeight * 0.4,
+                              //   child: ThemeImageView(
+                              //     url: provider.blogsDetail?.image ?? "",
+                              //     // fit: BoxFit.contain,
+                              //   ),
+                              // ),
+                              CachedNetworkImagesWidget(
+                                provider.blogsDetail?.image ?? "",
+                                height: ScreenUtil().screenHeight * 0.27,
+                                width: double.infinity,
+                                fit: BoxFit.contain,
+                                // fit: BoxFit.contain,
+                              ),
+                              const SpacerVertical(height: 10),
+                              Padding(
+                                padding: EdgeInsets.only(bottom: 0.sp),
+                                child: ListAlignment(
+                                  date: provider.blogsDetail?.postDateString ??
+                                      "",
+                                  list1: provider.blogsDetail?.authors,
+                                  list2: const [],
+                                  blog: true,
+                                ),
+                              ),
+                              SpacerVertical(height: Dimen.itemSpacing.sp),
+                              //Text("shwoing ticker Data", style: TextStyle(color: Colors.white),),
+                              //New Blog Tickers Widget
+                              const BlogDetailMentionBy(),
+                              SpacerVertical(height: Dimen.itemSpacing.sp),
+                              // const BlogDetailAuthor(),
+                              // const SpacerVertical(height: 5),
+                              // const BlogDetailCategory(),
+                              // const SpacerVertical(height: 5),
+                              // const BlogDetailTags(),
+                              HtmlWidget(
+                                onTapImage: (data) {
+                                  Utils().showLog(data.sources.first.url);
+                                },
+                                onTapUrl: (url) async {
+                                  bool a = false;
+                                  if (Platform.isAndroid) {
+                                    a = await launchUrl(Uri.parse(url));
+                                    // Utils().showLog("clicked ur---$url, return value $a");
+                                  } else {
+                                    a = true;
+                                    Uri uri = Uri.parse(url);
+                                    iOSNavigate(uri);
+                                    // Utils().showLog("iOS navigation");
+                                  }
+                                  return a;
+                                },
 
-                          // customWidgetBuilder: (element) {
-                          //   if (element.localName == 'img') {
-                          //     final src = element.attributes['src'];
-                          //     return ZoomableImage(url: src ?? "");
-                          //   }
-                          //   return null;
-                          // },
-                          onLoadingBuilder:
-                              (context, element, loadingProgress) {
-                            return const ProgressDialog();
-                          },
-                          provider.blogsDetail?.description ?? "",
-                          textStyle:
-                              styleGeorgiaRegular(fontSize: 18, height: 1.5),
-                        ),
-                        if (provider.blogsDetail?.feedbackMsg != null)
-                          ArticleFeedback(
-                            feebackType: provider.extra?.feebackType,
-                            title: provider.blogsDetail?.feedbackMsg,
-                            submitMessage:
-                                provider.blogsDetail?.feedbackExistMsg,
-                            onSubmit: (value) =>
-                                _onSubmitAffiliate(value, context),
+                                // customWidgetBuilder: (element) {
+                                //   if (element.localName == 'img') {
+                                //     final src = element.attributes['src'];
+                                //     return ZoomableImage(url: src ?? "");
+                                //   }
+                                //   return null;
+                                // },
+                                onLoadingBuilder:
+                                    (context, element, loadingProgress) {
+                                  return const ProgressDialog();
+                                },
+                                provider.blogsDetail?.description ?? "",
+                                textStyle: styleGeorgiaRegular(
+                                    fontSize: 18, height: 1.5),
+                              ),
+                              if (provider.blogsDetail?.feedbackMsg != null)
+                                ArticleFeedback(
+                                  feebackType: provider.extra?.feebackType,
+                                  title: provider.blogsDetail?.feedbackMsg,
+                                  submitMessage:
+                                      provider.blogsDetail?.feedbackExistMsg,
+                                  onSubmit: (value) =>
+                                      _onSubmitAffiliate(value, context),
+                                ),
+                              const SpacerVertical(height: 30),
+                            ],
                           ),
-                        const SpacerVertical(height: 30),
-                      ],
-                    ),
+                        ),
+                      ),
+                      BaseAuth(),
+                    ],
                   ),
                   // Positioned(
                   //   bottom: 6.sp,
@@ -272,7 +284,8 @@ class BlogDetailContainer extends StatelessWidget {
                   //   ),
                   // ),
                   Positioned(
-                    bottom: 6,
+                    bottom:
+                        homeProvider.extra?.updateYourPhone == null ? 6 : 220,
                     right: 6,
                     // child: FloatingActionButton(
                     //   backgroundColor: ThemeColors.accent,
@@ -306,6 +319,7 @@ class BlogDetailContainer extends StatelessWidget {
         BlogDetailsLock(slug: slug),
         if (provider.blogsDetail?.premiumReaderOnly == true)
           CommonLock(isLocked: true),
+
         // if ((provider.blogsDetail?.readingStatus == false) &&
         //     !provider.isLoadingDetail)
         //   Column(

@@ -210,7 +210,7 @@ class CommonLock extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SpacerVertical(height: 10),
+                // SpacerVertical(height: ScreenUtil().scaleWidth + 100),
               ],
             ),
           ),

@@ -180,6 +180,7 @@ class _BaseAuthState extends State<BaseAuth> {
           topLeft: Radius.circular(8),
           topRight: Radius.circular(8),
         ),
+        border: Border(top: BorderSide(color: ThemeColors.greyBorder)),
         gradient: LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
@@ -243,6 +244,10 @@ class _BaseAuthState extends State<BaseAuth> {
                             bottomRight: Radius.circular(4),
                           ),
                           controller: phone,
+                          onChanged: (p0) {
+                            phone.text = p0;
+                            setState(() {});
+                          },
                           placeholder: "Enter your phone number",
                           keyboardType: TextInputType.phone,
                           inputFormatters: [
@@ -250,13 +255,20 @@ class _BaseAuthState extends State<BaseAuth> {
                           ],
                           textCapitalization: TextCapitalization.none,
                         ),
-                        Positioned(
-                          right: 10,
-                          child: InkWell(
-                            onTap: closeKeyboard,
-                            child: Icon(
-                              Icons.close,
-                              color: ThemeColors.background,
+                        Visibility(
+                          visible: phone.text != '',
+                          child: Positioned(
+                            right: 10,
+                            child: InkWell(
+                              onTap: () {
+                                phone.clear();
+                                closeKeyboard();
+                                setState(() {});
+                              },
+                              child: Icon(
+                                Icons.close,
+                                color: ThemeColors.background,
+                              ),
                             ),
                           ),
                         ),

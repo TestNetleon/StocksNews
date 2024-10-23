@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/leaderboard.dart';
 import 'package:stocks_news_new/screens/affiliate/claimHistory/index.dart';
 import 'package:stocks_news_new/screens/affiliate/referFriend/widget/points_summary.dart';
@@ -48,6 +49,8 @@ class _AffiliateTransactionState extends State<AffiliateTransaction> {
   @override
   Widget build(BuildContext context) {
     LeaderBoardProvider provider = context.watch<LeaderBoardProvider>();
+    HomeProvider homeProvider = context.watch<HomeProvider>();
+
     return BaseContainer(
       appBar: AppBarHome(
         isPopback: true,
@@ -112,21 +115,24 @@ class _AffiliateTransactionState extends State<AffiliateTransaction> {
                 ),
               ),
             ),
-            ThemeButton(
-              onPressed: () async {
-                final result = await Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => ClaimPointsIndex(),
-                  ),
-                );
-                if (result == true) {
-                  provider.getReferData();
-                  provider.getTransactionData();
-                }
-              },
-              text: "Claim Your Rewards",
-              margin: EdgeInsets.only(top: 5),
+            Visibility(
+              visible: homeProvider.extra?.showRewards == true,
+              child: ThemeButton(
+                onPressed: () async {
+                  final result = await Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ClaimPointsIndex(),
+                    ),
+                  );
+                  if (result == true) {
+                    provider.getReferData();
+                    provider.getTransactionData();
+                  }
+                },
+                text: "Claim Your Rewards",
+                margin: EdgeInsets.only(top: 5),
+              ),
             )
           ],
         ),

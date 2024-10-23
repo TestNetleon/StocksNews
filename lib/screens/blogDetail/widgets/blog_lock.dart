@@ -321,6 +321,7 @@ class _BlogDetailsLockState extends State<BlogDetailsLock> {
                   WarningTextOnLock(
                     warningText: provider.blogsDetail?.warningText,
                   ),
+                  SpacerVertical(height: ScreenUtil().scaleWidth + 200),
                 ],
               ),
             ),

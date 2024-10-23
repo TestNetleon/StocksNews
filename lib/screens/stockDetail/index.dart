@@ -23,6 +23,8 @@ import 'package:stocks_news_new/widgets/theme_image_view.dart';
 import '../../socket/socket.dart';
 import '../../utils/constants.dart';
 // import '../simulator/buyAndSell/index.dart';
+import '../../utils/utils.dart';
+import '../auth/base/base_auth.dart';
 import 'widgets/AlertWatchlist/add_alert_watchlist.dart';
 import 'stockDetailTabs/chart/chart.dart';
 import 'stockDetailTabs/dividends/dividends.dart';
@@ -221,6 +223,8 @@ class _StockDetailState extends State<StockDetail> {
                 padding: const EdgeInsets.only(top: 8),
                 child: CommonTabContainer(
                   onChange: (index) {
+                    closeKeyboard();
+
                     provider.setOpenIndex(-1);
                   },
                   padding: const EdgeInsets.only(bottom: 10),
@@ -263,6 +267,7 @@ class _StockDetailState extends State<StockDetail> {
             //     );
             //   },
             // ),
+            BaseAuth(),
             Container(
               decoration: BoxDecoration(
                 color: ThemeColors.background.withOpacity(0.8),
