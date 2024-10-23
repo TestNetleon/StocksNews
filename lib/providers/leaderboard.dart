@@ -263,7 +263,7 @@ class LeaderBoardProvider extends ChangeNotifier {
 
   int _page = 1;
 
-  bool get canLoadMore => _page <= (_extraDetail?.totalPages ?? 1);
+  bool get canLoadMore => _page < (_extraDetail?.totalPages ?? 1);
   // bool get canLoadMore => _page < 5;
 
   void setStatusSeparate(status) {
@@ -341,7 +341,7 @@ class LeaderBoardProvider extends ChangeNotifier {
 
   int _pageClaim = 1;
 
-  bool get canLoadMoreClaim => _pageClaim <= (_extraClaim?.totalPages ?? 1);
+  bool get canLoadMoreClaim => _pageClaim < (_extraClaim?.totalPages ?? 1);
 
   void setStatusClaim(status) {
     _statusClaim = status;
@@ -354,6 +354,7 @@ class LeaderBoardProvider extends ChangeNotifier {
     required String type,
     id,
   }) async {
+    Utils().showLog('HI');
     if (loadMore) {
       _pageClaim++;
       setStatusClaim(Status.loadingMore);
@@ -367,7 +368,7 @@ class LeaderBoardProvider extends ChangeNotifier {
       Map request = {
         "token":
             navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
-        "page": "$_page",
+        "page": "$_pageClaim",
         "txn_type": type,
       };
       if (id != null) {
@@ -384,8 +385,8 @@ class LeaderBoardProvider extends ChangeNotifier {
         if (_pageClaim == 1) {
           _dataClaim =
               affiliateTransactionResFromJson(jsonEncode(response.data));
-          // _extraDetail =
-          //     (response.extra is Extra ? response.extra as Extra : null);
+          _extraClaim =
+              (response.extra is Extra ? response.extra as Extra : null);
         } else {
           _dataClaim?.addAll(
               affiliateTransactionResFromJson(jsonEncode(response.data)));
