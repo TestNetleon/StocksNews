@@ -281,7 +281,9 @@ class _BaseAuthState extends State<BaseAuth> {
           ),
           SpacerVertical(height: 10),
           _button(
-              text: isLoading ? 'Verifying...' : 'Update',
+              text: isLoading
+                  ? 'Verifying your phone number...'
+                  : 'Update my phone number',
               onTap: isLoading ? null : _gotoVerify,
               color: const Color.fromARGB(255, 194, 216, 51),
               textColor: ThemeColors.background),
@@ -300,7 +302,6 @@ class _BaseAuthState extends State<BaseAuth> {
       radius: 30,
       // showArrow: false,
       fontBold: true,
-
       onPressed: onTap,
       text: text,
       color: color,

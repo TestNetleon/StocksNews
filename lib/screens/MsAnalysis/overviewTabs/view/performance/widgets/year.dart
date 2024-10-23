@@ -71,7 +71,7 @@ class MsPerformanceYear extends StatelessWidget {
                     : ThemeColors.sos,
               ),
               Positioned(
-                left: (msWidthPadding) * pointerPosition - 15,
+                left: (msWidthPadding) * pointerPosition - 23,
                 top: 12,
                 child: MsPointerContainer(
                   style: styleGeorgiaBold(

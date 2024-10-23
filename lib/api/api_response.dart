@@ -223,7 +223,6 @@ class Extra {
         updateYourPhone: json["update_your_phone"] == null
             ? null
             : UpdateYourPhoneRes.fromJson(json["update_your_phone"]),
-
         recommendation: json["recommendation"],
         showRewards: json['show_rewards'],
         showAnalysis: json['show_analysis'],

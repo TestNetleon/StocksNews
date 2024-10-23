@@ -37,7 +37,7 @@ class MsRangeProgressBar extends StatelessWidget {
       child: Stack(
         children: [
           Positioned(
-            left: (msWidthPadding) * rangeStart,
+            left: ((msWidthPadding) * rangeStart) - 15,
             child: Container(
               height: 8,
               width: (msWidthPadding) * (rangeEnd - rangeStart),
