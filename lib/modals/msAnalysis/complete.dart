@@ -152,10 +152,8 @@ class MsCompleteRes {
         "latestNews": latestNews == null
             ? []
             : List<dynamic>.from(latestNews!.map((x) => x.toJson())),
-
         "text": text?.toJson(),
         "overview_text": overviewText?.toJson(),
-
         "fundamentals": fundamentals?.toJson(),
         "keyHighlights": keyHighlights == null
             ? []
