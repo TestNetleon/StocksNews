@@ -86,7 +86,7 @@ class MsTopWidgetDetail extends StatelessWidget {
                 padding: EdgeInsets.symmetric(vertical: 2, horizontal: 8),
                 margin: EdgeInsets.only(right: 0),
                 child: Text(
-                  "Mkt Cap",
+                  "MKT Cap",
                   style: stylePTSansRegular(fontSize: 12),
                 ),
               ),

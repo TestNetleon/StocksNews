@@ -30,6 +30,7 @@ class MsCompleteRes {
   final PriceVolatilityNew? priceVolatilityNew;
   final String? timeFrameText;
   final String? lastUpdateDate;
+  final String? usdText;
 
   // final String? cap;
   // final num? dividendYield;
@@ -58,6 +59,7 @@ class MsCompleteRes {
     this.peerComparison,
     this.msEvents,
     this.lastUpdateDate,
+    this.usdText,
     // this.cap,
     // this.dividendYield,
     // this.pe,
@@ -68,6 +70,8 @@ class MsCompleteRes {
   factory MsCompleteRes.fromJson(Map<String, dynamic> json) => MsCompleteRes(
         recommendation: json["recommendation"],
         open: json['open'],
+        usdText: json['usd_text'],
+
         timeFrameText: json['time_frame_text'],
         lastUpdateDate: json['last_update_date'],
 
@@ -131,6 +135,7 @@ class MsCompleteRes {
 
   Map<String, dynamic> toJson() => {
         "recommendation": recommendation,
+        'usd_text': usdText,
         'last_update_date': lastUpdateDate,
         "swotAnalysis": swotAnalysis?.toJson(),
         "priceVolatilityNew": priceVolatilityNew?.toJson(),

@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/stockAnalysis/provider.dart';
 import 'package:stocks_news_new/screens/MsAnalysis/overviewTabs/view/widgets/container.dart';
 import 'package:stocks_news_new/screens/MsAnalysis/overviewTabs/view/widgets/header.dart';
+import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/loading.dart';
@@ -112,7 +113,16 @@ class _MsFinancialState extends State<MsFinancial>
               ),
             ),
           ),
-          SpacerVertical(height: 10.0),
+          SpacerVertical(height: 10),
+          Visibility(
+            visible: provider.completeData?.usdText != null &&
+                provider.completeData?.usdText != '',
+            child: Text(
+              provider.completeData?.usdText ?? 'All values are in USD',
+              style: stylePTSansRegular(color: ThemeColors.greyText),
+            ),
+          ),
+          SpacerVertical(height: 10),
         ],
       ),
     );
