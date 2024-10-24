@@ -39,7 +39,7 @@ class MsPerformanceYear extends StatelessWidget {
     double pointerPosition = (currentPrice - weekLow) / (weekHigh - weekLow);
     pointerPosition = pointerPosition.clamp(0.0, 1.0);
 
-    double finalPosition = (msWidthPadding) * pointerPosition - 45;
+    double finalPosition = (msWidthPadding) * pointerPosition - 40;
 
     return Column(
       children: [
