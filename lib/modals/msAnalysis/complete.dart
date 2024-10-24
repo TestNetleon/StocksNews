@@ -168,7 +168,7 @@ class MsCompleteRes {
             : List<dynamic>.from(score!.map((x) => x.toJson())),
         "radar_chart": radarChart == null
             ? []
-            : List<dynamic>.from(score!.map((x) => x.toJson())),
+            : List<dynamic>.from(radarChart!.map((x) => x.toJson())),
         // "swot": swot?.toJson(),
         // "cap": cap,
         // "dividendYield": dividendYield,

@@ -82,7 +82,7 @@ class _SdOverviewState extends State<SdOverview> {
                 const SpacerVertical(height: 4),
                 const SdTopDisclaimer(),
                 Visibility(
-                  // visible: provider.tabRes?.showAnalysis == true,
+                  visible: provider.tabRes?.showAnalysis == true,
                   child: ThemeButtonSmall(
                     text: "Stock Analysis",
                     onPressed: () {
