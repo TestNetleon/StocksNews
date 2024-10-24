@@ -8,11 +8,13 @@ import 'package:stocks_news_new/screens/drawer/base_drawer.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
+import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import '../../socket/socket.dart';
 import '../../widgets/custom/refresh_indicator.dart';
+import '../../widgets/disclaimer_widget.dart';
 import 'highlights/index.dart';
 import 'otherStocks/other.dart';
 import 'ourTake/index.dart';
@@ -117,7 +119,7 @@ class _MsAnalysisState extends State<MsAnalysis> {
               : recommendation?.toLowerCase() == 'sell'
                   ? const Color.fromARGB(255, 163, 12, 1)
                   : ThemeColors.accent,
-      appBar: AppBarHome(
+      appBar: const AppBarHome(
         isPopback: true,
         subTitle: "",
         widget: PredictionAppBar(),
@@ -140,60 +142,117 @@ class _MsAnalysisState extends State<MsAnalysis> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  MsTopWidgetDetail(),
-                  SpacerVertical(height: Dimen.padding),
+                  const MsTopWidgetDetail(),
+                  const SpacerVertical(height: Dimen.padding),
                   Visibility(
                     visible: provider.completeData?.radarChart != null &&
                         provider.completeData?.radarChart?.isNotEmpty == true,
-                    child: MsRadarGraph(),
+                    child: const MsRadarGraph(),
                   ),
+
+                  Visibility(
+                    visible: provider.completeData?.timeFrameText != null &&
+                        provider.completeData?.timeFrameText != '',
+                    child:
+                        _tile(provider.completeData?.timeFrameText ?? "", 20),
+                  ),
+
                   Visibility(
                     visible: showStockScore,
-                    child: MsStockScore(),
+                    child: const MsStockScore(),
                   ),
-                  MsOtherStocks(),
+                  const MsOtherStocks(),
                   Visibility(
                     visible: provider.completeData?.score != null &&
                         provider.completeData?.score?.isNotEmpty == true,
-                    child: MsOurTake(),
+                    child: const MsOurTake(),
                   ),
                   Visibility(
                     visible: provider.completeData?.stockHighLights != null &&
                         provider.completeData?.stockHighLights?.isNotEmpty ==
                             true,
-                    child: MsOurHighlights(),
+                    child: const MsOurHighlights(),
                   ),
                   Visibility(
                     visible: provider.completeData?.swotAnalysis != null,
-                    child: MsSwotAnalysis(),
+                    child: const MsSwotAnalysis(),
                   ),
                   Visibility(
                     visible: provider.completeData?.priceVolatilityNew != null,
-                    child: Padding(
+                    child: const Padding(
                       padding: EdgeInsets.symmetric(vertical: Dimen.padding),
                       child: MsPriceVolatility(),
                     ),
                   ),
-                  MsTabs(),
-                  SpacerVertical(height: Dimen.padding),
+                  const MsTabs(),
+                  const SpacerVertical(height: Dimen.padding),
                   // MsForecastChart(),
                   Visibility(
                     visible: provider.completeData?.peerComparison != null,
-                    child: MsPeerComparison(),
+                    child: const MsPeerComparison(),
                   ),
                   // SpacerVertical(height: Dimen.padding),
                   // MsFundamentalAnalysisMetrics(),
-                  SpacerVertical(height: Dimen.padding),
+                  const SpacerVertical(height: Dimen.padding),
                   // MsTechnicalAnalysis(),
                   // SpacerVertical(height: Dimen.padding),
                   Visibility(
+                    visible: provider.completeData?.lastUpdateDate != null &&
+                        provider.completeData?.lastUpdateDate != '',
+                    child:
+                        _tile(provider.completeData?.lastUpdateDate ?? "", 15),
+                  ),
+                  Visibility(
                     visible: provider.completeData?.faqData != null &&
                         provider.completeData?.faqData?.isNotEmpty == true,
-                    child: MsFAQs(),
+                    child: const MsFAQs(),
                   ),
+                  if (provider.extraTop?.disclaimer != null &&
+                      provider.extraTop?.disclaimer != '')
+                    DisclaimerWidget(data: provider.extraTop?.disclaimer ?? ''),
                 ],
               ),
             ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Align _tile(String label, double fontSize) {
+    return Align(
+      alignment: Alignment.center,
+      child: Container(
+        width: double.infinity,
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+        decoration: BoxDecoration(
+          border: Border.all(
+            color: ThemeColors.greyBorder.withOpacity(0.5),
+          ),
+          boxShadow: const [
+            BoxShadow(
+              color: Color.fromARGB(255, 99, 99, 99),
+              blurRadius: 1.2,
+              spreadRadius: 0.1,
+              offset: Offset(0, 1),
+            ),
+          ],
+          borderRadius: BorderRadius.circular(8),
+          gradient: const LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            stops: [0.4, 0.9],
+            colors: [
+              Color.fromARGB(255, 0, 0, 0),
+              Color.fromARGB(255, 34, 34, 34),
+            ],
+          ),
+        ),
+        child: Text(
+          label,
+          style: stylePTSansRegular(
+            fontSize: fontSize,
+            color: ThemeColors.greyText,
           ),
         ),
       ),

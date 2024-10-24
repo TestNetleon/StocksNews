@@ -42,7 +42,10 @@ class DisclaimerWidget extends StatelessWidget {
         //   height: 1.5,
         //   color: ThemeColors.greyText,
         // ),
-        textStyle: const TextStyle(fontFamily: Fonts.ptSans),
+        textStyle: const TextStyle(
+          fontFamily: Fonts.ptSans,
+          // color: Colors.grey,
+        ),
       ),
     );
   }

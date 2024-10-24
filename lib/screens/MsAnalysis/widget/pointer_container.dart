@@ -14,7 +14,7 @@ class MsPointerContainer extends StatelessWidget {
     this.isDownwards = false,
     required this.title,
     this.style,
-    this.width = 55,
+    this.width = 65,
     this.color = ThemeColors.greyText,
   });
 
@@ -38,7 +38,7 @@ class MsPointerContainer extends StatelessWidget {
             color: color,
             borderRadius: BorderRadius.circular(30),
           ),
-          padding: EdgeInsets.symmetric(horizontal: 10, vertical: 3),
+          padding: EdgeInsets.symmetric(horizontal: 5, vertical: 3),
           child: AutoSizeText(
             textAlign: TextAlign.center,
             maxLines: 1,
@@ -92,5 +92,66 @@ class TrianglePointer extends CustomPainter {
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) {
     return false;
+  }
+}
+
+class MsPointerContainerNew extends StatelessWidget {
+  final bool isDownwards;
+  final String title;
+  final Color? color;
+  final TextStyle? style;
+  final double width;
+  const MsPointerContainerNew({
+    super.key,
+    this.isDownwards = false,
+    required this.title,
+    this.style,
+    this.width = 65,
+    this.color = ThemeColors.greyText,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Visibility(
+          visible: !isDownwards,
+          child: CustomPaint(
+            size: Size(10, 6),
+            painter: TrianglePointer(
+              isDownwards: isDownwards,
+              color: color ?? ThemeColors.greyText,
+            ),
+          ),
+        ),
+        Container(
+          width: width,
+          decoration: BoxDecoration(
+            color: color,
+            borderRadius: BorderRadius.circular(30),
+          ),
+          padding: EdgeInsets.symmetric(horizontal: 10, vertical: 3),
+          child: AutoSizeText(
+            textAlign: TextAlign.center,
+            maxLines: 1,
+            title,
+            style: styleGeorgiaBold(
+              color: ThemeColors.background,
+              fontSize: 12,
+            ),
+          ),
+        ),
+        Visibility(
+          visible: isDownwards,
+          child: CustomPaint(
+            size: Size(10, 6),
+            painter: TrianglePointer(
+              isDownwards: isDownwards,
+              color: color ?? ThemeColors.greyText,
+            ),
+          ),
+        ),
+      ],
+    );
   }
 }

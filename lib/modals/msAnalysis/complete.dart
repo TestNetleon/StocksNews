@@ -23,10 +23,14 @@ class MsCompleteRes {
   final List<MsNewsRes>? latestNews;
   // final Swot? swot;
   final MsTextRes? text;
+  final MsTextRes? overviewText;
   String? open;
   String? previousClose;
   String? volume;
   final PriceVolatilityNew? priceVolatilityNew;
+  final String? timeFrameText;
+  final String? lastUpdateDate;
+
   // final String? cap;
   // final num? dividendYield;
   // final num? pe;
@@ -35,6 +39,7 @@ class MsCompleteRes {
 
   MsCompleteRes({
     this.recommendation,
+    this.timeFrameText,
     this.priceVolatilityNew,
     this.swotAnalysis,
     this.keyHighlights,
@@ -46,11 +51,13 @@ class MsCompleteRes {
     this.radarChart,
     // this.swot,
     this.text,
+    this.overviewText,
     this.open,
     this.previousClose,
     this.volume,
     this.peerComparison,
     this.msEvents,
+    this.lastUpdateDate,
     // this.cap,
     // this.dividendYield,
     // this.pe,
@@ -61,6 +68,9 @@ class MsCompleteRes {
   factory MsCompleteRes.fromJson(Map<String, dynamic> json) => MsCompleteRes(
         recommendation: json["recommendation"],
         open: json['open'],
+        timeFrameText: json['time_frame_text'],
+        lastUpdateDate: json['last_update_date'],
+
         previousClose: json['previousClose'],
         priceVolatilityNew: json["priceVolatilityNew"] == null
             ? null
@@ -108,6 +118,9 @@ class MsCompleteRes {
                 json["radar_chart"]!.map((x) => MsRadarChartRes.fromJson(x))),
         // swot: json["swot"] == null ? null : Swot.fromJson(json["swot"]),
         text: json["text"] == null ? null : MsTextRes.fromJson(json["text"]),
+        overviewText: json["overview_text"] == null
+            ? null
+            : MsTextRes.fromJson(json["overview_text"]),
 
         // cap: json["cap"],
         // dividendYield: json["dividendYield"],
@@ -118,9 +131,10 @@ class MsCompleteRes {
 
   Map<String, dynamic> toJson() => {
         "recommendation": recommendation,
+        'last_update_date': lastUpdateDate,
         "swotAnalysis": swotAnalysis?.toJson(),
         "priceVolatilityNew": priceVolatilityNew?.toJson(),
-
+        'time_frame_text': timeFrameText,
         "events": msEvents == null
             ? []
             : List<dynamic>.from(msEvents!.map((x) => x.toJson())),
@@ -135,6 +149,8 @@ class MsCompleteRes {
             : List<dynamic>.from(latestNews!.map((x) => x.toJson())),
 
         "text": text?.toJson(),
+        "overview_text": overviewText?.toJson(),
+
         "fundamentals": fundamentals?.toJson(),
         "keyHighlights": keyHighlights == null
             ? []
@@ -234,6 +250,10 @@ class MsTextRes {
   final MsTextDataRes? peer;
   final MsTextDataRes? faq;
   final MsTextDataRes? stockScore;
+  final MsTextDataRes? performance;
+  final MsTextDataRes? fundamentals;
+  final MsTextDataRes? priceVolume;
+  final MsTextDataRes? financials;
 
   MsTextRes({
     this.otherStocks,
@@ -244,12 +264,28 @@ class MsTextRes {
     this.peer,
     this.faq,
     this.stockScore,
+    this.performance,
+    this.fundamentals,
+    this.priceVolume,
+    this.financials,
   });
 
   factory MsTextRes.fromJson(Map<String, dynamic> json) => MsTextRes(
         otherStocks: json["other_stocks"] == null
             ? null
             : MsTextDataRes.fromJson(json["other_stocks"]),
+        performance: json["performance"] == null
+            ? null
+            : MsTextDataRes.fromJson(json["performance"]),
+        financials: json["financials"] == null
+            ? null
+            : MsTextDataRes.fromJson(json["financials"]),
+        fundamentals: json["fundamentals"] == null
+            ? null
+            : MsTextDataRes.fromJson(json["fundamentals"]),
+        priceVolume: json["price_volume"] == null
+            ? null
+            : MsTextDataRes.fromJson(json["price_volume"]),
         stockScore: json["stock_score"] == null
             ? null
             : MsTextDataRes.fromJson(json["stock_score"]),
@@ -271,6 +307,10 @@ class MsTextRes {
 
   Map<String, dynamic> toJson() => {
         "other_stocks": otherStocks?.toJson(),
+        "performance": performance?.toJson(),
+        "price_volume": priceVolume?.toJson(),
+        "fundamentals": fundamentals?.toJson(),
+        "financials": financials?.toJson(),
         "stock_score": stockScore?.toJson(),
         "our_take": ourTake?.toJson(),
         "highlights": highlights?.toJson(),

@@ -29,8 +29,10 @@ class MsPerformance extends StatelessWidget {
         // ),
         child: MsOverviewHeader(
           leadingIcon: Icons.electric_bolt,
-          label: "Performance",
+          label: provider.completeData?.overviewText?.performance?.title ??
+              'Performance',
           stateKey: MsProviderKeys.performance,
+          showInfo: provider.completeData?.overviewText?.performance?.info,
         ),
       ),
       animatedChild: const Column(

@@ -22,7 +22,7 @@ class _MsPriceVolumeState extends State<MsPriceVolume>
   int selectedIndex = 0;
   List<String> menus = [
     'Past Returns',
-    'Post Volume',
+    'Past Volume',
   ];
 
   @override
@@ -35,8 +35,10 @@ class _MsPriceVolumeState extends State<MsPriceVolume>
         padding: EdgeInsets.all(12),
         child: MsOverviewHeader(
           leadingIcon: Icons.pie_chart,
-          label: "Price & Volume",
+          label: provider.completeData?.overviewText?.priceVolume?.title ??
+              "Price & Volume",
           stateKey: MsProviderKeys.priceVolume,
+          showInfo: provider.completeData?.overviewText?.priceVolume?.info,
         ),
       ),
       animatedChild: Column(
@@ -47,7 +49,6 @@ class _MsPriceVolumeState extends State<MsPriceVolume>
               setState(() {
                 selectedIndex = index;
               });
-
               provider.getPriceVolumeData(
                 symbol: provider.topData?.symbol ?? "",
                 selectedIndex: selectedIndex,

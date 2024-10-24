@@ -2,11 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/stockAnalysis/provider.dart';
 
+import '../../../widget/bottom_sheet.dart';
+
 class MsOverviewHeader extends StatelessWidget {
   final IconData? leadingIcon;
   final IconData? trailingIcon;
   final String label;
   final MsProviderKeys stateKey;
+  final String? showInfo;
 
   const MsOverviewHeader({
     super.key,
@@ -14,6 +17,7 @@ class MsOverviewHeader extends StatelessWidget {
     required this.label,
     this.trailingIcon = Icons.info,
     required this.stateKey,
+    this.showInfo,
   });
 
   @override
@@ -50,22 +54,25 @@ class MsOverviewHeader extends StatelessWidget {
                     color: Colors.white,
                   ),
                 ),
-                // GestureDetector(
-                //   onTap: () {
-                //     msShowBottomSheet();
-                //   },
-                //   child: Visibility(
-                //     visible: trailingIcon != null && isOpen,
-                //     child: Padding(
-                //       padding: const EdgeInsets.only(left: 8),
-                //       child: Icon(
-                //         trailingIcon,
-                //         color: Colors.grey,
-                //         size: 20,
-                //       ),
-                //     ),
-                //   ),
-                // ),
+                Visibility(
+                  visible: showInfo != null && showInfo != '',
+                  child: GestureDetector(
+                    onTap: () {
+                      msShowBottomSheet(html: showInfo);
+                    },
+                    child: Visibility(
+                      visible: trailingIcon != null,
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 8),
+                        child: Icon(
+                          trailingIcon,
+                          color: Colors.grey,
+                          size: 20,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
               ],
             ),
             Icon(

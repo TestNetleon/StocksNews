@@ -14,12 +14,17 @@ class MsOverview extends StatelessWidget {
 
     return Column(
       children: [
-        MsPerformance(),
-        if (provider.completeData?.fundamentals != null) MsFundamental(),
+        if (provider.completeData?.overviewText?.performance?.status == true)
+          MsPerformance(),
+        if (provider.completeData?.fundamentals != null &&
+            provider.completeData?.overviewText?.fundamentals?.status == true)
+          MsFundamental(),
         // if (provider.pvData != null && provider.pvData?.isNotEmpty == true)
-        MsPriceVolume(),
+        if (provider.completeData?.overviewText?.priceVolume?.status == true)
+          MsPriceVolume(),
         if (provider.financialsData != null &&
-            provider.financialsData?.isNotEmpty == true)
+            provider.financialsData?.isNotEmpty == true &&
+            provider.completeData?.overviewText?.financials?.status == true)
           MsFinancial(),
         // MsShareholdings(),
       ],

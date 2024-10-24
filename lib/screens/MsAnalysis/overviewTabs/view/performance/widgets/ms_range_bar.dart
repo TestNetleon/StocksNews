@@ -27,7 +27,7 @@ class MsRangeProgressBar extends StatelessWidget {
 
     return Container(
       height: 8,
-      margin: EdgeInsets.symmetric(horizontal: 20),
+      margin: EdgeInsets.symmetric(horizontal: 40),
       width: ScreenUtil().screenWidth,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(30),
@@ -37,7 +37,7 @@ class MsRangeProgressBar extends StatelessWidget {
       child: Stack(
         children: [
           Positioned(
-            left: ((msWidthPadding) * rangeStart) - 15,
+            left: ((msWidthPadding) * rangeStart) - 55,
             child: Container(
               height: 8,
               width: (msWidthPadding) * (rangeEnd - rangeStart),

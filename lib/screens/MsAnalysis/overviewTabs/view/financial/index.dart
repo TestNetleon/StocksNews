@@ -30,8 +30,10 @@ class _MsFinancialState extends State<MsFinancial>
         padding: const EdgeInsets.all(12),
         child: MsOverviewHeader(
           leadingIcon: Icons.format_indent_increase_outlined,
-          label: "Financials",
+          label: provider.completeData?.overviewText?.financials?.title ??
+              "Financials",
           stateKey: MsProviderKeys.financials,
+          showInfo: provider.completeData?.overviewText?.financials?.info,
         ),
       ),
       animatedChild: Column(
@@ -45,7 +47,6 @@ class _MsFinancialState extends State<MsFinancial>
             selectedIndex: provider.selectedTypeIndex,
           ),
           SpacerVertical(height: 10),
-
           BaseUiContainer(
             hasData: provider.financialsData != null &&
                 provider.financialsData?.isNotEmpty == true,
@@ -63,10 +64,9 @@ class _MsFinancialState extends State<MsFinancial>
               child: Loading(),
             ),
             child: MsFinancialCharts(
-              chart: provider.financialsData,
+              chart: provider.financialsData?.reversed.toList(),
             ),
           ),
-
           // SpacerVertical(height: 15),
           // Text(
           //   'all values are in \$',

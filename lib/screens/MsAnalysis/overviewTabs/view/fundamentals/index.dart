@@ -29,8 +29,10 @@ class _MsFundamentalState extends State<MsFundamental> {
         padding: const EdgeInsets.all(12),
         child: MsOverviewHeader(
           leadingIcon: Icons.file_open_sharp,
-          label: "Fundamentals",
+          label: provider.completeData?.overviewText?.fundamentals?.title ??
+              "Fundamentals",
           stateKey: MsProviderKeys.fundamentals,
+          showInfo: provider.completeData?.overviewText?.fundamentals?.info,
         ),
       ),
       animatedChild: Column(

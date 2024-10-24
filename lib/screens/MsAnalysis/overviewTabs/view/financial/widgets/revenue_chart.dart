@@ -56,7 +56,7 @@ class MsFinancialCharts extends StatelessWidget {
               "${chart?[groupIndex].formattedValue}",
               styleGeorgiaBold(
                 color: Colors.white,
-                fontSize: 13,
+                fontSize: 12,
               ),
             );
           },
@@ -127,13 +127,48 @@ class MsFinancialCharts extends StatelessWidget {
         end: Alignment.topCenter,
       );
 
+  // List<BarChartGroupData> get barGroups {
+  //   if (chart == null || chart!.isEmpty) return [];
+  //   List<BarChartGroupData> groups = [];
+  //   double? previousValue;
+  //   for (int i = (chart?.length ?? 0) - 1; i >= 0; i--) {
+  //     LinearGradient barGradient;
+  //     double currentValue = chart![i].value?.toDouble() ?? 0;
+  //     if (previousValue == null || currentValue > previousValue) {
+  //       barGradient = _greenGradient;
+  //     } else {
+  //       barGradient = _redGradient;
+  //     }
+  //     previousValue = currentValue;
+  //     groups.add(
+  //       BarChartGroupData(
+  //         x: i,
+  //         barRods: [
+  //           BarChartRodData(
+  //             toY: currentValue,
+  //             width: 25,
+  //             borderRadius: BorderRadius.vertical(
+  //               top: Radius.circular(5),
+  //               bottom: Radius.circular(5),
+  //             ),
+  //             gradient: barGradient,
+  //           ),
+  //         ],
+  //         showingTooltipIndicators: [0],
+  //       ),
+  //     );
+  //   }
+  //   return groups.reversed.toList();
+  // }
+
   List<BarChartGroupData> get barGroups {
     if (chart == null || chart!.isEmpty) return [];
 
     List<BarChartGroupData> groups = [];
     double? previousValue;
 
-    for (int i = (chart?.length ?? 0) - 1; i >= 0; i--) {
+    for (int i = 0; i < chart!.length; i++) {
+      // Changed loop to go from left to right
       LinearGradient barGradient;
 
       double currentValue = chart![i].value?.toDouble() ?? 0;
@@ -165,6 +200,6 @@ class MsFinancialCharts extends StatelessWidget {
       );
     }
 
-    return groups.reversed.toList();
+    return groups;
   }
 }

@@ -89,11 +89,11 @@ class MsSwotAnalysisDetailItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
-      borderRadius: BorderRadius.circular(10),
+      borderRadius: BorderRadius.circular(6),
       child: Container(
         decoration: BoxDecoration(
           color: ThemeColors.background,
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(6),
         ),
         margin: EdgeInsets.only(bottom: 20),
         child: Column(
