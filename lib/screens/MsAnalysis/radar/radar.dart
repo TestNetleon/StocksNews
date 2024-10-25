@@ -26,8 +26,7 @@ class _MsRadarGraphState extends State<MsRadarGraph> {
         MsRadarChartView(data: provider.completeData?.radarChart),
         SpacerVertical(height: 10),
         Visibility(
-          visible: provider.completeData?.recommendation != null &&
-              provider.completeData?.recommendation != '',
+          visible: provider.completeData?.recommendationNew != null,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -40,16 +39,18 @@ class _MsRadarGraphState extends State<MsRadarGraph> {
               ),
               SpacerHorizontal(width: 20),
               Text(
-                "${provider.completeData?.recommendation}",
+                "${provider.completeData?.recommendationNew?.text}",
                 style: stylePTSansRegular(
                   fontSize: 70,
-                  color: provider.completeData?.recommendation?.toLowerCase() ==
-                          'buy'
-                      ? ThemeColors.accent
-                      : provider.completeData?.recommendation?.toLowerCase() ==
-                              'sell'
+                  color: provider.completeData?.recommendationNew?.color
+                              ?.toLowerCase() ==
+                          'orange'
+                      ? Colors.orange
+                      : provider.completeData?.recommendationNew?.color
+                                  ?.toLowerCase() ==
+                              'red'
                           ? ThemeColors.sos
-                          : Colors.orange,
+                          : ThemeColors.accent,
                   fontFamily: Fonts.merriWeather,
                 ),
               ),

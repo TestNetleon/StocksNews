@@ -104,7 +104,7 @@ class _MsAnalysisState extends State<MsAnalysis> {
     MSAnalysisProvider provider = context.watch<MSAnalysisProvider>();
     // MsStockTopRes? topData = provider.topData;
 
-    String? recommendation = provider.completeData?.recommendation;
+    String? recommendation = provider.completeData?.recommendationNew?.color;
 //------------------------------------------------------------------------------------
     bool showStockScore = provider.completeData?.score != null &&
         provider.completeData?.score?.isNotEmpty == true &&
@@ -114,9 +114,9 @@ class _MsAnalysisState extends State<MsAnalysis> {
       drawer: const BaseDrawer(resetIndex: true),
       baseColor: provider.isLoadingComplete && provider.completeData == null
           ? Colors.black
-          : recommendation?.toLowerCase() == 'hold'
+          : recommendation?.toLowerCase() == 'orange'
               ? const Color.fromARGB(255, 255, 171, 44)
-              : recommendation?.toLowerCase() == 'sell'
+              : recommendation?.toLowerCase() == 'red'
                   ? const Color.fromARGB(255, 163, 12, 1)
                   : ThemeColors.accent,
       appBar: const AppBarHome(
@@ -149,22 +149,24 @@ class _MsAnalysisState extends State<MsAnalysis> {
                         provider.completeData?.radarChart?.isNotEmpty == true,
                     child: const MsRadarGraph(),
                   ),
-
                   Visibility(
                     visible: provider.completeData?.timeFrameText != null &&
                         provider.completeData?.timeFrameText != '',
-                    child:
-                        _tile(provider.completeData?.timeFrameText ?? "", 20),
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 15),
+                      child:
+                          _tile(provider.completeData?.timeFrameText ?? "", 20),
+                    ),
                   ),
-
                   Visibility(
                     visible: showStockScore,
                     child: const MsStockScore(),
                   ),
                   const MsOtherStocks(),
                   Visibility(
-                    visible: provider.completeData?.score != null &&
-                        provider.completeData?.score?.isNotEmpty == true,
+                    visible: provider.completeData?.keyHighlights != null &&
+                        provider.completeData?.keyHighlights?.isNotEmpty ==
+                            true,
                     child: const MsOurTake(),
                   ),
                   Visibility(

@@ -10,7 +10,7 @@ MsCompleteRes msCompleteResFromJson(String str) =>
 String msCompleteResToJson(MsCompleteRes data) => json.encode(data.toJson());
 
 class MsCompleteRes {
-  final String? recommendation;
+  // final String? recommendation;
   final List<String>? keyHighlights;
   final List<MsRadarChartRes>? stockHighLights;
   final List<MsRadarChartRes>? score;
@@ -31,7 +31,7 @@ class MsCompleteRes {
   final String? timeFrameText;
   final String? lastUpdateDate;
   final String? usdText;
-
+  final RecommendationNew? recommendationNew;
   // final String? cap;
   // final num? dividendYield;
   // final num? pe;
@@ -39,7 +39,8 @@ class MsCompleteRes {
   // final num? sectorPe;
 
   MsCompleteRes({
-    this.recommendation,
+    // this.recommendation,
+    this.recommendationNew,
     this.timeFrameText,
     this.priceVolatilityNew,
     this.swotAnalysis,
@@ -68,12 +69,15 @@ class MsCompleteRes {
   });
 
   factory MsCompleteRes.fromJson(Map<String, dynamic> json) => MsCompleteRes(
-        recommendation: json["recommendation"],
+        // recommendation: json["recommendation"],
         open: json['open'],
         usdText: json['usd_text'],
 
         timeFrameText: json['time_frame_text'],
         lastUpdateDate: json['last_update_date'],
+        recommendationNew: json["recommendationNew"] == null
+            ? null
+            : RecommendationNew.fromJson(json["recommendationNew"]),
 
         previousClose: json['previousClose'],
         priceVolatilityNew: json["priceVolatilityNew"] == null
@@ -134,9 +138,11 @@ class MsCompleteRes {
       );
 
   Map<String, dynamic> toJson() => {
-        "recommendation": recommendation,
+        // "recommendation": recommendation,
         'usd_text': usdText,
         'last_update_date': lastUpdateDate,
+        "recommendationNew": recommendationNew?.toJson(),
+
         "swotAnalysis": swotAnalysis?.toJson(),
         "priceVolatilityNew": priceVolatilityNew?.toJson(),
         'time_frame_text': timeFrameText,
@@ -173,6 +179,27 @@ class MsCompleteRes {
         // "pe": pe,
         // "sector": sector,
         // "sector_pe": sectorPe,
+      };
+}
+
+class RecommendationNew {
+  final String? text;
+  final String? color;
+
+  RecommendationNew({
+    this.text,
+    this.color,
+  });
+
+  factory RecommendationNew.fromJson(Map<String, dynamic> json) =>
+      RecommendationNew(
+        text: json["text"],
+        color: json["color"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "text": text,
+        "color": color,
       };
 }
 

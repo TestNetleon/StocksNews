@@ -122,7 +122,7 @@ class _MsFinancialState extends State<MsFinancial>
               style: stylePTSansRegular(color: ThemeColors.greyText),
             ),
           ),
-          SpacerVertical(height: 10),
+          SpacerVertical(height: 15),
         ],
       ),
     );
