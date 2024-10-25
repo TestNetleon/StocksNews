@@ -142,18 +142,15 @@ class MsCompleteRes {
         'usd_text': usdText,
         'last_update_date': lastUpdateDate,
         "recommendationNew": recommendationNew?.toJson(),
-
         "swotAnalysis": swotAnalysis?.toJson(),
         "priceVolatilityNew": priceVolatilityNew?.toJson(),
         'time_frame_text': timeFrameText,
         "events": msEvents == null
             ? []
             : List<dynamic>.from(msEvents!.map((x) => x.toJson())),
-
         "faqs": faqData == null
             ? []
             : List<dynamic>.from(faqData!.map((x) => x.toJson())),
-
         "peerComparison": peerComparison?.toJson(),
         "latestNews": latestNews == null
             ? []
