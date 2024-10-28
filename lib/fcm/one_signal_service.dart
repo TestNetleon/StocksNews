@@ -223,6 +223,7 @@ class OneSignalService {
 
     OneSignal.Notifications.addClickListener((OSNotificationClickEvent event) {
       if (oneSignalInitialized && navigatorKey.currentContext != null) {
+        popHome = true;
         _navigateToRequiredScreen(event.notification);
       } else {
         popHome = true;
