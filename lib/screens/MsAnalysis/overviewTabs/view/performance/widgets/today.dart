@@ -102,9 +102,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import 'package:stocks_news_new/utils/colors.dart';
-import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import '../../../../../../modals/msAnalysis/ms_top_res.dart';
 import '../../../../../../providers/stockAnalysis/provider.dart';
@@ -136,8 +134,6 @@ class MsPerformanceToday extends StatelessWidget {
     num priceRange = todayHigh - todayLow;
     double pricePosition =
         ((currentPrice - todayLow) / priceRange).clamp(0.0, 1.0) * 100;
-
-    Utils().showLog('Price => $pricePosition');
 
     return Column(
       children: [

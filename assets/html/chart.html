@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/variable-pie.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+    <style>
+        * {
+            box-sizing: border-box;
+            /* Include padding and border in the element's total width and height */
+        }
+
+        html,
+        body {
+            height: 100%;
+            /* Use full height */
+            margin: 0;
+            /* Remove margins */
+            padding: 0;
+            /* Remove padding */
+            overflow: hidden;
+            /* Prevent scrollbars */
+            background-color: transparent;
+            /* Set background color */
+        }
+
+        #container {
+            position: absolute;
+            /* Positioning to cover the entire area */
+            top: 0;
+            /* Align to the top */
+            left: 0;
+            /* Align to the left */
+            height: 100%;
+            /* Use full height of the body */
+            width: 100%;
+            /* Use full width */
+            margin: 0;
+            /* Remove margins */
+            padding: 0;
+            /* Remove padding */
+        }
+
+        figure {
+            height: 100%;
+            /* Allow the figure to take the full height */
+            margin: 0;
+            /* Remove default margins */
+            padding: 0;
+            /* Remove default padding */
+        }
+    </style>
+</head>
+
+<body>
+    <figure class="highcharts-figure">
+        <div id="container"></div>
+    </figure>
+
+    <script>
+        function createChart(data) {
+            Highcharts.chart('container', {
+                chart: {
+                    type: 'variablepie',
+                    backgroundColor: 'rgba(0,0,0,0)',
+                    events: {
+                        load: function () {
+                            var chart = this;
+                            chart.series[0].points.forEach(point => {
+                                point.graphic.element.onclick = function () {
+                                    ChartDataChannel.postMessage(JSON.stringify({
+                                        name: point.name || "Unknown",
+                                        value: point.z || 0,
+                                        description: point.options.description || "No Description"
+                                    }));
+                                    chart.series[0].points.forEach(p => p.setState(''));
+                                };
+                            });
+                        }
+                    }
+                },
+                title: {
+                    text: '',
+                },
+                exporting: {
+                    enabled: false
+                },
+                tooltip: {
+                    enabled: false
+                },
+                credits: {
+                    enabled: false
+                },
+                series: [{
+                    minPointSize: 20,
+                    innerSize: '20%',
+                    zMin: 0,
+                    name: 'Performance',
+                    data: data,
+                    colors: [
+                        '#ff5733', '#33c1ff', '#ffea00', '#28a745', '#ff8c00', '#6f42c1'
+                    ],
+                    dataLabels: {
+                        style: {
+                            fontSize: '30px',
+                            color: '#FFFFFF'
+                        }
+                    }
+                }]
+            });
+        }
+
+        // Example data to populate the chart
+        createChart([]);
+    </script>
+</body>
+
+</html>

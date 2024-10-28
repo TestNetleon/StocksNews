@@ -39,7 +39,7 @@ class _MsRadarGraphState extends State<MsRadarGraph> {
               ),
               SpacerHorizontal(width: 20),
               Text(
-                "${provider.completeData?.recommendationNew?.text}",
+                provider.completeData?.recommendationNew?.text ?? "",
                 style: stylePTSansRegular(
                   fontSize: 70,
                   color: provider.completeData?.recommendationNew?.color

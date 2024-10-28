@@ -143,7 +143,7 @@ class _MsAnalysisState extends State<MsAnalysis> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const MsTopWidgetDetail(),
-                  const SpacerVertical(height: Dimen.padding),
+                  // const SpacerVertical(height: Dimen.padding),
                   Visibility(
                     visible: provider.completeData?.radarChart != null &&
                         provider.completeData?.radarChart?.isNotEmpty == true,

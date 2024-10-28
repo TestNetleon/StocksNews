@@ -295,6 +295,7 @@ class Images {
   // static const signin = "assets/svg/signin.svg";
   // static const star = "assets/svg/star.svg";
   static const add = "assets/svg/add.svg";
+  static const chartHTML = 'assets/html/chart.html';
 }
 
 class AudioFiles {
