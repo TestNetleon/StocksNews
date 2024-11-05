@@ -4,13 +4,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
-import 'package:stocks_news_new/providers/leaderboard.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
-import 'package:stocks_news_new/screens/auth/login/login_sheet.dart';
-import 'package:stocks_news_new/screens/auth/signup/signup_sheet_tablet.dart';
-import 'package:stocks_news_new/screens/auth/login/login_sheet_tablet.dart';
-import 'package:stocks_news_new/screens/auth/signup/signup_sheet.dart';
+// import 'package:stocks_news_new/screens/auth/login/login_sheet.dart';
+// import 'package:stocks_news_new/screens/auth/signup/signup_sheet_tablet.dart';
+// import 'package:stocks_news_new/screens/auth/login/login_sheet_tablet.dart';
+// import 'package:stocks_news_new/screens/auth/signup/signup_sheet.dart';
 import 'package:stocks_news_new/screens/drawer/about/about_stocks_news.dart';
 import 'package:stocks_news_new/screens/drawer/widgets/drawer_new_widget.dart';
 import 'package:stocks_news_new/screens/drawer/widgets/user_card.dart';
@@ -21,11 +20,12 @@ import 'package:stocks_news_new/utils/theme.dart';
 // import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
+import 'package:stocks_news_new/widgets/theme_button.dart';
 // import '../../utils/constants.dart';
 import '../../utils/utils.dart';
 import '../../widgets/custom_gridview.dart';
-import '../../widgets/theme_button_small.dart';
 import '../alerts/alerts.dart';
+import '../auth/base/base_auth.dart';
 import '../watchlist/watchlist.dart';
 import 'widgets/drawer_lists.dart';
 // import '../t&cAndPolicy/tc_policy.dart';
@@ -45,7 +45,7 @@ class _BaseDrawerState extends State<BaseDrawer> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      _callAPI();
+      // _callAPI();
       _getData();
     });
   }
@@ -56,10 +56,13 @@ class _BaseDrawerState extends State<BaseDrawer> {
     setState(() {});
   }
 
-  _callAPI() {
-    LeaderBoardProvider provider = context.read<LeaderBoardProvider>();
-    provider.getReferData(checkAppUpdate: false);
-  }
+  // _callAPI() {
+  //   LeaderBoardProvider provider = context.read<LeaderBoardProvider>();
+  //   UserProvider userProvider = context.read<UserProvider>();
+  //   if (userProvider.user?.affiliateStatus == 1) {
+  //     provider.getReferData(checkAppUpdate: false);
+  //   }
+  // }
 
   void _closeDrawer() {
     // Navigator.pop(context);
@@ -112,66 +115,53 @@ class _BaseDrawerState extends State<BaseDrawer> {
                                   ),
                                 ),
                                 const SpacerVertical(height: 20),
-                                Row(
-                                  children: [
-                                    Expanded(
-                                      child: ThemeButtonSmall(
-                                        showArrow: false,
-                                        text: "Log in",
-                                        onPressed: () {
-                                          Scaffold.of(context).closeDrawer();
-                                          // TODO: Uncomment this ---
-                                          isPhone
-                                              ? loginSheet()
-                                              : loginSheetTablet();
-                                          // TODO: Delete Below code this ---
-                                          // loginFirstSheet();
-                                          // Navigator.push(context,
-                                          //     createRoute(CompleteAuth())
-                                          //     // MaterialPageRoute(
-                                          //     //   builder: (_) => CompleteAuth(),
-                                          //     // ),
-                                          //     );
-                                        },
-                                      ),
-                                    ),
-                                    const SpacerHorizontal(width: 10),
-                                    Expanded(
-                                      child: ThemeButtonSmall(
-                                        showArrow: false,
-                                        text: "Sign up",
-                                        onPressed: () {
-                                          Scaffold.of(context).closeDrawer();
-                                          isPhone
-                                              ? signupSheet()
-                                              : signupSheetTablet(
-                                                  dontPop: "true");
-                                        },
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                // Visibility(
-                                //   visible: kDebugMode,
-                                //   child: Row(
-                                //     children: [
-                                //       Expanded(
-                                //         child: ThemeButtonSmall(
-                                //           showArrow: false,
-                                //           text: "New Log in",
-                                //           onPressed: () {
-                                //             Scaffold.of(context).closeDrawer();
-                                //             Navigator.push(
-                                //               context,
-                                //               createRoute(Login()),
-                                //               // createRoute(CompleteDetails()),
-                                //             );
-                                //           },
-                                //         ),
+                                // Row(
+                                //   children: [
+                                //     Expanded(
+                                //       child: ThemeButtonSmall(
+                                //         showArrow: false,
+                                //         text: "Log in",
+                                //         onPressed: () {
+                                //           Scaffold.of(context).closeDrawer();
+                                //           // TODO: Uncomment this ---
+                                //           // isPhone
+                                //           //     ? loginSheet()
+                                //           //     : loginSheetTablet();
+                                //           // TODO: Delete Below code this ---
+                                //           loginFirstSheet();
+                                //           // Navigator.push(context,
+                                //           //     createRoute(CompleteAuth())
+                                //           //     // MaterialPageRoute(
+                                //           //     //   builder: (_) => CompleteAuth(),
+                                //           //     // ),
+                                //           //     );
+                                //         },
                                 //       ),
-                                //     ],
-                                //   ),
+                                //     ),
+                                //     const SpacerHorizontal(width: 10),
+                                //     Expanded(
+                                //       child: ThemeButtonSmall(
+                                //         showArrow: false,
+                                //         text: "Sign up",
+                                //         onPressed: () {
+                                //           Scaffold.of(context).closeDrawer();
+                                //           // isPhone
+                                //           //     ? signupSheet()
+                                //           //     : signupSheetTablet(
+                                //           //         dontPop: "true");
+                                //           loginFirstSheet();
+                                //         },
+                                //       ),
+                                //     ),
+                                //   ],
                                 // ),
+                                ThemeButton(
+                                  text: 'Log in or Sign up',
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                    loginFirstSheet();
+                                  },
+                                ),
                               ],
                             ),
                           ),

@@ -9,12 +9,16 @@ import '../../../utils/theme.dart';
 class CommonPinput extends StatelessWidget {
   final TextEditingController controller;
   final FocusNode? focusNode;
+  final int length;
+  final double separatorWidth;
   final void Function(String)? onCompleted;
   const CommonPinput({
     super.key,
     required this.controller,
     this.onCompleted,
     this.focusNode,
+    this.length = 4,
+    this.separatorWidth = 15,
   });
 
   @override
@@ -23,7 +27,7 @@ class CommonPinput extends StatelessWidget {
       alignment: Alignment.center,
       child: Pinput(
         focusNode: focusNode,
-        length: 4,
+        length: length,
         controller: controller,
         closeKeyboardWhenCompleted: true,
         cursor: Text(
@@ -32,7 +36,7 @@ class CommonPinput extends StatelessWidget {
         ),
         showCursor: true,
         separatorBuilder: (index) {
-          return const SpacerHorizontal(width: 15);
+          return SpacerHorizontal(width: separatorWidth);
         },
         mouseCursor: SystemMouseCursors.basic,
         defaultPinTheme: PinTheme(

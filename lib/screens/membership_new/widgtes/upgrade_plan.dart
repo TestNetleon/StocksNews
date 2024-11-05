@@ -3,8 +3,6 @@ import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/membership/membership_info_res.dart';
 import 'package:stocks_news_new/providers/membership.dart';
-import 'package:stocks_news_new/screens/auth/login/login_sheet.dart';
-import 'package:stocks_news_new/screens/auth/login/login_sheet_tablet.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -14,6 +12,7 @@ import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import '../../../providers/user_provider.dart';
 import '../../../route/my_app.dart';
 import '../../../service/revenue_cat.dart';
+import '../../auth/base/base_auth.dart';
 import '../../auth/membershipAsk/ask.dart';
 
 // class NewMembershipUpgradeCurrentPlan extends StatefulWidget {
@@ -285,7 +284,8 @@ class _NewMembershipUpgradeCurrentPlanState
     withLoginMembership = false;
     if (provider.user == null) {
       Utils().showLog("Ask login-----");
-      isPhone ? await loginSheet() : await loginSheetTablet();
+      // isPhone ? await loginSheet() : await loginSheetTablet();
+      await loginFirstSheet();
 
       if (provider.user?.membership?.purchased == 1) {
         Utils().showLog("---user already purchased membership----");

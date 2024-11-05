@@ -62,7 +62,7 @@ class DefaultFirebaseOptions {
     appId: '1:661986825229:ios:2958225927da6ea85bb144',
     messagingSenderId: '661986825229',
     projectId: 'stocksnews-ef556',
-    storageBucket: 'stocksnews-ef556.appspot.com',
+    storageBucket: 'stocksnews-ef556.firebasestorage.app',
     androidClientId:
         '661986825229-0de23kv34v919suf1ticnuth3f8rn9i3.apps.googleusercontent.com',
     iosClientId:

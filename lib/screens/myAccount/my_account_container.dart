@@ -11,7 +11,6 @@ import 'package:sms_autofill/sms_autofill.dart';
 import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/modals/user_res.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
-import 'package:stocks_news_new/providers/leaderboard.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/screens/myAccount/widgets/my-account_header.dart';
 import 'package:stocks_news_new/screens/myAccount/widgets/otp.dart';
@@ -83,8 +82,8 @@ class _MyAccountContainerState extends State<MyAccountContainer>
     WidgetsBinding.instance.addObserver(this);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<UserProvider>().resetVerification();
-      _callAPI();
       _updateUser();
+      // _callAPI();
     });
   }
 
@@ -102,15 +101,17 @@ class _MyAccountContainerState extends State<MyAccountContainer>
     }
   }
 
-  _callAPI() {
-    // UserProvider userProvider = context.read<UserProvider>();
-    // if (userProvider.user?.affiliateStatus == 0) {
-    //   return;
-    // }
-    LeaderBoardProvider provider = context.read<LeaderBoardProvider>();
-
-    provider.getReferData(checkAppUpdate: false);
-  }
+  // _callAPI() {
+  //   // UserProvider userProvider = context.read<UserProvider>();
+  //   // if (userProvider.user?.affiliateStatus == 0) {
+  //   //   return;
+  //   // }
+  //   LeaderBoardProvider provider = context.read<LeaderBoardProvider>();
+  //   UserProvider userProvider = context.read<UserProvider>();
+  //   if (userProvider.user?.affiliateStatus == 1) {
+  //     provider.getReferData(checkAppUpdate: false);
+  //   }
+  // }
 
   void _updateUser() {
     UserProvider provider = context.read<UserProvider>();
@@ -137,6 +138,7 @@ class _MyAccountContainerState extends State<MyAccountContainer>
 
     if (user?.phone != '' && user?.phone != null) {
       provider.setPhoneClickText();
+      mobileController.text = user?.phone ?? '';
     }
     if (user?.name?.isNotEmpty == true) nameController.text = user?.name ?? "";
     if (user?.email?.isNotEmpty == true) {
@@ -199,27 +201,30 @@ class _MyAccountContainerState extends State<MyAccountContainer>
               displayName: displayController.text,
               email: "",
             );
-
+        Utils().showLog('!~~~~${res.status}');
         if (res.status) {
-          if (emailController.text != provider.user?.email) {
-            _sendOTP(otp: res.data["otp"].toString());
-          } else {
-            popUpAlert(
-              message: res.message ?? "",
-              title: "Profile Updated",
-              iconWidget: Image.asset(
-                Images.receiveGIF,
-                height: 80,
-                width: 80,
-              ),
-            );
+          // if (emailController.text != provider.user?.email) {
+          //   Utils().showLog('!!~~~~!!');
 
-            provider.updateUser(
-              name: nameController.text,
-              email: emailController.text.toLowerCase(),
-              displayName: displayController.text,
-            );
-          }
+          //   _sendOTP(otp: res.data["otp"].toString());
+          // } else {
+          //   Utils().showLog('~~~~~~~~~~~`');
+
+          // }
+          popUpAlert(
+            message: res.message ?? "",
+            title: "Profile Updated",
+            iconWidget: Image.asset(
+              Images.receiveGIF,
+              height: 80,
+              width: 80,
+            ),
+          );
+
+          provider.updateUser(
+            name: nameController.text,
+            displayName: displayController.text,
+          );
         }
       } catch (e) {
         //
@@ -256,6 +261,15 @@ class _MyAccountContainerState extends State<MyAccountContainer>
   Widget build(BuildContext context) {
     UserProvider provider = context.watch<UserProvider>();
     HomeProvider homeProvider = context.watch<HomeProvider>();
+
+    // if (provider.user?.phoneCode != null && provider.user?.phoneCode != "") {
+    //   countryCode =
+    //       CountryCode.fromDialCode(provider.user?.phoneCode ?? "").dialCode;
+    // } else if (geoCountryCode != null && geoCountryCode != "") {
+    //   countryCode = CountryCode.fromCountryCode(geoCountryCode!).dialCode;
+    // } else {
+    //   countryCode = CountryCode.fromCountryCode("US").dialCode;
+    // }
 
     // final String locale = Intl.getCurrentLocale().split('_').last;
 
@@ -316,7 +330,11 @@ class _MyAccountContainerState extends State<MyAccountContainer>
           textCapitalization: TextCapitalization.words,
         ),
         const SpacerVertical(height: 13),
-        showAsteriskText(text: "Email Address", bold: true),
+        // showAsteriskText(text: "Email Address", bold: true),
+        Text(
+          "Email Address",
+          style: stylePTSansBold(color: Colors.white, fontSize: 14),
+        ),
         const SpacerVertical(height: 5),
         IntrinsicHeight(
           child: Row(
@@ -738,6 +756,7 @@ class _MyAccountContainerState extends State<MyAccountContainer>
   }
 
   Future _onPhoneUpdateClick(String phone) async {
+    closeKeyboard();
     // UserProvider provider = context.read<UserProvider>();
 
     if (mobileController.text.isEmpty || mobileController.text.length < 6) {
@@ -756,49 +775,58 @@ class _MyAccountContainerState extends State<MyAccountContainer>
       );
       return;
     }
+    UserProvider provider = context.read<UserProvider>();
 
-    showGlobalProgressDialog();
-    log("PHONE => $countryCode $phone");
-    await FirebaseAuth.instance.verifyPhoneNumber(
-      // phoneNumber: kDebugMode ? "+91 $phone" : "+1$phone",
-      phoneNumber: "$countryCode $phone",
-      verificationCompleted: (PhoneAuthCredential credential) {
-        closeGlobalProgressDialog();
-      },
-      verificationFailed: (FirebaseAuthException e) {
-        log("Error message ** => ${e.code} ${e.message} ${e.stackTrace}");
-        closeGlobalProgressDialog();
-        // log("Error message => ${e.code} ${e.message} ${e.stackTrace}");
-        popUpAlert(
-          message: e.code == "invalid-phone-number"
-              ? "The format of the phone number provided is incorrect."
-              : e.code == "too-many-requests"
-                  ? "We have blocked all requests from this device due to unusual activity. Please try again after 24 hours."
-                  : e.code == "internal-error"
-                      ? "The phone number you entered is either incorrect or not currently in use."
-                      : e.message ?? Const.errSomethingWrong,
-          title: "Alert",
-          icon: Images.alertPopGIF,
-        );
-      },
-      codeSent: (String verificationId, int? resendToken) {
-        closeGlobalProgressDialog();
-        phoneOTP(
-            phone: phone,
-            verificationId: verificationId,
-            name: nameController.text,
-            countryCode: countryCode!,
-            displayName: displayController.text);
-        // referOTP(
-        //   name: name.text,
-        //   displayName: displayName.text,
-        //   phone: mobile.text,
-        //   appSignature: appSignature,
-        //   verificationId: verificationId,
-        // );
-      },
-      codeAutoRetrievalTimeout: (String verificationId) {},
+    ApiResponse response = await provider.checkPhoneExist(
+      countryCode: countryCode ?? '+1',
+      phone: phone,
     );
+    if (response.status) {
+      showGlobalProgressDialog();
+      log("PHONE => $countryCode $phone");
+      await FirebaseAuth.instance.verifyPhoneNumber(
+        // phoneNumber: kDebugMode ? "+91 $phone" : "+1$phone",
+        phoneNumber: "$countryCode $phone",
+        verificationCompleted: (PhoneAuthCredential credential) {
+          closeGlobalProgressDialog();
+        },
+        verificationFailed: (FirebaseAuthException e) {
+          log("Error message ** => ${e.code} ${e.message} ${e.stackTrace}");
+          closeGlobalProgressDialog();
+          // log("Error message => ${e.code} ${e.message} ${e.stackTrace}");
+          popUpAlert(
+            message: e.code == "invalid-phone-number"
+                ? "The format of the phone number provided is incorrect."
+                : e.code == "too-many-requests"
+                    ? "We have blocked all requests from this device due to unusual activity. Please try again after 24 hours."
+                    : e.code == "internal-error"
+                        ? "The phone number you entered is either incorrect or not currently in use."
+                        : e.message ?? Const.errSomethingWrong,
+            title: "Alert",
+            icon: Images.alertPopGIF,
+          );
+        },
+        codeSent: (String verificationId, int? resendToken) {
+          closeGlobalProgressDialog();
+          phoneOTP(
+              phone: phone,
+              verificationId: verificationId,
+              name: nameController.text,
+              countryCode: countryCode!,
+              displayName: displayController.text);
+          // referOTP(
+          //   name: name.text,
+          //   displayName: displayName.text,
+          //   phone: mobile.text,
+          //   appSignature: appSignature,
+          //   verificationId: verificationId,
+          // );
+        },
+        codeAutoRetrievalTimeout: (String verificationId) {},
+      );
+    } else {
+      //
+    }
 
     // Map request = {
     //   "token": provider.user?.token ?? "",

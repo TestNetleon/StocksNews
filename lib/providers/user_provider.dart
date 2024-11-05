@@ -395,6 +395,7 @@ class UserProvider extends ChangeNotifier {
   Future googleLogin(
     request, {
     bool alreadySubmitted = true,
+    bool direct = false,
   }) async {
     setStatus(Status.loading);
 
@@ -430,10 +431,8 @@ class UserProvider extends ChangeNotifier {
           if (referralCode != null && referralCode != "") {
             // Sign up from referral link
             Preference.clearReferral();
-            Navigator.push(
-              navigatorKey.currentContext!,
-              MaterialPageRoute(builder: (_) => const SignUpSuccess()),
-            );
+
+            _optionalNavigation(direct: direct);
           } else {
             // Sign up but not from referral link
 
@@ -442,26 +441,25 @@ class UserProvider extends ChangeNotifier {
                 onReferral: (code) {
                   if (code == null || code == "") {
                     Navigator.pop(navigatorKey.currentContext!);
-                    Navigator.push(
-                      navigatorKey.currentContext!,
-                      MaterialPageRoute(builder: (_) => const SignUpSuccess()),
-                    );
+                    _optionalNavigation(direct: direct);
                   } else {
                     updateReferralCodeOnlyForApple(code: referralCode ?? code);
                   }
                 },
               );
               if (result == null) {
-                Navigator.push(
-                  navigatorKey.currentContext!,
-                  MaterialPageRoute(builder: (_) => const SignUpSuccess()),
-                );
+                // Navigator.push(
+                //   navigatorKey.currentContext!,
+                //   MaterialPageRoute(builder: (_) => const SignUpSuccess()),
+                // );
+                _optionalNavigation(direct: direct);
               }
             } else {
-              Navigator.push(
-                navigatorKey.currentContext!,
-                MaterialPageRoute(builder: (_) => const SignUpSuccess()),
-              );
+              // Navigator.push(
+              //   navigatorKey.currentContext!,
+              //   MaterialPageRoute(builder: (_) => const SignUpSuccess()),
+              // );
+              _optionalNavigation(direct: direct);
             }
           }
 
@@ -518,11 +516,33 @@ class UserProvider extends ChangeNotifier {
     }
   }
 
+  _optionalNavigation({bool direct = false}) {
+    if (direct) {
+      Navigator.popUntil(
+          navigatorKey.currentContext!, (route) => route.isFirst);
+      Navigator.pushReplacement(
+        navigatorKey.currentContext!,
+        MaterialPageRoute(
+          builder: (_) => const Tabs(
+            showRef: false,
+            showMembership: true,
+          ),
+        ),
+      );
+    } else {
+      Navigator.push(
+        navigatorKey.currentContext!,
+        MaterialPageRoute(builder: (_) => const SignUpSuccess()),
+      );
+    }
+  }
+
   Future appleLogin(
     request, {
     String? id,
     String? code,
     bool alreadySubmitted = false,
+    bool direct = false,
   }) async {
     setStatus(Status.loading);
 
@@ -554,10 +574,11 @@ class UserProvider extends ChangeNotifier {
           if (referralCode != null && referralCode != "") {
             // Sign up from referral link
             Preference.clearReferral();
-            Navigator.push(
-              navigatorKey.currentContext!,
-              MaterialPageRoute(builder: (_) => const SignUpSuccess()),
-            );
+            // Navigator.push(
+            //   navigatorKey.currentContext!,
+            //   MaterialPageRoute(builder: (_) => const SignUpSuccess()),
+            // );
+            _optionalNavigation(direct: direct);
           } else {
             // Sign up but not from referral link
             if (await Preference.isReferInput()) {
@@ -565,26 +586,29 @@ class UserProvider extends ChangeNotifier {
                 onReferral: (code) {
                   if (code == null || code == "") {
                     Navigator.pop(navigatorKey.currentContext!);
-                    Navigator.push(
-                      navigatorKey.currentContext!,
-                      MaterialPageRoute(builder: (_) => const SignUpSuccess()),
-                    );
+                    // Navigator.push(
+                    //   navigatorKey.currentContext!,
+                    //   MaterialPageRoute(builder: (_) => const SignUpSuccess()),
+                    // );
+                    _optionalNavigation(direct: direct);
                   } else {
                     updateReferralCodeOnlyForApple(code: referralCode ?? code);
                   }
                 },
               );
               if (result == null) {
-                Navigator.push(
-                  navigatorKey.currentContext!,
-                  MaterialPageRoute(builder: (_) => const SignUpSuccess()),
-                );
+                // Navigator.push(
+                //   navigatorKey.currentContext!,
+                //   MaterialPageRoute(builder: (_) => const SignUpSuccess()),
+                // );
+                _optionalNavigation(direct: direct);
               }
             } else {
-              Navigator.push(
-                navigatorKey.currentContext!,
-                MaterialPageRoute(builder: (_) => const SignUpSuccess()),
-              );
+              // Navigator.push(
+              //   navigatorKey.currentContext!,
+              //   MaterialPageRoute(builder: (_) => const SignUpSuccess()),
+              // );
+              _optionalNavigation(direct: direct);
             }
           }
         } else {
@@ -1022,6 +1046,7 @@ class UserProvider extends ChangeNotifier {
       }
     } catch (e) {
       setStatus(Status.loaded);
+      Utils().showLog('$e');
       // showErrorMessage(
       //   message: kDebugMode ? e.toString() : Const.errSomethingWrong,
       // );
@@ -1200,7 +1225,10 @@ class UserProvider extends ChangeNotifier {
       );
       if (response.status) {
         if (resendButtonClick == false) {
-          phoneEmailOTP(text: email.toLowerCase(), screenType: false);
+          phoneEmailOTP(
+            text: email.toLowerCase(),
+            screenType: false,
+          );
         }
 
         //
@@ -1409,6 +1437,80 @@ class UserProvider extends ChangeNotifier {
         message: Const.errSomethingWrong,
         icon: Images.alertPopGIF,
       );
+      return ApiResponse(status: false);
+    }
+  }
+
+  // Final OTP
+  Future finalVerifyOTP(
+    request, {
+    bool doublePop = true,
+  }) async {
+    setStatus(Status.loading);
+
+    try {
+      ApiResponse response = await apiRequest(
+        url: Apis.phoneLogin,
+        request: request,
+        showProgress: true,
+        removeForceLogin: true,
+      );
+      setStatus(Status.loaded);
+      if (response.status) {
+        _user = UserRes.fromJson(response.data);
+        Preference.saveUser(response.data);
+        isSVG = isSvgFromUrl(_user?.image);
+        navigatorKey.currentContext!.read<HomeProvider>().getHomeSlider();
+        shareUri = await DynamicLinkService.instance.getDynamicLink();
+
+        if (doublePop) {
+          Navigator.pop(navigatorKey.currentContext!);
+          Navigator.pop(navigatorKey.currentContext!);
+        } else {
+          Navigator.pop(navigatorKey.currentContext!);
+        }
+
+        Preference.setShowIntro(false);
+        //--------
+        var tags = {
+          'email': "${_user?.email}",
+          'phone': "${_user?.phoneCode} ${_user?.phone}"
+        };
+
+        OneSignal.User.addTags(tags);
+        //--------
+
+        //CHECK MEMBERSHIP
+        if ((_user?.membership?.purchased != null &&
+                _user?.membership?.purchased == 0) &&
+            withLoginMembership) {
+          Utils().showLog("----navigating from login verify---");
+          Navigator.push(
+            navigatorKey.currentContext!,
+            createRoute(
+              NewMembership(cancel: true),
+            ),
+          );
+        }
+        notifyListeners();
+        configureRevenueCatAttribute();
+      } else {
+        // showErrorMessage(message: response.message);
+        popUpAlert(
+            message: "${response.message}",
+            title: "Alert",
+            icon: Images.alertPopGIF);
+      }
+      _extra = (response.extra is Extra ? response.extra as Extra : null);
+
+      return ApiResponse(status: response.status);
+    } catch (e) {
+      Utils().showLog(e.toString());
+      popUpAlert(
+          message: Const.errSomethingWrong,
+          title: "Alert",
+          icon: Images.alertPopGIF);
+      setStatus(Status.loaded);
       return ApiResponse(status: false);
     }
   }

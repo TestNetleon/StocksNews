@@ -1,11 +1,16 @@
 import 'dart:async';
 import 'dart:developer';
+import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:package_info_plus/package_info_plus.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:sms_autofill/sms_autofill.dart';
 import 'package:stocks_news_new/api/api_response.dart';
+import 'package:stocks_news_new/database/preference.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/screens/auth/otp/pinput_phone.dart';
@@ -18,8 +23,6 @@ import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
-import 'package:stocks_news_new/widgets/theme_button.dart';
-
 import '../../../widgets/custom/alert_popup.dart';
 
 class BaseVerifyOTP extends StatefulWidget {
@@ -36,12 +39,19 @@ class BaseVerifyOTP extends StatefulWidget {
   State<BaseVerifyOTP> createState() => _BaseVerifyOTPState();
 }
 
-class _BaseVerifyOTPState extends State<BaseVerifyOTP> {
+class _BaseVerifyOTPState extends State<BaseVerifyOTP> with CodeAutoFill {
   final TextEditingController _controller = TextEditingController();
 
   int startTiming = 30;
   Timer? _timer;
   String? _verificationId;
+
+  @override
+  void codeUpdated() {
+    setState(() {
+      _controller.text = code!;
+    });
+  }
 
   Future _verifyPhoneNumber() async {
     if (_controller.text.isEmpty || _controller.text.length < 6) {
@@ -50,6 +60,10 @@ class _BaseVerifyOTPState extends State<BaseVerifyOTP> {
         title: "Alert",
         icon: Images.alertPopGIF,
       );
+      return;
+    }
+    if (kDebugMode) {
+      _callAPI();
       return;
     }
 
@@ -65,7 +79,7 @@ class _BaseVerifyOTPState extends State<BaseVerifyOTP> {
     try {
       await FirebaseAuth.instance.signInWithCredential(credential);
       closeGlobalProgressDialog();
-      _updateProfile();
+      _callAPI();
     } on FirebaseAuthException catch (e) {
       closeGlobalProgressDialog();
       popUpAlert(
@@ -80,21 +94,56 @@ class _BaseVerifyOTPState extends State<BaseVerifyOTP> {
     }
   }
 
-  _updateProfile() async {
+  _callAPI() async {
     UserProvider provider = context.read<UserProvider>();
     HomeProvider homeProvider = context.read<HomeProvider>();
 
-    ApiResponse response = await provider.updateProfile(
-      token: provider.user?.token ?? '',
-      name: provider.user?.name ?? '',
-      email: provider.user?.email ?? '',
-      phone: widget.phone,
-      countryCode: widget.countryCode,
-    );
-    await homeProvider.getHomeSlider(showProgress: true);
-    if (response.status) {
-      Navigator.pop(context);
+    if (provider.user == null) {
+      UserProvider provider = context.read<UserProvider>();
+      String? fcmToken = await Preference.getFcmToken();
+      String? address = await Preference.getLocation();
+      PackageInfo packageInfo = await PackageInfo.fromPlatform();
+      String versionName = packageInfo.version;
+      String buildNumber = packageInfo.buildNumber;
+      bool granted = await Permission.notification.isGranted;
+      String? referralCode = await Preference.getReferral();
+
+      Map request = {
+        "phone": widget.phone,
+        "phone_code": widget.countryCode,
+        "fcm_token": fcmToken ?? "",
+        "platform": Platform.operatingSystem,
+        "address": address ?? "",
+        "build_version": versionName,
+        "build_code": buildNumber,
+        "fcm_permission": "$granted",
+        "referral_code": referralCode ?? "",
+      };
+      if (memCODE != null && memCODE != '') {
+        request['distributor_code'] = memCODE;
+      }
+
+      await provider.finalVerifyOTP(request);
+    } else {
+      ApiResponse response = await provider.updateProfile(
+        token: provider.user?.token ?? '',
+        name: provider.user?.name ?? '',
+        email: provider.user?.email ?? '',
+        phone: widget.phone,
+        countryCode: widget.countryCode,
+      );
+      if (response.status) {
+        Navigator.pop(context);
+      } else {
+        popUpAlert(
+          title: 'Alert',
+          icon: Images.alertPopGIF,
+          message: response.message,
+        );
+      }
     }
+
+    await homeProvider.getHomeSlider();
   }
 
   void _startTime() {
@@ -117,30 +166,31 @@ class _BaseVerifyOTPState extends State<BaseVerifyOTP> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Utils().showLog('PHONE => ${widget.phone}');
 
-      _listenCode();
+      listenForCode();
       _startTime();
       _verificationId = widget.verificationId;
       setState(() {});
     });
   }
 
-  Future<void> _listenCode() async {
-    try {
-      log("trying to listen");
-      await SmsAutoFill().listenForCode();
-      SmsAutoFill().code.listen((event) {
-        _controller.text = event;
-        Utils().showLog('Listen $event');
-        // setState(() {});
-      });
-    } catch (e) {
-      Utils().showLog('Error while listening OTP $e');
-    }
-  }
+  // Future<void> _listenCode() async {
+  //   try {
+  //     log("trying to listen");
+  //     await SmsAutoFill().listenForCode();
+  //     SmsAutoFill().code.listen((event) {
+  //       _controller.text = event;
+  //       Utils().showLog('Listen $event');
+  //       // setState(() {});
+  //     });
+  //   } catch (e) {
+  //     Utils().showLog('Error while listening OTP $e');
+  //   }
+  // }
 
   @override
   void dispose() {
     _controller.dispose();
+    SmsAutoFill().unregisterListener();
     _timer?.cancel();
     super.dispose();
   }
@@ -162,8 +212,12 @@ class _BaseVerifyOTPState extends State<BaseVerifyOTP> {
     _startTime();
     _controller.text = '';
     setState(() {});
+    if (kDebugMode) {
+      return;
+    }
+
     await FirebaseAuth.instance.verifyPhoneNumber(
-      phoneNumber: "${widget.countryCode}${widget.phone}",
+      phoneNumber: "${widget.countryCode} ${widget.phone}",
       verificationCompleted: (PhoneAuthCredential credential) {},
       verificationFailed: (FirebaseAuthException e) {
         popUpAlert(
@@ -204,7 +258,7 @@ class _BaseVerifyOTPState extends State<BaseVerifyOTP> {
           child: Column(
             children: [
               const SpacerVertical(height: 30),
-              Image.asset(Images.otpSuccessGIT, height: 95.sp, width: 95.sp),
+              Image.asset(Images.otpVerify, height: 95.sp, width: 95.sp),
               Padding(
                 padding: const EdgeInsets.all(Dimen.authScreenPadding),
                 child: Column(
@@ -218,7 +272,10 @@ class _BaseVerifyOTPState extends State<BaseVerifyOTP> {
                       ),
                     ),
                     const SpacerVertical(height: 8),
-                    EditEmail(email: widget.phone),
+                    EditEmail(
+                      email: "${widget.countryCode}${widget.phone}",
+                      digit: 6,
+                    ),
                     const SpacerVertical(),
                     CommonPinputPhone(
                       controller: _controller,
@@ -269,11 +326,11 @@ class _BaseVerifyOTPState extends State<BaseVerifyOTP> {
                               ),
                             ),
                           ),
-                    const SpacerVertical(),
-                    ThemeButton(
-                      onPressed: _onVeryClick,
-                      text: "Verify and update",
-                    ),
+                    // const SpacerVertical(),
+                    // ThemeButton(
+                    //   onPressed: _onVeryClick,
+                    //   text: "Verify and update",
+                    // ),
                     const SpacerVertical(),
                   ],
                 ),

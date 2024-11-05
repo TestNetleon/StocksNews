@@ -2,19 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/providers/watchlist_provider.dart';
-import 'package:stocks_news_new/screens/auth/login/login_sheet.dart';
-import 'package:stocks_news_new/screens/auth/login/login_sheet_tablet.dart';
-// ignore: unused_import
 import 'package:stocks_news_new/screens/drawer/base_drawer.dart';
-// ignore: unused_import
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/screens/watchlist/watchlist_container.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/login_error.dart';
-// import 'package:stocks_news_new/widgets/screen_title.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
+import '../auth/base/base_auth.dart';
 
 class WatchList extends StatefulWidget {
   static const path = "WatchList";
@@ -83,7 +79,8 @@ class _WatchListState extends State<WatchList> {
                       state: "watchList",
                       title: "Stock Watchlist",
                       onClick: () async {
-                        isPhone ? await loginSheet() : await loginSheetTablet();
+                        // isPhone ? await loginSheet() : await loginSheetTablet();
+                        await loginFirstSheet();
                         await _getData();
                       },
                     ),

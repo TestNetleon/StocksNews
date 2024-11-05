@@ -5,12 +5,12 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/database/database_helper.dart';
 import 'package:stocks_news_new/providers/blog_provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
-import 'package:stocks_news_new/screens/auth/login/login_sheet.dart';
 import 'package:stocks_news_new/screens/auth/verifyIdentity/verify_identity.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
+import '../auth/base/base_auth.dart';
 import 'container.dart';
 
 class BlogDetail extends StatefulWidget {
@@ -65,7 +65,8 @@ class _BlogDetailState extends State<BlogDetail> {
         Timer(const Duration(seconds: 3), () {
           if (mounted && (ModalRoute.of(context)?.isCurrent ?? false)) {
             helper.update(BlogDetail.path);
-            loginSheet();
+            // loginSheet();
+            loginFirstSheet();
           }
         });
       }

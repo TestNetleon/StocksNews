@@ -11,7 +11,6 @@ import 'package:stocks_news_new/modals/user_res.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/navigation_observer.dart';
 import 'package:stocks_news_new/route/routes.dart';
-import 'package:stocks_news_new/screens/auth/signup/signup_sheet.dart';
 import 'package:stocks_news_new/screens/splash/splash.dart';
 import 'package:stocks_news_new/service/appsFlyer/service.dart';
 import 'package:stocks_news_new/utils/constants.dart';
@@ -19,6 +18,8 @@ import 'package:stocks_news_new/database/preference.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/utils/utils.dart';
+
+import '../screens/auth/base/base_auth.dart';
 
 final _appLinks = AppLinks();
 //
@@ -121,7 +122,8 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
             if (navigatorKey.currentContext!.read<UserProvider>().user ==
                     null &&
                 !signUpVisible) {
-              signupSheet();
+              // signupSheet();
+              loginFirstSheet();
             }
           });
         }
@@ -196,7 +198,8 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
         Timer(const Duration(seconds: 4), () {
           if (navigatorKey.currentContext!.read<UserProvider>().user == null &&
               !signUpVisible) {
-            signupSheet();
+            // signupSheet();
+            loginFirstSheet();
           }
         });
         FirebaseAnalytics.instance.logEvent(

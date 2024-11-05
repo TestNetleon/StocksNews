@@ -3,17 +3,21 @@
 import 'package:flutter/foundation.dart';
 
 class Apis {
-  static const baseUrl = "https://app.stocks.news/api/v1"; // live server
+  // static const baseUrl = "https://app.stocks.news/api/v1"; // live server
   static const baseUrlLocal =
       "https://notification.stocks.news/api/v1"; // Local server
 
   // static const baseUrl = kDebugMode
-  //     ? "https://notification.stocks.news/public/demo/public/api/v1"
+  //     ? "https://dev.stocks.news/api/v1"
   //     : "https://app.stocks.news/api/v1"; // live server
+
+  static const baseUrl = 'https://dev.stocks.news/api/v1'; // Local base
+
   // live server
 
   static const checkServer = "/check-server-status";
 
+  static const phoneLogin = '/phone-login';
   static const signup = "/sign-up";
   static const verifySignupOtp = "/check-signup-otp";
   static const resendOtp = "/resend-otp";
@@ -36,8 +40,11 @@ class Apis {
   static const savePlaidPortfolio = "/save-plaid-portfolio";
   static const plaidPortfolio = "/plaid-portfolio";
   static const referLogin = "/send-phone-otp";
-  static const updateEmailOtp = "/update-email-otp";
-  static const checkEmailOtp = "/check-email-otp";
+  // static const updateEmailOtp = "/update-email-otp";
+  static const updateEmailOtp = "/update-profile-email";
+  // static const checkEmailOtp = "/check-email-otp";
+  static const checkEmailOtp = "/check-profile-email-otp";
+
   static const updatePhoneOtp = "/update-phone-otp";
   static const checkUpdatePhoneOtp = "/check-update-phone-otp";
   static const checkPhone = "/check-phone-otp";
@@ -78,6 +85,7 @@ class Apis {
   static const congress = "/congress-stock-trades";
   static const congressMember = "/profile-congress-member";
   static const updateProfile = "/update-profile";
+
   static const updateProfileEmail = "/update-profile-otp";
   static const updateProfileOTP = "/update-profile-resend-otp";
   static const logout = "/logout";

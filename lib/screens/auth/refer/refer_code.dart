@@ -107,10 +107,12 @@ class _ReferLoginState extends State<ReferLogin> {
       mobile.text = provider.user?.phone ?? "";
     }
     affiliateStatus = provider.user?.affiliateStatus == 1;
-    numberVerified = provider.user?.phone != null &&
-        provider.user?.phone != "" &&
-        provider.user?.name != null &&
-        provider.user?.name != "";
+    // numberVerified = provider.user?.phone != null &&
+    //     provider.user?.phone != "" &&
+    //     provider.user?.name != null &&
+    //     provider.user?.name != "";
+
+    numberVerified = provider.user?.phone != null && provider.user?.phone != "";
   }
 
   void _getAppSignature() {
@@ -127,6 +129,7 @@ class _ReferLoginState extends State<ReferLogin> {
   }
 
   Future _referLogin() async {
+    closeKeyboard();
     if (name.text.isEmpty) {
       popUpAlert(
         message: "Please enter a valid name.",
@@ -153,6 +156,16 @@ class _ReferLoginState extends State<ReferLogin> {
       );
     } else {
       if (!numberVerified) {
+        UserProvider provider = context.read<UserProvider>();
+
+        ApiResponse response = await provider.checkPhoneExist(
+          countryCode: countryCode ?? '+1',
+          phone: mobile.text,
+        );
+        if (!response.status) {
+          return;
+        }
+
         // log("Phone Number $countryCode ${mobile.text}");
         showGlobalProgressDialog();
         await FirebaseAuth.instance.verifyPhoneNumber(
@@ -435,86 +448,9 @@ class _ReferLoginState extends State<ReferLogin> {
                                         },
                                         enabled: user?.phoneCode == null ||
                                             user?.phoneCode == "",
-                                      )
-                                      // CountryCodePicker(
-                                      //   padding: EdgeInsets.zero,
-                                      //   enabled: user?.phoneCode == null ||
-                                      //       user?.phoneCode == "",
-                                      //   // enabled: true,
-                                      //   onChanged: (CountryCode value) {
-                                      //     countryCode = value.dialCode;
-                                      //     // log("Selected Log => ${value.dialCode}");
-                                      //   },
-                                      //   initialSelection: locale,
-                                      //   showCountryOnly: false,
-                                      //   textStyle: stylePTSansBold(
-                                      //     color: Colors.black,
-                                      //     fontSize: 18,
-                                      //   ),
-                                      //   flagWidth: 24,
-                                      //   showOnlyCountryWhenClosed: false,
-                                      //   alignLeft: false,
-                                      //   boxDecoration: const BoxDecoration(
-                                      //     color: ThemeColors.tabBack,
-                                      //   ),
-                                      //   // builder: (CountryCode? country) {
-                                      //   //   log("Selected Log => ${country?.code}");
-                                      //   // },
-                                      //   dialogTextStyle: styleGeorgiaBold(),
-                                      //   barrierColor: Colors.black26,
-                                      //   searchDecoration: InputDecoration(
-                                      //     iconColor: Colors.white,
-                                      //     fillColor: Colors.white,
-                                      //     prefixIcon: const Icon(
-                                      //       Icons.search,
-                                      //       size: 22,
-                                      //     ),
-                                      //     filled: true,
-                                      //     hintStyle: stylePTSansRegular(
-                                      //       color: Colors.grey,
-                                      //     ),
-                                      //     hintText: "Search country",
-                                      //     border: OutlineInputBorder(
-                                      //       borderRadius:
-                                      //           BorderRadius.circular(4.0),
-                                      //       borderSide: BorderSide.none,
-                                      //     ),
-                                      //     enabledBorder: OutlineInputBorder(
-                                      //       borderRadius:
-                                      //           BorderRadius.circular(4.0),
-                                      //       borderSide: BorderSide.none,
-                                      //     ),
-                                      //     focusedBorder: OutlineInputBorder(
-                                      //       borderRadius:
-                                      //           BorderRadius.circular(4.0),
-                                      //       borderSide: BorderSide.none,
-                                      //     ),
-                                      //   ),
-                                      // )
-                                      // Text(
-                                      //   "+1",
-                                      //   style: stylePTSansBold(
-                                      //     color: user?.phone == '' ||
-                                      //             user?.phone == null
-                                      //         ? ThemeColors.greyText
-                                      //         : ThemeColors.greyBorder,
-                                      //     fontSize: 18,
-                                      //   ),
-                                      // ),
-                                      ),
-                                  // Text(
-                                  //   "+1",
-                                  //   style: stylePTSansBold(
-                                  //     color: user?.phone == '' ||
-                                  //             user?.phone == null
-                                  //         ? ThemeColors.greyText
-                                  //         : ThemeColors.greyBorder,
-                                  //     fontSize: 18,
-                                  //   ),
-                                  // ),
+                                      )),
                                 ],
                               ),
-                              // const SpacerHorizontal(width: 2),
                               Flexible(
                                 child: ThemeInputField(
                                   fillColor:

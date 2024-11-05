@@ -9,7 +9,6 @@ import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/stock_detail_new.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
-import 'package:stocks_news_new/screens/auth/login/login_sheet.dart';
 import 'package:stocks_news_new/screens/auth/refer/refer_code.dart';
 import 'package:stocks_news_new/screens/stockDetail/stockDetailTabs/overview/morningstart_lock.dart';
 import 'package:stocks_news_new/screens/stockDetail/stockDetailTabs/pdfViewer/pdf_viewer_widget.dart';
@@ -26,6 +25,7 @@ import 'package:stocks_news_new/widgets/loading.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
+import '../../auth/base/base_auth.dart';
 import '../../morningstarTranscations/morningstar_txn.dart';
 
 class StockDetailAnalystData extends StatefulWidget {
@@ -60,7 +60,8 @@ class _StockDetailAnalystDataState extends State<StockDetailAnalystData> {
   }
 
   void _onLoginClick(context) async {
-    await loginSheet();
+    // await loginSheet();
+    await loginFirstSheet();
 
     UserProvider userProvider =
         Provider.of<UserProvider>(context, listen: false);

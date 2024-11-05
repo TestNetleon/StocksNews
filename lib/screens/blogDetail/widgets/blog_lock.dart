@@ -7,7 +7,6 @@ import 'package:stocks_news_new/providers/blog_provider.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
-import 'package:stocks_news_new/screens/auth/login/login_sheet.dart';
 import 'package:stocks_news_new/screens/auth/membershipAsk/ask.dart';
 import 'package:stocks_news_new/screens/auth/refer/refer_code.dart';
 import 'package:stocks_news_new/screens/membership/store/store.dart';
@@ -20,6 +19,7 @@ import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/theme_button_small.dart';
 
 import '../../../widgets/custom/warning_text.dart';
+import '../../auth/base/base_auth.dart';
 
 class BlogDetailsLock extends StatefulWidget {
   final String? slug;
@@ -32,7 +32,8 @@ class BlogDetailsLock extends StatefulWidget {
 
 class _BlogDetailsLockState extends State<BlogDetailsLock> {
   void _onLoginClick(context) async {
-    await loginSheet();
+    // await loginSheet();
+    await loginFirstSheet();
     UserProvider userProvider =
         Provider.of<UserProvider>(context, listen: false);
     BlogProvider provider = Provider.of<BlogProvider>(context, listen: false);

@@ -14,8 +14,6 @@ import 'package:provider/provider.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/screens/auth/bottomSheets/aggree_conditions.dart';
-import 'package:stocks_news_new/screens/auth/signup/signup_sheet_tablet.dart';
-import 'package:stocks_news_new/screens/auth/signup/signup_sheet.dart';
 // import 'package:stocks_news_new/screens/auth/otp/otp_login.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
@@ -30,6 +28,7 @@ import 'package:stocks_news_new/widgets/theme_input_field.dart';
 import 'package:validators/validators.dart';
 
 import '../../../widgets/custom/alert_popup.dart';
+import '../base/base_auth.dart';
 
 loginSheetTablet() async {
   await showModalBottomSheet(
@@ -402,9 +401,11 @@ class _LoginBottomState extends State<LoginBottom> {
                               GestureDetector(
                                 onTap: () async {
                                   Navigator.pop(context);
-                                  isPhone
-                                      ? await signupSheet()
-                                      : await signupSheetTablet();
+                                  // isPhone
+                                  //     ? await signupSheet()
+                                  //     : await signupSheetTablet();
+
+                                  await loginFirstSheet();
                                 },
                                 child: Text(
                                   " Sign up ",

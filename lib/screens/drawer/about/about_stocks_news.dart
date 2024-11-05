@@ -9,7 +9,6 @@ import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/affiliate/pointsTransaction/trasnsaction.dart';
-import 'package:stocks_news_new/screens/auth/login/login_sheet.dart';
 import 'package:stocks_news_new/screens/auth/login/login_sheet_tablet.dart';
 import 'package:stocks_news_new/screens/drawer/about/tile.dart';
 import 'package:stocks_news_new/screens/drawer/settings/index.dart';
@@ -50,7 +49,8 @@ class _AboutStocksNewsState extends State<AboutStocksNews> {
     UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
 
     if (provider.user == null) {
-      isPhone ? await loginSheet() : await loginSheetTablet();
+      // isPhone ? await loginSheet() : await loginSheetTablet();
+      await loginSheetTablet();
     }
 
     if (provider.user == null) {

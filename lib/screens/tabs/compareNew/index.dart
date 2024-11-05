@@ -1,17 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/compare_stocks_provider.dart';
-import 'package:stocks_news_new/screens/auth/login/login_sheet.dart';
-import 'package:stocks_news_new/screens/auth/login/login_sheet_tablet.dart';
 import 'package:stocks_news_new/screens/drawer/base_drawer.dart';
 import 'package:stocks_news_new/screens/tabs/compareNew/container.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
-
 import '../../../providers/user_provider.dart';
-import '../../../utils/constants.dart';
 import '../../../widgets/login_error.dart';
+import '../../auth/base/base_auth.dart';
 import 'addScreen/add_stock.dart';
 
 class CompareNew extends StatelessWidget {
@@ -45,7 +42,8 @@ class CompareNew extends StatelessWidget {
                 state: "compare",
                 title: "Compare Stocks",
                 onClick: () async {
-                  isPhone ? await loginSheet() : await loginSheetTablet();
+                  // isPhone ? await loginSheet() : await loginSheetTablet();
+                  await loginFirstSheet();
 
                   await provider.getCompareStock(showProgress: false);
                 },

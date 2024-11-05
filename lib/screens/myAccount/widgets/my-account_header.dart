@@ -23,8 +23,6 @@ import 'package:image_picker/image_picker.dart';
 import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/api/apis.dart';
 import 'package:stocks_news_new/api/image_service.dart';
-
-import '../../../providers/leaderboard.dart';
 import '../../../utils/constants.dart';
 
 //
@@ -223,7 +221,7 @@ class MyVerifiedCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    LeaderBoardProvider leaderProvider = context.watch<LeaderBoardProvider>();
+    // LeaderBoardProvider leaderProvider = context.watch<LeaderBoardProvider>();
     HomeProvider homeProvider = context.watch<HomeProvider>();
     UserProvider userProvider = context.watch<UserProvider>();
 
@@ -306,10 +304,10 @@ class MyVerifiedCard extends StatelessWidget {
                 ),
                 const SpacerVertical(height: 5),
                 Text(
-                  leaderProvider.extra?.balance == 0 ||
-                          leaderProvider.extra?.balance == 1
-                      ? "${leaderProvider.extra?.balance ?? 0} Point"
-                      : "${leaderProvider.extra?.balance ?? 0} Points",
+                  userProvider.user?.pointEarn == 0 ||
+                          userProvider.user?.pointEarn == 1
+                      ? "${userProvider.user?.pointEarn ?? 0} Point"
+                      : "${userProvider.user?.pointEarn ?? 0} Points",
                   textAlign: TextAlign.center,
                   style: stylePTSansBold(color: Colors.white, fontSize: 14),
                 ),
@@ -339,7 +337,7 @@ class MyVerifiedCard extends StatelessWidget {
                 const SpacerVertical(height: 5),
                 Text(
                   verified
-                      ? "Rank - ${leaderProvider.extra?.selfRank ?? 0}"
+                      ? "Rank - ${userProvider.user?.selfRank ?? 0}"
                       : "Rank - N/A",
                   style: stylePTSansBold(color: Colors.white, fontSize: 14),
                 ),

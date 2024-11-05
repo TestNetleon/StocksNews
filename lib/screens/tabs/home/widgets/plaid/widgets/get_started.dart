@@ -8,8 +8,6 @@ import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/plaid.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
-import 'package:stocks_news_new/screens/auth/login/login_sheet.dart';
-import 'package:stocks_news_new/screens/auth/login/login_sheet_tablet.dart';
 import 'package:stocks_news_new/screens/auth/verifyIdentity/verify_identity.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
@@ -18,6 +16,7 @@ import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 import '../../../../../../utils/utils.dart';
+import '../../../../../auth/base/base_auth.dart';
 import '../handle/plaid_handler.dart';
 
 class PlaidHomeGetStarted extends StatefulWidget {
@@ -74,7 +73,8 @@ class _PlaidHomeGetStartedState extends State<PlaidHomeGetStarted> {
     PlaidProvider plaidProvider = context.read<PlaidProvider>();
 
     if (provider.user == null) {
-      isPhone ? await loginSheet() : await loginSheetTablet();
+      // isPhone ? await loginSheet() : await loginSheetTablet();
+      await loginFirstSheet();
     }
     if (provider.user == null) {
       return;

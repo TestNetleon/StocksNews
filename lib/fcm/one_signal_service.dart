@@ -18,12 +18,10 @@ import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/affiliate/pointsTransaction/trasnsaction.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/database/preference.dart';
+import '../screens/auth/base/base_auth.dart';
 import '../utils/utils.dart';
-
 import 'package:stocks_news_new/screens/affiliate/index.dart';
 import 'package:stocks_news_new/screens/auth/refer/refer_code.dart';
-import 'package:stocks_news_new/screens/auth/signup/signup_sheet_tablet.dart';
-import 'package:stocks_news_new/screens/auth/signup/signup_sheet.dart';
 import 'package:stocks_news_new/screens/blogDetail/index.dart';
 import 'package:stocks_news_new/screens/deepLinkScreen/webscreen.dart';
 import 'package:stocks_news_new/screens/membership_new/membership.dart';
@@ -108,7 +106,8 @@ class OneSignalService {
           );
           return;
         }
-        isPhone ? signupSheet() : signupSheetTablet();
+        // isPhone ? signupSheet() : signupSheetTablet();
+        loginFirstSheet();
       } else if (slug != '' && type == NotificationType.review.name) {
         popHome = false;
         if (whenAppKilled) await Future.delayed(const Duration(seconds: 3));

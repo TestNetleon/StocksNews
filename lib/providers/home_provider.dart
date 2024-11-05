@@ -308,15 +308,12 @@ class HomeProvider extends ChangeNotifier {
 
     retryCount = 0;
     showAdd = true;
-    if (kDebugMode) {
-      checkMaintenanceMode();
-    }
 
+    getHomeSlider();
     getHomePortfolio();
     // _getLastMarketOpen();
     _getLastMarketOpenFW();
 
-    getHomeSlider();
     getFeaturedWatchlist();
     // getHomeAlerts();
     getMostPurchased(home: "home");
@@ -423,6 +420,7 @@ class HomeProvider extends ChangeNotifier {
         },
         onRefresh: () => refreshData(null),
       );
+      _extra = (response.extra is Extra ? response.extra as Extra : null);
 
       if (response.status) {
         //...........PLAID KEYS SET............
@@ -434,15 +432,21 @@ class HomeProvider extends ChangeNotifier {
         // holdingsAPI = "$basePlaidUrl/investments/holdings/get";
         //.....................................
         _homeSliderRes = HomeSliderRes.fromJson(response.data);
+
         Utils().showLog("-----!!${_homeSliderRes?.rating?.description}");
-        _extra = (response.extra is Extra ? response.extra as Extra : null);
+        notifyListeners();
+
         Preference.saveReferInput(_extra?.affiliateInput == 1);
         loginTxt = _extra?.loginText;
         signUpTxt = _extra?.signUpText;
         totalAlerts = _homeSliderRes?.totalAlerts ?? 0;
         totalWatchList = _homeSliderRes?.totalWatchList ?? 0;
         if (_extra?.messageObject != null) {
-          Preference.saveLocalDataBase(_extra?.messageObject);
+          try {
+            Preference.saveLocalDataBase(_extra?.messageObject);
+          } catch (e) {
+            Utils().showLog('error $e');
+          }
         }
         if (_extra?.messageObject?.error != null) {
           Const.errSomethingWrong = _extra?.messageObject?.error ?? "";
@@ -633,6 +637,7 @@ class HomeProvider extends ChangeNotifier {
         }
       } else {
         _homePortfolio = null;
+        Utils().showLog('getHomePortfolio else');
         //
       }
       _statusPortfolio = Status.loaded;
@@ -640,6 +645,8 @@ class HomeProvider extends ChangeNotifier {
 
       return ApiResponse(status: true, data: response.data);
     } catch (e) {
+      Utils().showLog('getHomePortfolio $e');
+
       _homePortfolio = null;
       _statusPortfolio = Status.loaded;
       notifyListeners();
@@ -895,7 +902,6 @@ class HomeProvider extends ChangeNotifier {
   }
 
   Future checkMaintenanceMode() async {
-    _statusSlider = Status.loading;
     notifyListeners();
     // UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
     // String? fcmToken = await Preference.getFcmToken();
@@ -912,13 +918,10 @@ class HomeProvider extends ChangeNotifier {
         // url: Apis.homeSlider,
         url: Apis.checkServer,
         baseUrl: Apis.baseUrlLocal,
-
         // request: request,
         showProgress: false,
         onRefresh: () => refreshData(null),
       );
-      _statusSlider = Status.loaded;
-      notifyListeners();
 
       _extra = (response.extra is Extra ? response.extra as Extra : null);
 
@@ -931,10 +934,10 @@ class HomeProvider extends ChangeNotifier {
       }
       MessageRes? localDataBase = await Preference.getLocalDataBase();
       Utils().showLog("localDataBase  =========${localDataBase?.error}");
+      notifyListeners();
 
       return response.status ? false : true;
     } catch (e) {
-      _statusSlider = Status.loaded;
       notifyListeners();
       return false;
     }

@@ -11,8 +11,7 @@ import 'package:stocks_news_new/modals/news_datail_res.dart';
 import 'package:stocks_news_new/providers/news_detail.provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/AdManager/manager.dart';
-import 'package:stocks_news_new/screens/auth/base/base_auth.dart';
-import 'package:stocks_news_new/screens/auth/login/login_sheet.dart';
+import 'package:stocks_news_new/screens/auth/base/base_auth_bottom.dart';
 import 'package:stocks_news_new/screens/auth/verifyIdentity/verify_identity.dart';
 import 'package:stocks_news_new/screens/blogDetail/widgets/item.dart';
 import 'package:stocks_news_new/screens/tabs/news/newsAuthor/index.dart';
@@ -36,6 +35,7 @@ import '../../../../providers/user_provider.dart';
 import '../../../../widgets/custom/update_error.dart';
 import '../../../../widgets/disclaimer_widget.dart';
 import '../../../../widgets/theme_button_small.dart';
+import '../../../auth/base/base_auth.dart';
 import '../../../auth/refer/refer_code.dart';
 import '../../../blogs/index.dart';
 import '../../../marketData/lock/common_lock.dart';
@@ -89,7 +89,8 @@ class _NewsDetailsBodyState extends State<NewsDetailsBody> {
         Timer(const Duration(seconds: 3), () {
           if (mounted && (ModalRoute.of(context)?.isCurrent ?? false)) {
             helper.update(NewsDetails.path);
-            loginSheet();
+            // loginSheet();
+            loginFirstSheet();
           }
         });
       }
@@ -113,7 +114,9 @@ class _NewsDetailsBodyState extends State<NewsDetailsBody> {
     NewsDetailProvider provider = context.read<NewsDetailProvider>();
 
     if (userProvider.user == null) {
-      await loginSheet();
+      // await loginSheet();
+      await loginFirstSheet();
+
       if (context.read<UserProvider>().user != null) {
         await provider.getNewsDetailData(
           showProgress: false,
@@ -134,7 +137,8 @@ class _NewsDetailsBodyState extends State<NewsDetailsBody> {
   }
 
   void _onLoginClick(context) async {
-    await loginSheet();
+    // await loginSheet();
+    await loginFirstSheet();
 
     UserProvider userProvider =
         Provider.of<UserProvider>(context, listen: false);

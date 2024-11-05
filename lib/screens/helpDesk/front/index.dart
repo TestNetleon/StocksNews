@@ -9,8 +9,7 @@ import 'package:stocks_news_new/widgets/screen_title.dart';
 import '../../../modals/user_res.dart';
 import '../../../providers/user_provider.dart';
 import '../../../widgets/login_error.dart';
-import '../../auth/login/login_sheet.dart';
-import '../../auth/login/login_sheet_tablet.dart';
+import '../../auth/base/base_auth.dart';
 import 'container.dart';
 
 class HelpDeskNew extends StatefulWidget {
@@ -57,7 +56,8 @@ class _HelpDeskNewState extends State<HelpDeskNew> {
                       state: "notification",
                       title: "Helpdesk",
                       onClick: () async {
-                        isPhone ? await loginSheet() : await loginSheetTablet();
+                        // isPhone ? await loginSheet() : await loginSheetTablet();
+                        await loginFirstSheet();
                         if (context.read<UserProvider>().user != null) {
                           provider.getTickets();
                         }

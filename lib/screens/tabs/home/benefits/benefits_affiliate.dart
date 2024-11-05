@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/screens/affiliate/index.dart';
-import 'package:stocks_news_new/screens/auth/login/login_sheet.dart';
 import 'package:stocks_news_new/screens/auth/refer/refer_code.dart';
 import 'package:stocks_news_new/screens/drawer/base_drawer.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
@@ -13,8 +12,7 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/custom_tab_container.dart';
 import 'package:stocks_news_new/widgets/theme_button_small.dart';
-
-import '../../../auth/login/login_sheet_tablet.dart';
+import '../../../auth/base/base_auth.dart';
 
 class BenefitsMarketing extends StatefulWidget {
   const BenefitsMarketing({super.key});
@@ -65,7 +63,8 @@ class _BenefitsMarketingState extends State<BenefitsMarketing> {
               child: ThemeButtonSmall(
                 onPressed: () async {
                   if (provider.user == null) {
-                    isPhone ? await loginSheet() : await loginSheetTablet();
+                    // isPhone ? await loginSheet() : await loginSheetTablet();
+                    await loginFirstSheet();
                   }
                   if (provider.user == null) {
                     return;

@@ -24,7 +24,7 @@ import '../../socket/socket.dart';
 import '../../utils/constants.dart';
 // import '../simulator/buyAndSell/index.dart';
 import '../../utils/utils.dart';
-import '../auth/base/base_auth.dart';
+import '../auth/base/base_auth_bottom.dart';
 import 'widgets/AlertWatchlist/add_alert_watchlist.dart';
 import 'stockDetailTabs/chart/chart.dart';
 import 'stockDetailTabs/dividends/dividends.dart';

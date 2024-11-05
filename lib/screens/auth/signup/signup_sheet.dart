@@ -12,9 +12,7 @@ import 'package:provider/provider.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/screens/auth/bottomSheets/aggree_conditions.dart';
-import 'package:stocks_news_new/screens/auth/login/login_sheet.dart';
 import 'package:stocks_news_new/screens/auth/bottomSheets/refer_sheet.dart';
-import 'package:stocks_news_new/screens/auth/login/login_sheet_tablet.dart';
 // import 'package:stocks_news_new/screens/auth/otp/otp_login.dart';
 
 import 'package:stocks_news_new/utils/colors.dart';
@@ -31,6 +29,7 @@ import '../../../route/my_app.dart';
 import '../../../utils/utils.dart';
 import '../../../utils/validations.dart';
 import '../../../widgets/theme_input_field.dart';
+import '../base/base_auth.dart';
 
 signupSheet({String? email}) async {
   await showModalBottomSheet(
@@ -460,7 +459,8 @@ class _SignUpBottomState extends State<SignUpBottom> {
                             child: GestureDetector(
                                 onTap: () {
                                   Navigator.pop(context);
-                                  isPhone ? loginSheet() : loginSheetTablet();
+                                  // isPhone ? loginSheet() : loginSheetTablet();
+                                  loginFirstSheet();
                                 },
                                 child: Text(
                                   "Already have an account? Log in",

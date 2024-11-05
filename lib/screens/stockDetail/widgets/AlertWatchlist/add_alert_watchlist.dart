@@ -7,17 +7,15 @@ import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/stock_detail_new.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
-import 'package:stocks_news_new/screens/auth/login/login_sheet.dart';
-import 'package:stocks_news_new/screens/auth/login/login_sheet_tablet.dart';
 import 'package:stocks_news_new/screens/membership_new/membership.dart';
 import 'package:stocks_news_new/screens/watchlist/watchlist.dart';
 import 'package:stocks_news_new/utils/colors.dart';
-import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:vibration/vibration.dart';
 import '../../../../utils/dialogs.dart';
 import '../../../alerts/alerts.dart';
+import '../../../auth/base/base_auth.dart';
 import '../../../auth/membershipAsk/ask.dart';
 import 'alert_popup.dart';
 import 'button.dart';
@@ -150,7 +148,9 @@ class AddToAlertWatchlist extends StatelessWidget {
                   //Ask for Login
                   Utils().showLog("---Ask for Login");
 
-                  isPhone ? await loginSheet() : await loginSheetTablet();
+                  // isPhone ? await loginSheet() : await loginSheetTablet();
+                  await loginFirstSheet();
+
                   if (provider.user == null) {
                     return;
                   }
@@ -192,7 +192,8 @@ class AddToAlertWatchlist extends StatelessWidget {
                   //Ask for Login
                   Utils().showLog("---Ask for Login");
 
-                  isPhone ? await loginSheet() : await loginSheetTablet();
+                  // isPhone ? await loginSheet() : await loginSheetTablet();
+                  await loginFirstSheet();
                   if (provider.user == null) {
                     return;
                   }
@@ -279,7 +280,9 @@ class AddToAlertWatchlist extends StatelessWidget {
                   //Ask for Login
                   Utils().showLog("---Ask for Login");
 
-                  isPhone ? await loginSheet() : await loginSheetTablet();
+                  // isPhone ? await loginSheet() : await loginSheetTablet();
+                  await loginFirstSheet();
+
                   if (provider.user == null) {
                     return;
                   }
@@ -323,7 +326,9 @@ class AddToAlertWatchlist extends StatelessWidget {
                   //Ask for Login
                   Utils().showLog("---Ask for Login");
 
-                  isPhone ? await loginSheet() : await loginSheetTablet();
+                  // isPhone ? await loginSheet() : await loginSheetTablet();
+                  await loginFirstSheet();
+
                   if (provider.user == null) {
                     return;
                   }

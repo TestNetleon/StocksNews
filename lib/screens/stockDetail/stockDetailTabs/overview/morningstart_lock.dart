@@ -10,7 +10,6 @@ import 'package:stocks_news_new/providers/leaderboard.dart';
 import 'package:stocks_news_new/providers/stock_detail_new.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
-import 'package:stocks_news_new/screens/auth/login/login_sheet.dart';
 import 'package:stocks_news_new/screens/auth/membershipAsk/ask.dart';
 import 'package:stocks_news_new/screens/auth/refer/refer_code.dart';
 import 'package:stocks_news_new/screens/membership/store/store.dart';
@@ -22,6 +21,7 @@ import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/theme_button_small.dart';
 
 import '../../../../widgets/custom/confirmation_point_popup.dart';
+import '../../../auth/base/base_auth.dart';
 
 class SdMorningStarLock extends StatefulWidget {
   final String symbol;
@@ -70,7 +70,8 @@ class _SdMorningStarLockState extends State<SdMorningStarLock> {
   }
 
   void _onLoginClick(context) async {
-    await loginSheet();
+    // await loginSheet();
+    await loginFirstSheet();
 
     UserProvider userProvider =
         Provider.of<UserProvider>(context, listen: false);

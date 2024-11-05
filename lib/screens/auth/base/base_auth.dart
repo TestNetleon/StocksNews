@@ -1,66 +1,141 @@
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:provider/provider.dart';
-import 'package:stocks_news_new/api/api_response.dart';
+import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:stocks_news_new/modals/user_res.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
+import 'package:stocks_news_new/route/my_app.dart';
+import 'dart:io';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:provider/provider.dart';
+import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
+import 'package:stocks_news_new/screens/auth/base/base_verify.dart';
+import 'package:stocks_news_new/screens/auth/bottomSheets/aggree_conditions.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:stocks_news_new/database/preference.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/utils/validations.dart';
-import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
 import 'package:stocks_news_new/widgets/custom/country_code_picker_widget.dart';
-import 'package:stocks_news_new/widgets/screen_title.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/theme_button.dart';
 import 'package:stocks_news_new/widgets/theme_input_field.dart';
+import '../../../widgets/custom/alert_popup.dart';
 
-import 'base_verify.dart';
-
-class BaseAuth extends StatefulWidget {
-  const BaseAuth({super.key});
-
-  @override
-  State<BaseAuth> createState() => _BaseAuthState();
+loginFirstSheet() async {
+  await showModalBottomSheet(
+    useSafeArea: true,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.only(
+        topLeft: Radius.circular(5.sp),
+        topRight: Radius.circular(5.sp),
+      ),
+    ),
+    backgroundColor: ThemeColors.transparent,
+    isScrollControlled: true,
+    context: navigatorKey.currentContext!,
+    builder: (context) {
+      return const LoginFirst();
+    },
+  );
 }
 
-class _BaseAuthState extends State<BaseAuth> {
+class LoginFirst extends StatefulWidget {
+  const LoginFirst({super.key, this.onLogin});
+
+  final Function()? onLogin;
+
+  @override
+  State<LoginFirst> createState() => _LoginFirstState();
+}
+
+class _LoginFirstState extends State<LoginFirst> {
+  final TextEditingController _controller = TextEditingController();
   String? countryCode;
+  bool verifying = false;
   String? _verificationId;
-  bool isLoading = false;
-  TextEditingController phone = TextEditingController();
-  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final GoogleSignIn _googleSignIn = GoogleSignIn();
+
   @override
   void initState() {
     super.initState();
-    Utils().showLog('BASE AUTH INIT...');
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _getCode();
     });
-    closeKeyboard();
   }
 
-  statusIsLoading(status) {
-    isLoading = status;
+//GET COUNTRY CODE
+  _getCode() {
+    UserRes? user = context.read<UserProvider>().user;
+    if (user?.phone != null && user?.phone != '') {
+      _controller.text = user?.phone ?? '';
+    } else {
+      _controller.text = '';
+    }
+    if (user?.phoneCode != null && user?.phoneCode != "") {
+      countryCode = CountryCode.fromDialCode(user?.phoneCode ?? "").dialCode;
+    } else if (geoCountryCode != null && geoCountryCode != "") {
+      countryCode = CountryCode.fromCountryCode(geoCountryCode!).dialCode;
+    } else {
+      countryCode = CountryCode.fromCountryCode("US").dialCode;
+    }
     setState(() {});
   }
 
-  Future<void> _verifyPhoneNumber() async {
-    statusIsLoading(true);
+//LOADING
+  setVerify(status) {
+    verifying = status;
+    if (mounted) {
+      setState(() {});
+    }
+  }
 
+//ON LOGIN
+  void _onLoginClick() async {
+    closeKeyboard();
+
+    if (isEmpty(_controller.text)) {
+      popUpAlert(
+        icon: Images.alertPopGIF,
+        title: 'Alert',
+        message: 'Please enter a valid phone number',
+      );
+      return;
+    }
+
+    if (kDebugMode) {
+      //DEBUG
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => BaseVerifyOTP(
+            countryCode: countryCode ?? '+1',
+            phone: _controller.text,
+            verificationId: '',
+          ),
+        ),
+      );
+      return;
+    }
+    setVerify(true);
+    Utils().showLog('${countryCode ?? '+1'} ${_controller.text}');
     try {
-      await _auth.verifyPhoneNumber(
-        phoneNumber: '${countryCode ?? '+1'} ${phone.text}',
+      await FirebaseAuth.instance.verifyPhoneNumber(
+        phoneNumber: '${countryCode ?? '+1'} ${_controller.text}',
         verificationCompleted: (PhoneAuthCredential credential) async {
           // Auto-resolve on Android (not iOS)
-          await _auth.signInWithCredential(credential);
+          await FirebaseAuth.instance.signInWithCredential(credential);
           Utils().showLog(
-              'Phone number automatically verified and user signed in: ${_auth.currentUser}');
-          statusIsLoading(false);
+              'Phone number automatically verified and user signed in: ${FirebaseAuth.instance.currentUser}');
+          setVerify(false);
+          _finalVerifyOTP();
         },
         verificationFailed: (FirebaseAuthException e) {
           popUpAlert(
@@ -74,31 +149,37 @@ class _BaseAuthState extends State<BaseAuth> {
             title: "Alert",
             icon: Images.alertPopGIF,
           );
-          statusIsLoading(false);
+          setVerify(false);
+          Utils().showLog('$e');
         },
         codeSent: (String verificationId, int? resendToken) {
-          statusIsLoading(false);
-
+          setVerify(false);
           setState(() {
             _verificationId = verificationId;
           });
 
-          Utils().showLog('PHONE => ${phone.text}');
-          String mobile = phone.text;
+          // otpLoginFirstSheet(
+          //   mobile: _controller.text,
+          //   countryCode: countryCode ?? '+1',
+          //   verificationId: _verificationId ?? '',
+          // );
           Navigator.push(
             context,
             MaterialPageRoute(
               builder: (context) => BaseVerifyOTP(
                 countryCode: countryCode ?? '+1',
-                phone: mobile,
+                phone: _controller.text,
                 verificationId: _verificationId ?? verificationId,
               ),
             ),
           );
+
           Utils().showLog('Verification code sent.');
         },
         codeAutoRetrievalTimeout: (String verificationId) {
-          statusIsLoading(false);
+          Utils().showLog('Time Out');
+
+          setVerify(false);
 
           setState(() {
             _verificationId = verificationId;
@@ -107,207 +188,415 @@ class _BaseAuthState extends State<BaseAuth> {
         timeout: const Duration(seconds: 60),
       );
     } catch (e) {
-      statusIsLoading(false);
+      setVerify(false);
 
       Utils().showLog('Firebase error $e');
     } finally {}
   }
 
-  _getCode() {
-    UserRes? user = context.read<UserProvider>().user;
-    if (user?.phone != null && user?.phone != '') {
-      phone.text = user?.phone ?? '';
-    } else {
-      phone.text = '';
-    }
-    setState(() {});
-    if (user?.phoneCode != null && user?.phoneCode != "") {
-      countryCode = CountryCode.fromDialCode(user?.phoneCode ?? "").dialCode;
-    } else if (geoCountryCode != null && geoCountryCode != "") {
-      countryCode = CountryCode.fromCountryCode(geoCountryCode!).dialCode;
-    } else {
-      countryCode = CountryCode.fromCountryCode("US").dialCode;
-    }
-  }
-
-  void _onChanged(CountryCode value) {
-    countryCode = value.dialCode;
-    Utils().showLog("COUNTRY CODE => $countryCode");
-    setState(() {});
-  }
-
-  _gotoVerify() async {
-    closeKeyboard();
-    if (isEmpty(phone.text)) {
-      return popUpAlert(
-        message: "Please enter a valid phone number.",
-        title: "Alert",
-        icon: Images.alertPopGIF,
-      );
-    }
-    Utils().showLog('$countryCode');
-
+//FINAL VERIFY OTP
+  _finalVerifyOTP() async {
     UserProvider provider = context.read<UserProvider>();
-    ApiResponse response = await provider.checkPhoneExist(
-      countryCode: countryCode ?? '+1',
-      phone: phone.text,
-    );
-    if (response.status) {
-      _verifyPhoneNumber();
-    } else {
-      //
+    String? fcmToken = await Preference.getFcmToken();
+    String? address = await Preference.getLocation();
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+    String versionName = packageInfo.version;
+    String buildNumber = packageInfo.buildNumber;
+    bool granted = await Permission.notification.isGranted;
+    String? referralCode = await Preference.getReferral();
+
+    Map request = {
+      "phone": _controller.text,
+      "phone_code": countryCode ?? '+1',
+      "fcm_token": fcmToken ?? "",
+      "platform": Platform.operatingSystem,
+      "address": address ?? "",
+      "build_version": versionName,
+      "build_code": buildNumber,
+      "fcm_permission": "$granted",
+      "referral_code": referralCode ?? "",
+    };
+    if (memCODE != null && memCODE != '') {
+      request['distributor_code'] = memCODE;
+    }
+
+    provider.finalVerifyOTP(request, doublePop: false);
+  }
+
+//GOOGLE SIGN IN
+  void _handleSignIn() async {
+    UserProvider provider = context.read<UserProvider>();
+    if (await _googleSignIn.isSignedIn()) {
+      await _googleSignIn.signOut();
+    }
+
+    try {
+      String? fcmToken = await Preference.getFcmToken();
+      String? address = await Preference.getLocation();
+
+      GoogleSignInAccount? account = await _googleSignIn.signIn();
+      Utils().showLog(account.toString());
+      PackageInfo packageInfo = await PackageInfo.fromPlatform();
+      String versionName = packageInfo.version;
+      String buildNumber = packageInfo.buildNumber;
+      String? referralCode = await Preference.getReferral();
+
+      if (account != null) {
+        bool granted = await Permission.notification.isGranted;
+        Map request = {
+          "displayName": account.displayName ?? "",
+          "email": account.email,
+          "id": account.id,
+          "photoUrl": account.photoUrl ?? "",
+          "fcm_token": fcmToken ?? "",
+          "platform": Platform.operatingSystem,
+          "address": address ?? "",
+          "build_version": versionName,
+          "build_code": buildNumber,
+          "fcm_permission": "$granted",
+          "referral_code": referralCode ?? "",
+        };
+        if (memCODE != null && memCODE != '') {
+          request['distributor_code'] = memCODE;
+        }
+
+        provider.googleLogin(
+          request,
+          alreadySubmitted: false,
+          direct: true,
+        );
+      }
+    } catch (error) {
+      popUpAlert(message: "$error", title: "Alert", icon: Images.alertPopGIF);
+      Utils().showLog("$error");
+    }
+  }
+
+//APPLE SIGN IN
+  void _handleSignInApple(id, displayName, email) async {
+    try {
+      String? fcmToken = await Preference.getFcmToken();
+      String? address = await Preference.getLocation();
+      bool granted = await Permission.notification.isGranted;
+
+      UserProvider provider = context.read<UserProvider>();
+      PackageInfo packageInfo = await PackageInfo.fromPlatform();
+      String versionName = packageInfo.version;
+      String buildNumber = packageInfo.buildNumber;
+
+      Map request = {
+        "displayName": displayName ?? "",
+        "email": email ?? "",
+        "id": id ?? "",
+        "platform": Platform.operatingSystem,
+        "address": address ?? "",
+        "build_version": versionName,
+        "build_code": buildNumber,
+        "fcm_token": fcmToken ?? "",
+        "fcm_permission": "$granted",
+      };
+      if (memCODE != null && memCODE != '') {
+        request['distributor_code'] = memCODE;
+      }
+      provider.appleLogin(
+        request,
+        id: id,
+        direct: true,
+      );
+    } catch (error) {
+      popUpAlert(message: "$error", title: "Alert", icon: Images.alertPopGIF);
+      Utils().showLog("$error");
     }
   }
 
   @override
   void dispose() {
-    phone.dispose();
+    _controller.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     HomeProvider provider = context.watch<HomeProvider>();
+    UserProvider userProvider = context.watch<UserProvider>();
 
-    if (provider.extra?.updateYourPhone == null) {
-      return SizedBox();
+    if (userProvider.user?.phoneCode != null &&
+        userProvider.user?.phoneCode != "") {
+      countryCode =
+          CountryCode.fromDialCode(userProvider.user?.phoneCode ?? "").dialCode;
+    } else if (geoCountryCode != null && geoCountryCode != "") {
+      countryCode = CountryCode.fromCountryCode(geoCountryCode!).dialCode;
+    } else {
+      countryCode = CountryCode.fromCountryCode("US").dialCode;
     }
-
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(8),
-          topRight: Radius.circular(8),
-        ),
-        border: Border(top: BorderSide(color: ThemeColors.greyBorder)),
-        gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: const [
-            ThemeColors.bottomsheetGradient,
-            ThemeColors.background,
-          ],
-        ),
-      ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          ScreenTitle(
-            title: provider.extra?.updateYourPhone?.title,
-            subTitle: provider.extra?.updateYourPhone?.text,
-            subTitleHtml: true,
-            dividerPadding: EdgeInsets.only(bottom: 5),
+    return GestureDetector(
+      onTap: () {
+        closeKeyboard();
+      },
+      child: Container(
+        constraints: BoxConstraints(maxHeight: ScreenUtil().screenHeight - 30),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(10.sp),
+            topRight: Radius.circular(10.sp),
           ),
-          IntrinsicHeight(
-            child: Container(
-              decoration: BoxDecoration(
-                color: ThemeColors.white,
-                borderRadius: BorderRadius.circular(4),
+          gradient: const LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [ThemeColors.bottomsheetGradient, Colors.black],
+          ),
+          color: ThemeColors.background,
+          border: const Border(
+            top: BorderSide(color: ThemeColors.greyBorder),
+          ),
+        ),
+        child: GestureDetector(
+          onTap: () {
+            closeKeyboard();
+          },
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                margin: EdgeInsets.only(left: 12, top: 12),
+                child: IconButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  icon: Icon(
+                    Icons.cancel,
+                    size: 30,
+                    color: ThemeColors.greyText,
+                  ),
+                ),
               ),
-              child: Row(
-                children: [
-                  Stack(
-                    alignment: Alignment.center,
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.all(Dimen.authScreenPadding),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Container(
-                        decoration: const BoxDecoration(
-                          border: Border(
-                            bottom: BorderSide(
-                              color: ThemeColors.white,
+                      // const SpacerVertical(height: 30),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          // Text(
+                          //   provider.homeTrendingRes?.loginTitle ??
+                          //       "Get Started With Your Stocks Journey",
+                          //   style: stylePTSansBold(fontSize: 28),
+                          //   textAlign: TextAlign.center,
+                          // ),
+                          HtmlWidget(
+                            provider.homeTrendingRes?.loginTitle ??
+                                "Get Started With Your Stocks Journey",
+                            textStyle: stylePTSansBold(fontSize: 28),
+
+                            // textAlign: TextAlign.center,
+                          ),
+                          const SpacerVertical(height: 5),
+                          Text(
+                            provider.homeTrendingRes?.loginText ??
+                                "Log in or Sign up",
+                            style: stylePTSansRegular(
+                              fontSize: 16,
+                              color: ThemeColors.greyText,
                             ),
+                            textAlign: TextAlign.center,
                           ),
-                          color: ThemeColors.white,
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(4),
-                            bottomLeft: Radius.circular(4),
+                        ],
+                      ),
+                      const SpacerVertical(height: 30),
+                      IntrinsicHeight(
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: ThemeColors.white,
+                            borderRadius: BorderRadius.circular(4),
                           ),
-                        ),
-                        child: CountryPickerWidget(
-                          onChanged: _onChanged,
-                          showBox: false,
+                          child: Row(
+                            children: [
+                              Stack(
+                                alignment: Alignment.center,
+                                children: [
+                                  Container(
+                                    decoration: const BoxDecoration(
+                                      border: Border(
+                                        bottom: BorderSide(
+                                          color: ThemeColors.white,
+                                        ),
+                                      ),
+                                      color: ThemeColors.white,
+                                      borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(4),
+                                        bottomLeft: Radius.circular(4),
+                                      ),
+                                    ),
+                                    child: CountryPickerWidget(
+                                      onChanged: (CountryCode value) {
+                                        countryCode = value.dialCode;
+                                      },
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Flexible(
+                                child: ThemeInputField(
+                                  style: stylePTSansRegular(
+                                    color: Colors.black,
+                                    fontSize: 18,
+                                  ),
+                                  borderRadiusOnly: const BorderRadius.only(
+                                    topRight: Radius.circular(4),
+                                    bottomRight: Radius.circular(4),
+                                  ),
+                                  controller: _controller,
+                                  placeholder: "Enter your phone number",
+                                  keyboardType: TextInputType.phone,
+                                  inputFormatters: [
+                                    // _formatter,
+                                    LengthLimitingTextInputFormatter(15)
+                                  ],
+                                  textCapitalization: TextCapitalization.none,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-                    ],
-                  ),
-                  Flexible(
-                    child: Stack(
-                      alignment: Alignment.centerRight,
-                      children: [
-                        ThemeInputField(
-                          style: stylePTSansRegular(
-                            color: Colors.black,
-                            fontSize: 18,
+                      const SpacerVertical(height: Dimen.itemSpacing),
+                      ThemeButton(
+                        text: verifying
+                            ? provider.extra?.updateYourPhone?.verifyButton ??
+                                'Verifying your phone number...'
+                            : provider.extra?.updateYourPhone?.updateButton ??
+                                'Update my phone number',
+                        onPressed: verifying ? null : _onLoginClick,
+                      ),
+                      const SpacerVertical(),
+                      Stack(
+                        alignment: Alignment.center,
+                        children: [
+                          Divider(
+                            color: ThemeColors.dividerDark,
+                            height: 1,
+                            thickness: 1,
                           ),
-                          borderRadiusOnly: const BorderRadius.only(
-                            topRight: Radius.circular(4),
-                            bottomRight: Radius.circular(4),
+                          Container(
+                            color: ThemeColors.background,
+                            padding: EdgeInsets.symmetric(horizontal: 8.sp),
+                            child: Text(
+                              "or continue with",
+                              style: stylePTSansRegular(
+                                fontSize: 12,
+                                color: ThemeColors.greyText,
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                      const SpacerVertical(),
+                      ThemeButton(
+                        onPressed: () async {
+                          _handleSignIn();
+                        },
+                        color: ThemeColors.primaryLight,
+                        child: SizedBox(
+                          width: double.infinity,
+                          child: Stack(
+                            alignment: Alignment.center,
+                            children: [
+                              Positioned(
+                                left: 0,
+                                child: Image.asset(
+                                  Images.google,
+                                  width: 16,
+                                  height: 16,
+                                  fit: BoxFit.contain,
+                                ),
+                              ),
+                              Text(
+                                "Continue with Google",
+                                style: stylePTSansRegular(fontSize: 15),
+                                textAlign: TextAlign.center,
+                              ),
+                            ],
                           ),
-                          controller: phone,
-                          onChanged: (p0) {
-                            phone.text = p0;
-                            setState(() {});
-                          },
-                          placeholder: "Enter your phone number",
-                          keyboardType: TextInputType.phone,
-                          inputFormatters: [
-                            LengthLimitingTextInputFormatter(15),
-                          ],
-                          textCapitalization: TextCapitalization.none,
                         ),
-                        Visibility(
-                          visible: phone.text != '',
-                          child: Positioned(
-                            right: 10,
-                            child: InkWell(
-                              onTap: () {
-                                phone.clear();
-                                closeKeyboard();
-                                setState(() {});
-                              },
-                              child: Icon(
-                                Icons.close,
-                                color: ThemeColors.background,
+                      ),
+                      Visibility(
+                        visible: Platform.isIOS,
+                        child: Padding(
+                          padding:
+                              const EdgeInsets.only(top: Dimen.itemSpacing),
+                          child: ThemeButton(
+                            onPressed: () async {
+                              try {
+                                final AuthorizationCredentialAppleID
+                                    credential =
+                                    await SignInWithApple.getAppleIDCredential(
+                                  scopes: [
+                                    AppleIDAuthorizationScopes.email,
+                                    AppleIDAuthorizationScopes.fullName,
+                                  ],
+                                );
+
+                                _handleSignInApple(
+                                  credential.userIdentifier,
+                                  credential.givenName != null
+                                      ? "${credential.givenName} ${credential.familyName}"
+                                      : null,
+                                  credential.email,
+                                );
+                              } catch (e) {
+                                if (e.toString().contains(
+                                    "SignInWithAppleNotSupportedException")) {
+                                  // showErrorMessage(
+                                  //   message:
+                                  //       "Sign in with Apple not supported in this device",
+                                  // );
+                                }
+                              }
+                            },
+                            color: ThemeColors.white,
+                            child: SizedBox(
+                              width: double.infinity,
+                              child: Stack(
+                                alignment: Alignment.center,
+                                children: [
+                                  Positioned(
+                                    left: 0,
+                                    child: Image.asset(
+                                      Images.apple,
+                                      width: 18,
+                                      height: 18,
+                                      fit: BoxFit.contain,
+                                      color: ThemeColors.background,
+                                    ),
+                                  ),
+                                  Text(
+                                    "Continue with Apple",
+                                    style: stylePTSansRegular(
+                                        fontSize: 15,
+                                        color: ThemeColors.background),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ],
                               ),
                             ),
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
-                ],
+                ),
               ),
-            ),
+              Padding(
+                padding: const EdgeInsets.all(Dimen.authScreenPadding),
+                child: const NewAgreeConditions(),
+              ),
+            ],
           ),
-          SpacerVertical(height: 10),
-          _button(
-              text: isLoading
-                  ? provider.extra?.updateYourPhone?.verifyButton ??
-                      'Verifying your phone number...'
-                  : provider.extra?.updateYourPhone?.updateButton ??
-                      'Update my phone number',
-              onTap: isLoading ? null : _gotoVerify,
-              color: const Color.fromARGB(255, 194, 216, 51),
-              textColor: ThemeColors.background),
-        ],
+        ),
       ),
-    );
-  }
-
-  Widget _button({
-    required String text,
-    required void Function()? onTap,
-    Color? color = ThemeColors.accent,
-    Color textColor = Colors.white,
-  }) {
-    return ThemeButton(
-      radius: 30,
-      // showArrow: false,
-      fontBold: true,
-      onPressed: onTap,
-      text: text,
-      color: color,
-      textColor: textColor,
     );
   }
 }

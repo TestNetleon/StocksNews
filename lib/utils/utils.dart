@@ -7,8 +7,6 @@ import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:stocks_news_new/modals/stockDetailRes/earnings.dart';
 import 'package:stocks_news_new/modals/stockDetailRes/financial.dart';
-import 'package:stocks_news_new/screens/auth/login/login_sheet.dart';
-import 'package:stocks_news_new/screens/auth/signup/signup_sheet.dart';
 import 'package:stocks_news_new/screens/helpDesk/front/index.dart';
 import 'package:stocks_news_new/screens/marketData/congressionalData/index.dart';
 import 'package:stocks_news_new/screens/marketData/dividends/dividends.dart';
@@ -25,13 +23,13 @@ import 'package:stocks_news_new/screens/marketData/pennyStocks/index.dart';
 import 'package:stocks_news_new/screens/membership_new/membership.dart';
 import 'package:stocks_news_new/screens/stocks/index.dart';
 import 'package:stocks_news_new/screens/t&cAndPolicy/tc_policy.dart';
-// import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:intl/intl.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../providers/user_provider.dart';
 import '../route/my_app.dart';
+import '../screens/auth/base/base_auth.dart';
 import '../screens/blogDetail/index.dart';
 import '../screens/stockDetail/index.dart';
 import '../screens/tabs/news/newsDetail/new_detail.dart';
@@ -811,7 +809,8 @@ void handleNavigation({
       }
     } else {
       Timer(Duration(milliseconds: splashLoaded ? 0 : 3500), () {
-        loginSheet();
+        // loginSheet();
+        loginFirstSheet();
       });
     }
     // } else if (type == "signUp") {
@@ -829,7 +828,8 @@ void handleNavigation({
       }
     } else {
       Timer(Duration(milliseconds: splashLoaded ? 0 : 3500), () {
-        signupSheet();
+        // signupSheet();
+        loginFirstSheet();
       });
     }
     // } else if (type == "dashboard") {

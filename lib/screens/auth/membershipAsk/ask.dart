@@ -23,6 +23,7 @@ import '../../../../utils/constants.dart';
 import '../../../../utils/theme.dart';
 import '../../../../widgets/spacer_vertical.dart';
 import '../../../../widgets/theme_input_field.dart';
+import '../../../api/api_response.dart';
 import '../../contactUs/contact_us_item.dart';
 import '../../t&cAndPolicy/tc_policy.dart';
 import '../refer/refer_otp.dart';
@@ -166,39 +167,49 @@ class _MembershipLoginAskState extends State<MembershipLoginAsk> {
         icon: Images.alertPopGIF,
       );
     } else {
-      try {
-        showGlobalProgressDialog();
-        await FirebaseAuth.instance.verifyPhoneNumber(
-          // phoneNumber: kDebugMode ? "+91 ${mobile.text}" : "+1${mobile.text}",
-          phoneNumber: "$countryCode ${mobile.text}",
-          verificationCompleted: (PhoneAuthCredential credential) {
-            closeGlobalProgressDialog();
-          },
-          verificationFailed: (FirebaseAuthException e) {
-            closeGlobalProgressDialog();
-            // log("Error message => ${e.code} ${e.message} ${e.stackTrace}");
-            popUpAlert(
-              message: e.message ?? Const.errSomethingWrong,
-              title: "Alert",
-              icon: Images.alertPopGIF,
-            );
-          },
-          codeSent: (String verificationId, int? resendToken) {
-            closeGlobalProgressDialog();
-            referOTP(
-              name: name.text,
-              // displayName: displayName.text,
-              phone: mobile.text,
-              appSignature: appSignature,
-              verificationId: verificationId,
-              countryCode: countryCode!,
-              isVerifyIdentity: true,
-            );
-          },
-          codeAutoRetrievalTimeout: (String verificationId) {},
-        );
-      } catch (e) {
-        Utils().showLog("$e");
+      UserProvider provider = context.read<UserProvider>();
+
+      ApiResponse response = await provider.checkPhoneExist(
+        countryCode: countryCode ?? '+1',
+        phone: mobile.text,
+      );
+      if (response.status) {
+        try {
+          showGlobalProgressDialog();
+          await FirebaseAuth.instance.verifyPhoneNumber(
+            // phoneNumber: kDebugMode ? "+91 ${mobile.text}" : "+1${mobile.text}",
+            phoneNumber: "$countryCode ${mobile.text}",
+            verificationCompleted: (PhoneAuthCredential credential) {
+              closeGlobalProgressDialog();
+            },
+            verificationFailed: (FirebaseAuthException e) {
+              closeGlobalProgressDialog();
+              // log("Error message => ${e.code} ${e.message} ${e.stackTrace}");
+              popUpAlert(
+                message: e.message ?? Const.errSomethingWrong,
+                title: "Alert",
+                icon: Images.alertPopGIF,
+              );
+            },
+            codeSent: (String verificationId, int? resendToken) {
+              closeGlobalProgressDialog();
+              referOTP(
+                name: name.text,
+                // displayName: displayName.text,
+                phone: mobile.text,
+                appSignature: appSignature,
+                verificationId: verificationId,
+                countryCode: countryCode!,
+                isVerifyIdentity: true,
+              );
+            },
+            codeAutoRetrievalTimeout: (String verificationId) {},
+          );
+        } catch (e) {
+          Utils().showLog("$e");
+        }
+      } else {
+        //
       }
     }
   }
@@ -343,59 +354,7 @@ class _MembershipLoginAskState extends State<MembershipLoginAsk> {
                                         },
                                         enabled: user?.phoneCode == null ||
                                             user?.phoneCode == "",
-                                      )
-                                      //  CountryCodePicker(
-                                      //   padding: EdgeInsets.zero,
-                                      //   enabled: user?.phoneCode == null ||
-                                      //       user?.phoneCode == "",
-                                      //   // enabled: true,
-                                      //   onChanged: (CountryCode value) {
-                                      //     countryCode = value.dialCode;
-                                      //   },
-                                      //   initialSelection: locale,
-                                      //   showCountryOnly: false,
-                                      //   textStyle: stylePTSansBold(
-                                      //     color: Colors.black,
-                                      //     fontSize: 18,
-                                      //   ),
-                                      //   flagWidth: 24,
-                                      //   showOnlyCountryWhenClosed: false,
-                                      //   alignLeft: false,
-                                      //   boxDecoration: const BoxDecoration(
-                                      //     color: ThemeColors.tabBack,
-                                      //   ),
-                                      //   dialogTextStyle: styleGeorgiaBold(),
-                                      //   barrierColor: Colors.black26,
-                                      //   searchDecoration: InputDecoration(
-                                      //     iconColor: Colors.white,
-                                      //     fillColor: Colors.white,
-                                      //     prefixIcon: const Icon(
-                                      //       Icons.search,
-                                      //       size: 22,
-                                      //     ),
-                                      //     filled: true,
-                                      //     hintStyle: stylePTSansRegular(
-                                      //       color: Colors.grey,
-                                      //     ),
-                                      //     hintText: "Search country",
-                                      //     border: OutlineInputBorder(
-                                      //       borderRadius:
-                                      //           BorderRadius.circular(4.0),
-                                      //       borderSide: BorderSide.none,
-                                      //     ),
-                                      //     enabledBorder: OutlineInputBorder(
-                                      //       borderRadius:
-                                      //           BorderRadius.circular(4.0),
-                                      //       borderSide: BorderSide.none,
-                                      //     ),
-                                      //     focusedBorder: OutlineInputBorder(
-                                      //       borderRadius:
-                                      //           BorderRadius.circular(4.0),
-                                      //       borderSide: BorderSide.none,
-                                      //     ),
-                                      //   ),
-                                      // ),
-                                      ),
+                                      )),
                                 ],
                               ),
                               Flexible(
@@ -486,12 +445,12 @@ class _MembershipLoginAskState extends State<MembershipLoginAsk> {
                         ),
                       ),
                       const SpacerVertical(height: Dimen.itemSpacing),
-                      if (!numberVerified)
-                        ThemeButton(
-                          text: "Send OTP",
-                          onPressed: checkBox ? _referLogin : null,
-                          textUppercase: true,
-                        ),
+                      // if (!numberVerified)
+                      ThemeButton(
+                        text: "Send OTP",
+                        onPressed: checkBox ? _referLogin : null,
+                        textUppercase: true,
+                      ),
                       const SpacerVertical(height: 200),
                     ],
                   ),

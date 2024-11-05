@@ -30,6 +30,7 @@ class UserRes {
   int? affiliateStatus;
   String? phoneCode;
   dynamic pointEarn;
+  num? selfRank;
 
   UserRes({
     // this.subscriptionPurchased = 0,
@@ -57,6 +58,7 @@ class UserRes {
     this.phoneCode,
     this.pointEarn,
     this.trade,
+    this.selfRank,
   });
 
   factory UserRes.fromJson(Map<String, dynamic> json) => UserRes(
@@ -86,6 +88,7 @@ class UserRes {
         phoneCode: json["phone_code"],
         pointEarn: json["point_earn"],
         trade: json["trade"] == null ? null : TradeRes.fromJson(json["trade"]),
+        selfRank: json['self_rank'],
       );
 
   Map<String, dynamic> toJson() => {
@@ -113,6 +116,7 @@ class UserRes {
         "phone_code": phoneCode,
         "point_earn": pointEarn,
         "trade": trade?.toJson(),
+        "self_rank": selfRank,
       };
 }
 

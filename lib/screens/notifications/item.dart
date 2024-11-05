@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stocks_news_new/modals/notification_res.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/affiliate/index.dart';
-import 'package:stocks_news_new/screens/auth/signup/signup_sheet.dart';
 import 'package:stocks_news_new/screens/deepLinkScreen/webscreen.dart';
 import 'package:stocks_news_new/screens/drawer/widgets/review_app_pop_up.dart';
 import 'package:stocks_news_new/screens/tabs/news/newsDetail/new_detail.dart';
@@ -16,10 +15,9 @@ import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
-//
+import '../auth/base/base_auth.dart';
 import '../../widgets/theme_image_view.dart';
 import '../auth/refer/refer_code.dart';
-import '../auth/signup/signup_sheet_tablet.dart';
 import '../blogDetail/index.dart';
 import '../helpDesk/chats/index.dart';
 import '../stockDetail/index.dart';
@@ -108,7 +106,8 @@ class NotificationsItem extends StatelessWidget {
           return;
         }
         Navigator.pop(context);
-        isPhone ? signupSheet() : signupSheetTablet();
+        // isPhone ? signupSheet() : signupSheetTablet();
+        await loginFirstSheet();
       } else if (slug != '' && type == NotificationType.stockDetail.name ||
           isValidTickerSymbol(type)) {
         Navigator.push(

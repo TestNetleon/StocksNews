@@ -5,10 +5,6 @@ import 'package:lottie/lottie.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:stocks_news_new/modals/welcome_res.dart';
 import 'package:stocks_news_new/route/my_app.dart';
-import 'package:stocks_news_new/screens/auth/login/login_sheet.dart';
-import 'package:stocks_news_new/screens/auth/signup/signup_sheet_tablet.dart';
-import 'package:stocks_news_new/screens/auth/login/login_sheet_tablet.dart';
-import 'package:stocks_news_new/screens/auth/signup/signup_sheet.dart';
 import 'package:stocks_news_new/screens/tabs/tabs.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
@@ -19,6 +15,7 @@ import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 import 'package:stocks_news_new/widgets/theme_button_small.dart';
+import '../auth/base/base_auth.dart';
 
 class StartIndex extends StatefulWidget {
   final List<WelcomeRes>? welcome;
@@ -208,7 +205,8 @@ class _StartIndexState extends State<StartIndex> {
                       //     ),
                       //   ),
                       // );
-                      isPhone ? loginSheet() : loginSheetTablet();
+                      // isPhone ? loginSheet() : loginSheetTablet();
+                      loginFirstSheet();
                     },
                     text: "Log In",
                   ),
@@ -227,9 +225,10 @@ class _StartIndexState extends State<StartIndex> {
                       //     ),
                       //   ),
                       // );
-                      isPhone
-                          ? signupSheet()
-                          : signupSheetTablet(dontPop: "true");
+                      // isPhone
+                      //     ? signupSheet()
+                      //     : signupSheetTablet(dontPop: "true");
+                      loginFirstSheet();
                     },
                     text: "Create New Account",
                   ),

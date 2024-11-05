@@ -4,8 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
-import 'package:stocks_news_new/screens/auth/login/login_sheet.dart';
-import 'package:stocks_news_new/screens/auth/login/login_sheet_tablet.dart';
 import 'package:stocks_news_new/screens/auth/membershipAsk/ask.dart';
 import 'package:stocks_news_new/screens/membership_new/membership.dart';
 import 'package:stocks_news_new/utils/colors.dart';
@@ -14,6 +12,7 @@ import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:provider/provider.dart';
 import '../../../../route/my_app.dart';
+import '../../../auth/base/base_auth.dart';
 
 class PopUpMenuButtonCommon extends StatelessWidget {
   final String symbol;
@@ -117,7 +116,8 @@ class PopUpMenuButtonCommon extends StatelessWidget {
               //     Navigator.pop(context);
 
               if (provider.user == null) {
-                isPhone ? await loginSheet() : await loginSheetTablet();
+                // isPhone ? await loginSheet() : await loginSheetTablet();
+                await loginFirstSheet();
               }
               if (provider.user == null) {
                 return;
@@ -133,7 +133,8 @@ class PopUpMenuButtonCommon extends StatelessWidget {
               //   },
               // );
             } else if (provider.user == null) {
-              isPhone ? await loginSheet() : await loginSheetTablet();
+              // isPhone ? await loginSheet() : await loginSheetTablet();
+              await loginFirstSheet();
 
               if (context.read<UserProvider>().user == null) {
                 return;
@@ -205,7 +206,8 @@ class PopUpMenuButtonCommon extends StatelessWidget {
               //     Navigator.pop(context);
 
               if (provider.user == null) {
-                isPhone ? await loginSheet() : await loginSheetTablet();
+                // isPhone ? await loginSheet() : await loginSheetTablet();
+                await loginFirstSheet();
               }
               if (provider.user == null) {
                 return;
@@ -220,7 +222,8 @@ class PopUpMenuButtonCommon extends StatelessWidget {
               //   },
               // );
             } else if (provider.user == null) {
-              isPhone ? await loginSheet() : await loginSheetTablet();
+              // isPhone ? await loginSheet() : await loginSheetTablet();
+              await loginFirstSheet();
 
               if (context.read<UserProvider>().user == null) {
                 return;
