@@ -134,7 +134,7 @@ class _BaseAuthState extends State<BaseAuth> {
       statusIsLoading(false);
 
       Utils().showLog('Firebase error $e');
-    } finally {}
+    }
   }
 
   _callAPI() async {
@@ -225,12 +225,8 @@ class _BaseAuthState extends State<BaseAuth> {
       );
       if (response.status) {
         _verifyPhoneNumber();
-      } else {
-        //
       }
     }
-
-    // _verifyPhoneNumber();
   }
 
   @override

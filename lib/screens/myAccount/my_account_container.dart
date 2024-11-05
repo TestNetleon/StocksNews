@@ -314,7 +314,6 @@ class _MyAccountContainerState extends State<MyAccountContainer>
         ),
         const SpacerVertical(height: 13),
         showAsteriskText(text: "Display Name", bold: true),
-
         const SpacerVertical(height: 5),
         ThemeInputField(
           cursorColor: Colors.white,
@@ -331,7 +330,6 @@ class _MyAccountContainerState extends State<MyAccountContainer>
           textCapitalization: TextCapitalization.words,
         ),
         const SpacerVertical(height: 13),
-        // showAsteriskText(text: "Email Address", bold: true),
         Text(
           "Email Address",
           style: stylePTSansBold(color: Colors.white, fontSize: 14),
@@ -572,7 +570,6 @@ class _MyAccountContainerState extends State<MyAccountContainer>
           ),
         ),
         const SpacerVertical(height: 20),
-
         ThemeButton(
           onPressed: _onTap,
           text: "Update Profile",

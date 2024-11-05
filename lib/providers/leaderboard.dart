@@ -57,21 +57,6 @@ class LeaderBoardProvider extends ChangeNotifier {
   num verified = 0;
   num unVerified = 0;
 
-  // void startNudgeTimer(int index) {
-  //   _data?[index].timer = 60;
-  //   notifyListeners();
-  //   Timer.periodic(const Duration(seconds: 1), (timer) {
-  //     if ((_data?[index].timer ?? 0) > 0) {
-  //       _data?[index].timer--;
-  //       Utils().showLog("---Timer ----${_data?[index].timer}");
-  //       notifyListeners();
-  //     } else {
-  //       timer.cancel();
-  //       Utils().showLog("Cancel Timer");
-  //     }
-  //   });
-  // }
-
   void setStatusL(status) {
     _statusL = status;
     notifyListeners();
@@ -115,11 +100,11 @@ class LeaderBoardProvider extends ChangeNotifier {
       if (response.status) {
         _data = affiliateReferResFromJson(jsonEncode(response.data));
         getUserType();
+        _extra = (response.extra is Extra ? response.extra as Extra : null);
       } else {
         _data = null;
         _error = response.message;
       }
-      _extra = (response.extra is Extra ? response.extra as Extra : null);
       // UserProvider userProvider =
       //     Provider.of(navigatorKey.currentContext!, listen: false);
       // userProvider.updateBalance(_extra?.balance ?? 0);

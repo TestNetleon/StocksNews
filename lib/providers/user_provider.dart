@@ -263,6 +263,7 @@ class UserProvider extends ChangeNotifier {
     HomeProvider provider = navigatorKey.currentContext!.read<HomeProvider>();
     provider.setTotalsAlerts(0);
     provider.setTotalsWatchList(0);
+    provider.refreshData(null);
     // Reset login dialog visibility count
     isSVG = false;
     DatabaseHelper helper = DatabaseHelper();
