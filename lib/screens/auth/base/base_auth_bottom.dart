@@ -214,7 +214,6 @@ class _BaseAuthState extends State<BaseAuth> {
         icon: Images.alertPopGIF,
       );
     }
-    Utils().showLog('$countryCode');
 
     UserProvider provider = context.read<UserProvider>();
     if (provider.user == null) {

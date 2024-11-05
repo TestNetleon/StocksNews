@@ -23,6 +23,7 @@ import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
+import '../../../route/my_app.dart';
 import '../../../widgets/custom/alert_popup.dart';
 
 class BaseVerifyOTP extends StatefulWidget {
@@ -133,7 +134,13 @@ class _BaseVerifyOTPState extends State<BaseVerifyOTP> with CodeAutoFill {
         countryCode: widget.countryCode,
       );
       if (response.status) {
+        provider.setPhoneClickText();
         Navigator.pop(context);
+        showSnackbar(
+          context: navigatorKey.currentContext!,
+          message: response.message,
+          type: SnackbarType.info,
+        );
       } else {
         popUpAlert(
           title: 'Alert',

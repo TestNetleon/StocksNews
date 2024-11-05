@@ -2,6 +2,7 @@ import 'dart:developer';
 import 'dart:io';
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -14,7 +15,6 @@ import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/screens/myAccount/widgets/my-account_header.dart';
 import 'package:stocks_news_new/screens/myAccount/widgets/otp.dart';
-import 'package:stocks_news_new/screens/myAccount/widgets/phone_otp.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
@@ -28,6 +28,7 @@ import '../../utils/utils.dart';
 import '../../utils/validations.dart';
 import '../../widgets/spacer_vertical.dart';
 import '../../widgets/theme_input_field.dart';
+import '../auth/base/base_verify.dart';
 import '../contactUs/contact_us_item.dart';
 
 class MyAccountContainer extends StatefulWidget {
@@ -419,68 +420,6 @@ class _MyAccountContainerState extends State<MyAccountContainer>
                   ],
                 ),
               ),
-              // Container(
-              //   padding:
-              //       const EdgeInsets.symmetric(horizontal: 10, vertical: 11.7),
-              //   decoration: const BoxDecoration(
-              //     color: ThemeColors.primaryLight,
-              //     borderRadius: BorderRadius.only(
-              //       topRight: Radius.circular(4),
-              //       bottomRight: Radius.circular(4),
-              //     ),
-              //   ),
-              //   child: Container(
-              //     padding: const EdgeInsets.symmetric(
-              //       horizontal: 10,
-              //       vertical: 0,
-              //     ),
-              //     decoration: BoxDecoration(
-              //       color: provider.emailVerified
-              //           ? ThemeColors.greyBorder
-              //           : ThemeColors.accent,
-              //       borderRadius: const BorderRadius.only(
-              //         topRight: Radius.circular(20),
-              //         bottomRight: Radius.circular(20),
-              //         bottomLeft: Radius.circular(20),
-              //         topLeft: Radius.circular(20),
-              //       ),
-              //     ),
-              //     child: GestureDetector(
-              //       onTap: provider.emailVerified
-              //           ? null
-              //           : () =>
-              //               _onEmailUpdateClick(emailController.text.trim()),
-              //       child: Padding(
-              //         padding: EdgeInsets.fromLTRB(
-              //             provider.emailVerified ? 0 : 5, 5, 5, 5),
-              //         child: Row(
-              //           children: [
-              //             Visibility(
-              //               visible: provider.emailVerified,
-              //               child: const Padding(
-              //                 padding: EdgeInsets.only(right: 5),
-              //                 child: Icon(
-              //                   Icons.check,
-              //                   size: 15,
-              //                   color: ThemeColors.accent,
-              //                 ),
-              //               ),
-              //             ),
-              //             Text(
-              //               provider.emailVerified ? "Verified" : "Verify",
-              //               style: stylePTSansBold(
-              //                 color: provider.emailVerified
-              //                     ? ThemeColors.accent
-              //                     : Colors.white,
-              //                 fontSize: 14,
-              //               ),
-              //             ),
-              //           ],
-              //         ),
-              //       ),
-              //     ),
-              //   ),
-              // ),
             ],
           ),
         ),
@@ -529,86 +468,15 @@ class _MyAccountContainerState extends State<MyAccountContainer>
                             );
                           },
                           textColor: Colors.white,
-                        )
-                        // CountryCodePicker(
-                        //   padding: EdgeInsets.zero,
-                        //   onChanged: (CountryCode value) {
-                        //     countryCode = value.dialCode;
-                        //   },
-                        //   initialSelection: locale,
-                        //   showCountryOnly: false,
-                        //   closeIcon: const Icon(
-                        //     Icons.close_sharp,
-                        //     color: Colors.black,
-                        //   ),
-                        //   flagWidth: 24,
-                        //   showOnlyCountryWhenClosed: false,
-                        //   alignLeft: false,
-                        //   boxDecoration: BoxDecoration(
-                        //     color: ThemeColors.white,
-                        //     borderRadius: BorderRadius.circular(8),
-                        //   ),
-                        //   dialogTextStyle: styleGeorgiaBold(color: Colors.black),
-                        //   textStyle: styleGeorgiaRegular(),
-                        //   searchStyle: styleGeorgiaRegular(color: Colors.black),
-                        //   barrierColor: Colors.black26,
-                        //   searchDecoration: InputDecoration(
-                        //     iconColor: Colors.black,
-                        //     fillColor: ThemeColors.divider,
-                        //     contentPadding: EdgeInsets.zero,
-                        //     prefixIcon: const Icon(
-                        //       Icons.search,
-                        //       size: 22,
-                        //       color: Colors.black,
-                        //     ),
-                        //     filled: true,
-                        //     hintStyle: stylePTSansRegular(color: Colors.grey),
-                        //     hintText: "Search country",
-                        //     border: OutlineInputBorder(
-                        //       borderRadius: BorderRadius.circular(4.0),
-                        //       borderSide: BorderSide.none,
-                        //     ),
-                        //     enabledBorder: OutlineInputBorder(
-                        //       borderRadius: BorderRadius.circular(4.0),
-                        //       borderSide: BorderSide.none,
-                        //     ),
-                        //     focusedBorder: OutlineInputBorder(
-                        //       borderRadius: BorderRadius.circular(4.0),
-                        //       borderSide: BorderSide.none,
-                        //     ),
-                        //   ),
-                        // ),
-                        ),
+                        )),
                   ],
                 ),
               ),
-
-              // Stack(
-              //   alignment: Alignment.center,
-              //   children: [
-              //     Container(
-              //       padding: const EdgeInsets.symmetric(horizontal: 20),
-              //       decoration: const BoxDecoration(
-              //         color: ThemeColors.primaryLight,
-              //         borderRadius: BorderRadius.only(
-              //           topLeft: Radius.circular(4),
-              //           bottomLeft: Radius.circular(4),
-              //         ),
-              //       ),
-              //     ),
-              //     Text(
-              //       "+1",
-              //       style: stylePTSansBold(),
-              //     ),
-              //   ],
-              // ),
-
               Expanded(
                 child: Stack(
                   alignment: Alignment.center,
                   children: [
                     ThemeInputField(
-                      // onChanged: (value) => provider.onChangePhone(value),
                       onChanged: (value) {
                         provider.onChangePhoneAndCode(
                           phone: value,
@@ -616,11 +484,6 @@ class _MyAccountContainerState extends State<MyAccountContainer>
                         );
                       },
                       cursorColor: Colors.white,
-                      // prefix: Text(
-                      //   "+1 ",
-                      //   style: stylePTSansBold(color: Colors.white, fontSize: 14),
-                      // ),
-                      // contentPadding: EdgeInsets.fromLTRB(8, 6, 0, 10),
                       style:
                           stylePTSansRegular(color: Colors.white, height: 1.5),
                       fillColor: ThemeColors.primaryLight,
@@ -718,14 +581,6 @@ class _MyAccountContainerState extends State<MyAccountContainer>
         const SpacerVertical(height: 20),
         const Divider(color: ThemeColors.divider, thickness: 1),
         const SpacerVertical(height: 16),
-        // Visibility(
-        //   visible: context.watch<HomeProvider>().extra?.referral?.shwReferral ??
-        //       false,
-        //   child: const Padding(
-        //     padding: EdgeInsets.only(bottom: Dimen.padding),
-        //     child: ReferApp(),
-        //   ),
-        // ),
       ],
     );
   }
@@ -782,6 +637,21 @@ class _MyAccountContainerState extends State<MyAccountContainer>
       phone: phone,
     );
     if (response.status) {
+      if (kDebugMode) {
+        String mobile = phone;
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => BaseVerifyOTP(
+              countryCode: countryCode ?? '+1',
+              phone: mobile,
+              verificationId: '',
+            ),
+          ),
+        );
+        return;
+      }
+
       showGlobalProgressDialog();
       log("PHONE => $countryCode $phone");
       await FirebaseAuth.instance.verifyPhoneNumber(
@@ -808,37 +678,21 @@ class _MyAccountContainerState extends State<MyAccountContainer>
         },
         codeSent: (String verificationId, int? resendToken) {
           closeGlobalProgressDialog();
-          phoneOTP(
-              phone: phone,
-              verificationId: verificationId,
-              name: nameController.text,
-              countryCode: countryCode!,
-              displayName: displayController.text);
-          // referOTP(
-          //   name: name.text,
-          //   displayName: displayName.text,
-          //   phone: mobile.text,
-          //   appSignature: appSignature,
-          //   verificationId: verificationId,
-          // );
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => BaseVerifyOTP(
+                countryCode: countryCode ?? '+1',
+                phone: phone,
+                verificationId: verificationId,
+              ),
+            ),
+          );
         },
         codeAutoRetrievalTimeout: (String verificationId) {},
       );
     } else {
       //
     }
-
-    // Map request = {
-    //   "token": provider.user?.token ?? "",
-    //   "phone": phone,
-    //   "phone_hash": appSignature,
-    // };
-    // try {
-    // ApiResponse response = await provider.phoneUpdateOtp(request,
-    //     resendButtonClick: false, phone: phone);
-    //   if (response.status) {}
-    // } catch (e) {
-    //   //
-    // }
   }
 }
