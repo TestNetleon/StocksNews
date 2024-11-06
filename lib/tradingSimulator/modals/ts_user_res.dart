@@ -6,7 +6,7 @@ String tsUserResToJson(TsUserRes data) => json.encode(data.toJson());
 
 class TsUserRes {
   final dynamic sqlId;
-  final num tradeBalance;
+  num tradeBalance;
 
   TsUserRes({
     required this.sqlId,

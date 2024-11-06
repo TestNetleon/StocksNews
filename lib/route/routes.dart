@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:stocks_news_new/arena/provider/arena.dart';
 import 'package:stocks_news_new/providers/ad_provider.dart';
 import 'package:stocks_news_new/providers/ai_provider.dart';
 import 'package:stocks_news_new/providers/alert_provider.dart';
@@ -601,6 +602,7 @@ class Routes {
       ChangeNotifierProvider(create: (_) => NewHelpDeskProvider()),
       ChangeNotifierProvider(create: (_) => MSAnalysisProvider()),
       ChangeNotifierProvider(create: (_) => MissionProvider()),
+      ChangeNotifierProvider(create: (_) => ArenaProvider()),
     ];
   }
 }

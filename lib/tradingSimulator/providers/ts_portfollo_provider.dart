@@ -81,6 +81,7 @@ class TsPortfolioProvider extends ChangeNotifier {
       );
       if (response.status) {
         _userData = tsUserResFromJson(jsonEncode(response.data));
+        _userData?.tradeBalance = 100;
         // _extra = (response.extra is Extra ? response.extra as Extra : null);
         _error = null;
       } else {
