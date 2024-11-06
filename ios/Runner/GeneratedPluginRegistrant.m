@@ -6,6 +6,12 @@
 
 #import "GeneratedPluginRegistrant.h"
 
+#if __has_include(<amplitude_flutter/AmplitudeFlutterPlugin.h>)
+#import <amplitude_flutter/AmplitudeFlutterPlugin.h>
+#else
+@import amplitude_flutter;
+#endif
+
 #if __has_include(<app_links/AppLinksPlugin.h>)
 #import <app_links/AppLinksPlugin.h>
 #else
@@ -267,6 +273,7 @@
 @implementation GeneratedPluginRegistrant
 
 + (void)registerWithRegistry:(NSObject<FlutterPluginRegistry>*)registry {
+  [AmplitudeFlutterPlugin registerWithRegistrar:[registry registrarForPlugin:@"AmplitudeFlutterPlugin"]];
   [AppLinksPlugin registerWithRegistrar:[registry registrarForPlugin:@"AppLinksPlugin"]];
   [AppsflyerSdkPlugin registerWithRegistrar:[registry registrarForPlugin:@"AppsflyerSdkPlugin"]];
   [AudioSessionPlugin registerWithRegistrar:[registry registrarForPlugin:@"AudioSessionPlugin"]];

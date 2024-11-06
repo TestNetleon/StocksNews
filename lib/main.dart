@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:amplitude_flutter/amplitude.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -52,6 +53,7 @@ void main() async {
     );
 
     FirebaseInAppMessaging.instance.setAutomaticDataCollectionEnabled(true);
+    initializeAmplitude();
     Timer(const Duration(seconds: 8), () {
       Preference.setIsFirstOpen(false);
     });
@@ -68,4 +70,14 @@ void main() async {
       .then((_) {
     runApp(const MyApp());
   });
+}
+
+initializeAmplitude() {
+  try {
+    final Amplitude amplitude = Amplitude.getInstance();
+    amplitude.init("ff8ab349a2ddf801c985a59e3be1bedf");
+    Utils().showLog('Initialized Amplitude');
+  } catch (e) {
+    Utils().showLog('Error while initializing amplitude.');
+  }
 }

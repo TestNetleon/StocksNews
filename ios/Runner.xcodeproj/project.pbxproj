@@ -10,6 +10,7 @@
 		1498D2341E8E89220040F4C2 /* GeneratedPluginRegistrant.m in Sources */ = {isa = PBXBuildFile; fileRef = 1498D2331E8E89220040F4C2 /* GeneratedPluginRegistrant.m */; };
 		425D6A9AEE55A9482E926FEF /* Pods_Runner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 473D933A82194BEAAE5F2A84 /* Pods_Runner.framework */; };
 		49316EBE2C2FD7CB00D847D9 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49316EBD2C2FD7CB00D847D9 /* StoreKit.framework */; };
+		4968EFAD2CDB32F100066DAF /* dummy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4968EFAC2CDB32F100066DAF /* dummy.swift */; };
 		496FF35F2BFCE12B008DE4CD /* notifications.wav in Resources */ = {isa = PBXBuildFile; fileRef = 496FF35E2BFCE12B008DE4CD /* notifications.wav */; };
 		49775C672BE51A5E009814B2 /* NotificationService.m in Sources */ = {isa = PBXBuildFile; fileRef = 49775C662BE51A5E009814B2 /* NotificationService.m */; };
 		49D550F82C1083B3004F7717 /* notifications.caf in Resources */ = {isa = PBXBuildFile; fileRef = 49D550F72C1083B2004F7717 /* notifications.caf */; };
@@ -65,6 +66,7 @@
 		3B3967151E833CAA004F5970 /* AppFrameworkInfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = AppFrameworkInfo.plist; path = Flutter/AppFrameworkInfo.plist; sourceTree = "<group>"; };
 		473D933A82194BEAAE5F2A84 /* Pods_Runner.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Runner.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		49316EBD2C2FD7CB00D847D9 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		4968EFAC2CDB32F100066DAF /* dummy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = dummy.swift; sourceTree = "<group>"; };
 		496FF35E2BFCE12B008DE4CD /* notifications.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = notifications.wav; path = ../../android/app/src/main/res/raw/notifications.wav; sourceTree = "<group>"; };
 		49775C5E2BE514D9009814B2 /* Runner.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Runner.entitlements; sourceTree = "<group>"; };
 		49775C632BE51A5E009814B2 /* ImageNotification.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ImageNotification.appex; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -158,6 +160,7 @@
 		97C146E51CF9000F007C117D = {
 			isa = PBXGroup;
 			children = (
+				4968EFAC2CDB32F100066DAF /* dummy.swift */,
 				9740EEB11CF90186004384FC /* Flutter */,
 				97C146F01CF9000F007C117D /* Runner */,
 				331C80F2294D02FB00263BE5 /* RunnerTests */,
@@ -279,6 +282,7 @@
 					};
 					97C146ED1CF9000F007C117D = {
 						CreatedOnToolsVersion = 7.3.1;
+						LastSwiftMigration = 1610;
 					};
 				};
 			};
@@ -452,6 +456,7 @@
 			files = (
 				978B8F6F1D3862AE00F588F7 /* AppDelegate.m in Sources */,
 				97C146F31CF9000F007C117D /* main.m in Sources */,
+				4968EFAD2CDB32F100066DAF /* dummy.swift in Sources */,
 				1498D2341E8E89220040F4C2 /* GeneratedPluginRegistrant.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -547,6 +552,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Runner/Runner.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Manual;
@@ -561,6 +567,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = app.stocks.news;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = DEV_stocks_news_app;
+				SWIFT_VERSION = 6.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Profile;
@@ -818,6 +825,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Runner/Runner.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Manual;
@@ -832,6 +840,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = app.stocks.news;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = DEV_stocks_news_app;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 6.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -843,6 +853,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Runner/Runner.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Manual;
@@ -857,6 +868,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = app.stocks.news;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = DEV_stocks_news_app;
+				SWIFT_VERSION = 6.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
