@@ -25,6 +25,8 @@ import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/refresh_controll.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
+import '../../../service/amplitude/service.dart';
+
 class EarningsList extends StatefulWidget {
   const EarningsList({super.key});
 
@@ -48,6 +50,8 @@ class _EarningsListState extends State<EarningsList> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      AmplitudeService.logUserInteractionEvent(type: 'Earning Announcements');
+
       EarningsProvider provider = context.read<EarningsProvider>();
       if (provider.data != null) {
         return;

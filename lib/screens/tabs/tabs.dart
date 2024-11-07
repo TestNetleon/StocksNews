@@ -174,21 +174,29 @@ class _TabsState extends State<Tabs> {
             homeProvider.homeTrendingRes == null) {
           homeProvider.refreshData(widget.inAppMsgId);
         }
+        AmplitudeService.logUserInteractionEvent(type: "Stocks.News Home Page");
+
         break;
       case 1:
         if (trendingProvider.mostBullish == null) {
           trendingProvider.getMostBullish();
         }
+        AmplitudeService.logUserInteractionEvent(type: "Trending");
+
         break;
       case 2:
         if (insiderProvider.data == null) {
           insiderProvider.getData(showProgress: false);
         }
+        AmplitudeService.logUserInteractionEvent(type: "Insider Trades");
+
         break;
       case 3:
         if (redditTwitterProvider.socialSentimentRes == null) {
           redditTwitterProvider.getRedditTwitterData(reset: true);
         }
+        AmplitudeService.logUserInteractionEvent(type: "Market Sentiment");
+
         break;
       case 4:
         if (newsCatProvider.tabs == null) {
@@ -196,6 +204,8 @@ class _TabsState extends State<Tabs> {
         } else {
           newsCatProvider.tabChange(0, newsCatProvider.tabs![0].id);
         }
+        AmplitudeService.logUserInteractionEvent(type: "News");
+
         break;
       case 5:
         log("---Compare");
@@ -211,6 +221,7 @@ void _compareStocks(BuildContext context) {
   if (provider.user != null && compareProvider.company.isEmpty) {
     compareProvider.getCompareStock();
   }
+  AmplitudeService.logUserInteractionEvent(type: 'Compare Stocks');
 }
 
 class Screens {

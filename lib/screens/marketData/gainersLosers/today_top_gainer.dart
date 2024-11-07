@@ -19,6 +19,7 @@ import 'package:stocks_news_new/widgets/market_data_header.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 import '../../../modals/gainers_losers_res.dart';
+import '../../../service/amplitude/service.dart';
 import '../../../utils/constants.dart';
 import '../../../widgets/base_ui_container.dart';
 import '../../../widgets/refresh_controll.dart';
@@ -36,6 +37,8 @@ class _TodaysTopGainerState extends State<TodaysTopGainer> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      AmplitudeService.logUserInteractionEvent(type: "Today's Gainers");
+
       TodayTopGainerProvider provider = context.read<TodayTopGainerProvider>();
       if (provider.data != null) {
         return;

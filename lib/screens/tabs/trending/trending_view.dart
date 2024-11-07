@@ -15,6 +15,7 @@ import 'package:stocks_news_new/widgets/custom/refresh_indicator.dart';
 import 'package:stocks_news_new/widgets/custom_tab_container.dart';
 import 'package:stocks_news_new/widgets/loading.dart';
 
+import '../../../service/amplitude/service.dart';
 import '../../trendingIndustries/index.dart';
 import 'widgets/trending_partial_loading.dart';
 import 'widgets/trending_sectors.dart';
@@ -39,7 +40,30 @@ class _TrendingViewState extends State<TrendingView> {
       // _showImageBottomSheet();
       // context.read<TrendingProvider>().getData();
       log("TRENDING INDEX   => ${widget.index}");
+      _sendEvent(widget.index);
     });
+  }
+
+  _sendEvent(index) {
+    switch (index) {
+      case 0:
+        AmplitudeService.logUserInteractionEvent(type: "Most Bullish");
+        break;
+      case 1:
+        AmplitudeService.logUserInteractionEvent(type: "Most Bearish");
+        break;
+
+      case 2:
+        AmplitudeService.logUserInteractionEvent(type: "Trending Stories");
+        break;
+      case 3:
+        AmplitudeService.logUserInteractionEvent(type: "Trending Sectors");
+        break;
+      case 4:
+        AmplitudeService.logUserInteractionEvent(type: "Trending Industries");
+        break;
+      default:
+    }
   }
 
   // void _showImagePopup() {
@@ -73,6 +97,9 @@ class _TrendingViewState extends State<TrendingView> {
             physics: const NeverScrollableScrollPhysics(),
             scrollable: provider.tabs.length > 2 ? true : false,
             tabPaddingNew: provider.tabs.length > 2 ? false : true,
+            onChange: (index) {
+              _sendEvent(index);
+            },
             // initialIndex: widget.index,
             tabs: List.generate(
               provider.tabs.length,

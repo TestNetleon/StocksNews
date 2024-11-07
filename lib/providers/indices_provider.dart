@@ -387,6 +387,12 @@ class IndicesProvider extends ChangeNotifier {
         removeForceLogin: true,
       );
       if (response.status) {
+        if (_tabs?[selectedIndex].key != null &&
+            _tabs?[selectedIndex].key != '') {
+          AmplitudeService.logUserInteractionEvent(
+              type: _tabs?[selectedIndex].key ?? '');
+        }
+
         _extra = response.extra is Extra ? response.extra : null;
         notifyListeners();
 

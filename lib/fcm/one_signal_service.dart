@@ -16,6 +16,7 @@ import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/affiliate/pointsTransaction/trasnsaction.dart';
+import 'package:stocks_news_new/service/amplitude/service.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/database/preference.dart';
 import '../screens/auth/base/base_auth.dart';
@@ -45,6 +46,12 @@ class OneSignalService {
     String? slug = data['slug'];
     String? notificationId = data['notification_id'];
     isAppUpdating = false;
+
+    userInteractionEventCommon(
+      slug: slug,
+      type: type,
+    );
+
     try {
       if (type == NotificationType.dashboard.name) {
         if (whenAppKilled) return null;
@@ -303,5 +310,69 @@ Future saveFCMapi({String? value, String? address}) async {
     }
   } catch (e) {
     Utils().showLog("Catch error $e");
+  }
+}
+
+void userInteractionEventCommon({String? type, String? slug}) async {
+  try {
+    UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
+    if (provider.user == null) {
+      bool userPresent = await provider.checkForUser();
+      Utils().showLog('User present while interacting with event $userPresent');
+    }
+
+    String eventType;
+    String selfText;
+
+    if (type == NotificationType.dashboard.name) {
+      eventType = "Stocks.News Home Page";
+      selfText = "Navigated to the home page from notification.";
+    } else if (type == NotificationType.ticketDetail.name) {
+      eventType = "Support Ticket Detail";
+      selfText = "Viewed a support ticket detail with ID: $slug";
+    } else if (type == NotificationType.newsDetail.name) {
+      eventType = "News Detail";
+      selfText = "Opened news detail with ID: $slug";
+    } else if (type == NotificationType.lpPage.name) {
+      eventType = "Landing Page";
+      selfText = "Viewed a landing page with URL: $slug";
+    } else if (type == NotificationType.blogDetail.name) {
+      eventType = "Blog Detail";
+      selfText = "Read a blog article with ID: $slug";
+    } else if (type == NotificationType.register.name) {
+      eventType = "User Registration";
+      selfText = "Initiated registration process.";
+    } else if (type == NotificationType.review.name) {
+      eventType = "App Review Prompt";
+      selfText = "Prompted to review the app.";
+    } else if (type == NotificationType.stockDetail.name) {
+      eventType = "Stock Detail";
+      selfText = "Viewed stock details for ticker: $slug";
+    } else if (type == NotificationType.nudgeFriend.name) {
+      eventType = "Friend Referral Prompt";
+      selfText = "Prompted to refer a friend.";
+    } else if (type == NotificationType.referRegistration.name) {
+      eventType = "Referral Registration";
+      selfText = "Opened referral registration page.";
+    } else if (type == NotificationType.membership.name) {
+      eventType = "Membership Page";
+      selfText = "Viewed membership information.";
+    } else if (type == NotificationType.pointTransaction.name) {
+      eventType = "Points Transaction";
+      selfText = "Viewed points transaction details.";
+    } else if (type == NotificationType.appUpdate.name) {
+      eventType = "App Update";
+      selfText = "Notification received to update the app.";
+    } else {
+      eventType = "Unknown Notification Type";
+      selfText = "Received a notification with unknown type.";
+    }
+
+    AmplitudeService.logUserInteractionEvent(
+      type: eventType,
+      selfText: selfText,
+    );
+  } catch (e) {
+    //
   }
 }

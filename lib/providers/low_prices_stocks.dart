@@ -203,6 +203,10 @@ class LowPriceStocksProvider extends ChangeNotifier {
   void tabChange(index) {
     _filterParams = null;
     _extra = null;
+    if (tabs?[index].key != null && tabs?[index].key != '') {
+      AmplitudeService.logUserInteractionEvent(type: tabs?[index].key ?? '');
+    }
+
     if (tabs?[index].key == "Stocks On Sale") {
       if (_selectedIndex != index) {
         _selectedIndex = index;
@@ -306,6 +310,7 @@ class LowPriceStocksProvider extends ChangeNotifier {
         _tabs = lowPriceStocksTabResFromJson(jsonEncode(response.data));
         if (_tabs != null) {
           getLowPriceData(type: 0);
+          AmplitudeService.logUserInteractionEvent(type: tabs?[0].key ?? '');
         }
       } else {
         _error = response.message;

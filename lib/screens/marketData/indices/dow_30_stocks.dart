@@ -23,6 +23,7 @@ import 'package:stocks_news_new/widgets/market_data_header.dart';
 import 'package:stocks_news_new/widgets/refresh_controll.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
+import '../../../service/amplitude/service.dart';
 import 'item.dart';
 
 class Dow30Stocks extends StatefulWidget {
@@ -37,6 +38,8 @@ class _Dow30StocksState extends State<Dow30Stocks> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      AmplitudeService.logUserInteractionEvent(type: "DOW 30 Stocks");
+
       Dow30Provider provider = context.read<Dow30Provider>();
       // if (provider.data != null) {
       //   return;

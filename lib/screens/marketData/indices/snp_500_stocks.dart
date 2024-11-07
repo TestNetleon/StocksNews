@@ -22,6 +22,7 @@ import 'package:stocks_news_new/widgets/market_data_header.dart';
 import 'package:stocks_news_new/widgets/refresh_controll.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
+import '../../../service/amplitude/service.dart';
 import 'item.dart';
 
 class Snp500Stocks extends StatefulWidget {
@@ -36,6 +37,8 @@ class _Snp500StocksState extends State<Snp500Stocks> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      AmplitudeService.logUserInteractionEvent(type: "S&P Stocks");
+
       SnP500Provider provider = context.read<SnP500Provider>();
       // if (provider.data != null) {
       //   return;

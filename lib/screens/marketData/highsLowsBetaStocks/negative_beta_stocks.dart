@@ -20,6 +20,7 @@ import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/widgets/market_data_header.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
+import '../../../service/amplitude/service.dart';
 import '../../../utils/constants.dart';
 import '../../../widgets/base_ui_container.dart';
 import '../../../widgets/refresh_controll.dart';
@@ -36,6 +37,8 @@ class _NegativeBetaStocksState extends State<NegativeBetaStocks> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      AmplitudeService.logUserInteractionEvent(type: "Negative Beta Stocks");
+
       NegativeBetaStocksProvider provider =
           context.read<NegativeBetaStocksProvider>();
       if (provider.data != null) {
