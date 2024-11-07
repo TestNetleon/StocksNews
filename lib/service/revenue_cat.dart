@@ -11,6 +11,7 @@ import 'package:stocks_news_new/providers/membership.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
+import '../api/apis.dart';
 import '../utils/utils.dart';
 import 'appsFlyer/service.dart';
 import 'success.dart';
@@ -31,12 +32,11 @@ class RevenueCatService {
 
     PurchasesConfiguration? configuration;
     if (Platform.isAndroid) {
-      configuration = PurchasesConfiguration(
-          keys?.playStore ?? "goog_KXHVJRLChlyjoOamWsqCWQSJZfI")
-        ..appUserID = userRes?.userId ?? "";
+      configuration =
+          PurchasesConfiguration(keys?.playStore ?? ApiKeys.androidKey)
+            ..appUserID = userRes?.userId ?? "";
     } else if (Platform.isIOS) {
-      configuration = PurchasesConfiguration(
-          keys?.appStore ?? "appl_kHwXNrngqMNktkEZJqYhEgLjbcC")
+      configuration = PurchasesConfiguration(keys?.appStore ?? ApiKeys.iosKey)
         ..appUserID = userRes?.userId ?? "";
     }
 
@@ -74,8 +74,8 @@ class RevenueCatService {
   static configureAppsFlyer() async {
     try {
       AppsFlyerService(
-        "DdBBqNnwC3Xz2dwhbF7kJK",
-        "6476615803",
+        ApiKeys.appsFlyerKey,
+        ApiKeys.iosAppID,
       );
     } catch (e) {
       Utils().showLog('Error in configure Apps Flyer => $e');

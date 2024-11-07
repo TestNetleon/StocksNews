@@ -15,6 +15,8 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 
+import '../service/amplitude/service.dart';
+
 class TopTodayPennyStocksProviders extends ChangeNotifier {
   Status _status = Status.ideal;
 
@@ -87,6 +89,7 @@ class TopTodayPennyStocksProviders extends ChangeNotifier {
 
   Future addToWishList({
     required String symbol,
+    required String companyName,
     required bool up,
     required int index,
   }) async {
@@ -105,6 +108,11 @@ class TopTodayPennyStocksProviders extends ChangeNotifier {
         removeForceLogin: true,
       );
       if (response.status) {
+        AmplitudeService.logWatchlistUpdateEvent(
+          added: true,
+          symbol: symbol,
+          companyName: companyName,
+        );
         //
         _data?[index].isWatchlistAdded = 1;
         notifyListeners();

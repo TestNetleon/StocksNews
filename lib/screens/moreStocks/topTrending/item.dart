@@ -253,6 +253,7 @@ class _TopTrendingItemState extends State<TopTrendingItem> {
   void _addToWatchlist(BuildContext context) {
     context.read<TopTrendingProvider>().addToWishList(
           symbol: widget.data.symbol,
+          companyName: widget.data.name,
           index: widget.index,
         );
   }

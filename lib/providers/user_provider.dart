@@ -31,6 +31,7 @@ import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
 
 import '../fcm/dynamic_links.service.dart';
 import '../screens/membership_new/membership.dart';
+import '../service/amplitude/service.dart';
 import '../utils/dialogs.dart';
 import '../widgets/ios_emailerror.dart';
 
@@ -411,6 +412,14 @@ class UserProvider extends ChangeNotifier {
       if (response.status) {
         _user = UserRes.fromJson(response.data);
         Preference.saveUser(response.data);
+
+        _extra = (response.extra is Extra ? response.extra as Extra : null);
+
+        if (_extra?.isRegistered != null) {
+          AmplitudeService.logLoginSignUpEvent(
+            isRegistered: _extra?.isRegistered ?? 0,
+          );
+        }
         isSVG = isSvgFromUrl(_user?.image);
 
         shareUri = await DynamicLinkService.instance.getDynamicLink();
@@ -559,6 +568,15 @@ class UserProvider extends ChangeNotifier {
       if (response.status) {
         _user = UserRes.fromJson(response.data);
         Preference.saveUser(response.data);
+
+        _extra = (response.extra is Extra ? response.extra as Extra : null);
+
+        if (_extra?.isRegistered != null) {
+          AmplitudeService.logLoginSignUpEvent(
+            isRegistered: _extra?.isRegistered ?? 0,
+          );
+        }
+
         isSVG = isSvgFromUrl(_user?.image);
         var tags = {
           'email': "${_user?.email}",
@@ -1495,6 +1513,13 @@ class UserProvider extends ChangeNotifier {
         }
         notifyListeners();
         configureRevenueCatAttribute();
+        _extra = (response.extra is Extra ? response.extra as Extra : null);
+
+        if (_extra?.isRegistered != null) {
+          AmplitudeService.logLoginSignUpEvent(
+            isRegistered: _extra?.isRegistered ?? 0,
+          );
+        }
       } else {
         // showErrorMessage(message: response.message);
         popUpAlert(
@@ -1502,7 +1527,6 @@ class UserProvider extends ChangeNotifier {
             title: "Alert",
             icon: Images.alertPopGIF);
       }
-      _extra = (response.extra is Extra ? response.extra as Extra : null);
 
       return ApiResponse(status: response.status);
     } catch (e) {

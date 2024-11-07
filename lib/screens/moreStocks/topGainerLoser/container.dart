@@ -144,6 +144,7 @@ class _GainerLoserContainerState extends State<GainerLoserContainer> {
                           onClickWatchlist: () => _onWatchListClick(
                               navigatorKey.currentContext!,
                               data[index].symbol,
+                              data[index].name,
                               data[index].isWatchlistAdded,
                               index),
                           child: GainerLoserItem(
@@ -227,8 +228,13 @@ class _GainerLoserContainerState extends State<GainerLoserContainer> {
     }
   }
 
-  void _onWatchListClick(BuildContext context, String symbol,
-      num? isWatchlistAdded, int index) async {
+  void _onWatchListClick(
+    BuildContext context,
+    String symbol,
+    String companyName,
+    num? isWatchlistAdded,
+    int index,
+  ) async {
     if (isWatchlistAdded == 1) {
       Navigator.push(
         navigatorKey.currentContext!,
@@ -241,6 +247,7 @@ class _GainerLoserContainerState extends State<GainerLoserContainer> {
             .addToWishList(
               type: widget.type.name,
               symbol: symbol,
+              companyName: companyName,
               index: index,
               up: true,
             );
@@ -263,6 +270,7 @@ class _GainerLoserContainerState extends State<GainerLoserContainer> {
                 .addToWishList(
                   type: widget.type.name,
                   symbol: symbol,
+                  companyName: companyName,
                   index: index,
                   up: true,
                 );

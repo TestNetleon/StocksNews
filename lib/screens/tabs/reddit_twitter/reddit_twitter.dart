@@ -253,6 +253,7 @@ class _RedditTwitterState extends State<RedditTwitter> {
                                 onClickWatchlist: () => _onWatchListClickLast(
                                     context,
                                     data?.symbol ?? "",
+                                    data?.name ?? "",
                                     data?.isWatchlistAdded,
                                     index),
                                 child: RedditTwitterItem(
@@ -312,7 +313,12 @@ class _RedditTwitterState extends State<RedditTwitter> {
                       onClickAlert: () => _onAlertClickRecent(
                           context, data.symbol, data.isAlertAdded, index),
                       onClickWatchlist: () => _onWatchListClickRecent(
-                          context, data.symbol, data.isWatchlistAdded, index),
+                        context,
+                        data.symbol,
+                        data.name ?? '',
+                        data.isWatchlistAdded,
+                        index,
+                      ),
                       child: SocialSentimentMentions(
                         data: data,
                       ),
@@ -399,8 +405,13 @@ class _RedditTwitterState extends State<RedditTwitter> {
     }
   }
 
-  void _onWatchListClickRecent(BuildContext context, String symbol,
-      num? isWatchlistAdded, int index) async {
+  void _onWatchListClickRecent(
+    BuildContext context,
+    String symbol,
+    String companyName,
+    num? isWatchlistAdded,
+    int index,
+  ) async {
     if (isWatchlistAdded == 1) {
       Navigator.push(
         navigatorKey.currentContext!,
@@ -413,6 +424,7 @@ class _RedditTwitterState extends State<RedditTwitter> {
             .addToWishList(
               type: "Recent",
               symbol: symbol,
+              companyName: companyName,
               index: index,
               up: true,
             );
@@ -435,6 +447,7 @@ class _RedditTwitterState extends State<RedditTwitter> {
                 .addToWishList(
                   type: "Recent",
                   symbol: symbol,
+                  companyName: companyName,
                   index: index,
                   up: true,
                 );
@@ -508,8 +521,13 @@ class _RedditTwitterState extends State<RedditTwitter> {
     }
   }
 
-  void _onWatchListClickLast(BuildContext context, String symbol,
-      num? isWatchlistAdded, int index) async {
+  void _onWatchListClickLast(
+    BuildContext context,
+    String symbol,
+    String companyName,
+    num? isWatchlistAdded,
+    int index,
+  ) async {
     if (isWatchlistAdded == 1) {
       Navigator.push(
         navigatorKey.currentContext!,
@@ -522,6 +540,7 @@ class _RedditTwitterState extends State<RedditTwitter> {
             .addToWishList(
               type: "ShowTheLast",
               symbol: symbol,
+              companyName: companyName,
               index: index,
               up: true,
             );
@@ -544,6 +563,7 @@ class _RedditTwitterState extends State<RedditTwitter> {
                 .addToWishList(
                   type: "ShowTheLast",
                   symbol: symbol,
+                  companyName: companyName,
                   index: index,
                   up: true,
                 );

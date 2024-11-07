@@ -130,6 +130,7 @@ class Extra {
   final bool? showRewards;
   final bool? showAnalysis;
   final UpdateYourPhoneRes? updateYourPhone;
+  final num? isRegistered;
 
   Extra({
     this.updateYourPhone,
@@ -216,10 +217,12 @@ class Extra {
     this.watchlistTitle,
     this.isOldApp,
     this.notificationSetting,
+    this.isRegistered,
   });
 
   factory Extra.fromJson(Map<String, dynamic> json) => Extra(
         search: json["search"],
+        isRegistered: json['is_registered'],
         updateYourPhone: json["update_your_phone"] == null
             ? null
             : UpdateYourPhoneRes.fromJson(json["update_your_phone"]),
@@ -376,6 +379,7 @@ class Extra {
         "ad_managers": adManagers?.toJson(),
         "phone_code_error": phoneCodeError,
         "phone_error": phoneError,
+        "is_registered": isRegistered,
         'show_analysis': showAnalysis,
         "show_rewards": showRewards,
         "feeback_type": feebackType == null

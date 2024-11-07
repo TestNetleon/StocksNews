@@ -19,6 +19,7 @@ import 'package:stocks_news_new/utils/theme.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 
+import '../api/apis.dart';
 import '../screens/auth/base/base_auth.dart';
 
 final _appLinks = AppLinks();
@@ -338,9 +339,7 @@ Future<void> configureRevenueCatAttribute() async {
     String? appUserId = user?.userId;
 
     // Set the API keys based on the platform
-    String apiKey = Platform.isAndroid
-        ? "goog_KXHVJRLChlyjoOamWsqCWQSJZfI"
-        : "appl_kHwXNrngqMNktkEZJqYhEgLjbcC";
+    String apiKey = Platform.isAndroid ? ApiKeys.androidKey : ApiKeys.iosKey;
 
     // Configure Purchases
     PurchasesConfiguration configuration = PurchasesConfiguration(apiKey);
@@ -351,8 +350,8 @@ Future<void> configureRevenueCatAttribute() async {
     await Purchases.configure(configuration);
     try {
       AppsFlyerService(
-        "DdBBqNnwC3Xz2dwhbF7kJK",
-        "6476615803",
+        ApiKeys.appsFlyerKey,
+        ApiKeys.iosAppID,
       );
     } catch (e) {
       //

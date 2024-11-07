@@ -200,6 +200,7 @@ class StocksContainer extends StatelessWidget {
                                     onClickWatchlist: () => _onWatchListClick(
                                         context,
                                         data?.symbol ?? "",
+                                        data?.name ?? '',
                                         data?.isWatchlistAdded,
                                         index),
                                     child: StocksItemAll(
@@ -224,6 +225,7 @@ class StocksContainer extends StatelessWidget {
                               onClickWatchlist: () => _onWatchListClick(
                                   context,
                                   data?.symbol ?? "",
+                                  data?.name ?? '',
                                   data?.isWatchlistAdded,
                                   index),
                               child: StocksItemAll(
@@ -311,8 +313,13 @@ class StocksContainer extends StatelessWidget {
     }
   }
 
-  void _onWatchListClick(BuildContext context, String symbol,
-      num? isWatchlistAdded, int index) async {
+  void _onWatchListClick(
+    BuildContext context,
+    String symbol,
+    String companyName,
+    num? isWatchlistAdded,
+    int index,
+  ) async {
     if (isWatchlistAdded == 1) {
       Navigator.push(
         navigatorKey.currentContext!,
@@ -324,6 +331,7 @@ class StocksContainer extends StatelessWidget {
             .read<AllStocksProvider>()
             .addToWishList(
               symbol: symbol,
+              companyName: companyName,
               index: index,
               up: true,
             );
@@ -344,6 +352,7 @@ class StocksContainer extends StatelessWidget {
                 .read<AllStocksProvider>()
                 .addToWishList(
                   symbol: symbol,
+                  companyName: companyName,
                   index: index,
                   up: true,
                 );

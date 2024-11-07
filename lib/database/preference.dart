@@ -124,6 +124,17 @@ class Preference {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     preferences.setBool("@referralInput", value ?? true);
   }
+
+  static Future<bool> setAmplitudeFirstOpen(bool isFirstTime) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    return preferences.setBool("@amplitudeFirstOpen", isFirstTime);
+  }
+
+  static Future<bool> getAmplitudeFirstOpen() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    return preferences.getBool("@amplitudeFirstOpen") ?? true;
+  }
+
   //----------- For Testing Only ---------------
 
   // static const String dataListKey = 'data_list';

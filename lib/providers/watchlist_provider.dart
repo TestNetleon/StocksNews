@@ -1,4 +1,3 @@
-import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/foundation.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/api/api_requester.dart';
@@ -11,6 +10,8 @@ import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/utils.dart';
+
+import '../service/amplitude/service.dart';
 
 class WatchlistProvider extends ChangeNotifier {
   WatchlistRes? _data;
@@ -27,7 +28,7 @@ class WatchlistProvider extends ChangeNotifier {
   Extra? _extra;
   Extra? get extra => _extra;
 
-  final AudioPlayer _player = AudioPlayer();
+  // final AudioPlayer _player = AudioPlayer();
 
   void setStatus(status) {
     _status = status;
@@ -98,14 +99,14 @@ class WatchlistProvider extends ChangeNotifier {
     }
   }
 
-  Future deleteItem(id, String symbol) async {
+  Future deleteItem(id, String symbol, String companyName) async {
     setStatus(Status.loading);
 
     try {
       Map request = {
         "token":
             navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
-        "id": "$id"
+        "id": "$id",
       };
 
       ApiResponse response = await apiRequest(
@@ -135,6 +136,12 @@ class WatchlistProvider extends ChangeNotifier {
             .read<HomeProvider>()
             .setTotalsWatchList(response.data['total_watchlist']);
         // showErrorMessage(message: response.message, type: SnackbarType.info);
+
+        AmplitudeService.logWatchlistUpdateEvent(
+          added: false,
+          symbol: symbol,
+          companyName: companyName,
+        );
       } else {
         // showErrorMessage(message: response.message);
       }
@@ -145,37 +152,37 @@ class WatchlistProvider extends ChangeNotifier {
     }
   }
 
-  Future addItem(id) async {
-    setStatus(Status.loading);
+  // Future addItem(id) async {
+  //   setStatus(Status.loading);
 
-    try {
-      Map request = {
-        "token":
-            navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
-        "id": "$id"
-      };
+  //   try {
+  //     Map request = {
+  //       "token":
+  //           navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
+  //       "id": "$id"
+  //     };
 
-      ApiResponse response = await apiRequest(
-        url: Apis.addWatchlist,
-        request: request,
-        showProgress: false,
-        onRefresh: onRefresh,
-        removeForceLogin: true,
-      );
-      if (response.status) {
-        await _player.play(AssetSource(AudioFiles.alertWeathlist));
+  //     ApiResponse response = await apiRequest(
+  //       url: Apis.addWatchlist,
+  //       request: request,
+  //       showProgress: false,
+  //       onRefresh: onRefresh,
+  //       removeForceLogin: true,
+  //     );
+  //     if (response.status) {
+  //       await _player.play(AssetSource(AudioFiles.alertWeathlist));
 
-        navigatorKey.currentContext!
-            .read<HomeProvider>()
-            .setTotalsWatchList(response.data['total_watchlist']);
-        // showErrorMessage(message: response.message);
-      } else {
-        // showErrorMessage(message: response.message);
-      }
-      setStatus(Status.loaded);
-    } catch (e) {
-      Utils().showLog(e.toString());
-      setStatus(Status.loaded);
-    }
-  }
+  //       navigatorKey.currentContext!
+  //           .read<HomeProvider>()
+  //           .setTotalsWatchList(response.data['total_watchlist']);
+  //       // showErrorMessage(message: response.message);
+  //     } else {
+  //       // showErrorMessage(message: response.message);
+  //     }
+  //     setStatus(Status.loaded);
+  //   } catch (e) {
+  //     Utils().showLog(e.toString());
+  //     setStatus(Status.loaded);
+  //   }
+  // }
 }

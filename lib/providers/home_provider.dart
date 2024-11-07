@@ -35,6 +35,7 @@ import 'package:stocks_news_new/utils/utils.dart';
 
 import '../modals/featured_watchlist.dart';
 import '../modals/most_purchased.dart';
+import '../service/amplitude/service.dart';
 
 class HomeProvider extends ChangeNotifier {
   // HomeRes? _home;
@@ -249,6 +250,7 @@ class HomeProvider extends ChangeNotifier {
 
   Future addToWishList({
     required String symbol,
+    required String companyName,
     required bool up,
     required int index,
     type,
@@ -268,6 +270,12 @@ class HomeProvider extends ChangeNotifier {
         removeForceLogin: true,
       );
       if (response.status) {
+        AmplitudeService.logWatchlistUpdateEvent(
+          added: true,
+          symbol: symbol,
+          companyName: companyName,
+        );
+
         //
         if (type == "homeTrending") {
           _homeTrendingRes?.trending[index].isWatchlistAdded = 1;

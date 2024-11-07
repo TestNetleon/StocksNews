@@ -132,6 +132,7 @@ class _GapUpStocksState extends State<GapUpStocks> {
                               onClickWatchlist: () => _onWatchListClick(
                                   context,
                                   data[index].symbol,
+                                  data[index].name,
                                   data[index].isWatchlistAdded,
                                   index),
                               child: UpDownStocksItem(
@@ -247,8 +248,13 @@ class _GapUpStocksState extends State<GapUpStocks> {
     }
   }
 
-  void _onWatchListClick(BuildContext context, String symbol,
-      num? isWatchlistAdded, int index) async {
+  void _onWatchListClick(
+    BuildContext context,
+    String symbol,
+    String companyName,
+    num? isWatchlistAdded,
+    int index,
+  ) async {
     if (isWatchlistAdded == 1) {
       Navigator.push(
         navigatorKey.currentContext!,
@@ -258,6 +264,7 @@ class _GapUpStocksState extends State<GapUpStocks> {
       if (context.read<UserProvider>().user != null) {
         await navigatorKey.currentContext!.read<GapUpProvider>().addToWishList(
               symbol: symbol,
+              companyName: companyName,
               index: index,
               up: true,
             );
@@ -278,6 +285,7 @@ class _GapUpStocksState extends State<GapUpStocks> {
                 .read<GapUpProvider>()
                 .addToWishList(
                   symbol: symbol,
+                  companyName: companyName,
                   index: index,
                   up: true,
                 );

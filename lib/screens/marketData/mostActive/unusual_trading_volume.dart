@@ -119,6 +119,7 @@ class _UnusualTradingVolumeState extends State<UnusualTradingVolume> {
                             onClickWatchlist: () => _onWatchListClick(
                                 context,
                                 data[index].symbol ?? "",
+                                data[index].name ?? "",
                                 data[index].isWatchlistAdded,
                                 index),
                             child: MostActiveItem(
@@ -239,8 +240,13 @@ class _UnusualTradingVolumeState extends State<UnusualTradingVolume> {
     }
   }
 
-  void _onWatchListClick(BuildContext context, String symbol,
-      num? isWatchlistAdded, int index) async {
+  void _onWatchListClick(
+    BuildContext context,
+    String symbol,
+    String companyName,
+    num? isWatchlistAdded,
+    int index,
+  ) async {
     if (isWatchlistAdded == 1) {
       Navigator.push(
         navigatorKey.currentContext!,
@@ -252,6 +258,7 @@ class _UnusualTradingVolumeState extends State<UnusualTradingVolume> {
             .read<UnusualTradingVolumeProvider>()
             .addToWishList(
               symbol: symbol,
+              companyName: companyName,
               index: index,
               up: true,
             );
@@ -272,6 +279,7 @@ class _UnusualTradingVolumeState extends State<UnusualTradingVolume> {
                 .read<UnusualTradingVolumeProvider>()
                 .addToWishList(
                   symbol: symbol,
+                  companyName: companyName,
                   index: index,
                   up: true,
                 );

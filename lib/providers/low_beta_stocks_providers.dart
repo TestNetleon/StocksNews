@@ -15,6 +15,8 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 
+import '../service/amplitude/service.dart';
+
 class LowsBetaStocksProvider extends ChangeNotifier {
   Status _status = Status.ideal;
 
@@ -87,6 +89,7 @@ class LowsBetaStocksProvider extends ChangeNotifier {
 
   Future addToWishList({
     required String symbol,
+    required String companyName,
     required bool up,
     required int index,
   }) async {
@@ -108,7 +111,11 @@ class LowsBetaStocksProvider extends ChangeNotifier {
         //
         _data?[index].isWatchlistAdded = 1;
         notifyListeners();
-
+        AmplitudeService.logWatchlistUpdateEvent(
+          added: true,
+          symbol: symbol,
+          companyName: companyName,
+        );
         // _homeTrendingRes?.trending[index].isWatchlistAdded = 1;
 
         await _player.play(AssetSource(AudioFiles.alertWeathlist));

@@ -122,6 +122,7 @@ class _TopTodayPennyStocksState extends State<TopTodayPennyStocks> {
                             onClickWatchlist: () => _onWatchListClick(
                                 context,
                                 data[index].symbol ?? "",
+                                data[index].name ?? "",
                                 data[index].isWatchlistAdded,
                                 index),
                             child: PennyStocksItem(
@@ -242,8 +243,13 @@ class _TopTodayPennyStocksState extends State<TopTodayPennyStocks> {
     }
   }
 
-  void _onWatchListClick(BuildContext context, String symbol,
-      num? isWatchlistAdded, int index) async {
+  void _onWatchListClick(
+    BuildContext context,
+    String symbol,
+    String companyName,
+    num? isWatchlistAdded,
+    int index,
+  ) async {
     if (isWatchlistAdded == 1) {
       Navigator.push(
         navigatorKey.currentContext!,
@@ -255,6 +261,7 @@ class _TopTodayPennyStocksState extends State<TopTodayPennyStocks> {
             .read<TopTodayPennyStocksProviders>()
             .addToWishList(
               symbol: symbol,
+              companyName: companyName,
               index: index,
               up: true,
             );
@@ -275,6 +282,7 @@ class _TopTodayPennyStocksState extends State<TopTodayPennyStocks> {
                 .read<TopTodayPennyStocksProviders>()
                 .addToWishList(
                   symbol: symbol,
+                  companyName: companyName,
                   index: index,
                   up: true,
                 );

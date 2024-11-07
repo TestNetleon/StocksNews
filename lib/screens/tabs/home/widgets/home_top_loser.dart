@@ -78,7 +78,12 @@ class _HomeTopLoserState extends State<HomeTopLoser> {
                   onClickAlert: () => _onAlertClick(
                       context, top.symbol, top.isAlertAdded, index),
                   onClickWatchlist: () => _onWatchListClick(
-                      context, top.symbol, top.isWatchlistAdded, index),
+                    context,
+                    top.symbol,
+                    top.name,
+                    top.isWatchlistAdded,
+                    index,
+                  ),
                   child: CommonItemUi(
                     data: TopTrendingDataRes(
                         image: top.image,
@@ -171,8 +176,13 @@ class _HomeTopLoserState extends State<HomeTopLoser> {
     }
   }
 
-  void _onWatchListClick(BuildContext context, String symbol,
-      num? isWatchlistAdded, int index) async {
+  void _onWatchListClick(
+    BuildContext context,
+    String symbol,
+    String companyName,
+    num? isWatchlistAdded,
+    int index,
+  ) async {
     if (isWatchlistAdded == 1) {
       Navigator.push(
         navigatorKey.currentContext!,
@@ -183,6 +193,7 @@ class _HomeTopLoserState extends State<HomeTopLoser> {
         await navigatorKey.currentContext!.read<HomeProvider>().addToWishList(
               type: "homeTopLosers",
               symbol: symbol,
+              companyName: companyName,
               index: index,
               up: true,
             );
@@ -205,6 +216,7 @@ class _HomeTopLoserState extends State<HomeTopLoser> {
                 .addToWishList(
                   type: "homeTopLosers",
                   symbol: symbol,
+                  companyName: companyName,
                   index: index,
                   up: true,
                 );

@@ -93,8 +93,13 @@ class _TopPlaidIndexViewState extends State<TopPlaidIndexView> {
                               data.isWatchlistAdded?.toInt() ?? 0,
                           onClickAlert: () => _onAlertClick(context,
                               data.symbol ?? "", data.isAlertAdded, index),
-                          onClickWatchlist: () => _onWatchListClick(context,
-                              data.symbol ?? "", data.isWatchlistAdded, index),
+                          onClickWatchlist: () => _onWatchListClick(
+                            context,
+                            data.symbol ?? "",
+                            data.name ?? "",
+                            data.isWatchlistAdded,
+                            index,
+                          ),
                           child: CommonItemUi(
                             data: TopTrendingDataRes(
                                 image: data.image,
@@ -191,8 +196,13 @@ class _TopPlaidIndexViewState extends State<TopPlaidIndexView> {
     }
   }
 
-  void _onWatchListClick(BuildContext context, String symbol,
-      num? isWatchlistAdded, int index) async {
+  void _onWatchListClick(
+    BuildContext context,
+    String symbol,
+    String companyName,
+    num? isWatchlistAdded,
+    int index,
+  ) async {
     if (isWatchlistAdded == 1) {
       Navigator.push(
         navigatorKey.currentContext!,
@@ -203,6 +213,7 @@ class _TopPlaidIndexViewState extends State<TopPlaidIndexView> {
         await navigatorKey.currentContext!.read<HomeProvider>().addToWishList(
               type: "homeMostBoughtMembers",
               symbol: symbol,
+              companyName: companyName,
               index: index,
               up: true,
             );
@@ -224,6 +235,7 @@ class _TopPlaidIndexViewState extends State<TopPlaidIndexView> {
                 .addToWishList(
                   type: "homeMostBoughtMembers",
                   symbol: symbol,
+                  companyName: companyName,
                   index: index,
                   up: true,
                 );

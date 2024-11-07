@@ -49,8 +49,13 @@ class SdStockPeers extends StatelessWidget {
                 watlistForBullish: data[index].isWatchlistAdded?.toInt() ?? 0,
                 onClickAlert: () => _onAlertClick(context, data[index].symbol,
                     data[index].isAlertAdded, index),
-                onClickWatchlist: () => _onWatchListClick(context,
-                    data[index].symbol, data[index].isWatchlistAdded, index),
+                onClickWatchlist: () => _onWatchListClick(
+                  context,
+                  data[index].symbol,
+                  data[index].name,
+                  data[index].isWatchlistAdded,
+                  index,
+                ),
                 child: CommonItemUi(
                   data: TopTrendingDataRes(
                       image: data[index].image,
@@ -146,8 +151,13 @@ class SdStockPeers extends StatelessWidget {
     }
   }
 
-  void _onWatchListClick(BuildContext context, String symbol,
-      num? isWatchlistAdded, int index) async {
+  void _onWatchListClick(
+    BuildContext context,
+    String symbol,
+    String companyName,
+    num? isWatchlistAdded,
+    int index,
+  ) async {
     if (isWatchlistAdded == 1) {
       Navigator.push(
         navigatorKey.currentContext!,
@@ -160,6 +170,7 @@ class SdStockPeers extends StatelessWidget {
             .addToWishListPeer(
               type: "Peer",
               symbol: symbol,
+              companyName: companyName,
               index: index,
               up: true,
             );
@@ -182,6 +193,7 @@ class SdStockPeers extends StatelessWidget {
                 .addToWishListPeer(
                   type: "Peer",
                   symbol: symbol,
+                  companyName: companyName,
                   index: index,
                   up: true,
                 );

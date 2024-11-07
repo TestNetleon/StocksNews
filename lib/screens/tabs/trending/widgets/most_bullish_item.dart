@@ -286,6 +286,7 @@ class _MostBullishItemState extends State<MostBullishItem> {
   Future _addToWatchlist() async {
     await navigatorKey.currentContext!.read<TrendingProvider>().addToWishList(
           symbol: widget.data.symbol,
+          companyName: widget.data.name ?? '',
           index: widget.index,
           up: widget.up,
         );

@@ -24,6 +24,7 @@ import 'package:stocks_news_new/screens/tabs/insider/insider.dart';
 import 'package:stocks_news_new/screens/tabs/news/news.dart';
 import 'package:stocks_news_new/screens/tabs/reddit_twitter/reddit_twitter.dart';
 import 'package:stocks_news_new/screens/tabs/trending/trending.dart';
+import 'package:stocks_news_new/service/amplitude/service.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -68,6 +69,7 @@ class _TabsState extends State<Tabs> {
       //Because we are asking membership thats why hiding refer
       if (widget.showRef) referLogin();
       if (widget.showMembership) _showMembership();
+      AmplitudeService.logFirstOpenEvent();
     });
   }
 

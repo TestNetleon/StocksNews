@@ -137,6 +137,7 @@ class _TodaysBreakoutStocksState extends State<TodaysBreakoutStocks> {
                             onClickWatchlist: () => _onWatchListClick(
                                 context,
                                 gainers[index].symbol,
+                                gainers[index].name,
                                 gainers[index].isWatchlistAdded,
                                 index),
                             child: BreakOutStocksItem(
@@ -250,8 +251,13 @@ class _TodaysBreakoutStocksState extends State<TodaysBreakoutStocks> {
     }
   }
 
-  void _onWatchListClick(BuildContext context, String symbol,
-      num? isWatchlistAdded, int index) async {
+  void _onWatchListClick(
+    BuildContext context,
+    String symbol,
+    String companyName,
+    num? isWatchlistAdded,
+    int index,
+  ) async {
     if (isWatchlistAdded == 1) {
       Navigator.push(
         navigatorKey.currentContext!,
@@ -264,6 +270,7 @@ class _TodaysBreakoutStocksState extends State<TodaysBreakoutStocks> {
             .addToWishList(
               type: "homeTopGainers",
               symbol: symbol,
+              companyName: companyName,
               index: index,
               up: true,
             );
@@ -285,6 +292,7 @@ class _TodaysBreakoutStocksState extends State<TodaysBreakoutStocks> {
                 .addToWishList(
                   type: "homeTopGainers",
                   symbol: symbol,
+                  companyName: companyName,
                   index: index,
                   up: true,
                 );

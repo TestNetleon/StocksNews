@@ -120,6 +120,7 @@ class _MostVolatileStocksState extends State<MostVolatileStocks> {
                             onClickWatchlist: () => _onWatchListClick(
                                 context,
                                 data[index].symbol ?? "",
+                                data[index].name ?? "",
                                 data[index].isWatchlistAdded,
                                 index),
                             child: MostActiveItem(
@@ -240,8 +241,13 @@ class _MostVolatileStocksState extends State<MostVolatileStocks> {
     }
   }
 
-  void _onWatchListClick(BuildContext context, String symbol,
-      num? isWatchlistAdded, int index) async {
+  void _onWatchListClick(
+    BuildContext context,
+    String symbol,
+    String companyName,
+    num? isWatchlistAdded,
+    int index,
+  ) async {
     if (isWatchlistAdded == 1) {
       Navigator.push(
         navigatorKey.currentContext!,
@@ -253,6 +259,7 @@ class _MostVolatileStocksState extends State<MostVolatileStocks> {
             .read<MostVolatileStocksProvider>()
             .addToWishList(
               symbol: symbol,
+              companyName: companyName,
               index: index,
               up: true,
             );
@@ -273,6 +280,7 @@ class _MostVolatileStocksState extends State<MostVolatileStocks> {
                 .read<MostVolatileStocksProvider>()
                 .addToWishList(
                   symbol: symbol,
+                  companyName: companyName,
                   index: index,
                   up: true,
                 );

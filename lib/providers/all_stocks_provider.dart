@@ -11,6 +11,7 @@ import 'package:stocks_news_new/modals/stocks_res.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
+import 'package:stocks_news_new/service/amplitude/service.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/utils/utils.dart';
@@ -105,6 +106,7 @@ class AllStocksProvider extends ChangeNotifier {
 
   Future addToWishList({
     required String symbol,
+    required String companyName,
     required bool up,
     required int index,
   }) async {
@@ -125,6 +127,11 @@ class AllStocksProvider extends ChangeNotifier {
       if (response.status) {
         //
         _data?.data?[index].isWatchlistAdded = 1;
+        AmplitudeService.logWatchlistUpdateEvent(
+          added: true,
+          symbol: symbol,
+          companyName: companyName,
+        );
         notifyListeners();
 
         // _homeTrendingRes?.trending[index].isWatchlistAdded = 1;

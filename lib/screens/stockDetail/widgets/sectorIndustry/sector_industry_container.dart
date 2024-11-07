@@ -50,8 +50,13 @@ class SectorIndustryList extends StatelessWidget {
                     watlistForBullish: data?.isWatchlistAdded?.toInt() ?? 0,
                     onClickAlert: () => _onAlertClick(
                         context, data?.symbol ?? "", data?.isAlertAdded, index),
-                    onClickWatchlist: () => _onWatchListClick(context,
-                        data?.symbol ?? "", data?.isWatchlistAdded, index),
+                    onClickWatchlist: () => _onWatchListClick(
+                      context,
+                      data?.symbol ?? "",
+                      data?.name ?? "",
+                      data?.isWatchlistAdded,
+                      index,
+                    ),
                     child: SectorIndustryItem(
                       index: index,
                       data: data,
@@ -72,7 +77,12 @@ class SectorIndustryList extends StatelessWidget {
               onClickAlert: () => _onAlertClick(
                   context, data?.symbol ?? "", data?.isAlertAdded, index),
               onClickWatchlist: () => _onWatchListClick(
-                  context, data?.symbol ?? "", data?.isWatchlistAdded, index),
+                context,
+                data?.symbol ?? "",
+                data?.name ?? "",
+                data?.isWatchlistAdded,
+                index,
+              ),
               child: SectorIndustryItem(index: index, data: data),
             );
 
@@ -151,8 +161,13 @@ class SectorIndustryList extends StatelessWidget {
     }
   }
 
-  void _onWatchListClick(BuildContext context, String symbol,
-      num? isWatchlistAdded, int index) async {
+  void _onWatchListClick(
+    BuildContext context,
+    String symbol,
+    String companyName,
+    num? isWatchlistAdded,
+    int index,
+  ) async {
     if (isWatchlistAdded == 1) {
       Navigator.push(
         navigatorKey.currentContext!,
@@ -164,6 +179,7 @@ class SectorIndustryList extends StatelessWidget {
             .read<SectorIndustryProvider>()
             .addToWishList(
               symbol: symbol,
+              companyName: companyName,
               index: index,
               up: true,
             );
@@ -186,6 +202,7 @@ class SectorIndustryList extends StatelessWidget {
                 .read<SectorIndustryProvider>()
                 .addToWishList(
                   symbol: symbol,
+                  companyName: companyName,
                   index: index,
                   up: true,
                 );

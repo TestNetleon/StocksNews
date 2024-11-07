@@ -182,6 +182,7 @@ class _CongressionalDetailContainerState
                                 onClickWatchlist: () => _onWatchListClick(
                                     context,
                                     data?.symbol,
+                                    data?.company,
                                     data?.isWatchlistAdded,
                                     index),
                                 child: CongressTradeItem(
@@ -274,8 +275,13 @@ class _CongressionalDetailContainerState
     }
   }
 
-  void _onWatchListClick(BuildContext context, String symbol,
-      num? isWatchlistAdded, int index) async {
+  void _onWatchListClick(
+    BuildContext context,
+    String symbol,
+    String companyName,
+    num? isWatchlistAdded,
+    int index,
+  ) async {
     if (isWatchlistAdded == 1) {
       Navigator.push(
         navigatorKey.currentContext!,
@@ -287,6 +293,7 @@ class _CongressionalDetailContainerState
             .read<CongressionalDetailProvider>()
             .addToWishList(
               symbol: symbol,
+              companyName: companyName,
               index: index,
               up: true,
             );
@@ -308,6 +315,7 @@ class _CongressionalDetailContainerState
                 .read<CongressionalDetailProvider>()
                 .addToWishList(
                   symbol: symbol,
+                  companyName: companyName,
                   index: index,
                   up: true,
                 );

@@ -124,6 +124,7 @@ class _LowPEStocksState extends State<LowPEStocks> {
                               onClickWatchlist: () => _onWatchListClick(
                                   context,
                                   data[index].symbol ?? "",
+                                  data[index].name ?? "",
                                   data[index].isWatchlistAdded,
                                   index),
                               child: HighLowPEItem(
@@ -222,8 +223,13 @@ class _LowPEStocksState extends State<LowPEStocks> {
     }
   }
 
-  void _onWatchListClick(BuildContext context, String symbol,
-      num? isWatchlistAdded, int index) async {
+  void _onWatchListClick(
+    BuildContext context,
+    String symbol,
+    String companyName,
+    num? isWatchlistAdded,
+    int index,
+  ) async {
     if (isWatchlistAdded == 1) {
       Navigator.push(
         navigatorKey.currentContext!,
@@ -233,6 +239,7 @@ class _LowPEStocksState extends State<LowPEStocks> {
       if (context.read<UserProvider>().user != null) {
         await navigatorKey.currentContext!.read<LowPeProvider>().addToWishList(
               symbol: symbol,
+              companyName: companyName,
               index: index,
               up: true,
             );
@@ -252,6 +259,7 @@ class _LowPEStocksState extends State<LowPEStocks> {
                 .read<LowPeProvider>()
                 .addToWishList(
                   symbol: symbol,
+                  companyName: companyName,
                   index: index,
                   up: true,
                 );

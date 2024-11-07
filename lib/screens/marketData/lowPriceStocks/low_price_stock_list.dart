@@ -117,6 +117,7 @@ class _LowPriceStocksListState extends State<LowPriceStocksList> {
                             onClickWatchlist: () => _onWatchListClick(
                                 context,
                                 data.symbol ?? "",
+                                data.name ?? "",
                                 data.isWatchlistAdded,
                                 index),
                             child: provider.typeIndex == 1
@@ -224,8 +225,13 @@ class _LowPriceStocksListState extends State<LowPriceStocksList> {
     }
   }
 
-  void _onWatchListClick(BuildContext context, String symbol,
-      num? isWatchlistAdded, int index) async {
+  void _onWatchListClick(
+    BuildContext context,
+    String symbol,
+    String companyName,
+    num? isWatchlistAdded,
+    int index,
+  ) async {
     if (isWatchlistAdded == 1) {
       Navigator.push(
         navigatorKey.currentContext!,
@@ -237,6 +243,7 @@ class _LowPriceStocksListState extends State<LowPriceStocksList> {
             .read<LowPriceStocksProvider>()
             .addToWishList(
               symbol: symbol,
+              companyName: companyName,
               index: index,
               up: true,
             );
@@ -257,6 +264,7 @@ class _LowPriceStocksListState extends State<LowPriceStocksList> {
                 .read<LowPriceStocksProvider>()
                 .addToWishList(
                   symbol: symbol,
+                  companyName: companyName,
                   index: index,
                   up: true,
                 );

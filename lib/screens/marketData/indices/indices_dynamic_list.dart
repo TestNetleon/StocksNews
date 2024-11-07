@@ -106,6 +106,7 @@ class _IndicesDynamicStocksState extends State<IndicesDynamicStocks> {
                                     onClickWatchlist: () => _onWatchListClick(
                                         context,
                                         data.symbol ?? "",
+                                        data.name ?? "",
                                         data.isWatchlistAdded,
                                         index),
                                     child:
@@ -214,8 +215,13 @@ class _IndicesDynamicStocksState extends State<IndicesDynamicStocks> {
     }
   }
 
-  void _onWatchListClick(BuildContext context, String symbol,
-      num? isWatchlistAdded, int index) async {
+  void _onWatchListClick(
+    BuildContext context,
+    String symbol,
+    String companyName,
+    num? isWatchlistAdded,
+    int index,
+  ) async {
     if (isWatchlistAdded == 1) {
       Navigator.push(
         navigatorKey.currentContext!,
@@ -227,6 +233,7 @@ class _IndicesDynamicStocksState extends State<IndicesDynamicStocks> {
             .read<IndicesProvider>()
             .addToWishList(
               symbol: symbol,
+              companyName: companyName,
               index: index,
               up: true,
             );
@@ -247,6 +254,7 @@ class _IndicesDynamicStocksState extends State<IndicesDynamicStocks> {
                 .read<IndicesProvider>()
                 .addToWishList(
                   symbol: symbol,
+                  companyName: companyName,
                   index: index,
                   up: true,
                 );

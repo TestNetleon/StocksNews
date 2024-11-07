@@ -112,6 +112,7 @@ class _Snp500StocksState extends State<Snp500Stocks> {
                             onClickWatchlist: () => _onWatchListClick(
                                 context,
                                 data.symbol ?? "",
+                                data.name ?? "",
                                 data.isWatchlistAdded,
                                 index),
                             child: IndicesItem(data: data, index: index),
@@ -209,8 +210,13 @@ class _Snp500StocksState extends State<Snp500Stocks> {
     }
   }
 
-  void _onWatchListClick(BuildContext context, String symbol,
-      num? isWatchlistAdded, int index) async {
+  void _onWatchListClick(
+    BuildContext context,
+    String symbol,
+    String companyName,
+    num? isWatchlistAdded,
+    int index,
+  ) async {
     if (isWatchlistAdded == 1) {
       Navigator.push(
         navigatorKey.currentContext!,
@@ -220,6 +226,7 @@ class _Snp500StocksState extends State<Snp500Stocks> {
       if (context.read<UserProvider>().user != null) {
         await navigatorKey.currentContext!.read<SnP500Provider>().addToWishList(
               symbol: symbol,
+              companyName: companyName,
               index: index,
               up: true,
             );
@@ -239,6 +246,7 @@ class _Snp500StocksState extends State<Snp500Stocks> {
                 .read<SnP500Provider>()
                 .addToWishList(
                   symbol: symbol,
+                  companyName: companyName,
                   index: index,
                   up: true,
                 );

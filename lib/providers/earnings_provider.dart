@@ -15,6 +15,8 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 
+import '../service/amplitude/service.dart';
+
 class EarningsProvider extends ChangeNotifier {
   Status _status = Status.ideal;
 
@@ -86,6 +88,7 @@ class EarningsProvider extends ChangeNotifier {
 
   Future addToWishList({
     required String symbol,
+    required String companyName,
     required bool up,
     required int index,
   }) async {
@@ -106,6 +109,12 @@ class EarningsProvider extends ChangeNotifier {
       if (response.status) {
         //
         _data?[index].isWatchlistAdded = 1;
+        AmplitudeService.logWatchlistUpdateEvent(
+          added: true,
+          symbol: symbol,
+          companyName: companyName,
+        );
+
         notifyListeners();
 
         // _homeTrendingRes?.trending[index].isWatchlistAdded = 1;

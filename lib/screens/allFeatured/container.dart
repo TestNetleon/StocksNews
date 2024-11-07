@@ -53,7 +53,12 @@ class AllFeaturedContainer extends StatelessWidget {
                     onClickAlert: () => _onAlertClick(
                         context, data.symbol, data.isAlertAdded, index),
                     onClickWatchlist: () => _onWatchListClick(
-                        context, data.symbol, data.isWatchlistAdded, index),
+                      context,
+                      data.symbol,
+                      data.name,
+                      data.isWatchlistAdded,
+                      index,
+                    ),
                     child: CommonItemUi(
                       data: TopTrendingDataRes(
                           image: data.image,
@@ -78,7 +83,12 @@ class AllFeaturedContainer extends StatelessWidget {
                 onClickAlert: () => _onAlertClick(
                     context, data.symbol, data.isAlertAdded, index),
                 onClickWatchlist: () => _onWatchListClick(
-                    context, data.symbol, data.isWatchlistAdded, index),
+                  context,
+                  data.symbol,
+                  data.name,
+                  data.isWatchlistAdded,
+                  index,
+                ),
                 child: CommonItemUi(
                   data: TopTrendingDataRes(
                       image: data.image,
@@ -163,8 +173,13 @@ class AllFeaturedContainer extends StatelessWidget {
     }
   }
 
-  void _onWatchListClick(BuildContext context, String symbol,
-      num? isWatchlistAdded, int index) async {
+  void _onWatchListClick(
+    BuildContext context,
+    String symbol,
+    String companyName,
+    num? isWatchlistAdded,
+    int index,
+  ) async {
     if (isWatchlistAdded == 1) {
       Navigator.push(
         navigatorKey.currentContext!,
@@ -176,6 +191,7 @@ class AllFeaturedContainer extends StatelessWidget {
             .read<FeaturedTickerProvider>()
             .addToWishList(
               symbol: symbol,
+              companyName: companyName,
               index: index,
               up: true,
             );
@@ -196,6 +212,7 @@ class AllFeaturedContainer extends StatelessWidget {
                 .read<FeaturedTickerProvider>()
                 .addToWishList(
                   symbol: symbol,
+                  companyName: companyName,
                   index: index,
                   up: true,
                 );

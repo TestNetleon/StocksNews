@@ -48,7 +48,7 @@ class WatchlistItem extends StatelessWidget {
                 onTap: () {
                   context
                       .read<WatchlistProvider>()
-                      .deleteItem(data.id, data.symbol);
+                      .deleteItem(data.id, data.symbol, data.name);
                   Navigator.pop(context);
                 },
               );

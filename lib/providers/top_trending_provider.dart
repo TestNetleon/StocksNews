@@ -14,6 +14,7 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 
+import '../service/amplitude/service.dart';
 import 'home_provider.dart';
 
 class TopTrendingProvider extends ChangeNotifier {
@@ -138,6 +139,7 @@ class TopTrendingProvider extends ChangeNotifier {
 
   Future addToWishList({
     required String symbol,
+    required String companyName,
     required int index,
   }) async {
     setAdd(Status.loading);
@@ -156,6 +158,11 @@ class TopTrendingProvider extends ChangeNotifier {
         removeForceLogin: true,
       );
       if (response.status) {
+        AmplitudeService.logWatchlistUpdateEvent(
+          added: true,
+          symbol: symbol,
+          companyName: companyName,
+        );
         if (_selectedIndex == 0 || _selectedIndex == 1) {
           Utils().showLog("Helllooooo");
           data?[index].isWatchlistAdded = 1;

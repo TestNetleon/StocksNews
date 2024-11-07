@@ -112,6 +112,7 @@ class _SdCompetitorState extends State<SdCompetitor> {
                       onClickWatchlist: () => _onWatchListClick(
                           context,
                           data?[index].symbol,
+                          data?[index].company,
                           data?[index].isWatchlistAdded,
                           index),
                       child: SdCompetitorItem(
@@ -197,8 +198,13 @@ class _SdCompetitorState extends State<SdCompetitor> {
     }
   }
 
-  void _onWatchListClick(BuildContext context, String symbol,
-      num? isWatchlistAdded, int index) async {
+  void _onWatchListClick(
+    BuildContext context,
+    String symbol,
+    String companyName,
+    num? isWatchlistAdded,
+    int index,
+  ) async {
     if (isWatchlistAdded == 1) {
       Navigator.push(
         navigatorKey.currentContext!,
@@ -211,6 +217,7 @@ class _SdCompetitorState extends State<SdCompetitor> {
             .addToWishListPeer(
               type: "compititor",
               symbol: symbol,
+              companyName: companyName,
               index: index,
               up: true,
             );
@@ -233,6 +240,7 @@ class _SdCompetitorState extends State<SdCompetitor> {
                 .addToWishListPeer(
                   type: "compititor",
                   symbol: symbol,
+                  companyName: companyName,
                   index: index,
                   up: true,
                 );

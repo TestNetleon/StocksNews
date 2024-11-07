@@ -4,7 +4,7 @@ import 'package:flutter/foundation.dart';
 
 class Apis {
   // Main live server
-  static const baseUrl = "https://app.stocks.news/api/v1";
+  // static const baseUrl = "https://app.stocks.news/api/v1";
 
   // maintenance
   static const baseUrlLocal = "https://notification.stocks.news/api/v1";
@@ -15,7 +15,7 @@ class Apis {
   //     : "https://app.stocks.news/api/v1";
 
   // Set direct Local
-  // static const baseUrl = 'https://dev.stocks.news/api/v1';
+  static const baseUrl = 'https://dev.stocks.news/api/v1';
 
   static const checkServer = "/check-server-status";
   static const phoneLogin = '/phone-login';
@@ -240,4 +240,15 @@ class ApiKeys {
   static const appId = "1:661986825229:android:ce1c460925d54b155bb144";
   static const messagingSenderId = "661986825229";
   static const projectId = "stocksnews-ef556";
+
+  //Revenue Cat
+  static const androidKey = 'goog_KXHVJRLChlyjoOamWsqCWQSJZfI';
+  static const iosKey = 'appl_kHwXNrngqMNktkEZJqYhEgLjbcC';
+
+  //AppsFlyer
+  static const appsFlyerKey = 'DdBBqNnwC3Xz2dwhbF7kJK';
+  static const iosAppID = '6476615803';
+
+  //Amplitude
+  static const amplitudeKey = 'ff8ab349a2ddf801c985a59e3be1bedf';
 }

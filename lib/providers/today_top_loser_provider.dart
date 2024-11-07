@@ -15,6 +15,8 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 
+import '../service/amplitude/service.dart';
+
 class TodayTopLoserProvider extends ChangeNotifier {
   GainersLosersRes? _data;
   GainersLosersRes? get data => _data;
@@ -91,6 +93,7 @@ class TodayTopLoserProvider extends ChangeNotifier {
 
   Future addToWishList({
     required String symbol,
+    required String companyName,
     required bool up,
     required int index,
     type,
@@ -110,6 +113,11 @@ class TodayTopLoserProvider extends ChangeNotifier {
         removeForceLogin: true,
       );
       if (response.status) {
+        AmplitudeService.logWatchlistUpdateEvent(
+          added: true,
+          symbol: symbol,
+          companyName: companyName,
+        );
         //
         _data?.data?[index].isWatchlistAdded = 1;
         notifyListeners();

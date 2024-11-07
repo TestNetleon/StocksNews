@@ -36,6 +36,7 @@ import '../modals/stockDetailRes/earnings.dart';
 import '../modals/stockDetailRes/overview.dart';
 import '../modals/technical_analysis_res.dart';
 import '../route/my_app.dart';
+import '../service/amplitude/service.dart';
 import '../utils/colors.dart';
 import '../utils/constants.dart';
 import '../utils/theme.dart';
@@ -282,6 +283,7 @@ class StockDetailProviderNew extends ChangeNotifier {
   Future addToWishListPeer({
     String type = "",
     required String symbol,
+    required String companyName,
     required bool up,
     required int index,
   }) async {
@@ -300,6 +302,11 @@ class StockDetailProviderNew extends ChangeNotifier {
         removeForceLogin: true,
       );
       if (response.status) {
+        AmplitudeService.logWatchlistUpdateEvent(
+          added: true,
+          symbol: symbol,
+          companyName: companyName,
+        );
         //
 
         if (type == "Peer") {
@@ -396,6 +403,11 @@ class StockDetailProviderNew extends ChangeNotifier {
         removeForceLogin: true,
       );
       if (response.status) {
+        AmplitudeService.logWatchlistUpdateEvent(
+          added: true,
+          symbol: _tabRes?.keyStats?.symbol ?? "",
+          companyName: _tabRes?.keyStats?.name ?? "",
+        );
         if (index == null) {
           _tabRes?.isWatchListAdded = 1;
         }
