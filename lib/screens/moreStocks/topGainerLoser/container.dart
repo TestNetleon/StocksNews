@@ -139,6 +139,7 @@ class _GainerLoserContainerState extends State<GainerLoserContainer> {
                           onClickAlert: () => _onAlertClick(
                               navigatorKey.currentContext!,
                               data[index].symbol,
+                              data[index].name,
                               data[index].isAlertAdded,
                               index),
                           onClickWatchlist: () => _onWatchListClick(
@@ -169,7 +170,12 @@ class _GainerLoserContainerState extends State<GainerLoserContainer> {
   }
 
   void _onAlertClick(
-      context, String symbol, num? isAlertAdded, int? index) async {
+    context,
+    String symbol,
+    String companyName,
+    num? isAlertAdded,
+    int? index,
+  ) async {
     if ((isAlertAdded?.toInt() ?? 0) == 1) {
       Navigator.push(
         navigatorKey.currentContext!,
@@ -185,6 +191,7 @@ class _GainerLoserContainerState extends State<GainerLoserContainer> {
             insetPadding:
                 EdgeInsets.symmetric(horizontal: 15.sp, vertical: 10.sp),
             symbol: symbol,
+            companyName: companyName,
             index: index ?? 0,
             homeGainersAndLosers: widget.type,
           ),
@@ -212,6 +219,7 @@ class _GainerLoserContainerState extends State<GainerLoserContainer> {
                 insetPadding:
                     EdgeInsets.symmetric(horizontal: 15.sp, vertical: 10.sp),
                 symbol: symbol,
+                companyName: companyName,
                 index: index ?? 0,
                 homeGainersAndLosers: widget.type,
               ),

@@ -59,9 +59,11 @@ class AlertsItem extends StatelessWidget {
                 title: "Removing Stock",
                 icon: Images.alertPopGIF,
                 onTap: () {
-                  context
-                      .read<AlertProvider>()
-                      .deleteItem(data.id, data.symbol);
+                  context.read<AlertProvider>().deleteItem(
+                        data.id,
+                        data.symbol,
+                        data.name,
+                      );
                   Navigator.pop(context);
                 },
               );

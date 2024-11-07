@@ -85,6 +85,7 @@ class TrendingProvider extends ChangeNotifier {
   Future createAlertSend({
     required String alertName,
     required String symbol,
+    required String companyName,
     required bool up,
     required int index,
     bool selectedOne = false,
@@ -107,6 +108,11 @@ class TrendingProvider extends ChangeNotifier {
         removeForceLogin: true,
       );
       if (response.status) {
+        AmplitudeService.logAlertUpdateEvent(
+          added: true,
+          symbol: symbol,
+          companyName: companyName,
+        );
         if (up) {
           //
           _mostBullish?.mostBullish?[index].isAlertAdded = 1;

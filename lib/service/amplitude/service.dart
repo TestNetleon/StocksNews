@@ -136,6 +136,7 @@ class AmplitudeService {
     if (provider.user?.email != null && provider.user?.email != '') {
       request['email'] = provider.user?.email;
     }
+    _amplitude.setUserId(provider.user?.userId ?? '');
     _logEvent(
       added ? 'Added $symbol in Watchlist' : 'Removed $symbol from Watchlist',
       eventProperties: request,
@@ -170,8 +171,9 @@ class AmplitudeService {
     if (provider.user?.email != null && provider.user?.email != '') {
       request['email'] = provider.user?.email;
     }
+    _amplitude.setUserId(provider.user?.userId ?? '');
     _logEvent(
-      added ? 'Added $symbol in Alert' : 'Removed $symbol from Alert',
+      added ? 'Added $symbol in Alerts' : 'Removed $symbol from Alerts',
       eventProperties: request,
     );
   }

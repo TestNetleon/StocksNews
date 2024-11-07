@@ -177,8 +177,13 @@ class _CongressionalDetailContainerState
                                     data?.isAlertAdded?.toInt() ?? 0,
                                 watlistForBullish:
                                     data?.isWatchlistAdded?.toInt() ?? 0,
-                                onClickAlert: () => _onAlertClick(context,
-                                    data?.symbol, data?.isAlertAdded, index),
+                                onClickAlert: () => _onAlertClick(
+                                      context,
+                                      data?.symbol,
+                                      data?.company,
+                                      data?.isAlertAdded,
+                                      index,
+                                    ),
                                 onClickWatchlist: () => _onWatchListClick(
                                     context,
                                     data?.symbol,
@@ -215,8 +220,13 @@ class _CongressionalDetailContainerState
     );
   }
 
-  void _onAlertClick(BuildContext context, String symbol, num? isAlertAdded,
-      int? index) async {
+  void _onAlertClick(
+    BuildContext context,
+    String symbol,
+    String cN,
+    num? isAlertAdded,
+    int? index,
+  ) async {
     if ((isAlertAdded?.toInt() ?? 0) == 1) {
       Navigator.push(
         navigatorKey.currentContext!,
@@ -232,6 +242,7 @@ class _CongressionalDetailContainerState
             insetPadding:
                 EdgeInsets.symmetric(horizontal: 15.sp, vertical: 10.sp),
             symbol: symbol,
+            companyName: cN,
             index: index ?? 0,
             congresionalImagesClick: true,
           ),
@@ -259,6 +270,7 @@ class _CongressionalDetailContainerState
                 insetPadding:
                     EdgeInsets.symmetric(horizontal: 15.sp, vertical: 10.sp),
                 symbol: symbol,
+                companyName: cN,
                 index: index ?? 0,
                 congresionalImagesClick: true,
               ),

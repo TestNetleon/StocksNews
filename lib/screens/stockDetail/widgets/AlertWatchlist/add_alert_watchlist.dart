@@ -70,6 +70,8 @@ class AddToAlertWatchlist extends StatelessWidget {
   Widget build(BuildContext context) {
     String? symbol =
         context.watch<StockDetailProviderNew>().tabRes?.keyStats?.symbol ?? "";
+    String? companyName =
+        context.watch<StockDetailProviderNew>().tabRes?.keyStats?.name ?? "";
     num alertOn =
         context.watch<StockDetailProviderNew>().tabRes?.isAlertAdded ?? 0;
     num watchlistOn =
@@ -128,7 +130,8 @@ class AddToAlertWatchlist extends StatelessWidget {
 
                   if (alertOn == 0) {
                     _vibrate();
-                    _showAlertPopup(navigatorKey.currentContext!, symbol);
+                    _showAlertPopup(
+                        navigatorKey.currentContext!, symbol, companyName);
                   } else {
                     Navigator.push(
                       navigatorKey.currentContext!,
@@ -175,7 +178,8 @@ class AddToAlertWatchlist extends StatelessWidget {
 
                   if (alertOn == 0) {
                     _vibrate();
-                    _showAlertPopup(navigatorKey.currentContext!, symbol);
+                    _showAlertPopup(
+                        navigatorKey.currentContext!, symbol, companyName);
                   } else {
                     Navigator.push(
                       navigatorKey.currentContext!,
@@ -208,7 +212,8 @@ class AddToAlertWatchlist extends StatelessWidget {
 
                   if (alertOn == 0) {
                     _vibrate();
-                    _showAlertPopup(navigatorKey.currentContext!, symbol);
+                    _showAlertPopup(
+                        navigatorKey.currentContext!, symbol, companyName);
                   } else {
                     Navigator.push(
                       navigatorKey.currentContext!,
@@ -361,7 +366,8 @@ class AddToAlertWatchlist extends StatelessWidget {
     );
   }
 
-  Future _showAlertPopup(BuildContext context, String symbol) async {
+  Future _showAlertPopup(
+      BuildContext context, String symbol, String companyName) async {
     showPlatformBottomSheet(
       backgroundColor: ThemeColors.bottomsheetGradient,
       context: context,
@@ -369,6 +375,7 @@ class AddToAlertWatchlist extends StatelessWidget {
       content: AlertPopup(
         fromStockDetail: true,
         symbol: symbol,
+        companyName: companyName,
       ),
     );
   }

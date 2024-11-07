@@ -192,6 +192,7 @@ class HomeProvider extends ChangeNotifier {
   Future createAlertSend({
     required String alertName,
     required String symbol,
+    required String companyName,
     required int index,
     bool selectedOne = false,
     bool selectedTwo = false,
@@ -213,6 +214,11 @@ class HomeProvider extends ChangeNotifier {
         removeForceLogin: true,
       );
       if (response.status) {
+        AmplitudeService.logAlertUpdateEvent(
+          added: true,
+          symbol: symbol,
+          companyName: companyName,
+        );
         if (type == "homeTrending") {
           _homeTrendingRes?.trending[index].isAlertAdded = 1;
           notifyListeners();

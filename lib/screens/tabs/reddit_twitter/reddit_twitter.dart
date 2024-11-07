@@ -246,10 +246,12 @@ class _RedditTwitterState extends State<RedditTwitter> {
                                 watlistForBullish:
                                     data?.isWatchlistAdded?.toInt() ?? 0,
                                 onClickAlert: () => _onAlertClickLast(
-                                    context,
-                                    data?.symbol ?? "",
-                                    data?.isAlertAdded,
-                                    index),
+                                  context,
+                                  data?.symbol ?? "",
+                                  data?.name ?? "",
+                                  data?.isAlertAdded,
+                                  index,
+                                ),
                                 onClickWatchlist: () => _onWatchListClickLast(
                                     context,
                                     data?.symbol ?? "",
@@ -311,7 +313,12 @@ class _RedditTwitterState extends State<RedditTwitter> {
                       alertForBullish: data.isAlertAdded?.toInt() ?? 0,
                       watlistForBullish: data.isWatchlistAdded?.toInt() ?? 0,
                       onClickAlert: () => _onAlertClickRecent(
-                          context, data.symbol, data.isAlertAdded, index),
+                        context,
+                        data.symbol,
+                        data.name ?? '',
+                        data.isAlertAdded,
+                        index,
+                      ),
                       onClickWatchlist: () => _onWatchListClickRecent(
                         context,
                         data.symbol,
@@ -346,8 +353,13 @@ class _RedditTwitterState extends State<RedditTwitter> {
     );
   }
 
-  void _onAlertClickRecent(BuildContext context, String symbol,
-      num? isAlertAdded, int? index) async {
+  void _onAlertClickRecent(
+    BuildContext context,
+    String symbol,
+    String companyName,
+    num? isAlertAdded,
+    int? index,
+  ) async {
     if ((isAlertAdded?.toInt() ?? 0) == 1) {
       Navigator.push(
         navigatorKey.currentContext!,
@@ -363,6 +375,7 @@ class _RedditTwitterState extends State<RedditTwitter> {
             insetPadding:
                 EdgeInsets.symmetric(horizontal: 15.sp, vertical: 10.sp),
             symbol: symbol,
+            companyName: companyName,
             index: index ?? 0,
             sentimentRecent: true,
           ),
@@ -389,6 +402,7 @@ class _RedditTwitterState extends State<RedditTwitter> {
                 insetPadding:
                     EdgeInsets.symmetric(horizontal: 15.sp, vertical: 10.sp),
                 symbol: symbol,
+                companyName: companyName,
                 index: index ?? 0,
                 sentimentRecent: true,
               ),
@@ -462,8 +476,13 @@ class _RedditTwitterState extends State<RedditTwitter> {
     }
   }
 
-  void _onAlertClickLast(BuildContext context, String symbol, num? isAlertAdded,
-      int? index) async {
+  void _onAlertClickLast(
+    BuildContext context,
+    String symbol,
+    String companyName,
+    num? isAlertAdded,
+    int? index,
+  ) async {
     if ((isAlertAdded?.toInt() ?? 0) == 1) {
       Navigator.push(
         navigatorKey.currentContext!,
@@ -479,6 +498,7 @@ class _RedditTwitterState extends State<RedditTwitter> {
             insetPadding:
                 EdgeInsets.symmetric(horizontal: 15.sp, vertical: 10.sp),
             symbol: symbol,
+            companyName: companyName,
             index: index ?? 0,
             sentimentShowTheLast: true,
           ),
@@ -505,6 +525,7 @@ class _RedditTwitterState extends State<RedditTwitter> {
                 insetPadding:
                     EdgeInsets.symmetric(horizontal: 15.sp, vertical: 10.sp),
                 symbol: symbol,
+                companyName: companyName,
                 index: index ?? 0,
                 sentimentShowTheLast: true,
               ),

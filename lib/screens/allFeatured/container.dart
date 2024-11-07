@@ -51,7 +51,12 @@ class AllFeaturedContainer extends StatelessWidget {
                     alertForBullish: data.isAlertAdded?.toInt() ?? 0,
                     watlistForBullish: data.isWatchlistAdded?.toInt() ?? 0,
                     onClickAlert: () => _onAlertClick(
-                        context, data.symbol, data.isAlertAdded, index),
+                      context,
+                      data.symbol,
+                      data.name,
+                      data.isAlertAdded,
+                      index,
+                    ),
                     onClickWatchlist: () => _onWatchListClick(
                       context,
                       data.symbol,
@@ -81,7 +86,12 @@ class AllFeaturedContainer extends StatelessWidget {
                 alertForBullish: data.isAlertAdded?.toInt() ?? 0,
                 watlistForBullish: data.isWatchlistAdded?.toInt() ?? 0,
                 onClickAlert: () => _onAlertClick(
-                    context, data.symbol, data.isAlertAdded, index),
+                  context,
+                  data.symbol,
+                  data.name,
+                  data.isAlertAdded,
+                  index,
+                ),
                 onClickWatchlist: () => _onWatchListClick(
                   context,
                   data.symbol,
@@ -116,8 +126,13 @@ class AllFeaturedContainer extends StatelessWidget {
     );
   }
 
-  void _onAlertClick(BuildContext context, String symbol, num? isAlertAdded,
-      int? index) async {
+  void _onAlertClick(
+    BuildContext context,
+    String symbol,
+    String cN,
+    num? isAlertAdded,
+    int? index,
+  ) async {
     if ((isAlertAdded?.toInt() ?? 0) == 1) {
       Navigator.push(
         navigatorKey.currentContext!,
@@ -132,6 +147,7 @@ class AllFeaturedContainer extends StatelessWidget {
           content: AlertPopup(
             insetPadding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
             symbol: symbol,
+            companyName: cN,
             index: index ?? 0,
             homeFeatureStocks: true,
           ),
@@ -157,6 +173,7 @@ class AllFeaturedContainer extends StatelessWidget {
                 insetPadding:
                     EdgeInsets.symmetric(horizontal: 15, vertical: 10),
                 symbol: symbol,
+                companyName: cN,
                 index: index ?? 0,
                 homeFeatureStocks: true,
               ),

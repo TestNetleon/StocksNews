@@ -101,6 +101,7 @@ class MoreStocksProvider extends ChangeNotifier {
   Future createAlertSend({
     required String alertName,
     required String symbol,
+    required String companyName,
     required int index,
     bool selectedOne = false,
     bool selectedTwo = false,
@@ -122,6 +123,11 @@ class MoreStocksProvider extends ChangeNotifier {
         removeForceLogin: true,
       );
       if (response.status) {
+        AmplitudeService.logAlertUpdateEvent(
+          added: true,
+          symbol: symbol,
+          companyName: companyName,
+        );
         if (type == StocksType.gainers) {
           _gainersLosers?.data?[index].isAlertAdded = 1;
 

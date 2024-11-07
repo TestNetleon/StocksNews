@@ -230,6 +230,7 @@ class StockDetailProviderNew extends ChangeNotifier {
     String type = "",
     required String alertName,
     required String symbol,
+    required String companyName,
     required int index,
     bool selectedOne = false,
     bool selectedTwo = false,
@@ -249,22 +250,29 @@ class StockDetailProviderNew extends ChangeNotifier {
         showProgress: true,
         removeForceLogin: true,
       );
-      if (type == "peer") {
-        _analysis?.peersData?[index].isAlertAdded = 1;
+      if (response.status) {
+        AmplitudeService.logAlertUpdateEvent(
+          added: true,
+          symbol: symbol,
+          companyName: companyName,
+        );
+        if (type == "peer") {
+          _analysis?.peersData?[index].isAlertAdded = 1;
+        }
+        if (type == "compititor") {
+          _competitorRes?.tickerList[index].isAlertAdded = 1;
+        }
+
+        notifyListeners();
+
+        _extra = (response.extra is Extra ? response.extra as Extra : null);
+        await _player.play(AssetSource(AudioFiles.alertWeathlist));
+
+        navigatorKey.currentContext!
+            .read<HomeProvider>()
+            .setTotalsAlerts(response.data['total_alerts']);
+        notifyListeners();
       }
-      if (type == "compititor") {
-        _competitorRes?.tickerList[index].isAlertAdded = 1;
-      }
-
-      notifyListeners();
-
-      _extra = (response.extra is Extra ? response.extra as Extra : null);
-      await _player.play(AssetSource(AudioFiles.alertWeathlist));
-
-      navigatorKey.currentContext!
-          .read<HomeProvider>()
-          .setTotalsAlerts(response.data['total_alerts']);
-      notifyListeners();
 
       Navigator.pop(navigatorKey.currentContext!);
       Navigator.pop(navigatorKey.currentContext!);
@@ -362,6 +370,11 @@ class StockDetailProviderNew extends ChangeNotifier {
         removeForceLogin: true,
       );
       if (response.status) {
+        AmplitudeService.logAlertUpdateEvent(
+          added: true,
+          symbol: _tabRes?.keyStats?.symbol ?? "",
+          companyName: _tabRes?.keyStats?.name ?? "",
+        );
         if (index == null) {
           _tabRes?.isAlertAdded = 1;
         }

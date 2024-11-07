@@ -110,8 +110,13 @@ class _Dow30StocksState extends State<Dow30Stocks> {
                             alertForBullish: data.isAlertAdded?.toInt() ?? 0,
                             watlistForBullish:
                                 data.isWatchlistAdded?.toInt() ?? 0,
-                            onClickAlert: () => _onAlertClick(context,
-                                data.symbol ?? "", data.isAlertAdded, index),
+                            onClickAlert: () => _onAlertClick(
+                              context,
+                              data.symbol ?? "",
+                              data.name ?? "",
+                              data.isAlertAdded,
+                              index,
+                            ),
                             onClickWatchlist: () => _onWatchListClick(
                                 context,
                                 data.symbol ?? "",
@@ -160,8 +165,13 @@ class _Dow30StocksState extends State<Dow30Stocks> {
     );
   }
 
-  void _onAlertClick(BuildContext context, String symbol, num? isAlertAdded,
-      int? index) async {
+  void _onAlertClick(
+    BuildContext context,
+    String symbol,
+    String companyName,
+    num? isAlertAdded,
+    int? index,
+  ) async {
     if ((isAlertAdded?.toInt() ?? 0) == 1) {
       Navigator.push(
         navigatorKey.currentContext!,
@@ -177,6 +187,7 @@ class _Dow30StocksState extends State<Dow30Stocks> {
             insetPadding:
                 EdgeInsets.symmetric(horizontal: 15.sp, vertical: 10.sp),
             symbol: symbol,
+            companyName: companyName,
             index: index ?? 0,
             marketDataDowStocks: true,
           ),
@@ -201,6 +212,7 @@ class _Dow30StocksState extends State<Dow30Stocks> {
                 insetPadding:
                     EdgeInsets.symmetric(horizontal: 15.sp, vertical: 10.sp),
                 symbol: symbol,
+                companyName: companyName,
                 index: index ?? 0,
                 marketDataDowStocks: true,
               ),

@@ -124,6 +124,7 @@ class _HighPeGrowthStocksState extends State<HighPeGrowthStocks> {
                             onClickAlert: () => _onAlertClick(
                                 context,
                                 data[index].symbol ?? "",
+                                data[index].name ?? "",
                                 data[index].isAlertAdded,
                                 index),
                             onClickWatchlist: () => _onWatchListClick(
@@ -172,8 +173,13 @@ class _HighPeGrowthStocksState extends State<HighPeGrowthStocks> {
     );
   }
 
-  void _onAlertClick(BuildContext context, String symbol, num? isAlertAdded,
-      int? index) async {
+  void _onAlertClick(
+    BuildContext context,
+    String symbol,
+    String companyName,
+    num? isAlertAdded,
+    int? index,
+  ) async {
     if ((isAlertAdded?.toInt() ?? 0) == 1) {
       Navigator.push(
         navigatorKey.currentContext!,
@@ -189,6 +195,7 @@ class _HighPeGrowthStocksState extends State<HighPeGrowthStocks> {
             insetPadding:
                 EdgeInsets.symmetric(horizontal: 15.sp, vertical: 10.sp),
             symbol: symbol,
+            companyName: companyName,
             index: index ?? 0,
             marketDataHighPeGrowth: true,
           ),
@@ -213,6 +220,7 @@ class _HighPeGrowthStocksState extends State<HighPeGrowthStocks> {
                 insetPadding:
                     EdgeInsets.symmetric(horizontal: 15.sp, vertical: 10.sp),
                 symbol: symbol,
+                companyName: companyName,
                 index: index ?? 0,
                 marketDataHighPeGrowth: true,
               ),

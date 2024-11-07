@@ -218,6 +218,7 @@ class _TopTrendingItemState extends State<TopTrendingItem> {
         fromTopStock: true,
         insetPadding: EdgeInsets.symmetric(horizontal: 15.sp, vertical: 10.sp),
         symbol: widget.data.symbol,
+        companyName: widget.data.name,
         index: widget.index,
       ),
     );

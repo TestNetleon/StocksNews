@@ -45,6 +45,7 @@ class FeaturedTickerProvider extends ChangeNotifier {
   Future createAlertSend({
     required String alertName,
     required String symbol,
+    required String companyName,
     required int index,
     bool selectedOne = false,
     bool selectedTwo = false,
@@ -65,6 +66,11 @@ class FeaturedTickerProvider extends ChangeNotifier {
         removeForceLogin: true,
       );
       if (response.status) {
+        AmplitudeService.logAlertUpdateEvent(
+          added: true,
+          symbol: symbol,
+          companyName: companyName,
+        );
         _data?.data[index].isAlertAdded = 1;
         notifyListeners();
 

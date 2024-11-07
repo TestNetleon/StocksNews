@@ -117,6 +117,7 @@ class _NegativeBetaStocksState extends State<NegativeBetaStocks> {
                             onClickAlert: () => _onAlertClick(
                                 context,
                                 data[index].symbol ?? "",
+                                data[index].name ?? "",
                                 data[index].isAlertAdded,
                                 index),
                             onClickWatchlist: () => _onWatchListClick(
@@ -188,8 +189,13 @@ class _NegativeBetaStocksState extends State<NegativeBetaStocks> {
     );
   }
 
-  void _onAlertClick(BuildContext context, String symbol, num? isAlertAdded,
-      int? index) async {
+  void _onAlertClick(
+    BuildContext context,
+    String symbol,
+    String companyName,
+    num? isAlertAdded,
+    int? index,
+  ) async {
     if ((isAlertAdded?.toInt() ?? 0) == 1) {
       Navigator.push(
         navigatorKey.currentContext!,
@@ -205,6 +211,7 @@ class _NegativeBetaStocksState extends State<NegativeBetaStocks> {
             insetPadding:
                 EdgeInsets.symmetric(horizontal: 15.sp, vertical: 10.sp),
             symbol: symbol,
+            companyName: companyName,
             index: index ?? 0,
             marketDataNegativeBetaStocks: true,
           ),
@@ -231,6 +238,7 @@ class _NegativeBetaStocksState extends State<NegativeBetaStocks> {
                 insetPadding:
                     EdgeInsets.symmetric(horizontal: 15.sp, vertical: 10.sp),
                 symbol: symbol,
+                companyName: companyName,
                 index: index ?? 0,
                 marketDataNegativeBetaStocks: true,
               ),

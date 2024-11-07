@@ -132,6 +132,7 @@ class _TodaysBreakoutStocksState extends State<TodaysBreakoutStocks> {
                             onClickAlert: () => _onAlertClick(
                                 context,
                                 gainers[index].symbol,
+                                gainers[index].name,
                                 gainers[index].isAlertAdded,
                                 index),
                             onClickWatchlist: () => _onWatchListClick(
@@ -193,8 +194,13 @@ class _TodaysBreakoutStocksState extends State<TodaysBreakoutStocks> {
     );
   }
 
-  void _onAlertClick(BuildContext context, String symbol, num? isAlertAdded,
-      int? index) async {
+  void _onAlertClick(
+    BuildContext context,
+    String symbol,
+    String cN,
+    num? isAlertAdded,
+    int? index,
+  ) async {
     if ((isAlertAdded?.toInt() ?? 0) == 1) {
       Navigator.push(
         navigatorKey.currentContext!,
@@ -210,6 +216,7 @@ class _TodaysBreakoutStocksState extends State<TodaysBreakoutStocks> {
             insetPadding:
                 EdgeInsets.symmetric(horizontal: 15.sp, vertical: 10.sp),
             symbol: symbol,
+            companyName: cN,
             index: index ?? 0,
             marketDataTodaysBreakOut: true,
           ),
@@ -235,6 +242,7 @@ class _TodaysBreakoutStocksState extends State<TodaysBreakoutStocks> {
                 insetPadding:
                     EdgeInsets.symmetric(horizontal: 15.sp, vertical: 10.sp),
                 symbol: symbol,
+                companyName: cN,
                 index: index ?? 0,
                 marketDataTodaysBreakOut: true,
               ),

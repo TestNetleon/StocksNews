@@ -82,6 +82,7 @@ class TopTrendingProvider extends ChangeNotifier {
   Future createAlertSend({
     required String alertName,
     required String symbol,
+    required String companyName,
     required int index,
     bool selectedOne = false,
     bool selectedTwo = false,
@@ -103,6 +104,11 @@ class TopTrendingProvider extends ChangeNotifier {
         removeForceLogin: true,
       );
       if (response.status) {
+        AmplitudeService.logAlertUpdateEvent(
+          added: true,
+          symbol: symbol,
+          companyName: companyName,
+        );
         if (_selectedIndex == 0 || _selectedIndex == 1) {
           data?[index].isAlertAdded = 1;
         } else if (_selectedIndex == 2) {
