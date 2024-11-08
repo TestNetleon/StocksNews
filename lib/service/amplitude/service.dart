@@ -5,6 +5,7 @@ import 'package:stocks_news_new/api/apis.dart';
 import 'package:stocks_news_new/database/preference.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
+import 'package:stocks_news_new/service/appsFlyer/service.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 
@@ -12,6 +13,11 @@ import '../../utils/dialogs.dart';
 
 class AmplitudeService {
   static final Amplitude _amplitude = Amplitude.getInstance();
+  // Initialize AppsFlyerService instance
+  static final AppsFlyerService _appsFlyerService = AppsFlyerService(
+    ApiKeys.appsFlyerKey,
+    ApiKeys.iosAppID,
+  );
 
   //INITIALIZE
   static Future<void> initialize() async {
@@ -42,6 +48,15 @@ class AmplitudeService {
                 }
               : null,
         );
+        _appsFlyerService.appsFlyerLogEvent('First Open',
+            eventProperties: fcmToken != null
+                ? {
+                    'FCM': fcmToken,
+                    "build_version": versionName,
+                    "build_code": buildNumber,
+                  }
+                : null);
+
         await Preference.setAmplitudeFirstOpen(false);
       }
     } catch (e) {
@@ -99,7 +114,15 @@ class AmplitudeService {
         isRegistered == 0 ? 'Log in' : 'Sign up',
         eventProperties: request,
       );
-      logPushNotificationEnabledEvent(request);
+      _appsFlyerService.appsFlyerLogEvent(
+        isRegistered == 0 ? 'Log in' : 'Sign up',
+        eventProperties: request,
+        userId: provider.user?.userId,
+      );
+      logPushNotificationEnabledEvent(
+        request,
+        provider.user?.userId,
+      );
     } catch (e) {
       //
     }
@@ -107,7 +130,9 @@ class AmplitudeService {
 
   //NOTIFICATION ENABLED
   static void logPushNotificationEnabledEvent(
-      Map<String, dynamic>? request) async {
+    Map<String, dynamic>? request,
+    String? userId,
+  ) async {
     try {
       bool notReceived = await openNotificationsSettings();
       Utils().showLog('Logging event: got permission ${!notReceived}');
@@ -115,6 +140,11 @@ class AmplitudeService {
         _logEvent(
           'Push Notification Enabled',
           eventProperties: request,
+        );
+        _appsFlyerService.appsFlyerLogEvent(
+          'Push Notification Enabled',
+          eventProperties: request,
+          userId: userId,
         );
       }
     } catch (e) {
@@ -155,8 +185,13 @@ class AmplitudeService {
         _amplitude.setUserId(provider.user?.userId ?? '');
       }
       _logEvent(
-        added ? 'Added $symbol in Watchlist' : 'Removed $symbol from Watchlist',
+        added ? 'Added in Watchlist' : 'Removed from Watchlist',
         eventProperties: request,
+      );
+      _appsFlyerService.appsFlyerLogEvent(
+        added ? 'Added in Watchlist' : 'Removed from Watchlist',
+        eventProperties: request,
+        userId: provider.user?.userId,
       );
     } catch (e) {
       //
@@ -199,6 +234,11 @@ class AmplitudeService {
         added ? 'Added $symbol in Alerts' : 'Removed $symbol from Alerts',
         eventProperties: request,
       );
+      _appsFlyerService.appsFlyerLogEvent(
+        added ? 'Added $symbol in Alerts' : 'Removed $symbol from Alerts',
+        eventProperties: request,
+        userId: provider.user?.userId,
+      );
     } catch (e) {
       //
     }
@@ -208,7 +248,6 @@ class AmplitudeService {
   static void logUserInteractionEvent({
     required String type,
     String? selfText,
-    String? title,
   }) async {
     try {
       UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
@@ -218,11 +257,11 @@ class AmplitudeService {
       Map<String, dynamic> request = {
         "build_version": versionName,
         "build_code": buildNumber,
-        'landed_on': type,
       };
-      if (title != null && title != '') {
-        request['title'] = title;
+      if (selfText != null && selfText != '') {
+        request['landed_on'] = selfText;
       }
+
       if (provider.user?.phone != null && provider.user?.phone != '') {
         request['phone'] = provider.user?.phone;
       }
@@ -240,8 +279,13 @@ class AmplitudeService {
       }
 
       _logEvent(
-        selfText != null && selfText != '' ? selfText : 'User viewed $type',
+        type,
         eventProperties: request,
+      );
+      _appsFlyerService.appsFlyerLogEvent(
+        type,
+        eventProperties: request,
+        userId: provider.user?.userId,
       );
     } catch (e) {
       //
@@ -253,9 +297,9 @@ class AmplitudeService {
     Map<String, dynamic>? eventProperties,
   }) {
     try {
-      Utils().showLog('Logging event: $eventName');
+      Utils().showLog('Logging event:Amplitude $eventName');
       if (eventProperties != null) {
-        Utils().showLog('Event properties: $eventProperties');
+        Utils().showLog('Event properties:Amplitude $eventProperties');
       }
 
       _amplitude.logEvent(

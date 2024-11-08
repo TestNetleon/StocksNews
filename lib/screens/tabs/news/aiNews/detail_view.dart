@@ -56,7 +56,7 @@ class _NewsDetailsBodyAIState extends State<NewsDetailsBodyAI> {
     );
     AmplitudeService.logUserInteractionEvent(
       type: 'News Detail',
-      title: newsProvider.detail?.postDetail?.title ?? "",
+      selfText: newsProvider.detail?.postDetail?.title ?? "",
     );
   }
 

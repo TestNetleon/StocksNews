@@ -78,7 +78,9 @@ class _NewsDetailsBodyState extends State<NewsDetailsBody> {
       notificationId: widget.notificationId,
     );
     AmplitudeService.logUserInteractionEvent(
-        type: 'News Detail', title: newsProvider.data?.postDetail?.title ?? "");
+      type: 'News Detail',
+      selfText: newsProvider.data?.postDetail?.title ?? "",
+    );
 
     if (newsProvider.data?.postDetail?.readingStatus == false ||
         newsProvider.extra?.isOldApp == true) {

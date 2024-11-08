@@ -67,9 +67,7 @@ class _StockDetailState extends State<StockDetail> {
   }
 
   _callApi() {
-    AmplitudeService.logUserInteractionEvent(
-      type: 'Stock Detail for ${widget.symbol}',
-    );
+    AmplitudeService.logUserInteractionEvent(type: 'Stock Detail');
 
     context.read<StockDetailProviderNew>().getTabData(symbol: widget.symbol);
 

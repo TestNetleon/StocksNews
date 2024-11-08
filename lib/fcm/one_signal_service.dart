@@ -364,8 +364,8 @@ void userInteractionEventCommon({String? type, String? slug}) async {
       eventType = "App Update";
       selfText = "Notification received to update the app.";
     } else {
-      eventType = "Unknown Notification Type";
-      selfText = "Received a notification with unknown type.";
+      eventType = "Stocks.News Home Page";
+      selfText = "Navigated to the home page from notification.";
     }
 
     AmplitudeService.logUserInteractionEvent(

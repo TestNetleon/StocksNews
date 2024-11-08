@@ -28,8 +28,8 @@ class StocksItem extends StatelessWidget {
     return InkWell(
       onTap: () {
         AmplitudeService.logUserInteractionEvent(
-          type: top.symbol,
-          selfText: 'User searched for ${top.symbol}',
+          type: 'Stock Search',
+          selfText: "Searched for ${top.symbol}",
         );
 
         Navigator.push(

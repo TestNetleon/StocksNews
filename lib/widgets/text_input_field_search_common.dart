@@ -226,8 +226,8 @@ class _TextInputFieldSearchCommonState
                               closeKeyboard();
                               provider.clearSearch();
                               AmplitudeService.logUserInteractionEvent(
-                                type: data?.symbol ?? '',
-                                selfText: 'User searched for ${data?.symbol}',
+                                type: 'Stock Search',
+                                selfText: "Searched for ${data?.symbol ?? ''}",
                               );
                               Navigator.push(
                                 navigatorKey.currentContext!,
@@ -299,8 +299,8 @@ class _TextInputFieldSearchCommonState
                               closeKeyboard();
                               provider.clearSearch();
                               AmplitudeService.logUserInteractionEvent(
-                                type: data?.title ?? '',
-                                selfText: 'User searched for ${data?.title}',
+                                type: 'News Search',
+                                selfText: "Searched for ${data?.title ?? ''}",
                               );
                               Navigator.push(
                                 navigatorKey.currentContext!,
