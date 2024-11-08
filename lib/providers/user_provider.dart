@@ -1248,9 +1248,7 @@ class UserProvider extends ChangeNotifier {
             text: email.toLowerCase(),
             screenType: false,
           );
-        } else {
-          navigatorKey.currentContext!.read<HomeProvider>().getHomeSlider();
-        }
+        } else {}
 
         //
       } else {
@@ -1312,6 +1310,7 @@ class UserProvider extends ChangeNotifier {
         notifyListeners();
         closeKeyboard();
         showErrorMessage(message: response.message, type: SnackbarType.info);
+        navigatorKey.currentContext!.read<HomeProvider>().getHomeSlider();
         //
       } else {
         popUpAlert(

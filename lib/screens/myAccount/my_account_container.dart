@@ -583,6 +583,7 @@ class _MyAccountContainerState extends State<MyAccountContainer>
   }
 
   Future _onEmailUpdateClick(String email) async {
+    Utils().showLog('HI');
     UserProvider provider = context.read<UserProvider>();
 
     if (!isEmail(emailController.text)) {
