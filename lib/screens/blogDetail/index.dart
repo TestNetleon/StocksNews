@@ -1,11 +1,9 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/database/database_helper.dart';
 import 'package:stocks_news_new/providers/blog_provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
-import 'package:stocks_news_new/screens/auth/verifyIdentity/verify_identity.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
@@ -74,19 +72,21 @@ class _BlogDetailState extends State<BlogDetail> {
           }
         });
       }
-    } else if (userProvider.user != null &&
-        (userProvider.user?.phone == null || userProvider.user?.phone == "")) {
-      DatabaseHelper helper = DatabaseHelper();
-      bool visible = await helper.fetchLoginDialogData(BlogDetail.path);
-      if (visible) {
-        Timer(const Duration(seconds: 3), () {
-          if (mounted && (ModalRoute.of(context)?.isCurrent ?? false)) {
-            helper.update(BlogDetail.path);
-            verifyIdentitySheet();
-          }
-        });
-      }
     }
+    //BECAUSE OF BOTTOM
+    // else if (userProvider.user != null &&
+    //     (userProvider.user?.phone == null || userProvider.user?.phone == "")) {
+    //   DatabaseHelper helper = DatabaseHelper();
+    //   bool visible = await helper.fetchLoginDialogData(BlogDetail.path);
+    //   if (visible) {
+    //     Timer(const Duration(seconds: 3), () {
+    //       if (mounted && (ModalRoute.of(context)?.isCurrent ?? false)) {
+    //         helper.update(BlogDetail.path);
+    //         verifyIdentitySheet();
+    //       }
+    //     });
+    //   }
+    // }
   }
 
   @override

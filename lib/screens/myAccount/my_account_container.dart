@@ -643,6 +643,7 @@ class _MyAccountContainerState extends State<MyAccountContainer>
               countryCode: countryCode ?? '+1',
               phone: mobile,
               verificationId: '',
+              doublePop: false,
             ),
           ),
         );
@@ -682,6 +683,7 @@ class _MyAccountContainerState extends State<MyAccountContainer>
                 countryCode: countryCode ?? '+1',
                 phone: phone,
                 verificationId: verificationId,
+                doublePop: false,
               ),
             ),
           );

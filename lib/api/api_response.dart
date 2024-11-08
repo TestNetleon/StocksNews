@@ -223,9 +223,9 @@ class Extra {
   factory Extra.fromJson(Map<String, dynamic> json) => Extra(
         search: json["search"],
         isRegistered: json['is_registered'],
-        updateYourPhone: json["update_your_phone"] == null
+        updateYourPhone: json["update_your_phone_no"] == null
             ? null
-            : UpdateYourPhoneRes.fromJson(json["update_your_phone"]),
+            : UpdateYourPhoneRes.fromJson(json["update_your_phone_no"]),
         recommendation: json["recommendation"],
         showRewards: json['show_rewards'],
         showAnalysis: json['show_analysis'],
@@ -397,7 +397,7 @@ class Extra {
         "verify_identity_text": verifyIdentity,
         "show_morningstar": showMorningstar,
         "recommendation": recommendation,
-        "update_your_phone": updateYourPhone?.toJson(),
+        "update_your_phone_no": updateYourPhone?.toJson(),
         "verify_membership_text": verifySubscription,
         "self_rank": selfRank,
         "earn_condition": earnCondition,

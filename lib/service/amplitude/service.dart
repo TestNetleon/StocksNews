@@ -106,6 +106,11 @@ class AmplitudeService {
       if (fcmToken != null && fcmToken != '') {
         request['fcm_token'] = fcmToken;
       }
+      if (provider.user != null) {
+        request['membership'] = provider.user?.membership?.purchased == 1
+            ? 'Purchased'
+            : 'Not Purchased';
+      }
 
       if (provider.user?.userId != null && provider.user?.userId != '') {
         _amplitude.setUserId(provider.user?.userId ?? '');
@@ -181,6 +186,11 @@ class AmplitudeService {
       if (provider.user?.email != null && provider.user?.email != '') {
         request['email'] = provider.user?.email;
       }
+      if (provider.user != null) {
+        request['membership'] = provider.user?.membership?.purchased == 1
+            ? 'Purchased'
+            : 'Not Purchased';
+      }
       if (provider.user?.userId != null && provider.user?.userId != '') {
         _amplitude.setUserId(provider.user?.userId ?? '');
       }
@@ -226,6 +236,11 @@ class AmplitudeService {
       }
       if (provider.user?.email != null && provider.user?.email != '') {
         request['email'] = provider.user?.email;
+      }
+      if (provider.user != null) {
+        request['membership'] = provider.user?.membership?.purchased == 1
+            ? 'Purchased'
+            : 'Not Purchased';
       }
       if (provider.user?.userId != null && provider.user?.userId != '') {
         _amplitude.setUserId(provider.user?.userId ?? '');
@@ -273,6 +288,11 @@ class AmplitudeService {
       }
       if (provider.user?.email != null && provider.user?.email != '') {
         request['email'] = provider.user?.email;
+      }
+      if (provider.user != null) {
+        request['membership'] = provider.user?.membership?.purchased == 1
+            ? 'Purchased'
+            : 'Not Purchased';
       }
       if (provider.user?.userId != null && provider.user?.userId != '') {
         _amplitude.setUserId(provider.user?.userId ?? '');

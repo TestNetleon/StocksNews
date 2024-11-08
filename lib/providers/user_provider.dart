@@ -534,9 +534,9 @@ class UserProvider extends ChangeNotifier {
         navigatorKey.currentContext!,
         MaterialPageRoute(
           builder: (_) => const Tabs(
-            showRef: false,
-            showMembership: true,
-          ),
+              // showRef: false,
+              // showMembership: true,
+              ),
         ),
       );
     } else {
@@ -1248,6 +1248,8 @@ class UserProvider extends ChangeNotifier {
             text: email.toLowerCase(),
             screenType: false,
           );
+        } else {
+          navigatorKey.currentContext!.read<HomeProvider>().getHomeSlider();
         }
 
         //
@@ -1464,6 +1466,7 @@ class UserProvider extends ChangeNotifier {
   Future finalVerifyOTP(
     request, {
     bool doublePop = true,
+    bool skipPop = false,
   }) async {
     setStatus(Status.loading);
 
@@ -1482,11 +1485,17 @@ class UserProvider extends ChangeNotifier {
         navigatorKey.currentContext!.read<HomeProvider>().getHomeSlider();
         shareUri = await DynamicLinkService.instance.getDynamicLink();
 
-        if (doublePop) {
-          Navigator.pop(navigatorKey.currentContext!);
-          Navigator.pop(navigatorKey.currentContext!);
+        if (!skipPop) {
+          if (doublePop) {
+            Navigator.pop(navigatorKey.currentContext!);
+            Navigator.pop(navigatorKey.currentContext!);
+            Utils().showLog('+++++++++Double Pop');
+          } else {
+            Navigator.pop(navigatorKey.currentContext!);
+            Utils().showLog('+++++++++Single Pop');
+          }
         } else {
-          Navigator.pop(navigatorKey.currentContext!);
+          Utils().showLog('+++++++++Skip Pop true');
         }
 
         Preference.setShowIntro(false);

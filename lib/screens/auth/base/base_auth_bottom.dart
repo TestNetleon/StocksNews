@@ -64,6 +64,7 @@ class _BaseAuthState extends State<BaseAuth> {
             countryCode: countryCode ?? '+1',
             phone: mobile,
             verificationId: _verificationId ?? '',
+            doublePop: false,
           ),
         ),
       );
@@ -115,6 +116,7 @@ class _BaseAuthState extends State<BaseAuth> {
                 countryCode: countryCode ?? '+1',
                 phone: mobile,
                 verificationId: _verificationId ?? verificationId,
+                doublePop: false,
               ),
             ),
           );
@@ -166,7 +168,10 @@ class _BaseAuthState extends State<BaseAuth> {
         request['distributor_code'] = memCODE;
       }
 
-      await provider.finalVerifyOTP(request);
+      await provider.finalVerifyOTP(
+        request,
+        skipPop: true,
+      );
     } else {
       ApiResponse response = await provider.updateProfile(
         token: provider.user?.token ?? '',

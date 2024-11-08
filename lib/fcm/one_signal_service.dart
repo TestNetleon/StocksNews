@@ -229,9 +229,12 @@ class OneSignalService {
 
     OneSignal.Notifications.addClickListener((OSNotificationClickEvent event) {
       if (oneSignalInitialized && navigatorKey.currentContext != null) {
+        log('Going to navigate IF');
         popHome = true;
         _navigateToRequiredScreen(event.notification);
       } else {
+        log('Going to navigate ELSE');
+
         popHome = true;
         Timer(const Duration(seconds: 2), () {
           _navigateToRequiredScreen(event.notification, whenAppKilled: true);
@@ -314,6 +317,7 @@ Future saveFCMapi({String? value, String? address}) async {
 }
 
 void userInteractionEventCommon({String? type, String? slug}) async {
+  Utils().showLog('User interaction started');
   try {
     UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
     if (provider.user == null) {
@@ -323,48 +327,47 @@ void userInteractionEventCommon({String? type, String? slug}) async {
 
     String eventType;
     String selfText;
-
     if (type == NotificationType.dashboard.name) {
-      eventType = "Stocks.News Home Page";
+      eventType = "Notification Clicked: Home";
       selfText = "Navigated to the home page from notification.";
     } else if (type == NotificationType.ticketDetail.name) {
-      eventType = "Support Ticket Detail";
-      selfText = "Viewed a support ticket detail with ID: $slug";
+      eventType = "Notification Clicked: Support Ticket";
+      selfText = "Viewed support ticket with ID: $slug";
     } else if (type == NotificationType.newsDetail.name) {
-      eventType = "News Detail";
-      selfText = "Opened news detail with ID: $slug";
+      eventType = "Notification Clicked: News Detail";
+      selfText = "Opened news with ID: $slug";
     } else if (type == NotificationType.lpPage.name) {
-      eventType = "Landing Page";
-      selfText = "Viewed a landing page with URL: $slug";
+      eventType = "Notification Clicked: Landing Page";
+      selfText = "Viewed landing page with URL: $slug";
     } else if (type == NotificationType.blogDetail.name) {
-      eventType = "Blog Detail";
-      selfText = "Read a blog article with ID: $slug";
+      eventType = "Notification Clicked: Blog Detail";
+      selfText = "Read blog article with ID: $slug";
     } else if (type == NotificationType.register.name) {
-      eventType = "User Registration";
+      eventType = "Notification Clicked: Register";
       selfText = "Initiated registration process.";
     } else if (type == NotificationType.review.name) {
-      eventType = "App Review Prompt";
+      eventType = "Notification Clicked: App Review";
       selfText = "Prompted to review the app.";
     } else if (type == NotificationType.stockDetail.name) {
-      eventType = "Stock Detail";
+      eventType = "Notification Clicked: Stock Detail";
       selfText = "Viewed stock details for ticker: $slug";
     } else if (type == NotificationType.nudgeFriend.name) {
-      eventType = "Friend Referral Prompt";
+      eventType = "Notification Clicked: Friend Referral";
       selfText = "Prompted to refer a friend.";
     } else if (type == NotificationType.referRegistration.name) {
-      eventType = "Referral Registration";
+      eventType = "Notification Clicked: Referral Register";
       selfText = "Opened referral registration page.";
     } else if (type == NotificationType.membership.name) {
-      eventType = "Membership Page";
+      eventType = "Notification Clicked: Membership";
       selfText = "Viewed membership information.";
     } else if (type == NotificationType.pointTransaction.name) {
-      eventType = "Points Transaction";
+      eventType = "Notification Clicked: Points Transaction";
       selfText = "Viewed points transaction details.";
     } else if (type == NotificationType.appUpdate.name) {
-      eventType = "App Update";
+      eventType = "Notification Clicked: App Update";
       selfText = "Notification received to update the app.";
     } else {
-      eventType = "Stocks.News Home Page";
+      eventType = "Notification Clicked: Home";
       selfText = "Navigated to the home page from notification.";
     }
 

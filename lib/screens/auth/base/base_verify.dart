@@ -28,9 +28,13 @@ import '../../../widgets/custom/alert_popup.dart';
 
 class BaseVerifyOTP extends StatefulWidget {
   final String phone, countryCode, verificationId;
+  final bool doublePop;
+  final bool skipPop;
 //
   const BaseVerifyOTP({
     required this.phone,
+    this.doublePop = true,
+    this.skipPop = false,
     required this.countryCode,
     required this.verificationId,
     super.key,
@@ -124,7 +128,11 @@ class _BaseVerifyOTPState extends State<BaseVerifyOTP> with CodeAutoFill {
         request['distributor_code'] = memCODE;
       }
 
-      await provider.finalVerifyOTP(request);
+      await provider.finalVerifyOTP(
+        request,
+        doublePop: widget.doublePop,
+        skipPop: widget.skipPop,
+      );
     } else {
       ApiResponse response = await provider.updateProfile(
         token: provider.user?.token ?? '',

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:appsflyer_sdk/appsflyer_sdk.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
@@ -9,7 +11,7 @@ class AppsFlyerService {
       : _appsFlyerSdk = AppsflyerSdk(
           AppsFlyerOptions(
             afDevKey: devKey,
-            appId: appId,
+            appId: Platform.isIOS ? appId : '',
           ),
         ) {
     initializeSdk();

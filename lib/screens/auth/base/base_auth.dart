@@ -468,7 +468,7 @@ class _LoginFirstState extends State<LoginFirst> {
                             ? provider.extra?.updateYourPhone?.verifyButton ??
                                 'Verifying your phone number...'
                             : provider.extra?.updateYourPhone?.updateButton ??
-                                'Update my phone number',
+                                'Send OTP',
                         onPressed: verifying ? null : _onLoginClick,
                       ),
                       const SpacerVertical(),
