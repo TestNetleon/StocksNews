@@ -227,6 +227,8 @@ class _AppBarHomeState extends State<AppBarHome> {
                       visible: widget.canSearch,
                       child: IconButton(
                         onPressed: () {
+                          closeKeyboard();
+
                           Navigator.push(
                             navigatorKey.currentContext!,
                             MaterialPageRoute(builder: (_) => const Search()),
@@ -261,6 +263,8 @@ class _AppBarHomeState extends State<AppBarHome> {
                         children: [
                           IconButton(
                             onPressed: () {
+                              closeKeyboard();
+
                               if (provider.user != null) {
                                 homeProvider.setNotification(true);
                               }

@@ -24,6 +24,7 @@ import 'package:stocks_news_new/widgets/theme_button.dart';
 import 'package:stocks_news_new/widgets/theme_input_field.dart';
 
 import '../../../database/preference.dart';
+import '../bottomSheets/aggree_conditions.dart';
 import 'base_verify.dart';
 
 class BaseAuth extends StatefulWidget {
@@ -364,7 +365,13 @@ class _BaseAuthState extends State<BaseAuth> {
               ),
             ),
           ),
-          SpacerVertical(height: 10),
+          provider.homeTrendingRes?.loginAgree != null &&
+                  provider.homeTrendingRes?.loginAgree != ''
+              ? Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 10),
+                  child: const NewAgreeConditions(),
+                )
+              : SpacerVertical(height: 10),
           _button(
               text: isLoading
                   ? provider.extra?.updateYourPhone?.verifyButton ??

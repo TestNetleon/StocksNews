@@ -312,6 +312,10 @@ void closeKeyboard() {
   FocusManager.instance.primaryFocus?.unfocus();
 }
 
+void openKeyboard(FocusNode focusNode) {
+  FocusScope.of(navigatorKey.currentContext!).requestFocus(focusNode);
+}
+
 Future openUrl(String? url,
     {LaunchMode mode = LaunchMode.platformDefault, String? extraUrl}) async {
   if (url == null || url.isEmpty) {

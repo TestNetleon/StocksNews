@@ -311,6 +311,8 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
             ? null
             : GestureDetector(
                 onTap: () {
+                  closeKeyboard();
+
                   Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -350,7 +352,7 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
                           style: stylePTSansRegular(
                             fontSize: 14,
                           ),
-                        )
+                        ),
                       ],
                     ),
                   ),

@@ -175,11 +175,13 @@ class _BaseVerifyOTPState extends State<BaseVerifyOTP> with CodeAutoFill {
     });
   }
 
+  final FocusNode myFocusNode = FocusNode();
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Utils().showLog('PHONE => ${widget.phone}');
+      openKeyboard(myFocusNode);
 
       listenForCode();
       _startTime();
@@ -293,6 +295,7 @@ class _BaseVerifyOTPState extends State<BaseVerifyOTP> with CodeAutoFill {
                     ),
                     const SpacerVertical(),
                     CommonPinputPhone(
+                      focusNode: myFocusNode,
                       controller: _controller,
                       onCompleted: (p0) {
                         _onVeryClick();
