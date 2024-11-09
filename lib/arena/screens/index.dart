@@ -22,7 +22,7 @@ class _ArenaIndexState extends State<ArenaIndex> {
     return BaseContainer(
       appBar: AppBarHome(
         isPopback: true,
-        title: 'Arena',
+        title: 'Game Arena',
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: Dimen.padding),

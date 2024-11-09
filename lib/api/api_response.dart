@@ -130,9 +130,14 @@ class Extra {
   final bool? showRewards;
   final bool? showAnalysis;
   final UpdateYourPhoneRes? updateYourPhone;
+  final bool? showArena;
+  final bool? showTradingSimulator;
+
   // final num? isRegistered;
 
   Extra({
+    this.showArena,
+    this.showTradingSimulator,
     this.updateYourPhone,
     this.showRewards,
     this.adManagers,
@@ -222,6 +227,8 @@ class Extra {
 
   factory Extra.fromJson(Map<String, dynamic> json) => Extra(
         search: json["search"],
+        showArena: json['show_arena'],
+        showTradingSimulator: json['show_trading_simulator'],
         // isRegistered: json['is_registered'],
         updateYourPhone: json["update_your_phone_no"] == null
             ? null
@@ -378,6 +385,8 @@ class Extra {
   Map<String, dynamic> toJson() => {
         "ad_managers": adManagers?.toJson(),
         "phone_code_error": phoneCodeError,
+        'show_trading_simulator': showTradingSimulator,
+        'show_arena': showArena,
         "phone_error": phoneError,
         // "is_registered": isRegistered,
         'show_analysis': showAnalysis,
