@@ -5,8 +5,6 @@ import 'package:stocks_news_new/modals/user_res.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
-import 'package:stocks_news_new/utils/utils.dart';
-
 import '../../utils/theme.dart';
 
 // class CountryPickerWidget extends StatelessWidget {
@@ -108,31 +106,12 @@ class CountryPickerWidget extends StatefulWidget {
 }
 
 class _CountryPickerWidgetState extends State<CountryPickerWidget> {
-  final ValueNotifier<bool> _showOverlayNotifier = ValueNotifier<bool>(false);
+  // final ValueNotifier<bool> _showOverlayNotifier = ValueNotifier<bool>(false);
 
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _change();
-    });
-  }
-
-  _change() {
-    if (!widget.showBox) {
-      _showOverlayNotifier.value = false;
-      return;
-    }
-
-    UserProvider provider = context.read<UserProvider>();
-    UserRes? user = provider.user;
-    if ((user?.phoneCode == null || user?.phoneCode == '') &&
-        (user?.phone != null && user?.phone != '')) {
-      _showOverlayNotifier.value = true;
-      Utils().showLog("---${_showOverlayNotifier.value}, ${user?.phoneCode}");
-    } else {
-      _showOverlayNotifier.value = false;
-    }
+    WidgetsBinding.instance.addPostFrameCallback((_) {});
   }
 
   @override
@@ -142,21 +121,28 @@ class _CountryPickerWidgetState extends State<CountryPickerWidget> {
     String? locale;
 
     // provider.updateUser(countryCode: '');
-    if (user?.phoneCode != null && user?.phoneCode != "") {
-      locale = CountryCode.fromDialCode(user!.phoneCode!).code?.split('_').last;
-    } else if (geoCountryCode != null && geoCountryCode != "") {
-      locale = geoCountryCode;
-    } else {
-      locale = "US";
-    }
+    // if (user?.phoneCode != null && user?.phoneCode != "") {
+    //   locale = CountryCode.fromDialCode(user!.phoneCode!).code?.split('_').last;
+    // } else if (geoCountryCode != null && geoCountryCode != "") {
+    //   locale = geoCountryCode;
+    // } else {
+    //   locale = "US";
+    // }
 
+    if (user?.phoneCode != null && user?.phoneCode != "") {
+      locale = CountryCode.fromDialCode(user?.phoneCode ?? "").dialCode;
+    } else if (geoCountryCode != null && geoCountryCode != "") {
+      locale = CountryCode.fromCountryCode(geoCountryCode!).dialCode;
+    } else {
+      locale = CountryCode.fromCountryCode("US").dialCode;
+    }
     return Stack(
       children: [
         CountryCodePicker(
           padding: EdgeInsets.zero,
           onChanged: (value) {
             widget.onChanged(value);
-            _showOverlayNotifier.value = false;
+            // _showOverlayNotifier.value = false;
           },
           initialSelection: locale,
           showCountryOnly: false,
@@ -202,29 +188,29 @@ class _CountryPickerWidgetState extends State<CountryPickerWidget> {
             ),
           ),
         ),
-        ValueListenableBuilder<bool>(
-          valueListenable: _showOverlayNotifier,
-          builder: (context, showOverlay, child) {
-            return Visibility(
-              visible: showOverlay,
-              child: Positioned.fill(
-                child: IgnorePointer(
-                  ignoring: true,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(5),
-                        bottomLeft: Radius.circular(5),
-                      ),
-                      color: ThemeColors.sos,
-                    ),
-                    child: const Icon(Icons.arrow_circle_down_outlined),
-                  ),
-                ),
-              ),
-            );
-          },
-        ),
+        // ValueListenableBuilder<bool>(
+        //   valueListenable: _showOverlayNotifier,
+        //   builder: (context, showOverlay, child) {
+        //     return Visibility(
+        //       visible: showOverlay,
+        //       child: Positioned.fill(
+        //         child: IgnorePointer(
+        //           ignoring: true,
+        //           child: Container(
+        //             decoration: BoxDecoration(
+        //               borderRadius: BorderRadius.only(
+        //                 topLeft: Radius.circular(5),
+        //                 bottomLeft: Radius.circular(5),
+        //               ),
+        //               color: ThemeColors.sos,
+        //             ),
+        //             child: const Icon(Icons.arrow_circle_down_outlined),
+        //           ),
+        //         ),
+        //       ),
+        //     );
+        //   },
+        // ),
       ],
     );
   }
