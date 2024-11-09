@@ -208,6 +208,7 @@ class _BaseVerifyOTPState extends State<BaseVerifyOTP> with CodeAutoFill {
   void dispose() {
     _controller.dispose();
     SmsAutoFill().unregisterListener();
+    myFocusNode.dispose();
     _timer?.cancel();
     super.dispose();
   }
