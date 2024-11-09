@@ -353,55 +353,12 @@ class HomeProvider extends ChangeNotifier {
     if (_homeTrendingRes == null) {
       getHomeTrendingData();
     }
-    // if (_benefitRes == null) {
-    //   getBenefitsDetails();
-    // }
-    // if (_ipoRes == null) {
-    //   getIpoData();
-    // }
-    // if (_homeSentimentRes == null) {
-    //   getHomeSentimentData();
-    // }
-    // if (_focusRes == null) {
-    //   getStockInFocus();
-    // }
-    // if (_homeInsiderRes == null) {
-    //   getHomeInsiderData(null);
-    // }
   }
 
   updateReferShare(text) {
     _extra?.referral?.shareText = text;
     notifyListeners();
   }
-
-  // PurchasesConfiguration? _configuration;
-
-  // void _configureRevenueCat() async {
-  //   Utils().showLog("---CONFIGURE START----");
-  //   try {
-  //     UserRes? user = navigatorKey.currentContext!.read<UserProvider>().user;
-  //     RevenueCatKeyRes? keys = _extra?.revenueCatKeys;
-  //     if (Platform.isAndroid) {
-  //       _configuration = PurchasesConfiguration(
-  //           keys?.playStore ?? "goog_KXHVJRLChlyjoOamWsqCWQSJZfI")
-  //         ..appUserID = user?.userId ?? "";
-  //     } else if (Platform.isIOS) {
-  //       _configuration = PurchasesConfiguration(
-  //           keys?.appStore ?? "appl_kHwXNrngqMNktkEZJqYhEgLjbcC")
-  //         ..appUserID = user?.userId ?? "";
-  //     }
-  //     if (_configuration != null) {
-  //       try {
-  //         await Purchases.configure(_configuration!);
-  //       } catch (e) {
-  //         await Purchases.configure(_configuration!);
-  //       }
-  //     }
-  //   } catch (e) {
-  //     //
-  //   }
-  // }
 
   Future getHomeSlider({showProgress = false, String? addId}) async {
     _statusSlider = Status.loading;
@@ -476,7 +433,6 @@ class HomeProvider extends ChangeNotifier {
           notificationSeen = (response.extra as Extra).notificationCount == 0;
           showMembership = (response.extra as Extra).showMembership == true;
         }
-        // _configureRevenueCat();
 
         notifyListeners();
       } else {
@@ -497,7 +453,6 @@ class HomeProvider extends ChangeNotifier {
 
   Future getHomeTrendingData() async {
     topLoading = true;
-    // popularPresent = true;
     _statusTrending = Status.loading;
     notifyListeners();
 
@@ -513,12 +468,6 @@ class HomeProvider extends ChangeNotifier {
       );
       if (response.status) {
         _homeTrendingRes = HomeTrendingRes.fromJson(response.data);
-        // if (_homeTrendingRes?.popular.isEmpty == true ||
-        //     _homeTrendingRes?.popular == null ||
-        //     _homeTrendingRes == null) {
-        //   popularPresent = false;
-        //   notifyListeners();
-        // }
       } else {
         _homeTrendingRes = null;
         _error = "Data not found";
@@ -540,7 +489,6 @@ class HomeProvider extends ChangeNotifier {
   }
 
   Future getHomeTopGainerData() async {
-    // popularPresent = true;
     _statusGainers = Status.loading;
     notifyListeners();
 
@@ -560,12 +508,6 @@ class HomeProvider extends ChangeNotifier {
 
       if (response.status) {
         _homeTopGainerRes = HomeTopGainerRes.fromJson(response.data);
-        // if (_homeTrendingRes?.popular.isEmpty == true ||
-        //     _homeTrendingRes?.popular == null ||
-        //     _homeTrendingRes == null) {
-        //   popularPresent = false;
-        //   notifyListeners();
-        // }
       } else {
         _homeTopGainerRes = null;
         _error = "Data not found";
@@ -581,7 +523,6 @@ class HomeProvider extends ChangeNotifier {
   }
 
   Future getHomeTopLoserData() async {
-    // popularPresent = true;
     _statusLosers = Status.loading;
     notifyListeners();
 
@@ -600,12 +541,6 @@ class HomeProvider extends ChangeNotifier {
       );
       if (response.status) {
         _homeTopLosersRes = HomeTopLosersRes.fromJson(response.data);
-        // if (_homeTrendingRes?.popular.isEmpty == true ||
-        //     _homeTrendingRes?.popular == null ||
-        //     _homeTrendingRes == null) {
-        //   popularPresent = false;
-        //   notifyListeners();
-        // }
       } else {
         _homeTopLosersRes = null;
         _error = "Data not found";
@@ -689,7 +624,6 @@ class HomeProvider extends ChangeNotifier {
 
   Future getFeaturedWatchlist({bool userAvail = true}) async {
     UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
-    // _fwData = null;
     setStatusFW(Status.loading);
     try {
       Map request = {
@@ -751,7 +685,6 @@ class HomeProvider extends ChangeNotifier {
       _statusHomeAlert = Status.loaded;
       notifyListeners();
     }
-    // closeGlobalProgressDialog();
   }
 
   Future getBenefitsDetails() async {
@@ -783,20 +716,6 @@ class HomeProvider extends ChangeNotifier {
     }
   }
 
-  // Future<void> apiIsolate(SendPort sendPort, String apiUrl, Map request) async {
-  //   try {
-  //     ApiResponse response = await apiRequest(
-  //       url: apiUrl,
-  //       request: request,
-  //       showProgress: false,
-  //       onRefresh: () => refreshData(null),
-  //     );
-  //     sendPort.send(response);
-  //   } catch (e) {
-  //     sendPort.send(e);
-  //   }
-  // }
-
   Future getStockInFocus() async {
     _statusFocus = Status.loading;
     notifyListeners();
@@ -825,34 +744,6 @@ class HomeProvider extends ChangeNotifier {
       notifyListeners();
     }
   }
-
-  // Future getIpoData() async {
-  //   _statusIpo = Status.loading;
-  //   notifyListeners();
-  //   UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
-  //   try {
-  //     Map request = {
-  //       "token": provider.user?.token ?? "",
-  //     };
-  //     ApiResponse response = await apiRequest(
-  //       url: Apis.ipoCalendar,
-  //       request: request,
-  //       showProgress: false,
-  //       onRefresh: () => refreshData(null),
-  //     );
-  //     if (response.status) {
-  //       _ipoRes = ipoResFromJson(jsonEncode(response.data));
-  //     } else {
-  //       _ipoRes = null;
-  //     }
-  //     _statusIpo = Status.loaded;
-  //     notifyListeners();
-  //   } catch (e) {
-  //     _ipoRes = null;
-  //     _statusIpo = Status.loaded;
-  //     notifyListeners();
-  //   }
-  // }
 
   Future getHomeSentimentData() async {
     _statusSentiment = Status.loading;
@@ -904,7 +795,6 @@ class HomeProvider extends ChangeNotifier {
         _homeInsiderRes = HomeInsiderRes.fromJson(response.data);
       } else {
         _homeInsiderRes = null;
-        // showErrorMessage(message: response.message);
       }
       _statusInsider = Status.loaded;
       notifyListeners();
@@ -917,22 +807,11 @@ class HomeProvider extends ChangeNotifier {
 
   Future checkMaintenanceMode() async {
     notifyListeners();
-    // UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
-    // String? fcmToken = await Preference.getFcmToken();
-    // bool granted = await Permission.notification.isGranted;
 
     try {
-      // fcmToken ??= await FirebaseMessaging.instance.getToken();
-      // Map request = {
-      //   "token": provider.user?.token ?? "",
-      //   "fcm_token": fcmToken ?? "",
-      //   "fcm_permission": "$granted",
-      // };
       ApiResponse response = await apiRequest(
-        // url: Apis.homeSlider,
         url: Apis.checkServer,
         baseUrl: Apis.baseUrlLocal,
-        // request: request,
         showProgress: false,
         onRefresh: () => refreshData(null),
       );
@@ -1162,7 +1041,6 @@ class HomeProvider extends ChangeNotifier {
 
   void _checkForNewVersion(Extra extra) async {
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
-    // String versionName = packageInfo.version;
     String buildCode = packageInfo.buildNumber;
     if (Platform.isAndroid &&
         (extra.androidBuildCode ?? 0) > int.parse(buildCode)) {
@@ -1266,22 +1144,4 @@ class HomeProvider extends ChangeNotifier {
       setStatusMostPurchased(Status.loaded);
     }
   }
-
-  // Maintenance API
-
-  // Future callMaintenance() async {
-  //   try {
-  //     ApiResponse response = await apiRequest(
-  //       url: Apis.checkServer,
-  //       baseUrl: Apis.baseUrlLocal,
-  //     );
-  //     if (response.status) {
-  //       //
-  //     } else {
-  //       //
-  //     }
-  //   } catch (e) {
-  //     //
-  //   }
-  // }
 }

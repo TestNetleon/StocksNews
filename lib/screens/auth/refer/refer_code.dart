@@ -172,9 +172,18 @@ class _ReferLoginState extends State<ReferLogin> {
           phoneNumber: "$countryCode ${mobile.text}",
           verificationCompleted: (PhoneAuthCredential credential) {
             closeGlobalProgressDialog();
+            referOTP(
+              name: name.text,
+              displayName: displayName.text,
+              phone: mobile.text,
+              appSignature: appSignature,
+              verificationId: credential.verificationId ?? '',
+              countryCode: countryCode!,
+            );
           },
           verificationFailed: (FirebaseAuthException e) {
             closeGlobalProgressDialog();
+
             // log("Error message => ${e.code} ${e.message} ${e.stackTrace}");
             popUpAlert(
               message: e.code == "invalid-phone-number"

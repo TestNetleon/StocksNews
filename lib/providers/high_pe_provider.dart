@@ -13,7 +13,6 @@ import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/utils/utils.dart';
-
 import '../modals/highlow_pe_res.dart';
 import '../service/amplitude/service.dart';
 

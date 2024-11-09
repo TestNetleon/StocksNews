@@ -39,7 +39,6 @@ class _BaseAuthState extends State<BaseAuth> {
   String? _verificationId;
   bool isLoading = false;
   TextEditingController phone = TextEditingController();
-  // final FirebaseAuth _auth = FirebaseAuth.instance;
   @override
   void initState() {
     super.initState();
@@ -281,6 +280,7 @@ class _BaseAuthState extends State<BaseAuth> {
         children: [
           ScreenTitle(
             title: provider.extra?.updateYourPhone?.title,
+            style: styleGeorgiaBold(fontSize: 21),
             subTitle: provider.extra?.updateYourPhone?.text,
             subTitleHtml: true,
             dividerPadding: EdgeInsets.only(bottom: 8),
@@ -365,11 +365,14 @@ class _BaseAuthState extends State<BaseAuth> {
               ),
             ),
           ),
-          provider.homeTrendingRes?.loginAgree != null &&
-                  provider.homeTrendingRes?.loginAgree != ''
+          provider.extra?.updateYourPhone?.agreeText != null &&
+                  provider.extra?.updateYourPhone?.agreeText != ''
               ? Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10),
-                  child: const NewAgreeConditions(),
+                  child: NewAgreeConditions(
+                    fontSize: 13,
+                    text: provider.extra?.updateYourPhone?.agreeText,
+                  ),
                 )
               : SpacerVertical(height: 10),
           _button(

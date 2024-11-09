@@ -307,13 +307,21 @@ String formatNumberString(String numberString) {
 }
 
 void closeKeyboard() {
-  SystemChannels.textInput.invokeMethod("TextInput.hide");
-  // FocusScope.of(navigatorKey.currentContext!).requestFocus(FocusNode());
-  FocusManager.instance.primaryFocus?.unfocus();
+  try {
+    SystemChannels.textInput.invokeMethod("TextInput.hide");
+    // FocusScope.of(navigatorKey.currentContext!).requestFocus(FocusNode());
+    FocusManager.instance.primaryFocus?.unfocus();
+  } catch (e) {
+    //
+  }
 }
 
 void openKeyboard(FocusNode focusNode) {
-  FocusScope.of(navigatorKey.currentContext!).requestFocus(focusNode);
+  try {
+    FocusScope.of(navigatorKey.currentContext!).requestFocus(focusNode);
+  } catch (e) {
+    //
+  }
 }
 
 Future openUrl(String? url,

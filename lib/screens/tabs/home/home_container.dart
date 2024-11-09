@@ -1,4 +1,5 @@
 // import 'package:flutter/foundation.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
@@ -20,6 +21,7 @@ import 'package:stocks_news_new/widgets/screen_title.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/theme_button_small.dart';
 // import 'package:upgrader/upgrader.dart';
+import '../../../arena/screens/index.dart';
 import '../../../modals/home_insider_res.dart';
 import '../../../utils/colors.dart';
 import '../../../utils/utils.dart';
@@ -57,21 +59,22 @@ class HomeContainer extends StatelessWidget {
     }
     return Column(
       children: [
-        // if (kDebugMode)
-        //   ThemeButtonSmall(
-        //     text: "Arena",
-        //     onPressed: () {
-        //       Navigator.push(
-        //         context,
-        //         MaterialPageRoute(
-        //           builder: (context) => ArenaIndex(),
-        //         ),
-        //       );
-        //     },
-        //   ),
+        if (kDebugMode)
+          ThemeButtonSmall(
+            text: "Arena",
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ArenaIndex(),
+                ),
+              );
+            },
+          ),
         // if (kDebugMode)
         // Container(
         //   color: Colors.amber,
+
         //   width: double.infinity,
         //   child: Column(
         //     children: List.generate(

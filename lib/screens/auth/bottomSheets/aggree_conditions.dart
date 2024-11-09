@@ -102,13 +102,17 @@ class AgreeConditions extends StatelessWidget {
 }
 
 class NewAgreeConditions extends StatelessWidget {
-  const NewAgreeConditions({super.key});
+  final double fontSize;
+  final String? text;
+  const NewAgreeConditions({
+    super.key,
+    this.fontSize = 15,
+    this.text,
+  });
 
   @override
   Widget build(BuildContext context) {
-    HomeProvider provider = context.watch<HomeProvider>();
-    if (provider.homeTrendingRes?.loginAgree == null ||
-        provider.homeTrendingRes?.loginAgree == '') {
+    if (text == null || text == '') {
       return RichText(
         textAlign: TextAlign.center,
         text: TextSpan(
@@ -185,6 +189,7 @@ class NewAgreeConditions extends StatelessWidget {
         return null;
       },
       onTapUrl: (url) async {
+        closeKeyboard();
         Navigator.push(
           context,
           createRoute(
@@ -200,8 +205,11 @@ class NewAgreeConditions extends StatelessWidget {
         );
         return true;
       },
-      provider.homeTrendingRes?.loginAgree ?? "",
-      textStyle: styleGeorgiaRegular(height: 1.5),
+      text ?? "",
+      textStyle: styleGeorgiaRegular(
+        height: 1.5,
+        fontSize: fontSize,
+      ),
     );
   }
 }

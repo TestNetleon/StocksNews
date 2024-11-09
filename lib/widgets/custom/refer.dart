@@ -29,12 +29,12 @@ class ReferApp extends StatelessWidget {
 
     log("NOW SHOWING SHEET => ${provider.user?.signupStatus}");
 
-    if (provider.user?.signupStatus ?? false) {
-      // This condition is only to stop sheet in sign up condition
-      // because signup success will be open here and we want to
-      // avoid double bottomsheet
-      return;
-    }
+    // if (provider.user?.signupStatus ?? false) {
+    //   // This condition is only to stop sheet in sign up condition
+    //   // because signup success will be open here and we want to
+    //   // avoid double bottomsheet
+    //   return;
+    // }
 
     if (provider.user == null) {
       return;

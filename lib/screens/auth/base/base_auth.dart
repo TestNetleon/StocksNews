@@ -591,7 +591,9 @@ class _LoginFirstState extends State<LoginFirst> {
               ),
               Padding(
                 padding: const EdgeInsets.all(Dimen.authScreenPadding),
-                child: const NewAgreeConditions(),
+                child: NewAgreeConditions(
+                  text: provider.homeTrendingRes?.loginAgree,
+                ),
               ),
             ],
           ),

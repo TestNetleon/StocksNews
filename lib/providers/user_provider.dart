@@ -94,26 +94,6 @@ class UserProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  // void onChangePhone(String value) {
-  //   if ((value == _user?.phone) &&
-  //       (_user?.phone != null && _user?.phone != '')) {
-  //     phoneVerified = true;
-  //   } else {
-  //     phoneVerified = false;
-  //   }
-  //   notifyListeners();
-  // }
-
-  // void onChangeCountryCode(String value) {
-  //   if ((value == _user?.phoneCode) &&
-  //       (_user?.phoneCode != null && _user?.phoneCode != '')) {
-  //     phoneVerified = true;
-  //   } else {
-  //     phoneVerified = false;
-  //   }
-  //   notifyListeners();
-  // }
-
   void setStatus(status) {
     _status = status;
     notifyListeners();
@@ -415,9 +395,9 @@ class UserProvider extends ChangeNotifier {
 
         _extra = (response.extra is Extra ? response.extra as Extra : null);
 
-        if (_extra?.isRegistered != null) {
+        if (_user?.signupStatus == true) {
           AmplitudeService.logLoginSignUpEvent(
-            isRegistered: _extra?.isRegistered ?? 0,
+            isRegistered: (_user?.signupStatus ?? false) ? 1 : 0,
           );
         }
         isSVG = isSvgFromUrl(_user?.image);
@@ -478,7 +458,7 @@ class UserProvider extends ChangeNotifier {
           //   MaterialPageRoute(builder: (_) => const SignUpSuccess()),
           // );
         } else {
-          navigatorKey.currentContext!.read<HomeProvider>().getHomeSlider();
+          // navigatorKey.currentContext!.read<HomeProvider>().getHomeSlider();
           Navigator.pop(navigatorKey.currentContext!);
 
           if ((_user?.membership?.purchased != null &&
@@ -505,6 +485,8 @@ class UserProvider extends ChangeNotifier {
         //     _user?.signupStatus == false) {
         //   referLogin();
         // }
+        callSliderTrendingAPI();
+
         configureRevenueCatAttribute();
       } else {
         // showErrorMessage(message: response.message);
@@ -571,9 +553,9 @@ class UserProvider extends ChangeNotifier {
 
         _extra = (response.extra is Extra ? response.extra as Extra : null);
 
-        if (_extra?.isRegistered != null) {
+        if (_user?.signupStatus == true) {
           AmplitudeService.logLoginSignUpEvent(
-            isRegistered: _extra?.isRegistered ?? 0,
+            isRegistered: (_user?.signupStatus ?? false) ? 1 : 0,
           );
         }
 
@@ -631,7 +613,6 @@ class UserProvider extends ChangeNotifier {
             }
           }
         } else {
-          navigatorKey.currentContext!.read<HomeProvider>().getHomeSlider();
           Navigator.pop(navigatorKey.currentContext!);
           if ((_user?.membership?.purchased != null &&
                   _user?.membership?.purchased == 0) &&
@@ -665,6 +646,9 @@ class UserProvider extends ChangeNotifier {
         //     _user?.signupStatus == false) {
         //   referLogin();
         // }
+        // navigatorKey.currentContext!.read<HomeProvider>().getHomeSlider();
+        callSliderTrendingAPI();
+
         configureRevenueCatAttribute();
       } else {
         // showErrorMessage(message: response.message);
@@ -893,10 +877,12 @@ class UserProvider extends ChangeNotifier {
         _user = UserRes.fromJson(response.data);
         Preference.saveUser(response.data);
         isSVG = isSvgFromUrl(_user?.image);
-        navigatorKey.currentContext!.read<HomeProvider>().getHomeSlider();
+        // navigatorKey.currentContext!.read<HomeProvider>().getHomeSlider();
         shareUri = await DynamicLinkService.instance.getDynamicLink();
         Navigator.pop(navigatorKey.currentContext!);
         Navigator.pop(navigatorKey.currentContext!);
+        callSliderTrendingAPI();
+
         Preference.setShowIntro(false);
         //--------
         var tags = {
@@ -1310,7 +1296,8 @@ class UserProvider extends ChangeNotifier {
         notifyListeners();
         closeKeyboard();
         showErrorMessage(message: response.message, type: SnackbarType.info);
-        navigatorKey.currentContext!.read<HomeProvider>().getHomeSlider();
+        // navigatorKey.currentContext!.read<HomeProvider>().getHomeSlider();
+        callSliderTrendingAPI();
         //
       } else {
         popUpAlert(
@@ -1481,8 +1468,9 @@ class UserProvider extends ChangeNotifier {
         _user = UserRes.fromJson(response.data);
         Preference.saveUser(response.data);
         isSVG = isSvgFromUrl(_user?.image);
-        navigatorKey.currentContext!.read<HomeProvider>().getHomeSlider();
+        // navigatorKey.currentContext!.read<HomeProvider>().getHomeSlider();
         shareUri = await DynamicLinkService.instance.getDynamicLink();
+        callSliderTrendingAPI();
 
         if (!skipPop) {
           if (doublePop) {
@@ -1523,9 +1511,9 @@ class UserProvider extends ChangeNotifier {
         configureRevenueCatAttribute();
         _extra = (response.extra is Extra ? response.extra as Extra : null);
 
-        if (_extra?.isRegistered != null) {
+        if (_user?.signupStatus == true) {
           AmplitudeService.logLoginSignUpEvent(
-            isRegistered: _extra?.isRegistered ?? 0,
+            isRegistered: (_user?.signupStatus ?? false) ? 1 : 0,
           );
         }
       } else {
@@ -1546,5 +1534,11 @@ class UserProvider extends ChangeNotifier {
       setStatus(Status.loaded);
       return ApiResponse(status: false);
     }
+  }
+
+  callSliderTrendingAPI() {
+    HomeProvider provider = navigatorKey.currentContext!.read<HomeProvider>();
+    provider.getHomeSlider();
+    // provider.getHomeTrendingData();
   }
 }

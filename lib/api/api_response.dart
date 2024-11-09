@@ -130,7 +130,7 @@ class Extra {
   final bool? showRewards;
   final bool? showAnalysis;
   final UpdateYourPhoneRes? updateYourPhone;
-  final num? isRegistered;
+  // final num? isRegistered;
 
   Extra({
     this.updateYourPhone,
@@ -217,12 +217,12 @@ class Extra {
     this.watchlistTitle,
     this.isOldApp,
     this.notificationSetting,
-    this.isRegistered,
+    // this.isRegistered,
   });
 
   factory Extra.fromJson(Map<String, dynamic> json) => Extra(
         search: json["search"],
-        isRegistered: json['is_registered'],
+        // isRegistered: json['is_registered'],
         updateYourPhone: json["update_your_phone_no"] == null
             ? null
             : UpdateYourPhoneRes.fromJson(json["update_your_phone_no"]),
@@ -379,7 +379,7 @@ class Extra {
         "ad_managers": adManagers?.toJson(),
         "phone_code_error": phoneCodeError,
         "phone_error": phoneError,
-        "is_registered": isRegistered,
+        // "is_registered": isRegistered,
         'show_analysis': showAnalysis,
         "show_rewards": showRewards,
         "feeback_type": feebackType == null
@@ -484,12 +484,14 @@ class UpdateYourPhoneRes {
   final String? text;
   final String? verifyButton;
   final String? updateButton;
+  final String? agreeText;
 
   UpdateYourPhoneRes({
     this.title,
     this.text,
     this.verifyButton,
     this.updateButton,
+    this.agreeText,
   });
 
   factory UpdateYourPhoneRes.fromJson(Map<String, dynamic> json) =>
@@ -498,6 +500,7 @@ class UpdateYourPhoneRes {
         text: json["text"],
         updateButton: json['update_btn_text'],
         verifyButton: json['verify_btn_text'],
+        agreeText: json['agree_text'],
       );
 
   Map<String, dynamic> toJson() => {
@@ -505,6 +508,7 @@ class UpdateYourPhoneRes {
         "text": text,
         'update_btn_text': updateButton,
         'verify_btn_text': verifyButton,
+        'agree_text': agreeText,
       };
 }
 
