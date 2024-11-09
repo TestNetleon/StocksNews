@@ -27,8 +27,6 @@ import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/custom/refer.dart';
 import 'package:stocks_news_new/widgets/logout.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
-
-import '../../../tradingSimulator/screens/dashboard/index.dart';
 import '../../../utils/constants.dart';
 import '../../../utils/theme.dart';
 import '../../../widgets/spacer_vertical.dart';
@@ -210,23 +208,23 @@ class _AboutStocksNewsState extends State<AboutStocksNews> {
       );
     }
     // Trading Simulator
-    if (user != null) {
-      visibleAboutTiles.add(
-        DrawerRes(
-          iconData: Icons.bakery_dining_outlined,
-          text: "Trading Simulator",
-          onTap: () {
-            _closeDrawer();
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const TsDashboard(),
-              ),
-            );
-          },
-        ),
-      );
-    }
+    // if (user != null) {
+    //   visibleAboutTiles.add(
+    //     DrawerRes(
+    //       iconData: Icons.bakery_dining_outlined,
+    //       text: "Trading Simulator",
+    //       onTap: () {
+    //         _closeDrawer();
+    //         Navigator.push(
+    //           context,
+    //           MaterialPageRoute(
+    //             builder: (context) => const TsDashboard(),
+    //           ),
+    //         );
+    //       },
+    //     ),
+    //   );
+    // }
     // Refer and Earn
     if (provider.extra?.referral?.shwReferral == true) {
       visibleAboutTiles.add(
