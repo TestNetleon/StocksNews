@@ -280,7 +280,6 @@ class _BaseAuthState extends State<BaseAuth> {
         children: [
           ScreenTitle(
             title: provider.extra?.updateYourPhone?.title,
-            style: styleGeorgiaBold(fontSize: 21),
             subTitle: provider.extra?.updateYourPhone?.text,
             subTitleHtml: true,
             dividerPadding: EdgeInsets.only(bottom: 8),

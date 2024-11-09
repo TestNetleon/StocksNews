@@ -226,18 +226,6 @@ class _AboutStocksNewsState extends State<AboutStocksNews> {
     //   );
     // }
     // Refer and Earn
-    if (provider.extra?.referral?.shwReferral == true) {
-      visibleAboutTiles.add(
-        DrawerRes(
-          iconData: Icons.leaderboard_outlined,
-          text: "Refer and Earn",
-          onTap: () {
-            _closeDrawer();
-            _onShareAppClick();
-          },
-        ),
-      );
-    }
 
     if (provider.extra?.showRewards == true) {
       visibleAboutTiles.add(

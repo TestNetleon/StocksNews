@@ -133,7 +133,7 @@ class BlogDetailContainer extends StatelessWidget {
 
     BlogProvider provider = context.watch<BlogProvider>();
 
-    HomeProvider homeProvider = context.watch<HomeProvider>();
+    // HomeProvider homeProvider = context.watch<HomeProvider>();
 
     return Stack(
       children: [
@@ -158,159 +158,141 @@ class BlogDetailContainer extends StatelessWidget {
                   Column(
                     children: [
                       Expanded(
-                        child: SingleChildScrollView(
-                          physics: const AlwaysScrollableScrollPhysics(),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.max,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              // const SpacerVertical(height: 5),
-                              Text(
-                                provider.blogsDetail?.name ?? "",
-                                style: styleGeorgiaBold(fontSize: 25),
-                              ),
-                              const SpacerVertical(height: 5),
-                              // Padding(
-                              //   padding: EdgeInsets.only(bottom: 15.sp),
-                              //   child: ListAlignment(
-                              //     // date: DateFormat("MMMM dd, yyyy").format(
-                              //     //     provider.blogsDetail?.publishedDate ??
-                              //     //         DateTime.now()),
-                              //     date: provider.blogsDetail?.postDateString ?? "",
-                              //     list1: provider.blogsDetail?.authors,
-                              //     list2: const [],
-                              //     blog: true,
-                              //   ),
-                              // ),
-                              const SpacerVertical(height: 10),
-                              // SizedBox(
-                              //   width: double.infinity,
-                              //   // height: isPhone
-                              //   //     ? ScreenUtil().screenHeight * 0.3
-                              //   //     : ScreenUtil().screenHeight * 0.4,
-                              //   child: ThemeImageView(
-                              //     url: provider.blogsDetail?.image ?? "",
-                              //     // fit: BoxFit.contain,
-                              //   ),
-                              // ),
-                              CachedNetworkImagesWidget(
-                                provider.blogsDetail?.image ?? "",
-                                height: ScreenUtil().screenHeight * 0.27,
-                                width: double.infinity,
-                                fit: BoxFit.contain,
-                                // fit: BoxFit.contain,
-                              ),
-                              const SpacerVertical(height: 10),
-                              Padding(
-                                padding: EdgeInsets.only(bottom: 0.sp),
-                                child: ListAlignment(
-                                  date: provider.blogsDetail?.postDateString ??
-                                      "",
-                                  list1: provider.blogsDetail?.authors,
-                                  list2: const [],
-                                  blog: true,
-                                ),
-                              ),
-                              SpacerVertical(height: Dimen.itemSpacing.sp),
-                              //Text("shwoing ticker Data", style: TextStyle(color: Colors.white),),
-                              //New Blog Tickers Widget
-                              const BlogDetailMentionBy(),
-                              SpacerVertical(height: Dimen.itemSpacing.sp),
-                              // const BlogDetailAuthor(),
-                              // const SpacerVertical(height: 5),
-                              // const BlogDetailCategory(),
-                              // const SpacerVertical(height: 5),
-                              // const BlogDetailTags(),
-                              HtmlWidget(
-                                onTapImage: (data) {
-                                  Utils().showLog(data.sources.first.url);
-                                },
-                                onTapUrl: (url) async {
-                                  bool a = false;
-                                  if (Platform.isAndroid) {
-                                    a = await launchUrl(Uri.parse(url));
-                                    // Utils().showLog("clicked ur---$url, return value $a");
-                                  } else {
-                                    a = true;
-                                    Uri uri = Uri.parse(url);
-                                    iOSNavigate(uri);
-                                    // Utils().showLog("iOS navigation");
-                                  }
-                                  return a;
-                                },
+                        child: Stack(
+                          children: [
+                            SingleChildScrollView(
+                              physics: const AlwaysScrollableScrollPhysics(),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.max,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  // const SpacerVertical(height: 5),
+                                  Text(
+                                    provider.blogsDetail?.name ?? "",
+                                    style: styleGeorgiaBold(fontSize: 25),
+                                  ),
+                                  const SpacerVertical(height: 5),
+                                  // Padding(
+                                  //   padding: EdgeInsets.only(bottom: 15.sp),
+                                  //   child: ListAlignment(
+                                  //     // date: DateFormat("MMMM dd, yyyy").format(
+                                  //     //     provider.blogsDetail?.publishedDate ??
+                                  //     //         DateTime.now()),
+                                  //     date: provider.blogsDetail?.postDateString ?? "",
+                                  //     list1: provider.blogsDetail?.authors,
+                                  //     list2: const [],
+                                  //     blog: true,
+                                  //   ),
+                                  // ),
+                                  const SpacerVertical(height: 10),
+                                  // SizedBox(
+                                  //   width: double.infinity,
+                                  //   // height: isPhone
+                                  //   //     ? ScreenUtil().screenHeight * 0.3
+                                  //   //     : ScreenUtil().screenHeight * 0.4,
+                                  //   child: ThemeImageView(
+                                  //     url: provider.blogsDetail?.image ?? "",
+                                  //     // fit: BoxFit.contain,
+                                  //   ),
+                                  // ),
+                                  CachedNetworkImagesWidget(
+                                    provider.blogsDetail?.image ?? "",
+                                    height: ScreenUtil().screenHeight * 0.27,
+                                    width: double.infinity,
+                                    fit: BoxFit.contain,
+                                    // fit: BoxFit.contain,
+                                  ),
+                                  const SpacerVertical(height: 10),
+                                  Padding(
+                                    padding: EdgeInsets.only(bottom: 0.sp),
+                                    child: ListAlignment(
+                                      date: provider
+                                              .blogsDetail?.postDateString ??
+                                          "",
+                                      list1: provider.blogsDetail?.authors,
+                                      list2: const [],
+                                      blog: true,
+                                    ),
+                                  ),
+                                  SpacerVertical(height: Dimen.itemSpacing.sp),
+                                  //Text("shwoing ticker Data", style: TextStyle(color: Colors.white),),
+                                  //New Blog Tickers Widget
+                                  const BlogDetailMentionBy(),
+                                  SpacerVertical(height: Dimen.itemSpacing.sp),
+                                  // const BlogDetailAuthor(),
+                                  // const SpacerVertical(height: 5),
+                                  // const BlogDetailCategory(),
+                                  // const SpacerVertical(height: 5),
+                                  // const BlogDetailTags(),
+                                  HtmlWidget(
+                                    onTapImage: (data) {
+                                      Utils().showLog(data.sources.first.url);
+                                    },
+                                    onTapUrl: (url) async {
+                                      bool a = false;
+                                      if (Platform.isAndroid) {
+                                        a = await launchUrl(Uri.parse(url));
+                                        // Utils().showLog("clicked ur---$url, return value $a");
+                                      } else {
+                                        a = true;
+                                        Uri uri = Uri.parse(url);
+                                        iOSNavigate(uri);
+                                        // Utils().showLog("iOS navigation");
+                                      }
+                                      return a;
+                                    },
 
-                                // customWidgetBuilder: (element) {
-                                //   if (element.localName == 'img') {
-                                //     final src = element.attributes['src'];
-                                //     return ZoomableImage(url: src ?? "");
-                                //   }
-                                //   return null;
-                                // },
-                                onLoadingBuilder:
-                                    (context, element, loadingProgress) {
-                                  return const ProgressDialog();
-                                },
-                                provider.blogsDetail?.description ?? "",
-                                textStyle: styleGeorgiaRegular(
-                                    fontSize: 18, height: 1.5),
+                                    // customWidgetBuilder: (element) {
+                                    //   if (element.localName == 'img') {
+                                    //     final src = element.attributes['src'];
+                                    //     return ZoomableImage(url: src ?? "");
+                                    //   }
+                                    //   return null;
+                                    // },
+                                    onLoadingBuilder:
+                                        (context, element, loadingProgress) {
+                                      return const ProgressDialog();
+                                    },
+                                    provider.blogsDetail?.description ?? "",
+                                    textStyle: styleGeorgiaRegular(
+                                        fontSize: 18, height: 1.5),
+                                  ),
+                                  if (provider.blogsDetail?.feedbackMsg != null)
+                                    ArticleFeedback(
+                                      feebackType: provider.extra?.feebackType,
+                                      title: provider.blogsDetail?.feedbackMsg,
+                                      submitMessage: provider
+                                          .blogsDetail?.feedbackExistMsg,
+                                      onSubmit: (value) =>
+                                          _onSubmitAffiliate(value, context),
+                                    ),
+                                  const SpacerVertical(height: 30),
+                                ],
                               ),
-                              if (provider.blogsDetail?.feedbackMsg != null)
-                                ArticleFeedback(
-                                  feebackType: provider.extra?.feebackType,
-                                  title: provider.blogsDetail?.feedbackMsg,
-                                  submitMessage:
-                                      provider.blogsDetail?.feedbackExistMsg,
-                                  onSubmit: (value) =>
-                                      _onSubmitAffiliate(value, context),
-                                ),
-                              const SpacerVertical(height: 30),
-                            ],
-                          ),
+                            ),
+                            Positioned(
+                              // bottom: homeProvider.extra?.updateYourPhone == null
+                              //     ? 6
+                              //     : ScreenUtil().screenWidth * 0.68,
+                              bottom: 6,
+                              right: 6,
+                              child: ThemeButtonSmall(
+                                onPressed: () {
+                                  commonShare(
+                                    title: provider.blogsDetail?.name ?? "",
+                                    url: provider.blogsDetail?.slug ?? "",
+                                  );
+                                },
+                                text: "Share Story",
+                                fontBold: true,
+                                icon: Icons.share,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                       BaseAuth(),
                     ],
-                  ),
-                  // Positioned(
-                  //   bottom: 6.sp,
-                  //   right: 0,
-                  //   child: FloatingActionButton(
-                  //     backgroundColor: ThemeColors.accent,
-                  //     child: const Icon(Icons.share),
-                  //     onPressed: () {
-                  //       commonShare(
-                  //         title: provider.blogsDetail?.name ?? "",
-                  //         url: provider.blogsDetail?.slug ?? "",
-                  //       );
-                  //     },
-                  //   ),
-                  // ),
-                  Positioned(
-                    bottom:
-                        homeProvider.extra?.updateYourPhone == null ? 6 : 220,
-                    right: 6,
-                    // child: FloatingActionButton(
-                    //   backgroundColor: ThemeColors.accent,
-                    //   child: const Icon(Icons.share),
-                    //   onPressed: () {
-                    //     commonShare(
-                    //       title: provider.data?.postDetail?.title ?? "",
-                    //       url: provider.data?.postDetail?.slug ?? "",
-                    //     );
-                    //   },
-                    // ),
-
-                    child: ThemeButtonSmall(
-                      onPressed: () {
-                        commonShare(
-                          title: provider.blogsDetail?.name ?? "",
-                          url: provider.blogsDetail?.slug ?? "",
-                        );
-                      },
-                      text: "Share Story",
-                      fontBold: true,
-                      icon: Icons.share,
-                    ),
                   ),
                 ],
               ),

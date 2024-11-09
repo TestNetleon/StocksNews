@@ -213,7 +213,7 @@ class _NewsDetailsBodyState extends State<NewsDetailsBody> {
   @override
   Widget build(BuildContext context) {
     NewsDetailProvider provider = context.watch<NewsDetailProvider>();
-    HomeProvider homeProvider = context.watch<HomeProvider>();
+    // HomeProvider homeProvider = context.watch<HomeProvider>();
 
     // String date = DateFormat("MMMM dd, yyyy")
     //     .format(provider.data?.postDetail?.publishedDate ?? DateTime.now());
@@ -240,436 +240,486 @@ class _NewsDetailsBodyState extends State<NewsDetailsBody> {
                     Column(
                       children: [
                         Expanded(
-                          child: SingleChildScrollView(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  provider.data?.postDetail?.title ?? "",
-                                  style: styleGeorgiaBold(fontSize: 25),
-                                ),
-                                const SpacerVertical(height: 5),
-                                CachedNetworkImagesWidget(
-                                  provider.data?.postDetail?.image ?? "",
-                                  height: ScreenUtil().screenHeight * 0.27,
-                                  width: double.infinity,
-                                  // fit: BoxFit.contain,
-                                ),
-                                NewsDetailMentionedBy(
-                                  data: provider.data?.postDetail?.tickers,
-                                ),
-                                const SpacerVertical(height: Dimen.itemSpacing),
-                                provider.data?.postDetail?.authors
-                                                ?.isNotEmpty ==
-                                            true ||
-                                        provider.data?.postDetail?.categories
-                                                ?.isNotEmpty ==
-                                            true
-                                    ? Padding(
-                                        padding: EdgeInsets.only(bottom: 15.sp),
-                                        child: ListAlignment(
-                                          date: date,
-                                          list1: provider
-                                              .data?.postDetail?.authors,
-                                          // list2: provider.data?.postDetail?.categories,
-                                        ),
-                                      )
-                                    : foundSite
+                          child: Stack(
+                            children: [
+                              SingleChildScrollView(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      provider.data?.postDetail?.title ?? "",
+                                      style: styleGeorgiaBold(fontSize: 25),
+                                    ),
+                                    const SpacerVertical(height: 5),
+                                    CachedNetworkImagesWidget(
+                                      provider.data?.postDetail?.image ?? "",
+                                      height: ScreenUtil().screenHeight * 0.27,
+                                      width: double.infinity,
+                                      // fit: BoxFit.contain,
+                                    ),
+                                    NewsDetailMentionedBy(
+                                      data: provider.data?.postDetail?.tickers,
+                                    ),
+                                    const SpacerVertical(
+                                        height: Dimen.itemSpacing),
+                                    provider.data?.postDetail?.authors
+                                                    ?.isNotEmpty ==
+                                                true ||
+                                            provider.data?.postDetail
+                                                    ?.categories?.isNotEmpty ==
+                                                true
                                         ? Padding(
                                             padding:
-                                                EdgeInsets.only(bottom: 10.sp),
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.stretch,
-                                              children: [
-                                                Container(
-                                                  constraints:
-                                                      const BoxConstraints(
-                                                          minHeight: 18),
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          left: 8),
-                                                  alignment:
-                                                      Alignment.centerLeft,
-                                                  decoration:
-                                                      const BoxDecoration(
-                                                    border: Border(
-                                                      left: BorderSide(
-                                                        color:
-                                                            ThemeColors.accent,
-                                                        width: 3,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  child: Row(
-                                                    children: [
-                                                      Text(
-                                                        "Source - ",
-                                                        style:
-                                                            stylePTSansRegular(
-                                                          fontSize: 16,
-                                                          color:
-                                                              ThemeColors.white,
+                                                EdgeInsets.only(bottom: 15.sp),
+                                            child: ListAlignment(
+                                              date: date,
+                                              list1: provider
+                                                  .data?.postDetail?.authors,
+                                              // list2: provider.data?.postDetail?.categories,
+                                            ),
+                                          )
+                                        : foundSite
+                                            ? Padding(
+                                                padding: EdgeInsets.only(
+                                                    bottom: 10.sp),
+                                                child: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment
+                                                          .stretch,
+                                                  children: [
+                                                    Container(
+                                                      constraints:
+                                                          const BoxConstraints(
+                                                              minHeight: 18),
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              left: 8),
+                                                      alignment:
+                                                          Alignment.centerLeft,
+                                                      decoration:
+                                                          const BoxDecoration(
+                                                        border: Border(
+                                                          left: BorderSide(
+                                                            color: ThemeColors
+                                                                .accent,
+                                                            width: 3,
+                                                          ),
                                                         ),
                                                       ),
-                                                      Text(
-                                                        "${provider.data?.postDetail?.site}",
-                                                        style:
-                                                            stylePTSansRegular(
+                                                      child: Row(
+                                                        children: [
+                                                          Text(
+                                                            "Source - ",
+                                                            style:
+                                                                stylePTSansRegular(
+                                                              fontSize: 16,
+                                                              color: ThemeColors
+                                                                  .white,
+                                                            ),
+                                                          ),
+                                                          Text(
+                                                            "${provider.data?.postDetail?.site}",
+                                                            style: stylePTSansRegular(
                                                                 fontSize: 16,
                                                                 color:
                                                                     ThemeColors
                                                                         .white),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                    const SpacerVertical(
+                                                        height: 8),
+                                                    Text(
+                                                      date,
+                                                      style: stylePTSansRegular(
+                                                        fontSize: 13,
+                                                        color: ThemeColors
+                                                            .greyText,
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              )
+                                            : Padding(
+                                                padding: EdgeInsets.only(
+                                                    bottom: 10.sp),
+                                                child: Text(
+                                                  date,
+                                                  style: stylePTSansRegular(
+                                                      fontSize: 13,
+                                                      color:
+                                                          ThemeColors.greyText),
+                                                ),
+                                              ),
+                                    SpacerVertical(
+                                        height: Dimen.itemSpacing.sp),
+                                    HtmlWidget(
+                                      customWidgetBuilder: (element) {
+                                        if (element.innerHtml
+                                            .contains('DISPLAY_AD_1')) {
+                                          return Visibility(
+                                            visible: provider.extra?.adManagers
+                                                    ?.data?.newsPlace1 !=
+                                                null,
+                                            child: AdManagerIndex(
+                                                screen: AdScreen.newsDetail,
+                                                places: AdPlaces.place1,
+                                                margin: EdgeInsets.zero,
+                                                data: provider.extra?.adManagers
+                                                    ?.data?.newsPlace1),
+                                          );
+                                        }
+
+                                        if (element.innerHtml
+                                            .contains('DISPLAY_AD_2')) {
+                                          return Visibility(
+                                            visible: provider.extra?.adManagers
+                                                    ?.data?.newsPlace2 !=
+                                                null,
+                                            child: AdManagerIndex(
+                                                screen: AdScreen.newsDetail,
+                                                places: AdPlaces.place2,
+                                                margin: EdgeInsets.zero,
+                                                data: provider.extra?.adManagers
+                                                    ?.data?.newsPlace2),
+                                          );
+                                        }
+                                        return null;
+                                      },
+                                      onTapUrl: (url) async {
+                                        if (url.startsWith(
+                                            "https://app.stocks.news/page/")) {
+                                          String slug =
+                                              extractLastPathComponent(
+                                                  Uri.parse(url));
+                                          Navigator.pushReplacement(
+                                            context,
+                                            createRoute(
+                                              TCandPolicy(
+                                                policyType:
+                                                    PolicyType.disclaimer,
+                                                slug: slug,
+                                              ),
+                                            ),
+                                          );
+                                          return true;
+                                        }
+                                        bool a = false;
+                                        if (Platform.isAndroid) {
+                                          a = await launchUrl(Uri.parse(url));
+                                          Utils().showLog(
+                                              "clicked ur---$url, return value $a");
+                                        } else {
+                                          a = true;
+                                          Uri uri = Uri.parse(url);
+                                          iOSNavigate(uri);
+                                          Utils().showLog("iOS navigation");
+                                        }
+                                        return a;
+                                      },
+                                      provider.data?.postDetail?.text ?? "",
+                                      textStyle: styleGeorgiaRegular(
+                                          fontSize: 18, height: 1.5),
+                                    ),
+
+                                    // const SpacerVertical(height: 20),
+                                    if (provider.data?.feedbackMsg != null)
+                                      ArticleFeedback(
+                                        feebackType:
+                                            provider.extra?.feebackType,
+                                        title: provider.data?.feedbackMsg,
+                                        submitMessage:
+                                            provider.data?.feedbackExistMsg,
+                                        onSubmit: _onSubmit,
+                                      ),
+                                    Visibility(
+                                      visible: (provider.data?.postDetail
+                                                  ?.categories?.length ??
+                                              0) >
+                                          0,
+                                      child: Container(
+                                        margin: EdgeInsets.only(top: 20.sp),
+                                        child: Wrap(
+                                          alignment: WrapAlignment.start,
+                                          children: [
+                                            Text(
+                                              "Posted under - ",
+                                              style: stylePTSansRegular(
+                                                  fontSize: 16,
+                                                  color: ThemeColors.greyText),
+                                            ),
+                                            const ListAlignment().buildList(
+                                              list: provider
+                                                  .data?.postDetail?.categories,
+                                              isLastList: true,
+                                              type: BlogsType.category,
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                    Visibility(
+                                      visible: provider.data?.postDetail?.tags
+                                              ?.isNotEmpty ==
+                                          true,
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(top: 20),
+                                        child: NewsDetailAuthor(
+                                          type: BlogsType.tag,
+                                          title: "Tags: ",
+                                          data: provider.data?.postDetail?.tags,
+                                        ),
+                                      ),
+                                    ),
+                                    Visibility(
+                                      visible: provider.data?.postDetail
+                                                  ?.authors?.isNotEmpty ==
+                                              true &&
+                                          provider.data?.postDetail?.authors !=
+                                              null,
+                                      child: ListView.separated(
+                                        itemCount: provider.data?.postDetail
+                                                ?.authors?.length ??
+                                            0,
+                                        shrinkWrap: true,
+                                        physics:
+                                            const NeverScrollableScrollPhysics(),
+                                        itemBuilder: (context, index) {
+                                          DetailListType? data = provider.data
+                                              ?.postDetail?.authors?[index];
+                                          if (data?.show == false) {
+                                            return const SizedBox();
+                                          }
+                                          return Container(
+                                            margin:
+                                                const EdgeInsets.only(top: 8),
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 10, vertical: 10),
+                                            decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(5),
+                                                color: ThemeColors.greyBorder
+                                                    .withOpacity(0.2)),
+                                            child: Row(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Visibility(
+                                                  visible:
+                                                      data?.image != null &&
+                                                          data?.image != '',
+                                                  child: ClipRRect(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            0.sp),
+                                                    child: Container(
+                                                      width: 80,
+                                                      height: 80,
+                                                      padding:
+                                                          EdgeInsets.all(5.sp),
+                                                      child:
+                                                          CachedNetworkImagesWidget(
+                                                        data?.image,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                                const SpacerHorizontal(
+                                                    width: 10),
+                                                Flexible(
+                                                  child: Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      Visibility(
+                                                        visible: data?.name !=
+                                                                null &&
+                                                            data?.name != '',
+                                                        child: Text(
+                                                          "${data?.name}",
+                                                          style:
+                                                              stylePTSansBold(
+                                                                  fontSize: 18),
+                                                        ),
+                                                      ),
+                                                      Visibility(
+                                                        visible:
+                                                            data?.designation !=
+                                                                    null &&
+                                                                data?.designation !=
+                                                                    '',
+                                                        child: Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .only(top: 4),
+                                                          child: Text(
+                                                            "${data?.designation}",
+                                                            style:
+                                                                stylePTSansBold(
+                                                                    fontSize:
+                                                                        15),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      const Divider(
+                                                        color: ThemeColors
+                                                            .greyBorder,
+                                                      ),
+                                                      Visibility(
+                                                        visible: data?.text !=
+                                                                null &&
+                                                            data?.text != '',
+                                                        child: HtmlWidget(
+                                                          data?.text ?? "",
+                                                          customWidgetBuilder:
+                                                              (element) =>
+                                                                  ReadMoreText(
+                                                            textAlign:
+                                                                TextAlign.start,
+                                                            element.text,
+                                                            trimLines: 2,
+                                                            colorClickableText:
+                                                                ThemeColors
+                                                                    .accent,
+                                                            trimMode:
+                                                                TrimMode.Line,
+                                                            trimCollapsedText:
+                                                                ' Read more',
+                                                            trimExpandedText:
+                                                                ' Read less',
+                                                            moreStyle:
+                                                                stylePTSansRegular(
+                                                              color: ThemeColors
+                                                                  .accent,
+                                                              height: 1.3,
+                                                            ),
+                                                            style:
+                                                                stylePTSansRegular(
+                                                              height: 1.3,
+                                                              color: ThemeColors
+                                                                  .white,
+                                                            ),
+                                                          ),
+                                                        ),
+
+                                                        //  HtmlWidget(
+                                                        //   '${data?.text}',
+                                                        //   // textStyle: const TextStyle(
+                                                        //   //   fontFamily: Fonts.ptSans,
+                                                        //   // ),
+                                                        //   textStyle: stylePTSansRegular(
+                                                        //       color:
+                                                        //           ThemeColors.greyText),
+                                                        // ),
                                                       ),
                                                     ],
                                                   ),
-                                                ),
-                                                const SpacerVertical(height: 8),
-                                                Text(
-                                                  date,
-                                                  style: stylePTSansRegular(
-                                                    fontSize: 13,
-                                                    color: ThemeColors.greyText,
-                                                  ),
-                                                ),
+                                                )
                                               ],
                                             ),
-                                          )
-                                        : Padding(
-                                            padding:
-                                                EdgeInsets.only(bottom: 10.sp),
-                                            child: Text(
-                                              date,
-                                              style: stylePTSansRegular(
-                                                  fontSize: 13,
-                                                  color: ThemeColors.greyText),
-                                            ),
-                                          ),
-                                SpacerVertical(height: Dimen.itemSpacing.sp),
-                                HtmlWidget(
-                                  customWidgetBuilder: (element) {
-                                    if (element.innerHtml
-                                        .contains('DISPLAY_AD_1')) {
-                                      return Visibility(
-                                        visible: provider.extra?.adManagers
-                                                ?.data?.newsPlace1 !=
-                                            null,
-                                        child: AdManagerIndex(
-                                            screen: AdScreen.newsDetail,
-                                            places: AdPlaces.place1,
-                                            margin: EdgeInsets.zero,
-                                            data: provider.extra?.adManagers
-                                                ?.data?.newsPlace1),
-                                      );
-                                    }
-
-                                    if (element.innerHtml
-                                        .contains('DISPLAY_AD_2')) {
-                                      return Visibility(
-                                        visible: provider.extra?.adManagers
-                                                ?.data?.newsPlace2 !=
-                                            null,
-                                        child: AdManagerIndex(
-                                            screen: AdScreen.newsDetail,
-                                            places: AdPlaces.place2,
-                                            margin: EdgeInsets.zero,
-                                            data: provider.extra?.adManagers
-                                                ?.data?.newsPlace2),
-                                      );
-                                    }
-                                    return null;
-                                  },
-                                  onTapUrl: (url) async {
-                                    if (url.startsWith(
-                                        "https://app.stocks.news/page/")) {
-                                      String slug = extractLastPathComponent(
-                                          Uri.parse(url));
-                                      Navigator.pushReplacement(
-                                        context,
-                                        createRoute(
-                                          TCandPolicy(
-                                            policyType: PolicyType.disclaimer,
-                                            slug: slug,
-                                          ),
-                                        ),
-                                      );
-                                      return true;
-                                    }
-                                    bool a = false;
-                                    if (Platform.isAndroid) {
-                                      a = await launchUrl(Uri.parse(url));
-                                      Utils().showLog(
-                                          "clicked ur---$url, return value $a");
-                                    } else {
-                                      a = true;
-                                      Uri uri = Uri.parse(url);
-                                      iOSNavigate(uri);
-                                      Utils().showLog("iOS navigation");
-                                    }
-                                    return a;
-                                  },
-                                  provider.data?.postDetail?.text ?? "",
-                                  textStyle: styleGeorgiaRegular(
-                                      fontSize: 18, height: 1.5),
-                                ),
-
-                                // const SpacerVertical(height: 20),
-                                if (provider.data?.feedbackMsg != null)
-                                  ArticleFeedback(
-                                    feebackType: provider.extra?.feebackType,
-                                    title: provider.data?.feedbackMsg,
-                                    submitMessage:
-                                        provider.data?.feedbackExistMsg,
-                                    onSubmit: _onSubmit,
-                                  ),
-                                Visibility(
-                                  visible: (provider.data?.postDetail
-                                              ?.categories?.length ??
-                                          0) >
-                                      0,
-                                  child: Container(
-                                    margin: EdgeInsets.only(top: 20.sp),
-                                    child: Wrap(
-                                      alignment: WrapAlignment.start,
-                                      children: [
-                                        Text(
-                                          "Posted under - ",
-                                          style: stylePTSansRegular(
-                                              fontSize: 16,
-                                              color: ThemeColors.greyText),
-                                        ),
-                                        const ListAlignment().buildList(
-                                          list: provider
-                                              .data?.postDetail?.categories,
-                                          isLastList: true,
-                                          type: BlogsType.category,
-                                        ),
-                                      ],
+                                          );
+                                        },
+                                        separatorBuilder:
+                                            (BuildContext context, int index) {
+                                          return const SpacerVertical(
+                                              height: 16);
+                                        },
+                                      ),
                                     ),
-                                  ),
-                                ),
-                                Visibility(
-                                  visible: provider
-                                          .data?.postDetail?.tags?.isNotEmpty ==
-                                      true,
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(top: 20),
-                                    child: NewsDetailAuthor(
-                                      type: BlogsType.tag,
-                                      title: "Tags: ",
-                                      data: provider.data?.postDetail?.tags,
-                                    ),
-                                  ),
-                                ),
-                                Visibility(
-                                  visible: provider.data?.postDetail?.authors
-                                              ?.isNotEmpty ==
-                                          true &&
-                                      provider.data?.postDetail?.authors !=
+                                    const SpacerVertical(height: 25),
+                                    Visibility(
+                                      visible: provider.extra?.adManagers?.data
+                                              ?.newsPlace3 !=
                                           null,
-                                  child: ListView.separated(
-                                    itemCount: provider.data?.postDetail
-                                            ?.authors?.length ??
-                                        0,
-                                    shrinkWrap: true,
-                                    physics:
-                                        const NeverScrollableScrollPhysics(),
-                                    itemBuilder: (context, index) {
-                                      DetailListType? data = provider
-                                          .data?.postDetail?.authors?[index];
-                                      if (data?.show == false) {
-                                        return const SizedBox();
-                                      }
-                                      return Container(
-                                        margin: const EdgeInsets.only(top: 8),
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 10, vertical: 10),
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(5),
-                                            color: ThemeColors.greyBorder
-                                                .withOpacity(0.2)),
-                                        child: Row(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Visibility(
-                                              visible: data?.image != null &&
-                                                  data?.image != '',
-                                              child: ClipRRect(
-                                                borderRadius:
-                                                    BorderRadius.circular(0.sp),
-                                                child: Container(
-                                                  width: 80,
-                                                  height: 80,
-                                                  padding: EdgeInsets.all(5.sp),
-                                                  child:
-                                                      CachedNetworkImagesWidget(
-                                                    data?.image,
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                            const SpacerHorizontal(width: 10),
-                                            Flexible(
-                                              child: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Visibility(
-                                                    visible:
-                                                        data?.name != null &&
-                                                            data?.name != '',
-                                                    child: Text(
-                                                      "${data?.name}",
-                                                      style: stylePTSansBold(
-                                                          fontSize: 18),
-                                                    ),
-                                                  ),
-                                                  Visibility(
-                                                    visible: data
-                                                                ?.designation !=
-                                                            null &&
-                                                        data?.designation != '',
-                                                    child: Padding(
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                              top: 4),
-                                                      child: Text(
-                                                        "${data?.designation}",
-                                                        style: stylePTSansBold(
-                                                            fontSize: 15),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  const Divider(
-                                                    color:
-                                                        ThemeColors.greyBorder,
-                                                  ),
-                                                  Visibility(
-                                                    visible:
-                                                        data?.text != null &&
-                                                            data?.text != '',
-                                                    child: HtmlWidget(
-                                                      data?.text ?? "",
-                                                      customWidgetBuilder:
-                                                          (element) =>
-                                                              ReadMoreText(
-                                                        textAlign:
-                                                            TextAlign.start,
-                                                        element.text,
-                                                        trimLines: 2,
-                                                        colorClickableText:
-                                                            ThemeColors.accent,
-                                                        trimMode: TrimMode.Line,
-                                                        trimCollapsedText:
-                                                            ' Read more',
-                                                        trimExpandedText:
-                                                            ' Read less',
-                                                        moreStyle:
-                                                            stylePTSansRegular(
-                                                          color: ThemeColors
-                                                              .accent,
-                                                          height: 1.3,
-                                                        ),
-                                                        style:
-                                                            stylePTSansRegular(
-                                                          height: 1.3,
-                                                          color:
-                                                              ThemeColors.white,
-                                                        ),
-                                                      ),
-                                                    ),
-
-                                                    //  HtmlWidget(
-                                                    //   '${data?.text}',
-                                                    //   // textStyle: const TextStyle(
-                                                    //   //   fontFamily: Fonts.ptSans,
-                                                    //   // ),
-                                                    //   textStyle: stylePTSansRegular(
-                                                    //       color:
-                                                    //           ThemeColors.greyText),
-                                                    // ),
-                                                  ),
-                                                ],
-                                              ),
-                                            )
-                                          ],
-                                        ),
-                                      );
-                                    },
-                                    separatorBuilder:
-                                        (BuildContext context, int index) {
-                                      return const SpacerVertical(height: 16);
-                                    },
-                                  ),
+                                      child: AdManagerIndex(
+                                          places: AdPlaces.place3,
+                                          screen: AdScreen.newsDetail,
+                                          margin: EdgeInsets.zero,
+                                          data: provider.extra?.adManagers?.data
+                                              ?.newsPlace3),
+                                    ),
+                                    const ScreenTitle(
+                                        title: "More News to Read"),
+                                    ListView.separated(
+                                      itemCount:
+                                          provider.data?.otherPost?.length ?? 0,
+                                      shrinkWrap: true,
+                                      physics:
+                                          const NeverScrollableScrollPhysics(),
+                                      padding: EdgeInsets.all(12.sp),
+                                      itemBuilder: (context, index) {
+                                        PostDetail? moreNewsData =
+                                            provider.data?.otherPost?[index];
+                                        return NewsDetailList(
+                                          moreNewsData: moreNewsData,
+                                          fromAI: moreNewsData?.newsType ==
+                                              "ainews",
+                                        );
+                                      },
+                                      separatorBuilder:
+                                          (BuildContext context, int index) {
+                                        // return const SpacerVertical(height: 16);
+                                        return Divider(
+                                          color: const Color.fromARGB(
+                                              255, 98, 98, 98),
+                                          height: 16,
+                                        );
+                                      },
+                                    ),
+                                    if (provider.extra?.disclaimer != null &&
+                                        foundSite)
+                                      DisclaimerWidget(
+                                        data: provider.extra?.disclaimer ?? "",
+                                      )
+                                  ],
                                 ),
-                                const SpacerVertical(height: 25),
-                                Visibility(
-                                  visible: provider.extra?.adManagers?.data
-                                          ?.newsPlace3 !=
-                                      null,
-                                  child: AdManagerIndex(
-                                      places: AdPlaces.place3,
-                                      screen: AdScreen.newsDetail,
-                                      margin: EdgeInsets.zero,
-                                      data: provider
-                                          .extra?.adManagers?.data?.newsPlace3),
-                                ),
-                                const ScreenTitle(title: "More News to Read"),
-                                ListView.separated(
-                                  itemCount:
-                                      provider.data?.otherPost?.length ?? 0,
-                                  shrinkWrap: true,
-                                  physics: const NeverScrollableScrollPhysics(),
-                                  padding: EdgeInsets.all(12.sp),
-                                  itemBuilder: (context, index) {
-                                    PostDetail? moreNewsData =
-                                        provider.data?.otherPost?[index];
-                                    return NewsDetailList(
-                                      moreNewsData: moreNewsData,
-                                      fromAI:
-                                          moreNewsData?.newsType == "ainews",
+                              ),
+                              Positioned(
+                                // bottom: homeProvider.extra?.updateYourPhone == null
+                                //     ? 6
+                                //     : ScreenUtil().screenWidth * 0.68,
+                                bottom: 6,
+                                right: 10,
+                                child: ThemeButtonSmall(
+                                  onPressed: () {
+                                    commonShare(
+                                      title: provider.data?.postDetail?.title ??
+                                          "",
+                                      url:
+                                          provider.data?.postDetail?.slug ?? "",
                                     );
                                   },
-                                  separatorBuilder:
-                                      (BuildContext context, int index) {
-                                    // return const SpacerVertical(height: 16);
-                                    return Divider(
-                                      color:
-                                          const Color.fromARGB(255, 98, 98, 98),
-                                      height: 16,
-                                    );
-                                  },
+                                  text: "Share Story",
+                                  fontBold: true,
+                                  icon: Icons.share,
                                 ),
-                                if (provider.extra?.disclaimer != null &&
-                                    foundSite)
-                                  DisclaimerWidget(
-                                    data: provider.extra?.disclaimer ?? "",
-                                  )
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
                         ),
                         BaseAuth(),
                       ],
                     ),
-                    Positioned(
-                      bottom:
-                          homeProvider.extra?.updateYourPhone == null ? 6 : 220,
-                      right: 10,
-                      child: ThemeButtonSmall(
-                        onPressed: () {
-                          commonShare(
-                            title: provider.data?.postDetail?.title ?? "",
-                            url: provider.data?.postDetail?.slug ?? "",
-                          );
-                        },
-                        text: "Share Story",
-                        fontBold: true,
-                        icon: Icons.share,
-                      ),
-                    ),
+                    // Positioned(
+                    //   // bottom: homeProvider.extra?.updateYourPhone == null
+                    //   //     ? 6
+                    //   //     : ScreenUtil().screenWidth * 0.68,
+                    //   bottom: 6,
+                    //   right: 10,
+                    //   child: ThemeButtonSmall(
+                    //     onPressed: () {
+                    //       commonShare(
+                    //         title: provider.data?.postDetail?.title ?? "",
+                    //         url: provider.data?.postDetail?.slug ?? "",
+                    //       );
+                    //     },
+                    //     text: "Share Story",
+                    //     fontBold: true,
+                    //     icon: Icons.share,
+                    //   ),
+                    // ),
                     NewsDetailsLock(slug: widget.slug),
                     if (provider.data?.postDetail?.premiumReaderOnly == true)
                       CommonLock(isLocked: true),

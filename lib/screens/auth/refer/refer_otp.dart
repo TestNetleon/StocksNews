@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:sms_autofill/sms_autofill.dart';
+import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/affiliate/index.dart';
@@ -304,6 +305,7 @@ class _OTPLoginBottomReferState extends State<OTPLoginBottomRefer> {
             message: response.message,
             type: SnackbarType.info,
           );
+          navigatorKey.currentContext!.read<HomeProvider>().getHomeSlider();
         } else {
           Navigator.popUntil(
             navigatorKey.currentContext!,
