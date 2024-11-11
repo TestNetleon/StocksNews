@@ -1,5 +1,3 @@
-// ignore_for_file: use_build_context_synchronously
-
 import 'dart:developer';
 import 'dart:io';
 import 'package:flutter/material.dart';
@@ -15,9 +13,6 @@ import 'package:stocks_news_new/providers/search_provider.dart';
 import 'package:stocks_news_new/providers/trending_provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/screens/auth/refer/refer_code.dart';
-// ignore: unused_import
-import 'package:stocks_news_new/screens/drawer/base_drawer.dart';
-// ignore: unused_import
 import 'package:stocks_news_new/screens/tabs/compareStocks/compare_stocks.dart';
 import 'package:stocks_news_new/screens/tabs/home/home.dart';
 import 'package:stocks_news_new/screens/tabs/insider/insider.dart';
@@ -69,6 +64,7 @@ class _TabsState extends State<Tabs> {
       //Because we are asking membership thats why hiding refer
       if (widget.showRef) referLogin();
       if (widget.showMembership) _showMembership();
+      // appTrack();
       AmplitudeService.logFirstOpenEvent();
     });
   }

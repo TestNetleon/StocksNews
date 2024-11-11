@@ -135,6 +135,19 @@ class Preference {
     return preferences.getBool("@amplitudeFirstOpen") ?? true;
   }
 
+  //App Tracking
+  static const _trackingKey = 'app_tracking_allowed';
+
+  static Future<void> setTrackingPreference(bool isAllowed) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    await preferences.setBool(_trackingKey, isAllowed);
+  }
+
+  static Future<bool?> isTrackingAllowed() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    return preferences.getBool(_trackingKey);
+  }
+
   //----------- For Testing Only ---------------
 
   // static const String dataListKey = 'data_list';

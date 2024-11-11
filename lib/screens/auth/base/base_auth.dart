@@ -62,6 +62,7 @@ class _LoginFirstState extends State<LoginFirst> {
   bool verifying = false;
   String? _verificationId;
   final GoogleSignIn _googleSignIn = GoogleSignIn();
+  bool changed = false;
 
   @override
   void initState() {
@@ -329,6 +330,7 @@ class _LoginFirstState extends State<LoginFirst> {
     } else {
       countryCode = CountryCode.fromCountryCode("US").dialCode;
     }
+    Utils().showLog('COUNTRY CODE $countryCode');
     return GestureDetector(
       onTap: () {
         closeKeyboard();
@@ -529,6 +531,7 @@ class _LoginFirstState extends State<LoginFirst> {
                               const EdgeInsets.only(top: Dimen.itemSpacing),
                           child: ThemeButton(
                             onPressed: () async {
+                              closeKeyboard();
                               try {
                                 final AuthorizationCredentialAppleID
                                     credential =

@@ -1,31 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:stocks_news_new/providers/home_provider.dart';
-import 'package:stocks_news_new/providers/user_provider.dart';
+import 'package:stocks_news_new/database/preference.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/utils/constants.dart';
+import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
-import 'package:provider/provider.dart';
-
 import '../../../utils/theme.dart';
-import '../utils/colors.dart';
+import '../../utils/colors.dart';
+import '../spacer_horizontal.dart';
 
-void logoutPopUp({pop = false}) {
+void appTrack() async {
+  final value = await Preference.isTrackingAllowed();
+  Utils().showLog('ALLOWED APP TRACK $value');
+  if (value != null) return;
   showDialog(
     context: navigatorKey.currentContext!,
     barrierColor: ThemeColors.transparentDark,
     builder: (context) {
-      return LogoutPopUpCustom(pop: pop);
+      return LogoutPopUpCustom();
     },
   );
 }
 
 class LogoutPopUpCustom extends StatelessWidget {
   const LogoutPopUpCustom({
-    required this.pop,
     super.key,
   });
-  final bool pop;
 
   @override
   Widget build(BuildContext context) {
@@ -52,9 +52,9 @@ class LogoutPopUpCustom extends StatelessWidget {
                       height: 80.sp,
                       width: 80.sp,
                     ),
-                    // const SpacerVertical(height: 5),
                     Text(
-                      "Sign Out",
+                      "Help Us Improve Your Experience",
+                      textAlign: TextAlign.center,
                       style: stylePTSansBold(
                         color: ThemeColors.background,
                         fontSize: 20,
@@ -62,45 +62,35 @@ class LogoutPopUpCustom extends StatelessWidget {
                     ),
                     const SpacerVertical(height: 8),
                     Text(
-                      "Are you sure you want to sign out?",
+                      "We value your privacy! Please confirm if you'd like to allow the app to track your activity for personalized experiences.",
                       textAlign: TextAlign.center,
                       style: stylePTSansRegular(color: ThemeColors.background),
                     ),
                     const SpacerVertical(height: 5),
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         TextButton(
                           onPressed: () {
                             Navigator.of(context).pop();
                           },
                           child: Text(
-                            "CANCEL",
-                            style:
-                                stylePTSansBold(color: ThemeColors.background),
+                            "No, Thanks",
+                            style: stylePTSansBold(
+                              color: ThemeColors.background,
+                              fontSize: 17,
+                            ),
                           ),
                         ),
+                        SpacerHorizontal(width: 10),
                         TextButton(
-                          onPressed: () async {
-                            HomeProvider homeProvider =
-                                context.read<HomeProvider>();
-                            Map request = {
-                              'token':
-                                  context.read<UserProvider>().user?.token ??
-                                      "",
-                            };
-                            Navigator.pop(context);
-                            // if (pop) Navigator.of(context).pop();
-                            await context
-                                .read<UserProvider>()
-                                .logoutUser(request, pop);
-                            homeProvider.getHomeSlider(showProgress: true);
-                            homeProvider.getFeaturedWatchlist(userAvail: false);
-                          },
+                          onPressed: () async {},
                           child: Text(
-                            "LOGOUT",
-                            style:
-                                stylePTSansBold(color: ThemeColors.background),
+                            "Yes, Allow",
+                            style: stylePTSansBold(
+                              color: ThemeColors.background,
+                              fontSize: 17,
+                            ),
                           ),
                         ),
                       ],

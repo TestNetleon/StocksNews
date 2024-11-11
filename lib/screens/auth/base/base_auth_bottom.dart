@@ -38,6 +38,7 @@ class _BaseAuthState extends State<BaseAuth> {
   String? countryCode;
   String? _verificationId;
   bool isLoading = false;
+  bool changed = false;
   TextEditingController phone = TextEditingController();
   @override
   void initState() {
@@ -55,6 +56,7 @@ class _BaseAuthState extends State<BaseAuth> {
   }
 
   Future<void> _verifyPhoneNumber() async {
+    Utils().showLog('on verify going with $countryCode');
     if (kDebugMode) {
       String mobile = phone.text;
       Navigator.push(
@@ -205,6 +207,7 @@ class _BaseAuthState extends State<BaseAuth> {
   }
 
   void _onChanged(CountryCode value) {
+    changed = true;
     countryCode = value.dialCode;
     Utils().showLog("COUNTRY CODE => $countryCode");
     setState(() {});
@@ -248,16 +251,20 @@ class _BaseAuthState extends State<BaseAuth> {
       return SizedBox();
     }
     UserProvider userProvider = context.watch<UserProvider>();
-
-    if (userProvider.user?.phoneCode != null &&
-        userProvider.user?.phoneCode != "") {
-      countryCode =
-          CountryCode.fromDialCode(userProvider.user?.phoneCode ?? "").dialCode;
-    } else if (geoCountryCode != null && geoCountryCode != "") {
-      countryCode = CountryCode.fromCountryCode(geoCountryCode!).dialCode;
-    } else {
-      countryCode = CountryCode.fromCountryCode("US").dialCode;
+    if (!changed) {
+      if (userProvider.user?.phoneCode != null &&
+          userProvider.user?.phoneCode != "") {
+        countryCode =
+            CountryCode.fromDialCode(userProvider.user?.phoneCode ?? "")
+                .dialCode;
+      } else if (geoCountryCode != null && geoCountryCode != "") {
+        countryCode = CountryCode.fromCountryCode(geoCountryCode!).dialCode;
+      } else {
+        countryCode = CountryCode.fromCountryCode("US").dialCode;
+      }
     }
+
+    Utils().showLog('COUNTRY CODE $countryCode');
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
       decoration: BoxDecoration(

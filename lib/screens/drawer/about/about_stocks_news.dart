@@ -247,7 +247,7 @@ class _AboutStocksNewsState extends State<AboutStocksNews> {
 
     // Refer and Earn
 
-    if (provider.extra?.showRewards == true) {
+    if (provider.extra?.showRewards == true && user != null) {
       visibleAboutTiles.add(
         DrawerRes(
           iconData: Icons.star,

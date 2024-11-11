@@ -816,18 +816,21 @@ class HomeProvider extends ChangeNotifier {
         onRefresh: () => refreshData(null),
       );
 
-      _extra = (response.extra is Extra ? response.extra as Extra : null);
+      if (response.status) {
+        Extra? newExtra =
+            (response.extra is Extra ? response.extra as Extra : null);
 
-      if (_extra?.messageObject != null) {
-        Preference.saveLocalDataBase(_extra?.messageObject);
+        if (newExtra?.messageObject != null) {
+          Preference.saveLocalDataBase(newExtra?.messageObject);
+        }
+        if (newExtra?.messageObject?.error != null) {
+          Const.errSomethingWrong = newExtra?.messageObject?.error ?? "";
+          Const.loadingMessage = newExtra?.messageObject?.loading ?? "";
+        }
+        MessageRes? localDataBase = await Preference.getLocalDataBase();
+        Utils().showLog("localDataBase  =========${localDataBase?.error}");
+        notifyListeners();
       }
-      if (_extra?.messageObject?.error != null) {
-        Const.errSomethingWrong = _extra?.messageObject?.error ?? "";
-        Const.loadingMessage = _extra?.messageObject?.loading ?? "";
-      }
-      MessageRes? localDataBase = await Preference.getLocalDataBase();
-      Utils().showLog("localDataBase  =========${localDataBase?.error}");
-      notifyListeners();
 
       return response.status ? false : true;
     } catch (e) {
