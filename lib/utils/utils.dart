@@ -669,6 +669,7 @@ void handleDeepLinkNavigation({
   bool conditionalCheck = false,
   int? duration,
 }) {
+  Utils().showLog('url $uri');
   if (uri == null) {
     onDeepLinking = false;
     return;
@@ -678,7 +679,9 @@ void handleDeepLinkNavigation({
     extractCodeFromMEM(uri, "4");
     Utils().showLog("Calling from handle deep link MEM CODE => $memCODE");
 
-    if (memCODE != null && memCODE != '') {
+    if (memCODE != null &&
+        memCODE != '' &&
+        uri.toString().contains('.page.link')) {
       Utils().showLog("Going to membership page-------");
       Timer(Duration(seconds: duration ?? 0), () {
         Navigator.push(navigatorKey.currentContext!,
