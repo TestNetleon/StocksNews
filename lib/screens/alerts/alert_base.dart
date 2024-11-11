@@ -53,7 +53,7 @@
 //     HomeProvider homeProvider = context.watch<HomeProvider>();
 
 //     return BaseContainer(
-//       appBar: const AppBarHome(isPopback: true, canSearch: true),
+//       appBar: const AppBarHome(isPopBack: true, canSearch: true),
 //       body: Padding(
 //         padding: EdgeInsets.fromLTRB(
 //           Dimen.padding.sp,
@@ -208,7 +208,7 @@ class _AlertBaseState extends State<AlertBase> {
 
     return BaseContainer(
       appBar: AppBarHome(
-        isPopback: true,
+        isPopBack: true,
         title: userProvider.user == null
             ? null
             : provider.textRes?.title ??

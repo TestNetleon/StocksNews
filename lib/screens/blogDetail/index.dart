@@ -96,7 +96,7 @@ class _BlogDetailState extends State<BlogDetail> {
           context.watch<BlogProvider>().blogsDetail?.readingStatus == false
               ? ThemeColors.tabBack
               : null,
-      appBar: const AppBarHome(isPopback: true),
+      appBar: const AppBarHome(isPopBack: true),
       body: BlogDetailContainer(slug: widget.slug ?? ""),
     );
   }

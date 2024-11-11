@@ -87,7 +87,7 @@ class AppsFlyerService {
   }) {
     try {
       if (eventProperties != null) {
-        Utils().showLog('Event properties:Apps Flyer  $eventProperties');
+        // Utils().showLog('Event properties:Apps Flyer  $eventProperties');
       }
 
       if (userId != null && userId != '') {

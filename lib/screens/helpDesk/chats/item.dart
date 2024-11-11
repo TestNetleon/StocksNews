@@ -51,7 +51,7 @@ class HelpDeskAllChatsItemNew extends StatelessWidget {
                           context,
                           MaterialPageRoute(
                             builder: (_) => Scaffold(
-                              appBar: const AppBarHome(isPopback: true),
+                              appBar: const AppBarHome(isPopBack: true),
                               backgroundColor: Colors.transparent,
                               body: Center(
                                 child: PhotoView(

@@ -33,7 +33,7 @@ class _SeparatePointsIndexState extends State<SeparatePointsIndex> {
   Widget build(BuildContext context) {
     return BaseContainer(
       appBar: AppBarHome(
-        isPopback: true,
+        isPopBack: true,
         title: widget.appbarHeading,
       ),
       body: SeparatePointsContainer(

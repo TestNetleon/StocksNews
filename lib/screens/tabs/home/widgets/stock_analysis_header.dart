@@ -22,14 +22,14 @@ class AppBarStockAnalysis extends StatefulWidget
   final String amount;
   final String subPercentage;
   final String percentage;
-  final bool showTrailing, isPopback, showQR, canSearch, showrate;
+  final bool showTrailing, isPopBack, showQR, canSearch, showrate;
   final void Function()? filterClick;
   final void Function()? onTap;
 //
   const AppBarStockAnalysis({
     super.key,
     this.showTrailing = true,
-    this.isPopback = false,
+    this.isPopBack = false,
     this.showQR = false,
     this.filterClick,
     this.isHome = false,
@@ -69,7 +69,7 @@ class _AppBarStockAnalysisState extends State<AppBarStockAnalysis> {
       backgroundColor: Colors.black,
       elevation: 0,
       automaticallyImplyLeading: false,
-      leading: widget.isPopback
+      leading: widget.isPopBack
           ? IconButton(
               onPressed: widget.onTap ??
                   () {

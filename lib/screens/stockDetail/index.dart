@@ -149,7 +149,7 @@ class _StockDetailState extends State<StockDetail> {
 
     return BaseContainer(
       appBar: AppBarHome(
-        isPopback: true,
+        isPopBack: true,
         title: keyStats?.symbol ?? "",
         subTitle: keyStats?.name ?? "",
         widget: keyStats?.symbol == null

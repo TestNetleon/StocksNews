@@ -21,7 +21,7 @@ class _ArenaIndexState extends State<ArenaIndex> {
     ArenaProvider provider = context.watch<ArenaProvider>();
     return BaseContainer(
       appBar: AppBarHome(
-        isPopback: true,
+        isPopBack: true,
         title: 'Game Arena',
       ),
       body: Padding(

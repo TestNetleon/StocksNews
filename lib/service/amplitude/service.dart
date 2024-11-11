@@ -140,7 +140,7 @@ class AmplitudeService {
   ) async {
     try {
       bool notReceived = await openNotificationsSettings();
-      Utils().showLog('Logging event: got permission ${!notReceived}');
+      // Utils().showLog('Logging event: got permission ${!notReceived}');
       if (!notReceived) {
         _logEvent(
           'Push Notification Enabled',
@@ -319,7 +319,7 @@ class AmplitudeService {
     try {
       Utils().showLog('Logging event:Amplitude $eventName');
       if (eventProperties != null) {
-        Utils().showLog('Event properties:Amplitude $eventProperties');
+        // Utils().showLog('Event properties:Amplitude $eventProperties');
       }
 
       _amplitude.logEvent(

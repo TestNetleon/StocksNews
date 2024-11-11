@@ -87,7 +87,7 @@ class StocksContainer extends StatelessWidget {
     // Utils().showLog("GAP UP DOWN OPEN? $isLocked");
     return BaseContainer(
       appBar: AppBarHome(
-        isPopback: true,
+        isPopBack: true,
         showTrailing: false,
         canSearch: false,
         title: "Stocks",

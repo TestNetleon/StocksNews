@@ -32,7 +32,7 @@ class _HelpDeskAllChatsNewState extends State<HelpDeskAllChatsNew> {
     NewHelpDeskProvider provider = context.watch<NewHelpDeskProvider>();
     return BaseContainer(
       appBar: AppBarHome(
-        isPopback: true,
+        isPopBack: true,
         title: "Ticker Number: ${provider.chatData?.ticketNo ?? ""}",
       ),
       body: HelpDeskAllChatNewListing(

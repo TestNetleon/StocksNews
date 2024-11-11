@@ -124,7 +124,7 @@ class _LoginState extends State<Login> {
       },
       child: BaseContainer(
         appBar: const AppBarHome(
-          isPopback: true,
+          isPopBack: true,
           canSearch: false,
           showTrailing: false,
           title: "",

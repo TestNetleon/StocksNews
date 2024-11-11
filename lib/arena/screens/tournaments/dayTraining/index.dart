@@ -18,7 +18,7 @@ class TournamentDayTrainingIndex extends StatelessWidget {
   Widget build(BuildContext context) {
     return BaseContainer(
       appBar: const AppBarHome(
-        isPopback: true,
+        isPopBack: true,
         title: 'Day Training',
       ),
       body: Padding(

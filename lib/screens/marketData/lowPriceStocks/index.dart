@@ -38,7 +38,7 @@ class _LowPriceStocksIndexState extends State<LowPriceStocksIndex> {
     LowPriceStocksProvider provider = context.watch<LowPriceStocksProvider>();
     return BaseContainer(
       bottomSafeAreaColor: ThemeColors.background,
-      appBar: const AppBarHome(isPopback: true, title: "Market Data"),
+      appBar: const AppBarHome(isPopBack: true, title: "Market Data"),
       body: provider.tabLoading
           ? const Loading()
           : !provider.tabLoading && provider.tabs == null

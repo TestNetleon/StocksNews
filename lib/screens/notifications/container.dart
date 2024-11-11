@@ -67,7 +67,7 @@ class _NotificationsContainerState extends State<NotificationsContainer> {
         resetIndex: true,
       ),
       appBar: const AppBarHome(
-        isPopback: true,
+        isPopBack: true,
         title: "Notifications",
         showTrailing: false,
       ),

@@ -32,7 +32,7 @@
 //   Widget build(BuildContext context) {
 //     return const BaseContainer(
 //       appBar: AppBarHome(
-//         isPopback: true,
+//         isPopBack: true,
 //         canSearch: true,
 //         showTrailing: true,
 //       ),
@@ -228,7 +228,7 @@ class HomePlaidAdded extends StatelessWidget {
   Widget build(BuildContext context) {
     return const BaseContainer(
       appBar: AppBarHome(
-        isPopback: true,
+        isPopBack: true,
         title: "Portfolio",
       ),
       body: HomePlaidAddedContainer(),

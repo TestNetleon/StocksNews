@@ -51,7 +51,7 @@ class _WatchListState extends State<WatchList> {
     return BaseContainer(
       drawer: const BaseDrawer(),
       appBar: AppBarHome(
-        isPopback: true,
+        isPopBack: true,
         title: provider.extra?.title ?? "Stock Watchlist",
       ),
       body: Padding(

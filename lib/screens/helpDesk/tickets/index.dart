@@ -17,7 +17,7 @@ class HelpDeskCreateTicket extends StatelessWidget {
     NewHelpDeskProvider provider = context.watch<NewHelpDeskProvider>();
     return BaseContainer(
       appBar: AppBarHome(
-        isPopback: true,
+        isPopBack: true,
         title: provider.extraTickets?.title ?? "Help Desk",
       ),
       body: Column(

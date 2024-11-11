@@ -132,7 +132,7 @@ class _CompleteDetailsState extends State<CompleteDetails> {
       },
       child: BaseContainer(
         appBar: const AppBarHome(
-          isPopback: true,
+          isPopBack: true,
           canSearch: false,
           showTrailing: false,
           title: "",

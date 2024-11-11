@@ -85,7 +85,7 @@ class SectorIndustryBase extends StatelessWidget {
     return BaseContainer(
       drawer: const BaseDrawer(resetIndex: true),
       appBar: AppBarHome(
-        isPopback: true,
+        isPopBack: true,
         title: stockStates == StockStates.sector
             ? "Sector Performance - $titleName"
             : "Industry - $titleName",

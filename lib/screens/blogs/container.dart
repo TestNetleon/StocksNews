@@ -24,7 +24,7 @@ class BlogContainer extends StatelessWidget {
 
     return BaseContainer(
       appBar: const AppBarHome(
-        isPopback: true,
+        isPopBack: true,
       ),
       body: Padding(
         padding: EdgeInsets.fromLTRB(
@@ -93,7 +93,7 @@ class AuthorContainer extends StatelessWidget {
     BlogProvider provider = context.watch<BlogProvider>();
 
     return BaseContainer(
-      appBar: const AppBarHome(isPopback: true),
+      appBar: const AppBarHome(isPopBack: true),
       body: Padding(
         padding: EdgeInsets.fromLTRB(Dimen.padding, 0, Dimen.padding, 0),
         child: BaseUiContainer(

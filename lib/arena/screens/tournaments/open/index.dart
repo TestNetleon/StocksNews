@@ -9,7 +9,7 @@ class TournamentOpenIndex extends StatelessWidget {
   Widget build(BuildContext context) {
     return BaseContainer(
       appBar: AppBarHome(
-        isPopback: true,
+        isPopBack: true,
         title: 'My Position',
       ),
       body: Container(),

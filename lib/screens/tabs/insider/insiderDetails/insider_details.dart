@@ -124,7 +124,7 @@ class _CompanyDetailsBaseState extends State<CompanyDetailsBase> {
     return BaseContainer(
       drawer: const BaseDrawer(),
       appBar: AppBarHome(
-        isPopback: true,
+        isPopBack: true,
         canSearch: false,
         showTrailing: false,
         onFilterClick: () => _filterClick(

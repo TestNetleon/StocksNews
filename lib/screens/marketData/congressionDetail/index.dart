@@ -18,7 +18,7 @@ class CongressionalDetail extends StatelessWidget {
     CongressionalDetailProvider provider =
         context.watch<CongressionalDetailProvider>();
     return BaseContainer(
-      appBar: AppBarHome(isPopback: true, title: provider.extra?.title),
+      appBar: AppBarHome(isPopBack: true, title: provider.extra?.title),
       body: CongressionalDetailContainer(slug: slug),
     );
   }

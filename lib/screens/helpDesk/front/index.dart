@@ -39,7 +39,7 @@ class _HelpDeskNewState extends State<HelpDeskNew> {
 
     return BaseContainer(
       appBar: AppBarHome(
-        isPopback: true,
+        isPopBack: true,
         title: provider.extraTickets?.title,
         subTitle: provider.extraTickets?.subTitle,
       ),

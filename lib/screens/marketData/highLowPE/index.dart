@@ -53,7 +53,7 @@ class HighLowPEIndex extends StatelessWidget {
 
     return BaseContainer(
       bottomSafeAreaColor: ThemeColors.background,
-      appBar: const AppBarHome(isPopback: true, title: "Market Data"),
+      appBar: const AppBarHome(isPopBack: true, title: "Market Data"),
       body: Stack(
         children: [
           const CommonTabContainer(

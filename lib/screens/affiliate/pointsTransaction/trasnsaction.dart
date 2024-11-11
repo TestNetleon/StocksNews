@@ -53,7 +53,7 @@ class _AffiliateTransactionState extends State<AffiliateTransaction> {
 
     return BaseContainer(
       appBar: AppBarHome(
-        isPopback: true,
+        isPopBack: true,
         title: provider.extraNew?.title.toString() ?? "",
       ),
       body: CommonEmptyError(

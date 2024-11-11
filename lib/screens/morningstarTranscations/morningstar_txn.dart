@@ -20,7 +20,7 @@ class MorningStarTransaction extends StatelessWidget {
     return BaseContainer(
       bottomSafeAreaColor: ThemeColors.background,
       appBar: AppBarHome(
-        isPopback: true,
+        isPopBack: true,
         title: provider.extra?.title.toString(),
       ),
       body: userProvider.user == null

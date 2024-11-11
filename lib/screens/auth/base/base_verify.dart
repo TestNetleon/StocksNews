@@ -267,7 +267,7 @@ class _BaseVerifyOTPState extends State<BaseVerifyOTP> with CodeAutoFill {
       },
       child: BaseContainer(
         appBar: const AppBarHome(
-          isPopback: true,
+          isPopBack: true,
           canSearch: false,
           showTrailing: false,
           title: "",

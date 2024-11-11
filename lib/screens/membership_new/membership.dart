@@ -20,7 +20,7 @@ class NewMembership extends StatelessWidget {
     return BaseContainer(
       drawer: const BaseDrawer(resetIndex: true),
       appBar: AppBarHome(
-        isPopback: true,
+        isPopBack: true,
         icon: cancel ? Icons.close : null,
         canSearch: !cancel,
         showTrailing: !cancel,

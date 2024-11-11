@@ -96,7 +96,7 @@ class _PdfViewerWidgetState extends State<PdfViewerWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const AppBarHome(isPopback: true),
+      appBar: const AppBarHome(isPopBack: true),
       body: isLoading
           ? const Center(child: Loading())
           : SizedBox(

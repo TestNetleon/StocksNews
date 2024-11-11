@@ -120,7 +120,7 @@ class _MsAnalysisState extends State<MsAnalysis> {
                   ? const Color.fromARGB(255, 163, 12, 1)
                   : ThemeColors.accent,
       appBar: const AppBarHome(
-        isPopback: true,
+        isPopBack: true,
         subTitle: "",
         widget: PredictionAppBar(),
       ),

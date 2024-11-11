@@ -59,7 +59,7 @@ class _BlogIndexNewState extends State<BlogIndexNew> {
     }
 
     return BaseContainer(
-      appBar: const AppBarHome(isPopback: true, title: "Blogs"),
+      appBar: const AppBarHome(isPopBack: true, title: "Blogs"),
       body: Stack(
         children: [
           Padding(

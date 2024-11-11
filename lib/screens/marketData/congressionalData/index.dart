@@ -48,7 +48,7 @@ class _CongressionalIndexState extends State<CongressionalIndex> {
     return BaseContainer(
       bottomSafeAreaColor: ThemeColors.background,
       appBar: AppBarHome(
-        isPopback: true,
+        isPopBack: true,
         showTrailing: false,
         canSearch: false,
         title: provider.extra?.title,

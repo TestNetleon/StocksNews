@@ -43,7 +43,7 @@ class _TopPlaidIndexViewState extends State<TopPlaidIndexView> {
 
     return BaseContainer(
       appBar: AppBarHome(
-        isPopback: true,
+        isPopBack: true,
         title: provider.extraMostPopular?.title ?? "",
       ),
       body: Padding(

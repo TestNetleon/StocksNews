@@ -73,7 +73,7 @@ class _GainerLoserContainerState extends State<GainerLoserContainer> {
         resetIndex: true,
       ),
       appBar: AppBarHome(
-        isPopback: true,
+        isPopBack: true,
         title: widget.type == StocksType.gainers
             ? "Today’s Top Gainers"
             : widget.type == StocksType.losers

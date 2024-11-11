@@ -35,7 +35,7 @@ class _ClaimPointsIndexState extends State<ClaimPointsIndex> {
 
     return BaseContainer(
       appBar: AppBarHome(
-        isPopback: true,
+        isPopBack: true,
         onTap: () {
           Navigator.pop(context, claimed);
         },

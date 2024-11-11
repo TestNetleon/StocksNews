@@ -34,7 +34,7 @@
 //     MoreStocksProvider provider = context.watch<MoreStocksProvider>();
 //     return BaseContainer(
 //       drawer: const BaseDrawer(),
-//       appBar: const AppBarHome(isPopback: true),
+//       appBar: const AppBarHome(isPopBack: true),
 //       body: Padding(
 //         padding: EdgeInsets.fromLTRB(
 //           Dimen.padding.sp,
