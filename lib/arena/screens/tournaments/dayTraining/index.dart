@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:stocks_news_new/arena/screens/tournaments/dayTraining/leaderboard.dart';
+import 'package:stocks_news_new/arena/screens/tournaments/dayTraining/widgets/leaderboard.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
@@ -7,9 +7,9 @@ import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import '../../../widgets/card.dart';
-import 'similar.dart';
-import 'timer.dart';
-import 'title.dart';
+import 'widgets/similar.dart';
+import 'widgets/timer.dart';
+import 'widgets/title.dart';
 
 class TournamentDayTrainingIndex extends StatelessWidget {
   const TournamentDayTrainingIndex({super.key});

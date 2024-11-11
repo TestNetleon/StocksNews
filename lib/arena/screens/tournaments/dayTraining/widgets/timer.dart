@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/arena/provider/arena.dart';
-import '../../../../utils/colors.dart';
-import '../../../../utils/theme.dart';
-import '../../../widgets/card.dart';
+import '../../../../../utils/colors.dart';
+import '../../../../../utils/theme.dart';
+import '../../../../widgets/card.dart';
 
 class DayTrainingTimer extends StatelessWidget {
   const DayTrainingTimer({super.key});

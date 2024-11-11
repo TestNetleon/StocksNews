@@ -108,6 +108,7 @@ import 'package:stocks_news_new/tradingSimulator/providers/ts_portfollo_provider
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 
+import '../arena/provider/trades.dart';
 import '../providers/featured_ticker.dart';
 import '../providers/high_low_pe.dart';
 import '../providers/low_prices_stocks.dart';
@@ -603,6 +604,7 @@ class Routes {
       ChangeNotifierProvider(create: (_) => MSAnalysisProvider()),
       ChangeNotifierProvider(create: (_) => MissionProvider()),
       ChangeNotifierProvider(create: (_) => ArenaProvider()),
+      ChangeNotifierProvider(create: (_) => TradesProvider()),
     ];
   }
 }
