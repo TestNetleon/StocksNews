@@ -199,7 +199,8 @@ class _BaseAuthState extends State<BaseAuth> {
     if (user?.phoneCode != null && user?.phoneCode != "") {
       countryCode = CountryCode.fromDialCode(user?.phoneCode ?? "").dialCode;
     } else if (geoCountryCode != null && geoCountryCode != "") {
-      countryCode = CountryCode.fromCountryCode(geoCountryCode!).dialCode;
+      countryCode =
+          CountryCode.fromCountryCode(geoCountryCode ?? 'US').dialCode;
     } else {
       countryCode = CountryCode.fromCountryCode("US").dialCode;
     }

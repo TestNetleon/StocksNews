@@ -1468,6 +1468,7 @@ class UserProvider extends ChangeNotifier {
         _user = UserRes.fromJson(response.data);
         Preference.saveUser(response.data);
         isSVG = isSvgFromUrl(_user?.image);
+        Utils().showLog('IS SVG $isSVG');
         // navigatorKey.currentContext!.read<HomeProvider>().getHomeSlider();
         shareUri = await DynamicLinkService.instance.getDynamicLink();
         callSliderTrendingAPI();

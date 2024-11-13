@@ -25,8 +25,7 @@ class ArenaStockItem extends StatelessWidget {
             child: CachedNetworkImage(
               width: 43,
               height: 43,
-              imageUrl:
-                  'https:\/\/financialmodelingprep.com\/image-stock\/TSLA.png',
+              imageUrl: data?.image ?? '',
             ),
           ),
           SpacerHorizontal(width: 10),
@@ -35,7 +34,7 @@ class ArenaStockItem extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'TSLA',
+                  data?.symbol ?? '',
                   style: styleGeorgiaBold(fontSize: 18),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
@@ -45,7 +44,7 @@ class ArenaStockItem extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.only(bottom: 5),
                     child: Text(
-                      'Tesla. Inc.',
+                      data?.company ?? '',
                       style: styleGeorgiaRegular(
                         color: ThemeColors.greyText,
                         fontSize: 12,
@@ -65,15 +64,24 @@ class ArenaStockItem extends StatelessWidget {
               borderRadius: BorderRadius.circular(30),
             ),
             child: Text(
-              '1.14%',
-              style: styleGeorgiaRegular(),
+              "${data?.change ?? 0} %",
+              style: styleGeorgiaRegular(
+                fontSize: 13,
+                color: (data?.change ?? 0) < 0
+                    ? ThemeColors.sos
+                    : ThemeColors.accent,
+              ),
             ),
           ),
           SpacerHorizontal(width: 10),
           Container(
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: ThemeColors.accent,
+              color: data?.isOpen == false
+                  ? ThemeColors.greyBorder
+                  : data?.type == StockType.bear
+                      ? ThemeColors.sos
+                      : ThemeColors.accent,
             ),
             padding: EdgeInsets.all(10),
           )

@@ -326,7 +326,8 @@ class _LoginFirstState extends State<LoginFirst> {
       countryCode =
           CountryCode.fromDialCode(userProvider.user?.phoneCode ?? "").dialCode;
     } else if (geoCountryCode != null && geoCountryCode != "") {
-      countryCode = CountryCode.fromCountryCode(geoCountryCode!).dialCode;
+      countryCode =
+          CountryCode.fromCountryCode(geoCountryCode ?? 'US').dialCode;
     } else {
       countryCode = CountryCode.fromCountryCode("US").dialCode;
     }

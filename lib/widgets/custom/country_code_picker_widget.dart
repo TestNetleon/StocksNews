@@ -130,12 +130,17 @@ class _CountryPickerWidgetState extends State<CountryPickerWidget> {
     // }
 
     if (user?.phoneCode != null && user?.phoneCode != "") {
-      locale = CountryCode.fromDialCode(user?.phoneCode ?? "").dialCode;
+      locale = CountryCode.fromDialCode(user?.phoneCode ?? "+1").code;
     } else if (geoCountryCode != null && geoCountryCode != "") {
-      locale = CountryCode.fromCountryCode(geoCountryCode!).dialCode;
+      if (geoCountryCode == "+1") {
+        locale = "US";
+      } else {
+        locale = CountryCode.fromCountryCode(geoCountryCode ?? 'US').dialCode;
+      }
     } else {
-      locale = CountryCode.fromCountryCode("US").dialCode;
+      locale = "US";
     }
+
     return Stack(
       children: [
         CountryCodePicker(

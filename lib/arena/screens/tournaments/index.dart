@@ -17,6 +17,7 @@ class _TournamentsIndexState extends State<TournamentsIndex> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<ArenaProvider>().getTournamentData();
+      context.read<ArenaProvider>().getSearchDefaults();
     });
   }
 

@@ -1,6 +1,17 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../../api/api_requester.dart';
+import '../../api/api_response.dart';
+import '../../api/apis.dart';
+import '../../providers/user_provider.dart';
+import '../../route/my_app.dart';
+import '../../tradingSimulator/modals/trading_search_res.dart';
+import '../../utils/constants.dart';
+import '../../utils/utils.dart';
 
 class ArenaProvider extends ChangeNotifier {
   int selectedTab = 0;
@@ -91,6 +102,51 @@ class ArenaProvider extends ChangeNotifier {
       'minutes': minutes.toString().padLeft(2, '0'),
       'seconds': seconds.toString().padLeft(2, '0'),
     };
+  }
+// TOP STOCKS
+
+  Status _status = Status.ideal;
+  Status get status => _status;
+  bool get isLoading => _status == Status.loading || _status == Status.ideal;
+
+  List<TradingSearchTickerRes>? _topSearch;
+  List<TradingSearchTickerRes>? get topSearch => _topSearch;
+
+  String? _error;
+  String? get error => _error ?? Const.errSomethingWrong;
+
+  void setStatus(status) {
+    _status = status;
+    notifyListeners();
+  }
+
+  Future getSearchDefaults() async {
+    setStatus(Status.loading);
+    try {
+      Map request = {
+        "token":
+            navigatorKey.currentContext!.read<UserProvider>().user?.token ?? ""
+      };
+
+      ApiResponse response = await apiRequest(
+        url: Apis.tradingMostSearch,
+        request: request,
+        showProgress: false,
+      );
+
+      if (response.status) {
+        _topSearch = tradingSearchTickerResFromJson(jsonEncode(response.data));
+      } else {
+        _topSearch = null;
+        _error = response.message ?? Const.errSomethingWrong;
+      }
+      setStatus(Status.ideal);
+    } catch (e) {
+      _topSearch = null;
+      _error = Const.errSomethingWrong;
+      Utils().showLog(e.toString());
+      setStatus(Status.ideal);
+    }
   }
 }
 

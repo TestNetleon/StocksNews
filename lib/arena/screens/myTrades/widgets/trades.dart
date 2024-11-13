@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/arena/provider/trades.dart';
+import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import '../../../../utils/colors.dart';
 import '../../../../utils/constants.dart';
@@ -41,7 +42,7 @@ class _ArenaTradesState extends State<ArenaTrades> {
   @override
   Widget build(BuildContext context) {
     TradesProvider provider = context.watch<TradesProvider>();
-
+    Utils().showLog('Data length ${provider.data.length}');
     var outlineInputBorder = OutlineInputBorder(
       borderRadius: BorderRadius.circular(Dimen.radius),
       borderSide: BorderSide(
@@ -132,8 +133,13 @@ class _ArenaTradesState extends State<ArenaTrades> {
             physics: AlwaysScrollableScrollPhysics(),
             itemBuilder: (context, index) {
               ArenaStockRes data = provider.data[index];
-              return ArenaStockItem(
-                data: data,
+              return GestureDetector(
+                onTap: () {
+                  Navigator.pop(context, data);
+                },
+                child: ArenaStockItem(
+                  data: data,
+                ),
               );
             },
             separatorBuilder: (context, index) {
