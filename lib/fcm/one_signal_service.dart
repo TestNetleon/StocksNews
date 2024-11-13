@@ -210,11 +210,13 @@ class OneSignalService {
 
   Future<void> initNotifications() async {
     fcmTokenGlobal = OneSignal.User.pushSubscription.id;
+    Utils().showLog('FCM Token Before $fcmTokenGlobal');
 
     OneSignal.User.pushSubscription.addObserver((state) async {
-      print(OneSignal.User.pushSubscription.id);
-      String? address = await _getUserLocation();
       fcmTokenGlobal = OneSignal.User.pushSubscription.id;
+      String? address = await _getUserLocation();
+      Utils().showLog('FCM Token After $fcmTokenGlobal');
+
       if (!isShowingError) {
         saveFCMapi(value: fcmTokenGlobal, address: address);
       }
