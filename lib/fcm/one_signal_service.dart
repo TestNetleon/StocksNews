@@ -258,7 +258,9 @@ Future<String?> _getUserLocation() async {
 
     // Get current position
     Position position = await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.high);
+      locationSettings: LocationSettings(accuracy: LocationAccuracy.high),
+      // desiredAccuracy: LocationAccuracy.high,
+    );
     // Reverse geocoding
     List<Placemark> placemarks =
         await placemarkFromCoordinates(position.latitude, position.longitude);
