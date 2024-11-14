@@ -16,7 +16,7 @@ class EarningsScreen extends StatelessWidget {
 
     return BaseContainer(
       bottomSafeAreaColor: ThemeColors.background,
-      appBar: AppBarHome(isPopback: true, title: provider.extra?.title),
+      appBar: AppBarHome(isPopBack: true, title: provider.extra?.title),
       body: EarningsList(),
     );
   }

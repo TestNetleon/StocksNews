@@ -29,7 +29,6 @@ class InputOTP extends StatelessWidget {
       },
       controller: pinController,
       focusNode: focusNode,
-      listenForMultipleSmsOnAndroid: true,
       onCompleted: onCompleted,
       onSubmitted: onSubmitted,
       onChanged: onChanged,

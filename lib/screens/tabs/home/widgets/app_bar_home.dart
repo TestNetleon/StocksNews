@@ -20,7 +20,7 @@ import 'package:svg_flutter/svg_flutter.dart';
 
 class AppBarHome extends StatefulWidget implements PreferredSizeWidget {
   final bool isHome;
-  final bool showTrailing, isPopback, canSearch, showPortfolio, showTitleLogo;
+  final bool showTrailing, isPopBack, canSearch, showPortfolio, showTitleLogo;
   final void Function()? onFilterClick;
   final void Function()? onTap;
   final String? title;
@@ -32,7 +32,7 @@ class AppBarHome extends StatefulWidget implements PreferredSizeWidget {
     super.key,
     this.icon,
     this.showTrailing = true,
-    this.isPopback = false,
+    this.isPopBack = false,
     this.onFilterClick,
     this.isHome = false,
     this.canSearch = true,
@@ -104,7 +104,7 @@ class _AppBarHomeState extends State<AppBarHome> {
               mainAxisSize: MainAxisSize.max,
               children: [
                 // Leading
-                widget.isPopback
+                widget.isPopBack
                     ? IconButton(
                         onPressed: widget.onTap ??
                             () {
@@ -227,6 +227,8 @@ class _AppBarHomeState extends State<AppBarHome> {
                       visible: widget.canSearch,
                       child: IconButton(
                         onPressed: () {
+                          closeKeyboard();
+
                           Navigator.push(
                             navigatorKey.currentContext!,
                             MaterialPageRoute(builder: (_) => const Search()),
@@ -261,6 +263,8 @@ class _AppBarHomeState extends State<AppBarHome> {
                         children: [
                           IconButton(
                             onPressed: () {
+                              closeKeyboard();
+
                               if (provider.user != null) {
                                 homeProvider.setNotification(true);
                               }

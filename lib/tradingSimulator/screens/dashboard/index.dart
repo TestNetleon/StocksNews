@@ -19,7 +19,7 @@ class TsDashboard extends StatelessWidget {
   Widget build(BuildContext context) {
     return BaseContainer(
       appBar: const AppBarHome(
-        isPopback: true,
+        isPopBack: true,
         canSearch: false,
         showTrailing: false,
         showPortfolio: true,

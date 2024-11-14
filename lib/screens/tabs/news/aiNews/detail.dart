@@ -18,7 +18,7 @@ class NewsDetailsAI extends StatelessWidget {
   Widget build(BuildContext context) {
     return BaseContainer(
       drawer: const BaseDrawer(resetIndex: true),
-      appBar: const AppBarHome(isPopback: true),
+      appBar: const AppBarHome(isPopBack: true),
       body: Padding(
         padding: EdgeInsets.fromLTRB(10.sp, 10.sp, 10.sp, 0),
         child: NewsDetailsBodyAI(slug: slug),

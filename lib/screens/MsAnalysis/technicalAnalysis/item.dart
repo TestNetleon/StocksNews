@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:stocks_news_new/providers/stockAnalysis/provider.dart';
 import 'package:stocks_news_new/utils/colors.dart';

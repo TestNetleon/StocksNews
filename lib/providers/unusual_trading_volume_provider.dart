@@ -15,6 +15,8 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 
+import '../service/amplitude/service.dart';
+
 class UnusualTradingVolumeProvider extends ChangeNotifier {
   Status _status = Status.ideal;
 
@@ -40,6 +42,7 @@ class UnusualTradingVolumeProvider extends ChangeNotifier {
   Future createAlertSend({
     required String alertName,
     required String symbol,
+    required String companyName,
     required int index,
     bool selectedOne = false,
     bool selectedTwo = false,
@@ -59,16 +62,23 @@ class UnusualTradingVolumeProvider extends ChangeNotifier {
         showProgress: true,
         removeForceLogin: true,
       );
-      _data?[index].isAlertAdded = 1;
-      notifyListeners();
+      if (response.status) {
+        AmplitudeService.logAlertUpdateEvent(
+          added: true,
+          symbol: symbol,
+          companyName: companyName,
+        );
+        _data?[index].isAlertAdded = 1;
+        notifyListeners();
 
-      _extra = (response.extra is Extra ? response.extra as Extra : null);
-      await _player.play(AssetSource(AudioFiles.alertWeathlist));
+        _extra = (response.extra is Extra ? response.extra as Extra : null);
+        await _player.play(AssetSource(AudioFiles.alertWeathlist));
 
-      navigatorKey.currentContext!
-          .read<HomeProvider>()
-          .setTotalsAlerts(response.data['total_alerts']);
-      notifyListeners();
+        navigatorKey.currentContext!
+            .read<HomeProvider>()
+            .setTotalsAlerts(response.data['total_alerts']);
+        notifyListeners();
+      }
 
       Navigator.pop(navigatorKey.currentContext!);
       Navigator.pop(navigatorKey.currentContext!);
@@ -86,6 +96,7 @@ class UnusualTradingVolumeProvider extends ChangeNotifier {
 
   Future addToWishList({
     required String symbol,
+    required String companyName,
     required bool up,
     required int index,
   }) async {
@@ -104,6 +115,11 @@ class UnusualTradingVolumeProvider extends ChangeNotifier {
         removeForceLogin: true,
       );
       if (response.status) {
+        AmplitudeService.logWatchlistUpdateEvent(
+          added: true,
+          symbol: symbol,
+          companyName: companyName,
+        );
         //
         _data?[index].isWatchlistAdded = 1;
         notifyListeners();

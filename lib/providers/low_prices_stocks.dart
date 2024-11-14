@@ -16,6 +16,7 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import '../modals/low_price_stocks_res.dart';
+import '../service/amplitude/service.dart';
 
 class LowPriceStocksProvider extends ChangeNotifier {
   String? _error;
@@ -54,6 +55,7 @@ class LowPriceStocksProvider extends ChangeNotifier {
   Future createAlertSend({
     required String alertName,
     required String symbol,
+    required String companyName,
     required int index,
     bool selectedOne = false,
     bool selectedTwo = false,
@@ -73,16 +75,23 @@ class LowPriceStocksProvider extends ChangeNotifier {
         showProgress: true,
         removeForceLogin: true,
       );
-      _data?[index].isAlertAdded = 1;
-      notifyListeners();
+      if (response.status) {
+        AmplitudeService.logAlertUpdateEvent(
+          added: true,
+          symbol: symbol,
+          companyName: companyName,
+        );
+        _data?[index].isAlertAdded = 1;
+        notifyListeners();
 
-      _extra = (response.extra is Extra ? response.extra as Extra : null);
-      await _player.play(AssetSource(AudioFiles.alertWeathlist));
+        _extra = (response.extra is Extra ? response.extra as Extra : null);
+        await _player.play(AssetSource(AudioFiles.alertWeathlist));
 
-      navigatorKey.currentContext!
-          .read<HomeProvider>()
-          .setTotalsAlerts(response.data['total_alerts']);
-      notifyListeners();
+        navigatorKey.currentContext!
+            .read<HomeProvider>()
+            .setTotalsAlerts(response.data['total_alerts']);
+        notifyListeners();
+      }
 
       Navigator.pop(navigatorKey.currentContext!);
       Navigator.pop(navigatorKey.currentContext!);
@@ -100,6 +109,7 @@ class LowPriceStocksProvider extends ChangeNotifier {
 
   Future addToWishList({
     required String symbol,
+    required String companyName,
     required bool up,
     required int index,
   }) async {
@@ -121,7 +131,11 @@ class LowPriceStocksProvider extends ChangeNotifier {
         //
         _data?[index].isWatchlistAdded = 1;
         notifyListeners();
-
+        AmplitudeService.logWatchlistUpdateEvent(
+          added: true,
+          symbol: symbol,
+          companyName: companyName,
+        );
         // _homeTrendingRes?.trending[index].isWatchlistAdded = 1;
 
         await _player.play(AssetSource(AudioFiles.alertWeathlist));
@@ -189,6 +203,10 @@ class LowPriceStocksProvider extends ChangeNotifier {
   void tabChange(index) {
     _filterParams = null;
     _extra = null;
+    if (tabs?[index].key != null && tabs?[index].key != '') {
+      AmplitudeService.logUserInteractionEvent(type: tabs?[index].key ?? '');
+    }
+
     if (tabs?[index].key == "Stocks On Sale") {
       if (_selectedIndex != index) {
         _selectedIndex = index;
@@ -292,6 +310,7 @@ class LowPriceStocksProvider extends ChangeNotifier {
         _tabs = lowPriceStocksTabResFromJson(jsonEncode(response.data));
         if (_tabs != null) {
           getLowPriceData(type: 0);
+          AmplitudeService.logUserInteractionEvent(type: tabs?[0].key ?? '');
         }
       } else {
         _error = response.message;

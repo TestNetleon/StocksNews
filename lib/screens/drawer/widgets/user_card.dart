@@ -302,7 +302,6 @@ import 'package:stocks_news_new/screens/membership_new/membership.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
-import '../../../providers/leaderboard.dart';
 import '../../../utils/colors.dart';
 import '../../../utils/constants.dart';
 import '../../myAccount/widgets/my-account_header.dart';
@@ -323,19 +322,19 @@ class _UserCardState extends State<UserCard> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      _callAPI();
+      // _callAPI();
       // _isSVG();
     });
   }
 
-  _callAPI() {
-    // HomeProvider provider = context.read<HomeProvider>();
-    UserProvider provider = context.read<UserProvider>();
-    if (provider.user?.affiliateStatus == 1) {
-      LeaderBoardProvider provider = context.read<LeaderBoardProvider>();
-      provider.getReferData(checkAppUpdate: false);
-    }
-  }
+  // _callAPI() {
+  //   // HomeProvider provider = context.read<HomeProvider>();
+  //   UserProvider provider = context.read<UserProvider>();
+  //   if (provider.user?.affiliateStatus == 1) {
+  //     LeaderBoardProvider provider = context.read<LeaderBoardProvider>();
+  //     provider.getReferData(checkAppUpdate: false);
+  //   }
+  // }
 
   // Future _isSVG() async {
   //   UserProvider provider = context.read<UserProvider>();

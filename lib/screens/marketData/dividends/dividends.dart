@@ -12,7 +12,7 @@ class DividendsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return const BaseContainer(
       bottomSafeAreaColor: ThemeColors.background,
-      appBar: AppBarHome(isPopback: true, title: "Market Data"),
+      appBar: AppBarHome(isPopBack: true, title: "Market Data"),
       body: DividendsList(),
     );
   }

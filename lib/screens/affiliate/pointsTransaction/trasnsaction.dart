@@ -53,7 +53,7 @@ class _AffiliateTransactionState extends State<AffiliateTransaction> {
 
     return BaseContainer(
       appBar: AppBarHome(
-        isPopback: true,
+        isPopBack: true,
         title: provider.extraNew?.title.toString() ?? "",
       ),
       body: CommonEmptyError(
@@ -131,7 +131,7 @@ class _AffiliateTransactionState extends State<AffiliateTransaction> {
                   }
                 },
                 text: "Claim Your Rewards",
-                margin: EdgeInsets.only(top: 5),
+                margin: EdgeInsets.only(top: 5, bottom: 10),
               ),
             )
           ],

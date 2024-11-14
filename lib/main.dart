@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:stocks_news_new/fcm/one_signal_service.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:stocks_news_new/route/my_app.dart';
+import 'package:stocks_news_new/service/amplitude/service.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/database/preference.dart';
 import 'package:stocks_news_new/utils/utils.dart';
@@ -52,6 +53,7 @@ void main() async {
     );
 
     FirebaseInAppMessaging.instance.setAutomaticDataCollectionEnabled(true);
+    AmplitudeService.initialize();
     Timer(const Duration(seconds: 8), () {
       Preference.setIsFirstOpen(false);
     });
@@ -60,9 +62,6 @@ void main() async {
   }
 
   // FirebaseApi().initNotifications();
-  // Uri membershipURL =
-  //     await DynamicLinkService.instance.getMembershipDynamicLink();
-  // Utils().showLog("Membership URL $membershipURL");
   splashLoaded = false;
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
       .then((_) {

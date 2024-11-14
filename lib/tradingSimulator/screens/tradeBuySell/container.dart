@@ -79,7 +79,11 @@ class _BuySellContainerState extends State<BuySellContainer> {
     super.dispose();
   }
 
+  _calculationsForBUY() {}
+  _calculationsForSELL() {}
+
   _onTap() async {
+    closeKeyboard();
     StockDetailProviderNew provider = context.read<StockDetailProviderNew>();
     KeyStats? keyStats = provider.tabRes?.keyStats;
 
@@ -162,6 +166,7 @@ class _BuySellContainerState extends State<BuySellContainer> {
 
         ApiResponse response =
             await tradeProviderNew.requestBuyShare(request, showProgress: true);
+        Utils().showLog('~~~~~${response.status}~~~~');
         if (response.status) {
           context.read<TsPortfolioProvider>().getDashboardData();
           context.read<TsOpenListProvider>().getData();
@@ -366,6 +371,8 @@ class _BuySellContainerState extends State<BuySellContainer> {
 
       ApiResponse response =
           await tradeProviderNew.requestSellShare(request, showProgress: true);
+      Utils().showLog('~~~~~${response.status}~~~~');
+
       if (response.status) {
         context.read<HomeProvider>().getHomeSlider();
         context.read<TsOpenListProvider>().getData();
@@ -424,38 +431,38 @@ class _BuySellContainerState extends State<BuySellContainer> {
         await showTsOrderSuccessSheet(order, widget.buy);
       } else {
         // TODO:
-        // popUpAlert(message: "${response.message}", title: "Alert");
+        popUpAlert(message: "${response.message}", title: "Alert");
 
-        final order = SummaryOrderNew(
-          isShare: _selectedSegment == TypeTrade.shares,
-          change: provider.tabRes?.keyStats?.changeWithCur,
-          changePercentage: provider.tabRes?.keyStats?.changesPercentage,
-          dollars: _selectedSegment == TypeTrade.dollar
-              ? num.parse(_currentText)
-              : (num.parse(_currentText) * price),
-          shares: _selectedSegment == TypeTrade.shares
-              ? num.parse(_currentText)
-              : (num.parse(_currentText) / price),
-          image: provider.tabRes?.companyInfo?.image,
-          name: provider.tabRes?.keyStats?.name,
-          price: provider.tabRes?.keyStats?.price,
-          symbol: provider.tabRes?.keyStats?.symbol,
-          invested: invested,
-          buy: widget.buy,
-        );
-        Navigator.pop(context);
-        Navigator.pop(context);
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (_) => TsDashboard(initialIndex: isPending ? 1 : 0),
-          ),
-        );
+        // final order = SummaryOrderNew(
+        //   isShare: _selectedSegment == TypeTrade.shares,
+        //   change: provider.tabRes?.keyStats?.changeWithCur,
+        //   changePercentage: provider.tabRes?.keyStats?.changesPercentage,
+        //   dollars: _selectedSegment == TypeTrade.dollar
+        //       ? num.parse(_currentText)
+        //       : (num.parse(_currentText) * price),
+        //   shares: _selectedSegment == TypeTrade.shares
+        //       ? num.parse(_currentText)
+        //       : (num.parse(_currentText) / price),
+        //   image: provider.tabRes?.companyInfo?.image,
+        //   name: provider.tabRes?.keyStats?.name,
+        //   price: provider.tabRes?.keyStats?.price,
+        //   symbol: provider.tabRes?.keyStats?.symbol,
+        //   invested: invested,
+        //   buy: widget.buy,
+        // );
+        // Navigator.pop(context);
+        // Navigator.pop(context);
+        // Navigator.push(
+        //   context,
+        //   MaterialPageRoute(
+        //     builder: (_) => TsDashboard(initialIndex: isPending ? 1 : 0),
+        //   ),
+        // );
 
-        widget.buy
-            ? tradeProviderNew.addOrderData(order)
-            : tradeProviderNew.sellOrderData(order);
-        await showTsOrderSuccessSheet(order, widget.buy);
+        // widget.buy
+        //     ? tradeProviderNew.addOrderData(order)
+        //     : tradeProviderNew.sellOrderData(order);
+        // await showTsOrderSuccessSheet(order, widget.buy);
       }
     }
 
@@ -798,6 +805,7 @@ class _BuySellContainerState extends State<BuySellContainer> {
                         ThemeInputField(
                           controller: limitController,
                           placeholder: "Enter price to limit order",
+                          keyboardType: TextInputType.number,
                         ),
                       if (_limitOrder == true) SpacerVertical(),
                       if (_bracketOrder == true)
@@ -807,6 +815,7 @@ class _BuySellContainerState extends State<BuySellContainer> {
                               child: ThemeInputField(
                                 controller: targetController,
                                 placeholder: "Enter target price",
+                                keyboardType: TextInputType.number,
                                 inputFormatters: [priceFormatter],
                               ),
                             ),
@@ -814,6 +823,7 @@ class _BuySellContainerState extends State<BuySellContainer> {
                             Expanded(
                               child: ThemeInputField(
                                 controller: stopLossController,
+                                keyboardType: TextInputType.number,
                                 placeholder: "Enter stop loss",
                               ),
                             ),

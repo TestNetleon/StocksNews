@@ -76,7 +76,7 @@ class _NotificationSettingState extends State<NotificationSetting>
 
     return BaseContainer(
       appBar: AppBarHome(
-        isPopback: true,
+        isPopBack: true,
         showTrailing: false,
         canSearch: false,
         title: provider.extra?.title ?? "Notification Settings",

@@ -39,7 +39,7 @@ class _IndicesIndexState extends State<IndicesIndex> {
     IndicesProvider provider = context.watch<IndicesProvider>();
     return BaseContainer(
       bottomSafeAreaColor: ThemeColors.background,
-      appBar: const AppBarHome(isPopback: true, title: "Market Data"),
+      appBar: const AppBarHome(isPopBack: true, title: "Market Data"),
       body: provider.tabLoading ? const Loading() : _getWidget(provider),
     );
   }

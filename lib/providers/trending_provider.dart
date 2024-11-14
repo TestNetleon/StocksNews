@@ -12,6 +12,8 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 
+import '../service/amplitude/service.dart';
+
 class TrendingProvider extends ChangeNotifier {
   TrendingRes? _mostBullish;
   TrendingRes? get mostBullish => _mostBullish;
@@ -83,6 +85,7 @@ class TrendingProvider extends ChangeNotifier {
   Future createAlertSend({
     required String alertName,
     required String symbol,
+    required String companyName,
     required bool up,
     required int index,
     bool selectedOne = false,
@@ -105,6 +108,11 @@ class TrendingProvider extends ChangeNotifier {
         removeForceLogin: true,
       );
       if (response.status) {
+        AmplitudeService.logAlertUpdateEvent(
+          added: true,
+          symbol: symbol,
+          companyName: companyName,
+        );
         if (up) {
           //
           _mostBullish?.mostBullish?[index].isAlertAdded = 1;
@@ -137,8 +145,12 @@ class TrendingProvider extends ChangeNotifier {
     }
   }
 
-  Future addToWishList(
-      {required String symbol, required bool up, required int index}) async {
+  Future addToWishList({
+    required String symbol,
+    required String companyName,
+    required bool up,
+    required int index,
+  }) async {
     setStatus(Status.loading);
     showGlobalProgressDialog();
 
@@ -155,6 +167,11 @@ class TrendingProvider extends ChangeNotifier {
         removeForceLogin: true,
       );
       if (response.status) {
+        AmplitudeService.logWatchlistUpdateEvent(
+          added: true,
+          symbol: symbol,
+          companyName: companyName,
+        );
         if (up) {
           //
 

@@ -222,7 +222,7 @@ import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import '../../../utils/dialogs.dart';
 import '../../../utils/utils.dart';
 import '../../affiliate/pointsTransaction/trasnsaction.dart';
-import '../../auth/base/base_auth.dart';
+import '../../auth/base/base_auth_bottom.dart';
 
 class Home extends StatefulWidget {
   static const String path = "Home";
@@ -311,6 +311,8 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
             ? null
             : GestureDetector(
                 onTap: () {
+                  closeKeyboard();
+
                   Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -350,7 +352,7 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
                           style: stylePTSansRegular(
                             fontSize: 14,
                           ),
-                        )
+                        ),
                       ],
                     ),
                   ),

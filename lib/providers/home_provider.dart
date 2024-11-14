@@ -35,6 +35,7 @@ import 'package:stocks_news_new/utils/utils.dart';
 
 import '../modals/featured_watchlist.dart';
 import '../modals/most_purchased.dart';
+import '../service/amplitude/service.dart';
 
 class HomeProvider extends ChangeNotifier {
   // HomeRes? _home;
@@ -191,6 +192,7 @@ class HomeProvider extends ChangeNotifier {
   Future createAlertSend({
     required String alertName,
     required String symbol,
+    required String companyName,
     required int index,
     bool selectedOne = false,
     bool selectedTwo = false,
@@ -212,6 +214,11 @@ class HomeProvider extends ChangeNotifier {
         removeForceLogin: true,
       );
       if (response.status) {
+        AmplitudeService.logAlertUpdateEvent(
+          added: true,
+          symbol: symbol,
+          companyName: companyName,
+        );
         if (type == "homeTrending") {
           _homeTrendingRes?.trending[index].isAlertAdded = 1;
           notifyListeners();
@@ -249,6 +256,7 @@ class HomeProvider extends ChangeNotifier {
 
   Future addToWishList({
     required String symbol,
+    required String companyName,
     required bool up,
     required int index,
     type,
@@ -268,6 +276,12 @@ class HomeProvider extends ChangeNotifier {
         removeForceLogin: true,
       );
       if (response.status) {
+        AmplitudeService.logWatchlistUpdateEvent(
+          added: true,
+          symbol: symbol,
+          companyName: companyName,
+        );
+
         //
         if (type == "homeTrending") {
           _homeTrendingRes?.trending[index].isWatchlistAdded = 1;
@@ -308,15 +322,12 @@ class HomeProvider extends ChangeNotifier {
 
     retryCount = 0;
     showAdd = true;
-    if (kDebugMode) {
-      checkMaintenanceMode();
-    }
 
+    getHomeSlider();
     getHomePortfolio();
     // _getLastMarketOpen();
     _getLastMarketOpenFW();
 
-    getHomeSlider();
     getFeaturedWatchlist();
     // getHomeAlerts();
     getMostPurchased(home: "home");
@@ -342,55 +353,12 @@ class HomeProvider extends ChangeNotifier {
     if (_homeTrendingRes == null) {
       getHomeTrendingData();
     }
-    // if (_benefitRes == null) {
-    //   getBenefitsDetails();
-    // }
-    // if (_ipoRes == null) {
-    //   getIpoData();
-    // }
-    // if (_homeSentimentRes == null) {
-    //   getHomeSentimentData();
-    // }
-    // if (_focusRes == null) {
-    //   getStockInFocus();
-    // }
-    // if (_homeInsiderRes == null) {
-    //   getHomeInsiderData(null);
-    // }
   }
 
   updateReferShare(text) {
     _extra?.referral?.shareText = text;
     notifyListeners();
   }
-
-  // PurchasesConfiguration? _configuration;
-
-  // void _configureRevenueCat() async {
-  //   Utils().showLog("---CONFIGURE START----");
-  //   try {
-  //     UserRes? user = navigatorKey.currentContext!.read<UserProvider>().user;
-  //     RevenueCatKeyRes? keys = _extra?.revenueCatKeys;
-  //     if (Platform.isAndroid) {
-  //       _configuration = PurchasesConfiguration(
-  //           keys?.playStore ?? "goog_KXHVJRLChlyjoOamWsqCWQSJZfI")
-  //         ..appUserID = user?.userId ?? "";
-  //     } else if (Platform.isIOS) {
-  //       _configuration = PurchasesConfiguration(
-  //           keys?.appStore ?? "appl_kHwXNrngqMNktkEZJqYhEgLjbcC")
-  //         ..appUserID = user?.userId ?? "";
-  //     }
-  //     if (_configuration != null) {
-  //       try {
-  //         await Purchases.configure(_configuration!);
-  //       } catch (e) {
-  //         await Purchases.configure(_configuration!);
-  //       }
-  //     }
-  //   } catch (e) {
-  //     //
-  //   }
-  // }
 
   Future getHomeSlider({showProgress = false, String? addId}) async {
     _statusSlider = Status.loading;
@@ -423,6 +391,7 @@ class HomeProvider extends ChangeNotifier {
         },
         onRefresh: () => refreshData(null),
       );
+      _extra = (response.extra is Extra ? response.extra as Extra : null);
 
       if (response.status) {
         //...........PLAID KEYS SET............
@@ -434,15 +403,21 @@ class HomeProvider extends ChangeNotifier {
         // holdingsAPI = "$basePlaidUrl/investments/holdings/get";
         //.....................................
         _homeSliderRes = HomeSliderRes.fromJson(response.data);
+
         Utils().showLog("-----!!${_homeSliderRes?.rating?.description}");
-        _extra = (response.extra is Extra ? response.extra as Extra : null);
+        notifyListeners();
+
         Preference.saveReferInput(_extra?.affiliateInput == 1);
         loginTxt = _extra?.loginText;
         signUpTxt = _extra?.signUpText;
         totalAlerts = _homeSliderRes?.totalAlerts ?? 0;
         totalWatchList = _homeSliderRes?.totalWatchList ?? 0;
         if (_extra?.messageObject != null) {
-          Preference.saveLocalDataBase(_extra?.messageObject);
+          try {
+            Preference.saveLocalDataBase(_extra?.messageObject);
+          } catch (e) {
+            Utils().showLog('error $e');
+          }
         }
         if (_extra?.messageObject?.error != null) {
           Const.errSomethingWrong = _extra?.messageObject?.error ?? "";
@@ -458,7 +433,6 @@ class HomeProvider extends ChangeNotifier {
           notificationSeen = (response.extra as Extra).notificationCount == 0;
           showMembership = (response.extra as Extra).showMembership == true;
         }
-        // _configureRevenueCat();
 
         notifyListeners();
       } else {
@@ -479,7 +453,6 @@ class HomeProvider extends ChangeNotifier {
 
   Future getHomeTrendingData() async {
     topLoading = true;
-    // popularPresent = true;
     _statusTrending = Status.loading;
     notifyListeners();
 
@@ -495,12 +468,6 @@ class HomeProvider extends ChangeNotifier {
       );
       if (response.status) {
         _homeTrendingRes = HomeTrendingRes.fromJson(response.data);
-        // if (_homeTrendingRes?.popular.isEmpty == true ||
-        //     _homeTrendingRes?.popular == null ||
-        //     _homeTrendingRes == null) {
-        //   popularPresent = false;
-        //   notifyListeners();
-        // }
       } else {
         _homeTrendingRes = null;
         _error = "Data not found";
@@ -522,7 +489,6 @@ class HomeProvider extends ChangeNotifier {
   }
 
   Future getHomeTopGainerData() async {
-    // popularPresent = true;
     _statusGainers = Status.loading;
     notifyListeners();
 
@@ -542,12 +508,6 @@ class HomeProvider extends ChangeNotifier {
 
       if (response.status) {
         _homeTopGainerRes = HomeTopGainerRes.fromJson(response.data);
-        // if (_homeTrendingRes?.popular.isEmpty == true ||
-        //     _homeTrendingRes?.popular == null ||
-        //     _homeTrendingRes == null) {
-        //   popularPresent = false;
-        //   notifyListeners();
-        // }
       } else {
         _homeTopGainerRes = null;
         _error = "Data not found";
@@ -563,7 +523,6 @@ class HomeProvider extends ChangeNotifier {
   }
 
   Future getHomeTopLoserData() async {
-    // popularPresent = true;
     _statusLosers = Status.loading;
     notifyListeners();
 
@@ -582,12 +541,6 @@ class HomeProvider extends ChangeNotifier {
       );
       if (response.status) {
         _homeTopLosersRes = HomeTopLosersRes.fromJson(response.data);
-        // if (_homeTrendingRes?.popular.isEmpty == true ||
-        //     _homeTrendingRes?.popular == null ||
-        //     _homeTrendingRes == null) {
-        //   popularPresent = false;
-        //   notifyListeners();
-        // }
       } else {
         _homeTopLosersRes = null;
         _error = "Data not found";
@@ -633,6 +586,7 @@ class HomeProvider extends ChangeNotifier {
         }
       } else {
         _homePortfolio = null;
+        Utils().showLog('getHomePortfolio else');
         //
       }
       _statusPortfolio = Status.loaded;
@@ -640,6 +594,8 @@ class HomeProvider extends ChangeNotifier {
 
       return ApiResponse(status: true, data: response.data);
     } catch (e) {
+      Utils().showLog('getHomePortfolio $e');
+
       _homePortfolio = null;
       _statusPortfolio = Status.loaded;
       notifyListeners();
@@ -668,7 +624,6 @@ class HomeProvider extends ChangeNotifier {
 
   Future getFeaturedWatchlist({bool userAvail = true}) async {
     UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
-    // _fwData = null;
     setStatusFW(Status.loading);
     try {
       Map request = {
@@ -730,7 +685,6 @@ class HomeProvider extends ChangeNotifier {
       _statusHomeAlert = Status.loaded;
       notifyListeners();
     }
-    // closeGlobalProgressDialog();
   }
 
   Future getBenefitsDetails() async {
@@ -762,20 +716,6 @@ class HomeProvider extends ChangeNotifier {
     }
   }
 
-  // Future<void> apiIsolate(SendPort sendPort, String apiUrl, Map request) async {
-  //   try {
-  //     ApiResponse response = await apiRequest(
-  //       url: apiUrl,
-  //       request: request,
-  //       showProgress: false,
-  //       onRefresh: () => refreshData(null),
-  //     );
-  //     sendPort.send(response);
-  //   } catch (e) {
-  //     sendPort.send(e);
-  //   }
-  // }
-
   Future getStockInFocus() async {
     _statusFocus = Status.loading;
     notifyListeners();
@@ -804,34 +744,6 @@ class HomeProvider extends ChangeNotifier {
       notifyListeners();
     }
   }
-
-  // Future getIpoData() async {
-  //   _statusIpo = Status.loading;
-  //   notifyListeners();
-  //   UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
-  //   try {
-  //     Map request = {
-  //       "token": provider.user?.token ?? "",
-  //     };
-  //     ApiResponse response = await apiRequest(
-  //       url: Apis.ipoCalendar,
-  //       request: request,
-  //       showProgress: false,
-  //       onRefresh: () => refreshData(null),
-  //     );
-  //     if (response.status) {
-  //       _ipoRes = ipoResFromJson(jsonEncode(response.data));
-  //     } else {
-  //       _ipoRes = null;
-  //     }
-  //     _statusIpo = Status.loaded;
-  //     notifyListeners();
-  //   } catch (e) {
-  //     _ipoRes = null;
-  //     _statusIpo = Status.loaded;
-  //     notifyListeners();
-  //   }
-  // }
 
   Future getHomeSentimentData() async {
     _statusSentiment = Status.loading;
@@ -883,7 +795,6 @@ class HomeProvider extends ChangeNotifier {
         _homeInsiderRes = HomeInsiderRes.fromJson(response.data);
       } else {
         _homeInsiderRes = null;
-        // showErrorMessage(message: response.message);
       }
       _statusInsider = Status.loaded;
       notifyListeners();
@@ -895,46 +806,34 @@ class HomeProvider extends ChangeNotifier {
   }
 
   Future checkMaintenanceMode() async {
-    _statusSlider = Status.loading;
     notifyListeners();
-    // UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
-    // String? fcmToken = await Preference.getFcmToken();
-    // bool granted = await Permission.notification.isGranted;
 
     try {
-      // fcmToken ??= await FirebaseMessaging.instance.getToken();
-      // Map request = {
-      //   "token": provider.user?.token ?? "",
-      //   "fcm_token": fcmToken ?? "",
-      //   "fcm_permission": "$granted",
-      // };
       ApiResponse response = await apiRequest(
-        // url: Apis.homeSlider,
         url: Apis.checkServer,
         baseUrl: Apis.baseUrlLocal,
-
-        // request: request,
         showProgress: false,
         onRefresh: () => refreshData(null),
       );
-      _statusSlider = Status.loaded;
-      notifyListeners();
 
-      _extra = (response.extra is Extra ? response.extra as Extra : null);
+      if (response.status) {
+        Extra? newExtra =
+            (response.extra is Extra ? response.extra as Extra : null);
 
-      if (_extra?.messageObject != null) {
-        Preference.saveLocalDataBase(_extra?.messageObject);
+        if (newExtra?.messageObject != null) {
+          Preference.saveLocalDataBase(newExtra?.messageObject);
+        }
+        if (newExtra?.messageObject?.error != null) {
+          Const.errSomethingWrong = newExtra?.messageObject?.error ?? "";
+          Const.loadingMessage = newExtra?.messageObject?.loading ?? "";
+        }
+        MessageRes? localDataBase = await Preference.getLocalDataBase();
+        Utils().showLog("localDataBase  =========${localDataBase?.error}");
+        notifyListeners();
       }
-      if (_extra?.messageObject?.error != null) {
-        Const.errSomethingWrong = _extra?.messageObject?.error ?? "";
-        Const.loadingMessage = _extra?.messageObject?.loading ?? "";
-      }
-      MessageRes? localDataBase = await Preference.getLocalDataBase();
-      Utils().showLog("localDataBase  =========${localDataBase?.error}");
 
       return response.status ? false : true;
     } catch (e) {
-      _statusSlider = Status.loaded;
       notifyListeners();
       return false;
     }
@@ -1145,7 +1044,6 @@ class HomeProvider extends ChangeNotifier {
 
   void _checkForNewVersion(Extra extra) async {
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
-    // String versionName = packageInfo.version;
     String buildCode = packageInfo.buildNumber;
     if (Platform.isAndroid &&
         (extra.androidBuildCode ?? 0) > int.parse(buildCode)) {
@@ -1249,22 +1147,4 @@ class HomeProvider extends ChangeNotifier {
       setStatusMostPurchased(Status.loaded);
     }
   }
-
-  // Maintenance API
-
-  // Future callMaintenance() async {
-  //   try {
-  //     ApiResponse response = await apiRequest(
-  //       url: Apis.checkServer,
-  //       baseUrl: Apis.baseUrlLocal,
-  //     );
-  //     if (response.status) {
-  //       //
-  //     } else {
-  //       //
-  //     }
-  //   } catch (e) {
-  //     //
-  //   }
-  // }
 }

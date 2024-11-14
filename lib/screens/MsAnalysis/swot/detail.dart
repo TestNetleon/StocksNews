@@ -22,7 +22,7 @@ class MsSwotAnalysisDetail extends StatelessWidget {
 
     return BaseContainer(
       appBar: AppBarHome(
-        isPopback: true,
+        isPopBack: true,
         title: 'SWOT Analysis Detail',
       ),
       body: CustomScrollView(

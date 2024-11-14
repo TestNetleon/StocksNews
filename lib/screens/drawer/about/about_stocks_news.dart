@@ -9,7 +9,6 @@ import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/affiliate/pointsTransaction/trasnsaction.dart';
-import 'package:stocks_news_new/screens/auth/login/login_sheet.dart';
 import 'package:stocks_news_new/screens/auth/login/login_sheet_tablet.dart';
 import 'package:stocks_news_new/screens/drawer/about/tile.dart';
 import 'package:stocks_news_new/screens/drawer/settings/index.dart';
@@ -28,7 +27,8 @@ import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/custom/refer.dart';
 import 'package:stocks_news_new/widgets/logout.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
-
+import '../../../arena/screens/index.dart';
+import '../../../tradingSimulator/screens/dashboard/index.dart';
 import '../../../utils/constants.dart';
 import '../../../utils/theme.dart';
 import '../../../widgets/spacer_vertical.dart';
@@ -50,7 +50,8 @@ class _AboutStocksNewsState extends State<AboutStocksNews> {
     UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
 
     if (provider.user == null) {
-      isPhone ? await loginSheet() : await loginSheetTablet();
+      // isPhone ? await loginSheet() : await loginSheetTablet();
+      await loginSheetTablet();
     }
 
     if (provider.user == null) {
@@ -209,38 +210,44 @@ class _AboutStocksNewsState extends State<AboutStocksNews> {
       );
     }
     // Trading Simulator
-    // if (user != null) {
-    //   visibleAboutTiles.add(
-    //     DrawerRes(
-    //       iconData: Icons.bakery_dining_outlined,
-    //       text: "Trading Simulator",
-    //       onTap: () {
-    //         _closeDrawer();
-    //         Navigator.push(
-    //           context,
-    //           MaterialPageRoute(
-    //             builder: (context) => const TsDashboard(),
-    //           ),
-    //         );
-    //       },
-    //     ),
-    //   );
-    // }
-    // Refer and Earn
-    if (provider.extra?.referral?.shwReferral == true) {
+    if (provider.extra?.showTradingSimulator == true) {
       visibleAboutTiles.add(
         DrawerRes(
-          iconData: Icons.leaderboard_outlined,
-          text: "Refer and Earn",
+          iconData: Icons.bakery_dining_outlined,
+          text: "Trading Simulator",
           onTap: () {
             _closeDrawer();
-            _onShareAppClick();
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const TsDashboard(),
+              ),
+            );
+          },
+        ),
+      );
+    }
+    if (provider.extra?.showArena == true) {
+      visibleAboutTiles.add(
+        DrawerRes(
+          iconData: Icons.bakery_dining_outlined,
+          text: "Game Arena",
+          onTap: () {
+            _closeDrawer();
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ArenaIndex(),
+              ),
+            );
           },
         ),
       );
     }
 
-    if (provider.extra?.showRewards == true) {
+    // Refer and Earn
+
+    if (provider.extra?.showRewards == true && user != null) {
       visibleAboutTiles.add(
         DrawerRes(
           iconData: Icons.star,

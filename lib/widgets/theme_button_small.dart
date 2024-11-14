@@ -5,7 +5,7 @@ import 'package:stocks_news_new/utils/theme.dart';
 //
 class ThemeButtonSmall extends StatelessWidget {
   const ThemeButtonSmall({
-    required this.onPressed,
+    this.onPressed,
     this.text = "Submit",
     this.color = ThemeColors.accent,
     this.textColor = Colors.white,
@@ -17,6 +17,7 @@ class ThemeButtonSmall extends StatelessWidget {
     this.padding,
     this.icon,
     this.margin,
+    this.disabledColor,
     this.iconWidget,
     this.textAlign = TextAlign.center,
     super.key,
@@ -26,9 +27,11 @@ class ThemeButtonSmall extends StatelessWidget {
 
   final String text;
   final Color? color;
+  final Color? disabledColor;
+
   final Color textColor;
   final Widget? iconWidget;
-  final Function onPressed;
+  final Function? onPressed;
   final double textSize;
   final double radius;
   final IconData? icon;
@@ -45,9 +48,16 @@ class ThemeButtonSmall extends StatelessWidget {
     return Container(
       margin: margin,
       child: ElevatedButton(
-        onPressed: () => onPressed(),
+        onPressed: onPressed != null
+            ? () {
+                if (onPressed != null) {
+                  onPressed!();
+                }
+              }
+            : null,
         style: ElevatedButton.styleFrom(
           backgroundColor: color,
+          disabledBackgroundColor: disabledColor,
           elevation: 0,
           padding: padding ??
               EdgeInsets.symmetric(

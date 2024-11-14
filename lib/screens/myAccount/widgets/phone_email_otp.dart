@@ -145,34 +145,49 @@ class _OTPBottomPhoneState extends State<OTPBottomPhone> {
     setState(() {});
 
     UserProvider provider = context.read<UserProvider>();
-    Map request = widget.screenType == true
-        ? {
-            "token": provider.user?.token ?? "",
-            "phone": text,
-            "phone_hash": appSignature,
-          }
-        : {
-            "token": provider.user?.token ?? "",
-            "email": text?.toLowerCase(),
-          };
+    Map request = {
+      "token": provider.user?.token ?? "",
+      "email": text?.toLowerCase(),
+    };
 
     try {
-      _listenCode();
-      ApiResponse response;
-      if (widget.screenType == true) {
-        response = await provider.emailUpdateOtp(request,
-            resendButtonClick: true, email: text ?? "");
-      } else {
-        response = await provider.phoneUpdateOtp(request,
-            resendButtonClick: false, phone: text ?? "");
-      }
+      ApiResponse response = await provider.emailUpdateOtp(request,
+          resendButtonClick: false, email: text ?? '');
 
-      if (response.status) {
-        _otpFocusNode.requestFocus();
-      }
+      if (response.status) {}
     } catch (e) {
       //
     }
+
+    // UserProvider provider = context.read<UserProvider>();
+    // Map request = widget.screenType == true
+    //     ? {
+    //         "token": provider.user?.token ?? "",
+    //         "phone": text,
+    //         "phone_hash": appSignature,
+    //       }
+    //     : {
+    //         "token": provider.user?.token ?? "",
+    //         "email": text?.toLowerCase(),
+    //       };
+
+    // try {
+    //   _listenCode();
+    //   ApiResponse response;
+    //   if (widget.screenType == true) {
+    //     response = await provider.emailUpdateOtp(request,
+    //         resendButtonClick: true, email: text ?? "");
+    //   } else {
+    //     response = await provider.phoneUpdateOtp(request,
+    //         resendButtonClick: false, phone: text ?? "");
+    //   }
+
+    //   if (response.status) {
+    //     _otpFocusNode.requestFocus();
+    //   }
+    // } catch (e) {
+    //   //
+    // }
   }
 
   @override

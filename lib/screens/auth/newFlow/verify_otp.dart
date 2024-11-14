@@ -159,7 +159,7 @@ class _VerifyOTPState extends State<VerifyOTP> {
       },
       child: BaseContainer(
         appBar: const AppBarHome(
-          isPopback: true,
+          isPopBack: true,
           canSearch: false,
           showTrailing: false,
           title: "",

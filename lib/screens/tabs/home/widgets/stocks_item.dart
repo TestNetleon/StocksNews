@@ -10,6 +10,8 @@ import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/theme_image_view.dart';
 
+import '../../../../service/amplitude/service.dart';
+
 class StocksItem extends StatelessWidget {
   final bool gainer;
   final bool priceData;
@@ -25,6 +27,11 @@ class StocksItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
+        AmplitudeService.logUserInteractionEvent(
+          type: 'Stock Search',
+          selfText: "Searched for ${top.symbol}",
+        );
+
         Navigator.push(
           navigatorKey.currentContext!,
           MaterialPageRoute(builder: (_) => StockDetail(symbol: top.symbol)),

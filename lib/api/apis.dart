@@ -3,17 +3,22 @@
 import 'package:flutter/foundation.dart';
 
 class Apis {
-  static const baseUrl = "https://app.stocks.news/api/v1"; // live server
-  static const baseUrlLocal =
-      "https://notification.stocks.news/api/v1"; // Local server
+  // Main live server
+  static const baseUrl = "https://app.stocks.news/api/v1";
 
+  // maintenance
+  static const baseUrlLocal = "https://notification.stocks.news/api/v1";
+
+  // With Debug condition
   // static const baseUrl = kDebugMode
-  //     ? "https://notification.stocks.news/public/demo/public/api/v1"
-  //     : "https://app.stocks.news/api/v1"; // live server
-  // live server
+  //     ? "https://dev.stocks.news/api/v1"
+  //     : "https://app.stocks.news/api/v1";
+
+  // Set direct Local
+  // static const baseUrl = 'https://dev.stocks.news/api/v1';
 
   static const checkServer = "/check-server-status";
-
+  static const phoneLogin = '/phone-login';
   static const signup = "/sign-up";
   static const verifySignupOtp = "/check-signup-otp";
   static const resendOtp = "/resend-otp";
@@ -36,8 +41,10 @@ class Apis {
   static const savePlaidPortfolio = "/save-plaid-portfolio";
   static const plaidPortfolio = "/plaid-portfolio";
   static const referLogin = "/send-phone-otp";
-  static const updateEmailOtp = "/update-email-otp";
-  static const checkEmailOtp = "/check-email-otp";
+  // static const updateEmailOtp = "/update-email-otp";
+  static const updateEmailOtp = "/update-profile-email";
+  // static const checkEmailOtp = "/check-email-otp";
+  static const checkEmailOtp = "/check-profile-email-otp";
   static const updatePhoneOtp = "/update-phone-otp";
   static const checkUpdatePhoneOtp = "/check-update-phone-otp";
   static const checkPhone = "/check-phone-otp";
@@ -233,4 +240,15 @@ class ApiKeys {
   static const appId = "1:661986825229:android:ce1c460925d54b155bb144";
   static const messagingSenderId = "661986825229";
   static const projectId = "stocksnews-ef556";
+
+  //Revenue Cat
+  static const androidKey = 'goog_KXHVJRLChlyjoOamWsqCWQSJZfI';
+  static const iosKey = 'appl_kHwXNrngqMNktkEZJqYhEgLjbcC';
+
+  //AppsFlyer
+  static const appsFlyerKey = 'DdBBqNnwC3Xz2dwhbF7kJK';
+  static const iosAppID = '6476615803';
+
+  //Amplitude
+  static const amplitudeKey = 'ff8ab349a2ddf801c985a59e3be1bedf';
 }

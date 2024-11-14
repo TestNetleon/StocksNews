@@ -219,14 +219,14 @@ class MembershipProvider extends ChangeNotifier {
 
         PurchasesConfiguration? configuration;
         if (Platform.isAndroid) {
-          configuration = PurchasesConfiguration(
-              keys?.playStore ?? "goog_KXHVJRLChlyjoOamWsqCWQSJZfI")
-            ..appUserID = userRes?.userId ?? "";
+          configuration =
+              PurchasesConfiguration(keys?.playStore ?? ApiKeys.androidKey)
+                ..appUserID = userRes?.userId ?? "";
         } else if (Platform.isIOS) {
           Utils().showLog("---Platform.isIOS-----");
-          configuration = PurchasesConfiguration(
-              keys?.appStore ?? "appl_kHwXNrngqMNktkEZJqYhEgLjbcC")
-            ..appUserID = userRes?.userId ?? "";
+          configuration =
+              PurchasesConfiguration(keys?.appStore ?? ApiKeys.iosKey)
+                ..appUserID = userRes?.userId ?? "";
         }
 
         try {

@@ -15,6 +15,7 @@ import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 
 import '../modals/highlow_pe_res.dart';
+import '../service/amplitude/service.dart';
 
 class LowPeGrowthProvider extends ChangeNotifier {
   List<HIghLowPeRes>? _data;
@@ -46,6 +47,7 @@ class LowPeGrowthProvider extends ChangeNotifier {
   Future createAlertSend({
     required String alertName,
     required String symbol,
+    required String companyName,
     required int index,
     bool selectedOne = false,
     bool selectedTwo = false,
@@ -65,16 +67,23 @@ class LowPeGrowthProvider extends ChangeNotifier {
         showProgress: true,
         removeForceLogin: true,
       );
-      _data?[index].isAlertAdded = 1;
-      notifyListeners();
+      if (response.status) {
+        AmplitudeService.logAlertUpdateEvent(
+          added: true,
+          symbol: symbol,
+          companyName: companyName,
+        );
+        _data?[index].isAlertAdded = 1;
+        notifyListeners();
 
-      _extra = (response.extra is Extra ? response.extra as Extra : null);
-      await _player.play(AssetSource(AudioFiles.alertWeathlist));
+        _extra = (response.extra is Extra ? response.extra as Extra : null);
+        await _player.play(AssetSource(AudioFiles.alertWeathlist));
 
-      navigatorKey.currentContext!
-          .read<HomeProvider>()
-          .setTotalsAlerts(response.data['total_alerts']);
-      notifyListeners();
+        navigatorKey.currentContext!
+            .read<HomeProvider>()
+            .setTotalsAlerts(response.data['total_alerts']);
+        notifyListeners();
+      }
 
       Navigator.pop(navigatorKey.currentContext!);
       Navigator.pop(navigatorKey.currentContext!);
@@ -92,6 +101,7 @@ class LowPeGrowthProvider extends ChangeNotifier {
 
   Future addToWishList({
     required String symbol,
+    required String companyName,
     required bool up,
     required int index,
   }) async {
@@ -113,6 +123,11 @@ class LowPeGrowthProvider extends ChangeNotifier {
         //
         _data?[index].isWatchlistAdded = 1;
         notifyListeners();
+        AmplitudeService.logWatchlistUpdateEvent(
+          added: true,
+          symbol: symbol,
+          companyName: companyName,
+        );
 
         // _homeTrendingRes?.trending[index].isWatchlistAdded = 1;
 

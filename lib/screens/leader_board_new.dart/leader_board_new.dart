@@ -11,7 +11,7 @@ class LeaderBoardNew extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BaseContainer(
-      appBar: const AppBarHome(isPopback: true),
+      appBar: const AppBarHome(isPopBack: true),
       body: Padding(
         padding: EdgeInsets.all(Dimen.padding.sp),
         child: const AffiliateLeaderBoardNew(),

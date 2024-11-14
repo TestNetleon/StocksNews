@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:stocks_news_new/arena/provider/arena.dart';
 import 'package:stocks_news_new/providers/ad_provider.dart';
 import 'package:stocks_news_new/providers/ai_provider.dart';
 import 'package:stocks_news_new/providers/alert_provider.dart';
@@ -74,9 +75,7 @@ import 'package:stocks_news_new/providers/what_we_do_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/affiliate/index.dart';
 import 'package:stocks_news_new/screens/alerts/alerts.dart';
-import 'package:stocks_news_new/screens/auth/login/login_sheet.dart';
 import 'package:stocks_news_new/screens/auth/qrScan/index.dart';
-import 'package:stocks_news_new/screens/auth/signup/signup_sheet.dart';
 import 'package:stocks_news_new/screens/auth/signup/signup_success.dart';
 import 'package:stocks_news_new/screens/blogDetail/index.dart';
 import 'package:stocks_news_new/screens/contactUs/contact_us.dart';
@@ -109,6 +108,7 @@ import 'package:stocks_news_new/tradingSimulator/providers/ts_portfollo_provider
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 
+import '../arena/provider/trades.dart';
 import '../providers/featured_ticker.dart';
 import '../providers/high_low_pe.dart';
 import '../providers/low_prices_stocks.dart';
@@ -116,6 +116,7 @@ import '../providers/missions/provider.dart';
 import '../providers/notification_settings.dart';
 import '../providers/scroll_controller.dart';
 import '../providers/stockAnalysis/provider.dart';
+import '../screens/auth/base/base_auth.dart';
 import '../tradingSimulator/providers/trading_simulator.dart';
 import '../providers/trending_industries.dart';
 import '../screens/marketData/congressionalData/index.dart';
@@ -487,7 +488,8 @@ class Routes {
           if (await provider.checkForUser()) {
             userPresent = true;
           }
-          if (!userPresent) loginSheet();
+          // if (!userPresent) loginSheet();
+          if (!userPresent) loginFirstSheet();
         });
         return MaterialPageRoute(builder: (context) => const Tabs());
       // case "signUp":
@@ -499,7 +501,8 @@ class Routes {
           if (await provider.checkForUser()) {
             userPresent = true;
           }
-          if (!userPresent) signupSheet();
+          // if (!userPresent) signupSheet();
+          if (!userPresent) loginFirstSheet();
         });
         return MaterialPageRoute(builder: (context) => const Tabs());
       default:
@@ -600,6 +603,8 @@ class Routes {
       ChangeNotifierProvider(create: (_) => NewHelpDeskProvider()),
       ChangeNotifierProvider(create: (_) => MSAnalysisProvider()),
       ChangeNotifierProvider(create: (_) => MissionProvider()),
+      ChangeNotifierProvider(create: (_) => ArenaProvider()),
+      ChangeNotifierProvider(create: (_) => TradesProvider()),
     ];
   }
 }

@@ -28,7 +28,7 @@ class NewsAuthorIndex extends StatelessWidget {
   Widget build(BuildContext context) {
     return BaseContainer(
       appBar: AppBarHome(
-        isPopback: true,
+        isPopBack: true,
         title: type == BlogsType.author
             ? "Articles by ${data?.name}"
             : "News Under - ${data?.name}",

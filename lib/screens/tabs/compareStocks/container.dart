@@ -3,9 +3,8 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/compare_stock_res.dart';
 import 'package:stocks_news_new/providers/compare_stocks_provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
-import 'package:stocks_news_new/screens/auth/login/login_sheet.dart';
-import 'package:stocks_news_new/screens/auth/login/login_sheet_tablet.dart';
 import 'package:stocks_news_new/screens/drawer/base_drawer.dart';
+
 import 'package:stocks_news_new/screens/tabs/compareStocks/footerList/footer_list.dart';
 import 'package:stocks_news_new/screens/tabs/compareStocks/headerList/header.dart';
 import 'package:stocks_news_new/screens/tabs/compareStocks/widgets/add_company_container.dart';
@@ -18,8 +17,8 @@ import 'package:stocks_news_new/widgets/disclaimer_widget.dart';
 import 'package:stocks_news_new/widgets/login_error.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
-
 import '../../../providers/search_provider.dart';
+import '../../auth/base/base_auth.dart';
 import 'widgets/pop_up.dart';
 
 class CompareStocksContainer extends StatelessWidget {
@@ -88,7 +87,8 @@ class CompareStocksContainer extends StatelessWidget {
                       state: "compare",
                       title: "Compare Stocks",
                       onClick: () async {
-                        isPhone ? await loginSheet() : await loginSheetTablet();
+                        // isPhone ? await loginSheet() : await loginSheetTablet();
+                        await loginFirstSheet();
 
                         await provider.getCompareStock(showProgress: false);
                       },

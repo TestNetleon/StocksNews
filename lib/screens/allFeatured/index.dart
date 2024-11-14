@@ -31,7 +31,7 @@ class _AllFeaturedIndexState extends State<AllFeaturedIndex> {
   Widget build(BuildContext context) {
     FeaturedTickerProvider provider = context.watch<FeaturedTickerProvider>();
     return BaseContainer(
-      appBar: const AppBarHome(isPopback: true, title: "Featured Stocks"),
+      appBar: const AppBarHome(isPopBack: true, title: "Featured Stocks"),
       body: Padding(
         padding: const EdgeInsets.fromLTRB(
           Dimen.itemSpacing,

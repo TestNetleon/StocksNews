@@ -100,3 +100,116 @@ class AgreeConditions extends StatelessWidget {
     );
   }
 }
+
+class NewAgreeConditions extends StatelessWidget {
+  final double fontSize;
+  final String? text;
+  const NewAgreeConditions({
+    super.key,
+    this.fontSize = 15,
+    this.text,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    if (text == null || text == '') {
+      return RichText(
+        textAlign: TextAlign.center,
+        text: TextSpan(
+          text: 'By logging in or signing up you agree to our ',
+          style: stylePTSansRegular(
+            height: 1.4,
+            fontSize: 13,
+          ),
+          children: [
+            TextSpan(
+              recognizer: TapGestureRecognizer()
+                ..onTap = () {
+                  Navigator.push(
+                    context,
+                    createRoute(
+                      const TCandPolicy(
+                        policyType: PolicyType.tC,
+                        slug: "terms-of-service",
+                      ),
+                    ),
+                  );
+                },
+              text: 'terms of service',
+              style: stylePTSansRegular(
+                color: ThemeColors.accent,
+                height: 1.4,
+                fontSize: 13,
+              ),
+            ),
+            TextSpan(
+              text: ' and ',
+              style: stylePTSansRegular(
+                height: 1.4,
+                fontSize: 13,
+              ),
+            ),
+            TextSpan(
+              recognizer: TapGestureRecognizer()
+                ..onTap = () {
+                  Navigator.push(
+                    context,
+                    createRoute(
+                      const TCandPolicy(
+                        policyType: PolicyType.privacy,
+                        slug: "privacy-policy",
+                      ),
+                    ),
+                  );
+                },
+              text: 'privacy policy',
+              style: stylePTSansRegular(
+                color: ThemeColors.accent,
+                height: 1.4,
+                fontSize: 13,
+              ),
+            ),
+            TextSpan(
+              text: '.',
+              style: stylePTSansRegular(
+                height: 1.4,
+                fontSize: 13,
+              ),
+            ),
+          ],
+        ),
+      );
+    }
+
+    return HtmlWidget(
+      customStylesBuilder: (element) {
+        if (element.localName == 'a') {
+          return {'color': '#1bb449', 'text-decoration': 'none'};
+        }
+        return null;
+      },
+      onTapUrl: (url) async {
+        closeKeyboard();
+        Navigator.push(
+          context,
+          createRoute(
+            TCandPolicy(
+              policyType: url == "terms-of-service"
+                  ? PolicyType.tC
+                  : PolicyType.privacy,
+              slug: url == "terms-of-service"
+                  ? "terms-of-service"
+                  : "privacy-policy",
+            ),
+          ),
+        );
+        return true;
+      },
+      text ?? "",
+      textStyle: styleGeorgiaRegular(
+        height: 1.5,
+        fontSize: fontSize,
+      ),
+    );
+  }
+}

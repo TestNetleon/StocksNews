@@ -7,7 +7,6 @@ import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/news_detail.provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
-import 'package:stocks_news_new/screens/auth/login/login_sheet.dart';
 import 'package:stocks_news_new/screens/auth/membershipAsk/ask.dart';
 import 'package:stocks_news_new/screens/auth/refer/refer_code.dart';
 import 'package:stocks_news_new/screens/membership/store/store.dart';
@@ -18,8 +17,8 @@ import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/custom/confirmation_point_popup.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/theme_button_small.dart';
-
 import '../../../../../widgets/custom/warning_text.dart';
+import '../../../../auth/base/base_auth.dart';
 
 class NewsDetailsLock extends StatefulWidget {
   final String? slug;
@@ -43,7 +42,9 @@ class _NewsDetailsLockState extends State<NewsDetailsLock> {
     UserProvider userProvider = context.read<UserProvider>();
     NewsDetailProvider provider = context.read<NewsDetailProvider>();
     if (userProvider.user == null) {
-      await loginSheet();
+      // await loginSheet();
+      await loginFirstSheet();
+
       if (context.read<UserProvider>().user != null) {
         await provider.getNewsDetailData(
           showProgress: false,
@@ -62,7 +63,8 @@ class _NewsDetailsLockState extends State<NewsDetailsLock> {
   }
 
   void _onLoginClick(context) async {
-    await loginSheet();
+    // await loginSheet();
+    await loginFirstSheet();
 
     UserProvider userProvider =
         Provider.of<UserProvider>(context, listen: false);

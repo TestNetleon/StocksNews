@@ -21,6 +21,9 @@ class HomeTrendingRes {
   final List<News>? trendingNews;
   final TextRes? text;
   final BannerBlogRes? bannerBlog;
+  final String? loginTitle;
+  final String? loginText;
+  final String? loginAgree;
 
   HomeTrendingRes({
     required this.trending,
@@ -30,11 +33,15 @@ class HomeTrendingRes {
     this.text,
     this.trendingNews,
     this.bannerBlog,
+    this.loginText,
+    this.loginTitle,
+    this.loginAgree,
   });
 
   factory HomeTrendingRes.fromJson(Map<String, dynamic> json) =>
       HomeTrendingRes(
         popular: List<Top>.from(json["actives"].map((x) => Top.fromJson(x))),
+        loginAgree: json['common_login_agree'],
         trendingNews: json["trending_news"] == null
             ? []
             : List<News>.from(
@@ -51,9 +58,14 @@ class HomeTrendingRes {
         bannerBlog: json["banner_blog"] == null
             ? null
             : BannerBlogRes.fromJson(json["banner_blog"]),
+        loginTitle: json['common_login_title'],
+        loginText: json['common_login_text'],
       );
 
   Map<String, dynamic> toJson() => {
+        'common_login_title': loginTitle,
+        'common_login_agree': loginAgree,
+        'common_login_text': loginText,
         "trending": List<dynamic>.from(trending.map((x) => x.toJson())),
         "trending_news": trendingNews == null
             ? []

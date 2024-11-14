@@ -15,6 +15,8 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/refresh_controll.dart';
 
+import '../../../service/amplitude/service.dart';
+
 class CongressionalContainer extends StatefulWidget {
   const CongressionalContainer({super.key});
 
@@ -27,6 +29,8 @@ class _CongressionalContainerState extends State<CongressionalContainer> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      AmplitudeService.logUserInteractionEvent(
+          type: 'Congressional Stock Trades');
       CongressionalProvider provider = context.read<CongressionalProvider>();
       if (provider.data != null) {
         return;

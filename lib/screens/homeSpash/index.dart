@@ -4,8 +4,6 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/affiliate/index.dart';
-import 'package:stocks_news_new/screens/auth/signup/signup_sheet_tablet.dart';
-import 'package:stocks_news_new/screens/auth/signup/signup_sheet.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/screens/tabs/news/newsDetail/new_detail.dart';
 import 'package:stocks_news_new/screens/tabs/tabs.dart';
@@ -13,6 +11,7 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 import '../../database/preference.dart';
+import '../auth/base/base_auth.dart';
 import '../auth/refer/refer_code.dart';
 import '../blogDetail/index.dart';
 import '../deepLinkScreen/webscreen.dart';
@@ -190,7 +189,8 @@ class _HomeSplashState extends State<HomeSplash> {
           //     icon: Images.alertPopGIF);
           return;
         }
-        isPhone ? signupSheet() : signupSheetTablet();
+        // isPhone ? signupSheet() : signupSheetTablet();
+        await loginFirstSheet();
       } else if (slug != '' && type == NotificationType.review.name) {
         //review pop up
         Navigator.popUntil(

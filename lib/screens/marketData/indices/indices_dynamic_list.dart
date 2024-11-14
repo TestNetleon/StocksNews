@@ -99,13 +99,16 @@ class _IndicesDynamicStocksState extends State<IndicesDynamicStocks> {
                                     watlistForBullish:
                                         data.isWatchlistAdded?.toInt() ?? 0,
                                     onClickAlert: () => _onAlertClick(
-                                        context,
-                                        data.symbol ?? "",
-                                        data.isAlertAdded,
-                                        index),
+                                          context,
+                                          data.symbol ?? "",
+                                          data.name ?? "",
+                                          data.isAlertAdded,
+                                          index,
+                                        ),
                                     onClickWatchlist: () => _onWatchListClick(
                                         context,
                                         data.symbol ?? "",
+                                        data.name ?? "",
                                         data.isWatchlistAdded,
                                         index),
                                     child:
@@ -156,8 +159,13 @@ class _IndicesDynamicStocksState extends State<IndicesDynamicStocks> {
     );
   }
 
-  void _onAlertClick(BuildContext context, String symbol, num? isAlertAdded,
-      int? index) async {
+  void _onAlertClick(
+    BuildContext context,
+    String symbol,
+    String companyName,
+    num? isAlertAdded,
+    int? index,
+  ) async {
     if ((isAlertAdded?.toInt() ?? 0) == 1) {
       Navigator.push(
         navigatorKey.currentContext!,
@@ -173,6 +181,7 @@ class _IndicesDynamicStocksState extends State<IndicesDynamicStocks> {
             insetPadding:
                 EdgeInsets.symmetric(horizontal: 15.sp, vertical: 10.sp),
             symbol: symbol,
+            companyName: companyName,
             index: index ?? 0,
             marketDataIndices: true,
           ),
@@ -198,6 +207,7 @@ class _IndicesDynamicStocksState extends State<IndicesDynamicStocks> {
                 insetPadding:
                     EdgeInsets.symmetric(horizontal: 15.sp, vertical: 10.sp),
                 symbol: symbol,
+                companyName: companyName,
                 index: index ?? 0,
                 marketDataIndices: true,
               ),
@@ -214,8 +224,13 @@ class _IndicesDynamicStocksState extends State<IndicesDynamicStocks> {
     }
   }
 
-  void _onWatchListClick(BuildContext context, String symbol,
-      num? isWatchlistAdded, int index) async {
+  void _onWatchListClick(
+    BuildContext context,
+    String symbol,
+    String companyName,
+    num? isWatchlistAdded,
+    int index,
+  ) async {
     if (isWatchlistAdded == 1) {
       Navigator.push(
         navigatorKey.currentContext!,
@@ -227,6 +242,7 @@ class _IndicesDynamicStocksState extends State<IndicesDynamicStocks> {
             .read<IndicesProvider>()
             .addToWishList(
               symbol: symbol,
+              companyName: companyName,
               index: index,
               up: true,
             );
@@ -247,6 +263,7 @@ class _IndicesDynamicStocksState extends State<IndicesDynamicStocks> {
                 .read<IndicesProvider>()
                 .addToWishList(
                   symbol: symbol,
+                  companyName: companyName,
                   index: index,
                   up: true,
                 );

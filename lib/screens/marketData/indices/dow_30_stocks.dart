@@ -23,6 +23,7 @@ import 'package:stocks_news_new/widgets/market_data_header.dart';
 import 'package:stocks_news_new/widgets/refresh_controll.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
+import '../../../service/amplitude/service.dart';
 import 'item.dart';
 
 class Dow30Stocks extends StatefulWidget {
@@ -37,6 +38,8 @@ class _Dow30StocksState extends State<Dow30Stocks> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      AmplitudeService.logUserInteractionEvent(type: "DOW 30 Stocks");
+
       Dow30Provider provider = context.read<Dow30Provider>();
       // if (provider.data != null) {
       //   return;
@@ -110,11 +113,17 @@ class _Dow30StocksState extends State<Dow30Stocks> {
                             alertForBullish: data.isAlertAdded?.toInt() ?? 0,
                             watlistForBullish:
                                 data.isWatchlistAdded?.toInt() ?? 0,
-                            onClickAlert: () => _onAlertClick(context,
-                                data.symbol ?? "", data.isAlertAdded, index),
+                            onClickAlert: () => _onAlertClick(
+                              context,
+                              data.symbol ?? "",
+                              data.name ?? "",
+                              data.isAlertAdded,
+                              index,
+                            ),
                             onClickWatchlist: () => _onWatchListClick(
                                 context,
                                 data.symbol ?? "",
+                                data.name ?? "",
                                 data.isWatchlistAdded,
                                 index),
                             child: IndicesItem(data: data, index: index),
@@ -159,8 +168,13 @@ class _Dow30StocksState extends State<Dow30Stocks> {
     );
   }
 
-  void _onAlertClick(BuildContext context, String symbol, num? isAlertAdded,
-      int? index) async {
+  void _onAlertClick(
+    BuildContext context,
+    String symbol,
+    String companyName,
+    num? isAlertAdded,
+    int? index,
+  ) async {
     if ((isAlertAdded?.toInt() ?? 0) == 1) {
       Navigator.push(
         navigatorKey.currentContext!,
@@ -176,6 +190,7 @@ class _Dow30StocksState extends State<Dow30Stocks> {
             insetPadding:
                 EdgeInsets.symmetric(horizontal: 15.sp, vertical: 10.sp),
             symbol: symbol,
+            companyName: companyName,
             index: index ?? 0,
             marketDataDowStocks: true,
           ),
@@ -200,6 +215,7 @@ class _Dow30StocksState extends State<Dow30Stocks> {
                 insetPadding:
                     EdgeInsets.symmetric(horizontal: 15.sp, vertical: 10.sp),
                 symbol: symbol,
+                companyName: companyName,
                 index: index ?? 0,
                 marketDataDowStocks: true,
               ),
@@ -216,8 +232,13 @@ class _Dow30StocksState extends State<Dow30Stocks> {
     }
   }
 
-  void _onWatchListClick(BuildContext context, String symbol,
-      num? isWatchlistAdded, int index) async {
+  void _onWatchListClick(
+    BuildContext context,
+    String symbol,
+    String companyName,
+    num? isWatchlistAdded,
+    int index,
+  ) async {
     if (isWatchlistAdded == 1) {
       Navigator.push(
         navigatorKey.currentContext!,
@@ -227,6 +248,7 @@ class _Dow30StocksState extends State<Dow30Stocks> {
       if (context.read<UserProvider>().user != null) {
         await navigatorKey.currentContext!.read<Dow30Provider>().addToWishList(
               symbol: symbol,
+              companyName: companyName,
               index: index,
               up: true,
             );
@@ -246,6 +268,7 @@ class _Dow30StocksState extends State<Dow30Stocks> {
                 .read<Dow30Provider>()
                 .addToWishList(
                   symbol: symbol,
+                  companyName: companyName,
                   index: index,
                   up: true,
                 );

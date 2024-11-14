@@ -218,6 +218,7 @@ class _TopTrendingItemState extends State<TopTrendingItem> {
         fromTopStock: true,
         insetPadding: EdgeInsets.symmetric(horizontal: 15.sp, vertical: 10.sp),
         symbol: widget.data.symbol,
+        companyName: widget.data.name,
         index: widget.index,
       ),
     );
@@ -253,6 +254,7 @@ class _TopTrendingItemState extends State<TopTrendingItem> {
   void _addToWatchlist(BuildContext context) {
     context.read<TopTrendingProvider>().addToWishList(
           symbol: widget.data.symbol,
+          companyName: widget.data.name,
           index: widget.index,
         );
   }

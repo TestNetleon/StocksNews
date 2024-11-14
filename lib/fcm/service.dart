@@ -21,14 +21,13 @@ import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/affiliate/index.dart';
 import 'package:stocks_news_new/screens/auth/refer/refer_code.dart';
-import 'package:stocks_news_new/screens/auth/signup/signup_sheet_tablet.dart';
-import 'package:stocks_news_new/screens/auth/signup/signup_sheet.dart';
 import 'package:stocks_news_new/screens/blogDetail/index.dart';
 import 'package:stocks_news_new/screens/deepLinkScreen/webscreen.dart';
 import 'package:stocks_news_new/screens/membership_new/membership.dart';
 import 'package:stocks_news_new/screens/tabs/tabs.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/database/preference.dart';
+import '../screens/auth/base/base_auth.dart';
 import '../screens/drawer/widgets/review_app_pop_up.dart';
 import '../screens/helpDesk/chats/index.dart';
 import '../screens/stockDetail/index.dart';
@@ -135,7 +134,8 @@ class FirebaseApi {
           );
           return;
         }
-        isPhone ? signupSheet() : signupSheetTablet();
+        // isPhone ? signupSheet() : signupSheetTablet();
+        loginFirstSheet();
       } else if (slug != '' && type == NotificationType.review.name) {
         //review pop up
         showDialog(

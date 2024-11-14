@@ -6,6 +6,12 @@
 
 #import "GeneratedPluginRegistrant.h"
 
+#if __has_include(<amplitude_flutter/AmplitudeFlutterPlugin.h>)
+#import <amplitude_flutter/AmplitudeFlutterPlugin.h>
+#else
+@import amplitude_flutter;
+#endif
+
 #if __has_include(<app_links/AppLinksPlugin.h>)
 #import <app_links/AppLinksPlugin.h>
 #else
@@ -216,22 +222,16 @@
 @import sign_in_with_apple;
 #endif
 
-#if __has_include(<smart_auth/SmartAuthPlugin.h>)
-#import <smart_auth/SmartAuthPlugin.h>
-#else
-@import smart_auth;
-#endif
-
 #if __has_include(<sms_autofill/SmsAutoFillPlugin.h>)
 #import <sms_autofill/SmsAutoFillPlugin.h>
 #else
 @import sms_autofill;
 #endif
 
-#if __has_include(<sqflite/SqflitePlugin.h>)
-#import <sqflite/SqflitePlugin.h>
+#if __has_include(<sqflite_darwin/SqflitePlugin.h>)
+#import <sqflite_darwin/SqflitePlugin.h>
 #else
-@import sqflite;
+@import sqflite_darwin;
 #endif
 
 #if __has_include(<url_launcher_ios/URLLauncherPlugin.h>)
@@ -267,6 +267,7 @@
 @implementation GeneratedPluginRegistrant
 
 + (void)registerWithRegistry:(NSObject<FlutterPluginRegistry>*)registry {
+  [AmplitudeFlutterPlugin registerWithRegistrar:[registry registrarForPlugin:@"AmplitudeFlutterPlugin"]];
   [AppLinksPlugin registerWithRegistrar:[registry registrarForPlugin:@"AppLinksPlugin"]];
   [AppsflyerSdkPlugin registerWithRegistrar:[registry registrarForPlugin:@"AppsflyerSdkPlugin"]];
   [AudioSessionPlugin registerWithRegistrar:[registry registrarForPlugin:@"AudioSessionPlugin"]];
@@ -302,7 +303,6 @@
   [FPPSharePlusPlugin registerWithRegistrar:[registry registrarForPlugin:@"FPPSharePlusPlugin"]];
   [SharedPreferencesPlugin registerWithRegistrar:[registry registrarForPlugin:@"SharedPreferencesPlugin"]];
   [SignInWithApplePlugin registerWithRegistrar:[registry registrarForPlugin:@"SignInWithApplePlugin"]];
-  [SmartAuthPlugin registerWithRegistrar:[registry registrarForPlugin:@"SmartAuthPlugin"]];
   [SmsAutoFillPlugin registerWithRegistrar:[registry registrarForPlugin:@"SmsAutoFillPlugin"]];
   [SqflitePlugin registerWithRegistrar:[registry registrarForPlugin:@"SqflitePlugin"]];
   [URLLauncherPlugin registerWithRegistrar:[registry registrarForPlugin:@"URLLauncherPlugin"]];

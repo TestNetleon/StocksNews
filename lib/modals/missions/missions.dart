@@ -15,6 +15,7 @@ class ClaimPointsRes {
   final int? targetPoints;
   final int? claimPoints;
   final bool status;
+  final String? text;
 
   ClaimPointsRes({
     this.title,
@@ -22,11 +23,13 @@ class ClaimPointsRes {
     this.points,
     this.targetPoints,
     this.claimPoints,
+    this.text,
     required this.status,
   });
 
   factory ClaimPointsRes.fromJson(Map<String, dynamic> json) => ClaimPointsRes(
         title: json["title"],
+        text: json['text'],
         type: json["type"],
         points: json["points"],
         targetPoints: json["targetPoints"],
@@ -38,6 +41,7 @@ class ClaimPointsRes {
         "title": title,
         "type": type,
         "points": points,
+        'text': text,
         "targetPoints": targetPoints,
         "claimPoints": claimPoints,
         "status": status,

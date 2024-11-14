@@ -25,6 +25,8 @@ import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/refresh_controll.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
+import '../../../service/amplitude/service.dart';
+
 class EarningsList extends StatefulWidget {
   const EarningsList({super.key});
 
@@ -48,6 +50,8 @@ class _EarningsListState extends State<EarningsList> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      AmplitudeService.logUserInteractionEvent(type: 'Earning Announcements');
+
       EarningsProvider provider = context.read<EarningsProvider>();
       if (provider.data != null) {
         return;
@@ -145,10 +149,20 @@ class _EarningsListState extends State<EarningsList> {
                               alertForBullish: data.isAlertAdded?.toInt() ?? 0,
                               watlistForBullish:
                                   data.isWatchlistAdded?.toInt() ?? 0,
-                              onClickAlert: () => _onAlertClick(context,
-                                  data.symbol, data.isAlertAdded, index),
-                              onClickWatchlist: () => _onWatchListClick(context,
-                                  data.symbol, data.isWatchlistAdded, index),
+                              onClickAlert: () => _onAlertClick(
+                                    context,
+                                    data.symbol,
+                                    data.name,
+                                    data.isAlertAdded,
+                                    index,
+                                  ),
+                              onClickWatchlist: () => _onWatchListClick(
+                                    context,
+                                    data.symbol,
+                                    data.name,
+                                    data.isWatchlistAdded,
+                                    index,
+                                  ),
                               child: EarningsItem(
                                 data: data,
                                 isOpen: provider.openIndex == index,
@@ -208,8 +222,13 @@ class _EarningsListState extends State<EarningsList> {
     );
   }
 
-  void _onAlertClick(BuildContext context, String symbol, num? isAlertAdded,
-      int? index) async {
+  void _onAlertClick(
+    BuildContext context,
+    String symbol,
+    String cN,
+    num? isAlertAdded,
+    int? index,
+  ) async {
     if ((isAlertAdded?.toInt() ?? 0) == 1) {
       Navigator.push(
         navigatorKey.currentContext!,
@@ -225,6 +244,7 @@ class _EarningsListState extends State<EarningsList> {
             insetPadding:
                 EdgeInsets.symmetric(horizontal: 15.sp, vertical: 10.sp),
             symbol: symbol,
+            companyName: cN,
             index: index ?? 0,
             marketDataEarning: true,
           ),
@@ -250,6 +270,7 @@ class _EarningsListState extends State<EarningsList> {
                 insetPadding:
                     EdgeInsets.symmetric(horizontal: 15.sp, vertical: 10.sp),
                 symbol: symbol,
+                companyName: cN,
                 index: index ?? 0,
                 marketDataEarning: true,
               ),
@@ -266,8 +287,13 @@ class _EarningsListState extends State<EarningsList> {
     }
   }
 
-  void _onWatchListClick(BuildContext context, String symbol,
-      num? isWatchlistAdded, int index) async {
+  void _onWatchListClick(
+    BuildContext context,
+    String symbol,
+    String companyName,
+    num? isWatchlistAdded,
+    int index,
+  ) async {
     if (isWatchlistAdded == 1) {
       Navigator.push(
         navigatorKey.currentContext!,
@@ -279,6 +305,7 @@ class _EarningsListState extends State<EarningsList> {
             .read<EarningsProvider>()
             .addToWishList(
               symbol: symbol,
+              companyName: companyName,
               index: index,
               up: true,
             );
@@ -299,6 +326,7 @@ class _EarningsListState extends State<EarningsList> {
                 .read<EarningsProvider>()
                 .addToWishList(
                   symbol: symbol,
+                  companyName: companyName,
                   index: index,
                   up: true,
                 );

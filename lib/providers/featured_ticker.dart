@@ -13,6 +13,7 @@ import '../api/apis.dart';
 import '../modals/featured_ticeker_res.dart';
 import '../modals/home_alert_res.dart';
 import '../route/my_app.dart';
+import '../service/amplitude/service.dart';
 import '../utils/constants.dart';
 import 'user_provider.dart';
 
@@ -44,6 +45,7 @@ class FeaturedTickerProvider extends ChangeNotifier {
   Future createAlertSend({
     required String alertName,
     required String symbol,
+    required String companyName,
     required int index,
     bool selectedOne = false,
     bool selectedTwo = false,
@@ -64,6 +66,11 @@ class FeaturedTickerProvider extends ChangeNotifier {
         removeForceLogin: true,
       );
       if (response.status) {
+        AmplitudeService.logAlertUpdateEvent(
+          added: true,
+          symbol: symbol,
+          companyName: companyName,
+        );
         _data?.data[index].isAlertAdded = 1;
         notifyListeners();
 
@@ -91,6 +98,7 @@ class FeaturedTickerProvider extends ChangeNotifier {
 
   Future addToWishList({
     required String symbol,
+    required String companyName,
     required bool up,
     required int index,
   }) async {
@@ -111,6 +119,11 @@ class FeaturedTickerProvider extends ChangeNotifier {
       if (response.status) {
         //
         _data?.data[index].isWatchlistAdded = 1;
+        AmplitudeService.logWatchlistUpdateEvent(
+          added: true,
+          symbol: symbol,
+          companyName: companyName,
+        );
         notifyListeners();
 
         // _homeTrendingRes?.trending[index].isWatchlistAdded = 1;

@@ -242,7 +242,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:provider/provider.dart';
-import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
@@ -250,8 +249,7 @@ import '../../../../providers/home_provider.dart';
 import '../../../../providers/user_provider.dart';
 import '../../../../route/my_app.dart';
 import '../../../../utils/colors.dart';
-import '../../../auth/login/login_sheet.dart';
-import '../../../auth/login/login_sheet_tablet.dart';
+import '../../../auth/base/base_auth.dart';
 import '../../../auth/membershipAsk/ask.dart';
 import '../../../membership_new/membership.dart';
 
@@ -624,7 +622,8 @@ class _SlidableMenuWidgetState extends State<SlidableMenuWidget>
   Future _onIsAlertClick() async {
     UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
     if (provider.user == null) {
-      isPhone ? await loginSheet() : await loginSheetTablet();
+      // isPhone ? await loginSheet() : await loginSheetTablet();
+      await loginFirstSheet();
     }
     if (provider.user == null) {
       return;
@@ -678,7 +677,8 @@ class _SlidableMenuWidgetState extends State<SlidableMenuWidget>
       //   },
       // );
     } else if (provider.user == null) {
-      isPhone ? await loginSheet() : await loginSheetTablet();
+      // isPhone ? await loginSheet() : await loginSheetTablet();
+      await loginFirstSheet();
 
       if (navigatorKey.currentContext!.read<UserProvider>().user == null) {
         return;
@@ -692,7 +692,8 @@ class _SlidableMenuWidgetState extends State<SlidableMenuWidget>
   Future _onIsWatchListClick() async {
     UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
     if (provider.user == null) {
-      isPhone ? await loginSheet() : await loginSheetTablet();
+      // isPhone ? await loginSheet() : await loginSheetTablet();
+      await loginFirstSheet();
     }
     if (provider.user == null) {
       return;
@@ -739,7 +740,8 @@ class _SlidableMenuWidgetState extends State<SlidableMenuWidget>
       //   },
       // );
     } else if (provider.user == null) {
-      isPhone ? await loginSheet() : await loginSheetTablet();
+      // isPhone ? await loginSheet() : await loginSheetTablet();
+      await loginFirstSheet();
 
       if (navigatorKey.currentContext!.read<UserProvider>().user == null) {
         return;

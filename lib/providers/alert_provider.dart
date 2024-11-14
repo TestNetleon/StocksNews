@@ -14,6 +14,8 @@ import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 
+import '../service/amplitude/service.dart';
+
 //
 class AlertProvider extends ChangeNotifier {
   AlertRes? _data;
@@ -96,7 +98,11 @@ class AlertProvider extends ChangeNotifier {
     }
   }
 
-  Future deleteItem(String id, String symbol) async {
+  Future deleteItem(
+    String id,
+    String symbol,
+    String companyName,
+  ) async {
     setStatus(Status.loading);
 
     try {
@@ -114,6 +120,11 @@ class AlertProvider extends ChangeNotifier {
       );
 
       if (response.status) {
+        AmplitudeService.logAlertUpdateEvent(
+          added: false,
+          symbol: symbol,
+          companyName: companyName,
+        );
         _data?.data?.removeWhere((element) => element.id == id);
         if (_data?.data == null || _data?.data?.isEmpty == true) {
           _error = "Your alert list is currently empty.";

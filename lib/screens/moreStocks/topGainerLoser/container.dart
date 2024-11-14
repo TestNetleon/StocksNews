@@ -73,7 +73,7 @@ class _GainerLoserContainerState extends State<GainerLoserContainer> {
         resetIndex: true,
       ),
       appBar: AppBarHome(
-        isPopback: true,
+        isPopBack: true,
         title: widget.type == StocksType.gainers
             ? "Today’s Top Gainers"
             : widget.type == StocksType.losers
@@ -139,11 +139,13 @@ class _GainerLoserContainerState extends State<GainerLoserContainer> {
                           onClickAlert: () => _onAlertClick(
                               navigatorKey.currentContext!,
                               data[index].symbol,
+                              data[index].name,
                               data[index].isAlertAdded,
                               index),
                           onClickWatchlist: () => _onWatchListClick(
                               navigatorKey.currentContext!,
                               data[index].symbol,
+                              data[index].name,
                               data[index].isWatchlistAdded,
                               index),
                           child: GainerLoserItem(
@@ -168,7 +170,12 @@ class _GainerLoserContainerState extends State<GainerLoserContainer> {
   }
 
   void _onAlertClick(
-      context, String symbol, num? isAlertAdded, int? index) async {
+    context,
+    String symbol,
+    String companyName,
+    num? isAlertAdded,
+    int? index,
+  ) async {
     if ((isAlertAdded?.toInt() ?? 0) == 1) {
       Navigator.push(
         navigatorKey.currentContext!,
@@ -184,6 +191,7 @@ class _GainerLoserContainerState extends State<GainerLoserContainer> {
             insetPadding:
                 EdgeInsets.symmetric(horizontal: 15.sp, vertical: 10.sp),
             symbol: symbol,
+            companyName: companyName,
             index: index ?? 0,
             homeGainersAndLosers: widget.type,
           ),
@@ -211,6 +219,7 @@ class _GainerLoserContainerState extends State<GainerLoserContainer> {
                 insetPadding:
                     EdgeInsets.symmetric(horizontal: 15.sp, vertical: 10.sp),
                 symbol: symbol,
+                companyName: companyName,
                 index: index ?? 0,
                 homeGainersAndLosers: widget.type,
               ),
@@ -227,8 +236,13 @@ class _GainerLoserContainerState extends State<GainerLoserContainer> {
     }
   }
 
-  void _onWatchListClick(BuildContext context, String symbol,
-      num? isWatchlistAdded, int index) async {
+  void _onWatchListClick(
+    BuildContext context,
+    String symbol,
+    String companyName,
+    num? isWatchlistAdded,
+    int index,
+  ) async {
     if (isWatchlistAdded == 1) {
       Navigator.push(
         navigatorKey.currentContext!,
@@ -241,6 +255,7 @@ class _GainerLoserContainerState extends State<GainerLoserContainer> {
             .addToWishList(
               type: widget.type.name,
               symbol: symbol,
+              companyName: companyName,
               index: index,
               up: true,
             );
@@ -263,6 +278,7 @@ class _GainerLoserContainerState extends State<GainerLoserContainer> {
                 .addToWishList(
                   type: widget.type.name,
                   symbol: symbol,
+                  companyName: companyName,
                   index: index,
                   up: true,
                 );

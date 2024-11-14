@@ -16,14 +16,13 @@ import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/affiliate/pointsTransaction/trasnsaction.dart';
+import 'package:stocks_news_new/service/amplitude/service.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/database/preference.dart';
+import '../screens/auth/base/base_auth.dart';
 import '../utils/utils.dart';
-
 import 'package:stocks_news_new/screens/affiliate/index.dart';
 import 'package:stocks_news_new/screens/auth/refer/refer_code.dart';
-import 'package:stocks_news_new/screens/auth/signup/signup_sheet_tablet.dart';
-import 'package:stocks_news_new/screens/auth/signup/signup_sheet.dart';
 import 'package:stocks_news_new/screens/blogDetail/index.dart';
 import 'package:stocks_news_new/screens/deepLinkScreen/webscreen.dart';
 import 'package:stocks_news_new/screens/membership_new/membership.dart';
@@ -47,6 +46,12 @@ class OneSignalService {
     String? slug = data['slug'];
     String? notificationId = data['notification_id'];
     isAppUpdating = false;
+
+    userInteractionEventCommon(
+      slug: slug,
+      type: type,
+    );
+
     try {
       if (type == NotificationType.dashboard.name) {
         if (whenAppKilled) return null;
@@ -108,7 +113,8 @@ class OneSignalService {
           );
           return;
         }
-        isPhone ? signupSheet() : signupSheetTablet();
+        // isPhone ? signupSheet() : signupSheetTablet();
+        loginFirstSheet();
       } else if (slug != '' && type == NotificationType.review.name) {
         popHome = false;
         if (whenAppKilled) await Future.delayed(const Duration(seconds: 3));
@@ -204,11 +210,13 @@ class OneSignalService {
 
   Future<void> initNotifications() async {
     fcmTokenGlobal = OneSignal.User.pushSubscription.id;
+    Utils().showLog('FCM Token Before $fcmTokenGlobal');
 
     OneSignal.User.pushSubscription.addObserver((state) async {
-      print(OneSignal.User.pushSubscription.id);
-      String? address = await _getUserLocation();
       fcmTokenGlobal = OneSignal.User.pushSubscription.id;
+      String? address = await _getUserLocation();
+      Utils().showLog('FCM Token After $fcmTokenGlobal');
+
       if (!isShowingError) {
         saveFCMapi(value: fcmTokenGlobal, address: address);
       }
@@ -223,9 +231,12 @@ class OneSignalService {
 
     OneSignal.Notifications.addClickListener((OSNotificationClickEvent event) {
       if (oneSignalInitialized && navigatorKey.currentContext != null) {
+        log('Going to navigate IF');
         popHome = true;
         _navigateToRequiredScreen(event.notification);
       } else {
+        log('Going to navigate ELSE');
+
         popHome = true;
         Timer(const Duration(seconds: 2), () {
           _navigateToRequiredScreen(event.notification, whenAppKilled: true);
@@ -249,7 +260,9 @@ Future<String?> _getUserLocation() async {
 
     // Get current position
     Position position = await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.high);
+      locationSettings: LocationSettings(accuracy: LocationAccuracy.high),
+      // desiredAccuracy: LocationAccuracy.high,
+    );
     // Reverse geocoding
     List<Placemark> placemarks =
         await placemarkFromCoordinates(position.latitude, position.longitude);
@@ -304,5 +317,69 @@ Future saveFCMapi({String? value, String? address}) async {
     }
   } catch (e) {
     Utils().showLog("Catch error $e");
+  }
+}
+
+void userInteractionEventCommon({String? type, String? slug}) async {
+  Utils().showLog('User interaction started');
+  try {
+    UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
+    if (provider.user == null) {
+      bool userPresent = await provider.checkForUser();
+      Utils().showLog('User present while interacting with event $userPresent');
+    }
+
+    String eventType;
+    String selfText;
+    if (type == NotificationType.dashboard.name) {
+      eventType = "Notification Clicked: Home";
+      selfText = "Navigated to the home page from notification.";
+    } else if (type == NotificationType.ticketDetail.name) {
+      eventType = "Notification Clicked: Support Ticket";
+      selfText = "Viewed support ticket with ID: $slug";
+    } else if (type == NotificationType.newsDetail.name) {
+      eventType = "Notification Clicked: News Detail";
+      selfText = "Opened news with ID: $slug";
+    } else if (type == NotificationType.lpPage.name) {
+      eventType = "Notification Clicked: Landing Page";
+      selfText = "Viewed landing page with URL: $slug";
+    } else if (type == NotificationType.blogDetail.name) {
+      eventType = "Notification Clicked: Blog Detail";
+      selfText = "Read blog article with ID: $slug";
+    } else if (type == NotificationType.register.name) {
+      eventType = "Notification Clicked: Register";
+      selfText = "Initiated registration process.";
+    } else if (type == NotificationType.review.name) {
+      eventType = "Notification Clicked: App Review";
+      selfText = "Prompted to review the app.";
+    } else if (type == NotificationType.stockDetail.name) {
+      eventType = "Notification Clicked: Stock Detail";
+      selfText = "Viewed stock details for ticker: $slug";
+    } else if (type == NotificationType.nudgeFriend.name) {
+      eventType = "Notification Clicked: Friend Referral";
+      selfText = "Prompted to refer a friend.";
+    } else if (type == NotificationType.referRegistration.name) {
+      eventType = "Notification Clicked: Referral Register";
+      selfText = "Opened referral registration page.";
+    } else if (type == NotificationType.membership.name) {
+      eventType = "Notification Clicked: Membership";
+      selfText = "Viewed membership information.";
+    } else if (type == NotificationType.pointTransaction.name) {
+      eventType = "Notification Clicked: Points Transaction";
+      selfText = "Viewed points transaction details.";
+    } else if (type == NotificationType.appUpdate.name) {
+      eventType = "Notification Clicked: App Update";
+      selfText = "Notification received to update the app.";
+    } else {
+      eventType = "Notification Clicked: Home";
+      selfText = "Navigated to the home page from notification.";
+    }
+
+    AmplitudeService.logUserInteractionEvent(
+      type: eventType,
+      selfText: selfText,
+    );
+  } catch (e) {
+    //
   }
 }

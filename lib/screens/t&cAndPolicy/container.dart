@@ -77,7 +77,7 @@ class _TermsPolicyContainerState extends State<TermsPolicyContainer> {
     return BaseContainer(
       drawer: const BaseDrawer(resetIndex: true),
       appBar: AppBarHome(
-        isPopback: true,
+        isPopBack: true,
         title: widget.slug == "about-us"
             ? "About Stocks.News"
             : widget.slug == "referral-terms"

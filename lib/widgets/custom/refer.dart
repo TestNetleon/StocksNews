@@ -5,8 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
-import 'package:stocks_news_new/screens/auth/login/login_sheet.dart';
-import 'package:stocks_news_new/screens/auth/login/login_sheet_tablet.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
@@ -14,6 +12,7 @@ import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import '../../modals/referral_res.dart';
 import '../../providers/user_provider.dart';
 import '../../screens/affiliate/index.dart';
+import '../../screens/auth/base/base_auth.dart';
 import '../../screens/drawer/about/refer_dialog.dart';
 import '../../utils/constants.dart';
 import '../../utils/utils.dart';
@@ -24,17 +23,18 @@ class ReferApp extends StatelessWidget {
     UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
 
     if (provider.user == null) {
-      isPhone ? await loginSheet() : await loginSheetTablet();
+      // isPhone ? await loginSheet() : await loginSheetTablet();
+      await loginFirstSheet();
     }
 
     log("NOW SHOWING SHEET => ${provider.user?.signupStatus}");
 
-    if (provider.user?.signupStatus ?? false) {
-      // This condition is only to stop sheet in sign up condition
-      // because signup success will be open here and we want to
-      // avoid double bottomsheet
-      return;
-    }
+    // if (provider.user?.signupStatus ?? false) {
+    //   // This condition is only to stop sheet in sign up condition
+    //   // because signup success will be open here and we want to
+    //   // avoid double bottomsheet
+    //   return;
+    // }
 
     if (provider.user == null) {
       return;

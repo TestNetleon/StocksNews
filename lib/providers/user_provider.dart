@@ -31,6 +31,7 @@ import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
 
 import '../fcm/dynamic_links.service.dart';
 import '../screens/membership_new/membership.dart';
+import '../service/amplitude/service.dart';
 import '../utils/dialogs.dart';
 import '../widgets/ios_emailerror.dart';
 
@@ -92,26 +93,6 @@ class UserProvider extends ChangeNotifier {
     }
     notifyListeners();
   }
-
-  // void onChangePhone(String value) {
-  //   if ((value == _user?.phone) &&
-  //       (_user?.phone != null && _user?.phone != '')) {
-  //     phoneVerified = true;
-  //   } else {
-  //     phoneVerified = false;
-  //   }
-  //   notifyListeners();
-  // }
-
-  // void onChangeCountryCode(String value) {
-  //   if ((value == _user?.phoneCode) &&
-  //       (_user?.phoneCode != null && _user?.phoneCode != '')) {
-  //     phoneVerified = true;
-  //   } else {
-  //     phoneVerified = false;
-  //   }
-  //   notifyListeners();
-  // }
 
   void setStatus(status) {
     _status = status;
@@ -263,6 +244,7 @@ class UserProvider extends ChangeNotifier {
     HomeProvider provider = navigatorKey.currentContext!.read<HomeProvider>();
     provider.setTotalsAlerts(0);
     provider.setTotalsWatchList(0);
+    provider.refreshData(null);
     // Reset login dialog visibility count
     isSVG = false;
     DatabaseHelper helper = DatabaseHelper();
@@ -395,6 +377,7 @@ class UserProvider extends ChangeNotifier {
   Future googleLogin(
     request, {
     bool alreadySubmitted = true,
+    bool direct = false,
   }) async {
     setStatus(Status.loading);
 
@@ -409,6 +392,14 @@ class UserProvider extends ChangeNotifier {
       if (response.status) {
         _user = UserRes.fromJson(response.data);
         Preference.saveUser(response.data);
+
+        _extra = (response.extra is Extra ? response.extra as Extra : null);
+
+        if (_user?.signupStatus == true) {
+          AmplitudeService.logLoginSignUpEvent(
+            isRegistered: (_user?.signupStatus ?? false) ? 1 : 0,
+          );
+        }
         isSVG = isSvgFromUrl(_user?.image);
 
         shareUri = await DynamicLinkService.instance.getDynamicLink();
@@ -430,10 +421,8 @@ class UserProvider extends ChangeNotifier {
           if (referralCode != null && referralCode != "") {
             // Sign up from referral link
             Preference.clearReferral();
-            Navigator.push(
-              navigatorKey.currentContext!,
-              MaterialPageRoute(builder: (_) => const SignUpSuccess()),
-            );
+
+            _optionalNavigation(direct: direct);
           } else {
             // Sign up but not from referral link
 
@@ -442,26 +431,25 @@ class UserProvider extends ChangeNotifier {
                 onReferral: (code) {
                   if (code == null || code == "") {
                     Navigator.pop(navigatorKey.currentContext!);
-                    Navigator.push(
-                      navigatorKey.currentContext!,
-                      MaterialPageRoute(builder: (_) => const SignUpSuccess()),
-                    );
+                    _optionalNavigation(direct: direct);
                   } else {
                     updateReferralCodeOnlyForApple(code: referralCode ?? code);
                   }
                 },
               );
               if (result == null) {
-                Navigator.push(
-                  navigatorKey.currentContext!,
-                  MaterialPageRoute(builder: (_) => const SignUpSuccess()),
-                );
+                // Navigator.push(
+                //   navigatorKey.currentContext!,
+                //   MaterialPageRoute(builder: (_) => const SignUpSuccess()),
+                // );
+                _optionalNavigation(direct: direct);
               }
             } else {
-              Navigator.push(
-                navigatorKey.currentContext!,
-                MaterialPageRoute(builder: (_) => const SignUpSuccess()),
-              );
+              // Navigator.push(
+              //   navigatorKey.currentContext!,
+              //   MaterialPageRoute(builder: (_) => const SignUpSuccess()),
+              // );
+              _optionalNavigation(direct: direct);
             }
           }
 
@@ -470,7 +458,7 @@ class UserProvider extends ChangeNotifier {
           //   MaterialPageRoute(builder: (_) => const SignUpSuccess()),
           // );
         } else {
-          navigatorKey.currentContext!.read<HomeProvider>().getHomeSlider();
+          // navigatorKey.currentContext!.read<HomeProvider>().getHomeSlider();
           Navigator.pop(navigatorKey.currentContext!);
 
           if ((_user?.membership?.purchased != null &&
@@ -497,6 +485,8 @@ class UserProvider extends ChangeNotifier {
         //     _user?.signupStatus == false) {
         //   referLogin();
         // }
+        callSliderTrendingAPI();
+
         configureRevenueCatAttribute();
       } else {
         // showErrorMessage(message: response.message);
@@ -518,11 +508,33 @@ class UserProvider extends ChangeNotifier {
     }
   }
 
+  _optionalNavigation({bool direct = false}) {
+    if (direct) {
+      Navigator.popUntil(
+          navigatorKey.currentContext!, (route) => route.isFirst);
+      Navigator.pushReplacement(
+        navigatorKey.currentContext!,
+        MaterialPageRoute(
+          builder: (_) => const Tabs(
+              // showRef: false,
+              // showMembership: true,
+              ),
+        ),
+      );
+    } else {
+      Navigator.push(
+        navigatorKey.currentContext!,
+        MaterialPageRoute(builder: (_) => const SignUpSuccess()),
+      );
+    }
+  }
+
   Future appleLogin(
     request, {
     String? id,
     String? code,
     bool alreadySubmitted = false,
+    bool direct = false,
   }) async {
     setStatus(Status.loading);
 
@@ -538,6 +550,15 @@ class UserProvider extends ChangeNotifier {
       if (response.status) {
         _user = UserRes.fromJson(response.data);
         Preference.saveUser(response.data);
+
+        _extra = (response.extra is Extra ? response.extra as Extra : null);
+
+        if (_user?.signupStatus == true) {
+          AmplitudeService.logLoginSignUpEvent(
+            isRegistered: (_user?.signupStatus ?? false) ? 1 : 0,
+          );
+        }
+
         isSVG = isSvgFromUrl(_user?.image);
         var tags = {
           'email': "${_user?.email}",
@@ -554,10 +575,11 @@ class UserProvider extends ChangeNotifier {
           if (referralCode != null && referralCode != "") {
             // Sign up from referral link
             Preference.clearReferral();
-            Navigator.push(
-              navigatorKey.currentContext!,
-              MaterialPageRoute(builder: (_) => const SignUpSuccess()),
-            );
+            // Navigator.push(
+            //   navigatorKey.currentContext!,
+            //   MaterialPageRoute(builder: (_) => const SignUpSuccess()),
+            // );
+            _optionalNavigation(direct: direct);
           } else {
             // Sign up but not from referral link
             if (await Preference.isReferInput()) {
@@ -565,30 +587,32 @@ class UserProvider extends ChangeNotifier {
                 onReferral: (code) {
                   if (code == null || code == "") {
                     Navigator.pop(navigatorKey.currentContext!);
-                    Navigator.push(
-                      navigatorKey.currentContext!,
-                      MaterialPageRoute(builder: (_) => const SignUpSuccess()),
-                    );
+                    // Navigator.push(
+                    //   navigatorKey.currentContext!,
+                    //   MaterialPageRoute(builder: (_) => const SignUpSuccess()),
+                    // );
+                    _optionalNavigation(direct: direct);
                   } else {
                     updateReferralCodeOnlyForApple(code: referralCode ?? code);
                   }
                 },
               );
               if (result == null) {
-                Navigator.push(
-                  navigatorKey.currentContext!,
-                  MaterialPageRoute(builder: (_) => const SignUpSuccess()),
-                );
+                // Navigator.push(
+                //   navigatorKey.currentContext!,
+                //   MaterialPageRoute(builder: (_) => const SignUpSuccess()),
+                // );
+                _optionalNavigation(direct: direct);
               }
             } else {
-              Navigator.push(
-                navigatorKey.currentContext!,
-                MaterialPageRoute(builder: (_) => const SignUpSuccess()),
-              );
+              // Navigator.push(
+              //   navigatorKey.currentContext!,
+              //   MaterialPageRoute(builder: (_) => const SignUpSuccess()),
+              // );
+              _optionalNavigation(direct: direct);
             }
           }
         } else {
-          navigatorKey.currentContext!.read<HomeProvider>().getHomeSlider();
           Navigator.pop(navigatorKey.currentContext!);
           if ((_user?.membership?.purchased != null &&
                   _user?.membership?.purchased == 0) &&
@@ -622,6 +646,9 @@ class UserProvider extends ChangeNotifier {
         //     _user?.signupStatus == false) {
         //   referLogin();
         // }
+        // navigatorKey.currentContext!.read<HomeProvider>().getHomeSlider();
+        callSliderTrendingAPI();
+
         configureRevenueCatAttribute();
       } else {
         // showErrorMessage(message: response.message);
@@ -850,10 +877,12 @@ class UserProvider extends ChangeNotifier {
         _user = UserRes.fromJson(response.data);
         Preference.saveUser(response.data);
         isSVG = isSvgFromUrl(_user?.image);
-        navigatorKey.currentContext!.read<HomeProvider>().getHomeSlider();
+        // navigatorKey.currentContext!.read<HomeProvider>().getHomeSlider();
         shareUri = await DynamicLinkService.instance.getDynamicLink();
         Navigator.pop(navigatorKey.currentContext!);
         Navigator.pop(navigatorKey.currentContext!);
+        callSliderTrendingAPI();
+
         Preference.setShowIntro(false);
         //--------
         var tags = {
@@ -1022,6 +1051,7 @@ class UserProvider extends ChangeNotifier {
       }
     } catch (e) {
       setStatus(Status.loaded);
+      Utils().showLog('$e');
       // showErrorMessage(
       //   message: kDebugMode ? e.toString() : Const.errSomethingWrong,
       // );
@@ -1200,8 +1230,11 @@ class UserProvider extends ChangeNotifier {
       );
       if (response.status) {
         if (resendButtonClick == false) {
-          phoneEmailOTP(text: email.toLowerCase(), screenType: false);
-        }
+          phoneEmailOTP(
+            text: email.toLowerCase(),
+            screenType: false,
+          );
+        } else {}
 
         //
       } else {
@@ -1263,6 +1296,8 @@ class UserProvider extends ChangeNotifier {
         notifyListeners();
         closeKeyboard();
         showErrorMessage(message: response.message, type: SnackbarType.info);
+        // navigatorKey.currentContext!.read<HomeProvider>().getHomeSlider();
+        callSliderTrendingAPI();
         //
       } else {
         popUpAlert(
@@ -1411,5 +1446,100 @@ class UserProvider extends ChangeNotifier {
       );
       return ApiResponse(status: false);
     }
+  }
+
+  // Final OTP
+  Future finalVerifyOTP(
+    request, {
+    bool doublePop = true,
+    bool skipPop = false,
+  }) async {
+    setStatus(Status.loading);
+
+    try {
+      ApiResponse response = await apiRequest(
+        url: Apis.phoneLogin,
+        request: request,
+        showProgress: true,
+        removeForceLogin: true,
+      );
+      setStatus(Status.loaded);
+      if (response.status) {
+        _user = UserRes.fromJson(response.data);
+        Preference.saveUser(response.data);
+        isSVG = isSvgFromUrl(_user?.image);
+        Utils().showLog('IS SVG $isSVG');
+        // navigatorKey.currentContext!.read<HomeProvider>().getHomeSlider();
+        shareUri = await DynamicLinkService.instance.getDynamicLink();
+        callSliderTrendingAPI();
+
+        if (!skipPop) {
+          if (doublePop) {
+            Navigator.pop(navigatorKey.currentContext!);
+            Navigator.pop(navigatorKey.currentContext!);
+            Utils().showLog('+++++++++Double Pop');
+          } else {
+            Navigator.pop(navigatorKey.currentContext!);
+            Utils().showLog('+++++++++Single Pop');
+          }
+        } else {
+          Utils().showLog('+++++++++Skip Pop true');
+        }
+
+        Preference.setShowIntro(false);
+        //--------
+        var tags = {
+          'email': "${_user?.email}",
+          'phone': "${_user?.phoneCode} ${_user?.phone}"
+        };
+
+        OneSignal.User.addTags(tags);
+        //--------
+
+        //CHECK MEMBERSHIP
+        if ((_user?.membership?.purchased != null &&
+                _user?.membership?.purchased == 0) &&
+            withLoginMembership) {
+          Utils().showLog("----navigating from login verify---");
+          Navigator.push(
+            navigatorKey.currentContext!,
+            createRoute(
+              NewMembership(cancel: true),
+            ),
+          );
+        }
+        notifyListeners();
+        configureRevenueCatAttribute();
+        _extra = (response.extra is Extra ? response.extra as Extra : null);
+
+        if (_user?.signupStatus == true) {
+          AmplitudeService.logLoginSignUpEvent(
+            isRegistered: (_user?.signupStatus ?? false) ? 1 : 0,
+          );
+        }
+      } else {
+        // showErrorMessage(message: response.message);
+        popUpAlert(
+            message: "${response.message}",
+            title: "Alert",
+            icon: Images.alertPopGIF);
+      }
+
+      return ApiResponse(status: response.status);
+    } catch (e) {
+      Utils().showLog(e.toString());
+      popUpAlert(
+          message: Const.errSomethingWrong,
+          title: "Alert",
+          icon: Images.alertPopGIF);
+      setStatus(Status.loaded);
+      return ApiResponse(status: false);
+    }
+  }
+
+  callSliderTrendingAPI() {
+    HomeProvider provider = navigatorKey.currentContext!.read<HomeProvider>();
+    provider.getHomeSlider();
+    // provider.getHomeTrendingData();
   }
 }

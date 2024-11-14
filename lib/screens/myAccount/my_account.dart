@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
-import 'package:stocks_news_new/screens/auth/login/login_sheet.dart';
-import 'package:stocks_news_new/screens/auth/login/login_sheet_tablet.dart';
 import 'package:stocks_news_new/screens/myAccount/my_account_container.dart';
 import 'package:stocks_news_new/screens/myAccount/widgets/delete_account.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
@@ -10,6 +8,7 @@ import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/login_error.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
+import '../auth/base/base_auth.dart';
 
 import '../../utils/constants.dart';
 
@@ -26,7 +25,7 @@ class MyAccount extends StatelessWidget {
       parameters: {'screen_name': 'My Account'},
     );
     return BaseContainer(
-      appBar: const AppBarHome(isPopback: true, title: "My Account"),
+      appBar: const AppBarHome(isPopBack: true, title: "My Account"),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: Dimen.padding),
         child: provider.user == null
@@ -37,7 +36,8 @@ class MyAccount extends StatelessWidget {
                       child: LoginError(
                     title: "My Account",
                     onClick: () async {
-                      isPhone ? await loginSheet() : await loginSheetTablet();
+                      // isPhone ? await loginSheet() : await loginSheetTablet();
+                      await loginFirstSheet();
                     },
                   ))
                 ],

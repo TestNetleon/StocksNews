@@ -67,7 +67,7 @@ class _AnalysisForecastState extends State<WebviewLink> {
   @override
   Widget build(BuildContext context) {
     return BaseContainer(
-      appBar: const AppBarHome(isPopback: true),
+      appBar: const AppBarHome(isPopBack: true),
       body: loading
           ? const ProgressDialog()
           : WebViewWidget(

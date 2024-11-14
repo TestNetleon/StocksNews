@@ -61,7 +61,7 @@ class _SearchState extends State<Search> {
       child: BaseContainer(
         drawer: const BaseDrawer(),
         appBar: const AppBarHome(
-          isPopback: true,
+          isPopBack: true,
           title: "Search",
           canSearch: false,
         ),

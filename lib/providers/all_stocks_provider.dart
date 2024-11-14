@@ -11,6 +11,7 @@ import 'package:stocks_news_new/modals/stocks_res.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
+import 'package:stocks_news_new/service/amplitude/service.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/utils/utils.dart';
@@ -59,6 +60,7 @@ class AllStocksProvider extends ChangeNotifier {
   Future createAlertSend({
     required String alertName,
     required String symbol,
+    required String companyName,
     required int index,
     bool selectedOne = false,
     bool selectedTwo = false,
@@ -78,16 +80,23 @@ class AllStocksProvider extends ChangeNotifier {
         showProgress: true,
         removeForceLogin: true,
       );
-      _data?.data?[index].isAlertAdded = 1;
-      notifyListeners();
+      if (response.status) {
+        AmplitudeService.logAlertUpdateEvent(
+          added: true,
+          symbol: symbol,
+          companyName: companyName,
+        );
+        _data?.data?[index].isAlertAdded = 1;
+        notifyListeners();
 
-      _extra = (response.extra is Extra ? response.extra as Extra : null);
-      await _player.play(AssetSource(AudioFiles.alertWeathlist));
+        _extra = (response.extra is Extra ? response.extra as Extra : null);
+        await _player.play(AssetSource(AudioFiles.alertWeathlist));
 
-      navigatorKey.currentContext!
-          .read<HomeProvider>()
-          .setTotalsAlerts(response.data['total_alerts']);
-      notifyListeners();
+        navigatorKey.currentContext!
+            .read<HomeProvider>()
+            .setTotalsAlerts(response.data['total_alerts']);
+        notifyListeners();
+      }
 
       Navigator.pop(navigatorKey.currentContext!);
       Navigator.pop(navigatorKey.currentContext!);
@@ -105,6 +114,7 @@ class AllStocksProvider extends ChangeNotifier {
 
   Future addToWishList({
     required String symbol,
+    required String companyName,
     required bool up,
     required int index,
   }) async {
@@ -125,6 +135,11 @@ class AllStocksProvider extends ChangeNotifier {
       if (response.status) {
         //
         _data?.data?[index].isWatchlistAdded = 1;
+        AmplitudeService.logWatchlistUpdateEvent(
+          added: true,
+          symbol: symbol,
+          companyName: companyName,
+        );
         notifyListeners();
 
         // _homeTrendingRes?.trending[index].isWatchlistAdded = 1;

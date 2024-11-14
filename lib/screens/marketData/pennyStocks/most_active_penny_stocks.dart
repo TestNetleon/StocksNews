@@ -20,6 +20,7 @@ import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/widgets/market_data_header.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
+import '../../../service/amplitude/service.dart';
 import '../../../utils/constants.dart';
 import '../../../widgets/base_ui_container.dart';
 import '../../../widgets/refresh_controll.dart';
@@ -36,6 +37,9 @@ class _MostActivePennyStocksState extends State<MostActivePennyStocks> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      AmplitudeService.logUserInteractionEvent(
+          type: 'Most Active Penny Stocks');
+
       MostActivePennyStocksProviders provider =
           context.read<MostActivePennyStocksProviders>();
       if (provider.data != null) {
@@ -116,11 +120,13 @@ class _MostActivePennyStocksState extends State<MostActivePennyStocks> {
                             onClickAlert: () => _onAlertClick(
                                 context,
                                 data[index].symbol ?? "",
+                                data[index].name ?? "",
                                 data[index].isAlertAdded,
                                 index),
                             onClickWatchlist: () => _onWatchListClick(
                                 context,
                                 data[index].symbol ?? "",
+                                data[index].name ?? "",
                                 data[index].isWatchlistAdded,
                                 index),
                             child: PennyStocksItem(
@@ -185,8 +191,13 @@ class _MostActivePennyStocksState extends State<MostActivePennyStocks> {
     );
   }
 
-  void _onAlertClick(BuildContext context, String symbol, num? isAlertAdded,
-      int? index) async {
+  void _onAlertClick(
+    BuildContext context,
+    String symbol,
+    String companyName,
+    num? isAlertAdded,
+    int? index,
+  ) async {
     if ((isAlertAdded?.toInt() ?? 0) == 1) {
       Navigator.push(
         navigatorKey.currentContext!,
@@ -202,6 +213,7 @@ class _MostActivePennyStocksState extends State<MostActivePennyStocks> {
             insetPadding:
                 EdgeInsets.symmetric(horizontal: 15.sp, vertical: 10.sp),
             symbol: symbol,
+            companyName: companyName,
             index: index ?? 0,
             marketDataMostActivePenny: true,
           ),
@@ -228,6 +240,7 @@ class _MostActivePennyStocksState extends State<MostActivePennyStocks> {
                 insetPadding:
                     EdgeInsets.symmetric(horizontal: 15.sp, vertical: 10.sp),
                 symbol: symbol,
+                companyName: companyName,
                 index: index ?? 0,
                 marketDataMostActivePenny: true,
               ),
@@ -244,8 +257,13 @@ class _MostActivePennyStocksState extends State<MostActivePennyStocks> {
     }
   }
 
-  void _onWatchListClick(BuildContext context, String symbol,
-      num? isWatchlistAdded, int index) async {
+  void _onWatchListClick(
+    BuildContext context,
+    String symbol,
+    String companyName,
+    num? isWatchlistAdded,
+    int index,
+  ) async {
     if (isWatchlistAdded == 1) {
       Navigator.push(
         navigatorKey.currentContext!,
@@ -257,6 +275,7 @@ class _MostActivePennyStocksState extends State<MostActivePennyStocks> {
             .read<MostActivePennyStocksProviders>()
             .addToWishList(
               symbol: symbol,
+              companyName: companyName,
               index: index,
               up: true,
             );
@@ -277,6 +296,7 @@ class _MostActivePennyStocksState extends State<MostActivePennyStocks> {
                 .read<MostActivePennyStocksProviders>()
                 .addToWishList(
                   symbol: symbol,
+                  companyName: companyName,
                   index: index,
                   up: true,
                 );

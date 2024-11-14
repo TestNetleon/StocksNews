@@ -37,7 +37,7 @@ class _ClaimHistoryIndexState extends State<ClaimHistoryIndex> {
   Widget build(BuildContext context) {
     return BaseContainer(
       appBar: AppBarHome(
-        isPopback: true,
+        isPopBack: true,
         title: widget.appbarHeading,
       ),
       body: ClaimHistoryContainer(type: widget.type, id: widget.id),

@@ -13,8 +13,6 @@ import 'package:stocks_news_new/modals/in_app_msg_res.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
-import 'package:stocks_news_new/screens/auth/login/login_sheet.dart';
-import 'package:stocks_news_new/screens/auth/login/login_sheet_tablet.dart';
 import 'package:stocks_news_new/screens/blogDetail/index.dart';
 import 'package:stocks_news_new/screens/blogNew/blogsNew/index.dart';
 import 'package:stocks_news_new/screens/membership_new/membership.dart';
@@ -32,6 +30,7 @@ import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
 import 'package:stocks_news_new/widgets/custom/required_login.dart';
 // import '../screens/Adds/adds.dart';
 import '../screens/AdManager/item.dart';
+import '../screens/auth/base/base_auth.dart';
 import '../screens/stockDetail/index.dart';
 
 String? validAuthToken;
@@ -176,7 +175,7 @@ Future<ApiResponse> apiRequest({
           if (res.data is! List && !res.status) {
             maintenanceDialogNew = MaintenanceDialog.fromJson(res.data);
           } else {
-            print('set empty maintenanceDialog data');
+            // print('set empty maintenanceDialog data');
           }
         }
 
@@ -248,7 +247,7 @@ Future<ApiResponse> apiRequest({
           if (res.data is! List && !res.status) {
             maintenanceDialog = MaintenanceDialog.fromJson(res.data);
           } else {
-            print('Data is a list, not a MaintenanceDialog');
+            // print('Data is a list, not a MaintenanceDialog');
           }
         }
         if (maintenanceDialog != null && !isShowingError) {
@@ -270,7 +269,7 @@ Future<ApiResponse> apiRequest({
       callCheckServer = true;
       navigatorKey.currentContext!.read<HomeProvider>().checkMaintenanceMode();
     }
-    Utils().showLog('Catch error => ${e.toString()}');
+    Utils().showLog('Catch error =>> ${e.toString()}');
     Utils().showLog(e.toString());
     if (showProgress) closeGlobalProgressDialog();
     if (!isShowingError && showErrorOnFull) {}
@@ -301,7 +300,8 @@ Future _checkLogin() async {
   UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
 
   if (provider.user == null) {
-    isPhone ? await loginSheet() : await loginSheetTablet();
+    // isPhone ? await loginSheet() : await loginSheetTablet();
+    loginFirstSheet();
   } else {
     if (provider.user?.phone == null || provider.user?.phone == '') {
       requiredLogin();

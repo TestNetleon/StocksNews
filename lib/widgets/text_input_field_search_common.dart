@@ -18,6 +18,7 @@ import 'package:stocks_news_new/widgets/cache_network_image.dart';
 
 import '../route/my_app.dart';
 import '../screens/stockDetail/index.dart';
+import '../service/amplitude/service.dart';
 import 'spacer_horizontal.dart';
 
 //
@@ -224,6 +225,10 @@ class _TextInputFieldSearchCommonState
                             onTap: () {
                               closeKeyboard();
                               provider.clearSearch();
+                              AmplitudeService.logUserInteractionEvent(
+                                type: 'Stock Search',
+                                selfText: "Searched for ${data?.symbol ?? ''}",
+                              );
                               Navigator.push(
                                 navigatorKey.currentContext!,
                                 MaterialPageRoute(
@@ -293,6 +298,10 @@ class _TextInputFieldSearchCommonState
                             onTap: () {
                               closeKeyboard();
                               provider.clearSearch();
+                              AmplitudeService.logUserInteractionEvent(
+                                type: 'News Search',
+                                selfText: "Searched for ${data?.title ?? ''}",
+                              );
                               Navigator.push(
                                 navigatorKey.currentContext!,
                                 MaterialPageRoute(

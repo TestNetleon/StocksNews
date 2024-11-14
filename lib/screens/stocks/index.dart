@@ -4,6 +4,8 @@ import 'package:stocks_news_new/providers/all_stocks_provider.dart';
 import 'package:stocks_news_new/screens/stocks/container.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 
+import '../../service/amplitude/service.dart';
+
 class StocksIndex extends StatefulWidget {
   static const path = "StocksIndex";
   final String? inAppMsgId;
@@ -27,6 +29,8 @@ class _StocksIndexState extends State<StocksIndex> {
   }
 
   _callAPi() {
+    AmplitudeService.logUserInteractionEvent(type: 'Stocks');
+
     AllStocksProvider provider = context.read<AllStocksProvider>();
     if (provider.data == null || provider.data?.isEmpty == true) {
       provider.getData(showProgress: false, inAppMsgId: widget.inAppMsgId);

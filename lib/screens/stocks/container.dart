@@ -87,7 +87,7 @@ class StocksContainer extends StatelessWidget {
     // Utils().showLog("GAP UP DOWN OPEN? $isLocked");
     return BaseContainer(
       appBar: AppBarHome(
-        isPopback: true,
+        isPopBack: true,
         showTrailing: false,
         canSearch: false,
         title: "Stocks",
@@ -195,11 +195,13 @@ class StocksContainer extends StatelessWidget {
                                     onClickAlert: () => _onAlertClick(
                                         context,
                                         data?.symbol ?? "",
+                                        data?.name ?? "",
                                         data?.isAlertAdded,
                                         index),
                                     onClickWatchlist: () => _onWatchListClick(
                                         context,
                                         data?.symbol ?? "",
+                                        data?.name ?? '',
                                         data?.isWatchlistAdded,
                                         index),
                                     child: StocksItemAll(
@@ -219,11 +221,13 @@ class StocksContainer extends StatelessWidget {
                               onClickAlert: () => _onAlertClick(
                                   context,
                                   data?.symbol ?? "",
+                                  data?.name ?? "",
                                   data?.isAlertAdded,
                                   index),
                               onClickWatchlist: () => _onWatchListClick(
                                   context,
                                   data?.symbol ?? "",
+                                  data?.name ?? '',
                                   data?.isWatchlistAdded,
                                   index),
                               child: StocksItemAll(
@@ -254,8 +258,13 @@ class StocksContainer extends StatelessWidget {
     );
   }
 
-  void _onAlertClick(BuildContext context, String symbol, num? isAlertAdded,
-      int? index) async {
+  void _onAlertClick(
+    BuildContext context,
+    String symbol,
+    String companyName,
+    num? isAlertAdded,
+    int? index,
+  ) async {
     if ((isAlertAdded?.toInt() ?? 0) == 1) {
       Navigator.push(
         navigatorKey.currentContext!,
@@ -271,6 +280,7 @@ class StocksContainer extends StatelessWidget {
             insetPadding:
                 EdgeInsets.symmetric(horizontal: 15.sp, vertical: 10.sp),
             symbol: symbol,
+            companyName: companyName,
             index: index ?? 0,
             marketDataStocks: true,
           ),
@@ -295,6 +305,7 @@ class StocksContainer extends StatelessWidget {
                 insetPadding:
                     EdgeInsets.symmetric(horizontal: 15.sp, vertical: 10.sp),
                 symbol: symbol,
+                companyName: companyName,
                 index: index ?? 0,
                 marketDataStocks: true,
               ),
@@ -311,8 +322,13 @@ class StocksContainer extends StatelessWidget {
     }
   }
 
-  void _onWatchListClick(BuildContext context, String symbol,
-      num? isWatchlistAdded, int index) async {
+  void _onWatchListClick(
+    BuildContext context,
+    String symbol,
+    String companyName,
+    num? isWatchlistAdded,
+    int index,
+  ) async {
     if (isWatchlistAdded == 1) {
       Navigator.push(
         navigatorKey.currentContext!,
@@ -324,6 +340,7 @@ class StocksContainer extends StatelessWidget {
             .read<AllStocksProvider>()
             .addToWishList(
               symbol: symbol,
+              companyName: companyName,
               index: index,
               up: true,
             );
@@ -344,6 +361,7 @@ class StocksContainer extends StatelessWidget {
                 .read<AllStocksProvider>()
                 .addToWishList(
                   symbol: symbol,
+                  companyName: companyName,
                   index: index,
                   up: true,
                 );

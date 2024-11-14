@@ -130,8 +130,14 @@ class Extra {
   final bool? showRewards;
   final bool? showAnalysis;
   final UpdateYourPhoneRes? updateYourPhone;
+  final bool? showArena;
+  final bool? showTradingSimulator;
+
+  // final num? isRegistered;
 
   Extra({
+    this.showArena,
+    this.showTradingSimulator,
     this.updateYourPhone,
     this.showRewards,
     this.adManagers,
@@ -216,13 +222,17 @@ class Extra {
     this.watchlistTitle,
     this.isOldApp,
     this.notificationSetting,
+    // this.isRegistered,
   });
 
   factory Extra.fromJson(Map<String, dynamic> json) => Extra(
         search: json["search"],
-        updateYourPhone: json["update_your_phone"] == null
+        showArena: json['show_arena'],
+        showTradingSimulator: json['show_trading_simulator'],
+        // isRegistered: json['is_registered'],
+        updateYourPhone: json["update_your_phone_no"] == null
             ? null
-            : UpdateYourPhoneRes.fromJson(json["update_your_phone"]),
+            : UpdateYourPhoneRes.fromJson(json["update_your_phone_no"]),
         recommendation: json["recommendation"],
         showRewards: json['show_rewards'],
         showAnalysis: json['show_analysis'],
@@ -375,7 +385,10 @@ class Extra {
   Map<String, dynamic> toJson() => {
         "ad_managers": adManagers?.toJson(),
         "phone_code_error": phoneCodeError,
+        'show_trading_simulator': showTradingSimulator,
+        'show_arena': showArena,
         "phone_error": phoneError,
+        // "is_registered": isRegistered,
         'show_analysis': showAnalysis,
         "show_rewards": showRewards,
         "feeback_type": feebackType == null
@@ -393,7 +406,7 @@ class Extra {
         "verify_identity_text": verifyIdentity,
         "show_morningstar": showMorningstar,
         "recommendation": recommendation,
-        "update_your_phone": updateYourPhone?.toJson(),
+        "update_your_phone_no": updateYourPhone?.toJson(),
         "verify_membership_text": verifySubscription,
         "self_rank": selfRank,
         "earn_condition": earnCondition,
@@ -480,12 +493,14 @@ class UpdateYourPhoneRes {
   final String? text;
   final String? verifyButton;
   final String? updateButton;
+  final String? agreeText;
 
   UpdateYourPhoneRes({
     this.title,
     this.text,
     this.verifyButton,
     this.updateButton,
+    this.agreeText,
   });
 
   factory UpdateYourPhoneRes.fromJson(Map<String, dynamic> json) =>
@@ -494,6 +509,7 @@ class UpdateYourPhoneRes {
         text: json["text"],
         updateButton: json['update_btn_text'],
         verifyButton: json['verify_btn_text'],
+        agreeText: json['agree_text'],
       );
 
   Map<String, dynamic> toJson() => {
@@ -501,6 +517,7 @@ class UpdateYourPhoneRes {
         "text": text,
         'update_btn_text': updateButton,
         'verify_btn_text': verifyButton,
+        'agree_text': agreeText,
       };
 }
 

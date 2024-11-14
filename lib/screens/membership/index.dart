@@ -25,7 +25,7 @@ class _MembershipIndexState extends State<MembershipIndex> {
   @override
   Widget build(BuildContext context) {
     return const BaseContainer(
-      appBar: AppBarHome(isPopback: true, title: "My Membership"),
+      appBar: AppBarHome(isPopBack: true, title: "My Membership"),
       body: Padding(
         padding: EdgeInsets.fromLTRB(Dimen.padding, 0, Dimen.padding, 0),
         child: Column(

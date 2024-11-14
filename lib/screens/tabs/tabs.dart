@@ -1,5 +1,3 @@
-// ignore_for_file: use_build_context_synchronously
-
 import 'dart:developer';
 import 'dart:io';
 import 'package:flutter/material.dart';
@@ -15,15 +13,13 @@ import 'package:stocks_news_new/providers/search_provider.dart';
 import 'package:stocks_news_new/providers/trending_provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/screens/auth/refer/refer_code.dart';
-// ignore: unused_import
-import 'package:stocks_news_new/screens/drawer/base_drawer.dart';
-// ignore: unused_import
 import 'package:stocks_news_new/screens/tabs/compareStocks/compare_stocks.dart';
 import 'package:stocks_news_new/screens/tabs/home/home.dart';
 import 'package:stocks_news_new/screens/tabs/insider/insider.dart';
 import 'package:stocks_news_new/screens/tabs/news/news.dart';
 import 'package:stocks_news_new/screens/tabs/reddit_twitter/reddit_twitter.dart';
 import 'package:stocks_news_new/screens/tabs/trending/trending.dart';
+import 'package:stocks_news_new/service/amplitude/service.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -68,6 +64,8 @@ class _TabsState extends State<Tabs> {
       //Because we are asking membership thats why hiding refer
       if (widget.showRef) referLogin();
       if (widget.showMembership) _showMembership();
+      // appTrack();
+      AmplitudeService.logFirstOpenEvent();
     });
   }
 
@@ -172,21 +170,29 @@ class _TabsState extends State<Tabs> {
             homeProvider.homeTrendingRes == null) {
           homeProvider.refreshData(widget.inAppMsgId);
         }
+        AmplitudeService.logUserInteractionEvent(type: "Stocks.News Home Page");
+
         break;
       case 1:
         if (trendingProvider.mostBullish == null) {
           trendingProvider.getMostBullish();
         }
+        AmplitudeService.logUserInteractionEvent(type: "Trending");
+
         break;
       case 2:
         if (insiderProvider.data == null) {
           insiderProvider.getData(showProgress: false);
         }
+        AmplitudeService.logUserInteractionEvent(type: "Insider Trades");
+
         break;
       case 3:
         if (redditTwitterProvider.socialSentimentRes == null) {
           redditTwitterProvider.getRedditTwitterData(reset: true);
         }
+        AmplitudeService.logUserInteractionEvent(type: "Market Sentiment");
+
         break;
       case 4:
         if (newsCatProvider.tabs == null) {
@@ -194,6 +200,8 @@ class _TabsState extends State<Tabs> {
         } else {
           newsCatProvider.tabChange(0, newsCatProvider.tabs![0].id);
         }
+        AmplitudeService.logUserInteractionEvent(type: "News");
+
         break;
       case 5:
         log("---Compare");
@@ -209,6 +217,7 @@ void _compareStocks(BuildContext context) {
   if (provider.user != null && compareProvider.company.isEmpty) {
     compareProvider.getCompareStock();
   }
+  AmplitudeService.logUserInteractionEvent(type: 'Compare Stocks');
 }
 
 class Screens {

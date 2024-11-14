@@ -5,7 +5,6 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
-
 import '../../modals/missions/missions.dart';
 import '../../providers/missions/provider.dart';
 import '../../widgets/custom/refresh_indicator.dart';
@@ -36,14 +35,13 @@ class _ClaimPointsIndexState extends State<ClaimPointsIndex> {
 
     return BaseContainer(
       appBar: AppBarHome(
-        isPopback: true,
+        isPopBack: true,
         onTap: () {
           Navigator.pop(context, claimed);
         },
         canSearch: true,
         showTrailing: true,
         title: "Rewards",
-        subTitle: provider.extra?.subTitle,
       ),
       body: BaseUiContainer(
         hasData: !provider.isLoading &&

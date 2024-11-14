@@ -15,7 +15,12 @@ import '../../../widgets/theme_input_field.dart';
 
 class EditEmail extends StatelessWidget {
   final String email;
-  const EditEmail({super.key, required this.email});
+  final int digit;
+  const EditEmail({
+    super.key,
+    required this.email,
+    this.digit = 4,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +55,8 @@ class EditEmail extends StatelessWidget {
             ),
           ),
         ],
-        text: "Please enter the 4-digit verification code that was sent to ",
+        text:
+            "Please enter the $digit-digit verification code that was sent to ",
         style: stylePTSansRegular(
           height: 1.5,
         ),

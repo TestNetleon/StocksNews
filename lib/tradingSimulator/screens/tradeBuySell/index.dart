@@ -29,7 +29,7 @@ class TradeBuySellIndex extends StatelessWidget {
     CompanyInfo? companyInfo = provider.tabRes?.companyInfo;
     return BaseContainer(
       appBar: AppBarHome(
-        isPopback: true,
+        isPopBack: true,
         title: keyStats?.symbol ?? "",
         subTitle: keyStats?.name ?? "",
         showTrailing: false,

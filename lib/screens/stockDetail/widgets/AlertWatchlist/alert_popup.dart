@@ -50,6 +50,8 @@ import 'setup_alert.dart';
 //
 class AlertPopup extends StatefulWidget {
   final String symbol;
+  final String companyName;
+
   final bool up;
   final bool fromTrending;
   final bool fromTopStock;
@@ -100,6 +102,7 @@ class AlertPopup extends StatefulWidget {
   const AlertPopup({
     super.key,
     required this.symbol,
+    required this.companyName,
     this.up = false,
     this.fromTrending = false,
     this.fromTopStock = false,
@@ -398,6 +401,7 @@ class _AlertPopupState extends State<AlertPopup> {
       context.read<TodayTopGainerProvider>().createAlertSend(
             index: widget.index,
             symbol: widget.symbol,
+            companyName: widget.companyName,
             alertName: controller.text,
             selectedOne: selectedOne,
             selectedTwo: selectedTwo,
@@ -409,6 +413,7 @@ class _AlertPopupState extends State<AlertPopup> {
       context.read<TodayTopLoserProvider>().createAlertSend(
             index: widget.index,
             symbol: widget.symbol,
+            companyName: widget.companyName,
             alertName: controller.text,
             selectedOne: selectedOne,
             selectedTwo: selectedTwo,
@@ -419,6 +424,7 @@ class _AlertPopupState extends State<AlertPopup> {
       context.read<TodayBreakoutStockProvider>().createAlertSend(
             index: widget.index,
             symbol: widget.symbol,
+            companyName: widget.companyName,
             alertName: controller.text,
             selectedOne: selectedOne,
             selectedTwo: selectedTwo,
@@ -430,6 +436,7 @@ class _AlertPopupState extends State<AlertPopup> {
       context.read<GapUpProvider>().createAlertSend(
             index: widget.index,
             symbol: widget.symbol,
+            companyName: widget.companyName,
             alertName: controller.text,
             selectedOne: selectedOne,
             selectedTwo: selectedTwo,
@@ -440,6 +447,7 @@ class _AlertPopupState extends State<AlertPopup> {
       context.read<GapDownProvider>().createAlertSend(
             index: widget.index,
             symbol: widget.symbol,
+            companyName: widget.companyName,
             alertName: controller.text,
             selectedOne: selectedOne,
             selectedTwo: selectedTwo,
@@ -450,6 +458,7 @@ class _AlertPopupState extends State<AlertPopup> {
       context.read<HighPeProvider>().createAlertSend(
             index: widget.index,
             symbol: widget.symbol,
+            companyName: widget.companyName,
             alertName: controller.text,
             selectedOne: selectedOne,
             selectedTwo: selectedTwo,
@@ -460,6 +469,7 @@ class _AlertPopupState extends State<AlertPopup> {
       context.read<LowPeProvider>().createAlertSend(
             index: widget.index,
             symbol: widget.symbol,
+            companyName: widget.companyName,
             alertName: controller.text,
             selectedOne: selectedOne,
             selectedTwo: selectedTwo,
@@ -471,6 +481,7 @@ class _AlertPopupState extends State<AlertPopup> {
       context.read<HighPeGrowthProvider>().createAlertSend(
             index: widget.index,
             symbol: widget.symbol,
+            companyName: widget.companyName,
             alertName: controller.text,
             selectedOne: selectedOne,
             selectedTwo: selectedTwo,
@@ -482,6 +493,7 @@ class _AlertPopupState extends State<AlertPopup> {
       context.read<LowPeGrowthProvider>().createAlertSend(
             index: widget.index,
             symbol: widget.symbol,
+            companyName: widget.companyName,
             alertName: controller.text,
             selectedOne: selectedOne,
             selectedTwo: selectedTwo,
@@ -492,6 +504,7 @@ class _AlertPopupState extends State<AlertPopup> {
       context.read<FiftyTwoWeeksHighProvider>().createAlertSend(
             index: widget.index,
             symbol: widget.symbol,
+            companyName: widget.companyName,
             alertName: controller.text,
             selectedOne: selectedOne,
             selectedTwo: selectedTwo,
@@ -502,6 +515,7 @@ class _AlertPopupState extends State<AlertPopup> {
       context.read<FiftyTwoWeeksProvider>().createAlertSend(
             index: widget.index,
             symbol: widget.symbol,
+            companyName: widget.companyName,
             alertName: controller.text,
             selectedOne: selectedOne,
             selectedTwo: selectedTwo,
@@ -512,6 +526,7 @@ class _AlertPopupState extends State<AlertPopup> {
       context.read<HighBetaStocksProvider>().createAlertSend(
             index: widget.index,
             symbol: widget.symbol,
+            companyName: widget.companyName,
             alertName: controller.text,
             selectedOne: selectedOne,
             selectedTwo: selectedTwo,
@@ -522,6 +537,7 @@ class _AlertPopupState extends State<AlertPopup> {
       context.read<LowsBetaStocksProvider>().createAlertSend(
             index: widget.index,
             symbol: widget.symbol,
+            companyName: widget.companyName,
             alertName: controller.text,
             selectedOne: selectedOne,
             selectedTwo: selectedTwo,
@@ -533,6 +549,7 @@ class _AlertPopupState extends State<AlertPopup> {
       context.read<NegativeBetaStocksProvider>().createAlertSend(
             index: widget.index,
             symbol: widget.symbol,
+            companyName: widget.companyName,
             alertName: controller.text,
             selectedOne: selectedOne,
             selectedTwo: selectedTwo,
@@ -543,6 +560,7 @@ class _AlertPopupState extends State<AlertPopup> {
       context.read<Dow30Provider>().createAlertSend(
             index: widget.index,
             symbol: widget.symbol,
+            companyName: widget.companyName,
             alertName: controller.text,
             selectedOne: selectedOne,
             selectedTwo: selectedTwo,
@@ -553,6 +571,7 @@ class _AlertPopupState extends State<AlertPopup> {
       context.read<SnP500Provider>().createAlertSend(
             index: widget.index,
             symbol: widget.symbol,
+            companyName: widget.companyName,
             alertName: controller.text,
             selectedOne: selectedOne,
             selectedTwo: selectedTwo,
@@ -564,6 +583,7 @@ class _AlertPopupState extends State<AlertPopup> {
       context.read<IndicesProvider>().createAlertSend(
             index: widget.index,
             symbol: widget.symbol,
+            companyName: widget.companyName,
             alertName: controller.text,
             selectedOne: selectedOne,
             selectedTwo: selectedTwo,
@@ -575,6 +595,7 @@ class _AlertPopupState extends State<AlertPopup> {
       context.read<LowPriceStocksProvider>().createAlertSend(
             index: widget.index,
             symbol: widget.symbol,
+            companyName: widget.companyName,
             alertName: controller.text,
             selectedOne: selectedOne,
             selectedTwo: selectedTwo,
@@ -585,6 +606,7 @@ class _AlertPopupState extends State<AlertPopup> {
       context.read<MostActiveProvider>().createAlertSend(
             index: widget.index,
             symbol: widget.symbol,
+            companyName: widget.companyName,
             alertName: controller.text,
             selectedOne: selectedOne,
             selectedTwo: selectedTwo,
@@ -595,6 +617,7 @@ class _AlertPopupState extends State<AlertPopup> {
       context.read<MostVolatileStocksProvider>().createAlertSend(
             index: widget.index,
             symbol: widget.symbol,
+            companyName: widget.companyName,
             alertName: controller.text,
             selectedOne: selectedOne,
             selectedTwo: selectedTwo,
@@ -606,6 +629,7 @@ class _AlertPopupState extends State<AlertPopup> {
       context.read<UnusualTradingVolumeProvider>().createAlertSend(
             index: widget.index,
             symbol: widget.symbol,
+            companyName: widget.companyName,
             alertName: controller.text,
             selectedOne: selectedOne,
             selectedTwo: selectedTwo,
@@ -617,6 +641,7 @@ class _AlertPopupState extends State<AlertPopup> {
       context.read<MostActivePennyStocksProviders>().createAlertSend(
             index: widget.index,
             symbol: widget.symbol,
+            companyName: widget.companyName,
             alertName: controller.text,
             selectedOne: selectedOne,
             selectedTwo: selectedTwo,
@@ -627,6 +652,7 @@ class _AlertPopupState extends State<AlertPopup> {
       context.read<MostPopularPennyStocksProviders>().createAlertSend(
             index: widget.index,
             symbol: widget.symbol,
+            companyName: widget.companyName,
             alertName: controller.text,
             selectedOne: selectedOne,
             selectedTwo: selectedTwo,
@@ -638,6 +664,7 @@ class _AlertPopupState extends State<AlertPopup> {
       context.read<TopTodayPennyStocksProviders>().createAlertSend(
             index: widget.index,
             symbol: widget.symbol,
+            companyName: widget.companyName,
             alertName: controller.text,
             selectedOne: selectedOne,
             selectedTwo: selectedTwo,
@@ -649,6 +676,7 @@ class _AlertPopupState extends State<AlertPopup> {
       context.read<DividendsProvider>().createAlertSend(
             index: widget.index,
             symbol: widget.symbol,
+            companyName: widget.companyName,
             alertName: controller.text,
             selectedOne: selectedOne,
             selectedTwo: selectedTwo,
@@ -660,6 +688,7 @@ class _AlertPopupState extends State<AlertPopup> {
       context.read<EarningsProvider>().createAlertSend(
             index: widget.index,
             symbol: widget.symbol,
+            companyName: widget.companyName,
             alertName: controller.text,
             selectedOne: selectedOne,
             selectedTwo: selectedTwo,
@@ -671,6 +700,7 @@ class _AlertPopupState extends State<AlertPopup> {
       context.read<AllStocksProvider>().createAlertSend(
             index: widget.index,
             symbol: widget.symbol,
+            companyName: widget.companyName,
             alertName: controller.text,
             selectedOne: selectedOne,
             selectedTwo: selectedTwo,
@@ -682,6 +712,7 @@ class _AlertPopupState extends State<AlertPopup> {
       context.read<SectorIndustryProvider>().createAlertSend(
             index: widget.index,
             symbol: widget.symbol,
+            companyName: widget.companyName,
             alertName: controller.text,
             selectedOne: selectedOne,
             selectedTwo: selectedTwo,
@@ -692,6 +723,7 @@ class _AlertPopupState extends State<AlertPopup> {
       context.read<StockDetailProviderNew>().createAlertSendPeer(
             type: "peer",
             symbol: widget.symbol,
+            companyName: widget.companyName,
             index: widget.index,
             alertName: controller.text,
             selectedOne: selectedOne,
@@ -703,6 +735,7 @@ class _AlertPopupState extends State<AlertPopup> {
       context.read<StockDetailProviderNew>().createAlertSendPeer(
             type: "compititor",
             symbol: widget.symbol,
+            companyName: widget.companyName,
             index: widget.index,
             alertName: controller.text,
             selectedOne: selectedOne,
@@ -714,6 +747,7 @@ class _AlertPopupState extends State<AlertPopup> {
       context.read<RedditTwitterProvider>().createAlertSend(
             type: "ShowTheLast",
             symbol: widget.symbol,
+            companyName: widget.companyName,
             index: widget.index,
             alertName: controller.text,
             selectedOne: selectedOne,
@@ -725,6 +759,7 @@ class _AlertPopupState extends State<AlertPopup> {
       context.read<RedditTwitterProvider>().createAlertSend(
             type: "Recent",
             symbol: widget.symbol,
+            companyName: widget.companyName,
             index: widget.index,
             alertName: controller.text,
             selectedOne: selectedOne,
@@ -735,6 +770,7 @@ class _AlertPopupState extends State<AlertPopup> {
     if (widget.congresionalImagesClick) {
       context.read<CongressionalDetailProvider>().createAlertSend(
             symbol: widget.symbol,
+            companyName: widget.companyName,
             index: widget.index,
             alertName: controller.text,
             selectedOne: selectedOne,
@@ -748,6 +784,7 @@ class _AlertPopupState extends State<AlertPopup> {
             index: widget.index,
             up: widget.up,
             symbol: widget.symbol,
+            companyName: widget.companyName,
             alertName: controller.text,
             selectedOne: selectedOne,
             selectedTwo: selectedTwo,
@@ -762,6 +799,7 @@ class _AlertPopupState extends State<AlertPopup> {
                 ? topTrendingProvider.createAlertSend(
                     alertName: controller.text,
                     symbol: widget.symbol,
+                    companyName: widget.companyName,
                     index: widget.index,
                   )
                 : widget.homeTrending
@@ -769,6 +807,7 @@ class _AlertPopupState extends State<AlertPopup> {
                         type: "homeTrending",
                         alertName: controller.text,
                         symbol: widget.symbol,
+                        companyName: widget.companyName,
                         index: widget.index,
                       )
                     : widget.homeTopGainers
@@ -776,6 +815,7 @@ class _AlertPopupState extends State<AlertPopup> {
                             type: "homeTopGainers",
                             alertName: controller.text,
                             symbol: widget.symbol,
+                            companyName: widget.companyName,
                             index: widget.index,
                           )
                         : widget.homeTopLosers
@@ -783,6 +823,7 @@ class _AlertPopupState extends State<AlertPopup> {
                                 type: "homeTopLosers",
                                 alertName: controller.text,
                                 symbol: widget.symbol,
+                                companyName: widget.companyName,
                                 index: widget.index,
                               )
                             : widget.homeGainersAndLosers == StocksType.gainers
@@ -790,6 +831,7 @@ class _AlertPopupState extends State<AlertPopup> {
                                     type: StocksType.gainers,
                                     alertName: controller.text,
                                     symbol: widget.symbol,
+                                    companyName: widget.companyName,
                                     index: widget.index,
                                   )
                                 : widget.homeGainersAndLosers ==
@@ -798,6 +840,7 @@ class _AlertPopupState extends State<AlertPopup> {
                                         type: StocksType.losers,
                                         alertName: controller.text,
                                         symbol: widget.symbol,
+                                        companyName: widget.companyName,
                                         index: widget.index,
                                       )
                                     : widget.homeGainersAndLosers ==
@@ -806,6 +849,7 @@ class _AlertPopupState extends State<AlertPopup> {
                                             type: StocksType.actives,
                                             alertName: controller.text,
                                             symbol: widget.symbol,
+                                            companyName: widget.companyName,
                                             index: widget.index,
                                           )
                                         : widget.homeMostBoughtMembers
@@ -813,6 +857,7 @@ class _AlertPopupState extends State<AlertPopup> {
                                                 type: "homeMostBoughtMembers",
                                                 alertName: controller.text,
                                                 symbol: widget.symbol,
+                                                companyName: widget.companyName,
                                                 index: widget.index,
                                               )
                                             : widget.homeFeatureStocks
@@ -820,6 +865,8 @@ class _AlertPopupState extends State<AlertPopup> {
                                                     .createAlertSend(
                                                     alertName: controller.text,
                                                     symbol: widget.symbol,
+                                                    companyName:
+                                                        widget.companyName,
                                                     index: widget.index,
                                                   )
                                                 : null;

@@ -76,9 +76,19 @@ class _HomeTopLoserState extends State<HomeTopLoser> {
                   alertForBullish: top.isAlertAdded?.toInt() ?? 0,
                   watlistForBullish: top.isWatchlistAdded?.toInt() ?? 0,
                   onClickAlert: () => _onAlertClick(
-                      context, top.symbol, top.isAlertAdded, index),
+                    context,
+                    top.symbol,
+                    top.name,
+                    top.isAlertAdded,
+                    index,
+                  ),
                   onClickWatchlist: () => _onWatchListClick(
-                      context, top.symbol, top.isWatchlistAdded, index),
+                    context,
+                    top.symbol,
+                    top.name,
+                    top.isWatchlistAdded,
+                    index,
+                  ),
                   child: CommonItemUi(
                     data: TopTrendingDataRes(
                         image: top.image,
@@ -112,8 +122,13 @@ class _HomeTopLoserState extends State<HomeTopLoser> {
     );
   }
 
-  void _onAlertClick(BuildContext context, String symbol, num? isAlertAdded,
-      int? index) async {
+  void _onAlertClick(
+    BuildContext context,
+    String symbol,
+    String companyName,
+    num? isAlertAdded,
+    int? index,
+  ) async {
     if ((isAlertAdded?.toInt() ?? 0) == 1) {
       Navigator.push(
         navigatorKey.currentContext!,
@@ -129,6 +144,7 @@ class _HomeTopLoserState extends State<HomeTopLoser> {
             insetPadding:
                 EdgeInsets.symmetric(horizontal: 15.sp, vertical: 10.sp),
             symbol: symbol,
+            companyName: companyName,
             index: index ?? 0,
             homeTopLosers: true,
           ),
@@ -155,6 +171,7 @@ class _HomeTopLoserState extends State<HomeTopLoser> {
                 insetPadding:
                     EdgeInsets.symmetric(horizontal: 15.sp, vertical: 10.sp),
                 symbol: symbol,
+                companyName: companyName,
                 index: index ?? 0,
                 homeTopLosers: true,
               ),
@@ -171,8 +188,13 @@ class _HomeTopLoserState extends State<HomeTopLoser> {
     }
   }
 
-  void _onWatchListClick(BuildContext context, String symbol,
-      num? isWatchlistAdded, int index) async {
+  void _onWatchListClick(
+    BuildContext context,
+    String symbol,
+    String companyName,
+    num? isWatchlistAdded,
+    int index,
+  ) async {
     if (isWatchlistAdded == 1) {
       Navigator.push(
         navigatorKey.currentContext!,
@@ -183,6 +205,7 @@ class _HomeTopLoserState extends State<HomeTopLoser> {
         await navigatorKey.currentContext!.read<HomeProvider>().addToWishList(
               type: "homeTopLosers",
               symbol: symbol,
+              companyName: companyName,
               index: index,
               up: true,
             );
@@ -205,6 +228,7 @@ class _HomeTopLoserState extends State<HomeTopLoser> {
                 .addToWishList(
                   type: "homeTopLosers",
                   symbol: symbol,
+                  companyName: companyName,
                   index: index,
                   up: true,
                 );

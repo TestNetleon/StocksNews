@@ -47,10 +47,20 @@ class SdStockPeers extends StatelessWidget {
                 index: index,
                 alertForBullish: data[index].isAlertAdded?.toInt() ?? 0,
                 watlistForBullish: data[index].isWatchlistAdded?.toInt() ?? 0,
-                onClickAlert: () => _onAlertClick(context, data[index].symbol,
-                    data[index].isAlertAdded, index),
-                onClickWatchlist: () => _onWatchListClick(context,
-                    data[index].symbol, data[index].isWatchlistAdded, index),
+                onClickAlert: () => _onAlertClick(
+                  context,
+                  data[index].symbol,
+                  data[index].name,
+                  data[index].isAlertAdded,
+                  index,
+                ),
+                onClickWatchlist: () => _onWatchListClick(
+                  context,
+                  data[index].symbol,
+                  data[index].name,
+                  data[index].isWatchlistAdded,
+                  index,
+                ),
                 child: CommonItemUi(
                   data: TopTrendingDataRes(
                       image: data[index].image,
@@ -87,8 +97,13 @@ class SdStockPeers extends StatelessWidget {
     );
   }
 
-  void _onAlertClick(BuildContext context, String symbol, num? isAlertAdded,
-      int? index) async {
+  void _onAlertClick(
+    BuildContext context,
+    String symbol,
+    String companyName,
+    num? isAlertAdded,
+    int? index,
+  ) async {
     if ((isAlertAdded?.toInt() ?? 0) == 1) {
       Navigator.push(
         navigatorKey.currentContext!,
@@ -104,6 +119,7 @@ class SdStockPeers extends StatelessWidget {
             insetPadding:
                 EdgeInsets.symmetric(horizontal: 15.sp, vertical: 10.sp),
             symbol: symbol,
+            companyName: companyName,
             index: index ?? 0,
             stocksAnalysisPeers: true,
           ),
@@ -130,6 +146,7 @@ class SdStockPeers extends StatelessWidget {
                 insetPadding:
                     EdgeInsets.symmetric(horizontal: 15.sp, vertical: 10.sp),
                 symbol: symbol,
+                companyName: companyName,
                 index: index ?? 0,
                 stocksAnalysisPeers: true,
               ),
@@ -146,8 +163,13 @@ class SdStockPeers extends StatelessWidget {
     }
   }
 
-  void _onWatchListClick(BuildContext context, String symbol,
-      num? isWatchlistAdded, int index) async {
+  void _onWatchListClick(
+    BuildContext context,
+    String symbol,
+    String companyName,
+    num? isWatchlistAdded,
+    int index,
+  ) async {
     if (isWatchlistAdded == 1) {
       Navigator.push(
         navigatorKey.currentContext!,
@@ -160,6 +182,7 @@ class SdStockPeers extends StatelessWidget {
             .addToWishListPeer(
               type: "Peer",
               symbol: symbol,
+              companyName: companyName,
               index: index,
               up: true,
             );
@@ -182,6 +205,7 @@ class SdStockPeers extends StatelessWidget {
                 .addToWishListPeer(
                   type: "Peer",
                   symbol: symbol,
+                  companyName: companyName,
                   index: index,
                   up: true,
                 );

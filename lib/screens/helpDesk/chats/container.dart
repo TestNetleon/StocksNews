@@ -96,6 +96,7 @@ class _HelpDeskAllChatNewListingState extends State<HelpDeskAllChatNewListing> {
         image: _image,
         ticketId: widget.ticketId,
         message: controller.text,
+        ticketNo: '${provider.chatData?.ticketNo ?? ''}',
       );
       if (res.status) {
         _image = null;

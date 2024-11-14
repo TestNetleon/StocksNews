@@ -15,6 +15,8 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 
+import '../service/amplitude/service.dart';
+
 class GapDownProvider extends ChangeNotifier {
   int _openIndex = -1;
   int? get openIndex => _openIndex;
@@ -42,6 +44,7 @@ class GapDownProvider extends ChangeNotifier {
   Future createAlertSend({
     required String alertName,
     required String symbol,
+    required String companyName,
     required int index,
     bool selectedOne = false,
     bool selectedTwo = false,
@@ -61,16 +64,24 @@ class GapDownProvider extends ChangeNotifier {
         showProgress: true,
         removeForceLogin: true,
       );
-      _data?[index].isAlertAdded = 1;
-      notifyListeners();
 
-      _extra = (response.extra is Extra ? response.extra as Extra : null);
-      await _player.play(AssetSource(AudioFiles.alertWeathlist));
+      if (response.status) {
+        AmplitudeService.logAlertUpdateEvent(
+          added: true,
+          symbol: symbol,
+          companyName: companyName,
+        );
+        _data?[index].isAlertAdded = 1;
+        notifyListeners();
 
-      navigatorKey.currentContext!
-          .read<HomeProvider>()
-          .setTotalsAlerts(response.data['total_alerts']);
-      notifyListeners();
+        _extra = (response.extra is Extra ? response.extra as Extra : null);
+        await _player.play(AssetSource(AudioFiles.alertWeathlist));
+
+        navigatorKey.currentContext!
+            .read<HomeProvider>()
+            .setTotalsAlerts(response.data['total_alerts']);
+        notifyListeners();
+      }
 
       Navigator.pop(navigatorKey.currentContext!);
       Navigator.pop(navigatorKey.currentContext!);
@@ -88,6 +99,7 @@ class GapDownProvider extends ChangeNotifier {
 
   Future addToWishList({
     required String symbol,
+    required String companyName,
     required bool up,
     required int index,
   }) async {
@@ -109,7 +121,11 @@ class GapDownProvider extends ChangeNotifier {
         //
         _data?[index].isWatchlistAdded = 1;
         notifyListeners();
-
+        AmplitudeService.logWatchlistUpdateEvent(
+          added: true,
+          symbol: symbol,
+          companyName: companyName,
+        );
         // _homeTrendingRes?.trending[index].isWatchlistAdded = 1;
 
         await _player.play(AssetSource(AudioFiles.alertWeathlist));

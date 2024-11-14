@@ -45,7 +45,7 @@ class _ContactUsBaseState extends State<ContactUsBase> {
 
     return BaseContainer(
       appBar: const AppBarHome(
-        isPopback: true,
+        isPopBack: true,
         title: "Contact Us",
       ),
       body: Padding(

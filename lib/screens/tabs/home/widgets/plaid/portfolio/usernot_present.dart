@@ -7,8 +7,6 @@ import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/providers/plaid.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
-import 'package:stocks_news_new/screens/auth/login/login_sheet.dart';
-import 'package:stocks_news_new/screens/auth/login/login_sheet_tablet.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -16,6 +14,7 @@ import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import '../../../../../../modals/home_portfolio.dart';
 import '../../../../../../providers/home_provider.dart';
+import '../../../../../auth/base/base_auth.dart';
 import '../handle/plaid_handler.dart';
 
 class PortfolioUserNotLoggedIn extends StatefulWidget {
@@ -45,7 +44,9 @@ class _PortfolioUserNotLoggedInState extends State<PortfolioUserNotLoggedIn> {
 
   Future _onTap(UserProvider provider, HomeProvider homeProvider) async {
     PlaidProvider plaidProvider = context.read<PlaidProvider>();
-    isPhone ? await loginSheet() : await loginSheetTablet();
+    // isPhone ? await loginSheet() : await loginSheetTablet();
+    await loginFirstSheet();
+
     if (navigatorKey.currentContext!.read<UserProvider>().user == null) {
       return;
     }

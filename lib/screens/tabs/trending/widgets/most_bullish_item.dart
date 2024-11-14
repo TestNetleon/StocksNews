@@ -249,6 +249,7 @@ class _MostBullishItemState extends State<MostBullishItem> {
       content: AlertPopup(
         insetPadding: EdgeInsets.symmetric(horizontal: 15.sp, vertical: 10.sp),
         symbol: widget.data.symbol,
+        companyName: widget.data.name ?? '',
         up: widget.up,
         index: widget.index,
         fromTrending: true,
@@ -286,6 +287,7 @@ class _MostBullishItemState extends State<MostBullishItem> {
   Future _addToWatchlist() async {
     await navigatorKey.currentContext!.read<TrendingProvider>().addToWishList(
           symbol: widget.data.symbol,
+          companyName: widget.data.name ?? '',
           index: widget.index,
           up: widget.up,
         );

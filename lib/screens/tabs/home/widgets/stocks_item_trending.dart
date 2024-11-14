@@ -300,6 +300,7 @@ class StocksItemTrending extends StatelessWidget {
             insetPadding:
                 EdgeInsets.symmetric(horizontal: 15.sp, vertical: 10.sp),
             symbol: trending.symbol,
+            companyName: trending.name,
             index: index,
             homeTrending: true,
           ),
@@ -327,6 +328,7 @@ class StocksItemTrending extends StatelessWidget {
                 insetPadding:
                     EdgeInsets.symmetric(horizontal: 15.sp, vertical: 10.sp),
                 symbol: trending.symbol,
+                companyName: trending.name,
                 index: index,
                 fromTrending: true,
               ),
@@ -354,6 +356,7 @@ class StocksItemTrending extends StatelessWidget {
         await navigatorKey.currentContext!.read<HomeProvider>().addToWishList(
               type: "homeTrending",
               symbol: trending.symbol,
+              companyName: trending.name,
               index: index,
               up: true,
             );
@@ -376,6 +379,7 @@ class StocksItemTrending extends StatelessWidget {
                 .addToWishList(
                   type: "homeTrending",
                   symbol: trending.symbol,
+                  companyName: trending.name,
                   index: index,
                   up: true,
                 );

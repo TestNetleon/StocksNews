@@ -51,9 +51,19 @@ class AllFeaturedContainer extends StatelessWidget {
                     alertForBullish: data.isAlertAdded?.toInt() ?? 0,
                     watlistForBullish: data.isWatchlistAdded?.toInt() ?? 0,
                     onClickAlert: () => _onAlertClick(
-                        context, data.symbol, data.isAlertAdded, index),
+                      context,
+                      data.symbol,
+                      data.name,
+                      data.isAlertAdded,
+                      index,
+                    ),
                     onClickWatchlist: () => _onWatchListClick(
-                        context, data.symbol, data.isWatchlistAdded, index),
+                      context,
+                      data.symbol,
+                      data.name,
+                      data.isWatchlistAdded,
+                      index,
+                    ),
                     child: CommonItemUi(
                       data: TopTrendingDataRes(
                           image: data.image,
@@ -76,9 +86,19 @@ class AllFeaturedContainer extends StatelessWidget {
                 alertForBullish: data.isAlertAdded?.toInt() ?? 0,
                 watlistForBullish: data.isWatchlistAdded?.toInt() ?? 0,
                 onClickAlert: () => _onAlertClick(
-                    context, data.symbol, data.isAlertAdded, index),
+                  context,
+                  data.symbol,
+                  data.name,
+                  data.isAlertAdded,
+                  index,
+                ),
                 onClickWatchlist: () => _onWatchListClick(
-                    context, data.symbol, data.isWatchlistAdded, index),
+                  context,
+                  data.symbol,
+                  data.name,
+                  data.isWatchlistAdded,
+                  index,
+                ),
                 child: CommonItemUi(
                   data: TopTrendingDataRes(
                       image: data.image,
@@ -106,8 +126,13 @@ class AllFeaturedContainer extends StatelessWidget {
     );
   }
 
-  void _onAlertClick(BuildContext context, String symbol, num? isAlertAdded,
-      int? index) async {
+  void _onAlertClick(
+    BuildContext context,
+    String symbol,
+    String cN,
+    num? isAlertAdded,
+    int? index,
+  ) async {
     if ((isAlertAdded?.toInt() ?? 0) == 1) {
       Navigator.push(
         navigatorKey.currentContext!,
@@ -122,6 +147,7 @@ class AllFeaturedContainer extends StatelessWidget {
           content: AlertPopup(
             insetPadding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
             symbol: symbol,
+            companyName: cN,
             index: index ?? 0,
             homeFeatureStocks: true,
           ),
@@ -147,6 +173,7 @@ class AllFeaturedContainer extends StatelessWidget {
                 insetPadding:
                     EdgeInsets.symmetric(horizontal: 15, vertical: 10),
                 symbol: symbol,
+                companyName: cN,
                 index: index ?? 0,
                 homeFeatureStocks: true,
               ),
@@ -163,8 +190,13 @@ class AllFeaturedContainer extends StatelessWidget {
     }
   }
 
-  void _onWatchListClick(BuildContext context, String symbol,
-      num? isWatchlistAdded, int index) async {
+  void _onWatchListClick(
+    BuildContext context,
+    String symbol,
+    String companyName,
+    num? isWatchlistAdded,
+    int index,
+  ) async {
     if (isWatchlistAdded == 1) {
       Navigator.push(
         navigatorKey.currentContext!,
@@ -176,6 +208,7 @@ class AllFeaturedContainer extends StatelessWidget {
             .read<FeaturedTickerProvider>()
             .addToWishList(
               symbol: symbol,
+              companyName: companyName,
               index: index,
               up: true,
             );
@@ -196,6 +229,7 @@ class AllFeaturedContainer extends StatelessWidget {
                 .read<FeaturedTickerProvider>()
                 .addToWishList(
                   symbol: symbol,
+                  companyName: companyName,
                   index: index,
                   up: true,
                 );

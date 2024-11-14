@@ -11,7 +11,6 @@ import 'package:stocks_news_new/modals/user_res.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/navigation_observer.dart';
 import 'package:stocks_news_new/route/routes.dart';
-import 'package:stocks_news_new/screens/auth/signup/signup_sheet.dart';
 import 'package:stocks_news_new/screens/splash/splash.dart';
 import 'package:stocks_news_new/service/appsFlyer/service.dart';
 import 'package:stocks_news_new/utils/constants.dart';
@@ -19,6 +18,9 @@ import 'package:stocks_news_new/database/preference.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/utils/utils.dart';
+
+import '../api/apis.dart';
+import '../screens/auth/base/base_auth.dart';
 
 final _appLinks = AppLinks();
 //
@@ -40,11 +42,11 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      oneSignalInitialized = true;
       configureRevenueCatAttribute();
       getInitialReferralsIfAny();
       getInitialDeeplinkWhenAppOpen();
       startListeningForDeepLinks();
-      oneSignalInitialized = true;
     });
     WidgetsBinding.instance.addObserver(this);
   }
@@ -121,7 +123,8 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
             if (navigatorKey.currentContext!.read<UserProvider>().user ==
                     null &&
                 !signUpVisible) {
-              signupSheet();
+              // signupSheet();
+              loginFirstSheet();
             }
           });
         }
@@ -196,7 +199,8 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
         Timer(const Duration(seconds: 4), () {
           if (navigatorKey.currentContext!.read<UserProvider>().user == null &&
               !signUpVisible) {
-            signupSheet();
+            // signupSheet();
+            loginFirstSheet();
           }
         });
         FirebaseAnalytics.instance.logEvent(
@@ -335,9 +339,7 @@ Future<void> configureRevenueCatAttribute() async {
     String? appUserId = user?.userId;
 
     // Set the API keys based on the platform
-    String apiKey = Platform.isAndroid
-        ? "goog_KXHVJRLChlyjoOamWsqCWQSJZfI"
-        : "appl_kHwXNrngqMNktkEZJqYhEgLjbcC";
+    String apiKey = Platform.isAndroid ? ApiKeys.androidKey : ApiKeys.iosKey;
 
     // Configure Purchases
     PurchasesConfiguration configuration = PurchasesConfiguration(apiKey);
@@ -348,8 +350,8 @@ Future<void> configureRevenueCatAttribute() async {
     await Purchases.configure(configuration);
     try {
       AppsFlyerService(
-        "DdBBqNnwC3Xz2dwhbF7kJK",
-        "6476615803",
+        ApiKeys.appsFlyerKey,
+        ApiKeys.iosAppID,
       );
     } catch (e) {
       //

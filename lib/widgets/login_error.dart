@@ -3,12 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/theme_button_small.dart';
-import '../screens/auth/signup/signup_sheet.dart';
-import '../screens/auth/signup/signup_sheet_tablet.dart';
-import '../utils/colors.dart';
-import '../utils/constants.dart';
 
-//
 class LoginError extends StatelessWidget {
   const LoginError({
     this.error,
@@ -65,7 +60,7 @@ class LoginError extends StatelessWidget {
                 const SpacerVertical(height: 10),
                 ThemeButtonSmall(
                   onPressed: onClick,
-                  text: "Already have an account? Log in",
+                  text: "Log in or Sign up",
                   iconFront: true,
                   icon: Icons.login,
                   radius: 30,
@@ -75,26 +70,27 @@ class LoginError extends StatelessWidget {
                   padding:
                       const EdgeInsets.symmetric(horizontal: 10, vertical: 11),
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(15),
-                  child: Align(
-                    alignment: Alignment.center,
-                    child: GestureDetector(
-                        onTap: () async {
-                          Navigator.pop(context);
-                          isPhone
-                              ? await signupSheet()
-                              : await signupSheetTablet();
-                        },
-                        child: Text(
-                          "Don't have an account? Sign up ",
-                          style: stylePTSansRegular(
-                            fontSize: 18,
-                            color: ThemeColors.accent,
-                          ),
-                        )),
-                  ),
-                ),
+                // Padding(
+                //   padding: const EdgeInsets.all(15),
+                //   child: Align(
+                //     alignment: Alignment.center,
+                //     child: GestureDetector(
+                //         onTap: () async {
+                //           Navigator.pop(context);
+                //           // isPhone
+                //           //     ? await signupSheet()
+                //           //     : await signupSheetTablet();
+                //           await loginFirstSheet();
+                //         },
+                //         child: Text(
+                //           "Don't have an account? Sign up ",
+                //           style: stylePTSansRegular(
+                //             fontSize: 18,
+                //             color: ThemeColors.accent,
+                //           ),
+                //         )),
+                //   ),
+                // ),
               ],
             ),
           ),

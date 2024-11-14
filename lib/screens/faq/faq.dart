@@ -37,7 +37,7 @@ class _FAQBaseState extends State<FAQBase> {
   Widget build(BuildContext context) {
     return BaseContainer(
       appBar: const AppBarHome(
-        isPopback: true,
+        isPopBack: true,
         title: "Frequently Asked Questions",
       ),
       body: Padding(

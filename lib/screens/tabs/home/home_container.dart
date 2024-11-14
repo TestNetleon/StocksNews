@@ -58,17 +58,9 @@ class HomeContainer extends StatelessWidget {
     return Column(
       children: [
         // if (kDebugMode)
-        //   ThemeButtonSmall(
-        //     text: "Extract Code",
-        //     onPressed: () {
-        //       Uri uri = Uri.parse('https://stocksnews.page.link/MEM');
-        //       memCODE = extractCodeFromMEM(uri);
-        //       Utils().showLog("CODE => $memCODE");
-        //     },
-        //   ),
-        // if (kDebugMode)
         // Container(
         //   color: Colors.amber,
+
         //   width: double.infinity,
         //   child: Column(
         //     children: List.generate(

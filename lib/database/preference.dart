@@ -124,6 +124,30 @@ class Preference {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     preferences.setBool("@referralInput", value ?? true);
   }
+
+  static Future<bool> setAmplitudeFirstOpen(bool isFirstTime) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    return preferences.setBool("@amplitudeFirstOpen", isFirstTime);
+  }
+
+  static Future<bool> getAmplitudeFirstOpen() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    return preferences.getBool("@amplitudeFirstOpen") ?? true;
+  }
+
+  //App Tracking
+  static const _trackingKey = 'app_tracking_allowed';
+
+  static Future<void> setTrackingPreference(bool isAllowed) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    await preferences.setBool(_trackingKey, isAllowed);
+  }
+
+  static Future<bool?> isTrackingAllowed() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    return preferences.getBool(_trackingKey);
+  }
+
   //----------- For Testing Only ---------------
 
   // static const String dataListKey = 'data_list';

@@ -16,6 +16,8 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 
+import '../service/amplitude/service.dart';
+
 class MoreStocksProvider extends ChangeNotifier {
   GainersLosersRes? _gainersLosers;
   GainersLosersRes? get gainersLosers => _gainersLosers;
@@ -99,6 +101,7 @@ class MoreStocksProvider extends ChangeNotifier {
   Future createAlertSend({
     required String alertName,
     required String symbol,
+    required String companyName,
     required int index,
     bool selectedOne = false,
     bool selectedTwo = false,
@@ -120,6 +123,11 @@ class MoreStocksProvider extends ChangeNotifier {
         removeForceLogin: true,
       );
       if (response.status) {
+        AmplitudeService.logAlertUpdateEvent(
+          added: true,
+          symbol: symbol,
+          companyName: companyName,
+        );
         if (type == StocksType.gainers) {
           _gainersLosers?.data?[index].isAlertAdded = 1;
 
@@ -155,6 +163,7 @@ class MoreStocksProvider extends ChangeNotifier {
 
   Future addToWishList({
     required String symbol,
+    required String companyName,
     required bool up,
     required int index,
     type,
@@ -178,6 +187,11 @@ class MoreStocksProvider extends ChangeNotifier {
 
         _gainersLosers?.data?[index].isWatchlistAdded = 1;
         notifyListeners();
+        AmplitudeService.logWatchlistUpdateEvent(
+          added: true,
+          symbol: symbol,
+          companyName: companyName,
+        );
 
         await _player.play(AssetSource(AudioFiles.alertWeathlist));
 

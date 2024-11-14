@@ -14,6 +14,8 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 
+import '../service/amplitude/service.dart';
+
 class RedditTwitterProvider extends ChangeNotifier {
   String? _error;
   Status _status = Status.ideal;
@@ -46,6 +48,7 @@ class RedditTwitterProvider extends ChangeNotifier {
     String type = "",
     required String alertName,
     required String symbol,
+    required String companyName,
     required int index,
     bool selectedOne = false,
     bool selectedTwo = false,
@@ -65,23 +68,29 @@ class RedditTwitterProvider extends ChangeNotifier {
         showProgress: true,
         removeForceLogin: true,
       );
+      if (response.status) {
+        AmplitudeService.logAlertUpdateEvent(
+          added: true,
+          symbol: symbol,
+          companyName: companyName,
+        );
+        if (type == "ShowTheLast") {
+          _socialSentimentRes?.data[index].isAlertAdded = 1;
+        }
+        if (type == "Recent") {
+          _socialSentimentRes?.recentMentions?[index].isAlertAdded = 1;
+        }
 
-      if (type == "ShowTheLast") {
-        _socialSentimentRes?.data[index].isAlertAdded = 1;
+        notifyListeners();
+
+        _extra = (response.extra is Extra ? response.extra as Extra : null);
+        await _player.play(AssetSource(AudioFiles.alertWeathlist));
+
+        navigatorKey.currentContext!
+            .read<HomeProvider>()
+            .setTotalsAlerts(response.data['total_alerts']);
+        notifyListeners();
       }
-      if (type == "Recent") {
-        _socialSentimentRes?.recentMentions?[index].isAlertAdded = 1;
-      }
-
-      notifyListeners();
-
-      _extra = (response.extra is Extra ? response.extra as Extra : null);
-      await _player.play(AssetSource(AudioFiles.alertWeathlist));
-
-      navigatorKey.currentContext!
-          .read<HomeProvider>()
-          .setTotalsAlerts(response.data['total_alerts']);
-      notifyListeners();
 
       Navigator.pop(navigatorKey.currentContext!);
       Navigator.pop(navigatorKey.currentContext!);
@@ -100,6 +109,7 @@ class RedditTwitterProvider extends ChangeNotifier {
   Future addToWishList({
     String type = "",
     required String symbol,
+    required String companyName,
     required bool up,
     required int index,
   }) async {
@@ -118,6 +128,12 @@ class RedditTwitterProvider extends ChangeNotifier {
         removeForceLogin: true,
       );
       if (response.status) {
+        AmplitudeService.logWatchlistUpdateEvent(
+          added: true,
+          symbol: symbol,
+          companyName: companyName,
+        );
+
         //
         if (type == "ShowTheLast") {
           _socialSentimentRes?.data[index].isWatchlistAdded = 1;

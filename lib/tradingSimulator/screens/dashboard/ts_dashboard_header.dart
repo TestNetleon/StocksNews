@@ -11,6 +11,8 @@ import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/theme_button_small.dart';
 
+import '../../providers/trade_provider.dart';
+
 class TsDashboardHeader extends StatefulWidget {
   const TsDashboardHeader({super.key});
 
@@ -37,7 +39,8 @@ class _TsDashboardHeaderState extends State<TsDashboardHeader> {
 
   @override
   Widget build(BuildContext context) {
-    TsPortfolioProvider userProvider = context.watch<TsPortfolioProvider>();
+    // TsPortfolioProvider provider = context.watch<TsPortfolioProvider>();
+    TradeProviderNew tradeProvider = context.watch<TradeProviderNew>();
     return Container(
       padding: const EdgeInsets.all(10),
       margin: EdgeInsets.only(bottom: 20),
@@ -73,8 +76,8 @@ class _TsDashboardHeaderState extends State<TsDashboardHeader> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          // "\$${formatBalance(num.parse(provider.data.availableBalance.toCurrency()))}",
-                          "\$${formatBalance(userProvider.userData?.tradeBalance ?? 0)}",
+                          "\$${formatBalance(num.parse(tradeProvider.data.availableBalance.toCurrency()))}",
+                          // "\$${formatBalance(provider.userData?.tradeBalance ?? 0)}",
                           style: styleGeorgiaBold(fontSize: 25),
                         ),
                         const SpacerVertical(height: 5),
@@ -96,7 +99,7 @@ class _TsDashboardHeaderState extends State<TsDashboardHeader> {
                         Text(
                           // "\$${provider.data.invested.toCurrency()}",
                           // "\$${formatBalance(userProvider.userData?.tradeBalance ?? 0)}",
-                          "\$${formatBalance(0)}",
+                          "\$${formatBalance(tradeProvider.data.invested)}",
                           style: styleGeorgiaBold(fontSize: 25),
                         ),
                         const SpacerVertical(height: 5),

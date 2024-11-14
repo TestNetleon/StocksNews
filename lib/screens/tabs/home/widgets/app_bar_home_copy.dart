@@ -16,7 +16,7 @@
 
 // class AppBarHome extends StatefulWidget implements PreferredSizeWidget {
 //   final bool isHome;
-//   final bool showTrailing, isPopback, showQR, canSearch;
+//   final bool showTrailing, isPopBack, showQR, canSearch;
 //   final void Function()? onFilterClick;
 //   final void Function()? onTap;
 //   final String? title;
@@ -24,7 +24,7 @@
 //   const AppBarHome({
 //     super.key,
 //     this.showTrailing = true,
-//     this.isPopback = false,
+//     this.isPopBack = false,
 //     this.showQR = false,
 //     this.onFilterClick,
 //     this.isHome = false,
@@ -56,7 +56,7 @@
 //       backgroundColor: Colors.transparent,
 //       elevation: 0,
 //       automaticallyImplyLeading: false,
-//       leading: widget.isPopback
+//       leading: widget.isPopBack
 //           ? IconButton(
 //               onPressed: widget.onTap ??
 //                   () {

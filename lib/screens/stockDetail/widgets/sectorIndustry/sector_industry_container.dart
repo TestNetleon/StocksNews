@@ -49,9 +49,19 @@ class SectorIndustryList extends StatelessWidget {
                     alertForBullish: data?.isAlertAdded?.toInt() ?? 0,
                     watlistForBullish: data?.isWatchlistAdded?.toInt() ?? 0,
                     onClickAlert: () => _onAlertClick(
-                        context, data?.symbol ?? "", data?.isAlertAdded, index),
-                    onClickWatchlist: () => _onWatchListClick(context,
-                        data?.symbol ?? "", data?.isWatchlistAdded, index),
+                      context,
+                      data?.symbol ?? "",
+                      data?.name ?? "",
+                      data?.isAlertAdded,
+                      index,
+                    ),
+                    onClickWatchlist: () => _onWatchListClick(
+                      context,
+                      data?.symbol ?? "",
+                      data?.name ?? "",
+                      data?.isWatchlistAdded,
+                      index,
+                    ),
                     child: SectorIndustryItem(
                       index: index,
                       data: data,
@@ -70,9 +80,19 @@ class SectorIndustryList extends StatelessWidget {
               alertForBullish: data?.isAlertAdded?.toInt() ?? 0,
               watlistForBullish: data?.isWatchlistAdded?.toInt() ?? 0,
               onClickAlert: () => _onAlertClick(
-                  context, data?.symbol ?? "", data?.isAlertAdded, index),
+                context,
+                data?.symbol ?? "",
+                data?.name ?? "",
+                data?.isAlertAdded,
+                index,
+              ),
               onClickWatchlist: () => _onWatchListClick(
-                  context, data?.symbol ?? "", data?.isWatchlistAdded, index),
+                context,
+                data?.symbol ?? "",
+                data?.name ?? "",
+                data?.isWatchlistAdded,
+                index,
+              ),
               child: SectorIndustryItem(index: index, data: data),
             );
 
@@ -90,8 +110,13 @@ class SectorIndustryList extends StatelessWidget {
     );
   }
 
-  void _onAlertClick(BuildContext context, String symbol, num? isAlertAdded,
-      int? index) async {
+  void _onAlertClick(
+    BuildContext context,
+    String symbol,
+    String companyName,
+    num? isAlertAdded,
+    int? index,
+  ) async {
     if ((isAlertAdded?.toInt() ?? 0) == 1) {
       Navigator.push(
         navigatorKey.currentContext!,
@@ -107,6 +132,7 @@ class SectorIndustryList extends StatelessWidget {
             insetPadding:
                 EdgeInsets.symmetric(horizontal: 15.sp, vertical: 10.sp),
             symbol: symbol,
+            companyName: companyName,
             index: index ?? 0,
             sectorAndIndustry: true,
           ),
@@ -135,6 +161,7 @@ class SectorIndustryList extends StatelessWidget {
                 insetPadding:
                     EdgeInsets.symmetric(horizontal: 15.sp, vertical: 10.sp),
                 symbol: symbol,
+                companyName: companyName,
                 index: index ?? 0,
                 sectorAndIndustry: true,
               ),
@@ -151,8 +178,13 @@ class SectorIndustryList extends StatelessWidget {
     }
   }
 
-  void _onWatchListClick(BuildContext context, String symbol,
-      num? isWatchlistAdded, int index) async {
+  void _onWatchListClick(
+    BuildContext context,
+    String symbol,
+    String companyName,
+    num? isWatchlistAdded,
+    int index,
+  ) async {
     if (isWatchlistAdded == 1) {
       Navigator.push(
         navigatorKey.currentContext!,
@@ -164,6 +196,7 @@ class SectorIndustryList extends StatelessWidget {
             .read<SectorIndustryProvider>()
             .addToWishList(
               symbol: symbol,
+              companyName: companyName,
               index: index,
               up: true,
             );
@@ -186,6 +219,7 @@ class SectorIndustryList extends StatelessWidget {
                 .read<SectorIndustryProvider>()
                 .addToWishList(
                   symbol: symbol,
+                  companyName: companyName,
                   index: index,
                   up: true,
                 );

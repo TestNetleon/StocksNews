@@ -19,6 +19,7 @@ import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/widgets/market_data_header.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
+import '../../../service/amplitude/service.dart';
 import '../../../utils/constants.dart';
 import '../../../widgets/base_ui_container.dart';
 import '../../../widgets/refresh_controll.dart';
@@ -36,6 +37,7 @@ class _HighPeStocksState extends State<HighPeStocks> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      AmplitudeService.logUserInteractionEvent(type: "High PE Ratio");
       HighPeProvider provider = context.read<HighPeProvider>();
       if (provider.data != null) {
         return;
@@ -46,6 +48,7 @@ class _HighPeStocksState extends State<HighPeStocks> {
       // }
       provider.resetFilter();
       provider.getData(showProgress: true);
+
       //-------
     });
   }
@@ -124,13 +127,16 @@ class _HighPeStocksState extends State<HighPeStocks> {
                             onClickAlert: () => _onAlertClick(
                                 context,
                                 data[index].symbol ?? "",
+                                data[index].name ?? "",
                                 data[index].isAlertAdded,
                                 index),
                             onClickWatchlist: () => _onWatchListClick(
-                                context,
-                                data[index].symbol ?? "",
-                                data[index].isWatchlistAdded,
-                                index),
+                              context,
+                              data[index].symbol ?? "",
+                              data[index].name ?? "",
+                              data[index].isWatchlistAdded,
+                              index,
+                            ),
                             child:
                                 HighLowPEItem(index: index, data: data[index]),
                           );
@@ -170,8 +176,13 @@ class _HighPeStocksState extends State<HighPeStocks> {
     );
   }
 
-  void _onAlertClick(BuildContext context, String symbol, num? isAlertAdded,
-      int? index) async {
+  void _onAlertClick(
+    BuildContext context,
+    String symbol,
+    String companyName,
+    num? isAlertAdded,
+    int? index,
+  ) async {
     if ((isAlertAdded?.toInt() ?? 0) == 1) {
       Navigator.push(
         navigatorKey.currentContext!,
@@ -187,6 +198,7 @@ class _HighPeStocksState extends State<HighPeStocks> {
             insetPadding:
                 EdgeInsets.symmetric(horizontal: 15.sp, vertical: 10.sp),
             symbol: symbol,
+            companyName: companyName,
             index: index ?? 0,
             marketDataHighPe: true,
           ),
@@ -211,6 +223,7 @@ class _HighPeStocksState extends State<HighPeStocks> {
                 insetPadding:
                     EdgeInsets.symmetric(horizontal: 15.sp, vertical: 10.sp),
                 symbol: symbol,
+                companyName: companyName,
                 index: index ?? 0,
                 marketDataHighPe: true,
               ),
@@ -227,8 +240,13 @@ class _HighPeStocksState extends State<HighPeStocks> {
     }
   }
 
-  void _onWatchListClick(BuildContext context, String symbol,
-      num? isWatchlistAdded, int index) async {
+  void _onWatchListClick(
+    BuildContext context,
+    String symbol,
+    String companyName,
+    num? isWatchlistAdded,
+    int index,
+  ) async {
     if (isWatchlistAdded == 1) {
       Navigator.push(
         navigatorKey.currentContext!,
@@ -238,6 +256,7 @@ class _HighPeStocksState extends State<HighPeStocks> {
       if (context.read<UserProvider>().user != null) {
         await navigatorKey.currentContext!.read<HighPeProvider>().addToWishList(
               symbol: symbol,
+              companyName: companyName,
               index: index,
               up: true,
             );
@@ -257,6 +276,7 @@ class _HighPeStocksState extends State<HighPeStocks> {
                 .read<HighPeProvider>()
                 .addToWishList(
                   symbol: symbol,
+                  companyName: companyName,
                   index: index,
                   up: true,
                 );

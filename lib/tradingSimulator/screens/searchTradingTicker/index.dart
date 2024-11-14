@@ -40,7 +40,7 @@ class _SearchTradingTickerState extends State<SearchTradingTicker> {
       },
       child: BaseContainer(
         appBar: const AppBarHome(
-          isPopback: true,
+          isPopBack: true,
           canSearch: false,
           showTrailing: false,
           title: "Search",

@@ -21,6 +21,7 @@ import 'package:stocks_news_new/widgets/custom/refresh_indicator.dart';
 import 'package:stocks_news_new/widgets/html_title.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
+import '../../../service/amplitude/service.dart';
 import '../../../utils/constants.dart';
 import '../../../widgets/base_ui_container.dart';
 import '../../../widgets/refresh_controll.dart';
@@ -38,6 +39,8 @@ class _FiftyTwoWeeksLowsStocksState extends State<FiftyTwoWeeksLowsStocks> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      AmplitudeService.logUserInteractionEvent(type: "52 Week Lows");
+
       FiftyTwoWeeksProvider provider = context.read<FiftyTwoWeeksProvider>();
       if (provider.data != null) {
         return;
@@ -120,11 +123,13 @@ class _FiftyTwoWeeksLowsStocksState extends State<FiftyTwoWeeksLowsStocks> {
                               onClickAlert: () => _onAlertClick(
                                   context,
                                   data[index].symbol ?? "",
+                                  data[index].name ?? "",
                                   data[index].isAlertAdded,
                                   index),
                               onClickWatchlist: () => _onWatchListClick(
                                   context,
                                   data[index].symbol ?? "",
+                                  data[index].name ?? "",
                                   data[index].isWatchlistAdded,
                                   index),
                               child: FiftyTwoWeeksItem(
@@ -186,8 +191,13 @@ class _FiftyTwoWeeksLowsStocksState extends State<FiftyTwoWeeksLowsStocks> {
     );
   }
 
-  void _onAlertClick(BuildContext context, String symbol, num? isAlertAdded,
-      int? index) async {
+  void _onAlertClick(
+    BuildContext context,
+    String symbol,
+    String companyName,
+    num? isAlertAdded,
+    int? index,
+  ) async {
     if ((isAlertAdded?.toInt() ?? 0) == 1) {
       Navigator.push(
         navigatorKey.currentContext!,
@@ -203,6 +213,7 @@ class _FiftyTwoWeeksLowsStocksState extends State<FiftyTwoWeeksLowsStocks> {
             insetPadding:
                 EdgeInsets.symmetric(horizontal: 15.sp, vertical: 10.sp),
             symbol: symbol,
+            companyName: companyName,
             index: index ?? 0,
             marketDataFiftyTwoLow: true,
           ),
@@ -228,6 +239,7 @@ class _FiftyTwoWeeksLowsStocksState extends State<FiftyTwoWeeksLowsStocks> {
                 insetPadding:
                     EdgeInsets.symmetric(horizontal: 15.sp, vertical: 10.sp),
                 symbol: symbol,
+                companyName: companyName,
                 index: index ?? 0,
                 marketDataFiftyTwoLow: true,
               ),
@@ -244,8 +256,13 @@ class _FiftyTwoWeeksLowsStocksState extends State<FiftyTwoWeeksLowsStocks> {
     }
   }
 
-  void _onWatchListClick(BuildContext context, String symbol,
-      num? isWatchlistAdded, int index) async {
+  void _onWatchListClick(
+    BuildContext context,
+    String symbol,
+    String companyName,
+    num? isWatchlistAdded,
+    int index,
+  ) async {
     if (isWatchlistAdded == 1) {
       Navigator.push(
         navigatorKey.currentContext!,
@@ -257,6 +274,7 @@ class _FiftyTwoWeeksLowsStocksState extends State<FiftyTwoWeeksLowsStocks> {
             .read<FiftyTwoWeeksProvider>()
             .addToWishList(
               symbol: symbol,
+              companyName: companyName,
               index: index,
               up: true,
             );
@@ -277,6 +295,7 @@ class _FiftyTwoWeeksLowsStocksState extends State<FiftyTwoWeeksLowsStocks> {
                 .read<FiftyTwoWeeksProvider>()
                 .addToWishList(
                   symbol: symbol,
+                  companyName: companyName,
                   index: index,
                   up: true,
                 );
