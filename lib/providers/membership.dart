@@ -233,6 +233,7 @@ class MembershipProvider extends ChangeNotifier {
           if (configuration != null) {
             Utils().showLog("--integrating configuration----");
             await Purchases.configure(configuration);
+            Purchases.setFirebaseAppInstanceId(userRes?.userId ?? '');
           }
           Offerings? offerings;
           offerings = await Purchases.getOfferings();

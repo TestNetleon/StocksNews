@@ -395,7 +395,7 @@ class UserProvider extends ChangeNotifier {
 
         _extra = (response.extra is Extra ? response.extra as Extra : null);
 
-        if (_user?.signupStatus == true) {
+        if (_user?.signupStatus != null) {
           AmplitudeService.logLoginSignUpEvent(
             isRegistered: (_user?.signupStatus ?? false) ? 1 : 0,
           );
@@ -553,7 +553,7 @@ class UserProvider extends ChangeNotifier {
 
         _extra = (response.extra is Extra ? response.extra as Extra : null);
 
-        if (_user?.signupStatus == true) {
+        if (_user?.signupStatus != null) {
           AmplitudeService.logLoginSignUpEvent(
             isRegistered: (_user?.signupStatus ?? false) ? 1 : 0,
           );
@@ -1512,7 +1512,7 @@ class UserProvider extends ChangeNotifier {
         configureRevenueCatAttribute();
         _extra = (response.extra is Extra ? response.extra as Extra : null);
 
-        if (_user?.signupStatus == true) {
+        if (_user?.signupStatus != null) {
           AmplitudeService.logLoginSignUpEvent(
             isRegistered: (_user?.signupStatus ?? false) ? 1 : 0,
           );

@@ -47,12 +47,16 @@ class RevenueCatService {
       showGlobalProgressDialog();
       if (configuration != null) {
         await Purchases.configure(configuration);
+        Purchases.setFirebaseAppInstanceId(userRes?.userId ?? "");
+
         await configureAppsFlyer();
         if (Platform.isIOS && !_adServicesAttributionEnabled) {
           await Purchases.enableAdServicesAttributionTokenCollection();
+
           _adServicesAttributionEnabled = true;
           Utils().showLog("Ad Services Attribution Enabled");
         }
+
         Offerings? offerings;
         offerings = await Purchases.getOfferings();
         closeGlobalProgressDialog();

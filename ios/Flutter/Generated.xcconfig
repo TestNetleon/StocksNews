@@ -2,13 +2,13 @@
 FLUTTER_ROOT=/Users/netleonmacmini1/Documents/Flutter/flutter
 FLUTTER_APPLICATION_PATH=/Users/netleonmacmini1/Documents/Flutter/workspace/StocksNewsMain
 COCOAPODS_PARALLEL_CODE_SIGN=true
-FLUTTER_TARGET=/Users/netleonmacmini1/Documents/Flutter/workspace/StocksNewsMain/lib/main.dart
+FLUTTER_TARGET=lib/main.dart
 FLUTTER_BUILD_DIR=build
-FLUTTER_BUILD_NAME=1.1.32
-FLUTTER_BUILD_NUMBER=125
+FLUTTER_BUILD_NAME=1.1.33
+FLUTTER_BUILD_NUMBER=126
 EXCLUDED_ARCHS[sdk=iphonesimulator*]=i386
 EXCLUDED_ARCHS[sdk=iphoneos*]=armv7
 DART_OBFUSCATION=false
 TRACK_WIDGET_CREATION=true
 TREE_SHAKE_ICONS=false
-PACKAGE_CONFIG=/Users/netleonmacmini1/Documents/Flutter/workspace/StocksNewsMain/.dart_tool/package_config.json
+PACKAGE_CONFIG=.dart_tool/package_config.json

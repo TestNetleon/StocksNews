@@ -348,6 +348,7 @@ Future<void> configureRevenueCatAttribute() async {
     }
 
     await Purchases.configure(configuration);
+    Purchases.setFirebaseAppInstanceId(appUserId ?? '');
     try {
       AppsFlyerService(
         ApiKeys.appsFlyerKey,
