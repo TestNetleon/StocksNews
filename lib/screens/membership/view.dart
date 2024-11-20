@@ -5,12 +5,12 @@ import 'package:stocks_news_new/providers/membership.dart';
 import 'package:stocks_news_new/screens/myAccount/my_account.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
-import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/custom/refresh_indicator.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import '../../api/api_response.dart';
+import '../../widgets/refresh_controll.dart';
 import '../drawer/widgets/profile_image.dart';
 import 'item.dart';
 
@@ -21,39 +21,18 @@ class MembershipView extends StatelessWidget {
   Widget build(BuildContext context) {
     MembershipProvider provider = context.watch<MembershipProvider>();
 
-    return BaseUiContainer(
-      hasData: !provider.isLoading &&
-          (provider.data?.isNotEmpty == true && provider.data != null),
-      isLoading: provider.isLoading,
-      error: provider.error,
-      isFull: true,
-      showPreparingText: true,
-      onRefresh: () {
+    return CommonRefreshIndicator(
+      onRefresh: () async {
         provider.getData();
       },
-      child: CommonRefreshIndicator(
-        onRefresh: () async {
-          provider.getData();
-        },
+      child: RefreshControl(
+        onRefresh: () async => provider.getData(),
+        canLoadMore: provider.canLoadMore,
+        onLoadMore: () async => provider.getData(loadMore: true),
         child: ListView.separated(
+          padding: EdgeInsets.only(bottom: 10),
           itemBuilder: (context, index) {
             MembershipRes? data = provider.data?[index];
-
-            if (index == 0) {
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const MyMembershipWidget(),
-                  // UpdateMembershipCard(),
-                  Text(
-                    "Invoices",
-                    style: stylePTSansBold(fontSize: 20),
-                  ),
-                  const SpacerVertical(height: 10),
-                  MembershipItem(data: data),
-                ],
-              );
-            }
 
             return MembershipItem(data: data);
           },
@@ -79,15 +58,7 @@ class _MyMembershipWidgetState extends State<MyMembershipWidget> {
     Extra? extra = context.watch<MembershipProvider>().extra;
 
     UserProvider provider = context.watch<UserProvider>();
-    // String? colorHex = provider.user?.membership?.color;
-    // Color? color;
-    // if (colorHex != null && colorHex.isNotEmpty) {
-    //   colorHex = colorHex.replaceAll('#', '');
-    //   color = Color(int.parse('0xFF$colorHex'));
-    //   Utils().showLog("$color, $colorHex");
-    // } else {
-    //   color = ThemeColors.background;
-    // }
+
     return Column(
       children: [
         GestureDetector(
@@ -153,68 +124,104 @@ class _MyMembershipWidgetState extends State<MyMembershipWidget> {
                   color: ThemeColors.greyBorder,
                   height: 20,
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "Current Plan",
-                      style: stylePTSansBold(),
-                    ),
-                    Container(
-                      decoration: BoxDecoration(
-                        color: ThemeColors.white,
-                        border: Border(
-                          bottom: BorderSide(
-                              color: provider.user?.membership?.purchased == 1
-                                  ? const Color.fromARGB(255, 253, 245, 4)
-                                  : const Color.fromARGB(255, 113, 113, 113),
-                              width: 1.2),
-                        ),
-                        gradient: LinearGradient(
-                          colors: provider.user?.membership?.purchased == 1
-                              ? [
-                                  const Color.fromARGB(255, 242, 234, 12),
-                                  const Color.fromARGB(255, 186, 181, 53),
-                                ]
-                              : [
-                                  Colors.white,
-                                  Colors.grey,
-                                ],
-                        ),
-                        borderRadius: BorderRadius.circular(20),
-                        boxShadow: [
-                          BoxShadow(
-                            blurRadius: 0,
-                            spreadRadius: 1,
-                            offset: const Offset(0, 1),
-                            color: provider.user?.membership?.purchased == 1
-                                ? const Color.fromARGB(255, 242, 234, 12)
-                                : const Color.fromARGB(255, 156, 153, 153),
+                Visibility(
+                  visible: extra?.activeMembership == null ||
+                      extra?.activeMembership?.isEmpty == true,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "Current Plan",
+                        style: stylePTSansBold(),
+                      ),
+                      Container(
+                        decoration: BoxDecoration(
+                          color: ThemeColors.white,
+                          border: Border(
+                            bottom: BorderSide(
+                                color: const Color.fromARGB(255, 113, 113, 113),
+                                width: 1.2),
                           ),
-                        ],
+                          gradient: LinearGradient(
+                            colors: [
+                              Colors.white,
+                              Colors.grey,
+                            ],
+                          ),
+                          borderRadius: BorderRadius.circular(20),
+                          boxShadow: [
+                            BoxShadow(
+                              blurRadius: 0,
+                              spreadRadius: 1,
+                              offset: const Offset(0, 1),
+                              color: const Color.fromARGB(255, 156, 153, 153),
+                            ),
+                          ],
+                        ),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 8, vertical: 2),
+                        child: Text(
+                          "Free",
+                          style: stylePTSansBold(color: Colors.black),
+                        ),
                       ),
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 8, vertical: 2),
-                      child: Text(
-                        provider.user?.membership?.purchased == 1
-                            ? "${provider.user?.membership?.displayName}"
-                            : "Free",
-                        style: stylePTSansBold(color: Colors.black),
-                      ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
                 Visibility(
-                  visible: extra?.tagLine != null && extra?.tagLine != '',
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 10),
-                    child: Text(
-                      "${extra?.tagLine}",
-                      style: stylePTSansRegular(
-                        color: ThemeColors.greyText,
-                        fontSize: 14,
-                      ),
-                    ),
+                  visible: extra?.activeMembership != null &&
+                      extra?.activeMembership?.isNotEmpty == true,
+                  child: ListView.separated(
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemBuilder: (context, index) {
+                      return Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            extra?.activeMembership?[index].title ?? '',
+                            style: stylePTSansBold(),
+                          ),
+                          Container(
+                            decoration: BoxDecoration(
+                              color: ThemeColors.white,
+                              border: Border(
+                                bottom: BorderSide(
+                                  color: const Color.fromARGB(255, 253, 245, 4),
+                                  width: 1.2,
+                                ),
+                              ),
+                              gradient: LinearGradient(
+                                colors: [
+                                  const Color.fromARGB(255, 242, 234, 12),
+                                  const Color.fromARGB(255, 186, 181, 53),
+                                ],
+                              ),
+                              borderRadius: BorderRadius.circular(20),
+                              boxShadow: [
+                                BoxShadow(
+                                  blurRadius: 0,
+                                  spreadRadius: 1,
+                                  offset: const Offset(0, 1),
+                                  color:
+                                      const Color.fromARGB(255, 242, 234, 12),
+                                ),
+                              ],
+                            ),
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 8, vertical: 2),
+                            child: Text(
+                              extra?.activeMembership?[index].displayName ?? '',
+                              style: stylePTSansBold(color: Colors.black),
+                            ),
+                          ),
+                        ],
+                      );
+                    },
+                    separatorBuilder: (context, index) {
+                      return SpacerVertical(height: 15);
+                    },
+                    itemCount: extra?.activeMembership?.length ?? 0,
                   ),
                 ),
               ],

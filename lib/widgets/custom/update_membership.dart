@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/api/api_response.dart';
-import 'package:stocks_news_new/modals/user_res.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
-import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/screens/membership/store/store.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -19,14 +17,14 @@ class UpdateMembershipCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Extra? extra = context.watch<HomeProvider>().extra;
-    UserRes? userRes = context.watch<UserProvider>().user;
+    // UserRes? userRes = context.watch<UserProvider>().user;
 
     return MembershipStoreCard(
       isMembership: true,
       data: extra?.membershipText?.card,
       onTap: () {
         closeKeyboard();
-        if (userRes?.showBlackFriday == true) {
+        if (extra?.showBlackFriday == true) {
           Navigator.push(
             context,
             MaterialPageRoute(

@@ -5,6 +5,7 @@ import 'package:stocks_news_new/screens/membership/view.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
+import 'package:stocks_news_new/widgets/base_ui_container.dart';
 
 class MembershipIndex extends StatefulWidget {
   const MembershipIndex({super.key});
@@ -24,17 +25,30 @@ class _MembershipIndexState extends State<MembershipIndex> {
 
   @override
   Widget build(BuildContext context) {
-    return const BaseContainer(
+    MembershipProvider provider = context.watch<MembershipProvider>();
+
+    return BaseContainer(
       appBar: AppBarHome(isPopBack: true, title: "My Membership"),
       body: Padding(
         padding: EdgeInsets.fromLTRB(Dimen.padding, 0, Dimen.padding, 0),
-        child: Column(
-          children: [
-            // ScreenTitle(
-            //   title: "My Membership",
-            // ),
-            Expanded(child: MembershipView()),
-          ],
+        child: BaseUiContainer(
+          hasData: !provider.isLoading &&
+              (provider.data?.isNotEmpty == true && provider.data != null),
+          isLoading: provider.isLoading,
+          error: provider.error,
+          isFull: true,
+          showPreparingText: true,
+          onRefresh: () {
+            provider.getData();
+          },
+          child: Column(
+            children: [
+              const MyMembershipWidget(),
+              Expanded(
+                child: MembershipView(),
+              ),
+            ],
+          ),
         ),
       ),
     );

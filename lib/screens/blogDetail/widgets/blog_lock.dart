@@ -17,6 +17,7 @@ import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/custom/confirmation_point_popup.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/theme_button_small.dart';
+import '../../../api/api_response.dart';
 import '../../../utils/utils.dart';
 import '../../../widgets/custom/warning_text.dart';
 import '../../auth/base/base_auth.dart';
@@ -77,6 +78,7 @@ class _BlogDetailsLockState extends State<BlogDetailsLock> {
 
   Future _membership() async {
     UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
+    Extra? extra = navigatorKey.currentContext!.read<HomeProvider>().extra;
     if (provider.user?.phone == null || provider.user?.phone == '') {
       await membershipLogin();
     }
@@ -90,7 +92,7 @@ class _BlogDetailsLockState extends State<BlogDetailsLock> {
       // );
       closeKeyboard();
 
-      if (provider.user?.showBlackFriday == true) {
+      if (extra?.showBlackFriday == true) {
         Navigator.push(
           navigatorKey.currentContext!,
           MaterialPageRoute(

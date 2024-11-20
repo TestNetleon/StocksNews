@@ -42,12 +42,12 @@ class LowPriceStocksProvider extends ChangeNotifier {
 
   String? title;
   String? subTitle;
-  bool get canLoadMore => _page < (_extra?.totalPages ?? 1);
   // bool get canLoadMoreDown => _pageDown < (_extraDown?.totalPages ?? 1);
   int _page = 1;
-  // int _pageDown = 1;
+  bool get canLoadMore => _page < (_extra?.totalPages ?? 1);
   Extra? _extra;
   Extra? get extra => _extra;
+  // int _pageDown = 1;
   // Extra? _extraDown;
 
   final AudioPlayer _player = AudioPlayer();

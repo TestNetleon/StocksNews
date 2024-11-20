@@ -161,6 +161,7 @@ class Images {
   static const String bannerImage = "assets/images/banner_image.png";
 
   static const String pointIcon3 = "assets/images/3_coins.png";
+  static const String blackFriday = "assets/images/black_friday.png";
 
   static const String netflix = "assets/images/nflx.png";
   static const String amazon = "assets/images/amzn.png";

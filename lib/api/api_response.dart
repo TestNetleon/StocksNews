@@ -5,6 +5,7 @@ import 'package:stocks_news_new/modals/in_app_msg_res.dart';
 import 'package:stocks_news_new/modals/referral_res.dart';
 import 'package:stocks_news_new/modals/user_res.dart';
 
+import '../modals/membership.dart';
 import '../modals/stockDetailRes/earnings.dart';
 
 ApiResponse apiResponseFromJson(String str) =>
@@ -132,10 +133,16 @@ class Extra {
   final UpdateYourPhoneRes? updateYourPhone;
   final bool? showArena;
   final bool? showTradingSimulator;
+  final bool? showBlackFriday;
+  final BlackFridayRes? blackFriday;
+  final List<MembershipRes>? activeMembership;
 
   // final num? isRegistered;
 
   Extra({
+    this.activeMembership,
+    this.blackFriday,
+    this.showBlackFriday,
     this.showArena,
     this.showTradingSimulator,
     this.updateYourPhone,
@@ -227,7 +234,15 @@ class Extra {
 
   factory Extra.fromJson(Map<String, dynamic> json) => Extra(
         search: json["search"],
+        activeMembership: json["active_membership"] == null
+            ? []
+            : List<MembershipRes>.from(json["active_membership"]!
+                .map((x) => MembershipRes.fromJson(x))),
 
+        showBlackFriday: json['black_friday_membership'],
+        blackFriday: json["black_friday"] == null
+            ? null
+            : BlackFridayRes.fromJson(json["black_friday"]),
         showArena: json['show_arena'],
         showTradingSimulator: json['show_trading_simulator'],
         // isRegistered: json['is_registered'],
@@ -313,6 +328,7 @@ class Extra {
         showPortfolio: json['show_portfolio'],
         signUpText: json["signup_text"],
         totalPages: json["total_pages"],
+
         period: json["period"] == null
             ? []
             : List<SdTopRes>.from(
@@ -384,6 +400,8 @@ class Extra {
       );
 
   Map<String, dynamic> toJson() => {
+        'black_friday_membership': showBlackFriday,
+        "black_friday": blackFriday?.toJson(),
         "ad_managers": adManagers?.toJson(),
         "phone_code_error": phoneCodeError,
         'show_trading_simulator': showTradingSimulator,
@@ -435,6 +453,9 @@ class Extra {
         "current_balance": currentBalance,
         "show_portfolio": showPortfolio,
         "total_pages": totalPages,
+        "active_membership": activeMembership == null
+            ? []
+            : List<dynamic>.from(activeMembership!.map((x) => x.toJson())),
         "exchange_short_name": exchangeShortName == null
             ? []
             : List<dynamic>.from(exchangeShortName!.map((x) => x.toJson())),

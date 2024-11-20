@@ -12,7 +12,6 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/api/api_requester.dart';
 import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/api/apis.dart';
-import 'package:stocks_news_new/modals/user_res.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
@@ -159,10 +158,9 @@ class OneSignalService {
         //   ),
         // );
 
-        closeKeyboard();
-        UserRes? userRes =
-            navigatorKey.currentContext!.read<UserProvider>().user;
-        if (userRes?.showBlackFriday == true) {
+        // closeKeyboard();
+        // Extra? extra = navigatorKey.currentContext!.read<HomeProvider>().extra;
+        if (slug != null && slug != '' && slug == 'black-friday') {
           Navigator.push(
             navigatorKey.currentContext!,
             MaterialPageRoute(
@@ -234,7 +232,15 @@ class OneSignalService {
     Utils().showLog('FCM Token Before $fcmTokenGlobal');
 
     OneSignal.User.pushSubscription.addObserver((state) async {
-      fcmTokenGlobal = OneSignal.User.pushSubscription.id;
+      fcmTokenGlobal = state.current.id;
+      // fcmTokenGlobal = OneSignal.User.pushSubscription.id;
+
+      // Utils().showLog('Fcm token global $fcmTokenGlobal');
+      // Utils().showLog(
+      //     'observer current ${state.current.id}, ${state.current.token}');
+      // Utils().showLog(
+      //     'observer previous ${state.previous.id}, ${state.previous.token}');
+
       String? address = await _getUserLocation();
       Utils().showLog('FCM Token After $fcmTokenGlobal');
 

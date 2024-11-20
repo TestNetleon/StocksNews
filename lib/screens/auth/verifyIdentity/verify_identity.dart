@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:io';
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -88,7 +87,7 @@ class _VerifyIdentityState extends State<VerifyIdentity> {
     } else {
       countryCode = CountryCode.fromCountryCode("US").dialCode;
     }
-    log("Country Code => $countryCode");
+    // log("Country Code => $countryCode");
 
     if (provider.user?.name != null && provider.user?.name != '') {
       name.text = provider.user?.name ?? "";

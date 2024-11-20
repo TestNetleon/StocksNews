@@ -8,7 +8,9 @@ import 'package:stocks_news_new/screens/membership_new/membership.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
+import '../../../api/api_response.dart';
 import '../../../modals/user_res.dart';
+import '../../../providers/home_provider.dart';
 import '../../../utils/colors.dart';
 import '../../../utils/constants.dart';
 import '../../blackFridayMembership/index.dart';
@@ -254,10 +256,11 @@ class _UserCardState extends State<UserCard> {
 
     closeKeyboard();
     UserRes? userRes = navigatorKey.currentContext!.read<UserProvider>().user;
+    Extra? extra = navigatorKey.currentContext!.read<HomeProvider>().extra;
 
     if (userRes?.blackFriday != null) {
       blackFridayPermission();
-    } else if (userRes?.showBlackFriday == true) {
+    } else if (extra?.showBlackFriday == true) {
       Navigator.push(
         navigatorKey.currentContext!,
         MaterialPageRoute(

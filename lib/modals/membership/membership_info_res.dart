@@ -18,6 +18,8 @@ class MembershipInfoRes {
   final List<String>? newFeatures;
   final String? selectTitle;
   final String? selectSubTitle;
+  final String? view_features;
+  final String? featuredImage;
   final List<Plan>? plans;
 
   MembershipInfoRes({
@@ -31,11 +33,15 @@ class MembershipInfoRes {
     this.selectTitle,
     this.selectSubTitle,
     this.plans,
+    this.view_features,
+    this.featuredImage,
   });
 
   factory MembershipInfoRes.fromJson(Map<String, dynamic> json) =>
       MembershipInfoRes(
         title: json["title"],
+        view_features: json['view_features'],
+        featuredImage: json['featured_image'],
         subTitle: json["sub_title"],
         plan: Plan.fromJson(json["plan"]),
         testimonials: List<Testimonial>.from(
@@ -56,6 +62,8 @@ class MembershipInfoRes {
   Map<String, dynamic> toJson() => {
         "title": title,
         "sub_title": subTitle,
+        'featured_image': featuredImage,
+        'view_features': view_features,
         "plan": plan.toJson(),
         "testimonials": List<dynamic>.from(testimonials.map((x) => x.toJson())),
         "faq": List<dynamic>.from(faq.map((x) => x.toJson())),
@@ -76,6 +84,8 @@ class Plan {
   String price;
   final String? type;
   final String? billed;
+  final String? discount;
+
   final String? description;
   bool selected;
   String? activeText;
@@ -87,6 +97,7 @@ class Plan {
     required this.price,
     this.description,
     this.type,
+    this.discount,
     this.productId,
     this.billed,
     this.selected = false,
@@ -97,6 +108,7 @@ class Plan {
   factory Plan.fromJson(Map<String, dynamic> json) => Plan(
         name: json["name"],
         price: json["price"],
+        discount: json['discount'],
         productId: json['product_id'],
         description: json["description"],
         type: json["type"],
@@ -111,6 +123,7 @@ class Plan {
         "name": name,
         "price": price,
         "product_id": productId,
+        'discount': discount,
         "description": description,
         "type": type,
         "active_text": activeText,

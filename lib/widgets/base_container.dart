@@ -61,7 +61,7 @@ class _BaseContainerState extends State<BaseContainer> {
                     0.9,
                   ],
                   colors: [
-                    widget.baseColor ?? Color.fromARGB(255, 0, 125, 17),
+                    widget.baseColor ?? Color(0xFF007D11),
                     Colors.black,
                   ],
                 ),

@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import 'package:stocks_news_new/modals/user_res.dart';
 import 'package:stocks_news_new/providers/compare_stocks_provider.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/insider_trading_provider.dart';
@@ -26,6 +25,7 @@ import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:vibration/vibration.dart';
+import '../../api/api_response.dart';
 import '../../utils/utils.dart';
 import '../blackFridayMembership/index.dart';
 import '../membership_new/membership.dart';
@@ -80,9 +80,11 @@ class _TabsState extends State<Tabs> {
     //   ),
     // );
 
-    UserRes? user = navigatorKey.currentContext!.read<UserProvider>().user;
+    // UserRes? user = navigatorKey.currentContext!.read<UserProvider>().user;
+    Extra? extra = navigatorKey.currentContext!.read<HomeProvider>().extra;
+
     closeKeyboard();
-    if (user?.showBlackFriday == true) {
+    if (extra?.showBlackFriday == true) {
       Navigator.push(
         navigatorKey.currentContext!,
         createRoute(

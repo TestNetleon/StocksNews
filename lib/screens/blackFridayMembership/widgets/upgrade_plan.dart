@@ -65,6 +65,113 @@ class _BlackFridayUpgradeCurrentPlanState
     }
   }
 
+  _featuresSheet() {
+    BlackFridayProvider provider = context.read<BlackFridayProvider>();
+    MembershipInfoRes? data = provider.membershipInfoRes;
+
+    showModalBottomSheet(
+      useSafeArea: true,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(5),
+          topRight: Radius.circular(5),
+        ),
+      ),
+      backgroundColor: ThemeColors.transparent,
+      isScrollControlled: true,
+      context: navigatorKey.currentContext!,
+      builder: (context) {
+        return Container(
+          padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(10),
+              topRight: Radius.circular(10),
+            ),
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [ThemeColors.bottomsheetGradient, Colors.black],
+            ),
+          ),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                  child: Align(
+                    alignment: Alignment.centerRight,
+                    child: Icon(
+                      Icons.close,
+                      color: ThemeColors.white,
+                    ),
+                  ),
+                ),
+                Text(
+                  provider.membershipInfoRes?.newTitle ?? "",
+                  style: stylePTSansBold(color: Colors.white, fontSize: 30),
+                ),
+                Visibility(
+                  visible: data?.newFeatures?.isNotEmpty == true,
+                  child: ListView.separated(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 0, vertical: 5),
+                    itemBuilder: (context, index) {
+                      return Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            height: 7,
+                            width: 7,
+                            margin: const EdgeInsets.only(top: 10),
+                            decoration: const BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: ThemeColors.white,
+                            ),
+                          ),
+                          const SpacerHorizontal(width: 6),
+                          Flexible(
+                            child: HtmlWidget(
+                              '${data?.newFeatures?[index]}',
+                              textStyle: const TextStyle(
+                                color: ThemeColors.white,
+                                height: 1.5,
+                                fontFamily: Fonts.ptSans,
+                                fontSize: 16,
+                              ),
+                            ),
+                          ),
+                        ],
+                      );
+                    },
+                    separatorBuilder: (context, index) {
+                      return const SpacerVertical(height: 15);
+                    },
+                    itemCount: data?.newFeatures?.length ?? 0,
+                  ),
+                ),
+                const SpacerVertical(height: 20),
+                // Text(
+                //   data?.selectTitle ?? "",
+                //   style: styleSansBold(
+                //     color: Colors.white,
+                //     fontSize: 22,
+                //   ),
+                // ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     BlackFridayProvider provider = context.watch<BlackFridayProvider>();
@@ -75,56 +182,24 @@ class _BlackFridayUpgradeCurrentPlanState
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            provider.membershipInfoRes?.newTitle ?? "",
-            style: stylePTSansBold(color: Colors.white, fontSize: 30),
-          ),
           Visibility(
-            visible: data?.newFeatures?.isNotEmpty == true,
-            child: ListView.separated(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 5),
-              itemBuilder: (context, index) {
-                return Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      height: 7,
-                      width: 7,
-                      margin: const EdgeInsets.only(top: 10),
-                      decoration: const BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: ThemeColors.white,
-                      ),
-                    ),
-                    const SpacerHorizontal(width: 6),
-                    Flexible(
-                      child: HtmlWidget(
-                        '${data?.newFeatures?[index]}',
-                        textStyle: const TextStyle(
-                          color: ThemeColors.white,
-                          height: 1.5,
-                          fontFamily: Fonts.ptSans,
-                          fontSize: 16,
-                        ),
-                      ),
-                    ),
-                  ],
-                );
+            visible: data?.view_features != null && data?.view_features != '',
+            child: GestureDetector(
+              onTap: () {
+                _featuresSheet();
               },
-              separatorBuilder: (context, index) {
-                return const SpacerVertical(height: 15);
-              },
-              itemCount: data?.newFeatures?.length ?? 0,
-            ),
-          ),
-          const SpacerVertical(height: 20),
-          Text(
-            data?.selectTitle ?? "",
-            style: styleSansBold(
-              color: Colors.white,
-              fontSize: 22,
+              child: Align(
+                alignment: Alignment.center,
+                child: Text(
+                  data?.view_features ?? 'View premium membership features',
+                  style: styleGeorgiaBold(
+                    fontSize: 17,
+                    fontStyle: FontStyle.italic,
+                    color: ThemeColors.accent,
+                    decoration: TextDecoration.underline,
+                  ),
+                ),
+              ),
             ),
           ),
           const SpacerVertical(height: 25),
@@ -169,8 +244,10 @@ class _BlackFridayUpgradeCurrentPlanState
                             begin: Alignment.centerLeft,
                             end: Alignment.centerRight,
                             colors: [
-                              Color.fromARGB(255, 101, 1, 1),
-                              ThemeColors.sos
+                              // Color.fromARGB(255, 101, 1, 1),
+                              // ThemeColors.sos
+                              Color.fromARGB(255, 1, 101, 16),
+                              ThemeColors.accent
                             ],
                           ),
                           borderRadius: BorderRadius.only(
@@ -196,16 +273,17 @@ class _BlackFridayUpgradeCurrentPlanState
                             // index == 0 && user?.membership?.canUpgrade == true
                             plan?.activeText != null && plan?.activeText != ''
                                 ? const Color(0xFF434343)
-                                : const Color.fromARGB(255, 78, 6, 6),
+                                : const Color(0xFF064E1F),
                             const Color(0xFF161616),
                           ],
                         ),
                         border: Border.all(
+                          width: 3,
                           color:
                               // index == 0 && user?.membership?.canUpgrade == true
                               plan?.activeText != null && plan?.activeText != ''
                                   ? Colors.grey
-                                  : ThemeColors.sos,
+                                  : ThemeColors.accent,
                         ),
                         borderRadius: BorderRadius.circular(10.0),
                       ),
@@ -219,11 +297,13 @@ class _BlackFridayUpgradeCurrentPlanState
                             children: [
                               Container(
                                 decoration: const BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.only(
-                                        topLeft: Radius.circular(10.0),
-                                        topRight: Radius.circular(10.0),
-                                        bottomLeft: Radius.circular(10.0))),
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(10.0),
+                                    topRight: Radius.circular(10.0),
+                                    bottomLeft: Radius.circular(10.0),
+                                  ),
+                                ),
                                 padding: const EdgeInsets.all(8.0),
                                 child: Center(
                                   child: Text(
@@ -245,8 +325,8 @@ class _BlackFridayUpgradeCurrentPlanState
                                   decoration: BoxDecoration(
                                     shape: BoxShape.circle,
                                     border: Border.all(
-                                      color: ThemeColors.white,
-                                      width: 2,
+                                      color: ThemeColors.accent,
+                                      width: 3,
                                     ),
                                   ),
                                   padding: const EdgeInsets.all(5),
@@ -254,7 +334,7 @@ class _BlackFridayUpgradeCurrentPlanState
                                     padding: const EdgeInsets.all(6.7),
                                     decoration: BoxDecoration(
                                       color: plan?.selected == true
-                                          ? ThemeColors.white
+                                          ? ThemeColors.accent
                                           : null,
                                       shape: BoxShape.circle,
                                     ),
@@ -264,26 +344,52 @@ class _BlackFridayUpgradeCurrentPlanState
                             ],
                           ),
                           const SpacerVertical(height: 12),
-                          Text(
-                            plan?.price ?? "",
-                            style: const TextStyle(
-                              fontFamily: 'Roboto',
-                              fontSize: 30,
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                            ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                plan?.price ?? "",
+                                style: const TextStyle(
+                                  fontFamily: 'Roboto',
+                                  fontSize: 30,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              Container(
+                                decoration: const BoxDecoration(
+                                  color: Color(0xFFdf151d),
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(30),
+                                  ),
+                                ),
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 15,
+                                  vertical: 6,
+                                ),
+                                child: Text(
+                                  plan?.discount ?? "",
+                                  style: styleGeorgiaBold(
+                                    fontSize: 20,
+                                    color: ThemeColors.white,
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
-                          const SpacerVertical(height: 10),
+                          const SpacerVertical(height: 1),
                           HtmlWidget(
                             plan?.billed ?? "",
                             textStyle: stylePTSansRegular(
                                 fontSize: 16, color: ThemeColors.greyText),
                           ),
                           const SpacerVertical(height: 10),
-                          Text(
+                          HtmlWidget(
                             plan?.description ?? "",
-                            style: stylePTSansBold(
-                                fontSize: 16, color: Colors.white),
+                            textStyle: stylePTSansBold(
+                              fontSize: 16,
+                              color: Colors.white,
+                            ),
                           ),
                         ],
                       ),

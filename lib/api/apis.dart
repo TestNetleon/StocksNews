@@ -155,6 +155,8 @@ class Apis {
   static const affiliateTnxList = "/referrals/txn-report-list";
 
   static const membership = "/membership/transactions";
+  static const blackFridayTransaction = "/membership/transactions_v2";
+
   static const membershipSuccess = "/membership/success";
 
   static const adViewed = "/ad-viewed";

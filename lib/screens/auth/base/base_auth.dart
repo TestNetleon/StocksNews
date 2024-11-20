@@ -331,7 +331,7 @@ class _LoginFirstState extends State<LoginFirst> {
     } else {
       countryCode = CountryCode.fromCountryCode("US").dialCode;
     }
-    Utils().showLog('COUNTRY CODE $countryCode');
+    // Utils().showLog('COUNTRY CODE $countryCode');
     return GestureDetector(
       onTap: () {
         closeKeyboard();

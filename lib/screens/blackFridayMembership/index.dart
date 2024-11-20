@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:stocks_news_new/screens/drawer/base_drawer.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
-import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 
 import 'container.dart';
@@ -20,7 +19,7 @@ class BlackFridayMembershipIndex extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BaseContainer(
-      baseColor: ThemeColors.sos,
+      // baseColor: ThemeColors.sos,
       drawer: const BaseDrawer(resetIndex: true),
       appBar: AppBarHome(
         isPopBack: true,

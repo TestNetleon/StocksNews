@@ -210,7 +210,7 @@ class _BaseAuthState extends State<BaseAuth> {
   void _onChanged(CountryCode value) {
     changed = true;
     countryCode = value.dialCode;
-    Utils().showLog("COUNTRY CODE => $countryCode");
+    // Utils().showLog("COUNTRY CODE => $countryCode");
     setState(() {});
   }
 
@@ -265,7 +265,7 @@ class _BaseAuthState extends State<BaseAuth> {
       }
     }
 
-    Utils().showLog('COUNTRY CODE $countryCode');
+    // Utils().showLog('COUNTRY CODE $countryCode');
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
       decoration: BoxDecoration(
