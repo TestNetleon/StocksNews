@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/affiliate/index.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
@@ -11,8 +12,11 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 import '../../database/preference.dart';
+import '../../modals/user_res.dart';
+import '../../providers/user_provider.dart';
 import '../auth/base/base_auth.dart';
 import '../auth/refer/refer_code.dart';
+import '../blackFridayMembership/index.dart';
 import '../blogDetail/index.dart';
 import '../deepLinkScreen/webscreen.dart';
 import '../drawer/widgets/review_app_pop_up.dart';
@@ -237,14 +241,36 @@ class _HomeSplashState extends State<HomeSplash> {
         );
       } else if (type == NotificationType.membership.name) {
         // popUpAlert(message: "IN HERE IN HOME SPLASH");
-        Navigator.pushReplacement(
-          navigatorKey.currentContext!,
-          MaterialPageRoute(
-            builder: (_) => NewMembership(
-              notificationId: notificationId,
+        // Navigator.pushReplacement(
+        //   navigatorKey.currentContext!,
+        //   MaterialPageRoute(
+        //     builder: (_) => NewMembership(
+        //       notificationId: notificationId,
+        //     ),
+        //   ),
+        // );
+        closeKeyboard();
+        UserRes? userRes =
+            navigatorKey.currentContext!.read<UserProvider>().user;
+        if (userRes?.showBlackFriday == true) {
+          Navigator.push(
+            navigatorKey.currentContext!,
+            MaterialPageRoute(
+              builder: (context) => BlackFridayMembershipIndex(
+                notificationId: notificationId,
+              ),
             ),
-          ),
-        );
+          );
+        } else {
+          Navigator.push(
+            navigatorKey.currentContext!,
+            MaterialPageRoute(
+              builder: (context) => NewMembership(
+                notificationId: notificationId,
+              ),
+            ),
+          );
+        }
       } else {
         // arguments: {"notificationId": notificationId},
         Navigator.popUntil(

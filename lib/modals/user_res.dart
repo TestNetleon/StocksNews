@@ -31,9 +31,13 @@ class UserRes {
   String? phoneCode;
   dynamic pointEarn;
   num? selfRank;
-
+  // final String? blackFridayMessage;
+  final bool? showBlackFriday;
+  final BlackFridayRes? blackFriday;
   UserRes({
-    // this.subscriptionPurchased = 0,
+    // this.blackFridayMessage,
+    this.blackFriday,
+    this.showBlackFriday,
     this.email,
     this.membership,
     this.phone,
@@ -62,7 +66,12 @@ class UserRes {
   });
 
   factory UserRes.fromJson(Map<String, dynamic> json) => UserRes(
+        // blackFridayMessage: json['black_friday_message'],
+        showBlackFriday: json['black_friday_membership'],
         email: json["email"],
+        blackFriday: json["black_friday"] == null
+            ? null
+            : BlackFridayRes.fromJson(json["black_friday"]),
         userId: json['_id'],
         phone: json["phone"],
         roleId: json["role_id"],
@@ -92,7 +101,11 @@ class UserRes {
       );
 
   Map<String, dynamic> toJson() => {
+        // 'black_friday_message': blackFridayMessage,
+        'black_friday_membership': showBlackFriday,
         "email": email,
+        "black_friday": blackFriday?.toJson(),
+
         "phone": phone,
         "_id": userId,
         "role_id": roleId,
@@ -222,5 +235,37 @@ class UpgradeMembershipTextRes {
   Map<String, dynamic> toJson() => {
         "text": text,
         "button": button,
+      };
+}
+
+class BlackFridayRes {
+  final String? title;
+  final String? checkbox;
+  final String? html;
+  final String? yesBtn;
+  final String? noBtn;
+
+  BlackFridayRes({
+    this.title,
+    this.checkbox,
+    this.html,
+    this.yesBtn,
+    this.noBtn,
+  });
+
+  factory BlackFridayRes.fromJson(Map<String, dynamic> json) => BlackFridayRes(
+        title: json["title"],
+        checkbox: json["checkbox"],
+        html: json["html"],
+        yesBtn: json["yes_btn"],
+        noBtn: json["no_btn"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "title": title,
+        "checkbox": checkbox,
+        "html": html,
+        "yes_btn": yesBtn,
+        "no_btn": noBtn,
       };
 }

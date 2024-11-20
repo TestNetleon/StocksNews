@@ -17,6 +17,7 @@ import '../../../../utils/dialogs.dart';
 import '../../../alerts/alerts.dart';
 import '../../../auth/base/base_auth.dart';
 import '../../../auth/membershipAsk/ask.dart';
+import '../../../blackFridayMembership/index.dart';
 import 'alert_popup.dart';
 import 'button.dart';
 
@@ -45,12 +46,28 @@ class AddToAlertWatchlist extends StatelessWidget {
     }
     if (provider.user?.phone != null && provider.user?.phone != '') {
       // await RevenueCatService.initializeSubscription();
-      Navigator.push(
-        navigatorKey.currentContext!,
-        MaterialPageRoute(
-          builder: (_) => const NewMembership(),
-        ),
-      );
+      // Navigator.push(
+      //   navigatorKey.currentContext!,
+      //   MaterialPageRoute(
+      //     builder: (_) => const NewMembership(),
+      //   ),
+      // );
+      closeKeyboard();
+      if (provider.user?.showBlackFriday == true) {
+        await Navigator.push(
+          navigatorKey.currentContext!,
+          MaterialPageRoute(
+            builder: (context) => const BlackFridayMembershipIndex(),
+          ),
+        );
+      } else {
+        await Navigator.push(
+          navigatorKey.currentContext!,
+          MaterialPageRoute(
+            builder: (context) => const NewMembership(),
+          ),
+        );
+      }
     }
   }
 

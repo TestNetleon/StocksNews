@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:stocks_news_new/modals/stockDetailRes/earnings.dart';
 import 'package:stocks_news_new/modals/stockDetailRes/financial.dart';
+import 'package:stocks_news_new/modals/user_res.dart';
 import 'package:stocks_news_new/screens/helpDesk/front/index.dart';
 import 'package:stocks_news_new/screens/marketData/congressionalData/index.dart';
 import 'package:stocks_news_new/screens/marketData/dividends/dividends.dart';
@@ -30,6 +31,7 @@ import 'package:url_launcher/url_launcher.dart';
 import '../providers/user_provider.dart';
 import '../route/my_app.dart';
 import '../screens/auth/base/base_auth.dart';
+import '../screens/blackFridayMembership/index.dart';
 import '../screens/blogDetail/index.dart';
 import '../screens/stockDetail/index.dart';
 import '../screens/tabs/news/newsDetail/new_detail.dart';
@@ -684,10 +686,27 @@ void handleDeepLinkNavigation({
         uri.toString().contains('.page.link')) {
       Utils().showLog("Going to membership page-------");
       Timer(Duration(seconds: duration ?? 0), () {
-        Navigator.push(navigatorKey.currentContext!,
-            MaterialPageRoute(builder: (context) {
-          return NewMembership();
-        }));
+        // Navigator.push(navigatorKey.currentContext!,
+        //     MaterialPageRoute(builder: (context) {
+        //   return NewMembership();
+        // }));
+        closeKeyboard();
+        UserRes? user = navigatorKey.currentContext!.read<UserProvider>().user;
+        if (user?.showBlackFriday == true) {
+          Navigator.push(
+            navigatorKey.currentContext!,
+            MaterialPageRoute(
+              builder: (context) => const BlackFridayMembershipIndex(),
+            ),
+          );
+        } else {
+          Navigator.push(
+            navigatorKey.currentContext!,
+            MaterialPageRoute(
+              builder: (context) => const NewMembership(),
+            ),
+          );
+        }
       });
       return;
     }

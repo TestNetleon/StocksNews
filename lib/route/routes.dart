@@ -109,6 +109,7 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 
 import '../arena/provider/trades.dart';
+import '../providers/blackFriday/provider.dart';
 import '../providers/featured_ticker.dart';
 import '../providers/high_low_pe.dart';
 import '../providers/low_prices_stocks.dart';
@@ -605,6 +606,7 @@ class Routes {
       ChangeNotifierProvider(create: (_) => MissionProvider()),
       ChangeNotifierProvider(create: (_) => ArenaProvider()),
       ChangeNotifierProvider(create: (_) => TradesProvider()),
+      ChangeNotifierProvider(create: (_) => BlackFridayProvider()),
     ];
   }
 }

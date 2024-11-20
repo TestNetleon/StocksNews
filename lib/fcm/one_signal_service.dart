@@ -12,6 +12,7 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/api/api_requester.dart';
 import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/api/apis.dart';
+import 'package:stocks_news_new/modals/user_res.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
@@ -20,6 +21,7 @@ import 'package:stocks_news_new/service/amplitude/service.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/database/preference.dart';
 import '../screens/auth/base/base_auth.dart';
+import '../screens/blackFridayMembership/index.dart';
 import '../utils/utils.dart';
 import 'package:stocks_news_new/screens/affiliate/index.dart';
 import 'package:stocks_news_new/screens/auth/refer/refer_code.dart';
@@ -147,15 +149,34 @@ class OneSignalService {
           MaterialPageRoute(builder: (_) => const ReferAFriend()),
         );
       } else if (type == NotificationType.membership.name) {
-        Navigator.push(
-          navigatorKey.currentContext!,
-          MaterialPageRoute(
-            builder: (_) => NewMembership(
-              notificationId: notificationId,
-              // withClickCondition: true,
+        // Navigator.push(
+        //   navigatorKey.currentContext!,
+        //   MaterialPageRoute(
+        //     builder: (_) => NewMembership(
+        //       notificationId: notificationId,
+        //       // withClickCondition: true,
+        //     ),
+        //   ),
+        // );
+
+        closeKeyboard();
+        UserRes? userRes =
+            navigatorKey.currentContext!.read<UserProvider>().user;
+        if (userRes?.showBlackFriday == true) {
+          Navigator.push(
+            navigatorKey.currentContext!,
+            MaterialPageRoute(
+              builder: (context) => const BlackFridayMembershipIndex(),
             ),
-          ),
-        );
+          );
+        } else {
+          Navigator.push(
+            navigatorKey.currentContext!,
+            MaterialPageRoute(
+              builder: (context) => const NewMembership(),
+            ),
+          );
+        }
       } else if (type == NotificationType.pointTransaction.name) {
         Navigator.push(
           navigatorKey.currentContext!,

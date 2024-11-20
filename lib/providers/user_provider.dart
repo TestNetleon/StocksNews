@@ -30,6 +30,7 @@ import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
 
 import '../fcm/dynamic_links.service.dart';
+import '../screens/blackFridayMembership/index.dart';
 import '../screens/membership_new/membership.dart';
 import '../service/amplitude/service.dart';
 import '../utils/dialogs.dart';
@@ -465,12 +466,29 @@ class UserProvider extends ChangeNotifier {
                   _user?.membership?.purchased == 0) &&
               withLoginMembership) {
             Utils().showLog("----navigating from login verify---");
-            Navigator.push(
-              navigatorKey.currentContext!,
-              createRoute(
-                NewMembership(cancel: true),
-              ),
-            );
+            // Navigator.push(
+            //   navigatorKey.currentContext!,
+            //   createRoute(
+            //     NewMembership(cancel: true),
+            //   ),
+            // );
+
+            closeKeyboard();
+            if (_user?.showBlackFriday == true) {
+              Navigator.push(
+                navigatorKey.currentContext!,
+                createRoute(
+                  const BlackFridayMembershipIndex(cancel: true),
+                ),
+              );
+            } else {
+              Navigator.push(
+                navigatorKey.currentContext!,
+                createRoute(
+                  const NewMembership(cancel: true),
+                ),
+              );
+            }
           }
 
           // Navigator.popUntil(
@@ -618,18 +636,29 @@ class UserProvider extends ChangeNotifier {
                   _user?.membership?.purchased == 0) &&
               withLoginMembership) {
             Utils().showLog("----navigating from login verify---");
+
             // Navigator.push(
             //   navigatorKey.currentContext!,
-            //   MaterialPageRoute(
-            //     builder: (context) => NewMembership(cancle: true),
+            //   createRoute(
+            //     NewMembership(cancel: true),
             //   ),
             // );
-            Navigator.push(
-              navigatorKey.currentContext!,
-              createRoute(
-                NewMembership(cancel: true),
-              ),
-            );
+            closeKeyboard();
+            if (_user?.showBlackFriday == true) {
+              Navigator.push(
+                navigatorKey.currentContext!,
+                createRoute(
+                  const BlackFridayMembershipIndex(cancel: true),
+                ),
+              );
+            } else {
+              Navigator.push(
+                navigatorKey.currentContext!,
+                createRoute(
+                  const NewMembership(cancel: true),
+                ),
+              );
+            }
           }
           // Navigator.popUntil(
           //   navigatorKey.currentContext!,
@@ -897,12 +926,28 @@ class UserProvider extends ChangeNotifier {
                 _user?.membership?.purchased == 0) &&
             withLoginMembership) {
           Utils().showLog("----navigating from login verify---");
-          Navigator.push(
-            navigatorKey.currentContext!,
-            createRoute(
-              NewMembership(cancel: true),
-            ),
-          );
+          // Navigator.push(
+          //   navigatorKey.currentContext!,
+          //   createRoute(
+          //     NewMembership(cancel: true),
+          //   ),
+          // );
+          closeKeyboard();
+          if (_user?.showBlackFriday == true) {
+            Navigator.push(
+              navigatorKey.currentContext!,
+              createRoute(
+                const BlackFridayMembershipIndex(cancel: true),
+              ),
+            );
+          } else {
+            Navigator.push(
+              navigatorKey.currentContext!,
+              createRoute(
+                const NewMembership(cancel: true),
+              ),
+            );
+          }
         }
         notifyListeners();
         configureRevenueCatAttribute();
@@ -1501,12 +1546,28 @@ class UserProvider extends ChangeNotifier {
                 _user?.membership?.purchased == 0) &&
             withLoginMembership) {
           Utils().showLog("----navigating from login verify---");
-          Navigator.push(
-            navigatorKey.currentContext!,
-            createRoute(
-              NewMembership(cancel: true),
-            ),
-          );
+          // Navigator.push(
+          //   navigatorKey.currentContext!,
+          //   createRoute(
+          //     NewMembership(cancel: true),
+          //   ),
+          // );
+          closeKeyboard();
+          if (_user?.showBlackFriday == true) {
+            Navigator.push(
+              navigatorKey.currentContext!,
+              createRoute(
+                const BlackFridayMembershipIndex(cancel: true),
+              ),
+            );
+          } else {
+            Navigator.push(
+              navigatorKey.currentContext!,
+              createRoute(
+                const NewMembership(cancel: true),
+              ),
+            );
+          }
         }
         notifyListeners();
         configureRevenueCatAttribute();

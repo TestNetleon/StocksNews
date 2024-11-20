@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -233,7 +234,12 @@ class MembershipProvider extends ChangeNotifier {
           if (configuration != null) {
             Utils().showLog("--integrating configuration----");
             await Purchases.configure(configuration);
-            Purchases.setFirebaseAppInstanceId(userRes?.userId ?? '');
+            FirebaseAnalytics analytics = FirebaseAnalytics.instance;
+            String? firebaseAppInstanceId = await analytics.appInstanceId;
+            if (firebaseAppInstanceId != null && firebaseAppInstanceId != '') {
+              Purchases.setFirebaseAppInstanceId(firebaseAppInstanceId);
+              Utils().showLog('Set app instance ID => $firebaseAppInstanceId');
+            }
           }
           Offerings? offerings;
           offerings = await Purchases.getOfferings();

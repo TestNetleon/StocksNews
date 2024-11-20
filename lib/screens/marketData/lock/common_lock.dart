@@ -12,6 +12,7 @@ import '../../../widgets/spacer_vertical.dart';
 import '../../../widgets/theme_button_small.dart';
 import '../../auth/base/base_auth.dart';
 import '../../auth/membershipAsk/ask.dart';
+import '../../blackFridayMembership/index.dart';
 import '../../tabs/tabs.dart';
 
 class CommonLock extends StatelessWidget {
@@ -44,10 +45,28 @@ class CommonLock extends StatelessWidget {
         }
         if (provider.user?.phone != null && provider.user?.phone != '') {
           // await RevenueCatService.initializeSubscription();
-          await Navigator.push(
-            context,
-            MaterialPageRoute(builder: (_) => const NewMembership()),
-          );
+          // await Navigator.push(
+          //   context,
+          //   MaterialPageRoute(builder: (_) => const NewMembership()),
+          // );
+
+          closeKeyboard();
+
+          if (provider.user?.showBlackFriday == true) {
+            await Navigator.push(
+              navigatorKey.currentContext!,
+              MaterialPageRoute(
+                builder: (context) => const BlackFridayMembershipIndex(),
+              ),
+            );
+          } else {
+            await Navigator.push(
+              navigatorKey.currentContext!,
+              MaterialPageRoute(
+                builder: (context) => const NewMembership(),
+              ),
+            );
+          }
         }
       }
     }
