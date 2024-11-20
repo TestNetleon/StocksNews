@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
@@ -47,12 +48,21 @@ class RevenueCatService {
       showGlobalProgressDialog();
       if (configuration != null) {
         await Purchases.configure(configuration);
+        FirebaseAnalytics analytics = FirebaseAnalytics.instance;
+        String? firebaseAppInstanceId = await analytics.appInstanceId;
+        if (firebaseAppInstanceId != null && firebaseAppInstanceId != '') {
+          Purchases.setFirebaseAppInstanceId(firebaseAppInstanceId);
+          Utils().showLog('Set app instance ID => $firebaseAppInstanceId');
+        }
+
         await configureAppsFlyer();
         if (Platform.isIOS && !_adServicesAttributionEnabled) {
           await Purchases.enableAdServicesAttributionTokenCollection();
+
           _adServicesAttributionEnabled = true;
           Utils().showLog("Ad Services Attribution Enabled");
         }
+
         Offerings? offerings;
         offerings = await Purchases.getOfferings();
         closeGlobalProgressDialog();

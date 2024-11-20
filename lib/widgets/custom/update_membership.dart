@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/api/api_response.dart';
+import 'package:stocks_news_new/modals/user_res.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
+import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/screens/membership/store/store.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/theme_button_small.dart';
+import '../../screens/blackFridayMembership/index.dart';
 import '../../screens/membership_new/membership.dart';
 import '../../utils/constants.dart';
 import '../../utils/utils.dart';
@@ -16,19 +19,28 @@ class UpdateMembershipCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Extra? extra = context.watch<HomeProvider>().extra;
+    UserRes? userRes = context.watch<UserProvider>().user;
 
     return MembershipStoreCard(
       isMembership: true,
       data: extra?.membershipText?.card,
       onTap: () {
         closeKeyboard();
-
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const NewMembership(),
-          ),
-        );
+        if (userRes?.showBlackFriday == true) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const BlackFridayMembershipIndex(),
+            ),
+          );
+        } else {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const NewMembership(),
+            ),
+          );
+        }
       },
     );
   }

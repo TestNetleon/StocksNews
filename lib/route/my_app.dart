@@ -348,6 +348,13 @@ Future<void> configureRevenueCatAttribute() async {
     }
 
     await Purchases.configure(configuration);
+
+    FirebaseAnalytics analytics = FirebaseAnalytics.instance;
+    String? firebaseAppInstanceId = await analytics.appInstanceId;
+    if (firebaseAppInstanceId != null && firebaseAppInstanceId != '') {
+      Purchases.setFirebaseAppInstanceId(firebaseAppInstanceId);
+      Utils().showLog('Set app instance ID => $firebaseAppInstanceId');
+    }
     try {
       AppsFlyerService(
         ApiKeys.appsFlyerKey,

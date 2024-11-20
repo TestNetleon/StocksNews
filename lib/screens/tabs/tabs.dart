@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:stocks_news_new/modals/user_res.dart';
 import 'package:stocks_news_new/providers/compare_stocks_provider.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/insider_trading_provider.dart';
@@ -12,6 +13,7 @@ import 'package:stocks_news_new/providers/reddit_twitter_provider.dart';
 import 'package:stocks_news_new/providers/search_provider.dart';
 import 'package:stocks_news_new/providers/trending_provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
+import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/auth/refer/refer_code.dart';
 import 'package:stocks_news_new/screens/tabs/compareStocks/compare_stocks.dart';
 import 'package:stocks_news_new/screens/tabs/home/home.dart';
@@ -25,6 +27,7 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:vibration/vibration.dart';
 import '../../utils/utils.dart';
+import '../blackFridayMembership/index.dart';
 import '../membership_new/membership.dart';
 
 class Tabs extends StatefulWidget {
@@ -72,16 +75,28 @@ class _TabsState extends State<Tabs> {
   _showMembership() {
     // Navigator.push(
     //   context,
-    //   MaterialPageRoute(
-    //     builder: (context) => NewMembership(cancle: true),
+    //   createRoute(
+    //     NewMembership(cancel: true),
     //   ),
     // );
-    Navigator.push(
-      context,
-      createRoute(
-        NewMembership(cancel: true),
-      ),
-    );
+
+    UserRes? user = navigatorKey.currentContext!.read<UserProvider>().user;
+    closeKeyboard();
+    if (user?.showBlackFriday == true) {
+      Navigator.push(
+        navigatorKey.currentContext!,
+        createRoute(
+          const BlackFridayMembershipIndex(cancel: true),
+        ),
+      );
+    } else {
+      Navigator.push(
+        navigatorKey.currentContext!,
+        createRoute(
+          const NewMembership(cancel: true),
+        ),
+      );
+    }
   }
 
   BottomNavigationBarItem bottomTab({icon, lable}) {

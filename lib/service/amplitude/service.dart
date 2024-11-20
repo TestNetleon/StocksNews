@@ -10,6 +10,7 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 
 import '../../utils/dialogs.dart';
+import '../firebase/service.dart';
 
 class AmplitudeService {
   static final Amplitude _amplitude = Amplitude.getInstance();
@@ -18,6 +19,8 @@ class AmplitudeService {
     ApiKeys.appsFlyerKey,
     ApiKeys.iosAppID,
   );
+
+  static final FirebaseService _firebaseService = FirebaseService();
 
   //INITIALIZE
   static Future<void> initialize() async {
@@ -49,6 +52,15 @@ class AmplitudeService {
               : null,
         );
         _appsFlyerService.appsFlyerLogEvent('First Open',
+            eventProperties: fcmToken != null
+                ? {
+                    'FCM': fcmToken,
+                    "build_version": versionName,
+                    "build_code": buildNumber,
+                  }
+                : null);
+
+        _firebaseService.firebaseLogEvent('First Open',
             eventProperties: fcmToken != null
                 ? {
                     'FCM': fcmToken,
@@ -124,6 +136,13 @@ class AmplitudeService {
         eventProperties: request,
         userId: provider.user?.userId,
       );
+
+      _firebaseService.firebaseLogEvent(
+        isRegistered == 0 ? 'login' : 'sign_up',
+        eventProperties: request,
+        userId: provider.user?.userId,
+      );
+
       logPushNotificationEnabledEvent(
         request,
         provider.user?.userId,

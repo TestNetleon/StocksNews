@@ -12,7 +12,9 @@ import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:provider/provider.dart';
 import '../../../../route/my_app.dart';
+import '../../../../utils/utils.dart';
 import '../../../auth/base/base_auth.dart';
+import '../../../blackFridayMembership/index.dart';
 
 class PopUpMenuButtonCommon extends StatelessWidget {
   final String symbol;
@@ -39,12 +41,28 @@ class PopUpMenuButtonCommon extends StatelessWidget {
         provider.user?.phone != '' &&
         provider.user?.membership?.purchased == 0) {
       // await RevenueCatService.initializeSubscription();
-      Navigator.push(
-        navigatorKey.currentContext!,
-        MaterialPageRoute(
-          builder: (_) => const NewMembership(),
-        ),
-      );
+      // Navigator.push(
+      //   navigatorKey.currentContext!,
+      //   MaterialPageRoute(
+      //     builder: (_) => const NewMembership(),
+      //   ),
+      // );
+      closeKeyboard();
+      if (provider.user?.showBlackFriday == true) {
+        await Navigator.push(
+          navigatorKey.currentContext!,
+          MaterialPageRoute(
+            builder: (context) => const BlackFridayMembershipIndex(),
+          ),
+        );
+      } else {
+        await Navigator.push(
+          navigatorKey.currentContext!,
+          MaterialPageRoute(
+            builder: (context) => const NewMembership(),
+          ),
+        );
+      }
     }
   }
 

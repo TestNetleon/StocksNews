@@ -251,6 +251,7 @@ import '../../../../route/my_app.dart';
 import '../../../../utils/colors.dart';
 import '../../../auth/base/base_auth.dart';
 import '../../../auth/membershipAsk/ask.dart';
+import '../../../blackFridayMembership/index.dart';
 import '../../../membership_new/membership.dart';
 
 class SlidableMenuWidget extends StatefulWidget {
@@ -351,12 +352,28 @@ class _SlidableMenuWidgetState extends State<SlidableMenuWidget>
       await membershipLogin();
     }
     if (provider.user?.phone != null && provider.user?.phone != '') {
-      Navigator.push(
-        navigatorKey.currentContext!,
-        MaterialPageRoute(
-          builder: (_) => const NewMembership(),
-        ),
-      );
+      // Navigator.push(
+      //   navigatorKey.currentContext!,
+      //   MaterialPageRoute(
+      //     builder: (_) => const NewMembership(),
+      //   ),
+      // );
+      closeKeyboard();
+      if (provider.user?.showBlackFriday == true) {
+        await Navigator.push(
+          navigatorKey.currentContext!,
+          MaterialPageRoute(
+            builder: (context) => const BlackFridayMembershipIndex(),
+          ),
+        );
+      } else {
+        await Navigator.push(
+          navigatorKey.currentContext!,
+          MaterialPageRoute(
+            builder: (context) => const NewMembership(),
+          ),
+        );
+      }
     }
   }
 

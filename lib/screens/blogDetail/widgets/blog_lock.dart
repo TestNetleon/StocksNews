@@ -17,9 +17,10 @@ import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/custom/confirmation_point_popup.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/theme_button_small.dart';
-
+import '../../../utils/utils.dart';
 import '../../../widgets/custom/warning_text.dart';
 import '../../auth/base/base_auth.dart';
+import '../../blackFridayMembership/index.dart';
 
 class BlogDetailsLock extends StatefulWidget {
   final String? slug;
@@ -81,12 +82,29 @@ class _BlogDetailsLockState extends State<BlogDetailsLock> {
     }
     if (provider.user?.phone != null && provider.user?.phone != '') {
       // await RevenueCatService.initializeSubscription();
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (_) => const NewMembership(),
-        ),
-      );
+      // Navigator.push(
+      //   context,
+      //   MaterialPageRoute(
+      //     builder: (_) => const NewMembership(),
+      //   ),
+      // );
+      closeKeyboard();
+
+      if (provider.user?.showBlackFriday == true) {
+        Navigator.push(
+          navigatorKey.currentContext!,
+          MaterialPageRoute(
+            builder: (context) => const BlackFridayMembershipIndex(),
+          ),
+        );
+      } else {
+        Navigator.push(
+          navigatorKey.currentContext!,
+          MaterialPageRoute(
+            builder: (context) => const NewMembership(),
+          ),
+        );
+      }
     }
   }
 

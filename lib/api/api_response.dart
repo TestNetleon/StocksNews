@@ -227,6 +227,7 @@ class Extra {
 
   factory Extra.fromJson(Map<String, dynamic> json) => Extra(
         search: json["search"],
+
         showArena: json['show_arena'],
         showTradingSimulator: json['show_trading_simulator'],
         // isRegistered: json['is_registered'],
