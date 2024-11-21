@@ -1522,14 +1522,10 @@ class UserProvider extends ChangeNotifier {
           if (doublePop) {
             Navigator.pop(navigatorKey.currentContext!);
             Navigator.pop(navigatorKey.currentContext!);
-            Utils().showLog('+++++++++Double Pop');
           } else {
             Navigator.pop(navigatorKey.currentContext!);
-            Utils().showLog('+++++++++Single Pop');
           }
-        } else {
-          Utils().showLog('+++++++++Skip Pop true');
-        }
+        } else {}
 
         Preference.setShowIntro(false);
         //--------

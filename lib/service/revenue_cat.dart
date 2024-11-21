@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -25,6 +24,7 @@ class RevenueCatService {
     bool fromMembership = true,
   }) async {
     Utils().showLog("---TYPE $type");
+
     Purchases.setLogLevel(LogLevel.debug);
     RevenueCatKeyRes? keys =
         navigatorKey.currentContext!.read<HomeProvider>().extra?.revenueCatKeys;
@@ -80,6 +80,34 @@ class RevenueCatService {
       Utils().showLog("Error $e");
     }
   }
+
+  // static Future<void> grantPromotionalEntitlement() async {
+  //   UserRes? user = navigatorKey.currentContext!.read<UserProvider>().user;
+  //   final url = Uri.parse(
+  //       'https://api.revenuecat.com/v1/subscribers/${user?.userId}/entitlements/AnnualFreeTrial/promotional');
+  //   final headers = {
+  //     'Authorization': 'Bearer sk_ALAAqntYwixSbHIiCiPXrMXDFSzty',
+  //     'Content-Type': 'application/json',
+  //   };
+  //   final int expirationTimeMs =
+  //       DateTime.now().add(Duration(minutes: 120)).millisecondsSinceEpoch;
+  //   Utils().showLog('Expiration time (ms): $expirationTimeMs');
+  //   final body = jsonEncode({
+  //     "end_time_ms": expirationTimeMs,
+  //   });
+  //   try {
+  //     final response = await http.post(url, headers: headers, body: body);
+  //     Utils().showLog('Status code: ${response.statusCode}');
+  //     if (response.statusCode == 200 || response.statusCode == 201) {
+  //       Utils().showLog('Promotional entitlement granted successfully!');
+  //       Utils().showLog('grant entitlement: ${response.body}');
+  //     } else {
+  //       Utils().showLog('not grant entitlement');
+  //     }
+  //   } catch (e) {
+  //     Utils().showLog('Error granting promotional entitlement: $e');
+  //   }
+  // }
 
   static configureAppsFlyer() async {
     try {

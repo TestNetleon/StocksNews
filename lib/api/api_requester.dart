@@ -48,10 +48,8 @@ Future<ConnectivityResult> _isConnected() async {
   try {
     List<ConnectivityResult> connectivityResults =
         await Connectivity().checkConnectivity();
-    Utils().showLog("${connectivityResults.first}");
     return connectivityResults.first;
   } catch (e) {
-    Utils().showLog("Connectivity Error $e");
     return ConnectivityResult.none;
   }
 }
@@ -270,7 +268,6 @@ Future<ApiResponse> apiRequest({
       navigatorKey.currentContext!.read<HomeProvider>().checkMaintenanceMode();
     }
     Utils().showLog('Catch error =>> ${e.toString()}');
-    Utils().showLog(e.toString());
     if (showProgress) closeGlobalProgressDialog();
     if (!isShowingError && showErrorOnFull) {}
     return ApiResponse(status: false, message: Const.errSomethingWrong);

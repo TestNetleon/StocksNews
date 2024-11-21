@@ -58,24 +58,11 @@ class HomeContainer extends StatelessWidget {
     return Column(
       children: [
         // if (kDebugMode)
-        // Container(
-        //   color: Colors.amber,
-
-        //   width: double.infinity,
-        //   child: Column(
-        //     children: List.generate(
-        //       memPageList.length,
-        //       (index) {
-        //         return Padding(
-        //           padding: const EdgeInsets.all(5),
-        //           child: Text(
-        //               "${memPageList[index]['place']}, ${memPageList[index]['code']}"),
-        //         );
-        //       },
-        //     ),
+        //   ThemeButtonSmall(
+        //     onPressed: () async {
+        //       await RevenueCatService.grantPromotionalEntitlement();
+        //     },
         //   ),
-        // ),
-
         Visibility(
           visible: provider.extra?.phoneCodeError != null &&
               provider.extra?.phoneCodeError != '',
