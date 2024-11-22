@@ -32,10 +32,8 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/database/preference.dart';
 import 'package:stocks_news_new/utils/utils.dart';
-
 import '../modals/featured_watchlist.dart';
 import '../modals/most_purchased.dart';
-import '../service/amplitude/service.dart';
 
 class HomeProvider extends ChangeNotifier {
   // HomeRes? _home;
@@ -214,11 +212,11 @@ class HomeProvider extends ChangeNotifier {
         removeForceLogin: true,
       );
       if (response.status) {
-        AmplitudeService.logAlertUpdateEvent(
-          added: true,
-          symbol: symbol,
-          companyName: companyName,
-        );
+        // AmplitudeService.logAlertUpdateEvent(
+        //   added: true,
+        //   symbol: symbol,
+        //   companyName: companyName,
+        // );
         if (type == "homeTrending") {
           _homeTrendingRes?.trending[index].isAlertAdded = 1;
           notifyListeners();
@@ -276,11 +274,11 @@ class HomeProvider extends ChangeNotifier {
         removeForceLogin: true,
       );
       if (response.status) {
-        AmplitudeService.logWatchlistUpdateEvent(
-          added: true,
-          symbol: symbol,
-          companyName: companyName,
-        );
+        // AmplitudeService.logWatchlistUpdateEvent(
+        //   added: true,
+        //   symbol: symbol,
+        //   companyName: companyName,
+        // );
 
         //
         if (type == "homeTrending") {

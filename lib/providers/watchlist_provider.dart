@@ -11,8 +11,6 @@ import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 
-import '../service/amplitude/service.dart';
-
 class WatchlistProvider extends ChangeNotifier {
   WatchlistRes? _data;
   String? _error;
@@ -137,11 +135,11 @@ class WatchlistProvider extends ChangeNotifier {
             .setTotalsWatchList(response.data['total_watchlist']);
         // showErrorMessage(message: response.message, type: SnackbarType.info);
 
-        AmplitudeService.logWatchlistUpdateEvent(
-          added: false,
-          symbol: symbol,
-          companyName: companyName,
-        );
+        // AmplitudeService.logWatchlistUpdateEvent(
+        //   added: false,
+        //   symbol: symbol,
+        //   companyName: companyName,
+        // );
       } else {
         // showErrorMessage(message: response.message);
       }

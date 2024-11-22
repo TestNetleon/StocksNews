@@ -309,15 +309,6 @@ Future _checkLogin() async {
 }
 
 void _handleSessionOut() {
-  // Handle session timeout, e.g., by calling logout() or refreshing tokens
-  // Preference.logout();
-  // Navigator.popUntil(navigatorKey.currentContext!, (route) => route.isFirst);
-  // Navigator.pushReplacement(
-  //   navigatorKey.currentContext!,
-  //   MaterialPageRoute(builder: (_) => const Tabs()),
-  // );
-  // DatabaseHelper helper = DatabaseHelper();
-  // helper.resetVisibilityCount();
   navigatorKey.currentContext!.read<UserProvider>().clearUser();
 }
 

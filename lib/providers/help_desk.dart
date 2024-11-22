@@ -8,7 +8,6 @@ import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/help_desk_res.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
-import 'package:stocks_news_new/service/amplitude/service.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
@@ -151,10 +150,10 @@ class NewHelpDeskProvider extends ChangeNotifier {
         } else {
           //
         }
-        AmplitudeService.logUserInteractionEvent(
-          type: 'Support Ticket Created',
-          selfText: 'Support ticket #$ticketNo created by user for assistance.',
-        );
+        // AmplitudeService.logUserInteractionEvent(
+        //   type: 'Support Ticket Created',
+        //   selfText: 'Support ticket #$ticketNo created by user for assistance.',
+        // );
         return ApiResponse(status: true);
       } else {
         return ApiResponse(status: false);

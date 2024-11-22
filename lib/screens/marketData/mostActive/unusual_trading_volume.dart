@@ -19,8 +19,6 @@ import 'package:stocks_news_new/utils/bottom_sheets.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/widgets/market_data_header.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
-
-import '../../../service/amplitude/service.dart';
 import '../../../utils/constants.dart';
 import '../../../widgets/base_ui_container.dart';
 import '../../../widgets/refresh_controll.dart';
@@ -37,7 +35,7 @@ class _UnusualTradingVolumeState extends State<UnusualTradingVolume> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      AmplitudeService.logUserInteractionEvent(type: 'Unusual Trading Volume');
+      // AmplitudeService.logUserInteractionEvent(type: 'Unusual Trading Volume');
 
       UnusualTradingVolumeProvider provider =
           context.read<UnusualTradingVolumeProvider>();

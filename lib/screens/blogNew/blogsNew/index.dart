@@ -11,8 +11,6 @@ import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/custom_tab_container.dart';
 
-import '../../../service/amplitude/service.dart';
-
 class BlogIndexNew extends StatefulWidget {
   static const path = "BlogIndexNew";
   final String? inAppMsgId;
@@ -28,7 +26,7 @@ class _BlogIndexNewState extends State<BlogIndexNew> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      AmplitudeService.logUserInteractionEvent(type: 'Blogs');
+      // AmplitudeService.logUserInteractionEvent(type: 'Blogs');
 
       context.read<BlogProviderNew>().getTabsData();
     });

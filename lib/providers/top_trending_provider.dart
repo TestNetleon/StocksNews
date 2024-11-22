@@ -13,8 +13,6 @@ import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/utils/utils.dart';
-
-import '../service/amplitude/service.dart';
 import 'home_provider.dart';
 
 class TopTrendingProvider extends ChangeNotifier {
@@ -104,11 +102,11 @@ class TopTrendingProvider extends ChangeNotifier {
         removeForceLogin: true,
       );
       if (response.status) {
-        AmplitudeService.logAlertUpdateEvent(
-          added: true,
-          symbol: symbol,
-          companyName: companyName,
-        );
+        // AmplitudeService.logAlertUpdateEvent(
+        //   added: true,
+        //   symbol: symbol,
+        //   companyName: companyName,
+        // );
         if (_selectedIndex == 0 || _selectedIndex == 1) {
           data?[index].isAlertAdded = 1;
         } else if (_selectedIndex == 2) {
@@ -164,16 +162,14 @@ class TopTrendingProvider extends ChangeNotifier {
         removeForceLogin: true,
       );
       if (response.status) {
-        AmplitudeService.logWatchlistUpdateEvent(
-          added: true,
-          symbol: symbol,
-          companyName: companyName,
-        );
+        // AmplitudeService.logWatchlistUpdateEvent(
+        //   added: true,
+        //   symbol: symbol,
+        //   companyName: companyName,
+        // );
         if (_selectedIndex == 0 || _selectedIndex == 1) {
-          Utils().showLog("Helllooooo");
           data?[index].isWatchlistAdded = 1;
         } else if (_selectedIndex == 2) {
-          Utils().showLog("HIIIIIIi");
           _capData?.where((element) {
             Utils().showLog(
                 "----API${element.symbol == symbol}, ${element.isWatchlistAdded == 0}");

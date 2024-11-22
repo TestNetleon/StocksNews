@@ -15,8 +15,6 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 
-import '../service/amplitude/service.dart';
-
 class TodayTopGainerProvider extends ChangeNotifier {
   GainersLosersRes? _data;
   GainersLosersRes? get data => _data;
@@ -69,11 +67,11 @@ class TodayTopGainerProvider extends ChangeNotifier {
       );
 
       if (response.status) {
-        AmplitudeService.logAlertUpdateEvent(
-          added: true,
-          symbol: symbol,
-          companyName: companyName,
-        );
+        // AmplitudeService.logAlertUpdateEvent(
+        //   added: true,
+        //   symbol: symbol,
+        //   companyName: companyName,
+        // );
         _data?.data?[index].isAlertAdded = 1;
         notifyListeners();
 
@@ -122,11 +120,11 @@ class TodayTopGainerProvider extends ChangeNotifier {
         removeForceLogin: true,
       );
       if (response.status) {
-        AmplitudeService.logWatchlistUpdateEvent(
-          added: true,
-          symbol: symbol,
-          companyName: companyName,
-        );
+        // AmplitudeService.logWatchlistUpdateEvent(
+        //   added: true,
+        //   symbol: symbol,
+        //   companyName: companyName,
+        // );
         //
         _data?.data?[index].isWatchlistAdded = 1;
         notifyListeners();

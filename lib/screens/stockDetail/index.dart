@@ -12,7 +12,6 @@ import 'package:stocks_news_new/screens/stockDetail/stockDetailTabs/overview/sd_
 import 'package:stocks_news_new/screens/stockDetail/stockDetailTabs/ownership/ownership.dart';
 import 'package:stocks_news_new/screens/stockDetail/stockDetailTabs/secFiling/sd_sec_filing.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
-import 'package:stocks_news_new/service/amplitude/service.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
@@ -67,7 +66,7 @@ class _StockDetailState extends State<StockDetail> {
   }
 
   _callApi() {
-    AmplitudeService.logUserInteractionEvent(type: 'Stock Detail');
+    // AmplitudeService.logUserInteractionEvent(type: 'Stock Detail');
 
     context.read<StockDetailProviderNew>().getTabData(symbol: widget.symbol);
 

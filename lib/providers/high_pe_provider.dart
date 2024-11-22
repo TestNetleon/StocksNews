@@ -14,7 +14,6 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import '../modals/highlow_pe_res.dart';
-import '../service/amplitude/service.dart';
 
 class HighPeProvider extends ChangeNotifier {
   List<HIghLowPeRes>? _data;
@@ -67,11 +66,11 @@ class HighPeProvider extends ChangeNotifier {
         removeForceLogin: true,
       );
       if (response.status) {
-        AmplitudeService.logAlertUpdateEvent(
-          added: true,
-          symbol: symbol,
-          companyName: companyName,
-        );
+        // AmplitudeService.logAlertUpdateEvent(
+        //   added: true,
+        //   symbol: symbol,
+        //   companyName: companyName,
+        // );
         _data?[index].isAlertAdded = 1;
         notifyListeners();
 
@@ -122,11 +121,11 @@ class HighPeProvider extends ChangeNotifier {
         //
         _data?[index].isWatchlistAdded = 1;
         notifyListeners();
-        AmplitudeService.logWatchlistUpdateEvent(
-          added: true,
-          symbol: symbol,
-          companyName: companyName,
-        );
+        // AmplitudeService.logWatchlistUpdateEvent(
+        //   added: true,
+        //   symbol: symbol,
+        //   companyName: companyName,
+        // );
 
         // _homeTrendingRes?.trending[index].isWatchlistAdded = 1;
 

@@ -19,7 +19,6 @@ import 'package:stocks_news_new/widgets/screen_title.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:url_launcher/url_launcher.dart';
-import '../../../../service/amplitude/service.dart';
 import '../../../../widgets/custom/update_error.dart';
 import '../../../../widgets/disclaimer_widget.dart';
 import '../../../../widgets/theme_button_small.dart';
@@ -55,10 +54,10 @@ class _NewsDetailsBodyAIState extends State<NewsDetailsBodyAI> {
       showProgress: false,
       slug: widget.slug,
     );
-    AmplitudeService.logUserInteractionEvent(
-      type: 'News Detail',
-      selfText: newsProvider.detail?.postDetail?.title ?? "",
-    );
+    // AmplitudeService.logUserInteractionEvent(
+    //   type: 'News Detail',
+    //   selfText: newsProvider.detail?.postDetail?.title ?? "",
+    // );
   }
 
   @override
