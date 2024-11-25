@@ -729,13 +729,10 @@ class _StockDetailAnalystDataState extends State<StockDetailAnalystData> {
                                             borderRadius:
                                                 BorderRadius.circular(8),
                                             color: healthLabel == "Weak"
-                                                ? const Color.fromARGB(
-                                                    255, 244, 67, 54)
+                                                ? const Color(0xFFF44336)
                                                 : healthLabel == "Moderate"
-                                                    ? const Color.fromARGB(
-                                                        255, 253, 239, 45)
-                                                    : const Color.fromARGB(
-                                                        255, 43, 255, 117),
+                                                    ? const Color(0xFFFDEF2D)
+                                                    : const Color(0xFF2BFF75),
                                           ),
                                           child: Center(
                                             child: Text(

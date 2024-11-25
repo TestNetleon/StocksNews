@@ -14,8 +14,6 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 
-import '../service/amplitude/service.dart';
-
 class CongressionalDetailProvider extends ChangeNotifier {
   CongressMemberRes? _data;
   CongressMemberRes? get data => _data;
@@ -125,11 +123,11 @@ class CongressionalDetailProvider extends ChangeNotifier {
       if (response.status) {
         //
         data?.tradeLists[index].isWatchlistAdded = 1;
-        AmplitudeService.logWatchlistUpdateEvent(
-          added: true,
-          symbol: symbol,
-          companyName: companyName,
-        );
+        // AmplitudeService.logWatchlistUpdateEvent(
+        //   added: true,
+        //   symbol: symbol,
+        //   companyName: companyName,
+        // );
         notifyListeners();
 
         // _homeTrendingRes?.trending[index].isWatchlistAdded = 1;

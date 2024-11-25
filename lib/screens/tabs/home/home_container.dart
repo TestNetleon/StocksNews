@@ -59,8 +59,13 @@ class HomeContainer extends StatelessWidget {
       children: [
         // if (kDebugMode)
         //   ThemeButtonSmall(
-        //     onPressed: () async {
-        //       await RevenueCatService.grantPromotionalEntitlement();
+        //     onPressed: () {
+        //       Navigator.push(
+        //         context,
+        //         createRoute(
+        //           FeedbackForm(),
+        //         ),
+        //       );
         //     },
         //   ),
         Visibility(

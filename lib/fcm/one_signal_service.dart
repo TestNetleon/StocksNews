@@ -232,13 +232,6 @@ class OneSignalService {
 
     OneSignal.User.pushSubscription.addObserver((state) async {
       fcmTokenGlobal = state.current.id;
-      // fcmTokenGlobal = OneSignal.User.pushSubscription.id;
-
-      // Utils().showLog('Fcm token global $fcmTokenGlobal');
-      // Utils().showLog(
-      //     'observer current ${state.current.id}, ${state.current.token}');
-      // Utils().showLog(
-      //     'observer previous ${state.previous.id}, ${state.previous.token}');
 
       String? address = await _getUserLocation();
       Utils().showLog('FCM Token After $fcmTokenGlobal');
