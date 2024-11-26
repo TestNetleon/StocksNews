@@ -62,8 +62,8 @@ class _LoginFirstState extends State<LoginFirst> {
   bool verifying = false;
   String? _verificationId;
   final GoogleSignIn _googleSignIn = GoogleSignIn();
-  bool changed = false;
   bool isChecked = false;
+  bool useCheckboxCondition = true;
   @override
   void initState() {
     super.initState();
@@ -87,6 +87,10 @@ class _LoginFirstState extends State<LoginFirst> {
     } else {
       countryCode = CountryCode.fromCountryCode("US").dialCode;
     }
+
+    //CHECKBOX Condition
+    UserProvider provider = context.read<UserProvider>();
+    useCheckboxCondition = provider.advertiserRes != null;
     setState(() {});
   }
 
@@ -101,7 +105,7 @@ class _LoginFirstState extends State<LoginFirst> {
 //ON LOGIN
   void _onLoginClick() async {
     closeKeyboard();
-    if (!isChecked) {
+    if (!isChecked && useCheckboxCondition) {
       return popUpAlert(
         message:
             "To proceed, please confirm your agreement with the terms and conditions by checking the box.",
@@ -619,10 +623,13 @@ class _LoginFirstState extends State<LoginFirst> {
                   ),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.all(Dimen.authScreenPadding),
-                child: NewAgreeConditions(
-                  text: provider.homeTrendingRes?.loginAgree,
+              Visibility(
+                visible: !useCheckboxCondition,
+                child: Padding(
+                  padding: const EdgeInsets.all(Dimen.authScreenPadding),
+                  child: NewAgreeConditions(
+                    text: provider.homeTrendingRes?.loginAgree,
+                  ),
                 ),
               ),
             ],

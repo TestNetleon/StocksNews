@@ -40,6 +40,7 @@ class _BaseAuthState extends State<BaseAuth> {
   bool isLoading = false;
   bool changed = false;
   bool isChecked = false;
+  bool useCheckboxCondition = true;
   TextEditingController phone = TextEditingController();
   @override
   void initState() {
@@ -205,6 +206,10 @@ class _BaseAuthState extends State<BaseAuth> {
     } else {
       countryCode = CountryCode.fromCountryCode("US").dialCode;
     }
+
+    //CHECKBOX Condition
+    UserProvider provider = context.read<UserProvider>();
+    useCheckboxCondition = provider.advertiserRes != null;
     setState(() {});
   }
 
@@ -219,7 +224,7 @@ class _BaseAuthState extends State<BaseAuth> {
     UserProvider provider = context.read<UserProvider>();
 
     closeKeyboard();
-    if (!isChecked && provider.user == null) {
+    if (!isChecked && useCheckboxCondition) {
       return popUpAlert(
         message:
             "To proceed, please confirm your agreement with the terms and conditions by checking the box.",
@@ -383,7 +388,7 @@ class _BaseAuthState extends State<BaseAuth> {
               ),
             ),
             Visibility(
-              visible: userProvider.user == null,
+              visible: useCheckboxCondition,
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -401,28 +406,25 @@ class _BaseAuthState extends State<BaseAuth> {
                 ],
               ),
             ),
-            // provider.extra?.updateYourPhone?.agreeText != null &&
-            //         provider.extra?.updateYourPhone?.agreeText != '' &&
-            //         userProvider.user != null
-            //     ? Padding(
-            //         padding: const EdgeInsets.symmetric(vertical: 10),
-            //         child: NewAgreeConditions(
-            //           fontSize: 13,
-            //           text: provider.extra?.updateYourPhone?.agreeText,
-            //         ),
-            //       )
-            //     :
-
-            SpacerVertical(height: 10),
+            useCheckboxCondition
+                ? SpacerVertical(height: 10)
+                : Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    child: NewAgreeConditions(
+                      fontSize: 13,
+                      text: provider.extra?.updateYourPhone?.agreeText,
+                    ),
+                  ),
             _button(
-                text: isLoading
-                    ? provider.extra?.updateYourPhone?.verifyButton ??
-                        'Verifying your phone number...'
-                    : provider.extra?.updateYourPhone?.updateButton ??
-                        'Update my phone number',
-                onTap: isLoading ? null : _gotoVerify,
-                color: const Color.fromARGB(255, 194, 216, 51),
-                textColor: ThemeColors.background),
+              text: isLoading
+                  ? provider.extra?.updateYourPhone?.verifyButton ??
+                      'Verifying your phone number...'
+                  : provider.extra?.updateYourPhone?.updateButton ??
+                      'Update my phone number',
+              onTap: isLoading ? null : _gotoVerify,
+              color: const Color.fromARGB(255, 194, 216, 51),
+              textColor: ThemeColors.background,
+            ),
           ],
         ),
       ),

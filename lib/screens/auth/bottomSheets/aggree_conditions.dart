@@ -113,74 +113,74 @@ class NewAgreeConditions extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (text == null || text == '') {
-      return RichText(
-        textAlign: TextAlign.center,
-        text: TextSpan(
-          text: 'By logging in or signing up you agree to our ',
-          style: stylePTSansRegular(
-            height: 1.4,
-            fontSize: 13,
-          ),
-          children: [
-            TextSpan(
-              recognizer: TapGestureRecognizer()
-                ..onTap = () {
-                  Navigator.push(
-                    context,
-                    createRoute(
-                      const TCandPolicy(
-                        policyType: PolicyType.tC,
-                        slug: "terms-of-service",
-                      ),
-                    ),
-                  );
-                },
-              text: 'terms of service',
-              style: stylePTSansRegular(
-                color: ThemeColors.accent,
-                height: 1.4,
-                fontSize: 13,
-              ),
-            ),
-            TextSpan(
-              text: ' and ',
-              style: stylePTSansRegular(
-                height: 1.4,
-                fontSize: 13,
-              ),
-            ),
-            TextSpan(
-              recognizer: TapGestureRecognizer()
-                ..onTap = () {
-                  Navigator.push(
-                    context,
-                    createRoute(
-                      const TCandPolicy(
-                        policyType: PolicyType.privacy,
-                        slug: "privacy-policy",
-                      ),
-                    ),
-                  );
-                },
-              text: 'privacy policy',
-              style: stylePTSansRegular(
-                color: ThemeColors.accent,
-                height: 1.4,
-                fontSize: 13,
-              ),
-            ),
-            TextSpan(
-              text: '.',
-              style: stylePTSansRegular(
-                height: 1.4,
-                fontSize: 13,
-              ),
-            ),
-          ],
-        ),
-      );
-    }
+    // if (text == null || text == '') {
+    //   return RichText(
+    //     textAlign: TextAlign.center,
+    //     text: TextSpan(
+    //       text: 'By logging in or signing up you agree to our ',
+    //       style: stylePTSansRegular(
+    //         height: 1.4,
+    //         fontSize: 13,
+    //       ),
+    //       children: [
+    //         TextSpan(
+    //           recognizer: TapGestureRecognizer()
+    //             ..onTap = () {
+    //               Navigator.push(
+    //                 context,
+    //                 createRoute(
+    //                   const TCandPolicy(
+    //                     policyType: PolicyType.tC,
+    //                     slug: "terms-of-service",
+    //                   ),
+    //                 ),
+    //               );
+    //             },
+    //           text: 'terms of service',
+    //           style: stylePTSansRegular(
+    //             color: ThemeColors.accent,
+    //             height: 1.4,
+    //             fontSize: 13,
+    //           ),
+    //         ),
+    //         TextSpan(
+    //           text: ' and ',
+    //           style: stylePTSansRegular(
+    //             height: 1.4,
+    //             fontSize: 13,
+    //           ),
+    //         ),
+    //         TextSpan(
+    //           recognizer: TapGestureRecognizer()
+    //             ..onTap = () {
+    //               Navigator.push(
+    //                 context,
+    //                 createRoute(
+    //                   const TCandPolicy(
+    //                     policyType: PolicyType.privacy,
+    //                     slug: "privacy-policy",
+    //                   ),
+    //                 ),
+    //               );
+    //             },
+    //           text: 'privacy policy',
+    //           style: stylePTSansRegular(
+    //             color: ThemeColors.accent,
+    //             height: 1.4,
+    //             fontSize: 13,
+    //           ),
+    //         ),
+    //         TextSpan(
+    //           text: '.',
+    //           style: stylePTSansRegular(
+    //             height: 1.4,
+    //             fontSize: 13,
+    //           ),
+    //         ),
+    //       ],
+    //     ),
+    //   );
+    // }
 
     return HtmlWidget(
       customStylesBuilder: (element) {
