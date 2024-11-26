@@ -33,7 +33,6 @@ class _ContactUsBaseState extends State<ContactUsBase> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       context.read<TermsAndPolicyProvider>().getTermsPolicy(
-            type: PolicyType.contactUs,
             slug: "contact-us",
           );
     });

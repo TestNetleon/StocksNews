@@ -137,9 +137,15 @@ Future<ApiResponse> apiRequest({
       var streamedResponse = await request.send();
       response = await http.Response.fromStream(streamedResponse);
     } else {
-      response = await http
-          .post(Uri.parse(baseUrl + url), body: request, headers: headers)
-          .timeout(timeoutDuration);
+      if (type == RequestType.post) {
+        response = await http
+            .post(Uri.parse(baseUrl + url), body: request, headers: headers)
+            .timeout(timeoutDuration);
+      } else {
+        response = await http
+            .get(Uri.parse(baseUrl + url), headers: headers)
+            .timeout(timeoutDuration);
+      }
     }
 
     Utils().showLog("RESPONSE  =  ${response.body}");

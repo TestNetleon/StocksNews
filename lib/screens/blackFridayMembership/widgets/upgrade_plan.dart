@@ -347,13 +347,15 @@ class _BlackFridayUpgradeCurrentPlanState
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text(
-                                plan?.price ?? "",
-                                style: const TextStyle(
-                                  fontFamily: 'Roboto',
-                                  fontSize: 30,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
+                              Flexible(
+                                child: Text(
+                                  plan?.price ?? "",
+                                  style: const TextStyle(
+                                    fontFamily: 'Roboto',
+                                    fontSize: 30,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
                               ),
                               Container(

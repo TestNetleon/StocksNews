@@ -63,7 +63,7 @@ class _LoginFirstState extends State<LoginFirst> {
   String? _verificationId;
   final GoogleSignIn _googleSignIn = GoogleSignIn();
   bool changed = false;
-
+  bool isChecked = false;
   @override
   void initState() {
     super.initState();
@@ -101,8 +101,14 @@ class _LoginFirstState extends State<LoginFirst> {
 //ON LOGIN
   void _onLoginClick() async {
     closeKeyboard();
-
-    if (isEmpty(_controller.text)) {
+    if (!isChecked) {
+      return popUpAlert(
+        message:
+            "To proceed, please confirm your agreement with the terms and conditions by checking the box.",
+        title: "Alert",
+        icon: Images.alertPopGIF,
+      );
+    } else if (isEmpty(_controller.text)) {
       popUpAlert(
         icon: Images.alertPopGIF,
         title: 'Alert',
@@ -340,8 +346,8 @@ class _LoginFirstState extends State<LoginFirst> {
         constraints: BoxConstraints(maxHeight: ScreenUtil().screenHeight - 30),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(10.sp),
-            topRight: Radius.circular(10.sp),
+            topLeft: Radius.circular(10),
+            topRight: Radius.circular(10),
           ),
           gradient: const LinearGradient(
             begin: Alignment.topCenter,
@@ -361,7 +367,7 @@ class _LoginFirstState extends State<LoginFirst> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-                margin: EdgeInsets.only(left: 12, top: 12),
+                margin: EdgeInsets.only(left: 5, top: 5),
                 child: IconButton(
                   onPressed: () {
                     Navigator.pop(context);
@@ -375,7 +381,7 @@ class _LoginFirstState extends State<LoginFirst> {
               ),
               Expanded(
                 child: Padding(
-                  padding: const EdgeInsets.all(Dimen.authScreenPadding),
+                  padding: const EdgeInsets.all(Dimen.padding),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -465,6 +471,26 @@ class _LoginFirstState extends State<LoginFirst> {
                           ),
                         ),
                       ),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Checkbox(
+                            side: BorderSide(color: Colors.white),
+                            value: isChecked,
+                            onChanged: (value) {
+                              setState(() {
+                                isChecked = value!;
+                              });
+                            },
+                            activeColor: ThemeColors.accent,
+                          ),
+                          Expanded(
+                              child: LoginSignupID(
+                            defaultLength: 280,
+                          )),
+                        ],
+                      ),
+
                       const SpacerVertical(height: Dimen.itemSpacing),
                       ThemeButton(
                         text: verifying

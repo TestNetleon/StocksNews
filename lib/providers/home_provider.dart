@@ -358,7 +358,11 @@ class HomeProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future getHomeSlider({showProgress = false, String? addId}) async {
+  Future getHomeSlider({
+    showProgress = false,
+    String? addId,
+    bool sendPublisher = false,
+  }) async {
     _statusSlider = Status.loading;
     notifyListeners();
     UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
@@ -376,6 +380,13 @@ class HomeProvider extends ChangeNotifier {
       if (memCODE != null && memCODE != '') {
         request['distributor_code'] = memCODE;
       }
+
+      if (provider.advertiserRes?.id != null &&
+          provider.advertiserRes?.id != '' &&
+          sendPublisher) {
+        request['publisher_id'] = provider.advertiserRes?.id;
+      }
+
       if (addId != null) {
         request.addAll({"ad_id": addId});
       }

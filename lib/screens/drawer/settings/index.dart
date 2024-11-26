@@ -1,5 +1,5 @@
+import 'package:app_settings/app_settings.dart';
 import 'package:flutter/material.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/utils/colors.dart';
@@ -168,7 +168,8 @@ class _NotificationSettingState extends State<NotificationSetting>
                   "${navigatorKey.currentContext!.watch<HomeProvider>().extra?.notifyTextMsg}",
               displayDuration: Duration(minutes: 1),
               onTap: () async {
-                await openAppSettings();
+                // await openAppSettings();
+                AppSettings.openAppSettings(type: AppSettingsType.notification);
               },
             ),
         ],

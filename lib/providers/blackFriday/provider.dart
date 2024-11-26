@@ -118,8 +118,25 @@ class BlackFridayProvider extends ChangeNotifier {
                 .getOffering(_membershipInfoRes?.plans?[i].type ?? 'access');
 
             if (offering != null) {
-              _membershipInfoRes?.plans?[i].price =
-                  offering.availablePackages.first.storeProduct.priceString;
+              var availablePackage = offering.availablePackages.first;
+              var priceString = availablePackage.storeProduct.priceString;
+
+              var introductoryPrice =
+                  availablePackage.storeProduct.introductoryPrice;
+
+              // var purchaserInfo = await Purchases.getCustomerInfo();
+              // bool isEligibleForIntroOffer = _isEligibleForIntroductoryPrice(
+              //     purchaserInfo, _membershipInfoRes?.plans?[i].type ?? '');
+
+              //use if wanna check eligibility && isEligibleForIntroOffer
+              if (introductoryPrice != null) {
+                priceString = introductoryPrice.priceString;
+              } else {
+                priceString =
+                    offering.availablePackages.first.storeProduct.priceString;
+              }
+
+              _membershipInfoRes?.plans?[i].price = priceString;
             } else {
               Utils().showLog("offering null");
             }
@@ -127,7 +144,6 @@ class BlackFridayProvider extends ChangeNotifier {
         } catch (e) {
           Utils().showLog("EXCEPTION $e");
         }
-
         _extra = (response.extra is Extra ? response.extra as Extra : null);
       } else {
         _membershipInfoRes = null;
@@ -143,4 +159,10 @@ class BlackFridayProvider extends ChangeNotifier {
       setStatus(Status.loaded);
     }
   }
+}
+
+bool _isEligibleForIntroductoryPrice(CustomerInfo purchaserInfo, String type) {
+  bool isNewUser = !purchaserInfo.entitlements.all.containsKey(type);
+
+  return isNewUser;
 }
