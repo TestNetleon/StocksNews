@@ -11,9 +11,9 @@ import 'package:stocks_news_new/screens/tabs/tabs.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
+import '../../api/api_response.dart';
 import '../../database/preference.dart';
-import '../../modals/user_res.dart';
-import '../../providers/user_provider.dart';
+import '../../providers/home_provider.dart';
 import '../auth/base/base_auth.dart';
 import '../auth/refer/refer_code.dart';
 import '../blackFridayMembership/index.dart';
@@ -250,9 +250,10 @@ class _HomeSplashState extends State<HomeSplash> {
         //   ),
         // );
         closeKeyboard();
-        UserRes? userRes =
-            navigatorKey.currentContext!.read<UserProvider>().user;
-        if (userRes?.showBlackFriday == true) {
+
+        Extra? extra = navigatorKey.currentContext!.read<HomeProvider>().extra;
+
+        if (extra?.showBlackFriday == true) {
           Navigator.push(
             navigatorKey.currentContext!,
             MaterialPageRoute(

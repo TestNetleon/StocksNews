@@ -34,7 +34,7 @@ class _LogoutPopUpCustomState extends State<LogoutPopUpCustom> {
   Widget build(BuildContext context) {
     UserRes? user = context.watch<UserProvider>().user;
     return Dialog(
-      insetPadding: EdgeInsets.symmetric(horizontal: 15),
+      insetPadding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
       backgroundColor: ThemeColors.transparent,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
@@ -51,139 +51,94 @@ class _LogoutPopUpCustomState extends State<LogoutPopUpCustom> {
               ),
               child: Padding(
                 padding: EdgeInsets.fromLTRB(10.sp, 0, 10.sp, 0),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Image.asset(
-                      Images.alertPopGIF,
-                      height: 80.sp,
-                      width: 80.sp,
-                    ),
-                    Text(
-                      user?.blackFriday?.title ?? "Black Friday Special!",
-                      style: stylePTSansBold(
-                        color: ThemeColors.background,
-                        fontSize: 20,
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Image.asset(
+                        Images.alertPopGIF,
+                        height: 80.sp,
+                        width: 80.sp,
                       ),
-                    ),
-                    const SpacerVertical(height: 8),
-                    // RichText(
-                    //   textAlign: TextAlign.center,
-                    //   text: TextSpan(
-                    //     style:
-                    //         stylePTSansRegular(color: ThemeColors.background),
-                    //     children: [
-                    //       TextSpan(
-                    //         text:
-                    //             "You're currently using an active membership. ",
-                    //       ),
-                    //       TextSpan(
-                    //         text:
-                    //             "This Black Friday, we're offering incredible discounts:\n\n",
-                    //       ),
-                    //       TextSpan(
-                    //         text: "- Monthly Special: ",
-                    //         style:
-                    //             stylePTSansBold(color: ThemeColors.background),
-                    //       ),
-                    //       TextSpan(
-                    //         text: "90% off for the first month.\n",
-                    //       ),
-                    //       TextSpan(
-                    //         text: "- Annual Special: ",
-                    //         style:
-                    //             stylePTSansBold(color: ThemeColors.background),
-                    //       ),
-                    //       TextSpan(
-                    //         text: "50% off for the first year.\n\n",
-                    //       ),
-                    //       TextSpan(
-                    //         text:
-                    //             "If you'd like to purchase these offers, we recommend first canceling your current membership. ",
-                    //       ),
-                    //       TextSpan(
-                    //         text:
-                    //             "Your existing plan will remain active until its expiration date.\n\n",
-                    //       ),
-                    //       TextSpan(
-                    //         text:
-                    //             "Alternatively, you can proceed directly with the Black Friday offers by checking the box below.",
-                    //       ),
-                    //     ],
-                    //   ),
-                    // ),
-
-                    HtmlWidget(
-                      user?.blackFriday?.html ?? '',
-                    ),
-
-                    const SpacerVertical(height: 5),
-                    GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          isChecked = !isChecked;
-                        });
-                      },
-                      child: Row(
+                      Text(
+                        user?.blackFriday?.title ?? "Black Friday Special!",
+                        style: stylePTSansBold(
+                          color: ThemeColors.background,
+                          fontSize: 20,
+                        ),
+                      ),
+                      const SpacerVertical(height: 8),
+                      HtmlWidget(
+                        user?.blackFriday?.html ?? '',
+                      ),
+                      const SpacerVertical(height: 5),
+                      GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            isChecked = !isChecked;
+                          });
+                        },
+                        child: Row(
+                          children: [
+                            Checkbox(
+                              value: isChecked,
+                              onChanged: (value) {
+                                setState(() {
+                                  isChecked = value!;
+                                });
+                              },
+                              activeColor: ThemeColors.accent,
+                            ),
+                            Expanded(
+                              child: Text(
+                                user?.blackFriday?.checkbox ??
+                                    "I understand and wish to proceed with the Black Friday plan.",
+                                style: stylePTSansRegular(
+                                    color: ThemeColors.background),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          Checkbox(
-                            value: isChecked,
-                            onChanged: (value) {
-                              setState(() {
-                                isChecked = value!;
-                              });
+                          TextButton(
+                            onPressed: () {
+                              Navigator.of(context).pop();
                             },
-                            activeColor: ThemeColors.accent,
-                          ),
-                          Expanded(
                             child: Text(
-                              user?.blackFriday?.checkbox ??
-                                  "I understand and wish to proceed with the Black Friday plan.",
-                              style: stylePTSansRegular(
+                              user?.blackFriday?.noBtn ?? 'Cancel',
+                              style: stylePTSansBold(
                                   color: ThemeColors.background),
+                            ),
+                          ),
+                          TextButton(
+                            onPressed: isChecked
+                                ? () async {
+                                    Navigator.pop(context);
+
+                                    Navigator.push(
+                                      navigatorKey.currentContext!,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            const BlackFridayMembershipIndex(),
+                                      ),
+                                    );
+                                  }
+                                : null,
+                            child: Text(
+                              user?.blackFriday?.yesBtn ?? "Goto Membership",
+                              style: stylePTSansBold(
+                                  color: isChecked
+                                      ? ThemeColors.background
+                                      : ThemeColors.greyText),
                             ),
                           ),
                         ],
                       ),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        TextButton(
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                          },
-                          child: Text(
-                            user?.blackFriday?.noBtn ?? 'Cancel',
-                            style:
-                                stylePTSansBold(color: ThemeColors.background),
-                          ),
-                        ),
-                        TextButton(
-                          onPressed: isChecked
-                              ? () async {
-                                  Navigator.pop(context);
-
-                                  Navigator.push(
-                                    navigatorKey.currentContext!,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          const BlackFridayMembershipIndex(),
-                                    ),
-                                  );
-                                }
-                              : null,
-                          child: Text(
-                            user?.blackFriday?.yesBtn ?? "Goto Membership",
-                            style: stylePTSansBold(
-                                color: isChecked
-                                    ? ThemeColors.background
-                                    : ThemeColors.greyText),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),

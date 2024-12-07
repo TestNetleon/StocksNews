@@ -202,9 +202,9 @@
 //   }
 // }
 
+import 'package:app_settings/app_settings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
@@ -391,7 +391,8 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
               bottomPosition: _snackbarBottomPosition,
               displayDuration: Duration(minutes: 1),
               onTap: () async {
-                await openAppSettings();
+                // await openAppSettings();
+                AppSettings.openAppSettings(type: AppSettingsType.notification);
               },
             ),
         ],

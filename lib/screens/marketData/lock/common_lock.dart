@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/screens/membership_new/membership.dart';
+import '../../../api/api_response.dart';
+import '../../../providers/home_provider.dart';
 import '../../../providers/user_provider.dart';
 import '../../../route/my_app.dart';
 import '../../../utils/colors.dart';
@@ -51,8 +53,10 @@ class CommonLock extends StatelessWidget {
           // );
 
           closeKeyboard();
+          Extra? extra =
+              navigatorKey.currentContext!.read<HomeProvider>().extra;
 
-          if (provider.user?.showBlackFriday == true) {
+          if (extra?.showBlackFriday == true) {
             await Navigator.push(
               navigatorKey.currentContext!,
               MaterialPageRoute(

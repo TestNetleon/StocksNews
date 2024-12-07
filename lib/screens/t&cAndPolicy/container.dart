@@ -48,9 +48,7 @@ class _TermsPolicyContainerState extends State<TermsPolicyContainer> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      context
-          .read<TermsAndPolicyProvider>()
-          .getTermsPolicy(type: widget.policyType, slug: widget.slug);
+      context.read<TermsAndPolicyProvider>().getTermsPolicy(slug: widget.slug);
       _triggerEvents();
     });
   }
@@ -151,7 +149,6 @@ class _TermsPolicyContainerState extends State<TermsPolicyContainer> {
     return Expanded(
       child: CommonRefreshIndicator(
         onRefresh: () => provider.getTermsPolicy(
-          type: widget.policyType,
           slug: widget.slug,
         ),
         child: provider.isLoading
@@ -208,8 +205,7 @@ class _TermsPolicyContainerState extends State<TermsPolicyContainer> {
                   )
                 : ErrorDisplayWidget(
                     error: provider.error,
-                    onRefresh: () => provider.getTermsPolicy(
-                        type: widget.policyType, slug: widget.slug),
+                    onRefresh: () => provider.getTermsPolicy(slug: widget.slug),
                   ),
       ),
     );

@@ -17,6 +17,7 @@ class Apis {
   // Set direct Local
   // static const baseUrl = 'https://dev.stocks.news/api/v1';
 
+  static const proxyAdvertiser = "/proxy/advertiser";
   static const checkServer = "/check-server-status";
   static const phoneLogin = '/phone-login';
   static const signup = "/sign-up";
@@ -155,6 +156,8 @@ class Apis {
   static const affiliateTnxList = "/referrals/txn-report-list";
 
   static const membership = "/membership/transactions";
+  static const blackFridayTransaction = "/membership/transactions_v2";
+
   static const membershipSuccess = "/membership/success";
 
   static const adViewed = "/ad-viewed";

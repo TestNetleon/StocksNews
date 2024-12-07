@@ -5,7 +5,6 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/terms_policy_provider.dart';
 import 'package:stocks_news_new/screens/contactUs/contact_us_item.dart';
 import 'package:stocks_news_new/utils/colors.dart';
-import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/disclaimer_widget.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
@@ -25,7 +24,6 @@ class ContactUsContainer extends StatelessWidget {
     return CommonRefreshIndicator(
       onRefresh: () async {
         provider.getTermsPolicy(
-          type: PolicyType.contactUs,
           slug: "contact-us",
         );
       },

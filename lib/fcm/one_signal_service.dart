@@ -12,12 +12,10 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/api/api_requester.dart';
 import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/api/apis.dart';
-import 'package:stocks_news_new/modals/user_res.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/affiliate/pointsTransaction/trasnsaction.dart';
-import 'package:stocks_news_new/service/amplitude/service.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/database/preference.dart';
 import '../screens/auth/base/base_auth.dart';
@@ -49,10 +47,10 @@ class OneSignalService {
     String? notificationId = data['notification_id'];
     isAppUpdating = false;
 
-    userInteractionEventCommon(
-      slug: slug,
-      type: type,
-    );
+    // userInteractionEventCommon(
+    //   slug: slug,
+    //   type: type,
+    // );
 
     try {
       if (type == NotificationType.dashboard.name) {
@@ -159,10 +157,9 @@ class OneSignalService {
         //   ),
         // );
 
-        closeKeyboard();
-        UserRes? userRes =
-            navigatorKey.currentContext!.read<UserProvider>().user;
-        if (userRes?.showBlackFriday == true) {
+        // closeKeyboard();
+        // Extra? extra = navigatorKey.currentContext!.read<HomeProvider>().extra;
+        if (slug != null && slug != '' && slug == 'black-friday') {
           Navigator.push(
             navigatorKey.currentContext!,
             MaterialPageRoute(
@@ -234,7 +231,8 @@ class OneSignalService {
     Utils().showLog('FCM Token Before $fcmTokenGlobal');
 
     OneSignal.User.pushSubscription.addObserver((state) async {
-      fcmTokenGlobal = OneSignal.User.pushSubscription.id;
+      fcmTokenGlobal = state.current.id;
+
       String? address = await _getUserLocation();
       Utils().showLog('FCM Token After $fcmTokenGlobal');
 
@@ -341,66 +339,64 @@ Future saveFCMapi({String? value, String? address}) async {
   }
 }
 
-void userInteractionEventCommon({String? type, String? slug}) async {
-  Utils().showLog('User interaction started');
-  try {
-    UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
-    if (provider.user == null) {
-      bool userPresent = await provider.checkForUser();
-      Utils().showLog('User present while interacting with event $userPresent');
-    }
-
-    String eventType;
-    String selfText;
-    if (type == NotificationType.dashboard.name) {
-      eventType = "Notification Clicked: Home";
-      selfText = "Navigated to the home page from notification.";
-    } else if (type == NotificationType.ticketDetail.name) {
-      eventType = "Notification Clicked: Support Ticket";
-      selfText = "Viewed support ticket with ID: $slug";
-    } else if (type == NotificationType.newsDetail.name) {
-      eventType = "Notification Clicked: News Detail";
-      selfText = "Opened news with ID: $slug";
-    } else if (type == NotificationType.lpPage.name) {
-      eventType = "Notification Clicked: Landing Page";
-      selfText = "Viewed landing page with URL: $slug";
-    } else if (type == NotificationType.blogDetail.name) {
-      eventType = "Notification Clicked: Blog Detail";
-      selfText = "Read blog article with ID: $slug";
-    } else if (type == NotificationType.register.name) {
-      eventType = "Notification Clicked: Register";
-      selfText = "Initiated registration process.";
-    } else if (type == NotificationType.review.name) {
-      eventType = "Notification Clicked: App Review";
-      selfText = "Prompted to review the app.";
-    } else if (type == NotificationType.stockDetail.name) {
-      eventType = "Notification Clicked: Stock Detail";
-      selfText = "Viewed stock details for ticker: $slug";
-    } else if (type == NotificationType.nudgeFriend.name) {
-      eventType = "Notification Clicked: Friend Referral";
-      selfText = "Prompted to refer a friend.";
-    } else if (type == NotificationType.referRegistration.name) {
-      eventType = "Notification Clicked: Referral Register";
-      selfText = "Opened referral registration page.";
-    } else if (type == NotificationType.membership.name) {
-      eventType = "Notification Clicked: Membership";
-      selfText = "Viewed membership information.";
-    } else if (type == NotificationType.pointTransaction.name) {
-      eventType = "Notification Clicked: Points Transaction";
-      selfText = "Viewed points transaction details.";
-    } else if (type == NotificationType.appUpdate.name) {
-      eventType = "Notification Clicked: App Update";
-      selfText = "Notification received to update the app.";
-    } else {
-      eventType = "Notification Clicked: Home";
-      selfText = "Navigated to the home page from notification.";
-    }
-
-    AmplitudeService.logUserInteractionEvent(
-      type: eventType,
-      selfText: selfText,
-    );
-  } catch (e) {
-    //
-  }
-}
+// void userInteractionEventCommon({String? type, String? slug}) async {
+//   Utils().showLog('User interaction started');
+//   try {
+//     UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
+//     if (provider.user == null) {
+//       bool userPresent = await provider.checkForUser();
+//       Utils().showLog('User present while interacting with event $userPresent');
+//     }
+//     String eventType;
+//     String selfText;
+//     if (type == NotificationType.dashboard.name) {
+//       eventType = "Notification Clicked: Home";
+//       selfText = "Navigated to the home page from notification.";
+//     } else if (type == NotificationType.ticketDetail.name) {
+//       eventType = "Notification Clicked: Support Ticket";
+//       selfText = "Viewed support ticket with ID: $slug";
+//     } else if (type == NotificationType.newsDetail.name) {
+//       eventType = "Notification Clicked: News Detail";
+//       selfText = "Opened news with ID: $slug";
+//     } else if (type == NotificationType.lpPage.name) {
+//       eventType = "Notification Clicked: Landing Page";
+//       selfText = "Viewed landing page with URL: $slug";
+//     } else if (type == NotificationType.blogDetail.name) {
+//       eventType = "Notification Clicked: Blog Detail";
+//       selfText = "Read blog article with ID: $slug";
+//     } else if (type == NotificationType.register.name) {
+//       eventType = "Notification Clicked: Register";
+//       selfText = "Initiated registration process.";
+//     } else if (type == NotificationType.review.name) {
+//       eventType = "Notification Clicked: App Review";
+//       selfText = "Prompted to review the app.";
+//     } else if (type == NotificationType.stockDetail.name) {
+//       eventType = "Notification Clicked: Stock Detail";
+//       selfText = "Viewed stock details for ticker: $slug";
+//     } else if (type == NotificationType.nudgeFriend.name) {
+//       eventType = "Notification Clicked: Friend Referral";
+//       selfText = "Prompted to refer a friend.";
+//     } else if (type == NotificationType.referRegistration.name) {
+//       eventType = "Notification Clicked: Referral Register";
+//       selfText = "Opened referral registration page.";
+//     } else if (type == NotificationType.membership.name) {
+//       eventType = "Notification Clicked: Membership";
+//       selfText = "Viewed membership information.";
+//     } else if (type == NotificationType.pointTransaction.name) {
+//       eventType = "Notification Clicked: Points Transaction";
+//       selfText = "Viewed points transaction details.";
+//     } else if (type == NotificationType.appUpdate.name) {
+//       eventType = "Notification Clicked: App Update";
+//       selfText = "Notification received to update the app.";
+//     } else {
+//       eventType = "Notification Clicked: Home";
+//       selfText = "Navigated to the home page from notification.";
+//     }
+//     AmplitudeService.logUserInteractionEvent(
+//       type: eventType,
+//       selfText: selfText,
+//     );
+//   } catch (e) {
+//     //
+//   }
+// }

@@ -18,8 +18,6 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 
-import '../service/amplitude/service.dart';
-
 class IndicesProvider extends ChangeNotifier {
   String? _error;
   Status _status = Status.ideal;
@@ -80,11 +78,11 @@ class IndicesProvider extends ChangeNotifier {
         removeForceLogin: true,
       );
       if (response.status) {
-        AmplitudeService.logAlertUpdateEvent(
-          added: true,
-          symbol: symbol,
-          companyName: companyName,
-        );
+        // AmplitudeService.logAlertUpdateEvent(
+        //   added: true,
+        //   symbol: symbol,
+        //   companyName: companyName,
+        // );
         _data?[index].isAlertAdded = 1;
         notifyListeners();
 
@@ -135,11 +133,11 @@ class IndicesProvider extends ChangeNotifier {
         //
         _data?[index].isWatchlistAdded = 1;
         notifyListeners();
-        AmplitudeService.logWatchlistUpdateEvent(
-          added: true,
-          symbol: symbol,
-          companyName: companyName,
-        );
+        // AmplitudeService.logWatchlistUpdateEvent(
+        //   added: true,
+        //   symbol: symbol,
+        //   companyName: companyName,
+        // );
 
         // _homeTrendingRes?.trending[index].isWatchlistAdded = 1;
 
@@ -387,11 +385,11 @@ class IndicesProvider extends ChangeNotifier {
         removeForceLogin: true,
       );
       if (response.status) {
-        if (_tabs?[selectedIndex].key != null &&
-            _tabs?[selectedIndex].key != '') {
-          AmplitudeService.logUserInteractionEvent(
-              type: _tabs?[selectedIndex].key ?? '');
-        }
+        // if (_tabs?[selectedIndex].key != null &&
+        //     _tabs?[selectedIndex].key != '') {
+        //   AmplitudeService.logUserInteractionEvent(
+        //       type: _tabs?[selectedIndex].key ?? '');
+        // }
 
         _extra = response.extra is Extra ? response.extra : null;
         notifyListeners();

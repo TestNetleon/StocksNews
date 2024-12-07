@@ -30,6 +30,7 @@ import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
 
 import '../fcm/dynamic_links.service.dart';
+import '../modals/advertiser.dart';
 import '../screens/blackFridayMembership/index.dart';
 import '../screens/membership_new/membership.dart';
 import '../service/amplitude/service.dart';
@@ -239,6 +240,8 @@ class UserProvider extends ChangeNotifier {
 
   void clearUser() async {
     _user = null;
+    callAdvertiserAPI();
+
     Preference.logout();
     // Reset some data related to user
     navigatorKey.currentContext!.read<LeaderBoardProvider>().clearData();
@@ -256,6 +259,7 @@ class UserProvider extends ChangeNotifier {
       navigatorKey.currentContext!,
       MaterialPageRoute(builder: (_) => const Tabs()),
     );
+
     notifyListeners();
   }
 
@@ -1516,20 +1520,18 @@ class UserProvider extends ChangeNotifier {
         Utils().showLog('IS SVG $isSVG');
         // navigatorKey.currentContext!.read<HomeProvider>().getHomeSlider();
         shareUri = await DynamicLinkService.instance.getDynamicLink();
-        callSliderTrendingAPI();
+        HomeProvider provider =
+            navigatorKey.currentContext!.read<HomeProvider>();
+        provider.getHomeSlider(sendPublisher: true);
 
         if (!skipPop) {
           if (doublePop) {
             Navigator.pop(navigatorKey.currentContext!);
             Navigator.pop(navigatorKey.currentContext!);
-            Utils().showLog('+++++++++Double Pop');
           } else {
             Navigator.pop(navigatorKey.currentContext!);
-            Utils().showLog('+++++++++Single Pop');
           }
-        } else {
-          Utils().showLog('+++++++++Skip Pop true');
-        }
+        } else {}
 
         Preference.setShowIntro(false);
         //--------
@@ -1598,9 +1600,31 @@ class UserProvider extends ChangeNotifier {
     }
   }
 
+  AdvertiserRes? _advertiserRes;
+  AdvertiserRes? get advertiserRes => _advertiserRes;
+
   callSliderTrendingAPI() {
     HomeProvider provider = navigatorKey.currentContext!.read<HomeProvider>();
     provider.getHomeSlider();
     // provider.getHomeTrendingData();
+  }
+
+  void callAdvertiserAPI() async {
+    try {
+      ApiResponse response = await apiRequest(
+        url: Apis.proxyAdvertiser,
+        type: RequestType.get,
+        checkAppUpdate: false,
+      );
+      if (response.status) {
+        _advertiserRes = advertiserResFromJson(jsonEncode(response.data));
+      } else {
+        _advertiserRes = null;
+      }
+      notifyListeners();
+    } catch (e) {
+      _advertiserRes = null;
+      notifyListeners();
+    }
   }
 }

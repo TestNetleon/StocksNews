@@ -170,12 +170,14 @@ final lightTheme = ThemeData(
 TextStyle styleGeorgiaRegular({
   color = Colors.white,
   double fontSize = 15,
+  FontStyle? fontStyle,
   height = 1.2,
   letterSpacing = 0.70,
-  decoration,
+  TextDecoration? decoration,
   bool showSpacing = false,
 }) {
   return TextStyle(
+    fontStyle: fontStyle,
     fontSize: fontSize,
     color: color,
     fontFamily: Fonts.ptSans,
@@ -191,6 +193,7 @@ TextStyle styleGeorgiaBold({
   color = Colors.white,
   double fontSize = 16,
   letterSpacing = 0.70,
+  FontStyle? fontStyle,
   decoration,
 }) {
   return TextStyle(
@@ -198,6 +201,7 @@ TextStyle styleGeorgiaBold({
     color: color,
     fontFamily: Fonts.ptSans,
     fontWeight: FontWeight.bold,
+    fontStyle: fontStyle,
     decoration: decoration,
     decorationColor: color,
     // letterSpacing: letterSpacing,

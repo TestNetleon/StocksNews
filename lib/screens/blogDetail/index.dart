@@ -8,7 +8,6 @@ import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
-import '../../service/amplitude/service.dart';
 import '../auth/base/base_auth.dart';
 import 'container.dart';
 
@@ -51,10 +50,10 @@ class _BlogDetailState extends State<BlogDetail> {
       inAppMsgId: widget.inAppMsgId,
       notificationId: widget.notificationId,
     );
-    AmplitudeService.logUserInteractionEvent(
-      type: 'Blog Detail',
-      selfText: blogProvider.blogRes?.title ?? "",
-    );
+    // AmplitudeService.logUserInteractionEvent(
+    //   type: 'Blog Detail',
+    //   selfText: blogProvider.blogRes?.title ?? "",
+    // );
     if (blogProvider.blogsDetail?.readingStatus == false ||
         blogProvider.extra?.isOldApp == true) {
       return;

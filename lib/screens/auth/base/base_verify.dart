@@ -156,9 +156,8 @@ class _BaseVerifyOTPState extends State<BaseVerifyOTP> with CodeAutoFill {
           message: response.message,
         );
       }
+      await homeProvider.getHomeSlider();
     }
-
-    await homeProvider.getHomeSlider();
   }
 
   void _startTime() {

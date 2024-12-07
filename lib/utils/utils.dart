@@ -7,7 +7,6 @@ import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:stocks_news_new/modals/stockDetailRes/earnings.dart';
 import 'package:stocks_news_new/modals/stockDetailRes/financial.dart';
-import 'package:stocks_news_new/modals/user_res.dart';
 import 'package:stocks_news_new/screens/helpDesk/front/index.dart';
 import 'package:stocks_news_new/screens/marketData/congressionalData/index.dart';
 import 'package:stocks_news_new/screens/marketData/dividends/dividends.dart';
@@ -28,6 +27,8 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:intl/intl.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:url_launcher/url_launcher.dart';
+import '../api/api_response.dart';
+import '../providers/home_provider.dart';
 import '../providers/user_provider.dart';
 import '../route/my_app.dart';
 import '../screens/auth/base/base_auth.dart';
@@ -691,8 +692,10 @@ void handleDeepLinkNavigation({
         //   return NewMembership();
         // }));
         closeKeyboard();
-        UserRes? user = navigatorKey.currentContext!.read<UserProvider>().user;
-        if (user?.showBlackFriday == true) {
+        // UserRes? user = navigatorKey.currentContext!.read<UserProvider>().user;
+        Extra? extra = navigatorKey.currentContext!.read<HomeProvider>().extra;
+
+        if (extra?.showBlackFriday == true) {
           Navigator.push(
             navigatorKey.currentContext!,
             MaterialPageRoute(

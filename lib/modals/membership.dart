@@ -9,43 +9,46 @@ String membershipResToJson(List<MembershipRes> data) =>
 
 class MembershipRes {
   final String? displayName;
+  final String? title;
   final int? id;
   final String? purchasedAt;
-  final String? expirationAt;
-  final String? transactionId;
+  // final String? expirationAt;
+  // final String? transactionId;
   final String? price;
   final String? type;
-
-  final int? status;
+  // final int? status;
 
   MembershipRes({
     this.displayName,
+    this.title,
     this.id,
     this.purchasedAt,
-    this.expirationAt,
-    this.transactionId,
+    // this.expirationAt,
+    // this.transactionId,
     this.price,
     this.type,
-    this.status,
+    // this.status,
   });
 
   factory MembershipRes.fromJson(Map<String, dynamic> json) => MembershipRes(
       displayName: json["display_name"],
       purchasedAt: json["purchased_at"],
-      expirationAt: json["expiration_at"],
-      transactionId: json["transaction_id"],
+      // expirationAt: json["expiration_at"],
+      // transactionId: json["transaction_id"],
       price: json["price"],
-      status: json["status"],
+      // status: json["status"],
       type: json["type"],
+      title: json["title"],
       id: json['id']);
 
   Map<String, dynamic> toJson() => {
         "display_name": displayName,
+        'title': title,
         "purchased_at": purchasedAt,
-        "expiration_at": expirationAt,
-        "transaction_id": transactionId,
+        // "expiration_at": expirationAt,
+        // "transaction_id": transactionId,
         "price": price,
-        "status": status,
+        // "status": status,
         "type": type,
         "id": id,
       };

@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:io';
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -103,7 +102,7 @@ class _MembershipLoginAskState extends State<MembershipLoginAsk> {
     } else {
       countryCode = CountryCode.fromCountryCode("US").dialCode;
     }
-    log("Country Code => $countryCode");
+    // log("Country Code => $countryCode");
 
     UserProvider provider = context.read<UserProvider>();
 

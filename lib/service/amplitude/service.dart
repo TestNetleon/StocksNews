@@ -42,7 +42,7 @@ class AmplitudeService {
       String buildNumber = packageInfo.buildNumber;
       if (getFirstTime) {
         _logEvent(
-          'First Open',
+          EventAmplitude.amp_firstopen.name,
           eventProperties: fcmToken != null
               ? {
                   'FCM': fcmToken,
@@ -51,23 +51,28 @@ class AmplitudeService {
                 }
               : null,
         );
-        _appsFlyerService.appsFlyerLogEvent('First Open',
-            eventProperties: fcmToken != null
-                ? {
-                    'FCM': fcmToken,
-                    "build_version": versionName,
-                    "build_code": buildNumber,
-                  }
-                : null);
 
-        _firebaseService.firebaseLogEvent('First Open',
-            eventProperties: fcmToken != null
-                ? {
-                    'FCM': fcmToken,
-                    "build_version": versionName,
-                    "build_code": buildNumber,
-                  }
-                : null);
+        _appsFlyerService.appsFlyerLogEvent(
+          EventAppsFlyer.af_firstopen.name,
+          eventProperties: fcmToken != null
+              ? {
+                  'FCM': fcmToken,
+                  "build_version": versionName,
+                  "build_code": buildNumber,
+                }
+              : null,
+        );
+
+        _firebaseService.firebaseLogEvent(
+          EventFirebase.f_firstopen.name,
+          eventProperties: fcmToken != null
+              ? {
+                  'FCM': fcmToken,
+                  "build_version": versionName,
+                  "build_code": buildNumber,
+                }
+              : null,
+        );
 
         await Preference.setAmplitudeFirstOpen(false);
       }
@@ -127,26 +132,44 @@ class AmplitudeService {
       if (provider.user?.userId != null && provider.user?.userId != '') {
         _amplitude.setUserId(provider.user?.userId ?? '');
       }
-      _logEvent(
-        isRegistered == 0 ? 'Log in' : 'Sign up',
-        eventProperties: request,
-      );
-      _appsFlyerService.appsFlyerLogEvent(
-        isRegistered == 0 ? 'Log in' : 'Sign up',
-        eventProperties: request,
-        userId: provider.user?.userId,
-      );
+      // _logEvent(
+      //   isRegistered == 0 ? 'Log in' : 'Sign up',
+      //   eventProperties: request,
+      // );
+      // _appsFlyerService.appsFlyerLogEvent(
+      //   isRegistered == 0 ? 'Log in' : 'Sign up',
+      //   eventProperties: request,
+      //   userId: provider.user?.userId,
+      // );
 
-      _firebaseService.firebaseLogEvent(
-        isRegistered == 0 ? 'login' : 'sign_up',
-        eventProperties: request,
-        userId: provider.user?.userId,
-      );
+      // _firebaseService.firebaseLogEvent(
+      //   isRegistered == 0 ? 'login' : 'sign_up',
+      //   eventProperties: request,
+      //   userId: provider.user?.userId,
+      // );
 
-      logPushNotificationEnabledEvent(
-        request,
-        provider.user?.userId,
-      );
+      if (isRegistered == 1) {
+        _logEvent(
+          EventAmplitude.amp_signup.name,
+          eventProperties: request,
+        );
+        _appsFlyerService.appsFlyerLogEvent(
+          EventAppsFlyer.af_signup.name,
+          eventProperties: request,
+          userId: provider.user?.userId,
+        );
+
+        _firebaseService.firebaseLogEvent(
+          EventFirebase.f_signup.name,
+          eventProperties: request,
+          userId: provider.user?.userId,
+        );
+      }
+
+      // logPushNotificationEnabledEvent(
+      //   request,
+      //   provider.user?.userId,
+      // );
     } catch (e) {
       //
     }

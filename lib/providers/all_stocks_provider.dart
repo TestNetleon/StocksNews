@@ -11,7 +11,6 @@ import 'package:stocks_news_new/modals/stocks_res.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
-import 'package:stocks_news_new/service/amplitude/service.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/utils/utils.dart';
@@ -81,11 +80,11 @@ class AllStocksProvider extends ChangeNotifier {
         removeForceLogin: true,
       );
       if (response.status) {
-        AmplitudeService.logAlertUpdateEvent(
-          added: true,
-          symbol: symbol,
-          companyName: companyName,
-        );
+        // AmplitudeService.logAlertUpdateEvent(
+        //   added: true,
+        //   symbol: symbol,
+        //   companyName: companyName,
+        // );
         _data?.data?[index].isAlertAdded = 1;
         notifyListeners();
 
@@ -135,11 +134,11 @@ class AllStocksProvider extends ChangeNotifier {
       if (response.status) {
         //
         _data?.data?[index].isWatchlistAdded = 1;
-        AmplitudeService.logWatchlistUpdateEvent(
-          added: true,
-          symbol: symbol,
-          companyName: companyName,
-        );
+        // AmplitudeService.logWatchlistUpdateEvent(
+        //   added: true,
+        //   symbol: symbol,
+        //   companyName: companyName,
+        // );
         notifyListeners();
 
         // _homeTrendingRes?.trending[index].isWatchlistAdded = 1;

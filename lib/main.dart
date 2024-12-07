@@ -32,7 +32,7 @@ void main() async {
 //-----------------------------------------------------
 //-----------------------------------------------------
 //-----------------------------------------------------
-  // Remove this method to stop OneSignal Debugging
+// Remove this method to stop OneSignal Debugging
   OneSignal.Debug.setLogLevel(OSLogLevel.verbose);
   OneSignal.initialize("da811ab1-8239-4155-99f1-ebc15b20160b");
   OneSignal.Notifications.requestPermission(true);

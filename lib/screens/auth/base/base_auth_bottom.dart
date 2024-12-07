@@ -19,11 +19,11 @@ import 'package:stocks_news_new/utils/validations.dart';
 import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
 import 'package:stocks_news_new/widgets/custom/country_code_picker_widget.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
-import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/theme_button.dart';
 import 'package:stocks_news_new/widgets/theme_input_field.dart';
 
 import '../../../database/preference.dart';
+import '../../../widgets/spacer_vertical.dart';
 import '../bottomSheets/aggree_conditions.dart';
 import 'base_verify.dart';
 
@@ -39,6 +39,8 @@ class _BaseAuthState extends State<BaseAuth> {
   String? _verificationId;
   bool isLoading = false;
   bool changed = false;
+  bool isChecked = false;
+  bool useCheckboxCondition = true;
   TextEditingController phone = TextEditingController();
   @override
   void initState() {
@@ -204,19 +206,32 @@ class _BaseAuthState extends State<BaseAuth> {
     } else {
       countryCode = CountryCode.fromCountryCode("US").dialCode;
     }
+
+    //CHECKBOX Condition
+    UserProvider provider = context.read<UserProvider>();
+    useCheckboxCondition = provider.advertiserRes != null;
     setState(() {});
   }
 
   void _onChanged(CountryCode value) {
     changed = true;
     countryCode = value.dialCode;
-    Utils().showLog("COUNTRY CODE => $countryCode");
+    // Utils().showLog("COUNTRY CODE => $countryCode");
     setState(() {});
   }
 
   _gotoVerify() async {
+    UserProvider provider = context.read<UserProvider>();
+
     closeKeyboard();
-    if (isEmpty(phone.text)) {
+    if (!isChecked && useCheckboxCondition) {
+      return popUpAlert(
+        message:
+            "To proceed, please confirm your agreement with the terms and conditions by checking the box.",
+        title: "Alert",
+        icon: Images.alertPopGIF,
+      );
+    } else if (isEmpty(phone.text)) {
       return popUpAlert(
         message: "Please enter a valid phone number.",
         title: "Alert",
@@ -224,7 +239,6 @@ class _BaseAuthState extends State<BaseAuth> {
       );
     }
 
-    UserProvider provider = context.read<UserProvider>();
     if (provider.user == null) {
       _verifyPhoneNumber();
     } else {
@@ -265,7 +279,7 @@ class _BaseAuthState extends State<BaseAuth> {
       }
     }
 
-    Utils().showLog('COUNTRY CODE $countryCode');
+    // Utils().showLog('COUNTRY CODE $countryCode');
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
       decoration: BoxDecoration(
@@ -283,106 +297,125 @@ class _BaseAuthState extends State<BaseAuth> {
           ],
         ),
       ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          ScreenTitle(
-            title: provider.extra?.updateYourPhone?.title,
-            subTitle: provider.extra?.updateYourPhone?.text,
-            subTitleHtml: true,
-            dividerPadding: EdgeInsets.only(bottom: 8),
-          ),
-          IntrinsicHeight(
-            child: Container(
-              decoration: BoxDecoration(
-                color: ThemeColors.white,
-                borderRadius: BorderRadius.circular(4),
-              ),
-              child: Row(
-                children: [
-                  Stack(
-                    alignment: Alignment.center,
-                    children: [
-                      Container(
-                        decoration: const BoxDecoration(
-                          border: Border(
-                            bottom: BorderSide(
-                              color: ThemeColors.white,
-                            ),
-                          ),
-                          color: ThemeColors.white,
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(4),
-                            bottomLeft: Radius.circular(4),
-                          ),
-                        ),
-                        child: CountryPickerWidget(
-                          onChanged: _onChanged,
-                          showBox: false,
-                        ),
-                      ),
-                    ],
-                  ),
-                  Flexible(
-                    child: Stack(
-                      alignment: Alignment.centerRight,
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ScreenTitle(
+              title: provider.extra?.updateYourPhone?.title,
+              subTitle: provider.extra?.updateYourPhone?.text,
+              subTitleHtml: true,
+              dividerPadding: EdgeInsets.only(bottom: 8),
+            ),
+            IntrinsicHeight(
+              child: Container(
+                decoration: BoxDecoration(
+                  color: ThemeColors.white,
+                  borderRadius: BorderRadius.circular(4),
+                ),
+                child: Row(
+                  children: [
+                    Stack(
+                      alignment: Alignment.center,
                       children: [
-                        ThemeInputField(
-                          style: stylePTSansRegular(
-                            color: Colors.black,
-                            fontSize: 18,
-                          ),
-                          borderRadiusOnly: const BorderRadius.only(
-                            topRight: Radius.circular(4),
-                            bottomRight: Radius.circular(4),
-                          ),
-                          controller: phone,
-                          onChanged: (p0) {
-                            phone.text = p0;
-                            setState(() {});
-                          },
-                          placeholder: "Enter your phone number",
-                          keyboardType: TextInputType.phone,
-                          inputFormatters: [
-                            LengthLimitingTextInputFormatter(15),
-                          ],
-                          textCapitalization: TextCapitalization.none,
-                        ),
-                        Visibility(
-                          visible: phone.text != '',
-                          child: Positioned(
-                            right: 10,
-                            child: InkWell(
-                              onTap: () {
-                                phone.clear();
-                                closeKeyboard();
-                                setState(() {});
-                              },
-                              child: Icon(
-                                Icons.close,
-                                color: ThemeColors.background,
+                        Container(
+                          decoration: const BoxDecoration(
+                            border: Border(
+                              bottom: BorderSide(
+                                color: ThemeColors.white,
                               ),
                             ),
+                            color: ThemeColors.white,
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(4),
+                              bottomLeft: Radius.circular(4),
+                            ),
+                          ),
+                          child: CountryPickerWidget(
+                            onChanged: _onChanged,
+                            showBox: false,
                           ),
                         ),
                       ],
                     ),
+                    Flexible(
+                      child: Stack(
+                        alignment: Alignment.centerRight,
+                        children: [
+                          ThemeInputField(
+                            style: stylePTSansRegular(
+                              color: Colors.black,
+                              fontSize: 18,
+                            ),
+                            borderRadiusOnly: const BorderRadius.only(
+                              topRight: Radius.circular(4),
+                              bottomRight: Radius.circular(4),
+                            ),
+                            controller: phone,
+                            onChanged: (p0) {
+                              phone.text = p0;
+                              setState(() {});
+                            },
+                            placeholder: "Enter your phone number",
+                            keyboardType: TextInputType.phone,
+                            inputFormatters: [
+                              LengthLimitingTextInputFormatter(15),
+                            ],
+                            textCapitalization: TextCapitalization.none,
+                          ),
+                          Visibility(
+                            visible: phone.text != '',
+                            child: Positioned(
+                              right: 10,
+                              child: InkWell(
+                                onTap: () {
+                                  phone.clear();
+                                  closeKeyboard();
+                                  setState(() {});
+                                },
+                                child: Icon(
+                                  Icons.close,
+                                  color: ThemeColors.background,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Visibility(
+              visible: useCheckboxCondition,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Checkbox(
+                    side: BorderSide(color: Colors.white),
+                    value: isChecked,
+                    onChanged: (value) {
+                      setState(() {
+                        isChecked = value!;
+                      });
+                    },
+                    activeColor: ThemeColors.accent,
                   ),
+                  Expanded(child: LoginSignupID()),
                 ],
               ),
             ),
-          ),
-          provider.extra?.updateYourPhone?.agreeText != null &&
-                  provider.extra?.updateYourPhone?.agreeText != ''
-              ? Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 10),
-                  child: NewAgreeConditions(
-                    fontSize: 13,
-                    text: provider.extra?.updateYourPhone?.agreeText,
+            useCheckboxCondition
+                ? SpacerVertical(height: 10)
+                : Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    child: NewAgreeConditions(
+                      fontSize: 13,
+                      text: provider.extra?.updateYourPhone?.agreeText,
+                    ),
                   ),
-                )
-              : SpacerVertical(height: 10),
-          _button(
+            _button(
               text: isLoading
                   ? provider.extra?.updateYourPhone?.verifyButton ??
                       'Verifying your phone number...'
@@ -390,8 +423,10 @@ class _BaseAuthState extends State<BaseAuth> {
                       'Update my phone number',
               onTap: isLoading ? null : _gotoVerify,
               color: const Color.fromARGB(255, 194, 216, 51),
-              textColor: ThemeColors.background),
-        ],
+              textColor: ThemeColors.background,
+            ),
+          ],
+        ),
       ),
     );
   }

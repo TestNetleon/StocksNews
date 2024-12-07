@@ -18,6 +18,12 @@
 @import app_links;
 #endif
 
+#if __has_include(<app_settings/AppSettingsPlugin.h>)
+#import <app_settings/AppSettingsPlugin.h>
+#else
+@import app_settings;
+#endif
+
 #if __has_include(<appsflyer_sdk/AppsflyerSdkPlugin.h>)
 #import <appsflyer_sdk/AppsflyerSdkPlugin.h>
 #else
@@ -269,6 +275,7 @@
 + (void)registerWithRegistry:(NSObject<FlutterPluginRegistry>*)registry {
   [AmplitudeFlutterPlugin registerWithRegistrar:[registry registrarForPlugin:@"AmplitudeFlutterPlugin"]];
   [AppLinksPlugin registerWithRegistrar:[registry registrarForPlugin:@"AppLinksPlugin"]];
+  [AppSettingsPlugin registerWithRegistrar:[registry registrarForPlugin:@"AppSettingsPlugin"]];
   [AppsflyerSdkPlugin registerWithRegistrar:[registry registrarForPlugin:@"AppsflyerSdkPlugin"]];
   [AudioSessionPlugin registerWithRegistrar:[registry registrarForPlugin:@"AudioSessionPlugin"]];
   [AudioplayersDarwinPlugin registerWithRegistrar:[registry registrarForPlugin:@"AudioplayersDarwinPlugin"]];

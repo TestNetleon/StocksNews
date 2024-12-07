@@ -84,25 +84,20 @@ class Valuable extends StatelessWidget {
                                   colors: morningStar?.quantValuation ==
                                           "Undervalued"
                                       ? [
-                                          const Color.fromARGB(
-                                              255, 242, 150, 37),
+                                          const Color(0xFFF29625),
                                           const Color.fromARGB(
                                               255, 144, 87, 17),
                                         ]
                                       : morningStar?.quantValuation ==
                                               "Fairly Valued"
                                           ? [
-                                              const Color.fromARGB(
-                                                  255, 14, 173, 5),
-                                              const Color.fromARGB(
-                                                  255, 11, 95, 13),
+                                              const Color(0xFF0EAD05),
+                                              const Color(0xFF0B5F0D),
                                             ]
                                           // Overvalued
                                           : [
-                                              const Color.fromARGB(
-                                                  255, 231, 41, 41),
-                                              const Color.fromARGB(
-                                                  255, 243, 88, 88),
+                                              const Color(0xFFE72929),
+                                              const Color(0xFFF35858),
                                             ],
                                 ),
                               ),

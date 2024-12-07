@@ -18,9 +18,7 @@ import 'package:stocks_news_new/screens/watchlist/watchlist.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/widgets/market_data_header.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
-
 import '../../../providers/filter_provider.dart';
-import '../../../service/amplitude/service.dart';
 import '../../../utils/bottom_sheets.dart';
 import '../../../utils/constants.dart';
 import '../../../widgets/base_ui_container.dart';
@@ -39,8 +37,8 @@ class _TopTodayPennyStocksState extends State<TopTodayPennyStocks> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      AmplitudeService.logUserInteractionEvent(
-          type: "Top Today's Penny Stocks");
+      // AmplitudeService.logUserInteractionEvent(
+      //     type: "Top Today's Penny Stocks");
       TopTodayPennyStocksProviders provider =
           context.read<TopTodayPennyStocksProviders>();
       if (provider.data != null) {

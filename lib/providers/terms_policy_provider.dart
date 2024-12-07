@@ -29,7 +29,6 @@ class TermsAndPolicyProvider extends ChangeNotifier {
   }
 
   Future getTermsPolicy({
-    required PolicyType type,
     required String slug,
   }) async {
     setStatus(Status.loading);

@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import 'package:stocks_news_new/modals/user_res.dart';
 import 'package:stocks_news_new/providers/compare_stocks_provider.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/insider_trading_provider.dart';
@@ -26,6 +25,7 @@ import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:vibration/vibration.dart';
+import '../../api/api_response.dart';
 import '../../utils/utils.dart';
 import '../blackFridayMembership/index.dart';
 import '../membership_new/membership.dart';
@@ -80,9 +80,11 @@ class _TabsState extends State<Tabs> {
     //   ),
     // );
 
-    UserRes? user = navigatorKey.currentContext!.read<UserProvider>().user;
+    // UserRes? user = navigatorKey.currentContext!.read<UserProvider>().user;
+    Extra? extra = navigatorKey.currentContext!.read<HomeProvider>().extra;
+
     closeKeyboard();
-    if (user?.showBlackFriday == true) {
+    if (extra?.showBlackFriday == true) {
       Navigator.push(
         navigatorKey.currentContext!,
         createRoute(
@@ -185,28 +187,28 @@ class _TabsState extends State<Tabs> {
             homeProvider.homeTrendingRes == null) {
           homeProvider.refreshData(widget.inAppMsgId);
         }
-        AmplitudeService.logUserInteractionEvent(type: "Stocks.News Home Page");
+        // AmplitudeService.logUserInteractionEvent(type: "Stocks.News Home Page");
 
         break;
       case 1:
         if (trendingProvider.mostBullish == null) {
           trendingProvider.getMostBullish();
         }
-        AmplitudeService.logUserInteractionEvent(type: "Trending");
+        // AmplitudeService.logUserInteractionEvent(type: "Trending");
 
         break;
       case 2:
         if (insiderProvider.data == null) {
           insiderProvider.getData(showProgress: false);
         }
-        AmplitudeService.logUserInteractionEvent(type: "Insider Trades");
+        // AmplitudeService.logUserInteractionEvent(type: "Insider Trades");
 
         break;
       case 3:
         if (redditTwitterProvider.socialSentimentRes == null) {
           redditTwitterProvider.getRedditTwitterData(reset: true);
         }
-        AmplitudeService.logUserInteractionEvent(type: "Market Sentiment");
+        // AmplitudeService.logUserInteractionEvent(type: "Market Sentiment");
 
         break;
       case 4:
@@ -215,7 +217,7 @@ class _TabsState extends State<Tabs> {
         } else {
           newsCatProvider.tabChange(0, newsCatProvider.tabs![0].id);
         }
-        AmplitudeService.logUserInteractionEvent(type: "News");
+        // AmplitudeService.logUserInteractionEvent(type: "News");
 
         break;
       case 5:
@@ -232,7 +234,7 @@ void _compareStocks(BuildContext context) {
   if (provider.user != null && compareProvider.company.isEmpty) {
     compareProvider.getCompareStock();
   }
-  AmplitudeService.logUserInteractionEvent(type: 'Compare Stocks');
+  // AmplitudeService.logUserInteractionEvent(type: 'Compare Stocks');
 }
 
 class Screens {

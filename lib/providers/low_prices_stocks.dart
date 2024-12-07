@@ -16,7 +16,6 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import '../modals/low_price_stocks_res.dart';
-import '../service/amplitude/service.dart';
 
 class LowPriceStocksProvider extends ChangeNotifier {
   String? _error;
@@ -42,12 +41,12 @@ class LowPriceStocksProvider extends ChangeNotifier {
 
   String? title;
   String? subTitle;
-  bool get canLoadMore => _page < (_extra?.totalPages ?? 1);
   // bool get canLoadMoreDown => _pageDown < (_extraDown?.totalPages ?? 1);
   int _page = 1;
-  // int _pageDown = 1;
+  bool get canLoadMore => _page < (_extra?.totalPages ?? 1);
   Extra? _extra;
   Extra? get extra => _extra;
+  // int _pageDown = 1;
   // Extra? _extraDown;
 
   final AudioPlayer _player = AudioPlayer();
@@ -76,11 +75,11 @@ class LowPriceStocksProvider extends ChangeNotifier {
         removeForceLogin: true,
       );
       if (response.status) {
-        AmplitudeService.logAlertUpdateEvent(
-          added: true,
-          symbol: symbol,
-          companyName: companyName,
-        );
+        // AmplitudeService.logAlertUpdateEvent(
+        //   added: true,
+        //   symbol: symbol,
+        //   companyName: companyName,
+        // );
         _data?[index].isAlertAdded = 1;
         notifyListeners();
 
@@ -131,11 +130,11 @@ class LowPriceStocksProvider extends ChangeNotifier {
         //
         _data?[index].isWatchlistAdded = 1;
         notifyListeners();
-        AmplitudeService.logWatchlistUpdateEvent(
-          added: true,
-          symbol: symbol,
-          companyName: companyName,
-        );
+        // AmplitudeService.logWatchlistUpdateEvent(
+        //   added: true,
+        //   symbol: symbol,
+        //   companyName: companyName,
+        // );
         // _homeTrendingRes?.trending[index].isWatchlistAdded = 1;
 
         await _player.play(AssetSource(AudioFiles.alertWeathlist));
@@ -203,9 +202,9 @@ class LowPriceStocksProvider extends ChangeNotifier {
   void tabChange(index) {
     _filterParams = null;
     _extra = null;
-    if (tabs?[index].key != null && tabs?[index].key != '') {
-      AmplitudeService.logUserInteractionEvent(type: tabs?[index].key ?? '');
-    }
+    // if (tabs?[index].key != null && tabs?[index].key != '') {
+    //   AmplitudeService.logUserInteractionEvent(type: tabs?[index].key ?? '');
+    // }
 
     if (tabs?[index].key == "Stocks On Sale") {
       if (_selectedIndex != index) {
@@ -310,7 +309,7 @@ class LowPriceStocksProvider extends ChangeNotifier {
         _tabs = lowPriceStocksTabResFromJson(jsonEncode(response.data));
         if (_tabs != null) {
           getLowPriceData(type: 0);
-          AmplitudeService.logUserInteractionEvent(type: tabs?[0].key ?? '');
+          // AmplitudeService.logUserInteractionEvent(type: tabs?[0].key ?? '');
         }
       } else {
         _error = response.message;

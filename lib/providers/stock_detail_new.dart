@@ -36,7 +36,6 @@ import '../modals/stockDetailRes/earnings.dart';
 import '../modals/stockDetailRes/overview.dart';
 import '../modals/technical_analysis_res.dart';
 import '../route/my_app.dart';
-import '../service/amplitude/service.dart';
 import '../utils/colors.dart';
 import '../utils/constants.dart';
 import '../utils/theme.dart';
@@ -251,11 +250,11 @@ class StockDetailProviderNew extends ChangeNotifier {
         removeForceLogin: true,
       );
       if (response.status) {
-        AmplitudeService.logAlertUpdateEvent(
-          added: true,
-          symbol: symbol,
-          companyName: companyName,
-        );
+        // AmplitudeService.logAlertUpdateEvent(
+        //   added: true,
+        //   symbol: symbol,
+        //   companyName: companyName,
+        // );
         if (type == "peer") {
           _analysis?.peersData?[index].isAlertAdded = 1;
         }
@@ -310,11 +309,11 @@ class StockDetailProviderNew extends ChangeNotifier {
         removeForceLogin: true,
       );
       if (response.status) {
-        AmplitudeService.logWatchlistUpdateEvent(
-          added: true,
-          symbol: symbol,
-          companyName: companyName,
-        );
+        // AmplitudeService.logWatchlistUpdateEvent(
+        //   added: true,
+        //   symbol: symbol,
+        //   companyName: companyName,
+        // );
         //
 
         if (type == "Peer") {
@@ -370,11 +369,11 @@ class StockDetailProviderNew extends ChangeNotifier {
         removeForceLogin: true,
       );
       if (response.status) {
-        AmplitudeService.logAlertUpdateEvent(
-          added: true,
-          symbol: _tabRes?.keyStats?.symbol ?? "",
-          companyName: _tabRes?.keyStats?.name ?? "",
-        );
+        // AmplitudeService.logAlertUpdateEvent(
+        //   added: true,
+        //   symbol: _tabRes?.keyStats?.symbol ?? "",
+        //   companyName: _tabRes?.keyStats?.name ?? "",
+        // );
         if (index == null) {
           _tabRes?.isAlertAdded = 1;
         }
@@ -416,11 +415,11 @@ class StockDetailProviderNew extends ChangeNotifier {
         removeForceLogin: true,
       );
       if (response.status) {
-        AmplitudeService.logWatchlistUpdateEvent(
-          added: true,
-          symbol: _tabRes?.keyStats?.symbol ?? "",
-          companyName: _tabRes?.keyStats?.name ?? "",
-        );
+        // AmplitudeService.logWatchlistUpdateEvent(
+        //   added: true,
+        //   symbol: _tabRes?.keyStats?.symbol ?? "",
+        //   companyName: _tabRes?.keyStats?.name ?? "",
+        // );
         if (index == null) {
           _tabRes?.isWatchListAdded = 1;
         }

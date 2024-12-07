@@ -48,10 +48,8 @@ Future<ConnectivityResult> _isConnected() async {
   try {
     List<ConnectivityResult> connectivityResults =
         await Connectivity().checkConnectivity();
-    Utils().showLog("${connectivityResults.first}");
     return connectivityResults.first;
   } catch (e) {
-    Utils().showLog("Connectivity Error $e");
     return ConnectivityResult.none;
   }
 }
@@ -139,9 +137,15 @@ Future<ApiResponse> apiRequest({
       var streamedResponse = await request.send();
       response = await http.Response.fromStream(streamedResponse);
     } else {
-      response = await http
-          .post(Uri.parse(baseUrl + url), body: request, headers: headers)
-          .timeout(timeoutDuration);
+      if (type == RequestType.post) {
+        response = await http
+            .post(Uri.parse(baseUrl + url), body: request, headers: headers)
+            .timeout(timeoutDuration);
+      } else {
+        response = await http
+            .get(Uri.parse(baseUrl + url), headers: headers)
+            .timeout(timeoutDuration);
+      }
     }
 
     Utils().showLog("RESPONSE  =  ${response.body}");
@@ -270,7 +274,6 @@ Future<ApiResponse> apiRequest({
       navigatorKey.currentContext!.read<HomeProvider>().checkMaintenanceMode();
     }
     Utils().showLog('Catch error =>> ${e.toString()}');
-    Utils().showLog(e.toString());
     if (showProgress) closeGlobalProgressDialog();
     if (!isShowingError && showErrorOnFull) {}
     return ApiResponse(status: false, message: Const.errSomethingWrong);
@@ -312,15 +315,6 @@ Future _checkLogin() async {
 }
 
 void _handleSessionOut() {
-  // Handle session timeout, e.g., by calling logout() or refreshing tokens
-  // Preference.logout();
-  // Navigator.popUntil(navigatorKey.currentContext!, (route) => route.isFirst);
-  // Navigator.pushReplacement(
-  //   navigatorKey.currentContext!,
-  //   MaterialPageRoute(builder: (_) => const Tabs()),
-  // );
-  // DatabaseHelper helper = DatabaseHelper();
-  // helper.resetVisibilityCount();
   navigatorKey.currentContext!.read<UserProvider>().clearUser();
 }
 

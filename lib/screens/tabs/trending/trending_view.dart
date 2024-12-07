@@ -14,8 +14,6 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/custom/refresh_indicator.dart';
 import 'package:stocks_news_new/widgets/custom_tab_container.dart';
 import 'package:stocks_news_new/widgets/loading.dart';
-
-import '../../../service/amplitude/service.dart';
 import '../../trendingIndustries/index.dart';
 import 'widgets/trending_partial_loading.dart';
 import 'widgets/trending_sectors.dart';
@@ -47,20 +45,20 @@ class _TrendingViewState extends State<TrendingView> {
   _sendEvent(index) {
     switch (index) {
       case 0:
-        AmplitudeService.logUserInteractionEvent(type: "Most Bullish");
+        // AmplitudeService.logUserInteractionEvent(type: "Most Bullish");
         break;
       case 1:
-        AmplitudeService.logUserInteractionEvent(type: "Most Bearish");
+        // AmplitudeService.logUserInteractionEvent(type: "Most Bearish");
         break;
 
       case 2:
-        AmplitudeService.logUserInteractionEvent(type: "Trending Stories");
+        // AmplitudeService.logUserInteractionEvent(type: "Trending Stories");
         break;
       case 3:
-        AmplitudeService.logUserInteractionEvent(type: "Trending Sectors");
+        // AmplitudeService.logUserInteractionEvent(type: "Trending Sectors");
         break;
       case 4:
-        AmplitudeService.logUserInteractionEvent(type: "Trending Industries");
+        // AmplitudeService.logUserInteractionEvent(type: "Trending Industries");
         break;
       default:
     }

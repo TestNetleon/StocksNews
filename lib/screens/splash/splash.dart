@@ -71,7 +71,7 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
     }
 
     Timer(const Duration(seconds: 0), () {
-      _getDeviceType();
+      _setUser();
     });
   }
 
@@ -91,10 +91,15 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
     }
   }
 
-  void _getDeviceType() async {
+  void _setUser() async {
     try {
       UserProvider provider = context.read<UserProvider>();
-
+      UserRes? user = await Preference.getUser();
+      if (user != null) {
+        provider.setUser(user);
+      } else {
+        provider.callAdvertiserAPI();
+      }
       MessageRes? messageObject = await Preference.getLocalDataBase();
 
       if (messageObject?.error != null) {
@@ -103,11 +108,6 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
 
       if (messageObject?.loading != null) {
         Const.loadingMessage = messageObject!.loading!;
-      }
-
-      UserRes? user = await Preference.getUser();
-      if (user != null) {
-        provider.setUser(user);
       }
     } catch (e) {
       //

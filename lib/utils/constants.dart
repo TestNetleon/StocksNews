@@ -1,6 +1,29 @@
+// ignore_for_file: constant_identifier_names
+
 import 'package:intl/intl.dart';
 
 import 'package:stocks_news_new/utils/utils.dart';
+
+enum EventAppsFlyer {
+  af_firstopen,
+  af_signup,
+  af_startsub,
+  af_starttrial,
+}
+
+enum EventAmplitude {
+  amp_firstopen,
+  amp_signup,
+  amp_startsub,
+  amp_starttrial,
+}
+
+enum EventFirebase {
+  f_firstopen,
+  f_signup,
+  f_startsub,
+  f_starttrial,
+}
 
 enum RequestType { get, post }
 
@@ -161,6 +184,7 @@ class Images {
   static const String bannerImage = "assets/images/banner_image.png";
 
   static const String pointIcon3 = "assets/images/3_coins.png";
+  static const String blackFriday = "assets/images/black_friday.png";
 
   static const String netflix = "assets/images/nflx.png";
   static const String amazon = "assets/images/amzn.png";

@@ -31,7 +31,6 @@ import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../../../providers/home_provider.dart';
 import '../../../../providers/user_provider.dart';
-import '../../../../service/amplitude/service.dart';
 import '../../../../widgets/custom/update_error.dart';
 import '../../../../widgets/disclaimer_widget.dart';
 import '../../../../widgets/theme_button_small.dart';
@@ -76,10 +75,10 @@ class _NewsDetailsBodyState extends State<NewsDetailsBody> {
       inAppMsgId: widget.inAppMsgId,
       notificationId: widget.notificationId,
     );
-    AmplitudeService.logUserInteractionEvent(
-      type: 'News Detail',
-      selfText: newsProvider.data?.postDetail?.title ?? "",
-    );
+    // AmplitudeService.logUserInteractionEvent(
+    //   type: 'News Detail',
+    //   selfText: newsProvider.data?.postDetail?.title ?? "",
+    // );
 
     if (newsProvider.data?.postDetail?.readingStatus == false ||
         newsProvider.extra?.isOldApp == true) {
