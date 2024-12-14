@@ -397,7 +397,7 @@ class BrazeService {
     }
 
     // Set Watchlist or Alerts if provided
-    if (alerts != null && alerts.isNotEmpty) {
+    if (alerts != null) {
       await executeAction(() async {
         if (Platform.isAndroid) {
           _braze.setCustomUserAttributeArrayOfStrings('alerts', alerts);
@@ -410,7 +410,7 @@ class BrazeService {
       }, "set alerts");
     }
 
-    if (watchlist != null && watchlist.isNotEmpty) {
+    if (watchlist != null) {
       await executeAction(() async {
         if (Platform.isAndroid) {
           _braze.setCustomUserAttributeArrayOfStrings('watchlists', watchlist);

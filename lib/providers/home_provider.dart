@@ -1183,8 +1183,8 @@ class HomeProvider extends ChangeNotifier {
         _myTickers = myTickersFromJson(jsonEncode(response.data));
 
         BrazeService.brazeBaseEvents(
-          alerts: _myTickers?.alerts,
-          watchlist: myTickers?.watchlist,
+          alerts: _myTickers?.alerts ?? [],
+          watchlist: myTickers?.watchlist ?? [],
         );
       } else {
         _myTickers = null;

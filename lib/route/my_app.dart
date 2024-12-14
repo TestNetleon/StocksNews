@@ -45,9 +45,9 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       oneSignalInitialized = true;
       // SocketApi().connectToServer();
       configureRevenueCatAttribute();
-      // getInitialReferralsIfAny();
-      // getInitialDeeplinkWhenAppOpen();
-      // startListeningForDeepLinks();
+      getInitialReferralsIfAny();
+      getInitialDeeplinkWhenAppOpen();
+      startListeningForDeepLinks();
     });
     WidgetsBinding.instance.addObserver(this);
   }
