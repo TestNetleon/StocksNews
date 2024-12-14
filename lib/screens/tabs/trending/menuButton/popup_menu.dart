@@ -14,7 +14,8 @@ import 'package:provider/provider.dart';
 import '../../../../route/my_app.dart';
 import '../../../../utils/utils.dart';
 import '../../../auth/base/base_auth.dart';
-import '../../../blackFridayMembership/index.dart';
+import '../../../offerMembership/blackFriday/index.dart';
+import '../../../offerMembership/christmas/index.dart';
 
 class PopUpMenuButtonCommon extends StatelessWidget {
   final String symbol;
@@ -53,6 +54,13 @@ class PopUpMenuButtonCommon extends StatelessWidget {
           navigatorKey.currentContext!,
           MaterialPageRoute(
             builder: (context) => const BlackFridayMembershipIndex(),
+          ),
+        );
+      } else if (provider.user?.christmasMembership == true) {
+        Navigator.push(
+          navigatorKey.currentContext!,
+          createRoute(
+            const ChristmasMembershipIndex(),
           ),
         );
       } else {

@@ -109,16 +109,13 @@ class _HighChartsPageState extends State<HighChartsPage> {
             String clickedDescription = data['description'];
             num clickedValue = data['value'];
 
-            // Handle the clicked section data
-            print(
-                'Clicked section: $clickedName with value: $clickedValue with description: $clickedDescription');
             _detailSheet(
               label: clickedName,
               value: "$clickedValue",
               description: clickedDescription,
             );
           } catch (e) {
-            print('Error parsing JSON: $e');
+            //
           }
         },
       )

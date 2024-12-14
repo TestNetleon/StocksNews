@@ -21,7 +21,8 @@ import '../../../../../api/api_response.dart';
 import '../../../../../utils/utils.dart';
 import '../../../../../widgets/custom/warning_text.dart';
 import '../../../../auth/base/base_auth.dart';
-import '../../../../blackFridayMembership/index.dart';
+import '../../../../offerMembership/blackFriday/index.dart';
+import '../../../../offerMembership/christmas/index.dart';
 
 class NewsDetailsLock extends StatefulWidget {
   final String? slug;
@@ -132,6 +133,13 @@ class _NewsDetailsLockState extends State<NewsDetailsLock> {
           navigatorKey.currentContext!,
           MaterialPageRoute(
             builder: (context) => const BlackFridayMembershipIndex(),
+          ),
+        );
+      } else if (extra?.christmasMembership == true) {
+        Navigator.push(
+          navigatorKey.currentContext!,
+          createRoute(
+            const ChristmasMembershipIndex(),
           ),
         );
       } else {

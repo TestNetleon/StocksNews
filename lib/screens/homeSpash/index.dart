@@ -16,12 +16,13 @@ import '../../database/preference.dart';
 import '../../providers/home_provider.dart';
 import '../auth/base/base_auth.dart';
 import '../auth/refer/refer_code.dart';
-import '../blackFridayMembership/index.dart';
+import '../offerMembership/blackFriday/index.dart';
 import '../blogDetail/index.dart';
 import '../deepLinkScreen/webscreen.dart';
 import '../drawer/widgets/review_app_pop_up.dart';
 import '../helpDesk/chats/index.dart';
 import '../membership_new/membership.dart';
+import '../offerMembership/christmas/index.dart';
 import '../stockDetail/index.dart';
 
 class HomeSplash extends StatefulWidget {
@@ -258,6 +259,15 @@ class _HomeSplashState extends State<HomeSplash> {
             navigatorKey.currentContext!,
             MaterialPageRoute(
               builder: (context) => BlackFridayMembershipIndex(
+                notificationId: notificationId,
+              ),
+            ),
+          );
+        } else if (extra?.christmasMembership == true) {
+          Navigator.push(
+            navigatorKey.currentContext!,
+            createRoute(
+              ChristmasMembershipIndex(
                 notificationId: notificationId,
               ),
             ),

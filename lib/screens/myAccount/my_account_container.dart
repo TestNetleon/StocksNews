@@ -102,18 +102,6 @@ class _MyAccountContainerState extends State<MyAccountContainer>
     }
   }
 
-  // _callAPI() {
-  //   // UserProvider userProvider = context.read<UserProvider>();
-  //   // if (userProvider.user?.affiliateStatus == 0) {
-  //   //   return;
-  //   // }
-  //   LeaderBoardProvider provider = context.read<LeaderBoardProvider>();
-  //   UserProvider userProvider = context.read<UserProvider>();
-  //   if (userProvider.user?.affiliateStatus == 1) {
-  //     provider.getReferData(checkAppUpdate: false);
-  //   }
-  // }
-
   void _updateUser() {
     UserProvider provider = context.read<UserProvider>();
 
@@ -121,13 +109,6 @@ class _MyAccountContainerState extends State<MyAccountContainer>
     if (user?.email != '' && user?.email != null) {
       provider.setEmailClickText();
     }
-
-    // UserRes? user = context.read<UserProvider>().user;
-    // countryCode = user?.phoneCode == null || user?.phoneCode == ""
-    //     ? CountryCode.fromCountryCode(Intl.getCurrentLocale().split('_').last)
-    //             .dialCode ??
-    //         ""
-    //     : CountryCode.fromDialCode(user?.phoneCode ?? " ").dialCode ?? "";
 
     if (user?.phoneCode != null && user?.phoneCode != "") {
       countryCode = CountryCode.fromDialCode(user?.phoneCode ?? "").dialCode;
@@ -169,31 +150,7 @@ class _MyAccountContainerState extends State<MyAccountContainer>
           icon: Images.alertPopGIF);
       return;
     }
-    // if (!isEmail(emailController.text)) {
-    //   popUpAlert(
-    //       message: "Please enter valid email address.",
-    //       title: "Alert",
-    //       icon: Images.alertPopGIF);
-    //   return;
-    // }
-    // if (mobileController.text.isEmpty || mobileController.text.length < 10) {
-    //   popUpAlert(
-    //     message: "Please enter a valid phone number.",
-    //     title: "Alert",
-    //     icon: Images.alertPopGIF,
-    //   );
-    //   return;
-    // }
-    // if (provider.user?.phone != mobileController.text.trim()) {
-    //   Utils().showLog("mobile not exist ${provider.user?.phone}");
-    // phoneOTP(
-    //   phone: mobileController.text.trim(),
-    //   name: nameController.text.trim(),
-    //   displayName: displayController.text.trim(),
-    //   email: nameController.text.trim(),
-    // );
-    //   return;
-    // }
+
     {
       try {
         ApiResponse res = await context.read<UserProvider>().updateProfile(
@@ -204,14 +161,6 @@ class _MyAccountContainerState extends State<MyAccountContainer>
             );
         Utils().showLog('!~~~~${res.status}');
         if (res.status) {
-          // if (emailController.text != provider.user?.email) {
-          //   Utils().showLog('!!~~~~!!');
-
-          //   _sendOTP(otp: res.data["otp"].toString());
-          // } else {
-          //   Utils().showLog('~~~~~~~~~~~`');
-
-          // }
           popUpAlert(
             message: res.message ?? "",
             title: "Profile Updated",
@@ -262,37 +211,6 @@ class _MyAccountContainerState extends State<MyAccountContainer>
   Widget build(BuildContext context) {
     UserProvider provider = context.watch<UserProvider>();
     HomeProvider homeProvider = context.watch<HomeProvider>();
-
-    // if (provider.user?.phoneCode != null && provider.user?.phoneCode != "") {
-    //   countryCode =
-    //       CountryCode.fromDialCode(provider.user?.phoneCode ?? "").dialCode;
-    // } else if (geoCountryCode != null && geoCountryCode != "") {
-    //   countryCode = CountryCode.fromCountryCode(geoCountryCode!).dialCode;
-    // } else {
-    //   countryCode = CountryCode.fromCountryCode("US").dialCode;
-    // }
-
-    // final String locale = Intl.getCurrentLocale().split('_').last;
-
-    // UserRes? user = context.read<UserProvider>().user;
-    // HomeProvider provider = context.watch<HomeProvider>();
-
-    // final String locale = user?.phoneCode == null || user?.phoneCode == ""
-    //     ? Intl.getCurrentLocale().split('_').last
-    //     : CountryCode.fromDialCode(user?.phoneCode ?? " ")
-    //             .code
-    //             ?.split('_')
-    //             .last ??
-    //         "";
-
-    // String? locale;
-    // if (user?.phoneCode != null && user?.phoneCode != "") {
-    //   locale = CountryCode.fromDialCode(user!.phoneCode!).code?.split('_').last;
-    // } else if (geoCountryCode != null && geoCountryCode != "") {
-    //   locale = geoCountryCode;
-    // } else {
-    //   locale = "US";
-    // }
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

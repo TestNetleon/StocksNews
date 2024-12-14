@@ -251,8 +251,9 @@ import '../../../../route/my_app.dart';
 import '../../../../utils/colors.dart';
 import '../../../auth/base/base_auth.dart';
 import '../../../auth/membershipAsk/ask.dart';
-import '../../../blackFridayMembership/index.dart';
+import '../../../offerMembership/blackFriday/index.dart';
 import '../../../membership_new/membership.dart';
+import '../../../offerMembership/christmas/index.dart';
 
 class SlidableMenuWidget extends StatefulWidget {
   final bool up;
@@ -364,6 +365,13 @@ class _SlidableMenuWidgetState extends State<SlidableMenuWidget>
           navigatorKey.currentContext!,
           MaterialPageRoute(
             builder: (context) => const BlackFridayMembershipIndex(),
+          ),
+        );
+      } else if (provider.user?.christmasMembership == true) {
+        Navigator.push(
+          navigatorKey.currentContext!,
+          createRoute(
+            const ChristmasMembershipIndex(),
           ),
         );
       } else {

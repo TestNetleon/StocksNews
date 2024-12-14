@@ -218,7 +218,6 @@ import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:stocks_news_new/widgets/custom/refresh_indicator.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
-
 import '../../../utils/dialogs.dart';
 import '../../../utils/utils.dart';
 import '../../affiliate/pointsTransaction/trasnsaction.dart';
@@ -235,7 +234,6 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> with WidgetsBindingObserver {
   final ScrollController _scrollController = ScrollController();
   double _snackbarBottomPosition = 0;
-
   @override
   void initState() {
     super.initState();

@@ -6,9 +6,9 @@ import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
-import '../../../modals/user_res.dart';
-import '../../../utils/colors.dart';
-import '../../../utils/theme.dart';
+import '../../../../modals/user_res.dart';
+import '../../../../utils/colors.dart';
+import '../../../../utils/theme.dart';
 import '../index.dart';
 
 void blackFridayPermission() {

@@ -7,12 +7,13 @@ import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 
 class FaqItem extends StatelessWidget {
   final int openIndex;
+  final dynamic provider;
   final int index;
   final String question;
   final String answer;
-  final dynamic provider;
   final Color textColor;
   final Function()? onTap;
+  final Color? color;
 
   const FaqItem({
     super.key,
@@ -22,6 +23,7 @@ class FaqItem extends StatelessWidget {
     required this.openIndex,
     required this.index,
     this.provider,
+    this.color = ThemeColors.accent,
     this.textColor = Colors.white,
   });
 
@@ -46,7 +48,7 @@ class FaqItem extends StatelessWidget {
               children: [
                 Icon(
                   openIndex == index ? Icons.remove_rounded : Icons.add_rounded,
-                  color: ThemeColors.darkGreen,
+                  color: color,
                 ),
                 const SpacerHorizontal(width: 8),
                 Expanded(
@@ -54,9 +56,7 @@ class FaqItem extends StatelessWidget {
                     question,
                     style: stylePTSansBold(
                       fontSize: 16,
-                      color: openIndex == index
-                          ? ThemeColors.themeGreen
-                          : textColor,
+                      color: openIndex == index ? color : textColor,
                       // color: Colors.black,
                     ),
                   ),

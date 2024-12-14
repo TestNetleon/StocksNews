@@ -13,9 +13,10 @@ import '../../../modals/user_res.dart';
 import '../../../providers/home_provider.dart';
 import '../../../utils/colors.dart';
 import '../../../utils/constants.dart';
-import '../../blackFridayMembership/index.dart';
-import '../../blackFridayMembership/widgets/permission_box.dart';
+import '../../offerMembership/blackFriday/index.dart';
+import '../../offerMembership/blackFriday/widgets/permission_box.dart';
 import '../../myAccount/widgets/my-account_header.dart';
+import '../../offerMembership/christmas/index.dart';
 import 'profile_image.dart';
 
 class UserCard extends StatefulWidget {
@@ -265,6 +266,13 @@ class _UserCardState extends State<UserCard> {
         navigatorKey.currentContext!,
         MaterialPageRoute(
           builder: (context) => const BlackFridayMembershipIndex(),
+        ),
+      );
+    } else if (extra?.christmasMembership == true) {
+      Navigator.push(
+        navigatorKey.currentContext!,
+        createRoute(
+          const ChristmasMembershipIndex(),
         ),
       );
     } else {

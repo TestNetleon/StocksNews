@@ -1,25 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/membership/membership_info_res.dart';
-import 'package:stocks_news_new/providers/blackFriday/provider.dart';
-import 'package:stocks_news_new/screens/blackFridayMembership/widgets/faq.dart';
+import 'package:stocks_news_new/screens/offerMembership/blackFriday/widgets/faq.dart';
+import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
-import '../../widgets/cache_network_image.dart';
-import 'widgets/reviews.dart';
+import '../../../providers/offerMembership/christmas.dart';
+import '../../../widgets/cache_network_image.dart';
+import '../blackFriday/widgets/reviews.dart';
 import 'widgets/upgrade_plan.dart';
 
-class BlackFridayContainer extends StatefulWidget {
+class ChristmasContainer extends StatefulWidget {
   final String? inAppMsgId;
   final String? notificationId;
 
-  const BlackFridayContainer({super.key, this.inAppMsgId, this.notificationId});
+  const ChristmasContainer({super.key, this.inAppMsgId, this.notificationId});
 
   @override
-  State<BlackFridayContainer> createState() => _BlackFridayContainerState();
+  State<ChristmasContainer> createState() => _ChristmasContainerState();
 }
 
-class _BlackFridayContainerState extends State<BlackFridayContainer> {
+class _ChristmasContainerState extends State<ChristmasContainer> {
   @override
   void initState() {
     super.initState();
@@ -27,7 +28,7 @@ class _BlackFridayContainerState extends State<BlackFridayContainer> {
   }
 
   void _getMembershipInfo() {
-    BlackFridayProvider provider = context.read<BlackFridayProvider>();
+    ChristmasProvider provider = context.read<ChristmasProvider>();
     provider.getMembershipInfo(
       inAppMsgId: widget.inAppMsgId,
       notificationId: widget.notificationId,
@@ -36,7 +37,7 @@ class _BlackFridayContainerState extends State<BlackFridayContainer> {
 
   @override
   Widget build(BuildContext context) {
-    BlackFridayProvider provider = context.watch<BlackFridayProvider>();
+    ChristmasProvider provider = context.watch<ChristmasProvider>();
     MembershipInfoRes? data = provider.membershipInfoRes;
 
     return BaseUiContainer(
@@ -90,11 +91,15 @@ class _BlackFridayContainerState extends State<BlackFridayContainer> {
                   ),
 
                   const SpacerVertical(height: 10),
-                  BlackFridayUpgradeCurrentPlan(),
+                  ChristmasUpgradeCurrentPlan(),
                   const SpacerVertical(height: 10),
                   Visibility(
-                    visible: data?.testimonials != null,
-                    child: const BlackFridayReviews(),
+                    visible: data?.testimonials != null &&
+                        data?.testimonials.isNotEmpty == true,
+                    child: OfferMembershipReviews(
+                      data: data?.testimonials,
+                      color: ThemeColors.sos,
+                    ),
                   ),
                   Visibility(
                     visible: data?.testimonials != null,
@@ -102,7 +107,12 @@ class _BlackFridayContainerState extends State<BlackFridayContainer> {
                   ),
                   Visibility(
                     visible: data?.faq != null,
-                    child: const BlackFridayFaq(),
+                    child: OfferMembershipFaq(
+                      openIndex: provider.faqOpenIndex,
+                      faq: data?.faq,
+                      provider: provider,
+                      color: ThemeColors.sos,
+                    ),
                   ),
                   const SpacerVertical(height: 10),
                 ],

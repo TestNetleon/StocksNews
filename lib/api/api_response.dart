@@ -134,6 +134,7 @@ class Extra {
   final bool? showArena;
   final bool? showTradingSimulator;
   final bool? showBlackFriday;
+  final bool? christmasMembership;
   final BlackFridayRes? blackFriday;
   final List<MembershipRes>? activeMembership;
 
@@ -143,6 +144,7 @@ class Extra {
     this.activeMembership,
     this.blackFriday,
     this.showBlackFriday,
+    this.christmasMembership,
     this.showArena,
     this.showTradingSimulator,
     this.updateYourPhone,
@@ -240,6 +242,7 @@ class Extra {
                 .map((x) => MembershipRes.fromJson(x))),
 
         showBlackFriday: json['black_friday_membership'],
+        christmasMembership: json['christmas_membership'],
         blackFriday: json["black_friday"] == null
             ? null
             : BlackFridayRes.fromJson(json["black_friday"]),
@@ -401,6 +404,7 @@ class Extra {
 
   Map<String, dynamic> toJson() => {
         'black_friday_membership': showBlackFriday,
+        'christmas_membership': christmasMembership,
         "black_friday": blackFriday?.toJson(),
         "ad_managers": adManagers?.toJson(),
         "phone_code_error": phoneCodeError,

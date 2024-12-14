@@ -28,7 +28,6 @@ class _AdManagerIndexState extends State<AdManagerIndex> {
   bool _isVisible = false;
 
   // void _visibilityCall() {
-
   //   switch (widget.places) {
   //     case AdPlaces.place1:
   //       if (_isVisible && !firstCalled) {
@@ -112,10 +111,12 @@ class _AdManagerIndexState extends State<AdManagerIndex> {
     return VisibilityDetector(
       key: Key(widget.places.name),
       onVisibilityChanged: (visibilityInfo) {
-        setState(() {
-          _isVisible = handleAdVisibility(visibilityInfo);
-        });
-        _visibilityCall(widget.screen);
+        if (mounted) {
+          setState(() {
+            _isVisible = handleAdVisibility(visibilityInfo);
+          });
+          _visibilityCall(widget.screen);
+        }
       },
       child: AdManagerItem(
         margin: widget.margin,

@@ -17,7 +17,8 @@ import '../../../../utils/dialogs.dart';
 import '../../../alerts/alerts.dart';
 import '../../../auth/base/base_auth.dart';
 import '../../../auth/membershipAsk/ask.dart';
-import '../../../blackFridayMembership/index.dart';
+import '../../../offerMembership/blackFriday/index.dart';
+import '../../../offerMembership/christmas/index.dart';
 import 'alert_popup.dart';
 import 'button.dart';
 
@@ -58,6 +59,13 @@ class AddToAlertWatchlist extends StatelessWidget {
           navigatorKey.currentContext!,
           MaterialPageRoute(
             builder: (context) => const BlackFridayMembershipIndex(),
+          ),
+        );
+      } else if (provider.user?.christmasMembership == true) {
+        Navigator.push(
+          navigatorKey.currentContext!,
+          createRoute(
+            const ChristmasMembershipIndex(),
           ),
         );
       } else {

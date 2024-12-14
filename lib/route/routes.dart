@@ -107,14 +107,14 @@ import 'package:stocks_news_new/tradingSimulator/providers/ts_pending_list_provi
 import 'package:stocks_news_new/tradingSimulator/providers/ts_portfollo_provider.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/utils.dart';
-
 import '../arena/provider/trades.dart';
-import '../providers/blackFriday/provider.dart';
+import '../providers/offerMembership/black_friday.dart';
 import '../providers/featured_ticker.dart';
 import '../providers/high_low_pe.dart';
 import '../providers/low_prices_stocks.dart';
 import '../providers/missions/provider.dart';
 import '../providers/notification_settings.dart';
+import '../providers/offerMembership/christmas.dart';
 import '../providers/scroll_controller.dart';
 import '../providers/stockAnalysis/provider.dart';
 import '../screens/auth/base/base_auth.dart';
@@ -259,7 +259,6 @@ class Routes {
     //     return MaterialPageRoute(
     //       builder: (context) {
     //         final arguments = settings.arguments as Map<String, dynamic>?;
-
     //         return StockDetail(
     //           symbol: arguments?['slug'],
     //           inAppMsgId: arguments?['inAppMsgId'],
@@ -328,7 +327,6 @@ class Routes {
     //     StockStates type = arguments["type"] as StockStates;
     //     String name = arguments["name"] as String;
     //     String titleName = arguments["titleName"] as String;
-
     //     return MaterialPageRoute(
     //       builder: (context) {
     //         return SectorIndustry(
@@ -366,10 +364,8 @@ class Routes {
     //     final arguments = settings.arguments as Map<String, dynamic>;
     //     final companySlug = arguments['companySlug'] as String?;
     //     final reportingSlug = arguments['reportingSlug'] as String?;
-
     //     final companyName = arguments['companyName'] as String?;
     //     final reportingName = arguments['reportingName'] as String?;
-
     //     return MaterialPageRoute(
     //       builder: (context) {
     //         return InsiderDetailsType(
@@ -412,13 +408,11 @@ class Routes {
     //     final arguments = settings.arguments as Map<String, dynamic>?;
     //     String? slug = arguments?['slug'] as String?;
     //     String? ticketId = arguments?['ticketId'] as String?;
-
     //     return MaterialPageRoute(
     //       builder: (context) {
     //         return ChatScreen(slug: slug, ticketId: ticketId);
     //       },
     //     );
-
     //   case ViewAllList.path:
     //     final arguments = settings.arguments as Map<String, dynamic>?;
     //     String? slug = arguments?['slug'] as String?;
@@ -441,7 +435,6 @@ class Routes {
     //       },
     //     );
     // }
-
     // // return _errorRoute();
     return MaterialPageRoute(
       builder: (context) {
@@ -607,6 +600,7 @@ class Routes {
       ChangeNotifierProvider(create: (_) => ArenaProvider()),
       ChangeNotifierProvider(create: (_) => TradesProvider()),
       ChangeNotifierProvider(create: (_) => BlackFridayProvider()),
+      ChangeNotifierProvider(create: (_) => ChristmasProvider()),
     ];
   }
 }

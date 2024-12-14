@@ -261,66 +261,61 @@ class _LoginSignupIDState extends State<LoginSignupID> {
 
     return Padding(
       padding: const EdgeInsets.only(top: 10, bottom: 10),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: Stack(
         children: [
-          Stack(
-            children: [
-              HtmlWidget(
-                content,
-                customStylesBuilder: (element) {
-                  if (element.localName == 'a') {
-                    return {'color': '#1bb449', 'text-decoration': 'none'};
-                  }
-                  return null;
-                },
-                onTapUrl: (url) async {
-                  // Utils().showLog('URL => $url');
-                  // closeKeyboard();
+          HtmlWidget(
+            content,
+            customStylesBuilder: (element) {
+              if (element.localName == 'a') {
+                return {'color': '#1bb449', 'text-decoration': 'none'};
+              }
+              return null;
+            },
+            onTapUrl: (url) async {
+              // Utils().showLog('URL => $url');
+              // closeKeyboard();
 
-                  if (!(url.startsWith('https:') || url.startsWith('http:'))) {
-                    Navigator.push(
-                      context,
-                      createRoute(
-                        TCandPolicy(
-                          policyType: url == "terms-of-service"
-                              ? PolicyType.tC
-                              : PolicyType.privacy,
-                          slug: url,
-                        ),
-                      ),
-                    );
-                  } else {
-                    openUrl(url);
-                  }
-
-                  return true;
-                },
-                textStyle: styleGeorgiaRegular(
-                  height: 1.5,
-                  fontSize: widget.fontSize,
-                ),
-              ),
-              if (content.length > widget.defaultLength && !widget.showFull)
-                Positioned(
-                  right: 0,
-                  bottom: 0,
-                  child: GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        _isExpanded = !_isExpanded;
-                      });
-                    },
-                    child: Text(
-                      _isExpanded ? 'Read Less' : 'Read More',
-                      style: stylePTSansRegular(
-                        color: ThemeColors.accent,
-                      ),
+              if (!(url.startsWith('https:') || url.startsWith('http:'))) {
+                Navigator.push(
+                  context,
+                  createRoute(
+                    TCandPolicy(
+                      policyType: url == "terms-of-service"
+                          ? PolicyType.tC
+                          : PolicyType.privacy,
+                      slug: url,
                     ),
                   ),
-                ),
-            ],
+                );
+              } else {
+                openUrl(url);
+              }
+
+              return true;
+            },
+            textStyle: styleGeorgiaRegular(
+              height: 1.5,
+              fontSize: widget.fontSize,
+            ),
           ),
+          if (content.length > widget.defaultLength && !widget.showFull)
+            Positioned(
+              right: 0,
+              bottom: 0,
+              child: GestureDetector(
+                onTap: () {
+                  setState(() {
+                    _isExpanded = !_isExpanded;
+                  });
+                },
+                child: Text(
+                  _isExpanded ? 'Read Less' : 'Read More',
+                  style: stylePTSansRegular(
+                    color: ThemeColors.accent,
+                  ),
+                ),
+              ),
+            ),
         ],
       ),
     );

@@ -1,19 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/membership/membership_info_res.dart';
-import 'package:stocks_news_new/providers/blackFriday/provider.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
-class BlackFridayReviews extends StatelessWidget {
-  const BlackFridayReviews({super.key});
+class OfferMembershipReviews extends StatelessWidget {
+  final List<Testimonial>? data;
+  final Color? color;
+  const OfferMembershipReviews({
+    super.key,
+    this.data,
+    this.color = ThemeColors.accent,
+  });
 
   @override
   Widget build(BuildContext context) {
-    BlackFridayProvider provider = context.watch<BlackFridayProvider>();
-    MembershipInfoRes? data = provider.membershipInfoRes;
+    // BlackFridayProvider provider = context.watch<BlackFridayProvider>();
+    // MembershipInfoRes? data = provider.membershipInfoRes;
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 0),
@@ -44,7 +48,7 @@ class BlackFridayReviews extends StatelessWidget {
                 child: Column(
                   children: [
                     RatingBar.builder(
-                      initialRating: data?.testimonials[index].rating ?? 5,
+                      initialRating: data?[index].rating ?? 5,
                       minRating: 5,
                       direction: Axis.horizontal,
                       allowHalfRating: true,
@@ -61,18 +65,18 @@ class BlackFridayReviews extends StatelessWidget {
                     ),
                     const SpacerVertical(height: 10),
                     Text(
-                      "${data?.testimonials[index].title}",
+                      "${data?[index].title}",
                       textAlign: TextAlign.center,
                       style: styleSansBold(
                         // color: Colors.black,
-                        color: ThemeColors.accent,
+                        color: color,
                         fontSize: 20,
                       ),
                     ),
                     const SpacerVertical(height: 10),
                     Text(
                       textAlign: TextAlign.center,
-                      "${data?.testimonials[index].text}",
+                      "${data?[index].text}",
                       style: stylePTSansRegular(
                         // color: Colors.black,
                         color: Colors.white,
@@ -82,11 +86,11 @@ class BlackFridayReviews extends StatelessWidget {
                     const SpacerVertical(height: 20),
                     Text(
                       textAlign: TextAlign.center,
-                      "${data?.testimonials[index].name}",
+                      "${data?[index].name}",
                       style: stylePTSansBold(
                         // color: Colors.black,
                         // color: Colors.white,
-                        color: ThemeColors.accent,
+                        color: color,
                         fontSize: 16,
                       ),
                     ),
@@ -97,7 +101,7 @@ class BlackFridayReviews extends StatelessWidget {
             separatorBuilder: (context, index) {
               return const SpacerVertical(height: 0);
             },
-            itemCount: data?.testimonials.length ?? 0,
+            itemCount: data?.length ?? 0,
           ),
         ],
       ),

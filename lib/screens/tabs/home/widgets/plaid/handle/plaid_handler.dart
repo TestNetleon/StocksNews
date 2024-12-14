@@ -182,11 +182,11 @@ class PlaidLinkHandler {
         Utils().showLog("PLAID TOKEN ${responseData['link_token']}");
         debugPrint("Success: $responseData");
         String token = '${responseData['link_token']}';
-        LinkConfiguration configuration = LinkTokenConfiguration(
+        LinkTokenConfiguration configuration = LinkTokenConfiguration(
           token: token,
         );
 
-        PlaidLink.open(configuration: configuration);
+        PlaidLink.create(configuration: configuration);
       } else {
         debugPrint("Failed to load data: ${response.statusCode}");
         debugPrint("Response body: ${response.body}");

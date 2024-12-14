@@ -14,15 +14,22 @@ enum EventAppsFlyer {
 enum EventAmplitude {
   amp_firstopen,
   amp_signup,
-  amp_startsub,
-  amp_starttrial,
+  // amp_startsub,
+  // amp_starttrial,
 }
 
 enum EventFirebase {
   f_firstopen,
   f_signup,
-  f_startsub,
-  f_starttrial,
+  // f_startsub,
+  // f_starttrial,
+}
+
+enum EventBraze {
+  b_firstopen,
+  b_sign_up,
+  // b_startsub,
+  // b_starttrial,
 }
 
 enum RequestType { get, post }
@@ -692,7 +699,7 @@ String extractLastPathComponent(Uri uri) {
 // List<Map<String, String>> memPageList = [];
 
 extractCodeFromMEM(Uri uri, String place) {
-  Utils().showLog("PLACE $place");
+  Utils().showLog("PLACE $place, $uri");
   try {
     String uriString = uri.toString();
 

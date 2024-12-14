@@ -14,7 +14,8 @@ import '../../../widgets/spacer_vertical.dart';
 import '../../../widgets/theme_button_small.dart';
 import '../../auth/base/base_auth.dart';
 import '../../auth/membershipAsk/ask.dart';
-import '../../blackFridayMembership/index.dart';
+import '../../offerMembership/blackFriday/index.dart';
+import '../../offerMembership/christmas/index.dart';
 import '../../tabs/tabs.dart';
 
 class CommonLock extends StatelessWidget {
@@ -61,6 +62,13 @@ class CommonLock extends StatelessWidget {
               navigatorKey.currentContext!,
               MaterialPageRoute(
                 builder: (context) => const BlackFridayMembershipIndex(),
+              ),
+            );
+          } else if (extra?.christmasMembership == true) {
+            Navigator.push(
+              navigatorKey.currentContext!,
+              createRoute(
+                const ChristmasMembershipIndex(),
               ),
             );
           } else {

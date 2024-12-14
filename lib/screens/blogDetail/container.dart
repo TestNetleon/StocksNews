@@ -25,6 +25,7 @@ import 'package:stocks_news_new/widgets/progress_dialog.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/theme_button_small.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:widget_zoom/widget_zoom.dart';
 
 import '../../widgets/cache_network_image.dart';
 import '../auth/base/base_auth.dart';
@@ -241,14 +242,18 @@ class BlogDetailContainer extends StatelessWidget {
                                       }
                                       return a;
                                     },
-
-                                    // customWidgetBuilder: (element) {
-                                    //   if (element.localName == 'img') {
-                                    //     final src = element.attributes['src'];
-                                    //     return ZoomableImage(url: src ?? "");
-                                    //   }
-                                    //   return null;
-                                    // },
+                                    customWidgetBuilder: (element) {
+                                      if (element.localName == 'img') {
+                                        final src = element.attributes['src'];
+                                        return WidgetZoom(
+                                          heroAnimationTag: '$src',
+                                          zoomWidget: Image.network(
+                                            src ?? '',
+                                          ),
+                                        );
+                                      }
+                                      return null;
+                                    },
                                     onLoadingBuilder:
                                         (context, element, loadingProgress) {
                                       return const ProgressDialog();

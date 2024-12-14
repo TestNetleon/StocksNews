@@ -33,11 +33,13 @@ class UserRes {
   num? selfRank;
   // final String? blackFridayMessage;
   final bool? showBlackFriday;
+  final bool? christmasMembership;
   final BlackFridayRes? blackFriday;
   UserRes({
     // this.blackFridayMessage,
     this.blackFriday,
     this.showBlackFriday,
+    this.christmasMembership,
     this.email,
     this.membership,
     this.phone,
@@ -68,6 +70,7 @@ class UserRes {
   factory UserRes.fromJson(Map<String, dynamic> json) => UserRes(
         // blackFridayMessage: json['black_friday_message'],
         showBlackFriday: json['black_friday_membership'],
+        christmasMembership: json['christmas_membership'],
         email: json["email"],
         blackFriday: json["black_friday"] == null
             ? null
@@ -103,6 +106,7 @@ class UserRes {
   Map<String, dynamic> toJson() => {
         // 'black_friday_message': blackFridayMessage,
         'black_friday_membership': showBlackFriday,
+        "christmas_membership": christmasMembership,
         "email": email,
         "black_friday": blackFriday?.toJson(),
 
@@ -136,6 +140,7 @@ class UserRes {
 class UserMembershipRes {
   int? purchased;
   final String? displayName;
+  final String? productID;
   // final String? color;
   // final bool? canUpgrade;
   final List<MembershipPermissionRes>? permissions;
@@ -144,6 +149,7 @@ class UserMembershipRes {
   UserMembershipRes({
     this.purchased,
     this.displayName,
+    this.productID,
     // this.canUpgrade,
     // this.color,
     this.permissions,
@@ -155,6 +161,7 @@ class UserMembershipRes {
         purchased: json["purchased"],
         // canUpgrade: json['can_upgrade'],
         displayName: json["display_name"],
+        productID: json['product_id'],
         // color: json["color"],
         permissions: json["permissionsNew"] == null
             ? []
@@ -170,6 +177,7 @@ class UserMembershipRes {
   Map<String, dynamic> toJson() => {
         "purchased": purchased,
         "display_name": displayName,
+        'product_id': productID,
         // "can_upgrade": canUpgrade,
         // "color": color,
         "permissionsNew": permissions == null

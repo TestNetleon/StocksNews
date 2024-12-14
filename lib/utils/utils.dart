@@ -32,8 +32,9 @@ import '../providers/home_provider.dart';
 import '../providers/user_provider.dart';
 import '../route/my_app.dart';
 import '../screens/auth/base/base_auth.dart';
-import '../screens/blackFridayMembership/index.dart';
+import '../screens/offerMembership/blackFriday/index.dart';
 import '../screens/blogDetail/index.dart';
+import '../screens/offerMembership/christmas/index.dart';
 import '../screens/stockDetail/index.dart';
 import '../screens/tabs/news/newsDetail/new_detail.dart';
 import '../screens/tabs/tabs.dart';
@@ -700,6 +701,13 @@ void handleDeepLinkNavigation({
             navigatorKey.currentContext!,
             MaterialPageRoute(
               builder: (context) => const BlackFridayMembershipIndex(),
+            ),
+          );
+        } else if (extra?.christmasMembership == true) {
+          Navigator.push(
+            navigatorKey.currentContext!,
+            createRoute(
+              const ChristmasMembershipIndex(),
             ),
           );
         } else {

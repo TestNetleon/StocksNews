@@ -23,7 +23,8 @@ import 'package:stocks_news_new/widgets/theme_button_small.dart';
 import '../../../../utils/utils.dart';
 import '../../../../widgets/custom/confirmation_point_popup.dart';
 import '../../../auth/base/base_auth.dart';
-import '../../../blackFridayMembership/index.dart';
+import '../../../offerMembership/blackFriday/index.dart';
+import '../../../offerMembership/christmas/index.dart';
 
 class SdMorningStarLock extends StatefulWidget {
   final String symbol;
@@ -104,6 +105,13 @@ class _SdMorningStarLockState extends State<SdMorningStarLock> {
           navigatorKey.currentContext!,
           MaterialPageRoute(
             builder: (context) => const BlackFridayMembershipIndex(),
+          ),
+        );
+      } else if (provider.user?.christmasMembership == true) {
+        Navigator.push(
+          navigatorKey.currentContext!,
+          createRoute(
+            const ChristmasMembershipIndex(),
           ),
         );
       } else {

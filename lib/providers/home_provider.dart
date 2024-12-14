@@ -28,12 +28,14 @@ import 'package:stocks_news_new/modals/ipo_res.dart';
 import 'package:stocks_news_new/modals/stock_infocus.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
+import 'package:stocks_news_new/service/braze/service.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/database/preference.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import '../modals/featured_watchlist.dart';
 import '../modals/most_purchased.dart';
+import 'my_tickers.dart';
 
 class HomeProvider extends ChangeNotifier {
   // HomeRes? _home;
@@ -444,6 +446,11 @@ class HomeProvider extends ChangeNotifier {
         }
 
         notifyListeners();
+
+        if (provider.user != null) {
+          BrazeService.brazeUserEvent();
+          getMyTickers();
+        }
       } else {
         _homeSliderRes = null;
       }
@@ -1154,6 +1161,39 @@ class HomeProvider extends ChangeNotifier {
       _errorMostPurchased = Const.errSomethingWrong;
       Utils().showLog(e.toString());
       setStatusMostPurchased(Status.loaded);
+    }
+  }
+
+//MY TICKERS
+  MyTickers? _myTickers;
+  MyTickers? get myTickers => _myTickers;
+
+  Future getMyTickers({String? home}) async {
+    try {
+      FormData request = FormData.fromMap({
+        "token":
+            navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
+      });
+      ApiResponse response = await apiRequest(
+        url: Apis.myTickers,
+        formData: request,
+        showProgress: false,
+      );
+      if (response.status) {
+        _myTickers = myTickersFromJson(jsonEncode(response.data));
+
+        BrazeService.brazeBaseEvents(
+          alerts: _myTickers?.alerts,
+          watchlist: myTickers?.watchlist,
+        );
+      } else {
+        _myTickers = null;
+      }
+      notifyListeners();
+    } catch (e) {
+      _myTickers = null;
+      notifyListeners();
+      Utils().showLog(' error in my tickers $e');
     }
   }
 }

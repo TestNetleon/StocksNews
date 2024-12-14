@@ -1,26 +1,28 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:stocks_news_new/modals/membership/membership_info_res.dart';
 import 'package:stocks_news_new/screens/membership/store/faq_item.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
+import '../../../../modals/faqs_res.dart';
+import '../../../../utils/colors.dart';
+import '../../../../utils/theme.dart';
 
-import '../../../providers/blackFriday/provider.dart';
-import '../../../utils/theme.dart';
+class OfferMembershipFaq extends StatelessWidget {
+  final int openIndex;
+  final dynamic provider;
+  final List<FaQsRes>? faq;
+  final Color? color;
+  const OfferMembershipFaq({
+    super.key,
+    required this.openIndex,
+    this.provider,
+    this.faq,
+    this.color = ThemeColors.accent,
+  });
 
-class BlackFridayFaq extends StatefulWidget {
-  const BlackFridayFaq({super.key});
-
-  @override
-  State<BlackFridayFaq> createState() => _BlackFridayFaqState();
-}
-
-class _BlackFridayFaqState extends State<BlackFridayFaq> {
   // final bool _isExpanded = false;
-
   @override
   Widget build(BuildContext context) {
-    BlackFridayProvider provider = context.watch<BlackFridayProvider>();
-    MembershipInfoRes? data = provider.membershipInfoRes;
+    // BlackFridayProvider provider = context.watch<BlackFridayProvider>();
+    // MembershipInfoRes? data = provider.membershipInfoRes;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -45,17 +47,18 @@ class _BlackFridayFaqState extends State<BlackFridayFaq> {
             physics: const NeverScrollableScrollPhysics(),
             itemBuilder: (context, index) {
               return FaqItem(
-                question: "${data?.faq[index].question}",
-                answer: "${data?.faq[index].answer}",
+                question: "${faq?[index].question}",
+                answer: "${faq?[index].answer}",
                 openIndex: provider.faqOpenIndex,
                 index: index,
                 provider: provider,
+                color: color,
               );
             },
             separatorBuilder: (context, index) {
               return const SpacerVertical(height: 12);
             },
-            itemCount: data?.faq.length ?? 0,
+            itemCount: faq?.length ?? 0,
           ),
         ),
       ],

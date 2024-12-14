@@ -27,8 +27,9 @@ import 'package:stocks_news_new/utils/theme.dart';
 import 'package:vibration/vibration.dart';
 import '../../api/api_response.dart';
 import '../../utils/utils.dart';
-import '../blackFridayMembership/index.dart';
+import '../offerMembership/blackFriday/index.dart';
 import '../membership_new/membership.dart';
+import '../offerMembership/christmas/index.dart';
 
 class Tabs extends StatefulWidget {
   static const String path = "Tabs";
@@ -89,6 +90,13 @@ class _TabsState extends State<Tabs> {
         navigatorKey.currentContext!,
         createRoute(
           const BlackFridayMembershipIndex(cancel: true),
+        ),
+      );
+    } else if (extra?.christmasMembership == true) {
+      Navigator.push(
+        navigatorKey.currentContext!,
+        createRoute(
+          const ChristmasMembershipIndex(),
         ),
       );
     } else {

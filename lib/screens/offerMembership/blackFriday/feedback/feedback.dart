@@ -8,9 +8,9 @@ import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/theme_button.dart';
-import '../../../utils/constants.dart';
-import '../../../widgets/spacer_vertical.dart';
-import '../../../widgets/theme_input_field.dart';
+import '../../../../utils/constants.dart';
+import '../../../../widgets/spacer_vertical.dart';
+import '../../../../widgets/theme_input_field.dart';
 
 class FeedbackForm extends StatefulWidget {
   const FeedbackForm({super.key});

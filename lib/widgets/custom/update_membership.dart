@@ -3,10 +3,11 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/screens/membership/store/store.dart';
+import 'package:stocks_news_new/screens/offerMembership/christmas/index.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/theme_button_small.dart';
-import '../../screens/blackFridayMembership/index.dart';
+import '../../screens/offerMembership/blackFriday/index.dart';
 import '../../screens/membership_new/membership.dart';
 import '../../utils/constants.dart';
 import '../../utils/utils.dart';
@@ -31,7 +32,24 @@ class UpdateMembershipCard extends StatelessWidget {
               builder: (context) => const BlackFridayMembershipIndex(),
             ),
           );
+        } else if (extra?.christmasMembership == true) {
+          Navigator.push(
+            context,
+            createRoute(
+              const ChristmasMembershipIndex(),
+            ),
+          );
         } else {
+          // if (kDebugMode) {
+          //   //STATIC CHRISTMAS
+          //   Navigator.push(
+          //     context,
+          //     MaterialPageRoute(
+          //       builder: (context) => const ChristmasMembershipIndex(),
+          //     ),
+          //   );
+          //   return;
+          // }
           Navigator.push(
             context,
             MaterialPageRoute(

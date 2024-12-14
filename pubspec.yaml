@@ -16,7 +16,7 @@ publish_to: "none" # Remove this line if you wish to publish to pub.dev
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 # In Windows, build-name is used as the major, minor, and patch parts
 # of the product and file versions while build-number is used as the build suffix.
-version: 1.1.37+131
+version: 1.1.39+133
 
 environment:
   sdk: ">=3.2.0 <4.0.0"
@@ -33,112 +33,170 @@ dependencies:
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^1.0.2
-  flutter_screenutil: ^5.9.0
-  font_awesome_flutter: ^10.5.0
-  dio: ^5.3.2
-  shared_preferences: ^2.2.0
-  syncfusion_flutter_sliders: 
-  range_slider_flutter: ^0.0.2
+  # cupertino_icons: ^1.0.2
+  cupertino_icons: ^1.0.8
+  # flutter_screenutil: ^5.9.0
+  flutter_screenutil: ^5.9.3
+  # font_awesome_flutter: ^10.5.0
+  # font_awesome_flutter: ^10.8.0
+  # dio: ^5.3.2
+  dio: ^5.7.0
+  # shared_preferences: ^2.2.0
+  shared_preferences: ^2.3.3
+  # syncfusion_flutter_sliders: 
+  # syncfusion_flutter_sliders: ^28.1.33
+  # range_slider_flutter: ^0.0.2
   flutter_dash: ^1.0.0
   validators: ^3.0.0
   # collection:
-  http: ^1.1.0
-  intl: 
+  # http: ^1.1.0
+  http: ^1.2.2
+  # intl: 
+  intl: ^0.18.1 
   pull_to_refresh: ^2.0.0
-  url_launcher: ^6.2.1
+  # url_launcher: ^6.2.1
+  url_launcher: ^6.3.1
   provider: ^6.1.2
   # package_info_plus: ^5.0.1
-  package_info_plus: ^8.0.2
-  syncfusion_flutter_gauges: 
+  # package_info_plus: ^8.0.2
+  package_info_plus: ^8.1.2
+  # syncfusion_flutter_gauges: 
+  syncfusion_flutter_gauges: ^28.1.33
   # pinput: ^4.0.0
   pinput: ^5.0.0
-  flutter_slidable: ^3.0.1
-  change_app_package_name: ^1.1.0
+  # flutter_slidable: ^3.0.1
+  flutter_slidable: ^3.1.2
+  # change_app_package_name: ^1.1.0
+  # change_app_package_name: ^1.4.0
   # firebase_core: ^2.27.0
-  firebase_core: ^3.4.1
-  google_sign_in: ^6.1.6
-  google_sign_in_ios: ^5.6.5
+  # firebase_core: ^3.4.1
+  firebase_core: ^3.8.1
+  # google_sign_in: ^6.1.6
+  google_sign_in: ^6.2.2
+  # google_sign_in_ios: ^5.6.5
+  google_sign_in_ios: ^5.7.8
   # firebase_analytics: ^10.8.9
-  firebase_analytics: ^11.3.1
+  # firebase_analytics: ^11.3.1
+  firebase_analytics: ^11.3.6
   # firebase_messaging: ^14.9.4
-  firebase_messaging: ^15.1.1
+  # firebase_messaging: ^15.1.1
+  firebase_messaging: ^15.1.6
   # flutter_local_notifications: ^16.2.0 
   flutter_local_notifications: ^18.0.1
-  webview_flutter: ^4.8.0
-  image_picker: ^1.0.5
+  # webview_flutter: ^4.8.0
+  webview_flutter: ^4.10.0
+  # image_picker: ^1.0.5
+  image_picker: ^1.1.2
   # image_cropper: ^5.0.1
   image_cropper: ^8.0.2
-  flutter_image_compress: ^2.1.0
-  flutter_widget_from_html: ^0.15.2
+  # flutter_image_compress: ^2.1.0
+  flutter_image_compress: ^2.3.0
+  # flutter_widget_from_html: ^0.15.2
+  flutter_widget_from_html: ^0.15.3
   # fl_chart: ^0.68.0
-  fl_chart: ^0.69.0
+  # fl_chart: ^0.69.0
+  fl_chart: ^0.69.2
+  # auto_size_text: ^3.0.0
   auto_size_text: ^3.0.0
-  path_provider: ^2.1.2
+  # path_provider: ^2.1.2
+  path_provider: ^2.1.5
   flutter_keyboard_visibility: ^6.0.0
   carousel_slider: ^5.0.0
-  smooth_page_indicator: ^1.1.0
-  sign_in_with_apple: ^6.1.3
-  responsive_builder: ^0.7.0
+  # smooth_page_indicator: ^1.1.0
+  smooth_page_indicator: ^1.2.0+3
+  # sign_in_with_apple: ^6.1.3
+  sign_in_with_apple: ^6.1.4
+  # responsive_builder: ^0.7.0
+  responsive_builder: ^0.7.1
   svg_flutter: ^0.0.1
-  percent_indicator: ^4.2.3
-  share_plus: ^10.1.2
-  cached_network_image: ^3.3.1
+  # percent_indicator: ^4.2.3
+  percent_indicator: ^4.2.4
+  # share_plus: ^10.1.2
+  share_plus: ^10.1.3
+  # cached_network_image: ^3.3.1
+  cached_network_image: ^3.4.1
   simple_gradient_text: ^1.3.0
   flutter_isolate: ^2.0.5-pre
-  lottie: ^3.1.0
+  # lottie: ^3.1.0
+  lottie: ^3.1.3
   # vibration: ^1.8.4
   vibration: ^2.0.1
   permission_handler: ^11.3.1
-  geolocator: ^13.0.1
+  # geolocator: ^13.0.1
+  geolocator: ^13.0.2
   geocoding: ^3.0.0
   # firebase_in_app_messaging: ^0.7.4+17
-  firebase_in_app_messaging: ^0.8.0+6
-  modal_bottom_sheet: ^3.0.0
-  app_links: ^6.0.2
+  # firebase_in_app_messaging: ^0.8.0+6
+  firebase_in_app_messaging: ^0.8.0+11
+  # modal_bottom_sheet: ^3.0.0
+  # app_links: ^6.0.2
+  app_links: ^6.3.3
   audioplayers: ^6.1.0
   readmore: ^3.0.0
   # web_socket_channel: ^2.4.3
   web_socket_channel: ^3.0.1
-  flutter_html: ^3.0.0-beta.2
-  connectivity_plus: ^6.0.5
+  # flutter_html: ^3.0.0-beta.2
+  # connectivity_plus: ^6.0.5
+  connectivity_plus: ^6.1.1
+  # photo_view: ^0.15.0
   photo_view: ^0.15.0
-  plaid_flutter: ^3.1.8
-  sqflite: ^2.3.3+1
+  # plaid_flutter: ^3.1.8
+  plaid_flutter: ^4.1.1
+  # sqflite: ^2.3.3+1
+  sqflite: ^2.4.1
   in_app_update: ^4.2.3
-  in_app_review: ^2.0.9
+  # in_app_review: ^2.0.9
+  in_app_review: ^2.0.10
   flutter_rating_bar: ^4.0.1
-  sms_autofill: ^2.4.0
+  # sms_autofill: ^2.4.0
+  sms_autofill: ^2.4.1
   # firebase_dynamic_links: ^5.4.17
-  firebase_dynamic_links: ^6.0.6
-  fluttertoast: ^8.2.5
+  # firebase_dynamic_links: ^6.0.6
+  firebase_dynamic_links: ^6.0.11
+  # fluttertoast: ^8.2.5
+  fluttertoast: ^8.2.10
   # firebase_auth: ^4.17.8
-  firebase_auth: ^5.2.1
-  purchases_flutter: ^8.2.1
-  purchases_ui_flutter: ^8.2.1
+  # firebase_auth: ^5.2.1
+  firebase_auth: ^5.3.4
+  # purchases_flutter: ^8.2.1
+  purchases_flutter: ^8.3.1
+  # purchases_ui_flutter: ^8.2.1
+  purchases_ui_flutter: ^8.3.1
   flutter_animation_progress_bar: ^2.3.1
-  dotted_border: ^2.1.0
-  multi_charts: ^0.3.0
-  google_fonts: ^6.2.1
-  slide_to_act: ^2.0.2 
-  desktop_window: ^0.4.0
-  country_code_picker: ^3.0.0
-  webview_flutter_android: ^3.16.4
+  # dotted_border: ^2.1.0
+  # multi_charts: ^0.3.0
+  # google_fonts: ^6.2.1
+  # slide_to_act: ^2.0.2 
+  # desktop_window: ^0.4.0
+  # desktop_window: ^0.4.2
+  # country_code_picker: ^3.0.0
+  country_code_picker: ^3.1.0
+  # webview_flutter_android: ^3.16.4
+  # webview_flutter_android: ^4.2.0
   flutter_pdfview: ^1.3.4
-  flutter_animate: ^4.5.0
-  flutter_speed_dial: ^7.0.0
-  syncfusion_flutter_charts: ^27.1.58
-  widget_and_text_animator: ^1.1.5
-  floating_action_bubble_custom: ^1.0.0+2
+  # flutter_animate: ^4.5.0
+  # flutter_animate: ^4.5.2
+  # flutter_speed_dial: ^7.0.0
+  # syncfusion_flutter_charts: ^27.1.58
+  # syncfusion_flutter_charts: ^28.1.33
+  # widget_and_text_animator: ^1.1.5
+  # floating_action_bubble_custom: ^1.0.0+2
   visibility_detector: ^0.4.0+2
-  flutter_charts: ^0.5.2
+  # flutter_charts: ^0.5.2
   collection: ^1.18.0
+  # collection: ^1.19.1
   animated_flip_counter: ^0.3.4
-  onesignal_flutter: ^5.2.2
-  appsflyer_sdk: ^6.15.1
-  amplitude_flutter: ^3.16.4
+  # onesignal_flutter: ^5.2.2
+  onesignal_flutter: ^5.2.8
+  # appsflyer_sdk: ^6.15.1
+  appsflyer_sdk: ^6.15.2
+  # amplitude_flutter: ^3.16.4
+  amplitude_flutter: ^3.16.5
   flutter_rating: ^2.0.2
   app_settings: ^5.1.1
+  braze_plugin: ^12.0.0
+  widget_zoom: ^0.0.4
+  socket_io_client: ^3.0.2
   # device_info_plus: ^11.0.0
 
 

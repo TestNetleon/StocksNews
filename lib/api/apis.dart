@@ -193,6 +193,7 @@ class Apis {
   static const storeInfo = "/store-points/list";
   static const membershipInfo = "/membership/plan-data";
   static const blackFridayMembership = "/membership/black-friday-plans";
+  static const christmasMembership = "/membership/christmas-plans";
 
   static const aiNewsList = "/latest-news-v2";
   static const notificationSettings = "/notification-settings";
@@ -238,6 +239,9 @@ class Apis {
 
   static const pointClaimLog = "/point-claim-log";
   static const claimPointLog = "/referrals/claim-point-log";
+
+  //
+  static const myTickers = "/my-tickers-list";
 }
 
 class ApiKeys {

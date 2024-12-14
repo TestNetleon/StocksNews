@@ -22,6 +22,7 @@ import 'package:stocks_news_new/screens/auth/signup/signup_sheet.dart';
 import 'package:stocks_news_new/screens/auth/signup/signup_success.dart';
 import 'package:stocks_news_new/screens/drawer/widgets/review_app_pop_up.dart';
 import 'package:stocks_news_new/screens/myAccount/widgets/phone_email_otp.dart';
+import 'package:stocks_news_new/screens/offerMembership/christmas/index.dart';
 import 'package:stocks_news_new/screens/tabs/tabs.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 
@@ -31,7 +32,7 @@ import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
 
 import '../fcm/dynamic_links.service.dart';
 import '../modals/advertiser.dart';
-import '../screens/blackFridayMembership/index.dart';
+import '../screens/offerMembership/blackFriday/index.dart';
 import '../screens/membership_new/membership.dart';
 import '../service/amplitude/service.dart';
 import '../utils/dialogs.dart';
@@ -485,6 +486,13 @@ class UserProvider extends ChangeNotifier {
                   const BlackFridayMembershipIndex(cancel: true),
                 ),
               );
+            } else if (_user?.christmasMembership == true) {
+              Navigator.push(
+                navigatorKey.currentContext!,
+                createRoute(
+                  const ChristmasMembershipIndex(cancel: true),
+                ),
+              );
             } else {
               Navigator.push(
                 navigatorKey.currentContext!,
@@ -653,6 +661,13 @@ class UserProvider extends ChangeNotifier {
                 navigatorKey.currentContext!,
                 createRoute(
                   const BlackFridayMembershipIndex(cancel: true),
+                ),
+              );
+            } else if (_user?.christmasMembership == true) {
+              Navigator.push(
+                navigatorKey.currentContext!,
+                createRoute(
+                  const ChristmasMembershipIndex(cancel: true),
                 ),
               );
             } else {
@@ -942,6 +957,13 @@ class UserProvider extends ChangeNotifier {
               navigatorKey.currentContext!,
               createRoute(
                 const BlackFridayMembershipIndex(cancel: true),
+              ),
+            );
+          } else if (_user?.christmasMembership == true) {
+            Navigator.push(
+              navigatorKey.currentContext!,
+              createRoute(
+                const ChristmasMembershipIndex(cancel: true),
               ),
             );
           } else {
@@ -1515,6 +1537,9 @@ class UserProvider extends ChangeNotifier {
       setStatus(Status.loaded);
       if (response.status) {
         _user = UserRes.fromJson(response.data);
+        // BrazeService().startSession();
+        // BrazeService.brazeUserEvent();
+
         Preference.saveUser(response.data);
         isSVG = isSvgFromUrl(_user?.image);
         Utils().showLog('IS SVG $isSVG');
@@ -1560,6 +1585,13 @@ class UserProvider extends ChangeNotifier {
               navigatorKey.currentContext!,
               createRoute(
                 const BlackFridayMembershipIndex(cancel: true),
+              ),
+            );
+          } else if (_user?.christmasMembership == true) {
+            Navigator.push(
+              navigatorKey.currentContext!,
+              createRoute(
+                const ChristmasMembershipIndex(cancel: true),
               ),
             );
           } else {
@@ -1614,6 +1646,7 @@ class UserProvider extends ChangeNotifier {
       ApiResponse response = await apiRequest(
         url: Apis.proxyAdvertiser,
         type: RequestType.get,
+        checkAppUpdate: false,
       );
       if (response.status) {
         _advertiserRes = advertiserResFromJson(jsonEncode(response.data));

@@ -29,6 +29,7 @@ import 'package:stocks_news_new/widgets/screen_title.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:widget_zoom/widget_zoom.dart';
 import '../../../../providers/home_provider.dart';
 import '../../../../providers/user_provider.dart';
 import '../../../../widgets/custom/update_error.dart';
@@ -382,6 +383,19 @@ class _NewsDetailsBodyState extends State<NewsDetailsBody> {
                                                 margin: EdgeInsets.zero,
                                                 data: provider.extra?.adManagers
                                                     ?.data?.newsPlace2),
+                                          );
+                                        }
+                                        if (element.localName == 'img' &&
+                                            !(element.innerHtml
+                                                    .contains('DISPLAY_AD_1') ||
+                                                element.innerHtml.contains(
+                                                    'DISPLAY_AD_2'))) {
+                                          final src = element.attributes['src'];
+                                          return WidgetZoom(
+                                            heroAnimationTag: '$src',
+                                            zoomWidget: Image.network(
+                                              src ?? '',
+                                            ),
                                           );
                                         }
                                         return null;

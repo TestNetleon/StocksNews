@@ -43,10 +43,11 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       oneSignalInitialized = true;
+      // SocketApi().connectToServer();
       configureRevenueCatAttribute();
-      getInitialReferralsIfAny();
-      getInitialDeeplinkWhenAppOpen();
-      startListeningForDeepLinks();
+      // getInitialReferralsIfAny();
+      // getInitialDeeplinkWhenAppOpen();
+      // startListeningForDeepLinks();
     });
     WidgetsBinding.instance.addObserver(this);
   }
@@ -356,14 +357,19 @@ Future<void> configureRevenueCatAttribute() async {
       Utils().showLog('Set app instance ID => $firebaseAppInstanceId');
     }
     try {
-      AppsFlyerService(
+      final _appsFlyerService = AppsFlyerService(
         ApiKeys.appsFlyerKey,
         ApiKeys.iosAppID,
       );
+      AppsFlyerService(
+        ApiKeys.appsFlyerKey,
+        ApiKeys.iosAppID,
+      ).appsflyerDeepLink();
+
+      _appsFlyerService.appsflyerDeepLink();
     } catch (e) {
       //
     }
-
     if (Platform.isIOS) {
       await Purchases.enableAdServicesAttributionTokenCollection();
     }

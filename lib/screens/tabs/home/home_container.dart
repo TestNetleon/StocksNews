@@ -1,5 +1,5 @@
-// import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:provider/provider.dart';
@@ -59,13 +59,11 @@ class HomeContainer extends StatelessWidget {
       children: [
         // if (kDebugMode)
         //   ThemeButtonSmall(
-        //     onPressed: () {
-        //       Navigator.push(
-        //         context,
-        //         createRoute(
-        //           FeedbackForm(),
-        //         ),
-        //       );
+        //     text: 'market Data',
+        //     onPressed: () async {
+        //       UserRes? user = context.read<UserProvider>().user;
+        //       String? country = CountryCode.fromDialCode('+1').name;
+        //       print('country $country');
         //     },
         //   ),
         Visibility(

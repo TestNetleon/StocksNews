@@ -19,7 +19,7 @@ import 'package:stocks_news_new/screens/affiliate/pointsTransaction/trasnsaction
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/database/preference.dart';
 import '../screens/auth/base/base_auth.dart';
-import '../screens/blackFridayMembership/index.dart';
+import '../screens/offerMembership/blackFriday/index.dart';
 import '../utils/utils.dart';
 import 'package:stocks_news_new/screens/affiliate/index.dart';
 import 'package:stocks_news_new/screens/auth/refer/refer_code.dart';
@@ -249,6 +249,8 @@ class OneSignalService {
     }
 
     OneSignal.Notifications.addClickListener((OSNotificationClickEvent event) {
+      Utils().showLog('Listening in one signal... ');
+
       if (oneSignalInitialized && navigatorKey.currentContext != null) {
         log('Going to navigate IF');
         popHome = true;

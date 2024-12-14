@@ -8,29 +8,27 @@ import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
-import '../../../providers/blackFriday/provider.dart';
-import '../../../providers/user_provider.dart';
-import '../../../route/my_app.dart';
-import '../../../service/revenue_cat.dart';
-import '../../auth/base/base_auth.dart';
-import '../../auth/membershipAsk/ask.dart';
+import '../../../../providers/offerMembership/christmas.dart';
+import '../../../../providers/user_provider.dart';
+import '../../../../route/my_app.dart';
+import '../../../../service/revenue_cat.dart';
+import '../../../auth/base/base_auth.dart';
+import '../../../auth/membershipAsk/ask.dart';
 
-class BlackFridayUpgradeCurrentPlan extends StatefulWidget {
-  const BlackFridayUpgradeCurrentPlan({
-    super.key,
-  });
+class ChristmasUpgradeCurrentPlan extends StatefulWidget {
+  const ChristmasUpgradeCurrentPlan({super.key});
 
   @override
-  State<BlackFridayUpgradeCurrentPlan> createState() =>
-      _BlackFridayUpgradeCurrentPlanState();
+  State<ChristmasUpgradeCurrentPlan> createState() =>
+      _ChristmasUpgradeCurrentPlanState();
 }
 
-class _BlackFridayUpgradeCurrentPlanState
-    extends State<BlackFridayUpgradeCurrentPlan> {
+class _ChristmasUpgradeCurrentPlanState
+    extends State<ChristmasUpgradeCurrentPlan> {
   Future _subscribe({type, required int index}) async {
     UserProvider? provider = navigatorKey.currentContext!.read<UserProvider>();
-    BlackFridayProvider? membershipProvider =
-        navigatorKey.currentContext!.read<BlackFridayProvider>();
+    ChristmasProvider? membershipProvider =
+        navigatorKey.currentContext!.read<ChristmasProvider>();
     withLoginMembership = false;
     if (provider.user == null) {
       Utils().showLog("Ask login-----");
@@ -61,12 +59,14 @@ class _BlackFridayUpgradeCurrentPlanState
     }
     if (provider.user?.phone != null && provider.user?.phone != '') {
       Utils().showLog("Open Paywall-----");
-      await RevenueCatService.initializeSubscription(type: type);
+      await RevenueCatService.initializeSubscription(
+        type: type,
+      );
     }
   }
 
   _featuresSheet() {
-    BlackFridayProvider provider = context.read<BlackFridayProvider>();
+    ChristmasProvider provider = context.read<ChristmasProvider>();
     MembershipInfoRes? data = provider.membershipInfoRes;
 
     showModalBottomSheet(
@@ -91,7 +91,7 @@ class _BlackFridayUpgradeCurrentPlanState
             gradient: LinearGradient(
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
-              colors: [ThemeColors.bottomsheetGradient, Colors.black],
+              colors: [const Color.fromARGB(255, 35, 0, 0), Colors.black],
             ),
           ),
           child: SingleChildScrollView(
@@ -174,7 +174,7 @@ class _BlackFridayUpgradeCurrentPlanState
 
   @override
   Widget build(BuildContext context) {
-    BlackFridayProvider provider = context.watch<BlackFridayProvider>();
+    ChristmasProvider provider = context.watch<ChristmasProvider>();
     MembershipInfoRes? data = provider.membershipInfoRes;
 
     return Padding(
@@ -195,7 +195,7 @@ class _BlackFridayUpgradeCurrentPlanState
                   style: styleGeorgiaBold(
                     fontSize: 17,
                     fontStyle: FontStyle.italic,
-                    color: ThemeColors.accent,
+                    color: ThemeColors.sos,
                     decoration: TextDecoration.underline,
                   ),
                 ),
@@ -246,8 +246,8 @@ class _BlackFridayUpgradeCurrentPlanState
                             colors: [
                               // Color.fromARGB(255, 101, 1, 1),
                               // ThemeColors.sos
-                              Color.fromARGB(255, 1, 101, 16),
-                              ThemeColors.accent
+                              Color.fromARGB(255, 101, 1, 1),
+                              ThemeColors.sos,
                             ],
                           ),
                           borderRadius: BorderRadius.only(
@@ -273,7 +273,7 @@ class _BlackFridayUpgradeCurrentPlanState
                             // index == 0 && user?.membership?.canUpgrade == true
                             plan?.activeText != null && plan?.activeText != ''
                                 ? const Color(0xFF434343)
-                                : const Color(0xFF064E1F),
+                                : const Color.fromARGB(255, 78, 6, 6),
                             const Color(0xFF161616),
                           ],
                         ),
@@ -283,7 +283,7 @@ class _BlackFridayUpgradeCurrentPlanState
                               // index == 0 && user?.membership?.canUpgrade == true
                               plan?.activeText != null && plan?.activeText != ''
                                   ? Colors.grey
-                                  : ThemeColors.accent,
+                                  : ThemeColors.sos,
                         ),
                         borderRadius: BorderRadius.circular(10.0),
                       ),
@@ -325,7 +325,7 @@ class _BlackFridayUpgradeCurrentPlanState
                                   decoration: BoxDecoration(
                                     shape: BoxShape.circle,
                                     border: Border.all(
-                                      color: ThemeColors.accent,
+                                      color: ThemeColors.sos,
                                       width: 3,
                                     ),
                                   ),
@@ -334,7 +334,7 @@ class _BlackFridayUpgradeCurrentPlanState
                                     padding: const EdgeInsets.all(6.7),
                                     decoration: BoxDecoration(
                                       color: plan?.selected == true
-                                          ? ThemeColors.accent
+                                          ? ThemeColors.sos
                                           : null,
                                       shape: BoxShape.circle,
                                     ),

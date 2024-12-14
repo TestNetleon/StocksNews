@@ -1,4 +1,5 @@
 import 'package:amplitude_flutter/amplitude.dart';
+import 'package:flutter/foundation.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/api/apis.dart';
@@ -8,8 +9,8 @@ import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/service/appsFlyer/service.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/utils.dart';
-
 import '../../utils/dialogs.dart';
+import '../braze/service.dart';
 import '../firebase/service.dart';
 
 class AmplitudeService {
@@ -34,6 +35,7 @@ class AmplitudeService {
 
   //FIRST OPEN
   static void logFirstOpenEvent() async {
+    // if (kDebugMode) return;
     try {
       String? fcmToken = await Preference.getFcmToken();
       bool getFirstTime = await Preference.getAmplitudeFirstOpen();
@@ -74,6 +76,17 @@ class AmplitudeService {
               : null,
         );
 
+        // _brazeService.logEvent(
+        //   EventBraze.b_firstopen.name,
+        //   eventProperties: fcmToken != null
+        //       ? {
+        //           'FCM': fcmToken,
+        //           "build_version": versionName,
+        //           "build_code": buildNumber,
+        //         }
+        //       : null,
+        // );
+
         await Preference.setAmplitudeFirstOpen(false);
       }
     } catch (e) {
@@ -85,6 +98,8 @@ class AmplitudeService {
   static void logLoginSignUpEvent({
     required num isRegistered,
   }) async {
+    // if (kDebugMode) return;
+
     try {
       UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
       String? fcmToken = await Preference.getFcmToken();
@@ -132,21 +147,6 @@ class AmplitudeService {
       if (provider.user?.userId != null && provider.user?.userId != '') {
         _amplitude.setUserId(provider.user?.userId ?? '');
       }
-      // _logEvent(
-      //   isRegistered == 0 ? 'Log in' : 'Sign up',
-      //   eventProperties: request,
-      // );
-      // _appsFlyerService.appsFlyerLogEvent(
-      //   isRegistered == 0 ? 'Log in' : 'Sign up',
-      //   eventProperties: request,
-      //   userId: provider.user?.userId,
-      // );
-
-      // _firebaseService.firebaseLogEvent(
-      //   isRegistered == 0 ? 'login' : 'sign_up',
-      //   eventProperties: request,
-      //   userId: provider.user?.userId,
-      // );
 
       if (isRegistered == 1) {
         _logEvent(
@@ -164,12 +164,12 @@ class AmplitudeService {
           eventProperties: request,
           userId: provider.user?.userId,
         );
-      }
 
-      // logPushNotificationEnabledEvent(
-      //   request,
-      //   provider.user?.userId,
-      // );
+        BrazeService.brazeBaseEvents(
+          eventName: EventBraze.b_sign_up.name,
+          eventProperties: request,
+        );
+      }
     } catch (e) {
       //
     }
@@ -358,6 +358,7 @@ class AmplitudeService {
     String eventName, {
     Map<String, dynamic>? eventProperties,
   }) {
+    if (kDebugMode) return;
     try {
       Utils().showLog('Logging event:Amplitude $eventName');
       if (eventProperties != null) {

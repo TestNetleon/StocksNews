@@ -102,4 +102,19 @@ class AppsFlyerService {
       Utils().showLog('Error while logEvent $e');
     }
   }
+
+  void appsflyerDeepLink() {
+    try {
+      Utils().showLog('Trying to listen appsflyer deeplink...');
+      _appsFlyerSdk.onDeepLinking(
+        (result) {
+          Utils().showLog('deepLink ->> ${result.deepLink}');
+          Utils().showLog('status ->> ${result.status}');
+          Utils().showLog('error ->> ${result.error}');
+        },
+      );
+    } catch (e) {
+      Utils().showLog('deep link error ->> $e');
+    }
+  }
 }

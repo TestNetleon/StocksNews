@@ -67,7 +67,7 @@ class RevenueCatService {
         offerings = await Purchases.getOfferings();
         closeGlobalProgressDialog();
         PaywallResult result = await RevenueCatUI.presentPaywall(
-          offering: offerings.getOffering(type ?? 'access'),
+          offering: offerings.getOffering(type ?? 'monthly-premium'),
         );
 
         await _handlePaywallResult(result, isMembership: fromMembership);
