@@ -1,7 +1,7 @@
 #!/bin/sh
 # This is a generated file; do not edit or check into version control.
-export "FLUTTER_ROOT=/Users/netleonmacmini1/Documents/Flutter/flutter"
-export "FLUTTER_APPLICATION_PATH=/Users/netleonmacmini1/Documents/Flutter/workspace/StocksNewsMain"
+export "FLUTTER_ROOT=/Users/netleontechnologies/Documents/flutter"
+export "FLUTTER_APPLICATION_PATH=/Users/netleontechnologies/Documents/workspace/StocksNewsMain"
 export "COCOAPODS_PARALLEL_CODE_SIGN=true"
 export "FLUTTER_TARGET=/Users/netleonmacmini1/Documents/Flutter/workspace/StocksNewsMain/lib/main.dart"
 export "FLUTTER_BUILD_DIR=build"
