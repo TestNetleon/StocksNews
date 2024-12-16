@@ -1,24 +1,28 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:app_links/app_links.dart';
+import 'package:braze_plugin/braze_plugin.dart';
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
+import 'package:stocks_news_new/fcm/braze_service.dart';
 import 'package:stocks_news_new/modals/user_res.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/navigation_observer.dart';
 import 'package:stocks_news_new/route/routes.dart';
 import 'package:stocks_news_new/screens/splash/splash.dart';
 import 'package:stocks_news_new/service/appsFlyer/service.dart';
+import 'package:stocks_news_new/service/braze/service.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/database/preference.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/utils/utils.dart';
-
 import '../api/apis.dart';
 import '../screens/auth/base/base_auth.dart';
 
@@ -35,6 +39,18 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
+  static const platform = MethodChannel('brazeMethod');
+  static final BrazePlugin _braze = BrazePlugin(
+    customConfigs: {replayCallbacksConfigKey: true},
+    brazeSdkAuthenticationErrorHandler: (e) {
+      print('authentication error : $e ');
+    },
+  );
+  static StreamSubscription? pushEventsStreamSubscription;
+
+  final StreamController<BrazePushEvent> pushEventStreamController =
+      StreamController<BrazePushEvent>.broadcast();
+
   bool _initialDeepLinks = false;
   bool connection = true;
 
@@ -43,44 +59,90 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       oneSignalInitialized = true;
-      // SocketApi().connectToServer();
+      listenForPushToken();
+      listenForNotification();
       configureRevenueCatAttribute();
-      // getInitialReferralsIfAny();
-      // getInitialDeeplinkWhenAppOpen();
-      // startListeningForDeepLinks();
+      getInitialReferralsIfAny();
+      getInitialDeeplinkWhenAppOpen();
+      startListeningForDeepLinks();
     });
     WidgetsBinding.instance.addObserver(this);
   }
 
-  // _configureRevenueCat() async {
-  //   try {
-  //     UserRes? user = await Preference.getUser();
-  //     if (user != null) {
-  //       PurchasesConfiguration? configuration;
-  //       if (Platform.isAndroid) {
-  //         configuration =
-  //             PurchasesConfiguration("goog_KXHVJRLChlyjoOamWsqCWQSJZfI")
-  //               ..appUserID = user.userId ?? "";
-  //       } else if (Platform.isIOS) {
-  //         configuration =
-  //             PurchasesConfiguration("appl_kHwXNrngqMNktkEZJqYhEgLjbcC")
-  //               ..appUserID = user.userId ?? "";
-  //       }
-  //       if (configuration != null) {
-  //         await Purchases.configure(configuration);
-  //         if (Platform.isIOS) {
-  //           await Purchases.enableAdServicesAttributionTokenCollection();
-  //         }
-  //       }
-  //     }
-  //   } catch (e) {
-  //     //
-  //   }
-  // }
+  Future<void> listenForPushToken() async {
+    FirebaseMessaging messaging = FirebaseMessaging.instance;
+    if (Platform.isAndroid) {
+      await messaging.requestPermission();
+    }
+    String? deviceToken = await messaging.getAPNSToken();
+    String? fcmToken;
+    if (deviceToken != null && Platform.isIOS) {
+      await messaging.getToken().then((value) async {
+        if (value != null) {
+          fcmToken = value;
+          Utils().showLog("FCM Token registered with Braze: $fcmToken");
+        }
+      });
+    } else {
+      if (Platform.isAndroid) {
+        await messaging.getToken().then((value) async {
+          if (value != null) {
+            fcmToken = value;
+            BrazeService().registerFCM(fcmToken);
+            Utils().showLog("FCM Token registered with Braze: $fcmToken");
+          }
+        });
+      }
+    }
+    String? address = await BrazeNotificationService().getUserLocation();
+    BrazeNotificationService().saveFCMApi(value: fcmToken, address: address);
+  }
+
+  void listenForNotification() {
+    if (Platform.isIOS) {
+      try {
+        platform.setMethodCallHandler((call) async {
+          popHome = true;
+          if (call.method == 'onBrazeNotificationReceived') {
+            final title = call.arguments['title'];
+            final body = call.arguments['body'];
+            final userInfo = call.arguments['userInfo'];
+            Utils().showLog(
+                'Notification received: title=$title, body=$body, userInfo=$userInfo');
+          } else if (call.method == 'onBrazeNotificationOpened') {
+            final userInfo = call.arguments['userInfo'];
+            BrazeNotificationService().navigateToRequiredScreen(userInfo);
+          }
+        });
+      } catch (e) {
+        Utils().showLog('iOS notification error: $e');
+      }
+    } else {
+      try {
+        pushEventsStreamSubscription = _braze
+            .subscribeToPushNotificationEvents((BrazePushEvent pushEvent) {
+          popHome = true;
+          if (pushEvent.payloadType == 'push_opened') {
+            BrazeNotificationService()
+                .navigateToRequiredScreen(pushEvent.brazeProperties);
+          }
+        });
+      } catch (e) {
+        Utils().showLog('Android notification error: $e');
+      }
+    }
+  }
+
+  listenForInAppMessage() {
+    _braze.subscribeToInAppMessages(
+      (BrazeInAppMessage event) {},
+    );
+  }
 
   @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
+    pushEventsStreamSubscription?.cancel();
     super.dispose();
   }
 

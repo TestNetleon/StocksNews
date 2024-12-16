@@ -126,6 +126,7 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
       popHome = true;
       return;
     }
+
     // Preference.saveDataList(
     //   DeeplinkData(
     //     from: "Navigating from Splash"

@@ -1,5 +1,0 @@
- extern const unsigned char flutter_isolateVersionString[];
- extern const double flutter_isolateVersionNumber;
-
- const unsigned char flutter_isolateVersionString[] __attribute__ ((used)) = "@(#)PROGRAM:flutter_isolate  PROJECT:Pods-1" "\n";
- const double flutter_isolateVersionNumber __attribute__ ((used)) = (double)1.;

@@ -37,9 +37,23 @@
               android:name="io.flutter.embedding.android.NormalTheme"
               android:resource="@style/NormalTheme"
               />
+
+            <!-- LIVE   -->
+            <!-- <meta-data
+                android:name="com.braze.api_key"
+                android:value="0bab6bcc-5ff6-4890-886d-d3f4ee981e1b" /> -->
+
+            <!-- LOCAL   -->
+            <!-- <meta-data
+                android:name="com.braze.api_key"
+                android:value="dbb4318a-71bd-47c0-bc36-29e3d392b206" /> -->
+                
+            <!--BRAZE API KEY -->
             <meta-data
                 android:name="com.braze.api_key"
-                android:value="0bab6bcc-5ff6-4890-886d-d3f4ee981e1b" />
+                android:value="@string/braze_api_key_local" />
+
+
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>

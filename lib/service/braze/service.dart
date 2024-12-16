@@ -8,13 +8,18 @@ import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 
 class BrazeService {
-  static const MethodChannel _channel = MethodChannel('brazeMethods');
+  static const MethodChannel _channel = MethodChannel('brazeMethod');
   static final BrazePlugin _braze = BrazePlugin(
     customConfigs: {replayCallbacksConfigKey: true},
     brazeSdkAuthenticationErrorHandler: (e) {
       print('authentication error : $e ');
     },
   );
+
+  Future<void> registerFCM(pushToken) async {
+    _braze.registerPushToken(pushToken);
+    print("Registering fcm $pushToken");
+  }
 
   // INITIALIZE SDK Android
   Future<void> initialize() async {
@@ -84,171 +89,6 @@ class BrazeService {
     }
   }
 
-  // static Future<void> brazeBaseEvents({
-  //   String? userId,
-  //   String? aliasName,
-  //   String? aliasLabel,
-  //   String? eventName,
-  //   Map<String, dynamic>? eventProperties,
-  //   String? productId,
-  //   String? currencyCode,
-  //   String? price,
-  //   String? quantity,
-  //   String? firstName,
-  //   String? lastName,
-  //   String? country,
-  //   String? email,
-  //   String? phoneNumber,
-  //   List<String>? watchlist,
-  //   List<String>? alerts,
-  //   dynamic attributeValue,
-  //   String? attributionKey,
-  // }) async {
-  //   try {
-  //     // Change User if userId is provided
-  //     if (userId != null && userId != '') {
-  //       if (Platform.isAndroid) {
-  //         _braze.changeUser(userId);
-  //       } else {
-  //         await _channel.invokeMethod('changeUser', {'userId': userId});
-  //         Utils().showLog('changeUser $userId');
-  //       }
-  //     }
-  //     // Add Alias if aliasName and aliasLabel are provided
-  //     if (aliasName != null &&
-  //         aliasLabel != null &&
-  //         aliasName != '' &&
-  //         aliasLabel != '') {
-  //       if (Platform.isAndroid) {
-  //         _braze.addAlias(aliasName, aliasLabel);
-  //       } else {
-  //         await _channel.invokeMethod('addAlias', {
-  //           'aliasName': aliasName,
-  //           'aliasLabel': aliasLabel,
-  //         });
-  //       }
-  //     }
-  //     // Log Custom Event if eventName is provided
-  //     if (eventName != null && eventName != '') {
-  //       if (Platform.isAndroid) {
-  //         _braze.logCustomEvent(eventName, properties: eventProperties ?? {});
-  //       } else {
-  //         await _channel.invokeMethod('logCustomEvent', {
-  //           'eventName': eventName,
-  //           'properties': eventProperties ?? {},
-  //         });
-  //       }
-  //     }
-  //     // Log Purchase if productId, currencyCode, price, and quantity are provided
-  //     if (productId != null &&
-  //         currencyCode != null &&
-  //         price != null &&
-  //         quantity != null &&
-  //         productId != '' &&
-  //         currencyCode != '' &&
-  //         price != '' &&
-  //         quantity != '') {
-  //       if (Platform.isAndroid) {
-  //         _braze.logPurchase(
-  //           productId,
-  //           currencyCode,
-  //           double.parse(price),
-  //           int.parse(quantity),
-  //         );
-  //       } else {
-  //         await _channel.invokeMethod('logPurchase', {
-  //           'productId': productId,
-  //           'currencyCode': currencyCode,
-  //           'price': price,
-  //           'quantity': quantity,
-  //           'properties': eventProperties ?? {},
-  //         });
-  //       }
-  //     }
-  //     // Set First Name if provided
-  //     if (firstName != null && firstName != '') {
-  //       if (Platform.isAndroid) {
-  //         _braze.setFirstName(firstName);
-  //       } else {
-  //         await _channel.invokeMethod('setFirstName', {'firstName': firstName});
-  //         Utils().showLog('setFirstName $firstName');
-  //       }
-  //     }
-  //     // Set Last Name if provided
-  //     if (lastName != null && lastName != '') {
-  //       if (Platform.isAndroid) {
-  //         _braze.setFirstName(lastName);
-  //       } else {
-  //         await _channel.invokeMethod('setLastName', {'lastName': lastName});
-  //         Utils().showLog('setLastName $lastName');
-  //       }
-  //     }
-  //     // Set Country if provided
-  //     // if (country != null && country != '') {
-  //     //   await _channel.invokeMethod('setCountry', {'country': country});
-  //     // }
-  //     // Set Email if provided
-  //     if (email != null && email != '') {
-  //       if (Platform.isAndroid) {
-  //         _braze.setFirstName(email);
-  //       } else {
-  //         await _channel.invokeMethod('setEmail', {'email': email});
-  //         Utils().showLog('setEmail $email');
-  //       }
-  //     }
-  //     // Set Phone Number if provided
-  //     if (phoneNumber != null && phoneNumber != '') {
-  //       if (Platform.isAndroid) {
-  //         _braze.setFirstName(phoneNumber);
-  //       } else {
-  //         await _channel
-  //             .invokeMethod('setPhoneNumber', {'phoneNumber': phoneNumber});
-  //         Utils().showLog('setPhoneNumber $phoneNumber');
-  //       }
-  //     }
-  //     // Set Phone Number if provided
-  //     if (alerts != null && alerts.isNotEmpty) {
-  //       if (Platform.isAndroid) {
-  //         _braze.setCustomUserAttributeArrayOfStrings('alerts', alerts);
-  //       } else {
-  //         await _channel.invokeMethod('setWatchlistOrAlert', {
-  //           'eventName': 'alerts',
-  //           'tickers': alerts,
-  //         });
-  //       }
-  //     }
-  //     if (watchlist != null && watchlist.isNotEmpty) {
-  //       if (Platform.isAndroid) {
-  //         _braze.setCustomUserAttributeArrayOfStrings('watchlists', watchlist);
-  //       } else {
-  //         await _channel.invokeMethod('setWatchlistOrAlert', {
-  //           'eventName': 'watchlists',
-  //           'tickers': watchlist,
-  //         });
-  //       }
-  //     }
-  //     if (attributionKey != null && attributionKey != '') {
-  //       if (Platform.isAndroid) {
-  //         if (attributeValue is String) {
-  //           _braze.setStringCustomUserAttribute(
-  //             'attributionKey',
-  //             attributeValue,
-  //           );
-  //         } else {
-  //           _braze.setIntCustomUserAttribute('attributionKey', attributeValue);
-  //         }
-  //       } else {
-  //         await _channel.invokeMethod('setCustomAttribute', {
-  //           'key': attributionKey,
-  //           'value': attributeValue,
-  //         });
-  //       }
-  //     }
-  //   } on PlatformException catch (e) {
-  //     Utils().showLog("Failed to start session or log events: ${e.message}");
-  //   }
-  // }
-
   static Future<void> brazeBaseEvents({
     String? userId,
     String? aliasName,
@@ -286,8 +126,8 @@ class BrazeService {
           _braze.changeUser(userId);
         } else {
           await _channel.invokeMethod('changeUser', {'userId': userId});
-          Utils().showLog('changeUser $userId');
         }
+        Utils().showLog('changeUser $userId');
       }, "change user");
     }
 
@@ -397,7 +237,7 @@ class BrazeService {
     }
 
     // Set Watchlist or Alerts if provided
-    if (alerts != null && alerts.isNotEmpty) {
+    if (alerts != null) {
       await executeAction(() async {
         if (Platform.isAndroid) {
           _braze.setCustomUserAttributeArrayOfStrings('alerts', alerts);
@@ -406,11 +246,12 @@ class BrazeService {
             'eventName': 'alerts',
             'tickers': alerts,
           });
+          Utils().showLog('setAlerts ${alerts.length}');
         }
       }, "set alerts");
     }
 
-    if (watchlist != null && watchlist.isNotEmpty) {
+    if (watchlist != null) {
       await executeAction(() async {
         if (Platform.isAndroid) {
           _braze.setCustomUserAttributeArrayOfStrings('watchlists', watchlist);
@@ -419,6 +260,7 @@ class BrazeService {
             'eventName': 'watchlists',
             'tickers': watchlist,
           });
+          Utils().showLog('setWatchlists ${watchlist.length}');
         }
       }, "set watchlist");
     }

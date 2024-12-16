@@ -34,6 +34,9 @@ target 'Runner' do
   use_modular_headers!
 
   pod 'FirebaseAnalytics'
+  pod 'FirebaseMessaging'
+  pod 'FirebaseCrashlytics'
+  pod 'FirebaseAuth'
   pod 'BrazeKit'
 
 
@@ -56,8 +59,8 @@ post_install do |installer|
   end
 end
 
-target 'ImageNotification' do
-  use_frameworks!
-  pod 'Firebase/Messaging'
-  pod 'OneSignalXCFramework', '>= 5.0.0', '< 6.0'
-end
+# target 'ImageNotification' do
+#   use_frameworks!
+#   pod 'Firebase/Messaging'
+#   pod 'OneSignalXCFramework', '>= 5.0.0', '< 6.0'
+# end
