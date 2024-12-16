@@ -11,7 +11,7 @@ import '../../api/api_response.dart';
 import '../../api/apis.dart';
 import '../../modals/membership/membership_info_res.dart';
 import '../../modals/user_res.dart';
-import '../../route/my_app.dart';
+import '../../routes/my_app.dart';
 import '../../utils/constants.dart';
 import '../../utils/utils.dart';
 import '../home_provider.dart';

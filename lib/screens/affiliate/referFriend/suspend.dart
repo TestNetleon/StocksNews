@@ -4,7 +4,7 @@ import 'package:stocks_news_new/providers/leaderboard.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/theme_button_small.dart';
 
-import '../../../route/my_app.dart';
+import '../../../routes/my_app.dart';
 import '../../../utils/colors.dart';
 import '../../../utils/theme.dart';
 import '../../helpDesk/front/index.dart';

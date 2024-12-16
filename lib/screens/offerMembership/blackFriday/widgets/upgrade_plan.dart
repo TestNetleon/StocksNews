@@ -10,7 +10,7 @@ import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import '../../../../providers/offerMembership/black_friday.dart';
 import '../../../../providers/user_provider.dart';
-import '../../../../route/my_app.dart';
+import '../../../../routes/my_app.dart';
 import '../../../../service/revenue_cat.dart';
 import '../../../auth/base/base_auth.dart';
 import '../../../auth/membershipAsk/ask.dart';

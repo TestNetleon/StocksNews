@@ -314,7 +314,7 @@ import '../api/apis.dart';
 import '../modals/membership.dart';
 import '../modals/membership_success.dart';
 import '../modals/user_res.dart';
-import '../route/my_app.dart';
+import '../routes/my_app.dart';
 import '../utils/constants.dart';
 import '../utils/utils.dart';
 import 'home_provider.dart';

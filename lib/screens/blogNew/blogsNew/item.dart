@@ -10,7 +10,7 @@ import 'package:stocks_news_new/widgets/cache_network_image.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
-import '../../../route/my_app.dart';
+import '../../../routes/my_app.dart';
 
 class BlogItemNew extends StatelessWidget {
   final BlogItemRes? blogItem;

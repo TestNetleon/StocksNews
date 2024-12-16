@@ -9,7 +9,7 @@ import '../api/api_response.dart';
 import '../api/apis.dart';
 import '../modals/affiliate/refer_friend_res.dart';
 import '../modals/affiliate/transaction.dart';
-import '../route/my_app.dart';
+import '../routes/my_app.dart';
 import '../utils/constants.dart';
 import '../utils/utils.dart';
 import '../widgets/custom/alert_popup.dart';

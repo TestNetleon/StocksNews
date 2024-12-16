@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/api/api_requester.dart';
 import 'package:stocks_news_new/api/apis.dart';
 import 'package:stocks_news_new/modals/msAnalysis/radar_chart.dart';
-import 'package:stocks_news_new/route/my_app.dart';
+import 'package:stocks_news_new/routes/my_app.dart';
 import '../../api/api_response.dart';
 import '../../modals/msAnalysis/complete.dart';
 import '../../modals/msAnalysis/financials.dart';

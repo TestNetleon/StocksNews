@@ -213,7 +213,7 @@ import 'package:stocks_news_new/widgets/loading.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
-import '../../../../../../route/my_app.dart';
+import '../../../../../../routes/my_app.dart';
 import '../../../../../MsAnalysis/ms_analysis.dart';
 import '../../../../../stockDetail/index.dart';
 import 'item.dart';

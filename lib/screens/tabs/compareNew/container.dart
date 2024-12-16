@@ -6,7 +6,7 @@ import 'package:stocks_news_new/screens/tabs/compareNew/earnings/earnings.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/custom_tab_container.dart';
 
-import '../../../route/my_app.dart';
+import '../../../routes/my_app.dart';
 import '../../../utils/colors.dart';
 import '../../../utils/theme.dart';
 import '../../../widgets/custom/refresh_indicator.dart';

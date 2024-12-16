@@ -9,7 +9,7 @@ import '../../api/api_response.dart';
 import '../../api/apis.dart';
 import '../../modals/search_new.dart';
 import '../../modals/top_search_res.dart';
-import '../../route/my_app.dart';
+import '../../routes/my_app.dart';
 import '../../utils/constants.dart';
 import '../../utils/utils.dart';
 import '../../providers/user_provider.dart';

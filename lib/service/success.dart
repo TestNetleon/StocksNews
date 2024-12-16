@@ -11,7 +11,7 @@ import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import '../../../utils/colors.dart';
 import '../../../widgets/theme_button.dart';
-import '../route/my_app.dart';
+import '../routes/my_app.dart';
 
 class SubscriptionPurchased extends StatefulWidget {
   final bool isMembership;

@@ -247,7 +247,7 @@ import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import '../../../../providers/home_provider.dart';
 import '../../../../providers/user_provider.dart';
-import '../../../../route/my_app.dart';
+import '../../../../routes/my_app.dart';
 import '../../../../utils/colors.dart';
 import '../../../auth/base/base_auth.dart';
 import '../../../auth/membershipAsk/ask.dart';

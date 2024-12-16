@@ -13,7 +13,7 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
-import '../../../../../route/my_app.dart';
+import '../../../../../routes/my_app.dart';
 import '../../../../../utils/utils.dart';
 
 class HomeTopNewsSlider extends StatefulWidget {

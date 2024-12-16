@@ -10,7 +10,7 @@ import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import '../../../providers/home_provider.dart';
 import '../../../providers/notification_settings.dart';
-import '../../../route/my_app.dart';
+import '../../../routes/my_app.dart';
 import '../../../utils/constants.dart';
 import '../../../utils/dialogs.dart';
 

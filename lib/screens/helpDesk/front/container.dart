@@ -8,7 +8,7 @@ import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 
-import '../../../route/my_app.dart';
+import '../../../routes/my_app.dart';
 import '../../../widgets/custom/refresh_indicator.dart';
 import '../listing/index.dart';
 import '../listing/item.dart';

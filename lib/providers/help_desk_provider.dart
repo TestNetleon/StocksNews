@@ -14,7 +14,7 @@ import 'package:stocks_news_new/api/image_service.dart';
 import 'package:stocks_news_new/modals/help_desk_chat_res.dart';
 import 'package:stocks_news_new/modals/help_desk_res.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
-import 'package:stocks_news_new/route/my_app.dart';
+import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/utils/utils.dart';

@@ -35,7 +35,7 @@ import '../modals/stockDetailRes/analyst_forecast.dart';
 import '../modals/stockDetailRes/earnings.dart';
 import '../modals/stockDetailRes/overview.dart';
 import '../modals/technical_analysis_res.dart';
-import '../route/my_app.dart';
+import '../routes/my_app.dart';
 import '../utils/colors.dart';
 import '../utils/constants.dart';
 import '../utils/theme.dart';

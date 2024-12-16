@@ -5,7 +5,7 @@ import 'package:stocks_news_new/screens/membership_new/membership.dart';
 import '../../../api/api_response.dart';
 import '../../../providers/home_provider.dart';
 import '../../../providers/user_provider.dart';
-import '../../../route/my_app.dart';
+import '../../../routes/my_app.dart';
 import '../../../utils/colors.dart';
 import '../../../utils/constants.dart';
 import '../../../utils/theme.dart';

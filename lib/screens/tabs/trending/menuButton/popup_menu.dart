@@ -11,7 +11,7 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:provider/provider.dart';
-import '../../../../route/my_app.dart';
+import '../../../../routes/my_app.dart';
 import '../../../../utils/utils.dart';
 import '../../../auth/base/base_auth.dart';
 import '../../../offerMembership/blackFriday/index.dart';

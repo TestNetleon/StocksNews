@@ -9,7 +9,7 @@ import '../../api/api_requester.dart';
 import '../../api/api_response.dart';
 import '../../api/apis.dart';
 import '../../modals/missions/missions.dart';
-import '../../route/my_app.dart';
+import '../../routes/my_app.dart';
 import '../../screens/animation/coin_animation.dart';
 import '../../utils/constants.dart';
 

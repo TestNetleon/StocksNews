@@ -9,7 +9,7 @@ import 'package:stocks_news_new/modals/search_res.dart';
 import 'package:stocks_news_new/providers/stock_detail_new.dart';
 // import 'package:stocks_news_new/providers/search_provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
-import 'package:stocks_news_new/route/my_app.dart';
+import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/screens/search/search.dart';
 import 'package:stocks_news_new/tradingSimulator/providers/trade_provider.dart';
 import 'package:stocks_news_new/tradingSimulator/providers/trading_search_provider.dart';

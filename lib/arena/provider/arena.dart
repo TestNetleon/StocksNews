@@ -8,7 +8,7 @@ import '../../api/api_requester.dart';
 import '../../api/api_response.dart';
 import '../../api/apis.dart';
 import '../../providers/user_provider.dart';
-import '../../route/my_app.dart';
+import '../../routes/my_app.dart';
 import '../../tradingSimulator/modals/trading_search_res.dart';
 import '../../utils/constants.dart';
 import '../../utils/utils.dart';

@@ -17,7 +17,7 @@ import '../api/api_response.dart';
 import '../api/apis.dart';
 import '../api/image_service.dart';
 import '../modals/help_desk_chat_res.dart';
-import '../route/my_app.dart';
+import '../routes/my_app.dart';
 import '../screens/helpDesk/chats/index.dart';
 import '../utils/dialogs.dart';
 

@@ -23,7 +23,7 @@ import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
-import '../../../route/my_app.dart';
+import '../../../routes/my_app.dart';
 import '../../../widgets/custom/alert_popup.dart';
 
 class BaseVerifyOTP extends StatefulWidget {

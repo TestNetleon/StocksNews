@@ -14,7 +14,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../widgets/cache_network_image.dart';
 import '../../../modals/affiliate/refer_friend_res.dart';
-import '../../../route/my_app.dart';
+import '../../../routes/my_app.dart';
 import '../../../utils/constants.dart';
 
 class AffiliateReferItem extends StatelessWidget {

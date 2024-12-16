@@ -12,7 +12,7 @@ import '../api/api_response.dart';
 import '../api/apis.dart';
 import '../modals/featured_ticeker_res.dart';
 import '../modals/home_alert_res.dart';
-import '../route/my_app.dart';
+import '../routes/my_app.dart';
 import '../utils/constants.dart';
 import 'user_provider.dart';
 

@@ -9,7 +9,7 @@ import 'package:share_plus/share_plus.dart';
 import 'package:stocks_news_new/database/database_helper.dart';
 import 'package:stocks_news_new/modals/news_datail_res.dart';
 import 'package:stocks_news_new/providers/news_detail.provider.dart';
-import 'package:stocks_news_new/route/my_app.dart';
+import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/screens/AdManager/manager.dart';
 import 'package:stocks_news_new/screens/auth/base/base_auth_bottom.dart';
 import 'package:stocks_news_new/screens/blogDetail/widgets/item.dart';

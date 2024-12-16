@@ -7,7 +7,7 @@ import 'package:stocks_news_new/modals/fifty_two_weeks_res.dart';
 import 'package:stocks_news_new/providers/fifty_two_weeks_high_provider.dart';
 import 'package:stocks_news_new/providers/filter_provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
-import 'package:stocks_news_new/route/my_app.dart';
+import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/screens/alerts/alerts.dart';
 import 'package:stocks_news_new/screens/marketData/fiftyTwoWeeks/item.dart';
 import 'package:stocks_news_new/screens/marketData/widget/marketDataBottomSheet/md_bottom_sheet.dart';

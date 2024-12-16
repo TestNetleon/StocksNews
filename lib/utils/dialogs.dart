@@ -7,7 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/modals/filters_res.dart';
 import 'package:stocks_news_new/providers/filter_provider.dart';
-import 'package:stocks_news_new/route/my_app.dart';
+import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/screens/errorScreens/app_maintenance.dart';
 import 'package:stocks_news_new/screens/errorScreens/server_error.dart';
 import 'package:stocks_news_new/screens/marketData/widget/extra_sorting_list.dart';

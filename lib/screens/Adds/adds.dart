@@ -6,7 +6,7 @@ import 'package:stocks_news_new/widgets/cache_network_image.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 
 import '../../api/api_response.dart';
-import '../../route/my_app.dart';
+import '../../routes/my_app.dart';
 import '../../utils/colors.dart';
 import '../../utils/constants.dart';
 import '../../utils/theme.dart';

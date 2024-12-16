@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stocks_news_new/modals/filters_res.dart';
-import 'package:stocks_news_new/route/my_app.dart';
+import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/screens/marketData/widget/filter_multi_select_list.dart';
 import 'package:stocks_news_new/screens/marketData/widget/marketDataBottomSheet/filter_single_select_list.dart';
 import 'package:stocks_news_new/utils/colors.dart';

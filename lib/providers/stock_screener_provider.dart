@@ -10,7 +10,7 @@ import 'package:stocks_news_new/api/apis.dart';
 import 'package:stocks_news_new/modals/stock_screener_res.dart';
 import 'package:stocks_news_new/providers/filter_provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
-import 'package:stocks_news_new/route/my_app.dart';
+import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 
 class StockScreenerProvider extends ChangeNotifier {

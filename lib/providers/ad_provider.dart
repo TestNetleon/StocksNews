@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import '../api/api_requester.dart';
 import '../api/api_response.dart';
 import '../api/apis.dart';
-import '../route/my_app.dart';
+import '../routes/my_app.dart';
 import '../utils/utils.dart';
 import 'user_provider.dart';
 

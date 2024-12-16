@@ -30,7 +30,7 @@ import 'package:url_launcher/url_launcher.dart';
 import '../api/api_response.dart';
 import '../providers/home_provider.dart';
 import '../providers/user_provider.dart';
-import '../route/my_app.dart';
+import '../routes/my_app.dart';
 import '../screens/auth/base/base_auth.dart';
 import '../screens/offerMembership/blackFriday/index.dart';
 import '../screens/blogDetail/index.dart';

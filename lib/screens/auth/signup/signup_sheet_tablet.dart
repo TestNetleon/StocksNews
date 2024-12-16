@@ -23,7 +23,7 @@ import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/theme_button.dart';
 import 'package:validators/validators.dart';
 
-import '../../../route/my_app.dart';
+import '../../../routes/my_app.dart';
 import '../../../utils/utils.dart';
 import '../../../utils/validations.dart';
 import '../../../widgets/theme_input_field.dart';

@@ -15,7 +15,7 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/cache_network_image.dart';
-import '../route/my_app.dart';
+import '../routes/my_app.dart';
 import '../screens/stockDetail/index.dart';
 import 'spacer_horizontal.dart';
 

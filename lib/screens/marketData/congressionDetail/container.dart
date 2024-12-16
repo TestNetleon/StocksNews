@@ -7,7 +7,7 @@ import 'package:stocks_news_new/modals/congress_member_res.dart';
 import 'package:stocks_news_new/modals/stockDetailRes/earnings.dart';
 import 'package:stocks_news_new/providers/congressional_detail_provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
-import 'package:stocks_news_new/route/my_app.dart';
+import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/screens/alerts/alerts.dart';
 import 'package:stocks_news_new/screens/marketData/congressionDetail/item.dart';
 import 'package:stocks_news_new/screens/stockDetail/stockDetailTabs/sd_top.dart';

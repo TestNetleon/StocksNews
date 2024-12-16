@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:stocks_news_new/route/my_app.dart';
+import 'package:stocks_news_new/routes/my_app.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 // import 'package:stocks_news_new/screens/auth/otp/otp_login.dart';

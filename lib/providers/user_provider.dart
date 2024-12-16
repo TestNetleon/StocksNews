@@ -13,7 +13,7 @@ import 'package:stocks_news_new/modals/refer.dart';
 import 'package:stocks_news_new/modals/user_res.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/leaderboard.dart';
-import 'package:stocks_news_new/route/my_app.dart';
+import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/screens/auth/bottomSheets/refer_sheet.dart';
 import 'package:stocks_news_new/screens/auth/login/otp_sheet_login.dart';
 import 'package:stocks_news_new/screens/auth/signup/otp_sheet_signup.dart';

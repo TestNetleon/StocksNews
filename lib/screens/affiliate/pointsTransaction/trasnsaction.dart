@@ -19,7 +19,7 @@ import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/theme_button.dart';
 
 import '../../../modals/affiliate/transaction.dart';
-import '../../../route/my_app.dart';
+import '../../../routes/my_app.dart';
 import '../../../utils/colors.dart';
 import '../../../utils/constants.dart';
 import '../../../utils/utils.dart';

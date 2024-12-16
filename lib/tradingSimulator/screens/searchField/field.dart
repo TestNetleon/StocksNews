@@ -11,7 +11,7 @@ import 'package:stocks_news_new/utils/colors.dart';
 import '../../../api/api_response.dart';
 import '../../../modals/search_res.dart';
 import '../../../providers/stock_detail_new.dart';
-import '../../../route/my_app.dart';
+import '../../../routes/my_app.dart';
 import '../../../utils/constants.dart';
 import '../../../utils/theme.dart';
 import '../../../utils/utils.dart';
