@@ -34,7 +34,7 @@ class MsStockTopRes {
   final String? image;
   // final num? isAlertAdded;
   // final num? isWatchlistAdded;
-  // final String? shareUrl;
+  final String? shareUrl;
 
   MsStockTopRes({
     this.symbol,
@@ -65,7 +65,7 @@ class MsStockTopRes {
     this.image,
     // this.isAlertAdded,
     // this.isWatchlistAdded,
-    // this.shareUrl,
+    this.shareUrl,
   });
 
   factory MsStockTopRes.fromJson(Map<String, dynamic> json) => MsStockTopRes(
@@ -97,7 +97,7 @@ class MsStockTopRes {
         image: json["image"],
         // isAlertAdded: json["is_alert_added"],
         // isWatchlistAdded: json["is_watchlist_added"],
-        // shareUrl: json["share_url"],
+        shareUrl: json["share_url"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -129,6 +129,6 @@ class MsStockTopRes {
         "image": image,
         // "is_alert_added": isAlertAdded,
         // "is_watchlist_added": isWatchlistAdded,
-        // "share_url": shareUrl,
+        "share_url": shareUrl,
       };
 }

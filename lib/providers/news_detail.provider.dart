@@ -13,6 +13,8 @@ import 'package:stocks_news_new/database/preference.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
 
+import '../service/braze/service.dart';
+
 class NewsDetailProvider extends ChangeNotifier {
   String? _error;
   Status _status = Status.ideal;
@@ -88,6 +90,23 @@ class NewsDetailProvider extends ChangeNotifier {
       if (response.status) {
         _data = newsDetailDataResFromJson(jsonEncode(response.data));
         Preference.saveReferInput(_extra?.affiliateInput == 1);
+
+        try {
+          List<String>? featured;
+          if (_data?.postDetail?.tickers != null &&
+              _data?.postDetail?.tickers?.isNotEmpty == true) {
+            featured = _data?.postDetail?.tickers?.map((ticker) {
+              return ticker.symbol ?? '';
+            }).toList();
+          }
+          BrazeService.eventContentView(
+            screenType: 'news_detail',
+            source: _data?.postDetail?.slug ?? "",
+            featuredStocks: featured,
+          );
+        } catch (e) {
+          //
+        }
       } else {
         _data = null;
         _error = response.message;

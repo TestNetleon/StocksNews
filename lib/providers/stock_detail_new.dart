@@ -36,6 +36,7 @@ import '../modals/stockDetailRes/earnings.dart';
 import '../modals/stockDetailRes/overview.dart';
 import '../modals/technical_analysis_res.dart';
 import '../routes/my_app.dart';
+import '../service/braze/service.dart';
 import '../utils/colors.dart';
 import '../utils/constants.dart';
 import '../utils/theme.dart';
@@ -469,6 +470,8 @@ class StockDetailProviderNew extends ChangeNotifier {
         _tabRes?.tabs?.removeWhere((tab) => tab.name == "Social Activities");
         _extra = (response.extra is Extra ? response.extra as Extra : null);
         Preference.saveReferInput(_extra?.affiliateInput == 1);
+        BrazeService.eventContentView(
+            screenType: 'ticker_detail', source: _tabRes?.shareUrl ?? '');
 
         if (_tabRes != null) {
           // getPlaidPortfolioData(name: _tabs[selectedTab]);

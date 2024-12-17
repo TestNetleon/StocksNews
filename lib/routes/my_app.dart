@@ -40,6 +40,8 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   static const platform = MethodChannel('brazeMethod');
+  static const deeplinkPlatform = MethodChannel('deepLinkChannel');
+
   static final BrazePlugin _braze = BrazePlugin(
     customConfigs: {replayCallbacksConfigKey: true},
     brazeSdkAuthenticationErrorHandler: (e) {
@@ -59,9 +61,12 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       oneSignalInitialized = true;
+
       listenForPushToken();
       listenForNotification();
+      listenForInAppMessage();
       configureRevenueCatAttribute();
+      // brazeDeepLink();
       getInitialReferralsIfAny();
       getInitialDeeplinkWhenAppOpen();
       startListeningForDeepLinks();
@@ -135,8 +140,26 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
 
   listenForInAppMessage() {
     _braze.subscribeToInAppMessages(
-      (BrazeInAppMessage event) {},
+      (BrazeInAppMessage event) {
+        Utils().showLog('in app message ${event.extras}');
+      },
     );
+  }
+
+  brazeDeepLink() {
+    deeplinkPlatform.setMethodCallHandler((call) async {
+      if (call.method == 'receiveDeepLink') {
+        try {
+          Utils().showLog('got deep link ${call.arguments}');
+          final Uri deepLink = Uri.parse(call.arguments);
+          DeeplinkEnum type = containsSpecificPath(deepLink);
+          Utils().showLog('type link $type');
+          handleDeepLinkNavigation(uri: deepLink);
+        } catch (e) {
+          Utils().showLog('error $e');
+        }
+      }
+    });
   }
 
   @override

@@ -11,6 +11,7 @@ import '../../modals/msAnalysis/complete.dart';
 import '../../modals/msAnalysis/financials.dart';
 import '../../modals/msAnalysis/ms_top_res.dart';
 import '../../modals/msAnalysis/other_stocks.dart';
+import '../../service/braze/service.dart';
 import '../../utils/constants.dart';
 import '../../utils/utils.dart';
 import '../user_provider.dart';
@@ -161,6 +162,11 @@ class MSAnalysisProvider extends ChangeNotifier {
         _topData = msStockTopResFromJson(jsonEncode(response.data));
         _errorTop = null;
         _extraTop = (response.extra is Extra ? response.extra as Extra : null);
+
+        BrazeService.eventContentView(
+          screenType: 'stock_analysis',
+          source: _topData?.shareUrl,
+        );
       } else {
         _topData = null;
         _errorTop = response.message;

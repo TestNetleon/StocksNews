@@ -11,6 +11,7 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 
 import '../api/api_response.dart';
+import '../service/braze/service.dart';
 import 'user_provider.dart';
 
 class AIProvider extends ChangeNotifier {
@@ -145,6 +146,11 @@ class AIProvider extends ChangeNotifier {
       );
       if (response.status) {
         _detail = newsDetailDataResFromJson(jsonEncode(response.data));
+
+        BrazeService.eventContentView(
+          screenType: 'blog_detail',
+          source: _detail?.postDetail?.slug ?? "",
+        );
       } else {
         _detail = null;
         _errorDetail = response.message;

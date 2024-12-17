@@ -14,6 +14,8 @@ import 'package:stocks_news_new/database/preference.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
 
+import '../service/braze/service.dart';
+
 //
 class BlogProvider extends ChangeNotifier {
   BlogsRes? _data;
@@ -210,6 +212,10 @@ class BlogProvider extends ChangeNotifier {
         _blogsDetail = BlogsDetailRes.fromJson(response.data);
         _extra = (response.extra is Extra ? response.extra as Extra : null);
         Preference.saveReferInput(_extra?.affiliateInput == 1);
+        BrazeService.eventContentView(
+          screenType: 'blog_detail',
+          source: _blogsDetail?.slug ?? '',
+        );
       } else {
         _blogsDetail = null;
         _error = response.message;

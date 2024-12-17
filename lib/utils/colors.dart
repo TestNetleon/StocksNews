@@ -16,6 +16,23 @@ class ThemeColors {
       900: Color(0xFF000000),
     },
   );
+
+  static const MaterialColor whitePalette = MaterialColor(
+    0xFFFFFFFF, // Base color (white)
+    <int, Color>{
+      50: Color(0xFFFFFFFF), // 100% white
+      100: Color(0xFFFAFAFA), // Slightly darker white
+      200: Color(0xFFF5F5F5), // Light grayish white
+      300: Color(0xFFEEEEEE), // Grayish white
+      400: Color(0xFFE0E0E0), // Light gray
+      500: Color(0xFFBDBDBD), // Mid gray (neutral)
+      600: Color(0xFF9E9E9E), // Dark gray
+      700: Color(0xFF757575), // Very dark gray
+      800: Color(0xFF616161), // Near black
+      900: Color(0xFF424242), // Almost black
+    },
+  );
+
 //
 
   static const MaterialColor blackShade = MaterialColor(

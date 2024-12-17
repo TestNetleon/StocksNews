@@ -26,8 +26,10 @@ enum EventFirebase {
 }
 
 enum EventBraze {
-  b_firstopen,
+  // b_firstopen,
   b_sign_up,
+  upgrade_screen_view,
+  content_view,
   // b_startsub,
   // b_starttrial,
 }

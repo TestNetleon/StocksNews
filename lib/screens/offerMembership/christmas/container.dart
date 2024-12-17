@@ -6,6 +6,7 @@ import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import '../../../providers/offerMembership/christmas.dart';
+import '../../../service/braze/service.dart';
 import '../../../widgets/cache_network_image.dart';
 import '../blackFriday/widgets/reviews.dart';
 import 'widgets/upgrade_plan.dart';
@@ -24,7 +25,10 @@ class _ChristmasContainerState extends State<ChristmasContainer> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) => _getMembershipInfo());
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _getMembershipInfo();
+      BrazeService.membershipVisit();
+    });
   }
 
   void _getMembershipInfo() {

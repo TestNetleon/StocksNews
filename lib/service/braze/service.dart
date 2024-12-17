@@ -1,11 +1,15 @@
 import 'dart:io';
 import 'package:braze_plugin/braze_plugin.dart';
 import 'package:flutter/services.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/user_res.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/utils/utils.dart';
+
+import '../../database/preference.dart';
+import '../../utils/constants.dart';
 
 class BrazeService {
   static const MethodChannel _channel = MethodChannel('brazeMethod');
@@ -89,6 +93,68 @@ class BrazeService {
     }
   }
 
+  static Future<void> membershipVisit() async {
+    UserRes? user = navigatorKey.currentContext!.read<UserProvider>().user;
+    if (user?.membership?.purchased == 1) return;
+    String? fcmToken = await Preference.getFcmToken();
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+    String versionName = packageInfo.version;
+    String buildNumber = packageInfo.buildNumber;
+    String? referralCode = await Preference.getReferral();
+
+    Map<String, dynamic> request = {
+      "build_version": versionName,
+      "build_code": buildNumber,
+      "platform": Platform.operatingSystem,
+    };
+    if (user?.userId != null && user?.userId != '') {
+      request['external_id'] = user?.userId;
+    }
+    if (memCODE != null && memCODE != '') {
+      request['distributor_code'] = memCODE;
+    }
+    if (referralCode != null && referralCode != '') {
+      request['referral_code'] = referralCode;
+    }
+    if (fcmToken != null && fcmToken != '') {
+      request['fcm_token'] = fcmToken;
+    }
+
+    brazeBaseEvents(
+      eventName: EventBraze.upgrade_screen_view.name,
+      eventProperties: request,
+    );
+  }
+
+  static Future<void> eventContentView({
+    required String screenType,
+    String? source,
+    List<String>? featuredStocks,
+  }) async {
+    UserRes? user = navigatorKey.currentContext!.read<UserProvider>().user;
+
+    Map<String, dynamic> request = {};
+
+    request['type'] = screenType;
+
+    if (user?.userId != null && user?.userId != '') {
+      request['id'] = user?.userId;
+    }
+
+    if (source != null && source != '') {
+      request['source'] = source;
+    }
+
+    if (featuredStocks != null && featuredStocks.isNotEmpty) {
+      request['featured_stocks'] = featuredStocks;
+    }
+
+    brazeBaseEvents(
+      eventName: EventBraze.content_view.name,
+      eventProperties: request,
+    );
+  }
+
   static Future<void> brazeBaseEvents({
     String? userId,
     String? aliasName,
@@ -158,6 +224,7 @@ class BrazeService {
             'eventName': eventName,
             'properties': eventProperties ?? {},
           });
+          Utils().showLog('logCustomEvent $eventName');
         }
       }, "log custom event");
     }

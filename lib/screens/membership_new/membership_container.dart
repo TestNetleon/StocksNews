@@ -4,6 +4,7 @@ import 'package:stocks_news_new/modals/membership/membership_info_res.dart';
 import 'package:stocks_news_new/providers/membership.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
+import '../../service/braze/service.dart';
 import 'widgtes/faq.dart';
 import 'widgtes/reviews.dart';
 import 'widgtes/upgrade_plan.dart';
@@ -23,7 +24,10 @@ class _NewMembershipContainerState extends State<NewMembershipContainer> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) => _getMembershipInfo());
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _getMembershipInfo();
+      BrazeService.membershipVisit();
+    });
   }
 
   void _getMembershipInfo() {

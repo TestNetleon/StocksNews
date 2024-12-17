@@ -584,4 +584,27 @@ override func userNotificationCenter(
   }
 }
 
+  // Delegate method for handling custom scheme links.
+  override func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
+    forwardURL(url)
+    return true
+  }
+
+  // Delegate method for handling universal links.
+  override func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
+    guard userActivity.activityType == NSUserActivityTypeBrowsingWeb,
+        let url = userActivity.webpageURL else {
+      return false
+    }
+    forwardURL(url)
+    return true
+  }
+
+  private func forwardURL(_ url: URL) {
+     print("Received deep link: \(url.absoluteString)")
+    guard let controller: FlutterViewController = window?.rootViewController as? FlutterViewController else { return }
+    let deepLinkChannel = FlutterMethodChannel(name: "deepLinkChannel", binaryMessenger: controller.binaryMessenger)
+    deepLinkChannel.invokeMethod("receiveDeepLink", arguments: url.absoluteString)
+  }
+
 }
