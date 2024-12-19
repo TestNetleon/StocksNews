@@ -33,12 +33,12 @@ target 'Runner' do
   use_frameworks!
   use_modular_headers!
 
+  pod 'FirebaseCore'
   pod 'FirebaseAnalytics'
   pod 'FirebaseMessaging'
   pod 'FirebaseCrashlytics'
   pod 'FirebaseAuth'
-  pod 'BrazeKit'
-
+  # pod 'BrazeKit'
 
   flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
 #  target 'RunnerTests' do

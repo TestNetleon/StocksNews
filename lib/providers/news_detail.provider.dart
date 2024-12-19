@@ -100,7 +100,7 @@ class NewsDetailProvider extends ChangeNotifier {
             }).toList();
           }
           BrazeService.eventContentView(
-            screenType: 'news_detail',
+            screenType: 'article',
             source: _data?.postDetail?.slug ?? "",
             featuredStocks: featured,
           );

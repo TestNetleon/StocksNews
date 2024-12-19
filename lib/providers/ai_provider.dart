@@ -148,7 +148,7 @@ class AIProvider extends ChangeNotifier {
         _detail = newsDetailDataResFromJson(jsonEncode(response.data));
 
         BrazeService.eventContentView(
-          screenType: 'blog_detail',
+          screenType: 'article',
           source: _detail?.postDetail?.slug ?? "",
         );
       } else {

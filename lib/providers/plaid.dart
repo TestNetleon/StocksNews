@@ -5,7 +5,6 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/api/api_requester.dart';
 import 'package:stocks_news_new/api/api_response.dart';
@@ -17,8 +16,6 @@ import 'package:stocks_news_new/screens/tabs/home/widgets/plaid/portfolio/index.
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
-
-import '../service/braze/service.dart';
 import 'user_provider.dart';
 
 class PlaidProvider extends ChangeNotifier {
@@ -286,7 +283,7 @@ class PlaidProvider extends ChangeNotifier {
       );
       if (response.status) {
         _data = plaidDataResFromJson(jsonEncode(response.data));
-        BrazeService.eventContentView(screenType: 'portfolio');
+        // BrazeService.eventContentView(screenType: 'portfolio');
         _extra = (response.extra is Extra ? response.extra as Extra : null);
       } else {
         _data = null;

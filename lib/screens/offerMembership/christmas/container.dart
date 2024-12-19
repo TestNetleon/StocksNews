@@ -77,7 +77,7 @@ class _ChristmasContainerState extends State<ChristmasContainer> {
                       ),
                       border: Border(
                         top: BorderSide(
-                          color: Colors.green,
+                          color: ThemeColors.sos,
                           width: 1,
                         ),
                       ),
@@ -102,7 +102,8 @@ class _ChristmasContainerState extends State<ChristmasContainer> {
                         data?.testimonials.isNotEmpty == true,
                     child: OfferMembershipReviews(
                       data: data?.testimonials,
-                      color: ThemeColors.sos,
+                      // color: ThemeColors.sos,
+                      color: Color.fromARGB(255, 207, 25, 25),
                     ),
                   ),
                   Visibility(

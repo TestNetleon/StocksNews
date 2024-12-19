@@ -1,5 +1,8 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:io';
+import 'package:braze_plugin/braze_plugin.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
@@ -17,6 +20,7 @@ import '../providers/home_provider.dart';
 import '../providers/user_provider.dart';
 import '../screens/auth/base/base_auth.dart';
 import '../screens/offerMembership/blackFriday/index.dart';
+import '../service/braze/service.dart';
 import '../utils/utils.dart';
 import 'package:stocks_news_new/screens/affiliate/index.dart';
 import 'package:stocks_news_new/screens/auth/refer/refer_code.dart';
@@ -31,9 +35,110 @@ import '../screens/tabs/news/newsDetail/new_detail.dart';
 import '../widgets/custom/alert_popup.dart';
 
 class BrazeNotificationService {
+  // BrazePlugin braze = BrazePlugin();
+  // static StreamSubscription? pushEventsStreamSubscription;
+  // static StreamSubscription? inAppMessageStreamSubscription;
+
+  // brazeNotificationInitialize() {
+  //   listenForPushToken();
+  //   listenForNotification();
+  //   listenForInAppMessage();
+  // }
+
+  // listenForInAppMessage() {
+  //   try {
+  //     inAppMessageStreamSubscription = braze.subscribeToInAppMessages(
+  //       (BrazeInAppMessage pushEvent) {
+  //         Utils().showLog('in app message event $pushEvent');
+
+  //         braze.logInAppMessageClicked(pushEvent);
+  //         braze.logInAppMessageClicked(pushEvent);
+  //       },
+  //     );
+  //   } catch (e) {
+  //     Utils().showLog('in app message error: $e');
+  //   }
+  // }
+
+  // Future<void> listenForPushToken() async {
+  //   FirebaseMessaging messaging = FirebaseMessaging.instance;
+  //   await messaging.requestPermission();
+
+  //   String? deviceToken = await messaging.getAPNSToken();
+  //   String? fcmToken;
+
+  //   await messaging.getToken().then((value) async {
+  //     if (value != null) {
+  //       fcmToken = value;
+  //       if (Platform.isAndroid) {
+  //         BrazeService().registerFCM(fcmToken);
+  //       } else {
+  //         // BrazeService().registerFCM(deviceToken);
+  //       }
+  //       Utils().showLog("FCM Token: $fcmToken");
+  //       Utils().showLog("DEVICE Token: $deviceToken");
+  //     }
+  //   });
+
+  //   String? address = await BrazeNotificationService().getUserLocation();
+  //   BrazeNotificationService().saveFCMApi(value: fcmToken, address: address);
+  // }
+
+  // void listenForNotification() {
+  //   try {
+  //     pushEventsStreamSubscription =
+  //         braze.subscribeToPushNotificationEvents((BrazePushEvent pushEvent) {
+  //       if (pushEvent.payloadType == 'push_opened') {
+  //         popHome = true;
+  //         Utils().showLog('data received: $pushEvent');
+
+  //         NotificationDataPref notification = NotificationDataPref(
+  //           type: pushEvent.payloadType,
+  //           android: json.encode(pushEvent.android),
+  //           ios: json.encode(pushEvent.ios),
+  //           pushEventJsonString: pushEvent.pushEventJsonString,
+  //           brazeProperties: json.encode(pushEvent.brazeProperties),
+  //         );
+  //         NotificationPreferences.saveNotification(notification);
+  //         try {
+  //           // Parse the push notification JSON
+  //           final Map<String, dynamic> notificationData =
+  //               jsonDecode(pushEvent.pushEventJsonString);
+
+  //           String? type;
+  //           String? slug;
+
+  //           if (Platform.isIOS) {
+  //             type = notificationData['ios']['raw_payload']['type'];
+  //             slug = notificationData['ios']['raw_payload']['slug'];
+  //           } else {
+  //             type = pushEvent.brazeProperties['type'];
+  //             slug = pushEvent.brazeProperties['slug'];
+  //           }
+
+  //           if (type != null && slug != null) {
+  //             BrazeNotificationService().navigateToRequiredScreen({
+  //               'type': type,
+  //               'slug': slug,
+  //             });
+  //           } else {
+  //             Utils().showLog(
+  //                 'Required fields "type" or "slug" not found in notification payload.');
+  //           }
+  //         } catch (e) {
+  //           Utils().showLog('Error parsing notification JSON: $e');
+  //         }
+  //       }
+  //     });
+  //   } catch (e) {
+  //     Utils().showLog('Notification error: $e');
+  //   }
+  // }
+
   Future<String?> getUserLocation() async {
     try {
       LocationPermission permission = await Geolocator.requestPermission();
+      Utils().showLog('location permission $permission');
       if (permission == LocationPermission.denied) {
         return null;
       }
@@ -104,7 +209,7 @@ class BrazeNotificationService {
 
     String? type = userInfo["type"];
     String? slug = userInfo['slug'];
-    String? notificationId = userInfo['notification_id'];
+    // String? notificationId = userInfo['notification_id'];
     isAppUpdating = false;
     Utils().showLog('Type is $type, Slug is $slug');
     // userInteractionEventCommon(
@@ -140,7 +245,7 @@ class BrazeNotificationService {
           MaterialPageRoute(
             builder: (_) => NewsDetails(
               slug: slug,
-              notificationId: notificationId,
+              // notificationId: notificationId,
             ),
           ),
         );
@@ -150,7 +255,7 @@ class BrazeNotificationService {
           MaterialPageRoute(
             builder: (context) => WebviewLink(
               stringURL: slug,
-              notificationId: notificationId,
+              // notificationId: notificationId,
             ),
           ),
         );
@@ -160,7 +265,7 @@ class BrazeNotificationService {
           MaterialPageRoute(
             builder: (context) => BlogDetail(
               slug: slug ?? "",
-              notificationId: notificationId,
+              // notificationId: notificationId,
             ),
           ),
         );
@@ -193,7 +298,7 @@ class BrazeNotificationService {
           MaterialPageRoute(
             builder: (_) => StockDetail(
               symbol: "$slug",
-              notificationId: notificationId,
+              // notificationId: notificationId,
             ),
           ),
         );
@@ -252,8 +357,8 @@ class BrazeNotificationService {
           navigatorKey.currentContext!,
           MaterialPageRoute(
             builder: (_) => Tabs(
-              inAppMsgId: notificationId,
-            ),
+                // inAppMsgId: notificationId,
+                ),
           ),
         );
         Timer(const Duration(milliseconds: 300), () {
@@ -270,7 +375,9 @@ class BrazeNotificationService {
         Navigator.pushReplacement(
           navigatorKey.currentContext!,
           MaterialPageRoute(
-            builder: (_) => Tabs(inAppMsgId: notificationId),
+            builder: (_) => Tabs(
+                // inAppMsgId: notificationId,
+                ),
           ),
         );
       }

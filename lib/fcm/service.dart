@@ -18,7 +18,6 @@
 // import 'package:stocks_news_new/modals/in_app_msg_res.dart';
 // import 'package:stocks_news_new/providers/home_provider.dart';
 // import 'package:stocks_news_new/providers/user_provider.dart';
-// import 'package:stocks_news_new/route/my_app.dart';
 // import 'package:stocks_news_new/screens/affiliate/index.dart';
 // import 'package:stocks_news_new/screens/auth/refer/refer_code.dart';
 // import 'package:stocks_news_new/screens/blogDetail/index.dart';
@@ -27,6 +26,7 @@
 // import 'package:stocks_news_new/screens/tabs/tabs.dart';
 // import 'package:stocks_news_new/utils/constants.dart';
 // import 'package:stocks_news_new/database/preference.dart';
+// import '../routes/my_app.dart';
 // import '../screens/auth/base/base_auth.dart';
 // import '../screens/drawer/widgets/review_app_pop_up.dart';
 // import '../screens/helpDesk/chats/index.dart';
@@ -321,68 +321,68 @@
 //       if (data.isEmpty) return;
 //       BigPictureStyleInformation? information;
 
-//       if (image != null) {
-//         final String bigPicturePath =
-//             await _downloadAndSaveFile(image, 'bigPicture');
-//         information = BigPictureStyleInformation(
-//           FilePathAndroidBitmap(bigPicturePath),
-//           contentTitle: data["title"],
-//           summaryText: data["message"],
-//         );
-//       }
+//       // if (image != null) {
+//       //   final String bigPicturePath =
+//       //       await _downloadAndSaveFile(image, 'bigPicture');
+//       //   information = BigPictureStyleInformation(
+//       //     FilePathAndroidBitmap(bigPicturePath),
+//       //     contentTitle: data["title"],
+//       //     summaryText: data["message"],
+//       //   );
+//       // }
 
 //       // Utils().showLog("THIS IS BIGIMAGE NOTIFICATION ${information != null}");
 
-//       if (Platform.isAndroid) {
-//         _localNotifications.show(
-//           data.hashCode,
-//           data["title"],
-//           data["message"],
-//           // null, null,
-//           NotificationDetails(
-//             android: AndroidNotificationDetails(
-//               _androidChannel.id,
-//               _androidChannel.name,
-//               playSound: true,
-//               sound: const RawResourceAndroidNotificationSound('notifications'),
-//               enableVibration: true,
-//               importance: Importance.max,
-//               icon: "mipmap/ic_launcher_round", //CHANGE ICON
-//               styleInformation: image != null
-//                   ? information
-//                   : BigTextStyleInformation(
-//                       contentTitle: data["title"],
-//                       data["message"].toString(),
-//                     ),
-//             ),
-//             iOS: const DarwinNotificationDetails(
-//               sound: "notifications.wav",
-//               presentSound: true,
-//             ),
-//           ),
-//           payload: jsonEncode(message.toMap()),
-//         );
-//       }
+//       // if (Platform.isAndroid) {
+//       //   _localNotifications.show(
+//       //     data.hashCode,
+//       //     data["title"],
+//       //     data["message"],
+//       //     // null, null,
+//       //     NotificationDetails(
+//       //       android: AndroidNotificationDetails(
+//       //         _androidChannel.id,
+//       //         _androidChannel.name,
+//       //         playSound: true,
+//       //         sound: const RawResourceAndroidNotificationSound('notifications'),
+//       //         enableVibration: true,
+//       //         importance: Importance.max,
+//       //         icon: "mipmap/ic_launcher_round", //CHANGE ICON
+//       //         styleInformation: image != null
+//       //             ? information
+//       //             : BigTextStyleInformation(
+//       //                 contentTitle: data["title"],
+//       //                 data["message"].toString(),
+//       //               ),
+//       //       ),
+//       //       iOS: const DarwinNotificationDetails(
+//       //         sound: "notifications.wav",
+//       //         presentSound: true,
+//       //       ),
+//       //     ),
+//       //     payload: jsonEncode(message.toMap()),
+//       //   );
+//       // }
 //     });
 //   }
 
 //   Future<void> initNotifications() async {
-//     await _firebaseMessaging.requestPermission();
+//     // await _firebaseMessaging.requestPermission();
 
-//     if (Platform.isIOS) {
-//       await _firebaseMessaging.getAPNSToken().then((value) async {
-//         Utils().showLog("APNS TOKEN  ******   $value");
-//       });
-//     }
+//     // if (Platform.isIOS) {
+//     //   await _firebaseMessaging.getAPNSToken().then((value) async {
+//     //     Utils().showLog("APNS TOKEN  ******   $value");
+//     //   });
+//     // }
 
-//     await _firebaseMessaging.getToken().then((value) async {
-//       Utils().showLog("FCM TOKEN  ******   $value");
-//       String? address = await _getUserLocation();
-//       fcmTokenGlobal = value;
-//       if (!isShowingError) {
-//         saveFCMapi(value: value, address: address);
-//       }
-//     });
+//     // await _firebaseMessaging.getToken().then((value) async {
+//     //   Utils().showLog("FCM TOKEN  ******   $value");
+//     //   String? address = await _getUserLocation();
+//     //   fcmTokenGlobal = value;
+//     //   if (!isShowingError) {
+//     //     saveFCMapi(value: value, address: address);
+//     //   }
+//     // });
 
 //     initPushNotification();
 //     initLocalNotifications();

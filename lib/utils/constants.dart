@@ -272,6 +272,7 @@ class Images {
   static const String diamondS = "assets/images/diamond.png";
   static const String logoGIF = "assets/images/StocksNews_Logo.gif";
   static const String splashLogoGIF = "assets/images/StocksNews_GIF.gif";
+  static const String christmasBell = "assets/images/christmas_bell.gif";
 
   //share
   static const twitter = "assets/images/twitter_share.png";

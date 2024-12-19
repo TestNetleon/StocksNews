@@ -213,7 +213,7 @@ class BlogProvider extends ChangeNotifier {
         _extra = (response.extra is Extra ? response.extra as Extra : null);
         Preference.saveReferInput(_extra?.affiliateInput == 1);
         BrazeService.eventContentView(
-          screenType: 'blog_detail',
+          screenType: 'article',
           source: _blogsDetail?.slug ?? '',
         );
       } else {

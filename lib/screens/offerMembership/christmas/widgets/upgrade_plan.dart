@@ -209,195 +209,216 @@ class _ChristmasUpgradeCurrentPlanState
             itemBuilder: (context, index) {
               Plan? plan = data?.plans?[index];
 
-              return GestureDetector(
-                onTap: plan?.activeText != null && plan?.activeText != ''
-                    ? null
-                    : () {
-                        _subscribe(
-                          type: plan?.type,
-                          index: index,
-                        );
+              return Stack(
+                alignment: Alignment.topLeft,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(top: 15),
+                    child: GestureDetector(
+                      onTap: plan?.activeText != null && plan?.activeText != ''
+                          ? null
+                          : () {
+                              _subscribe(
+                                type: plan?.type,
+                                index: index,
+                              );
 
-                        provider.selectedIndex(index);
-                        setState(() {});
-                      },
-                child: Column(
-                  children: [
-                    Visibility(
-                      // visible:
-                      //     index == 0 && user?.membership?.canUpgrade == true,
-
-                      visible:
-                          plan?.activeText != null && plan?.activeText != '',
-
-                      child: Container(
-                        width: double.infinity,
-                        alignment: Alignment.center,
-                        margin: const EdgeInsets.symmetric(horizontal: 20),
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 15,
-                          vertical: 4,
-                        ),
-                        decoration: const BoxDecoration(
-                          // color: Colors.yellow,
-                          gradient: LinearGradient(
-                            begin: Alignment.centerLeft,
-                            end: Alignment.centerRight,
-                            colors: [
-                              // Color.fromARGB(255, 101, 1, 1),
-                              // ThemeColors.sos
-                              Color.fromARGB(255, 101, 1, 1),
-                              ThemeColors.sos,
-                            ],
-                          ),
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(10),
-                            topRight: Radius.circular(10),
-                          ),
-                        ),
-                        child: Text(
-                          plan?.activeText ?? "Your current plan",
-                          style: styleSansBold(
-                              fontSize: 16, color: ThemeColors.white),
-                        ),
-                      ),
-                    ),
-                    Container(
-                      // width: MediaQuery.of(context).size.width / 1.05,
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                          stops: const [0.2, 0.65],
-                          colors: [
-                            // index == 0 && user?.membership?.canUpgrade == true
-                            plan?.activeText != null && plan?.activeText != ''
-                                ? const Color(0xFF434343)
-                                : const Color.fromARGB(255, 78, 6, 6),
-                            const Color(0xFF161616),
-                          ],
-                        ),
-                        border: Border.all(
-                          width: 3,
-                          color:
-                              // index == 0 && user?.membership?.canUpgrade == true
-                              plan?.activeText != null && plan?.activeText != ''
-                                  ? Colors.grey
-                                  : ThemeColors.sos,
-                        ),
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
-                      padding: const EdgeInsets.all(15),
+                              provider.selectedIndex(index);
+                              setState(() {});
+                            },
                       child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Container(
-                                decoration: const BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(10.0),
-                                    topRight: Radius.circular(10.0),
-                                    bottomLeft: Radius.circular(10.0),
-                                  ),
-                                ),
-                                padding: const EdgeInsets.all(8.0),
-                                child: Center(
-                                  child: Text(
-                                    plan?.name ?? "",
-                                    style: stylePTSansBold(
-                                        fontSize: 17, color: Colors.black),
-                                  ),
-                                ),
-                              ),
-                              const SpacerHorizontal(width: 10),
-                              // index == 0 && user?.membership?.canUpgrade == true
-                              //     ? SizedBox()
-                              //     :
+                          Visibility(
+                            // visible:
+                            //     index == 0 && user?.membership?.canUpgrade == true,
 
-                              Visibility(
-                                visible: plan?.activeText == null ||
-                                    plan?.activeText == '',
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    border: Border.all(
-                                      color: ThemeColors.sos,
-                                      width: 3,
-                                    ),
-                                  ),
-                                  padding: const EdgeInsets.all(5),
-                                  child: Container(
-                                    padding: const EdgeInsets.all(6.7),
-                                    decoration: BoxDecoration(
-                                      color: plan?.selected == true
-                                          ? ThemeColors.sos
-                                          : null,
-                                      shape: BoxShape.circle,
-                                    ),
-                                  ),
+                            visible: plan?.activeText != null &&
+                                plan?.activeText != '',
+
+                            child: Container(
+                              width: double.infinity,
+                              alignment: Alignment.center,
+                              margin:
+                                  const EdgeInsets.symmetric(horizontal: 20),
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 15,
+                                vertical: 4,
+                              ),
+                              decoration: const BoxDecoration(
+                                // color: Colors.yellow,
+                                gradient: LinearGradient(
+                                  begin: Alignment.centerLeft,
+                                  end: Alignment.centerRight,
+                                  colors: [
+                                    // Color.fromARGB(255, 101, 1, 1),
+                                    // ThemeColors.sos
+                                    Color.fromARGB(255, 101, 1, 1),
+                                    ThemeColors.sos,
+                                  ],
+                                ),
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(10),
+                                  topRight: Radius.circular(10),
                                 ),
                               ),
-                            ],
+                              child: Text(
+                                plan?.activeText ?? "Your current plan",
+                                style: styleSansBold(
+                                    fontSize: 16, color: ThemeColors.white),
+                              ),
+                            ),
                           ),
-                          const SpacerVertical(height: 12),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Flexible(
-                                child: Text(
-                                  plan?.price ?? "",
-                                  style: const TextStyle(
-                                    fontFamily: 'Roboto',
-                                    fontSize: 30,
+                          Container(
+                            // width: MediaQuery.of(context).size.width / 1.05,
+                            decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                begin: Alignment.topCenter,
+                                end: Alignment.bottomCenter,
+                                stops: const [0.2, 0.65],
+                                colors: [
+                                  // index == 0 && user?.membership?.canUpgrade == true
+                                  plan?.activeText != null &&
+                                          plan?.activeText != ''
+                                      ? const Color(0xFF434343)
+                                      : const Color.fromARGB(255, 78, 6, 6),
+                                  const Color(0xFF161616),
+                                ],
+                              ),
+                              border: Border.all(
+                                width: 3,
+                                color: plan?.activeText != null &&
+                                        plan?.activeText != ''
+                                    ? Colors.grey
+                                    : const Color.fromARGB(255, 119, 11, 11),
+                              ),
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            padding: const EdgeInsets.all(15),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                      decoration: const BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(10.0),
+                                          topRight: Radius.circular(10.0),
+                                          bottomLeft: Radius.circular(10.0),
+                                        ),
+                                      ),
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Center(
+                                        child: Text(
+                                          plan?.name ?? "",
+                                          style: stylePTSansBold(
+                                              fontSize: 17,
+                                              color: Colors.black),
+                                        ),
+                                      ),
+                                    ),
+                                    const SpacerHorizontal(width: 10),
+                                    // index == 0 && user?.membership?.canUpgrade == true
+                                    //     ? SizedBox()
+                                    //     :
+
+                                    Visibility(
+                                      visible: plan?.activeText == null ||
+                                          plan?.activeText == '',
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          border: Border.all(
+                                            // color: ThemeColors.sos,
+                                            color: Color.fromARGB(
+                                                255, 133, 12, 12),
+                                            width: 3,
+                                          ),
+                                        ),
+                                        padding: const EdgeInsets.all(5),
+                                        child: Container(
+                                          padding: const EdgeInsets.all(6.7),
+                                          decoration: BoxDecoration(
+                                            color: plan?.selected == true
+                                                ? const Color.fromARGB(
+                                                    255, 160, 17, 17)
+                                                : null,
+                                            shape: BoxShape.circle,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                const SpacerVertical(height: 12),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Flexible(
+                                      child: Text(
+                                        plan?.price ?? "",
+                                        style: const TextStyle(
+                                          fontFamily: 'Roboto',
+                                          fontSize: 30,
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ),
+                                    Container(
+                                      decoration: const BoxDecoration(
+                                        color: Color(0xFFdf151d),
+                                        borderRadius: BorderRadius.all(
+                                          Radius.circular(30),
+                                        ),
+                                      ),
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 15,
+                                        vertical: 6,
+                                      ),
+                                      child: Text(
+                                        plan?.discount ?? "",
+                                        style: styleGeorgiaBold(
+                                          fontSize: 20,
+                                          color: ThemeColors.white,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                const SpacerVertical(height: 1),
+                                HtmlWidget(
+                                  plan?.billed ?? "",
+                                  textStyle: stylePTSansRegular(
+                                      fontSize: 16,
+                                      color: ThemeColors.greyText),
+                                ),
+                                const SpacerVertical(height: 10),
+                                HtmlWidget(
+                                  plan?.description ?? "",
+                                  textStyle: stylePTSansBold(
+                                    fontSize: 16,
                                     color: Colors.white,
-                                    fontWeight: FontWeight.bold,
                                   ),
                                 ),
-                              ),
-                              Container(
-                                decoration: const BoxDecoration(
-                                  color: Color(0xFFdf151d),
-                                  borderRadius: BorderRadius.all(
-                                    Radius.circular(30),
-                                  ),
-                                ),
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 15,
-                                  vertical: 6,
-                                ),
-                                child: Text(
-                                  plan?.discount ?? "",
-                                  style: styleGeorgiaBold(
-                                    fontSize: 20,
-                                    color: ThemeColors.white,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          const SpacerVertical(height: 1),
-                          HtmlWidget(
-                            plan?.billed ?? "",
-                            textStyle: stylePTSansRegular(
-                                fontSize: 16, color: ThemeColors.greyText),
-                          ),
-                          const SpacerVertical(height: 10),
-                          HtmlWidget(
-                            plan?.description ?? "",
-                            textStyle: stylePTSansBold(
-                              fontSize: 16,
-                              color: Colors.white,
+                              ],
                             ),
                           ),
                         ],
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                  Image.asset(
+                    Images.christmasBell,
+                    height: 40,
+                    width: 40,
+                  ),
+                ],
               );
             },
             separatorBuilder: (context, index) {

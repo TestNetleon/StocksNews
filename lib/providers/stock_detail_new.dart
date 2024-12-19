@@ -471,7 +471,7 @@ class StockDetailProviderNew extends ChangeNotifier {
         _extra = (response.extra is Extra ? response.extra as Extra : null);
         Preference.saveReferInput(_extra?.affiliateInput == 1);
         BrazeService.eventContentView(
-            screenType: 'ticker_detail', source: _tabRes?.shareUrl ?? '');
+            screenType: 'stock_analysis', source: _tabRes?.shareUrl ?? '');
 
         if (_tabRes != null) {
           // getPlaidPortfolioData(name: _tabs[selectedTab]);

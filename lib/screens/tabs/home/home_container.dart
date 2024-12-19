@@ -1,8 +1,10 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:provider/provider.dart';
+import 'package:stocks_news_new/database/preference.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/screens/tabs/home/benefits/benefits_affiliate.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/blog_item_home.dart';
@@ -21,6 +23,7 @@ import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/theme_button_small.dart';
 // import 'package:upgrader/upgrader.dart';
 import '../../../modals/home_insider_res.dart';
+import '../../../routes/my_app.dart';
 import '../../../utils/colors.dart';
 import '../../../utils/utils.dart';
 import '../../../widgets/custom/refer.dart';
@@ -33,9 +36,14 @@ import 'widgets/sliderNews/slider.dart';
 import 'widgets/stockBuzz/index.dart';
 import 'widgets/topPlaid/index.dart';
 
-class HomeContainer extends StatelessWidget {
+class HomeContainer extends StatefulWidget {
   const HomeContainer({super.key});
 
+  @override
+  State<HomeContainer> createState() => _HomeContainerState();
+}
+
+class _HomeContainerState extends State<HomeContainer> {
   @override
   Widget build(BuildContext context) {
     HomeProvider provider = context.watch<HomeProvider>();
@@ -57,15 +65,17 @@ class HomeContainer extends StatelessWidget {
     }
     return Column(
       children: [
-        // if (kDebugMode)
-        //   ThemeButtonSmall(
-        //     text: 'market Data',
-        //     onPressed: () async {
-        //       UserRes? user = context.read<UserProvider>().user;
-        //       String? country = CountryCode.fromDialCode('+1').name;
-        //       print('country $country');
-        //     },
-        //   ),
+        ThemeButtonSmall(
+          text: 'market Data',
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => NotificationsScreenPref(),
+              ),
+            );
+          },
+        ),
         Visibility(
           visible: provider.extra?.phoneCodeError != null &&
               provider.extra?.phoneCodeError != '',
