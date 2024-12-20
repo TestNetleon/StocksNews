@@ -403,8 +403,12 @@ import Firebase
 import UserNotifications
 import FirebaseMessaging
 
+//LOCAL
+// let brazeApiKey = "ba184694-cb2b-4e70-9e00-1e300ca9ecb0"
 
-let brazeApiKey = "ba184694-cb2b-4e70-9e00-1e300ca9ecb0"
+//LIVE
+let brazeApiKey = "6e2560f1-ba23-4958-a4d9-16cd577fcf65"
+
 let brazeEndpoint = "sdk.iad-07.braze.com"
 
 @main
@@ -453,8 +457,8 @@ let brazeEndpoint = "sdk.iad-07.braze.com"
 
     // - InAppMessage UI
     // let inAppMessageUI = BrazeInAppMessageUI()
-    let inAppMessageUI = CustomInAppMessagePresenter()
-    braze.inAppMessagePresenter = inAppMessageUI
+    // let inAppMessageUI = CustomInAppMessagePresenter()
+    // braze.inAppMessagePresenter = inAppMessageUI
 
     pushEventsSubscription = braze.notifications.subscribeToUpdates { payload in
       print(
@@ -473,17 +477,17 @@ let brazeEndpoint = "sdk.iad-07.braze.com"
   }
 }
 
-class CustomInAppMessagePresenter: BrazeInAppMessageUI {
+// class CustomInAppMessagePresenter: BrazeInAppMessageUI {
 
-  override func present(message: Braze.InAppMessage) {
-    print("=> [In-app Message] Received message from Braze:", message)
+//   override func present(message: Braze.InAppMessage) {
+//     print("=> [In-app Message] Received message from Braze:", message)
 
-    BrazePlugin.processInAppMessage(message)
+//     BrazePlugin.processInAppMessage(message)
 
-    super.present(message: message)
-  }
+//     super.present(message: message)
+//   }
 
-}
+// }
 
 
  func application(

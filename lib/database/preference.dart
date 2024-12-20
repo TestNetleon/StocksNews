@@ -1,12 +1,7 @@
 import 'dart:convert';
-import 'package:flutter/material.dart';
 import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/modals/user_res.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:stocks_news_new/utils/theme.dart';
-import 'package:stocks_news_new/utils/utils.dart';
-
-import '../screens/demoNavigation/deeplink_data.dart';
 
 class Preference {
   static Future<bool> setShowIntro(bool isFirstTime) async {
@@ -190,146 +185,146 @@ class Preference {
   //-------------------------------------------
 }
 
-class NotificationDataPref {
-  final String type;
-  final String android;
-  final String ios;
-  final String pushEventJsonString;
-  final String brazeProperties;
+// class NotificationDataPref {
+//   final String type;
+//   final String android;
+//   final String ios;
+//   final String pushEventJsonString;
+//   final String brazeProperties;
 
-  NotificationDataPref({
-    required this.android,
-    required this.type,
-    required this.ios,
-    required this.pushEventJsonString,
-    required this.brazeProperties,
-  });
+//   NotificationDataPref({
+//     required this.android,
+//     required this.type,
+//     required this.ios,
+//     required this.pushEventJsonString,
+//     required this.brazeProperties,
+//   });
 
-  // Convert NotificationData to JSON
-  Map<String, dynamic> toJson() {
-    return {
-      'android': android,
-      'ios': ios,
-      'type': type,
-      'pushEventJsonString': pushEventJsonString,
-      'brazeProperties': brazeProperties,
-    };
-  }
+//   // Convert NotificationData to JSON
+//   Map<String, dynamic> toJson() {
+//     return {
+//       'android': android,
+//       'ios': ios,
+//       'type': type,
+//       'pushEventJsonString': pushEventJsonString,
+//       'brazeProperties': brazeProperties,
+//     };
+//   }
 
-  // Create NotificationData from JSON
-  factory NotificationDataPref.fromJson(Map<String, dynamic> json) {
-    return NotificationDataPref(
-      android: json['android'],
-      ios: json['ios'],
-      type: json['type'],
-      pushEventJsonString: json['pushEventJsonString'],
-      brazeProperties: json['brazeProperties'],
-    );
-  }
-}
+//   // Create NotificationData from JSON
+//   factory NotificationDataPref.fromJson(Map<String, dynamic> json) {
+//     return NotificationDataPref(
+//       android: json['android'],
+//       ios: json['ios'],
+//       type: json['type'],
+//       pushEventJsonString: json['pushEventJsonString'],
+//       brazeProperties: json['brazeProperties'],
+//     );
+//   }
+// }
 
-class NotificationPreferences {
-  static const String notificationListKey = 'notification_list';
+// class NotificationPreferences {
+//   static const String notificationListKey = 'notification_list';
 
-  // Save a new notification data
-  static Future<void> saveNotification(NotificationDataPref data) async {
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-    List<String>? jsonDataList = preferences.getStringList(notificationListKey);
-    List<String> updatedJsonDataList;
-    if (jsonDataList == null) {
-      updatedJsonDataList = [json.encode(data.toJson())];
-    } else {
-      updatedJsonDataList = List.from(jsonDataList);
-      updatedJsonDataList.add(json.encode(data.toJson()));
-    }
-    await preferences.setStringList(notificationListKey, updatedJsonDataList);
-  }
+//   // Save a new notification data
+//   static Future<void> saveNotification(NotificationDataPref data) async {
+//     SharedPreferences preferences = await SharedPreferences.getInstance();
+//     List<String>? jsonDataList = preferences.getStringList(notificationListKey);
+//     List<String> updatedJsonDataList;
+//     if (jsonDataList == null) {
+//       updatedJsonDataList = [json.encode(data.toJson())];
+//     } else {
+//       updatedJsonDataList = List.from(jsonDataList);
+//       updatedJsonDataList.add(json.encode(data.toJson()));
+//     }
+//     await preferences.setStringList(notificationListKey, updatedJsonDataList);
+//   }
 
-  // Clear all notification data
-  static Future<void> clearNotifications() async {
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-    await preferences.remove(notificationListKey);
-  }
+//   // Clear all notification data
+//   static Future<void> clearNotifications() async {
+//     SharedPreferences preferences = await SharedPreferences.getInstance();
+//     await preferences.remove(notificationListKey);
+//   }
 
-  // Get the list of notifications
-  static Future<List<NotificationDataPref>> getNotifications() async {
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-    List<String>? jsonDataList = preferences.getStringList(notificationListKey);
-    if (jsonDataList == null) {
-      return [];
-    }
-    List<NotificationDataPref> notificationList = jsonDataList
-        .map((jsonData) => NotificationDataPref.fromJson(json.decode(jsonData)))
-        .toList();
-    return notificationList;
-  }
-}
+//   // Get the list of notifications
+//   static Future<List<NotificationDataPref>> getNotifications() async {
+//     SharedPreferences preferences = await SharedPreferences.getInstance();
+//     List<String>? jsonDataList = preferences.getStringList(notificationListKey);
+//     if (jsonDataList == null) {
+//       return [];
+//     }
+//     List<NotificationDataPref> notificationList = jsonDataList
+//         .map((jsonData) => NotificationDataPref.fromJson(json.decode(jsonData)))
+//         .toList();
+//     return notificationList;
+//   }
+// }
 
-class NotificationsScreenPref extends StatefulWidget {
-  const NotificationsScreenPref({super.key});
+// class NotificationsScreenPref extends StatefulWidget {
+//   const NotificationsScreenPref({super.key});
 
-  @override
-  State<NotificationsScreenPref> createState() =>
-      _NotificationsScreenPrefState();
-}
+//   @override
+//   State<NotificationsScreenPref> createState() =>
+//       _NotificationsScreenPrefState();
+// }
 
-class _NotificationsScreenPrefState extends State<NotificationsScreenPref> {
-  List<NotificationDataPref> notifications = [];
+// class _NotificationsScreenPrefState extends State<NotificationsScreenPref> {
+//   List<NotificationDataPref> notifications = [];
 
-  // Load notifications from shared preferences
-  void _loadNotifications() async {
-    var loadedNotifications = await NotificationPreferences.getNotifications();
-    setState(() {
-      notifications = loadedNotifications;
-    });
-  }
+//   // Load notifications from shared preferences
+//   void _loadNotifications() async {
+//     var loadedNotifications = await NotificationPreferences.getNotifications();
+//     setState(() {
+//       notifications = loadedNotifications;
+//     });
+//   }
 
-  @override
-  void initState() {
-    super.initState();
-    _loadNotifications();
-  }
+//   @override
+//   void initState() {
+//     super.initState();
+//     _loadNotifications();
+//   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        title: Text('Notifications'),
-        actions: [
-          IconButton(
-            icon: Icon(
-              Icons.clear,
-              color: Colors.red,
-            ),
-            onPressed: () async {
-              await NotificationPreferences.clearNotifications();
-              _loadNotifications();
-            },
-          )
-        ],
-      ),
-      body: notifications.isEmpty
-          ? Center(child: Text('No notifications'))
-          : ListView.builder(
-              itemCount: notifications.length,
-              itemBuilder: (context, index) {
-                final notification = notifications[index];
-                return Column(
-                  children: [
-                    Text(
-                      'TYPE: ${notification.type}',
-                      style: styleSansBold(fontSize: 19),
-                    ),
-                    // Text('Android: ${notification.android}'),
-                    // Text('iOS: ${notification.ios}'),
-                    Text('brazeProperties: ${notification.brazeProperties}'),
-                    Text(
-                        'pushEventJsonString: ${notification.pushEventJsonString}'),
-                  ],
-                );
-              },
-            ),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       backgroundColor: Colors.white,
+//       appBar: AppBar(
+//         title: Text('Notifications'),
+//         actions: [
+//           IconButton(
+//             icon: Icon(
+//               Icons.clear,
+//               color: Colors.red,
+//             ),
+//             onPressed: () async {
+//               await NotificationPreferences.clearNotifications();
+//               _loadNotifications();
+//             },
+//           )
+//         ],
+//       ),
+//       body: notifications.isEmpty
+//           ? Center(child: Text('No notifications'))
+//           : ListView.builder(
+//               itemCount: notifications.length,
+//               itemBuilder: (context, index) {
+//                 final notification = notifications[index];
+//                 return Column(
+//                   children: [
+//                     Text(
+//                       'TYPE: ${notification.type}',
+//                       style: styleSansBold(fontSize: 19),
+//                     ),
+//                     // Text('Android: ${notification.android}'),
+//                     // Text('iOS: ${notification.ios}'),
+//                     Text('brazeProperties: ${notification.brazeProperties}'),
+//                     Text(
+//                         'pushEventJsonString: ${notification.pushEventJsonString}'),
+//                   ],
+//                 );
+//               },
+//             ),
+//     );
+//   }
+// }

@@ -51,7 +51,7 @@
             <!--MARK:  BRAZE API KEY -->
             <meta-data
                 android:name="com.braze.api_key"
-                android:value="@string/braze_api_key_local" />
+                android:value="@string/braze_api_key_live" />
 
 
 
