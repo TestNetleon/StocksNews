@@ -13,6 +13,7 @@ import 'package:stocks_news_new/providers/filter_provider.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
+import 'package:stocks_news_new/service/braze/service.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/utils/utils.dart';
@@ -69,6 +70,8 @@ class NegativeBetaStocksProvider extends ChangeNotifier {
         //   symbol: symbol,
         //   companyName: companyName,
         // );
+        BrazeService.eventADAlert(symbol: symbol);
+
         _data?[index].isAlertAdded = 1;
         notifyListeners();
 
@@ -125,6 +128,7 @@ class NegativeBetaStocksProvider extends ChangeNotifier {
         //   companyName: companyName,
         // );
         // _homeTrendingRes?.trending[index].isWatchlistAdded = 1;
+        BrazeService.eventADWatchlist(symbol: symbol);
 
         await _player.play(AssetSource(AudioFiles.alertWeathlist));
 

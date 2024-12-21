@@ -140,7 +140,6 @@ class RevenueCatService {
         break;
       case PaywallResult.restored:
         break;
-      default:
     }
   }
 }

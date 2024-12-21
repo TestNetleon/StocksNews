@@ -10,7 +10,6 @@ import 'package:stocks_news_new/service/appsFlyer/service.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import '../../utils/dialogs.dart';
-import '../braze/service.dart';
 import '../firebase/service.dart';
 
 class AmplitudeService {
@@ -165,10 +164,10 @@ class AmplitudeService {
           userId: provider.user?.userId,
         );
 
-        BrazeService.brazeBaseEvents(
-          eventName: EventBraze.b_sign_up.name,
-          eventProperties: request,
-        );
+        // BrazeService.brazeBaseEvents(
+        //   eventName: EventBraze.b_sign_up.name,
+        //   eventProperties: request,
+        // );
       }
     } catch (e) {
       //

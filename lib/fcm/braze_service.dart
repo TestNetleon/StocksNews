@@ -106,14 +106,11 @@ class BrazeNotificationService {
     }
   }
 
-  Future navigateToRequiredScreen(userInfo,
-      // Future _navigateToRequiredScreen(payload,
-      {whenAppKilled = false}) async {
-    // Log the cleaned payload
-
-    String? type = userInfo["type"];
-    String? slug = userInfo['slug'];
-    // String? notificationId = userInfo['notification_id'];
+  Future navigateToRequiredScreen({
+    whenAppKilled = false,
+    String? type,
+    String? slug,
+  }) async {
     isAppUpdating = false;
     Utils().showLog('Type is $type, Slug is $slug');
     // userInteractionEventCommon(
@@ -130,7 +127,9 @@ class BrazeNotificationService {
           navigatorKey.currentContext!,
           MaterialPageRoute(builder: (_) => const Tabs()),
         );
-      } else if (slug != '' && type == NotificationType.ticketDetail.name) {
+      } else if (slug != '' &&
+          slug != null &&
+          type == NotificationType.ticketDetail.name) {
         Navigator.push(
           navigatorKey.currentContext!,
           MaterialPageRoute(
@@ -139,11 +138,13 @@ class BrazeNotificationService {
             //   ticketId: slug,
             // ),
             builder: (_) => HelpDeskAllChatsNew(
-              ticketId: slug ?? "N/A",
+              ticketId: slug,
             ),
           ),
         );
-      } else if (slug != '' && type == NotificationType.newsDetail.name) {
+      } else if (slug != '' &&
+          slug != null &&
+          type == NotificationType.newsDetail.name) {
         Navigator.push(
           navigatorKey.currentContext!,
           MaterialPageRoute(
@@ -153,7 +154,9 @@ class BrazeNotificationService {
             ),
           ),
         );
-      } else if (slug != '' && type == NotificationType.lpPage.name) {
+      } else if (slug != '' &&
+          slug != null &&
+          type == NotificationType.lpPage.name) {
         Navigator.push(
           navigatorKey.currentContext!,
           MaterialPageRoute(
@@ -163,17 +166,21 @@ class BrazeNotificationService {
             ),
           ),
         );
-      } else if (slug != '' && type == NotificationType.blogDetail.name) {
+      } else if (slug != '' &&
+          slug != null &&
+          type == NotificationType.blogDetail.name) {
         Navigator.push(
           navigatorKey.currentContext!,
           MaterialPageRoute(
             builder: (context) => BlogDetail(
-              slug: slug ?? "",
+              slug: slug,
               // notificationId: notificationId,
             ),
           ),
         );
-      } else if (slug != '' && type == NotificationType.register.name) {
+      } else if (slug != '' &&
+          slug != null &&
+          type == NotificationType.register.name) {
         if (await Preference.isLoggedIn()) {
           popUpAlert(
             message: "Welcome to the Home Screen!",
@@ -184,7 +191,9 @@ class BrazeNotificationService {
         }
         // isPhone ? signupSheet() : signupSheetTablet();
         loginFirstSheet();
-      } else if (slug != '' && type == NotificationType.review.name) {
+      } else if (slug != '' &&
+          slug != null &&
+          type == NotificationType.review.name) {
         popHome = false;
         if (whenAppKilled) await Future.delayed(const Duration(seconds: 3));
         //review pop up
@@ -195,7 +204,9 @@ class BrazeNotificationService {
             return const ReviewAppPopUp();
           },
         );
-      } else if (slug != '' && type == NotificationType.stockDetail.name ||
+      } else if (slug != '' &&
+              slug != null &&
+              type == NotificationType.stockDetail.name ||
           isValidTickerSymbol(type ?? "")) {
         Navigator.push(
           navigatorKey.currentContext!,
@@ -206,7 +217,9 @@ class BrazeNotificationService {
             ),
           ),
         );
-      } else if (slug != '' && type == NotificationType.nudgeFriend.name) {
+      } else if (slug != '' &&
+          slug != null &&
+          type == NotificationType.nudgeFriend.name) {
         popHome = false;
         if (whenAppKilled) await Future.delayed(const Duration(seconds: 3));
         referLogin();

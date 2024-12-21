@@ -15,6 +15,8 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 
+import '../service/braze/service.dart';
+
 class MoreStocksProvider extends ChangeNotifier {
   GainersLosersRes? _gainersLosers;
   GainersLosersRes? get gainersLosers => _gainersLosers;
@@ -125,6 +127,8 @@ class MoreStocksProvider extends ChangeNotifier {
         //   symbol: symbol,
         //   companyName: companyName,
         // );
+        BrazeService.eventADAlert(symbol: symbol);
+
         if (type == StocksType.gainers) {
           _gainersLosers?.data?[index].isAlertAdded = 1;
 
@@ -189,6 +193,7 @@ class MoreStocksProvider extends ChangeNotifier {
         //   symbol: symbol,
         //   companyName: companyName,
         // );
+        BrazeService.eventADWatchlist(symbol: symbol);
 
         await _player.play(AssetSource(AudioFiles.alertWeathlist));
 

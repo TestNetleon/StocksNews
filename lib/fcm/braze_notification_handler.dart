@@ -71,21 +71,14 @@ class NotificationHandler {
           slug = event.brazeProperties['slug'];
         }
 
-        // Timer(const Duration(seconds: 2), () {
-        //   showConfirmAlertDialog(
-        //     context: navigatorKey.currentContext!,
-        //     title: "Notification brazeProperties",
-        //     message: 'type is $type, slug is $slug',
-        //   );
-        // });
         debugPrint('braze listener =>  type $type, slug $slug');
 
         if (type != null && slug != null) {
           popHome = true;
-          BrazeNotificationService.instance.navigateToRequiredScreen({
-            'type': type,
-            'slug': slug,
-          });
+          BrazeNotificationService.instance.navigateToRequiredScreen(
+            type: type,
+            slug: slug,
+          );
         } else {
           Utils().showLog(
               'Required fields "type" or "slug" not found in notification payload.');

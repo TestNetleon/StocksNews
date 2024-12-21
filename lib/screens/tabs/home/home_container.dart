@@ -1,5 +1,5 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:provider/provider.dart';
@@ -62,17 +62,19 @@ class _HomeContainerState extends State<HomeContainer> {
     }
     return Column(
       children: [
-        // ThemeButtonSmall(
-        //   text: 'market Data',
-        //   onPressed: () {
-        //     Navigator.push(
-        //       context,
-        //       MaterialPageRoute(
-        //         builder: (context) => NotificationsScreenPref(),
-        //       ),
-        //     );
-        //   },
-        // ),
+        Visibility(
+          visible: kDebugMode,
+          child: ThemeButtonSmall(
+            text: 'Braze Testing Event',
+            onPressed: () async {
+              // String user = 'user1${Platform.operatingSystem}';
+              // BrazePlugin().changeUser(user);
+              // Utils().showLog(user);
+              // BrazeService.brazeBaseEvents(alerts: ['GOOG']);
+              // BrazeService.eventADAlert(symbol: 'AAPL', add: false);
+            },
+          ),
+        ),
         Visibility(
           visible: provider.extra?.phoneCodeError != null &&
               provider.extra?.phoneCodeError != '',

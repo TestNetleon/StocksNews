@@ -17,6 +17,8 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 
+import '../service/braze/service.dart';
+
 class DividendsProvider extends ChangeNotifier {
   Status _status = Status.ideal;
   // ************* GAP DOWN **************** //
@@ -83,6 +85,8 @@ class DividendsProvider extends ChangeNotifier {
         //   symbol: symbol,
         //   companyName: companyName,
         // );
+        BrazeService.eventADAlert(symbol: symbol);
+
         _data?[index].isAlertAdded = 1;
         notifyListeners();
 
@@ -138,6 +142,7 @@ class DividendsProvider extends ChangeNotifier {
         //   symbol: symbol,
         //   companyName: companyName,
         // );
+        BrazeService.eventADWatchlist(symbol: symbol);
 
         // _homeTrendingRes?.trending[index].isWatchlistAdded = 1;
 

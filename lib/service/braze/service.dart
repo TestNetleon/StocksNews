@@ -11,7 +11,6 @@ import '../../database/preference.dart';
 import '../../utils/constants.dart';
 
 class BrazeService {
-  // static const MethodChannel _channel = MethodChannel('brazeMethod');
   static final BrazePlugin _braze = BrazePlugin(
     customConfigs: {replayCallbacksConfigKey: true},
     brazeSdkAuthenticationErrorHandler: (e) {
@@ -21,16 +20,6 @@ class BrazeService {
 
   Future<void> registerFCM(pushToken) async {
     _braze.registerPushToken(pushToken);
-  }
-
-  // INITIALIZE SDK Android
-  Future<void> initialize() async {
-    try {
-      _braze.enableSDK();
-      Utils().showLog('Braze SDK Initialized Successfully');
-    } catch (e) {
-      Utils().showLog('Error while initializing Braze: $e');
-    }
   }
 
   static Future<void> brazeUserEvent() async {
@@ -58,10 +47,6 @@ class BrazeService {
           user.phone != null &&
           user.phone != '') {
         phoneNumber = '${user.phoneCode}${user.phone}';
-        // country = CountryCode.fromDialCode(user.phoneCode!).name;
-        // if (user.phoneCode == '+1') {
-        //   country = 'United States';
-        // }
       } else if (user.phone != null && user.phone != '') {
         phoneNumber = '${user.phone}';
       }
@@ -86,6 +71,12 @@ class BrazeService {
         brazeBaseEvents(
           attributionKey: 'points_balance',
           attributeValue: user.pointEarn,
+        );
+      }
+
+      if (user.signupStatus == true) {
+        brazeBaseEvents(
+          eventName: EventBraze.b_sign_up.name,
         );
       }
     }
@@ -153,6 +144,30 @@ class BrazeService {
     );
   }
 
+  static Future<void> eventADAlert({
+    required String symbol,
+    bool add = true,
+  }) async {
+    brazeBaseEvents(
+        addRemove: AddRemoveEvent(
+      add: add,
+      symbolTo: 'alerts',
+      symbol: symbol,
+    ));
+  }
+
+  static Future<void> eventADWatchlist({
+    required String symbol,
+    bool add = true,
+  }) async {
+    brazeBaseEvents(
+        addRemove: AddRemoveEvent(
+      add: add,
+      symbolTo: 'watchlist',
+      symbol: symbol,
+    ));
+  }
+
   static Future<void> brazeBaseEvents({
     String? userId,
     String? aliasName,
@@ -172,6 +187,8 @@ class BrazeService {
     List<String>? alerts,
     dynamic attributeValue,
     String? attributionKey,
+    String? symbol,
+    AddRemoveEvent? addRemove,
   }) async {
     // Helper function to execute the action with error handling
     Future<void> executeAction(
@@ -268,9 +285,25 @@ class BrazeService {
 
     if (watchlist != null) {
       await executeAction(() async {
-        _braze.setCustomUserAttributeArrayOfStrings('watchlists', watchlist);
-        Utils().showLog('watchlists: $watchlist');
+        _braze.setCustomUserAttributeArrayOfStrings('watchlist', watchlist);
+        Utils().showLog('watchlist: $watchlist');
       }, "set watchlist");
+    }
+
+    if (addRemove != null) {
+      await executeAction(() async {
+        if (addRemove.add) {
+          _braze.addToCustomAttributeArray(
+            addRemove.symbolTo,
+            addRemove.symbol,
+          );
+        } else {
+          _braze.removeFromCustomAttributeArray(
+            addRemove.symbolTo,
+            addRemove.symbol,
+          );
+        }
+      }, 'add/remove ticker');
     }
 
     // Set Custom Attribute if provided
@@ -286,4 +319,15 @@ class BrazeService {
       }, "set custom attribute");
     }
   }
+}
+
+class AddRemoveEvent {
+  final bool add;
+  String symbolTo;
+  String symbol;
+  AddRemoveEvent({
+    required this.add,
+    required this.symbolTo,
+    required this.symbol,
+  });
 }

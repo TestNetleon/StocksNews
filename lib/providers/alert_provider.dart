@@ -14,6 +14,8 @@ import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 
+import '../service/braze/service.dart';
+
 //
 class AlertProvider extends ChangeNotifier {
   AlertRes? _data;
@@ -124,6 +126,10 @@ class AlertProvider extends ChangeNotifier {
         //   companyName: companyName,
         // );
         _data?.data?.removeWhere((element) => element.id == id);
+        BrazeService.eventADAlert(
+          symbol: symbol,
+          add: false,
+        );
         if (_data?.data == null || _data?.data?.isEmpty == true) {
           _error = "Your alert list is currently empty.";
         }

@@ -1,3 +1,5 @@
+// ignore_for_file: unreachable_switch_default
+
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -30,7 +32,8 @@ class _EarningsAnalystEstimateLineChartState
       return const Center(child: SizedBox.shrink());
     }
 
-    List<FlSpot> currentSpots = provider.earnings!.epsEstimates!.asMap().entries.map((entry) {
+    List<FlSpot> currentSpots =
+        provider.earnings!.epsEstimates!.asMap().entries.map((entry) {
       int index = entry.key;
       EpsEstimate data = entry.value;
       double current = double.tryParse(data.numberOfEstimates.toString()) ?? 0;

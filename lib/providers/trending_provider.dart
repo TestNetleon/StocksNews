@@ -12,6 +12,8 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 
+import '../service/braze/service.dart';
+
 class TrendingProvider extends ChangeNotifier {
   TrendingRes? _mostBullish;
   TrendingRes? get mostBullish => _mostBullish;
@@ -111,6 +113,8 @@ class TrendingProvider extends ChangeNotifier {
         //   symbol: symbol,
         //   companyName: companyName,
         // );
+        BrazeService.eventADAlert(symbol: symbol);
+
         if (up) {
           //
           _mostBullish?.mostBullish?[index].isAlertAdded = 1;
@@ -170,6 +174,8 @@ class TrendingProvider extends ChangeNotifier {
         //   symbol: symbol,
         //   companyName: companyName,
         // );
+        BrazeService.eventADWatchlist(symbol: symbol);
+
         if (up) {
           //
 

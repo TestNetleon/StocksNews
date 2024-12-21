@@ -15,6 +15,8 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 
+import '../service/braze/service.dart';
+
 class Dow30Provider extends ChangeNotifier {
   int _openIndex = -1;
   int? get openIndex => _openIndex;
@@ -66,6 +68,8 @@ class Dow30Provider extends ChangeNotifier {
         //   symbol: symbol,
         //   companyName: companyName,
         // );
+        BrazeService.eventADAlert(symbol: symbol);
+
         _data?[index].isAlertAdded = 1;
         notifyListeners();
 
@@ -121,6 +125,7 @@ class Dow30Provider extends ChangeNotifier {
         //   symbol: symbol,
         //   companyName: companyName,
         // );
+        BrazeService.eventADWatchlist(symbol: symbol);
 
         // _homeTrendingRes?.trending[index].isWatchlistAdded = 1;
 

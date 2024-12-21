@@ -37,6 +37,7 @@ import '../modals/advertiser.dart';
 import '../screens/offerMembership/blackFriday/index.dart';
 import '../screens/membership_new/membership.dart';
 import '../service/amplitude/service.dart';
+import '../service/braze/service.dart';
 import '../utils/dialogs.dart';
 import '../widgets/ios_emailerror.dart';
 
@@ -1539,8 +1540,7 @@ class UserProvider extends ChangeNotifier {
       setStatus(Status.loaded);
       if (response.status) {
         _user = UserRes.fromJson(response.data);
-        // BrazeService().startSession();
-        // BrazeService.brazeUserEvent();
+        BrazeService.brazeUserEvent();
 
         Preference.saveUser(response.data);
         isSVG = isSvgFromUrl(_user?.image);

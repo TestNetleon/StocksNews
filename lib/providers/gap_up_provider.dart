@@ -15,6 +15,8 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 
+import '../service/braze/service.dart';
+
 class GapUpProvider extends ChangeNotifier {
   int _openIndex = -1;
   int? get openIndex => _openIndex;
@@ -74,6 +76,8 @@ class GapUpProvider extends ChangeNotifier {
         //   symbol: symbol,
         //   companyName: companyName,
         // );
+        BrazeService.eventADAlert(symbol: symbol);
+
         _data?[index].isAlertAdded = 1;
         notifyListeners();
 
@@ -130,6 +134,7 @@ class GapUpProvider extends ChangeNotifier {
         //   companyName: companyName,
         // );
         // _homeTrendingRes?.trending[index].isWatchlistAdded = 1;
+        BrazeService.eventADWatchlist(symbol: symbol);
 
         await _player.play(AssetSource(AudioFiles.alertWeathlist));
 

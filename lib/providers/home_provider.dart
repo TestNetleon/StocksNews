@@ -219,6 +219,8 @@ class HomeProvider extends ChangeNotifier {
         //   symbol: symbol,
         //   companyName: companyName,
         // );
+        BrazeService.eventADAlert(symbol: symbol);
+
         if (type == "homeTrending") {
           _homeTrendingRes?.trending[index].isAlertAdded = 1;
           notifyListeners();
@@ -281,6 +283,7 @@ class HomeProvider extends ChangeNotifier {
         //   symbol: symbol,
         //   companyName: companyName,
         // );
+        BrazeService.eventADWatchlist(symbol: symbol);
 
         //
         if (type == "homeTrending") {

@@ -81,7 +81,10 @@ class Apis {
   static const insiderTrading = "/insider-trading";
   static const watchlist = "/watchlist";
   static const addWatchlist = "/add-watchlist";
+  static const createAlert = "/add-alert";
   static const deleteWatchlist = "/delete-watchlist";
+  static const deleteAlertlist = "/delete-alert";
+
   static const moreStocks = "/trending_gainer_loser";
   static const congress = "/congress-stock-trades";
   static const congressMember = "/profile-congress-member";
@@ -93,8 +96,6 @@ class Apis {
   static const contactUs = "/contact-us";
   static const infoPage = "/info-page";
   static const alerts = "/alerts";
-  static const deleteAlertlist = "/delete-alert";
-  static const createAlert = "/add-alert";
   static const stockDetails = "/stock-details";
   static const stockAnalysis = "/stock-analysis";
   static const technicalAnalysis = "/technical-analysis";

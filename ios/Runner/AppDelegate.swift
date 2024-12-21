@@ -404,10 +404,10 @@ import UserNotifications
 import FirebaseMessaging
 
 //LOCAL
-// let brazeApiKey = "ba184694-cb2b-4e70-9e00-1e300ca9ecb0"
+let brazeApiKey = "ba184694-cb2b-4e70-9e00-1e300ca9ecb0"
 
 //LIVE
-let brazeApiKey = "6e2560f1-ba23-4958-a4d9-16cd577fcf65"
+// let brazeApiKey = "6e2560f1-ba23-4958-a4d9-16cd577fcf65"
 
 let brazeEndpoint = "sdk.iad-07.braze.com"
 
@@ -442,6 +442,9 @@ let brazeEndpoint = "sdk.iad-07.braze.com"
 
     GeneratedPluginRegistrant.register(with: self)
 
+
+
+
     // - Setup Braze
     let configuration = Braze.Configuration(apiKey: brazeApiKey, endpoint: brazeEndpoint)
     configuration.sessionTimeout = 1
@@ -454,6 +457,11 @@ let brazeEndpoint = "sdk.iad-07.braze.com"
 
     let braze = BrazePlugin.initBraze(configuration)
 
+  // Check if a cached device token exists
+  if let cachedDeviceToken = UserDefaults.standard.data(forKey: "cachedDeviceToken") {
+      BrazePlugin.braze?.notifications.register(deviceToken: cachedDeviceToken)
+      print("Token registered with Braze from cache")
+  }
 
     // - InAppMessage UI
     // let inAppMessageUI = BrazeInAppMessageUI()
@@ -518,30 +526,30 @@ let brazeEndpoint = "sdk.iad-07.braze.com"
   }
 
 
-extension AppDelegate {
+// extension AppDelegate {
 
-  private func forwardURL(_ url: URL) {
-    guard
-      let controller: FlutterViewController = window?.rootViewController as? FlutterViewController
-    else { return }
-    let deepLinkChannel = FlutterMethodChannel(
-      name: "deepLinkChannel", binaryMessenger: controller.binaryMessenger)
-    deepLinkChannel.invokeMethod("receiveDeepLink", arguments: url.absoluteString)
-  }
+//   private func forwardURL(_ url: URL) {
+//     guard
+//       let controller: FlutterViewController = window?.rootViewController as? FlutterViewController
+//     else { return }
+//     let deepLinkChannel = FlutterMethodChannel(
+//       name: "deepLinkChannel", binaryMessenger: controller.binaryMessenger)
+//     deepLinkChannel.invokeMethod("receiveDeepLink", arguments: url.absoluteString)
+//   }
 
 
-  // Universal link
-  // See https://developer.apple.com/documentation/xcode/allowing-apps-and-websites-to-link-to-your-content for more information.
-  override func application(
-    _ application: UIApplication, continue userActivity: NSUserActivity,
-    restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void
-  ) -> Bool {
-    guard userActivity.activityType == NSUserActivityTypeBrowsingWeb,
-      let url = userActivity.webpageURL
-    else {
-      return false
-    }
-    forwardURL(url)
-    return true
-  }
-}
+//   // Universal link
+//   // See https://developer.apple.com/documentation/xcode/allowing-apps-and-websites-to-link-to-your-content for more information.
+//   override func application(
+//     _ application: UIApplication, continue userActivity: NSUserActivity,
+//     restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void
+//   ) -> Bool {
+//     guard userActivity.activityType == NSUserActivityTypeBrowsingWeb,
+//       let url = userActivity.webpageURL
+//     else {
+//       return false
+//     }
+//     forwardURL(url)
+//     return true
+//   }
+// }

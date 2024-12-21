@@ -15,6 +15,8 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 
+import '../service/braze/service.dart';
+
 class UnusualTradingVolumeProvider extends ChangeNotifier {
   Status _status = Status.ideal;
 
@@ -66,6 +68,8 @@ class UnusualTradingVolumeProvider extends ChangeNotifier {
         //   symbol: symbol,
         //   companyName: companyName,
         // );
+        BrazeService.eventADAlert(symbol: symbol);
+
         _data?[index].isAlertAdded = 1;
         notifyListeners();
 
@@ -119,6 +123,8 @@ class UnusualTradingVolumeProvider extends ChangeNotifier {
         //   companyName: companyName,
         // );
         //
+        BrazeService.eventADWatchlist(symbol: symbol);
+
         _data?[index].isWatchlistAdded = 1;
         notifyListeners();
 
