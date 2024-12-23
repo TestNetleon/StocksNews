@@ -1,99 +1,15 @@
-// import 'dart:async';
-// import 'package:flutter/foundation.dart';
-// import 'package:flutter/material.dart';
-// import 'package:flutter/services.dart';
-// import 'package:firebase_core/firebase_core.dart';
-// import 'package:stocks_news_new/routes/my_app.dart';
-// import 'package:stocks_news_new/service/amplitude/service.dart';
-// import 'package:stocks_news_new/service/braze/service.dart';
-// import 'package:stocks_news_new/utils/constants.dart';
-// import 'package:stocks_news_new/database/preference.dart';
-// import 'package:stocks_news_new/utils/utils.dart';
-// import 'package:firebase_in_app_messaging/firebase_in_app_messaging.dart';
-// import 'firebase_options.dart';
-
-// void main() async {
-//   try {
-//     WidgetsFlutterBinding.ensureInitialized();
-//   } catch (e) {
-//     if (kDebugMode) print(e.toString());
-//   }
-
-//   SystemChrome.setSystemUIOverlayStyle(
-//     const SystemUiOverlayStyle(
-//       statusBarColor: Colors.black,
-//       statusBarIconBrightness: Brightness.light,
-//       statusBarBrightness: Brightness.dark,
-//     ),
-//   );
-
-// //-----------------------------------------------------
-// //-----------------------------------------------------
-// //-----------------------------------------------------
-// //Remove this method to stop OneSignal Debugging
-//   // OneSignal.Debug.setLogLevel(OSLogLevel.verbose);
-//   // OneSignal.initialize("da811ab1-8239-4155-99f1-ebc15b20160b");
-//   // OneSignal.Notifications.requestPermission(true);
-//   // OneSignalService().initNotifications();
-
-// //-----------------------------------------------------
-// //-----------------------------------------------------
-// //-----------------------------------------------------
-
-//   try {
-//     try {
-//       await Firebase.initializeApp(
-//         options: DefaultFirebaseOptions.currentPlatform,
-//         // options: FirebaseOptions(
-//         //   apiKey: ApiKeys.apiKey,
-//         //   appId: ApiKeys.appId,
-//         //   messagingSenderId: ApiKeys.messagingSenderId,
-//         //   projectId: ApiKeys.projectId,
-//         // ),
-//       );
-//     } catch (e) {
-//       Utils().showLog('Error initializing Firebase: $e');
-//     }
-
-//     // BrazeNotificationService().initialize();
-
-//     FirebaseInAppMessaging.instance.setAutomaticDataCollectionEnabled(true);
-//     // BrazeService().initialize();
-//     // BrazeNotificationService.initializeNotificationService();
-
-//     AmplitudeService.initialize();
-//     Timer(const Duration(seconds: 8), () {
-//       Preference.setIsFirstOpen(false);
-//     });
-//   } catch (e) {
-//     Utils().showLog('Error initializing Firebase: $e');
-//   }
-
-//   // FirebaseApi().initNotifications();
-//   splashLoaded = false;
-//   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
-//       .then((_) {
-//     runApp(const MyApp());
-//   });
-// }
-
 import 'dart:async';
-import 'dart:convert';
-import 'dart:io';
-import 'package:braze_plugin/braze_plugin.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:stocks_news_new/fcm/braze_notification_handler.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/service/amplitude/service.dart';
-import 'package:stocks_news_new/service/braze/service.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/database/preference.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:firebase_in_app_messaging/firebase_in_app_messaging.dart';
-import 'fcm/braze_service.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -131,23 +47,20 @@ void main() async {
       Utils().showLog('Firebase catch: $e');
     }
 
-    BrazeService().initialize();
-    // BrazeNotificationService.initializeNotificationService();
-
     AmplitudeService.initialize();
     Timer(const Duration(seconds: 8), () {
       Preference.setIsFirstOpen(false);
     });
 
-    // try {
-    //   FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
-    // } catch (e) {}
+    try {
+      NotificationHandler.instance.initialize();
+    } catch (e) {
+      //
+    }
   } catch (e) {
     Utils().showLog('Error initializing Firebase: $e');
   }
 
-  // FirebaseApi().initNotifications();
-  // BrazeNotificationService().brazeNotificationInitialize();
   splashLoaded = false;
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
       .then((_) {

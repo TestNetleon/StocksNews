@@ -14,6 +14,8 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 
+import '../service/braze/service.dart';
+
 class CongressionalDetailProvider extends ChangeNotifier {
   CongressMemberRes? _data;
   CongressMemberRes? get data => _data;
@@ -73,6 +75,8 @@ class CongressionalDetailProvider extends ChangeNotifier {
         //   symbol: symbol,
         //   companyName: companyName,
         // );
+        BrazeService.eventADAlert(symbol: symbol);
+
         data?.tradeLists[index].isAlertAdded = 1;
 
         notifyListeners();
@@ -128,6 +132,8 @@ class CongressionalDetailProvider extends ChangeNotifier {
         //   symbol: symbol,
         //   companyName: companyName,
         // );
+        BrazeService.eventADWatchlist(symbol: symbol);
+
         notifyListeners();
 
         // _homeTrendingRes?.trending[index].isWatchlistAdded = 1;

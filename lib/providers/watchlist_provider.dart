@@ -11,6 +11,8 @@ import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 
+import '../service/braze/service.dart';
+
 class WatchlistProvider extends ChangeNotifier {
   WatchlistRes? _data;
   String? _error;
@@ -116,6 +118,11 @@ class WatchlistProvider extends ChangeNotifier {
 
       if (response.status) {
         _data?.data.removeWhere((element) => element.id == id);
+        BrazeService.eventADWatchlist(
+          symbol: symbol,
+          add: false,
+        );
+
         if (_data?.data == null || _data?.data.isEmpty == true) {
           _error = "Your watchlist is currently empty.";
         }

@@ -13,6 +13,7 @@ import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/modals/user_res.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
+import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/screens/myAccount/widgets/my-account_header.dart';
 import 'package:stocks_news_new/screens/myAccount/widgets/otp.dart';
 import 'package:stocks_news_new/utils/colors.dart';
@@ -175,6 +176,10 @@ class _MyAccountContainerState extends State<MyAccountContainer>
             name: nameController.text,
             displayName: displayController.text,
           );
+
+          navigatorKey.currentContext!
+              .read<HomeProvider>()
+              .getHomeSlider(showProgress: false);
         }
       } catch (e) {
         //

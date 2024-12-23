@@ -1,7 +1,7 @@
 import 'dart:io';
-import 'package:braze_plugin/braze_plugin.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
+import 'package:stocks_news_new/fcm/braze_notification_handler.dart';
 import 'package:stocks_news_new/modals/user_res.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
@@ -11,26 +11,15 @@ import '../../database/preference.dart';
 import '../../utils/constants.dart';
 
 class BrazeService {
-  // static const MethodChannel _channel = MethodChannel('brazeMethod');
-  static final BrazePlugin _braze = BrazePlugin(
-    customConfigs: {replayCallbacksConfigKey: true},
-    brazeSdkAuthenticationErrorHandler: (e) {
-      Utils().showLog('authentication error : $e ');
-    },
-  );
+  // static final BrazePlugin  NotificationHandler.instance.braze = BrazePlugin(
+  //   customConfigs: {replayCallbacksConfigKey: true},
+  //   brazeSdkAuthenticationErrorHandler: (e) {
+  //     Utils().showLog('authentication error : $e ');
+  //   },
+  // );
 
   Future<void> registerFCM(pushToken) async {
-    _braze.registerPushToken(pushToken);
-  }
-
-  // INITIALIZE SDK Android
-  Future<void> initialize() async {
-    try {
-      _braze.enableSDK();
-      Utils().showLog('Braze SDK Initialized Successfully');
-    } catch (e) {
-      Utils().showLog('Error while initializing Braze: $e');
-    }
+    NotificationHandler.instance.braze.registerPushToken(pushToken);
   }
 
   static Future<void> brazeUserEvent() async {
@@ -58,10 +47,6 @@ class BrazeService {
           user.phone != null &&
           user.phone != '') {
         phoneNumber = '${user.phoneCode}${user.phone}';
-        // country = CountryCode.fromDialCode(user.phoneCode!).name;
-        // if (user.phoneCode == '+1') {
-        //   country = 'United States';
-        // }
       } else if (user.phone != null && user.phone != '') {
         phoneNumber = '${user.phone}';
       }
@@ -86,6 +71,12 @@ class BrazeService {
         brazeBaseEvents(
           attributionKey: 'points_balance',
           attributeValue: user.pointEarn,
+        );
+      }
+
+      if (user.signupStatus == true) {
+        brazeBaseEvents(
+          eventName: EventBraze.b_sign_up.name,
         );
       }
     }
@@ -153,6 +144,30 @@ class BrazeService {
     );
   }
 
+  static Future<void> eventADAlert({
+    required String symbol,
+    bool add = true,
+  }) async {
+    brazeBaseEvents(
+        addRemove: AddRemoveEvent(
+      add: add,
+      symbolTo: 'alerts',
+      symbol: symbol,
+    ));
+  }
+
+  static Future<void> eventADWatchlist({
+    required String symbol,
+    bool add = true,
+  }) async {
+    brazeBaseEvents(
+        addRemove: AddRemoveEvent(
+      add: add,
+      symbolTo: 'watchlist',
+      symbol: symbol,
+    ));
+  }
+
   static Future<void> brazeBaseEvents({
     String? userId,
     String? aliasName,
@@ -172,6 +187,8 @@ class BrazeService {
     List<String>? alerts,
     dynamic attributeValue,
     String? attributionKey,
+    String? symbol,
+    AddRemoveEvent? addRemove,
   }) async {
     // Helper function to execute the action with error handling
     Future<void> executeAction(
@@ -186,7 +203,7 @@ class BrazeService {
     // Change User if userId is provided
     if (userId != null && userId != '') {
       await executeAction(() async {
-        _braze.changeUser(userId);
+        NotificationHandler.instance.braze.changeUser(userId);
         Utils().showLog('changeUser: $userId');
       }, "change user");
     }
@@ -197,7 +214,7 @@ class BrazeService {
         aliasLabel != null &&
         aliasLabel != '') {
       await executeAction(() async {
-        _braze.addAlias(aliasName, aliasLabel);
+        NotificationHandler.instance.braze.addAlias(aliasName, aliasLabel);
         Utils().showLog('addAlias: name?$aliasName, label?$aliasLabel');
       }, "add alias");
     }
@@ -205,7 +222,8 @@ class BrazeService {
     // Log Custom Event if eventName is provided
     if (eventName != null && eventName != '') {
       await executeAction(() async {
-        _braze.logCustomEvent(eventName, properties: eventProperties ?? {});
+        NotificationHandler.instance.braze
+            .logCustomEvent(eventName, properties: eventProperties ?? {});
         Utils().showLog(
             'logCustomEvent: eventName?$eventName, properties?$eventProperties');
       }, "log custom event");
@@ -217,7 +235,7 @@ class BrazeService {
     //     price != null &&
     //     quantity != null) {
     //   await executeAction(() async {
-    //     _braze.logPurchase(
+    //      NotificationHandler.instance.braze.logPurchase(
     //       productId,
     //       currencyCode,
     //       double.parse(price),
@@ -229,7 +247,7 @@ class BrazeService {
     // Set First Name if provided
     if (firstName != null && firstName != '') {
       await executeAction(() async {
-        _braze.setFirstName(firstName);
+        NotificationHandler.instance.braze.setFirstName(firstName);
         Utils().showLog('setFirstName: $firstName');
       }, "set first name");
     }
@@ -237,7 +255,7 @@ class BrazeService {
     // Set Last Name if provided
     if (lastName != null && lastName != '') {
       await executeAction(() async {
-        _braze.setLastName(lastName);
+        NotificationHandler.instance.braze.setLastName(lastName);
         Utils().showLog('setLastName: $lastName');
       }, "set last name");
     }
@@ -245,7 +263,7 @@ class BrazeService {
     // Set Email if provided
     if (email != null && email != '') {
       await executeAction(() async {
-        _braze.setEmail(email);
+        NotificationHandler.instance.braze.setEmail(email);
         Utils().showLog('setEmail: $email');
       }, "set email");
     }
@@ -253,7 +271,7 @@ class BrazeService {
     // Set Phone Number if provided
     if (phoneNumber != null && phoneNumber != '') {
       await executeAction(() async {
-        _braze.setPhoneNumber(phoneNumber);
+        NotificationHandler.instance.braze.setPhoneNumber(phoneNumber);
         Utils().showLog('setPhoneNumber: $phoneNumber');
       }, "set phone number");
     }
@@ -261,29 +279,60 @@ class BrazeService {
     // Set Watchlist or Alerts if provided
     if (alerts != null) {
       await executeAction(() async {
-        _braze.setCustomUserAttributeArrayOfStrings('alerts', alerts);
+        NotificationHandler.instance.braze
+            .setCustomUserAttributeArrayOfStrings('alerts', alerts);
         Utils().showLog('alerts: $alerts');
       }, "set alerts");
     }
 
     if (watchlist != null) {
       await executeAction(() async {
-        _braze.setCustomUserAttributeArrayOfStrings('watchlists', watchlist);
-        Utils().showLog('watchlists: $watchlist');
+        NotificationHandler.instance.braze
+            .setCustomUserAttributeArrayOfStrings('watchlist', watchlist);
+        Utils().showLog('watchlist: $watchlist');
       }, "set watchlist");
+    }
+
+    if (addRemove != null) {
+      await executeAction(() async {
+        if (addRemove.add) {
+          NotificationHandler.instance.braze.addToCustomAttributeArray(
+            addRemove.symbolTo,
+            addRemove.symbol,
+          );
+        } else {
+          NotificationHandler.instance.braze.removeFromCustomAttributeArray(
+            addRemove.symbolTo,
+            addRemove.symbol,
+          );
+        }
+      }, 'add/remove ticker');
     }
 
     // Set Custom Attribute if provided
     if (attributionKey != null && attributionKey != '') {
       await executeAction(() async {
         if (attributeValue is String) {
-          _braze.setStringCustomUserAttribute(attributionKey, attributeValue);
+          NotificationHandler.instance.braze
+              .setStringCustomUserAttribute(attributionKey, attributeValue);
           Utils().showLog('string: key?$attributionKey,value?$attributeValue');
         } else {
-          _braze.setIntCustomUserAttribute(attributionKey, attributeValue);
+          NotificationHandler.instance.braze
+              .setIntCustomUserAttribute(attributionKey, attributeValue);
           Utils().showLog('int: key?$attributionKey,value?$attributeValue');
         }
       }, "set custom attribute");
     }
   }
+}
+
+class AddRemoveEvent {
+  final bool add;
+  String symbolTo;
+  String symbol;
+  AddRemoveEvent({
+    required this.add,
+    required this.symbolTo,
+    required this.symbol,
+  });
 }

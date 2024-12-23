@@ -42,6 +42,7 @@
 // class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
 //   static const platform = MethodChannel('brazeMethod');
 //   static const deeplinkPlatform = MethodChannel('deepLinkChannel');
+//   BrazePlugin braze = BrazePlugin();
 
 //   static final BrazePlugin _braze = BrazePlugin(
 //     customConfigs: {replayCallbacksConfigKey: true},
@@ -51,21 +52,14 @@
 //   );
 //   static StreamSubscription? pushEventsStreamSubscription;
 
-//   final StreamController<BrazePushEvent> pushEventStreamController =
-//       StreamController<BrazePushEvent>.broadcast();
-
 //   bool _initialDeepLinks = false;
 //   bool connection = true;
-//   BrazePlugin braze = BrazePlugin();
 
 //   @override
 //   void initState() {
 //     super.initState();
 //     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
 //       oneSignalInitialized = true;
-
-//       ;
-
 //       listenForPushToken();
 //       listenForNotification();
 //       listenForInAppMessage();
@@ -468,10 +462,8 @@
 // }
 
 import 'dart:async';
-import 'dart:convert';
 import 'dart:io';
 import 'package:app_links/app_links.dart';
-import 'package:braze_plugin/braze_plugin.dart';
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
@@ -479,7 +471,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:stocks_news_new/fcm/braze_notification_handler.dart';
 import 'package:stocks_news_new/fcm/braze_service.dart';
 import 'package:stocks_news_new/modals/user_res.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
@@ -509,10 +501,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
-  BrazePlugin braze = BrazePlugin();
-  static StreamSubscription? pushEventsStreamSubscription;
-  static StreamSubscription? inAppMessageStreamSubscription;
-
   bool _initialDeepLinks = false;
   bool connection = true;
 
@@ -520,10 +508,10 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      oneSignalInitialized = true;
+      // oneSignalInitialized = true;
+
       listenForPushToken();
-      listenForNotification();
-      listenForInAppMessage();
+      NotificationHandler.instance.setupNotificationListeners();
       configureRevenueCatAttribute();
       // // brazeDeepLink();
       getInitialReferralsIfAny();
@@ -553,90 +541,9 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       }
     });
 
-    String? address = await BrazeNotificationService().getUserLocation();
-    BrazeNotificationService().saveFCMApi(value: fcmToken, address: address);
-  }
-
-  void listenForNotification() {
-    try {
-      pushEventsStreamSubscription =
-          braze.subscribeToPushNotificationEvents((BrazePushEvent pushEvent) {
-        // popHome = true;
-        Utils().showLog('listening for notification...');
-        Utils().showLog(pushEvent.payloadType);
-
-        if (pushEvent.payloadType == 'push_opened') {
-          Utils().showLog('data received: $pushEvent');
-
-          try {
-            NotificationDataPref notification = NotificationDataPref(
-              type: pushEvent.payloadType,
-              android: json.encode(pushEvent.android),
-              ios: json.encode(pushEvent.ios),
-              pushEventJsonString: pushEvent.pushEventJsonString,
-              brazeProperties: json.encode(pushEvent.brazeProperties),
-            );
-            NotificationPreferences.saveNotification(notification);
-          } catch (e) {
-            //
-          }
-
-          try {
-            // Parse the push notification JSON
-            final Map<String, dynamic> notificationData =
-                jsonDecode(pushEvent.pushEventJsonString);
-
-            String? type;
-            String? slug;
-
-            if (Platform.isIOS) {
-              type = notificationData['ios']['raw_payload']['type'];
-              slug = notificationData['ios']['raw_payload']['slug'];
-            } else {
-              type = pushEvent.brazeProperties['type'];
-              slug = pushEvent.brazeProperties['slug'];
-            }
-
-            if (type != null && slug != null) {
-              BrazeNotificationService().navigateToRequiredScreen({
-                'type': type,
-                'slug': slug,
-              });
-            } else {
-              Utils().showLog(
-                  'Required fields "type" or "slug" not found in notification payload.');
-            }
-          } catch (e) {
-            Utils().showLog('Error parsing notification JSON: $e');
-          }
-        }
-      });
-    } catch (e) {
-      Utils().showLog('Notification error: $e');
-    }
-  }
-
-  listenForInAppMessage() {
-    try {
-      inAppMessageStreamSubscription = braze.subscribeToInAppMessages(
-        (BrazeInAppMessage pushEvent) {
-          Utils().showLog('in app message event $pushEvent');
-
-          braze.logInAppMessageClicked(pushEvent);
-          braze.logInAppMessageClicked(pushEvent);
-        },
-      );
-    } catch (e) {
-      Utils().showLog('in app message error: $e');
-    }
-  }
-
-  @override
-  void dispose() {
-    WidgetsBinding.instance.removeObserver(this);
-    pushEventsStreamSubscription?.cancel();
-    inAppMessageStreamSubscription?.cancel();
-    super.dispose();
+    String? address = await BrazeNotificationService.instance.getUserLocation();
+    BrazeNotificationService.instance
+        .saveFCMApi(value: fcmToken, address: address);
   }
 
   @override

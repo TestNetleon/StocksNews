@@ -475,24 +475,27 @@ class _LoginFirstState extends State<LoginFirst> {
                           ),
                         ),
                       ),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Checkbox(
-                            side: BorderSide(color: Colors.white),
-                            value: isChecked,
-                            onChanged: (value) {
-                              setState(() {
-                                isChecked = value!;
-                              });
-                            },
-                            activeColor: ThemeColors.accent,
-                          ),
-                          Expanded(
-                              child: LoginSignupID(
-                            defaultLength: 280,
-                          )),
-                        ],
+                      Visibility(
+                        visible: useCheckboxCondition,
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Checkbox(
+                              side: BorderSide(color: Colors.white),
+                              value: isChecked,
+                              onChanged: (value) {
+                                setState(() {
+                                  isChecked = value!;
+                                });
+                              },
+                              activeColor: ThemeColors.accent,
+                            ),
+                            Expanded(
+                                child: LoginSignupID(
+                              defaultLength: 280,
+                            )),
+                          ],
+                        ),
                       ),
 
                       const SpacerVertical(height: Dimen.itemSpacing),

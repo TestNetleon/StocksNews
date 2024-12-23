@@ -7,6 +7,7 @@
 	<key>com.apple.developer.associated-domains</key>
 	<array>
 		<string>applinks:app.stocks.news</string>
+		<string>applinks:stocksnews.page.link</string>
 	</array>
 </dict>
 </plist>

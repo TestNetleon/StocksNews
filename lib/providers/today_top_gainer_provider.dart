@@ -15,6 +15,8 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 
+import '../service/braze/service.dart';
+
 class TodayTopGainerProvider extends ChangeNotifier {
   GainersLosersRes? _data;
   GainersLosersRes? get data => _data;
@@ -72,6 +74,8 @@ class TodayTopGainerProvider extends ChangeNotifier {
         //   symbol: symbol,
         //   companyName: companyName,
         // );
+        BrazeService.eventADAlert(symbol: symbol);
+
         _data?.data?[index].isAlertAdded = 1;
         notifyListeners();
 
@@ -126,6 +130,8 @@ class TodayTopGainerProvider extends ChangeNotifier {
         //   companyName: companyName,
         // );
         //
+        BrazeService.eventADWatchlist(symbol: symbol);
+
         _data?.data?[index].isWatchlistAdded = 1;
         notifyListeners();
 

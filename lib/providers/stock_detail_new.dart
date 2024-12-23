@@ -256,6 +256,8 @@ class StockDetailProviderNew extends ChangeNotifier {
         //   symbol: symbol,
         //   companyName: companyName,
         // );
+        BrazeService.eventADAlert(symbol: symbol);
+
         if (type == "peer") {
           _analysis?.peersData?[index].isAlertAdded = 1;
         }
@@ -316,6 +318,7 @@ class StockDetailProviderNew extends ChangeNotifier {
         //   companyName: companyName,
         // );
         //
+        BrazeService.eventADWatchlist(symbol: symbol);
 
         if (type == "Peer") {
           _analysis?.peersData?[index].isWatchlistAdded = 1;
@@ -375,6 +378,8 @@ class StockDetailProviderNew extends ChangeNotifier {
         //   symbol: _tabRes?.keyStats?.symbol ?? "",
         //   companyName: _tabRes?.keyStats?.name ?? "",
         // );
+        BrazeService.eventADAlert(symbol: _tabRes?.keyStats?.symbol ?? '');
+
         if (index == null) {
           _tabRes?.isAlertAdded = 1;
         }
@@ -421,6 +426,8 @@ class StockDetailProviderNew extends ChangeNotifier {
         //   symbol: _tabRes?.keyStats?.symbol ?? "",
         //   companyName: _tabRes?.keyStats?.name ?? "",
         // );
+        BrazeService.eventADWatchlist(symbol: _tabRes?.keyStats?.symbol ?? '');
+
         if (index == null) {
           _tabRes?.isWatchListAdded = 1;
         }

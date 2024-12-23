@@ -13,6 +13,7 @@ import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/utils/utils.dart';
+import '../service/braze/service.dart';
 import 'home_provider.dart';
 
 class TopTrendingProvider extends ChangeNotifier {
@@ -107,6 +108,8 @@ class TopTrendingProvider extends ChangeNotifier {
         //   symbol: symbol,
         //   companyName: companyName,
         // );
+        BrazeService.eventADAlert(symbol: symbol);
+
         if (_selectedIndex == 0 || _selectedIndex == 1) {
           data?[index].isAlertAdded = 1;
         } else if (_selectedIndex == 2) {

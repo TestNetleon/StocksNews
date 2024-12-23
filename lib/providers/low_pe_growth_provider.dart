@@ -14,6 +14,7 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import '../modals/highlow_pe_res.dart';
+import '../service/braze/service.dart';
 
 class LowPeGrowthProvider extends ChangeNotifier {
   List<HIghLowPeRes>? _data;
@@ -71,6 +72,8 @@ class LowPeGrowthProvider extends ChangeNotifier {
         //   symbol: symbol,
         //   companyName: companyName,
         // );
+        BrazeService.eventADAlert(symbol: symbol);
+
         _data?[index].isAlertAdded = 1;
         notifyListeners();
 
@@ -126,6 +129,7 @@ class LowPeGrowthProvider extends ChangeNotifier {
         //   symbol: symbol,
         //   companyName: companyName,
         // );
+        BrazeService.eventADWatchlist(symbol: symbol);
 
         // _homeTrendingRes?.trending[index].isWatchlistAdded = 1;
 

@@ -89,7 +89,6 @@ class _AdManagerIndexState extends State<AdManagerIndex> {
             screenMap[AdPlaces.place3] = true;
           }
           break;
-        default:
       }
       adVisibilityMap[screen] = screenMap;
     } catch (e) {

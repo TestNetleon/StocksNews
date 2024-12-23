@@ -15,6 +15,8 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 
+import '../service/braze/service.dart';
+
 class TodayBreakoutStockProvider extends ChangeNotifier {
   List<BreakoutStocksRes>? _data;
   List<BreakoutStocksRes>? get data => _data;
@@ -71,6 +73,8 @@ class TodayBreakoutStockProvider extends ChangeNotifier {
         //   symbol: symbol,
         //   companyName: companyName,
         // );
+        BrazeService.eventADAlert(symbol: symbol);
+
         _data?[index].isAlertAdded = 1;
         notifyListeners();
 
@@ -127,6 +131,7 @@ class TodayBreakoutStockProvider extends ChangeNotifier {
         //
         _data?[index].isWatchlistAdded = 1;
         notifyListeners();
+        BrazeService.eventADWatchlist(symbol: symbol);
 
         // _homeTrendingRes?.trending[index].isWatchlistAdded = 1;
 

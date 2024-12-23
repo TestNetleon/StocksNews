@@ -14,6 +14,8 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 
+import '../service/braze/service.dart';
+
 class RedditTwitterProvider extends ChangeNotifier {
   String? _error;
   Status _status = Status.ideal;
@@ -72,6 +74,8 @@ class RedditTwitterProvider extends ChangeNotifier {
         //   symbol: symbol,
         //   companyName: companyName,
         // );
+        BrazeService.eventADAlert(symbol: symbol);
+
         if (type == "ShowTheLast") {
           _socialSentimentRes?.data[index].isAlertAdded = 1;
         }
@@ -131,6 +135,7 @@ class RedditTwitterProvider extends ChangeNotifier {
         //   symbol: symbol,
         //   companyName: companyName,
         // );
+        BrazeService.eventADWatchlist(symbol: symbol);
 
         //
         if (type == "ShowTheLast") {

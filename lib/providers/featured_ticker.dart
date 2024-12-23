@@ -13,6 +13,7 @@ import '../api/apis.dart';
 import '../modals/featured_ticeker_res.dart';
 import '../modals/home_alert_res.dart';
 import '../routes/my_app.dart';
+import '../service/braze/service.dart';
 import '../utils/constants.dart';
 import 'user_provider.dart';
 
@@ -70,6 +71,8 @@ class FeaturedTickerProvider extends ChangeNotifier {
         //   symbol: symbol,
         //   companyName: companyName,
         // );
+        BrazeService.eventADAlert(symbol: symbol);
+
         _data?.data[index].isAlertAdded = 1;
         notifyListeners();
 
@@ -124,6 +127,7 @@ class FeaturedTickerProvider extends ChangeNotifier {
         //   companyName: companyName,
         // );
         notifyListeners();
+        BrazeService.eventADWatchlist(symbol: symbol);
 
         // _homeTrendingRes?.trending[index].isWatchlistAdded = 1;
 
