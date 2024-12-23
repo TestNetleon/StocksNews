@@ -442,6 +442,9 @@ let brazeEndpoint = "sdk.iad-07.braze.com"
 
     GeneratedPluginRegistrant.register(with: self)
 
+
+
+
     // - Setup Braze
     let configuration = Braze.Configuration(apiKey: brazeApiKey, endpoint: brazeEndpoint)
     configuration.sessionTimeout = 1
@@ -454,9 +457,16 @@ let brazeEndpoint = "sdk.iad-07.braze.com"
 
     let braze = BrazePlugin.initBraze(configuration)
 
+  // Check if a cached device token exists
+  if let cachedDeviceToken = UserDefaults.standard.data(forKey: "cachedDeviceToken") {
+      BrazePlugin.braze?.notifications.register(deviceToken: cachedDeviceToken)
+      print("Token registered with Braze from cache")
+  }
 
     // - InAppMessage UI
     // let inAppMessageUI = BrazeInAppMessageUI()
+    // let inAppMessageUI = CustomInAppMessagePresenter()
+    // braze.inAppMessagePresenter = inAppMessageUI
     // let inAppMessageUI = CustomInAppMessagePresenter()
     // braze.inAppMessagePresenter = inAppMessageUI
 
@@ -478,15 +488,22 @@ let brazeEndpoint = "sdk.iad-07.braze.com"
 }
 
 // class CustomInAppMessagePresenter: BrazeInAppMessageUI {
+// class CustomInAppMessagePresenter: BrazeInAppMessageUI {
 
+//   override func present(message: Braze.InAppMessage) {
+//     print("=> [In-app Message] Received message from Braze:", message)
 //   override func present(message: Braze.InAppMessage) {
 //     print("=> [In-app Message] Received message from Braze:", message)
 
 //     BrazePlugin.processInAppMessage(message)
+//     BrazePlugin.processInAppMessage(message)
 
 //     super.present(message: message)
 //   }
+//     super.present(message: message)
+//   }
 
+// }
 // }
 
 
@@ -518,16 +535,16 @@ let brazeEndpoint = "sdk.iad-07.braze.com"
   }
 
 
-extension AppDelegate {
+// extension AppDelegate {
 
-  private func forwardURL(_ url: URL) {
-    guard
-      let controller: FlutterViewController = window?.rootViewController as? FlutterViewController
-    else { return }
-    let deepLinkChannel = FlutterMethodChannel(
-      name: "deepLinkChannel", binaryMessenger: controller.binaryMessenger)
-    deepLinkChannel.invokeMethod("receiveDeepLink", arguments: url.absoluteString)
-  }
+//   private func forwardURL(_ url: URL) {
+//     guard
+//       let controller: FlutterViewController = window?.rootViewController as? FlutterViewController
+//     else { return }
+//     let deepLinkChannel = FlutterMethodChannel(
+//       name: "deepLinkChannel", binaryMessenger: controller.binaryMessenger)
+//     deepLinkChannel.invokeMethod("receiveDeepLink", arguments: url.absoluteString)
+//   }
 
 
   // Universal link

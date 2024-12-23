@@ -79,6 +79,12 @@ class BrazeService {
           eventName: EventBraze.b_sign_up.name,
         );
       }
+
+      if (user.signupStatus == true) {
+        brazeBaseEvents(
+          eventName: EventBraze.b_sign_up.name,
+        );
+      }
     }
   }
 
@@ -168,6 +174,30 @@ class BrazeService {
     ));
   }
 
+  static Future<void> eventADAlert({
+    required String symbol,
+    bool add = true,
+  }) async {
+    brazeBaseEvents(
+        addRemove: AddRemoveEvent(
+      add: add,
+      symbolTo: 'alerts',
+      symbol: symbol,
+    ));
+  }
+
+  static Future<void> eventADWatchlist({
+    required String symbol,
+    bool add = true,
+  }) async {
+    brazeBaseEvents(
+        addRemove: AddRemoveEvent(
+      add: add,
+      symbolTo: 'watchlist',
+      symbol: symbol,
+    ));
+  }
+
   static Future<void> brazeBaseEvents({
     String? userId,
     String? aliasName,
@@ -187,6 +217,8 @@ class BrazeService {
     List<String>? alerts,
     dynamic attributeValue,
     String? attributionKey,
+    String? symbol,
+    AddRemoveEvent? addRemove,
     String? symbol,
     AddRemoveEvent? addRemove,
   }) async {
@@ -324,6 +356,17 @@ class BrazeService {
       }, "set custom attribute");
     }
   }
+}
+
+class AddRemoveEvent {
+  final bool add;
+  String symbolTo;
+  String symbol;
+  AddRemoveEvent({
+    required this.add,
+    required this.symbolTo,
+    required this.symbol,
+  });
 }
 
 class AddRemoveEvent {
