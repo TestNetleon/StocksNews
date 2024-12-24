@@ -1,12 +1,12 @@
 #!/bin/sh
 # This is a generated file; do not edit or check into version control.
-export "FLUTTER_ROOT=/Users/netleontechnologies/Documents/flutter"
-export "FLUTTER_APPLICATION_PATH=/Users/netleontechnologies/Documents/workspace/StocksNewsMain 2"
+export "FLUTTER_ROOT=/Users/netleonmacmini1/Documents/Flutter/flutter"
+export "FLUTTER_APPLICATION_PATH=/Users/netleonmacmini1/Documents/Flutter/workspace/StocksNewsMain"
 export "COCOAPODS_PARALLEL_CODE_SIGN=true"
 export "FLUTTER_TARGET=lib/main.dart"
 export "FLUTTER_BUILD_DIR=build"
 export "FLUTTER_BUILD_NAME=1.1.43"
-export "FLUTTER_BUILD_NUMBER=138"
+export "FLUTTER_BUILD_NUMBER=139"
 export "DART_OBFUSCATION=false"
 export "TRACK_WIDGET_CREATION=true"
 export "TREE_SHAKE_ICONS=false"

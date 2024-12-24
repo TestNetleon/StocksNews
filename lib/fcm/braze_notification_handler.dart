@@ -25,6 +25,7 @@ class NotificationHandler {
   BrazePlugin get braze => _braze;
 
   static StreamSubscription? _pushSubscription;
+  static StreamSubscription? _inAppSubscription;
 
   Future<void> initialize() async {
     try {
@@ -42,18 +43,24 @@ class NotificationHandler {
     _pushSubscription?.cancel();
     _pushSubscription =
         _braze.subscribeToPushNotificationEvents((BrazePushEvent event) {
-      // Timer(const Duration(seconds: 2), () {
-      //   showConfirmAlertDialog(
-      //     context: navigatorKey.currentContext!,
-      //     title: "Notification RECEIVED NEW",
-      //     message: event.toString(),
-      //   );
-      // });
-
       debugPrint('Notification event received: ${event.toString()}');
 
       _handleNotificationPayload(event);
     });
+
+    _inAppSubscription = _braze.subscribeToInAppMessages(
+      (BrazeInAppMessage event) {
+        debugPrint('In App Message event received: $event');
+        Utils().showLog('In App Message event received: $event');
+
+        _braze.logInAppMessageClicked(event);
+        _braze.logInAppMessageImpression(event);
+
+        // for (var button in event.buttons) {
+        //   _braze.logInAppMessageButtonClicked(event, button.id);
+        // }
+      },
+    );
   }
 
   void _handleNotificationPayload(BrazePushEvent event) {
@@ -91,5 +98,6 @@ class NotificationHandler {
 
   void dispose() {
     _pushSubscription?.cancel();
+    _inAppSubscription?.cancel();
   }
 }

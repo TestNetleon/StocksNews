@@ -415,9 +415,7 @@ let brazeEndpoint = "sdk.iad-07.braze.com"
 @objc class AppDelegate: FlutterAppDelegate {
 
   // These subscriptions need to be retained to be active
-  var contentCardsSubscription: Braze.Cancellable?
   var pushEventsSubscription: Braze.Cancellable?
-  var featureFlagsSubscription: Braze.Cancellable?
 
   override func application(
     _ application: UIApplication,
@@ -442,9 +440,6 @@ let brazeEndpoint = "sdk.iad-07.braze.com"
 
     GeneratedPluginRegistrant.register(with: self)
 
-
-
-
     // - Setup Braze
     let configuration = Braze.Configuration(apiKey: brazeApiKey, endpoint: brazeEndpoint)
     configuration.sessionTimeout = 1
@@ -464,11 +459,10 @@ let brazeEndpoint = "sdk.iad-07.braze.com"
   }
 
     // - InAppMessage UI
-    // let inAppMessageUI = BrazeInAppMessageUI()
+    let inAppMessageUI = BrazeInAppMessageUI()
     // let inAppMessageUI = CustomInAppMessagePresenter()
-    // braze.inAppMessagePresenter = inAppMessageUI
-    // let inAppMessageUI = CustomInAppMessagePresenter()
-    // braze.inAppMessagePresenter = inAppMessageUI
+    braze.inAppMessagePresenter = inAppMessageUI
+
 
     pushEventsSubscription = braze.notifications.subscribeToUpdates { payload in
       print(
@@ -517,34 +511,32 @@ let brazeEndpoint = "sdk.iad-07.braze.com"
   
 }
 
-  func application(
-    _ application: UIApplication,
-    didReceiveRemoteNotification userInfo: [AnyHashable: Any],
-    fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void
-  ) {
-    // Handle Braze push notifications
-    if let braze = BrazePlugin.braze, braze.notifications.handleBackgroundNotification(
-      userInfo: userInfo,
-      fetchCompletionHandler: completionHandler
-    ) {
-      return
-    }
-    
-    // If Braze doesn't handle the notification, call the default handler
-    completionHandler(.noData)
+  // func application(
+  //   _ application: UIApplication,
+  //   didReceiveRemoteNotification userInfo: [AnyHashable: Any],
+  //   fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void
+  // ) {
+  //   // Handle Braze push notifications
+  //   if let braze = BrazePlugin.braze, braze.notifications.handleBackgroundNotification(
+  //     userInfo: userInfo,
+  //     fetchCompletionHandler: completionHandler
+  //   ) {
+  //     return
+  //   }    
+  //   completionHandler(.noData)
+  // }
+
+
+extension AppDelegate {
+
+  private func forwardURL(_ url: URL) {
+    guard
+      let controller: FlutterViewController = window?.rootViewController as? FlutterViewController
+    else { return }
+    let deepLinkChannel = FlutterMethodChannel(
+      name: "deepLinkChannel", binaryMessenger: controller.binaryMessenger)
+    deepLinkChannel.invokeMethod("receiveDeepLink", arguments: url.absoluteString)
   }
-
-
-// extension AppDelegate {
-
-//   private func forwardURL(_ url: URL) {
-//     guard
-//       let controller: FlutterViewController = window?.rootViewController as? FlutterViewController
-//     else { return }
-//     let deepLinkChannel = FlutterMethodChannel(
-//       name: "deepLinkChannel", binaryMessenger: controller.binaryMessenger)
-//     deepLinkChannel.invokeMethod("receiveDeepLink", arguments: url.absoluteString)
-//   }
 
 
   // Universal link
@@ -563,148 +555,3 @@ let brazeEndpoint = "sdk.iad-07.braze.com"
   }
 }
 
-
-// import BrazeKit
-// import BrazeUI
-// import Flutter
-// import UIKit
-// import braze_plugin
-// import Firebase
-// import UserNotifications
-// import FirebaseMessaging
-
-// //LOCAL
-// // let brazeApiKey = "ba184694-cb2b-4e70-9e00-1e300ca9ecb0"
-
-// //LIVE
-// let brazeApiKey = "6e2560f1-ba23-4958-a4d9-16cd577fcf65"
-// let brazeEndpoint = "sdk.iad-07.braze.com"
-
-// @main
-// @objc class AppDelegate: FlutterAppDelegate {
-
-//     // These subscriptions need to be retained to be active
-//     var contentCardsSubscription: Braze.Cancellable?
-//     var pushEventsSubscription: Braze.Cancellable?
-//     var featureFlagsSubscription: Braze.Cancellable?
-
-//     override func application(
-//         _ application: UIApplication,
-//         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
-//     ) -> Bool {
-//         // Initialize Firebase
-//         FirebaseApp.configure()
-//         FirebaseConfiguration.shared.setLoggerLevel(.debug)
-
-//         // Request permission for push notifications
-//         UNUserNotificationCenter.current().requestAuthorization(
-//             options: [.alert, .badge, .sound]
-//         ) { granted, error in
-//             if granted {
-//                 DispatchQueue.main.async {
-//                     // Register for remote notifications
-//                     application.registerForRemoteNotifications()
-//                 }
-//                 print("Permission granted for notifications.")
-//             } else if let error = error {
-//                 print("Error requesting permission: \(error.localizedDescription)")
-//             }
-//         }
-
-//         // Initialize Braze
-//         let configuration = Braze.Configuration(apiKey: brazeApiKey, endpoint: brazeEndpoint)
-//         configuration.sessionTimeout = 1
-//         configuration.triggerMinimumTimeInterval = 0
-//         configuration.logger.level = .debug
-//         configuration.push.automation = true
-        
-//         let braze = BrazePlugin.initBraze(configuration)
-
-//         // Subscribe to push notifications events from Braze
-//         pushEventsSubscription = braze.notifications.subscribeToUpdates { payload in
-//             print(
-//                 """
-//                 => [Push Event Subscription] Received push event:
-//                    - type: \(payload.type)
-//                    - title: \(payload.title ?? "<empty>")
-//                    - isSilent: \(payload.isSilent)
-//                 """
-//             )
-//             BrazePlugin.processPushEvent(payload)
-//         }
-
-//         GeneratedPluginRegistrant.register(with: self)
-
-//         return super.application(application, didFinishLaunchingWithOptions: launchOptions)
-//     }
-
-//     // Handle Universal Link
-//     private func forwardURL(_ url: URL) {
-//         guard
-//             let controller: FlutterViewController = window?.rootViewController as? FlutterViewController
-//         else { return }
-//         let deepLinkChannel = FlutterMethodChannel(
-//             name: "deepLinkChannel", binaryMessenger: controller.binaryMessenger)
-//         deepLinkChannel.invokeMethod("receiveDeepLink", arguments: url.absoluteString)
-//     }
-
-//     // Universal Link
-//     override func application(
-//         _ application: UIApplication, continue userActivity: NSUserActivity,
-//         restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void
-//     ) -> Bool {
-//         guard userActivity.activityType == NSUserActivityTypeBrowsingWeb,
-//               let url = userActivity.webpageURL
-//         else {
-//             return false
-//         }
-//         forwardURL(url)
-//         return true
-//     }
-// }
-
-// // MARK: - Push Notification Handling
-
-// extension AppDelegate {
-
-//     // This method is called when the app successfully registers for push notifications
-//     func application(
-//         _ application: UIApplication,
-//         didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data
-//     ) {
-//         print("Entered didRegisterForRemoteNotificationsWithDeviceToken")
-
-//         // Convert deviceToken to hex string for logging (optional)
-//         let tokenString = deviceToken.map { String(format: "%02x", $0) }.joined()
-//         print("Successfully registered for remote notifications with device token: \(tokenString)")
-
-//         // Register the device token with Braze
-//         BrazePlugin.braze?.notifications.register(deviceToken: deviceToken)
-//     }
-
-//     // This method is called if the app fails to register for remote notifications
-//     func application(
-//         _ application: UIApplication,
-//         didFailToRegisterForRemoteNotificationsWithError error: Error
-//     ) {
-//         print("Failed to register for remote notifications: \(error.localizedDescription)")
-//     }
-
-//     // Handle incoming push notifications when app is in the background or closed
-//     func application(
-//         _ application: UIApplication,
-//         didReceiveRemoteNotification userInfo: [AnyHashable: Any],
-//         fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void
-//     ) {
-//         // Handle Braze push notifications
-//         if let braze = BrazePlugin.braze, braze.notifications.handleBackgroundNotification(
-//             userInfo: userInfo,
-//             fetchCompletionHandler: completionHandler
-//         ) {
-//             return
-//         }
-
-//         // If Braze doesn't handle the notification, call the default handler
-//         completionHandler(.noData)
-//     }
-// }
