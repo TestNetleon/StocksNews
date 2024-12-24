@@ -402,6 +402,7 @@ import braze_plugin
 import Firebase
 import UserNotifications
 import FirebaseMessaging
+import StoreKit
 
 //LOCAL
 // let brazeApiKey = "ba184694-cb2b-4e70-9e00-1e300ca9ecb0"
@@ -412,7 +413,7 @@ let brazeApiKey = "6e2560f1-ba23-4958-a4d9-16cd577fcf65"
 let brazeEndpoint = "sdk.iad-07.braze.com"
 
 @main
-@objc class AppDelegate: FlutterAppDelegate {
+@objc class AppDelegate: FlutterAppDelegate, BrazeInAppMessageUIDelegate {
 
   // These subscriptions need to be retained to be active
   var pushEventsSubscription: Braze.Cancellable?
@@ -460,6 +461,7 @@ let brazeEndpoint = "sdk.iad-07.braze.com"
 
     // - InAppMessage UI
     let inAppMessageUI = BrazeInAppMessageUI()
+    inAppMessageUI.delegate = self
     // let inAppMessageUI = CustomInAppMessagePresenter()
     braze.inAppMessagePresenter = inAppMessageUI
 
@@ -479,27 +481,30 @@ let brazeEndpoint = "sdk.iad-07.braze.com"
 
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)
   }
+
+  // Implement delegate method to handle display choice for in-app message
+  func inAppMessage(_ ui: BrazeInAppMessageUI, displayChoiceForMessage message: Braze.InAppMessage) -> BrazeInAppMessageUI.DisplayChoice {
+      // Print the entire message object to inspect its contents
+      print("Received In-App Message: \(message)")
+      
+      
+      // Check for the specific URL indicating the App Store review
+      if let appStoreReviewURL = message.extras["AppStore Review"] as? String {
+          print("Extras 'AppStore Review' found: \(appStoreReviewURL)")
+          
+          if appStoreReviewURL == "https://app.stocks.news/app-store-review" {
+              print("Triggering App Store review prompt")
+              SKStoreReviewController.requestReview()
+              
+              // Return .discard to avoid opening the URL in the browser
+              return .discard
+          }
+      }
+
+      // Otherwise, display the in-app message
+      return .now
+  }
 }
-
-// class CustomInAppMessagePresenter: BrazeInAppMessageUI {
-// class CustomInAppMessagePresenter: BrazeInAppMessageUI {
-
-//   override func present(message: Braze.InAppMessage) {
-//     print("=> [In-app Message] Received message from Braze:", message)
-//   override func present(message: Braze.InAppMessage) {
-//     print("=> [In-app Message] Received message from Braze:", message)
-
-//     BrazePlugin.processInAppMessage(message)
-//     BrazePlugin.processInAppMessage(message)
-
-//     super.present(message: message)
-//   }
-//     super.present(message: message)
-//   }
-
-// }
-// }
-
 
  func application(
   _ application: UIApplication,
@@ -530,28 +535,38 @@ let brazeEndpoint = "sdk.iad-07.braze.com"
 extension AppDelegate {
 
   private func forwardURL(_ url: URL) {
-    guard
-      let controller: FlutterViewController = window?.rootViewController as? FlutterViewController
-    else { return }
-    let deepLinkChannel = FlutterMethodChannel(
-      name: "deepLinkChannel", binaryMessenger: controller.binaryMessenger)
-    deepLinkChannel.invokeMethod("receiveDeepLink", arguments: url.absoluteString)
+      print("Forwarding URL to Flutter: \(url.absoluteString)")
+      guard
+          let controller: FlutterViewController = window?.rootViewController as? FlutterViewController
+      else {
+          print("Failed to get FlutterViewController")
+          return
+      }
+      let deepLinkChannel = FlutterMethodChannel(
+          name: "deepLinkChannel", binaryMessenger: controller.binaryMessenger)
+      deepLinkChannel.invokeMethod("receiveDeepLink", arguments: url.absoluteString)
   }
+
 
 
   // Universal link
   // See https://developer.apple.com/documentation/xcode/allowing-apps-and-websites-to-link-to-your-content for more information.
   override func application(
-    _ application: UIApplication, continue userActivity: NSUserActivity,
-    restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void
+      _ application: UIApplication,
+      continue userActivity: NSUserActivity,
+      restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void
   ) -> Bool {
-    guard userActivity.activityType == NSUserActivityTypeBrowsingWeb,
-      let url = userActivity.webpageURL
-    else {
-      return false
-    }
-    forwardURL(url)
-    return true
+      guard userActivity.activityType == NSUserActivityTypeBrowsingWeb,
+            let url = userActivity.webpageURL else {
+          print("Universal link handling failed: Invalid user activity or URL")
+          return false
+      }
+      print("Universal link received: \(url.absoluteString)")
+      forwardURL(url)
+      return true
   }
+
 }
+
+
 

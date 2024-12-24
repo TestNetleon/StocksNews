@@ -54,7 +54,9 @@ class _BaseAuthState extends State<BaseAuth> {
 
   statusIsLoading(status) {
     isLoading = status;
-    setState(() {});
+    if (mounted) {
+      setState(() {});
+    }
   }
 
   Future<void> _verifyPhoneNumber() async {

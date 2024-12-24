@@ -469,6 +469,7 @@ import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:stocks_news_new/fcm/braze_notification_handler.dart';
@@ -503,7 +504,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   bool _initialDeepLinks = false;
   bool connection = true;
-
+  static const deeplinkPlatform = MethodChannel('deepLinkChannel');
   @override
   void initState() {
     super.initState();
@@ -513,12 +514,28 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       listenForPushToken();
       NotificationHandler.instance.setupNotificationListeners();
       configureRevenueCatAttribute();
-      // // brazeDeepLink();
-      getInitialReferralsIfAny();
-      getInitialDeeplinkWhenAppOpen();
-      startListeningForDeepLinks();
+      brazeDeepLink();
+      // getInitialReferralsIfAny();
+      // getInitialDeeplinkWhenAppOpen();
+      // startListeningForDeepLinks();
     });
     WidgetsBinding.instance.addObserver(this);
+  }
+
+  brazeDeepLink() {
+    deeplinkPlatform.setMethodCallHandler((call) async {
+      if (call.method == 'receiveDeepLink') {
+        try {
+          Utils().showLog('got deep link ${call.arguments}');
+          final Uri deepLink = Uri.parse(call.arguments);
+          DeeplinkEnum type = containsSpecificPath(deepLink);
+          Utils().showLog('type link $type');
+          handleDeepLinkNavigation(uri: deepLink);
+        } catch (e) {
+          Utils().showLog('error $e');
+        }
+      }
+    });
   }
 
   Future<void> listenForPushToken() async {

@@ -20,6 +20,7 @@
 		49A5C2882D0BF05A006DDDF2 /* BrazeNotificationService in Frameworks */ = {isa = PBXBuildFile; productRef = 49A5C2872D0BF05A006DDDF2 /* BrazeNotificationService */; };
 		49B014EE2D0879BC007CBDE3 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49B014ED2D0879BC007CBDE3 /* StoreKit.framework */; };
 		49EA2E712D0969D5003314F2 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 49EA2E702D0969D5003314F2 /* GoogleService-Info.plist */; };
+		49EE04EE2D1AD515007F6EAF /* notifications.wav in Resources */ = {isa = PBXBuildFile; fileRef = 49EE04ED2D1AD515007F6EAF /* notifications.wav */; };
 		74858FAF1ED2DC5600515810 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74858FAE1ED2DC5600515810 /* AppDelegate.swift */; };
 		97C146FC1CF9000F007C117D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FA1CF9000F007C117D /* Main.storyboard */; };
 		97C146FE1CF9000F007C117D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FD1CF9000F007C117D /* Assets.xcassets */; };
@@ -79,6 +80,7 @@
 		49B014ED2D0879BC007CBDE3 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		49B014EF2D087D27007CBDE3 /* Runner.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Runner.entitlements; sourceTree = "<group>"; };
 		49EA2E702D0969D5003314F2 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		49EE04ED2D1AD515007F6EAF /* notifications.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = notifications.wav; sourceTree = "<group>"; };
 		4B4A2A4CD9C2C67E5B005FE6 /* Pods_Runner.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Runner.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		74858FAD1ED2DC5600515810 /* Runner-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Runner-Bridging-Header.h"; sourceTree = "<group>"; };
 		74858FAE1ED2DC5600515810 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -205,6 +207,7 @@
 		97C146F01CF9000F007C117D /* Runner */ = {
 			isa = PBXGroup;
 			children = (
+				49EE04ED2D1AD515007F6EAF /* notifications.wav */,
 				49B014EF2D087D27007CBDE3 /* Runner.entitlements */,
 				97C146FA1CF9000F007C117D /* Main.storyboard */,
 				97C146FD1CF9000F007C117D /* Assets.xcassets */,
@@ -365,6 +368,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				97C147011CF9000F007C117D /* LaunchScreen.storyboard in Resources */,
+				49EE04EE2D1AD515007F6EAF /* notifications.wav in Resources */,
 				3B3967161E833CAA004F5970 /* AppFrameworkInfo.plist in Resources */,
 				49EA2E712D0969D5003314F2 /* GoogleService-Info.plist in Resources */,
 				97C146FE1CF9000F007C117D /* Assets.xcassets in Resources */,

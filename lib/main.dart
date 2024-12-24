@@ -31,7 +31,6 @@ void main() async {
     try {
       await Firebase.initializeApp(
         options: DefaultFirebaseOptions.currentPlatform,
-
         // options: FirebaseOptions(
 
         //   apiKey: Platform.isAndroid
