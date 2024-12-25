@@ -20,7 +20,7 @@ class TrendingIndustryItem extends StatelessWidget {
       MaterialPageRoute(
         builder: (_) => SectorIndustry(
           name: name,
-          stockStates: StockStates.sector,
+          stockStates: StockStates.industry,
           titleName: titleName,
         ),
       ),

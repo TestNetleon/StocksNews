@@ -405,10 +405,10 @@ import FirebaseMessaging
 import StoreKit
 
 //LOCAL
-// let brazeApiKey = "ba184694-cb2b-4e70-9e00-1e300ca9ecb0"
+let brazeApiKey = "ba184694-cb2b-4e70-9e00-1e300ca9ecb0"
 
 //LIVE
-let brazeApiKey = "6e2560f1-ba23-4958-a4d9-16cd577fcf65"
+// let brazeApiKey = "6e2560f1-ba23-4958-a4d9-16cd577fcf65"
 
 let brazeEndpoint = "sdk.iad-07.braze.com"
 
@@ -477,10 +477,20 @@ let brazeEndpoint = "sdk.iad-07.braze.com"
       )
       BrazePlugin.processPushEvent(payload)
     }
-
+    // Set Braze user notification center delegate
+    UNUserNotificationCenter.current().delegate = self
 
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)
   }
+
+    // Handle foreground notifications
+  override  func userNotificationCenter(_ center: UNUserNotificationCenter,
+                                 willPresent notification: UNNotification,
+                                 withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        // Play sound and show alert while app is in foreground
+        completionHandler([.alert, .sound])
+  }
+
 
   // Implement delegate method to handle display choice for in-app message
   func inAppMessage(_ ui: BrazeInAppMessageUI, displayChoiceForMessage message: Braze.InAppMessage) -> BrazeInAppMessageUI.DisplayChoice {

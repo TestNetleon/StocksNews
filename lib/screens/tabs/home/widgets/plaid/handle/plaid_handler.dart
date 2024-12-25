@@ -187,6 +187,7 @@ class PlaidLinkHandler {
         );
 
         PlaidLink.create(configuration: configuration);
+        PlaidLink.open();
       } else {
         debugPrint("Failed to load data: ${response.statusCode}");
         debugPrint("Response body: ${response.body}");

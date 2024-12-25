@@ -16,6 +16,7 @@ class Trending extends StatelessWidget {
     return BaseContainer(
       drawer: const BaseDrawer(),
       appBar: AppBarHome(isHome: false, title: "Trending"),
+      // body: TrendingView(index: index),
       body: TrendingView(index: index),
     );
   }
