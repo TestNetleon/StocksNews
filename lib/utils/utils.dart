@@ -339,7 +339,7 @@ Future openUrl(String? url,
         throw Exception('Could not launch $url');
       }
     } catch (e) {
-      Utils().showLog(e);
+      Utils().showLog('Catch error $e');
       await launchUrl(Uri.parse(extraUrl ?? ""),
           mode: LaunchMode.platformDefault);
     }

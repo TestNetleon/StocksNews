@@ -66,17 +66,7 @@ class _HomeContainerState extends State<HomeContainer> {
         //   child: ThemeButtonSmall(
         //     text: 'Braze Testing Event',
         //     onPressed: () async {
-        //       BrazeService.brazeBaseEvents(
-        //           eventName: 'stock_alert_sentiment',
-        //           eventProperties: {
-        //             'symbol': 'AAPL',
-        //             'is_negative': true,
-        //           });
-        //       // String user = 'user1${Platform.operatingSystem}';
-        //       // BrazePlugin().changeUser(user);
-        //       // Utils().showLog(user);
-        //       // BrazeService.brazeBaseEvents(alerts: ['GOOG']);
-        //       // BrazeService.eventADAlert(symbol: 'AAPL', add: false);
+        //       BrazeService.brazeBaseEvents(eventName: 'stock_alert_sentiment');
         //     },
         //   ),
         // ),

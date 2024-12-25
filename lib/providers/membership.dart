@@ -382,7 +382,7 @@ class MembershipProvider extends ChangeNotifier {
         showProgress: false,
       );
       if (response.status) {
-        _extra = (response.extra is Extra ? response.extra as Extra : null);
+        // _extra = (response.extra is Extra ? response.extra as Extra : null);
         if (_page == 1) {
           _data = membershipResFromJson(jsonEncode(response.data));
           _extra = response.extra is Extra ? response.extra : null;
