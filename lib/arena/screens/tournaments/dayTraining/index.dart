@@ -9,7 +9,6 @@ import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import '../../../widgets/card.dart';
 import 'widgets/similar.dart';
 import 'widgets/timer.dart';
-import 'widgets/title.dart';
 
 class TournamentDayTrainingIndex extends StatelessWidget {
   const TournamentDayTrainingIndex({super.key});
@@ -31,7 +30,6 @@ class TournamentDayTrainingIndex extends StatelessWidget {
                 (context, index) {
                   return Column(
                     children: [
-                      DayTrainingTimer(),
                       DayTrainingTitle(),
                       ArenaThemeCard(
                         padding:

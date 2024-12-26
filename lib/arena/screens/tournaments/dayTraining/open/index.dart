@@ -5,6 +5,7 @@ import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
+import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
@@ -22,10 +23,10 @@ class TournamentOpenIndex extends StatefulWidget {
   State<TournamentOpenIndex> createState() => _TournamentOpenIndexState();
 }
 
-class _TournamentOpenIndexState extends State<TournamentOpenIndex> {
-  ArenaStockRes? selectedStock;
-  bool setScroll = false;
-
+class _TournamentOpenIndexState extends State<TournamentOpenIndex>
+    with SingleTickerProviderStateMixin {
+  TradingSearchTickerRes? selectedStock;
+  TabController? _tabController;
   @override
   void initState() {
     super.initState();
@@ -35,15 +36,38 @@ class _TournamentOpenIndexState extends State<TournamentOpenIndex> {
       tradesProvider.clearTrades();
       if (provider.topSearch != null &&
           provider.topSearch?.isNotEmpty == true) {
-        selectedStock = ArenaStockRes(
+        selectedStock = TradingSearchTickerRes(
           symbol: provider.topSearch?[0].symbol ?? '',
-          company: provider.topSearch?[0].name ?? '',
+          name: provider.topSearch?[0].name ?? '',
           image: provider.topSearch?[0].image ?? '',
-          change: provider.topSearch?[0].changesPercentage ?? 0,
+          change: provider.topSearch?[0].change ?? '',
         );
         setState(() {});
+        var tickers = provider.topSearch;
+        _tabController = TabController(
+          length: tickers?.length ?? 0,
+          vsync: this,
+        );
+
+        _initializeTabController(provider.topSearch);
       }
     });
+  }
+
+  void _initializeTabController(List<TradingSearchTickerRes>? tickers) {
+    if (selectedStock?.symbol != null) {
+      final index = tickers?.indexWhere(
+        (ticker) => ticker.symbol == selectedStock?.symbol,
+      );
+
+      if (index != null && index != -1 && mounted) {
+        _tabController?.animateTo(
+          index,
+          duration: Duration(milliseconds: 800),
+          curve: Curves.easeInOut,
+        );
+      }
+    }
   }
 
   _navigateToAllTrades() async {
@@ -57,8 +81,10 @@ class _TournamentOpenIndexState extends State<TournamentOpenIndex> {
     if (stock != null) {
       setState(() {
         selectedStock = stock;
-        setScroll = !setScroll;
       });
+      ArenaProvider provider = context.read<ArenaProvider>();
+
+      _initializeTabController(provider.topSearch);
     }
   }
 
@@ -70,11 +96,11 @@ class _TournamentOpenIndexState extends State<TournamentOpenIndex> {
 
     TradesProvider provider =
         navigatorKey.currentContext!.read<TradesProvider>();
-    ArenaStockRes? finalStock = ArenaStockRes(
+    TradingSearchTickerRes? finalStock = TradingSearchTickerRes(
       symbol: selectedStock?.symbol ?? '',
-      company: selectedStock?.company ?? '',
+      name: selectedStock?.name ?? '',
       image: selectedStock?.image ?? '',
-      change: selectedStock?.change ?? 0,
+      change: selectedStock?.change ?? '',
       type: type,
       isOpen: true,
     );
@@ -100,31 +126,31 @@ class _TournamentOpenIndexState extends State<TournamentOpenIndex> {
   _onChange(TradingSearchTickerRes? stock) {
     TradesProvider tradesProvider = context.read<TradesProvider>();
 
-    ArenaStockRes? existingStock = tradesProvider.data.firstWhere(
+    TradingSearchTickerRes? existingStock = tradesProvider.data.firstWhere(
       (element) => element.symbol == stock?.symbol,
-      orElse: () => ArenaStockRes(
+      orElse: () => TradingSearchTickerRes(
         symbol: "",
-        company: "",
+        name: "",
         image: "",
-        change: 0,
+        change: '',
         isOpen: false,
       ),
     );
 
-    if (existingStock.isOpen) {
-      selectedStock = ArenaStockRes(
+    if (existingStock.isOpen == true) {
+      selectedStock = TradingSearchTickerRes(
         symbol: existingStock.symbol,
-        company: existingStock.company,
+        name: existingStock.name,
         image: existingStock.image,
         change: existingStock.change,
         isOpen: true,
       );
     } else {
-      selectedStock = ArenaStockRes(
+      selectedStock = TradingSearchTickerRes(
         symbol: stock?.symbol ?? "",
-        company: stock?.name ?? "",
+        name: stock?.name ?? "",
         image: stock?.image ?? "",
-        change: stock?.changesPercentage ?? 0,
+        change: stock?.change ?? '',
         isOpen: false,
       );
     }
@@ -139,63 +165,76 @@ class _TournamentOpenIndexState extends State<TournamentOpenIndex> {
         isPopBack: true,
         title: 'My Position',
       ),
-      body: Padding(
-        padding: const EdgeInsets.fromLTRB(
-          Dimen.padding,
-          Dimen.padding,
-          Dimen.padding,
-          0,
+      body: Theme(
+        data: lightTheme.copyWith(
+          tabBarTheme: TabBarTheme(
+            overlayColor: WidgetStateProperty.resolveWith<Color?>(
+              (states) {
+                return Colors.transparent;
+              },
+            ),
+            splashFactory: InkRipple.splashFactory,
+          ),
+          highlightColor: Colors.transparent,
+          splashColor: Colors.transparent,
+          splashFactory: NoSplash.splashFactory,
         ),
-        child: Column(
-          children: [
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  GestureDetector(
-                    onTap: _navigateToAllTrades,
-                    child: Align(
-                      alignment: Alignment.centerRight,
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: ThemeColors.greyText,
-                        ),
-                        child: Icon(
-                          Icons.keyboard_double_arrow_down_rounded,
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(
+            Dimen.padding,
+            Dimen.padding,
+            Dimen.padding,
+            0,
+          ),
+          child: Column(
+            children: [
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    GestureDetector(
+                      onTap: _navigateToAllTrades,
+                      child: Align(
+                        alignment: Alignment.centerRight,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: ThemeColors.greyText,
+                          ),
+                          child: Icon(
+                            Icons.keyboard_double_arrow_down_rounded,
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                  OpenTopStock(
-                    key: ValueKey(setScroll),
-                    selectedStockSymbol: selectedStock?.symbol ?? '',
-                    onTap: _onChange,
-                  ),
-                ],
-              ),
-            ),
-            if (selectedStock?.isOpen == false)
-              Row(
-                children: [
-                  Expanded(
-                    child: ThemeButton(
-                      radius: 10,
-                      text: 'Sell',
-                      onPressed: () => _add(type: StockType.bear),
-                      color: ThemeColors.sos,
+                    OpenTopStock(
+                      selectedStockSymbol: selectedStock?.symbol ?? '',
+                      onTap: _onChange,
+                      tabController: _tabController,
                     ),
-                  ),
-                  SpacerHorizontal(width: 10),
-                  Expanded(
-                    child: ThemeButton(
-                      radius: 10,
-                      text: 'Buy',
-                      onPressed: _add,
-                    ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            if (selectedStock?.isOpen == true)
+              if (selectedStock?.isOpen == false)
+                Row(
+                  children: [
+                    Expanded(
+                      child: ThemeButton(
+                        radius: 10,
+                        text: 'Sell',
+                        onPressed: () => _add(type: StockType.bear),
+                        color: ThemeColors.sos,
+                      ),
+                    ),
+                    SpacerHorizontal(width: 10),
+                    Expanded(
+                      child: ThemeButton(
+                        radius: 10,
+                        text: 'Buy',
+                        onPressed: _add,
+                      ),
+                    ),
+                  ],
+                ),
               if (selectedStock?.isOpen == true)
                 ThemeButton(
                   radius: 10,
@@ -204,8 +243,9 @@ class _TournamentOpenIndexState extends State<TournamentOpenIndex> {
                   color: ThemeColors.white,
                   textColor: Colors.black,
                 ),
-            SpacerVertical(height: 10),
-          ],
+              SpacerVertical(height: 10),
+            ],
+          ),
         ),
       ),
     );

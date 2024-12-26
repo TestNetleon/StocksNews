@@ -514,10 +514,10 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       listenForPushToken();
       NotificationHandler.instance.setupNotificationListeners();
       configureRevenueCatAttribute();
-      brazeDeepLink();
-      // getInitialReferralsIfAny();
-      // getInitialDeeplinkWhenAppOpen();
-      // startListeningForDeepLinks();
+      // brazeDeepLink();
+      getInitialReferralsIfAny();
+      getInitialDeeplinkWhenAppOpen();
+      startListeningForDeepLinks();
     });
     WidgetsBinding.instance.addObserver(this);
   }

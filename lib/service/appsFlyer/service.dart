@@ -21,6 +21,7 @@ class AppsFlyerService {
     try {
       await _appsFlyerSdk.initSdk();
       final appsFlyerId = await _appsFlyerSdk.getAppsFlyerUID();
+
       if (appsFlyerId != null) {
         await Purchases.setAppsflyerID(appsFlyerId);
         setupAppsFlyerListener();

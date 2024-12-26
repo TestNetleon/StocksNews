@@ -2,12 +2,13 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
+import '../../../../tradingSimulator/modals/trading_search_res.dart';
 import '../../../../utils/colors.dart';
 import '../../../../widgets/spacer_vertical.dart';
 import '../../../provider/trades.dart';
 
 class ArenaStockItem extends StatelessWidget {
-  final ArenaStockRes? data;
+  final TradingSearchTickerRes? data;
   const ArenaStockItem({super.key, this.data});
 
   @override
@@ -44,7 +45,7 @@ class ArenaStockItem extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.only(bottom: 5),
                     child: Text(
-                      data?.company ?? '',
+                      data?.name ?? '',
                       style: styleGeorgiaRegular(
                         color: ThemeColors.greyText,
                         fontSize: 12,
@@ -67,7 +68,7 @@ class ArenaStockItem extends StatelessWidget {
               "${data?.change ?? 0} %",
               style: styleGeorgiaRegular(
                 fontSize: 13,
-                color: (data?.change ?? 0) < 0
+                color: (data?.changesPercentage ?? 0) < 0
                     ? ThemeColors.sos
                     : ThemeColors.accent,
               ),

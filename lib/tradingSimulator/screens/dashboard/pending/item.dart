@@ -40,31 +40,11 @@ class TsPendingListItem extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Row(
-                        children: [
-                          Text(
-                            "${item?.company}",
-                            style: styleGeorgiaBold(fontSize: 18),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                          // SpacerHorizontal(width: 5),
-                          // Container(
-                          //   decoration: BoxDecoration(
-                          //     borderRadius: BorderRadius.circular(40),
-                          //     color: item?.orderType == 'buy'
-                          //         ? ThemeColors.accent
-                          //         : ThemeColors.sos,
-                          //   ),
-                          //   padding: EdgeInsets.symmetric(
-                          //       horizontal: 10, vertical: 2),
-                          //   child: Text(
-                          //     // item?.buy == true ? "Buy" : "Sell",
-                          //     item?.orderType ?? "",
-                          //     style: stylePTSansBold(fontSize: 12),
-                          //   ),
-                          // ),
-                        ],
+                      Text(
+                        "${item?.company}",
+                        style: styleGeorgiaBold(fontSize: 18),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
                       ),
                       const SpacerVertical(height: 5),
                       Text(

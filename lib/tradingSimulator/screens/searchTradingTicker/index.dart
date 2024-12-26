@@ -35,7 +35,7 @@ class _SearchTradingTickerState extends State<SearchTradingTicker> {
     TradingSearchProvider provider = context.watch<TradingSearchProvider>();
     return PopScope(
       canPop: true,
-      onPopInvoked: (didPop) {
+      onPopInvokedWithResult: (didPop, result) {
         context.read<SearchProvider>().clearSearch();
       },
       child: BaseContainer(
@@ -64,12 +64,8 @@ class _SearchTradingTickerState extends State<SearchTradingTicker> {
               ),
               child: Column(
                 children: [
-                  // SdTradeSearchField(buy: widget.buy),
                   TsTextInputFieldSearch(
-                    // searchFocusNode: provider.searchFocusNode,
                     hintText: "Search symbol or company name",
-                    // searching: context.watch<SearchProvider>().isLoading,
-                    // onChanged: (text) {},
                     editable: true,
                     buy: widget.buy,
                   ),

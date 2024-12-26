@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/arena/provider/trades.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
+import '../../../../tradingSimulator/modals/trading_search_res.dart';
 import '../../../../utils/colors.dart';
 import '../../../../utils/constants.dart';
 import '../../../../utils/theme.dart';
@@ -132,7 +133,7 @@ class _ArenaTradesState extends State<ArenaTrades> {
           child: ListView.separated(
             physics: AlwaysScrollableScrollPhysics(),
             itemBuilder: (context, index) {
-              ArenaStockRes data = provider.data[index];
+              TradingSearchTickerRes data = provider.data[index];
               return GestureDetector(
                 onTap: () {
                   Navigator.pop(context, data);

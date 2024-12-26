@@ -18,10 +18,6 @@ class SdTradeDefaultSearch extends StatelessWidget {
     return Column(
       children: [
         const SpacerVertical(),
-        // const ScreenTitle(
-        //   title: "Top Searches",
-        //   dividerPadding: EdgeInsets.only(bottom: 10),
-        // ),
         ListView.separated(
           itemCount: provider.data?.length ?? 0,
           physics: const NeverScrollableScrollPhysics(),

@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import '../../arena/provider/trades.dart';
+
 List<TradingSearchTickerRes> tradingSearchTickerResFromJson(String str) =>
     List<TradingSearchTickerRes>.from(
         json.decode(str).map((x) => TradingSearchTickerRes.fromJson(x)));
@@ -14,14 +16,18 @@ class TradingSearchTickerRes {
   final String? price;
   final String? change;
   final double? changesPercentage;
+  final StockType? type;
+  bool? isOpen;
 
   TradingSearchTickerRes({
-    required this.symbol,
-    required this.name,
-    required this.image,
-    required this.price,
-    required this.change,
-    required this.changesPercentage,
+    this.symbol,
+    this.name,
+    this.image,
+    this.price,
+    this.change,
+    this.changesPercentage,
+    this.isOpen = false,
+    this.type,
   });
 
   factory TradingSearchTickerRes.fromJson(Map<String, dynamic> json) =>

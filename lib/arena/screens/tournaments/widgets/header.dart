@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 
-import '../../../utils/theme.dart';
-import '../../../widgets/spacer_vertical.dart';
-import '../../provider/arena.dart';
+import '../../../../utils/theme.dart';
+import '../../../../widgets/spacer_vertical.dart';
+import '../../../provider/arena.dart';
 
 class TournamentHeader extends StatelessWidget {
   const TournamentHeader({super.key});

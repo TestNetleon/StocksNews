@@ -748,6 +748,7 @@ class _BuySellContainerState extends State<BuySellContainer> {
                       },
                     ),
                   ),
+
                   const SpacerVertical(),
                   TextfieldTrade(
                     controller: controller,

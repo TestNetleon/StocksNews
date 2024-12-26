@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/arena/provider/arena.dart';
-import 'package:stocks_news_new/arena/screens/tournaments/header.dart';
-import 'grid.dart';
+import 'package:stocks_news_new/arena/screens/tournaments/widgets/header.dart';
+import 'widgets/grid.dart';
 
 class TournamentsIndex extends StatefulWidget {
   const TournamentsIndex({super.key});
