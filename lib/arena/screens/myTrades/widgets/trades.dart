@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/arena/provider/trades.dart';
-import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import '../../../../tradingSimulator/modals/trading_search_res.dart';
 import '../../../../utils/colors.dart';
@@ -20,20 +19,6 @@ class _ArenaTradesState extends State<ArenaTrades> {
   TextEditingController search = TextEditingController();
   // ignore: unused_field
   num _selectedTradeType = 0;
-  final List<TradesTypeRes> _trades = [
-    TradesTypeRes(
-      name: 'All',
-      total: 8,
-    ),
-    TradesTypeRes(
-      name: 'Open',
-      total: 5,
-    ),
-    TradesTypeRes(
-      name: 'Closed',
-      total: 3,
-    ),
-  ];
 
   selectedIndex(index) {
     _selectedTradeType = index;
@@ -43,7 +28,7 @@ class _ArenaTradesState extends State<ArenaTrades> {
   @override
   Widget build(BuildContext context) {
     TradesProvider provider = context.watch<TradesProvider>();
-    Utils().showLog('Data length ${provider.data.length}');
+
     var outlineInputBorder = OutlineInputBorder(
       borderRadius: BorderRadius.circular(Dimen.radius),
       borderSide: BorderSide(
@@ -109,18 +94,20 @@ class _ArenaTradesState extends State<ArenaTrades> {
           spacing: 10.0,
           runSpacing: 10.0,
           children: List.generate(
-            _trades.length,
+            provider.trades.length,
             (index) {
               return GestureDetector(
                 onTap: () => selectedIndex(index),
                 child: Container(
                   padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8),
-                    color: ThemeColors.greyBorder.withOpacity(0.5),
-                  ),
+                      borderRadius: BorderRadius.circular(8),
+                      color: ThemeColors.greyBorder.withOpacity(0.5),
+                      border: _selectedTradeType == index
+                          ? Border.all(color: ThemeColors.white)
+                          : null),
                   child: Text(
-                    '${_trades[index].name} ${_trades[index].total}',
+                    '${provider.trades[index].name} ${provider.trades[index].total}',
                     style: styleGeorgiaBold(),
                   ),
                 ),
@@ -133,7 +120,18 @@ class _ArenaTradesState extends State<ArenaTrades> {
           child: ListView.separated(
             physics: AlwaysScrollableScrollPhysics(),
             itemBuilder: (context, index) {
-              TradingSearchTickerRes data = provider.data[index];
+              List<TradingSearchTickerRes> filteredData;
+              if (_selectedTradeType == 1) {
+                filteredData =
+                    provider.data.where((item) => item.isOpen == true).toList();
+              } else if (_selectedTradeType == 2) {
+                filteredData = provider.data
+                    .where((item) => item.isOpen == false)
+                    .toList();
+              } else {
+                filteredData = provider.data;
+              }
+              TradingSearchTickerRes data = filteredData[index];
               return GestureDetector(
                 onTap: () {
                   Navigator.pop(context, data);
@@ -146,19 +144,17 @@ class _ArenaTradesState extends State<ArenaTrades> {
             separatorBuilder: (context, index) {
               return SpacerVertical(height: 20);
             },
-            itemCount: provider.data.length,
+            // itemCount: provider.data.length,
+            itemCount: _selectedTradeType == 0
+                ? provider.data.length
+                : (_selectedTradeType == 1
+                    ? provider.data.where((item) => item.isOpen == true).length
+                    : provider.data
+                        .where((item) => item.isOpen == false)
+                        .length),
           ),
         ),
       ],
     );
   }
-}
-
-class TradesTypeRes {
-  String name;
-  num? total;
-  TradesTypeRes({
-    required this.name,
-    this.total,
-  });
 }

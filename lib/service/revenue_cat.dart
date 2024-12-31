@@ -111,10 +111,11 @@ class RevenueCatService {
 
   static configureAppsFlyer() async {
     try {
-      AppsFlyerService(
-        ApiKeys.appsFlyerKey,
-        ApiKeys.iosAppID,
-      );
+      // AppsFlyerService(
+      //   ApiKeys.appsFlyerKey,
+      //   ApiKeys.iosAppID,
+      // );
+      AppsFlyerService().initializeSdk();
     } catch (e) {
       Utils().showLog('Error in configure Apps Flyer => $e');
     }

@@ -85,6 +85,8 @@
 	<string>Need microphone access for uploading audio</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Need photo library access for update profile image</string>
+	<key>NSUserTrackingUsageDescription</key>
+	<string>We would like to collect data to serve personalized ads.</string>
 	<key>SKAdNetworkItems</key>
 	<array>
 		<dict>

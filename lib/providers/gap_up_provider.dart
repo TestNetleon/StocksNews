@@ -26,11 +26,11 @@ class GapUpProvider extends ChangeNotifier {
   List<GapUpRes>? _data;
   String? _error;
   int _page = 1;
+  bool get canLoadMore => _page < (_extra?.totalPages ?? 1);
   Extra? _extra;
+  Extra? get extra => _extra;
 
   List<GapUpRes>? get data => _data;
-  Extra? get extra => _extra;
-  bool get canLoadMore => _page < (_extra?.totalPages ?? 1);
   String? get error => _error ?? Const.errSomethingWrong;
   bool get isLoading => _status == Status.loading || _status == Status.ideal;
 

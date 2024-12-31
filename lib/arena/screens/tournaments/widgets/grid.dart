@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:stocks_news_new/arena/models/tournament.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
+import 'package:stocks_news_new/widgets/cache_network_image.dart';
 
 import '../../../../utils/colors.dart';
 import '../../../../utils/theme.dart';
@@ -12,12 +14,14 @@ import '../dayTraining/index.dart';
 class TournamentGrids extends StatelessWidget {
   const TournamentGrids({super.key});
 
-  _onTap(index) {
+  _onTap(index, int? id) {
     if (index == 0) {
       Navigator.push(
         navigatorKey.currentContext!,
         MaterialPageRoute(
-          builder: (context) => TournamentDayTrainingIndex(),
+          builder: (context) => TournamentDayTrainingIndex(
+            tournamentId: id,
+          ),
         ),
       );
     }
@@ -28,11 +32,15 @@ class TournamentGrids extends StatelessWidget {
     ArenaProvider provider = context.watch<ArenaProvider>();
 
     return CustomGridView(
-      length: provider.tournaments.length,
+      length: provider.data?.tournaments?.length ?? 0,
       getChild: (index) {
+        Tournament? data = provider.data?.tournaments?[index];
         return GestureDetector(
           onTap: () {
-            _onTap(index);
+            _onTap(
+              index,
+              data?.tournamentId,
+            );
           },
           child: Container(
             padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
@@ -42,16 +50,21 @@ class TournamentGrids extends StatelessWidget {
             ),
             child: Column(
               children: [
-                CircleAvatar(
-                  radius: 40,
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(8),
+                  child: CachedNetworkImagesWidget(
+                    data?.image,
+                    // height: 100,
+                    // width: 100,
+                  ),
                 ),
                 SpacerVertical(height: 10),
                 Text(
-                  provider.tournaments[index].label ?? '',
+                  data?.name ?? '',
                   style: styleGeorgiaBold(color: ThemeColors.greyText),
                 ),
                 Text(
-                  provider.tournaments[index].value ?? '',
+                  '${data?.point ?? 0}',
                   style: styleGeorgiaBold(fontSize: 18),
                 ),
               ],

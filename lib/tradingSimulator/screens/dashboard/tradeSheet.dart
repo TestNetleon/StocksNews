@@ -33,8 +33,11 @@ class SearchTicker extends StatelessWidget {
       StockDetailProviderNew provider =
           navigatorKey.currentContext!.read<StockDetailProviderNew>();
 
-      ApiResponse response =
-          await provider.getTabData(symbol: symbol, showProgress: true);
+      ApiResponse response = await provider.getTabData(
+        symbol: symbol,
+        showProgress: true,
+        startSSE: true,
+      );
       if (response.status) {
         // SummaryOrderNew order =
         // await

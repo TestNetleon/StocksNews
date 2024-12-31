@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -54,7 +53,6 @@ class _CustomState extends State<CustomTabContainer>
     );
 
     _controller?.addListener(() {
-      log("INDEX CHANGES -=> ${_controller?.index}");
       // if (_controller?.indexIsChanging == true) {
       setState(() {
         _selectedIndex = _controller?.index ?? 0;

@@ -1,13 +1,13 @@
 #!/bin/sh
 # This is a generated file; do not edit or check into version control.
 export "FLUTTER_ROOT=/Users/netleonmacmini1/Documents/Flutter/flutter"
-export "FLUTTER_APPLICATION_PATH=/Users/netleonmacmini1/Documents/Flutter/workspace/StocksNewsMain"
+export "FLUTTER_APPLICATION_PATH=/Users/netleonmacmini1/Documents/Flutter/workspace/StocksNewsMainLocal"
 export "COCOAPODS_PARALLEL_CODE_SIGN=true"
-export "FLUTTER_TARGET=/Users/netleonmacmini1/Documents/Flutter/workspace/StocksNewsMain/lib/main.dart"
+export "FLUTTER_TARGET=lib/main.dart"
 export "FLUTTER_BUILD_DIR=build"
-export "FLUTTER_BUILD_NAME=1.1.43"
-export "FLUTTER_BUILD_NUMBER=139"
+export "FLUTTER_BUILD_NAME=1.1.44"
+export "FLUTTER_BUILD_NUMBER=144"
 export "DART_OBFUSCATION=false"
 export "TRACK_WIDGET_CREATION=true"
 export "TREE_SHAKE_ICONS=false"
-export "PACKAGE_CONFIG=/Users/netleonmacmini1/Documents/Flutter/workspace/StocksNewsMain/.dart_tool/package_config.json"
+export "PACKAGE_CONFIG=.dart_tool/package_config.json"

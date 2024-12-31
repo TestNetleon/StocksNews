@@ -7,6 +7,7 @@ import 'package:stocks_news_new/widgets/custom_tab_container.dart';
 
 import '../../utils/constants.dart';
 import 'tournaments/index.dart';
+import 'tournaments/leaderboard/index.dart';
 
 class ArenaIndex extends StatefulWidget {
   const ArenaIndex({super.key});
@@ -40,7 +41,7 @@ class _ArenaIndexState extends State<ArenaIndex> {
           ),
           widgets: [
             TournamentsIndex(),
-            Container(),
+            TournamentLeaderboard(),
             Container(),
           ],
         ),

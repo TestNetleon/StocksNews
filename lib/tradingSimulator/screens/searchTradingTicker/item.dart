@@ -1,18 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:provider/provider.dart';
-import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/tradingSimulator/modals/trading_search_res.dart';
-import 'package:stocks_news_new/providers/stock_detail_new.dart';
 import 'package:stocks_news_new/tradingSimulator/providers/trade_provider.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
-import 'package:stocks_news_new/tradingSimulator/screens/tradeBuySell/index.dart';
 import 'package:stocks_news_new/tradingSimulator/screens/trade/sheet.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/cache_network_image.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
+
+import '../dashboard/tradeSheet.dart';
 
 class SdTradeDefaultItem extends StatelessWidget {
   final TradingSearchTickerRes data;
@@ -25,26 +23,28 @@ class SdTradeDefaultItem extends StatelessWidget {
 
   Future _onTap({String? symbol}) async {
     try {
-      StockDetailProviderNew provider =
-          navigatorKey.currentContext!.read<StockDetailProviderNew>();
+      tradeSheet(symbol: symbol);
 
-      ApiResponse response =
-          await provider.getTabData(symbol: symbol, showProgress: true);
-      if (response.status) {
-        SummaryOrderNew order = await Navigator.pushReplacement(
-          navigatorKey.currentContext!,
-          MaterialPageRoute(
-            builder: (context) => TradeBuySellIndex(buy: buy),
-          ),
-        );
-        TradeProviderNew provider =
-            navigatorKey.currentContext!.read<TradeProviderNew>();
+      // StockDetailProviderNew provider =
+      //     navigatorKey.currentContext!.read<StockDetailProviderNew>();
 
-        buy ? provider.addOrderData(order) : provider.sellOrderData(order);
-        await _showSheet(order, buy);
-      } else {
-        //
-      }
+      // ApiResponse response =
+      //     await provider.getTabData(symbol: symbol, showProgress: true);
+      // if (response.status) {
+      //   SummaryOrderNew order = await Navigator.pushReplacement(
+      //     navigatorKey.currentContext!,
+      //     MaterialPageRoute(
+      //       builder: (context) => TradeBuySellIndex(buy: buy),
+      //     ),
+      //   );
+      //   TradeProviderNew provider =
+      //       navigatorKey.currentContext!.read<TradeProviderNew>();
+
+      //   buy ? provider.addOrderData(order) : provider.sellOrderData(order);
+      //   await _showSheet(order, buy);
+      // } else {
+      //   //
+      // }
     } catch (e) {
       //
     }

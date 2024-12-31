@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/search_provider.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
+import 'package:stocks_news_new/tradingSimulator/manager/sse.dart';
 import 'package:stocks_news_new/tradingSimulator/providers/trading_search_provider.dart';
 import 'package:stocks_news_new/tradingSimulator/screens/searchTradingTicker/search_list.dart';
 import 'package:stocks_news_new/tradingSimulator/widgets/text_input_field_search_common.dart';
@@ -31,6 +32,13 @@ class _SearchTradingTickerState extends State<SearchTradingTicker> {
   }
 
   @override
+  void dispose() {
+    SSEManager().disconnectAll();
+    // context.read<TradingSearchProvider>().dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     TradingSearchProvider provider = context.watch<TradingSearchProvider>();
     return PopScope(
@@ -54,24 +62,22 @@ class _SearchTradingTickerState extends State<SearchTradingTicker> {
           onRefresh: () =>
               context.read<TradingSearchProvider>().getSearchDefaults(),
           showPreparingText: true,
-          child: SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(
-                Dimen.padding,
-                0,
-                Dimen.padding,
-                0,
-              ),
-              child: Column(
-                children: [
-                  TsTextInputFieldSearch(
-                    hintText: "Search symbol or company name",
-                    editable: true,
-                    buy: widget.buy,
-                  ),
-                  SdTradeDefaultSearch(buy: widget.buy),
-                ],
-              ),
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(
+              Dimen.padding,
+              0,
+              Dimen.padding,
+              0,
+            ),
+            child: Column(
+              children: [
+                TsTextInputFieldSearch(
+                  hintText: "Search symbol or company name",
+                  editable: true,
+                  buy: widget.buy,
+                ),
+                Expanded(child: SdTradeDefaultSearch(buy: widget.buy)),
+              ],
             ),
           ),
         ),

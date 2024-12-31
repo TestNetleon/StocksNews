@@ -46,6 +46,7 @@ class ApiResponse {
 }
 
 class Extra {
+  final String? tempUserID;
   final List<String>? feebackType;
   final String? search;
   final int? notificationCount;
@@ -141,6 +142,7 @@ class Extra {
   // final num? isRegistered;
 
   Extra({
+    this.tempUserID,
     this.activeMembership,
     this.blackFriday,
     this.showBlackFriday,
@@ -236,6 +238,7 @@ class Extra {
 
   factory Extra.fromJson(Map<String, dynamic> json) => Extra(
         search: json["search"],
+        tempUserID: json['temp_user_id'],
         activeMembership: json["active_membership"] == null
             ? []
             : List<MembershipRes>.from(json["active_membership"]!
@@ -404,6 +407,7 @@ class Extra {
 
   Map<String, dynamic> toJson() => {
         'black_friday_membership': showBlackFriday,
+        "temp_user_id": tempUserID,
         'christmas_membership': christmasMembership,
         "black_friday": blackFriday?.toJson(),
         "ad_managers": adManagers?.toJson(),

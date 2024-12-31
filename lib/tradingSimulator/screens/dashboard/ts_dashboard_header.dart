@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/tradingSimulator/providers/ts_open_list_provider.dart';
 import 'package:stocks_news_new/tradingSimulator/providers/ts_portfollo_provider.dart';
-import 'package:stocks_news_new/tradingSimulator/screens/dashboard/tradeSheet.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -12,6 +11,7 @@ import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/theme_button_small.dart';
 
 import '../../providers/trade_provider.dart';
+import '../searchTradingTicker/index.dart';
 
 class TsDashboardHeader extends StatefulWidget {
   const TsDashboardHeader({super.key});
@@ -120,7 +120,15 @@ class _TsDashboardHeaderState extends State<TsDashboardHeader> {
                   horizontal: 15,
                   vertical: 5,
                 ),
-                onPressed: tradeSheet,
+                // onPressed: tradeSheet,
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => SearchTradingTicker(),
+                    ),
+                  );
+                },
                 text: "Place New Virtual Trade",
                 color: const Color.fromARGB(255, 194, 216, 51),
                 icon: Icons.arrow_outward_outlined,

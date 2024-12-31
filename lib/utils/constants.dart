@@ -121,6 +121,7 @@ bool oneSignalInitialized = false;
 
 bool withLoginMembership = true;
 String? memCODE;
+String? appsFlyerUID;
 
 // bool memTrack = false;
 

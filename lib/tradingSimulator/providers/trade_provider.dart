@@ -1,9 +1,7 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
-
 import '../../api/api_requester.dart';
 import '../../api/api_response.dart';
 import '../../api/apis.dart';
@@ -18,7 +16,7 @@ class TradeProviderNew extends ChangeNotifier {
   List<SummaryOrderNew> orders = [];
 
   UserBalanceDataNew data = UserBalanceDataNew(
-    availableBalance: 100000,
+    availableBalance: 0,
     invested: 0,
   );
 

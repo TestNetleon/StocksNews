@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -210,7 +211,7 @@ class _AboutStocksNewsState extends State<AboutStocksNews> {
       );
     }
     // Trading Simulator
-    if (provider.extra?.showTradingSimulator == true) {
+    if (provider.extra?.showTradingSimulator == true || kDebugMode) {
       visibleAboutTiles.add(
         DrawerRes(
           iconData: Icons.bakery_dining_outlined,
@@ -227,7 +228,7 @@ class _AboutStocksNewsState extends State<AboutStocksNews> {
         ),
       );
     }
-    if (provider.extra?.showArena == true) {
+    if (provider.extra?.showArena == true || kDebugMode) {
       visibleAboutTiles.add(
         DrawerRes(
           iconData: Icons.bakery_dining_outlined,

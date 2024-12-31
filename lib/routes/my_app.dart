@@ -488,6 +488,7 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import '../api/apis.dart';
 import '../screens/auth/base/base_auth.dart';
+import '../service/transparency.dart';
 
 final _appLinks = AppLinks();
 //
@@ -510,7 +511,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       // oneSignalInitialized = true;
-
+      requestATT();
       listenForPushToken();
       NotificationHandler.instance.setupNotificationListeners();
       configureRevenueCatAttribute();
@@ -837,16 +838,17 @@ Future<void> configureRevenueCatAttribute() async {
       Utils().showLog('Set app instance ID => $firebaseAppInstanceId');
     }
     try {
-      final _appsFlyerService = AppsFlyerService(
-        ApiKeys.appsFlyerKey,
-        ApiKeys.iosAppID,
-      );
-      AppsFlyerService(
-        ApiKeys.appsFlyerKey,
-        ApiKeys.iosAppID,
-      ).appsflyerDeepLink();
+      // final _appsFlyerService = AppsFlyerService(
+      //   ApiKeys.appsFlyerKey,
+      //   ApiKeys.iosAppID,
+      // );
+      AppsFlyerService().initializeSdk();
+      // AppsFlyerService(
+      //   ApiKeys.appsFlyerKey,
+      //   ApiKeys.iosAppID,
+      // ).appsflyerDeepLink();
 
-      _appsFlyerService.appsflyerDeepLink();
+      // _appsFlyerService.appsflyerDeepLink();
     } catch (e) {
       //
     }

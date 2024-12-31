@@ -25,6 +25,7 @@ import 'package:stocks_news_new/modals/stockDetailRes/sec_filing_res.dart';
 import 'package:stocks_news_new/modals/stockDetailRes/tab.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/database/preference.dart';
+import 'package:stocks_news_new/tradingSimulator/manager/sse.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:vibration/vibration.dart';
@@ -44,6 +45,7 @@ import 'user_provider.dart';
 
 class StockDetailProviderNew extends ChangeNotifier {
   final AudioPlayer _player = AudioPlayer();
+  final SSEManager manager = SSEManager();
 
   void clearAll() {
     //Tab clear
@@ -458,6 +460,7 @@ class StockDetailProviderNew extends ChangeNotifier {
   Future getTabData({
     String? symbol,
     showProgress = false,
+    bool startSSE = false,
   }) async {
     clearAll();
     setStatusTab(Status.loading);
@@ -479,6 +482,15 @@ class StockDetailProviderNew extends ChangeNotifier {
         Preference.saveReferInput(_extra?.affiliateInput == 1);
         BrazeService.eventContentView(
             screenType: 'stock_analysis', source: _tabRes?.shareUrl ?? '');
+
+        // if (symbol != null && symbol != '' && startSSE) {
+        //   manager.addListener(symbol, (StockDataManagerRes stockData) {
+        //     Utils().showLog('Price=${stockData.price}');
+        //     Utils().showLog('Change=${stockData.change}');
+        //     Utils().showLog('Change%=${stockData.changePercentage}');
+        //   });
+        //   manager.connectToSSE(symbol);
+        // }
 
         if (_tabRes != null) {
           // getPlaidPortfolioData(name: _tabs[selectedTab]);

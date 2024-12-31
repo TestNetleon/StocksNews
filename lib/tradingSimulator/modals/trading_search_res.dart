@@ -13,7 +13,7 @@ class TradingSearchTickerRes {
   final String? symbol;
   final String? name;
   final String? image;
-  final String? price;
+  String? price;
   final String? change;
   final double? changesPercentage;
   final StockType? type;

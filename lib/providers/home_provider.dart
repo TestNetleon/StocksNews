@@ -35,6 +35,7 @@ import 'package:stocks_news_new/database/preference.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import '../modals/featured_watchlist.dart';
 import '../modals/most_purchased.dart';
+import '../modals/user_res.dart';
 import 'my_tickers.dart';
 
 class HomeProvider extends ChangeNotifier {
@@ -325,7 +326,7 @@ class HomeProvider extends ChangeNotifier {
 
     retryCount = 0;
     showAdd = true;
-
+    setAppsflyerData();
     getHomeSlider();
     getHomePortfolio();
     // _getLastMarketOpen();
@@ -418,7 +419,9 @@ class HomeProvider extends ChangeNotifier {
         //.....................................
         _homeSliderRes = HomeSliderRes.fromJson(response.data);
 
-        Utils().showLog("-----!!${_homeSliderRes?.rating?.description}");
+        if (_extra?.user == null) {
+          BrazeService.brazeUserEvent(randomID: _extra?.tempUserID);
+        }
         notifyListeners();
 
         Preference.saveReferInput(_extra?.affiliateInput == 1);
@@ -1197,6 +1200,84 @@ class HomeProvider extends ChangeNotifier {
       _myTickers = null;
       notifyListeners();
       Utils().showLog(' error in my tickers $e');
+    }
+  }
+
+//AppsFlyer API
+
+  Future setAppsflyerData() async {
+    try {
+      UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
+      UserRes? user = provider.user;
+
+      Map<String, dynamic> requestData = {};
+
+      String? fcmToken = await Preference.getFcmToken();
+      String? address = await Preference.getLocation();
+      PackageInfo packageInfo = await PackageInfo.fromPlatform();
+      String versionName = packageInfo.version;
+      String buildNumber = packageInfo.buildNumber;
+
+      requestData['build_version'] = versionName;
+      requestData['build_code'] = buildNumber;
+      requestData['platform'] = Platform.operatingSystem;
+
+      if (appsFlyerUID != null && appsFlyerUID != '') {
+        requestData['appsflyer_id'] = appsFlyerUID;
+      }
+      if (user?.token != null && user?.token != '') {
+        requestData['token'] = user?.token;
+      }
+      if (provider.user?.phone != null && provider.user?.phone != '') {
+        requestData['phone'] = provider.user?.phone;
+      }
+      if (provider.user?.userId != null && provider.user?.userId != '') {
+        requestData['_id'] = provider.user?.userId;
+      }
+      if (provider.user?.name != null && provider.user?.name != '') {
+        requestData['name'] = provider.user?.name;
+      }
+      if (provider.user?.phoneCode != null && provider.user?.phoneCode != '') {
+        requestData['phone_code'] = provider.user?.phoneCode;
+      }
+      if (provider.user?.email != null && provider.user?.email != '') {
+        requestData['email'] = provider.user?.email;
+      }
+      if (provider.user?.image != null && provider.user?.image != '') {
+        requestData['image'] = provider.user?.image;
+      }
+      if (memCODE != null && memCODE != '') {
+        requestData['distributor_code'] = memCODE;
+      }
+      if (address != null && address != '') {
+        requestData['address'] = address;
+      }
+      if (fcmToken != null && fcmToken != '') {
+        requestData['fcm_token'] = fcmToken;
+      }
+      if (provider.user?.membership?.purchased != null) {
+        requestData['purchased'] =
+            '${provider.user?.membership?.purchased ?? 0}';
+        requestData['product_id'] = provider.user?.membership?.productID;
+      }
+      if (provider.user?.pointEarn != null && provider.user?.pointEarn != '') {
+        requestData['points_earn'] = provider.user?.pointEarn;
+      }
+
+      FormData request = FormData.fromMap(requestData);
+
+      ApiResponse response = await apiRequest(
+        url: Apis.appsflyerUsers,
+        checkAppUpdate: false,
+        formData: request,
+      );
+      if (response.status) {
+        //
+      } else {
+        //
+      }
+    } catch (e) {
+      Utils().showLog('AppsFlyer: $e');
     }
   }
 }

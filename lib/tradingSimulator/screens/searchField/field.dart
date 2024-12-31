@@ -55,8 +55,11 @@ class _SdTradeSearchFieldState extends State<SdTradeSearchField> {
       StockDetailProviderNew provider =
           navigatorKey.currentContext!.read<StockDetailProviderNew>();
 
-      ApiResponse response =
-          await provider.getTabData(symbol: symbol, showProgress: true);
+      ApiResponse response = await provider.getTabData(
+        symbol: symbol,
+        showProgress: true,
+        startSSE: true,
+      );
       if (response.status) {
         SummaryOrderNew order = await Navigator.pushReplacement(
           navigatorKey.currentContext!,

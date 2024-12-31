@@ -29,19 +29,19 @@ class TournamentHeader extends StatelessWidget {
       ),
       child: Row(
         children: List.generate(
-          provider.tournamentHeader.length,
+          provider.data?.tournamentHeader?.length ?? 0,
           (index) {
             return Expanded(
               child: Column(
                 children: [
                   Text(
-                    provider.tournamentHeader[index].label ?? '',
-                    style: styleGeorgiaRegular(fontSize: 12),
+                    provider.data?.tournamentHeader?[index].label ?? '',
+                    style: styleGeorgiaRegular(fontSize: 14),
                   ),
                   const SpacerVertical(height: 5),
                   Text(
-                    provider.tournamentHeader[index].value ?? '',
-                    style: styleGeorgiaBold(fontSize: 16),
+                    provider.data?.tournamentHeader?[index].value ?? '',
+                    style: styleGeorgiaBold(fontSize: 18),
                   ),
                 ],
               ),

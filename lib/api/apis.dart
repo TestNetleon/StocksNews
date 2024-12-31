@@ -243,6 +243,10 @@ class Apis {
 
   //
   static const myTickers = "/my-tickers-list";
+  static const appsflyerUsers = '/appsflyer-users';
+  static const tournament = '/tournament';
+  static const tournamentLeaderboard = '/tournament/leaderboard/by-date';
+  static const tournamentDetail = '/tournament-details';
 }
 
 class ApiKeys {

@@ -22,7 +22,7 @@ class BrazeService {
     NotificationHandler.instance.braze.registerPushToken(pushToken);
   }
 
-  static Future<void> brazeUserEvent() async {
+  static Future<void> brazeUserEvent({String? randomID}) async {
     UserRes? user = navigatorKey.currentContext!.read<UserProvider>().user;
     if (user != null) {
       String? firstName;
@@ -52,7 +52,7 @@ class BrazeService {
       }
 
       brazeBaseEvents(
-        userId: user.userId,
+        userId: user.userId ?? randomID ?? '',
         firstName: firstName,
         lastName: lastName,
         email: user.email,
@@ -71,12 +71,6 @@ class BrazeService {
         brazeBaseEvents(
           attributionKey: 'points_balance',
           attributeValue: user.pointEarn,
-        );
-      }
-
-      if (user.signupStatus == true) {
-        brazeBaseEvents(
-          eventName: EventBraze.b_sign_up.name,
         );
       }
 

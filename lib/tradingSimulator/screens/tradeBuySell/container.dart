@@ -17,14 +17,10 @@ import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/utils/utils.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:stocks_news_new/utils/validations.dart';
 import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
-import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/theme_button.dart';
-import 'package:stocks_news_new/widgets/theme_checkbox.dart';
-import 'package:stocks_news_new/widgets/theme_input_field.dart';
+import '../../manager/sse.dart';
 import '../../providers/trade_provider.dart';
 
 class BuySellContainer extends StatefulWidget {
@@ -56,8 +52,8 @@ class _BuySellContainerState extends State<BuySellContainer> {
   String _previousText = "";
   int _keyCounter = 0;
   num _availableBalance = 0;
-  bool _limitOrder = false;
-  bool _bracketOrder = false;
+  // bool _limitOrder = false;
+  // bool _bracketOrder = false;
 
   // String text = "";
   @override
@@ -76,6 +72,7 @@ class _BuySellContainerState extends State<BuySellContainer> {
     limitController.clear();
     targetController.clear();
     stopLossController.clear();
+    SSEManager().disconnectAll();
     super.dispose();
   }
 
@@ -191,8 +188,10 @@ class _BuySellContainerState extends State<BuySellContainer> {
           );
           Navigator.pop(context);
           Navigator.pop(context);
+          Navigator.popUntil(
+              navigatorKey.currentContext!, (route) => route.isFirst);
           Navigator.push(
-            context,
+            navigatorKey.currentContext!,
             MaterialPageRoute(
               builder: (_) => TsDashboard(initialIndex: isPending ? 1 : 0),
             ),
@@ -394,26 +393,6 @@ class _BuySellContainerState extends State<BuySellContainer> {
           buy: widget.buy,
         );
 
-        // Navigator.pop(
-        //   context,
-        //   SummaryOrderNew(
-        //     isShare: _selectedSegment == TypeTrade.shares,
-        //     change: provider.tabRes?.keyStats?.changeWithCur,
-        //     changePercentage: provider.tabRes?.keyStats?.changesPercentage,
-        //     dollars: _selectedSegment == TypeTrade.dollar
-        //         ? num.parse(_currentText)
-        //         : (num.parse(_currentText) * price),
-        //     shares: _selectedSegment == TypeTrade.shares
-        //         ? num.parse(_currentText)
-        //         : (num.parse(_currentText) / price),
-        //     image: provider.tabRes?.companyInfo?.image,
-        //     name: provider.tabRes?.keyStats?.name,
-        //     price: provider.tabRes?.keyStats?.price,
-        //     symbol: provider.tabRes?.keyStats?.symbol,
-        //     invested: invested,
-        //     buy: widget.buy,
-        //   ),
-        // );
         _clear();
 
         Navigator.pop(context);
@@ -432,155 +411,8 @@ class _BuySellContainerState extends State<BuySellContainer> {
       } else {
         // TODO:
         popUpAlert(message: "${response.message}", title: "Alert");
-
-        // final order = SummaryOrderNew(
-        //   isShare: _selectedSegment == TypeTrade.shares,
-        //   change: provider.tabRes?.keyStats?.changeWithCur,
-        //   changePercentage: provider.tabRes?.keyStats?.changesPercentage,
-        //   dollars: _selectedSegment == TypeTrade.dollar
-        //       ? num.parse(_currentText)
-        //       : (num.parse(_currentText) * price),
-        //   shares: _selectedSegment == TypeTrade.shares
-        //       ? num.parse(_currentText)
-        //       : (num.parse(_currentText) / price),
-        //   image: provider.tabRes?.companyInfo?.image,
-        //   name: provider.tabRes?.keyStats?.name,
-        //   price: provider.tabRes?.keyStats?.price,
-        //   symbol: provider.tabRes?.keyStats?.symbol,
-        //   invested: invested,
-        //   buy: widget.buy,
-        // );
-        // Navigator.pop(context);
-        // Navigator.pop(context);
-        // Navigator.push(
-        //   context,
-        //   MaterialPageRoute(
-        //     builder: (_) => TsDashboard(initialIndex: isPending ? 1 : 0),
-        //   ),
-        // );
-
-        // widget.buy
-        //     ? tradeProviderNew.addOrderData(order)
-        //     : tradeProviderNew.sellOrderData(order);
-        // await showTsOrderSuccessSheet(order, widget.buy);
       }
     }
-
-    // popUpAlert(
-    //   message: "New Message",
-    //   title: "Alert",
-    //   padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
-    //   cancel: true,
-    //   canPop: false,
-    //   child: Column(
-    //     children: [
-    //       Text(
-    //         widget.buy
-    //             ? "Buy ${provider.tabRes?.keyStats?.symbol}"
-    //             : "Sell ${provider.tabRes?.keyStats?.symbol}",
-    //         style: stylePTSansBold(color: ThemeColors.background, fontSize: 30),
-    //       ),
-    //       const SpacerVertical(height: 30),
-    //       Row(
-    //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    //         crossAxisAlignment: CrossAxisAlignment.end,
-    //         children: [
-    //           Text(
-    //             "Price: ",
-    //             style: stylePTSansRegular(
-    //               color: ThemeColors.greyText,
-    //               fontSize: 20,
-    //             ),
-    //           ),
-    //           Flexible(
-    //             child: Text(
-    //               "${provider.tabRes?.keyStats?.price}",
-    //               style: stylePTSansBold(
-    //                   color: ThemeColors.background, fontSize: 20),
-    //             ),
-    //           ),
-    //         ],
-    //       ),
-    //       const Divider(
-    //         color: ThemeColors.greyBorder,
-    //         height: 25,
-    //       ),
-    //       Row(
-    //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    //         crossAxisAlignment: CrossAxisAlignment.end,
-    //         children: [
-    //           Text(
-    //             "Quantity: ",
-    //             style: stylePTSansRegular(
-    //               color: ThemeColors.greyText,
-    //               fontSize: 20,
-    //             ),
-    //           ),
-    //           Flexible(
-    //             child: Text(
-    //               _selectedSegment == TypeTrade.shares
-    //                   ? _currentText
-    //                   : (num.parse(_currentText) / price).toCurrency(),
-    //               style: stylePTSansBold(
-    //                 color: ThemeColors.background,
-    //                 fontSize: 20,
-    //               ),
-    //             ),
-    //           ),
-    //         ],
-    //       ),
-    //       const Divider(
-    //         color: ThemeColors.greyBorder,
-    //         height: 25,
-    //       ),
-    //       Row(
-    //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    //         crossAxisAlignment: CrossAxisAlignment.end,
-    //         children: [
-    //           Text(
-    //             "Total Amount: ",
-    //             style: stylePTSansRegular(
-    //               color: ThemeColors.greyText,
-    //               fontSize: 20,
-    //             ),
-    //           ),
-    //           Flexible(
-    //             child: Text(
-    //               "\$${invested.toCurrency()}",
-    //               style: stylePTSansBold(
-    //                   color: ThemeColors.background, fontSize: 20),
-    //             ),
-    //           ),
-    //         ],
-    //       ),
-    //       const SpacerVertical(height: 20),
-    //     ],
-    //   ),
-    //   onTap: () {
-    //     Navigator.pop(context);
-    //     Navigator.pop(
-    //       context,
-    //       SummaryOrderNew(
-    //         isShare: _selectedSegment == TypeTrade.shares,
-    //         change: provider.tabRes?.keyStats?.changeWithCur,
-    //         changePercentage: provider.tabRes?.keyStats?.changesPercentage,
-    //         dollars: _selectedSegment == TypeTrade.dollar
-    //             ? num.parse(_currentText)
-    //             : (num.parse(_currentText) * price),
-    //         shares: _selectedSegment == TypeTrade.shares
-    //             ? num.parse(_currentText)
-    //             : (num.parse(_currentText) / price),
-    //         image: provider.tabRes?.companyInfo?.image,
-    //         name: provider.tabRes?.keyStats?.name,
-    //         price: provider.tabRes?.keyStats?.price,
-    //         symbol: provider.tabRes?.keyStats?.symbol,
-    //         invested: invested,
-    //         buy: widget.buy,
-    //       ),
-    //     );
-    //     _clear();
-    //   },
-    // );
   }
 
   _clear() {
@@ -603,33 +435,37 @@ class _BuySellContainerState extends State<BuySellContainer> {
   }
 
   _onChange(String text) {
-    Utils().showLog("TEXT=>$text");
+    try {
+      Utils().showLog("TEXT=>$text");
 
-    setState(() {
-      if (text.length < _previousText.length) {
-        // Clearing text
-        _lastEntered = "";
-        _currentText = text;
-        _keyCounter++;
-        if (text == '') {
-          _currentText = '0';
-        }
-      } else {
-        if (text == "." || text == "0.") {
-          Utils().showLog("IF");
-          _currentText = "0.";
-          controller.text = "0.";
-        } else {
-          Utils().showLog("ELSE");
-
-          // Adding new characters
-          _lastEntered = text.substring(text.length - 1);
+      setState(() {
+        if (text.length < _previousText.length) {
+          // Clearing text
+          _lastEntered = "";
           _currentText = text;
           _keyCounter++;
+          if (text == '') {
+            _currentText = '0';
+          }
+        } else {
+          if (text == "." || text == "0.") {
+            Utils().showLog("IF");
+            _currentText = "0.";
+            controller.text = "0.";
+          } else {
+            Utils().showLog("ELSE");
+
+            // Adding new characters
+            _lastEntered = text.substring(text.length - 1);
+            _currentText = text;
+            _keyCounter++;
+          }
         }
-      }
-      _previousText = text;
-    });
+        _previousText = text;
+      });
+    } catch (e) {
+      Utils().showLog('error $e');
+    }
   }
 
   Widget _newMethod() {
@@ -715,37 +551,62 @@ class _BuySellContainerState extends State<BuySellContainer> {
               child: Column(
                 children: [
                   const SdCommonHeading(),
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(10),
-                    child: CupertinoSlidingSegmentedControl<TypeTrade>(
-                      backgroundColor: ThemeColors.greyBorder.withOpacity(0.4),
-                      thumbColor:
-                          widget.buy ? ThemeColors.accent : ThemeColors.sos,
-                      groupValue: _selectedSegment,
-                      onValueChanged: (TypeTrade? value) {
-                        if (value != null) {
-                          setState(() {
-                            _selectedSegment = value;
-                          });
-                          _clear();
-                        }
-                      },
-                      children: <TypeTrade, Widget>{
-                        TypeTrade.shares: Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 20),
-                          child: Text(
-                            widget.buy ? 'Buy in Shares' : 'Sell in Shares',
-                            style: styleGeorgiaBold(),
+                  // ClipRRect(
+                  //   borderRadius: BorderRadius.circular(10),
+                  //   child: CupertinoSlidingSegmentedControl<TypeTrade>(
+                  //     backgroundColor: ThemeColors.greyBorder.withOpacity(0.4),
+                  //     thumbColor:
+                  //         widget.buy ? ThemeColors.accent : ThemeColors.sos,
+                  //     groupValue: _selectedSegment,
+                  //     onValueChanged: (TypeTrade? value) {
+                  //       if (value != null) {
+                  //         setState(() {
+                  //           _selectedSegment = value;
+                  //         });
+                  //         _clear();
+                  //       }
+                  //     },
+                  //     children: <TypeTrade, Widget>{
+                  //       TypeTrade.shares: Container(
+                  //         padding: const EdgeInsets.symmetric(horizontal: 20),
+                  //         child: Text(
+                  //           widget.buy ? 'Buy in Shares' : 'Sell in Shares',
+                  //           style: styleGeorgiaBold(),
+                  //         ),
+                  //       ),
+                  //       TypeTrade.dollar: Padding(
+                  //         padding: const EdgeInsets.symmetric(horizontal: 20),
+                  //         child: Text(
+                  //           widget.buy ? 'Buy in Dollars' : 'Sell in Dollars',
+                  //           style: styleGeorgiaBold(),
+                  //         ),
+                  //       ),
+                  //     },
+                  //   ),
+                  // ),
+
+                  Align(
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child: Container(
+                        color: ThemeColors.greyBorder.withValues(alpha: 0.4),
+                        child: Center(
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 15, vertical: 5),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: widget.buy
+                                  ? ThemeColors.accent
+                                  : ThemeColors.sos,
+                            ),
+                            child: Text(
+                              widget.buy ? 'Buy in Shares' : 'Sell in Shares',
+                              style: styleGeorgiaBold(),
+                            ),
                           ),
                         ),
-                        TypeTrade.dollar: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 20),
-                          child: Text(
-                            widget.buy ? 'Buy in Dollars' : 'Sell in Dollars',
-                            style: styleGeorgiaBold(),
-                          ),
-                        ),
-                      },
+                      ),
                     ),
                   ),
 
@@ -773,65 +634,65 @@ class _BuySellContainerState extends State<BuySellContainer> {
                       ),
                     ),
                   SpacerVertical(),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      ThemeCheckbox(
-                        value: _limitOrder,
-                        onChanged: (value) {
-                          setState(() {
-                            _limitOrder = value;
-                          });
-                        },
-                        color: ThemeColors.themeGreen,
-                        label: "Limit Order",
-                      ),
-                      const SpacerHorizontal(),
-                      ThemeCheckbox(
-                        value: _bracketOrder,
-                        onChanged: (value) {
-                          setState(() {
-                            _bracketOrder = !_bracketOrder;
-                          });
-                        },
-                        color: ThemeColors.themeGreen,
-                        label: "Bracket Order",
-                      ),
-                    ],
-                  ),
-                  Column(
-                    children: [
-                      SpacerVertical(),
-                      if (_limitOrder == true)
-                        ThemeInputField(
-                          controller: limitController,
-                          placeholder: "Enter price to limit order",
-                          keyboardType: TextInputType.number,
-                        ),
-                      if (_limitOrder == true) SpacerVertical(),
-                      if (_bracketOrder == true)
-                        Row(
-                          children: [
-                            Expanded(
-                              child: ThemeInputField(
-                                controller: targetController,
-                                placeholder: "Enter target price",
-                                keyboardType: TextInputType.number,
-                                inputFormatters: [priceFormatter],
-                              ),
-                            ),
-                            const SpacerHorizontal(width: 12),
-                            Expanded(
-                              child: ThemeInputField(
-                                controller: stopLossController,
-                                keyboardType: TextInputType.number,
-                                placeholder: "Enter stop loss",
-                              ),
-                            ),
-                          ],
-                        ),
-                    ],
-                  )
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.center,
+                  //   children: [
+                  //     ThemeCheckbox(
+                  //       value: _limitOrder,
+                  //       onChanged: (value) {
+                  //         setState(() {
+                  //           _limitOrder = value;
+                  //         });
+                  //       },
+                  //       color: ThemeColors.themeGreen,
+                  //       label: "Limit Order",
+                  //     ),
+                  //     const SpacerHorizontal(),
+                  //     ThemeCheckbox(
+                  //       value: _bracketOrder,
+                  //       onChanged: (value) {
+                  //         setState(() {
+                  //           _bracketOrder = !_bracketOrder;
+                  //         });
+                  //       },
+                  //       color: ThemeColors.themeGreen,
+                  //       label: "Bracket Order",
+                  //     ),
+                  //   ],
+                  // ),
+                  // Column(
+                  //   children: [
+                  //     SpacerVertical(),
+                  //     if (_limitOrder == true)
+                  //       ThemeInputField(
+                  //         controller: limitController,
+                  //         placeholder: "Enter price to limit order",
+                  //         keyboardType: TextInputType.number,
+                  //       ),
+                  //     if (_limitOrder == true) SpacerVertical(),
+                  //     if (_bracketOrder == true)
+                  //       Row(
+                  //         children: [
+                  //           Expanded(
+                  //             child: ThemeInputField(
+                  //               controller: targetController,
+                  //               placeholder: "Enter target price",
+                  //               keyboardType: TextInputType.number,
+                  //               inputFormatters: [priceFormatter],
+                  //             ),
+                  //           ),
+                  //           const SpacerHorizontal(width: 12),
+                  //           Expanded(
+                  //             child: ThemeInputField(
+                  //               controller: stopLossController,
+                  //               keyboardType: TextInputType.number,
+                  //               placeholder: "Enter stop loss",
+                  //             ),
+                  //           ),
+                  //         ],
+                  //       ),
+                  //   ],
+                  // )
                 ],
               ),
             ),

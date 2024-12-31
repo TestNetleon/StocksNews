@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:stocks_news_new/arena/provider/arena.dart';
 import 'package:stocks_news_new/arena/screens/tournaments/dayTraining/widgets/leaderboard.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/utils/colors.dart';
@@ -10,8 +12,24 @@ import '../../../widgets/card.dart';
 import 'widgets/similar.dart';
 import 'widgets/timer.dart';
 
-class TournamentDayTrainingIndex extends StatelessWidget {
-  const TournamentDayTrainingIndex({super.key});
+class TournamentDayTrainingIndex extends StatefulWidget {
+  final int? tournamentId;
+  const TournamentDayTrainingIndex({super.key, this.tournamentId});
+
+  @override
+  State<TournamentDayTrainingIndex> createState() =>
+      _TournamentDayTrainingIndexState();
+}
+
+class _TournamentDayTrainingIndexState
+    extends State<TournamentDayTrainingIndex> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<ArenaProvider>().tournamentDetail(widget.tournamentId);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {

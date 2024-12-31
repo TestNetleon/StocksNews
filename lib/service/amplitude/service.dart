@@ -15,10 +15,11 @@ import '../firebase/service.dart';
 class AmplitudeService {
   static final Amplitude _amplitude = Amplitude.getInstance();
   // Initialize AppsFlyerService instance
-  static final AppsFlyerService _appsFlyerService = AppsFlyerService(
-    ApiKeys.appsFlyerKey,
-    ApiKeys.iosAppID,
-  );
+  // static final AppsFlyerService _appsFlyerService = AppsFlyerService(
+  //   ApiKeys.appsFlyerKey,
+  //   ApiKeys.iosAppID,
+  // );
+  static final AppsFlyerService _appsFlyerService = AppsFlyerService();
 
   static final FirebaseService _firebaseService = FirebaseService();
 
