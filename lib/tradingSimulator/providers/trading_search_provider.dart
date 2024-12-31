@@ -195,7 +195,6 @@ class TradingSearchProvider extends ChangeNotifier {
   /// Dispose method to clean up SSE
   @override
   void dispose() {
-    sseManager.disconnectAll();
     super.dispose();
   }
 

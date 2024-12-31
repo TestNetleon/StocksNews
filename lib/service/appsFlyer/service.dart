@@ -1,9 +1,7 @@
 import 'dart:io';
 import 'package:appsflyer_sdk/appsflyer_sdk.dart';
-import 'package:device_info_plus/device_info_plus.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
-
 import '../../api/apis.dart';
 import '../../utils/constants.dart';
 
@@ -127,22 +125,22 @@ import '../../utils/constants.dart';
 class AppsFlyerService {
   AppsflyerSdk? _appsFlyerSdk;
 
-  Future<void> getDeviceID() async {
-    DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+  // Future<void> getDeviceID() async {
+  //   DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
 
-    if (Platform.isAndroid) {
-      AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
-      String deviceId = androidInfo.id;
-      print("Android Device ID: $deviceId");
-    } else if (Platform.isIOS) {
-      IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
-      String? deviceId = iosInfo.identifierForVendor;
-      print("iOS Device ID: $deviceId");
-    }
-  }
+  //   if (Platform.isAndroid) {
+  //     AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
+  //     String deviceId = androidInfo.id;
+  //     print("Android Device ID: $deviceId");
+  //   } else if (Platform.isIOS) {
+  //     IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
+  //     String? deviceId = iosInfo.identifierForVendor;
+  //     print("iOS Device ID: $deviceId");
+  //   }
+  // }
 
   Future<void> initializeSdk() async {
-    getDeviceID();
+    // getDeviceID();
     try {
       final AppsFlyerOptions options = AppsFlyerOptions(
         // afDevKey: ApiKeys.appsFlyerKey,

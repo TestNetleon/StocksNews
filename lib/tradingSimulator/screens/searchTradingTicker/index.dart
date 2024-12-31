@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/search_provider.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
-import 'package:stocks_news_new/tradingSimulator/manager/sse.dart';
 import 'package:stocks_news_new/tradingSimulator/providers/trading_search_provider.dart';
 import 'package:stocks_news_new/tradingSimulator/screens/searchTradingTicker/search_list.dart';
 import 'package:stocks_news_new/tradingSimulator/widgets/text_input_field_search_common.dart';
@@ -33,7 +32,6 @@ class _SearchTradingTickerState extends State<SearchTradingTicker> {
 
   @override
   void dispose() {
-    SSEManager().disconnectAll();
     // context.read<TradingSearchProvider>().dispose();
     super.dispose();
   }

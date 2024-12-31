@@ -419,9 +419,6 @@ class HomeProvider extends ChangeNotifier {
         //.....................................
         _homeSliderRes = HomeSliderRes.fromJson(response.data);
 
-        if (_extra?.user == null) {
-          BrazeService.brazeUserEvent(randomID: _extra?.tempUserID);
-        }
         notifyListeners();
 
         Preference.saveReferInput(_extra?.affiliateInput == 1);

@@ -46,6 +46,7 @@ class SSEManager {
           if (rawData.startsWith('{')) {
             try {
               final data = Map<String, dynamic>.from(json.decode(rawData));
+              print('Data for $symbol: $data');
 
               if (data.containsKey('price') &&
                   data.containsKey('change') &&

@@ -488,7 +488,6 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import '../api/apis.dart';
 import '../screens/auth/base/base_auth.dart';
-import '../service/transparency.dart';
 
 final _appLinks = AppLinks();
 //
@@ -511,7 +510,6 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       // oneSignalInitialized = true;
-      requestATT();
       listenForPushToken();
       NotificationHandler.instance.setupNotificationListeners();
       configureRevenueCatAttribute();

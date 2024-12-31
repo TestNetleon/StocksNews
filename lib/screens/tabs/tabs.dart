@@ -26,6 +26,7 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:vibration/vibration.dart';
 import '../../api/api_response.dart';
+import '../../service/transparency.dart';
 import '../../utils/utils.dart';
 import '../offerMembership/blackFriday/index.dart';
 import '../membership_new/membership.dart';
@@ -60,6 +61,7 @@ class _TabsState extends State<Tabs> {
   void initState() {
     super.initState();
     splashLoaded = true;
+    _request();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       setState(() {
         _selectedIndex = widget.index;
@@ -71,6 +73,11 @@ class _TabsState extends State<Tabs> {
       // appTrack();
       AmplitudeService.logFirstOpenEvent();
     });
+  }
+
+  Future _request() async {
+    await Future.delayed(Duration(seconds: 8));
+    await requestATT();
   }
 
   _showMembership() {

@@ -52,7 +52,7 @@ class BrazeService {
       }
 
       brazeBaseEvents(
-        userId: user.userId ?? randomID ?? '',
+        userId: user.userId ?? '',
         firstName: firstName,
         lastName: lastName,
         email: user.email,
@@ -67,6 +67,11 @@ class BrazeService {
             : user.membership?.productID,
       );
 
+      brazeBaseEvents(
+        attributionKey: 'is_registered',
+        attributeValue: true,
+      );
+
       if (user.pointEarn != null) {
         brazeBaseEvents(
           attributionKey: 'points_balance',
@@ -79,6 +84,14 @@ class BrazeService {
           eventName: EventBraze.b_sign_up.name,
         );
       }
+    } else {
+      brazeBaseEvents(
+        userId: randomID ?? '',
+      );
+      brazeBaseEvents(
+        attributionKey: 'is_registered',
+        attributeValue: false,
+      );
     }
   }
 
@@ -316,6 +329,10 @@ class BrazeService {
           NotificationHandler.instance.braze
               .setStringCustomUserAttribute(attributionKey, attributeValue);
           Utils().showLog('string: key?$attributionKey,value?$attributeValue');
+        } else if (attributeValue is bool) {
+          NotificationHandler.instance.braze
+              .setBoolCustomUserAttribute(attributionKey, attributeValue);
+          Utils().showLog('bool: key?$attributionKey,value?$attributeValue');
         } else {
           NotificationHandler.instance.braze
               .setIntCustomUserAttribute(attributionKey, attributeValue);

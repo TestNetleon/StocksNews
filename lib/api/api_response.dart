@@ -46,7 +46,6 @@ class ApiResponse {
 }
 
 class Extra {
-  final String? tempUserID;
   final List<String>? feebackType;
   final String? search;
   final int? notificationCount;
@@ -77,6 +76,8 @@ class Extra {
   final String? currentBalance;
   final MessageRes? messageObject;
   final UserRes? user;
+  final UserRes? tempUser;
+
   final bool? showPortfolio;
   final bool? showAboutStockNews;
   final bool? showWhatWeDo;
@@ -142,7 +143,6 @@ class Extra {
   // final num? isRegistered;
 
   Extra({
-    this.tempUserID,
     this.activeMembership,
     this.blackFriday,
     this.showBlackFriday,
@@ -222,6 +222,7 @@ class Extra {
     this.disclaimer,
     this.messageObject,
     this.user,
+    this.tempUser,
     this.referral,
     this.earnCondition,
     this.referText,
@@ -238,7 +239,6 @@ class Extra {
 
   factory Extra.fromJson(Map<String, dynamic> json) => Extra(
         search: json["search"],
-        tempUserID: json['temp_user_id'],
         activeMembership: json["active_membership"] == null
             ? []
             : List<MembershipRes>.from(json["active_membership"]!
@@ -386,6 +386,10 @@ class Extra {
             ? null
             : MessageRes.fromJson(json["message"]),
         user: json["user"] == null ? null : UserRes.fromJson(json["user"]),
+        tempUser: json["temp_user"] == null
+            ? null
+            : UserRes.fromJson(json["temp_user"]),
+
         referral: json["referral"] == null
             ? null
             : ReferralRes.fromJson(json["referral"]),
@@ -407,7 +411,6 @@ class Extra {
 
   Map<String, dynamic> toJson() => {
         'black_friday_membership': showBlackFriday,
-        "temp_user_id": tempUserID,
         'christmas_membership': christmasMembership,
         "black_friday": blackFriday?.toJson(),
         "ad_managers": adManagers?.toJson(),
@@ -504,6 +507,8 @@ class Extra {
         "footer_disclaimer": disclaimer,
         "message": messageObject?.toJson(),
         "user": user?.toJson(),
+        "temp_user": tempUser?.toJson(),
+
         "referral": referral?.toJson(),
         "refer_text": referText,
         "affiliate_input": affiliateInput,

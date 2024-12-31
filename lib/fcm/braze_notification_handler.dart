@@ -31,7 +31,7 @@ class NotificationHandler {
     try {
       _braze.enableSDK();
 
-      setupNotificationListeners();
+      setupNotificationListeners(isKilled: true);
 
       debugPrint('Braze notification system initialized successfully');
     } catch (e) {
@@ -39,13 +39,13 @@ class NotificationHandler {
     }
   }
 
-  void setupNotificationListeners() {
+  void setupNotificationListeners({bool isKilled = false}) {
     _pushSubscription?.cancel();
     _pushSubscription =
         _braze.subscribeToPushNotificationEvents((BrazePushEvent event) {
       debugPrint('Notification event received: ${event.toString()}');
 
-      _handleNotificationPayload(event);
+      _handleNotificationPayload(event, isKilled: isKilled);
     });
 
     _inAppSubscription = _braze.subscribeToInAppMessages(
@@ -63,7 +63,8 @@ class NotificationHandler {
     );
   }
 
-  void _handleNotificationPayload(BrazePushEvent event) {
+  void _handleNotificationPayload(BrazePushEvent event,
+      {bool isKilled = false}) {
     if (event.payloadType == 'push_opened') {
       try {
         final Map<String, dynamic> notificationData =
@@ -85,6 +86,7 @@ class NotificationHandler {
           BrazeNotificationService.instance.navigateToRequiredScreen(
             type: type,
             slug: slug,
+            whenAppKilled: isKilled,
           );
         } else {
           Utils().showLog(

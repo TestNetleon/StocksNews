@@ -9,6 +9,7 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/screens/affiliate/pointsTransaction/trasnsaction.dart';
 import 'package:stocks_news_new/screens/offerMembership/christmas/index.dart';
+import 'package:stocks_news_new/service/braze/service.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/database/preference.dart';
 import '../api/api_requester.dart';
@@ -29,7 +30,6 @@ import '../screens/drawer/widgets/review_app_pop_up.dart';
 import '../screens/helpDesk/chats/index.dart';
 import '../screens/stockDetail/index.dart';
 import '../screens/tabs/news/newsDetail/new_detail.dart';
-import '../widgets/custom/alert_popup.dart';
 
 class BrazeNotificationService {
   BrazeNotificationService._internal();
@@ -91,11 +91,17 @@ class BrazeNotificationService {
         removeForceLogin: true,
       );
 
+      Extra? extra = response.extra is Extra ? response.extra : null;
+
       if (response.status) {
         navigatorKey.currentContext!.read<HomeProvider>().setSheetText(
-              loginText: response.extra?.loginText,
-              signupText: response.extra?.signUpText,
+              loginText: extra?.loginText,
+              signupText: extra?.signUpText,
             );
+        if (extra?.tempUser != null) {
+          BrazeService.brazeUserEvent(randomID: extra?.tempUser?.userId);
+        }
+
         Preference.saveFcmToken(value);
         Preference.saveLocation(address);
       } else {
@@ -120,7 +126,7 @@ class BrazeNotificationService {
     await Future.delayed(Duration(milliseconds: 400));
     try {
       if (type == NotificationType.dashboard.name) {
-        if (whenAppKilled) return null;
+        // if (!whenAppKilled) return null;
         Navigator.popUntil(
             navigatorKey.currentContext!, (route) => route.isFirst);
         Navigator.push(
@@ -181,14 +187,17 @@ class BrazeNotificationService {
       } else if (slug != '' &&
           slug != null &&
           type == NotificationType.register.name) {
+        popHome = false;
+        if (whenAppKilled) await Future.delayed(const Duration(seconds: 3));
         if (await Preference.isLoggedIn()) {
-          popUpAlert(
-            message: "Welcome to the Home Screen!",
-            title: "Alert",
-            icon: Images.alertPopGIF,
-          );
+          // popUpAlert(
+          //   message: "Welcome to the Home Screen!",
+          //   title: "Alert",
+          //   icon: Images.alertPopGIF,
+          // );
           return;
         }
+
         // isPhone ? signupSheet() : signupSheetTablet();
         loginFirstSheet();
       } else if (slug != '' &&

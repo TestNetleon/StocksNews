@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:app_tracking_transparency/app_tracking_transparency.dart';
 
-void requestATT() async {
+Future requestATT() async {
+  if (!Platform.isIOS) return;
   // Request the ATT permission
   try {
     final TrackingStatus status =
