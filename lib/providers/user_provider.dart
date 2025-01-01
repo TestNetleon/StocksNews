@@ -489,7 +489,8 @@ class UserProvider extends ChangeNotifier {
                   const BlackFridayMembershipIndex(cancel: true),
                 ),
               );
-            } else if (_user?.christmasMembership == true) {
+            } else if (_user?.christmasMembership == true ||
+                _user?.newYearMembership == true) {
               Navigator.push(
                 navigatorKey.currentContext!,
                 createRoute(
@@ -666,7 +667,8 @@ class UserProvider extends ChangeNotifier {
                   const BlackFridayMembershipIndex(cancel: true),
                 ),
               );
-            } else if (_user?.christmasMembership == true) {
+            } else if (_user?.christmasMembership == true ||
+                _user?.newYearMembership == true) {
               Navigator.push(
                 navigatorKey.currentContext!,
                 createRoute(
@@ -962,7 +964,8 @@ class UserProvider extends ChangeNotifier {
                 const BlackFridayMembershipIndex(cancel: true),
               ),
             );
-          } else if (_user?.christmasMembership == true) {
+          } else if (_user?.christmasMembership == true ||
+              _user?.newYearMembership == true) {
             Navigator.push(
               navigatorKey.currentContext!,
               createRoute(
@@ -1402,6 +1405,9 @@ class UserProvider extends ChangeNotifier {
         notifyListeners();
         closeKeyboard();
         showErrorMessage(message: response.message, type: SnackbarType.info);
+
+        callSliderTrendingAPI();
+
         //
       } else {
         popUpAlert(
@@ -1589,7 +1595,8 @@ class UserProvider extends ChangeNotifier {
                 const BlackFridayMembershipIndex(cancel: true),
               ),
             );
-          } else if (_user?.christmasMembership == true) {
+          } else if (_user?.christmasMembership == true ||
+              _user?.newYearMembership == true) {
             Navigator.push(
               navigatorKey.currentContext!,
               createRoute(

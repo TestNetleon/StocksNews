@@ -34,12 +34,15 @@ class UserRes {
   // final String? blackFridayMessage;
   final bool? showBlackFriday;
   final bool? christmasMembership;
+  final bool? newYearMembership;
+
   final BlackFridayRes? blackFriday;
   UserRes({
     // this.blackFridayMessage,
     this.blackFriday,
     this.showBlackFriday,
     this.christmasMembership,
+    this.newYearMembership,
     this.email,
     this.membership,
     this.phone,
@@ -71,6 +74,7 @@ class UserRes {
         // blackFridayMessage: json['black_friday_message'],
         showBlackFriday: json['black_friday_membership'],
         christmasMembership: json['christmas_membership'],
+        newYearMembership: json['new_year_membership'],
         email: json["email"],
         blackFriday: json["black_friday"] == null
             ? null
@@ -107,9 +111,9 @@ class UserRes {
         // 'black_friday_message': blackFridayMessage,
         'black_friday_membership': showBlackFriday,
         "christmas_membership": christmasMembership,
+        'new_year_membership': newYearMembership,
         "email": email,
         "black_friday": blackFriday?.toJson(),
-
         "phone": phone,
         "_id": userId,
         "role_id": roleId,

@@ -58,6 +58,9 @@ class ChristmasProvider extends ChangeNotifier {
   }) async {
     setStatus(Status.loading);
     UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
+    HomeProvider homeProvider =
+        navigatorKey.currentContext!.read<HomeProvider>();
+
     try {
       Map request = {
         "token": provider.user?.token ?? "",
@@ -72,7 +75,10 @@ class ChristmasProvider extends ChangeNotifier {
         request['distributor_code'] = memCODE;
       }
       ApiResponse response = await apiRequest(
-        url: Apis.christmasMembership,
+        url: homeProvider.extra?.newYearMembership == true ||
+                provider.user?.newYearMembership == true
+            ? Apis.newYearMembership
+            : Apis.christmasMembership,
         request: request,
         showProgress: showProgress,
       );

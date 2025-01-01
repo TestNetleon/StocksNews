@@ -89,15 +89,17 @@ class _OTPBottomPhoneState extends State<OTPBottomPhone> {
   void _startTime() {
     startTiming = 30;
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-      setState(() {
-        startTiming = startTiming - 1;
-        Utils().showLog("Start Timer ? $startTiming");
-        if (startTiming == 0) {
-          startTiming = 30;
-          _timer?.cancel();
-          Utils().showLog("Timer Stopped ? $startTiming");
-        }
-      });
+      if (mounted) {
+        setState(() {
+          startTiming = startTiming - 1;
+          Utils().showLog("Start Timer ? $startTiming");
+          if (startTiming == 0) {
+            startTiming = 30;
+            _timer?.cancel();
+            Utils().showLog("Timer Stopped ? $startTiming");
+          }
+        });
+      }
     });
   }
 

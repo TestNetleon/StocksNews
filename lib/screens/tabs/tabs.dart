@@ -99,7 +99,8 @@ class _TabsState extends State<Tabs> {
           const BlackFridayMembershipIndex(cancel: true),
         ),
       );
-    } else if (extra?.christmasMembership == true) {
+    } else if (extra?.christmasMembership == true ||
+        extra?.newYearMembership == true) {
       Navigator.push(
         navigatorKey.currentContext!,
         createRoute(

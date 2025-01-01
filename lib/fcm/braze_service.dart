@@ -250,7 +250,9 @@ class BrazeNotificationService {
 
         // closeKeyboard();
         // Extra? extra = navigatorKey.currentContext!.read<HomeProvider>().extra;
-        if (slug != null && slug != '' && slug == 'christmas') {
+        if (slug != null &&
+            slug != '' &&
+            (slug == 'christmas' || slug == 'new-year')) {
           Navigator.push(
             navigatorKey.currentContext!,
             MaterialPageRoute(

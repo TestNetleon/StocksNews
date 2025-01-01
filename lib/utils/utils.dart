@@ -703,7 +703,8 @@ void handleDeepLinkNavigation({
               builder: (context) => const BlackFridayMembershipIndex(),
             ),
           );
-        } else if (extra?.christmasMembership == true) {
+        } else if (extra?.christmasMembership == true ||
+            extra?.newYearMembership == true) {
           Navigator.push(
             navigatorKey.currentContext!,
             createRoute(

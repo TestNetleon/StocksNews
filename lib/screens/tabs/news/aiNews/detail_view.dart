@@ -23,6 +23,7 @@ import '../../../../widgets/custom/update_error.dart';
 import '../../../../widgets/disclaimer_widget.dart';
 import '../../../../widgets/theme_button_small.dart';
 import '../../../AdManager/manager.dart';
+import '../../../auth/base/base_auth_email_bottom.dart';
 import '../../../t&cAndPolicy/tc_policy.dart';
 import '../newsDetail/news_details_body.dart';
 import '../newsDetail/news_details_list.dart';
@@ -523,7 +524,8 @@ class _NewsDetailsBodyAIState extends State<NewsDetailsBodyAI> {
                         ],
                       ),
                     ),
-                    BaseAuth()
+                    BaseAuth(),
+                    BaseAuthEmail()
                   ],
                 ),
               )

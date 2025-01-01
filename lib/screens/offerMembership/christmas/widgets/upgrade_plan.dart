@@ -8,6 +8,7 @@ import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
+import '../../../../providers/home_provider.dart';
 import '../../../../providers/offerMembership/christmas.dart';
 import '../../../../providers/user_provider.dart';
 import '../../../../routes/my_app.dart';
@@ -174,8 +175,13 @@ class _ChristmasUpgradeCurrentPlanState
 
   @override
   Widget build(BuildContext context) {
+    UserProvider userProvider = context.watch<UserProvider>();
+    HomeProvider homeProvider = context.watch<HomeProvider>();
     ChristmasProvider provider = context.watch<ChristmasProvider>();
     MembershipInfoRes? data = provider.membershipInfoRes;
+
+    bool showNYbell = userProvider.user?.newYearMembership == true ||
+        homeProvider.extra?.newYearMembership == true;
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -213,7 +219,7 @@ class _ChristmasUpgradeCurrentPlanState
                 alignment: Alignment.topLeft,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(top: 15),
+                    padding: EdgeInsets.only(top: showNYbell ? 3 : 15),
                     child: GestureDetector(
                       onTap: plan?.activeText != null && plan?.activeText != ''
                           ? null
@@ -413,10 +419,13 @@ class _ChristmasUpgradeCurrentPlanState
                       ),
                     ),
                   ),
-                  Image.asset(
-                    Images.christmasBell,
-                    height: 40,
-                    width: 40,
+                  Positioned(
+                    left: showNYbell ? 5 : 0,
+                    child: Image.asset(
+                      showNYbell ? Images.newYearBell : Images.christmasBell,
+                      height: showNYbell ? 27 : 40,
+                      width: showNYbell ? 27 : 40,
+                    ),
                   ),
                 ],
               );

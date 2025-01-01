@@ -195,7 +195,7 @@ class Apis {
   static const membershipInfo = "/membership/plan-data";
   static const blackFridayMembership = "/membership/black-friday-plans";
   static const christmasMembership = "/membership/christmas-plans";
-
+  static const newYearMembership = "/membership/new-year-plans";
   static const aiNewsList = "/latest-news-v2";
   static const notificationSettings = "/notification-settings";
   static const updateNotificationSettings = "/update-notification-setting";

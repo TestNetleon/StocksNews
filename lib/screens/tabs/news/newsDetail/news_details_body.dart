@@ -36,6 +36,7 @@ import '../../../../widgets/custom/update_error.dart';
 import '../../../../widgets/disclaimer_widget.dart';
 import '../../../../widgets/theme_button_small.dart';
 import '../../../auth/base/base_auth.dart';
+import '../../../auth/base/base_auth_email_bottom.dart';
 import '../../../auth/refer/refer_code.dart';
 import '../../../blogs/index.dart';
 import '../../../marketData/lock/common_lock.dart';
@@ -713,6 +714,7 @@ class _NewsDetailsBodyState extends State<NewsDetailsBody> {
                           ),
                         ),
                         BaseAuth(),
+                        BaseAuthEmail(),
                       ],
                     ),
                     // Positioned(

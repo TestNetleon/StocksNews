@@ -107,7 +107,8 @@ class _SdMorningStarLockState extends State<SdMorningStarLock> {
             builder: (context) => const BlackFridayMembershipIndex(),
           ),
         );
-      } else if (provider.user?.christmasMembership == true) {
+      } else if (provider.user?.christmasMembership == true ||
+          provider.user?.newYearMembership == true) {
         Navigator.push(
           navigatorKey.currentContext!,
           createRoute(

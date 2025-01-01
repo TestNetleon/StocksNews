@@ -263,7 +263,8 @@ class _HomeSplashState extends State<HomeSplash> {
               ),
             ),
           );
-        } else if (extra?.christmasMembership == true) {
+        } else if (extra?.christmasMembership == true ||
+            extra?.newYearMembership == true) {
           Navigator.push(
             navigatorKey.currentContext!,
             createRoute(

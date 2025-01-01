@@ -133,10 +133,14 @@ class Extra {
   final bool? showRewards;
   final bool? showAnalysis;
   final UpdateYourPhoneRes? updateYourPhone;
+  final UpdateYourPhoneRes? updateYourEmail;
+
   final bool? showArena;
   final bool? showTradingSimulator;
   final bool? showBlackFriday;
   final bool? christmasMembership;
+  final bool? newYearMembership;
+
   final BlackFridayRes? blackFriday;
   final List<MembershipRes>? activeMembership;
 
@@ -147,9 +151,11 @@ class Extra {
     this.blackFriday,
     this.showBlackFriday,
     this.christmasMembership,
+    this.newYearMembership,
     this.showArena,
     this.showTradingSimulator,
     this.updateYourPhone,
+    this.updateYourEmail,
     this.showRewards,
     this.adManagers,
     this.adManager,
@@ -246,6 +252,8 @@ class Extra {
 
         showBlackFriday: json['black_friday_membership'],
         christmasMembership: json['christmas_membership'],
+        newYearMembership: json['new_year_membership'],
+
         blackFriday: json["black_friday"] == null
             ? null
             : BlackFridayRes.fromJson(json["black_friday"]),
@@ -255,6 +263,11 @@ class Extra {
         updateYourPhone: json["update_your_phone_no"] == null
             ? null
             : UpdateYourPhoneRes.fromJson(json["update_your_phone_no"]),
+
+        updateYourEmail: json["update_your_email_address"] == null
+            ? null
+            : UpdateYourPhoneRes.fromJson(json["update_your_email_address"]),
+
         recommendation: json["recommendation"],
         showRewards: json['show_rewards'],
         showAnalysis: json['show_analysis'],
@@ -412,6 +425,7 @@ class Extra {
   Map<String, dynamic> toJson() => {
         'black_friday_membership': showBlackFriday,
         'christmas_membership': christmasMembership,
+        'new_year_membership': newYearMembership,
         "black_friday": blackFriday?.toJson(),
         "ad_managers": adManagers?.toJson(),
         "phone_code_error": phoneCodeError,
@@ -437,6 +451,7 @@ class Extra {
         "show_morningstar": showMorningstar,
         "recommendation": recommendation,
         "update_your_phone_no": updateYourPhone?.toJson(),
+        "update_your_email_address": updateYourEmail?.toJson(),
         "verify_membership_text": verifySubscription,
         "self_rank": selfRank,
         "earn_condition": earnCondition,
