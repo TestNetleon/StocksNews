@@ -86,21 +86,21 @@ class SuccessTradeSheet extends StatelessWidget {
                 const SpacerVertical(height: 10),
                 Text(
                   buy
-                      ? "${order?.shares?.toCurrency()} ${order?.symbol} Purchased."
-                      : "${order?.shares?.toCurrency()} ${order?.symbol} Sold.",
+                      ? "${order?.shares?.toCurrency()} ${order?.symbol} Purchased"
+                      : "${order?.shares?.toCurrency()} ${order?.symbol} Sold",
                   style: stylePTSansBold(
                     color: ThemeColors.white,
                     fontSize: 20,
                   ),
                 ),
-                const SpacerVertical(height: 10),
-                Text(
-                  "\$${order?.invested?.toCurrency()}",
-                  style: stylePTSansBold(
-                    color: ThemeColors.greyText,
-                    fontSize: 15,
-                  ),
-                ),
+                // const SpacerVertical(height: 10),
+                // Text(
+                //   "Total Invested: \$${order?.invested?.toCurrency()}",
+                //   style: stylePTSansBold(
+                //     color: ThemeColors.greyText,
+                //     fontSize: 15,
+                //   ),
+                // ),
               ],
             ),
             const SpacerVertical(height: 40),

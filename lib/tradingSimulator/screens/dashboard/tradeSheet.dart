@@ -2,13 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/tradingSimulator/screens/searchTradingTicker/index.dart';
-import 'package:stocks_news_new/tradingSimulator/screens/tradeBuySell/index.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
-import '../../../../../api/api_response.dart';
-import '../../../../../providers/stock_detail_new.dart';
 import '../../../../../utils/theme.dart';
+import '../../providers/trading_search_provider.dart';
 
 tradeSheet({String? symbol, bool doPop = true, qty}) {
   showModalBottomSheet(
@@ -30,35 +28,45 @@ class SearchTicker extends StatelessWidget {
 
   Future _onTap({String? symbol, bool buy = true}) async {
     try {
-      StockDetailProviderNew provider =
-          navigatorKey.currentContext!.read<StockDetailProviderNew>();
-
-      ApiResponse response = await provider.getTabData(
-        symbol: symbol,
-        showProgress: true,
-        startSSE: true,
-      );
-      if (response.status) {
-        // SummaryOrderNew order =
-        // await
-        Navigator.pushReplacement(
-          navigatorKey.currentContext!,
-          MaterialPageRoute(
-            builder: (context) => TradeBuySellIndex(
-              buy: buy,
-              doPop: doPop,
-              qty: qty,
-            ),
-          ),
-        );
-        // TradeProviderNew provider =
-        //     navigatorKey.currentContext!.read<TradeProviderNew>();
-        // buy ? provider.addOrderData(order) : provider.sellOrderData(order);
-        // await showTsOrderSuccessSheet(order, buy);
-      } else {}
+      TradingSearchProvider provider =
+          navigatorKey.currentContext!.read<TradingSearchProvider>();
+      if (symbol != null && symbol != '') {
+        provider.stockHolding(symbol, buy: buy);
+      }
     } catch (e) {
       //
     }
+
+    // try {
+    //   StockDetailProviderNew provider =
+    //       navigatorKey.currentContext!.read<StockDetailProviderNew>();
+
+    //   ApiResponse response = await provider.getTabData(
+    //     symbol: symbol,
+    //     showProgress: true,
+    //     startSSE: true,
+    //   );
+    //   if (response.status) {
+    //     // SummaryOrderNew order =
+    //     // await
+    //     Navigator.pushReplacement(
+    //       navigatorKey.currentContext!,
+    //       MaterialPageRoute(
+    //         builder: (context) => TradeBuySellIndex(
+    //           buy: buy,
+    //           doPop: doPop,
+    //           qty: qty,
+    //         ),
+    //       ),
+    //     );
+    //     // TradeProviderNew provider =
+    //     //     navigatorKey.currentContext!.read<TradeProviderNew>();
+    //     // buy ? provider.addOrderData(order) : provider.sellOrderData(order);
+    //     // await showTsOrderSuccessSheet(order, buy);
+    //   } else {}
+    // } catch (e) {
+    //   //
+    // }
   }
 
   // Future _showSheet(SummaryOrderNew? order, bool buy) async {

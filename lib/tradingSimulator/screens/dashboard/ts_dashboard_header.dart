@@ -8,10 +8,6 @@ import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
-import 'package:stocks_news_new/widgets/theme_button_small.dart';
-
-import '../../providers/trade_provider.dart';
-import '../searchTradingTicker/index.dart';
 
 class TsDashboardHeader extends StatefulWidget {
   const TsDashboardHeader({super.key});
@@ -34,13 +30,13 @@ class _TsDashboardHeaderState extends State<TsDashboardHeader> {
     TsPortfolioProvider provider = context.read<TsPortfolioProvider>();
     orderProvider.setStatus(Status.ideal);
     await provider.getDashboardData();
-    orderProvider.getData();
+    // orderProvider.getData();
   }
 
   @override
   Widget build(BuildContext context) {
-    // TsPortfolioProvider provider = context.watch<TsPortfolioProvider>();
-    TradeProviderNew tradeProvider = context.watch<TradeProviderNew>();
+    TsPortfolioProvider provider = context.watch<TsPortfolioProvider>();
+    // TradeProviderNew tradeProvider = context.watch<TradeProviderNew>();
     return Container(
       padding: const EdgeInsets.all(10),
       margin: EdgeInsets.only(bottom: 20),
@@ -63,7 +59,7 @@ class _TsDashboardHeaderState extends State<TsDashboardHeader> {
         child: Padding(
           padding: const EdgeInsets.symmetric(
             horizontal: 15,
-            vertical: 15,
+            vertical: 30,
           ),
           child: Column(
             children: [
@@ -76,8 +72,8 @@ class _TsDashboardHeaderState extends State<TsDashboardHeader> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "\$${formatBalance(num.parse(tradeProvider.data.availableBalance.toCurrency()))}",
-                          // "\$${formatBalance(provider.userData?.tradeBalance ?? 0)}",
+                          // "\$${formatBalance(num.parse(tradeProvider.data.availableBalance.toCurrency()))}",
+                          "\$${formatBalance(provider.userData?.tradeBalance ?? 0)}",
                           style: styleGeorgiaBold(fontSize: 25),
                         ),
                         const SpacerVertical(height: 5),
@@ -97,9 +93,7 @@ class _TsDashboardHeaderState extends State<TsDashboardHeader> {
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                         Text(
-                          // "\$${provider.data.invested.toCurrency()}",
-                          // "\$${formatBalance(userProvider.userData?.tradeBalance ?? 0)}",
-                          "\$${formatBalance(tradeProvider.data.invested)}",
+                          "\$${formatBalance(provider.userData?.currentPositionAmount ?? 0)}",
                           style: styleGeorgiaBold(fontSize: 25),
                         ),
                         const SpacerVertical(height: 5),
@@ -113,27 +107,56 @@ class _TsDashboardHeaderState extends State<TsDashboardHeader> {
                   ),
                 ],
               ),
-              const SpacerVertical(height: 30),
-              ThemeButtonSmall(
-                textSize: 17,
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 15,
-                  vertical: 5,
-                ),
-                // onPressed: tradeSheet,
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => SearchTradingTicker(),
-                    ),
-                  );
-                },
-                text: "Place New Virtual Trade",
-                color: const Color.fromARGB(255, 194, 216, 51),
-                icon: Icons.arrow_outward_outlined,
-                textColor: ThemeColors.background,
+              // const SpacerVertical(height: 10),
+              Divider(
+                color: ThemeColors.greyBorder,
+                height: 20,
               ),
+
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Flexible(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "\$${formatBalance(provider.userData?.invested ?? 0)}",
+                          style: styleGeorgiaBold(fontSize: 25),
+                        ),
+                        const SpacerVertical(height: 5),
+                        Text(
+                          "Invested Amount",
+                          style: stylePTSansRegular(
+                            fontSize: 15,
+                            color: ThemeColors.greyText,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SpacerHorizontal(width: 10),
+                  Flexible(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Text(
+                          "\$${formatBalance(provider.userData?.invested ?? 0)}",
+                          style: styleGeorgiaBold(fontSize: 25),
+                        ),
+                        const SpacerVertical(height: 5),
+                        Text(
+                          "Market Value",
+                          style: stylePTSansRegular(
+                              fontSize: 15, color: ThemeColors.greyText),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              // const SpacerVertical(height: 30),
             ],
           ),
         ),

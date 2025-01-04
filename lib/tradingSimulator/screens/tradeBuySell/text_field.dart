@@ -33,7 +33,9 @@ class TextfieldTrade extends StatelessWidget {
             SingleDotInputFormatter(),
             // FilteringTextInputFormatter.digitsOnly,
           ],
-          keyboardType: const TextInputType.numberWithOptions(decimal: true),
+          // keyboardType: const TextInputType.numberWithOptions(decimal: true),
+          keyboardType: TextInputType.number,
+
           controller: controller,
           onChanged: (text) {
             change(text);

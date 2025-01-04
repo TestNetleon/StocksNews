@@ -8,40 +8,43 @@ String tsOpenListResToJson(List<TsOpenListRes> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class TsOpenListRes {
-  final dynamic symbol;
-  final dynamic quantity;
-  final dynamic price;
-  final dynamic currentPrice;
-  final dynamic invested;
-  final dynamic currentAmountOfShare;
-  final dynamic percentChangeLoss;
-  final dynamic image;
-  final dynamic change;
-  final dynamic changesPercentage;
-  final dynamic company;
+  final String? symbol;
+  final num? quantity;
+  num? currentPrice;
+  final num? invested;
+  num? currentInvested;
+  num? investedChange;
+  num? investedChangePercentage;
+  final String? image;
+  num? change;
+  num? changesPercentage;
+  final String? company;
+  final String? avgPrice;
 
   TsOpenListRes({
-    required this.symbol,
-    required this.quantity,
-    required this.price,
-    required this.currentPrice,
-    required this.invested,
-    required this.currentAmountOfShare,
-    required this.percentChangeLoss,
-    required this.image,
-    required this.change,
-    required this.changesPercentage,
-    required this.company,
+    this.symbol,
+    this.quantity,
+    this.currentPrice,
+    this.invested,
+    this.currentInvested,
+    this.investedChange,
+    this.investedChangePercentage,
+    this.image,
+    this.change,
+    this.changesPercentage,
+    this.company,
+    this.avgPrice,
   });
 
   factory TsOpenListRes.fromJson(Map<String, dynamic> json) => TsOpenListRes(
         symbol: json["symbol"],
+        avgPrice: json['average_price'],
         quantity: json["quantity"],
-        price: json["price"],
         currentPrice: json["currentPrice"],
-        invested: json["invested"],
-        currentAmountOfShare: json["current_amount_of_share"],
-        percentChangeLoss: json["percent_change_loss"],
+        invested: json["total_invested"],
+        currentInvested: json['current_invested'],
+        investedChange: json['invested_change'],
+        investedChangePercentage: json['invested_change_percentage'],
         image: json["image"],
         change: json["change"],
         changesPercentage: json["changesPercentage"],
@@ -51,25 +54,15 @@ class TsOpenListRes {
   Map<String, dynamic> toJson() => {
         "symbol": symbol,
         "quantity": quantity,
-        "price": price,
         "currentPrice": currentPrice,
-        "invested": invested,
-        "current_amount_of_share": currentAmountOfShare,
-        "percent_change_loss": percentChangeLoss,
+        "total_invested": invested,
         "image": image,
         "change": change,
         "changesPercentage": changesPercentage,
         "company": company,
+        "average_price": avgPrice,
       };
 }
-
-
-
-
-
-
-
-
 
 // import 'dart:convert';
 

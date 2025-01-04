@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:stocks_news_new/tradingSimulator/providers/ts_portfollo_provider.dart';
 import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
 import '../../api/api_requester.dart';
 import '../../api/api_response.dart';
@@ -15,14 +16,10 @@ import '../../providers/user_provider.dart';
 class TradeProviderNew extends ChangeNotifier {
   List<SummaryOrderNew> orders = [];
 
-  UserBalanceDataNew data = UserBalanceDataNew(
-    availableBalance: 0,
-    invested: 0,
-  );
-
   void addOrderData(SummaryOrderNew? order) {
     Utils().showLog("------Buy order");
-
+    TsPortfolioProvider provider =
+        navigatorKey.currentContext!.read<TsPortfolioProvider>();
     try {
       if (order != null) {
         int existingOrderIndex =
@@ -34,7 +31,7 @@ class TradeProviderNew extends ChangeNotifier {
         num price = num.parse(cleanedString);
         num invested = order.isShare ? (price * shares) : dollars;
 
-        if (invested > data.availableBalance) {
+        if (invested > (provider.userData?.tradeBalance ?? 0)) {
           popUpAlert(
             message: "Insufficient available balance to place this order.",
             title: "Alert",
@@ -71,10 +68,15 @@ class TradeProviderNew extends ChangeNotifier {
           orders.add(order);
         }
 
-        data = UserBalanceDataNew(
-          availableBalance: data.availableBalance - invested,
-          invested: data.invested + invested,
-        );
+        // provider.updateBalance(
+        //   balance: (provider.userData?.tradeBalance ?? 0) - invested,
+        //   invested: (provider.userData?.invested ?? 0) + invested,
+        // );
+
+        // data = UserBalanceDataNew(
+        //   availableBalance: data.availableBalance - invested,
+        //   invested: data.invested + invested,
+        // );
       } else {
         Utils().showLog("ELSE: Received null order");
       }
@@ -85,13 +87,15 @@ class TradeProviderNew extends ChangeNotifier {
     }
   }
 
-  void addAmount(num amount) {
-    data.availableBalance = data.availableBalance + amount;
-    notifyListeners();
-  }
+  // void addAmount(num amount) {
+  //   data.availableBalance = data.availableBalance + amount;
+  //   notifyListeners();
+  // }
 
   void sellOrderData(SummaryOrderNew? order) {
     Utils().showLog("------Sell order");
+    // TsPortfolioProvider provider =
+    //     navigatorKey.currentContext!.read<TsPortfolioProvider>();
     try {
       if (order != null) {
         int existingOrderIndex =
@@ -128,18 +132,23 @@ class TradeProviderNew extends ChangeNotifier {
                 buy: order.buy);
           }
 
-          num sharesToSell = order.shares ?? 0;
-          num dollarsToSell = order.dollars ?? 0;
+          // num sharesToSell = order.shares ?? 0;
+          // num dollarsToSell = order.dollars ?? 0;
 
-          String cleanedString =
-              order.price?.replaceAll(RegExp(r'[^\d.]'), '') ?? "";
-          num price = num.parse(cleanedString);
-          num invested = order.isShare ? (price * sharesToSell) : dollarsToSell;
+          // String cleanedString =
+          //     order.price?.replaceAll(RegExp(r'[^\d.]'), '') ?? "";
+          // num price = num.parse(cleanedString);
+          // num invested = order.isShare ? (price * sharesToSell) : dollarsToSell;
 
-          data = UserBalanceDataNew(
-            availableBalance: data.availableBalance + invested,
-            invested: data.invested - invested,
-          );
+          // provider.updateBalance(
+          //   balance: (provider.userData?.tradeBalance ?? 0) + invested,
+          //   invested: (provider.userData?.invested ?? 0) - invested,
+          // );
+
+          // data = TsUserRes(
+          //   tradeBalance: data.availableBalance + invested,
+          //   invested: data.invested - invested,
+          // );
         } else {
           orders.add(order);
           Utils().showLog("Order not found for symbol: ${order.symbol}");
@@ -250,7 +259,7 @@ class TradeProviderNew extends ChangeNotifier {
     setStatusSearch(Status.loading);
     try {
       ApiResponse response = await apiRequest(
-        url: Apis.tsRequestBuy,
+        url: Apis.tsRequestTrade,
         request: request,
         showProgress: showProgress,
       );
@@ -276,8 +285,8 @@ class TradeProviderNew extends ChangeNotifier {
     setStatusSearch(Status.loading);
     try {
       ApiResponse response = await apiRequest(
-        url: Apis.tsRequestSell,
-        request: request,
+        url: Apis.tsRequestTrade,
+        formData: request,
         showProgress: showProgress,
       );
       setStatusSearch(Status.loaded);
@@ -316,15 +325,5 @@ class SummaryOrderNew {
     this.invested,
     required this.buy,
     this.isShare = false,
-  });
-}
-
-class UserBalanceDataNew {
-  num availableBalance;
-  num invested;
-
-  UserBalanceDataNew({
-    required this.availableBalance,
-    required this.invested,
   });
 }

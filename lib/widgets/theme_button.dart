@@ -19,6 +19,7 @@ class ThemeButton extends StatelessWidget {
     this.child,
     this.textAlign = TextAlign.center,
     this.textUppercase = false,
+    this.disabledBackgroundColor,
     super.key,
   });
 
@@ -34,6 +35,7 @@ class ThemeButton extends StatelessWidget {
   final TextAlign? textAlign;
   final Widget? child;
   final bool textUppercase;
+  final Color? disabledBackgroundColor;
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +44,8 @@ class ThemeButton extends StatelessWidget {
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
-          disabledBackgroundColor: ThemeColors.border,
+          disabledBackgroundColor:
+              disabledBackgroundColor ?? ThemeColors.border,
 
           backgroundColor: color,
           elevation: 0,

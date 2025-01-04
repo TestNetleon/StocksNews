@@ -123,6 +123,7 @@ import '../providers/trending_industries.dart';
 import '../screens/marketData/congressionalData/index.dart';
 import '../screens/marketData/lowPriceStocks/index.dart';
 import '../screens/whatWeDo/index.dart';
+import '../tradingSimulator/providers/ts_transaction_list.dart';
 
 class Routes {
   static var routes = {
@@ -559,7 +560,6 @@ class Routes {
       ChangeNotifierProvider(create: (_) => GapUpProvider()),
       ChangeNotifierProvider(create: (_) => GapDownProvider()),
       ChangeNotifierProvider(create: (_) => BlogProviderNew()),
-
       ChangeNotifierProvider(create: (_) => HighPeProvider()),
       ChangeNotifierProvider(create: (_) => LowPeProvider()),
       ChangeNotifierProvider(create: (_) => HighPeGrowthProvider()),
@@ -601,6 +601,7 @@ class Routes {
       ChangeNotifierProvider(create: (_) => TradesProvider()),
       ChangeNotifierProvider(create: (_) => BlackFridayProvider()),
       ChangeNotifierProvider(create: (_) => ChristmasProvider()),
+      ChangeNotifierProvider(create: (_) => TsTransactionListProvider()),
     ];
   }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:stocks_news_new/tradingSimulator/modals/ts_open_list_res.dart';
 import 'package:stocks_news_new/utils/colors.dart';
+import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
@@ -40,56 +41,47 @@ class TsOpenListItem extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Row(
-                        children: [
-                          Text(
-                            // item?.symbol ?? "",
-                            "${item?.company}",
-                            style: styleGeorgiaBold(fontSize: 18),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                          // SpacerHorizontal(width: 5),
-                          // Container(
-                          //   decoration: BoxDecoration(
-                          //     borderRadius: BorderRadius.circular(40),
-                          //     color: item?.orderType == 'buy'
-                          //         ? ThemeColors.accent
-                          //         : ThemeColors.sos,
-                          //   ),
-                          //   padding: EdgeInsets.symmetric(
-                          //       horizontal: 10, vertical: 2),
-                          //   child: Text(
-                          //     // item?.buy == true ? "Buy" : "Sell",
-                          //     item?.orderType ?? "",
-                          //     style: stylePTSansBold(fontSize: 12),
-                          //   ),
-                          // ),
-                        ],
+                      Visibility(
+                        visible: item?.company != null && item?.company != '',
+                        child: Text(
+                          "${item?.company}",
+                          style: styleGeorgiaBold(fontSize: 18),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
                       ),
                       const SpacerVertical(height: 5),
                       Row(
                         children: [
-                          Text(
-                            "Price: ${item?.currentPrice}",
-                            style: styleGeorgiaRegular(
-                              // color: ThemeColors.greyText,
-                              fontSize: 14,
+                          Visibility(
+                            visible: item?.currentPrice != null,
+                            child: Flexible(
+                              child: Text(
+                                "Price: ${item?.currentPrice?.toFormattedPrice()}",
+                                style: styleGeorgiaRegular(
+                                  // color: ThemeColors.greyText,
+                                  fontSize: 14,
+                                ),
+                                // maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                              ),
                             ),
-                            // maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
                           ),
-                          Text(
-                            " (${item?.changesPercentage})",
-                            style: styleGeorgiaRegular(
-                              color:
-                                  (item?.changesPercentage ?? "").contains("-")
+                          Visibility(
+                            visible: item?.change != null,
+                            child: Flexible(
+                              child: Text(
+                                "  ${item?.change?.toFormattedPrice()}",
+                                style: styleGeorgiaRegular(
+                                  color: (item?.change ?? 0) < 0
                                       ? Colors.red
                                       : Colors.green,
-                              fontSize: 14,
+                                  fontSize: 14,
+                                ),
+                                // maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                              ),
                             ),
-                            // maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
                           ),
                         ],
                       ),
@@ -100,154 +92,121 @@ class TsOpenListItem extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    Text(
-                      // "${item?.price}",
-                      "${item?.quantity} Qty",
-                      style: stylePTSansBold(fontSize: 18),
+                    Visibility(
+                      visible: item?.quantity != null,
+                      child: Text(
+                        "${item?.quantity} Qty",
+                        style: stylePTSansBold(fontSize: 18),
+                      ),
                     ),
-                    const SpacerVertical(height: 5),
-                    Text(
-                      // "${item?.price}",
-                      "Avg: ${item?.price}",
-                      style: stylePTSansRegular(fontSize: 14),
+                    Visibility(
+                      visible: item?.avgPrice != null && item?.avgPrice != '',
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 5),
+                        child: Text(
+                          "Avg: ${item?.avgPrice}",
+                          style: stylePTSansRegular(fontSize: 14),
+                        ),
+                      ),
                     ),
-                    // RichText(
-                    //   text: TextSpan(
-                    //     children: [
-                    //       TextSpan(
-                    //         text:
-                    //             // "${item?.change} (${item?.changePercentage?.toCurrency()}%)",
-                    //             "(${item?.percentChangeLoss})",
-                    //         style: stylePTSansRegular(
-                    //           fontSize: 14,
-                    //           color: item?.percentChangeLoss.contains('-')
-                    //               ? Colors.red
-                    //               : Colors.green,
-                    //         ),
-                    //       ),
-                    //     ],
-                    //   ),
-                    // ),
                   ],
                 )
               ],
             ),
-
             const Divider(color: ThemeColors.greyBorder, height: 10),
-
-            // const SpacerVertical(height: 5),
-            // Align(
-            //   alignment: Alignment.centerRight,
-            //   child: Row(
-            //     mainAxisAlignment: MainAxisAlignment.end,
-            //     children: [
-            //       const Icon(
-            //         Icons.cases_outlined,
-            //         size: 14,
-            //       ),
-            //       const SpacerHorizontal(width: 5),
-            //       Text(
-            //         "${item?.quantity ?? "N/A"} Qty",
-            //         style: stylePTSansRegular(fontSize: 14),
-            //         maxLines: 1,
-            //         overflow: TextOverflow.ellipsis,
-            //       ),
-            //     ],
-            //   ),
-            // ),
             const SpacerVertical(height: 5),
             Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Flexible(
-                  child: Column(
-                    children: [
-                      Text(
-                        "Invested",
-                        style: stylePTSansRegular(
-                          color: ThemeColors.greyText,
-                          fontSize: 13,
-                        ),
+                Visibility(
+                  visible: item?.invested != null,
+                  child: Expanded(
+                    child: Container(
+                      alignment: Alignment.centerLeft,
+                      padding: const EdgeInsets.only(right: 40),
+                      child: Column(
+                        children: [
+                          Text(
+                            "Invested",
+                            style: stylePTSansRegular(
+                              color: ThemeColors.greyText,
+                              fontSize: 13,
+                            ),
+                          ),
+                          const SpacerVertical(height: 3),
+                          Text(
+                            "${item?.invested?.toFormattedPrice()}",
+                            style: stylePTSansBold(
+                                color: ThemeColors.white, fontSize: 14),
+                          ),
+                        ],
                       ),
-                      const SpacerVertical(height: 3),
-                      Text(
-                        "${item?.invested}",
-                        style: stylePTSansBold(
-                            color: ThemeColors.white, fontSize: 14),
-                      ),
-                    ],
+                    ),
                   ),
                 ),
-                const SpacerHorizontal(width: 40),
-                Flexible(
-                  child: Column(
-                    children: [
-                      Text(
-                        "Current",
-                        style: stylePTSansRegular(
-                          color: ThemeColors.greyText,
-                          fontSize: 13,
-                        ),
+                Visibility(
+                  visible: item?.currentInvested != null,
+                  child: Expanded(
+                    child: Container(
+                      alignment: Alignment.centerRight,
+                      padding: const EdgeInsets.only(right: 40),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            "Current",
+                            style: stylePTSansRegular(
+                              color: ThemeColors.greyText,
+                              fontSize: 13,
+                            ),
+                          ),
+                          const SpacerVertical(height: 3),
+                          Text(
+                            "${item?.currentInvested?.toFormattedPrice() ?? 0}",
+                            style: stylePTSansBold(
+                                color: ThemeColors.white, fontSize: 14),
+                          ),
+                        ],
                       ),
-                      const SpacerVertical(height: 3),
-                      Text(
-                        "${item?.currentAmountOfShare}",
-                        style: stylePTSansBold(
-                            color: ThemeColors.white, fontSize: 14),
-                      ),
-                    ],
+                    ),
                   ),
                 ),
-                const SpacerHorizontal(width: 40),
-                Flexible(
-                  child: Column(
-                    children: [
-                      Text(
-                        "Change",
-                        style: stylePTSansRegular(
-                          color: ThemeColors.greyText,
-                          fontSize: 13,
-                        ),
+                Visibility(
+                  visible: item?.investedChange != null,
+                  child: Expanded(
+                    child: Align(
+                      alignment: Alignment.centerRight,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            textAlign: TextAlign.center,
+                            "Change",
+                            style: stylePTSansRegular(
+                              color: ThemeColors.greyText,
+                              fontSize: 13,
+                            ),
+                          ),
+                          const SpacerVertical(height: 3),
+                          Text(
+                            textAlign: TextAlign.center,
+                            item?.investedChange == 0
+                                ? '0'
+                                : "${item?.investedChange?.toFormattedPrice() ?? 0} (${item?.investedChangePercentage?.toCurrency() ?? 0}%)",
+                            style: stylePTSansBold(
+                              color: (item?.investedChange ?? 0) < 0
+                                  ? Colors.red
+                                  : Colors.green,
+                              fontSize: 14,
+                            ),
+                          ),
+                        ],
                       ),
-                      const SpacerVertical(height: 3),
-                      Text(
-                        "${item?.percentChangeLoss}",
-                        style: stylePTSansBold(
-                          color: (item?.percentChangeLoss ?? "").contains("-")
-                              ? Colors.red
-                              : Colors.green,
-                          fontSize: 14,
-                        ),
-                      ),
-                    ],
+                    ),
                   ),
                 ),
               ],
             ),
-            // // Text(
-            // //   "QTY: ${order?.shares ?? "N/A"}",
-            // //   style: styleGeorgiaBold(fontSize: 15),
-            // //   maxLines: 1,
-            // //   overflow: TextOverflow.ellipsis,
-            // // ),
-            // // const SpacerVertical(height: 5),
-            // // Text(
-            // //   order?.invested == null
-            // //       ? "Invested: ${order?.invested?.toCurrency() ?? "N/A"}"
-            // //       : "Invested: \$${order?.invested?.toCurrency() ?? "N/A"}",
-            // //   style: styleGeorgiaBold(fontSize: 15),
-            // //   maxLines: 1,
-            // //   overflow: TextOverflow.ellipsis,
-            // // ),
-            // const SpacerVertical(height: 10),
-            // Align(
-            //   alignment: Alignment.centerRight,
-            //   child: Text(
-            //     DateFormat().format(DateTime.now()),
-            //     style: stylePTSansRegular(
-            //         fontSize: 13, color: ThemeColors.greyText),
-            //     overflow: TextOverflow.ellipsis,
-            //   ),
-            // ),
           ],
         ),
       ),

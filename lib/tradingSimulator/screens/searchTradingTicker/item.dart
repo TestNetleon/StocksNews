@@ -22,9 +22,8 @@ class SdTradeDefaultItem extends StatelessWidget {
   });
 
   Future _onTap({String? symbol}) async {
+    tradeSheet(symbol: symbol);
     try {
-      tradeSheet(symbol: symbol);
-
       // StockDetailProviderNew provider =
       //     navigatorKey.currentContext!.read<StockDetailProviderNew>();
 

@@ -1,9 +1,9 @@
 import 'dart:async';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/modals/stock_details_res.dart';
-import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/stock_detail_new.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
@@ -62,7 +62,7 @@ class _BuySellContainerState extends State<BuySellContainer> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       focusNode.requestFocus();
       _availableBalance =
-          context.read<TradeProviderNew>().data.availableBalance;
+          context.read<TsPortfolioProvider>().userData?.tradeBalance ?? 0;
     });
   }
 
@@ -72,7 +72,7 @@ class _BuySellContainerState extends State<BuySellContainer> {
     limitController.clear();
     targetController.clear();
     stopLossController.clear();
-    SSEManager().disconnectAll();
+    SSEManager.instance.disconnectScreen(SimulatorEnum.detail);
     super.dispose();
   }
 
@@ -84,7 +84,7 @@ class _BuySellContainerState extends State<BuySellContainer> {
     StockDetailProviderNew provider = context.read<StockDetailProviderNew>();
     KeyStats? keyStats = provider.tabRes?.keyStats;
 
-    if (keyStats?.marketStatus?.toLowerCase().contains("closed") ?? false) {
+    if (keyStats?.tradeMarketStatus == false) {
       popUpAlert(
         title: "Confirm Order",
         message:
@@ -104,6 +104,7 @@ class _BuySellContainerState extends State<BuySellContainer> {
   _onContinue({bool isPending = false}) async {
     StockDetailProviderNew provider = context.read<StockDetailProviderNew>();
     TradeProviderNew tradeProviderNew = context.read<TradeProviderNew>();
+    TsPortfolioProvider portfolioProvider = context.read<TsPortfolioProvider>();
 
     String cleanedString =
         provider.tabRes?.keyStats?.price?.replaceAll(RegExp(r'[^\d.]'), '') ??
@@ -124,7 +125,7 @@ class _BuySellContainerState extends State<BuySellContainer> {
     }
 
     if (widget.buy) {
-      if (invested > tradeProviderNew.data.availableBalance) {
+      if (invested > (portfolioProvider.userData?.tradeBalance ?? 0)) {
         popUpAlert(
           message: "Insufficient available balance to place this order.",
           title: "Alert",
@@ -136,30 +137,32 @@ class _BuySellContainerState extends State<BuySellContainer> {
           "token":
               navigatorKey.currentContext!.read<UserProvider>().user?.token ??
                   "",
-          "trade_type": "buy",
+          "action": "BUY",
           "symbol": provider.tabRes?.keyStats?.symbol,
-          "current_price": provider.tabRes?.keyStats?.price
-                  ?.replaceAll(RegExp(r'[^\d.]'), '') ??
-              "",
-          "type": _selectedSegment == TypeTrade.shares
-              ? "1"
-              : "2", // 1 = share , 2 = amount
           "quantity": controller.text, //entered value
-          "image": provider.tabRes?.companyInfo?.image, //entered value
+          "order_type": 'MARKET_ORDER',
+          "duration": "GOOD_UNTIL_CANCELLED"
+          // "current_price": provider.tabRes?.keyStats?.price
+          //         ?.replaceAll(RegExp(r'[^\d.]'), '') ??
+          //     "",
+          // "type": _selectedSegment == TypeTrade.shares
+          //     ? "1"
+          //     : "2", // 1 = share , 2 = amount
+          // "image": provider.tabRes?.companyInfo?.image, //entered value
         };
 
         // Conditionally add optional parameters if they have values
-        if (limitController.text.isNotEmpty) {
-          request["limit_order"] = limitController.text;
-        }
+        // if (limitController.text.isNotEmpty) {
+        //   request["limit_order"] = limitController.text;
+        // }
 
-        if (targetController.text.isNotEmpty) {
-          request["target_price"] = targetController.text;
-        }
+        // if (targetController.text.isNotEmpty) {
+        //   request["target_price"] = targetController.text;
+        // }
 
-        if (stopLossController.text.isNotEmpty) {
-          request["stop_loss"] = stopLossController.text;
-        }
+        // if (stopLossController.text.isNotEmpty) {
+        //   request["stop_loss"] = stopLossController.text;
+        // }
 
         ApiResponse response =
             await tradeProviderNew.requestBuyShare(request, showProgress: true);
@@ -186,8 +189,8 @@ class _BuySellContainerState extends State<BuySellContainer> {
             invested: invested,
             buy: widget.buy,
           );
-          Navigator.pop(context);
-          Navigator.pop(context);
+          // Navigator.pop(context);
+          // Navigator.pop(context);
           Navigator.popUntil(
               navigatorKey.currentContext!, (route) => route.isFirst);
           Navigator.push(
@@ -327,53 +330,29 @@ class _BuySellContainerState extends State<BuySellContainer> {
         }
       }
     } else {
-      // int existingOrderIndex = tradeProviderNew.orders
-      //     .indexWhere((o) => o.symbol == provider.tabRes?.keyStats?.symbol);
-      // if (existingOrderIndex < 0) {
-      //   Utils().showLog("$existingOrderIndex");
-      //   popUpAlert(
-      //       message:
-      //           "You have not bought any shares of ${provider.tabRes?.keyStats?.symbol}. ",
-      //       title: "Alert");
-      //   return;
-      // }
-      // try {
-      //   SummaryOrderNew existingOrder =
-      //       tradeProviderNew.orders[existingOrderIndex];
-      //   num existingInvested = existingOrder.invested ?? 0;
-      //   num newInvested = invested;
-      //   if (newInvested > existingInvested) {
-      //     popUpAlert(
-      //       message: "Attempted to sell more investment than available.",
-      //       title: "Alert",
-      //     );
-      //     return;
-      //   }
-      // } catch (e) {
-      //   //
-      // }
-
-      final request = {
+      FormData request = FormData.fromMap({
         "token":
             navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
-        "trade_type": "sell",
+        "action": "SELL",
         "symbol": provider.tabRes?.keyStats?.symbol,
-        "current_price": provider.tabRes?.keyStats?.price
-                ?.replaceAll(RegExp(r'[^\d.]'), '') ??
-            "",
-        "type": _selectedSegment == TypeTrade.shares
-            ? "1"
-            : "2", // 1 = share , 2 = amount
+        "order_type": 'MARKET_ORDER',
+        "duration": "GOOD_UNTIL_CANCELLED",
+        // "current_price": provider.tabRes?.keyStats?.price
+        //         ?.replaceAll(RegExp(r'[^\d.]'), '') ??
+        //     "",
+        // "type": _selectedSegment == TypeTrade.shares
+        //     ? "1"
+        //     : "2", // 1 = share , 2 = amount
         "quantity": controller.text, //entered value
-        "image": provider.tabRes?.companyInfo?.image, //entered value
-      };
+        // "image": provider.tabRes?.companyInfo?.image, //entered value
+      });
 
       ApiResponse response =
           await tradeProviderNew.requestSellShare(request, showProgress: true);
       Utils().showLog('~~~~~${response.status}~~~~');
 
       if (response.status) {
-        context.read<HomeProvider>().getHomeSlider();
+        // context.read<HomeProvider>().getHomeSlider();
         context.read<TsOpenListProvider>().getData();
         final order = SummaryOrderNew(
           isShare: _selectedSegment == TypeTrade.shares,
@@ -471,13 +450,18 @@ class _BuySellContainerState extends State<BuySellContainer> {
   Widget _newMethod() {
     StockDetailProviderNew stockDetailProviderNew =
         context.read<StockDetailProviderNew>();
+
+    TsPortfolioProvider portfolioProvider = context.read<TsPortfolioProvider>();
+
     String cleanedString = stockDetailProviderNew.tabRes?.keyStats?.price
             ?.replaceAll(RegExp(r'[^\d.]'), '') ??
-        "";
-    num price = num.parse(cleanedString);
+        "0";
+    num price = num.tryParse(cleanedString) ?? 0;
+
+    num parsedCurrentText = num.tryParse(_currentText) ?? 0;
     num invested = _selectedSegment == TypeTrade.shares
-        ? price * num.parse(_currentText)
-        : num.parse(_currentText);
+        ? price * parsedCurrentText
+        : parsedCurrentText;
 
     return Container(
       padding: const EdgeInsets.all(10),
@@ -498,8 +482,9 @@ class _BuySellContainerState extends State<BuySellContainer> {
                     style: stylePTSansBold(fontSize: 14),
                     children: [
                       TextSpan(
-                        text:
-                            "\$${formatBalance(num.parse(context.read<TradeProviderNew>().data.availableBalance.toCurrency()))}",
+                        text: portfolioProvider.userData?.tradeBalance != null
+                            ? "\$${formatBalance(num.parse(portfolioProvider.userData!.tradeBalance.toCurrency()))}"
+                            : '\$0',
                         style: stylePTSansRegular(fontSize: 14),
                       ),
                     ],
@@ -522,17 +507,37 @@ class _BuySellContainerState extends State<BuySellContainer> {
             ],
           ),
           const SpacerVertical(),
+          // ThemeButton(
+          //   text: widget.buy ? "Proceed Buy Order" : "Proceed Sell Order",
+          //   color: widget.buy
+          //       ? (invested > _availableBalance || invested == 0)
+          //           ? ThemeColors.greyText
+          //           : ThemeColors.accent
+          //       : (invested > _availableBalance || invested == 0)
+          //           ? ThemeColors.greyText
+          //           : ThemeColors.sos,
+          //   onPressed: (invested > _availableBalance || invested == 0)
+          //       ? () {}
+          //       : _onTap,
+          // ),
           ThemeButton(
+            disabledBackgroundColor: ThemeColors.greyBorder,
             text: widget.buy ? "Proceed Buy Order" : "Proceed Sell Order",
             color: widget.buy
                 ? (invested > _availableBalance || invested == 0)
                     ? ThemeColors.greyText
                     : ThemeColors.accent
-                : (invested > _availableBalance || invested == 0)
+                : (invested > _availableBalance ||
+                        invested == 0 ||
+                        num.parse(controller.text) > widget.qty)
                     ? ThemeColors.greyText
                     : ThemeColors.sos,
-            onPressed: (invested > _availableBalance || invested == 0)
-                ? () {}
+            onPressed: (widget.buy
+                    ? (invested > _availableBalance || invested == 0)
+                    : (invested > _availableBalance ||
+                        invested == 0 ||
+                        num.parse(controller.text) > widget.qty))
+                ? null
                 : _onTap,
           ),
         ],
@@ -551,66 +556,7 @@ class _BuySellContainerState extends State<BuySellContainer> {
               child: Column(
                 children: [
                   const SdCommonHeading(),
-                  // ClipRRect(
-                  //   borderRadius: BorderRadius.circular(10),
-                  //   child: CupertinoSlidingSegmentedControl<TypeTrade>(
-                  //     backgroundColor: ThemeColors.greyBorder.withOpacity(0.4),
-                  //     thumbColor:
-                  //         widget.buy ? ThemeColors.accent : ThemeColors.sos,
-                  //     groupValue: _selectedSegment,
-                  //     onValueChanged: (TypeTrade? value) {
-                  //       if (value != null) {
-                  //         setState(() {
-                  //           _selectedSegment = value;
-                  //         });
-                  //         _clear();
-                  //       }
-                  //     },
-                  //     children: <TypeTrade, Widget>{
-                  //       TypeTrade.shares: Container(
-                  //         padding: const EdgeInsets.symmetric(horizontal: 20),
-                  //         child: Text(
-                  //           widget.buy ? 'Buy in Shares' : 'Sell in Shares',
-                  //           style: styleGeorgiaBold(),
-                  //         ),
-                  //       ),
-                  //       TypeTrade.dollar: Padding(
-                  //         padding: const EdgeInsets.symmetric(horizontal: 20),
-                  //         child: Text(
-                  //           widget.buy ? 'Buy in Dollars' : 'Sell in Dollars',
-                  //           style: styleGeorgiaBold(),
-                  //         ),
-                  //       ),
-                  //     },
-                  //   ),
-                  // ),
 
-                  Align(
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(10),
-                      child: Container(
-                        color: ThemeColors.greyBorder.withValues(alpha: 0.4),
-                        child: Center(
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 15, vertical: 5),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: widget.buy
-                                  ? ThemeColors.accent
-                                  : ThemeColors.sos,
-                            ),
-                            child: Text(
-                              widget.buy ? 'Buy in Shares' : 'Sell in Shares',
-                              style: styleGeorgiaBold(),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-
-                  const SpacerVertical(),
                   TextfieldTrade(
                     controller: controller,
                     focusNode: focusNode,
@@ -621,6 +567,10 @@ class _BuySellContainerState extends State<BuySellContainer> {
                     change: _onChange,
                     counter: _keyCounter,
                     lastEntered: _lastEntered,
+                  ),
+                  Text(
+                    'Enter number of shares',
+                    style: styleGeorgiaRegular(color: ThemeColors.greyText),
                   ),
                   // AnimatedInput(
                   //   controller: controller,
@@ -634,65 +584,6 @@ class _BuySellContainerState extends State<BuySellContainer> {
                       ),
                     ),
                   SpacerVertical(),
-                  // Row(
-                  //   mainAxisAlignment: MainAxisAlignment.center,
-                  //   children: [
-                  //     ThemeCheckbox(
-                  //       value: _limitOrder,
-                  //       onChanged: (value) {
-                  //         setState(() {
-                  //           _limitOrder = value;
-                  //         });
-                  //       },
-                  //       color: ThemeColors.themeGreen,
-                  //       label: "Limit Order",
-                  //     ),
-                  //     const SpacerHorizontal(),
-                  //     ThemeCheckbox(
-                  //       value: _bracketOrder,
-                  //       onChanged: (value) {
-                  //         setState(() {
-                  //           _bracketOrder = !_bracketOrder;
-                  //         });
-                  //       },
-                  //       color: ThemeColors.themeGreen,
-                  //       label: "Bracket Order",
-                  //     ),
-                  //   ],
-                  // ),
-                  // Column(
-                  //   children: [
-                  //     SpacerVertical(),
-                  //     if (_limitOrder == true)
-                  //       ThemeInputField(
-                  //         controller: limitController,
-                  //         placeholder: "Enter price to limit order",
-                  //         keyboardType: TextInputType.number,
-                  //       ),
-                  //     if (_limitOrder == true) SpacerVertical(),
-                  //     if (_bracketOrder == true)
-                  //       Row(
-                  //         children: [
-                  //           Expanded(
-                  //             child: ThemeInputField(
-                  //               controller: targetController,
-                  //               placeholder: "Enter target price",
-                  //               keyboardType: TextInputType.number,
-                  //               inputFormatters: [priceFormatter],
-                  //             ),
-                  //           ),
-                  //           const SpacerHorizontal(width: 12),
-                  //           Expanded(
-                  //             child: ThemeInputField(
-                  //               controller: stopLossController,
-                  //               keyboardType: TextInputType.number,
-                  //               placeholder: "Enter stop loss",
-                  //             ),
-                  //           ),
-                  //         ],
-                  //       ),
-                  //   ],
-                  // )
                 ],
               ),
             ),

@@ -515,7 +515,67 @@ extension CurrencyFormat on num {
 
     return result;
   }
+
+  // String toFormattedPrice() {
+  //   // Format the number with commas
+  //   String formatted = abs().toStringAsFixed(2);
+  //   // String formatted = abs().toString();
+
+  //   formatted = formatted.replaceAll(RegExp(r'\.0+$'), '');
+
+  //   formatted = formatted.replaceAll(RegExp(r'(?<=\d)(?=(\d{3})+\.)'), ',');
+
+  //   if (this < 0) {
+  //     return '-\$$formatted';
+  //   } else {
+  //     return '\$$formatted';
+  //   }
+  // }
+
+  String toFormattedPrice() {
+    // Format the number with two decimal places
+    String formatted = abs().toStringAsFixed(2);
+
+    // Remove unnecessary trailing zeroes after the decimal point
+    formatted = formatted.replaceAll(RegExp(r'\.0+$'), '');
+
+    // Add commas to the integer part
+    formatted = formatted.replaceAll(RegExp(r'(?<=\d)(?=(\d{3})+(?!\d))'), ',');
+
+    // Format the price with a negative sign if the number is negative
+    if (this < 0) {
+      return '-\$$formatted';
+    } else {
+      return '\$$formatted';
+    }
+  }
+
+  // String formatPrice() {
+  //   if (this == 0) return '0';
+  //   // Format the number to have exactly 3 decimal places
+  //   String result = abs().toStringAsFixed(3);
+  //   Utils().showLog('Value got: $result');
+  //   // If the number is an integer (no decimals), remove the decimal point part
+  //   if (result.endsWith('.000')) {
+  //     result = result.substring(0, result.length - 4); // Remove ".000"
+  //   }
+  //   // Add commas to the integer part of the number
+  //   List<String> parts = result.split('.');
+  //   parts[0] = parts[0].replaceAllMapped(
+  //       RegExp(r'(\d)(?=(\d{3})+(?!\d))'), (match) => '${match[1]},');
+  //   result = parts.join('.');
+  //   // Handle negative numbers by adding a negative sign
+  //   if (this < 0) {
+  //     result = '-\$$result';
+  //   } else {
+  //     result = '\$$result';
+  //   }
+  //   Utils().showLog('Result: $result');
+  //   return result;
+  // }
 }
+
+extension PriceFormatting on num {}
 
 enum DeeplinkEnum {
   blogDetail,
@@ -547,6 +607,8 @@ enum DeeplinkEnum {
   stocks,
   outsider,
 }
+
+enum SimulatorEnum { open, pending, transaction, detail }
 
 DeeplinkEnum containsSpecificPath(Uri uri) {
   Utils().showLog("-----contain path * $uri");

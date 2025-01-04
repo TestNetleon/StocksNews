@@ -3,10 +3,14 @@ import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/tradingSimulator/screens/dashboard/open/index.dart';
 import 'package:stocks_news_new/tradingSimulator/screens/dashboard/pending/index.dart';
 import 'package:stocks_news_new/tradingSimulator/screens/dashboard/ts_dashboard_header.dart';
-import 'package:stocks_news_new/tradingSimulator/widgets/ts_error_widget.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/custom_tab_container.dart';
+import 'package:stocks_news_new/widgets/theme_button.dart';
+import '../../../utils/colors.dart';
+import '../../manager/sse.dart';
+import '../searchTradingTicker/index.dart';
+import 'transactions/index.dart';
 
 class TsDashboard extends StatelessWidget {
   final int initialIndex;
@@ -17,35 +21,61 @@ class TsDashboard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BaseContainer(
-      appBar: const AppBarHome(
-        isPopBack: true,
-        canSearch: false,
-        showTrailing: false,
-        showPortfolio: true,
-        title: "Virtual Trading Account",
-      ),
-      body: Padding(
-        padding: EdgeInsets.fromLTRB(Dimen.padding, 0, Dimen.padding, 0),
-        child: Column(
-          children: [
-            TsDashboardHeader(),
-            Expanded(
-              child: CommonTabContainer(
-                initialIndex: initialIndex,
-                scrollable: false,
-                tabPaddingNew: false,
-                physics: const NeverScrollableScrollPhysics(),
-                tabs: const ["Open", "Pending", "Transactions"],
-                widgets: const [
-                  TsOpenList(),
-                  TsPendingList(),
-                  // SummaryErrorWidget(title: "No pending orders"),
-                  SummaryErrorWidget(title: "No transactions"),
-                ],
+    return PopScope(
+      onPopInvokedWithResult: (didPop, result) {
+        SSEManager.instance.disconnectAllScreens();
+      },
+      child: BaseContainer(
+        appBar: const AppBarHome(
+          isPopBack: true,
+          canSearch: false,
+          showTrailing: false,
+          showPortfolio: false,
+          title: "Virtual Trading Account",
+        ),
+        body: Padding(
+          padding: EdgeInsets.fromLTRB(Dimen.padding, 0, Dimen.padding, 0),
+          child: Column(
+            children: [
+              TsDashboardHeader(),
+              Expanded(
+                child: CommonTabContainer(
+                  initialIndex: initialIndex,
+                  scrollable: false,
+                  tabPaddingNew: false,
+                  physics: const NeverScrollableScrollPhysics(),
+                  tabs: const ["Open", "Pending", "Transactions"],
+                  widgets: const [
+                    TsOpenList(),
+                    TsPendingList(),
+                    // SummaryErrorWidget(title: "No pending orders"),
+                    // SummaryErrorWidget(title: "No transactions"),
+                    TsTransactionList(),
+                  ],
+                ),
               ),
-            ),
-          ],
+              ThemeButton(
+                textSize: 17,
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 15,
+                  vertical: 5,
+                ),
+                // onPressed: tradeSheet,
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => SearchTradingTicker(),
+                    ),
+                  );
+                },
+                text: "Place New Virtual Trade",
+                color: const Color.fromARGB(255, 194, 216, 51),
+                // icon: Icons.arrow_outward_outlined,
+                textColor: ThemeColors.background,
+              ),
+            ],
+          ),
         ),
       ),
     );

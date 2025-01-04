@@ -35,6 +35,16 @@ class TsPortfolioProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  // void updateBalance({num? balance, num? invested}) {
+  //   if (balance != null) {
+  //     _userData?.tradeBalance = balance;
+  //   }
+  //   if (invested != null) {
+  //     _userData?.invested = invested;
+  //   }
+  //   notifyListeners();
+  // }
+
   Future getData() async {
     setStatus(Status.loading);
     try {
@@ -81,7 +91,7 @@ class TsPortfolioProvider extends ChangeNotifier {
       );
       if (response.status) {
         _userData = tsUserResFromJson(jsonEncode(response.data));
-        _userData?.tradeBalance = 100;
+        // _userData?.tradeBalance = 100;
         // _extra = (response.extra is Extra ? response.extra as Extra : null);
         _error = null;
       } else {

@@ -45,7 +45,7 @@ import 'user_provider.dart';
 
 class StockDetailProviderNew extends ChangeNotifier {
   final AudioPlayer _player = AudioPlayer();
-  final SSEManager manager = SSEManager();
+  // final SSEManager manager = SSEManager();
 
   void clearAll() {
     //Tab clear
@@ -457,51 +457,121 @@ class StockDetailProviderNew extends ChangeNotifier {
     }
   }
 
+  // Future getTabData({
+  //   String? symbol,
+  //   showProgress = false,
+  //   bool startSSE = false,
+  // }) async {
+  //   clearAll();
+  //   setStatusTab(Status.loading);
+  //   try {
+  //     FormData request = FormData.fromMap({
+  //       "token":
+  //           navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
+  //       "symbol": symbol ?? "",
+  //     });
+  //     ApiResponse response = await apiRequest(
+  //       url: Apis.stockDetailTab,
+  //       formData: request,
+  //       showProgress: showProgress,
+  //     );
+  //     if (response.status) {
+  //       _tabRes = stockDetailTabResFromJson(jsonEncode(response.data));
+  //       _tabRes?.tabs?.removeWhere((tab) => tab.name == "Social Activities");
+  //       _extra = (response.extra is Extra ? response.extra as Extra : null);
+  //       Preference.saveReferInput(_extra?.affiliateInput == 1);
+  //       BrazeService.eventContentView(
+  //           screenType: 'stock_analysis', source: _tabRes?.shareUrl ?? '');
+
+  //       if (symbol != null && symbol != '' && startSSE) {
+  //         //get data here
+  //         manager.connectToSSE(symbol);
+  //       }
+
+  //       if (_tabRes != null) {
+  //         // getPlaidPortfolioData(name: _tabs[selectedTab]);
+  //       }
+  //     } else {
+  //       //
+  //       _errorTab = response.message;
+  //     }
+  //     setStatusTab(Status.loaded);
+  //     return ApiResponse(status: response.status);
+  //   } catch (e) {
+  //     Utils().showLog(e.toString());
+  //     setStatusTab(Status.loaded);
+  //     return ApiResponse(status: false);
+  //   }
+  // }
+
   Future getTabData({
     String? symbol,
     showProgress = false,
     bool startSSE = false,
   }) async {
-    clearAll();
-    setStatusTab(Status.loading);
+    clearAll(); // Clear existing data
+    setStatusTab(Status.loading); // Set loading state
+
     try {
+      // Prepare the request
       FormData request = FormData.fromMap({
         "token":
             navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
         "symbol": symbol ?? "",
       });
+
+      // Make the API request
       ApiResponse response = await apiRequest(
         url: Apis.stockDetailTab,
         formData: request,
         showProgress: showProgress,
       );
+
       if (response.status) {
         _tabRes = stockDetailTabResFromJson(jsonEncode(response.data));
         _tabRes?.tabs?.removeWhere((tab) => tab.name == "Social Activities");
         _extra = (response.extra is Extra ? response.extra as Extra : null);
         Preference.saveReferInput(_extra?.affiliateInput == 1);
+
         BrazeService.eventContentView(
             screenType: 'stock_analysis', source: _tabRes?.shareUrl ?? '');
 
-        // if (symbol != null && symbol != '' && startSSE) {
-        //   manager.addListener(symbol, (StockDataManagerRes stockData) {
-        //     Utils().showLog('Price=${stockData.price}');
-        //     Utils().showLog('Change=${stockData.change}');
-        //     Utils().showLog('Change%=${stockData.changePercentage}');
-        //   });
-        //   manager.connectToSSE(symbol);
-        // }
+        if (symbol != null && symbol.isNotEmpty && startSSE) {
+          // SSEManager.instance.connectToSSE(symbol);
+          SSEManager.instance.connectStock(
+            screen: SimulatorEnum.detail,
+            symbol: symbol,
+          );
 
-        if (_tabRes != null) {
-          // getPlaidPortfolioData(name: _tabs[selectedTab]);
+          SSEManager.instance.addListener(symbol, (stockData) {
+            Utils().showLog('Data for $symbol');
+            Utils().showLog('Price ${stockData.price}');
+            Utils().showLog('Change for ${stockData.change}');
+            Utils().showLog('Change% for ${stockData.changePercentage}');
+
+            if (stockData.price != null) {
+              _tabRes?.keyStats?.price = '\$${stockData.price}';
+              _tabRes?.keyStats?.change = stockData.change;
+              _tabRes?.keyStats?.price = '\$${stockData.price}';
+            }
+            if (stockData.change != null) {
+              _tabRes?.keyStats?.change = stockData.change;
+              _tabRes?.keyStats?.changeWithCur = '\$${stockData.change}';
+            }
+            if (stockData.changePercentage != null) {
+              _tabRes?.keyStats?.changesPercentage = stockData.changePercentage;
+            }
+            notifyListeners();
+          });
         }
       } else {
-        //
         _errorTab = response.message;
       }
+
       setStatusTab(Status.loaded);
       return ApiResponse(status: response.status);
     } catch (e) {
+      // Handle any exceptions
       Utils().showLog(e.toString());
       setStatusTab(Status.loaded);
       return ApiResponse(status: false);

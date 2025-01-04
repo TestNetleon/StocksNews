@@ -203,15 +203,19 @@ class Apis {
   // ---------   Trading Simulator Start --------------
   static const tsUserInfo = "/simulator/user-info";
   static const tsPortfolio = "/simulator/portfolio";
-  static const tsOrderList = "/simulator/order-list";
+  static const tsOrderList = "/simulator/holding-list";
   static const tradingMostSearch = "/simulator/most-search-symbol";
-  static const tsRequestBuy = "/simulator/buy";
-  static const tsRequestSell = "/simulator/sell";
+  static const tsRequestTrade = "/simulator/trade/store";
   static const tsSearchSymbol = "/simulator/search-symbol";
-  static const tsPendingList = "/simulator/order-pending";
+  static const tsPendingList = "/simulator/pending-list";
+  static const tsOpenList = "/simulator/list-purchased-shares";
+  static const stockHoldings = '/simulator/stock-holdings';
+  static const tsTransaction = '/simulator/trade/history';
+  // static const tsOrderList = "/simulator/order-list";
+  // static const tsRequestSell = "/simulator/sell";
   // static const tsRequestBuy = "/simulator/buy-share";
   // static const tsRequestSell = "/simulator/sell-share";
-  static const tsOpenList = "/simulator/list-purchased-shares";
+
   // ---------   Trading Simulator End --------------
   static const loginNew = "/check-user";
 

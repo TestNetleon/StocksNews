@@ -1,216 +1,642 @@
+// MARK: PHASE 1
+
+// import 'dart:convert';
+// import 'dart:async';
+// import 'package:dio/dio.dart';
+
+// class SSEManager {
+//   static final SSEManager _instance = SSEManager._internal();
+//   factory SSEManager() => _instance;
+
+//   static SSEManager get instance => _instance;
+
+//   final Dio dio = Dio();
+//   final Map<String, Function(StockDataManagerRes)> _listeners = {};
+//   final Map<String, StreamSubscription?> _streamSubscriptions = {};
+
+//   // Private constructor
+//   SSEManager._internal();
+
+//   // Add a listener for a specific symbol
+//   void addListener(String symbol, Function(StockDataManagerRes) listener) {
+//     _listeners[symbol] = listener;
+//   }
+
+//   // Remove listener for a specific symbol
+//   void removeListener(String symbol) {
+//     _listeners.remove(symbol);
+//   }
+
+//   // Connect to the SSE stream for a specific symbol
+//   void connectToSSE(String symbol) {
+//     const baseUrl = 'https://dev.stocks.news';
+//     final url = '$baseUrl:8021/symbolData?symbol=$symbol';
+
+//     print('Connecting to SSE for $symbol at $url');
+
+//     dio
+//         .get<ResponseBody>(
+//       url,
+//       options: Options(responseType: ResponseType.stream),
+//     )
+//         .then((response) {
+//       final subscription = response.data?.stream.listen((event) {
+//         final rawData = String.fromCharCodes(event);
+//         print('Raw data for $symbol: $rawData');
+
+//         // Check for valid JSON data
+//         if (rawData.startsWith('data:')) {
+//           final jsonData = rawData.substring(5); // Remove the 'data:' prefix
+
+//           try {
+//             final data = json.decode(jsonData);
+//             // Process stock data
+//             final stockData = processStockData(data);
+//             // Notify listener with the processed stock data
+//             _notifyListener(symbol, stockData);
+//           } catch (e) {
+//             print('Error parsing SSE data for $symbol: $e');
+//           }
+//         } else {
+//           print('Received non-JSON data for $symbol: $rawData');
+//         }
+//       }, onError: (error) {
+//         print('Stream error for $symbol: $error');
+//       }, cancelOnError: true);
+
+//       // Store the subscription for later use (for disconnecting)
+//       _streamSubscriptions[symbol] = subscription;
+//     }).catchError((error) {
+//       print('Failed to connect to SSE for $symbol: $error');
+//     });
+//   }
+
+//   void connectToSSEForMultipleStocks(List<String> symbols) {
+//     const baseUrl = 'https://dev.stocks.news';
+
+//     // Join symbols with commas to form the URL parameter
+//     final symbolsParam = symbols.join(',');
+//     final url = '$baseUrl:8021/symbolsData?symbol=$symbolsParam';
+
+//     print('Connecting to SSE for multiple symbols: $symbolsParam at $url');
+
+//     dio
+//         .get<ResponseBody>(
+//       url,
+//       options: Options(responseType: ResponseType.stream),
+//     )
+//         .then((response) {
+//       final subscription = response.data?.stream.listen((event) {
+//         final rawData = String.fromCharCodes(event);
+//         // print('Raw data for symbols: $rawData');
+
+//         if (rawData.startsWith('data:')) {
+//           final jsonData = rawData.substring(5);
+//           try {
+//             final data = json.decode(jsonData);
+//             final symbol = data['Identifier'];
+//             final stockData = processStockData(data);
+
+//             // Notify listener for the specific symbol
+//             _notifyListener(symbol, stockData);
+//           } catch (e) {
+//             print('Error parsing SSE data for symbols: $e');
+//           }
+//         } else {
+//           print('Received non-JSON data for symbols: $rawData');
+//         }
+//       }, onError: (error) {
+//         print('Stream error for symbols: $error');
+//       }, cancelOnError: true);
+
+//       for (var symbol in symbols) {
+//         _streamSubscriptions[symbol] = subscription;
+//       }
+//     }).catchError((error) {
+//       print('Failed to connect to SSE for multiple symbols: $error');
+//     });
+//   }
+
+//   // Notify the listener with the processed stock data
+//   void _notifyListener(String symbol, StockDataManagerRes stockData) {
+//     if (_listeners.containsKey(symbol)) {
+//       final listener = _listeners[symbol];
+//       listener?.call(stockData); // Trigger the listener
+//     }
+//   }
+
+//   // Process the raw stock data and decide if it's pre-market, post-market, or regular data
+//   StockDataManagerRes processStockData(Map<String, dynamic> data) {
+//     final extendedHoursType = data['ExtendedHoursType'];
+
+//     // Check for pre-market or post-market data
+//     if (extendedHoursType != null &&
+//         (extendedHoursType == 'PreMarket' ||
+//             extendedHoursType == 'PostMarket')) {
+//       return StockDataManagerRes(
+//         price: data['ExtendedHoursPrice'],
+//         change: data['ExtendedHoursChange'],
+//         changePercentage: data['ExtendedHoursPercentChange'],
+//       );
+//     } else {
+//       // Regular market data
+//       return StockDataManagerRes(
+//         price: data['Last'],
+//         change: data['Change'],
+//         changePercentage: data['PercentChange'],
+//       );
+//     }
+//   }
+
+//   void disconnect(String symbol) {
+//     final subscription = _streamSubscriptions[symbol];
+//     if (subscription != null) {
+//       subscription.cancel();
+//       _streamSubscriptions.remove(symbol);
+//       print('Disconnected from SSE for $symbol');
+//     } else {
+//       print('No active SSE connection for $symbol');
+//     }
+//   }
+
+//   void disconnectAll() {
+//     _streamSubscriptions.forEach((symbol, subscription) {
+//       subscription?.cancel();
+//       print('Disconnected from SSE for $symbol');
+//     });
+
+//     _streamSubscriptions.clear();
+//     print('All SSE connections have been disconnected.');
+//   }
+// }
+
+// // Stock data response model
+// class StockDataManagerRes {
+//   num? price;
+//   final num? change;
+//   final num? changePercentage;
+//   final String? type;
+
+//   StockDataManagerRes({
+//     this.price,
+//     this.change,
+//     this.changePercentage,
+//     this.type,
+//   });
+
+//   // Factory method to create StockDataManagerRes from raw data (useful for serialization)
+//   factory StockDataManagerRes.fromJson(Map<String, dynamic> json) {
+//     final extendedHoursType = json['ExtendedHoursType'];
+
+//     if (extendedHoursType != null &&
+//         (extendedHoursType == 'PreMarket' ||
+//             extendedHoursType == 'PostMarket')) {
+//       return StockDataManagerRes(
+//         price: json['ExtendedHoursPrice'],
+//         change: json['ExtendedHoursChange'],
+//         changePercentage: json['ExtendedHoursPercentChange'],
+//         type: extendedHoursType,
+//       );
+//     } else {
+//       return StockDataManagerRes(
+//         price: json['Last'],
+//         change: json['Change'],
+//         changePercentage: json['PercentChange'],
+//       );
+//     }
+//   }
+// }
+
+// MARK: PHASE 2
+
+// import 'dart:convert';
+// import 'dart:async';
+// import 'package:dio/dio.dart';
+
+// class SSEManager {
+//   static final SSEManager _instance = SSEManager._internal();
+//   factory SSEManager() => _instance;
+
+//   static SSEManager get instance => _instance;
+
+//   final Dio _dio = Dio();
+//   final Map<String, Function(StockDataManagerRes)> _listeners = {};
+//   final Map<String, StreamSubscription?> _subscriptions = {};
+
+//   SSEManager._internal();
+
+//   /// Add a listener for a specific symbol
+//   void addListener(String symbol, Function(StockDataManagerRes) listener) {
+//     _listeners[symbol] = listener;
+//   }
+
+//   /// Remove listener for a specific symbol
+//   void removeListener(String symbol) {
+//     _listeners.remove(symbol);
+//   }
+
+//   /// Connect to the SSE stream for a specific symbol
+//   void connectToSSE(String symbol) {
+//     final url = 'https://dev.stocks.news:8021/symbolData?symbol=$symbol';
+
+//     if (_subscriptions.containsKey(symbol)) {
+//       print('Already connected to SSE for $symbol');
+//       return;
+//     }
+
+//     _connectToStream(
+//         url, (data) => _notifyListener(symbol, processStockData(data)));
+//   }
+
+//   /// Connect to SSE for multiple symbols
+//   void connectToSSEForMultipleStocks(List<String> symbols) {
+//     final symbolsParam = symbols.join(',');
+//     final url = 'https://dev.stocks.news:8021/symbolsData?symbol=$symbolsParam';
+
+//     for (var symbol in symbols) {
+//       if (_subscriptions.containsKey(symbol)) {
+//         print('Already connected to SSE for $symbol');
+//         continue;
+//       }
+//     }
+
+//     _connectToStream(url, (data) {
+//       final symbol = data['Identifier'];
+//       if (symbol != null) {
+//         _notifyListener(symbol, processStockData(data));
+//       }
+//     });
+//   }
+
+//   /// Disconnect SSE for a specific symbol
+//   void disconnect(String symbol) {
+//     final subscription = _subscriptions[symbol];
+//     subscription?.cancel();
+//     _subscriptions.remove(symbol);
+//     print('Disconnected from SSE for $symbol');
+//   }
+
+//   /// Disconnect all active SSE connections
+//   void disconnectAll() {
+//     for (var symbol in _subscriptions.keys) {
+//       _subscriptions[symbol]?.cancel();
+//     }
+//     _subscriptions.clear();
+//     print('All SSE connections have been disconnected.');
+//   }
+
+//   /// Notify the listener with processed stock data
+//   void _notifyListener(String symbol, StockDataManagerRes stockData) {
+//     final listener = _listeners[symbol];
+//     if (listener != null) {
+//       listener(stockData);
+//     }
+//   }
+
+//   /// Connect to a generic SSE stream
+//   void _connectToStream(String url, Function(Map<String, dynamic>) onData) {
+//     _dio
+//         .get<ResponseBody>(
+//       url,
+//       options: Options(responseType: ResponseType.stream),
+//     )
+//         .then((response) {
+//       final subscription = response.data?.stream.listen((event) {
+//         final rawData = String.fromCharCodes(event);
+//         if (rawData.startsWith('data:')) {
+//           final jsonData = rawData.substring(5); // Remove 'data:' prefix
+//           try {
+//             final data = json.decode(jsonData) as Map<String, dynamic>;
+//             onData(data);
+//           } catch (e) {
+//             print('Error parsing SSE data: $e');
+//           }
+//         }
+//       }, onError: (error) {
+//         print('Stream error: $error');
+//       }, cancelOnError: true);
+
+//       if (url.contains('?symbol=')) {
+//         // Single symbol
+//         final symbol = Uri.parse(url).queryParameters['symbol'];
+//         if (symbol != null) {
+//           _subscriptions[symbol] = subscription;
+//         }
+//       } else {
+//         // Multi-symbol
+//         final symbols =
+//             Uri.parse(url).queryParameters['symbol']?.split(',') ?? [];
+//         for (var symbol in symbols) {
+//           _subscriptions[symbol] = subscription;
+//         }
+//       }
+//     }).catchError((error) {
+//       print('Failed to connect to SSE: $error');
+//     });
+//   }
+
+//   /// Process raw stock data into a usable format
+//   StockDataManagerRes processStockData(Map<String, dynamic> data) {
+//     final extendedHoursType = data['ExtendedHoursType'];
+//     if (extendedHoursType == 'PreMarket' || extendedHoursType == 'PostMarket') {
+//       return StockDataManagerRes(
+//         price: data['ExtendedHoursPrice'],
+//         change: data['ExtendedHoursChange'],
+//         changePercentage: data['ExtendedHoursPercentChange'],
+//         type: extendedHoursType,
+//       );
+//     }
+//     return StockDataManagerRes(
+//       price: data['Last'],
+//       change: data['Change'],
+//       changePercentage: data['PercentChange'],
+//     );
+//   }
+// }
+
+// class StockDataManagerRes {
+//   final num? price;
+//   final num? change;
+//   final num? changePercentage;
+//   final String? type;
+
+//   StockDataManagerRes({
+//     this.price,
+//     this.change,
+//     this.changePercentage,
+//     this.type,
+//   });
+
+//   factory StockDataManagerRes.fromJson(Map<String, dynamic> json) {
+//     return StockDataManagerRes(
+//       price: json['Last'] ?? json['ExtendedHoursPrice'],
+//       change: json['Change'] ?? json['ExtendedHoursChange'],
+//       changePercentage:
+//           json['PercentChange'] ?? json['ExtendedHoursPercentChange'],
+//       type: json['ExtendedHoursType'],
+//     );
+//   }
+// }
+
+// MARK: PHASE 3
+
 import 'dart:convert';
 import 'dart:async';
 import 'package:dio/dio.dart';
-import 'package:stocks_news_new/utils/utils.dart';
+import 'package:flutter/foundation.dart';
 
-class SSEManager {
-  static final SSEManager _instance = SSEManager._internal();
-  factory SSEManager() => _instance;
-
-  final Dio dio = Dio();
-  final Map<String, Function(StockDataManagerRes)> _listeners = {};
-  final Map<String, StreamSubscription?> _streamSubscriptions = {};
-
-  // Private constructor
-  SSEManager._internal();
-
-  // Public method to add listeners
-  void addListener(String symbol, Function(StockDataManagerRes) listener) {
-    _listeners[symbol] = listener;
-  }
-
-  // Public method to remove listeners
-  void removeListener(String symbol) {
-    _listeners.remove(symbol);
-  }
-
-  void connectToSSE(String symbol) {
-    const baseUrl = 'https://dev.stocks.news';
-
-    for (int port = 8021; port == 8021; port++) {
-      Utils().showLog('PORT ON $port');
-      final url = '$baseUrl:$port/symbolData?symbol=$symbol';
-
-      print('Attempting to connect to SSE at $url');
-
-      dio
-          .get<ResponseBody>(
-        url,
-        options: Options(responseType: ResponseType.stream),
-      )
-          .then((response) {
-        final subscription = response.data?.stream.listen((event) {
-          final rawData = String.fromCharCodes(event);
-          Utils().showLog('Raw data for $symbol : $rawData');
-
-          if (rawData.startsWith('{')) {
-            try {
-              final data = Map<String, dynamic>.from(json.decode(rawData));
-              print('Data for $symbol: $data');
-
-              if (data.containsKey('price') &&
-                  data.containsKey('change') &&
-                  data.containsKey('changePercentage')) {
-                final stockData = StockDataManagerRes(
-                  price: data['price'] as double,
-                  change: data['change'] as double,
-                  changePercentage: data['changePercentage'] as double,
-                );
-
-                if (_listeners.containsKey(symbol)) {
-                  _listeners[symbol]!(stockData);
-                }
-              } else {
-                print('Unexpected data format for $symbol: $data');
-              }
-            } catch (e) {
-              print('Error parsing SSE data for $symbol: $e');
-            }
-          } else {
-            print('Received non-JSON data for $symbol: $rawData');
-          }
-        }, onError: (error) {
-          print('Stream error for $symbol: $error');
-        }, cancelOnError: true);
-
-        _streamSubscriptions[symbol] = subscription;
-      }).catchError((error) {
-        if (error is DioException) {
-          print(
-              'Failed to connect to SSE for $symbol. HTTP status: ${error.response?.statusCode}. Error: ${error.message}');
-        } else {
-          print('Unknown error while connecting to SSE for $symbol: $error');
-        }
-      });
-    }
-  }
-
-  // Disconnect from a specific SSE connection by symbol
-  void disconnect(String symbol) {
-    final subscription = _streamSubscriptions[symbol];
-    if (subscription != null) {
-      subscription.cancel(); // Cancel the subscription for this symbol
-      _streamSubscriptions
-          .remove(symbol); // Remove the subscription from the map
-      print('Disconnected from SSE for $symbol');
-    } else {
-      print('No active SSE connection for $symbol');
-    }
-  }
-
-  // Disconnect from all SSE connections
-  void disconnectAll() {
-    _streamSubscriptions.forEach((symbol, subscription) {
-      subscription?.cancel(); // Cancel the subscription for each symbol
-      print('Disconnected from SSE for $symbol');
-    });
-
-    // Clear the subscriptions map
-    _streamSubscriptions.clear();
-    print('All SSE connections have been disconnected.');
-  }
-}
+import '../../utils/constants.dart';
 
 class StockDataManagerRes {
   final num? price;
   final num? change;
   final num? changePercentage;
+  final String? type;
 
   StockDataManagerRes({
     this.price,
     this.change,
     this.changePercentage,
+    this.type,
   });
 }
 
-// import 'dart:convert';
-// import 'dart:async';
-// import 'package:dio/dio.dart';
-// import 'package:stocks_news_new/utils/utils.dart';
+class SSEManager {
+  static final SSEManager _instance = SSEManager._internal();
+  factory SSEManager() => _instance;
 
-// class SSEManager {
-//   // Singleton instance
-//   static final SSEManager _instance = SSEManager._internal();
-//   factory SSEManager() => _instance;
+  static SSEManager get instance => _instance;
 
-//   final Dio dio = Dio();
-//   final Map<int, StreamSubscription?> _streamSubscriptions =
-//       {}; // To hold the active subscriptions
+  final Dio _dio = Dio();
+  final Map<String, Function(StockDataManagerRes)> _listeners = {};
+  final Map<String, StreamSubscription?> _subscriptions = {};
 
-//   // Private constructor
-//   SSEManager._internal();
+  /// Tracks streams for each screen
+  final Map<SimulatorEnum, Set<String>> _screenStreams = {};
 
-//   void connectToSSE() {
-//     const baseUrl = 'https://dev.stocks.news';
+  SSEManager._internal();
 
-//     // Loop through ports from 8021 to 8036
-//     for (int port = 8036; port <= 8036; port++) {
-//       Utils().showLog('PORT ON $port');
-//       final url = '$baseUrl:$port/sse';
+  /// Add a listener for a specific symbol
+  void addListener(String symbol, Function(StockDataManagerRes) listener) {
+    _listeners[symbol] = listener;
+  }
 
-//       print('Attempting to connect to SSE at $url');
+  /// Remove listener for a specific symbol
+  void removeListener(String symbol) {
+    _listeners.remove(symbol);
+  }
 
-//       dio
-//           .get<ResponseBody>(
-//         url,
-//         options: Options(responseType: ResponseType.stream),
-//       )
-//           .then((response) {
-//         final subscription = response.data?.stream.listen((event) {
-//           final rawData = String.fromCharCodes(event);
+  void connectStock({required String symbol, required SimulatorEnum screen}) {
+    final url = 'https://dev.stocks.news:8021/symbolData?symbol=$symbol';
 
-//           // Remove the "data: " prefix if it exists
-//           final cleanedData =
-//               rawData.startsWith("data: ") ? rawData.substring(6) : rawData;
+    if (_screenStreams[screen]?.contains(symbol) == true) {
+      if (kDebugMode) {
+        print('Stream for $symbol is already connected.');
+        print('Url $url');
+      }
+      return;
+    }
 
-//           if (cleanedData.startsWith("{") || cleanedData.startsWith("[")) {
-//             try {
-//               final data = Map<String, dynamic>.from(json.decode(cleanedData));
-//               Utils().showLog('Raw data: $data');
-//             } catch (e) {
-//               print('Error parsing JSON: $e');
-//             }
-//           } else {
-//             Utils().showLog('Received non-JSON data: $cleanedData');
-//           }
-//         }, onError: (error) {
-//           print('Stream error: $error');
-//         }, cancelOnError: true);
+    _connectToStream(
+      url,
+      (data) {
+        final dataSymbol = data['Identifier'];
+        if (dataSymbol == symbol) {
+          _notifyListener(symbol, processStockData(data));
+        }
+      },
+      screen,
+    );
 
-//         // Store the subscription in the map
-//         _streamSubscriptions[port] = subscription;
-//       }).catchError((error) {
-//         if (error is DioException) {
-//           print(
-//               'Failed to connect ${error.response?.statusCode}. Error: ${error.message}');
-//         } else {
-//           print('Unknown error while connecting to SSE for: $error');
-//         }
-//       });
-//     }
-//   }
+    _screenStreams[screen] = (_screenStreams[screen] ?? {}).union({symbol});
+  }
 
-//   // Disconnect from all SSE connections
-//   void disconnectAll() {
-//     _streamSubscriptions.forEach((port, subscription) {
-//       subscription?.cancel(); // Cancel the subscription for each port
-//       print('Disconnected from port $port');
-//     });
+  void connectMultipleStocks(
+      {required List<String> symbols, required SimulatorEnum screen}) {
+    final currentStreams = _screenStreams[screen] ?? {};
+    // Calculate symbols to disconnect
+    final removedSymbols = currentStreams.difference(symbols.toSet());
+    for (var symbol in removedSymbols) {
+      disconnect(symbol);
+    }
+    print('current $currentStreams');
+    final newSymbols = symbols.toSet().difference(currentStreams);
+    print('new $newSymbols');
+    final url =
+        'https://dev.stocks.news:8021/symbolsData?symbol=${symbols.join(',')}';
 
-//     // Clear the active subscriptions map
-//     _streamSubscriptions.clear();
-//     print('All SSE connections have been disconnected.');
-//   }
+    if (newSymbols.isEmpty) {
+      if (kDebugMode) {
+        print('All streams for $screen are already connected.');
+        print('Url $url');
+      }
+      return;
+    }
 
-//   // Disconnect from a specific port
-//   void disconnectFromPort(int port) {
-//     final subscription = _streamSubscriptions[port];
-//     if (subscription != null) {
-//       subscription.cancel(); // Cancel the specific stream subscription
-//       _streamSubscriptions.remove(port); // Remove it from the map
-//       print('Disconnected from port $port');
-//     } else {
-//       print('No active connection for port $port.');
-//     }
-//   }
-// }
+    _connectToStream(
+      url,
+      (data) {
+        final symbol = data['Identifier'];
+        if (symbol != null &&
+            _screenStreams[screen]?.contains(symbol) == true) {
+          _notifyListener(symbol, processStockData(data));
+        }
+      },
+      screen,
+    );
+
+    _screenStreams[screen] = currentStreams.union(newSymbols);
+  }
+
+  /// Disconnect streams for a specific screen
+  void disconnectScreen(SimulatorEnum screen) {
+    final symbols = _screenStreams[screen] ?? {};
+    for (var symbol in symbols) {
+      disconnect(symbol);
+      if (kDebugMode) {
+        print('Disconnected symbol $symbol for screen $screen');
+      }
+    }
+    _screenStreams.remove(screen);
+  }
+
+  /// Disconnect all streams and clear resources
+  void disconnectAllScreens() {
+    for (var screen in _screenStreams.keys.toList()) {
+      disconnectScreen(screen);
+    }
+    _listeners.clear();
+    if (kDebugMode) {
+      print('Disconnected all streams and cleared all resources.');
+    }
+  }
+
+  /// Notify the listener with processed stock data
+  void _notifyListener(String symbol, StockDataManagerRes stockData) {
+    final listener = _listeners[symbol];
+    if (listener != null) {
+      listener(stockData);
+    }
+  }
+
+  /// Connect to a generic SSE stream
+  void _connectToStream(
+    String url,
+    Function(Map<String, dynamic>) onData,
+    SimulatorEnum type,
+  ) {
+    if (kDebugMode) {
+      print('Tyring to connect to $url');
+    }
+    _dio
+        .get<ResponseBody>(
+      url,
+      options: Options(responseType: ResponseType.stream),
+    )
+        .then((response) {
+      final subscription = response.data?.stream.listen(
+        (event) {
+          final rawData = String.fromCharCodes(event);
+          if (rawData.startsWith('data:')) {
+            final jsonData = rawData.substring(5);
+            try {
+              final data = json.decode(jsonData) as Map<String, dynamic>;
+              onData(data);
+            } catch (e) {
+              if (kDebugMode) {
+                print('Error parsing SSE data: $e');
+              }
+            }
+          }
+        },
+        onError: (error) {
+          if (kDebugMode) {
+            print('Stream error: $error');
+          }
+          // Handle errors by clearing the subscription and listener for all symbols
+          final uri = Uri.parse(url);
+          final symbols = uri.queryParameters['symbol']?.split(',');
+
+          if (symbols != null && symbols.isNotEmpty) {
+            for (var symbol in symbols) {
+              _handleStreamError(symbol);
+            }
+            // Clear the screen's data and reset symbols' states for error
+            // final screen = _getScreenForSymbols(symbols);
+            _clearScreenData(type); // Clear data for the screen
+          }
+        },
+        cancelOnError: false,
+      );
+
+      // Check if the URL is for a single symbol or multiple symbols
+      final uri = Uri.parse(url);
+      final symbols = uri.queryParameters['symbol']?.split(',');
+
+      if (symbols != null && symbols.length > 1) {
+        for (var symbol in symbols) {
+          _subscriptions[symbol] = subscription;
+        }
+      } else {
+        final symbol = uri.queryParameters['symbol'];
+        if (symbol != null) {
+          _subscriptions[symbol] = subscription;
+        }
+      }
+    }).catchError((error) {
+      if (kDebugMode) {
+        print('Failed to connect to SSE: $error');
+      }
+    });
+  }
+
+// Clear data for a specific screen
+  void _clearScreenData(SimulatorEnum screen) {
+    final symbols = _screenStreams[screen] ?? {};
+    for (var symbol in symbols) {
+      disconnect(symbol); // Disconnect symbol
+      removeListener(symbol); // Remove listener for symbol
+    }
+    _screenStreams.remove(screen); // Remove screen from tracking
+    if (kDebugMode) {
+      print('Cleared all data and disconnected streams for screen $screen');
+    }
+  }
+
+  /// Handle errors by removing the subscription and listener for a symbol
+  void _handleStreamError(String symbol) {
+    disconnect(symbol); // Clears the subscription
+    removeListener(symbol); // Removes the listener
+    if (kDebugMode) {
+      print('Cleared listener and subscription for $symbol due to an error.');
+    }
+  }
+
+  /// Disconnect a specific symbol
+  void disconnect(String symbol) {
+    final subscription = _subscriptions[symbol];
+    subscription?.cancel();
+    _subscriptions.remove(symbol);
+    if (kDebugMode) {
+      print('Disconnected SSE for $symbol');
+    }
+  }
+
+  /// Process raw stock data into a usable format
+  StockDataManagerRes processStockData(Map<String, dynamic> data) {
+    final extendedHoursType = data['ExtendedHoursType'];
+    if (extendedHoursType == 'PreMarket' || extendedHoursType == 'PostMarket') {
+      return StockDataManagerRes(
+        price: data['ExtendedHoursPrice'],
+        change: data['ExtendedHoursChange'],
+        changePercentage: data['ExtendedHoursPercentChange'],
+        type: extendedHoursType,
+      );
+    }
+    return StockDataManagerRes(
+      price: data['Last'],
+      change: data['Change'],
+      changePercentage: data['PercentChange'],
+    );
+  }
+}

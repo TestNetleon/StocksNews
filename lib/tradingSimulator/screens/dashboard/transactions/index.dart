@@ -1,25 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:stocks_news_new/tradingSimulator/modals/ts_open_list_res.dart';
-import 'package:stocks_news_new/tradingSimulator/providers/ts_open_list_provider.dart';
-import 'package:stocks_news_new/tradingSimulator/screens/dashboard/open/item.dart';
+import 'package:stocks_news_new/tradingSimulator/manager/sse.dart';
+import 'package:stocks_news_new/tradingSimulator/modals/ts_pending_list_res.dart';
 import 'package:stocks_news_new/tradingSimulator/screens/dashboard/tradeSheet.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/refresh_controll.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
-
 import '../../../providers/ts_portfollo_provider.dart';
+import '../../../providers/ts_transaction_list.dart';
+import 'item.dart';
 
-class TsOpenList extends StatefulWidget {
-  const TsOpenList({super.key});
+class TsTransactionList extends StatefulWidget {
+  const TsTransactionList({super.key});
 
   @override
-  State<TsOpenList> createState() => _TsOpenListState();
+  State<TsTransactionList> createState() => _TsTransactionListState();
 }
 
-class _TsOpenListState extends State<TsOpenList> {
+class _TsTransactionListState extends State<TsTransactionList> {
   @override
   void initState() {
     super.initState();
@@ -29,24 +29,26 @@ class _TsOpenListState extends State<TsOpenList> {
   }
 
   Future _getData({loadMore = false}) async {
-    TsOpenListProvider provider = context.read<TsOpenListProvider>();
+    TsTransactionListProvider provider =
+        context.read<TsTransactionListProvider>();
     await provider.getData(loadMore: loadMore);
   }
 
   @override
   void dispose() {
-    // SSEManager.instance.disconnectScreen(SimulatorEnum.open);
+    SSEManager.instance.disconnectScreen(SimulatorEnum.transaction);
+    Utils().showLog("TRANSACTIONS CLOSED");
     super.dispose();
-    Utils().showLog('OPEN DISPOSED');
   }
 
   @override
   Widget build(BuildContext context) {
-    TsOpenListProvider provider = context.watch<TsOpenListProvider>();
+    TsTransactionListProvider provider =
+        context.watch<TsTransactionListProvider>();
 
     return BaseUiContainer(
       hasData: provider.data != null && !provider.isLoading,
-      isLoading: provider.isLoading || provider.status == Status.ideal,
+      isLoading: provider.isLoading,
       error: provider.error,
       errorDispCommon: false,
       onRefresh: _getData,
@@ -56,6 +58,7 @@ class _TsOpenListState extends State<TsOpenList> {
           //   ? const SummaryErrorWidget(title: "No open orders")
           //   :
           RefreshControl(
+        // onRefresh: _getData,
         onRefresh: () async {
           await _getData();
           context.read<TsPortfolioProvider>().getDashboardData();
@@ -65,8 +68,8 @@ class _TsOpenListState extends State<TsOpenList> {
         child: ListView.separated(
           padding: EdgeInsets.only(bottom: 20),
           itemBuilder: (context, index) {
-            TsOpenListRes item = provider.data![index];
-            return TsOpenListItem(
+            TsPendingListRes item = provider.data![index];
+            return TsTransactionListItem(
               item: item,
               onTap: () {
                 tradeSheet(

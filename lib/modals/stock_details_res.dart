@@ -178,6 +178,8 @@ class KeyStats {
   final String? avgVolume;
   final String? open;
   final String? marketStatus;
+  final bool? tradeMarketStatus;
+
   final String? previousClose;
   final num? previousCloseNUM;
 
@@ -206,6 +208,7 @@ class KeyStats {
     required this.symbol,
     required this.name,
     this.price,
+    this.tradeMarketStatus,
     this.priceWithoutCur,
     this.marketStatus,
     this.previousCloseNUM,
@@ -260,6 +263,7 @@ class KeyStats {
       yearLow: json["yearLow"],
       previousCloseNUM: json['previousClose_without_cur'],
       marketCap: json["marketCap"],
+      tradeMarketStatus: json['trade_market_status'],
       priceAvg50: json["priceAvg50"],
       priceAvg200: json["priceAvg200"],
       exchange: json["exchange"],
@@ -329,6 +333,7 @@ class KeyStats {
         "dividendYield": dividendYield,
         "bookValuePerShare": bookValuePerShare,
         "revenue": revenue,
+        'trade_market_status': tradeMarketStatus,
         "revenue_date": revenueDate,
         "rating": rating
       };

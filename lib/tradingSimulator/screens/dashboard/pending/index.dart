@@ -11,8 +11,10 @@ import 'package:stocks_news_new/utils/constants.dart';
 
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
-import 'package:stocks_news_new/widgets/custom/refresh_indicator.dart';
+import 'package:stocks_news_new/widgets/refresh_controll.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
+
+import '../../../providers/ts_portfollo_provider.dart';
 
 class TsPendingList extends StatefulWidget {
   const TsPendingList({super.key});
@@ -30,9 +32,9 @@ class _TsPendingListState extends State<TsPendingList> {
     });
   }
 
-  Future _getData() async {
+  Future _getData({loadMore = false}) async {
     TsPendingListProvider provider = context.read<TsPendingListProvider>();
-    await provider.getData();
+    await provider.getData(loadMore: loadMore);
   }
 
   void _onEditClick() {
@@ -87,9 +89,16 @@ class _TsPendingListState extends State<TsPendingList> {
           // provider.data==null
           //   ? const SummaryErrorWidget(title: "No open orders")
           //   :
-          CommonRefreshIndicator(
-        onRefresh: _getData,
+          RefreshControl(
+        // onRefresh: _getData,
+        onRefresh: () async {
+          await _getData();
+          context.read<TsPortfolioProvider>().getDashboardData();
+        },
+        canLoadMore: provider.canLoadMore,
+        onLoadMore: () async => await _getData(loadMore: true),
         child: ListView.separated(
+          padding: EdgeInsets.only(bottom: 20),
           itemBuilder: (context, index) {
             TsPendingListRes item = provider.data![index];
             return TsPendingSlidableMenu(
