@@ -20,6 +20,8 @@ import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/cache_network_image.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 
+import '../modals/trading_search_res.dart';
+
 class TsTextInputFieldSearch extends StatefulWidget {
   const TsTextInputFieldSearch({
     // required this.onChanged,
@@ -87,8 +89,16 @@ class _TsTextInputFieldSearchCommonState extends State<TsTextInputFieldSearch> {
     }
   }
 
-  Future _onTap({String? symbol}) async {
-    tradeSheet(symbol: symbol);
+  Future _onTap({String? symbol, SearchRes? data}) async {
+    tradeSheet(
+      symbol: symbol,
+      data: TradingSearchTickerRes(
+        image: data?.image,
+        name: data?.name,
+        symbol: data?.symbol,
+        currentPrice: data?.currentPrice,
+      ),
+    );
 
     // try {
     //   StockDetailProviderNew provider =

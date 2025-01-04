@@ -69,8 +69,10 @@ class TsDashboard extends StatelessWidget {
                     ),
                   );
                 },
-                text: "Place New Virtual Trade",
-                color: const Color.fromARGB(255, 194, 216, 51),
+                text: "Place New Order",
+                // color: const Color.fromARGB(255, 194, 216, 51),
+                color: ThemeColors.accent,
+
                 // icon: Icons.arrow_outward_outlined,
                 textColor: ThemeColors.background,
               ),

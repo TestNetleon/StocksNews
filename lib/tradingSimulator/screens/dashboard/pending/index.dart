@@ -14,6 +14,7 @@ import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
 import 'package:stocks_news_new/widgets/refresh_controll.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
+import '../../../modals/trading_search_res.dart';
 import '../../../providers/ts_portfollo_provider.dart';
 
 class TsPendingList extends StatefulWidget {
@@ -112,6 +113,12 @@ class _TsPendingListState extends State<TsPendingList> {
                     symbol: item.symbol,
                     doPop: false,
                     qty: item.quantity,
+                    data: TradingSearchTickerRes(
+                      image: item.image,
+                      name: item.company,
+                      currentPrice: item.currentPrice,
+                      symbol: item.symbol,
+                    ),
                   );
                 },
               ),

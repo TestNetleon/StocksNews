@@ -38,19 +38,14 @@ class TsTransactionListProvider extends ChangeNotifier {
   void _updateStockData(String symbol, StockDataManagerRes stockData) {
     if (_data != null && _data?.isNotEmpty == true) {
       final index = _data!.indexWhere((stock) => stock.symbol == symbol);
-      if (index != -1) {
-        TsPendingListRes? existingStock = _data?[index];
-        existingStock?.currentPrice = stockData.price;
-
-        Utils().showLog('Updating for $symbol, Price: ${stockData.price}');
-      } else {
-        TsPendingListRes newStock = TsPendingListRes(
-          symbol: symbol,
-          currentPrice: stockData.price,
-        );
-
-        _data?.add(newStock);
+      if (index == -1) {
+        Utils().showLog("Stock with symbol $symbol not found in _data.");
+        return;
       }
+      TsPendingListRes? existingStock = _data?[index];
+      existingStock?.currentPrice = stockData.price;
+
+      Utils().showLog('Updating for $symbol, Price: ${stockData.price}');
     }
 
     notifyListeners();
@@ -83,9 +78,7 @@ class TsTransactionListProvider extends ChangeNotifier {
           _extra = (response.extra is Extra ? response.extra as Extra : null);
           _error = null;
         } else {
-          _data?.addAll(
-            tsPendingListResFromJson(jsonEncode(response.data)),
-          );
+          _data?.addAll(tsPendingListResFromJson(jsonEncode(response.data)));
         }
 
         List<String> symbols =

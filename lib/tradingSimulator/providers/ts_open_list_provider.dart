@@ -41,38 +41,38 @@ class TsOpenListProvider extends ChangeNotifier {
   void _updateStockData(String symbol, StockDataManagerRes stockData) {
     if (_data != null && _data?.isNotEmpty == true) {
       final index = _data!.indexWhere((stock) => stock.symbol == symbol);
+      if (index == -1) {
+        Utils().showLog("Stock with symbol $symbol not found in _data.");
+        return;
+      }
       num? shares = _data?[index].quantity ?? 0;
       num? invested = _data?[index].invested ?? 0;
-      if (index != -1) {
-        TsOpenListRes? existingStock = _data?[index];
-        existingStock?.currentPrice = stockData.price;
-        existingStock?.change = stockData.change;
-        existingStock?.changesPercentage = stockData.changePercentage;
-        existingStock?.currentInvested = (stockData.price ?? 0) * shares;
-        existingStock?.investedChange =
-            (existingStock.currentInvested ?? 0) - invested;
 
-        existingStock?.investedChangePercentage =
-            ((existingStock.investedChange ?? 0) / invested) * 100;
+      TsOpenListRes? existingStock = _data?[index];
+      existingStock?.currentPrice = stockData.price;
+      existingStock?.change = stockData.change;
+      existingStock?.changesPercentage = stockData.changePercentage;
+      existingStock?.currentInvested = (stockData.price ?? 0) * shares;
+      existingStock?.investedChange =
+          (existingStock.currentInvested ?? 0) - invested;
 
-        Utils().showLog('Updating for $symbol, Price: ${stockData.price}');
-      } else {
-        TsOpenListRes newStock = TsOpenListRes(
-            symbol: symbol,
-            currentPrice: stockData.price,
-            change: stockData.change,
-            changesPercentage: stockData.changePercentage,
-            currentInvested: (stockData.price ?? 0) * shares,
-            investedChange: ((stockData.price ?? 0) * shares) - invested,
-            investedChangePercentage:
-                (((stockData.price ?? 0) * shares) - invested / invested) *
-                    100);
+      existingStock?.investedChangePercentage =
+          ((existingStock.investedChange ?? 0) / invested) * 100;
 
-        _data?.add(newStock);
-      }
+      Utils().showLog('Updating for $symbol, Price: ${stockData.price}');
     }
 
     notifyListeners();
+
+    TsPortfolioProvider provider =
+        navigatorKey.currentContext!.read<TsPortfolioProvider>();
+    num totalMarketValue = _data?.fold<num>(
+            0, (sum, stock) => sum + (stock.currentInvested ?? 0)) ??
+        0;
+
+    provider.updateBalance(
+        marketValue: totalMarketValue,
+        position: totalMarketValue - (provider.userData?.invested ?? 0));
   }
 
   Future getData({loadMore = false}) async {
@@ -109,8 +109,6 @@ class TsOpenListProvider extends ChangeNotifier {
 
         List<String> symbols =
             _data?.map((stock) => stock.symbol ?? '').toList() ?? [];
-        // SSEManager.instance.disconnectAll();
-        // SSEManager.instance.connectToSSEForMultipleStocks(symbols);
 
         SSEManager.instance.connectMultipleStocks(
           screen: SimulatorEnum.open,

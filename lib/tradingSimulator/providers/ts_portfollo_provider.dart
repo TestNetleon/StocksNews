@@ -35,15 +35,15 @@ class TsPortfolioProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  // void updateBalance({num? balance, num? invested}) {
-  //   if (balance != null) {
-  //     _userData?.tradeBalance = balance;
-  //   }
-  //   if (invested != null) {
-  //     _userData?.invested = invested;
-  //   }
-  //   notifyListeners();
-  // }
+  void updateBalance({num? position, num? marketValue}) {
+    if (position != null) {
+      _userData?.currentPositionAmount = position;
+    }
+    if (marketValue != null) {
+      _userData?.investedValue = marketValue;
+    }
+    notifyListeners();
+  }
 
   Future getData() async {
     setStatus(Status.loading);

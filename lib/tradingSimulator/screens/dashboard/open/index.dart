@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:stocks_news_new/tradingSimulator/modals/trading_search_res.dart';
 import 'package:stocks_news_new/tradingSimulator/modals/ts_open_list_res.dart';
 import 'package:stocks_news_new/tradingSimulator/providers/ts_open_list_provider.dart';
 import 'package:stocks_news_new/tradingSimulator/screens/dashboard/open/item.dart';
@@ -73,6 +74,14 @@ class _TsOpenListState extends State<TsOpenList> {
                   symbol: item.symbol,
                   doPop: false,
                   qty: item.quantity,
+                  data: TradingSearchTickerRes(
+                    change: '${item.change}',
+                    changesPercentage: item.changesPercentage,
+                    image: item.image,
+                    name: item.company,
+                    currentPrice: item.currentPrice,
+                    symbol: item.symbol,
+                  ),
                 );
               },
             );

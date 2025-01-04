@@ -142,7 +142,7 @@ class _TsDashboardHeaderState extends State<TsDashboardHeader> {
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                         Text(
-                          "\$${formatBalance(provider.userData?.invested ?? 0)}",
+                          "\$${formatBalance(provider.userData?.investedValue ?? 0)}",
                           style: styleGeorgiaBold(fontSize: 25),
                         ),
                         const SpacerVertical(height: 5),

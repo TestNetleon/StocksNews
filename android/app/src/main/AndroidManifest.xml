@@ -53,8 +53,6 @@
                 android:name="com.braze.api_key"
                 android:value="@string/braze_api_key_live" />
 
-
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>

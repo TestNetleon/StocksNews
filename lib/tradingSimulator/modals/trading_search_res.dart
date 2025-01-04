@@ -15,9 +15,10 @@ class TradingSearchTickerRes {
   final String? image;
   String? price;
   final String? change;
-  final double? changesPercentage;
+  final num? changesPercentage;
   final StockType? type;
   bool? isOpen;
+  final num? currentPrice;
 
   TradingSearchTickerRes({
     this.symbol,
@@ -28,16 +29,18 @@ class TradingSearchTickerRes {
     this.changesPercentage,
     this.isOpen = false,
     this.type,
+    this.currentPrice,
   });
 
   factory TradingSearchTickerRes.fromJson(Map<String, dynamic> json) =>
       TradingSearchTickerRes(
         symbol: json["symbol"],
         name: json["name"],
+        currentPrice: json['current_price'],
         image: json["image"],
         price: json["price"],
         change: json["change"],
-        changesPercentage: json["changesPercentage"]?.toDouble(),
+        changesPercentage: json["changesPercentage"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -46,6 +49,7 @@ class TradingSearchTickerRes {
         "image": image,
         "price": price,
         "change": change,
+        'current_price': currentPrice,
         "changesPercentage": changesPercentage,
       };
 }

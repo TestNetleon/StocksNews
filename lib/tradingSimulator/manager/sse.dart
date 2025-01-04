@@ -411,17 +411,14 @@ class SSEManager {
   final Map<String, Function(StockDataManagerRes)> _listeners = {};
   final Map<String, StreamSubscription?> _subscriptions = {};
 
-  /// Tracks streams for each screen
   final Map<SimulatorEnum, Set<String>> _screenStreams = {};
 
   SSEManager._internal();
 
-  /// Add a listener for a specific symbol
   void addListener(String symbol, Function(StockDataManagerRes) listener) {
     _listeners[symbol] = listener;
   }
 
-  /// Remove listener for a specific symbol
   void removeListener(String symbol) {
     _listeners.remove(symbol);
   }
@@ -454,7 +451,6 @@ class SSEManager {
   void connectMultipleStocks(
       {required List<String> symbols, required SimulatorEnum screen}) {
     final currentStreams = _screenStreams[screen] ?? {};
-    // Calculate symbols to disconnect
     final removedSymbols = currentStreams.difference(symbols.toSet());
     for (var symbol in removedSymbols) {
       disconnect(symbol);
@@ -488,7 +484,6 @@ class SSEManager {
     _screenStreams[screen] = currentStreams.union(newSymbols);
   }
 
-  /// Disconnect streams for a specific screen
   void disconnectScreen(SimulatorEnum screen) {
     final symbols = _screenStreams[screen] ?? {};
     for (var symbol in symbols) {
@@ -500,7 +495,6 @@ class SSEManager {
     _screenStreams.remove(screen);
   }
 
-  /// Disconnect all streams and clear resources
   void disconnectAllScreens() {
     for (var screen in _screenStreams.keys.toList()) {
       disconnectScreen(screen);
@@ -511,7 +505,6 @@ class SSEManager {
     }
   }
 
-  /// Notify the listener with processed stock data
   void _notifyListener(String symbol, StockDataManagerRes stockData) {
     final listener = _listeners[symbol];
     if (listener != null) {
@@ -519,7 +512,6 @@ class SSEManager {
     }
   }
 
-  /// Connect to a generic SSE stream
   void _connectToStream(
     String url,
     Function(Map<String, dynamic>) onData,
@@ -553,7 +545,6 @@ class SSEManager {
           if (kDebugMode) {
             print('Stream error: $error');
           }
-          // Handle errors by clearing the subscription and listener for all symbols
           final uri = Uri.parse(url);
           final symbols = uri.queryParameters['symbol']?.split(',');
 
@@ -561,9 +552,7 @@ class SSEManager {
             for (var symbol in symbols) {
               _handleStreamError(symbol);
             }
-            // Clear the screen's data and reset symbols' states for error
-            // final screen = _getScreenForSymbols(symbols);
-            _clearScreenData(type); // Clear data for the screen
+            _clearScreenData(type);
           }
         },
         cancelOnError: false,
@@ -594,25 +583,23 @@ class SSEManager {
   void _clearScreenData(SimulatorEnum screen) {
     final symbols = _screenStreams[screen] ?? {};
     for (var symbol in symbols) {
-      disconnect(symbol); // Disconnect symbol
-      removeListener(symbol); // Remove listener for symbol
+      disconnect(symbol);
+      removeListener(symbol);
     }
-    _screenStreams.remove(screen); // Remove screen from tracking
+    _screenStreams.remove(screen);
     if (kDebugMode) {
       print('Cleared all data and disconnected streams for screen $screen');
     }
   }
 
-  /// Handle errors by removing the subscription and listener for a symbol
   void _handleStreamError(String symbol) {
-    disconnect(symbol); // Clears the subscription
-    removeListener(symbol); // Removes the listener
+    disconnect(symbol);
+    removeListener(symbol);
     if (kDebugMode) {
       print('Cleared listener and subscription for $symbol due to an error.');
     }
   }
 
-  /// Disconnect a specific symbol
   void disconnect(String symbol) {
     final subscription = _subscriptions[symbol];
     subscription?.cancel();
@@ -622,7 +609,6 @@ class SSEManager {
     }
   }
 
-  /// Process raw stock data into a usable format
   StockDataManagerRes processStockData(Map<String, dynamic> data) {
     final extendedHoursType = data['ExtendedHoursType'];
     if (extendedHoursType == 'PreMarket' || extendedHoursType == 'PostMarket') {
