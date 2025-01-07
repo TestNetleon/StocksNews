@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -27,8 +28,62 @@ class TsPortfolioProvider extends ChangeNotifier {
   String? _error;
   String? get error => _error ?? Const.errSomethingWrong;
 
-  // Extra? _extra;
-  // Extra? get extra => _extra;
+  Extra? _extra;
+  Extra? get extra => _extra;
+
+  Timer? _timer;
+  String marketStatus = "Market will open in: ";
+  DateTime? marketTime;
+  DateTime? responseTime;
+
+  startTimer() {
+    if (_extra?.reponseTime != null && _userData?.marketTime != null) {
+      // Calculate the difference between the current time and the market open time
+      Duration difference = marketTime!.difference(responseTime!);
+
+      // Start the timer only if the market isn't already open
+      if (difference.isNegative) {
+        marketStatus = "Market is open now!";
+        _showMarketStatus();
+      } else {
+        marketStatus = "Market will open in: ${_formatDuration(difference)}";
+        _showMarketStatus();
+
+        _timer = Timer.periodic(Duration(seconds: 1), (timer) {
+          // Update the countdown every second
+          Duration remaining = marketTime!.difference(DateTime.now());
+          if (remaining.isNegative) {
+            // Market is open, so update the status
+            marketStatus = "Market is open now!";
+            _showMarketStatus();
+            timer.cancel();
+          } else {
+            marketStatus = "Market will open in: ${_formatDuration(remaining)}";
+            _showMarketStatus();
+          }
+        });
+      }
+    }
+  }
+
+  stopTimer() {
+    _timer?.cancel();
+  }
+
+  String _formatDuration(Duration duration) {
+    int hours = duration.inHours;
+    int minutes = duration.inMinutes % 60;
+    int seconds = duration.inSeconds % 60;
+    return "$hours:${_padTimeUnit(minutes)}:${_padTimeUnit(seconds)}";
+  }
+
+  String _padTimeUnit(int timeUnit) {
+    return timeUnit.toString().padLeft(2, '0');
+  }
+
+  _showMarketStatus() {
+    Utils().showLog(marketStatus);
+  }
 
   void setStatus(status) {
     _status = status;
@@ -99,7 +154,8 @@ class TsPortfolioProvider extends ChangeNotifier {
       if (response.status) {
         _userData = tsUserResFromJson(jsonEncode(response.data));
         // _userData?.tradeBalance = 100;
-        // _extra = (response.extra is Extra ? response.extra as Extra : null);
+        _extra = (response.extra is Extra ? response.extra as Extra : null);
+        // startTimer();
         _error = null;
       } else {
         _data = null;

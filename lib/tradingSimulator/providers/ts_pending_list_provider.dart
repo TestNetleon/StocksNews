@@ -36,6 +36,7 @@ class TsPendingListProvider extends ChangeNotifier {
   }
 
   Future getData({loadMore = false}) async {
+    navigatorKey.currentContext!.read<TsPortfolioProvider>().getDashboardData();
     if (loadMore) {
       _page++;
       setStatus(Status.loadingMore);
@@ -58,9 +59,7 @@ class TsPendingListProvider extends ChangeNotifier {
         request: request,
         showProgress: false,
       );
-      navigatorKey.currentContext!
-          .read<TsPortfolioProvider>()
-          .getDashboardData();
+
       if (response.status) {
         if (_page == 1) {
           _data = tsPendingListResFromJson(jsonEncode(response.data));

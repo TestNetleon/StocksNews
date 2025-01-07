@@ -8,14 +8,11 @@ import 'package:stocks_news_new/tradingSimulator/screens/dashboard/pending/ts_sl
 import 'package:stocks_news_new/tradingSimulator/screens/dashboard/tradeSheet.dart';
 import 'package:stocks_news_new/tradingSimulator/screens/tradeBuySell/index.dart';
 import 'package:stocks_news_new/utils/constants.dart';
-
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
 import 'package:stocks_news_new/widgets/refresh_controll.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
-
 import '../../../modals/trading_search_res.dart';
-import '../../../providers/ts_portfollo_provider.dart';
 
 class TsPendingList extends StatefulWidget {
   const TsPendingList({super.key});

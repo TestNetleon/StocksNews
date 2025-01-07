@@ -104,7 +104,7 @@ class TsOpenListItem extends StatelessWidget {
                       child: Padding(
                         padding: const EdgeInsets.only(top: 5),
                         child: Text(
-                          "Avg: ${item?.avgPrice}",
+                          "Avg: ${item?.avgPrice?.toFormattedPrice()}",
                           style: stylePTSansRegular(fontSize: 14),
                         ),
                       ),

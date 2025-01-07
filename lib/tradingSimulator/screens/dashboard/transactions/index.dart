@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:stocks_news_new/tradingSimulator/manager/sse.dart';
 import 'package:stocks_news_new/tradingSimulator/modals/ts_pending_list_res.dart';
 import 'package:stocks_news_new/tradingSimulator/screens/dashboard/tradeSheet.dart';
-import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/refresh_controll.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import '../../../modals/trading_search_res.dart';
-import '../../../providers/ts_portfollo_provider.dart';
 import '../../../providers/ts_transaction_list.dart';
 import 'item.dart';
 
@@ -37,7 +34,7 @@ class _TsTransactionListState extends State<TsTransactionList> {
 
   @override
   void dispose() {
-    SSEManager.instance.disconnectScreen(SimulatorEnum.transaction);
+    // SSEManager.instance.disconnectScreen(SimulatorEnum.transaction);
     Utils().showLog("TRANSACTIONS CLOSED");
     super.dispose();
   }

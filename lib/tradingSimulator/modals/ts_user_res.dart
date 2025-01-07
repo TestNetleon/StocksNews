@@ -11,6 +11,7 @@ class TsUserRes {
   num? investedValue;
   num? currentPositionAmount;
   num? todayReturn;
+  DateTime? marketTime;
   TsUserRes({
     required this.sqlId,
     required this.tradeBalance,
@@ -18,6 +19,7 @@ class TsUserRes {
     this.investedValue,
     this.currentPositionAmount,
     this.todayReturn,
+    this.marketTime,
   });
 
   factory TsUserRes.fromJson(Map<String, dynamic> json) => TsUserRes(
@@ -27,6 +29,7 @@ class TsUserRes {
         investedValue: json['invested_value'],
         currentPositionAmount: json['current_position_amount'],
         todayReturn: json['today_return'],
+        marketTime: DateTime.parse(json["market_opening_date_time"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -36,5 +39,6 @@ class TsUserRes {
         "invested_value": investedValue,
         'current_position_amount': currentPositionAmount,
         'today_return': todayReturn,
+        'market_opening_date_time': marketTime,
       };
 }

@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/api/api_response.dart';
-import 'package:stocks_news_new/tournament/provider/tournament.dart';
 import 'package:stocks_news_new/tournament/provider/search.dart';
-import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/utils/colors.dart';
@@ -88,9 +86,9 @@ class _TournamentOpenIndexState extends State<TournamentOpenIndex>
       popUpAlert(title: 'Alert', message: 'Please select a ticker');
       return;
     }
-    TournamentProvider tournamentProvider = context.read<TournamentProvider>();
+    // TournamentProvider tournamentProvider = context.read<TournamentProvider>();
 
-    UserProvider userProvider = context.read<UserProvider>();
+    // UserProvider userProvider = context.read<UserProvider>();
 
     // if (type == StockType.buy) {
     //   request['trade_type'] = 'buy';
@@ -103,8 +101,8 @@ class _TournamentOpenIndexState extends State<TournamentOpenIndex>
   }
 
   _close() {
-    TournamentTradesProvider provider =
-        navigatorKey.currentContext!.read<TournamentTradesProvider>();
+    // TournamentTradesProvider provider =
+    //     navigatorKey.currentContext!.read<TournamentTradesProvider>();
 
     // provider.tradeCancle();
   }

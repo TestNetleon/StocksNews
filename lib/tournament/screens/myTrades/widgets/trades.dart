@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:stocks_news_new/tournament/provider/trades.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import '../../../../utils/colors.dart';
 import '../../../../utils/constants.dart';
@@ -25,8 +23,8 @@ class _TournamentTradesState extends State<TournamentTrades> {
 
   @override
   Widget build(BuildContext context) {
-    TournamentTradesProvider provider =
-        context.watch<TournamentTradesProvider>();
+    // TournamentTradesProvider provider =
+    //     context.watch<TournamentTradesProvider>();
 
     var outlineInputBorder = OutlineInputBorder(
       borderRadius: BorderRadius.circular(Dimen.radius),

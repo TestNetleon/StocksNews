@@ -36,6 +36,7 @@ class TournamentTradesProvider extends ChangeNotifier {
   void setSelectedOverview(KeyValueElementStockScreener? data) {
     _selectedOverview = data;
     notifyListeners();
+    getTradesList();
   }
 
   void setStatusOverview(status) {
@@ -81,8 +82,18 @@ class TournamentTradesProvider extends ChangeNotifier {
   Future getTradesList() async {
     setStatus(Status.loading);
     try {
+      TournamentProvider provider =
+          navigatorKey.currentContext!.read<TournamentProvider>();
+      Map request = {
+        "token":
+            navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
+        'tournament_battle_id':
+            '${provider.detailRes?.tournamentBattleId ?? ''}',
+      };
+
       ApiResponse response = await apiRequest(
         url: Apis.tTradeList,
+        request: request,
       );
       if (response.status) {
       } else {

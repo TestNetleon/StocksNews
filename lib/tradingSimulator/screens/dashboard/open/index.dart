@@ -8,10 +8,8 @@ import 'package:stocks_news_new/tradingSimulator/screens/dashboard/tradeSheet.da
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
-import 'package:stocks_news_new/widgets/refresh_controll.dart';
+import 'package:stocks_news_new/widgets/custom/refresh_indicator.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
-
-import '../../../providers/ts_portfollo_provider.dart';
 
 class TsOpenList extends StatefulWidget {
   const TsOpenList({super.key});
@@ -29,9 +27,9 @@ class _TsOpenListState extends State<TsOpenList> {
     });
   }
 
-  Future _getData({loadMore = false}) async {
+  Future _getData() async {
     TsOpenListProvider provider = context.read<TsOpenListProvider>();
-    await provider.getData(loadMore: loadMore);
+    await provider.getData();
   }
 
   @override
@@ -52,16 +50,10 @@ class _TsOpenListState extends State<TsOpenList> {
       errorDispCommon: false,
       onRefresh: _getData,
       showPreparingText: true,
-      child:
-          // provider.data==null
-          //   ? const SummaryErrorWidget(title: "No open orders")
-          //   :
-          RefreshControl(
+      child: CommonRefreshIndicator(
         onRefresh: () async {
           await _getData();
         },
-        canLoadMore: provider.canLoadMore,
-        onLoadMore: () async => await _getData(loadMore: true),
         child: ListView.separated(
           padding: EdgeInsets.only(bottom: 20),
           itemBuilder: (context, index) {

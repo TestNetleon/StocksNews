@@ -19,7 +19,7 @@ class TsOpenListRes {
   num? change;
   num? changesPercentage;
   final String? company;
-  final String? avgPrice;
+  final num? avgPrice;
   final DateTime? createdAt;
 
   TsOpenListRes({
