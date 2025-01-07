@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
@@ -82,7 +83,7 @@ class _SdOverviewState extends State<SdOverview> {
                 const SpacerVertical(height: 4),
                 const SdTopDisclaimer(),
                 Visibility(
-                  visible: provider.tabRes?.showAnalysis == true,
+                  visible: provider.tabRes?.showAnalysis == true || kDebugMode,
                   child: ThemeButtonSmall(
                     text: "Stock Analysis",
                     onPressed: () {
