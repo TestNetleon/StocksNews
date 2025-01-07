@@ -46,6 +46,9 @@ import 'package:stocks_news_new/providers/store_provider.dart';
 import 'package:stocks_news_new/providers/today_breackout_stocks_provider.dart';
 import 'package:stocks_news_new/providers/today_top_loser_provider.dart';
 import 'package:stocks_news_new/screens/auth/newFlow/login.dart';
+import 'package:stocks_news_new/stocksScanner/providers/market_scanner_provider.dart';
+import 'package:stocks_news_new/stocksScanner/providers/top_gainer_scanner_provider.dart';
+import 'package:stocks_news_new/stocksScanner/providers/top_loser_scanner_provider.dart';
 import 'package:stocks_news_new/tradingSimulator/providers/trade_provider.dart';
 import 'package:stocks_news_new/providers/unusual_trading_volume_provider.dart';
 import 'package:stocks_news_new/providers/most_volatile_stocks.dart';
@@ -602,6 +605,9 @@ class Routes {
       ChangeNotifierProvider(create: (_) => BlackFridayProvider()),
       ChangeNotifierProvider(create: (_) => ChristmasProvider()),
       ChangeNotifierProvider(create: (_) => TsTransactionListProvider()),
+      ChangeNotifierProvider(create: (_) => MarketScannerProvider()),
+      ChangeNotifierProvider(create: (_) => TopGainerScannerProvider()),
+      ChangeNotifierProvider(create: (_) => TopLoserScannerProvider()),
     ];
   }
 }
