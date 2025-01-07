@@ -52,6 +52,7 @@ class TsTransactionListProvider extends ChangeNotifier {
   }
 
   Future getData({loadMore = false}) async {
+    // navigatorKey.currentContext!.read<TsPortfolioProvider>().getDashboardData();
     if (loadMore) {
       _page++;
       setStatus(Status.loadingMore);
@@ -81,21 +82,19 @@ class TsTransactionListProvider extends ChangeNotifier {
           _data?.addAll(tsPendingListResFromJson(jsonEncode(response.data)));
         }
 
-        List<String> symbols =
-            _data?.map((stock) => stock.symbol ?? '').toList() ?? [];
-        // SSEManager.instance.disconnectAll();
-        // SSEManager.instance.connectToSSEForMultipleStocks(symbols);
+        // List<String> symbols =
+        //     _data?.map((stock) => stock.symbol ?? '').toList() ?? [];
 
-        SSEManager.instance.connectMultipleStocks(
-          screen: SimulatorEnum.transaction,
-          symbols: symbols,
-        );
-        for (var symbol in symbols) {
-          SSEManager.instance.addListener(symbol,
-              (StockDataManagerRes stockData) {
-            _updateStockData(symbol, stockData);
-          });
-        }
+        // SSEManager.instance.connectMultipleStocks(
+        //   screen: SimulatorEnum.transaction,
+        //   symbols: symbols,
+        // );
+        // for (var symbol in symbols) {
+        //   SSEManager.instance.addListener(symbol,
+        //       (StockDataManagerRes stockData) {
+        //     _updateStockData(symbol, stockData);
+        //   });
+        // }
       } else {
         if (_page == 1) {
           _data = null;

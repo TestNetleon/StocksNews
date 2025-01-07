@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:stocks_news_new/tradingSimulator/modals/ts_pending_list_res.dart';
 import 'package:stocks_news_new/utils/colors.dart';
-import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/theme_image_view.dart';
@@ -52,21 +51,6 @@ class TsTransactionListItem extends StatelessWidget {
                               overflow: TextOverflow.ellipsis,
                             ),
                           ),
-                          Visibility(
-                            visible: item?.currentPrice != null,
-                            child: Padding(
-                              padding: const EdgeInsets.only(top: 5),
-                              child: Text(
-                                "Price: ${item?.currentPrice?.toFormattedPrice()}",
-                                style: styleGeorgiaRegular(
-                                  // color: ThemeColors.greyText,
-                                  fontSize: 14,
-                                ),
-                                // maxLines: 2,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ),
-                          ),
                         ],
                       ),
                     ),
@@ -81,30 +65,77 @@ class TsTransactionListItem extends StatelessWidget {
                             style: stylePTSansBold(fontSize: 18),
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 5),
-                          child: Text(
-                            item?.tradeStatus == 'PENDING'
-                                ? "Price at Market"
-                                : 'Executed at: ${item?.price ?? '0'}',
-                            style: stylePTSansRegular(fontSize: 14),
-                          ),
-                        ),
-                        Visibility(
-                          visible: item?.tradeStatus != 'PENDING' &&
-                              item?.investedValue != null &&
-                              item?.investedValue != '',
-                          child: Padding(
-                            padding: const EdgeInsets.only(top: 5),
-                            child: Text(
-                              'Order value: ${item?.investedValue}',
-                              style: stylePTSansRegular(fontSize: 14),
-                            ),
-                          ),
-                        ),
                       ],
                     ),
                   ],
+                ),
+                IntrinsicHeight(
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Column(
+                          children: [
+                            Text(
+                              item?.tradeStatus == 'PENDING'
+                                  ? "Will Execute on"
+                                  : 'Executed at',
+                              style: stylePTSansRegular(fontSize: 14),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 5),
+                              child: Text(
+                                item?.tradeStatus == 'PENDING'
+                                    ? "Price at Market"
+                                    : item?.price ?? '0',
+                                style: styleGeorgiaBold(fontSize: 16),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Visibility(
+                          visible: item?.tradeStatus != 'PENDING' &&
+                              item?.investedValue != null &&
+                              item?.investedValue != '',
+                          child: VerticalDivider(
+                            color: ThemeColors.greyBorder,
+                            thickness: 1,
+                          )),
+                      Visibility(
+                        visible: item?.tradeStatus != 'PENDING' &&
+                            item?.investedValue != null &&
+                            item?.investedValue != '',
+                        child: Expanded(
+                          child: Column(
+                            children: [
+                              Text(
+                                'Order value',
+                                style: stylePTSansRegular(fontSize: 14),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(top: 5),
+                                child: Text(
+                                  item?.investedValue ?? 'N/A',
+                                  style: styleGeorgiaBold(fontSize: 16),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.only(top: 15),
+                  alignment: Alignment.center,
+                  child: Text(
+                    '${item?.date}',
+                    style: styleGeorgiaRegular(
+                      color: ThemeColors.greyText,
+                      fontSize: 14,
+                    ),
+                  ),
                 ),
               ],
             ),

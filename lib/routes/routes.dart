@@ -2,7 +2,9 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:stocks_news_new/arena/provider/arena.dart';
+import 'package:stocks_news_new/tournament/provider/leaderboard.dart';
+import 'package:stocks_news_new/tournament/provider/tournament.dart';
+import 'package:stocks_news_new/tournament/provider/search.dart';
 import 'package:stocks_news_new/providers/ad_provider.dart';
 import 'package:stocks_news_new/providers/ai_provider.dart';
 import 'package:stocks_news_new/providers/alert_provider.dart';
@@ -110,7 +112,7 @@ import 'package:stocks_news_new/tradingSimulator/providers/ts_pending_list_provi
 import 'package:stocks_news_new/tradingSimulator/providers/ts_portfollo_provider.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/utils.dart';
-import '../arena/provider/trades.dart';
+import '../tournament/provider/trades.dart';
 import '../providers/offerMembership/black_friday.dart';
 import '../providers/featured_ticker.dart';
 import '../providers/high_low_pe.dart';
@@ -600,14 +602,16 @@ class Routes {
       ChangeNotifierProvider(create: (_) => NewHelpDeskProvider()),
       ChangeNotifierProvider(create: (_) => MSAnalysisProvider()),
       ChangeNotifierProvider(create: (_) => MissionProvider()),
-      ChangeNotifierProvider(create: (_) => ArenaProvider()),
-      ChangeNotifierProvider(create: (_) => TradesProvider()),
+      ChangeNotifierProvider(create: (_) => TournamentProvider()),
+      ChangeNotifierProvider(create: (_) => TournamentTradesProvider()),
       ChangeNotifierProvider(create: (_) => BlackFridayProvider()),
       ChangeNotifierProvider(create: (_) => ChristmasProvider()),
       ChangeNotifierProvider(create: (_) => TsTransactionListProvider()),
       ChangeNotifierProvider(create: (_) => MarketScannerProvider()),
       ChangeNotifierProvider(create: (_) => TopGainerScannerProvider()),
       ChangeNotifierProvider(create: (_) => TopLoserScannerProvider()),
+      ChangeNotifierProvider(create: (_) => TournamentSearchProvider()),
+      ChangeNotifierProvider(create: (_) => TournamentLeaderboardProvider()),
     ];
   }
 }

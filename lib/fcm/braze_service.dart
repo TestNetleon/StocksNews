@@ -19,6 +19,8 @@ import '../providers/home_provider.dart';
 import '../providers/user_provider.dart';
 import '../screens/auth/base/base_auth.dart';
 import '../screens/offerMembership/blackFriday/index.dart';
+import '../tradingSimulator/providers/ts_pending_list_provider.dart';
+import '../tradingSimulator/screens/dashboard/index.dart';
 import '../utils/utils.dart';
 import 'package:stocks_news_new/screens/affiliate/index.dart';
 import 'package:stocks_news_new/screens/auth/refer/refer_code.dart';
@@ -304,6 +306,20 @@ class BrazeNotificationService {
             openUrl("https://apps.apple.com/us/app/stocks-news/id6476615803");
           }
         });
+      } else if (slug != '' &&
+          slug != null &&
+          type == NotificationType.simulator.name) {
+        if (whenAppKilled) {
+          Navigator.push(
+            navigatorKey.currentContext!,
+            MaterialPageRoute(
+              builder: (_) => TsDashboard(),
+            ),
+          );
+        } else {
+          popHome = true;
+          navigatorKey.currentContext!.read<TsPendingListProvider>().getData();
+        }
       } else {
         Navigator.popUntil(
             navigatorKey.currentContext!, (route) => route.isFirst);

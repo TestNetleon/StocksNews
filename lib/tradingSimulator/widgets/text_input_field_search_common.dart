@@ -287,7 +287,7 @@ class _TsTextInputFieldSearchCommonState extends State<TsTextInputFieldSearch> {
                               onTap: () {
                                 closeKeyboard();
                                 provider.clearSearch();
-                                _onTap(symbol: data?.symbol ?? "");
+                                _onTap(symbol: data?.symbol ?? "", data: data);
                                 // Navigator.push(
                                 //   navigatorKey.currentContext!,
                                 //   MaterialPageRoute(

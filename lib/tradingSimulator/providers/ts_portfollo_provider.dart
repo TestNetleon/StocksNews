@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -27,20 +28,27 @@ class TsPortfolioProvider extends ChangeNotifier {
   String? _error;
   String? get error => _error ?? Const.errSomethingWrong;
 
-  // Extra? _extra;
-  // Extra? get extra => _extra;
+  Extra? _extra;
+  Extra? get extra => _extra;
 
   void setStatus(status) {
     _status = status;
     notifyListeners();
   }
 
-  void updateBalance({num? position, num? marketValue}) {
+  void updateBalance({
+    num? position,
+    num? marketValue,
+    num? todayReturn,
+  }) {
     if (position != null) {
       _userData?.currentPositionAmount = position;
     }
     if (marketValue != null) {
       _userData?.investedValue = marketValue;
+    }
+    if (todayReturn != null) {
+      _userData?.todayReturn = todayReturn;
     }
     notifyListeners();
   }
@@ -51,7 +59,7 @@ class TsPortfolioProvider extends ChangeNotifier {
       Map request = {
         "token":
             navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
-        "mssql_id": "${userData?.sqlId}"
+        // "mssql_id": "${userData?.sqlId}"
       };
 
       ApiResponse response = await apiRequest(
@@ -92,7 +100,7 @@ class TsPortfolioProvider extends ChangeNotifier {
       if (response.status) {
         _userData = tsUserResFromJson(jsonEncode(response.data));
         // _userData?.tradeBalance = 100;
-        // _extra = (response.extra is Extra ? response.extra as Extra : null);
+        _extra = (response.extra is Extra ? response.extra as Extra : null);
         _error = null;
       } else {
         _data = null;
@@ -102,7 +110,7 @@ class TsPortfolioProvider extends ChangeNotifier {
       setStatus(Status.loaded);
     } catch (e) {
       _error = Const.errSomethingWrong;
-      Utils().showLog(e.toString());
+      Utils().showLog('Error getDashboardData $e');
       setStatus(Status.loaded);
     }
   }

@@ -6,6 +6,7 @@ import 'package:stocks_news_new/tradingSimulator/screens/dashboard/index.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/cache_network_image.dart';
+import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/theme_button.dart';
 
@@ -21,7 +22,7 @@ Future showTsOrderSuccessSheet(SummaryOrderNew? order, bool buy) async {
       ),
     ),
     backgroundColor: ThemeColors.transparent,
-    isScrollControlled: false,
+    isScrollControlled: true,
     context: navigatorKey.currentContext!,
     builder: (context) {
       return SuccessTradeSheet(
@@ -77,30 +78,82 @@ class SuccessTradeSheet extends StatelessWidget {
           children: [
             SpacerVertical(height: 20),
             Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(
-                  height: 50,
-                  width: 50,
-                  child: CachedNetworkImagesWidget(order?.image),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      height: 50,
+                      width: 50,
+                      child: CachedNetworkImagesWidget(order?.image),
+                    ),
+                    SpacerHorizontal(width: 10),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          order?.symbol ?? 'N/A',
+                          style: styleGeorgiaBold(fontSize: 20),
+                        ),
+                        Text(
+                          order?.name ?? 'N/A',
+                          style:
+                              styleGeorgiaRegular(color: ThemeColors.greyText),
+                        ),
+                      ],
+                    )
+                  ],
                 ),
                 const SpacerVertical(height: 10),
                 Text(
-                  buy
-                      ? "${order?.shares?.toCurrency()} ${order?.symbol} Purchased"
-                      : "${order?.shares?.toCurrency()} ${order?.symbol} Sold",
-                  style: stylePTSansBold(
-                    color: ThemeColors.white,
-                    fontSize: 20,
-                  ),
+                  'Order Detail',
+                  style: styleGeorgiaBold(fontSize: 20),
                 ),
-                // const SpacerVertical(height: 10),
-                // Text(
-                //   "Total Invested: \$${order?.invested?.toCurrency()}",
-                //   style: stylePTSansBold(
-                //     color: ThemeColors.greyText,
-                //     fontSize: 15,
-                //   ),
-                // ),
+                const SpacerVertical(height: 10),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "QTY",
+                      style: styleGeorgiaRegular(
+                        color: ThemeColors.white,
+                      ),
+                    ),
+                    Text(
+                      "${order?.shares?.toCurrency()}",
+                      style: styleGeorgiaRegular(
+                        color: ThemeColors.white,
+                      ),
+                    ),
+                  ],
+                ),
+                Divider(
+                  color: ThemeColors.greyText,
+                  height: 15,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "Order Type",
+                      style: styleGeorgiaRegular(
+                        color: ThemeColors.white,
+                      ),
+                    ),
+                    Text(
+                      buy ? "Buy" : 'Sell',
+                      style: styleGeorgiaRegular(
+                        color: ThemeColors.white,
+                      ),
+                    ),
+                  ],
+                ),
+                Divider(
+                  color: ThemeColors.greyText,
+                  height: 15,
+                ),
               ],
             ),
             const SpacerVertical(height: 40),

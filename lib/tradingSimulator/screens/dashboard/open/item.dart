@@ -95,7 +95,7 @@ class TsOpenListItem extends StatelessWidget {
                     Visibility(
                       visible: item?.quantity != null,
                       child: Text(
-                        "${item?.quantity} Qty",
+                        "${item?.quantity} QTY",
                         style: stylePTSansBold(fontSize: 18),
                       ),
                     ),
@@ -104,7 +104,7 @@ class TsOpenListItem extends StatelessWidget {
                       child: Padding(
                         padding: const EdgeInsets.only(top: 5),
                         child: Text(
-                          "Avg: ${item?.avgPrice}",
+                          "AVG: ${item?.avgPrice?.toFormattedPrice()}",
                           style: stylePTSansRegular(fontSize: 14),
                         ),
                       ),

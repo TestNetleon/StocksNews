@@ -28,7 +28,7 @@ import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/custom/refer.dart';
 import 'package:stocks_news_new/widgets/logout.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
-import '../../../arena/screens/index.dart';
+import '../../../tournament/screens/game_tournament_index.dart';
 import '../../../tradingSimulator/screens/dashboard/index.dart';
 import '../../../utils/constants.dart';
 import '../../../utils/theme.dart';
@@ -238,7 +238,7 @@ class _AboutStocksNewsState extends State<AboutStocksNews> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => ArenaIndex(),
+                builder: (context) => GameTournamentIndex(),
               ),
             );
           },

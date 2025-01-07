@@ -206,7 +206,7 @@ class Apis {
   static const tsOrderList = "/simulator/holding-list";
   static const tradingMostSearch = "/simulator/most-search-symbol";
   static const tsRequestTrade = "/simulator/trade/store";
-  static const tsSearchSymbol = "/simulator/search-symbol";
+  static const tsSearchSymbol = "/simulator/trade/search-symbol";
   static const tsPendingList = "/simulator/pending-list";
   static const tsOpenList = "/simulator/list-purchased-shares";
   static const stockHoldings = '/simulator/stock-holdings';
@@ -248,9 +248,16 @@ class Apis {
   //
   static const myTickers = "/my-tickers-list";
   static const appsflyerUsers = '/appsflyer-users';
-  static const tournament = '/tournament';
-  static const tournamentLeaderboard = '/tournament/leaderboard/by-date';
-  static const tournamentDetail = '/tournament-details';
+  static const t = '/tournament';
+  static const tLeaderboard = '/tournament/leaderboard/by-date';
+  static const tDetail = '/tournament-details';
+  static const tJoin = '/tournament/join';
+  static const tShow = '/tournament/show';
+  static const tBuyOrSell = '/tournament/ticker/action';
+  static const tTickerDetail = '/tournament/ticker-detail';
+  static const tCancle = '/tournament/trade/status';
+  static const tTradeOverview = '/tournament/trade/list-overview';
+  static const tTradeList = '/tournament/trade/list';
 }
 
 class ApiKeys {

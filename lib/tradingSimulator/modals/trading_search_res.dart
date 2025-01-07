@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import '../../arena/provider/trades.dart';
+import '../../tournament/provider/trades.dart';
 
 List<TradingSearchTickerRes> tradingSearchTickerResFromJson(String str) =>
     List<TradingSearchTickerRes>.from(
@@ -14,7 +14,7 @@ class TradingSearchTickerRes {
   final String? name;
   final String? image;
   String? price;
-  final String? change;
+  final num? change;
   final num? changesPercentage;
   final StockType? type;
   bool? isOpen;
