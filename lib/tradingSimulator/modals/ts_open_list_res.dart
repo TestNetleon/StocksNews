@@ -20,9 +20,11 @@ class TsOpenListRes {
   num? changesPercentage;
   final String? company;
   final String? avgPrice;
+  final DateTime? createdAt;
 
   TsOpenListRes({
     this.symbol,
+    this.createdAt,
     this.quantity,
     this.currentPrice,
     this.invested,
@@ -39,6 +41,9 @@ class TsOpenListRes {
   factory TsOpenListRes.fromJson(Map<String, dynamic> json) => TsOpenListRes(
         symbol: json["symbol"],
         avgPrice: json['average_price'],
+        createdAt: json["created_at"] == null
+            ? null
+            : DateTime.parse(json["created_at"]),
         quantity: json["quantity"],
         currentPrice: json["currentPrice"],
         invested: json["total_invested"],
@@ -57,6 +62,7 @@ class TsOpenListRes {
         "currentPrice": currentPrice,
         "total_invested": invested,
         "image": image,
+        "created_at": createdAt,
         "change": change,
         "changesPercentage": changesPercentage,
         "company": company,

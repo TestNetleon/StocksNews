@@ -62,7 +62,6 @@ class _TsTransactionListState extends State<TsTransactionList> {
         // onRefresh: _getData,
         onRefresh: () async {
           await _getData();
-          context.read<TsPortfolioProvider>().getDashboardData();
         },
         canLoadMore: provider.canLoadMore,
         onLoadMore: () async => await _getData(loadMore: true),

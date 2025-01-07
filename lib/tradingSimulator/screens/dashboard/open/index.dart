@@ -59,7 +59,6 @@ class _TsOpenListState extends State<TsOpenList> {
           RefreshControl(
         onRefresh: () async {
           await _getData();
-          context.read<TsPortfolioProvider>().getDashboardData();
         },
         canLoadMore: provider.canLoadMore,
         onLoadMore: () async => await _getData(loadMore: true),
@@ -75,8 +74,6 @@ class _TsOpenListState extends State<TsOpenList> {
                   doPop: false,
                   qty: item.quantity,
                   data: TradingSearchTickerRes(
-                    change: '${item.change}',
-                    changesPercentage: item.changesPercentage,
                     image: item.image,
                     name: item.company,
                     currentPrice: item.currentPrice,

@@ -19,6 +19,7 @@ class TsPendingListRes {
   num? currentPrice;
   final String? tradeStatus;
   final String? investedValue;
+  final String? date;
 
   TsPendingListRes({
     this.symbol,
@@ -31,21 +32,24 @@ class TsPendingListRes {
     this.currentPrice,
     this.tradeStatus,
     this.investedValue,
+    this.date,
   });
 
   factory TsPendingListRes.fromJson(Map<String, dynamic> json) =>
       TsPendingListRes(
-          symbol: json["symbol"],
-          investedValue: json['invested_value'],
-          company: json["company"],
-          image: json["image"],
-          price: json["price"],
-          quantity: json["quantity"],
-          tradeType: json["trade_type"],
-          tradeStatus: json['trade_status'],
-          // orderType: Types.fromJson(json["order_type"]),
-          orderType: json['order_type'],
-          currentPrice: json['currentPrice']);
+        symbol: json["symbol"],
+        investedValue: json['invested_value'],
+        company: json["company"],
+        image: json["image"],
+        price: json["price"],
+        quantity: json["quantity"],
+        tradeType: json["trade_type"],
+        tradeStatus: json['trade_status'],
+        // orderType: Types.fromJson(json["order_type"]),
+        orderType: json['order_type'],
+        currentPrice: json['currentPrice'],
+        date: json['updated_at'],
+      );
 
   Map<String, dynamic> toJson() => {
         "symbol": symbol,
@@ -59,6 +63,7 @@ class TsPendingListRes {
         // "order_type": orderType.toJson(),
         "order_type": orderType,
         "currentPrice": currentPrice,
+        "updated_at": date,
       };
 }
 

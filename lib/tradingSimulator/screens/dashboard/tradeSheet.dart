@@ -126,7 +126,7 @@ class SearchTicker extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Container(
-            padding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
             child: Column(
               children: [
                 Row(
@@ -134,14 +134,13 @@ class SearchTicker extends StatelessWidget {
                     ClipRRect(
                       borderRadius: BorderRadius.circular(80),
                       child: Container(
-                        margin: EdgeInsets.all(5),
-                        padding: const EdgeInsets.all(6),
+                        padding: const EdgeInsets.all(10),
                         decoration: BoxDecoration(
                           color: const Color.fromARGB(255, 224, 225, 227),
                           shape: BoxShape.circle,
                         ),
-                        width: 55,
-                        height: 55,
+                        width: 60,
+                        height: 60,
                         child: CachedNetworkImagesWidget(data?.image ?? ""),
                       ),
                     ),
@@ -181,6 +180,7 @@ class SearchTicker extends StatelessWidget {
                 //       color: ThemeColors.blackShade, fontSize: 16),
                 // ),
                 RichText(
+                  textAlign: TextAlign.center,
                   text: TextSpan(
                       text: 'Kindly select ',
                       style: styleGeorgiaBold(
@@ -226,7 +226,7 @@ class SearchTicker extends StatelessWidget {
             height: 20,
           ),
           Padding(
-            padding: const EdgeInsets.fromLTRB(30, 10, 30, 40),
+            padding: const EdgeInsets.fromLTRB(10, 10, 10, 40),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -310,6 +310,7 @@ class SearchTicker extends StatelessWidget {
         ),
         child: Text(
           "$text",
+          textAlign: TextAlign.center,
           style: stylePTSansBold(color: textColor, fontSize: 18),
         ),
         // Row(

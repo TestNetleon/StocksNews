@@ -5,6 +5,7 @@ import 'package:stocks_news_new/tradingSimulator/providers/trade_provider.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/tradingSimulator/screens/trade/sheet.dart';
 import 'package:stocks_news_new/utils/colors.dart';
+import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/cache_network_image.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
@@ -166,7 +167,7 @@ class SdTradeDefaultItem extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     Text(
-                      data.price ?? "",
+                      '${data.currentPrice?.toFormattedPrice()}',
                       style: stylePTSansBold(fontSize: 18),
                     ),
                     const SpacerVertical(height: 5),
@@ -174,7 +175,8 @@ class SdTradeDefaultItem extends StatelessWidget {
                       text: TextSpan(
                         children: [
                           TextSpan(
-                            text: "${data.change} (${data.changesPercentage}%)",
+                            text:
+                                "${data.change?.toFormattedPrice()} (${data.changesPercentage}%)",
                             style: stylePTSansRegular(
                               fontSize: 14,
                               color: (data.changesPercentage ?? 0) >= 0

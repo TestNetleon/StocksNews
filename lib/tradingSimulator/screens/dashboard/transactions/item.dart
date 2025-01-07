@@ -106,6 +106,17 @@ class TsTransactionListItem extends StatelessWidget {
                     ),
                   ],
                 ),
+                Container(
+                  margin: EdgeInsets.only(top: 15),
+                  alignment: Alignment.centerRight,
+                  child: Text(
+                    '${item?.date}',
+                    style: styleGeorgiaRegular(
+                      color: ThemeColors.greyText,
+                      fontSize: 14,
+                    ),
+                  ),
+                ),
               ],
             ),
           ),

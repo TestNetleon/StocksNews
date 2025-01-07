@@ -46,6 +46,7 @@ class ApiResponse {
 }
 
 class Extra {
+  final DateTime? reponseTime;
   final List<String>? feebackType;
   final String? search;
   final int? notificationCount;
@@ -147,6 +148,7 @@ class Extra {
   // final num? isRegistered;
 
   Extra({
+    this.reponseTime,
     this.activeMembership,
     this.blackFriday,
     this.showBlackFriday,
@@ -269,6 +271,9 @@ class Extra {
             : UpdateYourPhoneRes.fromJson(json["update_your_email_address"]),
 
         recommendation: json["recommendation"],
+        reponseTime: json["reponse_time"] == null
+            ? null
+            : DateTime.parse(json["reponse_time"]),
         showRewards: json['show_rewards'],
         showAnalysis: json['show_analysis'],
         storeTitle: json["store_title"],
@@ -431,6 +436,7 @@ class Extra {
         "phone_code_error": phoneCodeError,
         'show_trading_simulator': showTradingSimulator,
         'show_arena': showArena,
+        "reponse_time": reponseTime,
         "phone_error": phoneError,
         // "is_registered": isRegistered,
         'show_analysis': showAnalysis,

@@ -35,12 +35,19 @@ class TsPortfolioProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void updateBalance({num? position, num? marketValue}) {
+  void updateBalance({
+    num? position,
+    num? marketValue,
+    num? todayReturn,
+  }) {
     if (position != null) {
       _userData?.currentPositionAmount = position;
     }
     if (marketValue != null) {
       _userData?.investedValue = marketValue;
+    }
+    if (todayReturn != null) {
+      _userData?.todayReturn = todayReturn;
     }
     notifyListeners();
   }

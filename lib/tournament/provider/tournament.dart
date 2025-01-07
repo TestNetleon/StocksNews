@@ -1,0 +1,283 @@
+import 'dart:async';
+import 'dart:convert';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:stocks_news_new/modals/user_res.dart';
+import '../../api/api_requester.dart';
+import '../../api/api_response.dart';
+import '../../api/apis.dart';
+import '../../providers/user_provider.dart';
+import '../../routes/my_app.dart';
+import '../../utils/constants.dart';
+import '../../utils/utils.dart';
+import '../models/tournament.dart';
+import '../models/tournament_detail.dart';
+import '../screens/tournaments/dayTraining/open/index.dart';
+
+class TournamentProvider extends ChangeNotifier {
+  int selectedTab = 0;
+
+  onTabChange(index) {
+    selectedTab = index;
+    notifyListeners();
+  }
+
+  List<String> tabs = [
+    'Tournaments',
+    'Leaderboard',
+    'Trades',
+  ];
+
+  num hours = 00;
+  num minutes = 00;
+  num seconds = 00;
+  Timer? _timer;
+
+  timer(bool start) {
+    if (start) {
+      _timer?.cancel();
+      hours = 24;
+      minutes = 0;
+      seconds = 0;
+      startCountdown();
+    } else {
+      _timer?.cancel();
+    }
+  }
+
+  void startCountdown() async {
+    DateTime? start = _detailRes?.battleTime?.startTime;
+    DateTime? end = _detailRes?.battleTime?.endTime;
+
+    DateTime serverTime = _detailRes!.battleTime!.currentTime!;
+
+    if (start == null || end == null) {
+      return;
+    }
+
+    Utils().showLog('ServerTime $serverTime');
+    Utils().showLog('Start $start');
+    Utils().showLog('End $end');
+
+    if (serverTime.isBefore(start)) {
+      // Before tournament start
+      if (kDebugMode) {
+        print('1: Before start time');
+      }
+      _startTimer(start.difference(serverTime));
+    } else if (serverTime.isAfter(start) && serverTime.isBefore(end)) {
+      // During tournament
+      if (kDebugMode) {
+        print('2: During tournament');
+      }
+      _startTimer(end.difference(serverTime));
+    } else {
+      // After tournament end
+      if (kDebugMode) {
+        print('3: Tournament over');
+      }
+      hours = 0;
+      minutes = 0;
+      seconds = 0;
+      notifyListeners();
+    }
+  }
+
+  void _startTimer(Duration initialDuration) {
+    // Set initial time
+    hours = initialDuration.inHours;
+    minutes = initialDuration.inMinutes % 60;
+    seconds = initialDuration.inSeconds % 60;
+
+    // Start the periodic timer
+    _timer = Timer.periodic(Duration(seconds: 1), (timer) {
+      if (hours == 0 && minutes == 0 && seconds == 0) {
+        // Stop the timer when countdown reaches zero
+        stopCountdown();
+      } else {
+        // Decrement the countdown
+        if (seconds > 0) {
+          seconds--;
+        } else {
+          if (minutes > 0) {
+            minutes--;
+            seconds = 59;
+          } else {
+            if (hours > 0) {
+              hours--;
+              minutes = 59;
+              seconds = 59;
+            }
+          }
+        }
+      }
+      notifyListeners();
+    });
+  }
+
+  void stopCountdown() {
+    _timer?.cancel();
+  }
+
+  Map<String, String> get timeRemaining {
+    return {
+      'hours': hours.toString().padLeft(2, '0'),
+      'minutes': minutes.toString().padLeft(2, '0'),
+      'seconds': seconds.toString().padLeft(2, '0'),
+    };
+  }
+
+// TOURNAMENT
+  Status _statusTournament = Status.ideal;
+  Status get statusTournament => _statusTournament;
+
+  bool get isLoadingTournament =>
+      _statusTournament == Status.loading || _statusTournament == Status.ideal;
+
+  String? _error;
+  String? get error => _error ?? Const.errSomethingWrong;
+
+  TournamentRes? _data;
+  TournamentRes? get data => _data;
+
+  void setStatusTournament(status) {
+    _statusTournament = status;
+    notifyListeners();
+  }
+
+// MARK: TOURNAMENT
+  Future tournament() async {
+    _data = null;
+    setStatusTournament(Status.loading);
+
+    try {
+      Map request = {
+        "token":
+            navigatorKey.currentContext!.read<UserProvider>().user?.token ?? ""
+      };
+      ApiResponse response = await apiRequest(
+        url: Apis.t,
+        request: request,
+      );
+
+      if (response.status) {
+        _data = tournamentResFromJson(jsonEncode(response.data));
+      } else {
+        _data = null;
+        _error = response.message ?? Const.errSomethingWrong;
+      }
+      setStatusTournament(Status.loaded);
+    } catch (e) {
+      _data = null;
+      _error = Const.errSomethingWrong;
+      setStatusTournament(Status.loaded);
+      Utils().showLog('error $e');
+    }
+  }
+
+  Status _statusDetail = Status.ideal;
+  Status get statusDetail => _statusDetail;
+
+  bool get isLoadingDetail =>
+      _statusDetail == Status.loading || _statusDetail == Status.ideal;
+
+  String? _errorDetail;
+  String? get errorDetail => _errorDetail ?? Const.errSomethingWrong;
+
+  TournamentDetailRes? _detailRes;
+  TournamentDetailRes? get detailRes => _detailRes;
+
+  void setStatusDetail(status) {
+    _statusDetail = status;
+    notifyListeners();
+  }
+
+// MARK: DETAIL
+  Future tournamentDetail(int? id) async {
+    setStatusDetail(Status.loading);
+    try {
+      UserRes? user = navigatorKey.currentContext!.read<UserProvider>().user;
+      Map request = {
+        'token': user?.token ?? '',
+        'tournament_id': '${id ?? ''}',
+      };
+
+      ApiResponse response = await apiRequest(
+        url: Apis.tDetail,
+        request: request,
+      );
+      if (response.status) {
+        _detailRes = tournamentDetailResFromJson(jsonEncode(response.data));
+        timer(true);
+        _error = null;
+      } else {
+        _detailRes = null;
+        _error = response.message;
+      }
+      setStatusDetail(Status.loaded);
+    } catch (e) {
+      Utils().showLog('error in detail $e');
+      _error = Const.errSomethingWrong;
+      _detailRes = null;
+      setStatusDetail(Status.loaded);
+    }
+  }
+
+// MARK: JOIN
+  Future joinTounament({int? id}) async {
+    try {
+      UserRes? user = navigatorKey.currentContext!.read<UserProvider>().user;
+
+      Map requst = {
+        'token': user?.token ?? '',
+        'tournament_battle_id': '${_detailRes?.tournamentBattleId ?? ''}',
+      };
+
+      ApiResponse response = await apiRequest(
+        url: Apis.tJoin,
+        showProgress: true,
+        request: requst,
+      );
+      if (response.status) {
+        // tournamentDetail(id);
+        openTournament();
+      } else {
+        //
+      }
+    } catch (e) {
+      //
+      Utils().showLog('join error $e');
+    }
+  }
+
+// MARK: OPEN
+  Future openTournament() async {
+    try {
+      UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
+
+      Map requst = {
+        'token': provider.user?.token ?? '',
+        'tournament_battle_id': '${_detailRes?.tournamentBattleId}',
+      };
+      ApiResponse response = await apiRequest(
+        url: Apis.tShow,
+        showProgress: true,
+        request: requst,
+      );
+      if (response.status) {
+        Navigator.push(
+          navigatorKey.currentContext!,
+          MaterialPageRoute(
+            builder: (context) => TournamentOpenIndex(),
+          ),
+        );
+      } else {
+        //
+      }
+    } catch (e) {
+      //
+      Utils().showLog('join error $e');
+    }
+  }
+}
