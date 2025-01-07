@@ -405,10 +405,10 @@ import FirebaseMessaging
 import StoreKit
 
 //LOCAL
-let brazeApiKey = "ba184694-cb2b-4e70-9e00-1e300ca9ecb0"
+// let brazeApiKey = "ba184694-cb2b-4e70-9e00-1e300ca9ecb0"
 
 //LIVE
-// let brazeApiKey = "6e2560f1-ba23-4958-a4d9-16cd577fcf65"
+let brazeApiKey = "6e2560f1-ba23-4958-a4d9-16cd577fcf65"
 
 let brazeEndpoint = "sdk.iad-07.braze.com"
 
