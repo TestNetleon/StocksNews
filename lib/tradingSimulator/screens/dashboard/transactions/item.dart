@@ -77,7 +77,7 @@ class TsTransactionListItem extends StatelessWidget {
                           children: [
                             Text(
                               item?.tradeStatus == 'PENDING'
-                                  ? "Status"
+                                  ? "Will Execute on"
                                   : 'Executed at',
                               style: stylePTSansRegular(fontSize: 14),
                             ),
@@ -128,7 +128,7 @@ class TsTransactionListItem extends StatelessWidget {
                 ),
                 Container(
                   margin: EdgeInsets.only(top: 15),
-                  alignment: Alignment.centerRight,
+                  alignment: Alignment.center,
                   child: Text(
                     '${item?.date}',
                     style: styleGeorgiaRegular(

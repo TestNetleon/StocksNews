@@ -224,10 +224,7 @@ class _TsDashboardHeaderState extends State<TsDashboardHeader> {
           borderRadius: BorderRadius.circular(5),
         ),
         child: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 15,
-            vertical: 30,
-          ),
+          padding: const EdgeInsets.all(15),
           child: Column(
             children: [
               Row(
@@ -237,6 +234,27 @@ class _TsDashboardHeaderState extends State<TsDashboardHeader> {
                   Flexible(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "\$${formatBalance(provider.userData?.invested ?? 0)}",
+                          style: styleGeorgiaBold(fontSize: 25),
+                        ),
+                        const SpacerVertical(height: 5),
+                        Text(
+                          "Invested Amount",
+                          style: stylePTSansRegular(
+                            fontSize: 15,
+                            color: ThemeColors.greyText,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SpacerHorizontal(width: 10),
+
+                  Flexible(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                         Text(
                           "\$${formatBalance(provider.userData?.investedValue ?? 0)}",
@@ -272,27 +290,6 @@ class _TsDashboardHeaderState extends State<TsDashboardHeader> {
                   //     ],
                   //   ),
                   // ),
-                  const SpacerHorizontal(width: 10),
-
-                  Flexible(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        Text(
-                          "\$${formatBalance(provider.userData?.invested ?? 0)}",
-                          style: styleGeorgiaBold(fontSize: 25),
-                        ),
-                        const SpacerVertical(height: 5),
-                        Text(
-                          "Invested Amount",
-                          style: stylePTSansRegular(
-                            fontSize: 15,
-                            color: ThemeColors.greyText,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
                 ],
               ),
               // const SpacerVertical(height: 10),
@@ -310,7 +307,7 @@ class _TsDashboardHeaderState extends State<TsDashboardHeader> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          '${provider.userData?.currentPositionAmount?.toFormattedPrice() ?? 0}',
+                          '${provider.userData?.currentPositionAmount?.toFormattedPrice(removeSign: true) ?? 0}',
                           style: styleGeorgiaBold(
                               fontSize: 25,
                               color:
@@ -322,7 +319,7 @@ class _TsDashboardHeaderState extends State<TsDashboardHeader> {
                         ),
                         const SpacerVertical(height: 5),
                         Text(
-                          "Positions P&L",
+                          "Total Return",
                           style: stylePTSansRegular(
                               fontSize: 15, color: ThemeColors.greyText),
                         ),
@@ -344,7 +341,7 @@ class _TsDashboardHeaderState extends State<TsDashboardHeader> {
                         ),
                         const SpacerVertical(height: 5),
                         Text(
-                          "Today's Return",
+                          "1D Return",
                           style: stylePTSansRegular(
                               fontSize: 15, color: ThemeColors.greyText),
                         ),
@@ -353,7 +350,11 @@ class _TsDashboardHeaderState extends State<TsDashboardHeader> {
                   ),
                 ],
               ),
-              // const SpacerVertical(height: 30),
+              // const SpacerVertical(height: 10),
+              // Text(
+              //   provider.userData?.timingInfo ?? 'N/A',
+              //   style: styleGeorgiaBold(color: ThemeColors.greyText),
+              // )
             ],
           ),
         ),

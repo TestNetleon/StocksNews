@@ -198,6 +198,18 @@ class SSEManager {
       if (kDebugMode) {
         print('Failed to connect to SSE: $error');
       }
+      if (kDebugMode) {
+        print('Stream error: $error');
+      }
+      final uri = Uri.parse(url);
+      final symbols = uri.queryParameters['symbol']?.split(',');
+
+      if (symbols != null && symbols.isNotEmpty) {
+        for (var symbol in symbols) {
+          _handleStreamError(symbol);
+        }
+        _clearScreenData(type);
+      }
     });
   }
 

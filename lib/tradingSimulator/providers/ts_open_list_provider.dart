@@ -28,7 +28,6 @@ class TsOpenListProvider extends ChangeNotifier {
   Extra? _extra;
   Extra? get extra => _extra;
 
-  // Map to store returns for each stock separately
   Map<String, Map<String, num>> _stockReturnMap = {};
 
   void setStatus(status) {
@@ -43,47 +42,12 @@ class TsOpenListProvider extends ChangeNotifier {
     return createdAtDate == responseDateString;
   }
 
-  // Helper method to calculate today's return for a stock
-  // Map<String, num> _calculateTodaysReturn(StockDataManagerRes stockData,
-  //     TsOpenListRes stock, num shares, num invested) {
-  //   num todaysReturn = 0;
-  //   num todaysReturnPercentage = 0;
-  //   num price = stockData.price ?? 0;
-
-  //   // Check if the stock was bought today
-  //   bool boughtToday = _isStockBoughtToday(stock, _extra!.reponseTime!);
-
-  //   if (boughtToday) {
-  //     print('bought today ${stockData.symbol}');
-  //     num boughtPrice = stock.avgPrice ?? 0;
-  //     if (boughtPrice > 0 && invested > 0) {
-  //       todaysReturn = (price - boughtPrice) * shares;
-  //       todaysReturnPercentage = ((price - boughtPrice) / boughtPrice) * 100;
-  //     }
-  //   } else {
-  //     print('bought previous ${stockData.symbol}');
-
-  //     num previousClose = stockData.previousClose ?? 0;
-  //     if (previousClose > 0 && invested > 0) {
-  //       todaysReturn = (price - previousClose) * shares;
-  //       todaysReturnPercentage =
-  //           ((price - previousClose) / previousClose) * 100;
-  //     }
-  //   }
-
-  //   return {
-  //     'todaysReturn': todaysReturn,
-  //     'todaysReturnPercentage': todaysReturnPercentage
-  //   };
-  // }
-
   Map<String, num> _calculateTodaysReturn(StockDataManagerRes stockData,
       TsOpenListRes stock, num shares, num invested) {
     num todaysReturn = 0;
     num todaysReturnPercentage = 0;
     num price = stockData.price ?? 0;
 
-    // Check if the stock was bought today
     bool boughtToday = _isStockBoughtToday(stock, _extra!.reponseTime!);
 
     if (boughtToday) {
@@ -109,17 +73,14 @@ class TsOpenListProvider extends ChangeNotifier {
     };
   }
 
-  // Helper method to retrieve the return value for a stock
   Map<String, num> getTodaysReturnForStock(String symbol) {
     return _stockReturnMap[symbol] ??
         {'todaysReturn': 0, 'todaysReturnPercentage': 0};
   }
 
-  // Method to update stock data for each ticker
   void _updateStockData(String symbol, StockDataManagerRes stockData) {
     if (_data == null || _data!.isEmpty) return;
 
-    // Find the stock data for the given symbol
     final index = _data!.indexWhere((stock) => stock.symbol == symbol);
     if (index == -1) {
       Utils().showLog("Stock with symbol $symbol not found in _data.");
@@ -148,28 +109,23 @@ class TsOpenListProvider extends ChangeNotifier {
     existingStock.investedChangePercentage =
         ((existingStock.investedChange ?? 0) / invested) * 100;
     notifyListeners();
-    // Calculate today's return and percentage
     var returnData =
         _calculateTodaysReturn(stockData, existingStock, shares, invested);
 
-    // Update the map with the return data for the stock
     _stockReturnMap[symbol] = {
       'todaysReturn': returnData['todaysReturn']!,
       'todaysReturnPercentage': returnData['todaysReturnPercentage']!
     };
 
-    // Log for debugging
     Utils().showLog('Updating for $symbol, Price: ${stockData.price}');
     Utils()
         .showLog('Today\'s Return for $symbol: ${returnData['todaysReturn']}');
     Utils().showLog(
         'Today\'s Return Percentage for $symbol: ${returnData['todaysReturnPercentage']}%');
 
-    // Update the portfolio
     _updatePortfolioBalance();
   }
 
-  // Method to remove stock data from the map when no longer available
   void _removeStockFromMap(String symbol) {
     if (_stockReturnMap.containsKey(symbol)) {
       _stockReturnMap.remove(symbol);
@@ -177,32 +133,6 @@ class TsOpenListProvider extends ChangeNotifier {
     }
   }
 
-  // Method to update portfolio balance
-  // void _updatePortfolioBalance() {
-  //   TsPortfolioProvider provider =
-  //       navigatorKey.currentContext!.read<TsPortfolioProvider>();
-
-  //   num totalMarketValue = 0;
-  //   num totalReturn = 0;
-
-  //   // Calculate total return and market value
-  //   for (var stock in _data!) {
-  //     String symbol = stock.symbol ?? '';
-  //     Map<String, num> returnData = getTodaysReturnForStock(symbol);
-  //     totalReturn += returnData['todaysReturn'] ?? 0;
-  //     totalMarketValue += stock.currentInvested ?? 0;
-  //   }
-
-  //   provider.updateBalance(
-  //     marketValue: totalMarketValue,
-  //     position: totalMarketValue - (provider.userData?.invested ?? 0),
-  //     todayReturn: totalReturn, // Total return of the portfolio
-  //   );
-
-  //   Utils().showLog('Final Portfolio Return: $totalReturn');
-  // }
-
-// Method to update portfolio balance
   void _updatePortfolioBalance() {
     TsPortfolioProvider provider =
         navigatorKey.currentContext!.read<TsPortfolioProvider>();
@@ -210,44 +140,37 @@ class TsOpenListProvider extends ChangeNotifier {
     num totalMarketValue = 0;
     num totalReturn = 0;
 
-    // Calculate total return and market value for all stocks
     for (var stock in _data!) {
       String symbol = stock.symbol ?? '';
       Map<String, num> returnData = getTodaysReturnForStock(symbol);
 
-      // Add today's return to total portfolio return
       totalReturn += returnData['todaysReturn'] ?? 0;
 
-      // Add current market value of the stock to total
       totalMarketValue += stock.currentInvested ?? 0;
     }
 
-    // Update portfolio provider with aggregated values
     provider.updateBalance(
       marketValue: totalMarketValue,
-      position: totalMarketValue - (provider.userData?.invested ?? 0),
-      todayReturn: totalReturn, // Combined return of the portfolio
+      position: provider.userData?.previousPosition != null
+          ? (provider.userData?.previousPosition ?? 0) + totalReturn
+          : 0,
+      todayReturn: totalReturn,
     );
 
     Utils().showLog('Final Portfolio Return: $totalReturn');
   }
 
-  // Method to handle stock data update for multiple symbols
   void _updateStockDataForMultipleSymbols(
       List<StockDataManagerRes> stockDataList) {
-    // Create a set of existing stock symbols
     Set<String> existingSymbols =
         _data?.map((stock) => stock.symbol ?? '').toSet() ?? {};
 
-    // Iterate through the stock data
     for (var stockData in stockDataList) {
       String symbol = stockData.symbol;
 
-      // If the symbol exists in _data, update the stock return
       if (existingSymbols.contains(symbol)) {
         _updateStockData(symbol, stockData);
       } else {
-        // If stock is not found, remove it from the map
         _removeStockFromMap(symbol);
       }
     }
@@ -278,7 +201,6 @@ class TsOpenListProvider extends ChangeNotifier {
         List<String> symbols =
             _data?.map((stock) => stock.symbol ?? '').toList() ?? [];
 
-        // Connect SSE for multiple stocks
         _connectSSEForSymbols(symbols);
       } else {
         _data = null;
@@ -302,7 +224,6 @@ class TsOpenListProvider extends ChangeNotifier {
 
     for (var symbol in symbols) {
       SSEManager.instance.addListener(symbol, (StockDataManagerRes stockData) {
-        // Utils().showLog('${stockData.previousClose}');
         _updateStockData(symbol, stockData);
       });
     }

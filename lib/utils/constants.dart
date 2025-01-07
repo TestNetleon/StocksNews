@@ -72,6 +72,7 @@ enum NotificationType {
   appUpdate,
   membership,
   pointTransaction,
+  simulator,
 }
 
 enum MembershipEnum {
@@ -532,7 +533,7 @@ extension CurrencyFormat on num {
   //   }
   // }
 
-  String toFormattedPrice() {
+  String toFormattedPrice({bool removeSign = false}) {
     // Format the number with two decimal places
     String formatted = abs().toStringAsFixed(2);
 
@@ -543,6 +544,10 @@ extension CurrencyFormat on num {
     formatted = formatted.replaceAll(RegExp(r'(?<=\d)(?=(\d{3})+(?!\d))'), ',');
 
     // Format the price with a negative sign if the number is negative
+    if (removeSign) {
+      return '\$$formatted';
+    }
+
     if (this < 0) {
       return '-\$$formatted';
     } else {

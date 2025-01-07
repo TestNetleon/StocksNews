@@ -11,7 +11,6 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 
 import '../manager/sse.dart';
-import 'ts_portfollo_provider.dart';
 
 //
 class TsTransactionListProvider extends ChangeNotifier {
@@ -53,7 +52,7 @@ class TsTransactionListProvider extends ChangeNotifier {
   }
 
   Future getData({loadMore = false}) async {
-    navigatorKey.currentContext!.read<TsPortfolioProvider>().getDashboardData();
+    // navigatorKey.currentContext!.read<TsPortfolioProvider>().getDashboardData();
     if (loadMore) {
       _page++;
       setStatus(Status.loadingMore);

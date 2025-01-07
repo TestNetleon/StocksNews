@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
+import 'package:stocks_news_new/tradingSimulator/providers/ts_portfollo_provider.dart';
 import 'package:stocks_news_new/tradingSimulator/screens/dashboard/open/index.dart';
 import 'package:stocks_news_new/tradingSimulator/screens/dashboard/pending/index.dart';
 import 'package:stocks_news_new/tradingSimulator/screens/dashboard/ts_dashboard_header.dart';
 import 'package:stocks_news_new/utils/constants.dart';
+import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/custom_tab_container.dart';
 import 'package:stocks_news_new/widgets/theme_button.dart';
@@ -21,6 +24,7 @@ class TsDashboard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    TsPortfolioProvider provider = context.watch<TsPortfolioProvider>();
     return PopScope(
       onPopInvokedWithResult: (didPop, result) {
         SSEManager.instance.disconnectAllScreens();
@@ -37,7 +41,57 @@ class TsDashboard extends StatelessWidget {
           padding: EdgeInsets.fromLTRB(Dimen.padding, 0, Dimen.padding, 0),
           child: Column(
             children: [
-              TsDashboardHeader(),
+              // Padding(
+              //   padding: const EdgeInsets.only(bottom: 5),
+              //   child: Row(
+              //     children: [
+              //       Flexible(
+              //         child: Text(
+              //           'Portfolio Balance: ',
+              //           style: styleGeorgiaBold(),
+              //         ),
+              //       ),
+              //       Flexible(
+              //         child: Text(
+              //           '${provider.userData?.tradeBalance}',
+              //           style: styleGeorgiaBold(),
+              //         ),
+              //       ),
+              //     ],
+              //   ),
+              // ),
+              Column(
+                children: [
+                  Container(
+                    margin: EdgeInsets.symmetric(horizontal: 10),
+                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                    decoration: BoxDecoration(
+                        color: ThemeColors.accent,
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(8),
+                          topRight: Radius.circular(8),
+                        )),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Flexible(
+                            child: Text(
+                          'Portfolio Balance',
+                          style: styleGeorgiaBold(),
+                        )),
+                        Flexible(
+                            child: Text(
+                          provider.userData?.tradeBalance != null
+                              ? '${provider.userData?.tradeBalance.toFormattedPrice()}'
+                              : '\$0',
+                          style: styleGeorgiaBold(),
+                        )),
+                      ],
+                    ),
+                  ),
+                  TsDashboardHeader(),
+                ],
+              ),
               Expanded(
                 child: CommonTabContainer(
                   initialIndex: initialIndex,

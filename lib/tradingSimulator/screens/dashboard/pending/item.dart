@@ -78,7 +78,7 @@ class TsPendingListItem extends StatelessWidget {
                           visible:
                               item?.quantity != null && item?.quantity != '',
                           child: Text(
-                            "${item?.quantity} Qty",
+                            "${item?.quantity} QTY",
                             style: stylePTSansBold(fontSize: 18),
                           ),
                         ),
