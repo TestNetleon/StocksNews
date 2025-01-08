@@ -136,7 +136,11 @@ class _CountryPickerWidgetState extends State<CountryPickerWidget> {
     } else {
       locale = "US";
     }
-
+    // try {
+    //   Utils().showLog('${CountryCode.fromDialCode('+3').code}');
+    // } catch (e) {
+    //   Utils().showLog('$e');
+    // }
     return Stack(
       children: [
         CountryCodePicker(

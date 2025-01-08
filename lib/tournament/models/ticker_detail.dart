@@ -38,26 +38,29 @@ class ShowButtonRes {
   final String? btn1;
   final String? btn2;
   final String? btn3;
+  final num? tradeId;
 
   ShowButtonRes({
     this.alreadyTraded,
     this.btn1,
     this.btn2,
     this.btn3,
+    this.tradeId,
   });
 
   factory ShowButtonRes.fromJson(Map<String, dynamic> json) => ShowButtonRes(
-        alreadyTraded: json["already_traded"],
-        btn1: json["btn_1"],
-        btn2: json["btn_2"],
-        btn3: json["btn_3"],
-      );
+      alreadyTraded: json["already_traded"],
+      btn1: json["btn_1"],
+      btn2: json["btn_2"],
+      btn3: json["btn_3"],
+      tradeId: json['trade_id']);
 
   Map<String, dynamic> toJson() => {
         "already_traded": alreadyTraded,
         "btn_1": btn1,
         "btn_2": btn2,
         "btn_3": btn3,
+        'trade_id': tradeId,
       };
 }
 

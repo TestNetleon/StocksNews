@@ -13,7 +13,7 @@ import 'package:vibration/vibration.dart';
 class CustomTabContainer extends StatefulWidget {
   const CustomTabContainer({
     required this.tabs,
-    required this.widgets,
+    this.widgets,
     this.rightWidget = const SizedBox(),
     this.header,
     this.padding,
@@ -21,6 +21,8 @@ class CustomTabContainer extends StatefulWidget {
     this.showDivider = false,
     this.isScrollable = false,
     this.initialIndex = 0,
+    this.decorateTabBar = true,
+    this.hideIndicator = false,
     super.key,
   });
 //
@@ -29,11 +31,12 @@ class CustomTabContainer extends StatefulWidget {
   final List<Widget> tabs;
   final EdgeInsets? padding;
   final bool isScrollable;
-  final List<Widget> widgets;
+  final List<Widget>? widgets;
   final bool showDivider;
   final Function(int index)? onChange;
   final int initialIndex;
-
+  final bool decorateTabBar;
+  final bool hideIndicator;
   @override
   State<CustomTabContainer> createState() => _CustomState();
 }
@@ -78,23 +81,28 @@ class _CustomState extends State<CustomTabContainer>
         mainAxisSize: MainAxisSize.min,
         children: [
           Container(
-            padding: const EdgeInsets.all(5),
+            padding: widget.decorateTabBar ? const EdgeInsets.all(5) : null,
             margin: widget.padding,
-            decoration: BoxDecoration(
-              color: const Color.fromARGB(255, 21, 21, 21),
-              borderRadius: BorderRadius.circular(10),
-            ),
+            decoration: widget.decorateTabBar
+                ? BoxDecoration(
+                    color: const Color.fromARGB(255, 21, 21, 21),
+                    borderRadius: BorderRadius.circular(10),
+                  )
+                : null,
             child: TabBar(
               controller: _controller,
+              indicatorColor: widget.hideIndicator ? Colors.transparent : null,
               onTap: (index) {
                 setState(() {
                   _selectedIndex = index;
                 });
               },
-              indicator: BoxDecoration(
-                color: const Color.fromARGB(255, 0, 82, 4),
-                borderRadius: BorderRadius.circular(8),
-              ),
+              indicator: widget.hideIndicator
+                  ? null
+                  : BoxDecoration(
+                      color: const Color.fromARGB(255, 0, 82, 4),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
               isScrollable: widget.isScrollable,
               tabs: widget.tabs,
             ),
@@ -120,10 +128,14 @@ class _CustomState extends State<CustomTabContainer>
           Visibility(
               visible: widget.showDivider,
               child: Divider(color: ThemeColors.border, height: 10.sp)),
-          Expanded(
-            child: TabBarView(
-              controller: _controller,
-              children: widget.widgets,
+          Visibility(
+            visible:
+                widget.widgets != null && widget.widgets?.isNotEmpty == true,
+            child: Expanded(
+              child: TabBarView(
+                controller: _controller,
+                children: widget.widgets ?? [],
+              ),
             ),
           )
         ],

@@ -43,7 +43,12 @@ class TournamentSearchProvider extends ChangeNotifier {
         _topSearch = tradingSearchTickerResFromJson(jsonEncode(response.data));
         TournamentTradesProvider provider =
             navigatorKey.currentContext!.read<TournamentTradesProvider>();
-        provider.setSelectedStock(stock: _topSearch?[0]);
+
+        provider.setSelectedStock(
+          stock: _topSearch?[0],
+          refresh: true,
+          clearEverything: true,
+        );
       } else {
         _topSearch = null;
       }

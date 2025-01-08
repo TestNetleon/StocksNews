@@ -140,9 +140,9 @@ class BattleTimeRes {
       );
 
   Map<String, dynamic> toJson() => {
-        "start_time": startTime,
-        "end_time": endTime,
-        "current_time": currentTime,
+        "start_time": startTime?.toUtc(),
+        "end_time": endTime?.toUtc(),
+        "current_time": currentTime?.toUtc(),
       };
 }
 

@@ -4,9 +4,11 @@ import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/tournament/provider/search.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
+import 'package:stocks_news_new/tradingSimulator/manager/sse.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
+import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
@@ -16,6 +18,7 @@ import 'package:stocks_news_new/widgets/theme_button.dart';
 import '../../../../../tradingSimulator/modals/trading_search_res.dart';
 import '../../../../provider/trades.dart';
 import '../../../myTrades/all_index.dart';
+import 'details.dart';
 import 'stocks_list.dart';
 
 class TournamentOpenIndex extends StatefulWidget {
@@ -27,7 +30,6 @@ class TournamentOpenIndex extends StatefulWidget {
 
 class _TournamentOpenIndexState extends State<TournamentOpenIndex>
     with SingleTickerProviderStateMixin {
-  // TradingSearchTickerRes? selectedStock;
   @override
   void initState() {
     super.initState();
@@ -36,18 +38,14 @@ class _TournamentOpenIndexState extends State<TournamentOpenIndex>
           context.read<TournamentSearchProvider>();
       searchProvider.getSearchDefaults();
       if (searchProvider.topSearch != null &&
-          searchProvider.topSearch?.isNotEmpty == true) {
-        // _initializeTabController(searchProvider.topSearch);
-      }
+          searchProvider.topSearch?.isNotEmpty == true) {}
     });
   }
 
   _navigateToAllTrades() async {
     final stock = await Navigator.push(
       navigatorKey.currentContext!,
-      MaterialPageRoute(
-        builder: (context) => AllTradesOrdersIndex(),
-      ),
+      createRoute(AllTradesOrdersIndex()),
     );
 
     if (stock != null) {
@@ -57,28 +55,6 @@ class _TournamentOpenIndexState extends State<TournamentOpenIndex>
     }
   }
 
-  // _add({StockType type = StockType.bull}) {
-  //   if (selectedStock == null) {
-  //     popUpAlert(title: 'Alert', message: 'Please select a ticker');
-  //     return;
-  //   }
-
-  //   TradesProvider provider =
-  //       navigatorKey.currentContext!.read<TradesProvider>();
-  //   TradingSearchTickerRes? finalStock = TradingSearchTickerRes(
-  //     symbol: selectedStock?.symbol ?? '',
-  //     name: selectedStock?.name ?? '',
-  //     image: selectedStock?.image ?? '',
-  //     change: selectedStock?.change ?? 0,
-  //     type: type,
-  //     isOpen: true,
-  //   );
-  //   selectedStock?.isOpen = true;
-  //   setState(() {});
-
-  //   provider.addInTrade(finalStock);
-  // }
-
   _trade({StockType type = StockType.buy}) async {
     TournamentTradesProvider provider =
         context.read<TournamentTradesProvider>();
@@ -86,48 +62,25 @@ class _TournamentOpenIndexState extends State<TournamentOpenIndex>
       popUpAlert(title: 'Alert', message: 'Please select a ticker');
       return;
     }
-    // TournamentProvider tournamentProvider = context.read<TournamentProvider>();
-
-    // UserProvider userProvider = context.read<UserProvider>();
-
-    // if (type == StockType.buy) {
-    //   request['trade_type'] = 'buy';
-    // } else {
-    //   request['trade_type'] = 'sell';
-    // }
 
     ApiResponse res = await provider.tradeBuySell(type: type);
     if (res.status) {}
   }
 
   _close() {
-    // TournamentTradesProvider provider =
-    //     navigatorKey.currentContext!.read<TournamentTradesProvider>();
+    TournamentTradesProvider provider =
+        navigatorKey.currentContext!.read<TournamentTradesProvider>();
 
-    // provider.tradeCancle();
+    provider.tradeCancle();
   }
 
-  _onChange(TradingSearchTickerRes? stock) {
-    // TournamentTradesProvider provider = context.read<TournamentTradesProvider>();
+  _onChange(TradingSearchTickerRes? stock) {}
 
-    // TradingSearchTickerRes? existingStock = provider.data.firstWhere(
-    //   (element) => element.symbol == stock?.symbol,
-    //   orElse: () => TradingSearchTickerRes(
-    //     symbol: "",
-    //     name: "",
-    //     image: "",
-    //     change: 0,
-    //     isOpen: false,
-    //   ),
-    // );
+  @override
+  void dispose() {
+    SSEManager.instance.disconnectAllScreens();
 
-    // if (existingStock.isOpen == true) {
-    //   provider.setSelectedStock(existingStock);
-    // } else {
-    //   provider.setSelectedStock(stock);
-    // }
-
-    // setState(() {});
+    super.dispose();
   }
 
   @override
@@ -136,6 +89,8 @@ class _TournamentOpenIndexState extends State<TournamentOpenIndex>
         context.watch<TournamentTradesProvider>();
     TournamentSearchProvider searchProvider =
         context.watch<TournamentSearchProvider>();
+    TournamentTickerHolder? detailHolder =
+        provider.detail[provider.selectedStock?.symbol];
 
     return BaseContainer(
       appBar: AppBarHome(
@@ -187,22 +142,26 @@ class _TournamentOpenIndexState extends State<TournamentOpenIndex>
                         ),
                       ),
                     ),
-                    OpenTopStock(
-                      selectedStockSymbol: provider.selectedStock?.symbol ?? '',
-                      onTap: _onChange,
-                    ),
+                    OpenTopStock(),
                   ],
                 ),
                 Expanded(
                   child: BaseUiContainer(
-                    hasData: provider.detail != null,
-                    isLoading: provider.isLoading,
-                    error: provider.error,
+                    hasData: detailHolder?.data != null,
+                    isLoading: detailHolder?.loading == true,
+                    error: detailHolder?.error,
                     showPreparingText: true,
                     child: Column(
                       children: [
-                        Expanded(child: SizedBox()),
-                        if (provider.detail?.showButton?.alreadyTraded == false)
+                        Expanded(
+                          child: SingleChildScrollView(
+                            child: TournamentOpenDetail(
+                              data: detailHolder?.data?.ticker,
+                            ),
+                          ),
+                        ),
+                        if (detailHolder?.data?.showButton?.alreadyTraded ==
+                            false)
                           Row(
                             children: [
                               Expanded(
@@ -223,7 +182,8 @@ class _TournamentOpenIndexState extends State<TournamentOpenIndex>
                               ),
                             ],
                           ),
-                        if (provider.detail?.showButton?.alreadyTraded == true)
+                        if (detailHolder?.data?.showButton?.alreadyTraded ==
+                            true)
                           ThemeButton(
                             radius: 10,
                             text: 'Close',

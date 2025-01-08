@@ -217,6 +217,8 @@ class TradingSearchProvider extends ChangeNotifier {
       }
       setStatusS(Status.loaded);
     } catch (e) {
+      _dataNew = null;
+
       Utils().showLog(e.toString());
       setStatusS(Status.loaded);
     }
