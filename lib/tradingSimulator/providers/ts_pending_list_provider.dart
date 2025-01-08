@@ -84,7 +84,10 @@ class TsPendingListProvider extends ChangeNotifier {
       }
       setStatus(Status.loaded);
     } catch (e) {
-      _error = Const.errSomethingWrong;
+      if (_page == 1) {
+        _data = null;
+        _error = Const.errSomethingWrong;
+      }
       Utils().showLog(e.toString());
       setStatus(Status.loaded);
     }

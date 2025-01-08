@@ -79,6 +79,7 @@ class TsPortfolioProvider extends ChangeNotifier {
       }
       setStatus(Status.loaded);
     } catch (e) {
+      _data = null;
       _error = Const.errSomethingWrong;
       Utils().showLog(e.toString());
       setStatus(Status.loaded);
@@ -103,12 +104,14 @@ class TsPortfolioProvider extends ChangeNotifier {
         _extra = (response.extra is Extra ? response.extra as Extra : null);
         _error = null;
       } else {
-        _data = null;
+        _userData = null;
         _error = response.message ?? Const.errSomethingWrong;
         // showErrorMessage(message: response.message);
       }
       setStatus(Status.loaded);
     } catch (e) {
+      _userData = null;
+
       _error = Const.errSomethingWrong;
       Utils().showLog('Error getDashboardData $e');
       setStatus(Status.loaded);

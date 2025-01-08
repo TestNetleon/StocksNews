@@ -5,12 +5,14 @@ import 'package:stocks_news_new/tournament/screens/tournaments/dayTraining/widge
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
+import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/custom/refresh_indicator.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import '../../../widgets/card.dart';
+import 'widgets/rules.dart';
 import 'widgets/similar.dart';
 import 'widgets/timer.dart';
 
@@ -31,6 +33,14 @@ class _TournamentDayTrainingIndexState
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<TournamentProvider>().tournamentDetail(widget.tournamentId);
     });
+  }
+
+  _tournamentRuleDetails() {
+    showPlatformBottomSheet(
+      context: context,
+      padding: EdgeInsets.only(right: 10),
+      content: TournamentRules(),
+    );
   }
 
   @override
@@ -65,6 +75,7 @@ class _TournamentDayTrainingIndexState
                         children: [
                           DayTrainingTitle(),
                           TournamentThemeCard(
+                            onTap: _tournamentRuleDetails,
                             padding: EdgeInsets.symmetric(
                                 vertical: 5, horizontal: 10),
                             child: ListTile(
@@ -93,7 +104,7 @@ class _TournamentDayTrainingIndexState
                                 ),
                               ),
                               title: Text(
-                                'Tournament rules',
+                                'Tournament Rules',
                                 style: styleGeorgiaBold(),
                               ),
                               trailing: Icon(

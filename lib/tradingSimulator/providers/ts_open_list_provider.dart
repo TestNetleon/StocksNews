@@ -209,6 +209,7 @@ class TsOpenListProvider extends ChangeNotifier {
 
       setStatus(Status.loaded);
     } catch (e) {
+      _data = null;
       _error = Const.errSomethingWrong;
       Utils().showLog('Open data: $e');
       setStatus(Status.loaded);
