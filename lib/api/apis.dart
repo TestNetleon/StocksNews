@@ -258,6 +258,7 @@ class Apis {
   static const tCancle = '/tournament/trade/status';
   static const tTradeOverview = '/tournament/trade/list-overview';
   static const tTradeList = '/tournament/trade/list';
+  static const trendingSectors = '/trending-sectors';
 }
 
 class ApiKeys {

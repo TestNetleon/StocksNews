@@ -35,6 +35,7 @@ class TopGainerScannerDataManager {
 
   static void initializePorts() async {
     listening = true;
+    isFetchDataOfflineCalled = false;
     // Loop over each URL and create an EventSource and its listeners dynamically
     TopGainerScannerProvider provider =
         navigatorKey.currentContext!.read<TopGainerScannerProvider>();
@@ -53,11 +54,6 @@ class TopGainerScannerDataManager {
     try {
       Utils().showLog("Loops starts");
       for (var url in urls) {
-        Utils().showLog("Step 1 -> $url");
-        EventSource eventSource =
-            await EventSource.connect(url).timeout(Duration(seconds: 10));
-        eventSources.add(eventSource);
-        Utils().showLog("Step 2 -> Connected");
         Timer(const Duration(milliseconds: checkInterval), () async {
           Utils().showLog(
             "Connected to $url, but no data received in ${checkInterval / 1000} seconds.",
@@ -67,6 +63,11 @@ class TopGainerScannerDataManager {
             isFetchDataOfflineCalled = true;
           }
         });
+        Utils().showLog("Step 1 -> $url");
+        EventSource eventSource =
+            await EventSource.connect(url).timeout(Duration(seconds: 10));
+        eventSources.add(eventSource);
+        Utils().showLog("Step 2 -> Connected");
 
         eventSource.listen(
           (Event event) async {
