@@ -10,6 +10,7 @@ import 'package:stocks_news_new/utils/utils.dart';
 import '../../modals/stock_screener_res.dart';
 import '../../providers/user_provider.dart';
 import '../../routes/my_app.dart';
+import '../../tradingSimulator/manager/sse.dart';
 import '../../tradingSimulator/modals/trading_search_res.dart';
 import '../../utils/constants.dart';
 import '../models/ticker_detail.dart';
@@ -221,13 +222,20 @@ class TournamentTradesProvider extends ChangeNotifier {
   // TournamentTickerDetailRes? _detail;
   // TournamentTickerDetailRes? get detail => _detail;
 
-  final Map<String, TournamentTickerHolder?> _detail = {};
+  Map<String, TournamentTickerHolder?> _detail = {};
   Map<String, TournamentTickerHolder?> get detail => _detail;
 
   void setSelectedStock({
     TradingSearchTickerRes? stock,
     bool refresh = false,
+    bool clearEverything = false,
   }) {
+    if (clearEverything) {
+      _detail = {};
+      _activeTickers = {};
+      notifyListeners();
+    }
+
     if (stock != null) {
       _selectedStock = stock;
       notifyListeners();
@@ -250,20 +258,25 @@ class TournamentTradesProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  Set<String> _activeTickers = {};
+
   Future getDetail(String symbol, {bool refresh = false}) async {
-    if (_detail[_selectedStock?.symbol ?? '']?.data != null && !refresh) {
-      Utils().showLog('returning...');
+    // Check if the ticker is already loaded and no refresh is needed
+    if (_detail[symbol]?.data != null && !refresh) {
+      Utils().showLog('Data for $symbol already fetched, returning...');
       return;
-    } else {
-      _detail[_selectedStock?.symbol ?? ''] = TournamentTickerHolder(
-        data: null,
-        error: null,
-        loading: true,
-      );
-      setStatus(Status.loading);
     }
 
+    // Initialize the ticker entry in _detail
+    _detail[symbol] = TournamentTickerHolder(
+      data: null,
+      error: null,
+      loading: true,
+    );
+    setStatus(Status.loading);
+
     try {
+      // Prepare the API request
       TournamentProvider provider =
           navigatorKey.currentContext!.read<TournamentProvider>();
       Map request = {
@@ -274,33 +287,66 @@ class TournamentTradesProvider extends ChangeNotifier {
             '${provider.detailRes?.tournamentBattleId ?? ''}',
       };
 
+      // Fetch ticker details via API
       ApiResponse response = await apiRequest(
         url: Apis.tTickerDetail,
         request: request,
       );
+
       if (response.status) {
-        _detail[_selectedStock?.symbol ?? ''] = TournamentTickerHolder(
+        // Parse and store API response
+        _detail[symbol] = TournamentTickerHolder(
           data: tournamentTickerDetailResFromJson(jsonEncode(response.data)),
           error: null,
           loading: false,
         );
-      } else {
-        if (_detail[_selectedStock?.symbol ?? '']?.data == null) {
-          _detail[_selectedStock?.symbol ?? ''] = TournamentTickerHolder(
-            data: null,
-            error: response.message,
-            loading: false,
+
+        // Add the symbol to active tickers only if it's not already present
+        if (_activeTickers.add(symbol)) {
+          Utils().showLog('Added $symbol to active tickers');
+
+          // Connect to the streaming manager with updated tickers
+          SSEManager.instance.connectMultipleStocks(
+            screen: SimulatorEnum.detail,
+            symbols: _activeTickers.toList(),
           );
+
+          // Add a listener for the symbol
+          SSEManager.instance.addListener(symbol, (stockData) {
+            Utils().showLog(
+                'Streaming update for $symbol, Price: ${stockData.price}, Change: ${stockData.change}, Change%: ${stockData.changePercentage}');
+
+            // Update the _detail map with the streaming data
+            _detail[symbol]?.data?.ticker?.currentPrice = stockData.price;
+            _detail[symbol]?.data?.ticker?.change = stockData.change;
+            _detail[symbol]?.data?.ticker?.changesPercentage =
+                stockData.changePercentage;
+
+            // Notify listeners to update the UI
+            notifyListeners();
+          });
+        } else {
+          Utils().showLog(
+              '$symbol is already in active tickers, skipping re-addition.');
         }
+      } else {
+        // Handle API error
+        _detail[symbol] = TournamentTickerHolder(
+          data: null,
+          error: response.message,
+          loading: false,
+        );
       }
+
       setStatus(Status.loaded);
     } catch (e) {
-      _detail[_selectedStock?.symbol ?? ''] = TournamentTickerHolder(
+      // Handle unexpected errors
+      _detail[symbol] = TournamentTickerHolder(
         data: null,
         error: Const.errSomethingWrong,
         loading: false,
       );
-      Utils().showLog('error $e');
+      Utils().showLog('Error fetching details for $symbol: $e');
       setStatus(Status.loaded);
     }
   }

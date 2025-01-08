@@ -14,11 +14,11 @@ class TradingSearchTickerRes {
   final String? name;
   final String? image;
   String? price;
-  final num? change;
-  final num? changesPercentage;
+  num? change;
+  num? changesPercentage;
   final StockType? type;
   final int? status;
-  final num? currentPrice;
+  num? currentPrice;
 
   TradingSearchTickerRes({
     this.symbol,

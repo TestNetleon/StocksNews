@@ -4,6 +4,7 @@ import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/tournament/provider/search.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
+import 'package:stocks_news_new/tradingSimulator/manager/sse.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -74,6 +75,13 @@ class _TournamentOpenIndexState extends State<TournamentOpenIndex>
   }
 
   _onChange(TradingSearchTickerRes? stock) {}
+
+  @override
+  void dispose() {
+    SSEManager.instance.disconnectAllScreens();
+
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
