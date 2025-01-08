@@ -24,13 +24,14 @@ class MarketScannerDataManager {
 
   static final List<EventSource> eventSources = [];
   static bool subscribed = true;
-  static const checkInterval = 15000;
+  static const checkInterval = 10000;
   static final urls = [];
   static var isFetchDataOfflineCalled = false;
   static var listening = true;
 
   static void initializePorts() async {
     listening = true;
+    isFetchDataOfflineCalled = false;
     // Loop over each URL and create an EventSource and its listeners dynamically
     MarketScannerProvider provider =
         navigatorKey.currentContext!.read<MarketScannerProvider>();
@@ -49,26 +50,7 @@ class MarketScannerDataManager {
       Utils().showLog("Loops starts");
       for (var url in urls) {
         Utils().showLog("Step 1 -> $url");
-        EventSource eventSource =
-            await EventSource.connect(url).timeout(Duration(seconds: 10));
-        eventSources.add(eventSource);
-        Utils().showLog("Step 2 -> Connected");
-        // Interval in milliseconds to check for data
-        // // Start a timeout to check if no data is received
-        // const noDataTimeout = setTimeout(() => {}, checkInterval);
-        // Timer(const Duration(milliseconds: checkInterval), () {
-        //   Utils().showLog(
-        //     "Connected to $url, but no data received in ${checkInterval / 1000} seconds.",
-        //   );
-        //   if (!isFetchDataOfflineCalled) {
-        //     navigatorKey.currentContext!
-        //         .read<MarketScannerProvider>()
-        //         .getOfflineData();
-        //     // fetchDataOffLineData();
-        //     // Set the flag to true
-        //     isFetchDataOfflineCalled = true;
-        //   }
-        // });
+
         Timer(const Duration(milliseconds: checkInterval), () async {
           Utils().showLog(
             "Connected to $url, but no data received in ${checkInterval / 1000} seconds.",
@@ -79,12 +61,17 @@ class MarketScannerDataManager {
           }
         });
 
+        EventSource eventSource =
+            await EventSource.connect(url).timeout(Duration(seconds: 10));
+        eventSources.add(eventSource);
+        Utils().showLog("Step 2 -> Connected");
+
         eventSource.listen(
           (Event event) {
-            Utils().showLog(
-              "listen to => $url ${event.id} ${event.event} ",
-              // "listen to => $url ${event.id} ${event.event} ${event.data} ",
-            );
+            // Utils().showLog(
+            //   "listen to => $url ${event.id} ${event.event} ",
+            //   // "listen to => $url ${event.id} ${event.event} ${event.data} ",
+            // );
             if (!listening) {
               return;
             }
@@ -105,15 +92,15 @@ class MarketScannerDataManager {
         );
       }
     } catch (e) {
-      Timer(const Duration(milliseconds: checkInterval), () async {
-        Utils().showLog(
-          "NOT Connected to url, but no data received in ${checkInterval / 1000} seconds.",
-        );
-        if (!isFetchDataOfflineCalled) {
-          await getOfflineData();
-          isFetchDataOfflineCalled = true;
-        }
-      });
+      // Timer(const Duration(milliseconds: checkInterval), () async {
+      Utils().showLog(
+        "NOT Connected to url, but no data received in ${checkInterval / 1000} seconds.",
+      );
+      if (!isFetchDataOfflineCalled) {
+        await getOfflineData();
+        isFetchDataOfflineCalled = true;
+      }
+      // });
       Utils().showLog("ERROR connecting... $e");
     }
   }

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
+import 'package:stocks_news_new/stocksScanner/screens/marketScanner/market_scanner_filter.dart';
 import 'package:stocks_news_new/stocksScanner/screens/stockScanner/scanner_container.dart';
+import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 
 class StocksScanner extends StatelessWidget {
@@ -9,11 +11,15 @@ class StocksScanner extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BaseContainer(
-      appBar: const AppBarHome(
+      appBar: AppBarHome(
         isPopBack: true,
         title: "Stocks Scanner",
         canSearch: false,
         showTrailing: false,
+        filterApplied: true,
+        onFilterClick: () {
+          Navigator.push(context, createRoute(MarketScannerFilter()));
+        },
       ),
       body: ScannerContainer(),
     );

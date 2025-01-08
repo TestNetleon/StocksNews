@@ -34,10 +34,7 @@ class _MarketScannerState extends State<MarketScanner> {
             return MarketScannerOffline();
           } else {
             return Center(
-              child: Text(
-                "Preparing...",
-                style: stylePTSansBold(),
-              ),
+              child: Text("Preparing...", style: stylePTSansBold()),
             );
           }
         },

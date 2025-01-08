@@ -21,6 +21,7 @@ import 'package:svg_flutter/svg_flutter.dart';
 class AppBarHome extends StatefulWidget implements PreferredSizeWidget {
   final bool isHome;
   final bool showTrailing, isPopBack, canSearch, showPortfolio, showTitleLogo;
+  final bool filterApplied;
   final void Function()? onFilterClick;
   final void Function()? onTap;
   final String? title;
@@ -38,6 +39,7 @@ class AppBarHome extends StatefulWidget implements PreferredSizeWidget {
     this.canSearch = true,
     this.showPortfolio = false,
     this.showTitleLogo = true,
+    this.filterApplied = false,
     this.onTap,
     this.title,
     this.subTitle,
@@ -215,14 +217,43 @@ class _AppBarHomeState extends State<AppBarHome> {
                   children: [
                     Visibility(
                       visible: widget.onFilterClick != null,
-                      child: IconButton(
-                        onPressed: widget.onFilterClick,
-                        icon: const Icon(
-                          Icons.filter_alt,
-                          color: ThemeColors.accent,
-                        ),
+                      child: Stack(
+                        children: [
+                          IconButton(
+                            onPressed: widget.onFilterClick,
+                            icon: const Icon(
+                              Icons.filter_alt,
+                              color: ThemeColors.accent,
+                            ),
+                          ),
+                          if (widget.filterApplied)
+                            Positioned(
+                              right: 24,
+                              top: 14,
+                              child: Container(
+                                width: 8,
+                                height: 8,
+                                decoration: BoxDecoration(
+                                  color: Colors.red,
+                                  borderRadius: BorderRadius.circular(30),
+                                ),
+                              ),
+                            ),
+                        ],
                       ),
                     ),
+
+                    // Visibility(
+                    //   visible: widget.onFilterClick != null,
+                    //   child: IconButton(
+                    //     onPressed: widget.onFilterClick,
+                    //     icon: const Icon(
+                    //       Icons.filter_alt,
+                    //       color: ThemeColors.accent,
+                    //     ),
+                    //   ),
+                    // ),
+
                     Visibility(
                       visible: widget.canSearch,
                       child: IconButton(
@@ -246,9 +277,7 @@ class _AppBarHomeState extends State<AppBarHome> {
                         onPressed: () {
                           Navigator.push(
                             navigatorKey.currentContext!,
-                            MaterialPageRoute(
-                              builder: (_) => const TsPortfolio(),
-                            ),
+                            createRoute(TsPortfolio()),
                           );
                         },
                         icon: const Icon(

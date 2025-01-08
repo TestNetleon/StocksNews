@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stocks_news_new/utils/colors.dart';
@@ -22,10 +23,12 @@ class TextInputField extends StatelessWidget {
     this.borderColor,
     this.contentPadding,
     this.style,
+    this.hintStyle,
     this.textCapitalization = TextCapitalization.sentences,
     this.hintText,
     this.onChanged,
     this.suffix,
+    this.inputFormatters,
     super.key,
   });
 
@@ -39,12 +42,13 @@ class TextInputField extends StatelessWidget {
   final bool editable;
   final bool shadow;
   final bool filled;
-  final TextStyle? style;
+  final TextStyle? style, hintStyle;
   final Color? borderColor;
   final TextCapitalization textCapitalization;
   final Function()? onButtonClick, onTap;
   final String? hintText;
   final Function(String)? onChanged;
+  final List<TextInputFormatter>? inputFormatters;
 
   Widget _prefix({EdgeInsets? padding}) {
     return Padding(
@@ -82,9 +86,15 @@ class TextInputField extends StatelessWidget {
           enabled: editable,
           textCapitalization: textCapitalization,
           style: style ?? stylePTSansBold(fontSize: 16),
+          inputFormatters: inputFormatters,
           decoration: InputDecoration(
             suffixIcon: suffix,
             hintText: hintText,
+            hintStyle: hintStyle ??
+                styleGeorgiaBold(
+                  fontSize: 15,
+                  color: ThemeColors.greyText,
+                ),
             constraints: BoxConstraints(
               minHeight: 0,
               maxHeight: minLines > 1 ? 150 : 50,
