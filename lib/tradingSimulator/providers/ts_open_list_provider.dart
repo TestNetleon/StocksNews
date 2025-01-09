@@ -138,26 +138,26 @@ class TsOpenListProvider extends ChangeNotifier {
         navigatorKey.currentContext!.read<TsPortfolioProvider>();
 
     num totalMarketValue = 0;
-    num totalReturn = 0;
+    num todaysReturn = 0;
 
     for (var stock in _data!) {
       String symbol = stock.symbol ?? '';
       Map<String, num> returnData = getTodaysReturnForStock(symbol);
 
-      totalReturn += returnData['todaysReturn'] ?? 0;
+      todaysReturn += returnData['todaysReturn'] ?? 0;
 
       totalMarketValue += stock.currentInvested ?? 0;
     }
 
     provider.updateBalance(
       marketValue: totalMarketValue,
-      position: provider.userData?.previousPosition != null
-          ? (provider.userData?.previousPosition ?? 0) + totalReturn
+      totalReturn: provider.userData?.totalReturn != null
+          ? (provider.userData?.totalReturn ?? 0) + todaysReturn
           : 0,
-      todayReturn: totalReturn,
+      todayReturn: todaysReturn,
     );
 
-    Utils().showLog('Final Portfolio Return: $totalReturn');
+    Utils().showLog('Final Portfolio Return: $todaysReturn');
   }
 
   void _updateStockDataForMultipleSymbols(

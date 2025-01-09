@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/tournament/provider/tournament.dart';
+import 'package:stocks_news_new/widgets/cache_network_image.dart';
 import '../../../../../utils/colors.dart';
 import '../../../../../utils/theme.dart';
 import '../../../../../widgets/spacer_vertical.dart';
 import '../../../../../widgets/theme_button.dart';
 import '../../../../models/tournament_detail.dart';
 import '../../../../widgets/card.dart';
+import '../open/index.dart';
 
 class DayTrainingTitle extends StatelessWidget {
   final int? tournamentId;
@@ -34,7 +36,7 @@ class DayTrainingTitle extends StatelessWidget {
                   text: TextSpan(
                     children: [
                       TextSpan(
-                        text: provider.detailRes?.isMarketOpen == true
+                        text: provider.detailRes?.tournamentBattleId != null
                             ? 'Closes in '
                             : 'Starts in',
                         style: styleGeorgiaRegular(color: ThemeColors.greyText),
@@ -169,9 +171,20 @@ class DayTrainingTitle extends StatelessWidget {
                   ),
                 ],
               ),
-              SizedBox(
-                height: 250,
-                width: 100,
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 10),
+                child: Text(
+                  textAlign: TextAlign.center,
+                  '${provider.detailRes?.description}',
+                  style: styleGeorgiaRegular(color: ThemeColors.greyText),
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.symmetric(vertical: 10),
+                child: ClipRRect(
+                    borderRadius: BorderRadius.circular(8),
+                    child:
+                        CachedNetworkImagesWidget(provider.detailRes?.image)),
               ),
               Visibility(
                 visible: provider.detailRes?.isMarketOpen == true,
@@ -186,7 +199,13 @@ class DayTrainingTitle extends StatelessWidget {
                     if (provider.detailRes?.joined == false) {
                       provider.joinTounament(id: tournamentId);
                     } else {
-                      provider.openTournament();
+                      // provider.openTournament();
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => TournamentOpenIndex(),
+                        ),
+                      );
                     }
                   },
                   text: detailRes?.showButton ?? 'Open',

@@ -507,19 +507,6 @@ class _BuySellContainerState extends State<BuySellContainer> {
             ],
           ),
           const SpacerVertical(),
-          // ThemeButton(
-          //   text: widget.buy ? "Proceed Buy Order" : "Proceed Sell Order",
-          //   color: widget.buy
-          //       ? (invested > _availableBalance || invested == 0)
-          //           ? ThemeColors.greyText
-          //           : ThemeColors.accent
-          //       : (invested > _availableBalance || invested == 0)
-          //           ? ThemeColors.greyText
-          //           : ThemeColors.sos,
-          //   onPressed: (invested > _availableBalance || invested == 0)
-          //       ? () {}
-          //       : _onTap,
-          // ),
           ThemeButton(
             disabledBackgroundColor: ThemeColors.greyBorder,
             text: widget.buy ? "Proceed Buy Order" : "Proceed Sell Order",
@@ -527,18 +514,68 @@ class _BuySellContainerState extends State<BuySellContainer> {
                 ? (invested > _availableBalance || invested == 0)
                     ? ThemeColors.greyText
                     : ThemeColors.accent
-                : (invested > _availableBalance ||
-                        invested == 0 ||
+                : (controller.text.isEmpty ||
                         num.parse(controller.text) > widget.qty)
                     ? ThemeColors.greyText
                     : ThemeColors.sos,
             onPressed: (widget.buy
                     ? (invested > _availableBalance || invested == 0)
-                    : (invested > _availableBalance ||
-                        invested == 0 ||
+                    : (controller.text.isEmpty ||
                         num.parse(controller.text) > widget.qty))
                 ? null
                 : _onTap,
+          ),
+          Visibility(
+            visible: controller.text.isNotEmpty &&
+                widget.buy &&
+                (invested > _availableBalance || invested == 0),
+            child: Container(
+              padding: EdgeInsets.only(top: 10),
+              child: RichText(
+                text: TextSpan(
+                  text: 'Your current balance is ',
+                  style: styleGeorgiaRegular(color: const Color(0xFFC7C8CC)),
+                  children: [
+                    TextSpan(
+                      text: _availableBalance.toFormattedPrice(),
+                      style: styleGeorgiaBold(
+                          color: ThemeColors.white, fontSize: 15),
+                    ),
+                    TextSpan(
+                        style:
+                            styleGeorgiaRegular(color: const Color(0xFFC7C8CC)),
+                        text:
+                            '. You cannot purchase shares with an order value that exceeds your available balance.')
+                  ],
+                ),
+              ),
+            ),
+          ),
+          Visibility(
+            visible: controller.text.isNotEmpty &&
+                !widget.buy &&
+                num.parse(controller.text) > widget.qty,
+            child: Container(
+              padding: EdgeInsets.only(top: 10),
+              child: RichText(
+                text: TextSpan(
+                  text: 'Your current share holding is ',
+                  style: styleGeorgiaRegular(color: const Color(0xFFC7C8CC)),
+                  children: [
+                    TextSpan(
+                      text: '${widget.qty}',
+                      style: styleGeorgiaBold(
+                          color: ThemeColors.white, fontSize: 15),
+                    ),
+                    TextSpan(
+                        style:
+                            styleGeorgiaRegular(color: const Color(0xFFC7C8CC)),
+                        text:
+                            '. You cannot sell more shares than you currently own.')
+                  ],
+                ),
+              ),
+            ),
           ),
         ],
       ),

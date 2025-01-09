@@ -905,6 +905,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Development";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = NPUHL9S742;
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = NPUHL9S742;
 				ENABLE_BITCODE = NO;

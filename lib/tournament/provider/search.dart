@@ -34,7 +34,7 @@ class TournamentSearchProvider extends ChangeNotifier {
       };
 
       ApiResponse response = await apiRequest(
-        url: Apis.tradingMostSearch,
+        url: Apis.tTickerList,
         request: request,
         showProgress: false,
       );

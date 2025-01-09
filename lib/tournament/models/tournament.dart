@@ -6,8 +6,8 @@ TournamentRes tournamentResFromJson(String str) =>
 String tournamentResToJson(TournamentRes data) => json.encode(data.toJson());
 
 class TournamentRes {
-  final List<TournamentHeader>? tournamentHeader;
-  final List<Tournament>? tournaments;
+  final List<TournamentHeaderRes>? tournamentHeader;
+  final List<TournamentDataRes>? tournaments;
 
   TournamentRes({
     this.tournamentHeader,
@@ -17,12 +17,12 @@ class TournamentRes {
   factory TournamentRes.fromJson(Map<String, dynamic> json) => TournamentRes(
         tournamentHeader: json["tournament_header"] == null
             ? []
-            : List<TournamentHeader>.from(json["tournament_header"]!
-                .map((x) => TournamentHeader.fromJson(x))),
+            : List<TournamentHeaderRes>.from(json["tournament_header"]!
+                .map((x) => TournamentHeaderRes.fromJson(x))),
         tournaments: json["tournaments"] == null
             ? []
-            : List<Tournament>.from(
-                json["tournaments"]!.map((x) => Tournament.fromJson(x))),
+            : List<TournamentDataRes>.from(
+                json["tournaments"]!.map((x) => TournamentDataRes.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -35,17 +35,17 @@ class TournamentRes {
       };
 }
 
-class TournamentHeader {
+class TournamentHeaderRes {
   final String? label;
   final String? value;
 
-  TournamentHeader({
+  TournamentHeaderRes({
     this.label,
     this.value,
   });
 
-  factory TournamentHeader.fromJson(Map<String, dynamic> json) =>
-      TournamentHeader(
+  factory TournamentHeaderRes.fromJson(Map<String, dynamic> json) =>
+      TournamentHeaderRes(
         label: json["label"],
         value: json["value"],
       );
@@ -56,7 +56,7 @@ class TournamentHeader {
       };
 }
 
-class Tournament {
+class TournamentDataRes {
   final String? name;
   final String? slug;
   final String? time;
@@ -64,7 +64,7 @@ class Tournament {
   final int? point;
   final int? tournamentId;
 
-  Tournament({
+  TournamentDataRes({
     this.name,
     this.slug,
     this.time,
@@ -73,9 +73,10 @@ class Tournament {
     this.tournamentId,
   });
 
-  factory Tournament.fromJson(Map<String, dynamic> json) => Tournament(
+  factory TournamentDataRes.fromJson(Map<String, dynamic> json) =>
+      TournamentDataRes(
         name: json["name"],
-        tournamentId: json['tournament_id'],
+        tournamentId: json['id'],
         slug: json["slug"],
         time: json["time"],
         image: json["image"],
@@ -85,7 +86,7 @@ class Tournament {
   Map<String, dynamic> toJson() => {
         "name": name,
         "slug": slug,
-        "tournament_id": tournamentId,
+        "id": tournamentId,
         "time": time,
         "image": image,
         "point": point,

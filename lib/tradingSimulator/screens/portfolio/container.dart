@@ -24,8 +24,8 @@ class _TsPortfolioContainerState extends State<TsPortfolioContainer> {
   }
 
   void _getData() {
-    TsPortfolioProvider provider = context.read<TsPortfolioProvider>();
-    provider.getData();
+    // TsPortfolioProvider provider = context.read<TsPortfolioProvider>();
+    // provider.getData();
   }
 
   @override

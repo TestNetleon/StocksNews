@@ -34,7 +34,7 @@ class TournamentGrids extends StatelessWidget {
     return CustomGridView(
       length: provider.data?.tournaments?.length ?? 0,
       getChild: (index) {
-        Tournament? data = provider.data?.tournaments?[index];
+        TournamentDataRes? data = provider.data?.tournaments?[index];
         return GestureDetector(
           onTap: () {
             _onTap(

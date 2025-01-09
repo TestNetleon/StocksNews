@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/tournament/provider/tournament.dart';
 import 'package:stocks_news_new/tournament/screens/tournaments/dayTraining/widgets/leaderboard.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
@@ -7,6 +8,7 @@ import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/utils/theme.dart';
+import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/custom/refresh_indicator.dart';
@@ -41,6 +43,13 @@ class _TournamentDayTrainingIndexState
       padding: EdgeInsets.only(right: 10),
       content: TournamentRules(),
     );
+  }
+
+  @override
+  void dispose() {
+    Utils().showLog('DISPOSING TOURNAMENT');
+    navigatorKey.currentContext!.read<TournamentProvider>().stopCountdown();
+    super.dispose();
   }
 
   @override

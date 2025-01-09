@@ -11,7 +11,8 @@ import 'tournaments/tournaments_index.dart';
 import 'tournaments/leaderboard/index.dart';
 
 class GameTournamentIndex extends StatefulWidget {
-  const GameTournamentIndex({super.key});
+  final int? setIndex;
+  const GameTournamentIndex({super.key, this.setIndex});
 
   @override
   State<GameTournamentIndex> createState() => _GameTournamentIndexState();
@@ -29,6 +30,7 @@ class _GameTournamentIndexState extends State<GameTournamentIndex> {
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: Dimen.padding),
         child: CustomTabContainer(
+          initialIndex: widget.setIndex ?? 0,
           tabs: List.generate(
             provider.tabs.length,
             (index) {

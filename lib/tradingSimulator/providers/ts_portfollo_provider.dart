@@ -37,15 +37,15 @@ class TsPortfolioProvider extends ChangeNotifier {
   }
 
   void updateBalance({
-    num? position,
+    num? totalReturn,
     num? marketValue,
     num? todayReturn,
   }) {
-    if (position != null) {
-      _userData?.currentPositionAmount = position;
+    if (totalReturn != null) {
+      _userData?.totalReturn = totalReturn;
     }
     if (marketValue != null) {
-      _userData?.investedValue = marketValue;
+      _userData?.marketValue = marketValue;
     }
     if (todayReturn != null) {
       _userData?.todayReturn = todayReturn;
@@ -53,38 +53,38 @@ class TsPortfolioProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future getData() async {
-    setStatus(Status.loading);
-    try {
-      Map request = {
-        "token":
-            navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
-        // "mssql_id": "${userData?.sqlId}"
-      };
+  // Future getData() async {
+  //   setStatus(Status.loading);
+  //   try {
+  //     Map request = {
+  //       "token":
+  //           navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
+  //       // "mssql_id": "${userData?.sqlId}"
+  //     };
 
-      ApiResponse response = await apiRequest(
-        url: Apis.tsPortfolio,
-        request: request,
-        showProgress: false,
-      );
+  //     ApiResponse response = await apiRequest(
+  //       url: Apis.tsPortfolio,
+  //       request: request,
+  //       showProgress: false,
+  //     );
 
-      if (response.status) {
-        _data = tsPortfolioResFromJson(jsonEncode(response.data));
-        // _extra = (response.extra is Extra ? response.extra as Extra : null);
-        _error = null;
-      } else {
-        _data = null;
-        _error = response.message ?? Const.errSomethingWrong;
-        // showErrorMessage(message: response.message);
-      }
-      setStatus(Status.loaded);
-    } catch (e) {
-      _data = null;
-      _error = Const.errSomethingWrong;
-      Utils().showLog(e.toString());
-      setStatus(Status.loaded);
-    }
-  }
+  //     if (response.status) {
+  //       _data = tsPortfolioResFromJson(jsonEncode(response.data));
+  //       // _extra = (response.extra is Extra ? response.extra as Extra : null);
+  //       _error = null;
+  //     } else {
+  //       _data = null;
+  //       _error = response.message ?? Const.errSomethingWrong;
+  //       // showErrorMessage(message: response.message);
+  //     }
+  //     setStatus(Status.loaded);
+  //   } catch (e) {
+  //     _data = null;
+  //     _error = Const.errSomethingWrong;
+  //     Utils().showLog(e.toString());
+  //     setStatus(Status.loaded);
+  //   }
+  // }
 
   Future getDashboardData() async {
     setStatus(Status.loading);
