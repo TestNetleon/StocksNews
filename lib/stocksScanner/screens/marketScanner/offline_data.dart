@@ -34,11 +34,11 @@ class _MarketScannerOfflineState extends State<MarketScannerOffline> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      MarketScannerProvider provider = context.read<MarketScannerProvider>();
-      provider.startListeningPorts();
-      // provider.getOfflineData();
-    });
+    // WidgetsBinding.instance.addPostFrameCallback((_) {
+    //   MarketScannerProvider provider = context.read<MarketScannerProvider>();
+    //   provider.startListeningPorts();
+    //   // provider.getOfflineData();
+    // });
   }
 
   @override

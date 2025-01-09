@@ -23,6 +23,9 @@ class TopGainerScannerProvider extends ChangeNotifier {
   List<MarketScannerRes>? _dataList;
   List<MarketScannerRes>? get dataList => _dataList;
 
+  FilterParamsGainer? _filterParams;
+  FilterParamsGainer? get filterParams => _filterParams;
+
   Extra? _extra;
   Extra? get extra => _extra;
 
@@ -138,4 +141,11 @@ class TopGainerScannerProvider extends ChangeNotifier {
     _dataList = prChangeAr.take(50).toList();
     notifyListeners();
   }
+}
+
+class FilterParamsGainer {
+  // 2 = percent  3= volume
+  int? sortBy;
+
+  FilterParamsGainer({this.sortBy});
 }

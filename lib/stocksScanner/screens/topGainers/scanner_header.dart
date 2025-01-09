@@ -13,10 +13,7 @@ import 'package:stocks_news_new/utils/theme.dart';
 
 class TopGainerScannerHeader extends StatefulWidget {
   final bool isOnline;
-  const TopGainerScannerHeader({
-    super.key,
-    this.isOnline = false,
-  });
+  const TopGainerScannerHeader({super.key, this.isOnline = false});
 
   @override
   State<TopGainerScannerHeader> createState() => _TopGainerScannerHeaderState();
@@ -25,6 +22,7 @@ class TopGainerScannerHeader extends StatefulWidget {
 class _TopGainerScannerHeaderState extends State<TopGainerScannerHeader> {
   Timer? _timer;
   String _lastUpdated = "";
+
   @override
   void initState() {
     super.initState();
@@ -71,7 +69,8 @@ class _TopGainerScannerHeaderState extends State<TopGainerScannerHeader> {
     // }
 
     return Text(
-      "Market Status : $marketStatus  |   Last Updated : $_lastUpdated",
+      // "Market Status : $marketStatus  |   Last Updated : $_lastUpdated",
+      "Market Status : $marketStatus  |   Last Updated : ",
       style: stylePTSansBold(),
     );
   }

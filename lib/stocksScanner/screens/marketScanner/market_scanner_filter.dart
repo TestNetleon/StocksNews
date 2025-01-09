@@ -201,7 +201,7 @@ class _MarketScannerFilterState extends State<MarketScannerFilter> {
     }
     provider.applyFilter(params);
     Navigator.pop(context);
-    provider.updateData(provider.dataList);
+    // provider.updateData(provider.dataList);
     // MarketScannerDataManager.initializePorts();
   }
 
@@ -209,7 +209,7 @@ class _MarketScannerFilterState extends State<MarketScannerFilter> {
     MarketScannerProvider provider = context.read<MarketScannerProvider>();
     provider.clearFilter();
     Navigator.pop(context);
-    provider.updateData(provider.dataList);
+    // provider.updateData(provider.dataList);
     // MarketScannerDataManager.initializePorts();
   }
 

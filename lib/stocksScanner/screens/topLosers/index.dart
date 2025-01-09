@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/stocksScanner/providers/top_loser_scanner_provider.dart';
+import 'package:stocks_news_new/stocksScanner/screens/stockScanner/widget_preparing.dart';
 import 'package:stocks_news_new/stocksScanner/screens/topLosers/offline_data.dart';
 import 'package:stocks_news_new/stocksScanner/screens/topLosers/online_data.dart';
-import 'package:stocks_news_new/utils/theme.dart';
 
 class ScannerTopLosers extends StatefulWidget {
   const ScannerTopLosers({super.key});
@@ -34,12 +34,7 @@ class _ScannerTopLosersState extends State<ScannerTopLosers> {
           } else if (provider.offlineDataList != null) {
             return TopLosersOffline();
           } else {
-            return Center(
-              child: Text(
-                "Preparing...",
-                style: stylePTSansBold(),
-              ),
-            );
+            return ScannerPreparing();
           }
         },
       ),
