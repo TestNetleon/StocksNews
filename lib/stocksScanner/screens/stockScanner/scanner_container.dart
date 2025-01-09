@@ -27,10 +27,7 @@ class ScannerContainer extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                FaIcon(
-                  tabIcons[index],
-                  size: 14,
-                ),
+                FaIcon(tabIcons[index], size: 14),
                 SpacerHorizontal(width: 5),
                 Text(
                   tabs[index],

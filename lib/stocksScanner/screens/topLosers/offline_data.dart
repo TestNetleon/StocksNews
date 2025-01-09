@@ -35,10 +35,10 @@ class _TopLosersOfflineState extends State<TopLosersOffline> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      TopLoserScannerProvider provider =
-          context.read<TopLoserScannerProvider>();
-      provider.startListeningPorts();
-      provider.getOfflineData();
+      // TopLoserScannerProvider provider =
+      //     context.read<TopLoserScannerProvider>();
+      // provider.startListeningPorts();
+      // provider.getOfflineData();
     });
   }
 
@@ -196,29 +196,36 @@ class _TopLosersOfflineState extends State<TopLosersOffline> {
                         (data) {
                           return DataRow(
                             cells: [
-                              _dataCell(text: data.time), // "Time",
-                              // _dataCell(text: data.identifier), // "Symbol",
-                              _dataCell(text: data.name), // "Company Name",
-                              _dataCell(text: data.sector), // "Sector",
-                              _dataCell(text: "\$${data.bid}"), // "Bid",
-                              _dataCell(text: "\$${data.ask}"), // "Ask",
-                              _dataCell(
-                                  text: "\$${data.price}"), // "Last Trade",
+                              // "Time",
+                              _dataCell(text: data.time),
+                              // "Company Name",
+                              _dataCell(text: data.name ?? ""),
+                              // "Sector",
+                              _dataCell(text: data.sector ?? ""),
+                              // "Bid",
+                              _dataCell(text: "\$${data.bid}"),
+                              // "Ask",
+                              _dataCell(text: "\$${data.ask}"),
+                              // "Last Trade",
+                              _dataCell(text: "\$${data.price}"),
+                              // "Net Change",
                               _dataCell(
                                 text: "\$${data.change}",
                                 change: true,
                                 value: data.change,
-                              ), // "Net Change",
+                              ),
+                              // "% Change",
                               _dataCell(
-                                text:
-                                    "${data.changesPercentage}", // "% Change",
+                                text: "${data.changesPercentage}",
                                 change: true,
                                 value: data.changesPercentage,
                               ),
-                              _dataCell(text: "${data.volume}"), // "Volume",
+                              // "Volume",
+                              _dataCell(text: "${data.volume}"),
+                              // "$Volume"
                               _dataCell(
                                 text: num.parse("${data.volume * data.price}")
-                                    .toRuppees(), // "$Volume"
+                                    .toRuppees(),
                               ),
                             ],
                           );

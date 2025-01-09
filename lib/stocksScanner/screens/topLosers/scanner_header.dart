@@ -26,6 +26,7 @@ class TopLoserScannerHeader extends StatefulWidget {
 class _TopLoserScannerHeaderState extends State<TopLoserScannerHeader> {
   Timer? _timer;
   String _lastUpdated = "";
+
   @override
   void initState() {
     super.initState();
@@ -71,7 +72,8 @@ class _TopLoserScannerHeaderState extends State<TopLoserScannerHeader> {
     // }
 
     return Text(
-      "Market Status : $marketStatus  |   Last Updated : $_lastUpdated",
+      // "Market Status : $marketStatus  |   Last Updated : $_lastUpdated",
+      "Market Status : $marketStatus  |   Last Updated : ",
       style: stylePTSansBold(),
     );
   }
