@@ -10,6 +10,7 @@ String tradingSearchTickerResToJson(List<TradingSearchTickerRes> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class TradingSearchTickerRes {
+  final int? id;
   final String? symbol;
   final String? name;
   final String? image;
@@ -24,6 +25,7 @@ class TradingSearchTickerRes {
     this.symbol,
     this.name,
     this.image,
+    this.id,
     this.price,
     this.change,
     this.changesPercentage,
@@ -35,6 +37,7 @@ class TradingSearchTickerRes {
   factory TradingSearchTickerRes.fromJson(Map<String, dynamic> json) =>
       TradingSearchTickerRes(
         symbol: json["symbol"],
+        id: json['id'],
         name: json["name"],
         type: json['type'] != null
             ? StockTypeExtension.fromJson(json['type'])
@@ -52,6 +55,7 @@ class TradingSearchTickerRes {
         "name": name,
         "image": image,
         "price": price,
+        'id': id,
         'status': status,
         "change": change,
         'type': type?.toJson(),

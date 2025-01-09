@@ -236,7 +236,7 @@ class _TsDashboardHeaderState extends State<TsDashboardHeader> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "\$${formatBalance(provider.userData?.invested ?? 0)}",
+                          "\$${formatBalance(provider.userData?.investedAmount ?? 0)}",
                           style: styleGeorgiaBold(fontSize: 25),
                         ),
                         const SpacerVertical(height: 5),
@@ -257,7 +257,7 @@ class _TsDashboardHeaderState extends State<TsDashboardHeader> {
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                         Text(
-                          "\$${formatBalance(provider.userData?.investedValue ?? 0)}",
+                          "\$${formatBalance(provider.userData?.marketValue ?? 0)}",
                           style: styleGeorgiaBold(fontSize: 25),
                         ),
                         const SpacerVertical(height: 5),
@@ -307,15 +307,12 @@ class _TsDashboardHeaderState extends State<TsDashboardHeader> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          '${provider.userData?.currentPositionAmount?.toFormattedPrice(removeSign: true) ?? 0}',
+                          '${provider.userData?.totalReturn?.toFormattedPrice(removeSign: true) ?? 0}',
                           style: styleGeorgiaBold(
                               fontSize: 25,
-                              color:
-                                  (provider.userData?.currentPositionAmount ??
-                                              0) >=
-                                          0
-                                      ? ThemeColors.accent
-                                      : ThemeColors.sos),
+                              color: (provider.userData?.totalReturn ?? 0) >= 0
+                                  ? ThemeColors.accent
+                                  : ThemeColors.sos),
                         ),
                         const SpacerVertical(height: 5),
                         Text(

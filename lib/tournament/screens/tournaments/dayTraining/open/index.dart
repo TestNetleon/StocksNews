@@ -43,16 +43,17 @@ class _TournamentOpenIndexState extends State<TournamentOpenIndex>
   }
 
   _navigateToAllTrades() async {
-    final stock = await Navigator.push(
+    await Navigator.push(
       navigatorKey.currentContext!,
       createRoute(AllTradesOrdersIndex()),
     );
-
-    if (stock != null) {
-      TournamentTradesProvider provider =
-          context.read<TournamentTradesProvider>();
-      provider.setSelectedStock(stock: stock);
-    }
+    SSEManager.instance.disconnectAllScreens();
+    TournamentTradesProvider provider =
+        context.read<TournamentTradesProvider>();
+    provider.setSelectedStock(
+      stock: provider.selectedStock,
+      clearEverything: true,
+    );
   }
 
   _trade({StockType type = StockType.buy}) async {
@@ -190,6 +191,36 @@ class _TournamentOpenIndexState extends State<TournamentOpenIndex>
                             onPressed: _close,
                             color: ThemeColors.white,
                             textColor: Colors.black,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  'Close',
+                                  style: styleGeorgiaBold(color: Colors.black),
+                                ),
+                                SpacerHorizontal(width: 10),
+                                Flexible(
+                                  child: Container(
+                                    padding:
+                                        EdgeInsets.symmetric(horizontal: 15),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(20),
+                                      color: (detailHolder?.data?.showButton
+                                                      ?.orderChange ??
+                                                  0) >=
+                                              0
+                                          ? ThemeColors.accent
+                                          : ThemeColors.sos,
+                                    ),
+                                    child: Text(
+                                      '${detailHolder?.data?.showButton?.orderChange?.toCurrency()}%',
+                                      style:
+                                          styleGeorgiaBold(color: Colors.white),
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),
                           ),
                         SpacerVertical(height: 10),
                       ],

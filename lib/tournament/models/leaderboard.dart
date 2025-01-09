@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:stocks_news_new/tournament/models/tournament_detail.dart';
+
 TournamentLeaderboardRes tournamentLeaderboardResFromJson(String str) =>
     TournamentLeaderboardRes.fromJson(json.decode(str));
 
@@ -8,7 +10,7 @@ String tournamentLeaderboardResToJson(TournamentLeaderboardRes data) =>
 
 class TournamentLeaderboardRes {
   final List<LeaderboardByDateRes>? leaderboardByDate;
-  final num? loginUserPosition;
+  final LoginUserPositionRes? loginUserPosition;
 
   TournamentLeaderboardRes({
     this.leaderboardByDate,
@@ -17,65 +19,67 @@ class TournamentLeaderboardRes {
 
   factory TournamentLeaderboardRes.fromJson(Map<String, dynamic> json) =>
       TournamentLeaderboardRes(
-        leaderboardByDate: json["leaderboard_byDate"] == null
+        leaderboardByDate: json["leaderboard"] == null
             ? []
-            : List<LeaderboardByDateRes>.from(json["leaderboard_byDate"]!
+            : List<LeaderboardByDateRes>.from(json["leaderboard"]!
                 .map((x) => LeaderboardByDateRes.fromJson(x))),
-        loginUserPosition: json["login_user_position"],
+        loginUserPosition: json["login_user_position"] == null
+            ? null
+            : LoginUserPositionRes.fromJson(json["login_user_position"]),
       );
 
   Map<String, dynamic> toJson() => {
-        "leaderboard_byDate": leaderboardByDate == null
+        "leaderboard": leaderboardByDate == null
             ? []
             : List<dynamic>.from(leaderboardByDate!.map((x) => x.toJson())),
-        "login_user_position": loginUserPosition,
+        "login_user_position": loginUserPosition?.toJson(),
       };
 }
 
 class LeaderboardByDateRes {
-  final num? tournamentBattleId;
-  final DateTime? tournamentBattleDate;
+  // final num? tournamentBattleId;
+  // final DateTime? tournamentBattleDate;
   final num? userId;
   final String? name;
   final String? image;
   final num? avgTotalChange;
-  final num? position;
+  // final num? position;
   final String? imageType;
 
   LeaderboardByDateRes({
-    this.tournamentBattleId,
-    this.tournamentBattleDate,
+    // this.tournamentBattleId,
+    // this.tournamentBattleDate,
     this.userId,
     this.name,
     this.image,
     this.avgTotalChange,
-    this.position,
+    // this.position,
     this.imageType,
   });
 
   factory LeaderboardByDateRes.fromJson(Map<String, dynamic> json) =>
       LeaderboardByDateRes(
-        tournamentBattleId: json["tournament_battle_id"],
+        // tournamentBattleId: json["tournament_battle_id"],
         imageType: json['image_type'],
-        tournamentBattleDate: json["tournament_battle_date"] == null
-            ? null
-            : DateTime.parse(json["tournament_battle_date"]),
+        // tournamentBattleDate: json["tournament_battle_date"] == null
+        //     ? null
+        //     : DateTime.parse(json["tournament_battle_date"]),
         userId: json["user_id"],
         name: json["name"],
         image: json["image"],
-        avgTotalChange: json["avg_total_change"],
-        position: json["position"],
+        avgTotalChange: json["total_change"],
+        // position: json["position"],
       );
 
   Map<String, dynamic> toJson() => {
-        "tournament_battle_id": tournamentBattleId,
-        "tournament_battle_date":
-            "${tournamentBattleDate!.year.toString().padLeft(4, '0')}-${tournamentBattleDate!.month.toString().padLeft(2, '0')}-${tournamentBattleDate!.day.toString().padLeft(2, '0')}",
+        // "tournament_battle_id": tournamentBattleId,
+        // "tournament_battle_date":
+        //     "${tournamentBattleDate!.year.toString().padLeft(4, '0')}-${tournamentBattleDate!.month.toString().padLeft(2, '0')}-${tournamentBattleDate!.day.toString().padLeft(2, '0')}",
         "user_id": userId,
         "name": name,
         "image": image,
         "image_type": imageType,
-        "avg_total_change": avgTotalChange,
-        "position": position,
+        "total_change": avgTotalChange,
+        // "position": position,
       };
 }

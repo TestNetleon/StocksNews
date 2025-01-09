@@ -13,93 +13,59 @@ import '../../routes/my_app.dart';
 import '../../tradingSimulator/manager/sse.dart';
 import '../../tradingSimulator/modals/trading_search_res.dart';
 import '../../utils/constants.dart';
+import '../models/all_trades.dart';
 import '../models/ticker_detail.dart';
 
 enum StockType { buy, sell, hold }
 
 class TournamentTradesProvider extends ChangeNotifier {
-  //MARK: Trades Overview
-  List<KeyValueElementStockScreener>? _tradesOverview;
-  List<KeyValueElementStockScreener>? get tradesOverview => _tradesOverview;
-
-  Status _statusOverview = Status.ideal;
-  Status get statusOverview => _statusOverview;
-
-  bool get isLoadingOverview =>
-      _statusOverview == Status.loading || _statusOverview == Status.ideal;
-
-  String? _errorOverview;
-  String? get errorOverview => _errorOverview ?? Const.errSomethingWrong;
+//MARK: All Trades
 
   KeyValueElementStockScreener? _selectedOverview;
   KeyValueElementStockScreener? get selectedOverview => _selectedOverview;
 
-  void setSelectedOverview(KeyValueElementStockScreener? data,
-      {bool refresh = false}) {
+  TournamentAllTradesRes? _myTrades;
+  TournamentAllTradesRes? get myTrades => _myTrades;
+
+  Status _statusTrades = Status.ideal;
+  Status get statusTrades => _statusTrades;
+
+  bool get isLoadingTrades =>
+      _statusTrades == Status.loading || _statusTrades == Status.ideal;
+
+  String? _errorTrades;
+  String? get errorTrades => _errorTrades ?? Const.errSomethingWrong;
+
+  void setSelectedOverview(
+    KeyValueElementStockScreener? data, {
+    bool refresh = false,
+    bool showProgress = false,
+  }) {
     if (_selectedOverview != data) {
       _selectedOverview = data;
       notifyListeners();
-      getTradesList(refresh: refresh);
-    }
-  }
-
-  void setStatusOverview(status) {
-    _statusOverview = status;
-    notifyListeners();
-  }
-
-  Future getTradesOverview({bool resetIndex = false}) async {
-    setStatusOverview(Status.loading);
-    try {
-      TournamentProvider provider =
-          navigatorKey.currentContext!.read<TournamentProvider>();
-      Map request = {
-        "token":
-            navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
-        'tournament_battle_id':
-            '${provider.detailRes?.tournamentBattleId ?? ''}',
-      };
-
-      ApiResponse response = await apiRequest(
-        url: Apis.tTradeOverview,
-        request: request,
+      getTradesList(
+        refresh: refresh,
+        showProgress: showProgress,
       );
-      if (response.status) {
-        _tradesOverview = (response.data as List)
-            .map((item) => KeyValueElementStockScreener.fromJson(item))
-            .toList();
-        _errorOverview = null;
-        if (resetIndex) setSelectedOverview(_tradesOverview?[0], refresh: true);
-      } else {
-        _tradesOverview = null;
-        _errorOverview = response.message;
-      }
-      setStatusOverview(Status.loaded);
-    } catch (e) {
-      _tradesOverview = null;
-      _errorOverview = Const.errSomethingWrong;
-      Utils().showLog('trades overview $e');
-      setStatusOverview(Status.loaded);
     }
   }
 
-//MARK: All Trades
-
-  final Map<String, TournamentMyTradesHolder> _myTrades = {};
-  Map<String, TournamentMyTradesHolder>? get myTrades => _myTrades;
-
-  Future getTradesList({bool refresh = false}) async {
-    // if (_myTrades[_selectedOverview?.key]?.data != null && !refresh) {
-    //   Utils().showLog('Data already exists, returning...');
-    //   return;
-    // }
-
-    _myTrades[_selectedOverview?.key] = TournamentMyTradesHolder(
-      data: null,
-      error: null,
-      loading: true,
-    );
+  void setStatusTrades(status) {
+    _statusTrades = status;
     notifyListeners();
+  }
+
+  Future getTradesList({
+    bool refresh = false,
+    showProgress = false,
+  }) async {
+    if (refresh) {
+      _myTrades = null;
+      _selectedOverview = null;
+    }
+
+    setStatusTrades(Status.loading);
 
     try {
       TournamentProvider provider =
@@ -109,38 +75,31 @@ class TournamentTradesProvider extends ChangeNotifier {
             navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
         'tournament_battle_id':
             '${provider.detailRes?.tournamentBattleId ?? ''}',
-        'type': '${_selectedOverview?.key.toString().toLowerCase()}',
+        'type': _selectedOverview?.key?.toString().toLowerCase() ?? 'all',
       };
 
       ApiResponse response = await apiRequest(
         url: Apis.tTradeList,
         request: request,
+        showProgress: showProgress,
       );
 
       if (response.status) {
-        _myTrades[_selectedOverview?.key] = TournamentMyTradesHolder(
-          data: tradingSearchTickerResFromJson(jsonEncode(response.data)),
-          error: null,
-          loading: false,
-        );
+        _myTrades = tournamentAllTradesResFromJson(jsonEncode(response.data));
+        _errorTrades = null;
+        if (refresh) {
+          _selectedOverview = _myTrades?.overview?.first;
+        } else {}
       } else {
-        if (_myTrades[_selectedOverview?.key]?.data == null) {
-          _myTrades[_selectedOverview?.key] = TournamentMyTradesHolder(
-            data: null,
-            error: response.message,
-            loading: false,
-          );
-        }
+        _myTrades = null;
+        _errorTrades = null;
       }
-      notifyListeners();
+      setStatusTrades(Status.loaded);
     } catch (e) {
-      _myTrades[_selectedOverview?.key] = TournamentMyTradesHolder(
-        data: null,
-        error: Const.errSomethingWrong,
-        loading: false,
-      );
+      _myTrades = null;
+      _errorTrades = null;
       Utils().showLog('Trades Overview Error: $e');
-      notifyListeners();
+      setStatusTrades(Status.loaded);
     }
   }
 
@@ -152,7 +111,7 @@ class TournamentTradesProvider extends ChangeNotifier {
       Map request = {
         'token':
             navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
-        'ticker_symbol': _selectedStock?.symbol,
+        'symbol': _selectedStock?.symbol,
         'tournament_battle_id':
             '${provider.detailRes?.tournamentBattleId ?? ''}',
         'trade_type': type.name,
@@ -183,19 +142,22 @@ class TournamentTradesProvider extends ChangeNotifier {
   }
 
 //MARK: CANCLE
-  Future tradeCancle({bool cancleAll = false}) async {
+  Future tradeCancle(
+      {bool cancleAll = false, num? tradeId, String? ticker}) async {
     try {
       TournamentProvider provider =
           navigatorKey.currentContext!.read<TournamentProvider>();
       Map request = {
         'token':
             navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
-        'ticker_symbol': _selectedStock?.symbol,
+        'ticker_symbol': ticker ?? _selectedStock?.symbol ?? '',
         'tournament_battle_id':
             '${provider.detailRes?.tournamentBattleId ?? ''}',
-        'trade_id': cancleAll
-            ? 'all'
-            : '${_detail[_selectedStock?.symbol]?.data?.showButton?.tradeId}'
+        'trade_id': tradeId != null
+            ? '$tradeId'
+            : cancleAll
+                ? 'all'
+                : '${_detail[_selectedStock?.symbol]?.data?.showButton?.tradeId}'
       };
       ApiResponse response = await apiRequest(
         url: Apis.tCancle,
@@ -301,34 +263,7 @@ class TournamentTradesProvider extends ChangeNotifier {
           loading: false,
         );
 
-        // Add the symbol to active tickers only if it's not already present
-        if (_activeTickers.add(symbol)) {
-          Utils().showLog('Added $symbol to active tickers');
-
-          // Connect to the streaming manager with updated tickers
-          SSEManager.instance.connectMultipleStocks(
-            screen: SimulatorEnum.detail,
-            symbols: _activeTickers.toList(),
-          );
-
-          // Add a listener for the symbol
-          SSEManager.instance.addListener(symbol, (stockData) {
-            Utils().showLog(
-                'Streaming update for $symbol, Price: ${stockData.price}, Change: ${stockData.change}, Change%: ${stockData.changePercentage}');
-
-            // Update the _detail map with the streaming data
-            _detail[symbol]?.data?.ticker?.currentPrice = stockData.price;
-            _detail[symbol]?.data?.ticker?.change = stockData.change;
-            _detail[symbol]?.data?.ticker?.changesPercentage =
-                stockData.changePercentage;
-
-            // Notify listeners to update the UI
-            notifyListeners();
-          });
-        } else {
-          Utils().showLog(
-              '$symbol is already in active tickers, skipping re-addition.');
-        }
+        _startSSE(symbol);
       } else {
         // Handle API error
         _detail[symbol] = TournamentTickerHolder(
@@ -350,6 +285,57 @@ class TournamentTradesProvider extends ChangeNotifier {
       setStatus(Status.loaded);
     }
   }
+
+  void _startSSE(String symbol) {
+    ShowButtonRes? buttonRes = _detail[symbol]?.data?.showButton;
+    TradingSearchTickerRes? tickerData = _detail[symbol]?.data?.ticker;
+
+    if (buttonRes?.orderPrice != null) {
+      num CP = tickerData?.currentPrice ?? 0;
+      num OP = buttonRes?.orderPrice ?? 0;
+
+      if (buttonRes?.orderType == StockType.buy.name) {
+        buttonRes?.orderChange = ((CP - OP) / OP) * 100;
+        Utils().showLog('Buy orderChange: ${buttonRes?.orderChange}');
+      } else {
+        buttonRes?.orderChange = ((OP - CP) / CP) * 100;
+        Utils().showLog('Sell orderChange: ${buttonRes?.orderChange}');
+      }
+    }
+
+    if (_activeTickers.add(symbol)) {
+      Utils().showLog('Added $symbol to active tickers');
+
+      SSEManager.instance.connectMultipleStocks(
+        screen: SimulatorEnum.detail,
+        symbols: _activeTickers.toList(),
+      );
+
+      SSEManager.instance.addListener(symbol, (stockData) {
+        Utils().showLog(
+            'Streaming update for $symbol, Price: ${stockData.price}, Change: ${stockData.change}, Change%: ${stockData.changePercentage}');
+
+        tickerData?.currentPrice = stockData.price;
+        tickerData?.change = stockData.change;
+        tickerData?.changesPercentage = stockData.changePercentage;
+
+        if (buttonRes?.orderPrice != null) {
+          num CP = stockData.price ?? 0;
+          num OP = buttonRes?.orderPrice ?? 0;
+
+          if (buttonRes?.orderType == StockType.buy.name) {
+            buttonRes?.orderChange = ((CP - OP) / OP) * 100;
+          } else {
+            buttonRes?.orderChange = ((OP - CP) / CP) * 100;
+          }
+        }
+
+        notifyListeners();
+      });
+    } else {
+      Utils().showLog('$symbol is already in active tickers, skipping');
+    }
+  }
 }
 
 class TournamentTickerHolder {
@@ -364,14 +350,14 @@ class TournamentTickerHolder {
   });
 }
 
-class TournamentMyTradesHolder {
-  List<TradingSearchTickerRes>? data;
-  String? error;
-  bool loading;
+// class TournamentMyTradesHolder {
+//   TournamentAllTradesRes? data;
+//   String? error;
+//   bool loading;
 
-  TournamentMyTradesHolder({
-    this.data,
-    this.loading = true,
-    this.error,
-  });
-}
+//   TournamentMyTradesHolder({
+//     this.data,
+//     this.loading = true,
+//     this.error,
+//   });
+// }

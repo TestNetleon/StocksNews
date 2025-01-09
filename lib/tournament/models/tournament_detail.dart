@@ -8,7 +8,7 @@ String tournamentDetailResToJson(TournamentDetailRes data) =>
 
 class TournamentDetailRes {
   final List<String>? tournamentRules;
-  final LoginUserPositionRes? loginUserPosition;
+  // final LoginUserPositionRes? loginUserPosition;
   final List<TournamentPointRes>? tournamentPoints;
   final String? showButton;
   final String? tournamentStartTime;
@@ -21,12 +21,13 @@ class TournamentDetailRes {
   final String? time;
   final bool? isMarketOpen;
   final bool? joined;
+  final String? image;
 
   TournamentDetailRes({
     this.tournamentRules,
     this.tournamentPoints,
     this.showButton,
-    this.loginUserPosition,
+    // this.loginUserPosition,
     this.tournamentStartTime,
     this.tournamentEndTime,
     this.battleTime,
@@ -37,14 +38,16 @@ class TournamentDetailRes {
     this.time,
     this.isMarketOpen,
     this.joined,
+    this.image,
   });
 
   factory TournamentDetailRes.fromJson(Map<String, dynamic> json) =>
       TournamentDetailRes(
-        loginUserPosition: json["login_user_position"] == null
-            ? null
-            : LoginUserPositionRes.fromJson(json["login_user_position"]),
+        // loginUserPosition: json["login_user_position"] == null
+        //     ? null
+        //     : LoginUserPositionRes.fromJson(json["login_user_position"]),
         joined: json['tournament_battle_joined'],
+        image: json['image'],
         tournamentRules: json["tournament_rules"] == null
             ? []
             : List<String>.from(json["tournament_rules"]!.map((x) => x)),
@@ -68,7 +71,7 @@ class TournamentDetailRes {
 
   Map<String, dynamic> toJson() => {
         'tournament_battle_joined': joined,
-        "login_user_position": loginUserPosition?.toJson(),
+        // "login_user_position": loginUserPosition?.toJson(),
         "tournament_rules": tournamentRules == null
             ? []
             : List<dynamic>.from(tournamentRules!.map((x) => x)),
@@ -78,6 +81,7 @@ class TournamentDetailRes {
         "show_button": showButton,
         "tournament_start_time": tournamentStartTime,
         "tournament_end_time": tournamentEndTime,
+        'image': image,
         "battle_time": battleTime?.toJson(),
         "tournament_battle_id": tournamentBattleId,
         "name": name,
@@ -90,30 +94,24 @@ class TournamentDetailRes {
 
 class LoginUserPositionRes {
   final String? position;
-  final String? rank;
-  final String? image;
-  final String? imageType;
+  final num? totalChange;
+  // final String? imageType;
 
   LoginUserPositionRes({
     this.position,
-    this.rank,
-    this.image,
-    this.imageType,
+    this.totalChange,
+    // this.imageType,
   });
 
   factory LoginUserPositionRes.fromJson(Map<String, dynamic> json) =>
       LoginUserPositionRes(
         position: json["position"],
-        rank: json["rank"],
-        image: json["image"],
-        imageType: json["image_type"],
+        totalChange: json["total_change"],
       );
 
   Map<String, dynamic> toJson() => {
         "position": position,
-        "rank": rank,
-        "image": image,
-        "image_type": imageType,
+        "total_change": totalChange,
       };
 }
 

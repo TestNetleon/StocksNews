@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/user_res.dart';
+import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
 import '../../api/api_requester.dart';
 import '../../api/api_response.dart';
 import '../../api/apis.dart';
@@ -13,6 +14,7 @@ import '../../utils/constants.dart';
 import '../../utils/utils.dart';
 import '../models/tournament.dart';
 import '../models/tournament_detail.dart';
+import '../screens/game_tournament_index.dart';
 import '../screens/tournaments/dayTraining/open/index.dart';
 
 class TournamentProvider extends ChangeNotifier {
@@ -34,6 +36,7 @@ class TournamentProvider extends ChangeNotifier {
   num seconds = 00;
   Timer? _timer;
 
+//MARK: TIMER
   timer(bool start) {
     if (start) {
       _timer?.cancel();
@@ -50,9 +53,10 @@ class TournamentProvider extends ChangeNotifier {
     DateTime? start = _detailRes?.battleTime?.startTime;
     DateTime? end = _detailRes?.battleTime?.endTime;
 
-    DateTime serverTime = _detailRes!.battleTime!.currentTime!;
-
-    if (start == null || end == null) {
+    DateTime? serverTime = _detailRes?.battleTime?.currentTime;
+    // DateTime mockTime = DateTime(2025, 01, 09, 15, 59, 55);
+    // serverTime = mockTime;
+    if (start == null || end == null || serverTime == null) {
       return;
     }
 
@@ -65,13 +69,13 @@ class TournamentProvider extends ChangeNotifier {
       if (kDebugMode) {
         print('1: Before start time');
       }
-      _startTimer(start.difference(serverTime));
+      _startTimer(start.difference(serverTime), isStart: true);
     } else if (serverTime.isAfter(start) && serverTime.isBefore(end)) {
       // During tournament
       if (kDebugMode) {
         print('2: During tournament');
       }
-      _startTimer(end.difference(serverTime));
+      _startTimer(end.difference(serverTime), isStart: false);
     } else {
       // After tournament end
       if (kDebugMode) {
@@ -84,7 +88,7 @@ class TournamentProvider extends ChangeNotifier {
     }
   }
 
-  void _startTimer(Duration initialDuration) {
+  void _startTimer(Duration initialDuration, {required bool isStart}) {
     // Set initial time
     hours = initialDuration.inHours;
     minutes = initialDuration.inMinutes % 60;
@@ -95,6 +99,28 @@ class TournamentProvider extends ChangeNotifier {
       if (hours == 0 && minutes == 0 && seconds == 0) {
         // Stop the timer when countdown reaches zero
         stopCountdown();
+
+        // Call the respective API for start or end
+        if (isStart) {
+          tournamentDetail(_id);
+        } else {
+          // _endTournament();
+          popUpAlert(
+            canPop: false,
+            title: 'Tournament has Ended',
+            message:
+                'Thank you for participating! We hope you enjoyed the tournament. Stay tuned for upcoming event!',
+            onTap: () {
+              Navigator.popUntil(
+                  navigatorKey.currentContext!, (route) => route.isFirst);
+              Navigator.push(
+                  navigatorKey.currentContext!,
+                  MaterialPageRoute(
+                    builder: (context) => GameTournamentIndex(setIndex: 1),
+                  ));
+            },
+          );
+        }
       } else {
         // Decrement the countdown
         if (seconds > 0) {
@@ -110,6 +136,13 @@ class TournamentProvider extends ChangeNotifier {
               seconds = 59;
             }
           }
+        }
+
+        // Example: Notify 5 minutes before start or end
+        if (hours == 0 && minutes == 5 && seconds == 0) {
+          Utils().showLog(isStart
+              ? "Tournament starts in 5 minutes"
+              : "Tournament ends in 5 minutes");
         }
       }
       notifyListeners();
@@ -193,8 +226,10 @@ class TournamentProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  int? _id;
 // MARK: DETAIL
-  Future tournamentDetail(int? id) async {
+  Future tournamentDetail(int? id, {bool timerSet = true}) async {
+    _id = id;
     setStatusDetail(Status.loading);
     try {
       UserRes? user = navigatorKey.currentContext!.read<UserProvider>().user;
@@ -209,7 +244,7 @@ class TournamentProvider extends ChangeNotifier {
       );
       if (response.status) {
         _detailRes = tournamentDetailResFromJson(jsonEncode(response.data));
-        timer(true);
+        timer(timerSet);
         _error = null;
       } else {
         _detailRes = null;
@@ -240,32 +275,7 @@ class TournamentProvider extends ChangeNotifier {
         request: requst,
       );
       if (response.status) {
-        // tournamentDetail(id);
-        openTournament();
-      } else {
-        //
-      }
-    } catch (e) {
-      //
-      Utils().showLog('join error $e');
-    }
-  }
-
-// MARK: OPEN
-  Future openTournament() async {
-    try {
-      UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
-
-      Map requst = {
-        'token': provider.user?.token ?? '',
-        'tournament_battle_id': '${_detailRes?.tournamentBattleId}',
-      };
-      ApiResponse response = await apiRequest(
-        url: Apis.tShow,
-        showProgress: true,
-        request: requst,
-      );
-      if (response.status) {
+        tournamentDetail(_id);
         Navigator.push(
           navigatorKey.currentContext!,
           MaterialPageRoute(
@@ -280,4 +290,35 @@ class TournamentProvider extends ChangeNotifier {
       Utils().showLog('join error $e');
     }
   }
+
+// MARK: OPEN
+  // Future openTournament() async {
+  //   try {
+  //     UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
+
+  //     Map requst = {
+  //       'token': provider.user?.token ?? '',
+  //       'tournament_battle_id': '${_detailRes?.tournamentBattleId}',
+  //     };
+  //     ApiResponse response = await apiRequest(
+  //       url: Apis.tShow,
+  //       showProgress: true,
+  //       request: requst,
+  //     );
+  //     if (response.status) {
+  //       tournamentDetail(_id);
+  //       Navigator.push(
+  //         navigatorKey.currentContext!,
+  //         MaterialPageRoute(
+  //           builder: (context) => TournamentOpenIndex(),
+  //         ),
+  //       );
+  //     } else {
+  //       //
+  //     }
+  //   } catch (e) {
+  //     //
+  //     Utils().showLog('join error $e');
+  //   }
+  // }
 }

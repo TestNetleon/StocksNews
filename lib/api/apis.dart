@@ -202,15 +202,15 @@ class Apis {
 
   // ---------   Trading Simulator Start --------------
   static const tsUserInfo = "/simulator/user-info";
-  static const tsPortfolio = "/simulator/portfolio";
+  // static const tsPortfolio = "/simulator/portfolio";
   static const tsOrderList = "/simulator/holding-list";
+  static const tsPendingList = "/simulator/pending-list";
+  static const tsTransaction = '/simulator/trade/history';
   static const tradingMostSearch = "/simulator/most-search-symbol";
   static const tsRequestTrade = "/simulator/trade/store";
   static const tsSearchSymbol = "/simulator/trade/search-symbol";
-  static const tsPendingList = "/simulator/pending-list";
   static const tsOpenList = "/simulator/list-purchased-shares";
   static const stockHoldings = '/simulator/stock-holdings';
-  static const tsTransaction = '/simulator/trade/history';
   // static const tsOrderList = "/simulator/order-list";
   // static const tsRequestSell = "/simulator/sell";
   // static const tsRequestBuy = "/simulator/buy-share";
@@ -247,17 +247,21 @@ class Apis {
 
   //
   static const myTickers = "/my-tickers-list";
-  static const appsflyerUsers = '/appsflyer-users';
-  static const t = '/tournament';
+
+  //MARK: TOURNAMENT API
+  static const t = '/tournaments';
   static const tLeaderboard = '/tournament/leaderboard/by-date';
-  static const tDetail = '/tournament-details';
+  static const tTradeList = '/tournament/trade-list';
+  static const tDetail = '/tournament/detail';
   static const tJoin = '/tournament/join';
-  static const tShow = '/tournament/show';
-  static const tBuyOrSell = '/tournament/ticker/action';
+  static const tTickerList = '/tournament/ticker-list';
+  static const tTickerSearch = '/tournament/ticker-search';
   static const tTickerDetail = '/tournament/ticker-detail';
-  static const tCancle = '/tournament/trade/close';
-  static const tTradeOverview = '/tournament/trade/list-overview';
-  static const tTradeList = '/tournament/trade/list';
+  static const tBuyOrSell = '/tournament/trade-action';
+  static const tCancle = '/tournament/trade-close';
+  // static const tShow = '/tournament/trade-show';
+  //
+  static const appsflyerUsers = '/appsflyer-users';
   static const trendingSectors = '/trending-sectors';
 }
 
