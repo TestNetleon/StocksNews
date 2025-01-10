@@ -17,6 +17,8 @@ class TopGainerScannerProvider extends ChangeNotifier {
   String? _error;
   String? get error => _error ?? Const.errSomethingWrong;
 
+  List<ScannerRes>? _fullOfflineDataList;
+
   List<ScannerRes>? _offlineDataList;
   List<ScannerRes>? get offlineDataList => _offlineDataList;
 
@@ -72,8 +74,61 @@ class TopGainerScannerProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void updateOfflineData(List<ScannerRes>? data) {
-    _offlineDataList = data;
+  void updateOfflineData(List<ScannerRes>? data, {applyFilter = false}) {
+    // _offlineDataList = data;
+    // notifyListeners();
+
+    if (!applyFilter) {
+      if (_fullOfflineDataList == null && data != null) {
+        _fullOfflineDataList = List.empty(growable: true);
+        _fullOfflineDataList?.addAll(data);
+      }
+      _offlineDataList = data?.take(50).toList();
+    } else {
+      if (_fullOfflineDataList == null && data != null) {
+        _fullOfflineDataList = List.empty(growable: true);
+        _fullOfflineDataList?.addAll(data);
+      }
+      List<ScannerRes>? list = List.empty(growable: true);
+      list.addAll(data!);
+      updateOfflineDataFilter(list);
+    }
+    notifyListeners();
+  }
+
+  void updateOfflineDataFilter(List<ScannerRes>? data) {
+    if (data == null) return;
+
+    if (_filterParams == null) {
+      _offlineDataList = data.take(50).toList();
+      notifyListeners();
+      return;
+    }
+
+    if (_filterParams?.sortBy == 2) {
+      data.sort((a, b) {
+        double valueA = a.changesPercentage ?? 0;
+        double valueB = b.changesPercentage ?? 0;
+        if (_filterParams?.orderByAsc == true) {
+          return valueB.compareTo(valueA);
+        }
+        return valueA.compareTo(valueB);
+      });
+    }
+
+    if (_filterParams?.sortBy == 3) {
+      data.sort((a, b) {
+        double valueA = a.volume ?? 0;
+        double valueB = b.volume ?? 0;
+        if (_filterParams?.orderByAsc == true) {
+          return valueB.compareTo(valueA);
+        }
+        return valueA.compareTo(valueB);
+      });
+    }
+
+    _offlineDataList = data.take(50).toList();
+    // Notify listeners to update UI
     notifyListeners();
   }
 
@@ -141,11 +196,42 @@ class TopGainerScannerProvider extends ChangeNotifier {
     _dataList = prChangeAr.take(50).toList();
     notifyListeners();
   }
+
+  void applyFilter(sortBy) {
+    if (sortBy == _filterParams?.sortBy) {
+      _filterParams = FilterParamsGainer(
+        sortBy: sortBy,
+        orderByAsc: !(_filterParams?.orderByAsc ?? true),
+      );
+    } else {
+      _filterParams = FilterParamsGainer(
+        sortBy: sortBy,
+        orderByAsc: (_filterParams?.orderByAsc ?? true),
+      );
+    }
+
+    if (_dataList != null) {
+      Utils().showLog("----");
+      updateData(_dataList);
+    } else if (_offlineDataList != null) {
+      Utils().showLog("---- ******  ${_fullOfflineDataList?.length}");
+      updateOfflineData(_fullOfflineDataList, applyFilter: true);
+    } else {
+      notifyListeners();
+    }
+
+    notifyListeners();
+  }
+
+  void clearFilter() {
+    _filterParams = null;
+    notifyListeners();
+  }
 }
 
 class FilterParamsGainer {
   // 2 = percent  3= volume
   int? sortBy;
-
-  FilterParamsGainer({this.sortBy});
+  bool? orderByAsc;
+  FilterParamsGainer({this.sortBy, this.orderByAsc});
 }

@@ -24,6 +24,7 @@ class MarketScannerProvider extends ChangeNotifier {
   String? get error => _error ?? Const.errSomethingWrong;
 
   List<ScannerRes>? _fullOfflineDataList;
+
   List<ScannerRes>? _offlineDataList;
   List<ScannerRes>? get offlineDataList => _offlineDataList;
 

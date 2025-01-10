@@ -69,8 +69,12 @@ class _TopGainerOfflineState extends State<TopGainerOffline> {
               Consumer<TopGainerScannerProvider>(
                 builder: (context, value, child) {
                   return ScannerTopGainerFilter(
-                    onPercentClick: () {},
-                    onVolumnClick: () {},
+                    onPercentClick: () {
+                      value.applyFilter(2);
+                    },
+                    onVolumnClick: () {
+                      value.applyFilter(3);
+                    },
                     isPercent: value.filterParams?.sortBy == 2,
                     isVolume: value.filterParams?.sortBy == 3,
                   );
