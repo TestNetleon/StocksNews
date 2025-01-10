@@ -17,19 +17,19 @@ class MarketScannerOffline extends StatefulWidget {
 }
 
 class _MarketScannerOfflineState extends State<MarketScannerOffline> {
-  List<String> columnHeader = [
-    "Time",
-    // "Symbol",
-    "Company Name",
-    "Sector",
-    "Bid",
-    "Ask",
-    "Last Trade",
-    "Net Change",
-    "% Change",
-    "Volume",
-    "\$ Volume"
-  ];
+  // List<String> columnHeader = [
+  //   "Time",
+  //   // "Symbol",
+  //   "Company Name",
+  //   "Sector",
+  //   "Bid",
+  //   "Ask",
+  //   "Last Trade",
+  //   "Net Change",
+  //   "% Change",
+  //   "Volume",
+  //   "\$ Volume"
+  // ];
 
   @override
   void initState() {
@@ -178,7 +178,7 @@ class _MarketScannerOfflineState extends State<MarketScannerOffline> {
                           width: 0.5,
                         ),
                       ),
-                      columns: columnHeader.map(
+                      columns: provider.tableHeader.map(
                         (header) {
                           return DataColumn(
                             label: Text(

@@ -66,11 +66,14 @@ class FilterListing extends StatelessWidget {
   final List<KeyValueElement> items;
   final Function(int) onSelected;
   final double paddingLeft;
+  final bool titleBold;
+
   const FilterListing({
     super.key,
     required this.items,
     required this.onSelected,
     this.paddingLeft = 0,
+    this.titleBold = true,
   });
 
   @override
@@ -108,7 +111,7 @@ class FilterListing extends StatelessWidget {
                       Flexible(
                         child: Text(
                           items[index].value ?? "",
-                          style: index == 0
+                          style: (index == 0 && titleBold)
                               ? stylePTSansBold(fontSize: 16)
                               : stylePTSansRegular(fontSize: 15),
                         ),

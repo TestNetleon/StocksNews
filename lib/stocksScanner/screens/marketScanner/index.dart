@@ -4,6 +4,7 @@ import 'package:stocks_news_new/stocksScanner/providers/market_scanner_provider.
 import 'package:stocks_news_new/stocksScanner/screens/marketScanner/offline_data.dart';
 import 'package:stocks_news_new/stocksScanner/screens/marketScanner/online_data.dart';
 import 'package:stocks_news_new/stocksScanner/screens/stockScanner/widget_preparing.dart';
+import 'package:stocks_news_new/utils/utils.dart';
 
 class MarketScanner extends StatefulWidget {
   const MarketScanner({super.key});
@@ -19,9 +20,15 @@ class _MarketScannerState extends State<MarketScanner> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       MarketScannerProvider provider = context.read<MarketScannerProvider>();
       provider.startListeningPorts();
-      // TODO:
-      // provider.getOfflineData();
     });
+  }
+
+  @override
+  void dispose() {
+    Utils().showLog("DISPOSE CALLED");
+    MarketScannerProvider provider = context.read<MarketScannerProvider>();
+    provider.stopListeningPorts();
+    super.dispose();
   }
 
   @override

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/stocksScanner/modals/market_scanner_res.dart';
 import 'package:stocks_news_new/stocksScanner/providers/market_scanner_provider.dart';
 import 'package:stocks_news_new/stocksScanner/screens/marketScanner/scanner_header.dart';
@@ -18,20 +17,6 @@ class MarketScannerOnline extends StatefulWidget {
 }
 
 class _MarketScannerOnlineState extends State<MarketScannerOnline> {
-  List<String> columnHeader = [
-    "Time",
-    // "Symbol",
-    "Company Name",
-    "Sector",
-    "Bid",
-    "Ask",
-    "Last Trade",
-    "Net Change",
-    "% Change",
-    "Volume",
-    "\$ Volume"
-  ];
-
   @override
   void initState() {
     super.initState();
@@ -44,9 +29,9 @@ class _MarketScannerOnlineState extends State<MarketScannerOnline> {
 
   @override
   void dispose() {
-    MarketScannerProvider provider =
-        navigatorKey.currentContext!.read<MarketScannerProvider>();
-    provider.stopListeningPorts();
+    // MarketScannerProvider provider =
+    //     navigatorKey.currentContext!.read<MarketScannerProvider>();
+    // provider.stopListeningPorts();
     super.dispose();
   }
 
@@ -102,11 +87,14 @@ class _MarketScannerOnlineState extends State<MarketScannerOnline> {
                         constraints: BoxConstraints(
                           maxWidth: ScreenUtil().screenWidth * .3,
                         ),
-                        child: Text(
-                          'Symbol',
-                          style: styleGeorgiaBold(
-                            fontSize: 12,
-                            color: ThemeColors.greyText,
+                        child: GestureDetector(
+                          onTap: () => provider.applySorting("Symbol"),
+                          child: Text(
+                            'Symbol',
+                            style: styleGeorgiaBold(
+                              fontSize: 14,
+                              color: ThemeColors.greyText,
+                            ),
                           ),
                         ),
                       ),
@@ -123,32 +111,21 @@ class _MarketScannerOnlineState extends State<MarketScannerOnline> {
                                 constraints: BoxConstraints(
                                   maxWidth: ScreenUtil().screenWidth * .3,
                                 ),
-                                // width: 100,
-                                child: Row(
-                                  children: [
-                                    // Container(
-                                    //   height: 30,
-                                    //   width: 30,
-                                    //   decoration: BoxDecoration(
-                                    //     // color: Colors.white,
-                                    //     shape: BoxShape.circle,
-                                    //   ),
-                                    //   child: CachedNetworkImagesWidget(
-                                    //     "",
-                                    //     // company.image ?? "",
-                                    //     fit: BoxFit.cover,
-                                    //   ),
-                                    // ),
-                                    // SpacerHorizontal(width: 8.0),
-                                    Expanded(
-                                      child: Text(
-                                        "${data.identifier}",
-                                        // company.symbol ?? "",
-                                        style: styleGeorgiaBold(fontSize: 12),
-                                      ),
-                                    ),
-                                  ],
+                                child: Text(
+                                  "${data.identifier}",
+                                  style: styleGeorgiaBold(fontSize: 12),
                                 ),
+                                // Row(
+                                //   children: [
+                                //     Expanded(
+                                //       child:
+                                //       Text(
+                                //         "${data.identifier}",
+                                //         style: styleGeorgiaBold(fontSize: 12),
+                                //       ),
+                                //     ),
+                                //   ],
+                                // ),
                               ),
                             ),
                           ),
@@ -186,14 +163,17 @@ class _MarketScannerOnlineState extends State<MarketScannerOnline> {
                           width: 0.5,
                         ),
                       ),
-                      columns: columnHeader.map(
+                      columns: provider.tableHeader.map(
                         (header) {
                           return DataColumn(
-                            label: Text(
-                              header,
-                              style: styleGeorgiaBold(
-                                fontSize: 12,
-                                color: ThemeColors.greyText,
+                            label: GestureDetector(
+                              onTap: () => provider.applySorting(header),
+                              child: Text(
+                                header,
+                                style: styleGeorgiaBold(
+                                  fontSize: 14,
+                                  color: ThemeColors.greyText,
+                                ),
                               ),
                             ),
                           );
