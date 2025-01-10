@@ -300,7 +300,7 @@ function displayCurrentDateTimeInET() {
                     (!document.getElementById("dollarVolumeEnd").value || dollarVolume <= parseFloat(document.getElementById("dollarVolumeEnd").value)) &&
                     (!document.getElementById("sector").value || sector === document.getElementById("sector").value) &&
                     (!document.getElementById("symbolName").value || symbol.toLowerCase().includes(document.getElementById("symbolName").value.toLowerCase()));
-
+                
                 row.style.display = isVisible ? "" : "none";
             });
         }

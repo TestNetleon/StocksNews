@@ -100,6 +100,7 @@ class _MarketScannerFilterState extends State<MarketScannerFilter> {
     BaseBottomSheets().gradientBottomSheet(
       title: "Select Sector",
       child: FilterListing(
+        titleBold: false,
         paddingLeft: ScreenUtil().screenWidth * 0.26,
         items: List.generate(provider.sectors?.length ?? 0, (index) {
           return KeyValueElement(

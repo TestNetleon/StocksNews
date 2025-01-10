@@ -20,6 +20,19 @@ class MarketScannerProvider extends ChangeNotifier {
   Status _status = Status.ideal;
   bool get isLoading => _status == Status.loading || _status == Status.ideal;
 
+  List<String> tableHeader = [
+    "Time",
+    "Company Name",
+    "Sector",
+    "Bid",
+    "Ask",
+    "Last Trade",
+    "Net Change",
+    "% Change",
+    "Volume",
+    "\$ Volume"
+  ];
+
   String? _error;
   String? get error => _error ?? Const.errSomethingWrong;
 
@@ -59,8 +72,7 @@ class MarketScannerProvider extends ChangeNotifier {
     _filterParams = null;
     _filterParams = FilterParams(sector: "Healthcare");
     notifyListeners();
-    // TODO:
-    MarketScannerDataManager.initializePorts();
+    MarketScannerDataManager.instance.initializePorts();
   }
 
   void stopListeningPorts() {
@@ -68,7 +80,8 @@ class MarketScannerProvider extends ChangeNotifier {
     _offlineDataList = null;
     _dataList = null;
     _filterParams = null;
-    MarketScannerDataManager.stopListeningPorts();
+    MarketScannerDataManager.instance.stopListeningPorts();
+    notifyListeners();
   }
 
   Future getOfflineData({showProgress = false}) async {
@@ -129,7 +142,6 @@ class MarketScannerProvider extends ChangeNotifier {
           " ===>>>> ******** ${item.sector}  ${_filterParams?.sector} ${item.sector == (_filterParams?.sector ?? "Healthcare")}",
         );
       }
-
       if (item.sector == (_filterParams?.sector ?? "Healthcare")) {
         num lastTrade = (item.price ?? 0);
         if (lastTrade == 0) {
@@ -140,116 +152,9 @@ class MarketScannerProvider extends ChangeNotifier {
         }
 
         if (_filterParams == null) return false;
-        // Return false (item is not removed) if the item passes all filter conditions
-
-        // bool shouldRemove = false;
-        // // Apply filter for bid range (bidStart <= item.bid <= bidEnd)
-        // if (_filterParams?.bidStart != null && _filterParams?.bidEnd != null) {
-        //   if (!(item.bid! >= _filterParams!.bidStart! &&
-        //       item.bid! <= _filterParams!.bidEnd!)) {
-        //     shouldRemove = true;
-        //   }
-        // } else if (_filterParams?.bidStart != null) {
-        //   if (!(item.bid! >= _filterParams!.bidStart!)) {
-        //     shouldRemove = true;
-        //   }
-        // } else if (_filterParams?.bidEnd != null) {
-        //   if (!(item.bid! <= _filterParams!.bidEnd!)) {
-        //     shouldRemove = true;
-        //   }
-        // }
-
-        // // Apply filter for ask range (askStart <= item.ask <= askEnd)
-        // if (_filterParams?.askStart != null && _filterParams?.askEnd != null) {
-        //   if (!(item.ask! >= _filterParams!.askStart! &&
-        //       item.ask! <= _filterParams!.askEnd!)) {
-        //     shouldRemove = true;
-        //   }
-        // } else if (_filterParams?.askStart != null) {
-        //   if (!(item.ask! >= _filterParams!.askStart!)) {
-        //     shouldRemove = true;
-        //   }
-        // } else if (_filterParams?.askEnd != null) {
-        //   if (!(item.ask! <= _filterParams!.askEnd!)) {
-        //     shouldRemove = true;
-        //   }
-        // }
-
-        // // Apply filter for percentChange range
-        // if (_filterParams?.perChangeStart != null &&
-        //     _filterParams?.perChangeEnd != null) {
-        //   if (!(item.changesPercentage! >= _filterParams!.perChangeStart! &&
-        //       item.changesPercentage! <= _filterParams!.perChangeEnd!)) {
-        //     shouldRemove = true;
-        //   }
-        // } else if (_filterParams?.perChangeStart != null) {
-        //   if (!(item.changesPercentage! >= _filterParams!.perChangeStart!)) {
-        //     shouldRemove = true;
-        //   }
-        // } else if (_filterParams?.perChangeEnd != null) {
-        //   if (!(item.changesPercentage! <= _filterParams!.perChangeEnd!)) {
-        //     shouldRemove = true;
-        //   }
-        // }
-
-        // // Apply filter for volume range
-        // if (_filterParams?.volumeStart != null &&
-        //     _filterParams?.volumeEnd != null) {
-        //   if (!(item.volume! >= _filterParams!.volumeStart! &&
-        //       item.volume! <= _filterParams!.volumeEnd!)) {
-        //     shouldRemove = true;
-        //   }
-        // } else if (_filterParams?.volumeStart != null) {
-        //   if (!(item.volume! >= _filterParams!.volumeStart!)) {
-        //     shouldRemove = true;
-        //   }
-        // } else if (_filterParams?.volumeEnd != null) {
-        //   if (!(item.volume! <= _filterParams!.volumeEnd!)) {
-        //     shouldRemove = true;
-        //   }
-        // }
-
-        // // Apply filter for symbolCompany
-        // if (_filterParams?.symbolCompany != null) {
-        //   bool nameMatch = item.name
-        //           ?.toLowerCase()
-        //           .contains(_filterParams!.symbolCompany!.toLowerCase()) ??
-        //       false;
-        //   if (!nameMatch) {
-        //     shouldRemove = true;
-        //   }
-        // }
-
-        // if (item.identifier == "GSM") {
-        //   Utils().showLog(
-        //     "RESULT  =>  ${item.identifier}  ${_filterParams!.symbolCompany} ${!(item.name?.toLowerCase().contains(_filterParams!.symbolCompany!.toLowerCase()) ?? false)}",
-        //   );
-        // }
-        // if (_filterParams?.symbolCompany != null) {
-        //   // if (!(item.name
-        //   //         ?.toLowerCase()
-        //   //         .contains(_filterParams!.symbolCompany!.toLowerCase()) ??
-        //   //     false)) {
-        //   //   shouldRemove = true;
-        //   // }
-        //   bool nameMatch = item.identifier
-        //           ?.toLowerCase()
-        //           .contains(_filterParams!.symbolCompany!.toLowerCase()) ??
-        //       false;
-        //   if (!nameMatch) {
-        //     shouldRemove = true;
-        //   }
-        // }
-
-        // // Apply filter for sector
-        // if (_filterParams?.sector != null) {
-        //   if (!(item.sector == _filterParams!.sector)) {
-        //     shouldRemove = true;
-        //   }
-        // }
 
         // If any filter fails, return true to remove the item
-        bool visible = isVisible(item, _filterParams!);
+        bool visible = isVisibleOffline(item, _filterParams!);
         return !visible;
       } else {
         return true;
@@ -282,7 +187,7 @@ class MarketScannerProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  bool isVisible(ScannerRes item, FilterParams filterParams) {
+  bool isVisibleOffline(ScannerRes item, FilterParams filterParams) {
     num lastTrade = item.price ?? 0;
     num netChange = item.change ?? 0;
     num percentChange = item.changesPercentage ?? 0;
@@ -341,6 +246,11 @@ class MarketScannerProvider extends ChangeNotifier {
             .toLowerCase()
             .contains(filterParams.symbolCompany!.toLowerCase());
 
+    bool nameCondition = filterParams.symbolCompany == null ||
+        item.name
+            .toLowerCase()
+            .contains(filterParams.symbolCompany!.toLowerCase());
+
     // Combine all conditions using logical AND (&&)
     return bidStartCondition &&
         bidEndCondition &&
@@ -357,11 +267,12 @@ class MarketScannerProvider extends ChangeNotifier {
         dollarVolumeStartCondition &&
         dollarVolumeEndCondition &&
         sectorCondition &&
-        symbolCondition;
+        (symbolCondition || nameCondition);
   }
 
   void updateData(List<MarketScannerRes>? data) {
     if (data == null) return;
+
     data.removeWhere((item) {
       if (item.sector == (_filterParams?.sector ?? "Healthcare")) {
         double lastTrade = (item.last ?? 0);
@@ -387,6 +298,10 @@ class MarketScannerProvider extends ChangeNotifier {
         }
 
         if (_filterParams == null) return false;
+
+        // HERE
+        // bool visible = isVisible(item, _filterParams!);
+        // return !visible;
 
         // Return false (item is not removed) if the item passes all filter conditions
         bool shouldRemove = false;
@@ -468,11 +383,11 @@ class MarketScannerProvider extends ChangeNotifier {
         }
 
         // Apply filter for sector
-        if (_filterParams?.sector != null) {
-          if (!(item.sector == _filterParams!.sector)) {
-            shouldRemove = true;
-          }
-        }
+        // if (_filterParams?.sector != null) {
+        //   if (!(item.sector == _filterParams!.sector)) {
+        //     shouldRemove = true;
+        //   }
+        // }
 
         // If any filter fails, return true to remove the item
         return shouldRemove;
@@ -480,6 +395,7 @@ class MarketScannerProvider extends ChangeNotifier {
         return true;
       }
     });
+
     if (_dataList == null) {
       _dataList = List.empty(growable: true);
       _dataList!.addAll(data);
@@ -499,9 +415,114 @@ class MarketScannerProvider extends ChangeNotifier {
       }
     }
 
+    if (_filterParams?.sortBy != null) {
+      _dataList?.sort((a, b) {
+        return sortByCompare(
+          a,
+          b,
+          _filterParams?.sortBy ?? "",
+          _filterParams?.sortByAsc ?? false,
+        );
+      });
+    }
+
     _dataList = _dataList!.take(50).toList();
     // Notify listeners to update UI
     notifyListeners();
+  }
+
+  int sortByCompare(
+      MarketScannerRes a, MarketScannerRes b, String sortBy, bool isAsc) {
+    if (sortBy == "Symbol") {
+      if (a.identifier == null && b.identifier == null) return 0;
+      if (a.identifier == null) return -1;
+      if (b.identifier == null) return 1;
+      if (isAsc) {
+        return a.identifier!.compareTo(b.identifier!);
+      } else {
+        return b.identifier!.compareTo(a.identifier!);
+      }
+    }
+    if (sortBy == "Company Name") {
+      if (a.security?.name == null && b.security?.name == null) return 0;
+      if (a.security?.name == null) return -1;
+      if (b.security?.name == null) return 1;
+      if (isAsc) {
+        return a.security!.name!.compareTo(b.security!.name!);
+      } else {
+        return b.security!.name!.compareTo(a.security!.name!);
+      }
+    }
+    if (sortBy == "Bid") {
+      if (a.bid == null && b.bid == null) return 0;
+      if (a.bid == null) return -1;
+      if (b.bid == null) return 1;
+      if (isAsc) {
+        return a.bid!.compareTo(b.bid!);
+      } else {
+        return b.bid!.compareTo(a.bid!);
+      }
+    }
+    if (sortBy == "Ask") {
+      if (a.ask == null && b.ask == null) return 0;
+      if (a.ask == null) return -1;
+      if (b.ask == null) return 1;
+      if (isAsc) {
+        return a.ask!.compareTo(b.ask!);
+      } else {
+        return b.ask!.compareTo(a.ask!);
+      }
+    }
+    if (sortBy == "Last Trade") {
+      if (a.last == null && b.last == null) return 0;
+      if (a.last == null) return -1;
+      if (b.last == null) return 1;
+      if (isAsc) {
+        return a.last!.compareTo(b.last!);
+      } else {
+        return b.last!.compareTo(a.last!);
+      }
+    }
+    if (sortBy == "Net Change") {
+      if (a.change == null && b.change == null) return 0;
+      if (a.change == null) return -1;
+      if (b.change == null) return 1;
+      if (isAsc) {
+        return a.change!.compareTo(b.change!);
+      } else {
+        return b.change!.compareTo(a.change!);
+      }
+    }
+    if (sortBy == "% Change") {
+      if (a.percentChange == null && b.percentChange == null) return 0;
+      if (a.percentChange == null) return -1;
+      if (b.percentChange == null) return 1;
+      if (isAsc) {
+        return a.percentChange!.compareTo(b.percentChange!);
+      } else {
+        return b.percentChange!.compareTo(a.percentChange!);
+      }
+    }
+    if (sortBy == "Volume") {
+      if (a.volume == null && b.volume == null) return 0;
+      if (a.volume == null) return -1;
+      if (b.volume == null) return 1;
+      if (isAsc) {
+        return a.volume!.compareTo(b.volume!);
+      } else {
+        return b.volume!.compareTo(a.volume!);
+      }
+    }
+    if (sortBy == "\$ Volume") {
+      num dolorVolumeA = (a.volume ?? 0) * (a.last ?? 0);
+      num dolorVolumeB = (b.volume ?? 0) * (b.last ?? 0);
+      if (isAsc) {
+        return dolorVolumeA.compareTo(dolorVolumeB);
+      } else {
+        return dolorVolumeB.compareTo(dolorVolumeA);
+      }
+    }
+    return 0;
   }
 
   Future getSectors({showProgress = false}) async {
@@ -533,15 +554,45 @@ class MarketScannerProvider extends ChangeNotifier {
     }
   }
 
-  void applyFilter(FilterParams params) {
-    _filterParams = params;
+  void applySorting(String sortBy) {
+    Utils().showLog("--- Sort By => $sortBy");
+    if (sortBy == _filterParams?.sortBy) {
+      _filterParams?.sortByAsc = !(_filterParams?.sortByAsc ?? true);
+    } else {
+      _filterParams?.sortBy = sortBy;
+      _filterParams?.sortByAsc = true;
+    }
+    Utils().showLog(
+      "--- Sort By => ${_filterParams?.sortBy} ${_filterParams?.sortByAsc}",
+    );
+    MarketScannerDataManager.instance.stopListeningPorts();
+
     if (_dataList != null) {
-      Utils().showLog("----");
       updateData(_dataList);
     } else if (_offlineDataList != null) {
-      Utils().showLog("---- ******  ${_fullOfflineDataList?.length}");
       updateOfflineData(_fullOfflineDataList, applyFilter: true);
+    }
+  }
+
+  void applyFilter(FilterParams params) {
+    if (_dataList != null) {
+      _filterParams = params;
+      Utils().showLog("----");
+      _dataList = null;
+      _offlineDataList = null;
+      _fullOfflineDataList = null;
+      notifyListeners();
+      MarketScannerDataManager.instance.initializePorts();
+    } else if (_offlineDataList != null) {
+      if (params.sector != _filterParams?.sector) {
+        _filterParams = params;
+        MarketScannerDataManager.instance.getOfflineData();
+      } else {
+        _filterParams = params;
+        updateOfflineData(_fullOfflineDataList, applyFilter: true);
+      }
     } else {
+      _filterParams = params;
       notifyListeners();
     }
   }
@@ -552,6 +603,7 @@ class MarketScannerProvider extends ChangeNotifier {
       _offlineDataList = _fullOfflineDataList;
       _offlineDataList = _offlineDataList?.take(50).toList();
     }
+    MarketScannerDataManager.instance.getOfflineData();
     notifyListeners();
   }
 
@@ -623,6 +675,8 @@ class FilterParams {
   double? dolorVolumeStart, dolorVolumeEnd;
   String? sector;
   String? symbolCompany;
+  String? sortBy;
+  bool? sortByAsc;
 
   FilterParams({
     this.bidStart,
@@ -641,5 +695,7 @@ class FilterParams {
     this.dolorVolumeEnd,
     this.sector,
     this.symbolCompany,
+    this.sortBy,
+    this.sortByAsc,
   });
 }
