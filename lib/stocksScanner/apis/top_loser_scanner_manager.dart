@@ -106,15 +106,15 @@ class TopLoserScannerDataManager {
   }
 
   static Future getOfflineData() async {
-    if (isOfflineCalled) return;
+    // if (isOfflineCalled) return;
     // showGlobalProgressDialog();
     try {
       final url = Uri.parse(
         'https://dev.stocks.news:8080/topLoser?shortBy=2',
       );
+      Utils().showLog("$url");
       final response = await http.get(url);
       if (response.statusCode == 200) {
-        Utils().showLog("$url");
         Utils().showLog(response.body);
         final List<dynamic> decodedResponse = jsonDecode(response.body);
         TopLoserScannerProvider provider =

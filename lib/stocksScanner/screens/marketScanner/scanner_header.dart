@@ -53,7 +53,7 @@ class _MarketScannerHeaderState extends State<MarketScannerHeader> {
     String marketStatus = "";
     if (dataList == null && offlineData == null) {
       return SizedBox();
-    } else if (offlineData != null) {
+    } else if (offlineData != null && offlineData.isNotEmpty) {
       marketStatus = "Closed";
       _lastUpdated = offlineData[0].closeDate;
     } else if (dataList != null && dataList.isNotEmpty) {

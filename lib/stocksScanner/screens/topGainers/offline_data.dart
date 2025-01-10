@@ -66,19 +66,16 @@ class _TopGainerOfflineState extends State<TopGainerOffline> {
             children: [
               TopGainerScannerHeader(isOnline: false),
               const SpacerVertical(height: 10),
-              Consumer<TopGainerScannerProvider>(
-                builder: (context, value, child) {
-                  return ScannerTopGainerFilter(
-                    onPercentClick: () {
-                      value.applyFilter(2);
-                    },
-                    onVolumnClick: () {
-                      value.applyFilter(3);
-                    },
-                    isPercent: value.filterParams?.sortBy == 2,
-                    isVolume: value.filterParams?.sortBy == 3,
-                  );
+              ScannerTopGainerFilter(
+                onPercentClick: () {
+                  provider.applyFilter(2);
                 },
+                onVolumnClick: () {
+                  provider.applyFilter(3);
+                },
+                isPercent: provider.filterParams?.sortBy == 2,
+                isVolume: provider.filterParams?.sortBy == 3,
+                orderByAsc: provider.filterParams?.orderByAsc,
               ),
               ClipRRect(
                 borderRadius: BorderRadius.only(

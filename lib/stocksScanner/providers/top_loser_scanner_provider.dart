@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/stocksScanner/apis/top_loser_scanner_manager.dart';
+import 'package:stocks_news_new/stocksScanner/modals/filter_params_gaienr_loser.dart';
 import 'package:stocks_news_new/stocksScanner/modals/market_scanner_res.dart';
 import 'package:stocks_news_new/stocksScanner/modals/scanner_res.dart';
 import 'package:stocks_news_new/utils/constants.dart';
@@ -17,11 +18,16 @@ class TopLoserScannerProvider extends ChangeNotifier {
   String? _error;
   String? get error => _error ?? Const.errSomethingWrong;
 
+  List<ScannerRes>? _fullOfflineDataList;
+
   List<ScannerRes>? _offlineDataList;
   List<ScannerRes>? get offlineDataList => _offlineDataList;
 
   List<MarketScannerRes>? _dataList;
   List<MarketScannerRes>? get dataList => _dataList;
+
+  FilterParamsGainerLoser? _filterParams;
+  FilterParamsGainerLoser? get filterParams => _filterParams;
 
   Extra? _extra;
   Extra? get extra => _extra;
@@ -35,6 +41,7 @@ class TopLoserScannerProvider extends ChangeNotifier {
 
   void startListeningPorts() {
     _offlineDataList = null;
+    _fullOfflineDataList = null;
     _dataList = null;
     notifyListeners();
     TopLoserScannerDataManager.initializePorts();
@@ -69,10 +76,68 @@ class TopLoserScannerProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void updateOfflineData(List<ScannerRes>? data) {
-    _offlineDataList = data;
+  void updateOfflineData(List<ScannerRes>? data, {applyFilter = false}) {
+    // _offlineDataList = data;
+    // notifyListeners();
+
+    if (!applyFilter) {
+      if (_fullOfflineDataList == null && data != null) {
+        _fullOfflineDataList = List.empty(growable: true);
+        _fullOfflineDataList?.addAll(data);
+      }
+      _offlineDataList = data?.take(50).toList();
+    } else {
+      if (_fullOfflineDataList == null && data != null) {
+        _fullOfflineDataList = List.empty(growable: true);
+        _fullOfflineDataList?.addAll(data);
+      }
+      List<ScannerRes>? list = List.empty(growable: true);
+      list.addAll(data!);
+      updateOfflineDataFilter(list);
+    }
     notifyListeners();
   }
+
+  void updateOfflineDataFilter(List<ScannerRes>? data) {
+    if (data == null) return;
+
+    if (_filterParams == null) {
+      _offlineDataList = data.take(50).toList();
+      notifyListeners();
+      return;
+    }
+
+    if (_filterParams?.sortBy == 2) {
+      data.sort((a, b) {
+        double valueA = a.changesPercentage ?? 0;
+        double valueB = b.changesPercentage ?? 0;
+        if (_filterParams?.orderByAsc == true) {
+          return valueB.compareTo(valueA);
+        }
+        return valueA.compareTo(valueB);
+      });
+    }
+
+    if (_filterParams?.sortBy == 3) {
+      data.sort((a, b) {
+        num valueA = a.volume ?? 0;
+        num valueB = b.volume ?? 0;
+        if (_filterParams?.orderByAsc == true) {
+          return valueB.compareTo(valueA);
+        }
+        return valueA.compareTo(valueB);
+      });
+    }
+
+    _offlineDataList = data.take(50).toList();
+    // Notify listeners to update UI
+    notifyListeners();
+  }
+
+  // void updateOfflineData(List<ScannerRes>? data) {
+  //   _offlineDataList = data;
+  //   notifyListeners();
+  // }
 
   Future updateData(List<MarketScannerRes>? data) async {
     if (data == null) return;
@@ -136,6 +201,37 @@ class TopLoserScannerProvider extends ChangeNotifier {
     });
 
     _dataList = prChangeAr.take(50).toList();
+    notifyListeners();
+  }
+
+  void applyFilter(sortBy) {
+    if (sortBy == _filterParams?.sortBy) {
+      _filterParams = FilterParamsGainerLoser(
+        sortBy: sortBy,
+        orderByAsc: !(_filterParams?.orderByAsc ?? true),
+      );
+    } else {
+      _filterParams = FilterParamsGainerLoser(
+        sortBy: sortBy,
+        orderByAsc: (_filterParams?.orderByAsc ?? true),
+      );
+    }
+
+    if (_dataList != null) {
+      Utils().showLog("----");
+      updateData(_dataList);
+    } else if (_offlineDataList != null) {
+      Utils().showLog("---- ******  ${_fullOfflineDataList?.length}");
+      updateOfflineData(_fullOfflineDataList, applyFilter: true);
+    } else {
+      notifyListeners();
+    }
+
+    notifyListeners();
+  }
+
+  void clearFilter() {
+    _filterParams = null;
     notifyListeners();
   }
 }

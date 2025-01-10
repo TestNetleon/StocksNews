@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/stocksScanner/apis/top_gainer_scanner_manager.dart';
+import 'package:stocks_news_new/stocksScanner/modals/filter_params_gaienr_loser.dart';
 import 'package:stocks_news_new/stocksScanner/modals/market_scanner_res.dart';
 import 'package:stocks_news_new/stocksScanner/modals/scanner_res.dart';
 import 'package:stocks_news_new/utils/constants.dart';
@@ -25,8 +26,8 @@ class TopGainerScannerProvider extends ChangeNotifier {
   List<MarketScannerRes>? _dataList;
   List<MarketScannerRes>? get dataList => _dataList;
 
-  FilterParamsGainer? _filterParams;
-  FilterParamsGainer? get filterParams => _filterParams;
+  FilterParamsGainerLoser? _filterParams;
+  FilterParamsGainerLoser? get filterParams => _filterParams;
 
   Extra? _extra;
   Extra? get extra => _extra;
@@ -40,6 +41,7 @@ class TopGainerScannerProvider extends ChangeNotifier {
 
   void startListeningPorts() {
     _offlineDataList = null;
+    _fullOfflineDataList = null;
     _dataList = null;
     notifyListeners();
     TopGainerScannerDataManager.initializePorts();
@@ -118,8 +120,8 @@ class TopGainerScannerProvider extends ChangeNotifier {
 
     if (_filterParams?.sortBy == 3) {
       data.sort((a, b) {
-        double valueA = a.volume ?? 0;
-        double valueB = b.volume ?? 0;
+        num valueA = a.volume ?? 0;
+        num valueB = b.volume ?? 0;
         if (_filterParams?.orderByAsc == true) {
           return valueB.compareTo(valueA);
         }
@@ -199,12 +201,12 @@ class TopGainerScannerProvider extends ChangeNotifier {
 
   void applyFilter(sortBy) {
     if (sortBy == _filterParams?.sortBy) {
-      _filterParams = FilterParamsGainer(
+      _filterParams = FilterParamsGainerLoser(
         sortBy: sortBy,
         orderByAsc: !(_filterParams?.orderByAsc ?? true),
       );
     } else {
-      _filterParams = FilterParamsGainer(
+      _filterParams = FilterParamsGainerLoser(
         sortBy: sortBy,
         orderByAsc: (_filterParams?.orderByAsc ?? true),
       );
@@ -229,9 +231,9 @@ class TopGainerScannerProvider extends ChangeNotifier {
   }
 }
 
-class FilterParamsGainer {
-  // 2 = percent  3= volume
-  int? sortBy;
-  bool? orderByAsc;
-  FilterParamsGainer({this.sortBy, this.orderByAsc});
-}
+// class FilterParamsGainer {
+//   // 2 = percent  3= volume
+//   int? sortBy;
+//   bool? orderByAsc;
+//   FilterParamsGainer({this.sortBy, this.orderByAsc});
+// }

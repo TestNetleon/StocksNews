@@ -109,6 +109,7 @@ class MarketScannerDataManager {
       final url = Uri.parse(
         'https://dev.stocks.news:8080/getScreener?sector=${provider.filterParams?.sector}',
       );
+      Utils().showLog("$url");
       final response = await http.get(url);
       if (response.statusCode == 200) {
         Utils().showLog("$url");

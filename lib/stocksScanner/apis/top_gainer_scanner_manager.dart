@@ -113,6 +113,7 @@ class TopGainerScannerDataManager {
       final url = Uri.parse(
         'https://dev.stocks.news:8080/topGainer?shortBy=2',
       );
+      Utils().showLog("$url");
       final response = await http.get(url);
       if (response.statusCode == 200) {
         Utils().showLog("$url");
