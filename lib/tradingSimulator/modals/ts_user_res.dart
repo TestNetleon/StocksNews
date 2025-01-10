@@ -51,12 +51,14 @@ class TsUserRes {
   num? marketValue;
   num? totalReturn;
   num? todayReturn;
+  num? staticTotalReturn;
   TsUserRes({
     required this.tradeBalance,
     this.investedAmount,
     this.marketValue,
     this.totalReturn,
     this.todayReturn,
+    this.staticTotalReturn,
   });
 
   factory TsUserRes.fromJson(Map<String, dynamic> json) => TsUserRes(
