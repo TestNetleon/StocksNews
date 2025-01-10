@@ -120,8 +120,8 @@ class TsOpenListProvider extends ChangeNotifier {
     Utils().showLog('Updating for $symbol, Price: ${stockData.price}');
     Utils()
         .showLog('Today\'s Return for $symbol: ${returnData['todaysReturn']}');
-    Utils().showLog(
-        'Today\'s Return Percentage for $symbol: ${returnData['todaysReturnPercentage']}%');
+    // Utils().showLog(
+    //     'Today\'s Return Percentage for $symbol: ${returnData['todaysReturnPercentage']}%');
 
     _updatePortfolioBalance();
   }
