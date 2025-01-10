@@ -542,41 +542,41 @@ let brazeEndpoint = "sdk.iad-07.braze.com"
   // }
 
 
-extension AppDelegate {
+// extension AppDelegate {
 
-  private func forwardURL(_ url: URL) {
-      print("Forwarding URL to Flutter: \(url.absoluteString)")
-      guard
-          let controller: FlutterViewController = window?.rootViewController as? FlutterViewController
-      else {
-          print("Failed to get FlutterViewController")
-          return
-      }
-      let deepLinkChannel = FlutterMethodChannel(
-          name: "deepLinkChannel", binaryMessenger: controller.binaryMessenger)
-      deepLinkChannel.invokeMethod("receiveDeepLink", arguments: url.absoluteString)
-  }
+//   private func forwardURL(_ url: URL) {
+//       print("Forwarding URL to Flutter: \(url.absoluteString)")
+//       guard
+//           let controller: FlutterViewController = window?.rootViewController as? FlutterViewController
+//       else {
+//           print("Failed to get FlutterViewController")
+//           return
+//       }
+//       let deepLinkChannel = FlutterMethodChannel(
+//           name: "deepLinkChannel", binaryMessenger: controller.binaryMessenger)
+//       deepLinkChannel.invokeMethod("receiveDeepLink", arguments: url.absoluteString)
+//   }
 
 
 
-  // Universal link
-  // See https://developer.apple.com/documentation/xcode/allowing-apps-and-websites-to-link-to-your-content for more information.
-  override func application(
-      _ application: UIApplication,
-      continue userActivity: NSUserActivity,
-      restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void
-  ) -> Bool {
-      guard userActivity.activityType == NSUserActivityTypeBrowsingWeb,
-            let url = userActivity.webpageURL else {
-          print("Universal link handling failed: Invalid user activity or URL")
-          return false
-      }
-      print("Universal link received: \(url.absoluteString)")
-      forwardURL(url)
-      return true
-  }
+//   // Universal link
+//   // See https://developer.apple.com/documentation/xcode/allowing-apps-and-websites-to-link-to-your-content for more information.
+//   override func application(
+//       _ application: UIApplication,
+//       continue userActivity: NSUserActivity,
+//       restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void
+//   ) -> Bool {
+//       guard userActivity.activityType == NSUserActivityTypeBrowsingWeb,
+//             let url = userActivity.webpageURL else {
+//           print("Universal link handling failed: Invalid user activity or URL")
+//           return false
+//       }
+//       print("Universal link received: \(url.absoluteString)")
+//       forwardURL(url)
+//       return true
+//   }
 
-}
+// }
 
 
 

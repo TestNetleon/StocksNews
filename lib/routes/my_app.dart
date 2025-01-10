@@ -508,15 +508,16 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   @override
   void initState() {
     super.initState();
+
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      getInitialReferralsIfAny();
+      getInitialDeeplinkWhenAppOpen();
+      startListeningForDeepLinks();
       // oneSignalInitialized = true;
       listenForPushToken();
       NotificationHandler.instance.setupNotificationListeners();
       configureRevenueCatAttribute();
       // brazeDeepLink();
-      getInitialReferralsIfAny();
-      getInitialDeeplinkWhenAppOpen();
-      startListeningForDeepLinks();
     });
     WidgetsBinding.instance.addObserver(this);
   }

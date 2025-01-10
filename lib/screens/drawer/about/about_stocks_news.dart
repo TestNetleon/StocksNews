@@ -28,6 +28,7 @@ import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/custom/refer.dart';
 import 'package:stocks_news_new/widgets/logout.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
+import '../../../stocksScanner/screens/stockScanner/index.dart';
 import '../../../tournament/screens/game_tournament_index.dart';
 import '../../../tradingSimulator/screens/dashboard/index.dart';
 import '../../../utils/constants.dart';
@@ -228,6 +229,23 @@ class _AboutStocksNewsState extends State<AboutStocksNews> {
         ),
       );
     }
+    // Stock Scanner
+    if (provider.extra?.showTradingSimulator == true || kDebugMode) {
+      visibleAboutTiles.add(
+        DrawerRes(
+          iconData: Icons.bakery_dining_outlined,
+          text: "Stock Scanner",
+          onTap: () {
+            _closeDrawer();
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => StocksScanner()),
+            );
+          },
+        ),
+      );
+    }
+
     if (provider.extra?.showArena == true || kDebugMode) {
       visibleAboutTiles.add(
         DrawerRes(
