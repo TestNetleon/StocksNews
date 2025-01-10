@@ -49,7 +49,7 @@ class _SearchTradingTickerState extends State<SearchTradingTicker> {
           isPopBack: true,
           canSearch: false,
           showTrailing: false,
-          title: "Search",
+          title: "Search Symbol",
         ),
         body: BaseUiContainer(
           hasData: provider.data?.isNotEmpty == true && provider.data != null,

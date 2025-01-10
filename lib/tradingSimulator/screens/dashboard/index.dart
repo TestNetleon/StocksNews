@@ -9,6 +9,7 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/custom_tab_container.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/theme_button.dart';
 import '../../../utils/colors.dart';
 import '../../manager/sse.dart';
@@ -130,6 +131,7 @@ class TsDashboard extends StatelessWidget {
                 // icon: Icons.arrow_outward_outlined,
                 textColor: ThemeColors.background,
               ),
+              SpacerVertical(height: 10),
             ],
           ),
         ),

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/tournament/provider/trades.dart';
-import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/custom/refresh_indicator.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
@@ -52,8 +51,6 @@ class _TournamentAllTradeIndexState extends State<TournamentAllTradeIndex> {
   Widget build(BuildContext context) {
     TournamentTradesProvider provider =
         context.watch<TournamentTradesProvider>();
-    Utils().showLog('${provider.selectedOverview?.key}');
-    Utils().showLog('${provider.selectedOverview?.value}');
 
     return BaseUiContainer(
       hasData: provider.myTrades != null,
@@ -128,10 +125,7 @@ class _TournamentAllTradeIndexState extends State<TournamentAllTradeIndex> {
             ),
           ),
           Visibility(
-            visible: provider.myTrades?.data?.isNotEmpty == true &&
-                provider.myTrades?.data != null &&
-                provider.myTrades?.overview?[1].key == 'open' &&
-                provider.myTrades?.overview?[1].value != 0,
+            visible: provider.myTrades?.overview?[1].value != 0,
             child: ThemeButton(
               radius: 10,
               text: 'Close All',

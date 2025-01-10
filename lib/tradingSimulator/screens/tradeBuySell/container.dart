@@ -88,7 +88,7 @@ class _BuySellContainerState extends State<BuySellContainer> {
       popUpAlert(
         title: "Confirm Order",
         message:
-            "You are making transaction when market is closed. Your transaction will be take place when market is open. This order will be pending util then.",
+            "You are making transaction when market is closed. Your transaction will be take place when market is open. This order will be pending until then.",
         okText: "Continue",
         onTap: () {
           Navigator.pop(context);

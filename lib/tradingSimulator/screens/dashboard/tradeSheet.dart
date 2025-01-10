@@ -232,31 +232,6 @@ class SearchTicker extends StatelessWidget {
               children: [
                 Expanded(
                   child: AnimatedContainer(
-                    duration: const Duration(milliseconds: 500),
-                    width: double.infinity,
-                    curve: Curves.easeIn,
-                    child: _card(
-                      symbol: symbol,
-                      color: ThemeColors.accent,
-                      "Buy Order",
-                      onTap: () {
-                        if (symbol != null) {
-                          _onTap(symbol: symbol);
-                        } else {
-                          Navigator.push(
-                            context,
-                            createRoute(const SearchTradingTicker()),
-                          );
-                        }
-                      },
-                    ),
-                  ),
-                ),
-                const SpacerHorizontal(
-                  width: 10,
-                ),
-                Expanded(
-                  child: AnimatedContainer(
                     width: double.infinity,
                     duration: const Duration(milliseconds: 500),
                     curve: Curves.easeIn,
@@ -271,6 +246,31 @@ class SearchTicker extends StatelessWidget {
                           Navigator.push(
                             context,
                             createRoute(const SearchTradingTicker(buy: false)),
+                          );
+                        }
+                      },
+                    ),
+                  ),
+                ),
+                const SpacerHorizontal(
+                  width: 10,
+                ),
+                Expanded(
+                  child: AnimatedContainer(
+                    duration: const Duration(milliseconds: 500),
+                    width: double.infinity,
+                    curve: Curves.easeIn,
+                    child: _card(
+                      symbol: symbol,
+                      color: ThemeColors.accent,
+                      "Buy Order",
+                      onTap: () {
+                        if (symbol != null) {
+                          _onTap(symbol: symbol);
+                        } else {
+                          Navigator.push(
+                            context,
+                            createRoute(const SearchTradingTicker()),
                           );
                         }
                       },

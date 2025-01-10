@@ -307,7 +307,7 @@ class _TsDashboardHeaderState extends State<TsDashboardHeader> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          '${provider.userData?.totalReturn?.toFormattedPrice(removeSign: true) ?? 0}',
+                          '${provider.userData?.totalReturn?.toFormattedPrice() ?? 0}',
                           style: styleGeorgiaBold(
                               fontSize: 25,
                               color: (provider.userData?.totalReturn ?? 0) >= 0
