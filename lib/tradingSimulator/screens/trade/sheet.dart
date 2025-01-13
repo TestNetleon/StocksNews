@@ -106,7 +106,7 @@ class SuccessTradeSheet extends StatelessWidget {
                     )
                   ],
                 ),
-                const SpacerVertical(height: 10),
+                const SpacerVertical(height: 25),
                 Text(
                   'Order Detail',
                   style: styleGeorgiaBold(fontSize: 20),
@@ -133,32 +133,66 @@ class SuccessTradeSheet extends StatelessWidget {
                   color: ThemeColors.greyText,
                   height: 15,
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "Order Type",
-                      style: styleGeorgiaRegular(
-                        color: ThemeColors.white,
+                Visibility(
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "Order Type",
+                            style: styleGeorgiaRegular(
+                              color: ThemeColors.white,
+                            ),
+                          ),
+                          Text(
+                            buy ? "Buy" : 'Sell',
+                            style: styleGeorgiaRegular(
+                              color: ThemeColors.white,
+                            ),
+                          ),
+                        ],
                       ),
-                    ),
-                    Text(
-                      buy ? "Buy" : 'Sell',
-                      style: styleGeorgiaRegular(
-                        color: ThemeColors.white,
+                      Divider(
+                        color: ThemeColors.greyText,
+                        height: 15,
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-                Divider(
-                  color: ThemeColors.greyText,
-                  height: 15,
+                Visibility(
+                  visible: order?.date != null && order?.date != '',
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "Order Date/Time",
+                            style: styleGeorgiaRegular(
+                              color: ThemeColors.white,
+                            ),
+                          ),
+                          Text(
+                            order?.date ?? '',
+                            style: styleGeorgiaRegular(
+                              color: ThemeColors.white,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Divider(
+                        color: ThemeColors.greyText,
+                        height: 15,
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
             const SpacerVertical(height: 40),
             ThemeButton(
-              text: close ? "Close" : "My Orders",
+              text: close ? "Go to Orders" : "My Orders",
               onPressed: () {
                 Navigator.pop(context);
                 if (!close) {

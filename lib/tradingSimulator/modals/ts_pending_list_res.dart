@@ -8,6 +8,7 @@ String tsPendingListResToJson(List<TsPendingListRes> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class TsPendingListRes {
+  final num? id;
   final String? symbol;
   final String? company;
   final String? image;
@@ -22,6 +23,7 @@ class TsPendingListRes {
   final String? date;
 
   TsPendingListRes({
+    this.id,
     this.symbol,
     this.company,
     this.image,
@@ -38,6 +40,7 @@ class TsPendingListRes {
   factory TsPendingListRes.fromJson(Map<String, dynamic> json) =>
       TsPendingListRes(
         symbol: json["symbol"],
+        id: json['id'],
         investedValue: json['invested_value'],
         company: json["company"],
         image: json["image"],
@@ -53,6 +56,7 @@ class TsPendingListRes {
 
   Map<String, dynamic> toJson() => {
         "symbol": symbol,
+        'id': id,
         "company": company,
         "image": image,
         'invested_value': investedValue,

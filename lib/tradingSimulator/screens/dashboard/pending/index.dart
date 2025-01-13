@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/tradingSimulator/modals/ts_pending_list_res.dart';
 import 'package:stocks_news_new/tradingSimulator/providers/ts_pending_list_provider.dart';
 import 'package:stocks_news_new/tradingSimulator/screens/dashboard/pending/item.dart';
 import 'package:stocks_news_new/tradingSimulator/screens/dashboard/pending/ts_slidable_menu.dart';
 import 'package:stocks_news_new/tradingSimulator/screens/dashboard/tradeSheet.dart';
-import 'package:stocks_news_new/tradingSimulator/screens/tradeBuySell/index.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
 import 'package:stocks_news_new/widgets/refresh_controll.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
+import '../../../../tournament/provider/trades.dart';
 import '../../../modals/trading_search_res.dart';
 
 class TsPendingList extends StatefulWidget {
@@ -35,38 +34,38 @@ class _TsPendingListState extends State<TsPendingList> {
     await provider.getData(loadMore: loadMore);
   }
 
-  void _onEditClick() {
+  void _onEditClick(TsPendingListRes item, index) {
     //
     popUpAlert(
+      icon: Images.alertPopGIF,
       title: "Confirm",
       message: "Do you want to edit this order?",
       cancel: true,
       okText: "Edit",
       onTap: () {
-        Navigator.pop(context);
-        Navigator.pushReplacement(
-          navigatorKey.currentContext!,
-          MaterialPageRoute(
-            builder: (context) => TradeBuySellIndex(
-              buy: true,
-              doPop: true,
-              qty: 5,
-            ),
-          ),
+        TsPendingListProvider provider = context.read<TsPendingListProvider>();
+
+        provider.stockHolding(
+          index: index,
+          buy: item.tradeType?.toLowerCase() == StockType.buy.name,
         );
+
+        // Navigator.pop(context);
       },
     );
   }
 
-  void _onCancelClick() {
+  void _onCancelClick(TsPendingListRes item) {
     popUpAlert(
+      icon: Images.alertPopGIF,
       title: "Confirm",
       message: "Do you want to cancel this order?",
       cancel: true,
       cancelText: "No",
       okText: "Yes, cancel",
-      onTap: () {
-        Navigator.pop(context);
+      onTap: () async {
+        TsPendingListProvider provider = context.read<TsPendingListProvider>();
+        provider.cancleOrder(item.id);
       },
     );
     //
@@ -99,8 +98,8 @@ class _TsPendingListState extends State<TsPendingList> {
           itemBuilder: (context, index) {
             TsPendingListRes item = provider.data![index];
             return TsPendingSlidableMenu(
-              onEditClick: _onEditClick,
-              onCancelClick: _onCancelClick,
+              onEditClick: () => _onEditClick(item, index),
+              onCancelClick: () => _onCancelClick(item),
               index: index,
               child: TsPendingListItem(
                 item: item,

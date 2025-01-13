@@ -537,7 +537,7 @@ class StockDetailProviderNew extends ChangeNotifier {
             screenType: 'stock_analysis', source: _tabRes?.shareUrl ?? '');
 
         if (symbol != null && symbol.isNotEmpty && startSSE) {
-          // SSEManager.instance.connectToSSE(symbol);
+          SSEManager.instance.disconnectScreen(SimulatorEnum.detail);
           SSEManager.instance.connectStock(
             screen: SimulatorEnum.detail,
             symbol: symbol,

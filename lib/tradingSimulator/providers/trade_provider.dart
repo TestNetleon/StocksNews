@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/tradingSimulator/providers/ts_portfollo_provider.dart';
@@ -6,12 +5,9 @@ import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
 import '../../api/api_requester.dart';
 import '../../api/api_response.dart';
 import '../../api/apis.dart';
-import '../../modals/search_new.dart';
-import '../../modals/top_search_res.dart';
 import '../../routes/my_app.dart';
 import '../../utils/constants.dart';
 import '../../utils/utils.dart';
-import '../../providers/user_provider.dart';
 
 class TradeProviderNew extends ChangeNotifier {
   List<SummaryOrderNew> orders = [];
@@ -163,107 +159,16 @@ class TradeProviderNew extends ChangeNotifier {
     }
   }
 
-  //  Top Search Trade
-  List<TopSearch>? _topSearch;
-  List<TopSearch>? get topSearch => _topSearch;
-
-  Status _status = Status.ideal;
-  Status get status => _status;
-
-  bool get isLoading => _status == Status.loading || _status == Status.ideal;
-
-  String? _error;
-  String? get error => _error ?? Const.errSomethingWrong;
-
-  void setStatusTop(status) {
-    _status = status;
-    notifyListeners();
-  }
-
-  Future getSearchDefaults() async {
-    setStatusTop(Status.loading);
-    try {
-      Map request = {
-        "token":
-            navigatorKey.currentContext!.read<UserProvider>().user?.token ?? ""
-      };
-
-      ApiResponse response = await apiRequest(
-        url: Apis.getMostSearch,
-        request: request,
-        showProgress: false,
-      );
-
-      if (response.status) {
-        _topSearch = topSearchFromJson(jsonEncode(response.data));
-      } else {
-        _topSearch = null;
-        _error = response.message;
-      }
-      setStatusTop(Status.loaded);
-    } catch (e) {
-      _topSearch = null;
-      _error = Const.errSomethingWrong;
-      Utils().showLog(e.toString());
-      setStatusTop(Status.loaded);
-    }
-  }
-// Search API
-
-  void clearSearch() {
-    _dataNew = null;
-    notifyListeners();
-  }
-
-  SearchNewRes? _dataNew;
-  SearchNewRes? get dataNew => _dataNew;
-
-  Status _statusS = Status.ideal;
-  Status get statusS => _statusS;
-
-  bool get isLoadingS => _statusS == Status.loading;
-
-  String? _errorS;
-  String? get errorS => _errorS ?? Const.errSomethingWrong;
-
-  void setStatusSearch(status) {
-    _statusS = status;
-    notifyListeners();
-  }
-
-  Future searchSymbols(request, {showProgress = false}) async {
-    setStatusSearch(Status.loading);
-    try {
-      ApiResponse response = await apiRequest(
-        url: Apis.searchWithNews,
-        request: request,
-        showProgress: showProgress,
-      );
-      if (response.status) {
-        _dataNew = searchNewResFromJson(jsonEncode(response.data));
-      } else {
-        _dataNew = null;
-        _errorS = response.message;
-      }
-      setStatusSearch(Status.loaded);
-    } catch (e) {
-      _dataNew = null;
-      _errorS = Const.errSomethingWrong;
-
-      Utils().showLog(e.toString());
-      setStatusSearch(Status.loaded);
-    }
-  }
-
   Future<ApiResponse> requestBuyShare(request, {showProgress = false}) async {
-    setStatusSearch(Status.loading);
+    notifyListeners();
     try {
       ApiResponse response = await apiRequest(
         url: Apis.tsRequestTrade,
         request: request,
         showProgress: showProgress,
       );
-      setStatusSearch(Status.loaded);
+      notifyListeners();
+
       return response;
       // if (response.status) {
       //   // _dataNew = searchNewResFromJson(jsonEncode(response.data));
@@ -272,24 +177,22 @@ class TradeProviderNew extends ChangeNotifier {
       //   // _errorS = response.message;
       // }
     } catch (e) {
-      _dataNew = null;
-      _errorS = Const.errSomethingWrong;
-
       Utils().showLog(e.toString());
-      setStatusSearch(Status.loaded);
+      notifyListeners();
+
       return ApiResponse(status: false, message: Const.errSomethingWrong);
     }
   }
 
   Future<ApiResponse> requestSellShare(request, {showProgress = false}) async {
-    setStatusSearch(Status.loading);
+    notifyListeners();
     try {
       ApiResponse response = await apiRequest(
         url: Apis.tsRequestTrade,
         formData: request,
         showProgress: showProgress,
       );
-      setStatusSearch(Status.loaded);
+      notifyListeners();
       return response;
       // if (response.status) {
       //   // _dataNew = searchNewResFromJson(jsonEncode(response.data));
@@ -298,11 +201,29 @@ class TradeProviderNew extends ChangeNotifier {
       //   // _errorS = response.message;
       // }
     } catch (e) {
-      _dataNew = null;
-      _errorS = Const.errSomethingWrong;
-
       Utils().showLog(e.toString());
-      setStatusSearch(Status.loaded);
+      notifyListeners();
+      return ApiResponse(status: false, message: Const.errSomethingWrong);
+    }
+  }
+
+  Future<ApiResponse> requestUpdateShare({
+    Map? request,
+    showProgress = false,
+    required num id,
+  }) async {
+    notifyListeners();
+    try {
+      ApiResponse response = await apiRequest(
+        url: '${Apis.updateOrder}$id',
+        request: request,
+        showProgress: showProgress,
+      );
+      notifyListeners();
+      return response;
+    } catch (e) {
+      Utils().showLog(e.toString());
+      notifyListeners();
       return ApiResponse(status: false, message: Const.errSomethingWrong);
     }
   }
@@ -313,6 +234,7 @@ class SummaryOrderNew {
   num? changePercentage, invested, shares, dollars;
   bool isShare;
   bool buy;
+  String? date;
   SummaryOrderNew({
     this.image,
     this.symbol,
@@ -323,6 +245,7 @@ class SummaryOrderNew {
     this.price,
     this.changePercentage,
     this.invested,
+    this.date,
     required this.buy,
     this.isShare = false,
   });

@@ -36,7 +36,7 @@ class TsDashboard extends StatelessWidget {
           canSearch: false,
           showTrailing: false,
           showPortfolio: false,
-          title: "Virtual Trading Account",
+          title: "Trading Simulator",
         ),
         body: Padding(
           padding: EdgeInsets.fromLTRB(Dimen.padding, 0, Dimen.padding, 0),

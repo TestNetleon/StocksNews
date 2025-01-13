@@ -250,7 +250,7 @@ class _AboutStocksNewsState extends State<AboutStocksNews> {
       visibleAboutTiles.add(
         DrawerRes(
           iconData: Icons.bakery_dining_outlined,
-          text: "Game Arena",
+          text: "Trading League",
           onTap: () {
             _closeDrawer();
             Navigator.push(

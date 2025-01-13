@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'leaderboard.dart';
+
 TournamentDetailRes tournamentDetailResFromJson(String str) =>
     TournamentDetailRes.fromJson(json.decode(str));
 
@@ -10,6 +12,8 @@ class TournamentDetailRes {
   final List<String>? tournamentRules;
   // final LoginUserPositionRes? loginUserPosition;
   final List<TournamentPointRes>? tournamentPoints;
+  final List<LeaderboardByDateRes>? todayLeaderboard;
+
   final String? showButton;
   final String? tournamentStartTime;
   final String? tournamentEndTime;
@@ -25,6 +29,7 @@ class TournamentDetailRes {
 
   TournamentDetailRes({
     this.tournamentRules,
+    this.todayLeaderboard,
     this.tournamentPoints,
     this.showButton,
     // this.loginUserPosition,
@@ -46,7 +51,12 @@ class TournamentDetailRes {
         // loginUserPosition: json["login_user_position"] == null
         //     ? null
         //     : LoginUserPositionRes.fromJson(json["login_user_position"]),
+        todayLeaderboard: json["today_leaderboard"] == null
+            ? []
+            : List<LeaderboardByDateRes>.from(json["today_leaderboard"]!
+                .map((x) => LeaderboardByDateRes.fromJson(x))),
         joined: json['tournament_battle_joined'],
+
         image: json['image'],
         tournamentRules: json["tournament_rules"] == null
             ? []
@@ -88,6 +98,9 @@ class TournamentDetailRes {
         "description": description,
         "point": point,
         "time": time,
+        "today_leaderboard": todayLeaderboard == null
+            ? []
+            : List<dynamic>.from(todayLeaderboard!.map((x) => x.toJson())),
         "isMarketOpen": isMarketOpen,
       };
 }

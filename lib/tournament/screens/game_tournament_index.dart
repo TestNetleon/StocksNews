@@ -25,7 +25,7 @@ class _GameTournamentIndexState extends State<GameTournamentIndex> {
     return BaseContainer(
       appBar: AppBarHome(
         isPopBack: true,
-        title: 'Tournament',
+        title: 'Trading League',
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: Dimen.padding),
