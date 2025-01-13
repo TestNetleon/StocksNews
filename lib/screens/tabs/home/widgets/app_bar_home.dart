@@ -9,6 +9,7 @@ import 'package:stocks_news_new/routes/navigation_observer.dart';
 import 'package:stocks_news_new/screens/notifications/index.dart';
 import 'package:stocks_news_new/screens/search/search.dart';
 import 'package:stocks_news_new/screens/tabs/tabs.dart';
+import 'package:stocks_news_new/stocksScanner/providers/market_scanner_provider.dart';
 import 'package:stocks_news_new/tradingSimulator/screens/portfolio/index.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
@@ -21,7 +22,7 @@ import 'package:svg_flutter/svg_flutter.dart';
 class AppBarHome extends StatefulWidget implements PreferredSizeWidget {
   final bool isHome;
   final bool showTrailing, isPopBack, canSearch, showPortfolio, showTitleLogo;
-  final bool filterApplied;
+  final bool isScannerFilter;
   final void Function()? onFilterClick;
   final void Function()? onTap;
   final String? title;
@@ -39,7 +40,7 @@ class AppBarHome extends StatefulWidget implements PreferredSizeWidget {
     this.canSearch = true,
     this.showPortfolio = false,
     this.showTitleLogo = true,
-    this.filterApplied = false,
+    this.isScannerFilter = false,
     this.onTap,
     this.title,
     this.subTitle,
@@ -215,33 +216,48 @@ class _AppBarHomeState extends State<AppBarHome> {
                 // Actions
                 Row(
                   children: [
-                    Visibility(
-                      visible: widget.onFilterClick != null,
-                      child: Stack(
-                        children: [
-                          IconButton(
-                            onPressed: widget.onFilterClick,
-                            icon: const Icon(
-                              Icons.filter_alt,
-                              color: ThemeColors.accent,
-                            ),
+                    if (!widget.isScannerFilter)
+                      Visibility(
+                        visible: widget.onFilterClick != null,
+                        child: IconButton(
+                          onPressed: widget.onFilterClick,
+                          icon: const Icon(
+                            Icons.filter_alt,
+                            color: ThemeColors.accent,
                           ),
-                          if (widget.filterApplied)
-                            Positioned(
-                              right: 24,
-                              top: 14,
-                              child: Container(
-                                width: 8,
-                                height: 8,
-                                decoration: BoxDecoration(
-                                  color: Colors.red,
-                                  borderRadius: BorderRadius.circular(30),
+                        ),
+                      ),
+                    if (widget.isScannerFilter)
+                      Consumer<MarketScannerProvider>(
+                          builder: (context, value, child) {
+                        return Visibility(
+                          visible:
+                              widget.onFilterClick != null && value.visible,
+                          child: Stack(
+                            children: [
+                              IconButton(
+                                onPressed: widget.onFilterClick,
+                                icon: const Icon(
+                                  Icons.filter_alt,
+                                  color: ThemeColors.accent,
                                 ),
                               ),
-                            ),
-                        ],
-                      ),
-                    ),
+                              Positioned(
+                                right: 24,
+                                top: 14,
+                                child: Container(
+                                  width: 8,
+                                  height: 8,
+                                  decoration: BoxDecoration(
+                                    color: Colors.red,
+                                    borderRadius: BorderRadius.circular(30),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                      }),
 
                     // Visibility(
                     //   visible: widget.onFilterClick != null,

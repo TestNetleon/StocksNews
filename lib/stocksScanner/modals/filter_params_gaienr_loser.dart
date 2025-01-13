@@ -1,6 +1,7 @@
 class FilterParamsGainerLoser {
   // 2 = percent  3= volume
   int? sortBy;
-  bool? orderByAsc;
-  FilterParamsGainerLoser({this.sortBy, this.orderByAsc});
+  String? sortByHeader;
+  bool? sortByAsc;
+  FilterParamsGainerLoser({this.sortBy, this.sortByAsc, this.sortByHeader});
 }

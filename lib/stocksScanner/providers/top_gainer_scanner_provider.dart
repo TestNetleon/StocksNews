@@ -111,7 +111,7 @@ class TopGainerScannerProvider extends ChangeNotifier {
       data.sort((a, b) {
         double valueA = a.changesPercentage ?? 0;
         double valueB = b.changesPercentage ?? 0;
-        if (_filterParams?.orderByAsc == true) {
+        if (_filterParams?.sortByAsc == true) {
           return valueB.compareTo(valueA);
         }
         return valueA.compareTo(valueB);
@@ -122,7 +122,7 @@ class TopGainerScannerProvider extends ChangeNotifier {
       data.sort((a, b) {
         num valueA = a.volume ?? 0;
         num valueB = b.volume ?? 0;
-        if (_filterParams?.orderByAsc == true) {
+        if (_filterParams?.sortByAsc == true) {
           return valueB.compareTo(valueA);
         }
         return valueA.compareTo(valueB);
@@ -154,9 +154,15 @@ class TopGainerScannerProvider extends ChangeNotifier {
           if ((volume * (item.extendedHoursPrice ?? 0)) < 100000) {
             continue; // Skip if conditions are met
           }
+          if ((item.extendedHoursPercentChange ?? 0) <= 0) {
+            continue;
+          }
         } else {
           if ((volume * lastTrade) < 100000) {
             continue; // Skip if conditions are met
+          }
+          if ((item.percentChange ?? 0) <= 0) {
+            continue;
           }
         }
 
@@ -181,21 +187,46 @@ class TopGainerScannerProvider extends ChangeNotifier {
     }
 
     // Sort the array based on `shortIndex`
-    prChangeAr.sort((a, b) {
-      double valueA = a.percentChange ?? 0;
-      if (a.extendedHoursType == "PostMarket" ||
-          a.extendedHoursType == "PreMarket") {
-        valueA = a.extendedHoursPercentChange ?? 0;
-      }
-      double valueB = b.percentChange ?? 0;
-      if (b.extendedHoursType == "PostMarket" ||
-          b.extendedHoursType == "PreMarket") {
-        valueB = b.extendedHoursPercentChange ?? 0;
-      }
-      return valueB.compareTo(valueA);
-    });
+    if (_filterParams?.sortBy != 3 && _filterParams?.sortByHeader == null) {
+      prChangeAr.sort((a, b) {
+        num valueA = a.percentChange ?? 0;
+        num valueB = b.percentChange ?? 0;
+        if ((a.extendedHoursType == "PostMarket" ||
+            a.extendedHoursType == "PreMarket")) {
+          valueA = a.extendedHoursPercentChange ?? 0;
+          valueB = b.extendedHoursPercentChange ?? 0;
+        }
 
+        if (_filterParams?.sortByAsc == true) {
+          return valueB.compareTo(valueA);
+        } else {
+          return valueA.compareTo(valueB);
+        }
+      });
+    } else if (_filterParams?.sortBy == 3) {
+      prChangeAr.sort((a, b) {
+        num valueA = a.volume ?? 0;
+        num valueB = b.volume ?? 0;
+        if (_filterParams?.sortByAsc == true) {
+          return valueB.compareTo(valueA);
+        } else {
+          return valueA.compareTo(valueB);
+        }
+      });
+    }
+
+    if (_filterParams?.sortByHeader != null) {
+      prChangeAr.sort((a, b) {
+        return sortByCompare(
+          a,
+          b,
+          _filterParams?.sortByHeader ?? "",
+          _filterParams?.sortByAsc ?? true,
+        );
+      });
+    }
     _dataList = prChangeAr.take(50).toList();
+
     notifyListeners();
   }
 
@@ -203,31 +234,155 @@ class TopGainerScannerProvider extends ChangeNotifier {
     if (sortBy == _filterParams?.sortBy) {
       _filterParams = FilterParamsGainerLoser(
         sortBy: sortBy,
-        orderByAsc: !(_filterParams?.orderByAsc ?? true),
+        sortByAsc: !(_filterParams?.sortByAsc ?? true),
+        sortByHeader: null,
       );
     } else {
       _filterParams = FilterParamsGainerLoser(
         sortBy: sortBy,
-        orderByAsc: (_filterParams?.orderByAsc ?? true),
+        sortByAsc: true,
+        sortByHeader: null,
       );
     }
 
     if (_dataList != null) {
       Utils().showLog("----");
-      updateData(_dataList);
+      // updateData(_dataList,);
+      notifyListeners();
     } else if (_offlineDataList != null) {
       Utils().showLog("---- ******  ${_fullOfflineDataList?.length}");
       updateOfflineData(_fullOfflineDataList, applyFilter: true);
+      notifyListeners();
     } else {
       notifyListeners();
     }
-
-    notifyListeners();
   }
 
   void clearFilter() {
     _filterParams = null;
     notifyListeners();
+  }
+
+  void applySorting(String sortBy) {
+    if (sortBy == _filterParams?.sortByHeader) {
+      _filterParams = FilterParamsGainerLoser(
+        sortByHeader: sortBy,
+        sortBy: null,
+        sortByAsc: !(_filterParams?.sortByAsc ?? true),
+      );
+    } else {
+      _filterParams = FilterParamsGainerLoser(
+        sortByHeader: sortBy,
+        sortBy: null,
+        sortByAsc: true,
+      );
+    }
+    // MarketScannerDataManager.instance.stopListeningPorts();
+    if (_dataList != null) {
+      notifyListeners();
+    } else if (_offlineDataList != null) {
+      updateOfflineData(_fullOfflineDataList, applyFilter: true);
+    }
+  }
+
+  int sortByCompare(
+      MarketScannerRes a, MarketScannerRes b, String sortBy, bool isAsc) {
+    if (sortBy == "Symbol") {
+      if (a.identifier == null && b.identifier == null) return 0;
+      if (a.identifier == null) return -1;
+      if (b.identifier == null) return 1;
+      if (isAsc) {
+        return a.identifier!.compareTo(b.identifier!);
+      } else {
+        return b.identifier!.compareTo(a.identifier!);
+      }
+    } else if (sortBy == "Company Name") {
+      if (a.security?.name == null && b.security?.name == null) return 0;
+      if (a.security?.name == null) return -1;
+      if (b.security?.name == null) return 1;
+      if (isAsc) {
+        return a.security!.name!.compareTo(b.security!.name!);
+      } else {
+        return b.security!.name!.compareTo(a.security!.name!);
+      }
+    } else if (sortBy == "Sector") {
+      if (a.sector == null && b.sector == null) return 0;
+      if (a.sector == null) return -1;
+      if (b.sector == null) return 1;
+      if (isAsc) {
+        return a.sector!.compareTo(b.sector!);
+      } else {
+        return b.sector!.compareTo(a.sector!);
+      }
+    } else if (sortBy == "Last Trade") {
+      num? valueA = a.last;
+      num? valueB = b.last;
+      if (a.extendedHoursType == "PostMarket" ||
+          a.extendedHoursType == "PreMarket") {
+        valueA = a.extendedHoursPrice ?? 0;
+        valueB = b.extendedHoursPrice ?? 0;
+      }
+      if (valueA == null && valueB == null) return 0;
+      if (valueA == null) return -1;
+      if (valueB == null) return 1;
+      if (isAsc) {
+        return valueA.compareTo(valueB);
+      } else {
+        return valueB.compareTo(valueA);
+      }
+    } else if (sortBy == "Net Change") {
+      num? valueA = a.change;
+      num? valueB = b.change;
+      if (a.extendedHoursType == "PostMarket" ||
+          a.extendedHoursType == "PreMarket") {
+        valueA = a.extendedHoursChange ?? 0;
+        valueB = b.extendedHoursChange ?? 0;
+      }
+      if (valueA == null && valueB == null) return 0;
+      if (valueA == null) return -1;
+      if (valueB == null) return 1;
+      if (isAsc) {
+        return valueA.compareTo(valueB);
+      } else {
+        return valueB.compareTo(valueA);
+      }
+    } else if (sortBy == "% Change") {
+      Utils().showLog("_____ isAsc = $isAsc $sortBy");
+      num? valueA = a.percentChange;
+      num? valueB = b.percentChange;
+      if (a.extendedHoursType == "PostMarket" ||
+          a.extendedHoursType == "PreMarket") {
+        valueA = a.extendedHoursPercentChange ?? 0;
+        valueB = b.extendedHoursPercentChange ?? 0;
+      }
+
+      if (valueA == null && valueB == null) return 0;
+      if (valueA == null) return -1;
+      if (valueB == null) return 1;
+      if (isAsc) {
+        return valueA.compareTo(valueB);
+      } else {
+        return valueB.compareTo(valueA);
+      }
+    } else if (sortBy == "Volume") {
+      if (a.volume == null && b.volume == null) return 0;
+      if (a.volume == null) return -1;
+      if (b.volume == null) return 1;
+      if (isAsc) {
+        return a.volume!.compareTo(b.volume!);
+      } else {
+        return b.volume!.compareTo(a.volume!);
+      }
+    } else if (sortBy == "\$ Volume") {
+      num dolorVolumeA = (a.volume ?? 0) * (a.volume ?? 0);
+      num dolorVolumeB = (b.volume ?? 0) * (b.volume ?? 0);
+      if (isAsc) {
+        return dolorVolumeA.compareTo(dolorVolumeB);
+      } else {
+        return dolorVolumeB.compareTo(dolorVolumeA);
+      }
+    }
+    return 0;
   }
 }
 

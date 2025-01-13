@@ -139,6 +139,7 @@
                             <th class="sortable" data-column="bid">Bid</th>
                             <th class="sortable" data-column="ask">Ask</th>
                             <th class="sortable" data-column="lastTrade">Last Trade</th>
+                            <th class="sortable lastTradeExt" data-column="lastTradeExt">Post Market Price</th>
                             <th class="sortable" data-column="netChange">Net Change</th>
                             <th class="sortable" data-column="perChange">% Change</th>
                             <th class="sortable" data-column="volume">Volume</th>
@@ -164,6 +165,7 @@
     padding: 6px 18px;
 }
 .responsive-table table td a{color:var(--colorPrimary); text-decoration:none; }
+.lastTradeExt{display: none;}
 </style> 
 @endsection
 
@@ -203,10 +205,7 @@ function displayCurrentDateTimeInET() {
     }
 }
 
-
    // window.onload = displayCurrentDateTimeInET;
-
-   
     $(document).ready(function () {
         intervalId = setInterval(displayCurrentDateTimeInET, 1000);
         $("#lastUpdated").hide();
@@ -300,7 +299,7 @@ function displayCurrentDateTimeInET() {
                     (!document.getElementById("dollarVolumeEnd").value || dollarVolume <= parseFloat(document.getElementById("dollarVolumeEnd").value)) &&
                     (!document.getElementById("sector").value || sector === document.getElementById("sector").value) &&
                     (!document.getElementById("symbolName").value || symbol.toLowerCase().includes(document.getElementById("symbolName").value.toLowerCase()));
-                
+
                 row.style.display = isVisible ? "" : "none";
             });
         }
@@ -431,18 +430,23 @@ function displayCurrentDateTimeInET() {
     });
 
     function renderOffLine(data) {   
-       
+        let postMarket = false;
         if (Array.isArray(data) && data.length > 0) {  
             clearInterval(intervalId);           
             $("#lastUpdated").html(data[0].closeDate+" "+data[0].time);
             $("#marketStatus").html('Closed');
             $("tbody").empty();
-            data.forEach(function (item, index) {              
+            data.forEach(function (item, index) {  
+                //console.log("item=",item.Ext['ExtendedHoursType']);            
                 if (item && item.Identifier) {   
                     const bid = '$' + (item.bid || 0);
                     const ask = '$' + (item.ask || 0);
-
+ 
                     let lastTrade = (item.price || 0);
+                    if(item.Ext['ExtendedHoursType']=='PostMarket'){
+                        postMarket = true;
+                    }
+                    let lastTradeExt = item.Ext['ExtendedHoursPrice'];
                     let netChange =  (item.change || 0);
                     let perChange = item.changesPercentage || 0;
                     const volume = item.volume || 0;
@@ -467,16 +471,13 @@ function displayCurrentDateTimeInET() {
                                 row = document.createElement("tr");
                                 row.setAttribute("data-symbol", item.Identifier);
                                 row.innerHTML = `  
-                                    <td class="symbol">
-                                        <a href="/stock-detail/NASDAQ/${item.Identifier}/overview" target="_blank">${item.Identifier}</a>
-                                    </td>
-                                    <td class="company">
-                                        <a href="/stock-detail/NASDAQ/${item.Identifier}/overview" target="_blank">${item.name}</a>
-                                    </td>  
+                                    <td class="symbol">${item.Identifier}</td>
+                                    <td class="company">${item.name}</td>  
                                     <td class="sector">${item.sector}</td>
                                     <td class="bid">${bid}</td>
                                     <td class="ask">${ask}</td>
                                     <td class="lastTrade">$${lastTrade}</td>
+                                    <td class="lastTradeExt">$${lastTradeExt}</td>
                                     <td class="netChange ${getColorClass(netChange)}">$${netChange}</td>
                                     <td class="perChange ${getColorClass(perChange)}">${perChange}</td>
                                     <td class="volume">${formattedVolume}</td>
@@ -484,12 +485,13 @@ function displayCurrentDateTimeInET() {
                                 `;
                                 document.querySelector("table tbody").appendChild(row);
                             } else { 
-                                row.querySelector(".symbol").innerHTML = `<a href="/stock-detail/NASDAQ/${item.Identifier}/overview" target="_blank">${item.Identifier}</a>`;
-                                row.querySelector(".company").innerHTML =  `<a href="/stock-detail/NASDAQ/${item.Identifier}/overview" target="_blank">${item.name}</a>`;
+                                row.querySelector(".symbol").innerHTML = `${item.Identifier}`;
+                                row.querySelector(".company").innerHTML =  `${item.name}`;
                                 row.querySelector(".sector").textContent = item.sector;
                                 row.querySelector(".bid").textContent = bid;
                                 row.querySelector(".ask").textContent = ask;
                                 row.querySelector(".lastTrade").textContent = `$${lastTrade}`; 
+                                row.querySelector(".lastTradeExt").textContent = `$${lastTradeExt}`;
                                 row.querySelector(".netChange").textContent = '$'+netChange;
                                 row.querySelector(".netChange").className = `netChange ${getColorClass(netChange)}`;
                                 row.querySelector(".perChange").textContent = perChange;
@@ -504,6 +506,10 @@ function displayCurrentDateTimeInET() {
                 }
             });
             $("#loader").css('display','none'); 
+            console.log("postMarket+",postMarket);
+            if(postMarket==true){
+                $(".lastTradeExt").css('display','block');
+            }
         } else {
             console.warn("No valid data received:", data);
         }
@@ -661,12 +667,8 @@ function displayCurrentDateTimeInET() {
                             row = document.createElement("tr");
                             row.setAttribute("data-symbol", item.Identifier);
                             row.innerHTML = `                                
-                                <td class="symbol">
-                                    <a href="/stock-detail/NASDAQ/${item.Identifier}/overview" target="_blank">${item.Identifier}</a>
-                                </td>
-                                <td class="company">
-                                    <a href="/stock-detail/NASDAQ/${item.Identifier}/overview" target="_blank">${companyName}</a>
-                                </td> 
+                                <td class="symbol">${item.Identifier}</td>
+                                <td class="company">${companyName}</td> 
                                 <td class="sector">${sector}</td>
                                 <td class="bid">${bid}</td>
                                 <td class="ask">${ask}</td>
@@ -678,8 +680,8 @@ function displayCurrentDateTimeInET() {
                             `;
                             document.querySelector("table tbody").appendChild(row);
                         } else { 
-                            row.querySelector(".symbol").innerHTML = `<a href="/stock-detail/NASDAQ/${item.Identifier}/overview" target="_blank">${item.Identifier}</a>`;
-                            row.querySelector(".company").innerHTML = `<a href="/stock-detail/NASDAQ/${item.Identifier}/overview" target="_blank">${companyName}</a>`;
+                            row.querySelector(".symbol").innerHTML = `${item.Identifier}`;
+                            row.querySelector(".company").innerHTML = `${companyName}`;
                             row.querySelector(".sector").textContent = sector;
                             row.querySelector(".bid").textContent = bid;
                             row.querySelector(".ask").textContent = ask;

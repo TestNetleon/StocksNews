@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:stocks_news_new/stocksScanner/providers/market_scanner_provider.dart';
 import 'package:stocks_news_new/stocksScanner/providers/top_loser_scanner_provider.dart';
 import 'package:stocks_news_new/stocksScanner/screens/stockScanner/widget_preparing.dart';
 import 'package:stocks_news_new/stocksScanner/screens/topLosers/offline_data.dart';
@@ -17,6 +18,7 @@ class _ScannerTopLosersState extends State<ScannerTopLosers> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<MarketScannerProvider>().stopListeningPorts();
       TopLoserScannerProvider provider =
           context.read<TopLoserScannerProvider>();
       provider.startListeningPorts();

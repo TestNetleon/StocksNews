@@ -21,7 +21,7 @@ class MarketScannerProvider extends ChangeNotifier {
   bool get isLoading => _status == Status.loading || _status == Status.ideal;
 
   List<String> tableHeader = [
-    "Time",
+    // "Time",
     "Company Name",
     "Sector",
     "Bid",
@@ -77,6 +77,7 @@ class MarketScannerProvider extends ChangeNotifier {
 
   void stopListeningPorts() {
     _visible = false;
+    notifyListeners();
     _offlineDataList = null;
     _dataList = null;
     _filterParams = null;
@@ -183,6 +184,18 @@ class MarketScannerProvider extends ChangeNotifier {
     // }
 
     _offlineDataList = data.take(50).toList();
+
+    if (_filterParams?.sortBy != null) {
+      _offlineDataList?.sort((a, b) {
+        return sortByCompareOffline(
+          a,
+          b,
+          _filterParams?.sortBy ?? "",
+          _filterParams?.sortByAsc ?? false,
+        );
+      });
+    }
+
     // Notify listeners to update UI
     notifyListeners();
   }
@@ -415,6 +428,8 @@ class MarketScannerProvider extends ChangeNotifier {
       }
     }
 
+    _dataList = _dataList!.take(50).toList();
+
     if (_filterParams?.sortBy != null) {
       _dataList?.sort((a, b) {
         return sortByCompare(
@@ -425,8 +440,6 @@ class MarketScannerProvider extends ChangeNotifier {
         );
       });
     }
-
-    _dataList = _dataList!.take(50).toList();
     // Notify listeners to update UI
     notifyListeners();
   }
@@ -442,8 +455,7 @@ class MarketScannerProvider extends ChangeNotifier {
       } else {
         return b.identifier!.compareTo(a.identifier!);
       }
-    }
-    if (sortBy == "Company Name") {
+    } else if (sortBy == "Company Name") {
       if (a.security?.name == null && b.security?.name == null) return 0;
       if (a.security?.name == null) return -1;
       if (b.security?.name == null) return 1;
@@ -451,6 +463,114 @@ class MarketScannerProvider extends ChangeNotifier {
         return a.security!.name!.compareTo(b.security!.name!);
       } else {
         return b.security!.name!.compareTo(a.security!.name!);
+      }
+    } else if (sortBy == "Bid") {
+      if (a.bid == null && b.bid == null) return 0;
+      if (a.bid == null) return -1;
+      if (b.bid == null) return 1;
+      if (isAsc) {
+        return a.bid!.compareTo(b.bid!);
+      } else {
+        return b.bid!.compareTo(a.bid!);
+      }
+    } else if (sortBy == "Ask") {
+      if (a.ask == null && b.ask == null) return 0;
+      if (a.ask == null) return -1;
+      if (b.ask == null) return 1;
+      if (isAsc) {
+        return a.ask!.compareTo(b.ask!);
+      } else {
+        return b.ask!.compareTo(a.ask!);
+      }
+    } else if (sortBy == "Last Trade") {
+      num? valueA = a.last;
+      num? valueB = b.last;
+      if (a.extendedHoursType == "PostMarket" ||
+          a.extendedHoursType == "PreMarket") {
+        valueA = a.extendedHoursPrice ?? 0;
+        valueB = b.extendedHoursPrice ?? 0;
+      }
+      if (valueA == null && valueB == null) return 0;
+      if (valueA == null) return -1;
+      if (valueB == null) return 1;
+      if (isAsc) {
+        return valueA.compareTo(valueB);
+      } else {
+        return valueB.compareTo(valueA);
+      }
+    } else if (sortBy == "Net Change") {
+      num? valueA = a.change;
+      num? valueB = b.change;
+      if (a.extendedHoursType == "PostMarket" ||
+          a.extendedHoursType == "PreMarket") {
+        valueA = a.extendedHoursChange ?? 0;
+        valueB = b.extendedHoursChange ?? 0;
+      }
+      if (valueA == null && valueB == null) return 0;
+      if (valueA == null) return -1;
+      if (valueB == null) return 1;
+      if (isAsc) {
+        return valueA.compareTo(valueB);
+      } else {
+        return valueB.compareTo(valueA);
+      }
+    } else if (sortBy == "% Change") {
+      num? valueA = a.percentChange;
+      num? valueB = b.percentChange;
+      if (a.extendedHoursType == "PostMarket" ||
+          a.extendedHoursType == "PreMarket") {
+        valueA = a.extendedHoursPercentChange ?? 0;
+        valueB = b.extendedHoursPercentChange ?? 0;
+      }
+      if (valueA == null && valueB == null) return 0;
+      if (valueA == null) return -1;
+      if (valueB == null) return 1;
+      if (isAsc) {
+        return valueA.compareTo(valueB);
+      } else {
+        return valueB.compareTo(valueA);
+      }
+    } else if (sortBy == "Volume") {
+      if (a.volume == null && b.volume == null) return 0;
+      if (a.volume == null) return -1;
+      if (b.volume == null) return 1;
+      if (isAsc) {
+        return a.volume!.compareTo(b.volume!);
+      } else {
+        return b.volume!.compareTo(a.volume!);
+      }
+    } else if (sortBy == "\$ Volume") {
+      num dolorVolumeA = (a.volume ?? 0) * (a.volume ?? 0);
+      num dolorVolumeB = (b.volume ?? 0) * (b.volume ?? 0);
+      if (isAsc) {
+        return dolorVolumeA.compareTo(dolorVolumeB);
+      } else {
+        return dolorVolumeB.compareTo(dolorVolumeA);
+      }
+    }
+    return 0;
+  }
+
+  int sortByCompareOffline(
+      ScannerRes a, ScannerRes b, String sortBy, bool isAsc) {
+    if (sortBy == "Symbol") {
+      if (a.identifier == null && b.identifier == null) return 0;
+      if (a.identifier == null) return -1;
+      if (b.identifier == null) return 1;
+      if (isAsc) {
+        return a.identifier!.compareTo(b.identifier!);
+      } else {
+        return b.identifier!.compareTo(a.identifier!);
+      }
+    }
+    if (sortBy == "Company Name") {
+      if (a.name == null && b.name == null) return 0;
+      if (a.name == null) return -1;
+      if (b.name == null) return 1;
+      if (isAsc) {
+        return a.name!.compareTo(b.name!);
+      } else {
+        return b.name!.compareTo(a.name!);
       }
     }
     if (sortBy == "Bid") {
@@ -474,13 +594,13 @@ class MarketScannerProvider extends ChangeNotifier {
       }
     }
     if (sortBy == "Last Trade") {
-      if (a.last == null && b.last == null) return 0;
-      if (a.last == null) return -1;
-      if (b.last == null) return 1;
+      if (a.price == null && b.price == null) return 0;
+      if (a.price == null) return -1;
+      if (b.price == null) return 1;
       if (isAsc) {
-        return a.last!.compareTo(b.last!);
+        return a.price!.compareTo(b.price!);
       } else {
-        return b.last!.compareTo(a.last!);
+        return b.price!.compareTo(a.price!);
       }
     }
     if (sortBy == "Net Change") {
@@ -494,13 +614,13 @@ class MarketScannerProvider extends ChangeNotifier {
       }
     }
     if (sortBy == "% Change") {
-      if (a.percentChange == null && b.percentChange == null) return 0;
-      if (a.percentChange == null) return -1;
-      if (b.percentChange == null) return 1;
+      if (a.changesPercentage == null && b.changesPercentage == null) return 0;
+      if (a.changesPercentage == null) return -1;
+      if (b.changesPercentage == null) return 1;
       if (isAsc) {
-        return a.percentChange!.compareTo(b.percentChange!);
+        return a.changesPercentage!.compareTo(b.changesPercentage!);
       } else {
-        return b.percentChange!.compareTo(a.percentChange!);
+        return b.changesPercentage!.compareTo(a.changesPercentage!);
       }
     }
     if (sortBy == "Volume") {
@@ -514,8 +634,8 @@ class MarketScannerProvider extends ChangeNotifier {
       }
     }
     if (sortBy == "\$ Volume") {
-      num dolorVolumeA = (a.volume ?? 0) * (a.last ?? 0);
-      num dolorVolumeB = (b.volume ?? 0) * (b.last ?? 0);
+      num dolorVolumeA = (a.volume ?? 0) * (a.volume ?? 0);
+      num dolorVolumeB = (b.volume ?? 0) * (b.volume ?? 0);
       if (isAsc) {
         return dolorVolumeA.compareTo(dolorVolumeB);
       } else {
@@ -555,21 +675,18 @@ class MarketScannerProvider extends ChangeNotifier {
   }
 
   void applySorting(String sortBy) {
-    Utils().showLog("--- Sort By => $sortBy");
     if (sortBy == _filterParams?.sortBy) {
       _filterParams?.sortByAsc = !(_filterParams?.sortByAsc ?? true);
     } else {
       _filterParams?.sortBy = sortBy;
       _filterParams?.sortByAsc = true;
     }
-    Utils().showLog(
-      "--- Sort By => ${_filterParams?.sortBy} ${_filterParams?.sortByAsc}",
-    );
-    MarketScannerDataManager.instance.stopListeningPorts();
-
+    // MarketScannerDataManager.instance.stopListeningPorts();
     if (_dataList != null) {
-      updateData(_dataList);
+      // updateData(_dataList);
+      notifyListeners();
     } else if (_offlineDataList != null) {
+      // _offlineDataList = null;
       updateOfflineData(_fullOfflineDataList, applyFilter: true);
     }
   }

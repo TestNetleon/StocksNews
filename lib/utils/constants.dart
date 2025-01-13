@@ -492,6 +492,13 @@ extension IntExtention on num {
     return NumberFormat("##,##,##0.00").format(this < 0 ? this * -1 : this);
   }
 
+  String toRuppeeFormatWithoutFloating() {
+    if (this == 0) {
+      return NumberFormat("0").format(this);
+    }
+    return NumberFormat("##,##,###").format(this < 0 ? this * -1 : this);
+  }
+
   String toMonth() {
     return NumberFormat("00").format(this);
   }

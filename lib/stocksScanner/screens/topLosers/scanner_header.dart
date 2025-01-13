@@ -11,6 +11,8 @@ import 'package:stocks_news_new/stocksScanner/providers/top_loser_scanner_provid
 // import 'package:stocks_news_new/stocksScanner/providers/market_scanner_provider.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
+import 'package:timezone/timezone.dart' as tz;
+import 'package:timezone/data/latest_all.dart' as tz;
 
 class TopLoserScannerHeader extends StatefulWidget {
   final bool isOnline;
@@ -32,9 +34,16 @@ class _TopLoserScannerHeaderState extends State<TopLoserScannerHeader> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (widget.isOnline) {
+        tz.initializeTimeZones();
         _timer = Timer.periodic(Duration(seconds: 1), (_) {
+          // Initialize timezone data
+          // Get New York timezone
+          var newYork = tz.getLocation('America/New_York');
+          // Get current time in New York timezone
+          var nowInNewYork = tz.TZDateTime.now(newYork);
           setState(() {
-            _lastUpdated = DateFormat("hh:mm:ss").format(DateTime.now());
+            _lastUpdated =
+                DateFormat("MM/dd/yy hh:mm:ss a").format(nowInNewYork);
           });
         });
       }
@@ -72,9 +81,10 @@ class _TopLoserScannerHeaderState extends State<TopLoserScannerHeader> {
     // }
 
     return Text(
-      // "Market Status : $marketStatus  |   Last Updated : $_lastUpdated",
-      "Market Status : $marketStatus  |   Last Updated : ",
-      style: stylePTSansBold(),
+      "Market Status : $marketStatus  |   Last Updated : $_lastUpdated",
+      // "Market Status : $marketStatus  |   Last Updated : ",
+      style: stylePTSansBold(fontSize: 13),
+      maxLines: 1,
     );
   }
 

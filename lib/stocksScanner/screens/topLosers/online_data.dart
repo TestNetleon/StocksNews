@@ -3,13 +3,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/stocksScanner/modals/market_scanner_res.dart';
-// import 'package:stocks_news_new/stocksScanner/providers/market_scanner_provider.dart';
 import 'package:stocks_news_new/stocksScanner/providers/top_loser_scanner_provider.dart';
+import 'package:stocks_news_new/stocksScanner/screens/stockScanner/common_scanner_ui.dart';
+import 'package:stocks_news_new/stocksScanner/screens/topGainers/top_gainer_filter.dart';
 import 'package:stocks_news_new/stocksScanner/screens/topLosers/scanner_header.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/utils/constants.dart';
-import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 class TopLosersOnline extends StatefulWidget {
   const TopLosersOnline({super.key});
@@ -60,18 +60,21 @@ class _TopLosersOnlineState extends State<TopLosersOnline> {
       return SizedBox();
     }
 
-    // String marketStatus = dataList[0].extendedHoursType ?? "";
-    // String lastUpdated = DateFormat("hh:mm:ss").format(DateTime.now());
-    // if (!(dataList[0].extendedHoursType == "PostMarket" ||
-    //     dataList[0].extendedHoursType == "PreMarket")) {
-    //   marketStatus = "Live";
-    // }
-
     return SingleChildScrollView(
       child: Column(
         children: [
           TopLoserScannerHeader(isOnline: true),
-          const SpacerVertical(height: 10),
+          ScannerTopGainerFilter(
+            onPercentClick: () {
+              provider.applyFilter(2);
+            },
+            onVolumnClick: () {
+              provider.applyFilter(3);
+            },
+            isPercent: provider.filterParams?.sortBy == 2,
+            isVolume: provider.filterParams?.sortBy == 3,
+            orderByAsc: provider.filterParams?.sortByAsc,
+          ),
           ClipRRect(
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(8),
@@ -97,19 +100,12 @@ class _TopLosersOnlineState extends State<TopLosersOnline> {
                     width: 0.9,
                   ),
                   columns: [
-                    DataColumn(
-                      label: ConstrainedBox(
-                        constraints: BoxConstraints(
-                          maxWidth: ScreenUtil().screenWidth * .3,
-                        ),
-                        child: Text(
-                          'Symbol',
-                          style: styleGeorgiaBold(
-                            fontSize: 12,
-                            color: ThemeColors.greyText,
-                          ),
-                        ),
-                      ),
+                    dataColumn(
+                      text: 'Symbol',
+                      onTap: () => provider.applySorting('Symbol'),
+                      sortBy: provider.filterParams?.sortByHeader == 'Symbol'
+                          ? provider.filterParams?.sortByAsc
+                          : null,
                     ),
                   ],
                   rows: dataList.map(
@@ -126,20 +122,6 @@ class _TopLosersOnlineState extends State<TopLosersOnline> {
                                 // width: 100,
                                 child: Row(
                                   children: [
-                                    // Container(
-                                    //   height: 30,
-                                    //   width: 30,
-                                    //   decoration: BoxDecoration(
-                                    //     // color: Colors.white,
-                                    //     shape: BoxShape.circle,
-                                    //   ),
-                                    //   child: CachedNetworkImagesWidget(
-                                    //     "",
-                                    //     // company.image ?? "",
-                                    //     fit: BoxFit.cover,
-                                    //   ),
-                                    // ),
-                                    // SpacerHorizontal(width: 8.0),
                                     Expanded(
                                       child: Text(
                                         "${data.identifier}",
@@ -163,15 +145,6 @@ class _TopLosersOnlineState extends State<TopLosersOnline> {
                     scrollDirection: Axis.horizontal,
                     child: DataTable(
                       horizontalMargin: 10,
-                      // border: TableBorder.all(
-                      //   color: ThemeColors.greyBorder,
-                      //   // borderRadius: BorderRadius.circular(10.0),
-                      //   borderRadius: BorderRadius.only(
-                      //     topRight: Radius.circular(10),
-                      //     bottomRight: Radius.circular(10),
-                      //   ),
-                      //   width: 0.9,
-                      // ),
                       border: TableBorder(
                         top: BorderSide(
                           color: ThemeColors.greyBorder,
@@ -188,14 +161,13 @@ class _TopLosersOnlineState extends State<TopLosersOnline> {
                       ),
                       columns: columnHeader.map(
                         (header) {
-                          return DataColumn(
-                            label: Text(
-                              header,
-                              style: styleGeorgiaBold(
-                                fontSize: 12,
-                                color: ThemeColors.greyText,
-                              ),
-                            ),
+                          return dataColumn(
+                            text: header,
+                            onTap: () => provider.applySorting(header),
+                            sortBy:
+                                provider.filterParams?.sortByHeader == header
+                                    ? provider.filterParams?.sortByAsc
+                                    : null,
                           );
                         },
                       ).toList(),
@@ -231,7 +203,10 @@ class _TopLosersOnlineState extends State<TopLosersOnline> {
                                 // value: data.percentChange,
                                 value: perChange,
                               ),
-                              _dataCell(text: "${data.volume}"), // "Volume",
+                              _dataCell(
+                                text: num.parse("${data.volume ?? 0}")
+                                    .toRuppeeFormatWithoutFloating(),
+                              ), // "Volume",
                               _dataCell(
                                 text: num.parse(
                                         "${(data.volume ?? 0) * (data.last ?? 0)}")

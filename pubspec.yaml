@@ -112,6 +112,7 @@ dependencies:
   socket_io_client: ^3.0.2
   eventsource3: ^1.0.1
   font_awesome_flutter: ^10.8.0
+  timezone: ^0.10.0
   # app_tracking_transparency: ^2.0.6+1
 
 

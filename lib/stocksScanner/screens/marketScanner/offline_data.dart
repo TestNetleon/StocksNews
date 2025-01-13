@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/stocksScanner/modals/scanner_res.dart';
 import 'package:stocks_news_new/stocksScanner/providers/market_scanner_provider.dart';
 import 'package:stocks_news_new/stocksScanner/screens/marketScanner/scanner_header.dart';
+import 'package:stocks_news_new/stocksScanner/screens/stockScanner/common_scanner_ui.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/utils/constants.dart';
@@ -89,20 +90,30 @@ class _MarketScannerOfflineState extends State<MarketScannerOffline> {
                     width: 0.9,
                   ),
                   columns: [
-                    DataColumn(
-                      label: ConstrainedBox(
-                        constraints: BoxConstraints(
-                          maxWidth: ScreenUtil().screenWidth * .3,
-                        ),
-                        child: Text(
-                          'Symbol',
-                          style: styleGeorgiaBold(
-                            fontSize: 12,
-                            color: ThemeColors.greyText,
-                          ),
-                        ),
-                      ),
+                    dataColumn(
+                      text: "Symbol",
+                      onTap: () => provider.applySorting("Symbol"),
+                      sortBy: provider.filterParams?.sortBy == "Symbol"
+                          ? provider.filterParams?.sortByAsc
+                          : null,
                     ),
+                    // DataColumn(
+                    //   label: ConstrainedBox(
+                    //     constraints: BoxConstraints(
+                    //       maxWidth: ScreenUtil().screenWidth * .3,
+                    //     ),
+                    //     child: GestureDetector(
+                    //       onTap: () => provider.applySorting("Symbol"),
+                    //       child: Text(
+                    //         'Symbol',
+                    //         style: styleGeorgiaBold(
+                    //           fontSize: 12,
+                    //           color: ThemeColors.greyText,
+                    //         ),
+                    //       ),
+                    //     ),
+                    //   ),
+                    // ),
                   ],
                   rows: dataList.map(
                     (data) {
@@ -180,14 +191,12 @@ class _MarketScannerOfflineState extends State<MarketScannerOffline> {
                       ),
                       columns: provider.tableHeader.map(
                         (header) {
-                          return DataColumn(
-                            label: Text(
-                              header,
-                              style: styleGeorgiaBold(
-                                fontSize: 12,
-                                color: ThemeColors.greyText,
-                              ),
-                            ),
+                          return dataColumn(
+                            text: header,
+                            onTap: () => provider.applySorting(header),
+                            sortBy: provider.filterParams?.sortBy == header
+                                ? provider.filterParams?.sortByAsc
+                                : null,
                           );
                         },
                       ).toList(),
@@ -195,7 +204,7 @@ class _MarketScannerOfflineState extends State<MarketScannerOffline> {
                         (data) {
                           return DataRow(
                             cells: [
-                              _dataCell(text: data.time), // "Time",
+                              // _dataCell(text: data.time), // "Time",
                               // _dataCell(text: data.identifier), // "Symbol",
                               _dataCell(text: data.name), // "Company Name",
                               _dataCell(text: data.sector), // "Sector",
@@ -214,7 +223,10 @@ class _MarketScannerOfflineState extends State<MarketScannerOffline> {
                                 change: true,
                                 value: data.changesPercentage,
                               ),
-                              _dataCell(text: "${data.volume}"), // "Volume",
+                              _dataCell(
+                                text: (data.volume ?? 0)
+                                    .toRuppeeFormatWithoutFloating(),
+                              ), // "Volume",
                               _dataCell(
                                 text: num.parse("${data.volume * data.price}")
                                     .toRuppees(), // "$Volume"

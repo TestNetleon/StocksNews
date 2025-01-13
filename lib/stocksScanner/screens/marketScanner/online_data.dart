@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/stocksScanner/modals/market_scanner_res.dart';
 import 'package:stocks_news_new/stocksScanner/providers/market_scanner_provider.dart';
 import 'package:stocks_news_new/stocksScanner/screens/marketScanner/scanner_header.dart';
+import 'package:stocks_news_new/stocksScanner/screens/stockScanner/common_scanner_ui.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/utils/constants.dart';
@@ -82,51 +83,56 @@ class _MarketScannerOnlineState extends State<MarketScannerOnline> {
                     width: 0.9,
                   ),
                   columns: [
-                    DataColumn(
-                      label: ConstrainedBox(
-                        constraints: BoxConstraints(
-                          maxWidth: ScreenUtil().screenWidth * .3,
-                        ),
-                        child: GestureDetector(
-                          onTap: () => provider.applySorting("Symbol"),
-                          child: Text(
-                            'Symbol',
-                            style: styleGeorgiaBold(
-                              fontSize: 14,
-                              color: ThemeColors.greyText,
-                            ),
-                          ),
-                        ),
-                      ),
+                    dataColumn(
+                      text: "Symbol",
+                      onTap: () => provider.applySorting("Symbol"),
+                      sortBy: provider.filterParams?.sortBy == "Symbol"
+                          ? provider.filterParams?.sortByAsc
+                          : null,
                     ),
+                    // DataColumn(
+                    //   label: ConstrainedBox(
+                    //     constraints: BoxConstraints(
+                    //       maxWidth: ScreenUtil().screenWidth * .3,
+                    //     ),
+                    //     child: GestureDetector(
+                    //       onTap: () => provider.applySorting("Symbol"),
+                    //       child: Text(
+                    //         'Symbol',
+                    //         style: styleGeorgiaBold(
+                    //           fontSize: 14,
+                    //           color: ThemeColors.greyText,
+                    //         ),
+                    //       ),
+                    //     ),
+                    //   ),
+                    // ),
                   ],
                   rows: dataList.map(
                     (data) {
                       return DataRow(
                         cells: [
                           DataCell(
-                            GestureDetector(
-                              child: Container(
-                                padding: EdgeInsets.symmetric(horizontal: 10),
-                                constraints: BoxConstraints(
-                                  maxWidth: ScreenUtil().screenWidth * .3,
-                                ),
-                                child: Text(
-                                  "${data.identifier}",
-                                  style: styleGeorgiaBold(fontSize: 12),
-                                ),
-                                // Row(
-                                //   children: [
-                                //     Expanded(
-                                //       child:
-                                //       Text(
-                                //         "${data.identifier}",
-                                //         style: styleGeorgiaBold(fontSize: 12),
-                                //       ),
-                                //     ),
-                                //   ],
-                                // ),
+                            Container(
+                              padding: EdgeInsets.symmetric(horizontal: 10),
+                              constraints: BoxConstraints(
+                                maxWidth: ScreenUtil().screenWidth * .3,
                               ),
+                              child: Text(
+                                "${data.identifier}",
+                                style: styleGeorgiaBold(fontSize: 12),
+                              ),
+                              // Row(
+                              //   children: [
+                              //     Expanded(
+                              //       child:
+                              //       Text(
+                              //         "${data.identifier}",
+                              //         style: styleGeorgiaBold(fontSize: 12),
+                              //       ),
+                              //     ),
+                              //   ],
+                              // ),
                             ),
                           ),
                         ],
@@ -140,15 +146,6 @@ class _MarketScannerOnlineState extends State<MarketScannerOnline> {
                     scrollDirection: Axis.horizontal,
                     child: DataTable(
                       horizontalMargin: 10,
-                      // border: TableBorder.all(
-                      //   color: ThemeColors.greyBorder,
-                      //   // borderRadius: BorderRadius.circular(10.0),
-                      //   borderRadius: BorderRadius.only(
-                      //     topRight: Radius.circular(10),
-                      //     bottomRight: Radius.circular(10),
-                      //   ),
-                      //   width: 0.9,
-                      // ),
                       border: TableBorder(
                         top: BorderSide(
                           color: ThemeColors.greyBorder,
@@ -165,18 +162,31 @@ class _MarketScannerOnlineState extends State<MarketScannerOnline> {
                       ),
                       columns: provider.tableHeader.map(
                         (header) {
-                          return DataColumn(
-                            label: GestureDetector(
-                              onTap: () => provider.applySorting(header),
-                              child: Text(
-                                header,
-                                style: styleGeorgiaBold(
-                                  fontSize: 14,
-                                  color: ThemeColors.greyText,
-                                ),
-                              ),
-                            ),
+                          return dataColumn(
+                            text: header,
+                            onTap: () => provider.applySorting(header),
+                            sortBy: provider.filterParams?.sortBy == header
+                                ? provider.filterParams?.sortByAsc
+                                : null,
                           );
+                          // return DataColumn(
+                          //   label: GestureDetector(
+                          //     onTap: () => provider.applySorting(header),
+                          //     child: Container(
+                          //       padding: EdgeInsets.symmetric(
+                          //         horizontal: 10,
+                          //         vertical: 10,
+                          //       ),
+                          //       child: Text(
+                          //         header,
+                          //         style: styleGeorgiaBold(
+                          //           fontSize: 14,
+                          //           color: ThemeColors.greyText,
+                          //         ),
+                          //       ),
+                          //     ),
+                          //   ),
+                          // );
                         },
                       ).toList(),
                       rows: dataList.map(
@@ -184,53 +194,38 @@ class _MarketScannerOnlineState extends State<MarketScannerOnline> {
                           double lastTrade = (data.last ?? 0);
                           double netChange = (data.change ?? 0);
                           double perChange = data.percentChange ?? 0;
-                          String extendedHoursTime = "";
-                          // $("#marketStatus").html(ExtendedHoursType);
                           if (data.extendedHoursType == "PostMarket" ||
                               data.extendedHoursType == "PreMarket") {
                             netChange = data.extendedHoursChange ?? 0;
                             perChange = data.extendedHoursPercentChange ?? 0;
                             lastTrade = data.extendedHoursPrice ?? 0;
-                            extendedHoursTime = data.extendedHoursTime ?? "";
-                            // lastUpdated = item.ExtendedHoursDate;
-                            // Use extended hours time instead of regular time
-                            // timeWithoutMilliseconds =
-                            //     extendedHoursTime.split(".")[0];
                           }
 
                           return DataRow(
                             cells: [
-                              _dataCell(
-                                text: extendedHoursTime.split(".")[0],
-                              ), // "Time",
-                              // _dataCell(text: "${data.time}"), // "Time",
-                              // _dataCell(text: data.identifier), // "Symbol",
-                              _dataCell(
-                                text: "${data.security?.name}",
-                              ), // "Company Name",
-                              _dataCell(text: "${data.sector}"), // "Sector",
-                              _dataCell(text: "\$${data.bid}"), // "Bid",
-                              _dataCell(text: "\$${data.ask}"), // "Ask",
-                              _dataCell(
+                              // "Company Name",
+                              dataCell(text: "${data.security?.name}"),
+                              dataCell(text: "${data.sector}"), // "Sector",
+                              dataCell(text: "\$${data.bid}"), // "Bid",
+                              dataCell(text: "\$${data.ask}"), // "Ask",
+                              dataCell(
                                 text: "\$$lastTrade",
-                                // text: "\$${data.last}",
                               ), // "Last Trade",
-                              _dataCell(
+                              dataCell(
                                 text: "\$$netChange",
-                                // text: "\$${data.change}",
                                 change: true,
-                                // value: data.change,
                                 value: netChange,
                               ), // "Net Change",
-                              _dataCell(
+                              dataCell(
                                 text: "$perChange", // "% Change",
-                                // text: "${data.percentChange}", // "% Change",
                                 change: true,
-                                // value: data.percentChange,
                                 value: perChange,
                               ),
-                              _dataCell(text: "${data.volume}"), // "Volume",
-                              _dataCell(
+                              dataCell(
+                                text: num.parse("${data.volume ?? 0}")
+                                    .toRuppeeFormatWithoutFloating(),
+                              ), // "Volume",
+                              dataCell(
                                 text: num.parse(
                                         "${(data.volume ?? 0) * (data.last ?? 0)}")
                                     .toRuppees(), // "$Volume"
@@ -250,24 +245,24 @@ class _MarketScannerOnlineState extends State<MarketScannerOnline> {
     );
   }
 
-  DataCell _dataCell({required String text, bool change = false, num? value}) {
-    return DataCell(
-      ConstrainedBox(
-        constraints: BoxConstraints(
-          maxWidth: ScreenUtil().screenWidth * .3,
-        ),
-        child: Text(
-          // userPercent ? "$text%" : "$text",
-          text,
-          style: styleGeorgiaBold(
-            fontSize: 12,
-            // color: Colors.white,
-            color: value != null
-                ? (value >= 0 ? ThemeColors.accent : ThemeColors.sos)
-                : Colors.white,
-          ),
-        ),
-      ),
-    );
-  }
+  // DataCell _dataCell({required String text, bool change = false, num? value}) {
+  //   return DataCell(
+  //     ConstrainedBox(
+  //       constraints: BoxConstraints(
+  //         maxWidth: ScreenUtil().screenWidth * .3,
+  //       ),
+  //       child: Text(
+  //         // userPercent ? "$text%" : "$text",
+  //         text,
+  //         style: styleGeorgiaBold(
+  //           fontSize: 12,
+  //           // color: Colors.white,
+  //           color: value != null
+  //               ? (value >= 0 ? ThemeColors.accent : ThemeColors.sos)
+  //               : Colors.white,
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  // }
 }

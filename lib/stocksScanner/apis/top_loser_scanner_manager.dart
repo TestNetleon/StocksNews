@@ -59,7 +59,6 @@ class TopLoserScannerDataManager {
         eventSources.add(eventSource);
         eventSource.listen(
           (Event event) {
-            Utils().showLog("listen to => $url ${event.id} ${event.event} ");
             if (!listening) {
               return;
             }
