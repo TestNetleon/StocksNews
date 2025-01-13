@@ -31,7 +31,7 @@ DataColumn dataColumn({required String text, Function()? onTap, bool? sortBy}) {
       onTap: onTap,
       child: Container(
         padding: EdgeInsets.symmetric(
-          horizontal: 10,
+          // horizontal: 10,
           vertical: 15,
         ),
         child: Row(

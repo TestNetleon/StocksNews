@@ -70,7 +70,11 @@ class MarketScannerProvider extends ChangeNotifier {
     _dataList = null;
     _visible = true;
     _filterParams = null;
-    _filterParams = FilterParams(sector: "Healthcare");
+    _filterParams = FilterParams(
+      sector: "Healthcare",
+      sortBy: "% Change",
+      sortByAsc: false,
+    );
     notifyListeners();
     MarketScannerDataManager.instance.initializePorts();
   }
