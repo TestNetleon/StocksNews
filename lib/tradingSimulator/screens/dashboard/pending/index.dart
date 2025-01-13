@@ -12,6 +12,7 @@ import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
 import 'package:stocks_news_new/widgets/refresh_controll.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
+import '../../../../tournament/provider/trades.dart';
 import '../../../modals/trading_search_res.dart';
 
 class TsPendingList extends StatefulWidget {
@@ -35,7 +36,7 @@ class _TsPendingListState extends State<TsPendingList> {
     await provider.getData(loadMore: loadMore);
   }
 
-  void _onEditClick() {
+  void _onEditClick(TsPendingListRes item) {
     //
     popUpAlert(
       title: "Confirm",
@@ -43,14 +44,14 @@ class _TsPendingListState extends State<TsPendingList> {
       cancel: true,
       okText: "Edit",
       onTap: () {
-        Navigator.pop(context);
+        // Navigator.pop(context);
         Navigator.pushReplacement(
           navigatorKey.currentContext!,
           MaterialPageRoute(
             builder: (context) => TradeBuySellIndex(
-              buy: true,
+              buy: item.tradeType?.toLowerCase() == StockType.buy.name,
               doPop: true,
-              qty: 5,
+              qty: item.quantity,
             ),
           ),
         );
@@ -99,7 +100,7 @@ class _TsPendingListState extends State<TsPendingList> {
           itemBuilder: (context, index) {
             TsPendingListRes item = provider.data![index];
             return TsPendingSlidableMenu(
-              onEditClick: _onEditClick,
+              onEditClick: () => _onEditClick(item),
               onCancelClick: _onCancelClick,
               index: index,
               child: TsPendingListItem(
