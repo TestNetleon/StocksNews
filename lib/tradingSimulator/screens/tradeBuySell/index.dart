@@ -14,14 +14,14 @@ import '../../../../widgets/theme_image_view.dart';
 
 class TradeBuySellIndex extends StatelessWidget {
   final bool buy;
-  final bool doPop;
-  final dynamic qty;
+  final num? qty;
+  final num? editTradeID;
 
   const TradeBuySellIndex({
     super.key,
     this.buy = true,
-    this.doPop = true,
     this.qty,
+    this.editTradeID,
   });
 
   @override
@@ -102,7 +102,11 @@ class TradeBuySellIndex extends StatelessWidget {
                   ],
                 ),
         ),
-        body: BuySellContainer(buy: buy, doPop: doPop, qty: qty),
+        body: BuySellContainer(
+          buy: buy,
+          qty: qty,
+          editTradeID: editTradeID,
+        ),
       ),
     );
   }

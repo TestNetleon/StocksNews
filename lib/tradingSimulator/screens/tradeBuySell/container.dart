@@ -9,6 +9,7 @@ import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/screens/stockDetail/stockDetailTabs/common_heading.dart';
 import 'package:stocks_news_new/tradingSimulator/providers/ts_open_list_provider.dart';
+import 'package:stocks_news_new/tradingSimulator/providers/ts_pending_list_provider.dart';
 import 'package:stocks_news_new/tradingSimulator/providers/ts_portfollo_provider.dart';
 import 'package:stocks_news_new/tradingSimulator/screens/dashboard/index.dart';
 import 'package:stocks_news_new/tradingSimulator/screens/trade/sheet.dart';
@@ -25,14 +26,14 @@ import '../../providers/trade_provider.dart';
 
 class BuySellContainer extends StatefulWidget {
   final bool buy;
-  final bool doPop;
-  final dynamic qty;
+  final num? qty;
+  final num? editTradeID;
 
   const BuySellContainer({
     super.key,
     this.buy = true,
-    this.doPop = true,
     this.qty,
+    this.editTradeID,
   });
 
   @override
@@ -124,6 +125,64 @@ class _BuySellContainerState extends State<BuySellContainer> {
       return;
     }
 
+    if (widget.editTradeID != null) {
+      final Map<String, dynamic> request = {
+        "token":
+            navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
+        "quantity": controller.text,
+        "order_type": 'MARKET_ORDER',
+        "duration": "GOOD_UNTIL_CANCELLED"
+      };
+      ApiResponse response = await tradeProviderNew.requestUpdateShare(
+        id: widget.editTradeID ?? 0,
+        request: request,
+        showProgress: true,
+      );
+      if (response.status) {
+        context.read<TsPendingListProvider>().getData();
+
+        final order = SummaryOrderNew(
+          isShare: _selectedSegment == TypeTrade.shares,
+          dollars: _selectedSegment == TypeTrade.dollar
+              ? num.parse(_currentText)
+              : (num.parse(_currentText) * price),
+          shares: _selectedSegment == TypeTrade.shares
+              ? num.parse(_currentText)
+              : (num.parse(_currentText) / price),
+          image: provider.tabRes?.companyInfo?.image,
+          name: provider.tabRes?.keyStats?.name,
+          price: provider.tabRes?.keyStats?.price,
+          symbol: provider.tabRes?.keyStats?.symbol,
+          invested: invested,
+          buy: widget.buy,
+          date: response.data['result']['created_date'],
+        );
+        // Navigator.pop(context);
+        // Navigator.pop(context);
+        Navigator.popUntil(
+            navigatorKey.currentContext!, (route) => route.isFirst);
+        Navigator.push(
+          navigatorKey.currentContext!,
+          MaterialPageRoute(
+            builder: (_) => TsDashboard(initialIndex: 1),
+          ),
+        );
+        _clear();
+        widget.buy
+            ? tradeProviderNew.addOrderData(order)
+            : tradeProviderNew.sellOrderData(order);
+        await showTsOrderSuccessSheet(order, widget.buy);
+      } else {
+        popUpAlert(
+          message: "${response.message}",
+          title: "Alert",
+          icon: Images.alertPopGIF,
+        );
+      }
+
+      return;
+    }
+
     if (widget.buy) {
       if (invested > (portfolioProvider.userData?.tradeBalance ?? 0)) {
         popUpAlert(
@@ -188,6 +247,7 @@ class _BuySellContainerState extends State<BuySellContainer> {
             symbol: provider.tabRes?.keyStats?.symbol,
             invested: invested,
             buy: widget.buy,
+            date: response.data['result']['created_date'],
           );
           // Navigator.pop(context);
           // Navigator.pop(context);
@@ -210,123 +270,6 @@ class _BuySellContainerState extends State<BuySellContainer> {
             title: "Alert",
             icon: Images.alertPopGIF,
           );
-          // popUpAlert(
-          //   message: "New Message",
-          //   title: "Alert",
-          //   padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
-          //   cancel: true,
-          //   canPop: false,
-          //   child: Column(
-          //     children: [
-          //       Text(
-          //         widget.buy
-          //             ? "Buy ${provider.tabRes?.keyStats?.symbol}"
-          //             : "Sell ${provider.tabRes?.keyStats?.symbol}",
-          //         style: stylePTSansBold(
-          //             color: ThemeColors.background, fontSize: 30),
-          //       ),
-          //       const SpacerVertical(height: 30),
-          //       Row(
-          //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //         crossAxisAlignment: CrossAxisAlignment.end,
-          //         children: [
-          //           Text(
-          //             "Price: ",
-          //             style: stylePTSansRegular(
-          //               color: ThemeColors.greyText,
-          //               fontSize: 20,
-          //             ),
-          //           ),
-          //           Flexible(
-          //             child: Text(
-          //               "${provider.tabRes?.keyStats?.price}",
-          //               style: stylePTSansBold(
-          //                   color: ThemeColors.background, fontSize: 20),
-          //             ),
-          //           ),
-          //         ],
-          //       ),
-          //       const Divider(
-          //         color: ThemeColors.greyBorder,
-          //         height: 25,
-          //       ),
-          //       Row(
-          //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //         crossAxisAlignment: CrossAxisAlignment.end,
-          //         children: [
-          //           Text(
-          //             "Quantity: ",
-          //             style: stylePTSansRegular(
-          //               color: ThemeColors.greyText,
-          //               fontSize: 20,
-          //             ),
-          //           ),
-          //           Flexible(
-          //             child: Text(
-          //               _selectedSegment == TypeTrade.shares
-          //                   ? _currentText
-          //                   : (num.parse(_currentText) / price).toCurrency(),
-          //               style: stylePTSansBold(
-          //                 color: ThemeColors.background,
-          //                 fontSize: 20,
-          //               ),
-          //             ),
-          //           ),
-          //         ],
-          //       ),
-          //       const Divider(
-          //         color: ThemeColors.greyBorder,
-          //         height: 25,
-          //       ),
-          //       Row(
-          //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //         crossAxisAlignment: CrossAxisAlignment.end,
-          //         children: [
-          //           Text(
-          //             "Total Amount: ",
-          //             style: stylePTSansRegular(
-          //               color: ThemeColors.greyText,
-          //               fontSize: 20,
-          //             ),
-          //           ),
-          //           Flexible(
-          //             child: Text(
-          //               "\$${invested.toCurrency()}",
-          //               style: stylePTSansBold(
-          //                   color: ThemeColors.background, fontSize: 20),
-          //             ),
-          //           ),
-          //         ],
-          //       ),
-          //       const SpacerVertical(height: 20),
-          //     ],
-          //   ),
-          //   onTap: () {
-          //     Navigator.pop(context);
-          //     Navigator.pop(
-          //       context,
-          //       SummaryOrderNew(
-          //         isShare: _selectedSegment == TypeTrade.shares,
-          //         change: provider.tabRes?.keyStats?.changeWithCur,
-          //         changePercentage:
-          //             provider.tabRes?.keyStats?.changesPercentage,
-          //         dollars: _selectedSegment == TypeTrade.dollar
-          //             ? num.parse(_currentText)
-          //             : (num.parse(_currentText) * price),
-          //         shares: _selectedSegment == TypeTrade.shares
-          //             ? num.parse(_currentText)
-          //             : (num.parse(_currentText) / price),
-          //         image: provider.tabRes?.companyInfo?.image,
-          //         name: provider.tabRes?.keyStats?.name,
-          //         price: provider.tabRes?.keyStats?.price,
-          //         symbol: provider.tabRes?.keyStats?.symbol,
-          //         invested: invested,
-          //         buy: widget.buy,
-          //       ),
-          //     );
-          //     _clear();
-          //   },
-          // );
         }
       }
     } else {
@@ -370,6 +313,7 @@ class _BuySellContainerState extends State<BuySellContainer> {
           symbol: provider.tabRes?.keyStats?.symbol,
           invested: invested,
           buy: widget.buy,
+          date: response.data['result']['created_date'],
         );
 
         _clear();
@@ -462,7 +406,7 @@ class _BuySellContainerState extends State<BuySellContainer> {
     num invested = _selectedSegment == TypeTrade.shares
         ? price * parsedCurrentText
         : parsedCurrentText;
-
+    Utils().showLog('invested=> $invested');
     return Container(
       padding: const EdgeInsets.all(10),
       decoration: const BoxDecoration(
@@ -509,26 +453,33 @@ class _BuySellContainerState extends State<BuySellContainer> {
           const SpacerVertical(),
           ThemeButton(
             disabledBackgroundColor: ThemeColors.greyBorder,
-            text: widget.buy ? "Proceed Buy Order" : "Proceed Sell Order",
+            text: widget.buy
+                ? widget.editTradeID != null
+                    ? 'Update Buy Order'
+                    : "Proceed Buy Order"
+                : widget.editTradeID != null
+                    ? 'Update Sell Order'
+                    : "Proceed Sell Order",
             color: widget.buy
                 ? (invested > _availableBalance || invested == 0)
                     ? ThemeColors.greyText
                     : ThemeColors.accent
                 : (controller.text.isEmpty ||
-                        num.parse(controller.text) > widget.qty)
+                        num.parse(controller.text) > (widget.qty ?? 0) ||
+                        invested == 0)
                     ? ThemeColors.greyText
                     : ThemeColors.sos,
             onPressed: (widget.buy
                     ? (invested > _availableBalance || invested == 0)
                     : (controller.text.isEmpty ||
-                        num.parse(controller.text) > widget.qty))
+                        num.parse(controller.text) > (widget.qty ?? 0)))
                 ? null
                 : _onTap,
           ),
           Visibility(
             visible: controller.text.isNotEmpty &&
                 widget.buy &&
-                (invested > _availableBalance || invested == 0),
+                (invested > _availableBalance),
             child: Container(
               padding: EdgeInsets.only(top: 10),
               child: RichText(
@@ -554,7 +505,7 @@ class _BuySellContainerState extends State<BuySellContainer> {
           Visibility(
             visible: controller.text.isNotEmpty &&
                 !widget.buy &&
-                num.parse(controller.text) > widget.qty,
+                num.parse(controller.text) > (widget.qty ?? 0),
             child: Container(
               padding: EdgeInsets.only(top: 10),
               child: RichText(

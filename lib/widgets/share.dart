@@ -35,7 +35,7 @@ class _CommonShareState extends State<CommonShare> {
         String url =
             Platform.isAndroid ? baseUrl : "fb://share/?url=$encodedUrl";
 
-        await openUrl(url, extraUrl: baseUrl);
+        await openUrl(url);
       },
     ),
     ShareClass(
@@ -48,7 +48,7 @@ class _CommonShareState extends State<CommonShare> {
             ? baseUrl
             : "twitter://post?message=$title $link";
 
-        await openUrl(url, extraUrl: baseUrl);
+        await openUrl(url);
       },
     ),
     ShareClass(
@@ -59,7 +59,7 @@ class _CommonShareState extends State<CommonShare> {
         String url =
             Platform.isAndroid ? baseUrl : "linkedin://share?url=$link";
 
-        await openUrl(url, extraUrl: baseUrl);
+        await openUrl(url);
       },
     ),
     ShareClass(
@@ -69,7 +69,7 @@ class _CommonShareState extends State<CommonShare> {
         String url =
             Platform.isAndroid ? baseUrl : 'whatsapp://send?text=$title $link';
 
-        openUrl(url, extraUrl: baseUrl);
+        openUrl(url);
       },
     ),
     ShareClass(
@@ -79,8 +79,7 @@ class _CommonShareState extends State<CommonShare> {
 
         String url = Platform.isAndroid ? baseUrl : baseUrl;
 
-        await openUrl(url,
-            mode: LaunchMode.externalNonBrowserApplication, extraUrl: baseUrl);
+        await openUrl(url, mode: LaunchMode.externalNonBrowserApplication);
       },
     ),
   ];

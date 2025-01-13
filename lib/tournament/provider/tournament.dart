@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/user_res.dart';
+import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
 import '../../api/api_requester.dart';
 import '../../api/api_response.dart';
@@ -283,7 +284,7 @@ class TournamentProvider extends ChangeNotifier {
           ),
         );
       } else {
-        //
+        showErrorMessage(message: response.message);
       }
     } catch (e) {
       //

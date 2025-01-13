@@ -141,6 +141,7 @@ import 'package:stocks_news_new/utils/utils.dart';
 import '../../../../../tradingSimulator/modals/trading_search_res.dart';
 import '../../../../../widgets/cache_network_image.dart';
 import '../../../../provider/trades.dart';
+import '../../searchTradingTicker/index.dart';
 
 class OpenTopStock extends StatefulWidget {
   const OpenTopStock({
@@ -238,25 +239,35 @@ class _OpenTopStockState extends State<OpenTopStock>
               ),
             ),
           ),
-          Container(
-            height: 60,
-            width: 60,
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: const Color.fromARGB(255, 37, 37, 37),
-              boxShadow: [
-                BoxShadow(
-                  color: const Color.fromARGB(255, 0, 16, 3),
-                  offset: Offset(4, 0),
-                  blurRadius: 10,
-                  spreadRadius: 15,
+          GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                createRoute(
+                  TournamentSearch(),
                 ),
-              ],
-            ),
-            child: Text(
-              'All',
-              style: styleGeorgiaBold(),
+              );
+            },
+            child: Container(
+              height: 60,
+              width: 60,
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: const Color.fromARGB(255, 37, 37, 37),
+                boxShadow: [
+                  BoxShadow(
+                    color: const Color.fromARGB(255, 0, 16, 3),
+                    offset: Offset(4, 0),
+                    blurRadius: 10,
+                    spreadRadius: 15,
+                  ),
+                ],
+              ),
+              child: Text(
+                'All',
+                style: styleGeorgiaBold(),
+              ),
             ),
           ),
         ],

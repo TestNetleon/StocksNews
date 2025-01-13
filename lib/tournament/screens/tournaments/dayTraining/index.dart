@@ -15,7 +15,6 @@ import 'package:stocks_news_new/widgets/custom/refresh_indicator.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import '../../../widgets/card.dart';
 import 'widgets/rules.dart';
-import 'widgets/similar.dart';
 import 'widgets/timer.dart';
 
 class TournamentDayTrainingIndex extends StatefulWidget {
@@ -123,8 +122,14 @@ class _TournamentDayTrainingIndexState
                               ),
                             ),
                           ),
-                          DayTrainingSimilar(),
-                          DayTrainingLeaderboard(),
+                          // DayTrainingSimilar(),
+                          Visibility(
+                              visible: provider.detailRes?.todayLeaderboard !=
+                                      null &&
+                                  provider.detailRes?.todayLeaderboard
+                                          ?.isNotEmpty ==
+                                      true,
+                              child: DayTrainingLeaderboard()),
                           SpacerVertical(),
                         ],
                       );

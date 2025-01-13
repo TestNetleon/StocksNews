@@ -89,7 +89,9 @@ class TournamentTradesProvider extends ChangeNotifier {
         _errorTrades = null;
         if (refresh) {
           _selectedOverview = _myTrades?.overview?.first;
-        } else {}
+        } else {
+          //
+        }
       } else {
         _myTrades = null;
         _errorTrades = null;

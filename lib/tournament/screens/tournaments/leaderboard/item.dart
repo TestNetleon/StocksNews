@@ -10,16 +10,22 @@ import '../../../models/leaderboard.dart';
 
 class TournamentLeaderboardItem extends StatelessWidget {
   final LeaderboardByDateRes data;
-  const TournamentLeaderboardItem({super.key, required this.data});
+  final bool decorate;
+  const TournamentLeaderboardItem(
+      {super.key, required this.data, this.decorate = true});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-      decoration: BoxDecoration(
-        color: ThemeColors.background,
-        borderRadius: BorderRadius.circular(5),
-      ),
+      padding: decorate
+          ? const EdgeInsets.symmetric(horizontal: 10, vertical: 10)
+          : null,
+      decoration: decorate
+          ? BoxDecoration(
+              color: ThemeColors.background,
+              borderRadius: BorderRadius.circular(5),
+            )
+          : null,
       child: Row(
         children: [
           Expanded(
@@ -45,9 +51,7 @@ class TournamentLeaderboardItem extends StatelessWidget {
                               ),
                             ),
                           )
-                        : CachedNetworkImagesWidget(
-                            data.image,
-                          ),
+                        : CachedNetworkImagesWidget(data.image),
                   ),
                 ),
                 Flexible(

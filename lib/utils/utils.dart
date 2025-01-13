@@ -329,7 +329,7 @@ void openKeyboard(FocusNode focusNode) {
 }
 
 Future openUrl(String? url,
-    {LaunchMode mode = LaunchMode.platformDefault, String? extraUrl}) async {
+    {LaunchMode mode = LaunchMode.platformDefault}) async {
   if (url == null || url.isEmpty) {
     // showErrorMessage(message: "Exception: Could not launch.");
   } else {
@@ -340,8 +340,7 @@ Future openUrl(String? url,
       }
     } catch (e) {
       Utils().showLog('Catch error $e');
-      await launchUrl(Uri.parse(extraUrl ?? ""),
-          mode: LaunchMode.platformDefault);
+      await launchUrl(Uri.parse(url), mode: LaunchMode.platformDefault);
     }
   }
 }
