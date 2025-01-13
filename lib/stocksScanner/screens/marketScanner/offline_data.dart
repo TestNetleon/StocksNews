@@ -224,7 +224,7 @@ class _MarketScannerOfflineState extends State<MarketScannerOffline> {
                                 value: data.changesPercentage,
                               ),
                               _dataCell(
-                                text: (data.volume ?? 0)
+                                text: num.parse("${data.volume ?? 0}")
                                     .toRuppeeFormatWithoutFloating(),
                               ), // "Volume",
                               _dataCell(

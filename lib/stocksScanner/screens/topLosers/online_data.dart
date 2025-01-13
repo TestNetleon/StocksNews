@@ -210,7 +210,7 @@ class _TopLosersOnlineState extends State<TopLosersOnline> {
                               _dataCell(
                                 text: num.parse(
                                         "${(data.volume ?? 0) * (data.last ?? 0)}")
-                                    .toRuppees(), // "$Volume"
+                                    .toRuppees(), // "$ Volume"
                               ),
                             ],
                           );

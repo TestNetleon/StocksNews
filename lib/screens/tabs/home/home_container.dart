@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
@@ -9,6 +10,7 @@ import 'package:stocks_news_new/screens/tabs/home/widgets/featured/index.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/home_partial_loading_widget.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/membership_coins_option.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/plaid/index.dart';
+import 'package:stocks_news_new/stocksScanner/screens/stockScanner/index.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 // import 'package:stocks_news_new/utils/utils.dart';
