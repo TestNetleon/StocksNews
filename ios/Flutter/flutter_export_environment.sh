@@ -7,6 +7,7 @@ export "FLUTTER_TARGET=/Users/netleontechnologies/Documents/workspace/StocksNews
 export "FLUTTER_BUILD_DIR=build"
 export "FLUTTER_BUILD_NAME=1.1.47"
 export "FLUTTER_BUILD_NUMBER=156"
+export "CONFIGURATION_BUILD_DIR=/Users/netleontechnologies/Documents/workspace/StocksNewsMain/build/ios/iphoneos"
 export "DART_OBFUSCATION=false"
 export "TRACK_WIDGET_CREATION=true"
 export "TREE_SHAKE_ICONS=false"

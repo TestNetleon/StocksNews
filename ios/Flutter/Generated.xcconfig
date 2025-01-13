@@ -6,6 +6,7 @@ FLUTTER_TARGET=/Users/netleontechnologies/Documents/workspace/StocksNewsMain/lib
 FLUTTER_BUILD_DIR=build
 FLUTTER_BUILD_NAME=1.1.47
 FLUTTER_BUILD_NUMBER=156
+CONFIGURATION_BUILD_DIR=/Users/netleontechnologies/Documents/workspace/StocksNewsMain/build/ios/iphoneos
 EXCLUDED_ARCHS[sdk=iphonesimulator*]=i386
 EXCLUDED_ARCHS[sdk=iphoneos*]=armv7
 DART_OBFUSCATION=false

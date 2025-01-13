@@ -21,7 +21,6 @@ class MarketScannerProvider extends ChangeNotifier {
   bool get isLoading => _status == Status.loading || _status == Status.ideal;
 
   List<String> tableHeader = [
-    // "Time",
     "Company Name",
     "Sector",
     "Bid",
@@ -432,8 +431,6 @@ class MarketScannerProvider extends ChangeNotifier {
       }
     }
 
-    _dataList = _dataList!.take(50).toList();
-
     if (_filterParams?.sortBy != null) {
       _dataList?.sort((a, b) {
         return sortByCompare(
@@ -444,6 +441,8 @@ class MarketScannerProvider extends ChangeNotifier {
         );
       });
     }
+
+    _dataList = _dataList!.take(50).toList();
     // Notify listeners to update UI
     notifyListeners();
   }
