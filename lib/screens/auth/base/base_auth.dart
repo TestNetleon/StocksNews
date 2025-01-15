@@ -584,6 +584,7 @@ class _LoginFirstState extends State<LoginFirst> {
                                   credential.email,
                                 );
                               } catch (e) {
+                                Utils().showLog('error $e');
                                 if (e.toString().contains(
                                     "SignInWithAppleNotSupportedException")) {
                                   // showErrorMessage(
