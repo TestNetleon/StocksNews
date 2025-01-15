@@ -44,13 +44,13 @@ class TopGainerScannerProvider extends ChangeNotifier {
     _fullOfflineDataList = null;
     _dataList = null;
     notifyListeners();
-    TopGainerScannerDataManager.initializePorts();
+    TopGainerScannerDataManager().initializePorts();
   }
 
   void stopListeningPorts() {
     _offlineDataList = null;
     _dataList = null;
-    TopGainerScannerDataManager.stopListeningPorts();
+    TopGainerScannerDataManager().stopListeningPorts();
   }
 
   Future getOfflineData({showProgress = false}) async {
@@ -126,6 +126,17 @@ class TopGainerScannerProvider extends ChangeNotifier {
           return valueB.compareTo(valueA);
         }
         return valueA.compareTo(valueB);
+      });
+    }
+
+    if (_filterParams?.sortByHeader != null) {
+      data.sort((a, b) {
+        return sortByCompareOffline(
+          a,
+          b,
+          _filterParams?.sortByHeader ?? "",
+          _filterParams?.sortByAsc ?? true,
+        );
       });
     }
 
@@ -347,7 +358,6 @@ class TopGainerScannerProvider extends ChangeNotifier {
         return valueB.compareTo(valueA);
       }
     } else if (sortBy == "% Change") {
-      Utils().showLog("_____ isAsc = $isAsc $sortBy");
       num? valueA = a.percentChange;
       num? valueB = b.percentChange;
       if (a.extendedHoursType == "PostMarket" ||
@@ -356,6 +366,104 @@ class TopGainerScannerProvider extends ChangeNotifier {
         valueB = b.extendedHoursPercentChange ?? 0;
       }
 
+      if (valueA == null && valueB == null) return 0;
+      if (valueA == null) return -1;
+      if (valueB == null) return 1;
+      if (isAsc) {
+        return valueA.compareTo(valueB);
+      } else {
+        return valueB.compareTo(valueA);
+      }
+    } else if (sortBy == "Volume") {
+      if (a.volume == null && b.volume == null) return 0;
+      if (a.volume == null) return -1;
+      if (b.volume == null) return 1;
+      if (isAsc) {
+        return a.volume!.compareTo(b.volume!);
+      } else {
+        return b.volume!.compareTo(a.volume!);
+      }
+    } else if (sortBy == "\$ Volume") {
+      num dolorVolumeA = (a.volume ?? 0) * (a.volume ?? 0);
+      num dolorVolumeB = (b.volume ?? 0) * (b.volume ?? 0);
+      if (isAsc) {
+        return dolorVolumeA.compareTo(dolorVolumeB);
+      } else {
+        return dolorVolumeB.compareTo(dolorVolumeA);
+      }
+    }
+    return 0;
+  }
+
+  int sortByCompareOffline(
+      ScannerRes a, ScannerRes b, String sortBy, bool isAsc) {
+    if (sortBy == "Symbol") {
+      if (a.identifier == null && b.identifier == null) return 0;
+      if (a.identifier == null) return -1;
+      if (b.identifier == null) return 1;
+      if (isAsc) {
+        return a.identifier!.compareTo(b.identifier!);
+      } else {
+        return b.identifier!.compareTo(a.identifier!);
+      }
+    } else if (sortBy == "Company Name") {
+      if (a.name == null && b.name == null) return 0;
+      if (a.name == null) return -1;
+      if (b.name == null) return 1;
+      if (isAsc) {
+        return a.name!.compareTo(b.name!);
+      } else {
+        return b.name!.compareTo(a.name!);
+      }
+    } else if (sortBy == "Sector") {
+      if (a.sector == null && b.sector == null) return 0;
+      if (a.sector == null) return -1;
+      if (b.sector == null) return 1;
+      if (isAsc) {
+        return a.sector!.compareTo(b.sector!);
+      } else {
+        return b.sector!.compareTo(a.sector!);
+      }
+    } else if (sortBy == "Last Trade") {
+      num? valueA = a.price;
+      num? valueB = b.price;
+      // if (a.extendedHoursType == "PostMarket" ||
+      //     a.extendedHoursType == "PreMarket") {
+      //   valueA = a.extendedHoursPrice ?? 0;
+      //   valueB = b.extendedHoursPrice ?? 0;
+      // }
+      if (valueA == null && valueB == null) return 0;
+      if (valueA == null) return -1;
+      if (valueB == null) return 1;
+      if (isAsc) {
+        return valueA.compareTo(valueB);
+      } else {
+        return valueB.compareTo(valueA);
+      }
+    } else if (sortBy == "Net Change") {
+      num? valueA = a.change;
+      num? valueB = b.change;
+      // if (a.extendedHoursType == "PostMarket" ||
+      //     a.extendedHoursType == "PreMarket") {
+      //   valueA = a.extendedHoursChange ?? 0;
+      //   valueB = b.extendedHoursChange ?? 0;
+      // }
+      if (valueA == null && valueB == null) return 0;
+      if (valueA == null) return -1;
+      if (valueB == null) return 1;
+      if (isAsc) {
+        return valueA.compareTo(valueB);
+      } else {
+        return valueB.compareTo(valueA);
+      }
+    } else if (sortBy == "% Change") {
+      num? valueA = a.changesPercentage;
+      num? valueB = b.changesPercentage;
+      // if (a.extendedHoursType == "PostMarket" ||
+      //     a.extendedHoursType == "PreMarket") {
+      //   valueA = a.extendedHoursPercentChange ?? 0;
+      //   valueB = b.extendedHoursPercentChange ?? 0;
+      // }
       if (valueA == null && valueB == null) return 0;
       if (valueA == null) return -1;
       if (valueB == null) return 1;

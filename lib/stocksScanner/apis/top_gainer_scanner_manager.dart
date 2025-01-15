@@ -22,14 +22,16 @@ class TopGainerScannerDataManager {
     return instance;
   }
 
-  static final List<EventSource> eventSources = [];
-  static bool subscribed = true;
-  static const checkInterval = 5000;
-  static final urls = [];
-  static var isOfflineCalled = false;
-  static var listening = true;
+  final List<EventSource> eventSources = [];
+  bool subscribed = true;
+  // static const checkInterval = 5000;
+  final urls = [];
+  var isOfflineCalled = false;
+  var listening = true;
+  int checkInterval = 7000;
+  int checkOfflineInterval = 5000;
 
-  static void initializePorts() async {
+  void initializePorts() async {
     listening = true;
     isOfflineCalled = false;
     TopGainerScannerProvider provider =
@@ -43,13 +45,14 @@ class TopGainerScannerDataManager {
 
     try {
       for (var url in urls) {
-        Timer(const Duration(milliseconds: checkInterval), () async {
+        Timer(Duration(milliseconds: checkOfflineInterval), () async {
           if (!isOfflineCalled) {
             isOfflineCalled = true;
             if (navigatorKey.currentContext!
-                    .read<TopGainerScannerProvider>()
-                    .offlineDataList ==
-                null) {
+                        .read<TopGainerScannerProvider>()
+                        .offlineDataList ==
+                    null &&
+                listening == true) {
               await getOfflineData();
             }
           }
@@ -95,7 +98,7 @@ class TopGainerScannerDataManager {
   }
 
   // Method to cancel all StreamSubscriptions
-  static void stopListeningPorts() {
+  void stopListeningPorts() {
     listening = false;
     for (var event in eventSources) {
       try {
@@ -107,7 +110,7 @@ class TopGainerScannerDataManager {
     eventSources.clear();
   }
 
-  static Future getOfflineData() async {
+  Future getOfflineData() async {
     // showGlobalProgressDialog();
     try {
       final url = Uri.parse(

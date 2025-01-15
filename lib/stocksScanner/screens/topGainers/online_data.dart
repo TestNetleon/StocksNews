@@ -264,11 +264,9 @@ class _TopGainerOnlineState extends State<TopGainerOnline> {
           maxWidth: ScreenUtil().screenWidth * .3,
         ),
         child: Text(
-          // userPercent ? "$text%" : "$text",
           text,
           style: styleGeorgiaBold(
             fontSize: 12,
-            // color: Colors.white,
             color: value != null
                 ? (value >= 0 ? ThemeColors.accent : ThemeColors.sos)
                 : Colors.white,

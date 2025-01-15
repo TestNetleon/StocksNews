@@ -20,11 +20,11 @@ class TopGainerOffline extends StatefulWidget {
 
 class _TopGainerOfflineState extends State<TopGainerOffline> {
   List<String> columnHeader = [
-    "Time",
+    // "Time",
     "Company Name",
     "Sector",
-    "Bid",
-    "Ask",
+    // "Bid",
+    // "Ask",
     "Last Trade",
     "Net Change",
     "% Change",
@@ -179,13 +179,13 @@ class _TopGainerOfflineState extends State<TopGainerOffline> {
                             (data) {
                               return DataRow(
                                 cells: [
-                                  _dataCell(text: data.time), // "Time",
+                                  // _dataCell(text: data.time), // "Time",
                                   // _dataCell(text: data.identifier), // "Symbol",
                                   _dataCell(text: data.name), // "Company Name",
                                   _dataCell(
                                       text: data.sector ?? ""), // "Sector",
-                                  _dataCell(text: "\$${data.bid}"), // "Bid",
-                                  _dataCell(text: "\$${data.ask}"), // "Ask",
+                                  // _dataCell(text: "\$${data.bid}"), // "Bid",
+                                  // _dataCell(text: "\$${data.ask}"), // "Ask",
                                   _dataCell(
                                       text: "\$${data.price}"), // "Last Trade",
                                   _dataCell(

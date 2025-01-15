@@ -22,7 +22,8 @@ class MarketScannerDataManager {
   final Map<String, StreamSubscription> _eventSubscriptions = {};
   bool _isOfflineCalled = false;
   bool _isListening = false;
-  static const int checkInterval = 5000;
+  static const int checkInterval = 7000;
+  static const int checkOfflineInterval = 5000;
 
   bool get isListening => _isListening;
 
@@ -42,8 +43,10 @@ class MarketScannerDataManager {
         16, (index) => "https://dev.stocks.news:${8021 + index}/sse");
 
     // Set offline data timer
-    Timer(Duration(milliseconds: checkInterval), () async {
-      if (!_isOfflineCalled && provider.offlineDataList == null) {
+    Timer(Duration(milliseconds: checkOfflineInterval), () async {
+      if (!_isOfflineCalled &&
+          provider.offlineDataList == null &&
+          _isListening == true) {
         _isOfflineCalled = true;
         await getOfflineData();
       }
@@ -51,7 +54,8 @@ class MarketScannerDataManager {
 
     try {
       await Future.wait(
-          urls.map((url) => _connectToEventSource(url, provider)));
+        urls.map((url) => _connectToEventSource(url, provider)),
+      );
     } catch (e) {
       Utils().showLog("Error initializing ports: $e");
       if (!_isOfflineCalled && provider.offlineDataList == null) {
@@ -64,8 +68,8 @@ class MarketScannerDataManager {
   Future<void> _connectToEventSource(
       String url, MarketScannerProvider provider) async {
     try {
-      final eventSource =
-          await EventSource.connect(url).timeout(Duration(seconds: 5));
+      final eventSource = await EventSource.connect(url)
+          .timeout(Duration(milliseconds: checkInterval));
 
       final subscription = eventSource.listen(
         (Event event) {
@@ -76,15 +80,17 @@ class MarketScannerDataManager {
           }
         },
         cancelOnError: true,
-        onDone: () => Utils().showLog("Connection closed to $url"),
-        onError: (err) => Utils().showLog("Error in connection to $url: $err"),
+        onDone: () => Utils().showLog("Connection closed to ** $url"),
+        onError: (err) =>
+            Utils().showLog("Error in connection to ** $url: $err"),
       );
 
       _eventSources[url] = eventSource;
       _eventSubscriptions[url] = subscription;
     } catch (e) {
       Utils().showLog("Failed to connect to $url: $e");
-      throw e;
+      _connectToEventSource(url, provider);
+      // throw e;
     }
   }
 

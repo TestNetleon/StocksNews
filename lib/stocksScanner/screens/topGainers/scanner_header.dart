@@ -60,15 +60,15 @@ class _TopGainerScannerHeaderState extends State<TopGainerScannerHeader> {
     String marketStatus = "";
     if (dataList == null && offlineData == null) {
       return SizedBox();
+    } else if (dataList != null && dataList.isNotEmpty) {
+      marketStatus = dataList[0].extendedHoursType ?? "";
+      if (!(dataList[0].extendedHoursType == "PostMarket" ||
+          dataList[0].extendedHoursType == "PreMarket")) {
+        marketStatus = "Live";
+      }
     } else if (offlineData != null) {
       marketStatus = "Closed";
       _lastUpdated = offlineData[0].closeDate;
-    } else if (dataList != null && dataList.isNotEmpty) {
-      marketStatus = dataList[0].extendedHoursType ?? "";
-      // if (!(dataList[0].extendedHoursType == "PostMarket" ||
-      //     dataList[0].extendedHoursType == "PreMarket")) {
-      //   marketStatus = "Live";
-      // }
     }
 
     // if (marketStatus == "") {
