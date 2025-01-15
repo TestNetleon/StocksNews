@@ -61,19 +61,19 @@ class _HomeContainerState extends State<HomeContainer> {
     }
     return Column(
       children: [
-        Visibility(
-          visible: provider.extra?.showTradingSimulator == true || kDebugMode,
-          child: ThemeButtonSmall(
-            text: 'Stock Scanner',
-            onPressed: () async {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (_) => StocksScanner()),
-              );
-              // BrazeService.brazeBaseEvents(eventName: 'stock_alert_sentiment');
-            },
-          ),
-        ),
+        // Visibility(
+        //   visible: provider.extra?.showTradingSimulator == true || kDebugMode,
+        //   child: ThemeButtonSmall(
+        //     text: 'Stock Scanner',
+        //     onPressed: () async {
+        //       Navigator.push(
+        //         context,
+        //         MaterialPageRoute(builder: (_) => StocksScanner()),
+        //       );
+        //       // BrazeService.brazeBaseEvents(eventName: 'stock_alert_sentiment');
+        //     },
+        //   ),
+        // ),
         Visibility(
           visible: provider.extra?.phoneCodeError != null &&
               provider.extra?.phoneCodeError != '',
