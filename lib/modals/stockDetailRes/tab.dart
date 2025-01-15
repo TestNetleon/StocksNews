@@ -20,6 +20,7 @@ class StockDetailTabRes {
   int? isAlertAdded;
   int? isWatchListAdded;
   final bool? showAnalysis;
+  String? marketType;
 
   StockDetailTabRes({
     this.keyStats,
@@ -29,6 +30,7 @@ class StockDetailTabRes {
     this.isAlertAdded,
     this.shareUrl,
     this.isWatchListAdded,
+    this.marketType,
   });
 
   factory StockDetailTabRes.fromJson(Map<String, dynamic> json) =>

@@ -321,6 +321,7 @@ class _TournamentOpenIndexState extends State<TournamentOpenIndex>
   @override
   void dispose() {
     SSEManager.instance.disconnectAllScreens();
+    Utils().showLog('OPEN DISPOSE');
     super.dispose();
   }
 

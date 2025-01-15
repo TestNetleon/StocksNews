@@ -21,6 +21,8 @@ class AdProvider extends ChangeNotifier {
         url: view ? Apis.adViewed : Apis.adClicked,
         request: request,
         showProgress: false,
+        showErrorOnFull: false,
+        checkAppUpdate: false,
         removeForceLogin: true,
       );
       if (response.status) {

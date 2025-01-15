@@ -21,6 +21,22 @@ class StockDataManagerRes {
     this.previousClose,
     required this.symbol,
   });
+
+  Map<String, dynamic> toMap() {
+    return {
+      'Price': price,
+      'Change': change,
+      'Change%': changePercentage,
+      'Type': type,
+      'Previous Close': previousClose,
+      'Symbol': symbol,
+    };
+  }
+
+  @override
+  String toString() {
+    return toMap().toString();
+  }
 }
 
 class SSEManager {
@@ -107,14 +123,7 @@ class SSEManager {
   }
 
   void disconnectScreen(SimulatorEnum screen) {
-    final symbols = _screenStreams[screen] ?? {};
-    for (var symbol in symbols) {
-      disconnect(symbol);
-      if (kDebugMode) {
-        print('Disconnected symbol $symbol for screen $screen');
-      }
-    }
-    _screenStreams.remove(screen);
+    _clearScreenData(screen);
   }
 
   void disconnectAllScreens() {
@@ -140,7 +149,7 @@ class SSEManager {
     SimulatorEnum type,
   ) {
     if (kDebugMode) {
-      print('Tyring to connect to $url');
+      print('Trying to connect to $url');
     }
     _dio
         .get<ResponseBody>(

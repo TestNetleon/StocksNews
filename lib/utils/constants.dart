@@ -620,7 +620,13 @@ enum DeeplinkEnum {
   outsider,
 }
 
-enum SimulatorEnum { open, pending, transaction, detail }
+enum SimulatorEnum {
+  open,
+  pending,
+  transaction,
+  detail,
+  tradeSheet,
+}
 
 DeeplinkEnum containsSpecificPath(Uri uri) {
   Utils().showLog("-----contain path * $uri");

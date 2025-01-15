@@ -21,8 +21,12 @@ class TsPendingListRes {
   final String? tradeStatus;
   final String? investedValue;
   final String? date;
+  num? change;
+  num? changesPercentage;
 
   TsPendingListRes({
+    this.change,
+    this.changesPercentage,
     this.id,
     this.symbol,
     this.company,
@@ -52,6 +56,8 @@ class TsPendingListRes {
         orderType: json['order_type'],
         currentPrice: json['currentPrice'],
         date: json['updated_at'],
+        change: json["change"],
+        changesPercentage: json["changesPercentage"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -68,6 +74,8 @@ class TsPendingListRes {
         "order_type": orderType,
         "currentPrice": currentPrice,
         "updated_at": date,
+        "change": change,
+        "changesPercentage": changesPercentage,
       };
 }
 

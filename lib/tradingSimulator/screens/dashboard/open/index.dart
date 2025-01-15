@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/tradingSimulator/modals/trading_search_res.dart';
 import 'package:stocks_news_new/tradingSimulator/modals/ts_open_list_res.dart';
+import 'package:stocks_news_new/tradingSimulator/providers/trade_provider.dart';
 import 'package:stocks_news_new/tradingSimulator/providers/ts_open_list_provider.dart';
 import 'package:stocks_news_new/tradingSimulator/screens/dashboard/open/item.dart';
 import 'package:stocks_news_new/tradingSimulator/screens/dashboard/tradeSheet.dart';
@@ -10,6 +11,8 @@ import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/custom/refresh_indicator.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
+
+import '../../../manager/sse.dart';
 
 class TsOpenList extends StatefulWidget {
   const TsOpenList({super.key});
@@ -61,6 +64,13 @@ class _TsOpenListState extends State<TsOpenList> {
             return TsOpenListItem(
               item: item,
               onTap: () {
+                TradeProviderNew trade = context.read<TradeProviderNew>();
+                trade.setTappedStock(StockDataManagerRes(
+                  symbol: item.symbol ?? '',
+                  change: item.change,
+                  changePercentage: item.changesPercentage,
+                  price: item.currentPrice,
+                ));
                 tradeSheet(
                   symbol: item.symbol,
                   doPop: false,

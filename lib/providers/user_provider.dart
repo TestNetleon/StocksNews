@@ -1655,7 +1655,9 @@ class UserProvider extends ChangeNotifier {
       ApiResponse response = await apiRequest(
         url: Apis.proxyAdvertiser,
         type: RequestType.get,
+        showErrorOnFull: false,
         checkAppUpdate: false,
+        removeForceLogin: true,
       );
       if (response.status) {
         _advertiserRes = advertiserResFromJson(jsonEncode(response.data));

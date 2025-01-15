@@ -187,12 +187,12 @@ class TradingSearchProvider extends ChangeNotifier {
         _data = null;
         _error = response.message ?? Const.errSomethingWrong;
       }
-      setStatus(Status.ideal);
+      setStatus(Status.loaded);
     } catch (e) {
       _data = null;
       _error = Const.errSomethingWrong;
       Utils().showLog(e.toString());
-      setStatus(Status.ideal);
+      setStatus(Status.loaded);
     }
   }
 
@@ -263,10 +263,10 @@ class TradingSearchProvider extends ChangeNotifier {
             ),
           );
           if (order != null) {
-            TradeProviderNew provider =
-                navigatorKey.currentContext!.read<TradeProviderNew>();
+            // TradeProviderNew provider =
+            //     navigatorKey.currentContext!.read<TradeProviderNew>();
 
-            buy ? provider.addOrderData(order) : provider.sellOrderData(order);
+            // buy ? provider.addOrderData(order) : provider.sellOrderData(order);
             await _showSheet(order, buy);
           }
         }

@@ -24,7 +24,6 @@ class SdCommonHeading extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const SdTopWidgetDetail(),
-          const SpacerVertical(height: 4),
           const SdTopDisclaimer(),
           const SpacerVertical(height: 4),
           if (keyStats?.rating != null && keyStats?.rating != 0 && showRating)

@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
+import 'package:stocks_news_new/tradingSimulator/manager/sse.dart';
+import 'package:stocks_news_new/tradingSimulator/providers/trade_provider.dart';
 import 'package:stocks_news_new/tradingSimulator/screens/searchTradingTicker/index.dart';
 import 'package:stocks_news_new/utils/colors.dart';
+import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/cache_network_image.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
@@ -38,7 +41,7 @@ tradeSheet({
   );
 }
 
-class SearchTicker extends StatelessWidget {
+class SearchTicker extends StatefulWidget {
   final String? symbol;
   final bool doPop;
   final dynamic qty;
@@ -46,7 +49,17 @@ class SearchTicker extends StatelessWidget {
   const SearchTicker(
       {super.key, this.symbol, this.doPop = true, this.qty, this.data});
 
+  @override
+  State<SearchTicker> createState() => _SearchTickerState();
+}
+
+class _SearchTickerState extends State<SearchTicker> {
+  bool disposeSheet = true;
+
   Future _onTap({String? symbol, bool buy = true}) async {
+    disposeSheet = false;
+    setState(() {});
+
     try {
       TradingSearchProvider provider =
           navigatorKey.currentContext!.read<TradingSearchProvider>();
@@ -56,63 +69,21 @@ class SearchTicker extends StatelessWidget {
     } catch (e) {
       //
     }
-
-    // try {
-    //   StockDetailProviderNew provider =
-    //       navigatorKey.currentContext!.read<StockDetailProviderNew>();
-
-    //   ApiResponse response = await provider.getTabData(
-    //     symbol: symbol,
-    //     showProgress: true,
-    //     startSSE: true,
-    //   );
-    //   if (response.status) {
-    //     // SummaryOrderNew order =
-    //     // await
-    //     Navigator.pushReplacement(
-    //       navigatorKey.currentContext!,
-    //       MaterialPageRoute(
-    //         builder: (context) => TradeBuySellIndex(
-    //           buy: buy,
-    //           doPop: doPop,
-    //           qty: qty,
-    //         ),
-    //       ),
-    //     );
-    //     // TradeProviderNew provider =
-    //     //     navigatorKey.currentContext!.read<TradeProviderNew>();
-    //     // buy ? provider.addOrderData(order) : provider.sellOrderData(order);
-    //     // await showTsOrderSuccessSheet(order, buy);
-    //   } else {}
-    // } catch (e) {
-    //   //
-    // }
   }
 
-  // Future _showSheet(SummaryOrderNew? order, bool buy) async {
-  //   await showModalBottomSheet(
-  //     useSafeArea: true,
-  //     shape: const RoundedRectangleBorder(
-  //       borderRadius: BorderRadius.only(
-  //         topLeft: Radius.circular(5),
-  //         topRight: Radius.circular(5),
-  //       ),
-  //     ),
-  //     backgroundColor: ThemeColors.transparent,
-  //     isScrollControlled: false,
-  //     context: navigatorKey.currentContext!,
-  //     builder: (context) {
-  //       return SuccessTradeSheet(
-  //         order: order,
-  //         buy: buy,
-  //         close: true,
-  //       );
-  //     },
-  //   );
-  // }
+  @override
+  void dispose() {
+    if (disposeSheet) {
+      Utils().showLog('Disposing tradeSheet');
+      SSEManager.instance.disconnectScreen(SimulatorEnum.detail);
+    }
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
+    TradeProviderNew provider = context.watch<TradeProviderNew>();
+    StockDataManagerRes? stock = provider.tappedStock;
     return Container(
       decoration: BoxDecoration(
         color: ThemeColors.white,
@@ -141,7 +112,8 @@ class SearchTicker extends StatelessWidget {
                         ),
                         width: 60,
                         height: 60,
-                        child: CachedNetworkImagesWidget(data?.image ?? ""),
+                        child:
+                            CachedNetworkImagesWidget(widget.data?.image ?? ""),
                       ),
                     ),
                     const SpacerHorizontal(width: 12),
@@ -150,12 +122,12 @@ class SearchTicker extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            '${data?.symbol}',
+                            '${widget.data?.symbol}',
                             style: styleGeorgiaBold(
                                 color: ThemeColors.blackShade, fontSize: 22),
                           ),
                           Text(
-                            '${data?.name}',
+                            '${widget.data?.name}',
                             style: styleGeorgiaRegular(
                                 color: ThemeColors.blackShade, fontSize: 18),
                           ),
@@ -163,13 +135,30 @@ class SearchTicker extends StatelessWidget {
                       ),
                     ),
                     const SpacerHorizontal(width: 12),
-                    Visibility(
-                      visible: data?.currentPrice != null,
-                      child: Text(
-                        '\$${data?.currentPrice}',
-                        style: styleGeorgiaBold(
-                            color: ThemeColors.blackShade, fontSize: 22),
-                      ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Visibility(
+                          visible: stock?.price != null,
+                          child: Text(
+                            '${stock?.price?.toFormattedPrice()}',
+                            style: styleGeorgiaBold(
+                                color: ThemeColors.blackShade, fontSize: 22),
+                          ),
+                        ),
+                        Visibility(
+                          visible: stock?.change != null,
+                          child: Text(
+                            '${stock?.change?.toFormattedPrice()} (${stock?.changePercentage?.toCurrency()}%)',
+                            style: styleGeorgiaRegular(
+                              color: (stock?.change ?? 0) >= 0
+                                  ? ThemeColors.accent
+                                  : ThemeColors.sos,
+                              fontSize: 13,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
@@ -236,12 +225,12 @@ class SearchTicker extends StatelessWidget {
                     duration: const Duration(milliseconds: 500),
                     curve: Curves.easeIn,
                     child: _card(
-                      symbol: symbol,
+                      symbol: widget.symbol,
                       color: ThemeColors.sos,
                       "Sell Order",
                       onTap: () {
-                        if (symbol != null) {
-                          _onTap(symbol: symbol, buy: false);
+                        if (widget.symbol != null) {
+                          _onTap(symbol: widget.symbol, buy: false);
                         } else {
                           Navigator.push(
                             context,
@@ -261,12 +250,12 @@ class SearchTicker extends StatelessWidget {
                     width: double.infinity,
                     curve: Curves.easeIn,
                     child: _card(
-                      symbol: symbol,
+                      symbol: widget.symbol,
                       color: ThemeColors.accent,
                       "Buy Order",
                       onTap: () {
-                        if (symbol != null) {
-                          _onTap(symbol: symbol);
+                        if (widget.symbol != null) {
+                          _onTap(symbol: widget.symbol);
                         } else {
                           Navigator.push(
                             context,

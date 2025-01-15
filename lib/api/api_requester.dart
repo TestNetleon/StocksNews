@@ -4,6 +4,7 @@ import 'dart:io';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:stocks_news_new/api/api_response.dart';
@@ -209,13 +210,16 @@ Future<ApiResponse> apiRequest({
         // OR
         // DO NOT REMOVE THIS
         if ((maintenanceDialog != null || maintenanceDialogNew != null) &&
-            !isShowingError) {
+            !isShowingError &&
+            showErrorOnFull) {
           isShowingError = true;
-          showMaintenanceDialog(
-            title: maintenanceDialog?.title ?? maintenanceDialogNew?.title,
-            description: maintenanceDialog?.description ??
-                maintenanceDialogNew?.description,
-          );
+          if (!kDebugMode) {
+            showMaintenanceDialog(
+              title: maintenanceDialog?.title ?? maintenanceDialogNew?.title,
+              description: maintenanceDialog?.description ??
+                  maintenanceDialogNew?.description,
+            );
+          }
         } else if (inAppMsg != null) {
           checkForInAppMessage(inAppMsg);
         }
@@ -254,7 +258,7 @@ Future<ApiResponse> apiRequest({
             // print('Data is a list, not a MaintenanceDialog');
           }
         }
-        if (maintenanceDialog != null && !isShowingError) {
+        if (maintenanceDialog != null && !isShowingError && showErrorOnFull) {
           isShowingError = true;
           showMaintenanceDialog(
             title: maintenanceDialog.title,
@@ -265,7 +269,6 @@ Future<ApiResponse> apiRequest({
 
       Utils().showLog('Status Code Error ${response.statusCode}');
 
-      if (!isShowingError && showErrorOnFull) {}
       return ApiResponse(status: false, message: Const.errSomethingWrong);
     }
   } catch (e) {
@@ -275,7 +278,6 @@ Future<ApiResponse> apiRequest({
     }
     Utils().showLog('Catch error =>> ${e.toString()}');
     if (showProgress) closeGlobalProgressDialog();
-    if (!isShowingError && showErrorOnFull) {}
     return ApiResponse(status: false, message: Const.errSomethingWrong);
   }
 }

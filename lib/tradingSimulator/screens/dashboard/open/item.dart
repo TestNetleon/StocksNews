@@ -57,7 +57,7 @@ class TsOpenListItem extends StatelessWidget {
                             visible: item?.currentPrice != null,
                             child: Flexible(
                               child: Text(
-                                "Price: ${item?.currentPrice?.toFormattedPrice()}",
+                                "${item?.currentPrice?.toFormattedPrice()}",
                                 style: styleGeorgiaRegular(
                                   // color: ThemeColors.greyText,
                                   fontSize: 14,
@@ -104,7 +104,7 @@ class TsOpenListItem extends StatelessWidget {
                       child: Padding(
                         padding: const EdgeInsets.only(top: 5),
                         child: Text(
-                          "AVG: ${item?.avgPrice?.toFormattedPrice()}",
+                          "Avg. ${item?.avgPrice?.toFormattedPrice()}",
                           style: stylePTSansRegular(fontSize: 14),
                         ),
                       ),

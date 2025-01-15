@@ -537,17 +537,14 @@ class StockDetailProviderNew extends ChangeNotifier {
             screenType: 'stock_analysis', source: _tabRes?.shareUrl ?? '');
 
         if (symbol != null && symbol.isNotEmpty && startSSE) {
-          SSEManager.instance.disconnectScreen(SimulatorEnum.detail);
+          // SSEManager.instance.disconnectScreen(SimulatorEnum.detail);
           SSEManager.instance.connectStock(
             screen: SimulatorEnum.detail,
             symbol: symbol,
           );
 
           SSEManager.instance.addListener(symbol, (stockData) {
-            Utils().showLog('Data for $symbol');
-            Utils().showLog('Price ${stockData.price}');
-            Utils().showLog('Change for ${stockData.change}');
-            Utils().showLog('Change% for ${stockData.changePercentage}');
+            Utils().showLog('Detail: ${stockData.toMap()}');
 
             if (stockData.price != null) {
               _tabRes?.keyStats?.price = '\$${stockData.price}';
@@ -560,6 +557,12 @@ class StockDetailProviderNew extends ChangeNotifier {
             }
             if (stockData.changePercentage != null) {
               _tabRes?.keyStats?.changesPercentage = stockData.changePercentage;
+            }
+            if (stockData.changePercentage != null) {
+              _tabRes?.keyStats?.changesPercentage = stockData.changePercentage;
+            }
+            if (stockData.type != null) {
+              _tabRes?.marketType = stockData.type;
             }
             notifyListeners();
           });

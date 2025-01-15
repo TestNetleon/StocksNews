@@ -6,7 +6,9 @@ import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/refresh_controll.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
+import '../../../manager/sse.dart';
 import '../../../modals/trading_search_res.dart';
+import '../../../providers/trade_provider.dart';
 import '../../../providers/ts_transaction_list.dart';
 import 'item.dart';
 
@@ -69,6 +71,13 @@ class _TsTransactionListState extends State<TsTransactionList> {
             return TsTransactionListItem(
               item: item,
               onTap: () {
+                TradeProviderNew trade = context.read<TradeProviderNew>();
+                trade.setTappedStock(StockDataManagerRes(
+                  symbol: item.symbol ?? '',
+                  change: item.change,
+                  changePercentage: item.changesPercentage,
+                  price: item.currentPrice,
+                ));
                 tradeSheet(
                   symbol: item.symbol,
                   doPop: false,

@@ -263,7 +263,7 @@ class KeyStats {
       yearLow: json["yearLow"],
       previousCloseNUM: json['previousClose_without_cur'],
       marketCap: json["marketCap"],
-      tradeMarketStatus: json['trade_market_status'],
+      tradeMarketStatus: json['is_trade_executable'],
       priceAvg50: json["priceAvg50"],
       priceAvg200: json["priceAvg200"],
       exchange: json["exchange"],
@@ -333,7 +333,7 @@ class KeyStats {
         "dividendYield": dividendYield,
         "bookValuePerShare": bookValuePerShare,
         "revenue": revenue,
-        'trade_market_status': tradeMarketStatus,
+        'is_trade_executable': tradeMarketStatus,
         "revenue_date": revenueDate,
         "rating": rating
       };

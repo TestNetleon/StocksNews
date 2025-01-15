@@ -1265,7 +1265,9 @@ class HomeProvider extends ChangeNotifier {
 
       ApiResponse response = await apiRequest(
         url: Apis.appsflyerUsers,
+        showErrorOnFull: false,
         checkAppUpdate: false,
+        removeForceLogin: true,
         formData: request,
       );
       if (response.status) {

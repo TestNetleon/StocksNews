@@ -168,9 +168,9 @@ class _BuySellContainerState extends State<BuySellContainer> {
           ),
         );
         _clear();
-        widget.buy
-            ? tradeProviderNew.addOrderData(order)
-            : tradeProviderNew.sellOrderData(order);
+        // widget.buy
+        //     ? tradeProviderNew.addOrderData(order)
+        //     : tradeProviderNew.sellOrderData(order);
         await showTsOrderSuccessSheet(order, widget.buy);
       } else {
         popUpAlert(
@@ -260,9 +260,9 @@ class _BuySellContainerState extends State<BuySellContainer> {
             ),
           );
           _clear();
-          widget.buy
-              ? tradeProviderNew.addOrderData(order)
-              : tradeProviderNew.sellOrderData(order);
+          // widget.buy
+          //     ? tradeProviderNew.addOrderData(order)
+          //     : tradeProviderNew.sellOrderData(order);
           await showTsOrderSuccessSheet(order, widget.buy);
         } else {
           popUpAlert(
@@ -327,9 +327,9 @@ class _BuySellContainerState extends State<BuySellContainer> {
           ),
         );
 
-        widget.buy
-            ? tradeProviderNew.addOrderData(order)
-            : tradeProviderNew.sellOrderData(order);
+        // widget.buy
+        //     ? tradeProviderNew.addOrderData(order)
+        //     : tradeProviderNew.sellOrderData(order);
         await showTsOrderSuccessSheet(order, widget.buy);
       } else {
         // TODO:
@@ -567,7 +567,7 @@ class _BuySellContainerState extends State<BuySellContainer> {
                     Container(
                       margin: EdgeInsets.only(top: 10),
                       child: Text(
-                        'Available quantity - ${widget.qty}',
+                        'Available quantity - ${widget.qty ?? 0}',
                         style: styleGeorgiaBold(),
                       ),
                     ),
