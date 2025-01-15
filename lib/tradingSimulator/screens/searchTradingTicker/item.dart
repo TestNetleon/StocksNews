@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 import 'package:stocks_news_new/tradingSimulator/modals/trading_search_res.dart';
 import 'package:stocks_news_new/tradingSimulator/providers/trade_provider.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
@@ -11,6 +12,7 @@ import 'package:stocks_news_new/widgets/cache_network_image.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
+import '../../manager/sse.dart';
 import '../dashboard/tradeSheet.dart';
 
 class SdTradeDefaultItem extends StatelessWidget {
@@ -22,9 +24,17 @@ class SdTradeDefaultItem extends StatelessWidget {
     this.buy = true,
   });
 
-  Future _onTap({String? symbol}) async {
+  Future _onTap({TradingSearchTickerRes? item}) async {
+    TradeProviderNew trade =
+        navigatorKey.currentContext!.read<TradeProviderNew>();
+    trade.setTappedStock(StockDataManagerRes(
+      symbol: item?.symbol ?? '',
+      change: item?.change,
+      changePercentage: item?.changesPercentage,
+      price: item?.currentPrice,
+    ));
     tradeSheet(
-      symbol: symbol,
+      symbol: item?.symbol ?? '',
       data: TradingSearchTickerRes(
         image: data.image,
         name: data.name,
@@ -84,7 +94,7 @@ class SdTradeDefaultItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        _onTap(symbol: data.symbol);
+        _onTap(item: data);
       },
       child: Stack(
         children: [

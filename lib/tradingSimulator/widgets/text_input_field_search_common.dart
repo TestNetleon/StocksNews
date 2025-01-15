@@ -20,6 +20,7 @@ import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/cache_network_image.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 
+import '../manager/sse.dart';
 import '../modals/trading_search_res.dart';
 
 class TsTextInputFieldSearch extends StatefulWidget {
@@ -90,6 +91,14 @@ class _TsTextInputFieldSearchCommonState extends State<TsTextInputFieldSearch> {
   }
 
   Future _onTap({String? symbol, SearchRes? data}) async {
+    TradeProviderNew trade =
+        navigatorKey.currentContext!.read<TradeProviderNew>();
+    trade.setTappedStock(StockDataManagerRes(
+      symbol: data?.symbol ?? '',
+      change: data?.change,
+      changePercentage: data?.changesPercentage,
+      price: data?.currentPrice,
+    ));
     tradeSheet(
       symbol: symbol,
       data: TradingSearchTickerRes(

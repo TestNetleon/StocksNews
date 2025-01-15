@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/stock_details_res.dart';
 import 'package:stocks_news_new/providers/stock_detail_new.dart';
@@ -18,27 +17,36 @@ class SdTopDisclaimer extends StatelessWidget {
       return const SizedBox();
     }
     return Padding(
-      padding: EdgeInsets.only(left: 5.sp),
-      child: Visibility(
-        visible: keyStats?.marketStatus != null,
-        child: Row(
-          children: [
-            const Icon(
-              Icons.watch_later,
-              size: 15,
-              color: ThemeColors.greyText,
-            ),
-            const SpacerHorizontal(width: 5),
-            Text(
-              keyStats?.marketStatus ?? "",
-              style: stylePTSansRegular(
+      padding: EdgeInsets.only(left: 5),
+      child: provider.tabRes?.marketType != null &&
+              provider.tabRes?.marketType != ''
+          ? Text(
+              provider.tabRes?.marketType ?? "",
+              style: styleGeorgiaRegular(
                 color: ThemeColors.greyText,
-                fontSize: 11,
+                fontSize: 12,
+              ),
+            )
+          : Visibility(
+              visible: keyStats?.marketStatus != null,
+              child: Row(
+                children: [
+                  const Icon(
+                    Icons.watch_later,
+                    size: 15,
+                    color: ThemeColors.greyText,
+                  ),
+                  const SpacerHorizontal(width: 5),
+                  Text(
+                    keyStats?.marketStatus ?? "",
+                    style: stylePTSansRegular(
+                      color: ThemeColors.greyText,
+                      fontSize: 12,
+                    ),
+                  ),
+                ],
               ),
             ),
-          ],
-        ),
-      ),
     );
   }
 }

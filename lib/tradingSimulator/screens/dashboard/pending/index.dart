@@ -11,7 +11,9 @@ import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
 import 'package:stocks_news_new/widgets/refresh_controll.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import '../../../../tournament/provider/trades.dart';
+import '../../../manager/sse.dart';
 import '../../../modals/trading_search_res.dart';
+import '../../../providers/trade_provider.dart';
 
 class TsPendingList extends StatefulWidget {
   const TsPendingList({super.key});
@@ -104,6 +106,13 @@ class _TsPendingListState extends State<TsPendingList> {
               child: TsPendingListItem(
                 item: item,
                 onTap: () {
+                  TradeProviderNew trade = context.read<TradeProviderNew>();
+                  trade.setTappedStock(StockDataManagerRes(
+                    symbol: item.symbol ?? '',
+                    change: item.change,
+                    changePercentage: item.changesPercentage,
+                    price: item.currentPrice,
+                  ));
                   tradeSheet(
                     symbol: item.symbol,
                     doPop: false,

@@ -131,6 +131,9 @@ class _CountryPickerWidgetState extends State<CountryPickerWidget> {
 
     if (user?.phoneCode != null && user?.phoneCode != "") {
       locale = CountryCode.fromDialCode(user!.phoneCode!).code?.split('_').last;
+      if (user.phoneCode == '+1') {
+        locale = 'US';
+      }
     } else if (geoCountryCode != null && geoCountryCode != "") {
       locale = geoCountryCode;
     } else {

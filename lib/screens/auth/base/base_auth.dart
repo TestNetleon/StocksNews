@@ -64,6 +64,7 @@ class _LoginFirstState extends State<LoginFirst> {
   final GoogleSignIn _googleSignIn = GoogleSignIn();
   bool isChecked = false;
   bool useCheckboxCondition = true;
+  bool changed = false;
   @override
   void initState() {
     super.initState();
@@ -331,16 +332,19 @@ class _LoginFirstState extends State<LoginFirst> {
     HomeProvider provider = context.watch<HomeProvider>();
     UserProvider userProvider = context.watch<UserProvider>();
 
-    if (userProvider.user?.phoneCode != null &&
-        userProvider.user?.phoneCode != "") {
-      countryCode =
-          CountryCode.fromDialCode(userProvider.user?.phoneCode ?? "").dialCode;
-    } else if (geoCountryCode != null && geoCountryCode != "") {
-      countryCode =
-          CountryCode.fromCountryCode(geoCountryCode ?? 'US').dialCode;
-    } else {
-      countryCode = CountryCode.fromCountryCode("US").dialCode;
+    if (!changed) {
+      if (userProvider.user?.phoneCode != null &&
+          userProvider.user?.phoneCode != "") {
+        countryCode =
+            CountryCode.fromDialCode(userProvider.user?.phoneCode ?? "")
+                .dialCode;
+      } else if (geoCountryCode != null && geoCountryCode != "") {
+        countryCode = CountryCode.fromCountryCode(geoCountryCode!).dialCode;
+      } else {
+        countryCode = CountryCode.fromCountryCode("US").dialCode;
+      }
     }
+
     // Utils().showLog('COUNTRY CODE $countryCode');
     return GestureDetector(
       onTap: () {
@@ -445,7 +449,9 @@ class _LoginFirstState extends State<LoginFirst> {
                                     ),
                                     child: CountryPickerWidget(
                                       onChanged: (CountryCode value) {
+                                        changed = true;
                                         countryCode = value.dialCode;
+                                        setState(() {});
                                       },
                                     ),
                                   ),

@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/api/api_response.dart';
@@ -168,9 +169,9 @@ class _BuySellContainerState extends State<BuySellContainer> {
           ),
         );
         _clear();
-        widget.buy
-            ? tradeProviderNew.addOrderData(order)
-            : tradeProviderNew.sellOrderData(order);
+        // widget.buy
+        //     ? tradeProviderNew.addOrderData(order)
+        //     : tradeProviderNew.sellOrderData(order);
         await showTsOrderSuccessSheet(order, widget.buy);
       } else {
         popUpAlert(
@@ -260,9 +261,9 @@ class _BuySellContainerState extends State<BuySellContainer> {
             ),
           );
           _clear();
-          widget.buy
-              ? tradeProviderNew.addOrderData(order)
-              : tradeProviderNew.sellOrderData(order);
+          // widget.buy
+          //     ? tradeProviderNew.addOrderData(order)
+          //     : tradeProviderNew.sellOrderData(order);
           await showTsOrderSuccessSheet(order, widget.buy);
         } else {
           popUpAlert(
@@ -327,9 +328,9 @@ class _BuySellContainerState extends State<BuySellContainer> {
           ),
         );
 
-        widget.buy
-            ? tradeProviderNew.addOrderData(order)
-            : tradeProviderNew.sellOrderData(order);
+        // widget.buy
+        //     ? tradeProviderNew.addOrderData(order)
+        //     : tradeProviderNew.sellOrderData(order);
         await showTsOrderSuccessSheet(order, widget.buy);
       } else {
         // TODO:
@@ -567,7 +568,7 @@ class _BuySellContainerState extends State<BuySellContainer> {
                     Container(
                       margin: EdgeInsets.only(top: 10),
                       child: Text(
-                        'Available quantity - ${widget.qty}',
+                        'Available quantity - ${widget.qty ?? 0}',
                         style: styleGeorgiaBold(),
                       ),
                     ),

@@ -346,10 +346,10 @@ class TsOpenListProvider extends ChangeNotifier {
 
     _stockReturnMap[symbol] = returnData;
 
-    Utils().showLog(
-        'Updating for $symbol, Price: ${stockData.price}, Change: ${stockData.change}, Change%: ${stockData.changePercentage}');
-    Utils()
-        .showLog('Today\'s Return for $symbol: ${returnData['todaysReturn']}');
+    Utils().showLog('Holding: ${stockData.toMap()}');
+
+    // Utils()
+    //     .showLog('Today\'s Return for $symbol: ${returnData['todaysReturn']}');
 
     _updatePortfolioBalance();
     notifyListeners();
@@ -374,13 +374,17 @@ class TsOpenListProvider extends ChangeNotifier {
 
     provider.updateBalance(
       marketValue: totalMarketValue,
-      totalReturn: (provider.userData?.staticTotalReturn ?? 0) +
-          // todaysReturn +
+      // totalReturn: (provider.userData?.staticTotalReturn ?? 0) +
+
+      //     (totalMarketValue - (provider.userData?.investedAmount ?? 0)),
+
+      totalReturn:
           (totalMarketValue - (provider.userData?.investedAmount ?? 0)),
+
       todayReturn: todaysReturn,
     );
 
-    Utils().showLog('Final Portfolio Return: $todaysReturn');
+    // Utils().showLog('Final Portfolio Return: $todaysReturn');
   }
 
   void _removeStockFromMap(String symbol) {
