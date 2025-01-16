@@ -77,15 +77,12 @@ class _BuySellContainerState extends State<BuySellContainer> {
     super.dispose();
   }
 
-  _calculationsForBUY() {}
-  _calculationsForSELL() {}
-
   _onTap() async {
     closeKeyboard();
     StockDetailProviderNew provider = context.read<StockDetailProviderNew>();
     KeyStats? keyStats = provider.tabRes?.keyStats;
 
-    if (keyStats?.tradeMarketStatus == false) {
+    if (keyStats?.tradeMarketStatus == false && widget.editTradeID == null) {
       popUpAlert(
         title: "Confirm Order",
         message:
@@ -114,17 +111,6 @@ class _BuySellContainerState extends State<BuySellContainer> {
     num invested = _selectedSegment == TypeTrade.shares
         ? price * num.parse(_currentText)
         : num.parse(_currentText);
-
-    closeKeyboard();
-    if (controller.text.isEmpty || num.parse(controller.text) == 0.0) {
-      popUpAlert(
-        message: "Value can't be empty",
-        title: "Alert",
-        icon: Images.alertPopGIF,
-      );
-      return;
-    }
-
     if (widget.editTradeID != null) {
       final Map<String, dynamic> request = {
         "token":
@@ -180,6 +166,15 @@ class _BuySellContainerState extends State<BuySellContainer> {
         );
       }
 
+      return;
+    }
+    closeKeyboard();
+    if (controller.text.isEmpty || num.parse(controller.text) == 0.0) {
+      popUpAlert(
+        message: "Value can't be empty",
+        title: "Alert",
+        icon: Images.alertPopGIF,
+      );
       return;
     }
 
@@ -406,7 +401,6 @@ class _BuySellContainerState extends State<BuySellContainer> {
     num invested = _selectedSegment == TypeTrade.shares
         ? price * parsedCurrentText
         : parsedCurrentText;
-    Utils().showLog('invested=> $invested');
     return Container(
       padding: const EdgeInsets.all(10),
       decoration: const BoxDecoration(
@@ -438,14 +432,15 @@ class _BuySellContainerState extends State<BuySellContainer> {
               Flexible(
                 child: RichText(
                   text: TextSpan(
-                      text: "Order Value: ",
-                      style: stylePTSansBold(fontSize: 14),
-                      children: [
-                        TextSpan(
-                          text: "\$${invested.toCurrency()}",
-                          style: stylePTSansRegular(fontSize: 14),
-                        ),
-                      ]),
+                    text: "Order Value: ",
+                    style: stylePTSansBold(fontSize: 14),
+                    children: [
+                      TextSpan(
+                        text: "\$${invested.toCurrency()}",
+                        style: stylePTSansRegular(fontSize: 14),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ],

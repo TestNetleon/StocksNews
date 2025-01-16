@@ -277,6 +277,7 @@ class TsOpenListProvider extends ChangeNotifier {
     return createdAtDate == responseDateString;
   }
 
+//MARK: Today's Return
   Map<String, num> _calculateTodaysReturn(StockDataManagerRes stockData,
       TsOpenListRes stock, num shares, num invested) {
     num todaysReturn = 0;
@@ -312,6 +313,7 @@ class TsOpenListProvider extends ChangeNotifier {
         {'todaysReturn': 0, 'todaysReturnPercentage': 0};
   }
 
+//MARK: Update Stock Data
   void _updateStockData(String symbol, StockDataManagerRes stockData) {
     if (_data == null || _data!.isEmpty) return;
 
@@ -354,6 +356,7 @@ class TsOpenListProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+//MARK: Update Balance
   void _updatePortfolioBalance() {
     TsPortfolioProvider provider =
         navigatorKey.currentContext!.read<TsPortfolioProvider>();
@@ -409,6 +412,7 @@ class TsOpenListProvider extends ChangeNotifier {
     }
   }
 
+//MARK: API Call
   Future<void> getData() async {
     navigatorKey.currentContext!.read<TsPortfolioProvider>().getDashboardData();
     setStatus(Status.loading);
@@ -448,6 +452,7 @@ class TsOpenListProvider extends ChangeNotifier {
     }
   }
 
+// MARK: SSE Manager
   void _connectSSEForSymbols(List<String> symbols) {
     if (_data != null && _data?.isNotEmpty == true) {
       for (var data in _data!) {
@@ -462,96 +467,20 @@ class TsOpenListProvider extends ChangeNotifier {
               previousClose: data.previousClose,
             ),
           );
+
+          SSEManager.instance.connectMultipleStocks(
+            screen: SimulatorEnum.open,
+            symbols: symbols,
+          );
+
+          // for (var symbol in symbols) {
+          SSEManager.instance.addListener(data.symbol ?? '',
+              (StockDataManagerRes stockData) {
+            _updateStockData(data.symbol ?? '', stockData);
+          });
+          // }
         }
       }
     }
-
-    SSEManager.instance.connectMultipleStocks(
-      screen: SimulatorEnum.open,
-      symbols: symbols,
-    );
-
-    for (var symbol in symbols) {
-      SSEManager.instance.addListener(symbol, (StockDataManagerRes stockData) {
-        _updateStockData(symbol, stockData);
-      });
-    }
   }
-
-  // Future<void> getData() async {
-  //   navigatorKey.currentContext!.read<TsPortfolioProvider>().getDashboardData();
-  //   setStatus(Status.loading);
-
-  //   try {
-  //     Map request = {
-  //       "token":
-  //           navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
-  //     };
-
-  //     ApiResponse response = await apiRequest(
-  //       url: Apis.tsOrderList,
-  //       request: request,
-  //       showProgress: false,
-  //     );
-
-  //     if (response.status) {
-  //       _data = tsOpenListResFromJson(jsonEncode(response.data));
-  //       _extra = response.extra is Extra ? response.extra as Extra : null;
-  //       _error = null;
-
-  //       // Filter symbols with executable == true
-  //       List<String> executableSymbols = _data
-  //               ?.where((stock) => stock.executable == true)
-  //               .map((stock) => stock.symbol ?? '')
-  //               .toList() ??
-  //           [];
-
-  //       _updateDataWithoutStream();
-  //       if (executableSymbols.isNotEmpty) {
-  //         _connectSSEForSymbols(executableSymbols);
-  //       }
-  //     } else {
-  //       _data = null;
-  //       _error = response.message ?? Const.errSomethingWrong;
-  //     }
-
-  //     setStatus(Status.loaded);
-  //   } catch (e) {
-  //     _data = null;
-  //     _error = Const.errSomethingWrong;
-  //     Utils().showLog('Open data: $e');
-  //     setStatus(Status.loaded);
-  //   }
-  // }
-
-  // void _connectSSEForSymbols(List<String> symbols) {
-  //   SSEManager.instance.connectMultipleStocks(
-  //     screen: SimulatorEnum.open,
-  //     symbols: symbols,
-  //   );
-
-  //   // Add listeners and update stock data
-  //   for (var symbol in symbols) {
-  //     SSEManager.instance.addListener(symbol, (StockDataManagerRes stockData) {
-  //       _updateStockData(symbol, stockData);
-  //     });
-  //   }
-  // }
-
-  // void _updateDataWithoutStream() {
-  //   if (_data != null && _data?.isNotEmpty == true) {
-  //     for (var data in _data!) {
-  //       _updateStockData(
-  //         data.symbol ?? '',
-  //         StockDataManagerRes(
-  //           symbol: data.symbol ?? "",
-  //           change: data.change,
-  //           changePercentage: data.changesPercentage,
-  //           price: data.currentPrice,
-  //           previousClose: data.previousClose,
-  //         ),
-  //       );
-  //     }
-  //   }
-  // }
 }
