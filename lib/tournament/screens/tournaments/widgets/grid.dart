@@ -54,6 +54,7 @@ class TournamentGrids extends StatelessWidget {
                   borderRadius: BorderRadius.circular(8),
                   child: CachedNetworkImagesWidget(
                     data?.image,
+
                     // height: 100,
                     // width: 100,
                   ),
