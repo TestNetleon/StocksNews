@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:stocks_news_new/modals/stock_details_res.dart';
-import 'package:stocks_news_new/providers/stock_detail_new.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/tradingSimulator/manager/sse.dart';
 import 'package:stocks_news_new/tradingSimulator/screens/tradeBuySell/container.dart';
@@ -11,6 +9,8 @@ import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 import '../../../../widgets/spacer_horizontal.dart';
 import '../../../../widgets/theme_image_view.dart';
+import '../../modals/ts_topbar.dart';
+import '../../providers/trade_provider.dart';
 
 class TradeBuySellIndex extends StatelessWidget {
   final bool buy;
@@ -26,9 +26,8 @@ class TradeBuySellIndex extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    StockDetailProviderNew provider = context.watch<StockDetailProviderNew>();
-    KeyStats? keyStats = provider.tabRes?.keyStats;
-    CompanyInfo? companyInfo = provider.tabRes?.companyInfo;
+    TradeProviderNew provider = context.watch<TradeProviderNew>();
+    TsStockDetailRes? detailRes = provider.detailRes;
     return PopScope(
       onPopInvokedWithResult: (didPop, result) {
         SSEManager.instance.disconnectScreen(SimulatorEnum.detail);
@@ -36,11 +35,11 @@ class TradeBuySellIndex extends StatelessWidget {
       child: BaseContainer(
         appBar: AppBarHome(
           isPopBack: true,
-          title: keyStats?.symbol ?? "",
-          subTitle: keyStats?.name ?? "",
+          title: detailRes?.symbol ?? "",
+          subTitle: detailRes?.company ?? "",
           showTrailing: false,
           canSearch: false,
-          widget: keyStats?.symbol == null
+          widget: detailRes?.symbol == null
               ? null
               : Row(
                   children: [
@@ -57,7 +56,7 @@ class TradeBuySellIndex extends StatelessWidget {
                       width: 48,
                       height: 48,
                       child: ThemeImageView(
-                        url: companyInfo?.image ?? "",
+                        url: detailRes?.image ?? "",
                         fit: BoxFit.contain,
                       ),
                     ),
@@ -69,7 +68,7 @@ class TradeBuySellIndex extends StatelessWidget {
                           Row(
                             children: [
                               Text(
-                                keyStats?.symbol ?? "",
+                                detailRes?.symbol ?? "",
                                 style: stylePTSansBold(fontSize: 18),
                               ),
                               Container(
@@ -81,14 +80,14 @@ class TradeBuySellIndex extends StatelessWidget {
                                     vertical: 2, horizontal: 8),
                                 margin: EdgeInsets.only(left: 5),
                                 child: Text(
-                                  keyStats?.exchange ?? "",
+                                  detailRes?.exchange ?? "",
                                   style: stylePTSansRegular(fontSize: 11),
                                 ),
                               ),
                             ],
                           ),
                           Text(
-                            keyStats?.name ?? "",
+                            detailRes?.company ?? "",
                             style: stylePTSansRegular(
                               fontSize: 14,
                               color: ThemeColors.greyText,

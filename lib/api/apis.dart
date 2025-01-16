@@ -200,8 +200,10 @@ class Apis {
   static const notificationSettings = "/notification-settings";
   static const updateNotificationSettings = "/update-notification-setting";
 
-  //MARK: Trading Simulator API
+  //MARK: Simulator API
   static const tsUserInfo = "/simulator/user-info";
+  static const tsTopBar = "/simulator/trade/stock-detail-topbar";
+  static const tsStreamData = '/simulator/trade/stream-init-variables';
   // static const tsPortfolio = "/simulator/portfolio";
   static const tsOrderList = "/simulator/holding-list";
   static const tsPendingList = "/simulator/pending-list";

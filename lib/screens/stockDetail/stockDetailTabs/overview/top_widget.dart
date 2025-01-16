@@ -11,6 +11,7 @@ import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 import '../../../../widgets/spacer_horizontal.dart';
 
+//
 class SdTopWidgetDetail extends StatelessWidget {
   const SdTopWidgetDetail({super.key});
 

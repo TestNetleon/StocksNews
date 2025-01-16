@@ -454,32 +454,40 @@ class TsOpenListProvider extends ChangeNotifier {
 
 // MARK: SSE Manager
   void _connectSSEForSymbols(List<String> symbols) {
-    if (_data != null && _data?.isNotEmpty == true) {
+    if (_data != null &&
+        _data?.isNotEmpty == true &&
+        (_extra?.executable == true)) {
       for (var data in _data!) {
-        if (data.executable == true) {
-          _updateStockData(
-            data.symbol ?? '',
-            StockDataManagerRes(
-              symbol: data.symbol ?? "",
-              change: data.change,
-              changePercentage: data.changesPercentage,
-              price: data.currentPrice,
-              previousClose: data.previousClose,
-            ),
-          );
-
+        _updateStockData(
+          data.symbol ?? '',
+          StockDataManagerRes(
+            symbol: data.symbol ?? "",
+            change: data.change,
+            changePercentage: data.changesPercentage,
+            price: data.currentPrice,
+            previousClose: data.previousClose,
+          ),
+        );
+        try {
           SSEManager.instance.connectMultipleStocks(
             screen: SimulatorEnum.open,
             symbols: symbols,
           );
 
-          // for (var symbol in symbols) {
-          SSEManager.instance.addListener(data.symbol ?? '',
-              (StockDataManagerRes stockData) {
-            _updateStockData(data.symbol ?? '', stockData);
-          });
-          // }
+          SSEManager.instance.addListener(
+            data.symbol ?? '',
+            (StockDataManagerRes stockData) {
+              _updateStockData(data.symbol ?? '', stockData);
+            },
+            SimulatorEnum.open,
+          );
+        } catch (e) {
+          //
         }
+      }
+    } else {
+      if (kDebugMode) {
+        print('not executable');
       }
     }
   }

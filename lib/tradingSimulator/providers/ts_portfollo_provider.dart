@@ -13,6 +13,8 @@ import 'package:stocks_news_new/tradingSimulator/modals/ts_user_res.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 
+import '../modals/stream_data.dart';
+
 //
 class TsPortfolioProvider extends ChangeNotifier {
   Status _status = Status.ideal;
@@ -53,39 +55,6 @@ class TsPortfolioProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  // Future getData() async {
-  //   setStatus(Status.loading);
-  //   try {
-  //     Map request = {
-  //       "token":
-  //           navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
-  //       // "mssql_id": "${userData?.sqlId}"
-  //     };
-
-  //     ApiResponse response = await apiRequest(
-  //       url: Apis.tsPortfolio,
-  //       request: request,
-  //       showProgress: false,
-  //     );
-
-  //     if (response.status) {
-  //       _data = tsPortfolioResFromJson(jsonEncode(response.data));
-  //       // _extra = (response.extra is Extra ? response.extra as Extra : null);
-  //       _error = null;
-  //     } else {
-  //       _data = null;
-  //       _error = response.message ?? Const.errSomethingWrong;
-  //       // showErrorMessage(message: response.message);
-  //     }
-  //     setStatus(Status.loaded);
-  //   } catch (e) {
-  //     _data = null;
-  //     _error = Const.errSomethingWrong;
-  //     Utils().showLog(e.toString());
-  //     setStatus(Status.loaded);
-  //   }
-  // }
-
   Future getDashboardData() async {
     setStatus(Status.loading);
     try {
@@ -120,6 +89,35 @@ class TsPortfolioProvider extends ChangeNotifier {
       _error = Const.errSomethingWrong;
       Utils().showLog('Error getDashboardData $e');
       setStatus(Status.loaded);
+    }
+  }
+
+  StreamRes? _streamData;
+  StreamRes? get streamData => _streamData;
+
+  Future getStreamKeysData() async {
+    try {
+      Map request = {
+        "token":
+            navigatorKey.currentContext!.read<UserProvider>().user?.token ?? ""
+      };
+      ApiResponse response = await apiRequest(
+        url: Apis.tsStreamData,
+        request: request,
+      );
+      if (response.status) {
+        _streamData = streamResFromJson(jsonEncode(response.data));
+        streamKeysRes = _streamData;
+      } else {
+        _streamData = null;
+        streamKeysRes = _streamData;
+      }
+      notifyListeners();
+    } catch (e) {
+      _streamData = null;
+      streamKeysRes = _streamData;
+
+      notifyListeners();
     }
   }
 }

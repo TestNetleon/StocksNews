@@ -16,12 +16,25 @@ import '../../manager/sse.dart';
 import '../searchTradingTicker/index.dart';
 import 'transactions/index.dart';
 
-class TsDashboard extends StatelessWidget {
+class TsDashboard extends StatefulWidget {
   final int initialIndex;
   const TsDashboard({
     super.key,
     this.initialIndex = 0,
   });
+
+  @override
+  State<TsDashboard> createState() => _TsDashboardState();
+}
+
+class _TsDashboardState extends State<TsDashboard> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<TsPortfolioProvider>().getStreamKeysData();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -95,7 +108,7 @@ class TsDashboard extends StatelessWidget {
               ),
               Expanded(
                 child: CommonTabContainer(
-                  initialIndex: initialIndex,
+                  initialIndex: widget.initialIndex,
                   scrollable: false,
                   tabPaddingNew: false,
                   physics: const NeverScrollableScrollPhysics(),

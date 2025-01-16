@@ -2,294 +2,7 @@ import 'dart:convert';
 import 'dart:async';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
-import 'package:stocks_news_new/utils/utils.dart';
-
 import '../../utils/constants.dart';
-
-class StockDataManagerRes {
-  final num? price;
-  final num? change;
-  final num? changePercentage;
-  final String? type;
-  final num? previousClose;
-  final String symbol;
-  final String? time;
-
-  StockDataManagerRes({
-    this.price,
-    this.change,
-    this.changePercentage,
-    this.type,
-    this.previousClose,
-    this.time,
-    required this.symbol,
-  });
-
-  Map<String, dynamic> toMap() {
-    return {
-      'Price': price,
-      'Change': change,
-      'Change%': changePercentage,
-      'Type': type,
-      'Previous Close': previousClose,
-      'Symbol': symbol,
-    };
-  }
-
-  @override
-  String toString() {
-    return toMap().toString();
-  }
-}
-
-class SSEManager {
-  static final SSEManager _instance = SSEManager._internal();
-  factory SSEManager() => _instance;
-
-  static SSEManager get instance => _instance;
-
-  final Dio _dio = Dio();
-  final Map<String, Function(StockDataManagerRes)> _listeners = {};
-  final Map<String, StreamSubscription?> _subscriptions = {};
-
-  final Map<SimulatorEnum, Set<String>> _screenStreams = {};
-
-  SSEManager._internal();
-
-  void addListener(String symbol, Function(StockDataManagerRes) listener) {
-    try {
-      _listeners[symbol] = listener;
-    } catch (e) {
-      Utils().showLog('error in listener: $e');
-    }
-  }
-
-  void removeListener(String symbol) {
-    _listeners.remove(symbol);
-  }
-
-  void connectStock({required String symbol, required SimulatorEnum screen}) {
-    final url = 'https://dev.stocks.news:8021/symbolData?symbol=$symbol';
-
-    if (_screenStreams[screen]?.contains(symbol) == true) {
-      if (kDebugMode) {
-        print('Stream for $symbol is already connected.');
-        print('Url $url');
-      }
-      return;
-    }
-
-    _connectToStream(
-      url,
-      (data) {
-        final dataSymbol = data['Identifier'];
-        if (dataSymbol == symbol) {
-          _notifyListener(symbol, processStockData(data));
-        }
-      },
-      screen,
-    );
-
-    _screenStreams[screen] = (_screenStreams[screen] ?? {}).union({symbol});
-  }
-
-  void connectMultipleStocks(
-      {required List<String> symbols, required SimulatorEnum screen}) {
-    final currentStreams = _screenStreams[screen] ?? {};
-    final removedSymbols = currentStreams.difference(symbols.toSet());
-    for (var symbol in removedSymbols) {
-      disconnect(symbol);
-    }
-    print('current $currentStreams');
-    final newSymbols = symbols.toSet().difference(currentStreams);
-    print('new $newSymbols');
-    final url =
-        'https://dev.stocks.news:8021/symbolsData?symbol=${symbols.join(',')}';
-
-    if (newSymbols.isEmpty) {
-      if (kDebugMode) {
-        print('All streams for $screen are already connected.');
-        print('Url $url');
-      }
-      return;
-    }
-
-    _connectToStream(
-      url,
-      (data) {
-        final symbol = data['Identifier'];
-        if (symbol != null &&
-            _screenStreams[screen]?.contains(symbol) == true) {
-          _notifyListener(symbol, processStockData(data));
-        }
-      },
-      screen,
-    );
-
-    _screenStreams[screen] = currentStreams.union(newSymbols);
-  }
-
-  void disconnectScreen(SimulatorEnum screen) {
-    _clearScreenData(screen);
-  }
-
-  void disconnectAllScreens() {
-    for (var screen in _screenStreams.keys.toList()) {
-      disconnectScreen(screen);
-    }
-    _listeners.clear();
-    if (kDebugMode) {
-      print('Disconnected all streams and cleared all resources.');
-    }
-  }
-
-  void _notifyListener(String symbol, StockDataManagerRes stockData) {
-    final listener = _listeners[symbol];
-    if (listener != null) {
-      listener(stockData);
-    }
-  }
-
-  void _connectToStream(
-    String url,
-    Function(Map<String, dynamic>) onData,
-    SimulatorEnum type,
-  ) {
-    if (kDebugMode) {
-      print('Trying to connect to $url');
-    }
-    _dio
-        .get<ResponseBody>(
-      url,
-      options: Options(responseType: ResponseType.stream),
-    )
-        .then((response) {
-      final subscription = response.data?.stream.listen(
-        (event) {
-          final rawData = String.fromCharCodes(event);
-          if (rawData.startsWith('data:')) {
-            final jsonData = rawData.substring(5);
-            try {
-              final data = json.decode(jsonData) as Map<String, dynamic>;
-              onData(data);
-            } catch (e) {
-              if (kDebugMode) {
-                print('Error parsing SSE data: $e');
-              }
-            }
-          }
-        },
-        onError: (error) {
-          if (kDebugMode) {
-            print('Stream error: $error');
-          }
-          final uri = Uri.parse(url);
-          final symbols = uri.queryParameters['symbol']?.split(',');
-
-          if (symbols != null && symbols.isNotEmpty) {
-            for (var symbol in symbols) {
-              _handleStreamError(symbol);
-            }
-            _clearScreenData(type);
-          }
-        },
-        cancelOnError: false,
-      );
-
-      // Check if the URL is for a single symbol or multiple symbols
-      final uri = Uri.parse(url);
-      final symbols = uri.queryParameters['symbol']?.split(',');
-
-      if (symbols != null && symbols.length > 1) {
-        for (var symbol in symbols) {
-          _subscriptions[symbol] = subscription;
-        }
-      } else {
-        final symbol = uri.queryParameters['symbol'];
-        if (symbol != null) {
-          _subscriptions[symbol] = subscription;
-        }
-      }
-    }).catchError((error) {
-      if (kDebugMode) {
-        print('Failed to connect to SSE: $error');
-      }
-      if (kDebugMode) {
-        print('Stream error: $error');
-      }
-      final uri = Uri.parse(url);
-      final symbols = uri.queryParameters['symbol']?.split(',');
-
-      if (symbols != null && symbols.isNotEmpty) {
-        for (var symbol in symbols) {
-          _handleStreamError(symbol);
-        }
-        _clearScreenData(type);
-      }
-    });
-  }
-
-// Clear data for a specific screen
-  void _clearScreenData(SimulatorEnum screen) {
-    final symbols = _screenStreams[screen] ?? {};
-    for (var symbol in symbols) {
-      disconnect(symbol);
-      removeListener(symbol);
-    }
-    _screenStreams.remove(screen);
-    if (kDebugMode) {
-      print('Cleared all data and disconnected streams for screen $screen');
-    }
-  }
-
-  void _handleStreamError(String symbol) {
-    disconnect(symbol);
-    removeListener(symbol);
-    if (kDebugMode) {
-      print('Cleared listener and subscription for $symbol due to an error.');
-    }
-  }
-
-  void disconnect(String symbol) {
-    final subscription = _subscriptions[symbol];
-    subscription?.cancel();
-    _subscriptions.remove(symbol);
-    if (kDebugMode) {
-      print('Disconnected SSE for $symbol');
-    }
-  }
-
-  StockDataManagerRes processStockData(Map<String, dynamic> data) {
-    final extendedHoursType = data['ExtendedHoursType'];
-    if (extendedHoursType == 'PreMarket' || extendedHoursType == 'PostMarket') {
-      return StockDataManagerRes(
-        price: data['ExtendedHoursPrice'],
-        change: data['ExtendedHoursChange'],
-        changePercentage: data['ExtendedHoursPercentChange'],
-        type: extendedHoursType,
-        previousClose: data['PreviousClose'],
-        symbol: data['Identifier'],
-        time: data['ExtendedHoursTime'],
-      );
-    }
-    return StockDataManagerRes(
-      price: data['Last'],
-      change: data['Change'],
-      changePercentage: data['PercentChange'],
-      previousClose: data['PreviousClose'],
-      symbol: data['Identifier'],
-    );
-  }
-}
-
-// import 'dart:convert';
-// import 'dart:async';
-// import 'package:flutter/foundation.dart';
-// import 'package:flutter_client_sse/constants/sse_request_type_enum.dart';
-// import 'package:flutter_client_sse/flutter_client_sse.dart'; // Import the flutter_client_sse package
-// import 'package:stocks_news_new/api/api_requester.dart';
-
-// import '../../utils/constants.dart';
 
 // class StockDataManagerRes {
 //   final num? price;
@@ -297,6 +10,8 @@ class SSEManager {
 //   final num? changePercentage;
 //   final String? type;
 //   final num? previousClose;
+//   final String symbol;
+//   final String? time;
 
 //   StockDataManagerRes({
 //     this.price,
@@ -304,7 +19,26 @@ class SSEManager {
 //     this.changePercentage,
 //     this.type,
 //     this.previousClose,
+//     this.time,
+//     required this.symbol,
 //   });
+
+//   Map<String, dynamic> toMap() {
+//     return {
+//       'Price': price,
+//       'Change': change,
+//       'Change%': changePercentage,
+//       'Type': type,
+//       'Time': time,
+//       'Previous Close': previousClose,
+//       'Symbol': symbol,
+//     };
+//   }
+
+//   @override
+//   String toString() {
+//     return toMap().toString();
+//   }
 // }
 
 // class SSEManager {
@@ -313,6 +47,7 @@ class SSEManager {
 
 //   static SSEManager get instance => _instance;
 
+//   final Dio _dio = Dio();
 //   final Map<String, Function(StockDataManagerRes)> _listeners = {};
 //   final Map<String, StreamSubscription?> _subscriptions = {};
 
@@ -321,7 +56,11 @@ class SSEManager {
 //   SSEManager._internal();
 
 //   void addListener(String symbol, Function(StockDataManagerRes) listener) {
-//     _listeners[symbol] = listener;
+//     try {
+//       _listeners[symbol] = listener;
+//     } catch (e) {
+//       Utils().showLog('error in listener: $e');
+//     }
 //   }
 
 //   void removeListener(String symbol) {
@@ -390,14 +129,7 @@ class SSEManager {
 //   }
 
 //   void disconnectScreen(SimulatorEnum screen) {
-//     final symbols = _screenStreams[screen] ?? {};
-//     for (var symbol in symbols) {
-//       disconnect(symbol);
-//       if (kDebugMode) {
-//         print('Disconnected symbol $symbol for screen $screen');
-//       }
-//     }
-//     _screenStreams.remove(screen);
+//     _clearScreenData(screen);
 //   }
 
 //   void disconnectAllScreens() {
@@ -425,61 +157,78 @@ class SSEManager {
 //     if (kDebugMode) {
 //       print('Trying to connect to $url');
 //     }
-
-//     final subscription = SSEClient.subscribeToSSE(
-//             header: getHeaders(), method: SSERequestType.GET, url: url)
-//         .listen(
-//       (event) {
-//         final rawData = event.data;
-//         if (rawData == null) {
-//           return;
-//         }
-//         if (rawData.startsWith('data:')) {
-//           final jsonData = rawData.substring(5);
-//           try {
-//             final data = json.decode(jsonData) as Map<String, dynamic>;
-//             onData(data);
-//           } catch (e) {
-//             if (kDebugMode) {
-//               print('Error parsing SSE data: $e');
+//     _dio
+//         .get<ResponseBody>(
+//       url,
+//       options: Options(responseType: ResponseType.stream),
+//     )
+//         .then((response) {
+//       final subscription = response.data?.stream.listen(
+//         (event) {
+//           final rawData = String.fromCharCodes(event);
+//           if (rawData.startsWith('data:')) {
+//             final jsonData = rawData.substring(5);
+//             try {
+//               final data = json.decode(jsonData) as Map<String, dynamic>;
+//               onData(data);
+//             } catch (e) {
+//               if (kDebugMode) {
+//                 print('Error parsing SSE data: $e');
+//               }
 //             }
 //           }
-//         }
-//       },
-//       onError: (error) {
-//         if (kDebugMode) {
-//           print('Stream error: $error');
-//         }
-//         final uri = Uri.parse(url);
-//         final symbols = uri.queryParameters['symbol']?.split(',');
-
-//         if (symbols != null && symbols.isNotEmpty) {
-//           for (var symbol in symbols) {
-//             _handleStreamError(symbol);
+//         },
+//         onError: (error) {
+//           if (kDebugMode) {
+//             print('Stream error: $error');
 //           }
-//           _clearScreenData(type);
+//           final uri = Uri.parse(url);
+//           final symbols = uri.queryParameters['symbol']?.split(',');
+
+//           if (symbols != null && symbols.isNotEmpty) {
+//             for (var symbol in symbols) {
+//               _handleStreamError(symbol);
+//             }
+//             _clearScreenData(type);
+//           }
+//         },
+//         cancelOnError: false,
+//       );
+
+//       // Check if the URL is for a single symbol or multiple symbols
+//       final uri = Uri.parse(url);
+//       final symbols = uri.queryParameters['symbol']?.split(',');
+
+//       if (symbols != null && symbols.length > 1) {
+//         for (var symbol in symbols) {
+//           _subscriptions[symbol] = subscription;
 //         }
-//       },
-//       cancelOnError: false,
-//     );
-
-//     // Check if the URL is for a single symbol or multiple symbols
-//     final uri = Uri.parse(url);
-//     final symbols = uri.queryParameters['symbol']?.split(',');
-
-//     if (symbols != null && symbols.length > 1) {
-//       for (var symbol in symbols) {
-//         _subscriptions[symbol] = subscription;
+//       } else {
+//         final symbol = uri.queryParameters['symbol'];
+//         if (symbol != null) {
+//           _subscriptions[symbol] = subscription;
+//         }
 //       }
-//     } else {
-//       final symbol = uri.queryParameters['symbol'];
-//       if (symbol != null) {
-//         _subscriptions[symbol] = subscription;
+//     }).catchError((error) {
+//       if (kDebugMode) {
+//         print('Failed to connect to SSE: $error');
 //       }
-//     }
+//       if (kDebugMode) {
+//         print('Stream error: $error');
+//       }
+//       final uri = Uri.parse(url);
+//       final symbols = uri.queryParameters['symbol']?.split(',');
+
+//       if (symbols != null && symbols.isNotEmpty) {
+//         for (var symbol in symbols) {
+//           _handleStreamError(symbol);
+//         }
+//         _clearScreenData(type);
+//       }
+//     });
 //   }
 
-//   // Clear data for a specific screen
+// // Clear data for a specific screen
 //   void _clearScreenData(SimulatorEnum screen) {
 //     final symbols = _screenStreams[screen] ?? {};
 //     for (var symbol in symbols) {
@@ -510,20 +259,428 @@ class SSEManager {
 //   }
 
 //   StockDataManagerRes processStockData(Map<String, dynamic> data) {
-//     final extendedHoursType = data['ExtendedHoursType'];
+//     final extendedHoursType =
+//         data[streamKeysRes?.closeKeys?.type ?? 'ExtendedHoursType'];
 //     if (extendedHoursType == 'PreMarket' || extendedHoursType == 'PostMarket') {
 //       return StockDataManagerRes(
-//         price: data['ExtendedHoursPrice'],
-//         change: data['ExtendedHoursChange'],
-//         changePercentage: data['ExtendedHoursPercentChange'],
+//         price: data[streamKeysRes?.closeKeys?.price ?? 'ExtendedHoursPrice'],
+//         change: data[streamKeysRes?.closeKeys?.change ?? 'ExtendedHoursChange'],
+//         changePercentage: data[streamKeysRes?.closeKeys?.changePercentage ??
+//             'ExtendedHoursPercentChange'],
 //         type: extendedHoursType,
-//         previousClose: data['previousClose'],
+//         previousClose: data[streamKeysRes?.closeKeys?.previousClose ?? 'Close'],
+//         symbol: data[streamKeysRes?.closeKeys?.symbol ?? 'Identifier'],
+//         time: data[streamKeysRes?.closeKeys?.time ?? 'ExtendedHoursTime'],
 //       );
 //     }
 //     return StockDataManagerRes(
-//         price: data['Last'],
-//         change: data['Change'],
-//         changePercentage: data['PercentChange'],
-//         previousClose: data['previousClose']);
+//       price: data[streamKeysRes?.liveKeys?.time ?? 'Last'],
+//       change: data[streamKeysRes?.liveKeys?.change ?? 'Change'],
+//       changePercentage:
+//           data[streamKeysRes?.liveKeys?.changePercentage ?? 'PercentChange'],
+//       previousClose:
+//           data[streamKeysRes?.liveKeys?.previousClose ?? 'PreviousClose'],
+//       symbol: data[streamKeysRes?.liveKeys?.symbol ?? 'Identifier'],
+//     );
+
+//     // if (extendedHoursType == 'PreMarket' || extendedHoursType == 'PostMarket') {
+//     //   return StockDataManagerRes(
+//     //     price: data['ExtendedHoursPrice'],
+//     //     change: data['ExtendedHoursChange'],
+//     //     changePercentage: data['ExtendedHoursPercentChange'],
+//     //     type: extendedHoursType,
+//     //     previousClose: data['Close'],
+//     //     symbol: data['Identifier'],
+//     //     time: data['ExtendedHoursTime'],
+//     //   );
+//     // }
+//     // return StockDataManagerRes(
+//     //   price: data['Last'],
+//     //   change: data['Change'],
+//     //   changePercentage: data['PercentChange'],
+//     //   previousClose: data['PreviousClose'],
+//     //   symbol: data['Identifier'],
+//     // );
 //   }
 // }
+
+class SSEManager {
+  static final SSEManager _instance = SSEManager._internal();
+  factory SSEManager() => _instance;
+
+  static SSEManager get instance => _instance;
+
+  final Dio _dio = Dio();
+  final Map<String, Map<SimulatorEnum, Function(StockDataManagerRes)>>
+      _listeners = {};
+  final Map<String, Map<SimulatorEnum, StreamSubscription?>> _subscriptions =
+      {}; // Nested map
+  final Map<SimulatorEnum, Set<String>> _screenStreams = {};
+
+  SSEManager._internal();
+
+  // Add listener for a symbol on a specific screen
+  void addListener(String symbol, Function(StockDataManagerRes) listener,
+      SimulatorEnum screen) {
+    _listeners.putIfAbsent(symbol, () => {});
+    _listeners[symbol]![screen] = listener;
+  }
+
+  // Remove listener for a symbol on a specific screen
+  void removeListener(String symbol, SimulatorEnum screen) {
+    _listeners[symbol]?.remove(screen);
+    if (_listeners[symbol]?.isEmpty ?? true) {
+      _listeners.remove(symbol);
+    }
+  }
+
+  // Connect a stock stream to a specific screen
+  void connectStock({required String symbol, required SimulatorEnum screen}) {
+    final url = 'https://dev.stocks.news:8021/symbolData?symbol=$symbol';
+
+    if (_isStreamConnected(screen, symbol)) {
+      if (kDebugMode) {
+        print('Stream for $symbol is already connected.');
+      }
+      return;
+    }
+
+    _connectToStream(
+      url,
+      (data) {
+        final dataSymbol = data['Identifier'];
+        if (dataSymbol == symbol) {
+          _notifyListener(symbol, processStockData(data), screen);
+        }
+      },
+      screen,
+    );
+
+    _trackStreamForScreen(symbol, screen);
+  }
+
+  // Connect multiple stock streams to a specific screen
+  void connectMultipleStocks({
+    required List<String> symbols,
+    required SimulatorEnum screen,
+  }) {
+    try {
+      // If stream is already disposed, return early
+
+      // Ensure the screen stream is initialized as a set before using it
+      _screenStreams.putIfAbsent(screen, () => {}); // Initialize if null
+      final currentStreams = _screenStreams[screen]?.toSet() ?? {};
+      final removedSymbols = currentStreams.difference(symbols.toSet());
+
+      for (var symbol in removedSymbols) {
+        disconnect(symbol, screen);
+      }
+
+      print('current $currentStreams');
+      print('new ${symbols.toSet()}');
+
+      final newSymbols = symbols.toSet().difference(currentStreams);
+
+      if (newSymbols.isEmpty) {
+        if (kDebugMode) {
+          print('All streams for $screen are already connected.');
+        }
+        return;
+      }
+
+      final url =
+          'https://dev.stocks.news:8021/symbolsData?symbol=${symbols.join(',')}';
+
+      _connectToStream(
+        url,
+        (data) {
+          final symbol = data['Identifier'];
+
+          // Add the symbol to the stream if it is not already present
+          if (symbol != null) {
+            _screenStreams[screen]?.add(symbol);
+
+            bool symbolInStream =
+                _screenStreams[screen]?.contains(symbol) ?? false;
+
+            if (symbolInStream) {
+              _notifyListener(symbol, processStockData(data), screen);
+            }
+          }
+        },
+        screen,
+      );
+
+      _trackStreamForScreen(
+          symbols, screen); // Ensure this updates the stream correctly
+    } catch (e) {
+      print('ERROR $e');
+    }
+  }
+
+  // Disconnect all streams and listeners for a specific screen
+  // void disconnectScreen(SimulatorEnum screen) {
+  //   final symbols = _screenStreams[screen] ?? {};
+  //   for (var symbol in symbols) {
+  //     disconnect(symbol, screen);
+  //     removeListener(symbol, screen);
+  //   }
+  //   _screenStreams.remove(screen);
+  //   if (kDebugMode) {
+  //     print('Disconnected all streams and listeners for screen $screen');
+  //   }
+  // }
+  void disconnectScreen(SimulatorEnum screen) {
+    final symbols = _screenStreams[screen] ?? {};
+    for (var symbol in symbols) {
+      disconnect(symbol, screen);
+      removeListener(symbol, screen);
+    }
+    _screenStreams.remove(screen);
+    if (kDebugMode) {
+      print('Disconnected all streams and listeners for screen $screen');
+    }
+  }
+
+  // Disconnect all streams and listeners for all screens
+  void disconnectAllScreens() {
+    print('Before disconnect, active subscriptions: ${_subscriptions.length}');
+    _screenStreams.keys.toList().forEach(disconnectScreen);
+    _listeners.clear();
+    print('After disconnect, active subscriptions: ${_subscriptions.length}');
+    if (kDebugMode) {
+      print('Disconnected all streams and listeners for all screens.');
+    }
+  }
+
+  // Notify the listener for a stock on a specific screen
+  void _notifyListener(
+      String symbol, StockDataManagerRes stockData, SimulatorEnum screen) {
+    final listener = _listeners[symbol]?[screen];
+    if (listener != null) {
+      listener(stockData);
+    }
+  }
+
+  // Connect to a stock data stream
+  void _connectToStream(
+    String url,
+    Function(Map<String, dynamic>) onData,
+    SimulatorEnum screen,
+  ) {
+    if (kDebugMode) {
+      print('Trying to connect to $url');
+    }
+    _dio
+        .get<ResponseBody>(
+      url,
+      options: Options(responseType: ResponseType.stream),
+    )
+        .then((response) {
+      final subscription = response.data?.stream.listen(
+        (event) {
+          final rawData = String.fromCharCodes(event);
+          if (rawData.startsWith('data:')) {
+            final jsonData = rawData.substring(5);
+            try {
+              final data = json.decode(jsonData) as Map<String, dynamic>;
+              onData(data);
+            } catch (e) {
+              if (kDebugMode) {
+                print('Error parsing SSE data: $e');
+              }
+            }
+          }
+        },
+        onError: (error) {
+          if (kDebugMode) {
+            print('Stream error: $error');
+          }
+          _handleStreamError(url, screen);
+        },
+        cancelOnError: false,
+      );
+
+      // Track subscription for single or multiple symbols
+      final symbols = Uri.parse(url).queryParameters['symbol']?.split(',');
+
+      if (symbols != null && symbols.length > 1) {
+        for (var symbol in symbols) {
+          _subscriptions.putIfAbsent(symbol, () => {});
+          _subscriptions[symbol]![screen] = subscription;
+        }
+      } else {
+        final symbol = symbols?.first;
+        if (symbol != null) {
+          _subscriptions.putIfAbsent(symbol, () => {});
+          _subscriptions[symbol]![screen] = subscription;
+        }
+      }
+    }).catchError((error) {
+      if (kDebugMode) {
+        print('Failed to connect to SSE: $error');
+      }
+      _handleStreamError(url, screen);
+    });
+  }
+
+  // Track streams for a specific screen
+  void _trackStreamForScreen(dynamic symbols, SimulatorEnum screen) {
+    final symbolsSet = symbols is String ? {symbols} : symbols;
+    _screenStreams[screen] = (_screenStreams[screen] ?? {}).union(symbolsSet);
+    print('Tracking streams for $screen: $_screenStreams[screen]');
+  }
+
+  // Check if the stream for the symbol is already connected
+  bool _isStreamConnected(SimulatorEnum screen, String symbol) {
+    return _screenStreams[screen]?.contains(symbol) == true;
+  }
+
+  // Handle stream errors by disconnecting the stream and clearing resources
+  void _handleStreamError(String url, SimulatorEnum screen) {
+    final symbols = Uri.parse(url).queryParameters['symbol']?.split(',');
+    if (symbols != null && symbols.isNotEmpty) {
+      for (var symbol in symbols) {
+        disconnect(symbol, screen);
+        removeListener(symbol, screen);
+      }
+    }
+    _clearScreenData(screen);
+  }
+
+  // Clear data for a specific screen
+  void _clearScreenData(SimulatorEnum screen) {
+    final symbols = _screenStreams[screen] ?? {};
+    for (var symbol in symbols) {
+      disconnect(symbol, screen);
+      removeListener(symbol, screen);
+    }
+    _screenStreams.remove(screen);
+    if (kDebugMode) {
+      print('Cleared all data and disconnected streams for screen $screen');
+    }
+  }
+
+  // Disconnect a symbol's stream for a specific screen
+  void disconnect(String symbol, SimulatorEnum screen) {
+    final subscription = _subscriptions[symbol]?[screen];
+    if (subscription != null) {
+      subscription.cancel();
+      print('Stream for $symbol on screen $screen is canceled.');
+    }
+    _subscriptions[symbol]?.remove(screen);
+    if (_subscriptions[symbol]?.isEmpty ?? true) {
+      _subscriptions.remove(symbol);
+      print('Removed $symbol from active subscriptions.');
+    }
+  }
+
+  // Process stock data and map it to the model
+  StockDataManagerRes processStockData(Map<String, dynamic> data) {
+    final extendedHoursType = streamKeysRes?.closeKeys?.type != null &&
+            streamKeysRes?.closeKeys?.type != ''
+        ? data[streamKeysRes?.closeKeys?.type]
+        : data['ExtendedHoursType'];
+    //
+    if (extendedHoursType == 'PreMarket' || extendedHoursType == 'PostMarket') {
+      return StockDataManagerRes(
+        //
+        price: streamKeysRes?.closeKeys?.price != null &&
+                streamKeysRes?.closeKeys?.price != ''
+            ? data[streamKeysRes?.closeKeys?.price]
+            : data['ExtendedHoursPrice'],
+        //
+        change: streamKeysRes?.closeKeys?.change != null &&
+                streamKeysRes?.closeKeys?.change != ''
+            ? data[streamKeysRes?.closeKeys?.change]
+            : data['ExtendedHoursChange'],
+        //
+        changePercentage: streamKeysRes?.closeKeys?.changePercentage != null &&
+                streamKeysRes?.closeKeys?.changePercentage != ''
+            ? data[streamKeysRes?.closeKeys?.changePercentage]
+            : data['ExtendedHoursPercentChange'],
+        //
+        type: extendedHoursType,
+        previousClose: streamKeysRes?.closeKeys?.previousClose != null &&
+                streamKeysRes?.closeKeys?.previousClose != ''
+            ? data[streamKeysRes?.closeKeys?.previousClose]
+            : data['Close'],
+        //
+        symbol: streamKeysRes?.closeKeys?.symbol != null &&
+                streamKeysRes?.closeKeys?.symbol != ''
+            ? data[streamKeysRes?.closeKeys?.symbol]
+            : data['Identifier'],
+        //
+        time: streamKeysRes?.closeKeys?.time != null &&
+                streamKeysRes?.closeKeys?.time != ''
+            ? data[streamKeysRes?.closeKeys?.time]
+            : data['ExtendedHoursTime'],
+        //
+      );
+    }
+    return StockDataManagerRes(
+      price: streamKeysRes?.liveKeys?.price != null &&
+              streamKeysRes?.liveKeys?.price != ''
+          ? data[streamKeysRes?.liveKeys?.price]
+          : data['Last'],
+      //
+      change: streamKeysRes?.liveKeys?.change != null &&
+              streamKeysRes?.liveKeys?.change != ''
+          ? data[streamKeysRes?.liveKeys?.change]
+          : data['Change'],
+      //
+      changePercentage: streamKeysRes?.liveKeys?.changePercentage != null &&
+              streamKeysRes?.liveKeys?.changePercentage != ''
+          ? data[streamKeysRes?.liveKeys?.changePercentage]
+          : data['PercentChange'],
+      //
+      previousClose: streamKeysRes?.liveKeys?.previousClose != null &&
+              streamKeysRes?.liveKeys?.previousClose != ''
+          ? data[streamKeysRes?.liveKeys?.previousClose]
+          : data['PreviousClose'],
+      //
+      symbol: streamKeysRes?.liveKeys?.symbol != null &&
+              streamKeysRes?.liveKeys?.symbol != ''
+          ? data[streamKeysRes?.liveKeys?.symbol]
+          : data['Identifier'],
+      //
+    );
+  }
+}
+
+class StockDataManagerRes {
+  final num? price;
+  final num? change;
+  final num? changePercentage;
+  final String? type;
+  final num? previousClose;
+  final String symbol;
+  final String? time;
+
+  StockDataManagerRes({
+    this.price,
+    this.change,
+    this.changePercentage,
+    this.type,
+    this.previousClose,
+    this.time,
+    required this.symbol,
+  });
+
+  Map<String, dynamic> toMap() {
+    return {
+      'Price': price,
+      'Change': change,
+      'Change%': changePercentage,
+      'Type': type,
+      'Time': time,
+      'Previous Close': previousClose,
+      'Symbol': symbol,
+    };
+  }
+
+  @override
+  String toString() {
+    return toMap().toString();
+  }
+}

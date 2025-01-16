@@ -42,30 +42,6 @@ class SdTradeDefaultItem extends StatelessWidget {
         symbol: data.symbol,
       ),
     );
-    try {
-      // StockDetailProviderNew provider =
-      //     navigatorKey.currentContext!.read<StockDetailProviderNew>();
-
-      // ApiResponse response =
-      //     await provider.getTabData(symbol: symbol, showProgress: true);
-      // if (response.status) {
-      //   SummaryOrderNew order = await Navigator.pushReplacement(
-      //     navigatorKey.currentContext!,
-      //     MaterialPageRoute(
-      //       builder: (context) => TradeBuySellIndex(buy: buy),
-      //     ),
-      //   );
-      //   TradeProviderNew provider =
-      //       navigatorKey.currentContext!.read<TradeProviderNew>();
-
-      //   buy ? provider.addOrderData(order) : provider.sellOrderData(order);
-      //   await _showSheet(order, buy);
-      // } else {
-      //   //
-      // }
-    } catch (e) {
-      //
-    }
   }
 
   Future _showSheet(SummaryOrderNew? order, bool buy) async {

@@ -6,6 +6,7 @@ import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 
+//
 class SdTopDisclaimer extends StatelessWidget {
   const SdTopDisclaimer({super.key});
   @override
