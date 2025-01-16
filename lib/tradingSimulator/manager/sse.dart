@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:async';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
+import 'package:stocks_news_new/utils/utils.dart';
 
 import '../../utils/constants.dart';
 
@@ -12,6 +13,7 @@ class StockDataManagerRes {
   final String? type;
   final num? previousClose;
   final String symbol;
+  final String? time;
 
   StockDataManagerRes({
     this.price,
@@ -19,6 +21,7 @@ class StockDataManagerRes {
     this.changePercentage,
     this.type,
     this.previousClose,
+    this.time,
     required this.symbol,
   });
 
@@ -54,7 +57,11 @@ class SSEManager {
   SSEManager._internal();
 
   void addListener(String symbol, Function(StockDataManagerRes) listener) {
-    _listeners[symbol] = listener;
+    try {
+      _listeners[symbol] = listener;
+    } catch (e) {
+      Utils().showLog('error in listener: $e');
+    }
   }
 
   void removeListener(String symbol) {
@@ -256,12 +263,14 @@ class SSEManager {
     final extendedHoursType = data['ExtendedHoursType'];
     if (extendedHoursType == 'PreMarket' || extendedHoursType == 'PostMarket') {
       return StockDataManagerRes(
-          price: data['ExtendedHoursPrice'],
-          change: data['ExtendedHoursChange'],
-          changePercentage: data['ExtendedHoursPercentChange'],
-          type: extendedHoursType,
-          previousClose: data['PreviousClose'],
-          symbol: data['Identifier']);
+        price: data['ExtendedHoursPrice'],
+        change: data['ExtendedHoursChange'],
+        changePercentage: data['ExtendedHoursPercentChange'],
+        type: extendedHoursType,
+        previousClose: data['PreviousClose'],
+        symbol: data['Identifier'],
+        time: data['ExtendedHoursTime'],
+      );
     }
     return StockDataManagerRes(
       price: data['Last'],

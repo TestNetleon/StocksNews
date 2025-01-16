@@ -564,6 +564,9 @@ class StockDetailProviderNew extends ChangeNotifier {
             if (stockData.type != null) {
               _tabRes?.marketType = stockData.type;
             }
+            if (stockData.time != null) {
+              _tabRes?.marketTime = _formatExtendedHoursTime(stockData.time);
+            }
             notifyListeners();
           });
         }
@@ -578,6 +581,27 @@ class StockDetailProviderNew extends ChangeNotifier {
       Utils().showLog(e.toString());
       setStatusTab(Status.loaded);
       return ApiResponse(status: false);
+    }
+  }
+
+  String _formatExtendedHoursTime(String? time) {
+    if (time == null) {
+      return '';
+    }
+    try {
+      // Parse the input time (assuming it's in HH:mm:ss.SSS format)
+      final inputFormat = DateFormat("HH:mm:ss.SSS");
+      final dateTime = inputFormat.parse(time);
+
+      // Convert it to the desired output format
+      final outputFormat = DateFormat("h:mm:ss a");
+      final formattedTime = outputFormat.format(dateTime);
+
+      // Append the timezone abbreviation
+      return "$formattedTime EST";
+    } catch (e) {
+      print("Error formatting time: $e");
+      return time;
     }
   }
 

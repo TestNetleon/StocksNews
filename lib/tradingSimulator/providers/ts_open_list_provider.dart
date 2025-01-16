@@ -281,10 +281,9 @@ class TsOpenListProvider extends ChangeNotifier {
       TsOpenListRes stock, num shares, num invested) {
     num todaysReturn = 0;
     num todaysReturnPercentage = 0;
-    num price = stockData.price ?? 0;
+    num price = stockData.price ?? stock.currentPrice ?? 0;
 
     bool boughtToday = _isStockBoughtToday(stock, _extra!.reponseTime!);
-
     if (boughtToday) {
       // Stock bought today
       num boughtPrice = stock.avgPrice ?? 0;
@@ -450,6 +449,23 @@ class TsOpenListProvider extends ChangeNotifier {
   }
 
   void _connectSSEForSymbols(List<String> symbols) {
+    if (_data != null && _data?.isNotEmpty == true) {
+      for (var data in _data!) {
+        if (data.executable == true) {
+          _updateStockData(
+            data.symbol ?? '',
+            StockDataManagerRes(
+              symbol: data.symbol ?? "",
+              change: data.change,
+              changePercentage: data.changesPercentage,
+              price: data.currentPrice,
+              previousClose: data.previousClose,
+            ),
+          );
+        }
+      }
+    }
+
     SSEManager.instance.connectMultipleStocks(
       screen: SimulatorEnum.open,
       symbols: symbols,
@@ -461,4 +477,81 @@ class TsOpenListProvider extends ChangeNotifier {
       });
     }
   }
+
+  // Future<void> getData() async {
+  //   navigatorKey.currentContext!.read<TsPortfolioProvider>().getDashboardData();
+  //   setStatus(Status.loading);
+
+  //   try {
+  //     Map request = {
+  //       "token":
+  //           navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
+  //     };
+
+  //     ApiResponse response = await apiRequest(
+  //       url: Apis.tsOrderList,
+  //       request: request,
+  //       showProgress: false,
+  //     );
+
+  //     if (response.status) {
+  //       _data = tsOpenListResFromJson(jsonEncode(response.data));
+  //       _extra = response.extra is Extra ? response.extra as Extra : null;
+  //       _error = null;
+
+  //       // Filter symbols with executable == true
+  //       List<String> executableSymbols = _data
+  //               ?.where((stock) => stock.executable == true)
+  //               .map((stock) => stock.symbol ?? '')
+  //               .toList() ??
+  //           [];
+
+  //       _updateDataWithoutStream();
+  //       if (executableSymbols.isNotEmpty) {
+  //         _connectSSEForSymbols(executableSymbols);
+  //       }
+  //     } else {
+  //       _data = null;
+  //       _error = response.message ?? Const.errSomethingWrong;
+  //     }
+
+  //     setStatus(Status.loaded);
+  //   } catch (e) {
+  //     _data = null;
+  //     _error = Const.errSomethingWrong;
+  //     Utils().showLog('Open data: $e');
+  //     setStatus(Status.loaded);
+  //   }
+  // }
+
+  // void _connectSSEForSymbols(List<String> symbols) {
+  //   SSEManager.instance.connectMultipleStocks(
+  //     screen: SimulatorEnum.open,
+  //     symbols: symbols,
+  //   );
+
+  //   // Add listeners and update stock data
+  //   for (var symbol in symbols) {
+  //     SSEManager.instance.addListener(symbol, (StockDataManagerRes stockData) {
+  //       _updateStockData(symbol, stockData);
+  //     });
+  //   }
+  // }
+
+  // void _updateDataWithoutStream() {
+  //   if (_data != null && _data?.isNotEmpty == true) {
+  //     for (var data in _data!) {
+  //       _updateStockData(
+  //         data.symbol ?? '',
+  //         StockDataManagerRes(
+  //           symbol: data.symbol ?? "",
+  //           change: data.change,
+  //           changePercentage: data.changesPercentage,
+  //           price: data.currentPrice,
+  //           previousClose: data.previousClose,
+  //         ),
+  //       );
+  //     }
+  //   }
+  // }
 }
