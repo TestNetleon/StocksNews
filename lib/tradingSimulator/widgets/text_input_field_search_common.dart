@@ -108,36 +108,6 @@ class _TsTextInputFieldSearchCommonState extends State<TsTextInputFieldSearch> {
         currentPrice: data?.currentPrice,
       ),
     );
-
-    // try {
-    //   StockDetailProviderNew provider =
-    //       navigatorKey.currentContext!.read<StockDetailProviderNew>();
-
-    //   ApiResponse response = await provider.getTabData(
-    //     symbol: symbol,
-    //     showProgress: true,
-    //     startSSE: true,
-    //   );
-    //   if (response.status) {
-    //     SummaryOrderNew order = await Navigator.pushReplacement(
-    //       navigatorKey.currentContext!,
-    //       MaterialPageRoute(
-    //         builder: (context) => TradeBuySellIndex(buy: widget.buy),
-    //       ),
-    //     );
-    //     TradeProviderNew provider =
-    //         navigatorKey.currentContext!.read<TradeProviderNew>();
-
-    //     widget.buy
-    //         ? provider.addOrderData(order)
-    //         : provider.sellOrderData(order);
-    //     await _showSheet(order, widget.buy);
-    //   } else {
-    //     //
-    //   }
-    // } catch (e) {
-    //   //
-    // }
   }
 
   Future _showSheet(SummaryOrderNew? order, bool buy) async {

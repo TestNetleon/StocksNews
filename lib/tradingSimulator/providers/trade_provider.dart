@@ -1,142 +1,20 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import '../../api/api_requester.dart';
 import '../../api/api_response.dart';
 import '../../api/apis.dart';
+import '../../providers/user_provider.dart';
+import '../../routes/my_app.dart';
 import '../../utils/constants.dart';
 import '../../utils/utils.dart';
 import '../manager/sse.dart';
+import '../modals/ts_topbar.dart';
 
 class TradeProviderNew extends ChangeNotifier {
-  // List<SummaryOrderNew> orders = [];
-
-  // void addOrderData(SummaryOrderNew? order) {
-  //   Utils().showLog("------Buy order");
-  //   TsPortfolioProvider provider =
-  //       navigatorKey.currentContext!.read<TsPortfolioProvider>();
-  //   try {
-  //     if (order != null) {
-  //       int existingOrderIndex =
-  //           orders.indexWhere((o) => o.symbol == order.symbol);
-  //       num shares = order.shares ?? 0;
-  //       num dollars = order.dollars ?? 0;
-  //       String cleanedString =
-  //           order.price?.replaceAll(RegExp(r'[^\d.]'), '') ?? "";
-  //       num price = num.parse(cleanedString);
-  //       num invested = order.isShare ? (price * shares) : dollars;
-  //       if (invested > (provider.userData?.tradeBalance ?? 0)) {
-  //         popUpAlert(
-  //           message: "Insufficient available balance to place this order.",
-  //           title: "Alert",
-  //         );
-  //         return;
-  //       }
-  //       if (existingOrderIndex != -1) {
-  //         SummaryOrderNew existingOrder = orders[existingOrderIndex];
-  //         num existingShares = existingOrder.shares ?? 0;
-  //         num newShares = order.shares ?? 0;
-  //         num totalShares = existingShares + newShares;
-  //         num existingDollars = existingOrder.dollars ?? 0;
-  //         num newDollars = order.dollars ?? 0;
-  //         num totalDollars = existingDollars + newDollars;
-  //         num existingInvested = existingOrder.invested ?? 0;
-  //         num newInvested = order.invested ?? 0;
-  //         num totalInvested = existingInvested + newInvested;
-  //         orders[existingOrderIndex] = SummaryOrderNew(
-  //           image: order.image,
-  //           symbol: order.symbol,
-  //           name: order.name,
-  //           shares: totalShares,
-  //           dollars: totalDollars,
-  //           price: order.price,
-  //           change: order.change,
-  //           changePercentage: order.changePercentage,
-  //           invested: totalInvested,
-  //           isShare: order.isShare,
-  //           buy: order.buy,
-  //         );
-  //       } else {
-  //         orders.add(order);
-  //       }
-  //       // provider.updateBalance(
-  //       //   balance: (provider.userData?.tradeBalance ?? 0) - invested,
-  //       //   invested: (provider.userData?.invested ?? 0) + invested,
-  //       // );
-  //       // data = UserBalanceDataNew(
-  //       //   availableBalance: data.availableBalance - invested,
-  //       //   invested: data.invested + invested,
-  //       // );
-  //     } else {
-  //       Utils().showLog("ELSE: Received null order");
-  //     }
-  //     notifyListeners();
-  //   } catch (e) {
-  //     Utils().showLog("Error: $e");
-  //   }
-  // }
-
-  // void sellOrderData(SummaryOrderNew? order) {
-  //   Utils().showLog("------Sell order");
-  //   // TsPortfolioProvider provider =
-  //   //     navigatorKey.currentContext!.read<TsPortfolioProvider>();
-  //   try {
-  //     if (order != null) {
-  //       int existingOrderIndex =
-  //           orders.indexWhere((o) => o.symbol == order.symbol);
-  //       if (existingOrderIndex != -1) {
-  //         Utils().showLog("----$existingOrderIndex");
-  //         SummaryOrderNew existingOrder = orders[existingOrderIndex];
-  //         num existingShares = existingOrder.shares ?? 0;
-  //         num soldShares = order.shares ?? 0;
-  //         num remainingShares = existingShares - soldShares;
-  //         num existingDollars = existingOrder.dollars ?? 0;
-  //         num soldDollars = order.dollars ?? 0;
-  //         num remainingDollars = existingDollars - soldDollars;
-  //         num existingInvested = existingOrder.invested ?? 0;
-  //         num newInvested = order.invested ?? 0;
-  //         num totalInvested = existingInvested - newInvested;
-  //         if (totalInvested <= 0) {
-  //           orders.removeAt(existingOrderIndex);
-  //         } else {
-  //           orders[existingOrderIndex] = SummaryOrderNew(
-  //               image: order.image,
-  //               symbol: order.symbol,
-  //               name: order.name,
-  //               shares: remainingShares,
-  //               dollars: remainingDollars,
-  //               price: order.price,
-  //               change: order.change,
-  //               changePercentage: order.changePercentage,
-  //               invested: totalInvested,
-  //               isShare: order.isShare,
-  //               buy: order.buy);
-  //         }
-  //         // num sharesToSell = order.shares ?? 0;
-  //         // num dollarsToSell = order.dollars ?? 0;
-  //         // String cleanedString =
-  //         //     order.price?.replaceAll(RegExp(r'[^\d.]'), '') ?? "";
-  //         // num price = num.parse(cleanedString);
-  //         // num invested = order.isShare ? (price * sharesToSell) : dollarsToSell;
-  //         // provider.updateBalance(
-  //         //   balance: (provider.userData?.tradeBalance ?? 0) + invested,
-  //         //   invested: (provider.userData?.invested ?? 0) - invested,
-  //         // );
-  //         // data = TsUserRes(
-  //         //   tradeBalance: data.availableBalance + invested,
-  //         //   invested: data.invested - invested,
-  //         // );
-  //       } else {
-  //         orders.add(order);
-  //         Utils().showLog("Order not found for symbol: ${order.symbol}");
-  //       }
-  //       notifyListeners();
-  //     } else {
-  //       Utils().showLog("ELSE: Received null order");
-  //     }
-  //   } catch (e) {
-  //     Utils().showLog("Error: $e");
-  //   }
-  // }
-
+  //MARK: Sheet Stock
   StockDataManagerRes? _tappedStock;
   StockDataManagerRes? get tappedStock => _tappedStock;
 
@@ -158,12 +36,15 @@ class TradeProviderNew extends ChangeNotifier {
           _tappedStock = data;
           notifyListeners();
         },
+        SimulatorEnum.detail,
+        // SimulatorEnum.detail,
       );
     } catch (e) {
       Utils().showLog('---$e');
     }
   }
 
+  //MARK: Buy Share API
   Future<ApiResponse> requestBuyShare(request, {showProgress = false}) async {
     notifyListeners();
     try {
@@ -189,6 +70,7 @@ class TradeProviderNew extends ChangeNotifier {
     }
   }
 
+  //MARK: Sell Share API
   Future<ApiResponse> requestSellShare(request, {showProgress = false}) async {
     notifyListeners();
     try {
@@ -212,6 +94,7 @@ class TradeProviderNew extends ChangeNotifier {
     }
   }
 
+  //MARK: Update Share API
   Future<ApiResponse> requestUpdateShare({
     Map? request,
     showProgress = false,
@@ -230,6 +113,116 @@ class TradeProviderNew extends ChangeNotifier {
       Utils().showLog(e.toString());
       notifyListeners();
       return ApiResponse(status: false, message: Const.errSomethingWrong);
+    }
+  }
+
+//MARK: Detail Top API
+
+  TsStockDetailRes? _detailRes;
+  TsStockDetailRes? get detailRes => _detailRes;
+
+  Status _status = Status.ideal;
+  Status get status => _status;
+  bool get isLoading => _status == Status.loading;
+
+  String? _error;
+  String? get error => _error ?? Const.errSomethingWrong;
+
+  setStatus(status) {
+    _status = status;
+    notifyListeners();
+  }
+
+  Future getDetailTopData({
+    required String symbol,
+    bool showProgress = false,
+  }) async {
+    setStatus(Status.loading);
+    try {
+      Map request = {
+        "token":
+            navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
+        "symbol": symbol,
+      };
+
+      ApiResponse response = await apiRequest(
+        url: Apis.tsTopBar,
+        showProgress: showProgress,
+        request: request,
+      );
+      if (response.status) {
+        _detailRes = tsStockDetailTabResFromJson(jsonEncode(response.data));
+        _error = null;
+
+        try {
+          SSEManager.instance.connectStock(
+            screen: SimulatorEnum.detail,
+            symbol: symbol,
+          );
+
+          SSEManager.instance.addListener(
+            symbol,
+            (stockData) {
+              Utils().showLog('Detail: ${stockData.toMap()}');
+
+              if (stockData.price != null) {
+                _detailRes?.currentPrice = stockData.price;
+                _detailRes?.change = stockData.change;
+              }
+              if (stockData.change != null) {
+                _detailRes?.change = stockData.change;
+              }
+              if (stockData.changePercentage != null) {
+                _detailRes?.changePercentage = stockData.changePercentage;
+              }
+
+              _detailRes?.marketType = stockData.type;
+
+              if (stockData.time != null) {
+                _detailRes?.marketTime =
+                    _formatExtendedHoursTime(stockData.time);
+              }
+              notifyListeners();
+            },
+            SimulatorEnum.detail,
+          );
+        } catch (e) {
+          //
+        }
+      } else {
+        _detailRes = null;
+        _error = response.message;
+      }
+      setStatus(Status.loaded);
+
+      return ApiResponse(status: response.status);
+    } catch (e) {
+      _detailRes = null;
+      _error = Const.errSomethingWrong;
+      Utils().showLog('Error $e');
+      setStatus(Status.loaded);
+      return ApiResponse(status: false);
+    }
+  }
+
+  String _formatExtendedHoursTime(String? time) {
+    if (time == null) {
+      return '';
+    }
+    try {
+      // Parse the input time (assuming it's in HH:mm:ss.SSS format)
+      final inputFormat = DateFormat("HH:mm:ss.SSS");
+      final dateTime = inputFormat.parse(time);
+
+      // Convert it to the desired output format
+      final outputFormat = DateFormat("h:mm:ss a");
+      final formattedTime = outputFormat.format(dateTime);
+
+      // Append the timezone abbreviation
+      return "$formattedTime EST";
+    } catch (e) {
+      print("Error formatting time: $e");
+      return time;
     }
   }
 }

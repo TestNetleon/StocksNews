@@ -277,14 +277,14 @@ class TsOpenListProvider extends ChangeNotifier {
     return createdAtDate == responseDateString;
   }
 
+//MARK: Today's Return
   Map<String, num> _calculateTodaysReturn(StockDataManagerRes stockData,
       TsOpenListRes stock, num shares, num invested) {
     num todaysReturn = 0;
     num todaysReturnPercentage = 0;
-    num price = stockData.price ?? 0;
+    num price = stockData.price ?? stock.currentPrice ?? 0;
 
     bool boughtToday = _isStockBoughtToday(stock, _extra!.reponseTime!);
-
     if (boughtToday) {
       // Stock bought today
       num boughtPrice = stock.avgPrice ?? 0;
@@ -313,6 +313,7 @@ class TsOpenListProvider extends ChangeNotifier {
         {'todaysReturn': 0, 'todaysReturnPercentage': 0};
   }
 
+//MARK: Update Stock Data
   void _updateStockData(String symbol, StockDataManagerRes stockData) {
     if (_data == null || _data!.isEmpty) return;
 
@@ -355,6 +356,7 @@ class TsOpenListProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+//MARK: Update Balance
   void _updatePortfolioBalance() {
     TsPortfolioProvider provider =
         navigatorKey.currentContext!.read<TsPortfolioProvider>();
@@ -410,6 +412,7 @@ class TsOpenListProvider extends ChangeNotifier {
     }
   }
 
+//MARK: API Call
   Future<void> getData() async {
     navigatorKey.currentContext!.read<TsPortfolioProvider>().getDashboardData();
     setStatus(Status.loading);
@@ -449,16 +452,43 @@ class TsOpenListProvider extends ChangeNotifier {
     }
   }
 
+// MARK: SSE Manager
   void _connectSSEForSymbols(List<String> symbols) {
-    SSEManager.instance.connectMultipleStocks(
-      screen: SimulatorEnum.open,
-      symbols: symbols,
-    );
+    if (_data != null &&
+        _data?.isNotEmpty == true &&
+        (_extra?.executable == true)) {
+      for (var data in _data!) {
+        _updateStockData(
+          data.symbol ?? '',
+          StockDataManagerRes(
+            symbol: data.symbol ?? "",
+            change: data.change,
+            changePercentage: data.changesPercentage,
+            price: data.currentPrice,
+            previousClose: data.previousClose,
+          ),
+        );
+        try {
+          SSEManager.instance.connectMultipleStocks(
+            screen: SimulatorEnum.open,
+            symbols: symbols,
+          );
 
-    for (var symbol in symbols) {
-      SSEManager.instance.addListener(symbol, (StockDataManagerRes stockData) {
-        _updateStockData(symbol, stockData);
-      });
+          SSEManager.instance.addListener(
+            data.symbol ?? '',
+            (StockDataManagerRes stockData) {
+              _updateStockData(data.symbol ?? '', stockData);
+            },
+            SimulatorEnum.open,
+          );
+        } catch (e) {
+          //
+        }
+      }
+    } else {
+      if (kDebugMode) {
+        print('not executable');
+      }
     }
   }
 }

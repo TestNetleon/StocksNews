@@ -308,33 +308,42 @@ class TournamentTradesProvider extends ChangeNotifier {
     _activeTickers.add(symbol);
     Utils().showLog('Added $symbol to active tickers');
 
-    SSEManager.instance.connectMultipleStocks(
-      screen: SimulatorEnum.detail,
-      symbols: _activeTickers.toList(),
-    );
+    try {
+      SSEManager.instance.connectMultipleStocks(
+        screen: SimulatorEnum.detail,
+        symbols: _activeTickers.toList(),
+      );
 
-    SSEManager.instance.addListener(symbol, (stockData) {
-      // Utils().showLog(
-      //     'Streaming update for $symbol, Price: ${stockData.price}, Change: ${stockData.change}, Change%: ${stockData.changePercentage}');
+      SSEManager.instance.addListener(
+        symbol,
+        (stockData) {
+          // Utils().showLog(
+          //     'Streaming update for $symbol, Price: ${stockData.price}, Change: ${stockData.change}, Change%: ${stockData.changePercentage}');
 
-      tickerData?.currentPrice = stockData.price;
-      tickerData?.change = stockData.change;
-      tickerData?.changesPercentage = stockData.changePercentage;
+          tickerData?.currentPrice = stockData.price;
+          tickerData?.change = stockData.change;
+          tickerData?.changesPercentage = stockData.changePercentage;
 
-      if (buttonRes?.orderPrice != null) {
-        num CP = stockData.price ?? 0;
-        num OP = buttonRes?.orderPrice ?? 0;
+          if (buttonRes?.orderPrice != null) {
+            num CP = stockData.price ?? 0;
+            num OP = buttonRes?.orderPrice ?? 0;
 
-        if (buttonRes?.orderType == StockType.buy.name) {
-          buttonRes?.orderChange = ((CP - OP) / OP) * 100;
-        } else {
-          buttonRes?.orderChange = ((OP - CP) / CP) * 100;
-        }
-        Utils().showLog('=>$symbol::${buttonRes?.orderChange?.toCurrency()}');
-      }
+            if (buttonRes?.orderType == StockType.buy.name) {
+              buttonRes?.orderChange = ((CP - OP) / OP) * 100;
+            } else {
+              buttonRes?.orderChange = ((OP - CP) / CP) * 100;
+            }
+            Utils()
+                .showLog('=>$symbol::${buttonRes?.orderChange?.toCurrency()}');
+          }
 
-      notifyListeners();
-    });
+          notifyListeners();
+        },
+        SimulatorEnum.open,
+      );
+    } catch (e) {
+      //
+    }
   }
 }
 

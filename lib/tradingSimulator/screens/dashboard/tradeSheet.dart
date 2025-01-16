@@ -147,7 +147,8 @@ class _SearchTickerState extends State<SearchTicker> {
                           ),
                         ),
                         Visibility(
-                          visible: stock?.change != null,
+                          visible: stock?.change != null &&
+                              stock?.changePercentage != null,
                           child: Text(
                             '${stock?.change?.toFormattedPrice()} (${stock?.changePercentage?.toCurrency()}%)',
                             style: styleGeorgiaRegular(

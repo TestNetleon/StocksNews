@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/api/api_requester.dart';
 import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/api/apis.dart';
-import 'package:stocks_news_new/providers/stock_detail_new.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/service/braze/service.dart';
@@ -12,10 +11,10 @@ import 'package:stocks_news_new/tradingSimulator/modals/ts_pending_list_res.dart
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/utils/utils.dart';
-
 import '../../tournament/provider/trades.dart';
 import '../../widgets/custom/alert_popup.dart';
 import '../screens/tradeBuySell/index.dart';
+import 'trade_provider.dart';
 
 //
 class TsPendingListProvider extends ChangeNotifier {
@@ -154,13 +153,12 @@ class TsPendingListProvider extends ChangeNotifier {
           return;
         }
 
-        StockDetailProviderNew provider =
-            navigatorKey.currentContext!.read<StockDetailProviderNew>();
+        TradeProviderNew provider =
+            navigatorKey.currentContext!.read<TradeProviderNew>();
 
-        ApiResponse response = await provider.getTabData(
-          symbol: _data?[index].symbol,
+        ApiResponse response = await provider.getDetailTopData(
+          symbol: _data?[index].symbol ?? '',
           showProgress: true,
-          startSSE: true,
         );
         if (response.status) {
           Navigator.pushReplacement(

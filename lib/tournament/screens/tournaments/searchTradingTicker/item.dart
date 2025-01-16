@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stocks_news_new/tradingSimulator/modals/trading_search_res.dart';
-import 'package:stocks_news_new/tradingSimulator/providers/trade_provider.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
@@ -20,8 +19,6 @@ class TournamentDefaultItem extends StatelessWidget {
   Future _onTap({String? symbol}) async {
     Navigator.pop(navigatorKey.currentContext!, symbol);
   }
-
-  Future _showSheet(SummaryOrderNew? order, bool buy) async {}
 
   @override
   Widget build(BuildContext context) {

@@ -21,6 +21,7 @@ class StockDetailTabRes {
   int? isWatchListAdded;
   final bool? showAnalysis;
   String? marketType;
+  String? marketTime;
 
   StockDetailTabRes({
     this.keyStats,
@@ -31,6 +32,7 @@ class StockDetailTabRes {
     this.shareUrl,
     this.isWatchListAdded,
     this.marketType,
+    this.marketTime,
   });
 
   factory StockDetailTabRes.fromJson(Map<String, dynamic> json) =>

@@ -125,6 +125,7 @@ class TsOpenListItem extends StatelessWidget {
                       alignment: Alignment.centerLeft,
                       padding: const EdgeInsets.only(right: 40),
                       child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
                             "Invested",
@@ -177,7 +178,7 @@ class TsOpenListItem extends StatelessWidget {
                     child: Align(
                       alignment: Alignment.centerRight,
                       child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
                           Text(
                             textAlign: TextAlign.center,

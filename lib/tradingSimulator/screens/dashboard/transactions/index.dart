@@ -67,7 +67,10 @@ class _TsTransactionListState extends State<TsTransactionList> {
         child: ListView.separated(
           padding: EdgeInsets.only(bottom: 20),
           itemBuilder: (context, index) {
-            TsPendingListRes item = provider.data![index];
+            TsPendingListRes? item = provider.data?[index];
+            if (item == null) {
+              return SizedBox();
+            }
             return TsTransactionListItem(
               item: item,
               onTap: () {

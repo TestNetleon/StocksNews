@@ -6,6 +6,7 @@ import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 
+//
 class SdTopDisclaimer extends StatelessWidget {
   const SdTopDisclaimer({super.key});
   @override
@@ -21,7 +22,9 @@ class SdTopDisclaimer extends StatelessWidget {
       child: provider.tabRes?.marketType != null &&
               provider.tabRes?.marketType != ''
           ? Text(
-              provider.tabRes?.marketType ?? "",
+              provider.tabRes?.marketType == 'PreMarket'
+                  ? 'Pre-Market: ${provider.tabRes?.marketTime}'
+                  : 'Post-Market: ${provider.tabRes?.marketTime}',
               style: styleGeorgiaRegular(
                 color: ThemeColors.greyText,
                 fontSize: 12,

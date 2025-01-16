@@ -3,11 +3,8 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/api/api_response.dart';
-import 'package:stocks_news_new/modals/stock_details_res.dart';
-import 'package:stocks_news_new/providers/stock_detail_new.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
-import 'package:stocks_news_new/screens/stockDetail/stockDetailTabs/common_heading.dart';
 import 'package:stocks_news_new/tradingSimulator/providers/ts_open_list_provider.dart';
 import 'package:stocks_news_new/tradingSimulator/providers/ts_pending_list_provider.dart';
 import 'package:stocks_news_new/tradingSimulator/providers/ts_portfollo_provider.dart';
@@ -22,7 +19,9 @@ import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/theme_button.dart';
 import '../../manager/sse.dart';
+import '../../modals/ts_topbar.dart';
 import '../../providers/trade_provider.dart';
+import '../detailTop/top.dart';
 
 class BuySellContainer extends StatefulWidget {
   final bool buy;
@@ -77,15 +76,12 @@ class _BuySellContainerState extends State<BuySellContainer> {
     super.dispose();
   }
 
-  _calculationsForBUY() {}
-  _calculationsForSELL() {}
-
   _onTap() async {
     closeKeyboard();
-    StockDetailProviderNew provider = context.read<StockDetailProviderNew>();
-    KeyStats? keyStats = provider.tabRes?.keyStats;
+    TradeProviderNew provider = context.read<TradeProviderNew>();
+    TsStockDetailRes? detailRes = provider.detailRes;
 
-    if (keyStats?.tradeMarketStatus == false) {
+    if (detailRes?.executable == false && widget.editTradeID == null) {
       popUpAlert(
         title: "Confirm Order",
         message:
@@ -103,28 +99,13 @@ class _BuySellContainerState extends State<BuySellContainer> {
   }
 
   _onContinue({bool isPending = false}) async {
-    StockDetailProviderNew provider = context.read<StockDetailProviderNew>();
-    TradeProviderNew tradeProviderNew = context.read<TradeProviderNew>();
+    TradeProviderNew provider = context.read<TradeProviderNew>();
     TsPortfolioProvider portfolioProvider = context.read<TsPortfolioProvider>();
+    TsStockDetailRes? detailRes = provider.detailRes;
 
-    String cleanedString =
-        provider.tabRes?.keyStats?.price?.replaceAll(RegExp(r'[^\d.]'), '') ??
-            "";
-    num price = num.parse(cleanedString);
     num invested = _selectedSegment == TypeTrade.shares
-        ? price * num.parse(_currentText)
+        ? (detailRes?.currentPrice ?? 0) * num.parse(_currentText)
         : num.parse(_currentText);
-
-    closeKeyboard();
-    if (controller.text.isEmpty || num.parse(controller.text) == 0.0) {
-      popUpAlert(
-        message: "Value can't be empty",
-        title: "Alert",
-        icon: Images.alertPopGIF,
-      );
-      return;
-    }
-
     if (widget.editTradeID != null) {
       final Map<String, dynamic> request = {
         "token":
@@ -133,7 +114,7 @@ class _BuySellContainerState extends State<BuySellContainer> {
         "order_type": 'MARKET_ORDER',
         "duration": "GOOD_UNTIL_CANCELLED"
       };
-      ApiResponse response = await tradeProviderNew.requestUpdateShare(
+      ApiResponse response = await provider.requestUpdateShare(
         id: widget.editTradeID ?? 0,
         request: request,
         showProgress: true,
@@ -145,14 +126,14 @@ class _BuySellContainerState extends State<BuySellContainer> {
           isShare: _selectedSegment == TypeTrade.shares,
           dollars: _selectedSegment == TypeTrade.dollar
               ? num.parse(_currentText)
-              : (num.parse(_currentText) * price),
+              : (num.parse(_currentText) * (detailRes?.currentPrice ?? 0)),
           shares: _selectedSegment == TypeTrade.shares
               ? num.parse(_currentText)
-              : (num.parse(_currentText) / price),
-          image: provider.tabRes?.companyInfo?.image,
-          name: provider.tabRes?.keyStats?.name,
-          price: provider.tabRes?.keyStats?.price,
-          symbol: provider.tabRes?.keyStats?.symbol,
+              : (num.parse(_currentText) / (detailRes?.currentPrice ?? 0)),
+          image: detailRes?.image,
+          name: detailRes?.company,
+          price: '${detailRes?.currentPrice?.toFormattedPrice()}',
+          symbol: detailRes?.symbol,
           invested: invested,
           buy: widget.buy,
           date: response.data['result']['created_date'],
@@ -182,6 +163,15 @@ class _BuySellContainerState extends State<BuySellContainer> {
 
       return;
     }
+    closeKeyboard();
+    if (controller.text.isEmpty || num.parse(controller.text) == 0.0) {
+      popUpAlert(
+        message: "Value can't be empty",
+        title: "Alert",
+        icon: Images.alertPopGIF,
+      );
+      return;
+    }
 
     if (widget.buy) {
       if (invested > (portfolioProvider.userData?.tradeBalance ?? 0)) {
@@ -197,7 +187,7 @@ class _BuySellContainerState extends State<BuySellContainer> {
               navigatorKey.currentContext!.read<UserProvider>().user?.token ??
                   "",
           "action": "BUY",
-          "symbol": provider.tabRes?.keyStats?.symbol,
+          "symbol": detailRes?.symbol,
           "quantity": controller.text, //entered value
           "order_type": 'MARKET_ORDER',
           "duration": "GOOD_UNTIL_CANCELLED"
@@ -224,7 +214,7 @@ class _BuySellContainerState extends State<BuySellContainer> {
         // }
 
         ApiResponse response =
-            await tradeProviderNew.requestBuyShare(request, showProgress: true);
+            await provider.requestBuyShare(request, showProgress: true);
         Utils().showLog('~~~~~${response.status}~~~~');
         if (response.status) {
           context.read<TsPortfolioProvider>().getDashboardData();
@@ -233,18 +223,18 @@ class _BuySellContainerState extends State<BuySellContainer> {
 
           final order = SummaryOrderNew(
             isShare: _selectedSegment == TypeTrade.shares,
-            change: provider.tabRes?.keyStats?.changeWithCur,
-            changePercentage: provider.tabRes?.keyStats?.changesPercentage,
+            change: '${detailRes?.change?.toFormattedPrice()}',
+            changePercentage: detailRes?.changePercentage,
             dollars: _selectedSegment == TypeTrade.dollar
                 ? num.parse(_currentText)
-                : (num.parse(_currentText) * price),
+                : (num.parse(_currentText) * (detailRes?.currentPrice ?? 0)),
             shares: _selectedSegment == TypeTrade.shares
                 ? num.parse(_currentText)
-                : (num.parse(_currentText) / price),
-            image: provider.tabRes?.companyInfo?.image,
-            name: provider.tabRes?.keyStats?.name,
-            price: provider.tabRes?.keyStats?.price,
-            symbol: provider.tabRes?.keyStats?.symbol,
+                : (num.parse(_currentText) / (detailRes?.currentPrice ?? 0)),
+            image: detailRes?.image,
+            name: detailRes?.company,
+            price: '${detailRes?.currentPrice?.toFormattedPrice()}',
+            symbol: detailRes?.symbol,
             invested: invested,
             buy: widget.buy,
             date: response.data['result']['created_date'],
@@ -277,7 +267,7 @@ class _BuySellContainerState extends State<BuySellContainer> {
         "token":
             navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
         "action": "SELL",
-        "symbol": provider.tabRes?.keyStats?.symbol,
+        "symbol": detailRes?.symbol,
         "order_type": 'MARKET_ORDER',
         "duration": "GOOD_UNTIL_CANCELLED",
         // "current_price": provider.tabRes?.keyStats?.price
@@ -291,7 +281,7 @@ class _BuySellContainerState extends State<BuySellContainer> {
       });
 
       ApiResponse response =
-          await tradeProviderNew.requestSellShare(request, showProgress: true);
+          await provider.requestSellShare(request, showProgress: true);
       Utils().showLog('~~~~~${response.status}~~~~');
 
       if (response.status) {
@@ -299,18 +289,18 @@ class _BuySellContainerState extends State<BuySellContainer> {
         context.read<TsOpenListProvider>().getData();
         final order = SummaryOrderNew(
           isShare: _selectedSegment == TypeTrade.shares,
-          change: provider.tabRes?.keyStats?.changeWithCur,
-          changePercentage: provider.tabRes?.keyStats?.changesPercentage,
+          change: '${detailRes?.change?.toFormattedPrice()}',
+          changePercentage: detailRes?.changePercentage,
           dollars: _selectedSegment == TypeTrade.dollar
               ? num.parse(_currentText)
-              : (num.parse(_currentText) * price),
+              : (num.parse(_currentText) * (detailRes?.currentPrice ?? 0)),
           shares: _selectedSegment == TypeTrade.shares
               ? num.parse(_currentText)
-              : (num.parse(_currentText) / price),
-          image: provider.tabRes?.companyInfo?.image,
-          name: provider.tabRes?.keyStats?.name,
-          price: provider.tabRes?.keyStats?.price,
-          symbol: provider.tabRes?.keyStats?.symbol,
+              : (num.parse(_currentText) / (detailRes?.currentPrice ?? 0)),
+          image: detailRes?.image,
+          name: detailRes?.company,
+          price: '${detailRes?.currentPrice?.toFormattedPrice()}',
+          symbol: detailRes?.symbol,
           invested: invested,
           buy: widget.buy,
           date: response.data['result']['created_date'],
@@ -392,21 +382,15 @@ class _BuySellContainerState extends State<BuySellContainer> {
   }
 
   Widget _newMethod() {
-    StockDetailProviderNew stockDetailProviderNew =
-        context.read<StockDetailProviderNew>();
+    TradeProviderNew provider = context.read<TradeProviderNew>();
+    TsStockDetailRes? detailRes = provider.detailRes;
 
     TsPortfolioProvider portfolioProvider = context.read<TsPortfolioProvider>();
 
-    String cleanedString = stockDetailProviderNew.tabRes?.keyStats?.price
-            ?.replaceAll(RegExp(r'[^\d.]'), '') ??
-        "0";
-    num price = num.tryParse(cleanedString) ?? 0;
-
     num parsedCurrentText = num.tryParse(_currentText) ?? 0;
     num invested = _selectedSegment == TypeTrade.shares
-        ? price * parsedCurrentText
+        ? (detailRes?.currentPrice ?? 0) * parsedCurrentText
         : parsedCurrentText;
-    Utils().showLog('invested=> $invested');
     return Container(
       padding: const EdgeInsets.all(10),
       decoration: const BoxDecoration(
@@ -438,14 +422,15 @@ class _BuySellContainerState extends State<BuySellContainer> {
               Flexible(
                 child: RichText(
                   text: TextSpan(
-                      text: "Order Value: ",
-                      style: stylePTSansBold(fontSize: 14),
-                      children: [
-                        TextSpan(
-                          text: "\$${invested.toCurrency()}",
-                          style: stylePTSansRegular(fontSize: 14),
-                        ),
-                      ]),
+                    text: "Order Value: ",
+                    style: stylePTSansBold(fontSize: 14),
+                    children: [
+                      TextSpan(
+                        text: "\$${invested.toCurrency()}",
+                        style: stylePTSansRegular(fontSize: 14),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ],
@@ -543,7 +528,7 @@ class _BuySellContainerState extends State<BuySellContainer> {
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  const SdCommonHeading(),
+                  const TsTopWidget(),
 
                   TextfieldTrade(
                     controller: controller,
