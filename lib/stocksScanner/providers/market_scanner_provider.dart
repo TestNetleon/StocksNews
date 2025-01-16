@@ -71,8 +71,8 @@ class MarketScannerProvider extends ChangeNotifier {
     _filterParams = null;
     _filterParams = FilterParams(
       sector: "Healthcare",
-      sortBy: "% Change",
-      sortByAsc: false,
+      // sortBy: "% Change",
+      // sortByAsc: false,
     );
     notifyListeners();
     MarketScannerDataManager.instance.initializePorts();
@@ -426,7 +426,12 @@ class MarketScannerProvider extends ChangeNotifier {
           _dataList![index] = newItem;
         } else {
           // If the item does not exist, add it to the top of the list
-          _dataList!.insert(0, newItem); // Insert at the top
+          if (_filterParams?.sortBy != null) {
+            _dataList!.insert(0, newItem); // Insert at the top
+          } else {
+            _dataList!
+                .insert(_dataList!.length - 1, newItem); // Insert at the last
+          }
         }
       }
     }
