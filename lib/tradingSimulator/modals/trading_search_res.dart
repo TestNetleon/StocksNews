@@ -20,8 +20,13 @@ class TradingSearchTickerRes {
   final StockType? type;
   final int? status;
   num? currentPrice;
+  num? orderPrice;
+  num? closePrice;
+  num? orderChange;
 
   TradingSearchTickerRes({
+    this.orderPrice,
+    this.closePrice,
     this.symbol,
     this.name,
     this.image,
@@ -32,10 +37,14 @@ class TradingSearchTickerRes {
     this.status,
     this.type,
     this.currentPrice,
+    this.orderChange,
   });
 
   factory TradingSearchTickerRes.fromJson(Map<String, dynamic> json) =>
       TradingSearchTickerRes(
+        orderPrice: json['order_price'],
+        closePrice: json['close_price'],
+        orderChange: json['order_change'],
         symbol: json["symbol"],
         id: json['id'],
         name: json["name"],
@@ -51,6 +60,9 @@ class TradingSearchTickerRes {
       );
 
   Map<String, dynamic> toJson() => {
+        'order_price': orderPrice,
+        'order)change': orderChange,
+        'close_price': closePrice,
         "symbol": symbol,
         "name": name,
         "image": image,

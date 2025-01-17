@@ -75,7 +75,7 @@ class _BaseContainerState extends State<BaseContainer> {
                     0.9,
                   ],
                   colors: const [
-                    Color.fromARGB(255, 0, 125, 17),
+                    Color.fromRGBO(0, 125, 17, 1),
                     Colors.black,
                   ],
                 ),

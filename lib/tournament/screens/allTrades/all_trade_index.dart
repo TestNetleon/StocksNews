@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/tournament/provider/trades.dart';
+import 'package:stocks_news_new/tradingSimulator/manager/sse.dart';
+import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/custom/refresh_indicator.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
-
 import '../../../utils/colors.dart';
 import '../../../utils/theme.dart';
 import '../../../widgets/theme_button.dart';
@@ -41,6 +42,7 @@ class _TournamentAllTradeIndexState extends State<TournamentAllTradeIndex> {
       cancleAll: cancleAll,
       tradeId: id,
       ticker: ticker,
+      callTickerDetail: false,
     );
     if (response.status) {
       context.read<TournamentTradesProvider>().getTradesList(refresh: true);
@@ -48,9 +50,19 @@ class _TournamentAllTradeIndexState extends State<TournamentAllTradeIndex> {
   }
 
   @override
+  void dispose() {
+    super.dispose();
+    SSEManager.instance.disconnectScreen(SimulatorEnum.tournament);
+  }
+
+  @override
   Widget build(BuildContext context) {
     TournamentTradesProvider provider =
         context.watch<TournamentTradesProvider>();
+
+    num? sumOfAll = provider.myTrades?.data
+        ?.map((trade) => trade.orderChange)
+        .fold(0, (prev, change) => (prev ?? 0) + (change ?? 0));
 
     return BaseUiContainer(
       hasData: provider.myTrades != null,
@@ -124,16 +136,57 @@ class _TournamentAllTradeIndexState extends State<TournamentAllTradeIndex> {
               ),
             ),
           ),
+          // Visibility(
+          //   visible: provider.myTrades?.overview?[1].value != 0,
+          //   child: ThemeButton(
+          //     radius: 10,
+          //     text: sumOfAll == null
+          //         ? 'Close All'
+          //         : 'Close All ${sumOfAll.toCurrency()}',
+          //     onPressed: () => _close(cancleAll: true),
+          //     color: ThemeColors.white,
+          //     textColor: Colors.black,
+          //   ),
+          // ),
+
           Visibility(
             visible: provider.myTrades?.overview?[1].value != 0,
             child: ThemeButton(
+              color: Colors.white,
               radius: 10,
-              text: 'Close All',
               onPressed: () => _close(cancleAll: true),
-              color: ThemeColors.white,
               textColor: Colors.black,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'Close All',
+                    style: styleGeorgiaBold(color: Colors.black),
+                  ),
+                  Visibility(
+                    visible: sumOfAll != null,
+                    child: Flexible(
+                      child: Container(
+                        margin: EdgeInsets.only(left: 10),
+                        padding: EdgeInsets.symmetric(horizontal: 15),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: (sumOfAll ?? 0) >= 0
+                              ? ThemeColors.accent
+                              : ThemeColors.sos,
+                        ),
+                        child: Text(
+                          '${sumOfAll?.toCurrency()}%',
+                          style: styleGeorgiaBold(color: Colors.white),
+                        ),
+                      ),
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
+
           SpacerVertical(height: 10),
         ],
       ),

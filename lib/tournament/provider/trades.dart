@@ -21,7 +21,6 @@ enum StockType { buy, sell, hold }
 
 class TournamentTradesProvider extends ChangeNotifier {
 //MARK: All Trades
-
   KeyValueElementStockScreener? _selectedOverview;
   KeyValueElementStockScreener? get selectedOverview => _selectedOverview;
 
@@ -87,7 +86,12 @@ class TournamentTradesProvider extends ChangeNotifier {
 
       if (response.status) {
         _myTrades = tournamentAllTradesResFromJson(jsonEncode(response.data));
+        if (_myTrades?.data != null && _myTrades?.data?.isNotEmpty == true) {
+          _startSseTrades();
+        }
+
         _errorTrades = null;
+
         if (refresh) {
           _selectedOverview = _myTrades?.overview?.first;
         } else {
@@ -103,6 +107,84 @@ class TournamentTradesProvider extends ChangeNotifier {
       _errorTrades = null;
       Utils().showLog('Trades Overview Error: $e');
       setStatusTrades(Status.loaded);
+    }
+  }
+
+  void _startSseTrades() {
+    List<String>? _symbols;
+    if (_myTrades?.data != null && _myTrades?.data?.isNotEmpty == true) {
+      _symbols = _myTrades?.data
+          ?.where((trade) => trade.status == 0 && trade.symbol != null)
+          .map((trade) => trade.symbol!)
+          .toList();
+    }
+
+    for (var data in _myTrades!.data!) {
+      num currentPrice = data.currentPrice ?? 0;
+      num orderPrice = data.orderPrice ?? 0;
+      num closePrice = data.closePrice ?? 0;
+      if (data.status == 1) {
+        print('CLOSE TAB');
+
+        //CLOSE TAB
+
+        if (data.type == StockType.buy) {
+          data.orderChange = closePrice == 0
+              ? 0
+              : ((orderPrice - closePrice) / closePrice) * 100;
+        } else {
+          data.orderChange = orderPrice == 0
+              ? 0
+              : ((closePrice - orderPrice) / orderPrice) * 100;
+        }
+        notifyListeners();
+
+        SSEManager.instance.disconnect(
+          data.symbol ?? '',
+          SimulatorEnum.tournament,
+        );
+      } else {
+        print('OPEN TAB');
+
+        //OPEN TAB
+
+        if (_symbols != null && _symbols.isNotEmpty == true) {
+          if (data.type == StockType.buy) {
+            data.orderChange = orderPrice == 0 || currentPrice == 0
+                ? 0
+                : ((currentPrice - orderPrice) / orderPrice) * 100;
+          } else {
+            data.orderChange = currentPrice == 0 || orderPrice == 0
+                ? 0
+                : ((orderPrice - currentPrice) / currentPrice) * 100;
+          }
+          notifyListeners();
+
+          SSEManager.instance.connectMultipleStocks(
+            symbols: _symbols,
+            screen: SimulatorEnum.tournament,
+          );
+
+          SSEManager.instance.addListener(
+            data.symbol ?? '',
+            (stockData) {
+              num? newPrice = stockData.price;
+
+              if (newPrice != null) {
+                if (data.type == StockType.buy) {
+                  data.orderChange =
+                      ((newPrice - orderPrice) / orderPrice) * 100;
+                } else {
+                  data.orderChange = ((orderPrice - newPrice) / newPrice) * 100;
+                }
+              }
+              Utils().showLog('Symbol ${data.symbol}, ${data.orderChange}');
+              notifyListeners();
+            },
+            SimulatorEnum.tournament,
+          );
+        }
+      }
     }
   }
 
@@ -146,8 +228,12 @@ class TournamentTradesProvider extends ChangeNotifier {
   }
 
 //MARK: CANCLE
-  Future tradeCancle(
-      {bool cancleAll = false, num? tradeId, String? ticker}) async {
+  Future tradeCancle({
+    bool cancleAll = false,
+    num? tradeId,
+    String? ticker,
+    bool callTickerDetail = true,
+  }) async {
     try {
       TournamentProvider provider =
           navigatorKey.currentContext!.read<TournamentProvider>();
@@ -169,7 +255,9 @@ class TournamentTradesProvider extends ChangeNotifier {
         showProgress: true,
       );
       if (response.status) {
-        getDetail(_selectedStock?.symbol ?? '', refresh: true);
+        if (callTickerDetail) {
+          getDetail(_selectedStock?.symbol ?? '', refresh: true);
+        }
       } else {
         //
       }
@@ -336,8 +424,14 @@ class TournamentTradesProvider extends ChangeNotifier {
             } else {
               buttonRes?.orderChange = ((OP - CP) / CP) * 100;
             }
-            Utils()
-                .showLog('=>$symbol::${buttonRes?.orderChange?.toCurrency()}');
+            Map<String, dynamic> logData = {
+              'Symbol': symbol,
+              'CurrentPrice': CP,
+              'OrderPrice': OP,
+              'OrderChange': buttonRes?.orderChange,
+            };
+
+            Utils().showLog('Ticker: $logData');
           } else {
             Utils().showLog('order price $symbol => ${buttonRes?.orderPrice}');
           }

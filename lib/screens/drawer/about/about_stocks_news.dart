@@ -230,7 +230,7 @@ class _AboutStocksNewsState extends State<AboutStocksNews> {
       );
     }
     // Stock Scanner
-    if (provider.extra?.showTradingSimulator == true || kDebugMode) {
+    if (provider.extra?.showStockScanner == true) {
       visibleAboutTiles.add(
         DrawerRes(
           iconData: Icons.bakery_dining_outlined,
