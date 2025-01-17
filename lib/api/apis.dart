@@ -17,6 +17,9 @@ class Apis {
   // Set direct Local
   // static const baseUrl = 'https://dev.stocks.news/api/v1';
 
+  static const stocksScreenerWebUrl =
+      'https://app.stocks.news/stockScannerMobile/screener';
+
   static const proxyAdvertiser = "/proxy/advertiser";
   static const checkServer = "/check-server-status";
   static const phoneLogin = '/phone-login';
