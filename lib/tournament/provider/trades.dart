@@ -139,10 +139,10 @@ class TournamentTradesProvider extends ChangeNotifier {
         }
         notifyListeners();
 
-        SSEManager.instance.disconnect(
-          data.symbol ?? '',
-          SimulatorEnum.tournament,
-        );
+        // SSEManager.instance.disconnect(
+        //   data.symbol ?? '',
+        //   SimulatorEnum.tournament,
+        // );
       } else {
         print('OPEN TAB');
 
