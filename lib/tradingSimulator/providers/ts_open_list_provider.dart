@@ -286,6 +286,7 @@ class TsOpenListProvider extends ChangeNotifier {
 
     bool boughtToday = _isStockBoughtToday(stock, _extra!.reponseTime!);
     if (boughtToday) {
+      // Utils().showLog('Stock ${stock.symbol} is bought today');
       // Stock bought today
       num boughtPrice = stock.avgPrice ?? 0;
       if (boughtPrice > 0) {
@@ -293,6 +294,8 @@ class TsOpenListProvider extends ChangeNotifier {
         todaysReturnPercentage = ((price - boughtPrice) / boughtPrice) * 100;
       }
     } else {
+      // Utils().showLog('Stock ${stock.symbol} is bought previously');
+
       // Stock bought previously
       num previousClose = stockData.previousClose ?? 0;
       if (previousClose > 0) {
@@ -367,7 +370,7 @@ class TsOpenListProvider extends ChangeNotifier {
     for (var stock in _data!) {
       String symbol = stock.symbol ?? '';
       Map<String, num> returnData = getTodaysReturnForStock(symbol);
-
+      Utils().showLog('$symbol=> return $returnData');
       totalMarketValue += stock.currentInvested ?? 0;
       todaysReturn += returnData['todaysReturn'] ?? 0;
     }

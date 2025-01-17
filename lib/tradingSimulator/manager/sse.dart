@@ -457,6 +457,9 @@ class SSEManager {
 
       final currentStreams = _screenStreams[screen]?.toSet() ?? {};
       final removedSymbols = currentStreams.difference(symbols.toSet());
+      if (kDebugMode) {
+        print('removedSymbols $removedSymbols');
+      }
 
       // Disconnect removed symbols
       for (var symbol in removedSymbols) {

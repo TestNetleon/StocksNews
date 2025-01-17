@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:stocks_news_new/utils/colors.dart';
+import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
@@ -66,16 +67,16 @@ class TournamentTradeItem extends StatelessWidget {
                 Container(
                   padding: EdgeInsets.symmetric(horizontal: 10, vertical: 2),
                   decoration: BoxDecoration(
-                    color: ThemeColors.greyBorder,
+                    color: (data?.orderChange ?? 0) < 0
+                        ? ThemeColors.sos
+                        : ThemeColors.accent,
                     borderRadius: BorderRadius.circular(30),
                   ),
                   child: Text(
-                    "${data?.change ?? 0} %",
-                    style: styleGeorgiaRegular(
+                    "${data?.orderChange?.toCurrency() ?? 0} %",
+                    style: styleGeorgiaBold(
                       fontSize: 13,
-                      color: (data?.changesPercentage ?? 0) < 0
-                          ? ThemeColors.sos
-                          : ThemeColors.accent,
+                      color: ThemeColors.white,
                     ),
                   ),
                 ),
