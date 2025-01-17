@@ -7,10 +7,8 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/custom/refresh_indicator.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
-
 import '../../../utils/colors.dart';
 import '../../../utils/theme.dart';
-import '../../../widgets/spacer_horizontal.dart';
 import '../../../widgets/theme_button.dart';
 import 'slidable.dart';
 import 'trade_item.dart';
