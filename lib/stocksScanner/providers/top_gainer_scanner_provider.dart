@@ -19,10 +19,10 @@ class TopGainerScannerProvider extends ChangeNotifier {
   String? get error => _error ?? Const.errSomethingWrong;
 
   List<ScannerRes>? _fullOfflineDataList;
-
   List<ScannerRes>? _offlineDataList;
   List<ScannerRes>? get offlineDataList => _offlineDataList;
 
+  List<MarketScannerRes>? _fullDataList;
   List<MarketScannerRes>? _dataList;
   List<MarketScannerRes>? get dataList => _dataList;
 
@@ -33,6 +33,7 @@ class TopGainerScannerProvider extends ChangeNotifier {
   Extra? get extra => _extra;
 
   // int? get page => _page;
+  // bool isSorting = true;
 
   void setStatus(status) {
     _status = status;
@@ -183,6 +184,8 @@ class TopGainerScannerProvider extends ChangeNotifier {
       }
     }
 
+    storeFullLiveData(prChangeAr);
+
     if (_dataList != null) {
       // prChangeAr.addAll(_dataList!);
       for (var dataItem in _dataList!) {
@@ -197,35 +200,6 @@ class TopGainerScannerProvider extends ChangeNotifier {
       }
     }
 
-    // Sort the array based on `shortIndex`
-    if (_filterParams?.sortBy != 3 && _filterParams?.sortByHeader == null) {
-      prChangeAr.sort((a, b) {
-        num valueA = a.percentChange ?? 0;
-        num valueB = b.percentChange ?? 0;
-        if ((a.extendedHoursType == "PostMarket" ||
-            a.extendedHoursType == "PreMarket")) {
-          valueA = a.extendedHoursPercentChange ?? 0;
-          valueB = b.extendedHoursPercentChange ?? 0;
-        }
-
-        if (_filterParams?.sortByAsc == true) {
-          return valueB.compareTo(valueA);
-        } else {
-          return valueA.compareTo(valueB);
-        }
-      });
-    } else if (_filterParams?.sortBy == 3) {
-      prChangeAr.sort((a, b) {
-        num valueA = a.volume ?? 0;
-        num valueB = b.volume ?? 0;
-        if (_filterParams?.sortByAsc == true) {
-          return valueB.compareTo(valueA);
-        } else {
-          return valueA.compareTo(valueB);
-        }
-      });
-    }
-
     if (_filterParams?.sortByHeader != null) {
       prChangeAr.sort((a, b) {
         return sortByCompare(
@@ -235,13 +209,75 @@ class TopGainerScannerProvider extends ChangeNotifier {
           _filterParams?.sortByAsc ?? true,
         );
       });
+    } else if (_filterParams?.sortBy != 3) {
+      Utils().showLog("-----------------------------------------------");
+      prChangeAr.sort((a, b) {
+        num valueA = a.percentChange ?? 0;
+        num valueB = b.percentChange ?? 0;
+        if ((a.extendedHoursType == "PostMarket" ||
+            a.extendedHoursType == "PreMarket")) {
+          Utils().showLog("++++++++++++++++++++++++++++++++");
+          valueA = a.extendedHoursPercentChange ?? 0;
+          valueB = b.extendedHoursPercentChange ?? 0;
+        }
+
+        if (_filterParams?.sortByAsc == true) {
+          return valueA.compareTo(valueB);
+        } else {
+          return valueB.compareTo(valueA);
+        }
+      });
+    } else if (_filterParams?.sortBy == 3) {
+      prChangeAr.sort((a, b) {
+        num valueA = a.volume ?? 0;
+        num valueB = b.volume ?? 0;
+        if (_filterParams?.sortByAsc == true) {
+          return valueA.compareTo(valueB);
+        } else {
+          return valueB.compareTo(valueA);
+        }
+      });
     }
     _dataList = prChangeAr.take(50).toList();
 
     notifyListeners();
   }
 
+  void storeFullLiveData(List<MarketScannerRes>? data) async {
+    if (_fullDataList == null) {
+      _fullDataList = data;
+      return;
+    } else {
+      if (data != null && data.isNotEmpty) {
+        // Iterate over the new data list
+        for (var newItem in data) {
+          // Find if an item with the same identifier exists in the list
+          int index = _fullDataList!.indexWhere(
+              (existingItem) => existingItem.identifier == newItem.identifier);
+
+          if (index != -1) {
+            // If the item exists (index != -1), replace the existing one
+            _fullDataList![index] = newItem;
+          } else {
+            // If the item doesn't exist, add the new item
+            _fullDataList!.add(newItem);
+          }
+        }
+      }
+    }
+
+    _fullDataList!.sort((a, b) {
+      return sortByCompare(
+        a,
+        b,
+        "% Change",
+        false,
+      );
+    });
+  }
+
   void applyFilter(sortBy) {
+    // TopGainerScannerDataManager().stopListeningPorts();
     if (sortBy == _filterParams?.sortBy) {
       _filterParams = FilterParamsGainerLoser(
         sortBy: sortBy,
@@ -255,11 +291,14 @@ class TopGainerScannerProvider extends ChangeNotifier {
         sortByHeader: null,
       );
     }
-
+    if (TopGainerScannerDataManager().listening) {
+      TopGainerScannerDataManager().stopListeningPorts();
+    }
     if (_dataList != null) {
       Utils().showLog("----");
       // updateData(_dataList,);
-      notifyListeners();
+      // notifyListeners();
+      updateData(_fullDataList);
     } else if (_offlineDataList != null) {
       Utils().showLog("---- ******  ${_fullOfflineDataList?.length}");
       updateOfflineData(_fullOfflineDataList, applyFilter: true);
@@ -288,9 +327,23 @@ class TopGainerScannerProvider extends ChangeNotifier {
         sortByAsc: true,
       );
     }
-    // MarketScannerDataManager.instance.stopListeningPorts();
+
+    if (TopGainerScannerDataManager().listening) {
+      TopGainerScannerDataManager().stopListeningPorts();
+    }
+
     if (_dataList != null) {
+      // notifyListeners();
+      _dataList!.sort((a, b) {
+        return sortByCompare(
+          a,
+          b,
+          _filterParams?.sortByHeader ?? "",
+          _filterParams?.sortByAsc ?? true,
+        );
+      });
       notifyListeners();
+      // updateData(tempList);
     } else if (_offlineDataList != null) {
       updateOfflineData(_fullOfflineDataList, applyFilter: true);
     }

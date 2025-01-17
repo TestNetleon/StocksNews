@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
+import 'package:stocks_news_new/stocksScanner/apis/top_gainer_scanner_manager.dart';
 import 'package:stocks_news_new/stocksScanner/modals/market_scanner_res.dart';
 import 'package:stocks_news_new/stocksScanner/providers/top_gainer_scanner_provider.dart';
 import 'package:stocks_news_new/stocksScanner/screens/stockScanner/common_scanner_ui.dart';
@@ -74,6 +75,10 @@ class _TopGainerOnlineState extends State<TopGainerOnline> {
                 },
                 onVolumnClick: () {
                   provider.applyFilter(3);
+                },
+                onRestartClick: () {
+                  TopGainerScannerDataManager().initializePorts();
+                  provider.clearFilter();
                 },
                 isPercent: provider.filterParams?.sortBy == 2,
                 isVolume: provider.filterParams?.sortBy == 3,

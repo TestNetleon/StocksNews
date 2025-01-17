@@ -19,10 +19,10 @@ class TopLoserScannerProvider extends ChangeNotifier {
   String? get error => _error ?? Const.errSomethingWrong;
 
   List<ScannerRes>? _fullOfflineDataList;
-
   List<ScannerRes>? _offlineDataList;
   List<ScannerRes>? get offlineDataList => _offlineDataList;
 
+  List<MarketScannerRes>? _fullDataList;
   List<MarketScannerRes>? _dataList;
   List<MarketScannerRes>? get dataList => _dataList;
 
@@ -188,6 +188,8 @@ class TopLoserScannerProvider extends ChangeNotifier {
       }
     }
 
+    storeFullLiveData(prChangeAr);
+
     if (_dataList != null) {
       // prChangeAr.addAll(_dataList!);
       for (var dataItem in _dataList!) {
@@ -217,8 +219,17 @@ class TopLoserScannerProvider extends ChangeNotifier {
     //   return valueA.compareTo(valueB);
     // });
 
-    // Sort the array based on `shortIndex`
-    if (_filterParams?.sortBy != 3 && _filterParams?.sortByHeader == null) {
+    if (_filterParams?.sortByHeader != null) {
+      prChangeAr.sort((a, b) {
+        return sortByCompare(
+          a,
+          b,
+          _filterParams?.sortByHeader ?? "",
+          _filterParams?.sortByAsc ?? true,
+        );
+      });
+    } else if (_filterParams?.sortBy != 3 &&
+        _filterParams?.sortByHeader == null) {
       prChangeAr.sort((a, b) {
         num valueA = a.percentChange ?? 0;
         num valueB = b.percentChange ?? 0;
@@ -246,18 +257,41 @@ class TopLoserScannerProvider extends ChangeNotifier {
       });
     }
 
-    if (_filterParams?.sortByHeader != null) {
-      prChangeAr.sort((a, b) {
-        return sortByCompare(
-          a,
-          b,
-          _filterParams?.sortByHeader ?? "",
-          _filterParams?.sortByAsc ?? true,
-        );
-      });
-    }
     _dataList = prChangeAr.take(50).toList();
     notifyListeners();
+  }
+
+  void storeFullLiveData(List<MarketScannerRes>? data) async {
+    if (_fullDataList == null) {
+      _fullDataList = data;
+      return;
+    } else {
+      if (data != null && data.isNotEmpty) {
+        // Iterate over the new data list
+        for (var newItem in data) {
+          // Find if an item with the same identifier exists in the list
+          int index = _fullDataList!.indexWhere(
+              (existingItem) => existingItem.identifier == newItem.identifier);
+
+          if (index != -1) {
+            // If the item exists (index != -1), replace the existing one
+            _fullDataList![index] = newItem;
+          } else {
+            // If the item doesn't exist, add the new item
+            _fullDataList!.add(newItem);
+          }
+        }
+      }
+    }
+
+    _fullDataList!.sort((a, b) {
+      return sortByCompare(
+        a,
+        b,
+        "% Change",
+        false,
+      );
+    });
   }
 
   void applyFilter(sortBy) {
@@ -274,10 +308,13 @@ class TopLoserScannerProvider extends ChangeNotifier {
         sortByHeader: null,
       );
     }
-
+    if (TopLoserScannerDataManager().listening) {
+      TopLoserScannerDataManager().stopListeningPorts();
+    }
     if (_dataList != null) {
       Utils().showLog("----");
-      updateData(_dataList);
+      // updateData(_dataList);
+      updateData(_fullDataList);
     } else if (_offlineDataList != null) {
       Utils().showLog("---- ******  ${_fullOfflineDataList?.length}");
       updateOfflineData(_fullOfflineDataList, applyFilter: true);
@@ -307,9 +344,19 @@ class TopLoserScannerProvider extends ChangeNotifier {
         sortByAsc: true,
       );
     }
-    // MarketScannerDataManager.instance.stopListeningPorts();
+    if (TopLoserScannerDataManager().listening) {
+      TopLoserScannerDataManager().stopListeningPorts();
+    }
 
     if (_dataList != null) {
+      _dataList!.sort((a, b) {
+        return sortByCompare(
+          a,
+          b,
+          _filterParams?.sortByHeader ?? "",
+          _filterParams?.sortByAsc ?? true,
+        );
+      });
       notifyListeners();
     } else if (_offlineDataList != null) {
       updateOfflineData(_fullOfflineDataList, applyFilter: true);

@@ -21,6 +21,7 @@ class ScannerRes {
   final dynamic volume;
   final dynamic time;
   final dynamic closeDate;
+  final Ext? ext;
 
   ScannerRes({
     required this.identifier,
@@ -34,6 +35,7 @@ class ScannerRes {
     required this.volume,
     required this.time,
     required this.closeDate,
+    required this.ext,
   });
 
   factory ScannerRes.fromJson(Map<String, dynamic> json) => ScannerRes(
@@ -48,6 +50,7 @@ class ScannerRes {
         volume: json["volume"],
         time: json["time"],
         closeDate: json["closeDate"],
+        ext: json["Ext"] == null ? null : Ext.fromJson(json["Ext"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -62,5 +65,42 @@ class ScannerRes {
         "volume": volume,
         "time": time,
         "closeDate": closeDate,
+        "Ext": ext?.toJson(),
+      };
+}
+
+class Ext {
+  final dynamic extendedHoursDate;
+  final dynamic extendedHoursTime;
+  final dynamic extendedHoursType;
+  final dynamic extendedHoursPrice;
+  final dynamic extendedHoursChange;
+  final dynamic extendedHoursPercentChange;
+
+  Ext({
+    required this.extendedHoursDate,
+    required this.extendedHoursTime,
+    required this.extendedHoursType,
+    required this.extendedHoursPrice,
+    required this.extendedHoursChange,
+    required this.extendedHoursPercentChange,
+  });
+
+  factory Ext.fromJson(Map<String, dynamic> json) => Ext(
+        extendedHoursDate: json["ExtendedHoursDate"],
+        extendedHoursTime: json["ExtendedHoursTime"],
+        extendedHoursType: json["ExtendedHoursType"],
+        extendedHoursPrice: json["ExtendedHoursPrice"],
+        extendedHoursChange: json["ExtendedHoursChange"],
+        extendedHoursPercentChange: json["ExtendedHoursPercentChange"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "ExtendedHoursDate": extendedHoursDate,
+        "ExtendedHoursTime": extendedHoursTime,
+        "ExtendedHoursType": extendedHoursType,
+        "ExtendedHoursPrice": extendedHoursPrice,
+        "ExtendedHoursChange": extendedHoursChange,
+        "ExtendedHoursPercentChange": extendedHoursPercentChange,
       };
 }

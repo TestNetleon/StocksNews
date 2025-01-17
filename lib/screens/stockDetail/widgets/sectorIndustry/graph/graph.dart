@@ -13,7 +13,6 @@ class SectorGraph extends StatefulWidget {
   State<SectorGraph> createState() => _SectorGraphState();
 }
 
-//
 class _SectorGraphState extends State<SectorGraph> {
   WebViewController controller = WebViewController();
   @override
@@ -53,68 +52,68 @@ class _SectorGraphState extends State<SectorGraph> {
 
     return '''
     <canvas id="chart"></canvas>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script>
-    var values = [$valuesString];
+      <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+      <script>
+          var values = [$valuesString];
 
-    // Determine column colors based on values
-    var colors = values.map(value => value < 0 ? 'rgba(255, 0, 0, 0.7)' : 'rgba(0, 128, 0, 0.7)');
+          // Determine column colors based on values
+          var colors = values.map(value => value < 0 ? 'rgba(255, 0, 0, 0.7)' : 'rgba(0, 128, 0, 0.7)');
 
-    // Create chart options
-    var options = {
-        type: 'bar',
-   
-        data: {
-            labels: [$datesString],
-        datasets: [{
-            label: '',
-            data: values,
-            backgroundColor: colors,
-            borderColor: colors,
-            borderWidth: 1
-        }]
-    },
-    options: {
-        scales: {
-            x: {
-                grid: {
-                    color: '#222' // Set x-axis grid color to white
-                },
-                    ticks: {
-                        color: 'white', // Set y-axis tick color to white
-                    font: {
-                        size: 15 // Set font size for y-axis ticks
-                    }
-                    }
-            },
-            y: {
-                beginAtZero: false,
-                    title: {
-                    display: false,
-                },
-                    ticks: {
-                        color: 'white', // Set y-axis tick color to white
-                    font: {
-                        size: 15 // Set font size for y-axis ticks
-                    }
+          // Create chart options
+          var options = {
+              type: 'bar',
+        
+              data: {
+                  labels: [$datesString],
+              datasets: [{
+                  label: '',
+                  data: values,
+                  backgroundColor: colors,
+                  borderColor: colors,
+                  borderWidth: 1
+              }]
+          },
+          options: {
+              scales: {
+                  x: {
+                      grid: {
+                          color: '#222' // Set x-axis grid color to white
+                      },
+                          ticks: {
+                              color: 'white', // Set y-axis tick color to white
+                          font: {
+                              size: 15 // Set font size for y-axis ticks
+                          }
+                          }
+                  },
+                  y: {
+                      beginAtZero: false,
+                          title: {
+                          display: false,
+                      },
+                          ticks: {
+                              color: 'white', // Set y-axis tick color to white
+                          font: {
+                              size: 15 // Set font size for y-axis ticks
+                          }
 
-                    }
-            }
-        },
-        plugins: {
-            title: {
-                display: false,
-            },
-            legend: {
-                display: false
-            },
-        }
-    }
-};
+                          }
+                  }
+              },
+              plugins: {
+                  title: {
+                      display: false,
+                  },
+                  legend: {
+                      display: false
+                  },
+              }
+          }
+      };
 
-    var ctx = document.getElementById('chart').getContext('2d');
-    new Chart(ctx, options);
-</script>
+          var ctx = document.getElementById('chart').getContext('2d');
+          new Chart(ctx, options);
+      </script>
     ''';
   }
 
