@@ -62,7 +62,7 @@ class _HomeContainerState extends State<HomeContainer> {
     return Column(
       children: [
         // Visibility(
-        //   visible: provider.extra?.showTradingSimulator == true || kDebugMode,
+        //   visible: provider.extra?.showStockScanner == true || kDebugMode,
         //   child: ThemeButtonSmall(
         //     text: 'Stock Scanner',
         //     onPressed: () async {
