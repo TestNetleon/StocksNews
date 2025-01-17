@@ -72,7 +72,7 @@ class _TopLoserScannerHeaderState extends State<TopLoserScannerHeader> {
         marketStatus = "Live";
       }
     } else if (offlineData != null) {
-      marketStatus = "Closed";
+      marketStatus = offlineData[0].ext?.extendedHoursType ?? "Closed";
       _lastUpdated = offlineData[0].closeDate;
     }
 

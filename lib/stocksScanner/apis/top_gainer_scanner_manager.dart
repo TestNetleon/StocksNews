@@ -107,7 +107,11 @@ class TopGainerScannerDataManager {
         debugPrint("ERROR Closing - $e");
       }
     }
-    eventSources.clear();
+    try {
+      eventSources.clear();
+    } catch (e) {
+      debugPrint("ERROR Clearing - $e");
+    }
   }
 
   Future getOfflineData() async {

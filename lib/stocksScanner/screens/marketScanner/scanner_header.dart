@@ -67,7 +67,7 @@ class _MarketScannerHeaderState extends State<MarketScannerHeader> {
         marketStatus = "Live";
       }
     } else if (offlineData != null && offlineData.isNotEmpty) {
-      marketStatus = "Closed";
+      marketStatus = offlineData[0].ext?.extendedHoursType ?? "Closed";
       _lastUpdated = offlineData[0].closeDate;
     } else if (marketStatus == "") {
       marketStatus = provider.marketStatus ?? "";

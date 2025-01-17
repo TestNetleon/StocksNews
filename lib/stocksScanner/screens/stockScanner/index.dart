@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/stocksScanner/screens/marketScanner/market_scanner_filter.dart';
 import 'package:stocks_news_new/stocksScanner/screens/stockScanner/scanner_container.dart';
+import 'package:stocks_news_new/stocksScanner/screens/stockScanner/scanner_webview.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 
@@ -21,7 +22,8 @@ class StocksScanner extends StatelessWidget {
           Navigator.push(context, createRoute(MarketScannerFilter()));
         },
       ),
-      body: ScannerContainer(),
+      // body: ScannerContainer(),
+      body: ScannerWebview(),
     );
   }
 }
