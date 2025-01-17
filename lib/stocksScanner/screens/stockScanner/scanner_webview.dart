@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:stocks_news_new/api/apis.dart';
+import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
@@ -12,15 +14,11 @@ class ScannerWebview extends StatefulWidget {
 class _ScannerWebviewState extends State<ScannerWebview> {
   WebViewController controller = WebViewController();
 
-  String data = "";
+  bool loaded = false;
 
   @override
   void initState() {
     super.initState();
-    // WidgetsBinding.instance.addPostFrameCallback((_) {
-    //   MarketScannerProvider provider = context.read<MarketScannerProvider>();
-    //   provider.startListeningPorts();
-    // });
 
     controller = WebViewController()
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
@@ -30,14 +28,29 @@ class _ScannerWebviewState extends State<ScannerWebview> {
           onProgress: (int progress) {
             // Update loading bar.
           },
-          onPageStarted: (String url) {},
-          onPageFinished: (String url) {},
+          onPageStarted: (String url) {
+            if (url == Apis.stocksScreenerWebUrl) {
+              Utils().showLog("Started ****");
+              if (!loaded) {
+                showGlobalProgressDialog();
+              }
+            }
+          },
+          onPageFinished: (String url) {
+            if (url == Apis.stocksScreenerWebUrl) {
+              if (!loaded) {
+                closeGlobalProgressDialog();
+              }
+              Utils().showLog("Loaded ****");
+              loaded = true;
+            }
+          },
           onWebResourceError: (WebResourceError error) {
             Utils().showLog("Error $error");
           },
         ),
       )
-      ..loadRequest(Uri.parse('https://app.stocks.news/market-scanner'));
+      ..loadRequest(Uri.parse(Apis.stocksScreenerWebUrl));
   }
 
   @override
