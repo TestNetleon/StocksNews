@@ -393,10 +393,18 @@
 			buildActionMask = 2147483647;
 			files = (
 			);
+			inputFileListPaths = (
+			);
 			inputPaths = (
+				"$(SRCROOT)/ios/GoogleService-Info.plist",
 			);
 			name = "Run Script";
+			outputFileListPaths = (
+			);
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/${DWARF_DSYM_FILE_NAME}",
+				"$(DERIVED_FILE_DIR)/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${PRODUCT_NAME}",
+				"$(DERIVED_FILE_DIR)/${DWARF_DSYM_FILE_NAME}/Contents/Info.plist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;

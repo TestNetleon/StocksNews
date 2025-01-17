@@ -145,8 +145,8 @@ class SdTopDisclaimer extends StatelessWidget {
         padding: EdgeInsets.only(left: 5),
         child: Text(
           data?.marketType == 'PreMarket'
-              ? 'Pre-Market: ${data?.marketTime}'
-              : 'Post-Market: ${data?.marketTime}',
+              ? 'Pre-Market: ${data?.marketTime ?? ''}'
+              : 'Post-Market: ${data?.marketTime ?? ''}',
           style: styleGeorgiaRegular(
             color: ThemeColors.greyText,
             fontSize: 12,

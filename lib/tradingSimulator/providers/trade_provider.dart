@@ -155,6 +155,8 @@ class TradeProviderNew extends ChangeNotifier {
         _error = null;
 
         try {
+          _detailRes?.marketTime =
+              _formatExtendedHoursTime(_detailRes?.marketTime);
           SSEManager.instance.connectStock(
             screen: SimulatorEnum.detail,
             symbol: symbol,
