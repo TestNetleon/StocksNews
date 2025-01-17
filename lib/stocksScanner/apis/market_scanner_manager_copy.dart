@@ -6,15 +6,15 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/stocksScanner/modals/market_scanner_res.dart';
 import 'package:stocks_news_new/stocksScanner/modals/scanner_res.dart';
-import 'package:stocks_news_new/stocksScanner/providers/market_scanner_provider.dart';
+// import 'package:stocks_news_new/stocksScanner/providers/market_scanner_provider.dart';
+import 'package:stocks_news_new/stocksScanner/providers/scanner_provider.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 
-class MarketScannerDataManager {
-  static final MarketScannerDataManager instance =
-      MarketScannerDataManager._internal();
-  MarketScannerDataManager._internal();
+class ScannerDataManager {
+  static final ScannerDataManager instance = ScannerDataManager._internal();
+  ScannerDataManager._internal();
 
-  factory MarketScannerDataManager() {
+  factory ScannerDataManager() {
     return instance;
   }
 
@@ -22,7 +22,7 @@ class MarketScannerDataManager {
   final Map<String, StreamSubscription> _eventSubscriptions = {};
   bool _isOfflineCalled = false;
   bool _isListening = false;
-  static const int checkInterval = 180000;
+  static const int checkInterval = 10000;
   static const int checkOfflineInterval = 5000;
 
   bool get isListening => _isListening;
@@ -35,14 +35,12 @@ class MarketScannerDataManager {
     _isListening = true;
     _isOfflineCalled = false;
 
-    MarketScannerProvider provider =
-        navigatorKey.currentContext!.read<MarketScannerProvider>();
+    ScannerProvider provider =
+        navigatorKey.currentContext!.read<ScannerProvider>();
 
     // Create URLs for all ports
     final urls = List.generate(
-      16,
-      (index) => "https://dev.stocks.news:${8021 + index}/sse",
-    );
+        16, (index) => "https://dev.stocks.news:${8021 + index}/sse");
 
     // Set offline data timer
     Timer(Duration(milliseconds: checkOfflineInterval), () async {
@@ -68,7 +66,7 @@ class MarketScannerDataManager {
   }
 
   Future<void> _connectToEventSource(
-      String url, MarketScannerProvider provider) async {
+      String url, ScannerProvider provider) async {
     try {
       final eventSource = await EventSource.connect(url)
           .timeout(Duration(milliseconds: checkInterval));
@@ -96,7 +94,7 @@ class MarketScannerDataManager {
     }
   }
 
-  void _handleEventData(String data, MarketScannerProvider provider) {
+  void _handleEventData(String data, ScannerProvider provider) {
     try {
       _isOfflineCalled = false;
       final List<dynamic> decodedResponse = jsonDecode(data);
@@ -135,7 +133,7 @@ class MarketScannerDataManager {
   }
 
   Future<void> getOfflineData() async {
-    final provider = navigatorKey.currentContext!.read<MarketScannerProvider>();
+    final provider = navigatorKey.currentContext!.read<ScannerProvider>();
 
     try {
       final url = Uri.parse(

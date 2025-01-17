@@ -7,18 +7,21 @@ import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/api/apis.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
-import 'package:stocks_news_new/stocksScanner/apis/market_scanner_manager.dart';
+import 'package:stocks_news_new/stocksScanner/apis/market_scanner_manager_copy.dart';
 import 'package:stocks_news_new/stocksScanner/modals/market_scanner_res.dart';
 import 'package:stocks_news_new/stocksScanner/modals/scanner_res.dart';
 import 'package:stocks_news_new/stocksScanner/modals/sectors_res.dart';
 import 'package:stocks_news_new/utils/constants.dart';
-import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:http/http.dart' as http;
 
-class MarketScannerProvider extends ChangeNotifier {
+enum Types { scanner, gainer, loser }
+
+class ScannerProvider extends ChangeNotifier {
   Status _status = Status.ideal;
   bool get isLoading => _status == Status.loading || _status == Status.ideal;
+
+  Types _type = Types.gainer;
 
   List<String> tableHeader = [
     "Company Name",
@@ -36,10 +39,10 @@ class MarketScannerProvider extends ChangeNotifier {
   String? get error => _error ?? Const.errSomethingWrong;
 
   List<ScannerRes>? _fullOfflineDataList;
+
   List<ScannerRes>? _offlineDataList;
   List<ScannerRes>? get offlineDataList => _offlineDataList;
 
-  List<MarketScannerRes>? _fullDataList;
   List<MarketScannerRes>? _dataList;
   List<MarketScannerRes>? get dataList => _dataList;
 
@@ -57,13 +60,15 @@ class MarketScannerProvider extends ChangeNotifier {
 
   bool _visible = false;
   bool get visible => _visible;
-
-  bool _isScannerWebview = false;
-  bool get isScannerWebview => _isScannerWebview;
   // int? get page => _page;
 
   void setStatus(status) {
     _status = status;
+    notifyListeners();
+  }
+
+  void setType(type) {
+    _type = type;
     notifyListeners();
   }
 
@@ -78,7 +83,8 @@ class MarketScannerProvider extends ChangeNotifier {
       // sortByAsc: false,
     );
     notifyListeners();
-    MarketScannerDataManager.instance.initializePorts();
+    // MarketScannerDataManager.instance.initializePorts();
+    ScannerDataManager.instance.initializePorts();
   }
 
   void stopListeningPorts() {
@@ -87,36 +93,31 @@ class MarketScannerProvider extends ChangeNotifier {
     _offlineDataList = null;
     _dataList = null;
     _filterParams = null;
-    MarketScannerDataManager.instance.stopListeningPorts();
+    ScannerDataManager.instance.stopListeningPorts();
     notifyListeners();
   }
 
-  Future getOfflineData({showProgress = false}) async {
-    showGlobalProgressDialog();
+  Future<void> getOfflineData() async {
+    final provider = navigatorKey.currentContext!.read<ScannerProvider>();
+
     try {
       final url = Uri.parse(
-        'https://dev.stocks.news:8080/getScreener?sector=Healthcare',
+        _type == Types.scanner
+            ? 'https://dev.stocks.news:8080/getScreener?sector=${provider.filterParams?.sector}'
+            : _type == Types.gainer
+                ? 'https://dev.stocks.news:8080/topGainer?shortBy=2'
+                : 'https://dev.stocks.news:8080/topLoser?shortBy=2',
       );
       final response = await http.get(url);
       if (response.statusCode == 200) {
-        Utils().showLog("$url");
-        Utils().showLog(response.body);
-        // _dataList = scannerResFromJson(jsonDecode(response.body));
         final List<dynamic> decodedResponse = jsonDecode(response.body);
-        _offlineDataList = scannerResFromJson(decodedResponse);
-        _fullOfflineDataList = List.empty(growable: true);
-        _fullOfflineDataList?.addAll(_offlineDataList ?? []);
-        _offlineDataList = _offlineDataList?.take(50).toList();
-        Utils().showLog("LENGTH => ${_offlineDataList?.length}");
-        notifyListeners();
+        updateOfflineData(scannerResFromJson(decodedResponse));
       } else {
-        Utils().showLog('Error fetching data from $url');
+        Utils().showLog('Error fetching offline data: ${response.statusCode}');
       }
     } catch (err) {
-      Utils().showLog('Error: $err');
+      Utils().showLog('Error fetching offline data: $err');
     }
-    closeGlobalProgressDialog();
-    // notifyListeners();
   }
 
   void updateOfflineData(List<ScannerRes>? data, {applyFilter = false}) {
@@ -169,25 +170,6 @@ class MarketScannerProvider extends ChangeNotifier {
     });
 
     Utils().showLog("Filtered data length => ${data.length}");
-
-    // if (_offlineDataList == null) {
-    //   _offlineDataList = List.empty(growable: true);
-    //   _offlineDataList!.addAll(data);
-    //   notifyListeners();
-    // } else {
-    //   for (var newItem in data) {
-    //     // Check if the item already exists based on the identifier
-    //     int index = _offlineDataList!
-    //         .indexWhere((item) => item.identifier == newItem.identifier);
-    //     if (index != -1) {
-    //       // If the item exists, update it
-    //       _offlineDataList![index] = newItem;
-    //     } else {
-    //       // If the item does not exist, add it to the top of the list
-    //       _offlineDataList!.insert(0, newItem); // Insert at the top
-    //     }
-    //   }
-    // }
 
     _offlineDataList = data.take(50).toList();
 
@@ -415,8 +397,6 @@ class MarketScannerProvider extends ChangeNotifier {
       }
     });
 
-    storeFullLiveData(data);
-
     if (_dataList == null) {
       _dataList = List.empty(growable: true);
       _dataList!.addAll(data);
@@ -452,33 +432,9 @@ class MarketScannerProvider extends ChangeNotifier {
       });
     }
 
-    _dataList = _dataList!.take(30).toList();
+    _dataList = _dataList!.take(10).toList();
     // Notify listeners to update UI
     notifyListeners();
-  }
-
-  void storeFullLiveData(List<MarketScannerRes>? data) async {
-    if (_fullDataList == null) {
-      _fullDataList = data;
-      return;
-    } else {
-      if (data != null && data.isNotEmpty) {
-        // Iterate over the new data list
-        for (var newItem in data) {
-          // Find if an item with the same identifier exists in the list
-          int index = _fullDataList!.indexWhere(
-              (existingItem) => existingItem.identifier == newItem.identifier);
-
-          if (index != -1) {
-            // If the item exists (index != -1), replace the existing one
-            _fullDataList![index] = newItem;
-          } else {
-            // If the item doesn't exist, add the new item
-            _fullDataList!.add(newItem);
-          }
-        }
-      }
-    }
   }
 
   int sortByCompare(
@@ -718,14 +674,10 @@ class MarketScannerProvider extends ChangeNotifier {
       _filterParams?.sortBy = sortBy;
       _filterParams?.sortByAsc = true;
     }
-
-    if (MarketScannerDataManager.instance.isListening) {
-      MarketScannerDataManager.instance.stopListeningPorts();
-    }
-
+    // MarketScannerDataManager.instance.stopListeningPorts();
     if (_dataList != null) {
-      // notifyListeners();
-      updateData(_fullDataList);
+      // updateData(_dataList);
+      notifyListeners();
     } else if (_offlineDataList != null) {
       // _offlineDataList = null;
       updateOfflineData(_fullOfflineDataList, applyFilter: true);
@@ -740,12 +692,11 @@ class MarketScannerProvider extends ChangeNotifier {
       _offlineDataList = null;
       _fullOfflineDataList = null;
       notifyListeners();
-      // MarketScannerDataManager.instance.initializePorts();
-      updateData(_fullDataList);
+      ScannerDataManager.instance.initializePorts();
     } else if (_offlineDataList != null) {
       if (params.sector != _filterParams?.sector) {
         _filterParams = params;
-        MarketScannerDataManager.instance.getOfflineData();
+        getOfflineData();
       } else {
         _filterParams = params;
         updateOfflineData(_fullOfflineDataList, applyFilter: true);
@@ -762,7 +713,7 @@ class MarketScannerProvider extends ChangeNotifier {
       _offlineDataList = _fullOfflineDataList;
       _offlineDataList = _offlineDataList?.take(50).toList();
     }
-    MarketScannerDataManager.instance.getOfflineData();
+    getOfflineData();
     notifyListeners();
   }
 
@@ -821,31 +772,6 @@ class MarketScannerProvider extends ChangeNotifier {
       return true;
     }
     return false;
-  }
-
-  Future getScannerType({showProgress = false, loadMore = false}) async {
-    setStatus(Status.loading);
-    try {
-      Map request = {
-        "token":
-            navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
-      };
-      ApiResponse response = await apiRequest(
-        url: Apis.stockScannerChange,
-        request: request,
-        showProgress: false,
-      );
-
-      if (response.status) {
-        _isScannerWebview = response.data['webviewStatus'] == 1;
-      } else {
-        // _error = response.message;
-      }
-      setStatus(Status.loaded);
-    } catch (e) {
-      Utils().showLog(e.toString());
-      setStatus(Status.loaded);
-    }
   }
 }
 
