@@ -6,6 +6,7 @@ import 'package:stocks_news_new/api/api_requester.dart';
 import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/api/apis.dart';
 import 'package:stocks_news_new/tournament/provider/tournament.dart';
+import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import '../../modals/stock_screener_res.dart';
 import '../../providers/user_provider.dart';
@@ -134,6 +135,7 @@ class TournamentTradesProvider extends ChangeNotifier {
         getDetail(_selectedStock?.symbol ?? '', refresh: true);
       } else {
         //
+        showErrorMessage(message: response.message);
       }
 
       return ApiResponse(status: response.status);
@@ -227,6 +229,7 @@ class TournamentTradesProvider extends ChangeNotifier {
   Future getDetail(String symbol, {bool refresh = false}) async {
     // Check if the ticker is already loaded and no refresh is needed
     if (_detail[symbol]?.data != null && !refresh) {
+      _startSSE(symbol);
       Utils().showLog('Data for $symbol already fetched, returning...');
       return;
     }
@@ -319,7 +322,7 @@ class TournamentTradesProvider extends ChangeNotifier {
         (stockData) {
           // Utils().showLog(
           //     'Streaming update for $symbol, Price: ${stockData.price}, Change: ${stockData.change}, Change%: ${stockData.changePercentage}');
-
+          Utils().showLog('Tournament: ${stockData.toMap()}');
           tickerData?.currentPrice = stockData.price;
           tickerData?.change = stockData.change;
           tickerData?.changesPercentage = stockData.changePercentage;
@@ -335,11 +338,13 @@ class TournamentTradesProvider extends ChangeNotifier {
             }
             Utils()
                 .showLog('=>$symbol::${buttonRes?.orderChange?.toCurrency()}');
+          } else {
+            Utils().showLog('order price $symbol => ${buttonRes?.orderPrice}');
           }
 
           notifyListeners();
         },
-        SimulatorEnum.open,
+        SimulatorEnum.detail,
       );
     } catch (e) {
       //

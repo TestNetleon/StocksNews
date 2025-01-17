@@ -155,6 +155,8 @@ class TradeProviderNew extends ChangeNotifier {
         _error = null;
 
         try {
+          _detailRes?.marketTime =
+              _formatExtendedHoursTime(_detailRes?.marketTime);
           SSEManager.instance.connectStock(
             screen: SimulatorEnum.detail,
             symbol: symbol,
@@ -229,7 +231,7 @@ class TradeProviderNew extends ChangeNotifier {
 
 class SummaryOrderNew {
   String? image, symbol, name, change, price;
-  num? changePercentage, invested, shares, dollars;
+  num? changePercentage, invested, shares, dollars, currentPrice;
   bool isShare;
   bool buy;
   String? date;
@@ -241,6 +243,7 @@ class SummaryOrderNew {
     this.shares,
     this.change,
     this.price,
+    this.currentPrice,
     this.changePercentage,
     this.invested,
     this.date,

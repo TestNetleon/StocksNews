@@ -121,10 +121,12 @@ class SuccessTradeSheet extends StatelessWidget {
                         color: ThemeColors.white,
                       ),
                     ),
-                    Text(
-                      "${order?.shares?.toCurrency()}",
-                      style: styleGeorgiaRegular(
-                        color: ThemeColors.white,
+                    Flexible(
+                      child: Text(
+                        "${order?.shares?.toCurrency()}",
+                        style: styleGeorgiaRegular(
+                          color: ThemeColors.white,
+                        ),
                       ),
                     ),
                   ],
@@ -132,6 +134,65 @@ class SuccessTradeSheet extends StatelessWidget {
                 Divider(
                   color: ThemeColors.greyText,
                   height: 15,
+                ),
+                Visibility(
+                  visible: order?.currentPrice != null,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "Executed at",
+                        style: styleGeorgiaRegular(
+                          color: ThemeColors.white,
+                        ),
+                      ),
+                      Flexible(
+                        child: Text(
+                          "${order?.currentPrice?.toFormattedPrice()}",
+                          style: styleGeorgiaRegular(
+                            color: ThemeColors.white,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Visibility(
+                  visible: order?.currentPrice != null,
+                  child: Divider(
+                    color: ThemeColors.greyText,
+                    height: 15,
+                  ),
+                ),
+                Visibility(
+                  visible: order?.currentPrice != null,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "Order Value",
+                        style: styleGeorgiaRegular(
+                          color: ThemeColors.white,
+                        ),
+                      ),
+                      Flexible(
+                        child: Text(
+                          ((order?.currentPrice ?? 0) * (order?.shares ?? 0))
+                              .toFormattedPrice(),
+                          style: styleGeorgiaRegular(
+                            color: ThemeColors.white,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Visibility(
+                  visible: order?.currentPrice != null,
+                  child: Divider(
+                    color: ThemeColors.greyText,
+                    height: 15,
+                  ),
                 ),
                 Visibility(
                   child: Column(

@@ -187,7 +187,7 @@ class DayTrainingTitle extends StatelessWidget {
                         CachedNetworkImagesWidget(provider.detailRes?.image)),
               ),
               Visibility(
-                visible: provider.detailRes?.isMarketOpen == true,
+                visible: provider.detailRes?.tournamentBattleId != null,
                 child: ThemeButton(
                   onPressed: () {
                     // Navigator.push(

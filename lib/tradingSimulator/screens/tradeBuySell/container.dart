@@ -132,7 +132,9 @@ class _BuySellContainerState extends State<BuySellContainer> {
               : (num.parse(_currentText) / (detailRes?.currentPrice ?? 0)),
           image: detailRes?.image,
           name: detailRes?.company,
-          price: '${detailRes?.currentPrice?.toFormattedPrice()}',
+          // price: '${detailRes?.currentPrice?.toFormattedPrice()}',
+          price: null,
+
           symbol: detailRes?.symbol,
           invested: invested,
           buy: widget.buy,
@@ -220,6 +222,7 @@ class _BuySellContainerState extends State<BuySellContainer> {
           context.read<TsPortfolioProvider>().getDashboardData();
           context.read<TsOpenListProvider>().getData();
           // Navigator.pop(context);
+          num? numPrice = response.data['result']['executed_at'];
 
           final order = SummaryOrderNew(
             isShare: _selectedSegment == TypeTrade.shares,
@@ -233,7 +236,8 @@ class _BuySellContainerState extends State<BuySellContainer> {
                 : (num.parse(_currentText) / (detailRes?.currentPrice ?? 0)),
             image: detailRes?.image,
             name: detailRes?.company,
-            price: '${detailRes?.currentPrice?.toFormattedPrice()}',
+            // price: numPrice?.toFormattedPrice(),
+            currentPrice: numPrice,
             symbol: detailRes?.symbol,
             invested: invested,
             buy: widget.buy,
@@ -285,6 +289,8 @@ class _BuySellContainerState extends State<BuySellContainer> {
       Utils().showLog('~~~~~${response.status}~~~~');
 
       if (response.status) {
+        num? numPrice = response.data['result']['executed_at'];
+
         // context.read<HomeProvider>().getHomeSlider();
         context.read<TsOpenListProvider>().getData();
         final order = SummaryOrderNew(
@@ -299,7 +305,8 @@ class _BuySellContainerState extends State<BuySellContainer> {
               : (num.parse(_currentText) / (detailRes?.currentPrice ?? 0)),
           image: detailRes?.image,
           name: detailRes?.company,
-          price: '${detailRes?.currentPrice?.toFormattedPrice()}',
+          // price: numPrice?.toFormattedPrice(),
+          currentPrice: numPrice,
           symbol: detailRes?.symbol,
           invested: invested,
           buy: widget.buy,

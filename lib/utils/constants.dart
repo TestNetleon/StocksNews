@@ -630,6 +630,7 @@ enum SimulatorEnum {
   transaction,
   detail,
   tradeSheet,
+  tournament,
 }
 
 DeeplinkEnum containsSpecificPath(Uri uri) {
