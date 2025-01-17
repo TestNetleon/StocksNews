@@ -236,6 +236,27 @@ class _AppBarHomeState extends State<AppBarHome> {
                           child: Stack(
                             children: [
                               IconButton(
+                                onPressed: () {
+                                  value.startListeningPorts();
+                                },
+                                icon: const Icon(
+                                  Icons.restart_alt,
+                                  color: ThemeColors.white,
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                      }),
+                    if (widget.isScannerFilter)
+                      Consumer<MarketScannerProvider>(
+                          builder: (context, value, child) {
+                        return Visibility(
+                          visible:
+                              widget.onFilterClick != null && value.visible,
+                          child: Stack(
+                            children: [
+                              IconButton(
                                 onPressed: widget.onFilterClick,
                                 icon: const Icon(
                                   Icons.filter_alt,

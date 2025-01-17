@@ -28,7 +28,7 @@ class TopGainerScannerDataManager {
   final urls = [];
   var isOfflineCalled = false;
   var listening = true;
-  int checkInterval = 7000;
+  int checkInterval = 120000;
   int checkOfflineInterval = 5000;
 
   void initializePorts() async {

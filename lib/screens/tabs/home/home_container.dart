@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
@@ -10,7 +9,6 @@ import 'package:stocks_news_new/screens/tabs/home/widgets/featured/index.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/home_partial_loading_widget.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/membership_coins_option.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/plaid/index.dart';
-import 'package:stocks_news_new/stocksScanner/screens/stockScanner/index.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 // import 'package:stocks_news_new/utils/utils.dart';
@@ -22,7 +20,6 @@ import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/theme_button_small.dart';
 // import 'package:upgrader/upgrader.dart';
 import '../../../modals/home_insider_res.dart';
-import '../../../stocksScanner/screens/stockScanner/index.dart';
 import '../../../utils/colors.dart';
 import '../../../utils/utils.dart';
 import '../../../widgets/custom/refer.dart';
@@ -64,19 +61,19 @@ class _HomeContainerState extends State<HomeContainer> {
     }
     return Column(
       children: [
-        Visibility(
-          visible: provider.extra?.showTradingSimulator == true || kDebugMode,
-          child: ThemeButtonSmall(
-            text: 'Stock Scanner',
-            onPressed: () async {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (_) => StocksScanner()),
-              );
-              // BrazeService.brazeBaseEvents(eventName: 'stock_alert_sentiment');
-            },
-          ),
-        ),
+        // Visibility(
+        //   visible: provider.extra?.showTradingSimulator == true || kDebugMode,
+        //   child: ThemeButtonSmall(
+        //     text: 'Stock Scanner',
+        //     onPressed: () async {
+        //       Navigator.push(
+        //         context,
+        //         MaterialPageRoute(builder: (_) => StocksScanner()),
+        //       );
+        //       // BrazeService.brazeBaseEvents(eventName: 'stock_alert_sentiment');
+        //     },
+        //   ),
+        // ),
         Visibility(
           visible: provider.extra?.phoneCodeError != null &&
               provider.extra?.phoneCodeError != '',
