@@ -31,6 +31,21 @@ class TournamentLeaderboardItem extends StatelessWidget {
           Expanded(
             child: Row(
               children: [
+                Visibility(
+                  visible: data.position != null,
+                  child: Container(
+                    margin: EdgeInsets.only(right: 5),
+                    padding: EdgeInsets.all(4),
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: ThemeColors.greyBorder,
+                    ),
+                    child: Text(
+                      '${data.position}',
+                      style: styleGeorgiaBold(fontSize: 11),
+                    ),
+                  ),
+                ),
                 ClipRRect(
                   borderRadius: BorderRadius.circular(50),
                   child: Container(
@@ -42,7 +57,7 @@ class TournamentLeaderboardItem extends StatelessWidget {
                     child: data.imageType == "svg"
                         ? SvgPicture.network(
                             fit: BoxFit.cover,
-                            data.image ?? "",
+                            data.userImage ?? "",
                             placeholderBuilder: (BuildContext context) =>
                                 Container(
                               padding: const EdgeInsets.all(30.0),
@@ -51,28 +66,60 @@ class TournamentLeaderboardItem extends StatelessWidget {
                               ),
                             ),
                           )
-                        : CachedNetworkImagesWidget(data.image),
+                        : CachedNetworkImagesWidget(
+                            data.userImage,
+                          ),
                   ),
                 ),
                 Flexible(
                   child: Padding(
                     padding: const EdgeInsets.only(left: 10),
-                    child: Text(
-                      data.name ?? 'N/A',
-                      style: styleGeorgiaBold(),
+                    child: Row(
+                      children: [
+                        Flexible(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                data.userName ?? 'N/A',
+                                style: styleGeorgiaBold(),
+                              ),
+                              Text(
+                                data.rank ?? 'N/A',
+                                style: styleGeorgiaRegular(
+                                    color: ThemeColors.greyText, fontSize: 14),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Container()
+                      ],
                     ),
                   ),
                 ),
               ],
             ),
           ),
-          Text(
-            '${data.avgTotalChange?.toCurrency()}%',
-            style: stylePTSansRegular(
-              fontSize: 14,
-              color: (data.avgTotalChange ?? 0) > 0 ? Colors.green : Colors.red,
+          Visibility(
+            visible: data.totalChange != null,
+            child: Text(
+              '${data.totalChange?.toCurrency()}%',
+              style: stylePTSansRegular(
+                fontSize: 14,
+                color: (data.totalChange ?? 0) > 0 ? Colors.green : Colors.red,
+              ),
             ),
-          )
+          ),
+          Visibility(
+            visible: data.totalPoints != null,
+            child: Text(
+              '${data.totalPoints}',
+              style: styleGeorgiaBold(
+                fontSize: 14,
+                color: Colors.white,
+              ),
+            ),
+          ),
         ],
       ),
     );

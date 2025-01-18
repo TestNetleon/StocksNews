@@ -5,6 +5,7 @@ import 'package:stocks_news_new/utils/colors.dart';
 import '../../../../utils/theme.dart';
 import '../../../../widgets/spacer_vertical.dart';
 import '../../../provider/tournament.dart';
+import '../pointsPaid/index.dart';
 
 class TournamentHeader extends StatelessWidget {
   const TournamentHeader({super.key});
@@ -32,18 +33,29 @@ class TournamentHeader extends StatelessWidget {
           provider.data?.tournamentHeader?.length ?? 0,
           (index) {
             return Expanded(
-              child: Column(
-                children: [
-                  Text(
-                    provider.data?.tournamentHeader?[index].label ?? '',
-                    style: styleGeorgiaRegular(fontSize: 14),
-                  ),
-                  const SpacerVertical(height: 5),
-                  Text(
-                    provider.data?.tournamentHeader?[index].value ?? '',
-                    style: styleGeorgiaBold(fontSize: 18),
-                  ),
-                ],
+              child: InkWell(
+                onTap: () {
+                  if (index == 1) {
+                    Navigator.push(context, MaterialPageRoute(
+                      builder: (context) {
+                        return TournamentPointsPaidIndex();
+                      },
+                    ));
+                  }
+                },
+                child: Column(
+                  children: [
+                    Text(
+                      provider.data?.tournamentHeader?[index].label ?? '',
+                      style: styleGeorgiaRegular(fontSize: 14),
+                    ),
+                    const SpacerVertical(height: 5),
+                    Text(
+                      provider.data?.tournamentHeader?[index].value ?? '',
+                      style: styleGeorgiaBold(fontSize: 18),
+                    ),
+                  ],
+                ),
               ),
             );
           },

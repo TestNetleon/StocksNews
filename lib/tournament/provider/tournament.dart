@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/user_res.dart';
+import 'package:stocks_news_new/tournament/models/leaderboard.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
 import '../../api/api_requester.dart';
@@ -175,6 +176,9 @@ class TournamentProvider extends ChangeNotifier {
   TournamentRes? _data;
   TournamentRes? get data => _data;
 
+  Extra? _extra;
+  Extra? get extra => _extra;
+
   void setStatusTournament(status) {
     _statusTournament = status;
     notifyListeners();
@@ -201,9 +205,12 @@ class TournamentProvider extends ChangeNotifier {
         _data = null;
         _error = response.message ?? Const.errSomethingWrong;
       }
+      _extra = (response.extra is Extra ? response.extra as Extra : null);
+
       setStatusTournament(Status.loaded);
     } catch (e) {
       _data = null;
+
       _error = Const.errSomethingWrong;
       setStatusTournament(Status.loaded);
       Utils().showLog('error $e');
@@ -292,34 +299,74 @@ class TournamentProvider extends ChangeNotifier {
     }
   }
 
-// MARK: OPEN
-  // Future openTournament() async {
-  //   try {
-  //     UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
+// MARK: Trades Executed
 
-  //     Map requst = {
-  //       'token': provider.user?.token ?? '',
-  //       'tournament_battle_id': '${_detailRes?.tournamentBattleId}',
-  //     };
-  //     ApiResponse response = await apiRequest(
-  //       url: Apis.tShow,
-  //       showProgress: true,
-  //       request: requst,
-  //     );
-  //     if (response.status) {
-  //       tournamentDetail(_id);
-  //       Navigator.push(
-  //         navigatorKey.currentContext!,
-  //         MaterialPageRoute(
-  //           builder: (context) => TournamentOpenIndex(),
-  //         ),
-  //       );
-  //     } else {
-  //       //
-  //     }
-  //   } catch (e) {
-  //     //
-  //     Utils().showLog('join error $e');
-  //   }
-  // }
+  Status _statusCommonList = Status.ideal;
+  Status get statusCommonList => _statusCommonList;
+
+  bool get isLoadingCommonList => _statusCommonList == Status.loading;
+
+  String? _errorCommonList;
+  String? get errorCommonList => _errorCommonList ?? Const.errSomethingWrong;
+
+  Extra? _extraCommonList;
+  Extra? get extraCommonList => _extraCommonList;
+
+  List<LeaderboardByDateRes>? _pointsPaid;
+  List<LeaderboardByDateRes>? get tradesExecuted => _pointsPaid;
+
+  int _page = 1;
+  bool get canLoadMore => _page <= (_extra?.totalPages ?? 1);
+
+  void setStatusTradeExecuted(status) {
+    _statusCommonList = status;
+    notifyListeners();
+  }
+
+  Future pointsPaidAPI({loadMore = false}) async {
+    if (loadMore) {
+      _page++;
+      setStatusTradeExecuted(Status.loadingMore);
+    } else {
+      _page = 1;
+      setStatusTradeExecuted(Status.loading);
+    }
+
+    try {
+      UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
+
+      Map requst = {
+        'token': provider.user?.token ?? '',
+        'page': '$_page',
+      };
+      ApiResponse response = await apiRequest(
+        url: Apis.tPointsPaid,
+        showProgress: false,
+        request: requst,
+      );
+      if (response.status) {
+        if (_page == 1) {
+          // Parse as a list of leaderboard entries
+          _pointsPaid = leaderboardByDateResFromJson(jsonEncode(response.data));
+          _errorCommonList = null;
+        } else {
+          var newEntries =
+              leaderboardByDateResFromJson(jsonEncode(response.data));
+          _pointsPaid?.addAll(newEntries);
+        }
+      } else {
+        if (_page == 1) {
+          _pointsPaid = null;
+          _errorCommonList = response.message;
+        }
+      }
+      setStatusTradeExecuted(Status.loaded);
+    } catch (e) {
+      _pointsPaid = null;
+      _errorCommonList = Const.errSomethingWrong;
+
+      Utils().showLog('join error $e');
+      setStatusTradeExecuted(Status.loaded);
+    }
+  }
 }

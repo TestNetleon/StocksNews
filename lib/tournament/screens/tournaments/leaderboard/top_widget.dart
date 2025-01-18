@@ -58,7 +58,7 @@ class TournamentLeaderboardTopItem extends StatelessWidget {
                     child: data?[index].imageType == "svg"
                         ? SvgPicture.network(
                             fit: BoxFit.cover,
-                            data?[index].image ?? "",
+                            data?[index].userImage ?? "",
                             placeholderBuilder: (BuildContext context) =>
                                 Container(
                               padding: const EdgeInsets.all(30.0),
@@ -67,7 +67,7 @@ class TournamentLeaderboardTopItem extends StatelessWidget {
                               ),
                             ),
                           )
-                        : CachedNetworkImagesWidget(data?[index].image),
+                        : CachedNetworkImagesWidget(data?[index].userImage),
                   ),
                 ),
               ),
@@ -87,7 +87,7 @@ class TournamentLeaderboardTopItem extends StatelessWidget {
           ),
           const SpacerVertical(height: 5),
           Text(
-            "${data?[index].avgTotalChange}",
+            "${data?[index].totalChange}",
             style: stylePTSansBold(
               color: index == 2
                   ? ThemeColors.sos
@@ -97,7 +97,7 @@ class TournamentLeaderboardTopItem extends StatelessWidget {
             ),
           ),
           Text(
-            data?[index].name ?? 'N/A',
+            data?[index].userName ?? 'N/A',
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: stylePTSansBold(

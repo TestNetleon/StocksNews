@@ -36,50 +36,79 @@ class TournamentLeaderboardRes {
       };
 }
 
+List<LeaderboardByDateRes> leaderboardByDateResFromJson(String str) =>
+    List<LeaderboardByDateRes>.from(
+        json.decode(str).map((x) => LeaderboardByDateRes.fromJson(x)));
+
 class LeaderboardByDateRes {
-  // final num? tournamentBattleId;
-  // final DateTime? tournamentBattleDate;
+  final num? tournamentID;
+  final String? tournamentName;
+  final String? tournamentImage;
   final num? userId;
-  final String? name;
-  final String? image;
-  final num? avgTotalChange;
-  // final num? position;
+  final String? userName;
+  final String? userImage;
+  final num? totalChange;
   final String? imageType;
+  final num? position;
+  final num? level;
+  final num? totalPoints;
+  final String? rank;
+  final num? status;
+  final String? date;
+  final num? rewards;
 
   LeaderboardByDateRes({
-    // this.tournamentBattleId,
-    // this.tournamentBattleDate,
     this.userId,
-    this.name,
-    this.image,
-    this.avgTotalChange,
-    // this.position,
+    this.userName,
+    this.userImage,
+    this.totalChange,
+    this.position,
+    this.level,
+    this.totalPoints,
+    this.rank,
+    this.date,
     this.imageType,
+    this.rewards,
+    this.status,
+    this.tournamentID,
+    this.tournamentName,
+    this.tournamentImage,
   });
 
   factory LeaderboardByDateRes.fromJson(Map<String, dynamic> json) =>
       LeaderboardByDateRes(
-        // tournamentBattleId: json["tournament_battle_id"],
         imageType: json['image_type'],
-        // tournamentBattleDate: json["tournament_battle_date"] == null
-        //     ? null
-        //     : DateTime.parse(json["tournament_battle_date"]),
+        rank: json['rank'],
         userId: json["user_id"],
-        name: json["name"],
-        image: json["image"],
-        avgTotalChange: json["total_change"],
-        // position: json["position"],
+        userName: json["user_name"],
+        userImage: json["user_image"],
+        totalChange: json["total_change"],
+        level: json['level'],
+        position: json['position'],
+        totalPoints: json['total_points'],
+        date: json['date'],
+        rewards: json['rewards'],
+        status: json['status'],
+        tournamentID: json['tournament_id'],
+        tournamentImage: json['tournament_image'],
+        tournamentName: json['tournament_name'],
       );
 
   Map<String, dynamic> toJson() => {
-        // "tournament_battle_id": tournamentBattleId,
-        // "tournament_battle_date":
-        //     "${tournamentBattleDate!.year.toString().padLeft(4, '0')}-${tournamentBattleDate!.month.toString().padLeft(2, '0')}-${tournamentBattleDate!.day.toString().padLeft(2, '0')}",
         "user_id": userId,
-        "name": name,
-        "image": image,
+        "name": userName,
+        'rank': rank,
+        "image": userImage,
         "image_type": imageType,
-        "total_change": avgTotalChange,
-        // "position": position,
+        "total_change": totalChange,
+        'level': level,
+        'position': position,
+        'total_points': totalPoints,
+        'date': date,
+        'rewards': rewards,
+        'status': status,
+        'tournament_id': tournamentID,
+        'tournament_image': tournamentImage,
+        'tournament_name': tournamentName,
       };
 }

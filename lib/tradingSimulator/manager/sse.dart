@@ -583,7 +583,7 @@ class SSEManager {
           }
           _handleStreamError(url, screen);
         },
-        cancelOnError: false,
+        cancelOnError: true,
       );
 
       // Track subscription for single or multiple symbols
