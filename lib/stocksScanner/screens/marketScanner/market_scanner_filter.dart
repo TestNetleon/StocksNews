@@ -368,7 +368,7 @@ class FilterRow extends StatelessWidget {
               child: TextInputField(
                 controller: startController,
                 hintText: startHint,
-                keyboardType: TextInputType.number,
+                keyboardType: TextInputType.numberWithOptions(decimal: true),
                 style: stylePTSansBold(color: Colors.black),
                 inputFormatters: [
                   TextInputFormatter.withFunction((oldValue, newValue) {
@@ -386,7 +386,9 @@ class FilterRow extends StatelessWidget {
               child: TextInputField(
                 controller: endController,
                 hintText: endHint,
-                keyboardType: TextInputType.number,
+                // keyboardType: TextInputType.number,
+                keyboardType: TextInputType.numberWithOptions(decimal: true),
+
                 style: stylePTSansBold(color: Colors.black),
                 inputFormatters: [
                   TextInputFormatter.withFunction(

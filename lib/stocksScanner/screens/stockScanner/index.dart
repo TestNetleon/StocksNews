@@ -34,14 +34,21 @@ class _StocksScannerState extends State<StocksScanner> {
         title: "Stocks Scanner",
         canSearch: false,
         showTrailing: false,
-        isScannerFilter: true,
-        onFilterClick: () {
-          Navigator.push(context, createRoute(MarketScannerFilter()));
-        },
+        isScannerFilter: provider.scannerIndex != 1,
+        onFilterClick: provider.scannerIndex == 1
+            ? null
+            : () {
+                Navigator.push(
+                  context,
+                  createRoute(
+                    MarketScannerFilter(),
+                  ),
+                );
+              },
       ),
       body: provider.isLoading
           ? Loading()
-          : provider.isScannerWebview
+          : provider.scannerIndex == 1
               ? ScannerWebview()
               : ScannerContainer(),
     );

@@ -41,6 +41,8 @@ class TopGainerScannerDataManager {
 
     for (int port = 8021; port <= 8036; port++) {
       urls.add("https://dev.stocks.news:$port/sse");
+      // urls.add(
+      //     'https://dev.stocks.news:$port/topGainersLosers?type=gainers&limit=50');
     }
 
     try {

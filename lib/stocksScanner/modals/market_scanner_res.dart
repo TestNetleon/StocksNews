@@ -24,7 +24,7 @@ class MarketScannerRes {
   final String? time;
   final int? volume;
   final String? previousCloseDate;
-
+  final num? price;
   final String? extendedHoursDate;
   final String? extendedHoursTime;
   final String? extendedHoursType;
@@ -54,6 +54,7 @@ class MarketScannerRes {
   final String? identity;
 
   MarketScannerRes({
+    this.price,
     required this.extendedHoursDate,
     required this.extendedHoursTime,
     required this.extendedHoursType,
@@ -95,6 +96,7 @@ class MarketScannerRes {
 
   factory MarketScannerRes.fromJson(Map<String, dynamic> json) =>
       MarketScannerRes(
+        price: json['price'],
         extendedHoursDate: json["ExtendedHoursDate"],
         extendedHoursTime: json["ExtendedHoursTime"],
         extendedHoursType: json["ExtendedHoursType"],
@@ -138,6 +140,7 @@ class MarketScannerRes {
       );
 
   Map<String, dynamic> toJson() => {
+        'price': price,
         "ExtendedHoursDate": extendedHoursDate,
         "ExtendedHoursTime": extendedHoursTime,
         "ExtendedHoursType": extendedHoursType,

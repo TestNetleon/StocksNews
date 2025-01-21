@@ -507,6 +507,19 @@ class TopLoserScannerProvider extends ChangeNotifier {
       } else {
         return valueB.compareTo(valueA);
       }
+    } else if (sortBy == "Post Market Price") {
+      num? valueA = a.ext?.extendedHoursPrice ?? 0;
+      num? valueB = b.ext?.extendedHoursPrice ?? 0;
+      if (valueA == null && valueB == null) {
+        return 0;
+      }
+      if (valueA == null) return -1;
+      if (valueB == null) return 1;
+      if (isAsc) {
+        return valueA.compareTo(valueB);
+      } else {
+        return valueB.compareTo(valueA);
+      }
     } else if (sortBy == "Net Change") {
       num? valueA = a.change;
       num? valueB = b.change;

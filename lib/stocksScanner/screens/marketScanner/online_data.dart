@@ -8,6 +8,7 @@ import 'package:stocks_news_new/stocksScanner/screens/stockScanner/common_scanne
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/utils/constants.dart';
+import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 class MarketScannerOnline extends StatefulWidget {
@@ -40,7 +41,6 @@ class _MarketScannerOnlineState extends State<MarketScannerOnline> {
   Widget build(BuildContext context) {
     MarketScannerProvider provider = context.watch<MarketScannerProvider>();
     List<MarketScannerRes>? dataList = provider.dataList;
-
     if (dataList == null) {
       return SizedBox();
     }
@@ -53,11 +53,24 @@ class _MarketScannerOnlineState extends State<MarketScannerOnline> {
     //   marketStatus = "Live";
     // }
 
+    Utils().showLog('header ${provider.tableHeader.length}');
+    Utils().showLog('data ${dataList.length}');
+
     return SingleChildScrollView(
       child: Column(
         children: [
           MarketScannerHeader(isOnline: true),
           const SpacerVertical(height: 10),
+          Visibility(
+            visible: dataList.isNotEmpty && provider.isFilterApplied(),
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 10),
+              child: Text(
+                'Total number of results: ${dataList.length}',
+                style: styleGeorgiaBold(),
+              ),
+            ),
+          ),
           ClipRRect(
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(8),
@@ -211,6 +224,7 @@ class _MarketScannerOnlineState extends State<MarketScannerOnline> {
                               dataCell(
                                 text: "\$$lastTrade",
                               ), // "Last Trade",
+
                               dataCell(
                                 text: "\$$netChange",
                                 change: true,

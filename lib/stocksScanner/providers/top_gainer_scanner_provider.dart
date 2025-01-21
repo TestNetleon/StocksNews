@@ -110,8 +110,8 @@ class TopGainerScannerProvider extends ChangeNotifier {
 
     if (_filterParams?.sortBy == 2) {
       data.sort((a, b) {
-        double valueA = a.changesPercentage ?? 0;
-        double valueB = b.changesPercentage ?? 0;
+        num valueA = a.changesPercentage ?? 0;
+        num valueB = b.changesPercentage ?? 0;
         if (_filterParams?.sortByAsc == true) {
           return valueB.compareTo(valueA);
         }
@@ -486,6 +486,19 @@ class TopGainerScannerProvider extends ChangeNotifier {
       //   valueB = b.extendedHoursPrice ?? 0;
       // }
       if (valueA == null && valueB == null) return 0;
+      if (valueA == null) return -1;
+      if (valueB == null) return 1;
+      if (isAsc) {
+        return valueA.compareTo(valueB);
+      } else {
+        return valueB.compareTo(valueA);
+      }
+    } else if (sortBy == "Post Market Price") {
+      num? valueA = a.ext?.extendedHoursPrice ?? 0;
+      num? valueB = b.ext?.extendedHoursPrice ?? 0;
+      if (valueA == null && valueB == null) {
+        return 0;
+      }
       if (valueA == null) return -1;
       if (valueB == null) return 1;
       if (isAsc) {

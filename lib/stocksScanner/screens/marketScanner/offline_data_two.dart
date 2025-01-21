@@ -10,14 +10,15 @@ import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
-class MarketScannerOffline extends StatefulWidget {
-  const MarketScannerOffline({super.key});
+class MarketScannerOfflineTwo extends StatefulWidget {
+  const MarketScannerOfflineTwo({super.key});
 
   @override
-  State<MarketScannerOffline> createState() => _MarketScannerOfflineState();
+  State<MarketScannerOfflineTwo> createState() =>
+      _MarketScannerOfflineTwoState();
 }
 
-class _MarketScannerOfflineState extends State<MarketScannerOffline> {
+class _MarketScannerOfflineTwoState extends State<MarketScannerOfflineTwo> {
   // List<String> columnHeader = [
   //   "Time",
   //   // "Symbol",
@@ -51,9 +52,18 @@ class _MarketScannerOfflineState extends State<MarketScannerOffline> {
   Widget build(BuildContext context) {
     MarketScannerProvider provider = context.watch<MarketScannerProvider>();
     List<ScannerRes>? dataList = provider.offlineDataList;
-
+    List<String> tableHeader = provider.tableHeader;
+    bool? gotPostMarket = dataList?.any(
+      (element) => element.ext?.extendedHoursType == 'PostMarket',
+    );
     if (dataList == null) {
       return SizedBox();
+    }
+    if (gotPostMarket == true) {
+      int lastTradeIndex = provider.tableHeader.indexOf("Last Trade");
+      if (lastTradeIndex != -1 && !tableHeader.contains("Post Market Price")) {
+        tableHeader.insert(lastTradeIndex + 1, "Post Market Price");
+      }
     }
 
     return SingleChildScrollView(
@@ -199,7 +209,8 @@ class _MarketScannerOfflineState extends State<MarketScannerOffline> {
                           width: 0.5,
                         ),
                       ),
-                      columns: provider.tableHeader.map(
+                      columns: tableHeader.map(
+                        //    "Post Market Price", add this in header id data.first.ext?.extendedHoursType == "PostMarket"
                         (header) {
                           return dataColumn(
                             text: header,
@@ -212,37 +223,45 @@ class _MarketScannerOfflineState extends State<MarketScannerOffline> {
                       ).toList(),
                       rows: dataList.map(
                         (data) {
-                          return DataRow(
-                            cells: [
-                              // _dataCell(text: data.time), // "Time",
-                              // _dataCell(text: data.identifier), // "Symbol",
-                              _dataCell(text: data.name), // "Company Name",
-                              _dataCell(text: data.sector), // "Sector",
-                              _dataCell(text: "\$${data.bid}"), // "Bid",
-                              _dataCell(text: "\$${data.ask}"), // "Ask",
+                          List<DataCell> cells = [
+                            _dataCell(text: data.name), // "Company Name"
+                            _dataCell(text: data.sector), // "Sector"
+                            _dataCell(text: "\$${data.bid}"), // "Bid"
+                            _dataCell(text: "\$${data.ask}"), // "Ask"
+                            _dataCell(text: "\$${data.price}"), // "Last Trade"
+                            _dataCell(
+                              text: "\$${data.change}",
+                              change: true,
+                              value: data.change,
+                            ), // "Net Change"
+                            _dataCell(
+                              text: "${data.changesPercentage}", // "% Change"
+                              change: true,
+                              value: data.changesPercentage,
+                            ),
+                            _dataCell(
+                              text: num.parse("${data.volume ?? 0}")
+                                  .toRuppeeFormatWithoutFloating(), // "Volume"
+                            ),
+                            _dataCell(
+                              text: num.parse("${data.volume * data.price}")
+                                  .toRuppees(), // "$ Volume"
+                            ),
+                          ];
+
+                          if (gotPostMarket == true) {
+                            int lastTradeIndex = 4;
+                            cells.insert(
+                              lastTradeIndex + 1,
                               _dataCell(
-                                  text: "\$${data.price}"), // "Last Trade",
-                              _dataCell(
-                                text: "\$${data.change}",
-                                change: true,
-                                value: data.change,
-                              ), // "Net Change",
-                              _dataCell(
-                                text:
-                                    "${data.changesPercentage}", // "% Change",
-                                change: true,
-                                value: data.changesPercentage,
+                                text: data.ext?.extendedHoursPrice != null
+                                    ? "\$${data.ext?.extendedHoursPrice}"
+                                    : "N/A",
                               ),
-                              _dataCell(
-                                text: num.parse("${data.volume ?? 0}")
-                                    .toRuppeeFormatWithoutFloating(),
-                              ), // "Volume",
-                              _dataCell(
-                                text: num.parse("${data.volume * data.price}")
-                                    .toRuppees(), // "$Volume"
-                              ),
-                            ],
-                          );
+                            );
+                          }
+
+                          return DataRow(cells: cells);
                         },
                       ).toList(),
                     ),

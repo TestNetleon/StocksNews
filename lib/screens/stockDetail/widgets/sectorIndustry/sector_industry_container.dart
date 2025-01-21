@@ -43,7 +43,10 @@ class SectorIndustryList extends StatelessWidget {
             if (index == 0 && stockStates == StockStates.sector) {
               return Column(
                 children: [
-                  const SectorGraph(),
+                  Visibility(
+                    visible: !provider.isGraphLoading,
+                    child: const SectorGraph(),
+                  ),
                   SlidableMenuWidget(
                     index: index,
                     alertForBullish: data?.isAlertAdded?.toInt() ?? 0,

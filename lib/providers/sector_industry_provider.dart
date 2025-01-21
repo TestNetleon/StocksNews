@@ -160,6 +160,7 @@ class SectorIndustryProvider extends ChangeNotifier {
   }) async {
     // setStatus(Status.loading);
     _isGraphLoading = Status.loading;
+    notifyListeners();
     try {
       Map request = {
         "token":
@@ -181,12 +182,14 @@ class SectorIndustryProvider extends ChangeNotifier {
       }
 
       _isGraphLoading = Status.loaded;
+      notifyListeners();
     } catch (e) {
       dates = null;
       values = null;
       Utils().showLog(e.toString());
       // setStatus(Status.loaded);
       _isGraphLoading = Status.loaded;
+      notifyListeners();
     }
   }
 

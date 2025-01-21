@@ -58,8 +58,8 @@ class MarketScannerProvider extends ChangeNotifier {
   bool _visible = false;
   bool get visible => _visible;
 
-  bool _isScannerWebview = false;
-  bool get isScannerWebview => _isScannerWebview;
+  int _scannerIndex = 1;
+  int get scannerIndex => _scannerIndex;
   // int? get page => _page;
 
   void setStatus(status) {
@@ -452,7 +452,7 @@ class MarketScannerProvider extends ChangeNotifier {
       });
     }
 
-    _dataList = _dataList!.take(30).toList();
+    _dataList = _dataList!.take(50).toList();
     // Notify listeners to update UI
     notifyListeners();
   }
@@ -640,6 +640,20 @@ class MarketScannerProvider extends ChangeNotifier {
         return b.price!.compareTo(a.price!);
       }
     }
+    if (sortBy == "Post Market Price") {
+      if (a.ext?.extendedHoursPrice == null &&
+          b.ext?.extendedHoursPrice == null) {
+        return 0;
+      }
+      if (a.ext?.extendedHoursPrice == null) return -1;
+      if (b.ext?.extendedHoursPrice == null) return 1;
+      if (isAsc) {
+        return a.ext?.extendedHoursPrice!.compareTo(b.ext?.extendedHoursPrice!);
+      } else {
+        return b.ext?.extendedHoursPrice!.compareTo(a.ext?.extendedHoursPrice!);
+      }
+    }
+
     if (sortBy == "Net Change") {
       if (a.change == null && b.change == null) return 0;
       if (a.change == null) return -1;
@@ -837,7 +851,7 @@ class MarketScannerProvider extends ChangeNotifier {
       );
 
       if (response.status) {
-        _isScannerWebview = response.data['webviewStatus'] == 1;
+        _scannerIndex = response.data['webviewStatus'];
       } else {
         // _error = response.message;
       }
