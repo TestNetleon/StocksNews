@@ -118,7 +118,7 @@ class RevenueCatService {
       //   ApiKeys.appsFlyerKey,
       //   ApiKeys.iosAppID,
       // );
-      AppsFlyerService().initializeSdk();
+      AppsFlyerService.instance.initializeSdk();
     } catch (e) {
       Utils().showLog('Error in configure Apps Flyer => $e');
     }

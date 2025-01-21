@@ -244,7 +244,7 @@ class TopGainerScannerProvider extends ChangeNotifier {
   }
 
   void storeFullLiveData(List<MarketScannerRes>? data) async {
-    if (_fullDataList == null) {
+    if (_fullDataList == null || _fullDataList?.isEmpty == true) {
       _fullDataList = data;
       return;
     } else {

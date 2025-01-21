@@ -73,7 +73,7 @@ class MarketScannerProvider extends ChangeNotifier {
     _visible = true;
     _filterParams = null;
     _filterParams = FilterParams(
-      sector: "Healthcare",
+      sector: "Consumer Cyclical",
       // sortBy: "% Change",
       // sortByAsc: false,
     );
@@ -95,7 +95,7 @@ class MarketScannerProvider extends ChangeNotifier {
     showGlobalProgressDialog();
     try {
       final url = Uri.parse(
-        'https://dev.stocks.news:8080/getScreener?sector=Healthcare',
+        'https://dev.stocks.news:8080/getScreener?sector=Consumer Cyclical',
       );
       final response = await http.get(url);
       if (response.statusCode == 200) {
@@ -140,16 +140,17 @@ class MarketScannerProvider extends ChangeNotifier {
 
   void updateOfflineDataFilter(List<ScannerRes>? data) {
     if (data == null) return;
+
     data.removeWhere((item) {
       if (item.identifier == _filterParams!.symbolCompany) {
         Utils().showLog(
           "***********************************************************${item.identifier}  ${_filterParams!.symbolCompany}",
         );
         Utils().showLog(
-          " ===>>>> ******** ${item.sector}  ${_filterParams?.sector} ${item.sector == (_filterParams?.sector ?? "Healthcare")}",
+          " ===>>>> ******** ${item.sector}  ${_filterParams?.sector} ${item.sector == (_filterParams?.sector ?? "Consumer Cyclical")}",
         );
       }
-      if (item.sector == (_filterParams?.sector ?? "Healthcare")) {
+      if (item.sector == (_filterParams?.sector ?? "Consumer Cyclical")) {
         num lastTrade = (item.price ?? 0);
         if (lastTrade == 0) {
           return true;
@@ -293,7 +294,7 @@ class MarketScannerProvider extends ChangeNotifier {
     if (data == null) return;
 
     data.removeWhere((item) {
-      if (item.sector == (_filterParams?.sector ?? "Healthcare")) {
+      if (item.sector == (_filterParams?.sector ?? "Consumer Cyclical")) {
         double lastTrade = (item.last ?? 0);
         if (item.extendedHoursType == "PostMarket" ||
             item.extendedHoursType == "PreMarket") {
@@ -417,7 +418,7 @@ class MarketScannerProvider extends ChangeNotifier {
 
     storeFullLiveData(data);
 
-    if (_dataList == null) {
+    if (_dataList == null || _dataList?.isEmpty == true) {
       _dataList = List.empty(growable: true);
       _dataList!.addAll(data);
       notifyListeners();
@@ -466,6 +467,7 @@ class MarketScannerProvider extends ChangeNotifier {
         // Iterate over the new data list
         for (var newItem in data) {
           // Find if an item with the same identifier exists in the list
+
           int index = _fullDataList!.indexWhere(
               (existingItem) => existingItem.identifier == newItem.identifier);
 
@@ -771,7 +773,7 @@ class MarketScannerProvider extends ChangeNotifier {
   }
 
   void clearFilter() {
-    _filterParams = FilterParams(sector: "Healthcare");
+    _filterParams = FilterParams(sector: "Consumer Cyclical");
     if (_offlineDataList != null && _fullOfflineDataList != null) {
       _offlineDataList = _fullOfflineDataList;
       _offlineDataList = _offlineDataList?.take(50).toList();

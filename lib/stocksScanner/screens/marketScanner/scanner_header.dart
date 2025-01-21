@@ -58,7 +58,11 @@ class _MarketScannerHeaderState extends State<MarketScannerHeader> {
     List<ScannerRes>? offlineData = provider.offlineDataList;
 
     String marketStatus = "";
-    if (dataList == null && offlineData == null) {
+    // if (dataList == null && offlineData == null) {
+    //   return SizedBox();
+    // }
+    if ((dataList == null || dataList.isEmpty) &&
+        (offlineData == null || offlineData.isEmpty)) {
       return SizedBox();
     } else if (dataList != null && dataList.isNotEmpty) {
       marketStatus = dataList[0].extendedHoursType ?? "";

@@ -40,7 +40,7 @@ class MarketScannerDataManager {
 
     // Create URLs for all ports
     final urls = List.generate(
-      16,
+      20,
       (index) => "https://dev.stocks.news:${8021 + index}/sse",
     );
 
@@ -100,6 +100,7 @@ class MarketScannerDataManager {
     try {
       _isOfflineCalled = false;
       final List<dynamic> decodedResponse = jsonDecode(data);
+
       provider.updateData(marketScannerResFromJson(decodedResponse));
     } catch (e) {
       Utils().showLog("Error processing event data: $e");
