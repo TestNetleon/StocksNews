@@ -21,6 +21,7 @@ class MembershipInfoRes {
   final String? view_features;
   final String? featuredImage;
   final List<Plan>? plans;
+  final String? terms_text;
 
   MembershipInfoRes({
     required this.title,
@@ -35,11 +36,13 @@ class MembershipInfoRes {
     this.plans,
     this.view_features,
     this.featuredImage,
+    this.terms_text,
   });
 
   factory MembershipInfoRes.fromJson(Map<String, dynamic> json) =>
       MembershipInfoRes(
         title: json["title"],
+        terms_text: json['terms_text'],
         view_features: json['view_features'],
         featuredImage: json['featured_image'],
         subTitle: json["sub_title"],
@@ -61,6 +64,7 @@ class MembershipInfoRes {
 
   Map<String, dynamic> toJson() => {
         "title": title,
+        'terms_text': terms_text,
         "sub_title": subTitle,
         'featured_image': featuredImage,
         'view_features': view_features,

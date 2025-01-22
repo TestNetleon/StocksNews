@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/membership/membership_info_res.dart';
 import 'package:stocks_news_new/providers/membership.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
+
+import '../../../utils/constants.dart';
+import '../../../utils/utils.dart';
+import '../../t&cAndPolicy/tc_policy.dart';
 
 class NewMembershipReviews extends StatelessWidget {
   const NewMembershipReviews({super.key});
@@ -20,6 +25,40 @@ class NewMembershipReviews extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          Visibility(
+            visible: data?.terms_text != null && data?.terms_text != '',
+            child: Container(
+              padding: const EdgeInsets.fromLTRB(10, 0, 0, 12),
+              child: HtmlWidget(
+                onTapUrl: (url) async {
+                  if (url == 'privacy-policy') {
+                    Navigator.push(
+                      context,
+                      createRoute(
+                        TCandPolicy(
+                          policyType: url == "terms-of-service"
+                              ? PolicyType.tC
+                              : PolicyType.privacy,
+                          slug: url == "terms-of-service"
+                              ? "terms-of-service"
+                              : "privacy-policy",
+                        ),
+                      ),
+                    );
+                  } else {
+                    openUrl(url);
+                  }
+
+                  return true;
+                },
+                data?.terms_text ?? '',
+                textStyle: styleGeorgiaRegular(
+                  color: Colors.white,
+                  fontSize: 14,
+                ),
+              ),
+            ),
+          ),
           Padding(
             padding: const EdgeInsets.only(left: 10),
             child: Text(
@@ -65,7 +104,7 @@ class NewMembershipReviews extends StatelessWidget {
                       textAlign: TextAlign.center,
                       style: styleSansBold(
                         // color: Colors.black,
-                        color: ThemeColors.themeGreen,
+                        color: const Color(0xFF14B24A),
                         fontSize: 20,
                       ),
                     ),
