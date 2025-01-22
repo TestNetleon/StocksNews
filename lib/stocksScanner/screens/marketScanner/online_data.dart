@@ -103,23 +103,6 @@ class _MarketScannerOnlineState extends State<MarketScannerOnline> {
                           ? provider.filterParams?.sortByAsc
                           : null,
                     ),
-                    // DataColumn(
-                    //   label: ConstrainedBox(
-                    //     constraints: BoxConstraints(
-                    //       maxWidth: ScreenUtil().screenWidth * .3,
-                    //     ),
-                    //     child: GestureDetector(
-                    //       onTap: () => provider.applySorting("Symbol"),
-                    //       child: Text(
-                    //         'Symbol',
-                    //         style: styleGeorgiaBold(
-                    //           fontSize: 14,
-                    //           color: ThemeColors.greyText,
-                    //         ),
-                    //       ),
-                    //     ),
-                    //   ),
-                    // ),
                   ],
                   rows: dataList.map(
                     (data) {

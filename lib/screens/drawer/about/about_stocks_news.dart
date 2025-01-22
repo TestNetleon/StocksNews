@@ -245,6 +245,21 @@ class _AboutStocksNewsState extends State<AboutStocksNews> {
         ),
       );
     }
+    if (provider.extra?.showStockScannerApp == true) {
+      visibleAboutTiles.add(
+        DrawerRes(
+          iconData: Icons.bakery_dining_outlined,
+          text: "Stock Scanner",
+          onTap: () {
+            _closeDrawer();
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => StocksScannerApp()),
+            );
+          },
+        ),
+      );
+    }
 
     if (provider.extra?.showArena == true || kDebugMode) {
       visibleAboutTiles.add(

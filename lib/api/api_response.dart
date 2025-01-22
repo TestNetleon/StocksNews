@@ -143,6 +143,8 @@ class Extra {
   final bool? christmasMembership;
   final bool? newYearMembership;
   final bool? showStockScanner;
+  final bool? showStockScannerApp;
+
   final BlackFridayRes? blackFriday;
   final List<MembershipRes>? activeMembership;
 
@@ -150,6 +152,7 @@ class Extra {
 
   Extra({
     this.showStockScanner,
+    this.showStockScannerApp,
     this.executable,
     this.reponseTime,
     this.activeMembership,
@@ -251,6 +254,7 @@ class Extra {
   factory Extra.fromJson(Map<String, dynamic> json) => Extra(
         search: json["search"],
         showStockScanner: json['show_stock_scanner'],
+        showStockScannerApp: json['show_stock_scanner_app'],
         executable: json['is_trade_executable'],
 
         activeMembership: json["active_membership"] == null
@@ -435,6 +439,7 @@ class Extra {
 
   Map<String, dynamic> toJson() => {
         'showStockScanner': showStockScanner,
+        'show_stock_scanner_app': showStockScannerApp,
         'is_trade_executable': executable,
         'black_friday_membership': showBlackFriday,
         'christmas_membership': christmasMembership,

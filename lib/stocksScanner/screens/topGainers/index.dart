@@ -36,11 +36,12 @@ class _ScannerTopGainerState extends State<ScannerTopGainer> {
         builder: (context, provider, child) {
           if (provider.dataList != null) {
             return TopGainerOnline();
-          } else if (provider.offlineDataList != null &&
-              marketScannerProvider.scannerIndex == 2) {
-            return TopGainerOffline();
-          } else if (provider.offlineDataList != null &&
-              marketScannerProvider.scannerIndex == 3) {
+          }
+          //  else if (provider.offlineDataList != null &&
+          //     marketScannerProvider.scannerIndex == 2) {
+          //   return TopGainerOffline();
+          // }
+          else if (provider.offlineDataList != null) {
             return TopGainerOfflineTwo();
           } else {
             return ScannerPreparing();
