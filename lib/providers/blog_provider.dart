@@ -227,7 +227,7 @@ class BlogProvider extends ChangeNotifier {
     } catch (e) {
       _blogsDetail = null;
 
-      Utils().showLog(e.toString());
+      Utils().showLog('error there $e');
       // setStatus(Status.loaded);
       _statusDetail = Status.loaded;
       notifyListeners();
