@@ -72,6 +72,7 @@ Future<ApiResponse> apiRequest({
   removeForceLogin = false,
   updateDatabase = true,
   Future Function()? onAddClick,
+  Future Function()? callAgain,
 }) async {
   // ConnectivityResult type = await _isConnected();
   // if (type == ConnectivityResult.none) {
@@ -272,10 +273,15 @@ Future<ApiResponse> apiRequest({
       return ApiResponse(status: false, message: Const.errSomethingWrong);
     }
   } catch (e) {
+    if (callAgain != null) {
+      callAgain();
+    }
+
     if (!callCheckServer) {
       callCheckServer = true;
       navigatorKey.currentContext!.read<HomeProvider>().checkMaintenanceMode();
     }
+
     Utils().showLog('Catch error =>> ${e.toString()}');
     if (showProgress) closeGlobalProgressDialog();
     return ApiResponse(status: false, message: Const.errSomethingWrong);
