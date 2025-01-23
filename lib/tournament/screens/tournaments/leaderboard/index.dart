@@ -39,7 +39,7 @@ class _TournamentLeaderboardState extends State<TournamentLeaderboard> {
     return Column(
       children: [
         CustomDateSelector(
-          editedSelected: provider.editedDate,
+          editedDate: provider.editedDate,
           onDateSelected: (date) {
             provider.getSelectedDate(date);
             WidgetsBinding.instance.addPostFrameCallback((_) {

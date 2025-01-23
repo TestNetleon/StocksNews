@@ -1,8 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:stocks_news_new/stocksScanner/providers/scanner_provider.dart';
 import 'package:stocks_news_new/tournament/provider/leaderboard.dart';
 import 'package:stocks_news_new/tournament/provider/tournament.dart';
 import 'package:stocks_news_new/tournament/provider/search.dart';
@@ -613,7 +611,7 @@ class Routes {
       ChangeNotifierProvider(create: (_) => TopLoserScannerProvider()),
       ChangeNotifierProvider(create: (_) => TournamentSearchProvider()),
       ChangeNotifierProvider(create: (_) => TournamentLeaderboardProvider()),
-      ChangeNotifierProvider(create: (_) => ScannerProvider()),
+      // ChangeNotifierProvider(create: (_) => ScannerProvider()),
     ];
   }
 }

@@ -71,7 +71,8 @@
                 <category android:name="android.intent.category.BROWSABLE" />
                 <data android:scheme="https" android:host="stocksnews.page.link" />
                 <data android:scheme="https" android:host="app.stocks.news" />
-                <!-- <data android:host="stocksnews.onelink.me" android:scheme="https" /> -->
+                <data android:host="stocksnews.onelink.me" android:scheme="https" />
+                <data android:host="pagelink.stocks.news" android:scheme="https" />
                 <data android:scheme="https" />
             </intent-filter>    
 

@@ -3931,7 +3931,7 @@ class StockDetailProviderNew extends ChangeNotifier {
   void vibrateTabFinancial() async {
     try {
       if (Platform.isAndroid) {
-        bool isVibe = await Vibration.hasVibrator() ?? false;
+        bool isVibe = await Vibration.hasVibrator();
         if (isVibe) {
           Vibration.vibrate(pattern: [50, 50, 79, 55], intensities: [1, 10]);
         }

@@ -6,10 +6,13 @@ import 'package:intl/intl.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 
 class CustomDateSelector extends StatefulWidget {
-  final DateTime? editedSelected;
   final Function(DateTime) onDateSelected;
-
-  const CustomDateSelector({super.key, required this.onDateSelected,this.editedSelected});
+  final DateTime? editedDate;
+  const CustomDateSelector({
+    super.key,
+    required this.onDateSelected,
+    this.editedDate,
+  });
 
   @override
   State<CustomDateSelector> createState() => _CustomDateSelectorState();
@@ -23,49 +26,42 @@ class _CustomDateSelectorState extends State<CustomDateSelector> {
   @override
   void initState() {
     super.initState();
-    currentDates();
+
+    _createdDates();
   }
 
-  void currentDates(){
-    DateTime currentDate =  DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
-    selectedDate =widget.editedSelected ??currentDate;
-    setState(() {});
-    final DateTime startDate =
-    DateTime(currentDate.year, currentDate.month - 2, currentDate.day);
+  void _createdDates() {
+    DateTime currentDate = DateTime(
+      DateTime.now().year,
+      DateTime.now().month,
+      DateTime.now().day,
+    );
+
+    selectedDate = widget.editedDate ?? currentDate;
+
+    final DateTime startDate = DateTime(
+      currentDate.year - 1,
+      currentDate.month,
+      currentDate.day,
+    );
+
     fullDates = List.generate(
       currentDate.difference(startDate).inDays + 1,
-          (index) => startDate.add(Duration(days: index)),
+      (index) => startDate.add(Duration(days: index)),
     );
-    visibleDates = fullDates.sublist(fullDates.length - 3);
-    setState(() {});
-    // Notify the parent widget about the initial selected date
+
+    int selectedIndex = fullDates.indexOf(selectedDate);
+    int startVisibleIndex = selectedIndex - 1 < 0 ? 0 : selectedIndex - 1;
+    int endVisibleIndex = selectedIndex + 1 >= fullDates.length
+        ? fullDates.length - 1
+        : selectedIndex + 1;
+
+    visibleDates = fullDates.sublist(startVisibleIndex, endVisibleIndex + 1);
+
     widget.onDateSelected(selectedDate);
+
+    setState(() {});
   }
-
-  // void shiftLeft() {
-  //   setState(() {
-  //     if (fullDates.indexOf(visibleDates.first) > 0) {
-  //       visibleDates.insert(
-  //           0, fullDates[fullDates.indexOf(visibleDates.first) - 1]);
-  //       visibleDates.removeLast();
-  //       selectedDate = visibleDates.first;
-
-  //       widget.onDateSelected(selectedDate);
-  //     }
-  //   });
-  // }
-
-  // void shiftRight() {
-  //   setState(() {
-  //     if (fullDates.indexOf(visibleDates.last) < fullDates.length - 1) {
-  //       visibleDates.add(fullDates[fullDates.indexOf(visibleDates.last) + 1]);
-  //       visibleDates.removeAt(0);
-  //       selectedDate = visibleDates.last;
-
-  //       widget.onDateSelected(selectedDate);
-  //     }
-  //   });
-  // }
 
   void shiftLeft() {
     setState(() {
@@ -124,8 +120,6 @@ class _CustomDateSelectorState extends State<CustomDateSelector> {
   String formatDate(DateTime date) {
     return DateFormat('dd MMM yy').format(date);
   }
-
-
 
   @override
   Widget build(BuildContext context) {

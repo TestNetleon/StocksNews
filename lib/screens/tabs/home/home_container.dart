@@ -62,14 +62,15 @@ class _HomeContainerState extends State<HomeContainer> {
     return Column(
       children: [
         // Visibility(
-        //   visible: provider.extra?.showStockScanner == true || kDebugMode,
+        //   visible: kDebugMode,
         //   child: ThemeButtonSmall(
         //     text: 'Stock Scanner',
         //     onPressed: () async {
-        //       Navigator.push(
-        //         context,
-        //         MaterialPageRoute(builder: (_) => StocksScanner()),
-        //       );
+        //       // Navigator.push(
+        //       //   context,
+        //       //   MaterialPageRoute(builder: (_) => StocksScanner()),
+        //       // );
+        //       AppsFlyerService.instance.createUserInvitationLink();
         //     },
         //   ),
         // ),

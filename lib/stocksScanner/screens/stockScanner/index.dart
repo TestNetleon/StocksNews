@@ -9,6 +9,7 @@ import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/loading.dart';
 
+//MARK: WEB
 class StocksScanner extends StatefulWidget {
   const StocksScanner({super.key});
 
@@ -20,8 +21,39 @@ class _StocksScannerState extends State<StocksScanner> {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {});
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // MarketScannerProvider provider = context.watch<MarketScannerProvider>();
+    return BaseContainer(
+      appBar: AppBarHome(
+        isPopBack: true,
+        title: "Stocks Scanner",
+        canSearch: false,
+        showTrailing: false,
+        isScannerFilter: false,
+      ),
+      body: ScannerWebview(),
+    );
+  }
+}
+
+//MARK: APP
+class StocksScannerApp extends StatefulWidget {
+  const StocksScannerApp({super.key});
+
+  @override
+  State<StocksScannerApp> createState() => _StocksScannerAppState();
+}
+
+class _StocksScannerAppState extends State<StocksScannerApp> {
+  @override
+  void initState() {
+    super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      context.read<MarketScannerProvider>().getScannerType();
+      context.read<MarketScannerProvider>().getScannerPorts();
     });
   }
 
@@ -36,14 +68,15 @@ class _StocksScannerState extends State<StocksScanner> {
         showTrailing: false,
         isScannerFilter: true,
         onFilterClick: () {
-          Navigator.push(context, createRoute(MarketScannerFilter()));
+          Navigator.push(
+            context,
+            createRoute(
+              MarketScannerFilter(),
+            ),
+          );
         },
       ),
-      body: provider.isLoading
-          ? Loading()
-          : provider.isScannerWebview
-              ? ScannerWebview()
-              : ScannerContainer(),
+      body: provider.isLoading ? Loading() : ScannerContainer(),
     );
   }
 }

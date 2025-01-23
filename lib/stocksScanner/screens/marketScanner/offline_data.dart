@@ -65,6 +65,16 @@ class _MarketScannerOfflineState extends State<MarketScannerOffline> {
           //   style: stylePTSansBold(),
           // ),
           const SpacerVertical(height: 10),
+          Visibility(
+            visible: dataList.isNotEmpty && provider.isFilterApplied(),
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 10),
+              child: Text(
+                'Total number of results: ${dataList.length}',
+                style: styleGeorgiaBold(),
+              ),
+            ),
+          ),
           ClipRRect(
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(8),

@@ -22,24 +22,27 @@ class ScannerRes {
   final dynamic time;
   final dynamic closeDate;
   final Ext? ext;
+  final String? image;
 
   ScannerRes({
-    required this.identifier,
-    required this.name,
-    required this.sector,
-    required this.ask,
-    required this.bid,
-    required this.price,
-    required this.change,
-    required this.changesPercentage,
-    required this.volume,
-    required this.time,
-    required this.closeDate,
-    required this.ext,
+    this.identifier,
+    this.name,
+    this.sector,
+    this.ask,
+    this.bid,
+    this.price,
+    this.change,
+    this.changesPercentage,
+    this.volume,
+    this.time,
+    this.closeDate,
+    this.ext,
+    this.image,
   });
 
   factory ScannerRes.fromJson(Map<String, dynamic> json) => ScannerRes(
         identifier: json["Identifier"],
+        image: json['image'],
         name: json["name"],
         sector: json["sector"],
         ask: json["ask"],
@@ -56,6 +59,7 @@ class ScannerRes {
   Map<String, dynamic> toJson() => {
         "Identifier": identifier,
         "name": name,
+        'image': image,
         "sector": sector,
         "ask": ask,
         "bid": bid,

@@ -44,10 +44,10 @@ class _TournamentsIndexState extends State<TournamentsIndex> {
         child: CustomScrollView(
           physics: AlwaysScrollableScrollPhysics(),
           slivers: [
-            Visibility(
-              visible: provider.data?.heading != null &&
-                  provider.data?.heading != '',
-              child: SliverToBoxAdapter(
+            SliverToBoxAdapter(
+              child: Visibility(
+                visible: provider.data?.heading != null &&
+                    provider.data?.heading != '',
                 child: Align(
                   alignment: Alignment.center,
                   child: Text(
@@ -57,10 +57,10 @@ class _TournamentsIndexState extends State<TournamentsIndex> {
                 ),
               ),
             ),
-            Visibility(
-              visible: provider.data?.subHeading != null &&
-                  provider.data?.subHeading != '',
-              child: SliverToBoxAdapter(
+            SliverToBoxAdapter(
+              child: Visibility(
+                visible: provider.data?.subHeading != null &&
+                    provider.data?.subHeading != '',
                 child: Align(
                   alignment: Alignment.center,
                   child: Text(
@@ -70,26 +70,26 @@ class _TournamentsIndexState extends State<TournamentsIndex> {
                 ),
               ),
             ),
-            Visibility(
-              visible: provider.data?.tournamentHeader != null &&
-                  provider.data?.tournamentHeader?.isNotEmpty == true,
-              child: SliverToBoxAdapter(
+            SliverToBoxAdapter(
+              child: Visibility(
+                visible: provider.data?.tournamentHeader != null &&
+                    provider.data?.tournamentHeader?.isNotEmpty == true,
                 child: Padding(
                   padding: const EdgeInsets.only(top: 10),
                   child: TournamentHeader(),
                 ),
               ),
             ),
-            Visibility(
-              visible: provider.data?.tournaments != null &&
-                  provider.data?.tournaments?.isNotEmpty == true,
-              child: SliverToBoxAdapter(
+            SliverToBoxAdapter(
+              child: Visibility(
+                visible: provider.data?.tournaments != null &&
+                    provider.data?.tournaments?.isNotEmpty == true,
                 child: TournamentGrids(),
               ),
             ),
-            Visibility(
-              visible: provider.data?.topTradingTitans != null,
-              child: SliverToBoxAdapter(
+            SliverToBoxAdapter(
+              child: Visibility(
+                visible: provider.data?.topTradingTitans != null,
                 child: Padding(
                   padding: const EdgeInsets.only(top: 10),
                   child: Column(

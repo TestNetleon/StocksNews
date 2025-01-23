@@ -158,6 +158,7 @@ class AIProvider extends ChangeNotifier {
       _extraD = (response.extra is Extra ? response.extra as Extra : null);
       setStatusDetail(Status.loaded);
     } catch (e) {
+      // getNewsDetailData(slug: slug);
       _detail = null;
       _errorDetail = Const.errSomethingWrong;
       Utils().showLog(e.toString());

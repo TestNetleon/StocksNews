@@ -19,7 +19,7 @@ class AmplitudeService {
   //   ApiKeys.appsFlyerKey,
   //   ApiKeys.iosAppID,
   // );
-  static final AppsFlyerService _appsFlyerService = AppsFlyerService();
+  // static final AppsFlyerService _appsFlyerService = AppsFlyerService();
 
   static final FirebaseService _firebaseService = FirebaseService();
 
@@ -54,7 +54,7 @@ class AmplitudeService {
               : null,
         );
 
-        _appsFlyerService.appsFlyerLogEvent(
+        AppsFlyerService.instance.appsFlyerLogEvent(
           EventAppsFlyer.af_firstopen.name,
           eventProperties: fcmToken != null
               ? {
@@ -153,7 +153,7 @@ class AmplitudeService {
           EventAmplitude.amp_signup.name,
           eventProperties: request,
         );
-        _appsFlyerService.appsFlyerLogEvent(
+        AppsFlyerService.instance.appsFlyerLogEvent(
           EventAppsFlyer.af_signup.name,
           eventProperties: request,
           userId: provider.user?.userId,
@@ -188,7 +188,7 @@ class AmplitudeService {
           'Push Notification Enabled',
           eventProperties: request,
         );
-        _appsFlyerService.appsFlyerLogEvent(
+        AppsFlyerService.instance.appsFlyerLogEvent(
           'Push Notification Enabled',
           eventProperties: request,
           userId: userId,
@@ -240,7 +240,7 @@ class AmplitudeService {
         added ? 'Added in Watchlist' : 'Removed from Watchlist',
         eventProperties: request,
       );
-      _appsFlyerService.appsFlyerLogEvent(
+      AppsFlyerService.instance.appsFlyerLogEvent(
         added ? 'Added in Watchlist' : 'Removed from Watchlist',
         eventProperties: request,
         userId: provider.user?.userId,
@@ -291,7 +291,7 @@ class AmplitudeService {
         added ? 'Added $symbol in Alerts' : 'Removed $symbol from Alerts',
         eventProperties: request,
       );
-      _appsFlyerService.appsFlyerLogEvent(
+      AppsFlyerService.instance.appsFlyerLogEvent(
         added ? 'Added $symbol in Alerts' : 'Removed $symbol from Alerts',
         eventProperties: request,
         userId: provider.user?.userId,
@@ -344,7 +344,7 @@ class AmplitudeService {
         type,
         eventProperties: request,
       );
-      _appsFlyerService.appsFlyerLogEvent(
+      AppsFlyerService.instance.appsFlyerLogEvent(
         type,
         eventProperties: request,
         userId: provider.user?.userId,

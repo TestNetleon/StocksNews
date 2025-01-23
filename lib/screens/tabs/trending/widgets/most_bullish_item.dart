@@ -229,7 +229,7 @@ class _MostBullishItemState extends State<MostBullishItem> {
 
   void _vibrate() async {
     if (Platform.isAndroid) {
-      bool isVibe = await Vibration.hasVibrator() ?? false;
+      bool isVibe = await Vibration.hasVibrator();
       if (isVibe) {
         // Vibration.vibrate(pattern: [0, 500], intensities: [255, 255]);
         Vibration.vibrate(pattern: [50, 50, 79, 55], intensities: [1, 10]);

@@ -16,6 +16,8 @@ import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:http/http.dart' as http;
 
+import '../modals/ports.dart';
+
 class MarketScannerProvider extends ChangeNotifier {
   Status _status = Status.ideal;
   bool get isLoading => _status == Status.loading || _status == Status.ideal;
@@ -58,8 +60,8 @@ class MarketScannerProvider extends ChangeNotifier {
   bool _visible = false;
   bool get visible => _visible;
 
-  bool _isScannerWebview = false;
-  bool get isScannerWebview => _isScannerWebview;
+  int _scannerIndex = 1;
+  int get scannerIndex => _scannerIndex;
   // int? get page => _page;
 
   void setStatus(status) {
@@ -67,17 +69,18 @@ class MarketScannerProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void startListeningPorts() {
+  void startListeningPorts() async {
     _offlineDataList = null;
     _dataList = null;
     _visible = true;
     _filterParams = null;
     _filterParams = FilterParams(
-      sector: "Healthcare",
+      sector: "Consumer Cyclical",
       // sortBy: "% Change",
       // sortByAsc: false,
     );
     notifyListeners();
+
     MarketScannerDataManager.instance.initializePorts();
   }
 
@@ -95,7 +98,7 @@ class MarketScannerProvider extends ChangeNotifier {
     showGlobalProgressDialog();
     try {
       final url = Uri.parse(
-        'https://dev.stocks.news:8080/getScreener?sector=Healthcare',
+        'https://dev.stocks.news:8080/getScreener?sector=Consumer Cyclical',
       );
       final response = await http.get(url);
       if (response.statusCode == 200) {
@@ -140,16 +143,17 @@ class MarketScannerProvider extends ChangeNotifier {
 
   void updateOfflineDataFilter(List<ScannerRes>? data) {
     if (data == null) return;
+
     data.removeWhere((item) {
       if (item.identifier == _filterParams!.symbolCompany) {
         Utils().showLog(
           "***********************************************************${item.identifier}  ${_filterParams!.symbolCompany}",
         );
         Utils().showLog(
-          " ===>>>> ******** ${item.sector}  ${_filterParams?.sector} ${item.sector == (_filterParams?.sector ?? "Healthcare")}",
+          " ===>>>> ******** ${item.sector}  ${_filterParams?.sector} ${item.sector == (_filterParams?.sector ?? "Consumer Cyclical")}",
         );
       }
-      if (item.sector == (_filterParams?.sector ?? "Healthcare")) {
+      if (item.sector == (_filterParams?.sector ?? "Consumer Cyclical")) {
         num lastTrade = (item.price ?? 0);
         if (lastTrade == 0) {
           return true;
@@ -293,7 +297,7 @@ class MarketScannerProvider extends ChangeNotifier {
     if (data == null) return;
 
     data.removeWhere((item) {
-      if (item.sector == (_filterParams?.sector ?? "Healthcare")) {
+      if (item.sector == (_filterParams?.sector ?? "Consumer Cyclical")) {
         double lastTrade = (item.last ?? 0);
         if (item.extendedHoursType == "PostMarket" ||
             item.extendedHoursType == "PreMarket") {
@@ -417,7 +421,7 @@ class MarketScannerProvider extends ChangeNotifier {
 
     storeFullLiveData(data);
 
-    if (_dataList == null) {
+    if (_dataList == null || _dataList?.isEmpty == true) {
       _dataList = List.empty(growable: true);
       _dataList!.addAll(data);
       notifyListeners();
@@ -452,7 +456,8 @@ class MarketScannerProvider extends ChangeNotifier {
       });
     }
 
-    _dataList = _dataList!.take(30).toList();
+    // _dataList = _dataList!.take(50).toList();
+
     // Notify listeners to update UI
     notifyListeners();
   }
@@ -466,6 +471,7 @@ class MarketScannerProvider extends ChangeNotifier {
         // Iterate over the new data list
         for (var newItem in data) {
           // Find if an item with the same identifier exists in the list
+
           int index = _fullDataList!.indexWhere(
               (existingItem) => existingItem.identifier == newItem.identifier);
 
@@ -640,6 +646,20 @@ class MarketScannerProvider extends ChangeNotifier {
         return b.price!.compareTo(a.price!);
       }
     }
+    if (sortBy == "Post Market Price") {
+      if (a.ext?.extendedHoursPrice == null &&
+          b.ext?.extendedHoursPrice == null) {
+        return 0;
+      }
+      if (a.ext?.extendedHoursPrice == null) return -1;
+      if (b.ext?.extendedHoursPrice == null) return 1;
+      if (isAsc) {
+        return a.ext?.extendedHoursPrice!.compareTo(b.ext?.extendedHoursPrice!);
+      } else {
+        return b.ext?.extendedHoursPrice!.compareTo(a.ext?.extendedHoursPrice!);
+      }
+    }
+
     if (sortBy == "Net Change") {
       if (a.change == null && b.change == null) return 0;
       if (a.change == null) return -1;
@@ -757,7 +777,7 @@ class MarketScannerProvider extends ChangeNotifier {
   }
 
   void clearFilter() {
-    _filterParams = FilterParams(sector: "Healthcare");
+    _filterParams = FilterParams(sector: "Consumer Cyclical");
     if (_offlineDataList != null && _fullOfflineDataList != null) {
       _offlineDataList = _fullOfflineDataList;
       _offlineDataList = _offlineDataList?.take(50).toList();
@@ -823,28 +843,59 @@ class MarketScannerProvider extends ChangeNotifier {
     return false;
   }
 
-  Future getScannerType({showProgress = false, loadMore = false}) async {
+  // Future getScannerType({showProgress = false, loadMore = false}) async {
+  //   setStatus(Status.loading);
+  //   try {
+  //     Map request = {
+  //       "token":
+  //           navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
+  //     };
+  //     ApiResponse response = await apiRequest(
+  //       url: Apis.stockScannerChange,
+  //       request: request,
+  //       showProgress: false,
+  //     );
+
+  //     if (response.status) {
+  //       _scannerIndex = response.data['webviewStatus'];
+  //     } else {
+  //       // _error = response.message;
+  //     }
+  //     setStatus(Status.loaded);
+  //   } catch (e) {
+  //     Utils().showLog(e.toString());
+  //     setStatus(Status.loaded);
+  //   }
+  // }
+
+//MARK: Scanner Ports
+
+  ScannerPortsRes? _port;
+  ScannerPortsRes? get port => _port;
+
+  Future getScannerPorts({loading = true}) async {
     setStatus(Status.loading);
     try {
-      Map request = {
-        "token":
-            navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
-      };
       ApiResponse response = await apiRequest(
-        url: Apis.stockScannerChange,
-        request: request,
-        showProgress: false,
+        url: Apis.stockScannerPort,
+        showProgress: loading,
       );
-
       if (response.status) {
-        _isScannerWebview = response.data['webviewStatus'] == 1;
+        _port = scannerPortsResFromJson(jsonEncode(response.data));
+
+        startListeningPorts();
       } else {
-        // _error = response.message;
+        _port = null;
       }
       setStatus(Status.loaded);
+      return ApiResponse(
+        status: response.status,
+        data: _port,
+      );
     } catch (e) {
-      Utils().showLog(e.toString());
+      _port = null;
       setStatus(Status.loaded);
+      return ApiResponse(status: false);
     }
   }
 }

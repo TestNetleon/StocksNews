@@ -21,6 +21,11 @@ class _SectorGraphState extends State<SectorGraph> {
     _renderData();
   }
 
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
   void _renderData() {
     SectorIndustryProvider provider = context.read<SectorIndustryProvider>();
     controller = WebViewController()
@@ -40,6 +45,7 @@ class _SectorGraphState extends State<SectorGraph> {
       )
       ..loadHtmlString(
           _loadData(dates: provider.dates, values: provider.values));
+    setState(() {});
   }
 
   String _loadData({

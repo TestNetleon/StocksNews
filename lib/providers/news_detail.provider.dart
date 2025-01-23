@@ -115,6 +115,7 @@ class NewsDetailProvider extends ChangeNotifier {
       _extra = (response.extra is Extra ? response.extra as Extra : null);
       setStatus(Status.loaded);
     } catch (e) {
+      // getNewsDetailData(slug: slug);
       _data = null;
       _error = Const.errSomethingWrong;
       Utils().showLog(e.toString());

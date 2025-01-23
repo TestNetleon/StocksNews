@@ -11,6 +11,7 @@ import 'package:stocks_news_new/database/preference.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:firebase_in_app_messaging/firebase_in_app_messaging.dart';
 import 'firebase_options.dart';
+import 'service/appsFlyer/service.dart';
 
 void main() async {
   try {
@@ -52,6 +53,11 @@ void main() async {
 
     try {
       NotificationHandler.instance.initialize();
+    } catch (e) {
+      //
+    }
+    try {
+      AppsFlyerService.instance.initializeSdk();
     } catch (e) {
       //
     }

@@ -1,28 +1,27 @@
 // import 'package:flutter/material.dart';
 // import 'package:flutter_screenutil/flutter_screenutil.dart';
 // import 'package:provider/provider.dart';
-// import 'package:stocks_news_new/routes/my_app.dart';
 // import 'package:stocks_news_new/stocksScanner/apis/top_gainer_scanner_manager.dart';
-// import 'package:stocks_news_new/stocksScanner/modals/market_scanner_res.dart';
+// import 'package:stocks_news_new/stocksScanner/modals/scanner_res.dart';
 // import 'package:stocks_news_new/stocksScanner/providers/top_gainer_scanner_provider.dart';
 // import 'package:stocks_news_new/stocksScanner/screens/stockScanner/common_scanner_ui.dart';
 // import 'package:stocks_news_new/stocksScanner/screens/topGainers/scanner_header.dart';
 // import 'package:stocks_news_new/stocksScanner/screens/topGainers/top_gainer_filter.dart';
+// // import 'package:stocks_news_new/stocksScanner/providers/market_scanner_provider.dart';
 // import 'package:stocks_news_new/utils/colors.dart';
 // import 'package:stocks_news_new/utils/theme.dart';
 // import 'package:stocks_news_new/utils/constants.dart';
 
-// class TopGainerOnline extends StatefulWidget {
-//   const TopGainerOnline({super.key});
+// class TopGainerOfflineTwo extends StatefulWidget {
+//   const TopGainerOfflineTwo({super.key});
 
 //   @override
-//   State<TopGainerOnline> createState() => _TopGainerOnlineState();
+//   State<TopGainerOfflineTwo> createState() => _TopGainerOfflineTwoState();
 // }
 
-// class _TopGainerOnlineState extends State<TopGainerOnline> {
+// class _TopGainerOfflineTwoState extends State<TopGainerOfflineTwo> {
 //   List<String> columnHeader = [
 //     // "Time",
-//     // "Symbol",
 //     "Company Name",
 //     "Sector",
 //     // "Bid",
@@ -38,7 +37,8 @@
 //   void initState() {
 //     super.initState();
 //     WidgetsBinding.instance.addPostFrameCallback((_) {
-//       // MarketScannerProvider provider = context.read<MarketScannerProvider>();
+//       // TopGainerScannerProvider provider =
+//       //     context.read<TopGainerScannerProvider>();
 //       // provider.startListeningPorts();
 //       // provider.getOfflineData();
 //     });
@@ -46,9 +46,6 @@
 
 //   @override
 //   void dispose() {
-//     TopGainerScannerProvider provider =
-//         navigatorKey.currentContext!.read<TopGainerScannerProvider>();
-//     provider.stopListeningPorts();
 //     super.dispose();
 //   }
 
@@ -56,18 +53,25 @@
 //   Widget build(BuildContext context) {
 //     TopGainerScannerProvider provider =
 //         context.watch<TopGainerScannerProvider>();
-//     List<MarketScannerRes>? dataList = provider.dataList;
-
+//     List<ScannerRes>? dataList = provider.offlineDataList;
+//     bool? gotPostMarket = dataList?.any(
+//       (element) => element.ext?.extendedHoursType == 'PostMarket',
+//     );
 //     if (dataList == null) {
 //       return SizedBox();
 //     }
-
+//     if (gotPostMarket == true) {
+//       int lastTradeIndex = columnHeader.indexOf("Last Trade");
+//       if (lastTradeIndex != -1 && !columnHeader.contains("Post Market Price")) {
+//         columnHeader.insert(lastTradeIndex + 1, "Post Market Price");
+//       }
+//     }
 //     return Column(
 //       children: [
 //         SingleChildScrollView(
 //           child: Column(
 //             children: [
-//               TopGainerScannerHeader(isOnline: true),
+//               TopGainerScannerHeader(isOnline: false),
 //               // const SpacerVertical(height: 10),
 //               ScannerTopGainerFilter(
 //                 onPercentClick: () {
@@ -84,6 +88,7 @@
 //                 isVolume: provider.filterParams?.sortBy == 3,
 //                 orderByAsc: provider.filterParams?.sortByAsc,
 //               ),
+
 //               ClipRRect(
 //                 borderRadius: BorderRadius.only(
 //                   topLeft: Radius.circular(8),
@@ -135,7 +140,7 @@
 //                                       children: [
 //                                         Expanded(
 //                                           child: Text(
-//                                             "${data.identifier}",
+//                                             data.identifier,
 //                                             // company.symbol ?? "",
 //                                             style:
 //                                                 styleGeorgiaBold(fontSize: 12),
@@ -185,69 +190,83 @@
 //                           ).toList(),
 //                           rows: dataList.map(
 //                             (data) {
-//                               double lastTrade = (data.last ?? 0);
-//                               double netChange = (data.change ?? 0);
-//                               double perChange = data.percentChange ?? 0;
+//                               List<DataCell> cells = [
+//                                 _dataCell(text: data.name), // "Company Name",
+//                                 _dataCell(text: data.sector ?? ""), // "Sector",
 
-//                               if (data.extendedHoursType == "PostMarket" ||
-//                                   data.extendedHoursType == "PreMarket") {
-//                                 netChange = data.extendedHoursChange ?? 0;
-//                                 perChange =
-//                                     data.extendedHoursPercentChange ?? 0;
+//                                 _dataCell(
+//                                     text: "\$${data.price}"), // "Last Trade",
+//                                 _dataCell(
+//                                   text: "\$${data.change}",
+//                                   change: true,
+//                                   value: data.change,
+//                                 ), // "Net Change",
+//                                 _dataCell(
+//                                   text:
+//                                       "${data.changesPercentage}", // "% Change",
+//                                   change: true,
+//                                   value: data.changesPercentage,
+//                                 ),
+//                                 _dataCell(
+//                                   text: num.parse("${data.volume ?? 0}")
+//                                       .toRuppeeFormatWithoutFloating(),
+//                                 ), // "Volume",
+//                                 _dataCell(
+//                                   text: num.parse("${data.volume * data.price}")
+//                                       .toRuppees(), // "$Volume"
+//                                 ),
+//                               ];
+
+//                               if (gotPostMarket == true) {
+//                                 int lastTradeIndex = 2;
+//                                 cells.insert(
+//                                   lastTradeIndex + 1,
+//                                   _dataCell(
+//                                     text: data.ext?.extendedHoursPrice != null
+//                                         ? "\$${data.ext?.extendedHoursPrice}"
+//                                         : "\$0",
+//                                   ),
+//                                 );
 //                               }
 
-//                               return DataRow(
-//                                 cells: [
-//                                   // _dataCell(
-//                                   //   text: "$perChange", // "% Change",
-//                                   //   // text: "${data.percentChange}", // "% Change",
-//                                   //   change: true,
-//                                   //   // value: data.percentChange,
-//                                   //   value: perChange,
-//                                   // ),
-//                                   // _dataCell(
-//                                   //   text: extendedHoursTime.split(".")[0],
-//                                   // ), // "Time",
-//                                   // _dataCell(text: "${data.time}"), // "Time",
-//                                   // _dataCell(text: data.identifier), // "Symbol",
-//                                   _dataCell(
-//                                     text: "${data.security?.name}",
-//                                   ), // "Company Name",
-//                                   _dataCell(
-//                                       text: "${data.sector}"), // "Sector",
-//                                   // _dataCell(text: "\$${data.bid}"), // "Bid",
-//                                   // _dataCell(text: "\$${data.ask}"), // "Ask",
-//                                   _dataCell(
-//                                     text: "\$$lastTrade",
-//                                     // text: "\$${data.last}",
-//                                   ), // "Last Trade",
-//                                   _dataCell(
-//                                     text: "\$$netChange",
-//                                     // text: "\$${data.change}",
-//                                     change: true,
-//                                     // value: data.change,
-//                                     value: netChange,
-//                                   ), // "Net Change",
-//                                   _dataCell(
-//                                     text: "$perChange", // "% Change",
-//                                     // text: "${data.percentChange}", // "% Change",
-//                                     change: true,
-//                                     // value: data.percentChange,
-//                                     value: perChange,
-//                                   ),
-//                                   _dataCell(
-//                                     text: num.parse("${data.volume ?? 0}")
-//                                         .toRuppeeFormatWithoutFloating(),
-//                                   ), // "Volume",
-//                                   _dataCell(
-//                                     text: num.parse(
-//                                             "${(data.volume ?? 0) * (data.last ?? 0)}")
-//                                         .toRuppees(), // "$Volume"
-//                                   ),
-//                                 ],
-//                               );
+//                               return DataRow(cells: cells);
 //                             },
 //                           ).toList(),
+
+//                           // rows: dataList.map(
+//                           //   (data) {
+//                           //     return DataRow(
+//                           //       cells: [
+//                           //         _dataCell(text: data.name), // "Company Name",
+//                           //         _dataCell(
+//                           //             text: data.sector ?? ""), // "Sector",
+
+//                           //         _dataCell(
+//                           //             text: "\$${data.price}"), // "Last Trade",
+//                           //         _dataCell(
+//                           //           text: "\$${data.change}",
+//                           //           change: true,
+//                           //           value: data.change,
+//                           //         ), // "Net Change",
+//                           //         _dataCell(
+//                           //           text:
+//                           //               "${data.changesPercentage}", // "% Change",
+//                           //           change: true,
+//                           //           value: data.changesPercentage,
+//                           //         ),
+//                           //         _dataCell(
+//                           //           text: num.parse("${data.volume ?? 0}")
+//                           //               .toRuppeeFormatWithoutFloating(),
+//                           //         ), // "Volume",
+//                           //         _dataCell(
+//                           //           text:
+//                           //               num.parse("${data.volume * data.price}")
+//                           //                   .toRuppees(), // "$Volume"
+//                           //         ),
+//                           //       ],
+//                           //     );
+//                           //   },
+//                           // ).toList(),
 //                         ),
 //                       ),
 //                     ),
@@ -257,7 +276,6 @@
 //             ],
 //           ),
 //         ),
-//         // ScannerTopGainerFilter(),
 //       ],
 //     );
 //   }
@@ -269,9 +287,11 @@
 //           maxWidth: ScreenUtil().screenWidth * .3,
 //         ),
 //         child: Text(
+//           // userPercent ? "$text%" : "$text",
 //           text,
 //           style: styleGeorgiaBold(
 //             fontSize: 12,
+//             // color: Colors.white,
 //             color: value != null
 //                 ? (value >= 0 ? ThemeColors.accent : ThemeColors.sos)
 //                 : Colors.white,
@@ -285,27 +305,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/stocksScanner/apis/top_gainer_scanner_manager.dart';
-import 'package:stocks_news_new/stocksScanner/modals/market_scanner_res.dart';
+import 'package:stocks_news_new/stocksScanner/modals/scanner_res.dart';
 import 'package:stocks_news_new/stocksScanner/providers/top_gainer_scanner_provider.dart';
 import 'package:stocks_news_new/stocksScanner/screens/topGainers/scanner_header.dart';
 import 'package:stocks_news_new/stocksScanner/screens/topGainers/top_gainer_filter.dart';
+// import 'package:stocks_news_new/stocksScanner/providers/market_scanner_provider.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
+
 import '../widget/container.dart';
 
-class TopGainerOnline extends StatefulWidget {
-  const TopGainerOnline({super.key});
+class TopGainerOfflineTwo extends StatefulWidget {
+  const TopGainerOfflineTwo({super.key});
 
   @override
-  State<TopGainerOnline> createState() => _TopGainerOnlineState();
+  State<TopGainerOfflineTwo> createState() => _TopGainerOfflineTwoState();
 }
 
-class _TopGainerOnlineState extends State<TopGainerOnline> {
+class _TopGainerOfflineTwoState extends State<TopGainerOfflineTwo> {
   List<String> columnHeader = [
     // "Time",
-    // "Symbol",
     "Company Name",
     "Sector",
     // "Bid",
@@ -321,7 +341,8 @@ class _TopGainerOnlineState extends State<TopGainerOnline> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      // MarketScannerProvider provider = context.read<MarketScannerProvider>();
+      // TopGainerScannerProvider provider =
+      //     context.read<TopGainerScannerProvider>();
       // provider.startListeningPorts();
       // provider.getOfflineData();
     });
@@ -329,9 +350,6 @@ class _TopGainerOnlineState extends State<TopGainerOnline> {
 
   @override
   void dispose() {
-    TopGainerScannerProvider provider =
-        navigatorKey.currentContext!.read<TopGainerScannerProvider>();
-    provider.stopListeningPorts();
     super.dispose();
   }
 
@@ -339,18 +357,25 @@ class _TopGainerOnlineState extends State<TopGainerOnline> {
   Widget build(BuildContext context) {
     TopGainerScannerProvider provider =
         context.watch<TopGainerScannerProvider>();
-    List<MarketScannerRes>? dataList = provider.dataList;
-
+    List<ScannerRes>? dataList = provider.offlineDataList;
+    bool? gotPostMarket = dataList?.any(
+      (element) => element.ext?.extendedHoursType == 'PostMarket',
+    );
     if (dataList == null) {
       return SizedBox();
     }
-
+    if (gotPostMarket == true) {
+      int lastTradeIndex = columnHeader.indexOf("Last Trade");
+      if (lastTradeIndex != -1 && !columnHeader.contains("Post Market Price")) {
+        columnHeader.insert(lastTradeIndex + 1, "Post Market Price");
+      }
+    }
     return Column(
       children: [
         SingleChildScrollView(
           child: Column(
             children: [
-              TopGainerScannerHeader(isOnline: true),
+              TopGainerScannerHeader(isOnline: false),
               // const SpacerVertical(height: 10),
               ScannerTopGainerFilter(
                 onPercentClick: () {
@@ -367,47 +392,11 @@ class _TopGainerOnlineState extends State<TopGainerOnline> {
                 isVolume: provider.filterParams?.sortBy == 3,
                 orderByAsc: provider.filterParams?.sortByAsc,
               ),
-              // ListView.separated(
-              //   shrinkWrap: true,
-              //   physics: NeverScrollableScrollPhysics(),
-              //   padding: EdgeInsets.symmetric(horizontal: 10),
-              //   itemBuilder: (context, index) {
-              //     MarketScannerRes? data = dataList[index];
-              //     return ScannerBaseItem(
-              //       data: ScannerRes(
-              //         identifier: data.identifier,
-              //         name: data.security?.name,
-              //         bid: data.bid,
-              //         ask: data.ask,
-              //         volume: data.volume,
-              //         price: data.last,
-              //         sector: data.sector,
-              //         change: data.change,
-              //         changesPercentage: data.percentChange,
-              //         image: data.image,
-              //         ext: Ext(
-              //           extendedHoursDate: data.extendedHoursDate,
-              //           extendedHoursTime: data.extendedHoursTime,
-              //           extendedHoursType: data.extendedHoursType,
-              //           extendedHoursPrice: data.extendedHoursPrice,
-              //           extendedHoursChange: data.extendedHoursChange,
-              //           extendedHoursPercentChange:
-              //               data.extendedHoursPercentChange,
-              //         ),
-              //       ),
-              //     );
-              //   },
-              //   separatorBuilder: (context, index) {
-              //     return SpacerVertical(height: 15);
-              //   },
-              //   itemCount: dataList.length,
-              // ),
 
-              ScannerBaseContainer(dataList: dataList),
+              ScannerBaseContainerOffline(dataList: dataList),
             ],
           ),
         ),
-        // ScannerTopGainerFilter(),
       ],
     );
   }
@@ -419,9 +408,11 @@ class _TopGainerOnlineState extends State<TopGainerOnline> {
           maxWidth: ScreenUtil().screenWidth * .3,
         ),
         child: Text(
+          // userPercent ? "$text%" : "$text",
           text,
           style: styleGeorgiaBold(
             fontSize: 12,
+            // color: Colors.white,
             color: value != null
                 ? (value >= 0 ? ThemeColors.accent : ThemeColors.sos)
                 : Colors.white,
