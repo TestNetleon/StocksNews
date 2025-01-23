@@ -99,7 +99,8 @@ class MarketScannerDataManager {
       _eventSubscriptions[url] = subscription;
     } catch (e) {
       Utils().showLog("Failed to connect to $url: $e");
-      _connectToEventSource(url, provider);
+      // _connectToEventSource(url, provider);
+      getOfflineData();
       // throw e;
     }
   }

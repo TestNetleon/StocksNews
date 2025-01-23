@@ -424,7 +424,7 @@ class SSEManager {
 
   // Connect a stock stream to a specific screen
   void connectStock({required String symbol, required SimulatorEnum screen}) {
-    final url = 'https://dev.stocks.news:8021/symbolData?symbol=$symbol';
+    final url = 'https://dev.stocks.news:8052/symbolData?symbol=$symbol';
 
     if (_isStreamConnected(screen, symbol)) {
       if (kDebugMode) {
@@ -481,7 +481,7 @@ class SSEManager {
       }
 
       final url =
-          'https://dev.stocks.news:8021/symbolsData?symbol=${symbols.join(',')}';
+          'https://dev.stocks.news:8052/symbolsData?symbol=${symbols.join(',')}';
 
       _connectToStream(
         url,

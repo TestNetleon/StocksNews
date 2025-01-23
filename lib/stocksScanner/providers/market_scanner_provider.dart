@@ -881,15 +881,20 @@ class MarketScannerProvider extends ChangeNotifier {
       );
       if (response.status) {
         _port = scannerPortsResFromJson(jsonEncode(response.data));
-        // getScannerType();
+
         startListeningPorts();
       } else {
         _port = null;
       }
       setStatus(Status.loaded);
+      return ApiResponse(
+        status: response.status,
+        data: _port,
+      );
     } catch (e) {
       _port = null;
       setStatus(Status.loaded);
+      return ApiResponse(status: false);
     }
   }
 }

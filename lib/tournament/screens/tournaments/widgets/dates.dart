@@ -7,8 +7,12 @@ import 'package:stocks_news_new/utils/utils.dart';
 
 class CustomDateSelector extends StatefulWidget {
   final Function(DateTime) onDateSelected;
-
-  const CustomDateSelector({super.key, required this.onDateSelected});
+  final DateTime? editedDate;
+  const CustomDateSelector({
+    super.key,
+    required this.onDateSelected,
+    this.editedDate,
+  });
 
   @override
   State<CustomDateSelector> createState() => _CustomDateSelectorState();
@@ -23,49 +27,45 @@ class _CustomDateSelectorState extends State<CustomDateSelector> {
   void initState() {
     super.initState();
 
-    selectedDate =
-        DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
-    setState(() {});
+    _createdDates();
+  }
 
-    final DateTime startDate =
-        DateTime(selectedDate.year, selectedDate.month - 2, selectedDate.day);
+  void _createdDates() {
+    DateTime currentDate = DateTime(
+      DateTime.now().year,
+      DateTime.now().month,
+      DateTime.now().day,
+    );
+
+    // Initialize the selected date to the editedDate or currentDate
+    selectedDate = widget.editedDate ?? currentDate;
+
+    final DateTime startDate = DateTime(
+      currentDate.year - 1,
+      currentDate.month,
+      currentDate.day,
+    );
+
+    // Generate the full list of dates
     fullDates = List.generate(
-      selectedDate.difference(startDate).inDays + 1,
+      currentDate.difference(startDate).inDays + 1,
       (index) => startDate.add(Duration(days: index)),
     );
 
-    visibleDates = fullDates.sublist(fullDates.length - 3);
+    // Determine the visible dates
+    int selectedIndex = fullDates.indexOf(selectedDate);
+    int startVisibleIndex = selectedIndex - 1 < 0 ? 0 : selectedIndex - 1;
+    int endVisibleIndex = selectedIndex + 1 >= fullDates.length
+        ? fullDates.length - 1
+        : selectedIndex + 1;
 
-    setState(() {});
+    visibleDates = fullDates.sublist(startVisibleIndex, endVisibleIndex + 1);
 
     // Notify the parent widget about the initial selected date
     widget.onDateSelected(selectedDate);
+
+    setState(() {});
   }
-
-  // void shiftLeft() {
-  //   setState(() {
-  //     if (fullDates.indexOf(visibleDates.first) > 0) {
-  //       visibleDates.insert(
-  //           0, fullDates[fullDates.indexOf(visibleDates.first) - 1]);
-  //       visibleDates.removeLast();
-  //       selectedDate = visibleDates.first;
-
-  //       widget.onDateSelected(selectedDate);
-  //     }
-  //   });
-  // }
-
-  // void shiftRight() {
-  //   setState(() {
-  //     if (fullDates.indexOf(visibleDates.last) < fullDates.length - 1) {
-  //       visibleDates.add(fullDates[fullDates.indexOf(visibleDates.last) + 1]);
-  //       visibleDates.removeAt(0);
-  //       selectedDate = visibleDates.last;
-
-  //       widget.onDateSelected(selectedDate);
-  //     }
-  //   });
-  // }
 
   void shiftLeft() {
     setState(() {

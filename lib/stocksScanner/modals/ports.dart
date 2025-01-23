@@ -30,10 +30,12 @@ class ScannerPortsRes {
 class PortRes {
   final ScannerPortRes? scannerPort;
   final GainerLoserPortRes? gainerLoserPort;
+  final OtherPortRes? otherPortRes;
 
   PortRes({
     this.scannerPort,
     this.gainerLoserPort,
+    this.otherPortRes,
   });
 
   factory PortRes.fromJson(Map<String, dynamic> json) => PortRes(
@@ -43,11 +45,14 @@ class PortRes {
         gainerLoserPort: json["gainerLoserPort"] == null
             ? null
             : GainerLoserPortRes.fromJson(json["gainerLoserPort"]),
+        otherPortRes:
+            json["other"] == null ? null : OtherPortRes.fromJson(json["other"]),
       );
 
   Map<String, dynamic> toJson() => {
         "scannerPort": scannerPort?.toJson(),
         "gainerLoserPort": gainerLoserPort?.toJson(),
+        "other": otherPortRes?.toJson(),
       };
 }
 
@@ -89,5 +94,25 @@ class ScannerPortRes {
   Map<String, dynamic> toJson() => {
         "start": start,
         "end": end,
+      };
+}
+
+class OtherPortRes {
+  final int? simulator;
+  final int? offline;
+
+  OtherPortRes({
+    this.simulator,
+    this.offline,
+  });
+
+  factory OtherPortRes.fromJson(Map<String, dynamic> json) => OtherPortRes(
+        simulator: json["simulator"],
+        offline: json["offline"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "simulator": simulator,
+        "offline": offline,
       };
 }

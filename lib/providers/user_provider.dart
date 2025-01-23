@@ -1228,30 +1228,30 @@ class UserProvider extends ChangeNotifier {
 
 //-------------------------------------------------
 
-  Future referLoginApi(request) async {
-    try {
-      ApiResponse response = await apiRequest(
-        url: Apis.referLogin,
-        request: request,
-        showProgress: true,
-        removeForceLogin: true,
-      );
-      if (response.status) {
-        //
-      } else {
-        popUpAlert(
-            message: response.message ?? "",
-            title: "Alert",
-            icon: Images.alertPopGIF);
-        //
-      }
+  // Future referLoginApi(request) async {
+  //   try {
+  //     ApiResponse response = await apiRequest(
+  //       url: Apis.referLogin,
+  //       request: request,
+  //       showProgress: true,
+  //       removeForceLogin: true,
+  //     );
+  //     if (response.status) {
+  //       //
+  //     } else {
+  //       popUpAlert(
+  //           message: response.message ?? "",
+  //           title: "Alert",
+  //           icon: Images.alertPopGIF);
+  //       //
+  //     }
 
-      return ApiResponse(status: response.status, message: response.message);
-    } catch (e) {
-      Utils().showLog("$e");
-      return ApiResponse(status: false, message: Const.errSomethingWrong);
-    }
-  }
+  //     return ApiResponse(status: response.status, message: response.message);
+  //   } catch (e) {
+  //     Utils().showLog("$e");
+  //     return ApiResponse(status: false, message: Const.errSomethingWrong);
+  //   }
+  // }
 
   ReferSuccessRes? _refer;
   ReferSuccessRes? get refer => _refer;
