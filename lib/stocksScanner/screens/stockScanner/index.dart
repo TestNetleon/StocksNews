@@ -22,7 +22,7 @@ class _StocksScannerState extends State<StocksScanner> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      context.read<MarketScannerProvider>().getScannerType();
+      context.read<MarketScannerProvider>().getScannerPorts();
     });
   }
 
@@ -55,7 +55,7 @@ class _StocksScannerAppState extends State<StocksScannerApp> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      context.read<MarketScannerProvider>().getScannerType();
+      context.read<MarketScannerProvider>().getScannerPorts();
     });
   }
 

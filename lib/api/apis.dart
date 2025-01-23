@@ -273,6 +273,7 @@ class Apis {
   static const appsflyerUsers = '/appsflyer-users';
   static const trendingSectors = '/trending-sectors';
   static const stockScannerChange = '/stockScannerChange';
+  static const stockScannerPort = '/stockScannerPort';
 }
 
 class ApiKeys {

@@ -343,7 +343,7 @@ class _CommonTabContainerState extends State<CommonTabContainer>
         });
         try {
           if (Platform.isAndroid) {
-            bool isVibe = await Vibration.hasVibrator() ?? false;
+            bool isVibe = await Vibration.hasVibrator();
             if (isVibe) {
               Vibration.vibrate(
                 pattern: [50, 50, 79, 55],

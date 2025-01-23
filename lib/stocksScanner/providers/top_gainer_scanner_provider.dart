@@ -238,7 +238,8 @@ class TopGainerScannerProvider extends ChangeNotifier {
         }
       });
     }
-    _dataList = prChangeAr.take(50).toList();
+    // _dataList = prChangeAr.take(50).toList();
+    _dataList = prChangeAr;
 
     notifyListeners();
   }

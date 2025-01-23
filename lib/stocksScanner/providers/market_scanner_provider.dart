@@ -16,6 +16,8 @@ import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:http/http.dart' as http;
 
+import '../modals/ports.dart';
+
 class MarketScannerProvider extends ChangeNotifier {
   Status _status = Status.ideal;
   bool get isLoading => _status == Status.loading || _status == Status.ideal;
@@ -453,7 +455,8 @@ class MarketScannerProvider extends ChangeNotifier {
       });
     }
 
-    _dataList = _dataList!.take(50).toList();
+    // _dataList = _dataList!.take(50).toList();
+
     // Notify listeners to update UI
     notifyListeners();
   }
@@ -839,27 +842,53 @@ class MarketScannerProvider extends ChangeNotifier {
     return false;
   }
 
-  Future getScannerType({showProgress = false, loadMore = false}) async {
+  // Future getScannerType({showProgress = false, loadMore = false}) async {
+  //   setStatus(Status.loading);
+  //   try {
+  //     Map request = {
+  //       "token":
+  //           navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
+  //     };
+  //     ApiResponse response = await apiRequest(
+  //       url: Apis.stockScannerChange,
+  //       request: request,
+  //       showProgress: false,
+  //     );
+
+  //     if (response.status) {
+  //       _scannerIndex = response.data['webviewStatus'];
+  //     } else {
+  //       // _error = response.message;
+  //     }
+  //     setStatus(Status.loaded);
+  //   } catch (e) {
+  //     Utils().showLog(e.toString());
+  //     setStatus(Status.loaded);
+  //   }
+  // }
+
+//MARK: Scanner Ports
+
+  ScannerPortsRes? _port;
+  ScannerPortsRes? get port => _port;
+
+  Future getScannerPorts() async {
     setStatus(Status.loading);
     try {
-      Map request = {
-        "token":
-            navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
-      };
       ApiResponse response = await apiRequest(
-        url: Apis.stockScannerChange,
-        request: request,
-        showProgress: false,
+        url: Apis.stockScannerPort,
+        showProgress: true,
       );
-
       if (response.status) {
-        _scannerIndex = response.data['webviewStatus'];
+        _port = scannerPortsResFromJson(jsonEncode(response.data));
+        // getScannerType();
+        startListeningPorts();
       } else {
-        // _error = response.message;
+        _port = null;
       }
       setStatus(Status.loaded);
     } catch (e) {
-      Utils().showLog(e.toString());
+      _port = null;
       setStatus(Status.loaded);
     }
   }

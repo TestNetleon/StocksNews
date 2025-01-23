@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/stocksScanner/providers/market_scanner_provider.dart';
 import 'package:stocks_news_new/stocksScanner/providers/top_loser_scanner_provider.dart';
 import 'package:stocks_news_new/stocksScanner/screens/stockScanner/widget_preparing.dart';
-import 'package:stocks_news_new/stocksScanner/screens/topLosers/offline_data.dart';
 import 'package:stocks_news_new/stocksScanner/screens/topLosers/offline_data_two.dart';
 import 'package:stocks_news_new/stocksScanner/screens/topLosers/online_data.dart';
 
@@ -29,8 +28,8 @@ class _ScannerTopLosersState extends State<ScannerTopLosers> {
 
   @override
   Widget build(BuildContext context) {
-    MarketScannerProvider marketScannerProvider =
-        context.watch<MarketScannerProvider>();
+    // MarketScannerProvider marketScannerProvider =
+    //     context.watch<MarketScannerProvider>();
     return SingleChildScrollView(
       child: Consumer<TopLoserScannerProvider>(
         builder: (context, provider, child) {

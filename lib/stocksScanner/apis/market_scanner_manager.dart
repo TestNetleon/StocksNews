@@ -38,11 +38,19 @@ class MarketScannerDataManager {
     MarketScannerProvider provider =
         navigatorKey.currentContext!.read<MarketScannerProvider>();
 
+    int? startingPort = provider.port?.port?.scannerPort?.start ?? 8021;
+    int? endingPort = provider.port?.port?.scannerPort?.end ?? 8040;
+
     // Create URLs for all ports
+
     final urls = List.generate(
-      20,
-      (index) => "https://dev.stocks.news:${8021 + index}/sse",
+      endingPort - startingPort + 1,
+      (index) => "https://dev.stocks.news:${startingPort + index}/sse",
     );
+
+    for (var a in urls) {
+      print(a);
+    }
 
     // Set offline data timer
     Timer(Duration(milliseconds: checkOfflineInterval), () async {
