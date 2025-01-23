@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:stocks_news_new/tournament/provider/trades.dart';
 import 'package:stocks_news_new/tradingSimulator/providers/trade_provider.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 
@@ -55,14 +56,14 @@ class SdSummaryItem extends StatelessWidget {
                           Container(
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(40),
-                              color: order?.buy == true
+                              color: (order?.selectedStock==StockType.buy)
                                   ? ThemeColors.accent
                                   : ThemeColors.sos,
                             ),
                             padding: EdgeInsets.symmetric(
                                 horizontal: 10, vertical: 2),
                             child: Text(
-                              order?.buy == true ? "Buy" : "Sell",
+                              order?.selectedStock==StockType.buy ? "Buy" : order?.selectedStock==StockType.sell ? "Sell":"Short",
                               style: stylePTSansBold(fontSize: 12),
                             ),
                           ),

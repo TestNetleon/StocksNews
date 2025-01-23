@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:stocks_news_new/tradingSimulator/TradingWithTypes/trad_order_screen.dart';
 import 'package:stocks_news_new/tradingSimulator/modals/ts_pending_list_res.dart';
 import 'package:stocks_news_new/tradingSimulator/providers/ts_pending_list_provider.dart';
 import 'package:stocks_news_new/tradingSimulator/screens/dashboard/pending/item.dart';
 import 'package:stocks_news_new/tradingSimulator/screens/dashboard/pending/ts_slidable_menu.dart';
 import 'package:stocks_news_new/tradingSimulator/screens/dashboard/tradeSheet.dart';
 import 'package:stocks_news_new/utils/constants.dart';
+import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
 import 'package:stocks_news_new/widgets/refresh_controll.dart';
@@ -46,13 +48,16 @@ class _TsPendingListState extends State<TsPendingList> {
       okText: "Edit",
       onTap: () {
         TsPendingListProvider provider = context.read<TsPendingListProvider>();
-
-        provider.stockHolding(
-          index: index,
-          buy: item.tradeType?.toLowerCase() == StockType.buy.name,
-        );
-
-        // Navigator.pop(context);
+        if(item.tradeType == "Short"){
+          provider.shortRedirection(
+            index: index,
+          );
+        }
+        else{
+          provider.stockHolding(
+            index: index,
+          );
+        }
       },
     );
   }
@@ -113,7 +118,22 @@ class _TsPendingListState extends State<TsPendingList> {
                     changePercentage: item.changesPercentage,
                     price: item.currentPrice,
                   ));
-                  tradeSheet(
+
+                  Navigator.push(
+                    context,
+                    createRoute(TradOrderScreen(
+                      symbol: item.symbol,
+                      doPop: false,
+                      data: TradingSearchTickerRes(
+                        image: item.image,
+                        name: item.company,
+                        currentPrice: item.currentPrice,
+                        symbol: item.symbol,
+                      ),
+                      qty: item.quantity,
+                    )),
+                  );
+                  /* tradeSheet(
                     symbol: item.symbol,
                     doPop: false,
                     qty: item.quantity,
@@ -123,7 +143,7 @@ class _TsPendingListState extends State<TsPendingList> {
                       currentPrice: item.currentPrice,
                       symbol: item.symbol,
                     ),
-                  );
+                  );*/
                 },
               ),
             );

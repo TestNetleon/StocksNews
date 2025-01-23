@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/utils/colors.dart';
+import 'package:stocks_news_new/utils/constants.dart';
 
 import '../../../../utils/theme.dart';
 import '../../../../widgets/spacer_vertical.dart';
@@ -35,10 +36,27 @@ class TournamentHeader extends StatelessWidget {
             return Expanded(
               child: InkWell(
                 onTap: () {
-                  if (index == 1) {
+                  if (index == 0) {
+                    var selectedTournament = TournamentsHead.tradTotal;
                     Navigator.push(context, MaterialPageRoute(
                       builder: (context) {
-                        return TournamentPointsPaidIndex();
+                        return TournamentPointsPaidIndex(selectedTournament:selectedTournament);
+                      },
+                    ));
+                  }
+                 else if (index == 1) {
+                    var selectedTournament = TournamentsHead.pPaid;
+                    Navigator.push(context, MaterialPageRoute(
+                      builder: (context) {
+                        return TournamentPointsPaidIndex(selectedTournament:selectedTournament);
+                      },
+                    ));
+                  }
+                  else if (index == 2) {
+                    var selectedTournament = TournamentsHead.playTraders;
+                    Navigator.push(context, MaterialPageRoute(
+                      builder: (context) {
+                        return TournamentPointsPaidIndex(selectedTournament:selectedTournament);
                       },
                     ));
                   }
@@ -47,9 +65,12 @@ class TournamentHeader extends StatelessWidget {
                   children: [
                     Text(
                       provider.data?.tournamentHeader?[index].label ?? '',
-                      style: styleGeorgiaRegular(fontSize: 14),
+                      style: styleGeorgiaRegular(fontSize: 13),
+                      maxLines: 2,
+                      textAlign: TextAlign.center,
+                      overflow: TextOverflow.ellipsis,
                     ),
-                    const SpacerVertical(height: 5),
+                    const SpacerVertical(height:10),
                     Text(
                       provider.data?.tournamentHeader?[index].value ?? '',
                       style: styleGeorgiaBold(fontSize: 18),

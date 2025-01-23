@@ -24,6 +24,7 @@ class _TournamentSearchState extends State<TournamentSearch> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       context.read<TournamentSearchProvider>().clearSearch();
+      context.read<TournamentSearchProvider>().getSearchDefaults();
     });
   }
 

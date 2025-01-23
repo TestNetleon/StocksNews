@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
+import 'package:stocks_news_new/tournament/provider/search.dart';
+import 'package:stocks_news_new/tournament/screens/tournaments/widgets/tour_trade_sheet.dart';
+import 'package:stocks_news_new/tradingSimulator/manager/sse.dart';
 import 'package:stocks_news_new/tradingSimulator/modals/trading_search_res.dart';
-import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -16,15 +19,26 @@ class TournamentDefaultItem extends StatelessWidget {
     super.key,
   });
 
-  Future _onTap({String? symbol}) async {
-    Navigator.pop(navigatorKey.currentContext!, symbol);
-  }
-
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        _onTap(symbol: data.symbol);
+        TournamentSearchProvider provider = context.read<TournamentSearchProvider>();
+        provider.setTappedStock(
+            StockDataManagerRes(symbol: data.symbol??"",change: data.change,price: data.currentPrice,changePercentage: data.changesPercentage),
+            data.showButton
+        );
+        tournamentSheet(
+          symbol:data.symbol,
+          doPop: false,
+          data: TradingSearchTickerRes(
+            image: data.image,
+            name: data.name,
+            currentPrice: data.currentPrice,
+            symbol: data.symbol,
+            showButton: data.showButton
+          ),
+        );
       },
       child: Stack(
         children: [

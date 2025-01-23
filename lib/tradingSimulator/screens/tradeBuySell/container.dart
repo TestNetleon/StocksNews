@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
+import 'package:stocks_news_new/tournament/provider/trades.dart';
 import 'package:stocks_news_new/tradingSimulator/providers/ts_open_list_provider.dart';
 import 'package:stocks_news_new/tradingSimulator/providers/ts_pending_list_provider.dart';
 import 'package:stocks_news_new/tradingSimulator/providers/ts_portfollo_provider.dart';
@@ -24,13 +25,13 @@ import '../../providers/trade_provider.dart';
 import '../detailTop/top.dart';
 
 class BuySellContainer extends StatefulWidget {
-  final bool buy;
+  final StockType? selectedStock;
   final num? qty;
   final num? editTradeID;
 
   const BuySellContainer({
     super.key,
-    this.buy = true,
+    this.selectedStock,
     this.qty,
     this.editTradeID,
   });
@@ -137,7 +138,7 @@ class _BuySellContainerState extends State<BuySellContainer> {
 
           symbol: detailRes?.symbol,
           invested: invested,
-          buy: widget.buy,
+          selectedStock: widget.selectedStock,
           date: response.data['result']['created_date'],
         );
         // Navigator.pop(context);
@@ -154,7 +155,7 @@ class _BuySellContainerState extends State<BuySellContainer> {
         // widget.buy
         //     ? tradeProviderNew.addOrderData(order)
         //     : tradeProviderNew.sellOrderData(order);
-        await showTsOrderSuccessSheet(order, widget.buy);
+        await showTsOrderSuccessSheet(order, widget.selectedStock);
       } else {
         popUpAlert(
           message: "${response.message}",
@@ -175,7 +176,7 @@ class _BuySellContainerState extends State<BuySellContainer> {
       return;
     }
 
-    if (widget.buy) {
+    if (widget.selectedStock==StockType.buy) {
       if (invested > (portfolioProvider.userData?.tradeBalance ?? 0)) {
         popUpAlert(
           message: "Insufficient available balance to place this order.",
@@ -240,7 +241,7 @@ class _BuySellContainerState extends State<BuySellContainer> {
             currentPrice: numPrice,
             symbol: detailRes?.symbol,
             invested: invested,
-            buy: widget.buy,
+            selectedStock: widget.selectedStock,
             date: response.data['result']['created_date'],
           );
           // Navigator.pop(context);
@@ -257,7 +258,7 @@ class _BuySellContainerState extends State<BuySellContainer> {
           // widget.buy
           //     ? tradeProviderNew.addOrderData(order)
           //     : tradeProviderNew.sellOrderData(order);
-          await showTsOrderSuccessSheet(order, widget.buy);
+          await showTsOrderSuccessSheet(order, widget.selectedStock);
         } else {
           popUpAlert(
             message: "${response.message}",
@@ -270,7 +271,7 @@ class _BuySellContainerState extends State<BuySellContainer> {
       FormData request = FormData.fromMap({
         "token":
             navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
-        "action": "SELL",
+        "action": widget.selectedStock==StockType.sell?"SELL":widget.selectedStock==StockType.short ?"SHORT":"BUY_TO_COVER",
         "symbol": detailRes?.symbol,
         "order_type": 'MARKET_ORDER',
         "duration": "GOOD_UNTIL_CANCELLED",
@@ -309,7 +310,7 @@ class _BuySellContainerState extends State<BuySellContainer> {
           currentPrice: numPrice,
           symbol: detailRes?.symbol,
           invested: invested,
-          buy: widget.buy,
+          selectedStock: widget.selectedStock,
           date: response.data['result']['created_date'],
         );
 
@@ -327,7 +328,7 @@ class _BuySellContainerState extends State<BuySellContainer> {
         // widget.buy
         //     ? tradeProviderNew.addOrderData(order)
         //     : tradeProviderNew.sellOrderData(order);
-        await showTsOrderSuccessSheet(order, widget.buy);
+        await showTsOrderSuccessSheet(order, widget.selectedStock);
       } else {
         // TODO:
         popUpAlert(message: "${response.message}", title: "Alert");
@@ -398,6 +399,7 @@ class _BuySellContainerState extends State<BuySellContainer> {
     num invested = _selectedSegment == TypeTrade.shares
         ? (detailRes?.currentPrice ?? 0) * parsedCurrentText
         : parsedCurrentText;
+    print(widget.selectedStock);
     return Container(
       padding: const EdgeInsets.all(10),
       decoration: const BoxDecoration(
@@ -443,35 +445,63 @@ class _BuySellContainerState extends State<BuySellContainer> {
             ],
           ),
           const SpacerVertical(),
-          ThemeButton(
-            disabledBackgroundColor: ThemeColors.greyBorder,
-            text: widget.buy
-                ? widget.editTradeID != null
-                    ? 'Update Buy Order'
-                    : "Proceed Buy Order"
-                : widget.editTradeID != null
-                    ? 'Update Sell Order'
-                    : "Proceed Sell Order",
-            color: widget.buy
-                ? (invested > _availableBalance || invested == 0)
-                    ? ThemeColors.greyText
-                    : ThemeColors.accent
-                : (controller.text.isEmpty ||
-                        num.parse(controller.text) > (widget.qty ?? 0) ||
-                        invested == 0)
-                    ? ThemeColors.greyText
-                    : ThemeColors.sos,
-            onPressed: (widget.buy
-                    ? (invested > _availableBalance || invested == 0)
-                    : (controller.text.isEmpty ||
-                        num.parse(controller.text) > (widget.qty ?? 0)))
-                ? null
-                : _onTap,
+          Visibility(
+            visible: widget.selectedStock!=StockType.short,
+            child: ThemeButton(
+              disabledBackgroundColor: ThemeColors.greyBorder,
+              text:widget.selectedStock==StockType.buy
+                  ? widget.editTradeID != null
+                      ? 'Update Buy Order'
+                      : "Proceed Buy Order"
+                  :
+              widget.selectedStock==StockType.sell?
+              widget.editTradeID != null
+                      ? 'Update Sell Order'
+                      : "Proceed Sell Order":
+              widget.editTradeID != null
+                  ? 'Update BTC Order'
+                  : "Proceed BTC Order",
+              color:widget.selectedStock==StockType.buy
+                  ? (invested > _availableBalance || invested == 0)
+                      ? ThemeColors.greyText
+                      : ThemeColors.accent
+                  : (controller.text.isEmpty ||
+                          num.parse(controller.text) > (widget.qty ?? 0) ||
+                          invested == 0)
+                      ? ThemeColors.greyText
+                      : ThemeColors.sos,
+              onPressed: (widget.selectedStock==StockType.buy
+                      ? (invested > _availableBalance || invested == 0)
+                      : (controller.text.isEmpty ||
+                          num.parse(controller.text) > (widget.qty ?? 0)))
+                  ? null
+                  : _onTap,
+            ),
           ),
           Visibility(
+            visible: widget.selectedStock==StockType.short,
+            child: ThemeButton(
+              disabledBackgroundColor: ThemeColors.greyBorder,
+              text:
+              widget.editTradeID != null
+                  ? 'Update Short Order'
+                  : "Proceed Short Order",
+              color:(invested > _availableBalance || invested == 0)
+                  ? ThemeColors.greyText:
+              (controller.text.isEmpty)?
+              ThemeColors.greyText:
+              ThemeColors.sos,
+              onPressed: (invested > _availableBalance || invested == 0)
+                  ? null
+                  : (controller.text.isEmpty)
+                  ? null
+                  : _onTap,
+            ),
+          ),
+
+          Visibility(
             visible: controller.text.isNotEmpty &&
-                widget.buy &&
-                (invested > _availableBalance),
+                (widget.selectedStock==StockType.buy||widget.selectedStock==StockType.short) && (invested > _availableBalance),
             child: Container(
               padding: EdgeInsets.only(top: 10),
               child: RichText(
@@ -496,7 +526,7 @@ class _BuySellContainerState extends State<BuySellContainer> {
           ),
           Visibility(
             visible: controller.text.isNotEmpty &&
-                !widget.buy &&
+                (widget.selectedStock==StockType.sell ||widget.selectedStock==StockType.btc)&&
                 num.parse(controller.text) > (widget.qty ?? 0),
             child: Container(
               padding: EdgeInsets.only(top: 10),
@@ -552,10 +582,8 @@ class _BuySellContainerState extends State<BuySellContainer> {
                     'Enter number of shares',
                     style: styleGeorgiaRegular(color: ThemeColors.greyText),
                   ),
-                  // AnimatedInput(
-                  //   controller: controller,
-                  // ),
-                  if (widget.qty != null)
+
+                  if (widget.qty != null && widget.selectedStock!=StockType.short)
                     Container(
                       margin: EdgeInsets.only(top: 10),
                       child: Text(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/theme_button_small.dart';
@@ -49,11 +50,16 @@ class ErrorDisplayWidget extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
+                  /// replace text with html widget
+                  HtmlWidget(
+                    error ?? Const.errSomethingWrong,
+                    textStyle:stylePTSansRegular(fontSize: fontSize)
+                  ),
+                 /* Text(
                     error ?? Const.errSomethingWrong,
                     style: stylePTSansRegular(fontSize: fontSize),
                     textAlign: TextAlign.center,
-                  ),
+                  ),*/
                   const SpacerVertical(),
                   Visibility(
                     visible: onRefresh != null,

@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:stocks_news_new/tournament/provider/trades.dart';
 import '../../api/api_requester.dart';
 import '../../api/api_response.dart';
 import '../../api/apis.dart';
@@ -127,9 +128,16 @@ class TradeProviderNew extends ChangeNotifier {
 
   String? _error;
   String? get error => _error ?? Const.errSomethingWrong;
+  bool short = false;
 
   setStatus(status) {
     _status = status;
+    notifyListeners();
+  }
+
+  shortStatus(shortValue) {
+    short = shortValue;
+    Navigator.pop(navigatorKey.currentContext!);
     notifyListeners();
   }
 
@@ -233,7 +241,7 @@ class SummaryOrderNew {
   String? image, symbol, name, change, price;
   num? changePercentage, invested, shares, dollars, currentPrice;
   bool isShare;
-  bool buy;
+  StockType? selectedStock;
   String? date;
   SummaryOrderNew({
     this.image,
@@ -247,7 +255,7 @@ class SummaryOrderNew {
     this.changePercentage,
     this.invested,
     this.date,
-    required this.buy,
+    this.selectedStock,
     this.isShare = false,
   });
 }

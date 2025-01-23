@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:stocks_news_new/tournament/models/ticker_detail.dart';
+
 import '../../tournament/provider/trades.dart';
 
 List<TradingSearchTickerRes> tradingSearchTickerResFromJson(String str) =>
@@ -23,6 +25,7 @@ class TradingSearchTickerRes {
   num? orderPrice;
   num? closePrice;
   num? orderChange;
+  final ShowButtonRes? showButton;
 
   TradingSearchTickerRes({
     this.orderPrice,
@@ -38,6 +41,7 @@ class TradingSearchTickerRes {
     this.type,
     this.currentPrice,
     this.orderChange,
+    this.showButton,
   });
 
   factory TradingSearchTickerRes.fromJson(Map<String, dynamic> json) =>
@@ -57,6 +61,9 @@ class TradingSearchTickerRes {
         price: json["price"],
         change: json["change"],
         changesPercentage: json["changesPercentage"],
+        showButton: json["show_button"] == null
+            ? null
+            : ShowButtonRes.fromJson(json["show_button"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -73,6 +80,7 @@ class TradingSearchTickerRes {
         'type': type?.toJson(),
         'current_price': currentPrice,
         "changesPercentage": changesPercentage,
+        "show_button": showButton?.toJson(),
       };
 }
 
@@ -85,7 +93,13 @@ extension StockTypeExtension on StockType {
         return "sell";
       case StockType.hold:
         return "hold";
+      case StockType.short:
+        return "short";
+      case StockType.btc:
+        return "BUY_TO_COVER";
+
     }
+
   }
 
   static StockType fromJson(String value) {
@@ -96,6 +110,10 @@ extension StockTypeExtension on StockType {
         return StockType.sell;
       case "hold":
         return StockType.hold;
+      case "short":
+        return StockType.short;
+      case "BUY_TO_COVER":
+        return StockType.btc;
       default:
         throw ArgumentError("Invalid StockType value: $value");
     }

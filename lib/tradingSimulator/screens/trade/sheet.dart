@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
+import 'package:stocks_news_new/tournament/provider/trades.dart';
 import 'package:stocks_news_new/tradingSimulator/providers/trade_provider.dart';
 import 'package:stocks_news_new/tradingSimulator/screens/dashboard/index.dart';
 import 'package:stocks_news_new/utils/constants.dart';
@@ -12,7 +13,7 @@ import 'package:stocks_news_new/widgets/theme_button.dart';
 
 import '../../../utils/colors.dart';
 
-Future showTsOrderSuccessSheet(SummaryOrderNew? order, bool buy) async {
+Future showTsOrderSuccessSheet(SummaryOrderNew? order, StockType? selectedStock) async {
   await showModalBottomSheet(
     useSafeArea: true,
     shape: const RoundedRectangleBorder(
@@ -27,7 +28,7 @@ Future showTsOrderSuccessSheet(SummaryOrderNew? order, bool buy) async {
     builder: (context) {
       return SuccessTradeSheet(
         order: order,
-        buy: buy,
+        selectedStock: selectedStock,
         close: true,
       );
     },
@@ -36,10 +37,10 @@ Future showTsOrderSuccessSheet(SummaryOrderNew? order, bool buy) async {
 
 class SuccessTradeSheet extends StatelessWidget {
   final SummaryOrderNew? order;
-  final bool buy;
+  final StockType? selectedStock;
   final bool close;
   const SuccessTradeSheet(
-      {super.key, this.order, required this.buy, this.close = false});
+      {super.key, this.order, required this.selectedStock, this.close = false});
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +55,7 @@ class SuccessTradeSheet extends StatelessWidget {
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
           colors: [
-            buy
+            selectedStock==StockType.buy
                 ? ThemeColors.bottomsheetGradient
                 : const Color.fromARGB(255, 35, 0, 0),
             Colors.black,
@@ -207,7 +208,7 @@ class SuccessTradeSheet extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            buy ? "Buy" : 'Sell',
+                            selectedStock==StockType.buy ? "Buy" :selectedStock==StockType.sell ? 'Sell':selectedStock==StockType.short ?'Short':"Buy To Cover",
                             style: styleGeorgiaRegular(
                               color: ThemeColors.white,
                             ),

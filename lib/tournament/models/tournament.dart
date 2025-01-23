@@ -107,7 +107,7 @@ class TournamentDataRes {
   final String? slug;
   final String? time;
   final String? image;
-  final int? point;
+  final String? point;
   final String? pointText;
   final int? tournamentId;
   final String? description;

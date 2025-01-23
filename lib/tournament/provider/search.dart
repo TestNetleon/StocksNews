@@ -2,7 +2,10 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:stocks_news_new/tournament/models/ticker_detail.dart';
+import 'package:stocks_news_new/tournament/provider/tournament.dart';
 import 'package:stocks_news_new/tournament/provider/trades.dart';
+import 'package:stocks_news_new/tradingSimulator/manager/sse.dart';
 import '../../api/api_requester.dart';
 import '../../api/api_response.dart';
 import '../../api/apis.dart';
@@ -32,9 +35,10 @@ class TournamentSearchProvider extends ChangeNotifier {
   Future getSearchDefaults() async {
     setStatus(Status.loading);
     try {
+      TournamentProvider provider = navigatorKey.currentContext!.read<TournamentProvider>();
       Map request = {
-        "token":
-            navigatorKey.currentContext!.read<UserProvider>().user?.token ?? ""
+        "token": navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
+         "tournament_battle_id":'${provider.detailRes?.tournamentBattleId ?? ''}',
       };
 
       ApiResponse response = await apiRequest(
@@ -89,7 +93,7 @@ class TournamentSearchProvider extends ChangeNotifier {
     setStatusSearch(Status.loading);
     try {
       ApiResponse response = await apiRequest(
-        url: Apis.tsSearchSymbol,
+        url: Apis.tTickerSearch,
         request: request,
         showProgress: showProgress,
       );
@@ -104,6 +108,58 @@ class TournamentSearchProvider extends ChangeNotifier {
 
       Utils().showLog(e.toString());
       setStatusSearch(Status.loaded);
+    }
+  }
+
+  StockDataManagerRes? _tappedStock;
+  StockDataManagerRes? get tappedStock => _tappedStock;
+
+  setTappedStock(StockDataManagerRes? stock, ShowButtonRes? showButton) {
+    try {
+      ShowButtonRes? buttonRes = showButton;
+      _tappedStock = null;
+      _tappedStock = stock;
+      notifyListeners();
+
+      SSEManager.instance.connectStock(
+        symbol: stock?.symbol ?? "",
+        screen: SimulatorEnum.detail,
+      );
+
+      SSEManager.instance.addListener(
+        stock?.symbol ?? '',
+            (data) {
+          Utils().showLog('Detail: ${data.toMap()}');
+          _tappedStock = data;
+          _tappedStock?.price = data.price;
+          _tappedStock?.change = data.change;
+          _tappedStock?.changePercentage = data.changePercentage;
+          if (buttonRes?.orderPrice != null) {
+            num CP = data.price ?? 0;
+            num OP = buttonRes?.orderPrice ?? 0;
+
+            if (buttonRes?.orderType == StockType.buy.name) {
+              buttonRes?.orderChange = ((CP - OP) / OP) * 100;
+            } else {
+              buttonRes?.orderChange = ((OP - CP) / CP) * 100;
+            }
+            Map<String, dynamic> logData = {
+              'Symbol':  stock?.symbol ?? '',
+              'CurrentPrice': CP,
+              'OrderPrice': OP,
+              'OrderChange': buttonRes?.orderChange,
+            };
+
+            Utils().showLog('Ticker: $logData');
+          }
+          notifyListeners();
+        },
+        SimulatorEnum.detail,
+        // SimulatorEnum.detail,
+      );
+
+    } catch (e) {
+      Utils().showLog('---$e');
     }
   }
 }

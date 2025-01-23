@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
+import 'package:stocks_news_new/tournament/provider/trades.dart';
 import 'package:stocks_news_new/tradingSimulator/providers/trading_search_provider.dart';
 import 'package:stocks_news_new/tradingSimulator/screens/searchTradingTicker/search_list.dart';
 import 'package:stocks_news_new/tradingSimulator/widgets/text_input_field_search_common.dart';
@@ -10,8 +11,8 @@ import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/custom/refresh_indicator.dart';
 
 class SearchTradingTicker extends StatefulWidget {
-  final bool buy;
-  const SearchTradingTicker({super.key, this.buy = true});
+  final StockType? selectedStock;
+  const SearchTradingTicker({super.key, this.selectedStock});
 
   @override
   State<SearchTradingTicker> createState() => _SearchTradingTickerState();
@@ -77,9 +78,9 @@ class _SearchTradingTickerState extends State<SearchTradingTicker> {
                     TsTextInputFieldSearch(
                       hintText: "Search symbol or company name",
                       editable: true,
-                      buy: widget.buy,
+                      selectedStock: widget.selectedStock,
                     ),
-                    SdTradeDefaultSearch(buy: widget.buy),
+                    SdTradeDefaultSearch(selectedStock: widget.selectedStock),
                   ],
                 ),
               ),

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
+import 'package:stocks_news_new/tournament/provider/trades.dart';
 import 'package:stocks_news_new/tradingSimulator/manager/sse.dart';
 import 'package:stocks_news_new/tradingSimulator/screens/tradeBuySell/container.dart';
+import 'package:stocks_news_new/tradingSimulator/widgets/sim_trade_sheet.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -13,15 +15,15 @@ import '../../modals/ts_topbar.dart';
 import '../../providers/trade_provider.dart';
 
 class TradeBuySellIndex extends StatelessWidget {
-  final bool buy;
   final num? qty;
   final num? editTradeID;
+  final StockType? selectedStock;
 
   const TradeBuySellIndex({
     super.key,
-    this.buy = true,
     this.qty,
     this.editTradeID,
+    this.selectedStock,
   });
 
   @override
@@ -98,11 +100,28 @@ class TradeBuySellIndex extends StatelessWidget {
                         ],
                       ),
                     ),
+                    /*Expanded(
+                      child:Align(
+                        alignment: Alignment.centerRight,
+                        child: TextButton(
+                          onPressed: () {
+                            simTradeSheet(
+                              symbol:detailRes?.symbol ?? "",
+                              doPop: false,
+                            );
+                          },
+                          child: Text(
+                            "Trade option",
+                            style: stylePTSansBold(fontSize:14),
+                          ),
+                        ),
+                      ),
+                    ),*/
                   ],
                 ),
         ),
         body: BuySellContainer(
-          buy: buy,
+          selectedStock: selectedStock,
           qty: qty,
           editTradeID: editTradeID,
         ),

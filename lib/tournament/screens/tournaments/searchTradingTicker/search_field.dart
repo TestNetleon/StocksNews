@@ -5,10 +5,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/search_res.dart';
-// import 'package:stocks_news_new/providers/search_provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/screens/search/search.dart';
+import 'package:stocks_news_new/tournament/provider/tournament.dart';
+import 'package:stocks_news_new/tournament/screens/tournaments/widgets/tour_trade_sheet.dart';
+import 'package:stocks_news_new/tradingSimulator/manager/sse.dart';
+import 'package:stocks_news_new/tradingSimulator/modals/trading_search_res.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -76,9 +79,11 @@ class _TournamentInputFieldSearchCommonState
     if (text.isEmpty) {
       context.read<TournamentSearchProvider>().clearSearch();
     } else {
+      TournamentProvider provider = navigatorKey.currentContext!.read<TournamentProvider>();
       Map request = {
         "term": text,
-        "token": context.read<UserProvider>().user?.token ?? ""
+        "token": context.read<UserProvider>().user?.token ?? "",
+        "tournament_battle_id": '${provider.detailRes?.tournamentBattleId ?? ''}',
       };
       context.read<TournamentSearchProvider>().searchSymbols(request);
     }
@@ -222,7 +227,23 @@ class _TournamentInputFieldSearchCommonState
                             return InkWell(
                               onTap: () {
                                 closeKeyboard();
-                                _onTap(symbol: data?.symbol ?? "");
+                                TournamentSearchProvider provider = context.read<TournamentSearchProvider>();
+                                provider.setTappedStock(
+                                    StockDataManagerRes(symbol: data?.symbol??"",change: data?.change,price: data?.currentPrice,changePercentage: data?.changesPercentage),
+                                  data?.showButton
+                                );
+                                tournamentSheet(
+                                  symbol:data?.symbol,
+                                  doPop: false,
+                                  data: TradingSearchTickerRes(
+                                    image: data?.image,
+                                    name: data?.name,
+                                    currentPrice: data?.currentPrice,
+                                    symbol: data?.symbol,
+                                      showButton: data?.showButton
+                                  ),
+                                );
+                              //  _onTap(symbol: data?.symbol ?? "");
                               },
                               child: Padding(
                                 padding: EdgeInsets.symmetric(vertical: 6.sp),

@@ -268,6 +268,8 @@ class Apis {
   static const tBuyOrSell = '/tournament/trade-action';
   static const tCancle = '/tournament/trade-close';
   static const tPointsPaid = '/tournament/points-paid';
+  static const tPlayTraders = '/tournament/titans';
+  static const tTradingTotal = '/tournament/all';
   // static const tShow = '/tournament/trade-show';
   //
   static const appsflyerUsers = '/appsflyer-users';

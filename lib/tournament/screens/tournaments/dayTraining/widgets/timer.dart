@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/tournament/provider/tournament.dart';
+import 'package:stocks_news_new/tournament/screens/tournaments/widgets/play_box.dart';
 import 'package:stocks_news_new/widgets/cache_network_image.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import '../../../../../utils/colors.dart';
@@ -128,112 +130,31 @@ class DayTrainingTitle extends StatelessWidget {
             ),
           ),
         ),
-        Container(
-          margin: EdgeInsets.symmetric(vertical: 10),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(8),
-            gradient: LinearGradient(
-              transform: GradientRotation(1),
-              colors: [
-                ThemeColors.bottomsheetGradient,
-                ThemeColors.accent,
-                ThemeColors.bottomsheetGradient,
-              ],
-            ),
-          ),
-          child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-            margin: EdgeInsets.symmetric(horizontal: 4, vertical: 4),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(8),
-              color: Colors.black,
-            ),
-            child: Row(
-              children: [
-                Container(
-                  height: 110,
-                  margin: EdgeInsets.symmetric(vertical: 10),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(8),
-                    child: CachedNetworkImagesWidget(
-                      provider.detailRes?.image,
-                      fit: BoxFit.contain,
-                    ),
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical:10.0),
+          child: PlayBoxTournament(
+            title: detailRes?.name ?? '',
+            imageUrl: provider.detailRes?.image,
+            description: provider.detailRes?.description ?? '',
+            pointText: 'Prize Pool',
+            points: detailRes?.point ?? '',
+            onButtonTap: () {
+              if (provider.detailRes?.joined == false) {
+                provider.joinTounament(id: tournamentId);
+              } else {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => TournamentOpenIndex(),
                   ),
-                ),
-                SpacerHorizontal(width: 10),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Visibility(
-                        visible:
-                            detailRes?.name != null && detailRes?.name != '',
-                        child: Padding(
-                          padding: EdgeInsets.only(bottom: 2),
-                          child: Text(
-                            detailRes?.name ?? '',
-                            style: styleGeorgiaBold(fontSize: 20),
-                          ),
-                        ),
-                      ),
-                      Visibility(
-                        visible: provider.detailRes?.description != null &&
-                            provider.detailRes?.description != '',
-                        child: Text(
-                          '${provider.detailRes?.description}',
-                          style:
-                              styleGeorgiaRegular(color: ThemeColors.greyText),
-                        ),
-                      ),
-                      Divider(color: ThemeColors.greyBorder, thickness: 1),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'Prize Pool',
-                            style:
-                                styleGeorgiaBold(color: ThemeColors.greyText),
-                          ),
-                          Text(
-                            detailRes?.point ?? '',
-                            style: styleGeorgiaBold(fontSize: 20),
-                          ),
-                        ],
-                      ),
-                      Visibility(
-                        visible: provider.detailRes?.tournamentBattleId != null,
-                        child: ThemeButton(
-                          onPressed: () {
-                            // Navigator.push(
-                            //   context,
-                            //   MaterialPageRoute(
-                            //     builder: (context) => TournamentOpenIndex(),
-                            //   ),
-                            // );
-                            if (provider.detailRes?.joined == false) {
-                              provider.joinTounament(id: tournamentId);
-                            } else {
-                              // provider.openTournament();
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => TournamentOpenIndex(),
-                                ),
-                              );
-                            }
-                          },
-                          text: detailRes?.showButton ?? 'Open',
-                          radius: 10,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
+                );
+              }
+            },
+            buttonText: detailRes?.showButton ?? 'Open',
+            buttonVisibility: provider.detailRes?.tournamentBattleId != null,
           ),
         ),
+
       ],
     );
   }

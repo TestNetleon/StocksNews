@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
@@ -27,10 +28,15 @@ class ErrorDisplayNewWidget extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           const SpacerVertical(),
-          Text(
+          /// replace text with html widget
+          HtmlWidget(
+              error ?? Const.errSomethingWrong,
+              textStyle:stylePTSansBold()
+          ),
+          /*Text(
             error ?? Const.errSomethingWrong,
             style: stylePTSansBold(),
-          ),
+          ),*/
           const SpacerVertical(),
           // Visibility(
           //   visible: onRefresh != null,
