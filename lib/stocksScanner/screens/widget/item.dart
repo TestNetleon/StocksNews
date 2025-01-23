@@ -23,9 +23,9 @@ class ScannerBaseItem extends StatelessWidget {
         num.parse("${(data?.volume ?? 0) * (data?.price ?? 0)}").toRuppees();
     num? postMarketPrice = data?.ext?.extendedHoursPrice;
 
-    double lastTrade = data?.price ?? 0;
-    double netChange = data?.change ?? 0;
-    double perChange = data?.changesPercentage ?? 0;
+    num lastTrade = data?.price ?? 0;
+    num netChange = data?.change ?? 0;
+    num perChange = data?.changesPercentage ?? 0;
     if (data?.ext?.extendedHoursType == "PostMarket" ||
         data?.ext?.extendedHoursType == "PreMarket") {
       netChange = data?.ext?.extendedHoursChange ?? 0;

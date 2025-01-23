@@ -21,14 +21,12 @@ class _StocksScannerState extends State<StocksScanner> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      context.read<MarketScannerProvider>().getScannerPorts();
-    });
+    WidgetsBinding.instance.addPostFrameCallback((_) {});
   }
 
   @override
   Widget build(BuildContext context) {
-    MarketScannerProvider provider = context.watch<MarketScannerProvider>();
+    // MarketScannerProvider provider = context.watch<MarketScannerProvider>();
     return BaseContainer(
       appBar: AppBarHome(
         isPopBack: true,
@@ -37,7 +35,7 @@ class _StocksScannerState extends State<StocksScanner> {
         showTrailing: false,
         isScannerFilter: false,
       ),
-      body: provider.isLoading ? Loading() : ScannerWebview(),
+      body: ScannerWebview(),
     );
   }
 }

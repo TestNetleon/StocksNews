@@ -31,11 +31,13 @@ class PortRes {
   final ScannerPortRes? scannerPort;
   final GainerLoserPortRes? gainerLoserPort;
   final OtherPortRes? otherPortRes;
+  final CheckMarketOpenApiRes? checkMarketOpenApi;
 
   PortRes({
     this.scannerPort,
     this.gainerLoserPort,
     this.otherPortRes,
+    this.checkMarketOpenApi,
   });
 
   factory PortRes.fromJson(Map<String, dynamic> json) => PortRes(
@@ -47,12 +49,64 @@ class PortRes {
             : GainerLoserPortRes.fromJson(json["gainerLoserPort"]),
         otherPortRes:
             json["other"] == null ? null : OtherPortRes.fromJson(json["other"]),
+        checkMarketOpenApi: json["checkMarketOpenApi"] == null
+            ? null
+            : CheckMarketOpenApiRes.fromJson(json["checkMarketOpenApi"]),
       );
 
   Map<String, dynamic> toJson() => {
         "scannerPort": scannerPort?.toJson(),
         "gainerLoserPort": gainerLoserPort?.toJson(),
         "other": otherPortRes?.toJson(),
+        "checkMarketOpenApi": checkMarketOpenApi?.toJson(),
+      };
+}
+
+class CheckMarketOpenApiRes {
+  final bool? isHoliday;
+  final bool? isMarketOpen;
+  final String? extendedHoursType;
+  final String? extendedHoursTime;
+  final DateTime? extendedHoursDate;
+  final bool? checkPostMarket;
+  final bool? checkPreMarket;
+  final String? dateTime;
+
+  CheckMarketOpenApiRes({
+    this.isHoliday,
+    this.isMarketOpen,
+    this.extendedHoursType,
+    this.extendedHoursTime,
+    this.extendedHoursDate,
+    this.checkPostMarket,
+    this.checkPreMarket,
+    this.dateTime,
+  });
+
+  factory CheckMarketOpenApiRes.fromJson(Map<String, dynamic> json) =>
+      CheckMarketOpenApiRes(
+        isHoliday: json["isHoliday"],
+        isMarketOpen: json["isMarketOpen"],
+        extendedHoursType: json["ExtendedHoursType"],
+        extendedHoursTime: json["ExtendedHoursTime"],
+        extendedHoursDate: json["ExtendedHoursDate"] == null
+            ? null
+            : DateTime.parse(json["ExtendedHoursDate"]),
+        checkPostMarket: json["checkPostMarket"],
+        checkPreMarket: json["checkPreMarket"],
+        dateTime: json["dateTime"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "isHoliday": isHoliday,
+        "isMarketOpen": isMarketOpen,
+        "ExtendedHoursType": extendedHoursType,
+        "ExtendedHoursTime": extendedHoursTime,
+        "ExtendedHoursDate":
+            "${extendedHoursDate!.year.toString().padLeft(4, '0')}-${extendedHoursDate!.month.toString().padLeft(2, '0')}-${extendedHoursDate!.day.toString().padLeft(2, '0')}",
+        "checkPostMarket": checkPostMarket,
+        "checkPreMarket": checkPreMarket,
+        "dateTime": dateTime,
       };
 }
 

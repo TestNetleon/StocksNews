@@ -40,6 +40,13 @@ class MarketScannerDataManager {
 
     int? startingPort = provider.port?.port?.scannerPort?.start ?? 8021;
     int? endingPort = provider.port?.port?.scannerPort?.end ?? 8040;
+    bool? callOffline =
+        provider.port?.port?.checkMarketOpenApi?.checkPostMarket == true;
+
+    if (callOffline) {
+      await getOfflineData();
+      return;
+    }
 
     // Create URLs for all ports
 
@@ -47,10 +54,6 @@ class MarketScannerDataManager {
       endingPort - startingPort + 1,
       (index) => "https://dev.stocks.news:${startingPort + index}/sse",
     );
-
-    for (var a in urls) {
-      print(a);
-    }
 
     // Set offline data timer
     Timer(Duration(milliseconds: checkOfflineInterval), () async {
@@ -100,7 +103,10 @@ class MarketScannerDataManager {
     } catch (e) {
       Utils().showLog("Failed to connect to $url: $e");
       // _connectToEventSource(url, provider);
-      getOfflineData();
+      if (!_isOfflineCalled && provider.offlineDataList == null) {
+        _isOfflineCalled = true;
+        await getOfflineData();
+      }
       // throw e;
     }
   }
@@ -147,9 +153,11 @@ class MarketScannerDataManager {
   Future<void> getOfflineData() async {
     final provider = navigatorKey.currentContext!.read<MarketScannerProvider>();
 
+    int? port = provider.port?.port?.otherPortRes?.offline ?? 8080;
+
     try {
       final url = Uri.parse(
-        'https://dev.stocks.news:8080/getScreener?sector=${provider.filterParams?.sector}',
+        'https://dev.stocks.news:$port/getScreener?sector=${provider.filterParams?.sector}',
       );
 
       final response = await http.get(url);

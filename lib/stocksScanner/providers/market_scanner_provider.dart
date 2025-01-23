@@ -69,7 +69,7 @@ class MarketScannerProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void startListeningPorts() {
+  void startListeningPorts() async {
     _offlineDataList = null;
     _dataList = null;
     _visible = true;
@@ -80,6 +80,7 @@ class MarketScannerProvider extends ChangeNotifier {
       // sortByAsc: false,
     );
     notifyListeners();
+
     MarketScannerDataManager.instance.initializePorts();
   }
 
@@ -872,12 +873,12 @@ class MarketScannerProvider extends ChangeNotifier {
   ScannerPortsRes? _port;
   ScannerPortsRes? get port => _port;
 
-  Future getScannerPorts() async {
+  Future getScannerPorts({loading = true}) async {
     setStatus(Status.loading);
     try {
       ApiResponse response = await apiRequest(
         url: Apis.stockScannerPort,
-        showProgress: true,
+        showProgress: loading,
       );
       if (response.status) {
         _port = scannerPortsResFromJson(jsonEncode(response.data));

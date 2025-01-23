@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
+import 'package:stocks_news_new/stocksScanner/providers/market_scanner_provider.dart';
 import 'package:stocks_news_new/tradingSimulator/providers/ts_portfollo_provider.dart';
 import 'package:stocks_news_new/tradingSimulator/screens/dashboard/open/index.dart';
 import 'package:stocks_news_new/tradingSimulator/screens/dashboard/pending/index.dart';
@@ -33,6 +34,7 @@ class _TsDashboardState extends State<TsDashboard> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<TsPortfolioProvider>().getStreamKeysData();
+      context.read<MarketScannerProvider>().getScannerPorts(loading: false);
     });
   }
 

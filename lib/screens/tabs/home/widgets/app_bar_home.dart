@@ -236,7 +236,10 @@ class _AppBarHomeState extends State<AppBarHome> {
                           child: Stack(
                             children: [
                               IconButton(
-                                onPressed: () {
+                                onPressed: () async {
+                                  await navigatorKey.currentContext!
+                                      .read<MarketScannerProvider>()
+                                      .getScannerPorts();
                                   value.startListeningPorts();
                                 },
                                 icon: const Icon(

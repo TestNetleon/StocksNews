@@ -5,6 +5,7 @@ import '../../modals/market_scanner_res.dart';
 import '../../modals/scanner_res.dart';
 import 'item.dart';
 
+//MARK: Online Data
 class ScannerBaseContainer extends StatelessWidget {
   final List<MarketScannerRes>? dataList;
   const ScannerBaseContainer({super.key, this.dataList});
@@ -41,6 +42,35 @@ class ScannerBaseContainer extends StatelessWidget {
               extendedHoursPercentChange: data?.extendedHoursPercentChange,
             ),
           ),
+        );
+      },
+      separatorBuilder: (context, index) {
+        return SpacerVertical(height: 15);
+      },
+      itemCount: dataList?.length ?? 0,
+    );
+  }
+}
+
+//MARK: Offline Data
+class ScannerBaseContainerOffline extends StatelessWidget {
+  final List<ScannerRes>? dataList;
+  const ScannerBaseContainerOffline({super.key, this.dataList});
+
+  @override
+  Widget build(BuildContext context) {
+    if (dataList?.isEmpty == true || dataList == null) {
+      return SizedBox();
+    }
+    return ListView.separated(
+      shrinkWrap: true,
+      physics: NeverScrollableScrollPhysics(),
+      padding: EdgeInsets.symmetric(horizontal: 10),
+      itemBuilder: (context, index) {
+        ScannerRes? data = dataList?[index];
+        return ScannerBaseItem(
+          data: data,
+          showPreMarket: true,
         );
       },
       separatorBuilder: (context, index) {

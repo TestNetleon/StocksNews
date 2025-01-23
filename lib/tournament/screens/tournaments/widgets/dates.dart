@@ -37,7 +37,6 @@ class _CustomDateSelectorState extends State<CustomDateSelector> {
       DateTime.now().day,
     );
 
-    // Initialize the selected date to the editedDate or currentDate
     selectedDate = widget.editedDate ?? currentDate;
 
     final DateTime startDate = DateTime(
@@ -46,13 +45,11 @@ class _CustomDateSelectorState extends State<CustomDateSelector> {
       currentDate.day,
     );
 
-    // Generate the full list of dates
     fullDates = List.generate(
       currentDate.difference(startDate).inDays + 1,
       (index) => startDate.add(Duration(days: index)),
     );
 
-    // Determine the visible dates
     int selectedIndex = fullDates.indexOf(selectedDate);
     int startVisibleIndex = selectedIndex - 1 < 0 ? 0 : selectedIndex - 1;
     int endVisibleIndex = selectedIndex + 1 >= fullDates.length
@@ -61,7 +58,6 @@ class _CustomDateSelectorState extends State<CustomDateSelector> {
 
     visibleDates = fullDates.sublist(startVisibleIndex, endVisibleIndex + 1);
 
-    // Notify the parent widget about the initial selected date
     widget.onDateSelected(selectedDate);
 
     setState(() {});

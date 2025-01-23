@@ -185,6 +185,20 @@ class TopGainerScannerDataManager {
         navigatorKey.currentContext!.read<MarketScannerProvider>();
 
     int? port = scannerProvider.port?.port?.gainerLoserPort?.gainer ?? 8021;
+
+    try {
+      bool? callOffline =
+          scannerProvider.port?.port?.checkMarketOpenApi?.checkPostMarket ==
+              true;
+
+      if (callOffline) {
+        await getOfflineData();
+        return;
+      }
+    } catch (e) {
+//
+    }
+
     try {
       final url = 'https://dev.stocks.news:$port/topGainersLosers?type=gainers';
       Utils().showLog('running for.. $url');
@@ -258,8 +272,13 @@ class TopGainerScannerDataManager {
   Future getOfflineData() async {
     // showGlobalProgressDialog();
     try {
+      MarketScannerProvider scannerProvider =
+          navigatorKey.currentContext!.read<MarketScannerProvider>();
+
+      int? port = scannerProvider.port?.port?.otherPortRes?.offline ?? 8080;
+
       final url = Uri.parse(
-        'https://dev.stocks.news:8080/topGainer?shortBy=2',
+        'https://dev.stocks.news:$port/topGainer?shortBy=2',
       );
       Utils().showLog("$url");
       final response = await http.get(url);
