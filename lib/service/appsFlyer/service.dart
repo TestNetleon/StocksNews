@@ -133,7 +133,7 @@ class AppsFlyerService {
     UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
 
     AppsFlyerInviteLinkParams params = AppsFlyerInviteLinkParams(
-      brandDomain: 'app.stocks.news',
+      brandDomain: 'pagelink.stocks.news',
       referrerName: 'User Invitation',
       baseDeepLink: 'gk0r',
       campaign: 'TestOne',
