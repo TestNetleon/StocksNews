@@ -54,7 +54,7 @@ class AppsFlyerService {
       final appsFlyerId = await _appsFlyerSdk?.getAppsFlyerUID();
       appsFlyerUID = appsFlyerId;
       try {
-        _appsFlyerSdk?.setOneLinkCustomDomain(['deep.stocks.news']);
+        _appsFlyerSdk?.setOneLinkCustomDomain(['pagelink.stocks.news']);
       } catch (e) {
         //
       }
