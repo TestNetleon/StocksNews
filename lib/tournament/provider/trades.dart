@@ -17,7 +17,7 @@ import '../../utils/constants.dart';
 import '../models/all_trades.dart';
 import '../models/ticker_detail.dart';
 
-enum StockType { buy, sell, hold }
+enum StockType { buy, sell, hold,short,btc}
 
 class TournamentTradesProvider extends ChangeNotifier {
 //MARK: All Trades
@@ -189,14 +189,14 @@ class TournamentTradesProvider extends ChangeNotifier {
   }
 
 //MARK: BUY/SELL
-  Future tradeBuySell({StockType type = StockType.buy}) async {
+  Future tradeBuySell({StockType type = StockType.buy,String? symbol}) async {
     try {
       TournamentProvider provider =
           navigatorKey.currentContext!.read<TournamentProvider>();
       Map request = {
         'token':
             navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
-        'symbol': _selectedStock?.symbol,
+        'symbol':symbol ?? _selectedStock?.symbol,
         'tournament_battle_id':
             '${provider.detailRes?.tournamentBattleId ?? ''}',
         'trade_type': type.name,

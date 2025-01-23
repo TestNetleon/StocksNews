@@ -27,12 +27,19 @@ class _TournamentLeaderboardState extends State<TournamentLeaderboard> {
   }
 
   @override
+  void deactivate() {
+    context.read<TournamentLeaderboardProvider>().clearEditedDate();
+    super.deactivate();
+  }
+
+  @override
   Widget build(BuildContext context) {
     TournamentLeaderboardProvider provider =
         context.watch<TournamentLeaderboardProvider>();
     return Column(
       children: [
         CustomDateSelector(
+          editedSelected: provider.editedDate,
           onDateSelected: (date) {
             provider.getSelectedDate(date);
             WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -130,6 +137,7 @@ class _TournamentLeaderboardState extends State<TournamentLeaderboard> {
                   }
                   return TournamentLeaderboardItem(
                     data: data,
+                    decorate: false,
                   );
                 },
                 itemCount:

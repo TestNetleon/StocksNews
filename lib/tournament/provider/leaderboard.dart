@@ -38,10 +38,18 @@ class TournamentLeaderboardProvider extends ChangeNotifier {
   }
 
   String? selectedDate;
+  DateTime? editedDate;
 
   getSelectedDate(DateTime date) {
     String newDate = DateFormat('yyyy-MM-dd').format(date);
     selectedDate = newDate;
+  }
+  getEditedDate(DateTime date) {
+    editedDate = date;
+    notifyListeners();
+  }
+   clearEditedDate(){
+    editedDate = null;
   }
 
 // MARK: DATE LEADERBOARD

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:stocks_news_new/tradingSimulator/TradingWithTypes/trad_order_screen.dart';
 import 'package:stocks_news_new/tradingSimulator/modals/ts_pending_list_res.dart';
 import 'package:stocks_news_new/tradingSimulator/screens/dashboard/tradeSheet.dart';
 import 'package:stocks_news_new/utils/utils.dart';
@@ -81,7 +82,23 @@ class _TsTransactionListState extends State<TsTransactionList> {
                   changePercentage: item.changesPercentage,
                   price: item.currentPrice,
                 ));
-                tradeSheet(
+
+                Navigator.push(
+                  context,
+                  createRoute(TradOrderScreen(
+                    symbol: item.symbol,
+                    doPop: false,
+                    data: TradingSearchTickerRes(
+                      image: item.image,
+                      name: item.company,
+                      currentPrice: item.currentPrice,
+                      symbol: item.symbol,
+                    ),
+                    qty: item.quantity,
+                  )),
+                );
+
+                /*tradeSheet(
                   symbol: item.symbol,
                   doPop: false,
                   qty: item.quantity,
@@ -91,7 +108,7 @@ class _TsTransactionListState extends State<TsTransactionList> {
                     currentPrice: item.currentPrice,
                     symbol: item.symbol,
                   ),
-                );
+                );*/
               },
             );
           },

@@ -130,23 +130,23 @@ class TsPendingListProvider extends ChangeNotifier {
   }
 
   Future stockHolding({
-    bool buy = true,
     required int index,
   }) async {
-    Utils().showLog('Checking holdings for $buy');
+    Utils().showLog('Checking holdings for ${_data?[index].tradeType ?? ''}');
     try {
       UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
 
       Map request = {
         'token': provider.user?.token ?? '',
         'symbol': _data?[index].symbol ?? '',
+        'action':_data?[index].tradeType=="Sell"?"SELL":_data?[index].tradeType=="Buy"?"BUY":"BUY_TO_COVER",
         'edit': '1',
       };
 
       ApiResponse res = await apiRequest(
           url: Apis.stockHoldings, request: request, showProgress: true);
       if (res.status) {
-        if (!buy && res.data['quantity'] <= 0) {
+        if ((_data?[index].tradeType=="Sell"||_data?[index].tradeType=="But To Cover") && res.data['quantity'] <= 0) {
           popUpAlert(
               title: 'Alert',
               message: "You don't own the shares of this stock");
@@ -165,8 +165,7 @@ class TsPendingListProvider extends ChangeNotifier {
             navigatorKey.currentContext!,
             MaterialPageRoute(
               builder: (context) => TradeBuySellIndex(
-                buy:
-                    data?[index].tradeType?.toLowerCase() == StockType.buy.name,
+                selectedStock: _data?[index].tradeType == "Buy"?StockType.buy:_data?[index].tradeType=="Sell"?StockType.sell:StockType.btc,
                 qty: res.data['quantity'],
                 editTradeID: data?[index].id,
               ),
@@ -182,4 +181,33 @@ class TsPendingListProvider extends ChangeNotifier {
       return ApiResponse(status: false);
     }
   }
+
+  Future shortRedirection({required int index}) async {
+    try {
+      TradeProviderNew provider =
+      navigatorKey.currentContext!.read<TradeProviderNew>();
+
+      ApiResponse response = await provider.getDetailTopData(
+        symbol: _data?[index].symbol ?? '',
+        showProgress: true,
+      );
+      if (response.status) {
+        Navigator.pushReplacement(
+          navigatorKey.currentContext!,
+          MaterialPageRoute(
+            builder: (context) => TradeBuySellIndex(
+              selectedStock:StockType.short,
+              qty:0,
+              editTradeID: data?[index].id,
+            ),
+          ),
+        );
+      }
+      return ApiResponse(status: response.status);
+    } catch (e) {
+      Utils().showLog('stock holding: $e');
+      return ApiResponse(status: false);
+    }
+  }
+
 }

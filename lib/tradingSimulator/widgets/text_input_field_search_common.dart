@@ -9,6 +9,8 @@ import 'package:stocks_news_new/modals/search_res.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/screens/search/search.dart';
+import 'package:stocks_news_new/tournament/provider/trades.dart';
+import 'package:stocks_news_new/tradingSimulator/TradingWithTypes/trad_order_screen.dart';
 import 'package:stocks_news_new/tradingSimulator/providers/trade_provider.dart';
 import 'package:stocks_news_new/tradingSimulator/providers/trading_search_provider.dart';
 import 'package:stocks_news_new/tradingSimulator/screens/dashboard/tradeSheet.dart';
@@ -40,7 +42,7 @@ class TsTextInputFieldSearch extends StatefulWidget {
     this.openConstraints = true,
     this.searchFocusNode,
     this.searchForNews = false,
-    required this.buy,
+    this.selectedStock,
   });
 
   // final TextEditingController controller;
@@ -58,7 +60,7 @@ class TsTextInputFieldSearch extends StatefulWidget {
   final bool openConstraints;
   final FocusNode? searchFocusNode;
   final bool searchForNews;
-  final bool buy;
+  final StockType? selectedStock;
 
   @override
   State<TsTextInputFieldSearch> createState() =>
@@ -99,7 +101,20 @@ class _TsTextInputFieldSearchCommonState extends State<TsTextInputFieldSearch> {
       changePercentage: data?.changesPercentage,
       price: data?.currentPrice,
     ));
-    tradeSheet(
+    Navigator.push(
+      navigatorKey.currentContext!,
+      createRoute(TradOrderScreen(
+        symbol: symbol,
+        doPop: false,
+        data: TradingSearchTickerRes(
+          image: data?.image,
+          name: data?.name,
+          currentPrice: data?.currentPrice,
+          symbol: data?.symbol,
+        ),
+      )),
+    );
+    /* tradeSheet(
       symbol: symbol,
       data: TradingSearchTickerRes(
         image: data?.image,
@@ -107,7 +122,7 @@ class _TsTextInputFieldSearchCommonState extends State<TsTextInputFieldSearch> {
         symbol: data?.symbol,
         currentPrice: data?.currentPrice,
       ),
-    );
+    );*/
   }
 
   Future _showSheet(SummaryOrderNew? order, bool buy) async {
@@ -123,11 +138,13 @@ class _TsTextInputFieldSearchCommonState extends State<TsTextInputFieldSearch> {
       isScrollControlled: false,
       context: navigatorKey.currentContext!,
       builder: (context) {
-        return SuccessTradeSheet(
+        return
+          SizedBox();
+         /* SuccessTradeSheet(
           order: order,
           buy: buy,
           close: true,
-        );
+        );*/
       },
     );
   }

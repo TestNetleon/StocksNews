@@ -86,14 +86,30 @@ class TournamentLeaderboardTopItem extends StatelessWidget {
             ],
           ),
           const SpacerVertical(height: 5),
-          Text(
-            "${data?[index].totalChange}",
-            style: stylePTSansBold(
-              color: index == 2
-                  ? ThemeColors.sos
-                  : index == 1
-                      ? Colors.orange
-                      : ThemeColors.accent,
+          Visibility(
+            visible: data?[index].totalChange!=null,
+            child: Text(
+              "${data?[index].totalChange}",
+              style: stylePTSansBold(
+                color: index == 2
+                    ? ThemeColors.sos
+                    : index == 1
+                        ? Colors.orange
+                        : ThemeColors.accent,
+              ),
+            ),
+          ),
+          Visibility(
+            visible: data?[index].rank!=null,
+            child: Text(
+              "${data?[index].rank}",
+              style: stylePTSansBold(
+                color: index == 2
+                    ? ThemeColors.sos
+                    : index == 1
+                    ? Colors.orange
+                    : ThemeColors.accent,
+              ),
             ),
           ),
           Text(

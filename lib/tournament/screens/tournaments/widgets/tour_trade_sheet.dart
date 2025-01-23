@@ -1,23 +1,25 @@
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
+import 'package:stocks_news_new/tournament/provider/search.dart';
+import 'package:stocks_news_new/tournament/provider/trades.dart';
+import 'package:stocks_news_new/tournament/screens/myTrades/all_index.dart';
 import 'package:stocks_news_new/tradingSimulator/manager/sse.dart';
-import 'package:stocks_news_new/tradingSimulator/providers/trade_provider.dart';
-import 'package:stocks_news_new/tradingSimulator/screens/searchTradingTicker/index.dart';
+import 'package:stocks_news_new/tradingSimulator/modals/trading_search_res.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
+import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/cache_network_image.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
-import '../../../../../utils/theme.dart';
-import '../../modals/trading_search_res.dart';
-import '../../providers/trading_search_provider.dart';
+import 'package:stocks_news_new/widgets/theme_button.dart';
 
-tradeSheet({
+tournamentSheet({
   String? symbol,
   bool doPop = true,
-  qty,
   TradingSearchTickerRes? data,
 }) {
   showModalBottomSheet(
@@ -31,45 +33,28 @@ tradeSheet({
       ),
     ),
     builder: (context) {
-      return SearchTicker(
+      return TournamentTicker(
         symbol: symbol,
         doPop: doPop,
-        qty: qty,
         data: data,
       );
     },
   );
 }
 
-class SearchTicker extends StatefulWidget {
+class TournamentTicker extends StatefulWidget {
   final String? symbol;
   final bool doPop;
-  final dynamic qty;
   final TradingSearchTickerRes? data;
-  const SearchTicker(
-      {super.key, this.symbol, this.doPop = true, this.qty, this.data});
+  const TournamentTicker(
+      {super.key, this.symbol, this.doPop = true,this.data});
 
   @override
-  State<SearchTicker> createState() => _SearchTickerState();
+  State<TournamentTicker> createState() => _TournamentTickerState();
 }
 
-class _SearchTickerState extends State<SearchTicker> {
+class _TournamentTickerState extends State<TournamentTicker> {
   bool disposeSheet = true;
-
-  Future _onTap({String? symbol, bool buy = true}) async {
-    disposeSheet = false;
-    setState(() {});
-
-    try {
-      TradingSearchProvider provider =
-      navigatorKey.currentContext!.read<TradingSearchProvider>();
-      // if (symbol != null && symbol != '') {
-      //   provider.stockHolding(symbol, buy: buy);
-      // }
-    } catch (e) {
-      //
-    }
-  }
 
   @override
   void dispose() {
@@ -80,9 +65,48 @@ class _SearchTickerState extends State<SearchTicker> {
     super.dispose();
   }
 
-  @override
+  _trade({StockType type = StockType.buy,String? symbol}) async {
+    TournamentTradesProvider provider =
+    context.read<TournamentTradesProvider>();
+    ApiResponse res = await provider.tradeBuySell(type: type,symbol: symbol);
+    if (res.status) {
+      // Handle successful trade response
+      SSEManager.instance.disconnectAllScreens();
+      //navigatorKey.currentContext!.read<TournamentSearchProvider>().getSearchDefaults();
+      Navigator.pop(navigatorKey.currentContext!);
+      Navigator.pop(navigatorKey.currentContext!);
+      await Navigator.push(
+        navigatorKey.currentContext!,
+        createRoute(AllTradesOrdersIndex()),
+      );
+      TournamentTradesProvider provider =
+      context.read<TournamentTradesProvider>();
+      provider.setSelectedStock(
+        stock: provider.selectedStock,
+        clearEverything: true,
+      );
+
+      /// open sheet after api call with updated response
+    }
+  }
+  _close({
+    int? id,
+    String? ticker
+  }) async {
+    TournamentTradesProvider provider =
+    navigatorKey.currentContext!.read<TournamentTradesProvider>();
+
+    ApiResponse res = await provider.tradeCancle();
+    if (res.status) {
+     // navigatorKey.currentContext!.read<TournamentSearchProvider>().getSearchDefaults();
+      Navigator.pop(navigatorKey.currentContext!);
+      Navigator.pop(navigatorKey.currentContext!);
+    }
+  }
+
+    @override
   Widget build(BuildContext context) {
-    TradeProviderNew provider = context.watch<TradeProviderNew>();
+    TournamentSearchProvider provider = context.watch<TournamentSearchProvider>();
     StockDataManagerRes? stock = provider.tappedStock;
     return Container(
       decoration: BoxDecoration(
@@ -113,7 +137,7 @@ class _SearchTickerState extends State<SearchTicker> {
                         width: 60,
                         height: 60,
                         child:
-                            CachedNetworkImagesWidget(widget.data?.image ?? ""),
+                        CachedNetworkImagesWidget(widget.data?.image ?? ""),
                       ),
                     ),
                     const SpacerHorizontal(width: 12),
@@ -142,6 +166,7 @@ class _SearchTickerState extends State<SearchTicker> {
                           visible: stock?.price != null,
                           child: Text(
                             '${stock?.price?.toFormattedPrice()}',
+                            //'${stock?.price?.toFormattedPrice()}',
                             style: styleGeorgiaBold(
                                 color: ThemeColors.blackShade, fontSize: 22),
                           ),
@@ -164,11 +189,6 @@ class _SearchTickerState extends State<SearchTicker> {
                   ],
                 ),
                 SpacerVertical(height: 20),
-                // Text(
-                //   'Kindly select "Buy" or "Sell" to place your desired order.',
-                //   style: styleGeorgiaBold(
-                //       color: ThemeColors.blackShade, fontSize: 16),
-                // ),
                 RichText(
                   textAlign: TextAlign.center,
                   text: TextSpan(
@@ -215,6 +235,7 @@ class _SearchTickerState extends State<SearchTicker> {
             color: ThemeColors.greyBorder,
             height: 20,
           ),
+          if (widget.data?.showButton?.alreadyTraded == false)
           Padding(
             padding: const EdgeInsets.fromLTRB(10, 10, 10, 40),
             child: Row(
@@ -230,15 +251,7 @@ class _SearchTickerState extends State<SearchTicker> {
                       color: ThemeColors.sos,
                       "Sell Order",
                       onTap: () {
-                        if (widget.symbol != null) {
-                          _onTap(symbol: widget.symbol, buy: false);
-                        } else {
-                          Navigator.push(
-                            context,
-                            createRoute(const SearchTradingTicker()),
-                           // createRoute(const SearchTradingTicker(buy: false)),
-                          );
-                        }
+                        _trade(type: StockType.sell,symbol: widget.data?.symbol);
                       },
                     ),
                   ),
@@ -256,39 +269,7 @@ class _SearchTickerState extends State<SearchTicker> {
                       color: ThemeColors.accent,
                       "Buy Order",
                       onTap: () {
-                        if (widget.symbol != null) {
-                          _onTap(symbol: widget.symbol);
-                        } else {
-                          Navigator.push(
-                            context,
-                            createRoute(const SearchTradingTicker()),
-                          );
-                        }
-                      },
-                    ),
-                  ),
-                ),
-                const SpacerHorizontal(
-                  width: 10,
-                ),
-                Expanded(
-                  child: AnimatedContainer(
-                    duration: const Duration(milliseconds: 500),
-                    width: double.infinity,
-                    curve: Curves.easeIn,
-                    child: _card(
-                      symbol: widget.symbol,
-                      color: ThemeColors.accent,
-                      "Short Order",
-                      onTap: () {
-                        if (widget.symbol != null) {
-                          _onTap(symbol: widget.symbol);
-                        } else {
-                          Navigator.push(
-                            context,
-                            createRoute(const SearchTradingTicker()),
-                          );
-                        }
+                        _trade(symbol: widget.data?.symbol);
                       },
                     ),
                   ),
@@ -296,20 +277,70 @@ class _SearchTickerState extends State<SearchTicker> {
               ],
             ),
           ),
+          if (widget.data?.showButton?.alreadyTraded ==
+              true)
+            ThemeButton(
+              radius: 10,
+              text: 'Close',
+              margin: const EdgeInsets.fromLTRB(10, 10, 10,10),
+              onPressed: (){
+                _close(
+                  //id: provider.myTrades?.data?[index].id,
+                  ticker: widget.data?.symbol,
+                );
+              },
+              color: ThemeColors.primary,
+              textColor: ThemeColors.white,
+              child: Row(
+                mainAxisAlignment:
+                MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'Close',
+                    style: styleGeorgiaBold(
+                        color: ThemeColors.white),
+                  ),
+                  SpacerHorizontal(width: 10),
+                  Flexible(
+                    child: Container(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: 15),
+                      decoration: BoxDecoration(
+                        borderRadius:
+                        BorderRadius.circular(20),
+                        color: (widget
+                            .data
+                            ?.showButton
+                            ?.orderChange ??
+                            0) >=
+                            0
+                            ? ThemeColors.accent
+                            : ThemeColors.sos,
+                      ),
+                      child: Text(
+                        '${widget.data?.showButton?.orderChange?.toCurrency()}%',
+                        style: styleGeorgiaBold(
+                            color: ThemeColors.white),
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
         ],
       ),
     );
   }
 
   Widget _card(
-    text, {
-    IconData? icon,
-    Color? color = const Color.fromARGB(255, 194, 216, 51),
-    Color? textColor = ThemeColors.white,
-    EdgeInsetsGeometry? padding,
-    required void Function() onTap,
-    String? symbol,
-  }) {
+      text, {
+        IconData? icon,
+        Color? color = const Color.fromARGB(255, 194, 216, 51),
+        Color? textColor = ThemeColors.white,
+        EdgeInsetsGeometry? padding,
+        required void Function() onTap,
+        String? symbol,
+      }) {
     return GestureDetector(
       onTap: () {
         if (symbol == null) Navigator.pop(navigatorKey.currentContext!);
@@ -317,7 +348,8 @@ class _SearchTickerState extends State<SearchTicker> {
       },
       child: Container(
         padding: const EdgeInsets.symmetric(
-          horizontal: 10,
+          /// changed the hor pad 50 to 40
+          horizontal: 40,
           vertical: 11,
         ),
         decoration: BoxDecoration(
@@ -329,27 +361,6 @@ class _SearchTickerState extends State<SearchTicker> {
           textAlign: TextAlign.center,
           style: stylePTSansBold(color: textColor, fontSize: 18),
         ),
-        // Row(
-        //   mainAxisAlignment: MainAxisAlignment.center,
-        //   crossAxisAlignment: CrossAxisAlignment.center,
-        //   mainAxisSize: MainAxisSize.min,
-        //   children: [
-        //     Container(
-        //       margin: const EdgeInsets.only(right: 8),
-        //       child: Icon(
-        //         icon ?? Icons.travel_explore_rounded,
-        //         size: 20,
-        //         color: textColor,
-        //       ),
-        //     ),
-        //     Flexible(
-        //       child: Text(
-        //         "$text",
-        //         style: stylePTSansBold(color: textColor, fontSize: 18),
-        //       ),
-        //     ),
-        //   ],
-        // ),
       ),
     );
   }

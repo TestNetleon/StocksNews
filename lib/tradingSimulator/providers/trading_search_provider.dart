@@ -202,6 +202,7 @@ import 'package:stocks_news_new/api/api_requester.dart';
 import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/api/apis.dart';
 import 'package:stocks_news_new/modals/search_res.dart';
+import 'package:stocks_news_new/tournament/provider/trades.dart';
 import 'package:stocks_news_new/tradingSimulator/modals/trading_search_res.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
@@ -311,20 +312,19 @@ class TradingSearchProvider extends ChangeNotifier {
     }
   }
 
-  Future stockHolding(String symbol, {bool buy = true}) async {
-    Utils().showLog('Checking holdings for $buy');
+  Future stockHolding(String symbol, {StockType? selectedStock}) async {
+    Utils().showLog('Checking holdings for ${selectedStock?.name}');
     try {
       UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
-
       Map request = {
         'token': provider.user?.token ?? '',
         'symbol': symbol,
+        'action': selectedStock==StockType.sell?"SELL":selectedStock==StockType.buy?"BUY":"BUY_TO_COVER",
       };
-
       ApiResponse res = await apiRequest(
           url: Apis.stockHoldings, request: request, showProgress: true);
       if (res.status) {
-        if (!buy && res.data['quantity'] <= 0) {
+        if ((selectedStock==StockType.sell||selectedStock==StockType.btc) && res.data['quantity'] <= 0) {
           popUpAlert(
               title: 'Alert',
               message: "You don't own the shares of this stock");
@@ -339,27 +339,45 @@ class TradingSearchProvider extends ChangeNotifier {
           showProgress: true,
         );
         if (response.status) {
-          SummaryOrderNew? order = await Navigator.pushReplacement(
+          Navigator.pushReplacement(
             navigatorKey.currentContext!,
             MaterialPageRoute(
               builder: (context) => TradeBuySellIndex(
-                buy: buy,
+                selectedStock: selectedStock,
                 qty: res.data['quantity'],
               ),
             ),
           );
-          if (order != null) {
-            // TradeProviderNew provider =
-            //     navigatorKey.currentContext!.read<TradeProviderNew>();
-
-            // buy ? provider.addOrderData(order) : provider.sellOrderData(order);
-            await _showSheet(order, buy);
-          }
         }
       } else {
         //
       }
       return ApiResponse(status: res.status);
+    } catch (e) {
+      Utils().showLog('stock holding: $e');
+      return ApiResponse(status: false);
+    }
+  }
+
+  Future shortRedirection(String symbol) async {
+    try {
+        TradeProviderNew provider = navigatorKey.currentContext!.read<TradeProviderNew>();
+        ApiResponse response = await provider.getDetailTopData(
+          symbol: symbol,
+          showProgress: true,
+        );
+        if (response.status) {
+          Navigator.pushReplacement(
+            navigatorKey.currentContext!,
+            MaterialPageRoute(
+              builder: (context) => TradeBuySellIndex(
+                selectedStock: StockType.short,
+                qty:0,
+              ),
+            ),
+          );
+        }
+      return ApiResponse(status: response.status);
     } catch (e) {
       Utils().showLog('stock holding: $e');
       return ApiResponse(status: false);
@@ -379,11 +397,14 @@ class TradingSearchProvider extends ChangeNotifier {
       isScrollControlled: false,
       context: navigatorKey.currentContext!,
       builder: (context) {
-        return SuccessTradeSheet(
+        return
+             SizedBox();
+        /// not call _show sheet
+          /*SuccessTradeSheet(
           order: order,
           buy: buy,
           close: true,
-        );
+        );*/
       },
     );
   }

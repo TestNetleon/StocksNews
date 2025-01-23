@@ -45,6 +45,7 @@ class LeaderboardByDateRes {
   final String? tournamentName;
   final String? tournamentImage;
   final num? userId;
+  final num? battleId;
   final String? userName;
   final String? userImage;
   final num? totalChange;
@@ -56,9 +57,12 @@ class LeaderboardByDateRes {
   final num? status;
   final String? date;
   final num? rewards;
+  final num? joinUsers;
+  final num? performance;
 
   LeaderboardByDateRes({
     this.userId,
+    this.battleId,
     this.userName,
     this.userImage,
     this.totalChange,
@@ -73,6 +77,8 @@ class LeaderboardByDateRes {
     this.tournamentID,
     this.tournamentName,
     this.tournamentImage,
+    this.joinUsers,
+    this.performance,
   });
 
   factory LeaderboardByDateRes.fromJson(Map<String, dynamic> json) =>
@@ -80,6 +86,7 @@ class LeaderboardByDateRes {
         imageType: json['image_type'],
         rank: json['rank'],
         userId: json["user_id"],
+        battleId: json["battle_id"],
         userName: json["user_name"],
         userImage: json["user_image"],
         totalChange: json["total_change"],
@@ -92,10 +99,13 @@ class LeaderboardByDateRes {
         tournamentID: json['tournament_id'],
         tournamentImage: json['tournament_image'],
         tournamentName: json['tournament_name'],
+        joinUsers: json['join_users'],
+        performance: json['performance'],
       );
 
   Map<String, dynamic> toJson() => {
         "user_id": userId,
+        "battle_id": battleId,
         "name": userName,
         'rank': rank,
         "image": userImage,
@@ -110,5 +120,7 @@ class LeaderboardByDateRes {
         'tournament_id': tournamentID,
         'tournament_image': tournamentImage,
         'tournament_name': tournamentName,
+        'join_users': joinUsers,
+        'performance': performance,
       };
 }

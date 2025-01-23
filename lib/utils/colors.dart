@@ -73,6 +73,7 @@ class ThemeColors {
   static const ratingIconColor = Color(0xFFfec107);
   static const golden = Color(0xFFFFD700);
   static const themeGreen = Color(0xFF14b24a);
+  static const themeOrange = Color(0xfffa6c10);
 
   static const gredientColor = Color.fromARGB(78, 0, 0, 0);
 

@@ -97,6 +97,7 @@ enum SocialTrendingType { now, recently, cap }
 enum AdPlaces { place1, place2, place3 }
 
 enum AdScreen { home, newsDetail, aiNews }
+enum TournamentsHead { tradTotal, pPaid, playTraders }
 
 // ------ These are global constants to access in complete app --------
 bool isPhone = true;

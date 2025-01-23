@@ -6,9 +6,10 @@ import 'package:intl/intl.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 
 class CustomDateSelector extends StatefulWidget {
+  final DateTime? editedSelected;
   final Function(DateTime) onDateSelected;
 
-  const CustomDateSelector({super.key, required this.onDateSelected});
+  const CustomDateSelector({super.key, required this.onDateSelected,this.editedSelected});
 
   @override
   State<CustomDateSelector> createState() => _CustomDateSelectorState();
@@ -22,22 +23,21 @@ class _CustomDateSelectorState extends State<CustomDateSelector> {
   @override
   void initState() {
     super.initState();
+    currentDates();
+  }
 
-    selectedDate =
-        DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
+  void currentDates(){
+    DateTime currentDate =  DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
+    selectedDate =widget.editedSelected ??currentDate;
     setState(() {});
-
     final DateTime startDate =
-        DateTime(selectedDate.year, selectedDate.month - 2, selectedDate.day);
+    DateTime(currentDate.year, currentDate.month - 2, currentDate.day);
     fullDates = List.generate(
-      selectedDate.difference(startDate).inDays + 1,
-      (index) => startDate.add(Duration(days: index)),
+      currentDate.difference(startDate).inDays + 1,
+          (index) => startDate.add(Duration(days: index)),
     );
-
     visibleDates = fullDates.sublist(fullDates.length - 3);
-
     setState(() {});
-
     // Notify the parent widget about the initial selected date
     widget.onDateSelected(selectedDate);
   }
@@ -124,6 +124,8 @@ class _CustomDateSelectorState extends State<CustomDateSelector> {
   String formatDate(DateTime date) {
     return DateFormat('dd MMM yy').format(date);
   }
+
+
 
   @override
   Widget build(BuildContext context) {

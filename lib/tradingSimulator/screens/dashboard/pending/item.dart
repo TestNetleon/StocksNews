@@ -203,8 +203,10 @@ class TsPendingListItem extends StatelessWidget {
             margin: EdgeInsets.symmetric(horizontal: 10),
             decoration: BoxDecoration(
               color: item?.tradeType == "Buy"
-                  ? ThemeColors.themeGreen
-                  : ThemeColors.darkRed,
+                  ? ThemeColors.themeGreen:
+              item?.tradeType == "Sell"
+                  ? ThemeColors.darkRed:
+              ThemeColors.themeOrange,
               borderRadius: BorderRadius.only(
                 bottomLeft: Radius.circular(8),
                 bottomRight: Radius.circular(8),

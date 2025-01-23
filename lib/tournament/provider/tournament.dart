@@ -2,9 +2,12 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/user_res.dart';
 import 'package:stocks_news_new/tournament/models/leaderboard.dart';
+import 'package:stocks_news_new/tournament/provider/leaderboard.dart';
+import 'package:stocks_news_new/tournament/screens/tournaments/tournament_user_detail.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
 import '../../api/api_requester.dart';
@@ -179,6 +182,10 @@ class TournamentProvider extends ChangeNotifier {
   Extra? _extra;
   Extra? get extra => _extra;
 
+  /// extra for point_paid
+  Extra? _extraOfPointPaid;
+  Extra? get extraOfPointPaid => _extraOfPointPaid;
+
   void setStatusTournament(status) {
     _statusTournament = status;
     notifyListeners();
@@ -315,15 +322,32 @@ class TournamentProvider extends ChangeNotifier {
   List<LeaderboardByDateRes>? _pointsPaid;
   List<LeaderboardByDateRes>? get tradesExecuted => _pointsPaid;
 
+  /// value as per _playTraders
+
+  List<LeaderboardByDateRes>? _playTraders;
+  List<LeaderboardByDateRes>? get playTraders => _playTraders;
+
   int _page = 1;
-  bool get canLoadMore => _page <= (_extra?.totalPages ?? 1);
+  /// value as per _extraOfPointPaid
+  bool get canLoadMore => _page <= (_extraOfPointPaid?.totalPages ?? 1);
 
   void setStatusTradeExecuted(status) {
     _statusCommonList = status;
     notifyListeners();
   }
 
-  Future pointsPaidAPI({loadMore = false}) async {
+  String getApiUrl(TournamentsHead tournament) {
+    switch (tournament) {
+      case TournamentsHead.tradTotal:
+        return Apis.tTradingTotal;
+      case TournamentsHead.pPaid:
+        return Apis.tPointsPaid;
+      case TournamentsHead.playTraders:
+        return Apis.tPlayTraders;
+      }
+  }
+
+  Future pointsPaidAPI({loadMore = false, required TournamentsHead selectedTournament}) async {
     if (loadMore) {
       _page++;
       setStatusTradeExecuted(Status.loadingMore);
@@ -340,7 +364,7 @@ class TournamentProvider extends ChangeNotifier {
         'page': '$_page',
       };
       ApiResponse response = await apiRequest(
-        url: Apis.tPointsPaid,
+        url:getApiUrl(selectedTournament),
         showProgress: false,
         request: requst,
       );
@@ -360,6 +384,8 @@ class TournamentProvider extends ChangeNotifier {
           _errorCommonList = response.message;
         }
       }
+      /// get extra point values
+      _extraOfPointPaid = (response.extra is Extra ? response.extra as Extra : null);
       setStatusTradeExecuted(Status.loaded);
     } catch (e) {
       _pointsPaid = null;
@@ -369,4 +395,35 @@ class TournamentProvider extends ChangeNotifier {
       setStatusTradeExecuted(Status.loaded);
     }
   }
+
+  /// league redirection to leaderboard
+ void leagueToLeaderboard({String? selectedDate}){
+
+   DateFormat inputFormat = DateFormat("MM/dd/yyyy");
+   DateTime dateTime = inputFormat.parse(selectedDate!);
+
+   DateFormat outputFormat = DateFormat("yyyy-MM-dd");
+   String formattedDate = outputFormat.format(dateTime);
+   DateTime dateTime1 = outputFormat.parse(formattedDate);
+
+   TournamentLeaderboardProvider provider = navigatorKey.currentContext!.read<TournamentLeaderboardProvider>();
+   provider.getEditedDate(dateTime1);
+   Navigator.popUntil(
+       navigatorKey.currentContext!, (route) => route.isFirst);
+   Navigator.push(
+       navigatorKey.currentContext!,
+       MaterialPageRoute(
+         builder: (context) => GameTournamentIndex(setIndex: 1),
+       ));
+ }
+
+ /// profile redirection
+ void pointPaidTraderToLeaderboard({String? userName}){
+   Navigator.push(
+       navigatorKey.currentContext!,
+       MaterialPageRoute(
+         builder: (context) => TournamentUserDetail(userName:userName),
+       ));
+
+ }
 }

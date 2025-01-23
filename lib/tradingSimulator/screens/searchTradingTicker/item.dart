@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:stocks_news_new/tournament/provider/trades.dart';
+import 'package:stocks_news_new/tradingSimulator/TradingWithTypes/trad_order_screen.dart';
 import 'package:stocks_news_new/tradingSimulator/modals/trading_search_res.dart';
 import 'package:stocks_news_new/tradingSimulator/providers/trade_provider.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
@@ -8,6 +10,7 @@ import 'package:stocks_news_new/tradingSimulator/screens/trade/sheet.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
+import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/cache_network_image.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
@@ -17,11 +20,11 @@ import '../dashboard/tradeSheet.dart';
 
 class SdTradeDefaultItem extends StatelessWidget {
   final TradingSearchTickerRes data;
-  final bool buy;
+  final StockType? selectedStock;
   const SdTradeDefaultItem({
     required this.data,
     super.key,
-    this.buy = true,
+    this.selectedStock,
   });
 
   Future _onTap({TradingSearchTickerRes? item}) async {
@@ -33,7 +36,19 @@ class SdTradeDefaultItem extends StatelessWidget {
       changePercentage: item?.changesPercentage,
       price: item?.currentPrice,
     ));
-    tradeSheet(
+    Navigator.push(
+      navigatorKey.currentContext!,
+      createRoute(TradOrderScreen(symbol:  item?.symbol ?? '',doPop: false,
+        data:TradingSearchTickerRes(
+          image: data.image,
+          name: data.name,
+          currentPrice: data.currentPrice,
+          symbol: data.symbol,
+        ),
+      )
+      ),
+    );
+    /*tradeSheet(
       symbol: item?.symbol ?? '',
       data: TradingSearchTickerRes(
         image: data.image,
@@ -41,7 +56,7 @@ class SdTradeDefaultItem extends StatelessWidget {
         currentPrice: data.currentPrice,
         symbol: data.symbol,
       ),
-    );
+    );*/
   }
 
   Future _showSheet(SummaryOrderNew? order, bool buy) async {
@@ -59,7 +74,7 @@ class SdTradeDefaultItem extends StatelessWidget {
       builder: (context) {
         return SuccessTradeSheet(
           order: order,
-          buy: buy,
+          selectedStock: selectedStock,
           close: true,
         );
       },

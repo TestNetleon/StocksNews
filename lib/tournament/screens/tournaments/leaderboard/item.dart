@@ -110,16 +110,27 @@ class TournamentLeaderboardItem extends StatelessWidget {
               ),
             ),
           ),
-          Visibility(
-            visible: data.totalPoints != null,
-            child: Text(
-              '${data.totalPoints}',
-              style: styleGeorgiaBold(
-                fontSize: 14,
-                color: Colors.white,
-              ),
-            ),
-          ),
+          decorate == false
+              ? Visibility(
+                  visible: data.performance != null,
+                  child: Text(
+                    '${data.performance}%',
+                    style: styleGeorgiaBold(
+                      fontSize: 14,
+                      color: Colors.white,
+                    ),
+                  ),
+                )
+              : Visibility(
+                  visible: data.totalPoints != null,
+                  child: Text(
+                    '${data.totalPoints}',
+                    style: styleGeorgiaBold(
+                      fontSize: 14,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
         ],
       ),
     );

@@ -746,9 +746,9 @@ class SSEManager {
 }
 
 class StockDataManagerRes {
-  final num? price;
-  final num? change;
-  final num? changePercentage;
+  num? price;
+  num? change;
+  num? changePercentage;
   final String? type;
   final num? previousClose;
   final String symbol;
