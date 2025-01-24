@@ -193,22 +193,38 @@ class _AppBarHomeState extends State<AppBarHome> {
                         // ),
                       ),
                 // Title
-                Expanded(
+                Flexible(
                   child: Visibility(
                     visible: widget.title != null || widget.widget != null,
                     child: widget.widget ??
                         Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Image.asset(Images.k, width: 24, height: 24),
                             SpacerHorizontal(width: 8),
-                            Flexible(
-                              child: Text(
-                                "${widget.title}",
-                                style: stylePTSansBold(fontSize: 18),
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
+                            Expanded(
+                              child: Wrap(
+                                crossAxisAlignment: WrapCrossAlignment.start,
+                                children: [
+                                  Text(
+                                    "${widget.title}",
+                                    style: stylePTSansBold(fontSize: 18),
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                  Visibility(
+                                    visible: widget.subTitle!=null,
+                                    child: Text(
+                                      widget.subTitle??"",
+                                      style: styleGeorgiaRegular(fontSize: 14),
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ),
+                            )
+
                           ],
                         ),
                   ),

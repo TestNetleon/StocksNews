@@ -59,6 +59,9 @@ class LeaderboardByDateRes {
   final num? rewards;
   final num? joinUsers;
   final num? performance;
+  final num? performancePoint;
+  final num? totalTrades;
+  final num? winRatio;
 
   LeaderboardByDateRes({
     this.userId,
@@ -79,6 +82,9 @@ class LeaderboardByDateRes {
     this.tournamentImage,
     this.joinUsers,
     this.performance,
+    this.performancePoint,
+    this.totalTrades,
+    this.winRatio,
   });
 
   factory LeaderboardByDateRes.fromJson(Map<String, dynamic> json) =>
@@ -101,6 +107,9 @@ class LeaderboardByDateRes {
         tournamentName: json['tournament_name'],
         joinUsers: json['join_users'],
         performance: json['performance'],
+        performancePoint: json['performance_point'],
+        totalTrades: json['total_trades'],
+        winRatio: json['win_ratio'],
       );
 
   Map<String, dynamic> toJson() => {
@@ -122,5 +131,8 @@ class LeaderboardByDateRes {
         'tournament_name': tournamentName,
         'join_users': joinUsers,
         'performance': performance,
+        'performance_point': performancePoint,
+        'total_trades': totalTrades,
+        'win_ratio': winRatio,
       };
 }

@@ -5,7 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/user_res.dart';
+import 'package:stocks_news_new/screens/auth/base/base_auth.dart';
 import 'package:stocks_news_new/tournament/models/leaderboard.dart';
+import 'package:stocks_news_new/tournament/models/tour_user_detail.dart';
 import 'package:stocks_news_new/tournament/provider/leaderboard.dart';
 import 'package:stocks_news_new/tournament/screens/tournaments/tournament_user_detail.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
@@ -179,6 +181,9 @@ class TournamentProvider extends ChangeNotifier {
   TournamentRes? _data;
   TournamentRes? get data => _data;
 
+  TournamentUserDetailRes? _userData;
+  TournamentUserDetailRes? get userData => _userData;
+
   Extra? _extra;
   Extra? get extra => _extra;
 
@@ -276,8 +281,13 @@ class TournamentProvider extends ChangeNotifier {
 
 // MARK: JOIN
   Future joinTounament({int? id}) async {
+    UserProvider uPrivder = navigatorKey.currentContext!.read<UserProvider>();
+    if(uPrivder.user==null){
+      await loginFirstSheet();
+      if(uPrivder.user==null) return;
+    }
     try {
-      UserRes? user = navigatorKey.currentContext!.read<UserProvider>().user;
+      UserRes? user = uPrivder.user;
 
       Map requst = {
         'token': user?.token ?? '',
@@ -418,12 +428,44 @@ class TournamentProvider extends ChangeNotifier {
  }
 
  /// profile redirection
- void pointPaidTraderToLeaderboard({String? userName}){
+ void profileRedirection({String? userId}){
    Navigator.push(
        navigatorKey.currentContext!,
        MaterialPageRoute(
-         builder: (context) => TournamentUserDetail(userName:userName),
+         builder: (context) => TournamentUserDetail(userId:userId),
        ));
 
  }
+
+  Future getUserDetail({String? userID}) async {
+    setStatusDetail(Status.loading);
+    try {
+      Map request = {
+        "token": navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
+        "user_id":userID ?? "",
+      };
+      ApiResponse response = await apiRequest(
+        url: Apis.tUser,
+        request: request,
+        showProgress: false,
+      );
+      if (response.status) {
+        _userData = tournamentUserDetailResFromMap(jsonEncode(response.data));
+        //_extra = (response.extra is Extra ? response.extra as Extra : null);
+        _error = null;
+      } else {
+ //       _userData = null;
+        _error = response.message ?? Const.errSomethingWrong;
+        // showErrorMessage(message: response.message);
+      }
+      setStatusDetail(Status.loaded);
+    } catch (e) {
+   //   _userData = null;
+
+      _error = Const.errSomethingWrong;
+      Utils().showLog('Error getDashboardData $e');
+      setStatusDetail(Status.loaded);
+    }
+  }
+
 }

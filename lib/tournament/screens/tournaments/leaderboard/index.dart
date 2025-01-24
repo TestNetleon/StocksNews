@@ -74,12 +74,12 @@ class _TournamentLeaderboardState extends State<TournamentLeaderboard> {
                             children: [
                               Positioned(
                                 left: 0,
-                                top: 80,
+                                top: 70,
                                 child: TournamentLeaderboardTopItem(index: 1),
                               ),
                               Positioned(
                                 right: 0,
-                                top: 80,
+                                top: 70,
                                 child: TournamentLeaderboardTopItem(index: 2),
                               ),
                               Align(

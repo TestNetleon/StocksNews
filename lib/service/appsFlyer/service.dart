@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 import 'package:appsflyer_sdk/appsflyer_sdk.dart';
 import 'package:flutter/foundation.dart';
@@ -129,25 +130,62 @@ class AppsFlyerService {
     );
   }
 
-  Future createUserInvitationLink() async {
+  /*Future<Uri> createUserInvitationLink() async {
     UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
-
+    var dynamicLink ="";
     AppsFlyerInviteLinkParams params = AppsFlyerInviteLinkParams(
       brandDomain: 'pagelink.stocks.news',
       referrerName: 'User Invitation',
-      baseDeepLink: 'gk0r',
-      campaign: 'TestOne',
+      baseDeepLink: 'Zsdh',
+      campaign: 'app_invite',
       customerID: provider.user?.userId ?? 'UserA',
+      customParams: {"code":"${provider.user?.referralCode}","brandDomain":"pagelink.stocks.news"}
     );
-
     _appsFlyerSdk?.generateInviteLink(params, (data) {
       if (kDebugMode) {
+        dynamicLink = data['payload']['userInviteURL'];
         print('generateInviteLink SUCCESS $data');
+        print('dynamicLink $dynamicLink');
       }
     }, (data) {
       if (kDebugMode) {
         print('generateInviteLink ERROR $data');
       }
     });
+    return Uri.parse(dynamicLink);
+  }*/
+
+  Future<Uri> createUserInvitationLink() async {
+    UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
+    Completer<Uri> completer = Completer<Uri>();
+
+    AppsFlyerInviteLinkParams params = AppsFlyerInviteLinkParams(
+      brandDomain: 'pagelink.stocks.news',
+      referrerName: 'User Invitation',
+      baseDeepLink: 'Zsdh',
+      campaign: 'app_invite',
+      customerID: provider.user?.userId ?? 'UserA',
+      customParams: {
+        "code": provider.user?.referralCode ?? '',
+        "brandDomain": "pagelink.stocks.news",
+      },
+    );
+
+    _appsFlyerSdk?.generateInviteLink(params, (data) {
+      if (kDebugMode) {
+        String dynamicLink = data['payload']['userInviteURL'];
+        print('generateInviteLink SUCCESS $data');
+        print('dynamicLink $dynamicLink');
+        completer.complete(Uri.parse(dynamicLink));
+      }
+    }, (error) {
+      if (kDebugMode) {
+        print('generateInviteLink ERROR $error');
+      }
+      completer.completeError(error);
+    });
+
+    return completer.future;
   }
+
 }

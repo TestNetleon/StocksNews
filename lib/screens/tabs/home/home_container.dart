@@ -1,7 +1,9 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:provider/provider.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/screens/tabs/home/benefits/benefits_affiliate.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/blog_item_home.dart';
@@ -9,6 +11,7 @@ import 'package:stocks_news_new/screens/tabs/home/widgets/featured/index.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/home_partial_loading_widget.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/membership_coins_option.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/plaid/index.dart';
+import 'package:stocks_news_new/service/appsFlyer/service.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 // import 'package:stocks_news_new/utils/utils.dart';
@@ -61,19 +64,19 @@ class _HomeContainerState extends State<HomeContainer> {
     }
     return Column(
       children: [
-        // Visibility(
-        //   visible: kDebugMode,
-        //   child: ThemeButtonSmall(
-        //     text: 'Stock Scanner',
-        //     onPressed: () async {
-        //       // Navigator.push(
-        //       //   context,
-        //       //   MaterialPageRoute(builder: (_) => StocksScanner()),
-        //       // );
-        //       AppsFlyerService.instance.createUserInvitationLink();
-        //     },
-        //   ),
-        // ),
+       /* Visibility(
+          visible: kDebugMode,
+          child: ThemeButtonSmall(
+            text: 'Stock Scanner',
+            onPressed: () async {
+              shareUri = await AppsFlyerService.instance.createUserInvitationLink();
+              print('generateInviteLink shareUri $shareUri');
+              Share.share(
+                "${context.read<HomeProvider>().extra?.referral?.shareText}${"\n\n"}${shareUri.toString()}",
+              );
+            },
+          ),
+        ),*/
         Visibility(
           visible: provider.extra?.phoneCodeError != null &&
               provider.extra?.phoneCodeError != '',
