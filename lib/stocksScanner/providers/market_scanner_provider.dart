@@ -875,7 +875,7 @@ class MarketScannerProvider extends ChangeNotifier {
   ScannerPortsRes? _port;
   ScannerPortsRes? get port => _port;
 
-  Future getScannerPorts({loading = true}) async {
+  Future getScannerPorts({loading = true, start = true}) async {
     setStatus(Status.loading);
     try {
       ApiResponse response = await apiRequest(
@@ -884,8 +884,9 @@ class MarketScannerProvider extends ChangeNotifier {
       );
       if (response.status) {
         _port = scannerPortsResFromJson(jsonEncode(response.data));
-
-        startListeningPorts();
+        if (start) {
+          startListeningPorts();
+        }
       } else {
         _port = null;
       }

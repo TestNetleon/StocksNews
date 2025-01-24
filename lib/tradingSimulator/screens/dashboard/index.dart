@@ -34,7 +34,9 @@ class _TsDashboardState extends State<TsDashboard> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<TsPortfolioProvider>().getStreamKeysData();
-      context.read<MarketScannerProvider>().getScannerPorts(loading: false);
+      context
+          .read<MarketScannerProvider>()
+          .getScannerPorts(loading: false, start: false);
     });
   }
 

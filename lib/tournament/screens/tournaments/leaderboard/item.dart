@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/tournament/provider/tournament.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/cache_network_image.dart';
-import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:svg_flutter/svg_flutter.dart';
 
 import '../../../models/leaderboard.dart';
@@ -20,8 +18,10 @@ class TournamentLeaderboardItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: (){
-        context.read<TournamentProvider>().profileRedirection(userId:"${data.userId?? ""}");
+      onTap: () {
+        context
+            .read<TournamentProvider>()
+            .profileRedirection(userId: "${data.userId ?? ""}");
       },
       child: Container(
         padding: decorate
@@ -94,15 +94,17 @@ class TournamentLeaderboardItem extends StatelessWidget {
                                 Text(
                                   data.rank ?? 'N/A',
                                   style: styleGeorgiaRegular(
-                                      color: ThemeColors.greyText, fontSize: 14),
+                                      color: ThemeColors.greyText,
+                                      fontSize: 14),
                                 ),
                                 Visibility(
-                                  visible: ( data.totalTrades!=null|| data.winRatio!=null),
+                                  visible: (data.totalTrades != null ||
+                                      data.winRatio != null),
                                   child: Text(
-                                    "${ data.winRatio}% , ${data.totalTrades}",
-                                    style:styleGeorgiaRegular(
-                                        color: ThemeColors.greyText, fontSize: 12)
-                                  ),
+                                      "${data.winRatio}% , ${data.totalTrades}",
+                                      style: styleGeorgiaRegular(
+                                          color: ThemeColors.greyText,
+                                          fontSize: 12)),
                                 ),
                                 Visibility(
                                   visible: data.performance != null,
@@ -110,7 +112,9 @@ class TournamentLeaderboardItem extends StatelessWidget {
                                     '${data.performance?.toCurrency()}%',
                                     style: stylePTSansRegular(
                                       fontSize: 14,
-                                      color: (data.performance ?? 0) > 0 ? Colors.green : Colors.red,
+                                      color: (data.performance ?? 0) > 0
+                                          ? Colors.green
+                                          : Colors.red,
                                     ),
                                   ),
                                 ),
@@ -147,7 +151,6 @@ class TournamentLeaderboardItem extends StatelessWidget {
                     ),
                   )
                 :*/
-
           ],
         ),
       ),
