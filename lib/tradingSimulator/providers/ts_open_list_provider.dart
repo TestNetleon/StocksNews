@@ -235,7 +235,6 @@
 
 import 'dart:convert';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/api/api_requester.dart';
@@ -278,8 +277,12 @@ class TsOpenListProvider extends ChangeNotifier {
   }
 
 //MARK: Today's Return
-  Map<String, num> _calculateTodaysReturn(StockDataManagerRes stockData,
-      TsOpenListRes stock, num shares, num invested) {
+  Map<String, num> _calculateTodaysReturn(
+    StockDataManagerRes stockData,
+    TsOpenListRes stock,
+    num shares,
+    num invested,
+  ) {
     num todaysReturn = 0;
     num todaysReturnPercentage = 0;
     num price = stockData.price ?? stock.currentPrice ?? 0;
@@ -290,8 +293,13 @@ class TsOpenListProvider extends ChangeNotifier {
       // Stock bought today
       num boughtPrice = stock.avgPrice ?? 0;
       if (boughtPrice > 0) {
-        todaysReturn = (price - boughtPrice) * shares;
-        todaysReturnPercentage = ((price - boughtPrice) / boughtPrice) * 100;
+        if (stock.tradeType == 'Short') {
+          todaysReturn = (boughtPrice - price) * shares;
+          todaysReturnPercentage = ((boughtPrice - price) / price) * 100;
+        } else {
+          todaysReturn = (price - boughtPrice) * shares;
+          todaysReturnPercentage = ((price - boughtPrice) / boughtPrice) * 100;
+        }
       }
     } else {
       // Utils().showLog('Stock ${stock.symbol} is bought previously');
@@ -299,9 +307,14 @@ class TsOpenListProvider extends ChangeNotifier {
       // Stock bought previously
       num previousClose = stockData.previousClose ?? 0;
       if (previousClose > 0) {
-        todaysReturn = (price - previousClose) * shares;
-        todaysReturnPercentage =
-            ((price - previousClose) / previousClose) * 100;
+        if (stock.tradeType == 'Short') {
+          todaysReturn = (previousClose - price) * shares;
+          todaysReturnPercentage = ((previousClose - price) / price) * 100;
+        } else {
+          todaysReturn = (price - previousClose) * shares;
+          todaysReturnPercentage =
+              ((price - previousClose) / previousClose) * 100;
+        }
       }
     }
 
@@ -337,14 +350,9 @@ class TsOpenListProvider extends ChangeNotifier {
         stockData.changePercentage ?? existingStock.changesPercentage;
 
     existingStock.currentInvested = (existingStock.currentPrice ?? 0) * shares;
-    existingStock.investedChange =
-        (existingStock.currentInvested ?? 0) - invested;
-
-    existingStock.investedChangePercentage = invested > 0
-        ? ((existingStock.investedChange ?? 0) / invested) * 100
-        : 0;
 
     if (existingStock.tradeType == 'Short') {
+      //Short condition
       existingStock.investedChange =
           invested - (existingStock.currentInvested ?? 0);
 
@@ -352,6 +360,13 @@ class TsOpenListProvider extends ChangeNotifier {
           ? ((existingStock.investedChange ?? 0) /
                   (existingStock.currentInvested ?? 0)) *
               100
+          : 0;
+    } else {
+      existingStock.investedChange =
+          (existingStock.currentInvested ?? 0) - invested;
+
+      existingStock.investedChangePercentage = invested > 0
+          ? ((existingStock.investedChange ?? 0) / invested) * 100
           : 0;
     }
 
@@ -388,14 +403,20 @@ class TsOpenListProvider extends ChangeNotifier {
 
     provider.updateBalance(totalReturn: 0);
 
+    num? mainReturn = 0;
+
+    if (_data != null && _data!.isNotEmpty) {
+      mainReturn = _data!
+          .map((item) => item.investedChange ?? 0.0)
+          .fold(0.0, (prev, element) => prev + element);
+    }
+
     provider.updateBalance(
       marketValue: totalMarketValue,
-      // totalReturn: (provider.userData?.staticTotalReturn ?? 0) +
 
+      // totalReturn:
       //     (totalMarketValue - (provider.userData?.investedAmount ?? 0)),
-
-      totalReturn:
-          (totalMarketValue - (provider.userData?.investedAmount ?? 0)),
+      totalReturn: mainReturn,
 
       todayReturn: todaysReturn,
     );
@@ -428,7 +449,10 @@ class TsOpenListProvider extends ChangeNotifier {
 
 //MARK: API Call
   Future<void> getData() async {
-    navigatorKey.currentContext!.read<TsPortfolioProvider>().getDashboardData();
+    TsPortfolioProvider provider =
+        navigatorKey.currentContext!.read<TsPortfolioProvider>();
+    provider.getDashboardData();
+
     setStatus(Status.loading);
 
     try {
@@ -445,6 +469,16 @@ class TsOpenListProvider extends ChangeNotifier {
 
       if (response.status) {
         _data = tsOpenListResFromJson(jsonEncode(response.data));
+
+        // num? totalReturn = 0;
+        // if (_data != null && _data!.isNotEmpty) {
+        //   totalReturn = _data!
+        //       .map((item) => item.investedChange ?? 0.0)
+        //       .fold(0.0, (prev, element) => prev + element);
+        // }
+
+        // provider.updateBalance(totalReturn: totalReturn);
+
         _extra = response.extra is Extra ? response.extra as Extra : null;
         _error = null;
 

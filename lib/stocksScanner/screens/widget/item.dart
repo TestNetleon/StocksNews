@@ -117,7 +117,7 @@ class ScannerBaseItem extends StatelessWidget {
                         visible: data?.volume != null,
                         child: _widget(
                           label: 'Volume: ',
-                          value: '\$${data?.volume}',
+                          value: '${data?.volume}',
                         ),
                       ),
                       Visibility(
@@ -149,7 +149,7 @@ class ScannerBaseItem extends StatelessWidget {
                         visible: postMarketPrice != null && showPreMarket,
                         child: _widget(
                           margin: EdgeInsets.only(left: 10),
-                          label: '\$Post Market Price: ',
+                          label: 'Post Market Price: ',
                           value: '\$$postMarketPrice',
                         ),
                       ),

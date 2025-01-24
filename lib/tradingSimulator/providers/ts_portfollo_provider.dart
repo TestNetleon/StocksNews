@@ -73,8 +73,9 @@ class TsPortfolioProvider extends ChangeNotifier {
         // _userData?.totalReturn = (_userData?.staticTotalReturn ?? 0) +
         //     ((_userData?.marketValue ?? 0) - (_userData?.investedAmount ?? 0));
 
-        _userData?.totalReturn =
-            ((_userData?.marketValue ?? 0) - (_userData?.investedAmount ?? 0));
+        // _userData?.totalReturn =
+        //     ((_userData?.marketValue ?? 0) - (_userData?.investedAmount ?? 0));
+
         _extra = (response.extra is Extra ? response.extra as Extra : null);
         _error = null;
       } else {

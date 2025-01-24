@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:stocks_news_new/tradingSimulator/TradingWithTypes/trad_order_screen.dart';
 import 'package:stocks_news_new/tradingSimulator/modals/ts_pending_list_res.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
@@ -10,6 +9,7 @@ import '../../../manager/sse.dart';
 import '../../../modals/trading_search_res.dart';
 import '../../../providers/trade_provider.dart';
 import '../../../providers/ts_transaction_list.dart';
+import '../../../widgets/sim_trade_sheet.dart';
 import 'item.dart';
 
 class TsTransactionList extends StatefulWidget {
@@ -82,20 +82,29 @@ class _TsTransactionListState extends State<TsTransactionList> {
                   price: item.currentPrice,
                 ));
 
-                Navigator.push(
-                  context,
-                  createRoute(TradOrderScreen(
+                simTradeSheet(
+                  symbol: item.symbol,
+                  data: TradingSearchTickerRes(
+                    image: item.image,
+                    name: item.company,
+                    currentPrice: item.currentPrice,
                     symbol: item.symbol,
-                    doPop: false,
-                    data: TradingSearchTickerRes(
-                      image: item.image,
-                      name: item.company,
-                      currentPrice: item.currentPrice,
-                      symbol: item.symbol,
-                    ),
-                    qty: item.quantity,
-                  )),
+                  ),
+                  qty: item.quantity,
                 );
+                // Navigator.push(
+                //   context,
+                //   createRoute(TradOrderScreen(
+                //     symbol: item.symbol,
+                //     data: TradingSearchTickerRes(
+                //       image: item.image,
+                //       name: item.company,
+                //       currentPrice: item.currentPrice,
+                //       symbol: item.symbol,
+                //     ),
+                //     qty: item.quantity,
+                //   )),
+                // );
 
                 /*tradeSheet(
                   symbol: item.symbol,

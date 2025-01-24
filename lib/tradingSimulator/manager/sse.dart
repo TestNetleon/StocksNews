@@ -779,13 +779,13 @@ class StockDataManagerRes {
 
   Map<String, dynamic> toMap() {
     return {
+      'Symbol': symbol,
       'Price': price,
       'Change': change,
       'Change%': changePercentage,
+      'Previous Close': previousClose,
       'Type': type,
       'Time': time,
-      'Previous Close': previousClose,
-      'Symbol': symbol,
     };
   }
 

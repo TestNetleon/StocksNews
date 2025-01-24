@@ -65,7 +65,7 @@ class TsUserRes {
         tradeBalance: json["trade_balance"],
         investedAmount: json['invested_amount'],
         marketValue: json['market_value'],
-        // totalReturn: json['total_return'],
+        totalReturn: json['total_return'],
         todayReturn: json['today_return'],
       );
 
@@ -73,7 +73,7 @@ class TsUserRes {
         "trade_balance": tradeBalance,
         'invested_amount': investedAmount,
         "market_value": marketValue,
-        // 'total_return': totalReturn,
+        'total_return': totalReturn,
         'today_return': todayReturn,
       };
 }

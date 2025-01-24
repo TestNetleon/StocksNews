@@ -135,7 +135,7 @@ class AppsFlyerService {
     AppsFlyerInviteLinkParams params = AppsFlyerInviteLinkParams(
       brandDomain: 'pagelink.stocks.news',
       referrerName: 'User Invitation',
-      baseDeepLink: 'gk0r',
+      baseDeepLink: 'Zsdh',
       campaign: 'TestOne',
       customerID: provider.user?.userId ?? 'UserA',
     );

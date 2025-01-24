@@ -10,9 +10,9 @@ import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/screens/search/search.dart';
 import 'package:stocks_news_new/tournament/provider/trades.dart';
-import 'package:stocks_news_new/tradingSimulator/TradingWithTypes/trad_order_screen.dart';
 import 'package:stocks_news_new/tradingSimulator/providers/trade_provider.dart';
 import 'package:stocks_news_new/tradingSimulator/providers/trading_search_provider.dart';
+import 'package:stocks_news_new/tradingSimulator/widgets/sim_trade_sheet.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -99,19 +99,29 @@ class _TsTextInputFieldSearchCommonState extends State<TsTextInputFieldSearch> {
       changePercentage: data?.changesPercentage,
       price: data?.currentPrice,
     ));
-    Navigator.push(
-      navigatorKey.currentContext!,
-      createRoute(TradOrderScreen(
-        symbol: symbol,
-        doPop: false,
-        data: TradingSearchTickerRes(
-          image: data?.image,
-          name: data?.name,
-          currentPrice: data?.currentPrice,
-          symbol: data?.symbol,
-        ),
-      )),
+
+    simTradeSheet(
+      symbol: symbol,
+      data: TradingSearchTickerRes(
+        image: data?.image,
+        name: data?.name,
+        currentPrice: data?.currentPrice,
+        symbol: data?.symbol,
+      ),
     );
+
+    // Navigator.push(
+    //   navigatorKey.currentContext!,
+    //   createRoute(TradOrderScreen(
+    //     symbol: symbol,
+    //     data: TradingSearchTickerRes(
+    //       image: data?.image,
+    //       name: data?.name,
+    //       currentPrice: data?.currentPrice,
+    //       symbol: data?.symbol,
+    //     ),
+    //   )),
+    // );
     /* tradeSheet(
       symbol: symbol,
       data: TradingSearchTickerRes(

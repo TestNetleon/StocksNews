@@ -129,7 +129,7 @@ class TsPendingListProvider extends ChangeNotifier {
     }
   }
 
-  Future stockHolding({
+  Future editStock({
     required int index,
   }) async {
     Utils().showLog('Checking holdings for ${_data?[index].tradeType ?? ''}');
@@ -139,14 +139,20 @@ class TsPendingListProvider extends ChangeNotifier {
       Map request = {
         'token': provider.user?.token ?? '',
         'symbol': _data?[index].symbol ?? '',
-        'action':_data?[index].tradeType=="Sell"?"SELL":_data?[index].tradeType=="Buy"?"BUY":"BUY_TO_COVER",
+        'action': _data?[index].tradeType == "Sell"
+            ? "SELL"
+            : _data?[index].tradeType == "Buy"
+                ? "BUY"
+                : "BUY_TO_COVER",
         'edit': '1',
       };
 
       ApiResponse res = await apiRequest(
           url: Apis.stockHoldings, request: request, showProgress: true);
       if (res.status) {
-        if ((_data?[index].tradeType=="Sell"||_data?[index].tradeType=="But To Cover") && res.data['quantity'] <= 0) {
+        if ((_data?[index].tradeType == "Sell" ||
+                _data?[index].tradeType == "But To Cover") &&
+            res.data['quantity'] <= 0) {
           popUpAlert(
               title: 'Alert',
               message: "You don't own the shares of this stock");
@@ -165,7 +171,11 @@ class TsPendingListProvider extends ChangeNotifier {
             navigatorKey.currentContext!,
             MaterialPageRoute(
               builder: (context) => TradeBuySellIndex(
-                selectedStock: _data?[index].tradeType == "Buy"?StockType.buy:_data?[index].tradeType=="Sell"?StockType.sell:StockType.btc,
+                selectedStock: _data?[index].tradeType == "Buy"
+                    ? StockType.buy
+                    : _data?[index].tradeType == "Sell"
+                        ? StockType.sell
+                        : StockType.btc,
                 qty: res.data['quantity'],
                 editTradeID: data?[index].id,
               ),
@@ -185,7 +195,7 @@ class TsPendingListProvider extends ChangeNotifier {
   Future shortRedirection({required int index}) async {
     try {
       TradeProviderNew provider =
-      navigatorKey.currentContext!.read<TradeProviderNew>();
+          navigatorKey.currentContext!.read<TradeProviderNew>();
 
       ApiResponse response = await provider.getDetailTopData(
         symbol: _data?[index].symbol ?? '',
@@ -196,8 +206,8 @@ class TsPendingListProvider extends ChangeNotifier {
           navigatorKey.currentContext!,
           MaterialPageRoute(
             builder: (context) => TradeBuySellIndex(
-              selectedStock:StockType.short,
-              qty:0,
+              selectedStock: StockType.short,
+              qty: 0,
               editTradeID: data?[index].id,
             ),
           ),
@@ -209,5 +219,4 @@ class TsPendingListProvider extends ChangeNotifier {
       return ApiResponse(status: false);
     }
   }
-
 }
