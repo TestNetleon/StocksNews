@@ -145,6 +145,8 @@ class MarketScannerProvider extends ChangeNotifier {
     if (data == null) return;
 
     data.removeWhere((item) {
+      print('item bid ${item.bid}');
+
       if (item.identifier == _filterParams!.symbolCompany) {
         Utils().showLog(
           "***********************************************************${item.identifier}  ${_filterParams!.symbolCompany}",
@@ -218,16 +220,16 @@ class MarketScannerProvider extends ChangeNotifier {
     num dollarVolume = (volume * lastTrade);
 
     // Bid Range Conditions
-    bool bidStartCondition =
-        filterParams.bidStart == null || item.bid! >= filterParams.bidStart!;
+    bool bidStartCondition = filterParams.bidStart == null ||
+        (item.bid ?? 0) >= filterParams.bidStart!;
     bool bidEndCondition =
-        filterParams.bidEnd == null || item.bid! <= filterParams.bidEnd!;
+        filterParams.bidEnd == null || (item.bid ?? 0) <= filterParams.bidEnd!;
 
     // Ask Range Conditions
-    bool askStartCondition =
-        filterParams.askStart == null || item.ask! >= filterParams.askStart!;
+    bool askStartCondition = filterParams.askStart == null ||
+        (item.ask ?? 0) >= filterParams.askStart!;
     bool askEndCondition =
-        filterParams.askEnd == null || item.ask! <= filterParams.askEnd!;
+        filterParams.askEnd == null || (item.ask ?? 0) <= filterParams.askEnd!;
 
     // Last Trade Range Conditions
     bool lastTradeStartCondition = filterParams.lastTradeStart == null ||

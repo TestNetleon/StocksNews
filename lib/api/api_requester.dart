@@ -104,7 +104,7 @@ Future<ApiResponse> apiRequest({
 
   if (formData != null) {
     Utils().showLog(
-      "REQUEST  =  ${formData.fields.map((entry) => '${entry.key}: ${entry.value}').join(', ')}",
+      "REQUEST $url  =  ${formData.fields.map((entry) => '${entry.key}: ${entry.value}').join(', ')}",
     );
   } else {
     Utils().showLog("REQUEST  =  ${jsonEncode(request)}");

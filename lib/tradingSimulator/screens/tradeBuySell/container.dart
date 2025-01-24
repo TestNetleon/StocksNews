@@ -69,10 +69,10 @@ class _BuySellContainerState extends State<BuySellContainer> {
 
   @override
   void dispose() {
-    controller.clear();
-    limitController.clear();
-    targetController.clear();
-    stopLossController.clear();
+    controller.dispose();
+    limitController.dispose();
+    targetController.dispose();
+    stopLossController.dispose();
     SSEManager.instance.disconnectScreen(SimulatorEnum.detail);
     super.dispose();
   }
@@ -176,7 +176,7 @@ class _BuySellContainerState extends State<BuySellContainer> {
       return;
     }
 
-    if (widget.selectedStock==StockType.buy) {
+    if (widget.selectedStock == StockType.buy) {
       if (invested > (portfolioProvider.userData?.tradeBalance ?? 0)) {
         popUpAlert(
           message: "Insufficient available balance to place this order.",
@@ -271,7 +271,11 @@ class _BuySellContainerState extends State<BuySellContainer> {
       FormData request = FormData.fromMap({
         "token":
             navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
-        "action": widget.selectedStock==StockType.sell?"SELL":widget.selectedStock==StockType.short ?"SHORT":"BUY_TO_COVER",
+        "action": widget.selectedStock == StockType.sell
+            ? "SELL"
+            : widget.selectedStock == StockType.short
+                ? "SHORT"
+                : "BUY_TO_COVER",
         "symbol": detailRes?.symbol,
         "order_type": 'MARKET_ORDER',
         "duration": "GOOD_UNTIL_CANCELLED",
@@ -446,22 +450,21 @@ class _BuySellContainerState extends State<BuySellContainer> {
           ),
           const SpacerVertical(),
           Visibility(
-            visible: widget.selectedStock!=StockType.short,
+            visible: widget.selectedStock != StockType.short,
             child: ThemeButton(
               disabledBackgroundColor: ThemeColors.greyBorder,
-              text:widget.selectedStock==StockType.buy
+              text: widget.selectedStock == StockType.buy
                   ? widget.editTradeID != null
                       ? 'Update Buy Order'
                       : "Proceed Buy Order"
-                  :
-              widget.selectedStock==StockType.sell?
-              widget.editTradeID != null
-                      ? 'Update Sell Order'
-                      : "Proceed Sell Order":
-              widget.editTradeID != null
-                  ? 'Update BTC Order'
-                  : "Proceed BTC Order",
-              color:widget.selectedStock==StockType.buy
+                  : widget.selectedStock == StockType.sell
+                      ? widget.editTradeID != null
+                          ? 'Update Sell Order'
+                          : "Proceed Sell Order"
+                      : widget.editTradeID != null
+                          ? 'Update Buy To Cover Order'
+                          : "Proceed Buy To Cover Order",
+              color: widget.selectedStock == StockType.buy
                   ? (invested > _availableBalance || invested == 0)
                       ? ThemeColors.greyText
                       : ThemeColors.accent
@@ -470,7 +473,7 @@ class _BuySellContainerState extends State<BuySellContainer> {
                           invested == 0)
                       ? ThemeColors.greyText
                       : ThemeColors.sos,
-              onPressed: (widget.selectedStock==StockType.buy
+              onPressed: (widget.selectedStock == StockType.buy
                       ? (invested > _availableBalance || invested == 0)
                       : (controller.text.isEmpty ||
                           num.parse(controller.text) > (widget.qty ?? 0)))
@@ -479,29 +482,29 @@ class _BuySellContainerState extends State<BuySellContainer> {
             ),
           ),
           Visibility(
-            visible: widget.selectedStock==StockType.short,
+            visible: widget.selectedStock == StockType.short,
             child: ThemeButton(
               disabledBackgroundColor: ThemeColors.greyBorder,
-              text:
-              widget.editTradeID != null
+              text: widget.editTradeID != null
                   ? 'Update Short Order'
                   : "Proceed Short Order",
-              color:(invested > _availableBalance || invested == 0)
-                  ? ThemeColors.greyText:
-              (controller.text.isEmpty)?
-              ThemeColors.greyText:
-              ThemeColors.sos,
+              color: (invested > _availableBalance || invested == 0)
+                  ? ThemeColors.greyText
+                  : (controller.text.isEmpty)
+                      ? ThemeColors.greyText
+                      : ThemeColors.sos,
               onPressed: (invested > _availableBalance || invested == 0)
                   ? null
                   : (controller.text.isEmpty)
-                  ? null
-                  : _onTap,
+                      ? null
+                      : _onTap,
             ),
           ),
-
           Visibility(
             visible: controller.text.isNotEmpty &&
-                (widget.selectedStock==StockType.buy||widget.selectedStock==StockType.short) && (invested > _availableBalance),
+                (widget.selectedStock == StockType.buy ||
+                    widget.selectedStock == StockType.short) &&
+                (invested > _availableBalance),
             child: Container(
               padding: EdgeInsets.only(top: 10),
               child: RichText(
@@ -526,7 +529,8 @@ class _BuySellContainerState extends State<BuySellContainer> {
           ),
           Visibility(
             visible: controller.text.isNotEmpty &&
-                (widget.selectedStock==StockType.sell ||widget.selectedStock==StockType.btc)&&
+                (widget.selectedStock == StockType.sell ||
+                    widget.selectedStock == StockType.btc) &&
                 num.parse(controller.text) > (widget.qty ?? 0),
             child: Container(
               padding: EdgeInsets.only(top: 10),
@@ -566,7 +570,6 @@ class _BuySellContainerState extends State<BuySellContainer> {
               child: Column(
                 children: [
                   const TsTopWidget(),
-
                   TextfieldTrade(
                     controller: controller,
                     focusNode: focusNode,
@@ -582,8 +585,8 @@ class _BuySellContainerState extends State<BuySellContainer> {
                     'Enter number of shares',
                     style: styleGeorgiaRegular(color: ThemeColors.greyText),
                   ),
-
-                  if (widget.qty != null && widget.selectedStock!=StockType.short)
+                  if (widget.qty != null &&
+                      widget.selectedStock != StockType.short)
                     Container(
                       margin: EdgeInsets.only(top: 10),
                       child: Text(

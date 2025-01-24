@@ -5,6 +5,8 @@ import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/theme_image_view.dart';
 
+import '../widgets/order_Type.dart';
+
 class TsTransactionListItem extends StatelessWidget {
   final TsPendingListRes? item;
   final Function()? onTap;
@@ -140,18 +142,28 @@ class TsTransactionListItem extends StatelessWidget {
               ],
             ),
           ),
-          Container(
-            height: 2,
-            margin: EdgeInsets.symmetric(horizontal: 10),
-            decoration: BoxDecoration(
-              color: item?.tradeType == "Buy"
-                  ? ThemeColors.themeGreen
-                  : ThemeColors.darkRed,
-              borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(8),
-                bottomRight: Radius.circular(8),
+          Visibility(
+            visible: item?.tradeType == 'Buy' || item?.tradeType == 'Sell',
+            child: Container(
+              height: 2,
+              margin: EdgeInsets.symmetric(horizontal: 10),
+              decoration: BoxDecoration(
+                color: item?.tradeType == "Buy"
+                    ? ThemeColors.themeGreen
+                    : ThemeColors.darkRed,
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(8),
+                  bottomRight: Radius.circular(8),
+                ),
               ),
             ),
+          ),
+          TradingOrderTypeContainer(
+            tradeType: item?.tradeType == 'Short'
+                ? 'Short'
+                : item?.tradeType == 'Buy To Cover'
+                    ? 'Buy To Cover'
+                    : null,
           ),
         ],
       ),

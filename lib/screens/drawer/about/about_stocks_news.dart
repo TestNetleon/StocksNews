@@ -230,7 +230,7 @@ class _AboutStocksNewsState extends State<AboutStocksNews> {
       );
     }
     // Stock Scanner
-    if (provider.extra?.showStockScanner == true) {
+    if (provider.extra?.showStockScanner == true || kDebugMode) {
       visibleAboutTiles.add(
         DrawerRes(
           iconData: Icons.bakery_dining_outlined,
@@ -245,7 +245,7 @@ class _AboutStocksNewsState extends State<AboutStocksNews> {
         ),
       );
     }
-    if (provider.extra?.showStockScannerApp == true) {
+    if (provider.extra?.showStockScannerApp == true || kDebugMode) {
       visibleAboutTiles.add(
         DrawerRes(
           iconData: Icons.bakery_dining_outlined,

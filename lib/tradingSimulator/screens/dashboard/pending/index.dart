@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:stocks_news_new/tradingSimulator/TradingWithTypes/trad_order_screen.dart';
 import 'package:stocks_news_new/tradingSimulator/modals/ts_pending_list_res.dart';
 import 'package:stocks_news_new/tradingSimulator/providers/ts_pending_list_provider.dart';
 import 'package:stocks_news_new/tradingSimulator/screens/dashboard/pending/item.dart';
 import 'package:stocks_news_new/tradingSimulator/screens/dashboard/pending/ts_slidable_menu.dart';
 import 'package:stocks_news_new/utils/constants.dart';
-import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
 import 'package:stocks_news_new/widgets/refresh_controll.dart';
@@ -14,6 +12,7 @@ import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import '../../../manager/sse.dart';
 import '../../../modals/trading_search_res.dart';
 import '../../../providers/trade_provider.dart';
+import '../../../widgets/sim_trade_sheet.dart';
 
 class TsPendingList extends StatefulWidget {
   const TsPendingList({super.key});
@@ -47,13 +46,9 @@ class _TsPendingListState extends State<TsPendingList> {
       onTap: () {
         TsPendingListProvider provider = context.read<TsPendingListProvider>();
         if (item.tradeType == "Short") {
-          provider.shortRedirection(
-            index: index,
-          );
+          provider.shortRedirection(index: index);
         } else {
-          provider.stockHolding(
-            index: index,
-          );
+          provider.editStock(index: index);
         }
       },
     );
@@ -116,20 +111,30 @@ class _TsPendingListState extends State<TsPendingList> {
                     price: item.currentPrice,
                   ));
 
-                  Navigator.push(
-                    context,
-                    createRoute(TradOrderScreen(
+                  simTradeSheet(
+                    symbol: item.symbol,
+                    data: TradingSearchTickerRes(
+                      image: item.image,
+                      name: item.company,
+                      currentPrice: item.currentPrice,
                       symbol: item.symbol,
-                      doPop: false,
-                      data: TradingSearchTickerRes(
-                        image: item.image,
-                        name: item.company,
-                        currentPrice: item.currentPrice,
-                        symbol: item.symbol,
-                      ),
-                      qty: item.quantity,
-                    )),
+                    ),
+                    qty: item.quantity,
                   );
+
+                  // Navigator.push(
+                  //   context,
+                  //   createRoute(TradOrderScreen(
+                  //     symbol: item.symbol,
+                  //     data: TradingSearchTickerRes(
+                  //       image: item.image,
+                  //       name: item.company,
+                  //       currentPrice: item.currentPrice,
+                  //       symbol: item.symbol,
+                  //     ),
+                  //     qty: item.quantity,
+                  //   )),
+                  // );
                   /* tradeSheet(
                     symbol: item.symbol,
                     doPop: false,

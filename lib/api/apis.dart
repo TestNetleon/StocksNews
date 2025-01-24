@@ -4,15 +4,15 @@ import 'package:flutter/foundation.dart';
 
 class Apis {
   // Main live server
-  static const baseUrl = "https://app.stocks.news/api/v1";
+  // static const baseUrl = "https://app.stocks.news/api/v1";
 
   // maintenance
   static const baseUrlLocal = "https://notification.stocks.news/api/v1";
 
   // With Debug condition
-  // static const baseUrl = kDebugMode
-  //     ? "https://dev.stocks.news/api/v1"
-  //     : "https://app.stocks.news/api/v1";
+  static const baseUrl = kDebugMode
+      ? "https://dev.stocks.news/api/v1"
+      : "https://app.stocks.news/api/v1";
 
   // Set direct Local
   // static const baseUrl = 'https://dev.stocks.news/api/v1';

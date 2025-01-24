@@ -201,6 +201,7 @@ class _MarketScannerFilterState extends State<MarketScannerFilter> {
       params.symbolCompany = null;
     }
     provider.applyFilter(params);
+
     Navigator.pop(context);
     // provider.updateData(provider.dataList);
     // MarketScannerDataManager.initializePorts();
