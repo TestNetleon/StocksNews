@@ -31,7 +31,31 @@ class _CustomDateSelectorState extends State<CustomDateSelector> {
   }
 
   void _createdDates() {
-    DateTime currentDate = DateTime(
+
+    DateTime currentDate = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
+    selectedDate = widget.editedDate ?? currentDate;
+    final DateTime startDate = DateTime(selectedDate.year, selectedDate.month - 2, selectedDate.day);
+    fullDates = List.generate(
+      currentDate.difference(startDate).inDays + 1,
+          (index) => startDate.add(Duration(days: index)),
+    );
+    int selectedIndex = fullDates.indexWhere((date) =>
+    date.year == selectedDate.year &&
+        date.month == selectedDate.month &&
+        date.day == selectedDate.day);
+    if (selectedIndex >= 2) {
+      visibleDates = fullDates.sublist(selectedIndex - 2, selectedIndex + 1);
+    } else {
+      visibleDates = fullDates.sublist(0, selectedIndex + 1);
+    }
+    for (var date in visibleDates) {
+      print("visibleDates ----------> ${date.day} ${date.month}");
+    }
+    widget.onDateSelected(selectedDate);
+    setState(() {});
+
+
+    /*DateTime currentDate = DateTime(
       DateTime.now().year,
       DateTime.now().month,
       DateTime.now().day,
@@ -60,7 +84,7 @@ class _CustomDateSelectorState extends State<CustomDateSelector> {
 
     widget.onDateSelected(selectedDate);
 
-    setState(() {});
+    setState(() {});*/
   }
 
   void shiftLeft() {

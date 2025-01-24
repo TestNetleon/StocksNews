@@ -84,7 +84,7 @@ class _TournamentPointsPaidIndexState extends State<TournamentPointsPaidIndex> {
                         SizedBox(
                           child: AutoSizeText(
                             maxLines: 1,
-                            "LEAGUE",
+                            "Trading LEAGUE",
                             style: stylePTSansRegular(
                               fontSize: 12,
                               color: ThemeColors.greyText,

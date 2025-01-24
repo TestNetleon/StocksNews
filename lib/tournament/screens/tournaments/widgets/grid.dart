@@ -39,7 +39,7 @@ class TournamentGrids extends StatelessWidget {
             imageUrl: data?.image,
             description: data?.description ?? '',
             pointText: data?.pointText ?? '',
-            points: data?.point ?? "0",
+            points: "${data?.point ?? "0"}",
             onButtonTap: () {
               if (index == 0) {
                 Navigator.push(

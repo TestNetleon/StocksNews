@@ -48,7 +48,7 @@ class PointsPaidItem extends StatelessWidget {
             onTap: () {
               context
                   .read<TournamentProvider>()
-                  .pointPaidTraderToLeaderboard(userName: data?.userName ?? "");
+                  .profileRedirection(userId:"${ data?.userId ?? ""}");
             },
             child: Row(
               children: [
@@ -105,26 +105,43 @@ class PointsPaidItem extends StatelessWidget {
                         ),
                       ),
                       Visibility(
+                        visible: data?.performance!=null,
+                        child:  Text(
+                          "${data?.performance??"0"}%",
+                          style: stylePTSansRegular(fontSize: 12, color: (data?.performance ?? 0) > 0 ? Colors.green : Colors.red,),
+                        ),
+                      ),
+                      Visibility(
+                        visible: data?.totalPoints != null,
+                        child: Text(
+                          '${data?.totalPoints}',
+                          style: stylePTSansRegular(fontSize: 12,color:ThemeColors.greyText),
+                        ),
+                      ),
+                      /*Visibility(
                         visible: data?.rank != null,
                         child: Text(
                           data?.rank ?? 'N/A',
                           style: styleGeorgiaRegular(
                               color: ThemeColors.greyText, fontSize: 14),
                         ),
-                      ),
+                      ),*/
                     ],
                   ),
                 ),
+
+                const SpacerHorizontal(width: 10),
                 Visibility(
-                  visible: data?.totalPoints != null,
+                  visible: data?.performancePoint != null,
                   child: Text(
-                    '${data?.totalPoints}',
+                    '${data?.performancePoint}',
                     style: styleGeorgiaBold(
                       fontSize: 14,
                       color: Colors.white,
                     ),
                   ),
                 ),
+
               ],
             ),
           ),

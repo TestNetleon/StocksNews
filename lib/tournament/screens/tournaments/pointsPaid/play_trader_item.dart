@@ -19,7 +19,7 @@ class PlayTraderItem extends StatelessWidget {
 
     return InkWell(
       onTap: (){
-        context.read<TournamentProvider>().pointPaidTraderToLeaderboard(userName:data?.userName ?? "");
+        context.read<TournamentProvider>().profileRedirection(userId:"${ data?.userId ?? ""}");
       },
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
@@ -108,12 +108,12 @@ class PlayTraderItem extends StatelessWidget {
               ],
             ),
             Visibility(
-              visible: data?.level!=null,
+              visible: data?.performance!=null,
               child: Align(
                 alignment: Alignment.centerRight,
                 child: Text(
                   "${data?.performance??"0"}%",
-                  style: stylePTSansRegular(fontSize: 12,color:ThemeColors.greyText),
+                  style: stylePTSansRegular(fontSize: 12, color: (data?.performance ?? 0) > 0 ? Colors.green : Colors.red,),
                 ),
               ),
             ),

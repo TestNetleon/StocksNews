@@ -54,7 +54,7 @@ class TournamentLeaderboardTopItem extends StatelessWidget {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(200),
                   child: CircleAvatar(
-                    radius: index == 1 || index == 2 ? 40 : 60,
+                    radius: index == 1 || index == 2 ? 40 : 50,
                     child: data?[index].imageType == "svg"
                         ? SvgPicture.network(
                             fit: BoxFit.cover,
@@ -87,15 +87,16 @@ class TournamentLeaderboardTopItem extends StatelessWidget {
           ),
           const SpacerVertical(height: 5),
           Visibility(
-            visible: data?[index].totalChange!=null,
+            visible: data?[index].totalPoints!=null,
             child: Text(
-              "${data?[index].totalChange}",
+              "${data?[index].totalPoints}",
               style: stylePTSansBold(
                 color: index == 2
                     ? ThemeColors.sos
                     : index == 1
                         ? Colors.orange
                         : ThemeColors.accent,
+                fontSize: 12
               ),
             ),
           ),
@@ -109,6 +110,7 @@ class TournamentLeaderboardTopItem extends StatelessWidget {
                     : index == 1
                     ? Colors.orange
                     : ThemeColors.accent,
+                  fontSize: 12
               ),
             ),
           ),
@@ -124,6 +126,35 @@ class TournamentLeaderboardTopItem extends StatelessWidget {
                       : ThemeColors.accent,
             ),
           ),
+          Visibility(
+            visible: data?[index].performance!=null,
+            child: Text(
+              "${data?[index].performance}%",
+              style: stylePTSansBold(
+                  color: index == 2
+                      ? ThemeColors.sos
+                      : index == 1
+                      ? Colors.orange
+                      : ThemeColors.accent,
+                  fontSize: 12
+              ),
+            ),
+          ),
+          Visibility(
+            visible: (data?[index].totalTrades!=null||data?[index].winRatio!=null),
+            child: Text(
+              "${data?[index].winRatio}% , ${data?[index].totalTrades}",
+              style: stylePTSansBold(
+                  color: index == 2
+                      ? ThemeColors.sos
+                      : index == 1
+                      ? Colors.orange
+                      : ThemeColors.accent,
+                  fontSize: 12
+              ),
+            ),
+          ),
+
           const SpacerVertical(
             height: 50,
           )

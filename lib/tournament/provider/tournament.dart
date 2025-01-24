@@ -5,7 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/user_res.dart';
+import 'package:stocks_news_new/screens/auth/base/base_auth.dart';
 import 'package:stocks_news_new/tournament/models/leaderboard.dart';
+import 'package:stocks_news_new/tournament/models/tour_user_detail.dart';
 import 'package:stocks_news_new/tournament/provider/leaderboard.dart';
 import 'package:stocks_news_new/tournament/screens/tournaments/tournament_user_detail.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
@@ -179,6 +181,8 @@ class TournamentProvider extends ChangeNotifier {
   TournamentRes? _data;
   TournamentRes? get data => _data;
 
+
+
   Extra? _extra;
   Extra? get extra => _extra;
 
@@ -241,6 +245,8 @@ class TournamentProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+
+
   int? _id;
 // MARK: DETAIL
   Future tournamentDetail(int? id, {bool timerSet = true}) async {
@@ -276,8 +282,13 @@ class TournamentProvider extends ChangeNotifier {
 
 // MARK: JOIN
   Future joinTounament({int? id}) async {
+    UserProvider uPrivder = navigatorKey.currentContext!.read<UserProvider>();
+    if(uPrivder.user==null){
+      await loginFirstSheet();
+      if(uPrivder.user==null) return;
+    }
     try {
-      UserRes? user = navigatorKey.currentContext!.read<UserProvider>().user;
+      UserRes? user = uPrivder.user;
 
       Map requst = {
         'token': user?.token ?? '',
@@ -418,12 +429,63 @@ class TournamentProvider extends ChangeNotifier {
  }
 
  /// profile redirection
- void pointPaidTraderToLeaderboard({String? userName}){
+ void profileRedirection({String? userId}){
    Navigator.push(
        navigatorKey.currentContext!,
        MaterialPageRoute(
-         builder: (context) => TournamentUserDetail(userName:userName),
+         builder: (context) => TournamentUserDetail(userId:userId),
        ));
 
  }
+
+
+  Status _statusUserData = Status.ideal;
+  Status get statusUserData => _statusUserData;
+
+  bool get isLoadingUserData =>
+      _statusUserData == Status.loading || _statusUserData == Status.ideal;
+
+  String? _errorUserData;
+  String? get errorUserData => _errorUserData ?? Const.errSomethingWrong;
+
+  TournamentUserDetailRes? _userData;
+  TournamentUserDetailRes? get userData => _userData;
+
+
+  void setStatusUserData(status) {
+    _statusUserData = status;
+    notifyListeners();
+  }
+
+  Future getUserDetail({String? userID}) async {
+    setStatusUserData(Status.loading);
+    try {
+      Map request = {
+        "token": navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
+        "user_id":userID ?? "",
+      };
+      ApiResponse response = await apiRequest(
+        url: Apis.tUser,
+        request: request,
+        showProgress: false,
+      );
+      if (response.status) {
+        _userData = tournamentUserDetailResFromMap(jsonEncode(response.data));
+        //isSVG = isSvgFromUrl(_userData?.userStats?.image);
+        _errorUserData = null;
+      } else {
+        _userData = null;
+        _errorUserData = response.message ?? Const.errSomethingWrong;
+        // showErrorMessage(message: response.message);
+      }
+      setStatusUserData(Status.loaded);
+    } catch (e) {
+      _userData = null;
+
+      _errorUserData = Const.errSomethingWrong;
+      Utils().showLog('Error getDashboardData $e');
+      setStatusUserData(Status.loaded);
+    }
+  }
+
 }

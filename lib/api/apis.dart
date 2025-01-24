@@ -270,6 +270,7 @@ class Apis {
   static const tPointsPaid = '/tournament/points-paid';
   static const tPlayTraders = '/tournament/titans';
   static const tTradingTotal = '/tournament/all';
+  static const tUser = '/tournament/user-profile';
   // static const tShow = '/tournament/trade-show';
   //
   static const appsflyerUsers = '/appsflyer-users';
