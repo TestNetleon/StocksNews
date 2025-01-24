@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/screens/drawer/widgets/profile_image.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/tournament/models/leaderboard.dart';
+import 'package:stocks_news_new/tournament/models/tour_user_detail.dart';
 import 'package:stocks_news_new/tournament/provider/tournament.dart';
 import 'package:stocks_news_new/tournament/screens/tournaments/pointsPaid/league_total_item.dart';
 import 'package:stocks_news_new/tournament/screens/tournaments/widgets/grid_boxs.dart';
@@ -12,8 +13,11 @@ import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
+import 'package:stocks_news_new/widgets/base_ui_container.dart';
+import 'package:stocks_news_new/widgets/cache_network_image.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
+import 'package:svg_flutter/svg_flutter.dart';
 
 class TournamentUserDetail extends StatefulWidget {
   final String? userId;
@@ -34,7 +38,7 @@ class _TournamentUserDetailState extends State<TournamentUserDetail> {
   }
   void _getData() async {
     TournamentProvider provider = context.read<TournamentProvider>();
-    await provider.getUserDetail();
+    await provider.getUserDetail(userID: widget.userId);
   }
   @override
   Widget build(BuildContext context) {
@@ -46,21 +50,54 @@ class _TournamentUserDetailState extends State<TournamentUserDetail> {
           showTrailing: false,
           title:provider.userData?.title ?? "",
         ),
-        body: SingleChildScrollView(
+        body:
+        BaseUiContainer(
+        hasData: provider.userData != null,
+        isLoading: provider.isLoadingUserData,
+        error: provider.errorUserData,
+        showPreparingText: true,
+        onRefresh: () {
+          _getData();
+        },
+        child: SingleChildScrollView(
           child: Padding(
             padding: EdgeInsets.fromLTRB(Dimen.padding, 0, Dimen.padding, 0),
             child: Column(
               children: [
-                ProfileImage(
+                Container(
+                  decoration: BoxDecoration(
+                      border: Border.all(color: ThemeColors.white, width: 3),
+                      shape: BoxShape.circle),
+                  child: ClipOval(
+                    child: provider.userData?.userStats?.imageType=="svg"
+                        ? SvgPicture.network(
+                      height: 95,
+                      width: 95,
+                      provider.userData?.userStats?.image?? "",
+                      placeholderBuilder: (BuildContext context) =>
+                          Container(
+                            padding: const EdgeInsets.all(30.0),
+                            child: const CircularProgressIndicator(),
+                          ),
+                    )
+                        : CachedNetworkImagesWidget(
+                      provider.userData?.userStats?.image?? "",
+                      height: 95,
+                      width: 95,
+                      showLoading: true,
+                      placeHolder: Images.userPlaceholder,
+                    ),
+                  ),
+                ),
+              /*  ProfileImage(
                   imageSize: 95,
                   cameraSize: 19,
-                  url: "https://api.dicebear.com/9.x/thumbs/svg?size=500&seed=Felix&flip=false&backgroundColor=ffdfbf&eyes=variant2W16&mouth=variant5&shapeColor=0a5b83",
+                  url:provider.userData?.userStats?.image?? "",
                   showCameraIcon: false,
-
-                ),
+                ),*/
                 const SpacerVertical(height: 13),
                 Text(
-                 widget.userId ?? "",
+                  provider.userData?.title ?? "",
                   textAlign: TextAlign.center,
                   style: stylePTSansBold(
                     fontSize: 24,
@@ -92,8 +129,9 @@ class _TournamentUserDetailState extends State<TournamentUserDetail> {
                   ),
                   child: Row(
                     children: [
-                      InfoBox(label: 'Rank', value: 'Novice Trader'),
-                      InfoBox(label: 'Exp.', value: '0.1Y'),
+                      InfoBox(label: 'Performance', value:provider.userData?.userStats?.performance??""),
+                      InfoBox(label: 'Rank', value: provider.userData?.userStats?.rank??""),
+                      InfoBox(label: 'Exp.', value:provider.userData?.userStats?.exp??""),
                     ]
                   ),
                 ),
@@ -101,18 +139,19 @@ class _TournamentUserDetailState extends State<TournamentUserDetail> {
                 GridView.builder(
                   physics: NeverScrollableScrollPhysics(),
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount:4,
+                    crossAxisCount:3,
                     mainAxisSpacing:5.0,
                     crossAxisSpacing:5.0
                   ),
-                  itemCount: 4,
+                  itemCount: provider.userData?.userStats?.info?.length??0,
                   shrinkWrap: true,
                   itemBuilder: (context, index) {
-                    return GridBoxs();
+                    Info? info=  provider.userData?.userStats?.info?[index];
+                    return GridBoxs(info:info);
                   },
                 ),
 
-                const SpacerVertical(height: 13),
+                /*const SpacerVertical(height: 13),
                 ScreenTitle(
                   title: "Recent Activities",
                   subTitle: "Day Trading League (01/24/2025)",
@@ -191,10 +230,11 @@ class _TournamentUserDetailState extends State<TournamentUserDetail> {
                   separatorBuilder: (context, index) {
                     return SpacerVertical(height: 10);
                   },
-                )
+                )*/
               ],
             ),
           ),
+        )
         )
     );
   }

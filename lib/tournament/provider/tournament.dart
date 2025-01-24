@@ -181,8 +181,7 @@ class TournamentProvider extends ChangeNotifier {
   TournamentRes? _data;
   TournamentRes? get data => _data;
 
-  TournamentUserDetailRes? _userData;
-  TournamentUserDetailRes? get userData => _userData;
+
 
   Extra? _extra;
   Extra? get extra => _extra;
@@ -245,6 +244,8 @@ class TournamentProvider extends ChangeNotifier {
     _statusDetail = status;
     notifyListeners();
   }
+
+
 
   int? _id;
 // MARK: DETAIL
@@ -437,8 +438,27 @@ class TournamentProvider extends ChangeNotifier {
 
  }
 
+
+  Status _statusUserData = Status.ideal;
+  Status get statusUserData => _statusUserData;
+
+  bool get isLoadingUserData =>
+      _statusUserData == Status.loading || _statusUserData == Status.ideal;
+
+  String? _errorUserData;
+  String? get errorUserData => _errorUserData ?? Const.errSomethingWrong;
+
+  TournamentUserDetailRes? _userData;
+  TournamentUserDetailRes? get userData => _userData;
+
+
+  void setStatusUserData(status) {
+    _statusUserData = status;
+    notifyListeners();
+  }
+
   Future getUserDetail({String? userID}) async {
-    setStatusDetail(Status.loading);
+    setStatusUserData(Status.loading);
     try {
       Map request = {
         "token": navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
@@ -451,20 +471,20 @@ class TournamentProvider extends ChangeNotifier {
       );
       if (response.status) {
         _userData = tournamentUserDetailResFromMap(jsonEncode(response.data));
-        //_extra = (response.extra is Extra ? response.extra as Extra : null);
-        _error = null;
+        //isSVG = isSvgFromUrl(_userData?.userStats?.image);
+        _errorUserData = null;
       } else {
- //       _userData = null;
-        _error = response.message ?? Const.errSomethingWrong;
+        _userData = null;
+        _errorUserData = response.message ?? Const.errSomethingWrong;
         // showErrorMessage(message: response.message);
       }
-      setStatusDetail(Status.loaded);
+      setStatusUserData(Status.loaded);
     } catch (e) {
-   //   _userData = null;
+      _userData = null;
 
-      _error = Const.errSomethingWrong;
+      _errorUserData = Const.errSomethingWrong;
       Utils().showLog('Error getDashboardData $e');
-      setStatusDetail(Status.loaded);
+      setStatusUserData(Status.loaded);
     }
   }
 

@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:stocks_news_new/tournament/models/tour_user_detail.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 class GridBoxs extends StatelessWidget {
-  const GridBoxs({super.key});
+  final Info? info;
+  const GridBoxs({super.key, this.info});
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +31,7 @@ class GridBoxs extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(
-            '18',
+            "${info?.value??""}",
             style: styleGeorgiaBold(fontSize:16,color: ThemeColors.white),
             maxLines: 1,
             textAlign: TextAlign.center,
@@ -40,9 +42,11 @@ class GridBoxs extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(
-                'Total Trades',
-                style: styleGeorgiaRegular(fontSize:10),
+              Flexible(
+                child: Text(
+                  info?.title??"",
+                  style: styleGeorgiaRegular(fontSize:10),
+                ),
               ),
               const SpacerHorizontal(width:3),
               Icon(Icons.info_rounded,size: 14)

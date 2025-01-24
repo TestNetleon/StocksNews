@@ -64,7 +64,7 @@ class RecentBattle {
   final String? date;
   final int? status;
   final int? position;
-  final double? totalChange;
+  final num? totalChange;
   final int? points;
   final int? rewards;
 
@@ -89,7 +89,7 @@ class RecentBattle {
     date: json["date"],
     status: json["status"],
     position: json["position"],
-    totalChange: json["total_change"]?.toDouble(),
+    totalChange: json["total_change"],
     points: json["points"],
     rewards: json["rewards"],
   );
@@ -116,7 +116,7 @@ class RecentTradeRes {
   final String? closed;
   final String? type;
   final String? symbol;
-  final int? change;
+  final num? change;
 
   RecentTradeRes({
     this.tournamentId,
@@ -156,19 +156,31 @@ class UserStats {
   final String? userId;
   final String? name;
   final String? image;
+  final String? imageType;
+  final String? rank;
+  final String? performance;
+  final String? exp;
   final List<Info>? info;
 
   UserStats({
     this.userId,
     this.name,
     this.image,
+    this.imageType,
+    this.rank,
     this.info,
+    this.performance,
+    this.exp,
   });
 
   factory UserStats.fromMap(Map<String, dynamic> json) => UserStats(
     userId: json["user_id"],
     name: json["name"],
     image: json["image"],
+    imageType: json["image_type"],
+    rank: json["rank"],
+    performance: json["performance"],
+    exp: json["experience"],
     info: json["info"] == null ? [] : List<Info>.from(json["info"]!.map((x) => Info.fromMap(x))),
   );
 
@@ -176,13 +188,17 @@ class UserStats {
     "user_id": userId,
     "name": name,
     "image": image,
+    "image_type": imageType,
+    "rank": rank,
+    "performance": performance,
+    "experience": exp,
     "info": info == null ? [] : List<dynamic>.from(info!.map((x) => x.toMap())),
   };
 }
 
 class Info {
   final String? title;
-  final dynamic value;
+  final String? value;
 
   Info({
     this.title,
