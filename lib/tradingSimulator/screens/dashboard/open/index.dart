@@ -6,7 +6,6 @@ import 'package:stocks_news_new/tradingSimulator/modals/ts_open_list_res.dart';
 import 'package:stocks_news_new/tradingSimulator/providers/trade_provider.dart';
 import 'package:stocks_news_new/tradingSimulator/providers/ts_open_list_provider.dart';
 import 'package:stocks_news_new/tradingSimulator/screens/dashboard/open/item.dart';
-import 'package:stocks_news_new/tradingSimulator/screens/dashboard/tradeSheet.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';

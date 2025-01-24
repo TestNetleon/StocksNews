@@ -5,14 +5,12 @@ import 'package:stocks_news_new/tradingSimulator/modals/ts_pending_list_res.dart
 import 'package:stocks_news_new/tradingSimulator/providers/ts_pending_list_provider.dart';
 import 'package:stocks_news_new/tradingSimulator/screens/dashboard/pending/item.dart';
 import 'package:stocks_news_new/tradingSimulator/screens/dashboard/pending/ts_slidable_menu.dart';
-import 'package:stocks_news_new/tradingSimulator/screens/dashboard/tradeSheet.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
 import 'package:stocks_news_new/widgets/refresh_controll.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
-import '../../../../tournament/provider/trades.dart';
 import '../../../manager/sse.dart';
 import '../../../modals/trading_search_res.dart';
 import '../../../providers/trade_provider.dart';
@@ -48,12 +46,11 @@ class _TsPendingListState extends State<TsPendingList> {
       okText: "Edit",
       onTap: () {
         TsPendingListProvider provider = context.read<TsPendingListProvider>();
-        if(item.tradeType == "Short"){
+        if (item.tradeType == "Short") {
           provider.shortRedirection(
             index: index,
           );
-        }
-        else{
+        } else {
           provider.stockHolding(
             index: index,
           );

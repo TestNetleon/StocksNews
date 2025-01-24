@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/tournament/provider/tournament.dart';
 import 'package:stocks_news_new/tournament/screens/tournaments/widgets/play_box.dart';
-import 'package:stocks_news_new/widgets/cache_network_image.dart';
-import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import '../../../../../utils/colors.dart';
 import '../../../../../utils/theme.dart';
-import '../../../../../widgets/theme_button.dart';
 import '../../../../models/tournament_detail.dart';
 import '../../../../widgets/card.dart';
 import '../open/index.dart';
@@ -131,7 +127,7 @@ class DayTrainingTitle extends StatelessWidget {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.symmetric(vertical:10.0),
+          padding: const EdgeInsets.symmetric(vertical: 10.0),
           child: PlayBoxTournament(
             title: detailRes?.name ?? '',
             imageUrl: provider.detailRes?.image,
@@ -154,7 +150,6 @@ class DayTrainingTitle extends StatelessWidget {
             buttonVisibility: provider.detailRes?.tournamentBattleId != null,
           ),
         ),
-
       ],
     );
   }

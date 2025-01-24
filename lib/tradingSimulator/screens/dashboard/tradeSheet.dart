@@ -12,7 +12,6 @@ import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import '../../../../../utils/theme.dart';
 import '../../modals/trading_search_res.dart';
-import '../../providers/trading_search_provider.dart';
 
 tradeSheet({
   String? symbol,
@@ -61,8 +60,8 @@ class _SearchTickerState extends State<SearchTicker> {
     setState(() {});
 
     try {
-      TradingSearchProvider provider =
-      navigatorKey.currentContext!.read<TradingSearchProvider>();
+      // TradingSearchProvider provider =
+      // navigatorKey.currentContext!.read<TradingSearchProvider>();
       // if (symbol != null && symbol != '') {
       //   provider.stockHolding(symbol, buy: buy);
       // }
@@ -236,7 +235,7 @@ class _SearchTickerState extends State<SearchTicker> {
                           Navigator.push(
                             context,
                             createRoute(const SearchTradingTicker()),
-                           // createRoute(const SearchTradingTicker(buy: false)),
+                            // createRoute(const SearchTradingTicker(buy: false)),
                           );
                         }
                       },

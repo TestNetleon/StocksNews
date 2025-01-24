@@ -229,7 +229,7 @@ class BlogProvider extends ChangeNotifier {
 
       Utils().showLog('error there $e');
       // setStatus(Status.loaded);
-      _statusDetail = Status.loaded;
+      _statusDetail = Status.loading;
       notifyListeners();
     }
   }

@@ -212,7 +212,6 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
 import '../../utils/colors.dart';
-import '../screens/trade/sheet.dart';
 
 class TradingSearchProvider extends ChangeNotifier {
   Status _status = Status.ideal;
@@ -319,12 +318,18 @@ class TradingSearchProvider extends ChangeNotifier {
       Map request = {
         'token': provider.user?.token ?? '',
         'symbol': symbol,
-        'action': selectedStock==StockType.sell?"SELL":selectedStock==StockType.buy?"BUY":"BUY_TO_COVER",
+        'action': selectedStock == StockType.sell
+            ? "SELL"
+            : selectedStock == StockType.buy
+                ? "BUY"
+                : "BUY_TO_COVER",
       };
       ApiResponse res = await apiRequest(
           url: Apis.stockHoldings, request: request, showProgress: true);
       if (res.status) {
-        if ((selectedStock==StockType.sell||selectedStock==StockType.btc) && res.data['quantity'] <= 0) {
+        if ((selectedStock == StockType.sell ||
+                selectedStock == StockType.btc) &&
+            res.data['quantity'] <= 0) {
           popUpAlert(
               title: 'Alert',
               message: "You don't own the shares of this stock");
@@ -361,22 +366,23 @@ class TradingSearchProvider extends ChangeNotifier {
 
   Future shortRedirection(String symbol) async {
     try {
-        TradeProviderNew provider = navigatorKey.currentContext!.read<TradeProviderNew>();
-        ApiResponse response = await provider.getDetailTopData(
-          symbol: symbol,
-          showProgress: true,
-        );
-        if (response.status) {
-          Navigator.pushReplacement(
-            navigatorKey.currentContext!,
-            MaterialPageRoute(
-              builder: (context) => TradeBuySellIndex(
-                selectedStock: StockType.short,
-                qty:0,
-              ),
+      TradeProviderNew provider =
+          navigatorKey.currentContext!.read<TradeProviderNew>();
+      ApiResponse response = await provider.getDetailTopData(
+        symbol: symbol,
+        showProgress: true,
+      );
+      if (response.status) {
+        Navigator.pushReplacement(
+          navigatorKey.currentContext!,
+          MaterialPageRoute(
+            builder: (context) => TradeBuySellIndex(
+              selectedStock: StockType.short,
+              qty: 0,
             ),
-          );
-        }
+          ),
+        );
+      }
       return ApiResponse(status: response.status);
     } catch (e) {
       Utils().showLog('stock holding: $e');
@@ -397,10 +403,10 @@ class TradingSearchProvider extends ChangeNotifier {
       isScrollControlled: false,
       context: navigatorKey.currentContext!,
       builder: (context) {
-        return
-             SizedBox();
+        return SizedBox();
+
         /// not call _show sheet
-          /*SuccessTradeSheet(
+        /*SuccessTradeSheet(
           order: order,
           buy: buy,
           close: true,

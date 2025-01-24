@@ -1,15 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/tournament/models/tournament.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/tournament/screens/tournaments/widgets/play_box.dart';
-import 'package:stocks_news_new/utils/constants.dart';
-import 'package:stocks_news_new/widgets/cache_network_image.dart';
-import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
-import 'package:stocks_news_new/widgets/theme_button.dart';
-import '../../../../utils/colors.dart';
-import '../../../../utils/theme.dart';
 import '../../../../widgets/spacer_vertical.dart';
 import '../../../provider/tournament.dart';
 import '../dayTraining/index.dart';
@@ -41,21 +34,25 @@ class TournamentGrids extends StatelessWidget {
       itemBuilder: (context, index) {
         TournamentDataRes? data = provider.data?.tournaments?[index];
 
-        return
-          PlayBoxTournament(title: data?.name ??'',imageUrl: data?.image,description: data?.description ?? '',pointText: data?.pointText ?? '', points:data?.point??"0", onButtonTap:
-          (){
-            if (index == 0) {
-              Navigator.push(
-                navigatorKey.currentContext!,
-                MaterialPageRoute(
-                  builder: (context) => TournamentDayTrainingIndex(
-                    tournamentId:  data?.tournamentId,
+        return PlayBoxTournament(
+            title: data?.name ?? '',
+            imageUrl: data?.image,
+            description: data?.description ?? '',
+            pointText: data?.pointText ?? '',
+            points: data?.point ?? "0",
+            onButtonTap: () {
+              if (index == 0) {
+                Navigator.push(
+                  navigatorKey.currentContext!,
+                  MaterialPageRoute(
+                    builder: (context) => TournamentDayTrainingIndex(
+                      tournamentId: data?.tournamentId,
+                    ),
                   ),
-                ),
-              );
-            }
-          }
-         ,buttonText: "Play Game");
+                );
+              }
+            },
+            buttonText: "Play Game");
       },
       separatorBuilder: (context, index) {
         return SpacerVertical(height: 10);

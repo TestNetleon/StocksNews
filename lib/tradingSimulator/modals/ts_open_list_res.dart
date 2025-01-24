@@ -23,8 +23,10 @@ class TsOpenListRes {
   final DateTime? createdAt;
   final bool? executable;
   final num? previousClose;
+  final String? tradeType;
 
   TsOpenListRes({
+    this.tradeType,
     this.symbol,
     this.previousClose,
     this.executable,
@@ -44,6 +46,7 @@ class TsOpenListRes {
 
   factory TsOpenListRes.fromJson(Map<String, dynamic> json) => TsOpenListRes(
         symbol: json["symbol"],
+        tradeType: json['trade_type'],
         previousClose: json['previous_close'],
         executable: json['is_trade_executable'],
         avgPrice: json['average_price'],
@@ -64,6 +67,7 @@ class TsOpenListRes {
 
   Map<String, dynamic> toJson() => {
         "symbol": symbol,
+        'trade_type': tradeType,
         'previous_close': previousClose,
         'is_trade_executable': executable,
         "quantity": quantity,

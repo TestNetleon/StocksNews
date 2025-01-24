@@ -16,7 +16,6 @@ import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 import '../../manager/sse.dart';
-import '../dashboard/tradeSheet.dart';
 
 class SdTradeDefaultItem extends StatelessWidget {
   final TradingSearchTickerRes data;
@@ -38,15 +37,16 @@ class SdTradeDefaultItem extends StatelessWidget {
     ));
     Navigator.push(
       navigatorKey.currentContext!,
-      createRoute(TradOrderScreen(symbol:  item?.symbol ?? '',doPop: false,
-        data:TradingSearchTickerRes(
+      createRoute(TradOrderScreen(
+        symbol: item?.symbol ?? '',
+        doPop: false,
+        data: TradingSearchTickerRes(
           image: data.image,
           name: data.name,
           currentPrice: data.currentPrice,
           symbol: data.symbol,
         ),
-      )
-      ),
+      )),
     );
     /*tradeSheet(
       symbol: item?.symbol ?? '',

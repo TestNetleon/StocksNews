@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/tradingSimulator/TradingWithTypes/trad_order_screen.dart';
 import 'package:stocks_news_new/tradingSimulator/modals/ts_pending_list_res.dart';
-import 'package:stocks_news_new/tradingSimulator/screens/dashboard/tradeSheet.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/refresh_controll.dart';

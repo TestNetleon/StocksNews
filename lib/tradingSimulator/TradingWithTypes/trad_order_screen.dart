@@ -9,7 +9,6 @@ import 'package:stocks_news_new/tradingSimulator/modals/trading_search_res.dart'
 import 'package:stocks_news_new/tradingSimulator/providers/trade_provider.dart';
 import 'package:stocks_news_new/tradingSimulator/providers/trading_search_provider.dart';
 import 'package:stocks_news_new/tradingSimulator/screens/searchTradingTicker/index.dart';
-import 'package:stocks_news_new/tradingSimulator/screens/tradeBuySell/index.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -24,7 +23,8 @@ class TradOrderScreen extends StatefulWidget {
   final bool doPop;
   final dynamic qty;
   final TradingSearchTickerRes? data;
-  const TradOrderScreen({super.key, this.symbol, required this.doPop, this.data, this.qty});
+  const TradOrderScreen(
+      {super.key, this.symbol, required this.doPop, this.data, this.qty});
 
   @override
   State<TradOrderScreen> createState() => _TradOrderScreenState();
@@ -32,26 +32,43 @@ class TradOrderScreen extends StatefulWidget {
 
 class _TradOrderScreenState extends State<TradOrderScreen> {
   bool disposeSheet = true;
-  List<dynamic> listOfORders=[];
+  List<dynamic> listOfORders = [];
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    listOfORders.add({"title":"Recurring investments","description":'Invest in ${widget.symbol} on a recurring schedule.'});
-    listOfORders.add({"title":"Limit order","description":'Buy ${widget.symbol} at a maximum price or lower.'});
-    listOfORders.add({"title":"Trailing stop order","description":'If ${widget.symbol} rises above its lowest price by a specific amount, trigger a market buy.'});
-    listOfORders.add({"title":"Stop order","description":'If ${widget.symbol} rises to a fixed stop price, trigger a market buy.'});
-    listOfORders.add({"title":"Stop limit order","description":'If ${widget.symbol} rises to a fixed stop price, trigger a limit buy.'});
-
+    listOfORders.add({
+      "title": "Recurring investments",
+      "description": 'Invest in ${widget.symbol} on a recurring schedule.'
+    });
+    listOfORders.add({
+      "title": "Limit order",
+      "description": 'Buy ${widget.symbol} at a maximum price or lower.'
+    });
+    listOfORders.add({
+      "title": "Trailing stop order",
+      "description":
+          'If ${widget.symbol} rises above its lowest price by a specific amount, trigger a market buy.'
+    });
+    listOfORders.add({
+      "title": "Stop order",
+      "description":
+          'If ${widget.symbol} rises to a fixed stop price, trigger a market buy.'
+    });
+    listOfORders.add({
+      "title": "Stop limit order",
+      "description":
+          'If ${widget.symbol} rises to a fixed stop price, trigger a limit buy.'
+    });
   }
 
-
-  Future _onTap({String? symbol,StockType? selectedStock}) async {
+  Future _onTap({String? symbol, StockType? selectedStock}) async {
     disposeSheet = false;
     setState(() {});
     try {
-      TradingSearchProvider provider = navigatorKey.currentContext!.read<TradingSearchProvider>();
+      TradingSearchProvider provider =
+          navigatorKey.currentContext!.read<TradingSearchProvider>();
       if (symbol != null && symbol != '') {
         provider.stockHolding(symbol, selectedStock: selectedStock);
       }
@@ -76,16 +93,17 @@ class _TradOrderScreenState extends State<TradOrderScreen> {
     return BaseContainer(
         appBar: AppBarHome(
           isPopBack: true,
-          icon:  Icons.close,
+          icon: Icons.close,
           canSearch: false,
           showTrailing: false,
         ),
         body: Padding(
-          padding: EdgeInsets.fromLTRB(Dimen.padding, Dimen.paddingTablet, Dimen.padding, 0),
+          padding: EdgeInsets.fromLTRB(
+              Dimen.padding, Dimen.paddingTablet, Dimen.padding, 0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-            /*  SizedBox(
+              /*  SizedBox(
                 width:30,
                 height:30,
                 child: IconButton(
@@ -106,10 +124,10 @@ class _TradOrderScreenState extends State<TradOrderScreen> {
                         color: const Color.fromARGB(255, 224, 225, 227),
                         shape: BoxShape.circle,
                       ),
-                      width:50,
-                      height:50,
+                      width: 50,
+                      height: 50,
                       child:
-                      CachedNetworkImagesWidget(widget.data?.image ?? ""),
+                          CachedNetworkImagesWidget(widget.data?.image ?? ""),
                     ),
                   ),
                   const SpacerHorizontal(width: 12),
@@ -120,7 +138,7 @@ class _TradOrderScreenState extends State<TradOrderScreen> {
                         Text(
                           '${widget.data?.symbol}',
                           style: styleGeorgiaBold(
-                              color: ThemeColors.white, fontSize:18),
+                              color: ThemeColors.white, fontSize: 18),
                         ),
                         Text(
                           '${widget.data?.name}',
@@ -159,79 +177,100 @@ class _TradOrderScreenState extends State<TradOrderScreen> {
                   ),
                 ],
               ),
-              SpacerVertical(height:10),
+              SpacerVertical(height: 10),
               Divider(
                 color: ThemeColors.white,
                 height: 20,
               ),
-              SpacerVertical(height:5),
+              SpacerVertical(height: 5),
               Text(
                 "Buy orders",
-                style: stylePTSansBold(fontSize:18),
+                style: stylePTSansBold(fontSize: 18),
               ),
-              SpacerVertical(height:5),
-              BuyOrderItem(title: "Buy Order",subtitle: "Buy ${widget.symbol} at a maximum price or lower.",onTap: (){
-                var selectedStock = StockType.buy;
-                if (widget.symbol != null) {
-                  _onTap(symbol: widget.symbol, selectedStock: selectedStock);
-                } else {
-                  Navigator.push(
-                    context,
-                    createRoute(SearchTradingTicker(selectedStock: selectedStock)),
-                  );
-                }
-              }),
-              BuyOrderItem(title: "Sell Order",subtitle: "Sell ${widget.symbol} at a maximum price or lower.",onTap: (){
-                var selectedStock = StockType.sell;
-                if (widget.symbol != null) {
-                  _onTap(symbol: widget.symbol, selectedStock: selectedStock);
-                } else {
-                  Navigator.push(
-                    context,
-                    createRoute(SearchTradingTicker(selectedStock: selectedStock)),
-                  );
-                }
-              }),
-              BuyOrderItem(title: "Short Order",subtitle: "Short ${widget.symbol} at a maximum price or lower.",onTap: (){
-                var selectedStock = StockType.short;
-                if (widget.symbol != null) {
-                  navigatorKey.currentContext!.read<TradingSearchProvider>().shortRedirection(widget.symbol??"");
-                } else {
-                  Navigator.push(
-                    context,
-                    createRoute(SearchTradingTicker(selectedStock: selectedStock)),
-                  );
-                }
-              }),
-
-              BuyOrderItem(title: "Buy To Cover Order",subtitle: "Buy To Cover ${widget.symbol} at a maximum price or lower.",onTap: (){
-                var selectedStock = StockType.btc;
-                if (widget.symbol != null) {
-                  _onTap(symbol: widget.symbol, selectedStock: selectedStock);
-                } else {
-                  Navigator.push(
-                    context,
-                    createRoute(SearchTradingTicker(selectedStock: selectedStock)),
-                  );
-                }
-              }),
-
-              SpacerVertical(height:10),
-
+              SpacerVertical(height: 5),
+              BuyOrderItem(
+                  title: "Buy Order",
+                  subtitle: "Buy ${widget.symbol} at a maximum price or lower.",
+                  onTap: () {
+                    var selectedStock = StockType.buy;
+                    if (widget.symbol != null) {
+                      _onTap(
+                          symbol: widget.symbol, selectedStock: selectedStock);
+                    } else {
+                      Navigator.push(
+                        context,
+                        createRoute(
+                            SearchTradingTicker(selectedStock: selectedStock)),
+                      );
+                    }
+                  }),
+              BuyOrderItem(
+                  title: "Sell Order",
+                  subtitle:
+                      "Sell ${widget.symbol} at a maximum price or lower.",
+                  onTap: () {
+                    var selectedStock = StockType.sell;
+                    if (widget.symbol != null) {
+                      _onTap(
+                          symbol: widget.symbol, selectedStock: selectedStock);
+                    } else {
+                      Navigator.push(
+                        context,
+                        createRoute(
+                            SearchTradingTicker(selectedStock: selectedStock)),
+                      );
+                    }
+                  }),
+              BuyOrderItem(
+                  title: "Short Order",
+                  subtitle:
+                      "Short ${widget.symbol} at a maximum price or lower.",
+                  onTap: () {
+                    var selectedStock = StockType.short;
+                    if (widget.symbol != null) {
+                      navigatorKey.currentContext!
+                          .read<TradingSearchProvider>()
+                          .shortRedirection(widget.symbol ?? "");
+                    } else {
+                      Navigator.push(
+                        context,
+                        createRoute(
+                            SearchTradingTicker(selectedStock: selectedStock)),
+                      );
+                    }
+                  }),
+              BuyOrderItem(
+                  title: "Buy To Cover Order",
+                  subtitle:
+                      "Buy To Cover ${widget.symbol} at a maximum price or lower.",
+                  onTap: () {
+                    var selectedStock = StockType.btc;
+                    if (widget.symbol != null) {
+                      _onTap(
+                          symbol: widget.symbol, selectedStock: selectedStock);
+                    } else {
+                      Navigator.push(
+                        context,
+                        createRoute(
+                            SearchTradingTicker(selectedStock: selectedStock)),
+                      );
+                    }
+                  }),
+              SpacerVertical(height: 10),
               Text(
                 "Conditional orders",
-                style: stylePTSansBold(fontSize:18),
+                style: stylePTSansBold(fontSize: 18),
               ),
-              SpacerVertical(height:5),
+              SpacerVertical(height: 5),
               Expanded(
                 child: ListView.separated(
-                  itemCount:listOfORders.length,
+                  itemCount: listOfORders.length,
                   shrinkWrap: true,
                   itemBuilder: (context, index) {
                     //TradingSearchTickerRes data = provider.topSearch![index];
                     return ListTile(
                       contentPadding: EdgeInsets.zero,
-                      minTileHeight:60,
+                      minTileHeight: 60,
                       leading: Container(
                           padding: EdgeInsets.all(5),
                           decoration: BoxDecoration(
@@ -239,7 +278,7 @@ class _TradOrderScreenState extends State<TradOrderScreen> {
                             shape: BoxShape.circle,
                           ),
                           child:
-                          /* "data.imageType" == "svg"
+                              /* "data.imageType" == "svg"
                           ? SvgPicture.network(
                         fit: BoxFit.cover,
                        "",
@@ -256,15 +295,15 @@ class _TradOrderScreenState extends State<TradOrderScreen> {
                         height: 26,
                         "data.userImage",
                       ),*/
-                          Icon(Icons.auto_graph,color:  ThemeColors.white)
-                      ),
+                              Icon(Icons.auto_graph, color: ThemeColors.white)),
                       title: Text(
-                        listOfORders[index]['title']??"",
+                        listOfORders[index]['title'] ?? "",
                         style: styleGeorgiaRegular(),
                       ),
                       subtitle: Text(
-                        listOfORders[index]['description']??"",
-                        style: styleGeorgiaRegular(fontSize:12,color: ThemeColors.greyText),
+                        listOfORders[index]['description'] ?? "",
+                        style: styleGeorgiaRegular(
+                            fontSize: 12, color: ThemeColors.greyText),
                       ),
                       trailing: Icon(
                         Icons.arrow_forward_ios_sharp,
@@ -283,7 +322,6 @@ class _TradOrderScreenState extends State<TradOrderScreen> {
               )
             ],
           ),
-        )
-    );
+        ));
   }
 }

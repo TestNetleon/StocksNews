@@ -344,6 +344,17 @@ class TsOpenListProvider extends ChangeNotifier {
         ? ((existingStock.investedChange ?? 0) / invested) * 100
         : 0;
 
+    if (existingStock.tradeType == 'Short') {
+      existingStock.investedChange =
+          invested - (existingStock.currentInvested ?? 0);
+
+      existingStock.investedChangePercentage = invested > 0
+          ? ((existingStock.investedChange ?? 0) /
+                  (existingStock.currentInvested ?? 0)) *
+              100
+          : 0;
+    }
+
     // Calculate today's return and update map
     var returnData =
         _calculateTodaysReturn(stockData, existingStock, shares, invested);

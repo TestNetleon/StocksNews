@@ -136,6 +136,7 @@ class TsOpenListItem extends StatelessWidget {
                           ),
                           const SpacerVertical(height: 3),
                           Text(
+                            textAlign: TextAlign.start,
                             "${item?.invested?.toFormattedPrice()}",
                             style: stylePTSansBold(
                                 color: ThemeColors.white, fontSize: 14),
@@ -163,6 +164,7 @@ class TsOpenListItem extends StatelessWidget {
                           ),
                           const SpacerVertical(height: 3),
                           Text(
+                            textAlign: TextAlign.center,
                             "${item?.currentInvested?.toFormattedPrice() ?? 0}",
                             style: stylePTSansBold(
                                 color: ThemeColors.white, fontSize: 14),
@@ -190,7 +192,7 @@ class TsOpenListItem extends StatelessWidget {
                           ),
                           const SpacerVertical(height: 3),
                           Text(
-                            textAlign: TextAlign.center,
+                            textAlign: TextAlign.end,
                             item?.investedChange == 0
                                 ? '0'
                                 : "${item?.investedChange?.toFormattedPrice() ?? 0} (${item?.investedChangePercentage?.toCurrency() ?? 0}%)",

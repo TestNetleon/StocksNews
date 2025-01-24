@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/tournament/provider/tournament.dart';
-import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 
 import 'package:stocks_news_new/widgets/cache_network_image.dart';
@@ -29,10 +28,12 @@ class PointsPaidItem extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Visibility(
-            visible: data?.tournamentName!=null,
+            visible: data?.tournamentName != null,
             child: InkWell(
-              onTap: (){
-                context.read<TournamentProvider>().leagueToLeaderboard(selectedDate: data?.date ?? "");
+              onTap: () {
+                context
+                    .read<TournamentProvider>()
+                    .leagueToLeaderboard(selectedDate: data?.date ?? "");
               },
               child: Text(
                 data?.tournamentName ?? '',
@@ -40,10 +41,14 @@ class PointsPaidItem extends StatelessWidget {
               ),
             ),
           ),
-          Visibility(visible: data?.tournamentName!=null,child: const SpacerVertical(height: 3)),
+          Visibility(
+              visible: data?.tournamentName != null,
+              child: const SpacerVertical(height: 3)),
           InkWell(
-            onTap: (){
-              context.read<TournamentProvider>().pointPaidTraderToLeaderboard(userName: data?.userName ?? "");
+            onTap: () {
+              context
+                  .read<TournamentProvider>()
+                  .pointPaidTraderToLeaderboard(userName: data?.userName ?? "");
             },
             child: Row(
               children: [
@@ -124,12 +129,13 @@ class PointsPaidItem extends StatelessWidget {
             ),
           ),
           Visibility(
-            visible: data?.date!=null,
+            visible: data?.date != null,
             child: Align(
               alignment: Alignment.centerRight,
               child: Text(
                 data?.date ?? "",
-                style: stylePTSansRegular(fontSize: 12,color:ThemeColors.greyText),
+                style: stylePTSansRegular(
+                    fontSize: 12, color: ThemeColors.greyText),
               ),
             ),
           ),

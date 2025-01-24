@@ -8,7 +8,6 @@ import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/theme_button.dart';
 
-
 class PlayBoxTournament extends StatelessWidget {
   final String title;
   final String? imageUrl;
@@ -34,7 +33,7 @@ class PlayBoxTournament extends StatelessWidget {
     this.gradientStartColor = Colors.purple,
     this.gradientEndColor = Colors.lightBlue,
     this.buttonColor = Colors.lightBlue,
-    this.buttonVisibility =true,
+    this.buttonVisibility = true,
   });
 
   @override
@@ -83,7 +82,7 @@ class PlayBoxTournament extends StatelessWidget {
                     children: [
                       Expanded(
                         child: Text(
-                          title ??'',
+                          title,
                           textAlign: TextAlign.start,
                           style: styleGeorgiaBold(
                             fontSize: 25,
@@ -121,7 +120,7 @@ class PlayBoxTournament extends StatelessWidget {
                                 ),
                                 SpacerHorizontal(width: 5),
                                 Text(
-                                  points ?? '0',
+                                  points,
                                   textAlign: TextAlign.start,
                                   style: styleGeorgiaBold(
                                     fontSize: 25,
@@ -139,7 +138,7 @@ class PlayBoxTournament extends StatelessWidget {
             ),
             SpacerVertical(height: 5),
             Visibility(
-              visible:description != null && description != '',
+              visible: description != null && description != '',
               child: HtmlWidget(
                 description ?? '',
                 textStyle: styleGeorgiaBold(
@@ -155,8 +154,8 @@ class PlayBoxTournament extends StatelessWidget {
                 alignment: Alignment.centerRight,
                 child: ThemeButton(
                   radius: 30,
-                  color:buttonColor,
-                  text:buttonText,
+                  color: buttonColor,
+                  text: buttonText,
                   fontBold: true,
                   onPressed: onButtonTap,
                 ),

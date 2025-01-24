@@ -13,8 +13,6 @@ import 'package:stocks_news_new/tournament/provider/trades.dart';
 import 'package:stocks_news_new/tradingSimulator/TradingWithTypes/trad_order_screen.dart';
 import 'package:stocks_news_new/tradingSimulator/providers/trade_provider.dart';
 import 'package:stocks_news_new/tradingSimulator/providers/trading_search_provider.dart';
-import 'package:stocks_news_new/tradingSimulator/screens/dashboard/tradeSheet.dart';
-import 'package:stocks_news_new/tradingSimulator/screens/trade/sheet.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -138,9 +136,8 @@ class _TsTextInputFieldSearchCommonState extends State<TsTextInputFieldSearch> {
       isScrollControlled: false,
       context: navigatorKey.currentContext!,
       builder: (context) {
-        return
-          SizedBox();
-         /* SuccessTradeSheet(
+        return SizedBox();
+        /* SuccessTradeSheet(
           order: order,
           buy: buy,
           close: true,

@@ -4,7 +4,6 @@ import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/tournament/provider/trades.dart';
 import 'package:stocks_news_new/tradingSimulator/manager/sse.dart';
 import 'package:stocks_news_new/tradingSimulator/screens/tradeBuySell/container.dart';
-import 'package:stocks_news_new/tradingSimulator/widgets/sim_trade_sheet.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
