@@ -160,10 +160,10 @@ class MarketLosersStream {
             false;
     Utils().showLog('Call Offline $callOffline');
 
-    // if (callOffline) {
-    //   await getOfflineData();
-    //   return;
-    // }
+    if (callOffline) {
+      await getOfflineData();
+      return;
+    }
     final url = 'https://dev.stocks.news:$port/topGainersLosers?type=losers';
 
     final sseClient = SSEClient(url);

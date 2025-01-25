@@ -153,10 +153,10 @@ class MarketGainersStream {
     bool? callOffline =
         scannerProvider.port?.port?.checkMarketOpenApi?.checkPostMarket == true;
     Utils().showLog('Call Offline $callOffline');
-    // if (callOffline) {
-    //   await getOfflineData();
-    //   return;
-    // }
+    if (callOffline) {
+      await getOfflineData();
+      return;
+    }
 
     int? port = scannerProvider.port?.port?.gainerLoserPort?.gainer ?? 8021;
     final url = 'https://dev.stocks.news:$port/topGainersLosers?type=gainers';

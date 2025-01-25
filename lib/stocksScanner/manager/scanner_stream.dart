@@ -219,10 +219,10 @@ class MarketScannerStream {
 
     Utils().showLog('Call Offline $callOffline');
 
-    // if (callOffline) {
-    //   await getOfflineData();
-    //   return;
-    // }
+    if (callOffline) {
+      await getOfflineData();
+      return;
+    }
 
     final urls = List.generate(
       endingPort - startingPort + 1,

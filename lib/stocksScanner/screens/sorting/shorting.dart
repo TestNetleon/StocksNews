@@ -70,6 +70,7 @@ class _MarketScannerSortingState extends State<MarketScannerSorting> {
                 styleGeorgiaBold(color: ThemeColors.background, fontSize: 20),
           ),
         ),
+        SpacerHorizontal(width: 5),
         GestureDetector(
           onTap: () {
             if (widget.sortByCallBack != null) {
@@ -172,7 +173,7 @@ class _MarketScannerSortingState extends State<MarketScannerSorting> {
 
           // Sort by Dollar Volume
           _buildSortOption(
-            '\$ Volume',
+            '\$Volume',
             SortByEnums.dollarVolume,
             sortBy: widget.sortBy,
           ),
