@@ -17,12 +17,13 @@ class TopTraders extends StatelessWidget {
         return ListView.separated(
           shrinkWrap: true,
           physics: NeverScrollableScrollPhysics(),
+          //padding: EdgeInsets.only(top: 5),
           itemBuilder: (context, index) {
             LeaderboardByDateRes? data = list?[index];
             if (data == null) {
               return SizedBox();
             }
-            if (index == 0) {
+           /* if (index == 0) {
               return Column(
                 children: [
                   Divider(
@@ -62,12 +63,12 @@ class TopTraders extends StatelessWidget {
                     height: 15,
                     thickness: 1,
                   ),
-                  TournamentLeaderboardItem(data: data),
+                  TournamentLeaderboardItem(data: data,from: 1),
                 ],
               );
-            }
+            }*/
 
-            return TournamentLeaderboardItem(data: data);
+            return TournamentLeaderboardItem(data: data,from: 1);
           },
           itemCount: list?.length ?? 0,
           separatorBuilder: (context, index) {

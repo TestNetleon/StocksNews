@@ -4,6 +4,7 @@ import 'package:stocks_news_new/tournament/provider/tournament.dart';
 import 'package:stocks_news_new/tournament/widgets/card.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/featured/widgets/title.dart';
 import 'package:stocks_news_new/utils/colors.dart';
+import 'package:stocks_news_new/widgets/screen_title.dart';
 
 import '../../../../models/leaderboard.dart';
 import '../../leaderboard/item.dart';
@@ -19,11 +20,19 @@ class DayTrainingLeaderboard extends StatelessWidget {
       child: Column(
         children: [
           FeaturedWatchlistTitle(
-            title: 'Leaderboard',
-            onTap: () {},
+            title:  provider.detailRes?.leaderboardTitle??"",
+            onTap: () {
+              context.read<TournamentProvider>().leagueToLeaderboard();
+            },
+          ),
+          Visibility(
+            visible: provider.detailRes?.leaderboardSubTitle!=null,
+            child: ScreenTitle(
+              subTitle: provider.detailRes?.leaderboardSubTitle??"",
+            ),
           ),
           TournamentThemeCard(
-            margin: EdgeInsets.only(top: 10),
+            margin: EdgeInsets.only(top: provider.detailRes?.leaderboardSubTitle!=null?0:10),
             child: ListView.separated(
               padding: EdgeInsets.symmetric(vertical: 10),
               shrinkWrap: true,
@@ -65,6 +74,7 @@ class DayTrainingLeaderboard extends StatelessWidget {
                 return TournamentLeaderboardItem(
                   data: data,
                   decorate: false,
+                  from: 3,
                 );
               },
               separatorBuilder: (context, index) {

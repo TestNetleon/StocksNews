@@ -1,16 +1,23 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/tournament/models/tour_user_detail.dart';
 import 'package:stocks_news_new/tournament/provider/tournament.dart';
 import 'package:stocks_news_new/tournament/screens/tournaments/widgets/grid_boxs.dart';
+import 'package:stocks_news_new/tournament/screens/tournaments/widgets/growth_chart.dart';
 import 'package:stocks_news_new/tournament/screens/tournaments/widgets/info_box.dart';
+import 'package:stocks_news_new/tournament/screens/tournaments/widgets/ticker_item.dart';
+import 'package:stocks_news_new/tournament/screens/tournaments/widgets/tl_item.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/cache_network_image.dart';
+import 'package:stocks_news_new/widgets/loading.dart';
+import 'package:stocks_news_new/widgets/screen_title.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:svg_flutter/svg_flutter.dart';
 
@@ -23,17 +30,66 @@ class TournamentUserDetail extends StatefulWidget {
 }
 
 class _TournamentUserDetailState extends State<TournamentUserDetail> {
+  late DateTime currentDate;
+ /* List<GChart> gchart=[
+    GChart(
+      performance:800,
+      battleDate: "2024-12-23",
+      formatPerformance: "800%"
+    ),
+    GChart(
+        performance: -400,
+        battleDate: "2024-12-22",
+        formatPerformance: "-400%"
+    ),
+    GChart(
+        performance:-100,
+        battleDate: "2024-12-21",
+        formatPerformance: "100%"
+    )
+    ,
+    GChart(
+        performance:0,
+        battleDate: "2024-12-21",
+        formatPerformance: "0%"
+    )
+    ,
+    GChart(
+        performance:10,
+        battleDate: "2024-12-21",
+        formatPerformance: "10%"
+    )
+    ,
+    GChart(
+        performance:-10,
+        battleDate: "2024-12-21",
+        formatPerformance: "10%"
+    )
+    ,
+    GChart(
+        performance:40,
+        battleDate: "2024-12-21",
+        formatPerformance: "40%"
+    )
+  ];*/
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      currentDate = DateTime(
+          DateTime.now().year, DateTime.now().month, DateTime.now().day);
       _getData();
     });
+
   }
 
   void _getData() async {
     TournamentProvider provider = context.read<TournamentProvider>();
     await provider.getUserDetail(userID: widget.userId);
+  }
+
+  String formatDate(DateTime date) {
+    return DateFormat('dd MMM yyyy').format(date);
   }
 
   @override
@@ -44,7 +100,7 @@ class _TournamentUserDetailState extends State<TournamentUserDetail> {
           isPopBack: true,
           canSearch: false,
           showTrailing: false,
-          title: provider.userData?.title ?? "",
+          title: provider.extraOfUserData?.title ?? "",
         ),
         body: BaseUiContainer(
             hasData: provider.userData != null,
@@ -86,23 +142,20 @@ class _TournamentUserDetailState extends State<TournamentUserDetail> {
                               ),
                       ),
                     ),
-                    /*  ProfileImage(
-                  imageSize: 95,
-                  cameraSize: 19,
-                  url:provider.userData?.userStats?.image?? "",
-                  showCameraIcon: false,
-                ),*/
                     const SpacerVertical(height: 13),
-                    Text(
-                      provider.userData?.title ?? "",
-                      textAlign: TextAlign.center,
-                      style: stylePTSansBold(
-                        fontSize: 24,
+                    Visibility(
+                      visible: provider.userData?.userStats?.name != null,
+                      child: Text(
+                        provider.userData?.userStats?.name ?? "",
+                        textAlign: TextAlign.center,
+                        style: stylePTSansBold(
+                          fontSize: 24,
+                        ),
                       ),
                     ),
                     const SpacerVertical(height: 5),
                     Text(
-                      "Discover a complete overview of your performance, featuring details of the leagues you've joined, your victories, setbacks, rewards earned, and your overall growth.",
+                      provider.extraOfUserData?.subTitle ?? "",
                       textAlign: TextAlign.center,
                       style: stylePTSansRegular(
                           fontSize: 12, color: ThemeColors.greyText),
@@ -126,8 +179,7 @@ class _TournamentUserDetailState extends State<TournamentUserDetail> {
                       child: Row(children: [
                         InfoBox(
                             label: 'Performance',
-                            value: provider.userData?.userStats?.performance ??
-                                ""),
+                            value: "${provider.userData?.userStats?.performance ?? ""}"),
                         InfoBox(
                             label: 'Rank',
                             value: provider.userData?.userStats?.rank ?? ""),
@@ -151,87 +203,174 @@ class _TournamentUserDetailState extends State<TournamentUserDetail> {
                         return GridBoxs(info: info);
                       },
                     ),
-
-                    /*const SpacerVertical(height: 13),
-                ScreenTitle(
-                  title: "Recent Activities",
-                  subTitle: "Day Trading League (01/24/2025)",
-                  style: styleGeorgiaBold(fontSize: 16),
-                  dividerPadding: EdgeInsets.zero,
-                ),
-                const SpacerVertical(height: 13),
-
-                const SpacerVertical(height: 13),
-                ScreenTitle(
-                  title: "Trading Leagues",
-                  subTitle: "The detailed history of your participation in trading leagues.",
-                  style: styleGeorgiaBold(fontSize: 16),
-                  dividerPadding: EdgeInsets.zero,
-                ),
-                const SpacerVertical(height: 13),
-                ListView.separated(
-                  shrinkWrap: true,
-                  physics: NeverScrollableScrollPhysics(),
-                  itemBuilder: (context, index) {
-                    LeaderboardByDateRes? data = provider.tradesExecuted?[index];
-                    if (data == null) {
-                      return SizedBox();
-                    }
-                    if (index == 0) {
-                      return Column(
-                        children: [
-                          Divider(
-                            color: ThemeColors.greyBorder,
-                            height: 15,
-                            thickness: 1,
-                          ),
-                          Row(
+                    const SpacerVertical(height: 13),
+                    Visibility(
+                      visible:(provider.userData?.recentTrades?.title!=null|| provider.userData?.recentTrades?.status!=null),
+                      child: ScreenTitle(
+                        title: provider.userData?.recentTrades?.title??"",
+                        subTitle: provider.userData?.recentTrades?.status==true?provider.userData?.recentTrades?.subTitle??"":provider.userData?.recentTrades?.message??"",
+                        style: styleGeorgiaBold(fontSize: 16),
+                        dividerPadding: EdgeInsets.zero,
+                      ),
+                    ),
+                    const SpacerVertical(height: 13),
+                    ListView.separated(
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      itemBuilder: (context, index) {
+                        RecentTradeRes? data = provider.userData?.recentTrades?.dataTrade?[index];
+                        if (data == null) {
+                          return SizedBox();
+                        }
+                        if (index == 0) {
+                          return Column(
                             children: [
-                              SizedBox(
-                                child: AutoSizeText(
-                                  maxLines: 1,
-                                  "POSITION",
-                                  style: stylePTSansRegular(
-                                    fontSize: 12,
-                                    color: ThemeColors.greyText,
+                              Divider(
+                                color: ThemeColors.greyBorder,
+                                height: 15,
+                                thickness: 1,
+                              ),
+                              Row(
+                                children: [
+                                  SizedBox(
+                                    child: AutoSizeText(
+                                      maxLines: 1,
+                                      "TICKER",
+                                      style: stylePTSansRegular(
+                                        fontSize: 12,
+                                        color: ThemeColors.greyText,
+                                      ),
+                                    ),
                                   ),
-                                ),
+                                  Expanded(
+                                    child: SizedBox(),
+                                  ),
+                                  AutoSizeText(
+                                    maxLines: 1,
+                                    "PERFORMANCE",
+                                    textAlign: TextAlign.end,
+                                    style: stylePTSansRegular(
+                                      fontSize: 12,
+                                      color: ThemeColors.greyText,
+                                    ),
+                                  ),
+                                ],
                               ),
-                              Expanded(
-                                child: SizedBox(),
+                              Divider(
+                                color: ThemeColors.greyBorder,
+                                height: 15,
+                                thickness: 1,
                               ),
-                              AutoSizeText(
-                                maxLines: 1,
-                                "POINTS",
-                                textAlign: TextAlign.end,
-                                style: stylePTSansRegular(
-                                  fontSize: 12,
-                                  color: ThemeColors.greyText,
-                                ),
+                              TickerItem(
+                                data: data,
                               ),
                             ],
-                          ),
-                          Divider(
-                            color: ThemeColors.greyBorder,
-                            height: 15,
-                            thickness: 1,
-                          ),
-                          LeagueTotalItem(
-                            data: data,
-                          ),
-                        ],
-                      );
-                    }
+                          );
+                        }
 
-                    return LeagueTotalItem(
-                      data: data,
-                    );
-                  },
-                  itemCount: provider.tradesExecuted?.length ?? 0,
-                  separatorBuilder: (context, index) {
-                    return SpacerVertical(height: 10);
-                  },
-                )*/
+                        return TickerItem(
+                          data: data,
+                        );
+                      },
+                      itemCount: provider.userData?.recentTrades?.dataTrade?.length ?? 0,
+                      separatorBuilder: (context, index) {
+                        return SpacerVertical(height: 10);
+                      },
+                    ),
+                    const SpacerVertical(height: 13),
+                    Visibility(
+                      visible:(provider.userData?.chart?.title!=null),
+                      child: ScreenTitle(
+                        title: provider.userData?.chart?.title??"",
+                        style: styleGeorgiaBold(fontSize: 16),
+                        dividerPadding: EdgeInsets.zero,
+                      ),
+                    ),
+                    const SpacerVertical(height: 13),
+                    Visibility(
+                      visible: provider.userData?.chart != null,
+                      child: GrowthChart(
+                        chart: provider.userData?.chart?.gChart?.toList(),
+                      ),
+                    ),
+                    const SpacerVertical(height: 13),
+
+                    Visibility(
+                      visible:(provider.userData?.recentBattles?.title!=null|| provider.userData?.recentBattles?.status!=null),
+                      child: ScreenTitle(
+                        title: provider.userData?.recentBattles?.title??"",
+                        subTitle: provider.userData?.recentBattles?.status==true?provider.userData?.recentBattles?.subTitle??"":provider.userData?.recentBattles?.message??"",
+                        style: styleGeorgiaBold(fontSize: 16),
+                        dividerPadding: EdgeInsets.zero,
+                      ),
+                    ),
+                    Visibility(
+                        visible: provider.userData?.recentBattles != null,
+                        child: const SpacerVertical(height: 13)
+                    ),
+                    ListView.separated(
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      itemBuilder: (context, index) {
+                        RecentBattlesRes? data = provider.userData?.recentBattles?.data?[index];
+                        if (data == null) {
+                          return SizedBox();
+                        }
+                        if (index == 0) {
+                          return Column(
+                            children: [
+                              Divider(
+                                color: ThemeColors.greyBorder,
+                                height: 15,
+                                thickness: 1,
+                              ),
+                              Row(
+                                children: [
+                                  SizedBox(
+                                    child: AutoSizeText(
+                                      maxLines: 1,
+                                      "LEAGUE",
+                                      style: stylePTSansRegular(
+                                        fontSize: 12,
+                                        color: ThemeColors.greyText,
+                                      ),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: SizedBox(),
+                                  ),
+                                  AutoSizeText(
+                                    maxLines: 1,
+                                    "REWARD POINTS",
+                                    textAlign: TextAlign.end,
+                                    style: stylePTSansRegular(
+                                      fontSize: 12,
+                                      color: ThemeColors.greyText,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Divider(
+                                color: ThemeColors.greyBorder,
+                                height: 15,
+                                thickness: 1,
+                              ),
+                              TlItem(
+                                data: data,
+                              ),
+                            ],
+                          );
+                        }
+
+                        return TlItem(
+                          data: data,
+                        );
+                      },
+                      itemCount: provider.userData?.recentBattles?.data?.length ?? 0,
+                      separatorBuilder: (context, index) {
+                        return SpacerVertical(height: 10);
+                      },
+                    )
                   ],
                 ),
               ),

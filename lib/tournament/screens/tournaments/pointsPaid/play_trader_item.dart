@@ -95,28 +95,37 @@ class PlayTraderItem extends StatelessWidget {
                     ],
                   ),
                 ),
-                Visibility(
-                  visible: data?.totalPoints != null,
-                  child: Text(
-                    '${data?.totalPoints}',
-                    style: styleGeorgiaBold(
-                      fontSize: 14,
-                      color: Colors.white,
-                    ),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Visibility(
+                        visible: data?.totalPoints != null,
+                        child: Text(
+                          '${data?.totalPoints}',
+                          style: styleGeorgiaBold(
+                            fontSize: 14,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                      Visibility(
+                        visible: data?.performance!=null,
+                        child: Align(
+                          alignment: Alignment.centerRight,
+                          child: Text(
+                            "${data?.performance??"0"}%",
+                            style: stylePTSansRegular(fontSize: 12, color: (data?.performance ?? 0) > 0 ? Colors.green : Colors.red,),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                ),
+                )
+
               ],
             ),
-            Visibility(
-              visible: data?.performance!=null,
-              child: Align(
-                alignment: Alignment.centerRight,
-                child: Text(
-                  "${data?.performance??"0"}%",
-                  style: stylePTSansRegular(fontSize: 12, color: (data?.performance ?? 0) > 0 ? Colors.green : Colors.red,),
-                ),
-              ),
-            ),
+
           ],
         ),
       ),

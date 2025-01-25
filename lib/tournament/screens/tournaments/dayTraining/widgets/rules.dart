@@ -34,11 +34,11 @@ class TournamentRules extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Text(
+                       /* Text(
                           '${data?.positionText}',
                           style: styleGeorgiaRegular(),
                         ),
-                        SpacerVertical(height: 8),
+                        SpacerVertical(height: 8),*/
                         CachedNetworkImagesWidget(
                           height: 70,
                           width: 70,

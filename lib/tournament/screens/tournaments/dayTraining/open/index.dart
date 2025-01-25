@@ -239,6 +239,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/api/api_response.dart';
+import 'package:stocks_news_new/screens/stockDetail/stockDetailTabs/overview/chart.dart';
 import 'package:stocks_news_new/tournament/provider/search.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
@@ -333,7 +334,8 @@ class _TournamentOpenIndexState extends State<TournamentOpenIndex>
         return BaseContainer(
           appBar: AppBarHome(
             isPopBack: true,
-            title: 'My Position',
+            title: 'Place New Trade',
+            canSearch: false,
           ),
           body: BaseUiContainer(
             hasData: searchProvider.topSearch != null &&
@@ -366,20 +368,29 @@ class _TournamentOpenIndexState extends State<TournamentOpenIndex>
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        GestureDetector(
-                          onTap: _navigateToAllTrades,
-                          child: Align(
-                            alignment: Alignment.centerRight,
-                            child: Container(
+                       /* Align(
+                          alignment: Alignment.centerRight,
+                          child: TextButton.icon(
+                            iconAlignment: IconAlignment.end,
+                            onPressed: (){
+                              _navigateToAllTrades();
+                            },
+                            label: Text(
+                              'My Trades',
+                              style: styleGeorgiaBold(),
+                            ),
+                            icon:Container(
                               decoration: BoxDecoration(
                                 color: ThemeColors.greyText,
                               ),
                               child: Icon(
                                 Icons.keyboard_double_arrow_down_rounded,
+                                color: ThemeColors.white,
                               ),
                             ),
                           ),
                         ),
+                        */
                         OpenTopStock(),
                       ],
                     ),
@@ -403,6 +414,7 @@ class _TournamentOpenIndexState extends State<TournamentOpenIndex>
                                     ),
                                   ),
                                 ),
+                                SdOverviewChart(symbol: detailHolder?.data?.ticker?.symbol ?? ""),
                                 if (detailHolder
                                         ?.data?.showButton?.alreadyTraded ==
                                     false)

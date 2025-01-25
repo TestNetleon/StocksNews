@@ -61,83 +61,89 @@ class _TournamentLeaderboardState extends State<TournamentLeaderboard> {
               child: ListView.separated(
                 padding: EdgeInsets.only(top: 10),
                 itemBuilder: (context, index) {
-                  LeaderboardByDateRes? data =
-                      provider.leaderboardRes?.leaderboardByDate?[index];
-                  if (index == 0) {
-                    return Column(
-                      children: [
-                        const SizedBox(
-                          // height: 300,
-                          width: double.infinity,
-                          // color: ThemeColors.accent,
-                          child: Stack(
-                            children: [
-                              Positioned(
-                                left: 0,
-                                top: 70,
-                                child: TournamentLeaderboardTopItem(index: 1),
-                              ),
-                              Positioned(
-                                right: 0,
-                                top: 70,
-                                child: TournamentLeaderboardTopItem(index: 2),
-                              ),
-                              Align(
-                                alignment: Alignment.topCenter,
-                                child: TournamentLeaderboardTopItem(index: 0),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Visibility(
-                          visible: (provider.leaderboardRes?.leaderboardByDate
-                                      ?.length ??
-                                  0) >
-                              3,
-                          // visible: listData.length > 3,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Divider(
-                                color: ThemeColors.greyBorder,
-                                height: 15,
-                              ),
-                              // Row(
-                              //   mainAxisAlignment:
-                              //       MainAxisAlignment.spaceBetween,
-                              //   children: [
-                              //     Text(
-                              //       "RANKING",
-                              //       style: stylePTSansRegular(
-                              //           color: ThemeColors.greyBorder),
-                              //     ),
-                              //     Text(
-                              //       "POINTS",
-                              //       style: stylePTSansRegular(
-                              //           color: ThemeColors.greyBorder),
-                              //     ),
-                              //   ],
-                              // ),
-                              // const Divider(
-                              //   color: ThemeColors.greyBorder,
-                              //   height: 15,
-                              // ),
-                            ],
-                          ),
-                        )
-                      ],
+                  LeaderboardByDateRes? data = provider.leaderboardRes?.leaderboardByDate?[index];
+                  if (data == null) {
+                    return SizedBox();
+                  }
+                  if(provider.leaderboardRes?.showLeaderboard==false){
+                    return TournamentLeaderboardItem(
+                      data: data,
+                      from: 2,
                     );
+                  }
+                  else{
+                    if (index == 0) {
+                      return Column(
+                        children: [
+                          const SizedBox(
+                            // height: 300,
+                            width: double.infinity,
+                            // color: ThemeColors.accent,
+                            child: Stack(
+                              children: [
+                                Positioned(
+                                  left: 0,
+                                  top: 70,
+                                  child: TournamentLeaderboardTopItem(index: 1),
+                                ),
+                                Positioned(
+                                  right: 0,
+                                  top: 70,
+                                  child: TournamentLeaderboardTopItem(index: 2),
+                                ),
+                                Align(
+                                  alignment: Alignment.topCenter,
+                                  child: TournamentLeaderboardTopItem(index: 0),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Visibility(
+                            visible: (provider.leaderboardRes?.leaderboardByDate
+                                ?.length ??
+                                0) >
+                                3,
+                            // visible: listData.length > 3,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Divider(
+                                  color: ThemeColors.greyBorder,
+                                  height: 15,
+                                ),
+                                // Row(
+                                //   mainAxisAlignment:
+                                //       MainAxisAlignment.spaceBetween,
+                                //   children: [
+                                //     Text(
+                                //       "RANKING",
+                                //       style: stylePTSansRegular(
+                                //           color: ThemeColors.greyBorder),
+                                //     ),
+                                //     Text(
+                                //       "POINTS",
+                                //       style: stylePTSansRegular(
+                                //           color: ThemeColors.greyBorder),
+                                //     ),
+                                //   ],
+                                // ),
+                                // const Divider(
+                                //   color: ThemeColors.greyBorder,
+                                //   height: 15,
+                                // ),
+                              ],
+                            ),
+                          )
+                        ],
+                      );
+                    }
                   }
                   if (index == 1 || index == 2) {
                     return const SizedBox();
                   }
-
-                  if (data == null) {
-                    return SizedBox();
-                  }
                   return TournamentLeaderboardItem(
                     data: data,
-                    decorate: false,
+                    from: 2,
                   );
                 },
                 itemCount:

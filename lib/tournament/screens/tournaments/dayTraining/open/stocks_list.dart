@@ -197,46 +197,44 @@ class _OpenTopStockState extends State<OpenTopStock>
     return Container(
       margin: EdgeInsets.only(top: 15),
       child: Stack(
+        alignment: Alignment.centerRight,
         children: [
-          Padding(
-            padding: const EdgeInsets.only(left: 60),
-            child: TabBar(
-              padding: EdgeInsets.only(right: 20),
-              indicator: null,
-              indicatorColor: Colors.transparent,
-              isScrollable: true,
-              controller: _tabController,
-              onTap: (index) {
-                if (selectedIndex != index) {
-                  selectedIndex = index;
-                  setState(() {});
-                  onChange(data: provider.topSearch?[index]);
-                }
+          TabBar(
+            indicator: null,
+            indicatorColor: Colors.transparent,
+            isScrollable: true,
+            controller: _tabController,
+            labelPadding: EdgeInsets.only(right: 10),
+            onTap: (index) {
+              if (selectedIndex != index) {
+                selectedIndex = index;
+                setState(() {});
+                onChange(data: provider.topSearch?[index]);
+              }
+            },
+            tabs: List.generate(
+              provider.topSearch?.length ?? 0,
+              (index) {
+                TradingSearchTickerRes? data = provider.topSearch?[index];
+                return Container(
+                  padding: EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: const Color.fromARGB(255, 64, 64, 64),
+                    border: selectedIndex == index
+                        ? Border.all(
+                            color: ThemeColors.accent,
+                            width: 2,
+                          )
+                        : null,
+                  ),
+                  child: CachedNetworkImagesWidget(
+                    data?.image ?? '',
+                    height: 30,
+                    width: 30,
+                  ),
+                );
               },
-              tabs: List.generate(
-                provider.topSearch?.length ?? 0,
-                (index) {
-                  TradingSearchTickerRes? data = provider.topSearch?[index];
-                  return Container(
-                    padding: EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: const Color.fromARGB(255, 64, 64, 64),
-                      border: selectedIndex == index
-                          ? Border.all(
-                              color: ThemeColors.accent,
-                              width: 2,
-                            )
-                          : null,
-                    ),
-                    child: CachedNetworkImagesWidget(
-                      data?.image ?? '',
-                      height: 38,
-                      width: 38,
-                    ),
-                  );
-                },
-              ),
             ),
           ),
           GestureDetector(
@@ -249,25 +247,27 @@ class _OpenTopStockState extends State<OpenTopStock>
               );
             },
             child: Container(
-              height: 60,
-              width: 60,
+              height:55,
+              width:55,
               alignment: Alignment.center,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 color: const Color.fromARGB(255, 37, 37, 37),
-                boxShadow: [
+               /* boxShadow: [
                   BoxShadow(
                     color: const Color.fromARGB(255, 0, 16, 3),
                     offset: Offset(4, 0),
                     blurRadius: 10,
                     spreadRadius: 15,
                   ),
-                ],
+                ],*/
               ),
-              child: Text(
+              child:
+                Icon(Icons.search)
+              /*Text(
                 'All',
                 style: styleGeorgiaBold(),
-              ),
+              ),*/
             ),
           ),
         ],

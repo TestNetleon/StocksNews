@@ -124,21 +124,25 @@ class StockScreenerRes {
 class KeyValueElementStockScreener {
   final dynamic key;
   final dynamic value;
+  final dynamic message;
 
   KeyValueElementStockScreener({
     this.key,
     this.value,
+    this.message,
   });
 
   factory KeyValueElementStockScreener.fromJson(Map<String, dynamic> json) =>
       KeyValueElementStockScreener(
         key: json["key"],
         value: json["value"],
+        message: json["message"],
       );
 
   Map<String, dynamic> toJson() => {
         "key": key,
         "value": value,
+        "message": message,
       };
 }
 

@@ -6,6 +6,7 @@ import 'package:stocks_news_new/tradingSimulator/manager/sse.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/custom/refresh_indicator.dart';
+import 'package:stocks_news_new/widgets/screen_title.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import '../../../utils/colors.dart';
 import '../../../utils/theme.dart';
@@ -106,6 +107,12 @@ class _TournamentAllTradeIndexState extends State<TournamentAllTradeIndex> {
               ),
             ),
           ),
+        /*  Visibility(
+            visible: provider.myTrades?.data!= null,
+            child: ScreenTitle(
+              subTitle: provider.selectedOverview?.message??"",
+            ),
+          ),*/
           Expanded(
             child: CommonRefreshIndicator(
               onRefresh: () async {

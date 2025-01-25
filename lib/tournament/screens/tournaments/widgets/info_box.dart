@@ -16,14 +16,14 @@ class InfoBox extends StatelessWidget {
             Text(
               label?? '',
               style: styleGeorgiaRegular(fontSize: 13),
-              maxLines: 2,
-              textAlign: TextAlign.center,
-              overflow: TextOverflow.ellipsis,
             ),
             const SpacerVertical(height:10),
             Text(
               value ?? '',
-              style: styleGeorgiaBold(fontSize: 18),
+              style: styleGeorgiaBold(fontSize: 16),
+              maxLines: 2,
+              textAlign: TextAlign.center,
+              overflow: TextOverflow.ellipsis,
             ),
           ],
         )

@@ -129,7 +129,8 @@ class _TournamentDayTrainingIndexState
                                   provider.detailRes?.todayLeaderboard
                                           ?.isNotEmpty ==
                                       true,
-                              child: DayTrainingLeaderboard()),
+                              child: DayTrainingLeaderboard()
+                          ),
                           SpacerVertical(),
                         ],
                       );

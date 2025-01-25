@@ -105,42 +105,39 @@ class PointsPaidItem extends StatelessWidget {
                         ),
                       ),
                       Visibility(
-                        visible: data?.performance!=null,
-                        child:  Text(
-                          "${data?.performance??"0"}%",
-                          style: stylePTSansRegular(fontSize: 12, color: (data?.performance ?? 0) > 0 ? Colors.green : Colors.red,),
-                        ),
-                      ),
-                      Visibility(
                         visible: data?.totalPoints != null,
                         child: Text(
-                          '${data?.totalPoints}',
+                          'Reward Points: ${data?.totalPoints}',
                           style: stylePTSansRegular(fontSize: 12,color:ThemeColors.greyText),
                         ),
                       ),
-                      /*Visibility(
-                        visible: data?.rank != null,
-                        child: Text(
-                          data?.rank ?? 'N/A',
-                          style: styleGeorgiaRegular(
-                              color: ThemeColors.greyText, fontSize: 14),
-                        ),
-                      ),*/
+
+
                     ],
                   ),
                 ),
-
                 const SpacerHorizontal(width: 10),
-                Visibility(
-                  visible: data?.performancePoint != null,
-                  child: Text(
-                    '${data?.performancePoint}',
-                    style: styleGeorgiaBold(
-                      fontSize: 14,
-                      color: Colors.white,
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Visibility(
+                      visible: data?.performancePoint != null,
+                      child: Text(
+                        '${data?.performancePoint}',
+                        style: styleGeorgiaBold(
+                        ),
+                      ),
                     ),
-                  ),
-                ),
+                    Visibility(
+                      visible: data?.performance!=null,
+                      child:  Text(
+                        "${data?.performance??"0"}%",
+                        style: stylePTSansRegular(fontSize: 12, color: (data?.performance ?? 0) > 0 ? Colors.green : Colors.red,),
+                      ),
+                    ),
+                  ],
+                )
+
 
               ],
             ),

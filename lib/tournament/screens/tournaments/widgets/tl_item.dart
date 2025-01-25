@@ -1,18 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:stocks_news_new/tournament/models/tour_user_detail.dart';
 import 'package:stocks_news_new/tournament/provider/tournament.dart';
 import 'package:stocks_news_new/utils/theme.dart';
-
 import 'package:stocks_news_new/widgets/cache_network_image.dart';
-import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import '../../../../utils/colors.dart';
 import '../../../../widgets/spacer_horizontal.dart';
-import '../../../models/leaderboard.dart';
 
-class LeagueTotalItem extends StatelessWidget {
-  final LeaderboardByDateRes? data;
-  const LeagueTotalItem({super.key, this.data});
+class TlItem extends StatelessWidget {
+  final RecentBattlesRes? data;
+  const TlItem({super.key, this.data});
 
   @override
   Widget build(BuildContext context) {
@@ -41,8 +39,10 @@ class LeagueTotalItem extends StatelessWidget {
                     decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         border: Border.all(color: ThemeColors.greyBorder)),
-                    child: CachedNetworkImagesWidget(
-                      data?.tournamentImage,
+                    child:
+
+                    CachedNetworkImagesWidget(
+                      data?.tournamentImage?? "",
                     ),
                   ),
                 ),
@@ -53,27 +53,53 @@ class LeagueTotalItem extends StatelessWidget {
                     children: [
                       Text(
                         data?.tournamentName ?? '',
-                        style: styleGeorgiaBold(),
+                        style: styleGeorgiaBold(fontSize: 14),
                       ),
-                      const SpacerVertical(height: 3),
                       Visibility(
                         visible: data?.status != null,
                         child: Text(
                           data?.status == 1 ? "Live" : "Closed",
                           style: stylePTSansRegular(
-                              fontSize: 14,
+                              fontSize: 12,
                               color: data?.status == 1
                                   ? Colors.green
                                   : Colors.red),
                         ),
                       ),
+                      Visibility(
+                        visible: data?.performancePoints != null,
+                        child: Text(
+                          'Performance Points: ${data?.performancePoints}',
+                          style: stylePTSansRegular(fontSize: 10,color:ThemeColors.greyText),
+                        ),
+                      ),
                     ],
                   ),
                 ),
-                Text(
-                  '${data?.joinUsers ?? 0}',
-                  style: styleGeorgiaBold(),
-                ),
+                const SpacerHorizontal(width: 10),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Visibility(
+                      visible: data?.points != null,
+                      child: Text(
+                        '${data?.points}',
+                        style: styleGeorgiaBold(
+                          fontSize: 12,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                    Visibility(
+                      visible: data?.performance!=null,
+                      child:  Text(
+                        "${data?.performance??"0"}%",
+                        style: stylePTSansRegular(fontSize: 10, color: (data?.performance ?? 0) > 0 ? Colors.green : Colors.red,),
+                      ),
+                    ),
+                  ],
+                )
+
               ],
             ),
             Visibility(
@@ -83,7 +109,7 @@ class LeagueTotalItem extends StatelessWidget {
                 child: Text(
                   data?.date ?? "",
                   style: stylePTSansRegular(
-                      fontSize: 12, color: ThemeColors.greyText),
+                      fontSize: 10, color: ThemeColors.greyText),
                 ),
               ),
             ),

@@ -35,7 +35,7 @@ class TournamentProvider extends ChangeNotifier {
   List<String> tabs = [
     'Tournaments',
     'Leaderboard',
-    'Trades',
+    'My Trades',
   ];
 
   num hours = 00;
@@ -410,22 +410,34 @@ class TournamentProvider extends ChangeNotifier {
   /// league redirection to leaderboard
  void leagueToLeaderboard({String? selectedDate}){
 
-   DateFormat inputFormat = DateFormat("MM/dd/yyyy");
-   DateTime dateTime = inputFormat.parse(selectedDate!);
+    if(selectedDate!=null && selectedDate.isNotEmpty){
+      DateFormat inputFormat = DateFormat("MM/dd/yyyy");
+      DateTime dateTime = inputFormat.parse(selectedDate!);
 
-   DateFormat outputFormat = DateFormat("yyyy-MM-dd");
-   String formattedDate = outputFormat.format(dateTime);
-   DateTime dateTime1 = outputFormat.parse(formattedDate);
+      DateFormat outputFormat = DateFormat("yyyy-MM-dd");
+      String formattedDate = outputFormat.format(dateTime);
+      DateTime dateTime1 = outputFormat.parse(formattedDate);
 
-   TournamentLeaderboardProvider provider = navigatorKey.currentContext!.read<TournamentLeaderboardProvider>();
-   provider.getEditedDate(dateTime1);
-   Navigator.popUntil(
-       navigatorKey.currentContext!, (route) => route.isFirst);
-   Navigator.push(
-       navigatorKey.currentContext!,
-       MaterialPageRoute(
-         builder: (context) => GameTournamentIndex(setIndex: 1),
-       ));
+      TournamentLeaderboardProvider provider = navigatorKey.currentContext!.read<TournamentLeaderboardProvider>();
+      provider.getEditedDate(dateTime1);
+      Navigator.popUntil(
+          navigatorKey.currentContext!, (route) => route.isFirst);
+      Navigator.push(
+          navigatorKey.currentContext!,
+          MaterialPageRoute(
+            builder: (context) => GameTournamentIndex(setIndex: 1),
+          ));
+    }
+    else{
+      Navigator.popUntil(
+          navigatorKey.currentContext!, (route) => route.isFirst);
+      Navigator.push(
+          navigatorKey.currentContext!,
+          MaterialPageRoute(
+            builder: (context) => GameTournamentIndex(setIndex: 1),
+          ));
+    }
+
  }
 
  /// profile redirection
@@ -450,6 +462,9 @@ class TournamentProvider extends ChangeNotifier {
 
   TournamentUserDetailRes? _userData;
   TournamentUserDetailRes? get userData => _userData;
+
+  Extra? _extraOfUserData;
+  Extra? get extraOfUserData => _extraOfUserData;
 
 
   void setStatusUserData(status) {
@@ -478,6 +493,7 @@ class TournamentProvider extends ChangeNotifier {
         _errorUserData = response.message ?? Const.errSomethingWrong;
         // showErrorMessage(message: response.message);
       }
+      _extraOfUserData = (response.extra is Extra ? response.extra as Extra : null);
       setStatusUserData(Status.loaded);
     } catch (e) {
       _userData = null;
