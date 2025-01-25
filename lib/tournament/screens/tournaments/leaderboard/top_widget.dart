@@ -86,18 +86,16 @@ class TournamentLeaderboardTopItem extends StatelessWidget {
             ],
           ),
           const SpacerVertical(height: 5),
-          Visibility(
-            visible: data?[index].totalPoints!=null,
-            child: Text(
-              "${data?[index].totalPoints}",
-              style: stylePTSansBold(
-                color: index == 2
-                    ? ThemeColors.sos
-                    : index == 1
-                        ? Colors.orange
-                        : ThemeColors.accent,
-                fontSize: 12
-              ),
+          Text(
+            data?[index].userName ?? 'N/A',
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: stylePTSansBold(
+              color: index == 2
+                  ? ThemeColors.sos
+                  : index == 1
+                  ? Colors.orange
+                  : ThemeColors.accent,
             ),
           ),
           Visibility(
@@ -114,19 +112,22 @@ class TournamentLeaderboardTopItem extends StatelessWidget {
               ),
             ),
           ),
-          Text(
-            data?[index].userName ?? 'N/A',
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: stylePTSansBold(
-              color: index == 2
-                  ? ThemeColors.sos
-                  : index == 1
+          Visibility(
+            visible: data?[index].totalPoints!=null,
+            child: Text(
+              "${data?[index].totalPoints}",
+              style: stylePTSansBold(
+                  color: index == 2
+                      ? ThemeColors.sos
+                      : index == 1
                       ? Colors.orange
                       : ThemeColors.accent,
+                  fontSize: 12
+              ),
             ),
           ),
-          Visibility(
+
+          /*Visibility(
             visible: data?[index].performance!=null,
             child: Text(
               "${data?[index].performance}%",
@@ -154,7 +155,7 @@ class TournamentLeaderboardTopItem extends StatelessWidget {
               ),
             ),
           ),
-
+*/
           const SpacerVertical(
             height: 50,
           )

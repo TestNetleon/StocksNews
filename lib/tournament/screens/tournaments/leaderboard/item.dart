@@ -5,6 +5,8 @@ import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/cache_network_image.dart';
+import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:svg_flutter/svg_flutter.dart';
 
 import '../../../models/leaderboard.dart';
@@ -12,8 +14,9 @@ import '../../../models/leaderboard.dart';
 class TournamentLeaderboardItem extends StatelessWidget {
   final LeaderboardByDateRes data;
   final bool decorate;
+  final int? from;
   const TournamentLeaderboardItem(
-      {super.key, required this.data, this.decorate = true});
+      {super.key, required this.data, this.decorate = true, this.from});
 
   @override
   Widget build(BuildContext context) {
@@ -33,127 +36,180 @@ class TournamentLeaderboardItem extends StatelessWidget {
                 borderRadius: BorderRadius.circular(5),
               )
             : null,
-        child: Row(
+        child: Column(
           children: [
-            Expanded(
-              child: Row(
-                children: [
-                  Visibility(
-                    visible: data.position != null,
-                    child: Container(
-                      margin: EdgeInsets.only(right: 5),
-                      padding: EdgeInsets.all(4),
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: ThemeColors.greyBorder,
+            Row(
+              children: [
+                Expanded(
+                  child: Row(
+                    children: [
+                      Visibility(
+                        visible: (from==1||from==2)?false:true,
+                        child: Container(
+                          margin: EdgeInsets.only(right: 5),
+                          padding: EdgeInsets.all(4),
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: ThemeColors.greyBorder,
+                          ),
+                          child: Text(
+                            '${data.position}',
+                            style: styleGeorgiaBold(fontSize: 11),
+                          ),
+                        ),
                       ),
-                      child: Text(
-                        '${data.position}',
-                        style: styleGeorgiaBold(fontSize: 11),
-                      ),
-                    ),
-                  ),
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(50),
-                    child: Container(
-                      width: 43,
-                      height: 43,
-                      decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          border: Border.all(color: ThemeColors.greyBorder)),
-                      child: data.imageType == "svg"
-                          ? SvgPicture.network(
-                              fit: BoxFit.cover,
-                              data.userImage ?? "",
-                              placeholderBuilder: (BuildContext context) =>
-                                  Container(
-                                padding: const EdgeInsets.all(30.0),
-                                child: const CircularProgressIndicator(
-                                  color: ThemeColors.accent,
-                                ),
-                              ),
-                            )
-                          : CachedNetworkImagesWidget(
-                              data.userImage,
-                            ),
-                    ),
-                  ),
-                  Flexible(
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 10),
-                      child: Row(
-                        children: [
-                          Flexible(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  data.userName ?? 'N/A',
-                                  style: styleGeorgiaBold(),
-                                ),
-                                Text(
-                                  data.rank ?? 'N/A',
-                                  style: styleGeorgiaRegular(
-                                      color: ThemeColors.greyText,
-                                      fontSize: 14),
-                                ),
-                                Visibility(
-                                  visible: (data.totalTrades != null ||
-                                      data.winRatio != null),
-                                  child: Text(
-                                      "${data.winRatio}% , ${data.totalTrades}",
-                                      style: styleGeorgiaRegular(
-                                          color: ThemeColors.greyText,
-                                          fontSize: 12)),
-                                ),
-                                Visibility(
-                                  visible: data.performance != null,
-                                  child: Text(
-                                    '${data.performance?.toCurrency()}%',
-                                    style: stylePTSansRegular(
-                                      fontSize: 14,
-                                      color: (data.performance ?? 0) > 0
-                                          ? Colors.green
-                                          : Colors.red,
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(50),
+                        child: Container(
+                          width: 43,
+                          height: 43,
+                          decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              border: Border.all(color: ThemeColors.greyBorder)),
+                          child: data.imageType == "svg"
+                              ? SvgPicture.network(
+                                  fit: BoxFit.cover,
+                                  data.userImage ?? "",
+                                  placeholderBuilder: (BuildContext context) =>
+                                      Container(
+                                    padding: const EdgeInsets.all(30.0),
+                                    child: const CircularProgressIndicator(
+                                      color: ThemeColors.accent,
                                     ),
                                   ),
+                                )
+                              : CachedNetworkImagesWidget(
+                                  data.userImage,
                                 ),
-                              ],
-                            ),
+                        ),
+                      ),
+                      Flexible(
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 10),
+                          child: Row(
+                            children: [
+                              Flexible(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      data.userName ?? 'N/A',
+                                      style: styleGeorgiaBold(fontSize: 14),
+                                    ),
+                                    Visibility(
+                                      visible:from == 3?false:true,
+                                      child: Text(
+                                        data.rank ?? 'N/A',
+                                        style: styleGeorgiaRegular(
+                                            color: ThemeColors.greyText,
+                                            fontSize: 12),
+                                      ),
+                                    ),
+
+                                  ],
+                                ),
+                              ),
+                              Container()
+                            ],
                           ),
-                          Container()
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Visibility(
+                      visible:(from == 3||from == 2 )? false:true,
+                      child: Text(
+                        '${data.totalPoints}',
+                        style: styleGeorgiaBold(),
+                      ),
+                    ),
+                    Visibility(
+                      visible: from == 2 ?true:false,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          const SpacerVertical(height:5),
+                          Text(
+                            '${data.totalPoints} + ${data.performancePoint}',
+                            style: styleGeorgiaBold(),
+                          ),
+                          Text(
+                            '(Reward + Performance Points)',
+                            style: stylePTSansRegular(fontSize: 10,color: ThemeColors.greyText),
+                          ),
                         ],
                       ),
                     ),
+
+                    Visibility(
+                      visible: data.performance != null,
+                      child: Text(
+                        '${data.performance?.toCurrency()}%',
+                        style: stylePTSansRegular(
+                          fontSize: 12,
+                          color: (data.performance ?? 0) > 0
+                              ? Colors.green
+                              : Colors.red,
+                        ),
+                      ),
+                    ),
+                  ],
+                )
+
+              ],
+            ),
+            Visibility(
+              visible:(from == 1||from == 3)?false:true,
+              child: Divider(
+                // thickness: 1,
+                color: ThemeColors.greyBorder,
+              ),
+            ),
+            Visibility(
+              visible:(from == 1||from == 3)?false:true,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Flexible(
+                    child:
+                    _richPrices(label: "Win Ratio: ",value: "${data.winRatio}%"),
+                  ),
+                  const SpacerHorizontal(width: 10),
+                  Flexible(
+                      child: _richPrices(label: "Trades: ",value: "${data.totalTrades}")
                   ),
                 ],
               ),
             ),
-            Visibility(
-              visible: data.totalPoints != null,
-              child: Text(
-                '${data.totalPoints}',
-                style: styleGeorgiaBold(
-                  fontSize: 14,
-                  color: Colors.white,
-                ),
-              ),
-            ),
-            /*decorate == false
-                ? Visibility(
-                    visible: data.performance != null,
-                    child: Text(
-                      '${data.performance}%',
-                      style: styleGeorgiaBold(
-                        fontSize: 14,
-                        color: Colors.white,
-                      ),
-                    ),
-                  )
-                :*/
           ],
         ),
       ),
+    );
+  }
+
+  Widget _richPrices ({String? label,String? value}) {
+    if(value==null||value.isEmpty) return SizedBox();
+    return RichText(
+        text: TextSpan(
+            text: label,
+            style: stylePTSansRegular(
+              fontSize: 14,
+              color:ThemeColors.greyText,
+            ),
+            children: [
+              TextSpan(
+                text: value,
+                style: styleGeorgiaBold(
+                  fontSize: 14,
+                  color:ThemeColors.white,
+                ),
+              )
+            ]
+        )
     );
   }
 }

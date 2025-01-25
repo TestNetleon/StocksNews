@@ -86,7 +86,7 @@ class PlayBoxTournament extends StatelessWidget {
                           textAlign: TextAlign.start,
                           style: styleGeorgiaBold(
                             fontSize: 25,
-                            color: Colors.purple,
+                            color: ThemeColors.primary,
                           ),
                         ),
                       ),

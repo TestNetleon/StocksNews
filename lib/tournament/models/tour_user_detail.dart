@@ -7,8 +7,8 @@ String tournamentUserDetailResToMap(TournamentUserDetailRes data) => json.encode
 class TournamentUserDetailRes {
   final String? title;
   final UserStats? userStats;
-  final List<RecentTradeRes>? recentTrades;
-  final List<RecentBattle>? recentBattles;
+  final RecentTrades? recentTrades;
+  final RecentBattles? recentBattles;
   final Chart? chart;
 
   TournamentUserDetailRes({
@@ -21,134 +21,221 @@ class TournamentUserDetailRes {
 
   factory TournamentUserDetailRes.fromMap(Map<String, dynamic> json) => TournamentUserDetailRes(
     title: json["title"],
-    userStats: json["user_stats"] == null ? null : UserStats.fromMap(json["user_stats"]),
-    recentTrades: json["recent_trades"] == null ? [] : List<RecentTradeRes>.from(json["recent_trades"]!.map((x) => RecentTradeRes.fromMap(x))),
-    recentBattles: json["recent_battles"] == null ? [] : List<RecentBattle>.from(json["recent_battles"]!.map((x) => RecentBattle.fromMap(x))),
+    userStats: json["user"] == null ? null : UserStats.fromMap(json["user"]),
+    recentTrades: json["recent_trades"] == null ? null : RecentTrades.fromMap(json["recent_trades"]),
+    recentBattles: json["recent_battles"] == null ? null : RecentBattles.fromMap(json["recent_battles"]),
     chart: json["chart"] == null ? null : Chart.fromMap(json["chart"]),
+
   );
 
   Map<String, dynamic> toMap() => {
     "title": title,
-    "user_stats": userStats?.toMap(),
-    "recent_trades": recentTrades == null ? [] : List<dynamic>.from(recentTrades!.map((x) => x.toMap())),
-    "recent_battles": recentBattles == null ? [] : List<dynamic>.from(recentBattles!.map((x) => x.toMap())),
+    "user": userStats?.toMap(),
+    "recent_trades": recentTrades?.toMap(),
+    "recent_battles": recentBattles?.toMap(),
     "chart": chart?.toMap(),
   };
 }
 
 class Chart {
-  final List<String>? changes;
-  final List<DateTime>? dates;
+  final String? title;
+  final String? subTitle;
+  final List<GChart>? gChart;
 
   Chart({
-    this.changes,
-    this.dates,
+    this.title,
+    this.subTitle,
+    this.gChart,
   });
 
   factory Chart.fromMap(Map<String, dynamic> json) => Chart(
-    changes: json["changes"] == null ? [] : List<String>.from(json["changes"]!.map((x) => x)),
-    dates: json["dates"] == null ? [] : List<DateTime>.from(json["dates"]!.map((x) => DateTime.parse(x))),
+    title: json["title"],
+    subTitle: json["sub_title"],
+    gChart: json["data"] == null ? [] : List<GChart>.from(json["data"]!.map((x) => GChart.fromMap(x))),
   );
 
   Map<String, dynamic> toMap() => {
-    "changes": changes == null ? [] : List<dynamic>.from(changes!.map((x) => x)),
-    "dates": dates == null ? [] : List<dynamic>.from(dates!.map((x) => "${x.year.toString().padLeft(4, '0')}-${x.month.toString().padLeft(2, '0')}-${x.day.toString().padLeft(2, '0')}")),
+    "title": title,
+    "sub_title": subTitle,
+    "data": gChart == null ? [] : List<dynamic>.from(gChart!.map((x) => x.toMap())),
   };
 }
 
-class RecentBattle {
-  final int? tournamentId;
-  final String? tournamentName;
-  final String? imageType;
-  final String? image;
-  final String? date;
-  final int? status;
-  final int? position;
-  final num? totalChange;
-  final int? points;
-  final int? rewards;
+class GChart {
+  final num? performance;
+  final String? battleDate;
+  final String? formatPerformance;
 
-  RecentBattle({
-    this.tournamentId,
-    this.tournamentName,
-    this.imageType,
-    this.image,
-    this.date,
-    this.status,
-    this.position,
-    this.totalChange,
-    this.points,
-    this.rewards,
+  GChart({
+    this.performance,
+    this.battleDate,
+    this.formatPerformance,
   });
 
-  factory RecentBattle.fromMap(Map<String, dynamic> json) => RecentBattle(
-    tournamentId: json["tournament_id"],
-    tournamentName: json["tournament_name"],
-    imageType: json["imageType"],
-    image: json["image"],
-    date: json["date"],
-    status: json["status"],
-    position: json["position"],
-    totalChange: json["total_change"],
-    points: json["points"],
-    rewards: json["rewards"],
+  factory GChart.fromMap(Map<String, dynamic> json) => GChart(
+    performance: json["performance"],
+    battleDate: json["battle_date"],
+    formatPerformance: json["format_performance"],
   );
 
   Map<String, dynamic> toMap() => {
-    "tournament_id": tournamentId,
-    "tournament_name": tournamentName,
-    "imageType": imageType,
-    "image": image,
-    "date": date,
-    "status": status,
-    "position": position,
-    "total_change": totalChange,
-    "points": points,
-    "rewards": rewards,
+    "performance": performance,
+    "battle_date": battleDate,
+    "format_performance": formatPerformance,
   };
 }
 
-class RecentTradeRes {
-  final int? tournamentId;
+class RecentBattles {
+  final String? title;
+  final String? subTitle;
+  final bool? status;
+  final List<RecentBattlesRes>? data;
+  final String? message;
+
+  RecentBattles({
+    this.title,
+    this.subTitle,
+    this.status,
+    this.data,
+    this.message,
+  });
+
+  factory RecentBattles.fromMap(Map<String, dynamic> json) => RecentBattles(
+    title: json["title"],
+    subTitle: json["sub_title"],
+    status: json["status"],
+    data: json["data"] == null ? [] : List<RecentBattlesRes>.from(json["data"]!.map((x) => RecentBattlesRes.fromMap(x))),
+    message: json["message"],
+  );
+
+  Map<String, dynamic> toMap() => {
+    "title": title,
+    "sub_title": subTitle,
+    "status": status,
+    "data": data == null ? [] : List<dynamic>.from(data!.map((x) => x.toMap())),
+    "message": message,
+  };
+}
+
+class RecentBattlesRes {
   final String? tournamentName;
-  final String? imageType;
-  final String? image;
-  final String? closed;
-  final String? type;
+  final String? tournamentImage;
+  final String? date;
+  final int? status;
+  final num? performance;
+  final num? points;
+  final num? performancePoints;
+
+  RecentBattlesRes({
+    this.tournamentName,
+    this.tournamentImage,
+    this.date,
+    this.status,
+    this.performance,
+    this.points,
+    this.performancePoints,
+  });
+
+  factory RecentBattlesRes.fromMap(Map<String, dynamic> json) => RecentBattlesRes(
+    tournamentName: json["tournament_name"],
+    tournamentImage: json["tournament_image"],
+    date: json["date"],
+    status: json["status"],
+    performance: json["performance"],
+    points: json["points"],
+    performancePoints: json["performance_points"],
+  );
+
+  Map<String, dynamic> toMap() => {
+    "tournament_name": tournamentName,
+    "tournament_image": tournamentImage,
+    "date": date,
+    "status": status,
+    "performance": performance,
+    "points": points,
+    "performance_points": performancePoints,
+  };
+}
+
+
+class RecentTrades {
+  final String? title;
+  final String? subTitle;
+  final String? message;
+  final bool? status;
+  final List<RecentTradeRes>? dataTrade;
+
+  RecentTrades({
+    this.title,
+    this.subTitle,
+    this.message,
+    this.status,
+    this.dataTrade,
+  });
+
+  factory RecentTrades.fromMap(Map<String, dynamic> json) => RecentTrades(
+    title: json["title"],
+    subTitle: json["sub_title"],
+    message: json["message"],
+    status: json["status"],
+    dataTrade: json["data"] == null ? [] : List<RecentTradeRes>.from(json["data"]!.map((x) => RecentTradeRes.fromMap(x))),
+  );
+
+  Map<String, dynamic> toMap() => {
+    "title": title,
+    "sub_title": subTitle,
+    "message": message,
+    "status": status,
+    "data": dataTrade == null ? [] : List<dynamic>.from(dataTrade!.map((x) => x.toMap())),
+  };
+}
+class RecentTradeRes {
   final String? symbol;
-  final num? change;
+  final String? name;
+  final String? image;
+  final String? type;
+  final int? status;
+  final String? orderPrice;
+  final String? closePrice;
+  final String? gainLoss;
+  final num? performance;
 
   RecentTradeRes({
-    this.tournamentId,
-    this.tournamentName,
-    this.imageType,
-    this.image,
-    this.closed,
-    this.type,
     this.symbol,
-    this.change,
+    this.name,
+    this.image,
+    this.type,
+    this.status,
+    this.orderPrice,
+    this.closePrice,
+    this.gainLoss,
+    this.performance,
+
   });
 
   factory RecentTradeRes.fromMap(Map<String, dynamic> json) => RecentTradeRes(
-    tournamentId: json["tournament_id"],
-    tournamentName: json["tournament_name"],
-    imageType: json["imageType"],
-    image: json["image"],
-    closed: json["closed"],
-    type: json["type"],
     symbol: json["symbol"],
-    change: json["change"],
+    name: json["name"],
+    image: json["image"],
+    type: json["type"],
+    status: json["status"],
+    orderPrice: json["order_price"],
+    closePrice: json["close_price"],
+    gainLoss: json["gain_loss"],
+    performance: json["performance"]?.toDouble(),
+
   );
 
   Map<String, dynamic> toMap() => {
-    "tournament_id": tournamentId,
-    "tournament_name": tournamentName,
-    "imageType": imageType,
-    "image": image,
-    "closed": closed,
-    "type": type,
     "symbol": symbol,
-    "change": change,
+    "name": name,
+    "image": image,
+    "type":type,
+    "status": status,
+    "order_price": orderPrice,
+    "close_price": closePrice,
+    "gain_loss": gainLoss,
+    "performance": performance,
   };
 }
 
@@ -158,7 +245,7 @@ class UserStats {
   final String? image;
   final String? imageType;
   final String? rank;
-  final String? performance;
+  final num? performance;
   final String? exp;
   final List<Info>? info;
 
@@ -175,8 +262,8 @@ class UserStats {
 
   factory UserStats.fromMap(Map<String, dynamic> json) => UserStats(
     userId: json["user_id"],
-    name: json["name"],
-    image: json["image"],
+    name: json["user_name"],
+    image: json["user_image"],
     imageType: json["image_type"],
     rank: json["rank"],
     performance: json["performance"],
@@ -186,8 +273,8 @@ class UserStats {
 
   Map<String, dynamic> toMap() => {
     "user_id": userId,
-    "name": name,
-    "image": image,
+    "user_name": name,
+    "user_image": image,
     "image_type": imageType,
     "rank": rank,
     "performance": performance,
@@ -199,19 +286,23 @@ class UserStats {
 class Info {
   final String? title;
   final String? value;
+  final String? tooltip;
 
   Info({
     this.title,
     this.value,
+    this.tooltip,
   });
 
   factory Info.fromMap(Map<String, dynamic> json) => Info(
     title: json["title"],
     value: json["value"],
+    tooltip: json["tooltip"],
   );
 
   Map<String, dynamic> toMap() => {
     "title": title,
     "value": value,
+    "tooltip": tooltip,
   };
 }

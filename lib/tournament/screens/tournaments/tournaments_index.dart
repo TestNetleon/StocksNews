@@ -6,6 +6,7 @@ import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/custom/refresh_indicator.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'widgets/grid.dart';
 import 'widgets/top_traders.dart';
 
@@ -100,6 +101,7 @@ class _TournamentsIndexState extends State<TournamentsIndex> {
                         subTitle: provider.data?.topTradingTitans?.subTitle,
                         dividerPadding: EdgeInsets.zero,
                       ),
+                      SpacerVertical(height:10),
                       TopTraders(
                         list: provider.data?.topTradingTitans?.data,
                       ),
