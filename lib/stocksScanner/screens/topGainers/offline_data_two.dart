@@ -90,37 +90,48 @@ class _TopGainerOfflineTwoState extends State<TopGainerOfflineTwo> {
             alignment: Alignment.centerRight,
             child: Visibility(
               visible: dataList.isNotEmpty == true,
-              child: IconButton(
-                  onPressed: () {
-                    scannerSorting(
-                      sortByCallBack: (received) {
-                        Utils()
-                            .showLog('${received.type}, ${received.ascending}');
-                        if (received.type == SortByEnums.symbol) {
-                          provider.applySorting('Symbol');
-                        } else if (received.type == SortByEnums.company) {
-                          provider.applySorting('Company Name');
-                        } else if (received.type == SortByEnums.sector) {
-                          provider.applySorting('Sector');
-                        } else if (received.type == SortByEnums.lastTrade) {
-                          provider.applySorting('Last Trade');
-                        } else if (received.type == SortByEnums.netChange) {
-                          provider.applySorting('Net Change');
-                        } else if (received.type == SortByEnums.perChange) {
-                          provider.applySorting('% Change');
-                        } else if (received.type == SortByEnums.volume) {
-                          provider.applySorting('Volume');
-                        } else if (received.type == SortByEnums.dollarVolume) {
-                          provider.applySorting('\$ Volume');
-                        }
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Text(
+                    'Sort Stocks ',
+                    style: styleGeorgiaBold(),
+                  ),
+                  IconButton(
+                      onPressed: () {
+                        scannerSorting(
+                          sortByCallBack: (received) {
+                            Utils().showLog(
+                                '${received.type}, ${received.ascending}');
+                            if (received.type == SortByEnums.symbol) {
+                              provider.applySorting('Symbol');
+                            } else if (received.type == SortByEnums.company) {
+                              provider.applySorting('Company Name');
+                            } else if (received.type == SortByEnums.sector) {
+                              provider.applySorting('Sector');
+                            } else if (received.type == SortByEnums.lastTrade) {
+                              provider.applySorting('Last Trade');
+                            } else if (received.type == SortByEnums.netChange) {
+                              provider.applySorting('Net Change');
+                            } else if (received.type == SortByEnums.perChange) {
+                              provider.applySorting('% Change');
+                            } else if (received.type == SortByEnums.volume) {
+                              provider.applySorting('Volume');
+                            } else if (received.type ==
+                                SortByEnums.dollarVolume) {
+                              provider.applySorting('\$ Volume');
+                            }
 
-                        Navigator.pop(context);
+                            Navigator.pop(context);
+                          },
+                        );
                       },
-                    );
-                  },
-                  icon: Icon(Icons.sort)),
+                      icon: Icon(Icons.sort)),
+                ],
+              ),
             ),
           ),
+
           ScannerBaseContainerOffline(dataList: dataList),
         ],
       ),
