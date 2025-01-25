@@ -172,7 +172,7 @@ class _MarketScannerSortingState extends State<MarketScannerSorting> {
 
           // Sort by Dollar Volume
           _buildSortOption(
-            'Dollar Volume',
+            '\$ Volume',
             SortByEnums.dollarVolume,
             sortBy: widget.sortBy,
           ),
