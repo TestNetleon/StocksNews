@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 import 'package:stocks_news_new/api/api_response.dart';
-import 'package:stocks_news_new/stocksScanner/apis/top_gainer_scanner_manager.dart';
 import 'package:stocks_news_new/stocksScanner/modals/filter_params_gaienr_loser.dart';
 import 'package:stocks_news_new/stocksScanner/modals/market_scanner_res.dart';
 import 'package:stocks_news_new/stocksScanner/modals/scanner_res.dart';
@@ -10,6 +9,8 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:http/http.dart' as http;
+
+import '../manager/gainers_stream.dart';
 
 class TopGainerScannerProvider extends ChangeNotifier {
   Status _status = Status.ideal;
@@ -45,13 +46,13 @@ class TopGainerScannerProvider extends ChangeNotifier {
     _fullOfflineDataList = null;
     _dataList = null;
     notifyListeners();
-    TopGainerScannerDataManager().initializePorts();
+    MarketGainersStream().initializePorts();
   }
 
   void stopListeningPorts() {
     _offlineDataList = null;
     _dataList = null;
-    TopGainerScannerDataManager().stopListeningPorts();
+    MarketGainersStream().stopListeningPorts();
   }
 
   Future getOfflineData({showProgress = false}) async {
@@ -278,7 +279,7 @@ class TopGainerScannerProvider extends ChangeNotifier {
   }
 
   void applyFilter(sortBy) {
-    // TopGainerScannerDataManager().stopListeningPorts();
+    // MarketGainersStream().stopListeningPorts();
     if (sortBy == _filterParams?.sortBy) {
       _filterParams = FilterParamsGainerLoser(
         sortBy: sortBy,
@@ -292,8 +293,8 @@ class TopGainerScannerProvider extends ChangeNotifier {
         sortByHeader: null,
       );
     }
-    if (TopGainerScannerDataManager().listening) {
-      TopGainerScannerDataManager().stopListeningPorts();
+    if (MarketGainersStream().listening) {
+      MarketGainersStream().stopListeningPorts();
     }
     if (_dataList != null) {
       Utils().showLog("----");
@@ -329,8 +330,8 @@ class TopGainerScannerProvider extends ChangeNotifier {
       );
     }
 
-    if (TopGainerScannerDataManager().listening) {
-      TopGainerScannerDataManager().stopListeningPorts();
+    if (MarketGainersStream().listening) {
+      MarketGainersStream().stopListeningPorts();
     }
 
     if (_dataList != null) {

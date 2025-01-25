@@ -462,8 +462,8 @@ class _BuySellContainerState extends State<BuySellContainer> {
                           ? 'Update Sell Order'
                           : "Proceed Sell Order"
                       : widget.editTradeID != null
-                          ? 'Update Buy To Cover Order'
-                          : "Proceed Buy To Cover Order",
+                          ? 'Update Buy to Cover Order'
+                          : "Proceed Buy to Cover Order",
               color: widget.selectedStock == StockType.buy
                   ? (invested > _availableBalance || invested == 0)
                       ? ThemeColors.greyText

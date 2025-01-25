@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 import 'package:stocks_news_new/api/api_response.dart';
-import 'package:stocks_news_new/stocksScanner/apis/top_loser_scanner_manager.dart';
 import 'package:stocks_news_new/stocksScanner/modals/filter_params_gaienr_loser.dart';
 import 'package:stocks_news_new/stocksScanner/modals/market_scanner_res.dart';
 import 'package:stocks_news_new/stocksScanner/modals/scanner_res.dart';
@@ -10,6 +9,8 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:http/http.dart' as http;
+
+import '../manager/losers_stream.dart';
 
 class TopLoserScannerProvider extends ChangeNotifier {
   Status _status = Status.ideal;
@@ -44,13 +45,13 @@ class TopLoserScannerProvider extends ChangeNotifier {
     _fullOfflineDataList = null;
     _dataList = null;
     notifyListeners();
-    TopLoserScannerDataManager().initializePorts();
+    MarketLosersStream().initializePorts();
   }
 
   void stopListeningPorts() {
     _offlineDataList = null;
     _dataList = null;
-    TopLoserScannerDataManager().stopListeningPorts();
+    MarketLosersStream().stopListeningPorts();
   }
 
   Future getOfflineData({showProgress = false}) async {
@@ -235,6 +236,7 @@ class TopLoserScannerProvider extends ChangeNotifier {
         num valueB = b.percentChange ?? 0;
         if ((a.extendedHoursType == "PostMarket" ||
             a.extendedHoursType == "PreMarket")) {
+          Utils().showLog("++++++++++++++++++++++++++++++++");
           valueA = a.extendedHoursPercentChange ?? 0;
           valueB = b.extendedHoursPercentChange ?? 0;
         }
@@ -310,8 +312,8 @@ class TopLoserScannerProvider extends ChangeNotifier {
         sortByHeader: null,
       );
     }
-    if (TopLoserScannerDataManager().listening) {
-      TopLoserScannerDataManager().stopListeningPorts();
+    if (MarketLosersStream().listening) {
+      MarketLosersStream().stopListeningPorts();
     }
     if (_dataList != null) {
       Utils().showLog("----");
@@ -346,8 +348,8 @@ class TopLoserScannerProvider extends ChangeNotifier {
         sortByAsc: true,
       );
     }
-    if (TopLoserScannerDataManager().listening) {
-      TopLoserScannerDataManager().stopListeningPorts();
+    if (MarketLosersStream().listening) {
+      MarketLosersStream().stopListeningPorts();
     }
 
     if (_dataList != null) {
