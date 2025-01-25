@@ -17,7 +17,8 @@ import 'item.dart';
 
 class TournamentPointsPaidIndex extends StatefulWidget {
   final TournamentsHead selectedTournament;
-  const TournamentPointsPaidIndex({super.key, required this.selectedTournament});
+  const TournamentPointsPaidIndex(
+      {super.key, required this.selectedTournament});
 
   @override
   State<TournamentPointsPaidIndex> createState() =>
@@ -35,7 +36,8 @@ class _TournamentPointsPaidIndexState extends State<TournamentPointsPaidIndex> {
 
   Future _callAPI({loadMore = false}) async {
     TournamentProvider provider = context.read<TournamentProvider>();
-    provider.pointsPaidAPI(loadMore: loadMore,selectedTournament:widget.selectedTournament);
+    provider.pointsPaidAPI(
+        loadMore: loadMore, selectedTournament: widget.selectedTournament);
   }
 
   @override
@@ -49,6 +51,7 @@ class _TournamentPointsPaidIndexState extends State<TournamentPointsPaidIndex> {
         showTrailing: false,
         title: provider.extraOfPointPaid?.title ?? 'Trades Executed',
         subTitle: provider.extraOfPointPaid?.subTitle,
+
         /// displayed title,subtitle with dynamic value
       ),
       body: BaseUiContainer(
@@ -62,195 +65,196 @@ class _TournamentPointsPaidIndexState extends State<TournamentPointsPaidIndex> {
           onRefresh: _callAPI,
           onLoadMore: () => _callAPI(loadMore: true),
           canLoadMore: provider.canLoadMore,
-          child:
-          widget.selectedTournament==TournamentsHead.tradTotal?
-          ListView.separated(
-            padding: EdgeInsets.symmetric(horizontal: 10),
-            itemBuilder: (context, index) {
-              LeaderboardByDateRes? data = provider.tradesExecuted?[index];
-              if (data == null) {
-                return SizedBox();
-              }
-              if (index == 0) {
-                return Column(
-                  children: [
-                    Divider(
-                      color: ThemeColors.greyBorder,
-                      height: 15,
-                      thickness: 1,
-                    ),
-                    Row(
-                      children: [
-                        SizedBox(
-                          child: AutoSizeText(
-                            maxLines: 1,
-                            "Trading LEAGUE",
-                            style: stylePTSansRegular(
-                              fontSize: 12,
-                              color: ThemeColors.greyText,
-                            ),
+          child: widget.selectedTournament == TournamentsHead.tradTotal
+              ? ListView.separated(
+                  padding: EdgeInsets.symmetric(horizontal: 10),
+                  itemBuilder: (context, index) {
+                    LeaderboardByDateRes? data =
+                        provider.tradesExecuted?[index];
+                    if (data == null) {
+                      return SizedBox();
+                    }
+                    if (index == 0) {
+                      return Column(
+                        children: [
+                          Divider(
+                            color: ThemeColors.greyBorder,
+                            height: 15,
+                            thickness: 1,
                           ),
-                        ),
-                        Expanded(
-                          child: SizedBox(),
-                        ),
-                        AutoSizeText(
-                          maxLines: 1,
-                          "USER JOINED",
-                          textAlign: TextAlign.end,
-                          style: stylePTSansRegular(
-                            fontSize: 12,
-                            color: ThemeColors.greyText,
+                          Row(
+                            children: [
+                              SizedBox(
+                                child: AutoSizeText(
+                                  maxLines: 1,
+                                  "Trading LEAGUE",
+                                  style: stylePTSansRegular(
+                                    fontSize: 12,
+                                    color: ThemeColors.greyText,
+                                  ),
+                                ),
+                              ),
+                              Expanded(
+                                child: SizedBox(),
+                              ),
+                              AutoSizeText(
+                                maxLines: 1,
+                                "USER JOINED",
+                                textAlign: TextAlign.end,
+                                style: stylePTSansRegular(
+                                  fontSize: 12,
+                                  color: ThemeColors.greyText,
+                                ),
+                              ),
+                            ],
                           ),
-                        ),
-                      ],
-                    ),
-                    Divider(
-                      color: ThemeColors.greyBorder,
-                      height: 15,
-                      thickness: 1,
-                    ),
-                    LeagueTotalItem(
+                          Divider(
+                            color: ThemeColors.greyBorder,
+                            height: 15,
+                            thickness: 1,
+                          ),
+                          LeagueTotalItem(
+                            data: data,
+                          ),
+                        ],
+                      );
+                    }
+                    return LeagueTotalItem(
                       data: data,
-                    ),
-                  ],
-                );
-              }
-              return LeagueTotalItem(
-                data: data,
-              );
-            },
-            itemCount: provider.tradesExecuted?.length ?? 0,
-            separatorBuilder: (context, index) {
-              return SpacerVertical(height: 10);
-            },
-          ):
-          widget.selectedTournament==TournamentsHead.pPaid?
-          ListView.separated(
-            padding: EdgeInsets.symmetric(horizontal: 10),
-            itemBuilder: (context, index) {
-              LeaderboardByDateRes? data = provider.tradesExecuted?[index];
-              if (data == null) {
-                return SizedBox();
-              }
-              if (index == 0) {
-                return Column(
-                  children: [
-                    Divider(
-                      color: ThemeColors.greyBorder,
-                      height: 15,
-                      thickness: 1,
-                    ),
-                    Row(
-                      children: [
-                        SizedBox(
-                          child: AutoSizeText(
-                            maxLines: 1,
-                            "POSITION",
-                            style: stylePTSansRegular(
-                              fontSize: 12,
-                              color: ThemeColors.greyText,
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          child: SizedBox(),
-                        ),
-                        AutoSizeText(
-                          maxLines: 1,
-                          "POINTS",
-                          textAlign: TextAlign.end,
-                          style: stylePTSansRegular(
-                            fontSize: 12,
-                            color: ThemeColors.greyText,
-                          ),
-                        ),
-                      ],
-                    ),
-                    Divider(
-                      color: ThemeColors.greyBorder,
-                      height: 15,
-                      thickness: 1,
-                    ),
-                    PointsPaidItem(
-                      data: data,
-                    ),
-                  ],
-                );
-              }
+                    );
+                  },
+                  itemCount: provider.tradesExecuted?.length ?? 0,
+                  separatorBuilder: (context, index) {
+                    return SpacerVertical(height: 10);
+                  },
+                )
+              : widget.selectedTournament == TournamentsHead.pPaid
+                  ? ListView.separated(
+                      padding: EdgeInsets.symmetric(horizontal: 10),
+                      itemBuilder: (context, index) {
+                        LeaderboardByDateRes? data =
+                            provider.tradesExecuted?[index];
+                        if (data == null) {
+                          return SizedBox();
+                        }
+                        if (index == 0) {
+                          return Column(
+                            children: [
+                              Divider(
+                                color: ThemeColors.greyBorder,
+                                height: 15,
+                                thickness: 1,
+                              ),
+                              Row(
+                                children: [
+                                  SizedBox(
+                                    child: AutoSizeText(
+                                      maxLines: 1,
+                                      "POSITION",
+                                      style: stylePTSansRegular(
+                                        fontSize: 12,
+                                        color: ThemeColors.greyText,
+                                      ),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: SizedBox(),
+                                  ),
+                                  AutoSizeText(
+                                    maxLines: 1,
+                                    "POINTS",
+                                    textAlign: TextAlign.end,
+                                    style: stylePTSansRegular(
+                                      fontSize: 12,
+                                      color: ThemeColors.greyText,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Divider(
+                                color: ThemeColors.greyBorder,
+                                height: 15,
+                                thickness: 1,
+                              ),
+                              PointsPaidItem(
+                                data: data,
+                              ),
+                            ],
+                          );
+                        }
 
-              return PointsPaidItem(
-                data: data,
-              );
-            },
-            itemCount: provider.tradesExecuted?.length ?? 0,
-            separatorBuilder: (context, index) {
-              return SpacerVertical(height: 10);
-            },
-          ):
-          ListView.separated(
-            padding: EdgeInsets.symmetric(horizontal: 10),
-            itemBuilder: (context, index) {
-              LeaderboardByDateRes? data = provider.tradesExecuted?[index];
-              if (data == null) {
-                return SizedBox();
-              }
-              if (index == 0) {
-                return Column(
-                  children: [
-                    Divider(
-                      color: ThemeColors.greyBorder,
-                      height: 15,
-                      thickness: 1,
-                    ),
-                    Row(
-                      children: [
-                        SizedBox(
-                          child: AutoSizeText(
-                            maxLines: 1,
-                            "POSITION",
-                            style: stylePTSansRegular(
-                              fontSize: 12,
-                              color: ThemeColors.greyText,
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          child: SizedBox(),
-                        ),
-                        AutoSizeText(
-                          maxLines: 1,
-                          "PERFORMANCE",
-                          textAlign: TextAlign.end,
-                          style: stylePTSansRegular(
-                            fontSize: 12,
-                            color: ThemeColors.greyText,
-                          ),
-                        ),
-                      ],
-                    ),
-                    Divider(
-                      color: ThemeColors.greyBorder,
-                      height: 15,
-                      thickness: 1,
-                    ),
-                    PlayTraderItem(
-                      data: data,
-                    ),
-                  ],
-                );
-              }
+                        return PointsPaidItem(
+                          data: data,
+                        );
+                      },
+                      itemCount: provider.tradesExecuted?.length ?? 0,
+                      separatorBuilder: (context, index) {
+                        return SpacerVertical(height: 10);
+                      },
+                    )
+                  : ListView.separated(
+                      padding: EdgeInsets.symmetric(horizontal: 10),
+                      itemBuilder: (context, index) {
+                        LeaderboardByDateRes? data =
+                            provider.tradesExecuted?[index];
+                        if (data == null) {
+                          return SizedBox();
+                        }
+                        if (index == 0) {
+                          return Column(
+                            children: [
+                              Divider(
+                                color: ThemeColors.greyBorder,
+                                height: 15,
+                                thickness: 1,
+                              ),
+                              Row(
+                                children: [
+                                  SizedBox(
+                                    child: AutoSizeText(
+                                      maxLines: 1,
+                                      "POSITION",
+                                      style: stylePTSansRegular(
+                                        fontSize: 12,
+                                        color: ThemeColors.greyText,
+                                      ),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: SizedBox(),
+                                  ),
+                                  AutoSizeText(
+                                    maxLines: 1,
+                                    "PERFORMANCE",
+                                    textAlign: TextAlign.end,
+                                    style: stylePTSansRegular(
+                                      fontSize: 12,
+                                      color: ThemeColors.greyText,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Divider(
+                                color: ThemeColors.greyBorder,
+                                height: 15,
+                                thickness: 1,
+                              ),
+                              PlayTraderItem(
+                                data: data,
+                              ),
+                            ],
+                          );
+                        }
 
-
-              return PlayTraderItem(
-                data: data,
-              );
-            },
-            itemCount: provider.tradesExecuted?.length ?? 0,
-            separatorBuilder: (context, index) {
-              return SpacerVertical(height: 10);
-            },
-          ),
+                        return PlayTraderItem(
+                          data: data,
+                        );
+                      },
+                      itemCount: provider.tradesExecuted?.length ?? 0,
+                      separatorBuilder: (context, index) {
+                        return SpacerVertical(height: 10);
+                      },
+                    ),
         ),
       ),
     );

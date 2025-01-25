@@ -1,13 +1,14 @@
 // import 'dart:async';
 // import 'dart:convert';
 // import 'package:http/http.dart' as http;
-// import 'package:eventsource3/eventsource.dart';
 // import 'package:provider/provider.dart';
 // import 'package:stocks_news_new/routes/my_app.dart';
 // import 'package:stocks_news_new/stocksScanner/modals/market_scanner_res.dart';
 // import 'package:stocks_news_new/stocksScanner/modals/scanner_res.dart';
 // import 'package:stocks_news_new/stocksScanner/providers/market_scanner_provider.dart';
 // import 'package:stocks_news_new/utils/utils.dart';
+
+// import '../manager/client.dart';
 
 // class MarketScannerDataManager {
 //   static final MarketScannerDataManager instance =
@@ -18,8 +19,6 @@
 //     return instance;
 //   }
 
-//   final Map<String, EventSource> _eventSources = {};
-//   final Map<String, StreamSubscription> _eventSubscriptions = {};
 //   bool _isOfflineCalled = false;
 //   bool _isListening = false;
 //   static const int checkInterval = 180000;
@@ -42,183 +41,11 @@
 //     int? endingPort = provider.port?.port?.scannerPort?.end ?? 8040;
 //     bool? callOffline =
 //         provider.port?.port?.checkMarketOpenApi?.checkPostMarket == true;
-
+//     Utils().showLog('Call Offline $callOffline');
 //     if (callOffline) {
 //       await getOfflineData();
 //       return;
 //     }
-
-//     // Create URLs for all ports
-
-//     final urls = List.generate(
-//       // endingPort - startingPort + 1,
-//       3,
-
-//       (index) => "https://dev.stocks.news:${startingPort + index}/sse",
-//     );
-
-//     // Set offline data timer
-//     Timer(Duration(milliseconds: checkOfflineInterval), () async {
-//       if (!_isOfflineCalled &&
-//           provider.offlineDataList == null &&
-//           _isListening == true) {
-//         _isOfflineCalled = true;
-//         await getOfflineData();
-//       }
-//     });
-
-//     try {
-//       await Future.wait(
-//         urls.map((url) => _connectToEventSource(url, provider)),
-//       );
-//     } catch (e) {
-//       Utils().showLog("Error initializing ports: $e");
-//       if (!_isOfflineCalled && provider.offlineDataList == null) {
-//         _isOfflineCalled = true;
-//         await getOfflineData();
-//       }
-//     }
-//   }
-
-//   Future<void> _connectToEventSource(
-//       String url, MarketScannerProvider provider) async {
-//     try {
-//       final eventSource = await EventSource.connect(url)
-//           .timeout(Duration(milliseconds: checkInterval));
-
-//       final subscription = eventSource.listen(
-//         (Event event) {
-//           if (!_isListening) return;
-
-//           if (event.data != null && event.data!.isNotEmpty) {
-//             _handleEventData(event.data!, provider);
-//           }
-//         },
-//         cancelOnError: true,
-//         onDone: () => Utils().showLog("Connection closed to ** $url"),
-//         onError: (err) =>
-//             Utils().showLog("Error in connection to ** $url: $err"),
-//       );
-
-//       _eventSources[url] = eventSource;
-//       _eventSubscriptions[url] = subscription;
-//     } catch (e) {
-//       Utils().showLog("Failed to connect to $url: $e");
-//       _connectToEventSource(url, provider);
-//       // if (!_isOfflineCalled && provider.offlineDataList == null) {
-//       //   _isOfflineCalled = true;
-//       //   await getOfflineData();
-//       // }
-//       // throw e;
-//     }
-//   }
-
-//   void _handleEventData(String data, MarketScannerProvider provider) {
-//     try {
-//       _isOfflineCalled = false;
-//       final List<dynamic> decodedResponse = jsonDecode(data);
-
-//       provider.updateData(marketScannerResFromJson(decodedResponse));
-//     } catch (e) {
-//       Utils().showLog("Error processing event data: $e");
-//     }
-//   }
-
-//   Future<void> stopListeningPorts() async {
-//     _isListening = false;
-
-//     // Close EventSources
-//     // for (var entry in _eventSources.entries) {
-//     //   try {
-//     //     entry.value.client.close(); // Removed await since it returns void
-//     //     Utils().showLog("Closed EventSource for ${entry.key}");
-//     //   } catch (e) {
-//     //     Utils().showLog("Error closing EventSource for ${entry.key}: $e");
-//     //   }
-//     // }
-
-//     // Cancel subscriptions
-//     for (var entry in _eventSubscriptions.entries) {
-//       try {
-//         // await entry.value.cancel();
-//         entry.value.pause();
-//         Utils().showLog("Cancelled subscription for ${entry.key}");
-//       } catch (e) {
-//         Utils().showLog("Error cancelling subscription for ${entry.key}: $e");
-//       }
-//     }
-
-//     _eventSources.clear();
-//     _eventSubscriptions.clear();
-//   }
-
-//   Future<void> getOfflineData() async {
-//     final provider = navigatorKey.currentContext!.read<MarketScannerProvider>();
-
-//     int? port = provider.port?.port?.otherPortRes?.offline ?? 8080;
-
-//     try {
-//       final url = Uri.parse(
-//         'https://dev.stocks.news:$port/getScreener?sector=${provider.filterParams?.sector}',
-//       );
-
-//       final response = await http.get(url);
-
-//       if (response.statusCode == 200) {
-//         final List<dynamic> decodedResponse = jsonDecode(response.body);
-//         provider.updateOfflineData(scannerResFromJson(decodedResponse));
-//       } else {
-//         Utils().showLog('Error fetching offline data: ${response.statusCode}');
-//       }
-//     } catch (err) {
-//       Utils().showLog('Error fetching offline data: $err');
-//     }
-//   }
-// }
-
-//CHETAN SIR CODE
-// import 'dart:async';
-// import 'dart:convert';
-// import 'package:http/http.dart' as http;
-// import 'package:eventsource3/eventsource.dart';
-// import 'package:provider/provider.dart';
-// import 'package:stocks_news_new/routes/my_app.dart';
-// import 'package:stocks_news_new/stocksScanner/modals/market_scanner_res.dart';
-// import 'package:stocks_news_new/stocksScanner/modals/scanner_res.dart';
-// import 'package:stocks_news_new/stocksScanner/providers/market_scanner_provider.dart';
-// import 'package:stocks_news_new/utils/utils.dart';
-
-// class MarketScannerDataManager {
-//   static final MarketScannerDataManager instance =
-//       MarketScannerDataManager._internal();
-//   MarketScannerDataManager._internal();
-
-//   factory MarketScannerDataManager() {
-//     return instance;
-//   }
-
-//   final Map<String, EventSource> _eventSources = {};
-//   final Map<String, StreamSubscription> _eventSubscriptions = {};
-//   bool _isOfflineCalled = false;
-//   bool _isListening = false;
-//   static const int checkInterval = 180000;
-//   static const int checkOfflineInterval = 5000;
-
-//   bool get isListening => _isListening;
-
-//   Future<void> initializePorts() async {
-//     if (_isListening) {
-//       await stopListeningPorts(); // Ensure clean state before starting
-//     }
-
-//     _isListening = true;
-//     _isOfflineCalled = false;
-
-//     MarketScannerProvider provider =
-//         navigatorKey.currentContext!.read<MarketScannerProvider>();
-
-//     final startingPort = 8052;
-//     final endingPort = 8060;
 
 //     // Create URLs for all ports
 //     final urls = List.generate(
@@ -237,8 +64,9 @@
 //     });
 
 //     try {
+//       Utils().showLog("Starting connection to event sources...");
 //       await Future.wait(
-//         urls.map((url) => _connectToEventSource(url, provider)),
+//         urls.map((url) => _connectToSseClient(url, provider)),
 //       );
 //     } catch (e) {
 //       Utils().showLog("Error initializing ports: $e");
@@ -249,32 +77,49 @@
 //     }
 //   }
 
-//   Future<void> _connectToEventSource(
+//   Future<void> _connectToSseClient(
 //       String url, MarketScannerProvider provider) async {
 //     try {
-//       final eventSource = await EventSource.connect(url)
-//           .timeout(Duration(milliseconds: checkInterval));
+//       Utils().showLog("Connecting to $url...");
 
-//       final subscription = eventSource.listen(
-//         (Event event) {
-//           if (!_isListening) return;
+//       // Use SSEClient to listen to the SSE stream
 
-//           if (event.data != null && event.data!.isNotEmpty) {
-//             _handleEventData(event.data!, provider);
-//           }
-//         },
-//         cancelOnError: true,
-//         onDone: () => Utils().showLog("Connection closed to ** $url"),
-//         onError: (err) =>
-//             Utils().showLog("Error in connection to ** $url: $err"),
-//       );
+//       SSEClient sseClient = SSEClient(url);
+//       Stream<String> eventStream = sseClient.listen();
 
-//       _eventSources[url] = eventSource;
-//       _eventSubscriptions[url] = subscription;
+//       // Listen for the events and process data
+//       await for (var event in eventStream) {
+//         if (!_isListening) return;
+
+//         if (event.isNotEmpty) {
+//           _handleEventData(event, provider);
+//         }
+//       }
 //     } catch (e) {
 //       Utils().showLog("Failed to connect to $url: $e");
-//       _connectToEventSource(url, provider);
-//       // throw e;
+//       await _retryConnection(url, provider);
+//     }
+//   }
+
+//   Future<void> _retryConnection(
+//       String url, MarketScannerProvider provider) async {
+//     // Retry connection with backoff logic
+//     int retryCount = 0;
+//     final maxRetries = 5;
+//     final retryDelay = Duration(seconds: 5);
+
+//     while (retryCount < maxRetries) {
+//       try {
+//         Utils().showLog("Retrying connection to $url...");
+//         await Future.delayed(retryDelay * retryCount);
+//         await _connectToSseClient(url, provider);
+//         break; // Successfully connected, break the loop
+//       } catch (e) {
+//         retryCount++;
+//         if (retryCount == maxRetries) {
+//           Utils().showLog("Failed to connect after $maxRetries attempts: $e");
+//         }
+//       }
 //     }
 //   }
 
@@ -282,7 +127,9 @@
 //     try {
 //       _isOfflineCalled = false;
 //       final List<dynamic> decodedResponse = jsonDecode(data);
+
 //       provider.updateData(marketScannerResFromJson(decodedResponse));
+//       Utils().showLog("Event data processed successfully");
 //     } catch (e) {
 //       Utils().showLog("Error processing event data: $e");
 //     }
@@ -290,226 +137,189 @@
 
 //   Future<void> stopListeningPorts() async {
 //     _isListening = false;
-
-//     // Close EventSources
-//     // for (var entry in _eventSources.entries) {
-//     //   try {
-//     //     entry.value.client.close(); // Removed await since it returns void
-//     //     Utils().showLog("Closed EventSource for ${entry.key}");
-//     //   } catch (e) {
-//     //     Utils().showLog("Error closing EventSource for ${entry.key}: $e");
-//     //   }
-//     // }
-
-//     // Cancel subscriptions
-//     for (var entry in _eventSubscriptions.entries) {
-//       try {
-//         // await entry.value.cancel();
-//         entry.value.pause();
-//         Utils().showLog("Cancelled subscription for ${entry.key}");
-//       } catch (e) {
-//         Utils().showLog("Error cancelling subscription for ${entry.key}: $e");
-//       }
-//     }
-
-//     _eventSources.clear();
-//     _eventSubscriptions.clear();
+//     Utils().showLog("Stopped all EventSource listeners.");
 //   }
 
 //   Future<void> getOfflineData() async {
 //     final provider = navigatorKey.currentContext!.read<MarketScannerProvider>();
 
+//     int? port = provider.port?.port?.otherPortRes?.offline ?? 8080;
+
+//     final url = Uri.parse(
+//       'https://dev.stocks.news:$port/getScreener?sector=${provider.filterParams?.sector}',
+//     );
+//     final response = await http.get(url).timeout(Duration(seconds: 10));
+
 //     try {
-//       final url = Uri.parse(
-//         'https://dev.stocks.news:8080/getScreener?sector=${provider.filterParams?.sector}',
-//       );
-
-//       final response = await http.get(url);
-
 //       if (response.statusCode == 200) {
 //         final List<dynamic> decodedResponse = jsonDecode(response.body);
 //         provider.updateOfflineData(scannerResFromJson(decodedResponse));
 //       } else {
 //         Utils().showLog('Error fetching offline data: ${response.statusCode}');
 //       }
-//     } catch (err) {
-//       Utils().showLog('Error fetching offline data: $err');
+//     } on TimeoutException catch (_) {
+//       Utils().showLog('Request to fetch offline data timed out');
 //     }
 //   }
 // }
 
-import 'dart:async';
-import 'dart:convert';
-import 'package:http/http.dart' as http;
-import 'package:eventsource3/eventsource.dart';
-import 'package:provider/provider.dart';
-import 'package:stocks_news_new/routes/my_app.dart';
-import 'package:stocks_news_new/stocksScanner/modals/market_scanner_res.dart';
-import 'package:stocks_news_new/stocksScanner/modals/scanner_res.dart';
-import 'package:stocks_news_new/stocksScanner/providers/market_scanner_provider.dart';
-import 'package:stocks_news_new/utils/utils.dart';
+// import 'dart:async';
+// import 'dart:convert';
+// import 'package:http/http.dart' as http;
+// import 'package:provider/provider.dart';
+// import 'package:stocks_news_new/routes/my_app.dart';
+// import 'package:stocks_news_new/stocksScanner/modals/market_scanner_res.dart';
+// import 'package:stocks_news_new/stocksScanner/modals/scanner_res.dart';
+// import 'package:stocks_news_new/stocksScanner/providers/market_scanner_provider.dart';
+// import 'package:stocks_news_new/utils/utils.dart';
 
-class MarketScannerDataManager {
-  static final MarketScannerDataManager instance =
-      MarketScannerDataManager._internal();
-  MarketScannerDataManager._internal();
+// import '../manager/client.dart';
 
-  factory MarketScannerDataManager() {
-    return instance;
-  }
+// class MarketScannerDataManager {
+//   static final MarketScannerDataManager instance =
+//       MarketScannerDataManager._internal();
 
-  final Map<String, EventSource> _eventSources = {};
-  final Map<String, StreamSubscription> _eventSubscriptions = {};
-  bool _isOfflineCalled = false;
-  bool _isListening = false;
-  static const int checkInterval = 180000;
-  static const int checkOfflineInterval = 5000;
+//   MarketScannerDataManager._internal();
 
-  bool get isListening => _isListening;
+//   bool _isOfflineCalled = false;
+//   bool _isListening = false;
 
-  Future<void> initializePorts() async {
-    if (_isListening) {
-      await stopListeningPorts(); // Ensure clean state before starting
-    }
+//   static const int checkInterval = 180000;
+//   static const int checkOfflineInterval = 5000;
 
-    _isListening = true;
-    _isOfflineCalled = false;
+//   bool get isListening => _isListening;
 
-    MarketScannerProvider provider =
-        navigatorKey.currentContext!.read<MarketScannerProvider>();
+// //MARK: Initialize Port
+//   Future<void> initializePorts() async {
+//     if (_isListening) {
+//       await stopListeningPorts();
+//     }
 
-    int? startingPort = provider.port?.port?.scannerPort?.start ?? 8021;
-    int? endingPort = provider.port?.port?.scannerPort?.end ?? 8040;
-    bool? callOffline =
-        provider.port?.port?.checkMarketOpenApi?.checkPostMarket == true;
+//     _isListening = true;
+//     _isOfflineCalled = false;
 
-    if (callOffline) {
-      await getOfflineData();
-      return;
-    }
+//     final provider = navigatorKey.currentContext!.read<MarketScannerProvider>();
 
-    // Create URLs for all ports
-    final urls = List.generate(
-      endingPort - startingPort + 1,
-      (index) => "https://dev.stocks.news:${startingPort + index}/sse",
-    );
+//     final startingPort = provider.port?.port?.scannerPort?.start ?? 8021;
+//     final endingPort = provider.port?.port?.scannerPort?.end ?? 8040;
+//     final callOffline =
+//         provider.port?.port?.checkMarketOpenApi?.checkPostMarket == true;
 
-    // Set offline data timer
-    Timer(Duration(milliseconds: checkOfflineInterval), () async {
-      if (!_isOfflineCalled &&
-          provider.offlineDataList == null &&
-          _isListening == true) {
-        _isOfflineCalled = true;
-        await getOfflineData();
-      }
-    });
+//     Utils().showLog('Call Offline: $callOffline');
+//     if (callOffline) {
+//       await getOfflineData();
+//       return;
+//     }
 
-    try {
-      Utils().showLog("Starting connection to event sources...");
-      await Future.wait(
-        urls.map((url) => _connectToEventSource(url, provider)),
-      );
-    } catch (e) {
-      Utils().showLog("Error initializing ports: $e");
-      if (!_isOfflineCalled && provider.offlineDataList == null) {
-        _isOfflineCalled = true;
-        await getOfflineData();
-      }
-    }
-  }
+//     final urls = List.generate(
+//       endingPort - startingPort + 1,
+//       (index) => "https://dev.stocks.news:${startingPort + index}/sse",
+//     );
 
-  Future<void> _connectToEventSource(
-      String url, MarketScannerProvider provider) async {
-    try {
-      Utils().showLog("Connecting to $url...");
-      final eventSource = await EventSource.connect(url)
-          .timeout(Duration(milliseconds: checkInterval));
+//     Timer(Duration(milliseconds: checkOfflineInterval), () async {
+//       if (!_isOfflineCalled &&
+//           provider.offlineDataList == null &&
+//           _isListening) {
+//         _isOfflineCalled = true;
+//         await getOfflineData();
+//       }
+//     });
 
-      final subscription = eventSource.listen(
-        (Event event) {
-          if (!_isListening) return;
+//     try {
+//       Utils().showLog("Starting connections to SSE servers...");
+//       await Future.wait(urls.map((url) => _connectToSseClient(url, provider)));
+//     } catch (e) {
+//       Utils().showLog("Error initializing ports: $e");
+//       if (!_isOfflineCalled && provider.offlineDataList == null) {
+//         _isOfflineCalled = true;
+//         await getOfflineData();
+//       }
+//     }
+//   }
 
-          if (event.data != null && event.data!.isNotEmpty) {
-            _handleEventData(event.data!, provider);
-          }
-        },
-        cancelOnError: true,
-        onDone: () => Utils().showLog("Connection closed to ** $url"),
-        onError: (err) {
-          Utils().showLog("Error in connection to ** $url: $err");
-          // Handle reconnection attempt here if necessary
-        },
-      );
+//   Future<void> _connectToSseClient(
+//       String url, MarketScannerProvider provider) async {
+//     try {
+//       Utils().showLog("Connecting to $url...");
 
-      _eventSources[url] = eventSource;
-      _eventSubscriptions[url] = subscription;
-      Utils().showLog("Successfully connected to $url");
-    } catch (e) {
-      Utils().showLog("Failed to connect to $url: $e");
-      await _retryConnection(url, provider);
-    }
-  }
+//       final sseClient = SSEClient(url);
+//       final eventStream = sseClient.listen();
 
-  Future<void> _retryConnection(
-      String url, MarketScannerProvider provider) async {
-    // Retry connection if it fails
-    Utils().showLog("Retrying connection to $url...");
-    await Future.delayed(Duration(seconds: 5));
-    await _connectToEventSource(url, provider);
-  }
+//       await for (var event in eventStream) {
+//         if (!_isListening) return;
 
-  void _handleEventData(String data, MarketScannerProvider provider) {
-    try {
-      _isOfflineCalled = false;
-      final List<dynamic> decodedResponse = jsonDecode(data);
+//         if (event.isNotEmpty) {
+//           _handleEventData(event, provider);
+//         }
+//       }
+//     } catch (e) {
+//       Utils().showLog("Connection failed to $url: $e");
+//       await _retryConnection(url, provider);
+//     }
+//   }
 
-      provider.updateData(marketScannerResFromJson(decodedResponse));
-      Utils().showLog("Event data processed successfully");
-    } catch (e) {
-      Utils().showLog("Error processing event data: $e");
-    }
-  }
+//   Future<void> _retryConnection(
+//       String url, MarketScannerProvider provider) async {
+//     const maxRetries = 5;
+//     const retryDelay = Duration(seconds: 5);
 
-  Future<void> stopListeningPorts() async {
-    _isListening = false;
+//     for (int attempt = 1; attempt <= maxRetries; attempt++) {
+//       try {
+//         Utils().showLog("Retrying connection to $url (Attempt $attempt)...");
+//         await Future.delayed(retryDelay * attempt);
+//         await _connectToSseClient(url, provider);
+//         break;
+//       } catch (e) {
+//         if (attempt == maxRetries) {
+//           Utils()
+//               .showLog("Max retries reached. Failed to reconnect to $url: $e");
+//         }
+//       }
+//     }
+//   }
 
-    // Cancel EventSource subscriptions
-    for (var entry in _eventSubscriptions.entries) {
-      try {
-        await entry.value.cancel(); // Cancel subscription to stop listening
-        Utils().showLog("Cancelled subscription for ${entry.key}");
-      } catch (e) {
-        Utils().showLog("Error cancelling subscription for ${entry.key}: $e");
-      }
-    }
+//   void _handleEventData(String data, MarketScannerProvider provider) {
+//     try {
+//       _isOfflineCalled = false;
+//       final decodedResponse = jsonDecode(data) as List<dynamic>;
 
-    // Clear the eventSources and eventSubscriptions maps
-    _eventSources.clear();
-    _eventSubscriptions.clear();
+//       provider.updateData(marketScannerResFromJson(decodedResponse));
+//       Utils().showLog("Event data processed successfully.");
+//     } catch (e) {
+//       Utils().showLog("Error processing event data: $e");
+//     }
+//   }
 
-    Utils().showLog("Stopped all EventSource listeners.");
-  }
+// //MARK: Stop listening
+//   Future<void> stopListeningPorts() async {
+//     _isListening = false;
+//     Utils().showLog("Stopped all SSE connections.");
+//   }
 
-  Future<void> getOfflineData() async {
-    final provider = navigatorKey.currentContext!.read<MarketScannerProvider>();
+//   ///MARK: Offline
+//   Future<void> getOfflineData() async {
+//     final provider = navigatorKey.currentContext!.read<MarketScannerProvider>();
+//     final port = provider.port?.port?.otherPortRes?.offline ?? 8080;
 
-    int? port = provider.port?.port?.otherPortRes?.offline ?? 8080;
+//     final url = Uri.parse(
+//       'https://dev.stocks.news:$port/getScreener?sector=${provider.filterParams?.sector}',
+//     );
 
-    try {
-      final url = Uri.parse(
-        'https://dev.stocks.news:$port/getScreener?sector=${provider.filterParams?.sector}',
-      );
+//     try {
+//       final response = await http.get(url).timeout(Duration(seconds: 10));
 
-      final response = await http.get(url);
-
-      if (response.statusCode == 200) {
-        final List<dynamic> decodedResponse = jsonDecode(response.body);
-        provider.updateOfflineData(scannerResFromJson(decodedResponse));
-      } else {
-        Utils().showLog('Error fetching offline data: ${response.statusCode}');
-      }
-    } catch (err) {
-      Utils().showLog('Error fetching offline data: $err');
-    }
-  }
-}
+//       if (response.statusCode == 200) {
+//         final decodedResponse = jsonDecode(response.body) as List<dynamic>;
+//         provider.updateOfflineData(scannerResFromJson(decodedResponse));
+//         Utils().showLog("Offline data fetched successfully.");
+//       } else {
+//         Utils().showLog(
+//             "Error fetching offline data. Status code: ${response.statusCode}");
+//       }
+//     } on TimeoutException {
+//       Utils().showLog("Request to fetch offline data timed out.");
+//     } catch (e) {
+//       Utils().showLog("Error fetching offline data: $e");
+//     }
+//   }
+// }

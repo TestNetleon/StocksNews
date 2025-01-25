@@ -7,7 +7,6 @@ import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/api/apis.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
-import 'package:stocks_news_new/stocksScanner/apis/market_scanner_manager.dart';
 import 'package:stocks_news_new/stocksScanner/modals/market_scanner_res.dart';
 import 'package:stocks_news_new/stocksScanner/modals/scanner_res.dart';
 import 'package:stocks_news_new/stocksScanner/modals/sectors_res.dart';
@@ -16,6 +15,7 @@ import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:http/http.dart' as http;
 
+import '../manager/scanner_stream.dart';
 import '../modals/ports.dart';
 
 class MarketScannerProvider extends ChangeNotifier {
@@ -81,7 +81,7 @@ class MarketScannerProvider extends ChangeNotifier {
     );
     notifyListeners();
 
-    MarketScannerDataManager.instance.initializePorts();
+    MarketScannerStream.instance.initializePorts();
   }
 
   void stopListeningPorts() {
@@ -90,7 +90,7 @@ class MarketScannerProvider extends ChangeNotifier {
     _offlineDataList = null;
     _dataList = null;
     _filterParams = null;
-    MarketScannerDataManager.instance.stopListeningPorts();
+    MarketScannerStream.instance.stopListeningPorts();
     notifyListeners();
   }
 
@@ -741,8 +741,8 @@ class MarketScannerProvider extends ChangeNotifier {
       _filterParams?.sortByAsc = true;
     }
 
-    if (MarketScannerDataManager.instance.isListening) {
-      MarketScannerDataManager.instance.stopListeningPorts();
+    if (MarketScannerStream.instance.isListening) {
+      MarketScannerStream.instance.stopListeningPorts();
     }
 
     if (_dataList != null) {
@@ -762,12 +762,12 @@ class MarketScannerProvider extends ChangeNotifier {
       _offlineDataList = null;
       _fullOfflineDataList = null;
       notifyListeners();
-      // MarketScannerDataManager.instance.initializePorts();
+      // MarketScannerStream.instance.initializePorts();
       updateData(_fullDataList);
     } else if (_offlineDataList != null) {
       if (params.sector != _filterParams?.sector) {
         _filterParams = params;
-        MarketScannerDataManager.instance.getOfflineData();
+        MarketScannerStream.instance.getOfflineData();
       } else {
         _filterParams = params;
         updateOfflineData(_fullOfflineDataList, applyFilter: true);
@@ -784,7 +784,7 @@ class MarketScannerProvider extends ChangeNotifier {
       _offlineDataList = _fullOfflineDataList;
       _offlineDataList = _offlineDataList?.take(50).toList();
     }
-    MarketScannerDataManager.instance.getOfflineData();
+    MarketScannerStream.instance.getOfflineData();
     notifyListeners();
   }
 
@@ -885,7 +885,12 @@ class MarketScannerProvider extends ChangeNotifier {
       if (response.status) {
         _port = scannerPortsResFromJson(jsonEncode(response.data));
         if (start) {
-          startListeningPorts();
+          int called = 0;
+
+          if (called == 0) {
+            called++;
+            startListeningPorts();
+          }
         }
       } else {
         _port = null;

@@ -548,9 +548,9 @@ class _TradOrderScreenState extends State<TradOrderScreen> {
                 }
               }),
           BuyOrderItem(
-            title: "Buy To Cover Order",
+            title: "Buy to Cover Order",
             subtitle:
-                "Buy To Cover ${widget.symbol} at a maximum price or lower.",
+                "Buy to Cover ${widget.symbol} at a maximum price or lower.",
             onTap: () {
               var selectedStock = StockType.btc;
               if (widget.symbol != null) {
