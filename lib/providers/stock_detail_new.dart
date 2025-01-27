@@ -2591,7 +2591,7 @@ class StockDetailProviderNew extends ChangeNotifier {
       return ApiResponse(status: response.status);
     } catch (e) {
       // Handle any exceptions
-      Utils().showLog(e.toString());
+      Utils().showLog('error on detail $e');
       setStatusTab(Status.loaded);
       return ApiResponse(status: false);
     }
@@ -3071,7 +3071,7 @@ class StockDetailProviderNew extends ChangeNotifier {
       setStatusOverview(Status.loaded);
     } catch (e) {
       _overviewRes = null;
-      Utils().showLog(e.toString());
+      Utils().showLog('ERROR $e');
       _errorOverview = Const.errSomethingWrong;
       setStatusOverview(Status.loaded);
     }

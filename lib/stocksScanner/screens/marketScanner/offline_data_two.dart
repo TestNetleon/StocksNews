@@ -6,7 +6,6 @@ import 'package:stocks_news_new/stocksScanner/providers/market_scanner_provider.
 import 'package:stocks_news_new/stocksScanner/screens/marketScanner/scanner_header.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
-import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import '../../../utils/utils.dart';
 import '../sorting/shorting.dart';
 import '../widget/container.dart';
@@ -20,20 +19,6 @@ class MarketScannerOfflineTwo extends StatefulWidget {
 }
 
 class _MarketScannerOfflineTwoState extends State<MarketScannerOfflineTwo> {
-  // List<String> columnHeader = [
-  //   "Time",
-  //   // "Symbol",
-  //   "Company Name",
-  //   "Sector",
-  //   "Bid",
-  //   "Ask",
-  //   "Last Trade",
-  //   "Net Change",
-  //   "% Change",
-  //   "Volume",
-  //   "\$ Volume"
-  // ];
-
   @override
   void initState() {
     super.initState();
@@ -75,58 +60,80 @@ class _MarketScannerOfflineTwoState extends State<MarketScannerOfflineTwo> {
           //   "Market Status :   |   Last Updated :",
           //   style: stylePTSansBold(),
           // ),
-          const SpacerVertical(height: 10),
-          Visibility(
-            visible: dataList.isNotEmpty && provider.isFilterApplied(),
-            child: Padding(
-              padding: const EdgeInsets.only(bottom: 10),
-              child: Text(
-                'Total number of results: ${dataList.length}',
-                style: styleGeorgiaBold(),
-              ),
-            ),
-          ),
-          Align(
+          Container(
+            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
             alignment: Alignment.centerRight,
             child: Visibility(
               visible: dataList.isNotEmpty == true,
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    'Sort Stocks ',
-                    style: styleGeorgiaBold(),
+                  Flexible(
+                    child: Visibility(
+                      visible:
+                          dataList.isNotEmpty && provider.isFilterApplied(),
+                      child: Text(
+                        'Total number of results: ${dataList.length}',
+                        style: styleGeorgiaBold(),
+                      ),
+                    ),
                   ),
-                  IconButton(
-                      onPressed: () {
+                  Flexible(
+                    child: GestureDetector(
+                      onTap: () {
                         scannerSorting(
+                          showPreMarket: true,
+                          sortBy: provider.filterParams?.sortByAsc,
+                          header: provider.filterParams?.sortBy,
                           sortByCallBack: (received) {
                             Utils().showLog(
                                 '${received.type}, ${received.ascending}');
-                            if (received.type == SortByEnums.symbol) {
-                              provider.applySorting('Symbol');
-                            } else if (received.type == SortByEnums.company) {
-                              provider.applySorting('Company Name');
-                            } else if (received.type == SortByEnums.sector) {
-                              provider.applySorting('Sector');
-                            } else if (received.type == SortByEnums.lastTrade) {
-                              provider.applySorting('Last Trade');
-                            } else if (received.type == SortByEnums.netChange) {
-                              provider.applySorting('Net Change');
-                            } else if (received.type == SortByEnums.perChange) {
-                              provider.applySorting('% Change');
-                            } else if (received.type == SortByEnums.volume) {
-                              provider.applySorting('Volume');
-                            } else if (received.type ==
-                                SortByEnums.dollarVolume) {
-                              provider.applySorting('\$ Volume');
-                            }
+                            provider.applySorting(
+                                received.type.name, received.ascending);
+
+                            // if (received.type == SortByEnums.symbol) {
+                            //   provider.applySorting(
+                            //       'Symbol', received.ascending);
+                            // } else if (received.type == SortByEnums.company) {
+                            //   provider.applySorting(
+                            //       'Company Name', received.ascending);
+                            // } else if (received.type == SortByEnums.sector) {
+                            //   provider.applySorting(
+                            //       'Sector', received.ascending);
+                            // } else if (received.type == SortByEnums.lastTrade) {
+                            //   provider.applySorting(
+                            //       'Last Trade', received.ascending);
+                            // } else if (received.type == SortByEnums.netChange) {
+                            //   provider.applySorting(
+                            //       'Net Change', received.ascending);
+                            // } else if (received.type == SortByEnums.perChange) {
+                            //   provider.applySorting(
+                            //       '% Change', received.ascending);
+                            // } else if (received.type == SortByEnums.volume) {
+                            //   provider.applySorting(
+                            //       'Volume', received.ascending);
+                            // } else if (received.type ==
+                            //     SortByEnums.dollarVolume) {
+                            //   provider.applySorting(
+                            //       '\$ Volume', received.ascending);
+                            // }
 
                             Navigator.pop(context);
                           },
                         );
                       },
-                      icon: Icon(Icons.sort)),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Text(
+                            'Sort Stocks ',
+                            style: styleGeorgiaBold(),
+                          ),
+                          Icon(Icons.sort),
+                        ],
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -161,113 +168,3 @@ class _MarketScannerOfflineTwoState extends State<MarketScannerOfflineTwo> {
     );
   }
 }
-
-// import 'package:flutter/material.dart';
-// import 'package:flutter_screenutil/flutter_screenutil.dart';
-// import 'package:provider/provider.dart';
-// import 'package:stocks_news_new/stocksScanner/modals/scanner_res.dart';
-// import 'package:stocks_news_new/stocksScanner/providers/market_scanner_provider.dart';
-// import 'package:stocks_news_new/stocksScanner/screens/marketScanner/scanner_header.dart';
-// import 'package:stocks_news_new/utils/colors.dart';
-// import 'package:stocks_news_new/utils/theme.dart';
-// import 'package:stocks_news_new/widgets/spacer_vertical.dart';
-// import '../widget/container.dart';
-
-// class MarketScannerOfflineTwo extends StatefulWidget {
-//   const MarketScannerOfflineTwo({super.key});
-
-//   @override
-//   State<MarketScannerOfflineTwo> createState() =>
-//       _MarketScannerOfflineTwoState();
-// }
-
-// class _MarketScannerOfflineTwoState extends State<MarketScannerOfflineTwo> {
-//   // List<String> columnHeader = [
-//   //   "Time",
-//   //   // "Symbol",
-//   //   "Company Name",
-//   //   "Sector",
-//   //   "Bid",
-//   //   "Ask",
-//   //   "Last Trade",
-//   //   "Net Change",
-//   //   "% Change",
-//   //   "Volume",
-//   //   "\$ Volume"
-//   // ];
-
-//   @override
-//   void initState() {
-//     super.initState();
-//     // WidgetsBinding.instance.addPostFrameCallback((_) {
-//     //   MarketScannerProvider provider = context.read<MarketScannerProvider>();
-//     //   provider.startListeningPorts();
-//     //   // provider.getOfflineData();
-//     // });
-//   }
-
-//   @override
-//   void dispose() {
-//     super.dispose();
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     MarketScannerProvider provider = context.watch<MarketScannerProvider>();
-//     List<ScannerRes>? dataList = provider.offlineDataList;
-//     List<String> tableHeader = provider.tableHeader;
-//     bool? gotPostMarket = dataList?.any(
-//       (element) => element.ext?.extendedHoursType == 'PostMarket',
-//     );
-//     if (dataList == null) {
-//       return SizedBox();
-//     }
-//     if (gotPostMarket == true) {
-//       int lastTradeIndex = provider.tableHeader.indexOf("Last Trade");
-//       if (lastTradeIndex != -1 && !tableHeader.contains("Post Market Price")) {
-//         tableHeader.insert(lastTradeIndex + 1, "Post Market Price");
-//       }
-//     }
-
-//     return Column(
-//       children: [
-//         MarketScannerHeader(isOnline: false),
-//         const SpacerVertical(height: 10),
-//         Visibility(
-//           visible: dataList.isNotEmpty && provider.isFilterApplied(),
-//           child: Padding(
-//             padding: const EdgeInsets.only(bottom: 10),
-//             child: Text(
-//               'Total number of results: ${dataList.length}',
-//               style: styleGeorgiaBold(),
-//             ),
-//           ),
-//         ),
-//         ScannerBaseContainerOffline(
-//           dataList: dataList,
-//         ),
-//       ],
-//     );
-//   }
-
-//   DataCell _dataCell({required String text, bool change = false, num? value}) {
-//     return DataCell(
-//       ConstrainedBox(
-//         constraints: BoxConstraints(
-//           maxWidth: ScreenUtil().screenWidth * .3,
-//         ),
-//         child: Text(
-//           // userPercent ? "$text%" : "$text",
-//           text,
-//           style: styleGeorgiaBold(
-//             fontSize: 12,
-//             // color: Colors.white,
-//             color: value != null
-//                 ? (value >= 0 ? ThemeColors.accent : ThemeColors.sos)
-//                 : Colors.white,
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-// }

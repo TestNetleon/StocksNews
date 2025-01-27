@@ -295,4 +295,8 @@ class ApiKeys {
 
   //Amplitude
   static const amplitudeKey = 'ff8ab349a2ddf801c985a59e3be1bedf';
+
+  //SuperWall
+  static const superWall =
+      'pk_12e4abaf1b222772aa2033514213dd673b31001945d628d2';
 }

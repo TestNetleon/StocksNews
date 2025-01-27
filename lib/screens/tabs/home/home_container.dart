@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
@@ -62,19 +61,19 @@ class _HomeContainerState extends State<HomeContainer> {
     }
     return Column(
       children: [
-        Visibility(
-          visible: kDebugMode,
-          child: ThemeButtonSmall(
-            text: 'Stock Scanner',
-            onPressed: () async {
-              // shareUri = await AppsFlyerService.instance.createUserInvitationLink();
-              // print('generateInviteLink shareUri $shareUri');
-              // Share.share(
-              //   "${context.read<HomeProvider>().extra?.referral?.shareText}${"\n\n"}${shareUri.toString()}",
-              // );
-            },
-          ),
-        ),
+        // Visibility(
+        //   visible: kDebugMode,
+        //   child: ThemeButtonSmall(
+        //     text: 'Stock Scanner',
+        //     onPressed: () async {
+        //       // shareUri = await AppsFlyerService.instance.createUserInvitationLink();
+        //       // print('generateInviteLink shareUri $shareUri');
+        //       // Share.share(
+        //       //   "${context.read<HomeProvider>().extra?.referral?.shareText}${"\n\n"}${shareUri.toString()}",
+        //       // );
+        //     },
+        //   ),
+        // ),
         Visibility(
           visible: provider.extra?.phoneCodeError != null &&
               provider.extra?.phoneCodeError != '',

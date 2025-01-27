@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/stocksScanner/modals/market_scanner_res.dart';
@@ -9,7 +8,6 @@ import 'package:stocks_news_new/stocksScanner/modals/scanner_res.dart';
 import 'package:stocks_news_new/stocksScanner/providers/top_loser_scanner_provider.dart';
 // import 'package:stocks_news_new/stocksScanner/providers/top_gainer_scanner_provider.dart';
 // import 'package:stocks_news_new/stocksScanner/providers/market_scanner_provider.dart';
-import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:timezone/timezone.dart' as tz;
 import 'package:timezone/data/latest_all.dart' as tz;
@@ -85,27 +83,6 @@ class _TopLoserScannerHeaderState extends State<TopLoserScannerHeader> {
       // "Market Status : $marketStatus  |   Last Updated : ",
       style: stylePTSansBold(fontSize: 13),
       maxLines: 1,
-    );
-  }
-
-  DataCell _dataCell({required String text, bool change = false, num? value}) {
-    return DataCell(
-      ConstrainedBox(
-        constraints: BoxConstraints(
-          maxWidth: ScreenUtil().screenWidth * .3,
-        ),
-        child: Text(
-          // userPercent ? "$text%" : "$text",
-          text,
-          style: styleGeorgiaBold(
-            fontSize: 12,
-            // color: Colors.white,
-            color: value != null
-                ? (value >= 0 ? ThemeColors.accent : ThemeColors.sos)
-                : Colors.white,
-          ),
-        ),
-      ),
     );
   }
 }

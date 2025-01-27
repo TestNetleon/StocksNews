@@ -114,6 +114,7 @@ dependencies:
   font_awesome_flutter: ^10.8.0
   timezone: ^0.10.0
   featurehub_sse_client: ^1.3.3
+  superwallkit_flutter: ^1.3.9
   # app_tracking_transparency: ^2.0.6+1
 
 dev_dependencies:

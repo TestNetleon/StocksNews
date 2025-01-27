@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:stocks_news_new/screens/stockDetail/index.dart';
 import 'package:stocks_news_new/stocksScanner/modals/scanner_res.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
@@ -32,6 +33,9 @@ class ScannerBaseItem extends StatelessWidget {
       perChange = data?.ext?.extendedHoursPercentChange ?? 0;
       lastTrade = data?.ext?.extendedHoursPrice ?? 0;
     }
+    if (showPreMarket) {
+      lastTrade = data?.price ?? 0;
+    }
     return Column(
       children: [
         Container(
@@ -47,15 +51,27 @@ class ScannerBaseItem extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  Visibility(
-                    visible: data?.image != null && data?.image != '',
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(5),
-                      child: SizedBox(
-                        height: 43,
-                        width: 43,
-                        // color: ThemeColors.greyText,
-                        child: CachedNetworkImagesWidget(data?.image ?? ''),
+                  GestureDetector(
+                    onTap: () {
+                      if (data?.identifier == null || data?.identifier == '') {
+                        return;
+                      }
+                      Navigator.push(context, MaterialPageRoute(
+                        builder: (context) {
+                          return StockDetail(symbol: data?.identifier ?? '');
+                        },
+                      ));
+                    },
+                    child: Visibility(
+                      visible: data?.image != null && data?.image != '',
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(5),
+                        child: SizedBox(
+                          height: 43,
+                          width: 43,
+                          // color: ThemeColors.greyText,
+                          child: CachedNetworkImagesWidget(data?.image ?? ''),
+                        ),
                       ),
                     ),
                   ),

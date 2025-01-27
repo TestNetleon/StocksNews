@@ -59,6 +59,7 @@ import 'package:stocks_news_new/stocksScanner/providers/market_scanner_provider.
 import 'package:stocks_news_new/stocksScanner/screens/marketScanner/offline_data_two.dart';
 import 'package:stocks_news_new/stocksScanner/screens/marketScanner/online_data.dart';
 import 'package:stocks_news_new/stocksScanner/screens/stockScanner/widget_preparing.dart';
+import 'package:stocks_news_new/widgets/custom/refresh_indicator.dart';
 
 class MarketScanner extends StatefulWidget {
   const MarketScanner({super.key});
@@ -87,17 +88,22 @@ class _MarketScannerState extends State<MarketScanner> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Consumer<MarketScannerProvider>(
-        builder: (context, provider, child) {
-          if (provider.dataList != null) {
-            return MarketScannerOnline();
-          } else if (provider.offlineDataList != null) {
-            return MarketScannerOfflineTwo();
-          } else {
-            return ScannerPreparing();
-          }
-        },
+    return CommonRefreshIndicator(
+      onRefresh: () async {
+        context.read<MarketScannerProvider>().startListeningPorts();
+      },
+      child: SingleChildScrollView(
+        child: Consumer<MarketScannerProvider>(
+          builder: (context, provider, child) {
+            if (provider.dataList != null) {
+              return MarketScannerOnline();
+            } else if (provider.offlineDataList != null) {
+              return MarketScannerOfflineTwo();
+            } else {
+              return ScannerPreparing();
+            }
+          },
+        ),
       ),
     );
   }
