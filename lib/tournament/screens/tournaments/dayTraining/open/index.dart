@@ -239,12 +239,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/api/api_response.dart';
-import 'package:stocks_news_new/screens/stockDetail/stockDetailTabs/overview/chart.dart';
 import 'package:stocks_news_new/tournament/provider/search.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/tournament/screens/tournaments/dayTraining/widgets/tradiding_view_chart.dart';
-import 'package:stocks_news_new/tournament/screens/tournaments/dayTraining/widgets/trading_webview.dart';
 import 'package:stocks_news_new/tradingSimulator/manager/sse.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
@@ -297,7 +295,6 @@ class _TournamentOpenIndexState extends State<TournamentOpenIndex>
       stock: provider.selectedStock,
       clearEverything: true,
     );
-
   }
 
   _trade({StockType type = StockType.buy}) async {
@@ -372,7 +369,7 @@ class _TournamentOpenIndexState extends State<TournamentOpenIndex>
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                       /* Align(
+                        /* Align(
                           alignment: Alignment.centerRight,
                           child: TextButton.icon(
                             iconAlignment: IconAlignment.end,
@@ -417,9 +414,13 @@ class _TournamentOpenIndexState extends State<TournamentOpenIndex>
                                     data: detailHolder?.data?.ticker,
                                   ),
                                 ),
-                              //  Expanded(child: TradingWebview(symbol: detailHolder?.data?.ticker?.symbol ?? "")),
+                                //  Expanded(child: TradingWebview(symbol: detailHolder?.data?.ticker?.symbol ?? "")),
 
-                                Expanded(child: TradingViewChart(symbol: detailHolder?.data?.ticker?.symbol ?? "")),
+                                Expanded(
+                                    child: TradingViewChart(
+                                        symbol: detailHolder
+                                                ?.data?.ticker?.symbol ??
+                                            "")),
 
                                 if (detailHolder
                                         ?.data?.showButton?.alreadyTraded ==
@@ -435,7 +436,7 @@ class _TournamentOpenIndexState extends State<TournamentOpenIndex>
                                           color: ThemeColors.sos,
                                           child: Row(
                                             mainAxisAlignment:
-                                            MainAxisAlignment.center,
+                                                MainAxisAlignment.center,
                                             children: [
                                               Text(
                                                 'Sell',
@@ -443,14 +444,16 @@ class _TournamentOpenIndexState extends State<TournamentOpenIndex>
                                               ),
                                               SpacerHorizontal(width: 10),
                                               Visibility(
-                                                visible:detailHolder?.data?.ticker?.currentPrice != null,
+                                                visible: detailHolder
+                                                        ?.data
+                                                        ?.ticker
+                                                        ?.currentPrice !=
+                                                    null,
                                                 child: Flexible(
-                                                  child:
-                                                  Text(
+                                                  child: Text(
                                                     "${detailHolder?.data?.ticker?.currentPrice?.toFormattedPrice()}",
                                                     style: styleGeorgiaBold(
-                                                      color: Colors.white
-                                                    ),
+                                                        color: Colors.white),
                                                   ),
                                                 ),
                                               )
@@ -466,7 +469,7 @@ class _TournamentOpenIndexState extends State<TournamentOpenIndex>
                                           onPressed: _trade,
                                           child: Row(
                                             mainAxisAlignment:
-                                            MainAxisAlignment.center,
+                                                MainAxisAlignment.center,
                                             children: [
                                               Text(
                                                 'Buy',
@@ -474,14 +477,16 @@ class _TournamentOpenIndexState extends State<TournamentOpenIndex>
                                               ),
                                               SpacerHorizontal(width: 10),
                                               Visibility(
-                                                visible:detailHolder?.data?.ticker?.currentPrice != null,
+                                                visible: detailHolder
+                                                        ?.data
+                                                        ?.ticker
+                                                        ?.currentPrice !=
+                                                    null,
                                                 child: Flexible(
-                                                  child:
-                                                  Text(
+                                                  child: Text(
                                                     "${detailHolder?.data?.ticker?.currentPrice?.toFormattedPrice()}",
                                                     style: styleGeorgiaBold(
-                                                        color: Colors.white
-                                                    ),
+                                                        color: Colors.white),
                                                   ),
                                                 ),
                                               )
@@ -500,7 +505,7 @@ class _TournamentOpenIndexState extends State<TournamentOpenIndex>
                                         child: ThemeButton(
                                           radius: 10,
                                           text: 'Open Trades',
-                                          onPressed: (){
+                                          onPressed: () {
                                             _navigateToAllTrades();
                                           },
                                           color: ThemeColors.themeGreen,
@@ -514,10 +519,9 @@ class _TournamentOpenIndexState extends State<TournamentOpenIndex>
                                           onPressed: _close,
                                           color: ThemeColors.white,
                                           textColor: Colors.black,
-
                                           child: Row(
                                             mainAxisAlignment:
-                                            MainAxisAlignment.center,
+                                                MainAxisAlignment.center,
                                             children: [
                                               Text(
                                                 'Close',
@@ -526,16 +530,23 @@ class _TournamentOpenIndexState extends State<TournamentOpenIndex>
                                               ),
                                               SpacerHorizontal(width: 10),
                                               Flexible(
-                                                child:
-                                                Text(
+                                                child: Text(
                                                   '${detailHolder?.data?.showButton?.orderChange?.toCurrency()}%',
                                                   style: styleGeorgiaBold(
-                                                      color:
-                                                      (detailHolder?.data?.showButton?.orderChange ?? 0) > 0
-                                                          ? Colors.green
-                                                          : detailHolder?.data?.showButton?.orderChange ==0?
-                                                      Colors.black:
-                                                      Colors.red,
+                                                    color: (detailHolder
+                                                                    ?.data
+                                                                    ?.showButton
+                                                                    ?.orderChange ??
+                                                                0) >
+                                                            0
+                                                        ? Colors.green
+                                                        : detailHolder
+                                                                    ?.data
+                                                                    ?.showButton
+                                                                    ?.orderChange ==
+                                                                0
+                                                            ? Colors.black
+                                                            : Colors.red,
                                                   ),
                                                 ),
                                                 /*Container(

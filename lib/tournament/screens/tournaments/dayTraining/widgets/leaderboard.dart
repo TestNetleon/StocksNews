@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/tournament/provider/tournament.dart';
-import 'package:stocks_news_new/tournament/widgets/card.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/featured/widgets/title.dart';
-import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
@@ -21,15 +19,15 @@ class DayTrainingLeaderboard extends StatelessWidget {
       child: Column(
         children: [
           FeaturedWatchlistTitle(
-            title:  provider.detailRes?.leaderboardTitle??"",
+            title: provider.detailRes?.leaderboardTitle ?? "",
             onTap: () {
               context.read<TournamentProvider>().leagueToLeaderboard();
             },
           ),
           Visibility(
-            visible: provider.detailRes?.leaderboardSubTitle!=null,
+            visible: provider.detailRes?.leaderboardSubTitle != null,
             child: ScreenTitle(
-              subTitle: provider.detailRes?.leaderboardSubTitle??"",
+              subTitle: provider.detailRes?.leaderboardSubTitle ?? "",
             ),
           ),
           ListView.separated(
@@ -38,7 +36,7 @@ class DayTrainingLeaderboard extends StatelessWidget {
             physics: NeverScrollableScrollPhysics(),
             itemBuilder: (context, index) {
               LeaderboardByDateRes? data =
-              provider.detailRes?.todayLeaderboard?[index];
+                  provider.detailRes?.todayLeaderboard?[index];
               if (data == null) {
                 return SizedBox();
               }

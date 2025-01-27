@@ -181,8 +181,6 @@ class TournamentProvider extends ChangeNotifier {
   TournamentRes? _data;
   TournamentRes? get data => _data;
 
-
-
   Extra? _extra;
   Extra? get extra => _extra;
 
@@ -245,8 +243,6 @@ class TournamentProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-
-
   int? _id;
 // MARK: DETAIL
   Future tournamentDetail(int? id, {bool timerSet = true}) async {
@@ -283,9 +279,9 @@ class TournamentProvider extends ChangeNotifier {
 // MARK: JOIN
   Future joinTounament({int? id}) async {
     UserProvider uPrivder = navigatorKey.currentContext!.read<UserProvider>();
-    if(uPrivder.user==null){
+    if (uPrivder.user == null) {
       await loginFirstSheet();
-      if(uPrivder.user==null) return;
+      if (uPrivder.user == null) return;
     }
     try {
       UserRes? user = uPrivder.user;
@@ -339,6 +335,7 @@ class TournamentProvider extends ChangeNotifier {
   List<LeaderboardByDateRes>? get playTraders => _playTraders;
 
   int _page = 1;
+
   /// value as per _extraOfPointPaid
   bool get canLoadMore => _page <= (_extraOfPointPaid?.totalPages ?? 1);
 
@@ -355,10 +352,11 @@ class TournamentProvider extends ChangeNotifier {
         return Apis.tPointsPaid;
       case TournamentsHead.playTraders:
         return Apis.tPlayTraders;
-      }
+    }
   }
 
-  Future pointsPaidAPI({loadMore = false, required TournamentsHead selectedTournament}) async {
+  Future pointsPaidAPI(
+      {loadMore = false, required TournamentsHead selectedTournament}) async {
     if (loadMore) {
       _page++;
       setStatusTradeExecuted(Status.loadingMore);
@@ -375,7 +373,7 @@ class TournamentProvider extends ChangeNotifier {
         'page': '$_page',
       };
       ApiResponse response = await apiRequest(
-        url:getApiUrl(selectedTournament),
+        url: getApiUrl(selectedTournament),
         showProgress: false,
         request: requst,
       );
@@ -395,8 +393,10 @@ class TournamentProvider extends ChangeNotifier {
           _errorCommonList = response.message;
         }
       }
+
       /// get extra point values
-      _extraOfPointPaid = (response.extra is Extra ? response.extra as Extra : null);
+      _extraOfPointPaid =
+          (response.extra is Extra ? response.extra as Extra : null);
       setStatusTradeExecuted(Status.loaded);
     } catch (e) {
       _pointsPaid = null;
@@ -408,17 +408,17 @@ class TournamentProvider extends ChangeNotifier {
   }
 
   /// league redirection to leaderboard
- void leagueToLeaderboard({String? selectedDate}){
-
-    if(selectedDate!=null && selectedDate.isNotEmpty){
+  void leagueToLeaderboard({String? selectedDate}) {
+    if (selectedDate != null && selectedDate.isNotEmpty) {
       DateFormat inputFormat = DateFormat("MM/dd/yyyy");
-      DateTime dateTime = inputFormat.parse(selectedDate!);
+      DateTime dateTime = inputFormat.parse(selectedDate);
 
       DateFormat outputFormat = DateFormat("yyyy-MM-dd");
       String formattedDate = outputFormat.format(dateTime);
       DateTime dateTime1 = outputFormat.parse(formattedDate);
 
-      TournamentLeaderboardProvider provider = navigatorKey.currentContext!.read<TournamentLeaderboardProvider>();
+      TournamentLeaderboardProvider provider =
+          navigatorKey.currentContext!.read<TournamentLeaderboardProvider>();
       provider.getEditedDate(dateTime1);
       Navigator.popUntil(
           navigatorKey.currentContext!, (route) => route.isFirst);
@@ -427,8 +427,7 @@ class TournamentProvider extends ChangeNotifier {
           MaterialPageRoute(
             builder: (context) => GameTournamentIndex(setIndex: 1),
           ));
-    }
-    else{
+    } else {
       Navigator.popUntil(
           navigatorKey.currentContext!, (route) => route.isFirst);
       Navigator.push(
@@ -437,19 +436,16 @@ class TournamentProvider extends ChangeNotifier {
             builder: (context) => GameTournamentIndex(setIndex: 1),
           ));
     }
+  }
 
- }
-
- /// profile redirection
- void profileRedirection({String? userId}){
-   Navigator.push(
-       navigatorKey.currentContext!,
-       MaterialPageRoute(
-         builder: (context) => TournamentUserDetail(userId:userId),
-       ));
-
- }
-
+  /// profile redirection
+  void profileRedirection({String? userId}) {
+    Navigator.push(
+        navigatorKey.currentContext!,
+        MaterialPageRoute(
+          builder: (context) => TournamentUserDetail(userId: userId),
+        ));
+  }
 
   Status _statusUserData = Status.ideal;
   Status get statusUserData => _statusUserData;
@@ -466,7 +462,6 @@ class TournamentProvider extends ChangeNotifier {
   Extra? _extraOfUserData;
   Extra? get extraOfUserData => _extraOfUserData;
 
-
   void setStatusUserData(status) {
     _statusUserData = status;
     notifyListeners();
@@ -476,8 +471,9 @@ class TournamentProvider extends ChangeNotifier {
     setStatusUserData(Status.loading);
     try {
       Map request = {
-        "token": navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
-        "user_id":userID ?? "",
+        "token":
+            navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
+        "user_id": userID ?? "",
       };
       ApiResponse response = await apiRequest(
         url: Apis.tUser,
@@ -493,7 +489,8 @@ class TournamentProvider extends ChangeNotifier {
         _errorUserData = response.message ?? Const.errSomethingWrong;
         // showErrorMessage(message: response.message);
       }
-      _extraOfUserData = (response.extra is Extra ? response.extra as Extra : null);
+      _extraOfUserData =
+          (response.extra is Extra ? response.extra as Extra : null);
       setStatusUserData(Status.loaded);
     } catch (e) {
       _userData = null;
@@ -503,5 +500,4 @@ class TournamentProvider extends ChangeNotifier {
       setStatusUserData(Status.loaded);
     }
   }
-
 }
