@@ -47,7 +47,8 @@ class _TradingLineChartState extends State<TradingLineChart>  with SingleTickerP
   double _calculateInterval() {
     DateTime minDate = widget.gChart!.first.battleDate!;
     DateTime maxDate = currentData.length==1?DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day):widget.gChart!.last.battleDate!;
-    int totalDays = maxDate.difference(minDate).inDays;
+
+    int totalDays = maxDate == minDate?1:maxDate.difference(minDate).inDays;
     double screenWidth = MediaQuery.of(context).size.width;
     int maxLabels = (screenWidth / 50).floor();
     return (totalDays / maxLabels).ceilToDouble();
