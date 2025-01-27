@@ -22,171 +22,207 @@ class TournamentLeaderboardItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        context
-            .read<TournamentProvider>()
-            .profileRedirection(userId: "${data.userId ?? ""}");
+        context.read<TournamentProvider>().profileRedirection(userId: "${data.userId ?? ""}");
       },
-      child: Container(
-        padding: decorate
-            ? const EdgeInsets.symmetric(horizontal: 10, vertical: 10)
-            : null,
-        decoration: decorate
-            ? BoxDecoration(
-                color: ThemeColors.background,
-                borderRadius: BorderRadius.circular(5),
-              )
-            : null,
-        child: Column(
-          children: [
-            Row(
+      child: Column(
+        children: [
+          Container(
+            padding: decorate
+                ? const EdgeInsets.symmetric(horizontal: 10, vertical: 10)
+                : null,
+            decoration: decorate
+                ? BoxDecoration(
+                    color: ThemeColors.background,
+                    /// pengin for others condition, like border radius
+                    //borderRadius: BorderRadius.circular(5),
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(5),
+                  topRight: Radius.circular(5),
+                )
+                  )
+                : null,
+            child: Column(
               children: [
-                Expanded(
-                  child: Row(
-                    children: [
-                      Visibility(
-                        visible: (from==1||from==2)?false:true,
-                        child: Container(
-                          margin: EdgeInsets.only(right: 5),
-                          padding: EdgeInsets.all(4),
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: ThemeColors.greyBorder,
+                Row(
+                  children: [
+                    Expanded(
+                      child: Row(
+                        children: [
+                          Visibility(
+                            visible: (from==1||from==2)?false:true,
+                            child: Container(
+                              margin: EdgeInsets.only(right: 5),
+                              padding: EdgeInsets.all(4),
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: ThemeColors.greyBorder,
+                              ),
+                              child: Text(
+                                '${data.position}',
+                                style: styleGeorgiaBold(fontSize: 11),
+                              ),
+                            ),
                           ),
-                          child: Text(
-                            '${data.position}',
-                            style: styleGeorgiaBold(fontSize: 11),
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(50),
+                            child: Container(
+                              width: 43,
+                              height: 43,
+                              decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  border: Border.all(color: ThemeColors.greyBorder)),
+                              child: data.imageType == "svg"
+                                  ? SvgPicture.network(
+                                      fit: BoxFit.cover,
+                                      data.userImage ?? "",
+                                      placeholderBuilder: (BuildContext context) =>
+                                          Container(
+                                        padding: const EdgeInsets.all(30.0),
+                                        child: const CircularProgressIndicator(
+                                          color: ThemeColors.accent,
+                                        ),
+                                      ),
+                                    )
+                                  : CachedNetworkImagesWidget(
+                                      data.userImage,
+                                    ),
+                            ),
                           ),
-                        ),
-                      ),
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(50),
-                        child: Container(
-                          width: 43,
-                          height: 43,
-                          decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              border: Border.all(color: ThemeColors.greyBorder)),
-                          child: data.imageType == "svg"
-                              ? SvgPicture.network(
-                                  fit: BoxFit.cover,
-                                  data.userImage ?? "",
-                                  placeholderBuilder: (BuildContext context) =>
-                                      Container(
-                                    padding: const EdgeInsets.all(30.0),
-                                    child: const CircularProgressIndicator(
-                                      color: ThemeColors.accent,
+                          Flexible(
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 10),
+                              child: Row(
+                                children: [
+                                  Flexible(
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          data.userName ?? 'N/A',
+                                          style: styleGeorgiaBold(),
+                                        ),
+                                        Visibility(
+                                          visible:from == 3?false:true,
+                                          child: Text(
+                                            data.rank ?? 'N/A',
+                                            style: styleGeorgiaRegular(
+                                                color: ThemeColors.greyText,
+                                                fontSize: 14),
+                                          ),
+                                        ),
+
+                                      ],
                                     ),
                                   ),
-                                )
-                              : CachedNetworkImagesWidget(
-                                  data.userImage,
-                                ),
-                        ),
-                      ),
-                      Flexible(
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 10),
-                          child: Row(
-                            children: [
-                              Flexible(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      data.userName ?? 'N/A',
-                                      style: styleGeorgiaBold(fontSize: 14),
-                                    ),
-                                    Visibility(
-                                      visible:from == 3?false:true,
-                                      child: Text(
-                                        data.rank ?? 'N/A',
-                                        style: styleGeorgiaRegular(
-                                            color: ThemeColors.greyText,
-                                            fontSize: 12),
-                                      ),
-                                    ),
-
-                                  ],
-                                ),
+                                  Container()
+                                ],
                               ),
-                              Container()
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Visibility(
-                      visible:(from == 3||from == 2 )? false:true,
-                      child: Text(
-                        '${data.totalPoints}',
-                        style: styleGeorgiaBold(),
-                      ),
-                    ),
-                    Visibility(
-                      visible: from == 2 ?true:false,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          const SpacerVertical(height:5),
-                          Text(
-                            '${data.totalPoints} + ${data.performancePoint}',
-                            style: styleGeorgiaBold(),
-                          ),
-                          Text(
-                            '(Reward + Performance Points)',
-                            style: stylePTSansRegular(fontSize: 10,color: ThemeColors.greyText),
+                            ),
                           ),
                         ],
                       ),
                     ),
-
-                    Visibility(
-                      visible: data.performance != null,
-                      child: Text(
-                        '${data.performance?.toCurrency()}%',
-                        style: stylePTSansRegular(
-                          fontSize: 12,
-                          color: (data.performance ?? 0) > 0
-                              ? Colors.green
-                              : Colors.red,
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Visibility(
+                          visible: from == 2 ?true:false,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              const SpacerVertical(height:5),
+                              Text(
+                                '${data.totalPoints}',
+                                style: styleGeorgiaBold(),
+                              ),
+                              Text(
+                                'Reward Points',
+                                style: stylePTSansRegular(fontSize: 10,color: ThemeColors.greyText),
+                              ),
+                            ],
+                          ),
                         ),
+                        Visibility(
+                          visible: from == 3 ?true:false,
+                          child: Text(
+                            '${data.performance?.toCurrency()}%',
+                            style: stylePTSansBold(
+                              fontSize: 14,
+                              color: (data.performance ?? 0) > 0
+                                  ? Colors.green
+                                  : data.performance==0?
+                              Colors.white:
+                              Colors.red,
+                            ),
+                          ),
+                        ),
+                      ],
+                    )
+
+                  ],
+                ),
+                Visibility(
+                  visible:from == 3? false:true,
+                  child: Divider(
+                    color: ThemeColors.greyBorder,
+                  ),
+                ),
+
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Visibility(
+                      visible:from == 3? false:true,
+                      child: Flexible(
+                          child: _richPrices1(label: "Gain/Loss: ",value: "${data.performance??"0"}%")
                       ),
                     ),
+                    Visibility(
+                      visible:(from == 3||from == 2)? false:true,
+                      child: Flexible(
+                        child:
+                        _richPrices1(label: "Points Earned: ",value: "${data.totalPoints}"),
+                      ),
+                    ),
+                    if(from == 2)
+                      Flexible(
+                        child:
+                        Visibility(child: _richPrices(label: "Per. Points: ",value: "${data.performancePoint}")),
+                      ),
                   ],
-                )
-
+                ),
               ],
             ),
-            Visibility(
-              visible:(from == 1||from == 3)?false:true,
-              child: Divider(
-                // thickness: 1,
-                color: ThemeColors.greyBorder,
+          ),
+          Visibility(
+            visible:(from == 1||from == 3)?false:true,
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+              decoration: BoxDecoration(
+                color: ThemeColors.primaryLight,
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(5),
+                  bottomRight: Radius.circular(5),
+              )
               ),
-            ),
-            Visibility(
-              visible:(from == 1||from == 3)?false:true,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Flexible(
-                    child:
-                    _richPrices(label: "Win Ratio: ",value: "${data.winRatio}%"),
+                      child: _richPrices(label: "Trades: ",value: "${data.totalTrades}")
                   ),
                   const SpacerHorizontal(width: 10),
                   Flexible(
-                      child: _richPrices(label: "Trades: ",value: "${data.totalTrades}")
+                    child:
+                    _richPrices(label: "Win Ratio: ",value: "${data.winRatio}%"),
                   ),
+
                 ],
               ),
             ),
-          ],
-        ),
+          )
+
+        ],
       ),
     );
   }
@@ -196,17 +232,36 @@ class TournamentLeaderboardItem extends StatelessWidget {
     return RichText(
         text: TextSpan(
             text: label,
-            style: stylePTSansRegular(
+            style: stylePTSansBold(
               fontSize: 14,
               color:ThemeColors.greyText,
             ),
             children: [
               TextSpan(
                 text: value,
-                style: styleGeorgiaBold(
-                  fontSize: 14,
-                  color:ThemeColors.white,
+                style: stylePTSansRegular(
+                    fontSize: 14, color: ThemeColors.white
                 ),
+              )
+            ]
+        )
+    );
+  }
+
+  Widget _richPrices1 ({String? label,String? value}) {
+    if(value==null||value.isEmpty) return SizedBox();
+    return RichText(
+        text: TextSpan(
+            text: label,
+            style: stylePTSansBold(
+              fontSize: 14,
+              color:ThemeColors.greyText,
+            ),
+            children: [
+              TextSpan(
+                  text: value,
+                  style: label=="Points Earned: "?stylePTSansRegular(fontSize: 14, color: ThemeColors.white):
+                  stylePTSansBold(fontSize: 14, color: (data.performance ?? 0) > 0 ? ThemeColors.themeGreen:data.performance==0?ThemeColors.white:ThemeColors.darkRed)
               )
             ]
         )

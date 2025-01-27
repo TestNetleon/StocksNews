@@ -75,23 +75,26 @@ class _TournamentLeaderboardState extends State<TournamentLeaderboard> {
                     if (index == 0) {
                       return Column(
                         children: [
-                          const SizedBox(
+                          SizedBox(
                             // height: 300,
                             width: double.infinity,
                             // color: ThemeColors.accent,
                             child: Stack(
                               children: [
-                                Positioned(
+                                if((data.performance ?? 0) > 0)
+                                const Positioned(
                                   left: 0,
                                   top: 70,
                                   child: TournamentLeaderboardTopItem(index: 1),
                                 ),
-                                Positioned(
+                                if((data.performance ?? 0) > 0)
+                                const Positioned(
                                   right: 0,
                                   top: 70,
                                   child: TournamentLeaderboardTopItem(index: 2),
                                 ),
-                                Align(
+                                if((data.performance ?? 0) > 0)
+                                const Align(
                                   alignment: Alignment.topCenter,
                                   child: TournamentLeaderboardTopItem(index: 0),
                                 ),

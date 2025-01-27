@@ -98,4 +98,6 @@ class ThemeColors {
   static const buttonLightGreen = Color.fromARGB(255, 231, 253, 232);
   static const buttonBlue = Colors.blue;
   static const tabBack = Color.fromARGB(255, 32, 32, 32);
+  static const green11 = Color.fromARGB(92, 19, 56, 4);
+
 }

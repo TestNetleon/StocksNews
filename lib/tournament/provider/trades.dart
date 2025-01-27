@@ -1,12 +1,17 @@
 import 'dart:convert';
 
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/api/api_requester.dart';
 import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/api/apis.dart';
+import 'package:stocks_news_new/modals/stockDetailRes/overview_graph.dart';
 import 'package:stocks_news_new/tournament/provider/tournament.dart';
+import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
+import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import '../../modals/stock_screener_res.dart';
 import '../../providers/user_provider.dart';
@@ -59,6 +64,7 @@ class TournamentTradesProvider extends ChangeNotifier {
   Future getTradesList({
     bool refresh = false,
     showProgress = false,
+    String? typeOfTrade,
   }) async {
     if (refresh) {
       _myTrades = null;
@@ -75,7 +81,7 @@ class TournamentTradesProvider extends ChangeNotifier {
             navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
         'tournament_battle_id':
             '${provider.detailRes?.tournamentBattleId ?? ''}',
-        'type': _selectedOverview?.key?.toString().toLowerCase() ?? 'all',
+        'type': typeOfTrade??_selectedOverview?.key?.toString().toLowerCase() ?? 'all',
       };
 
       ApiResponse response = await apiRequest(
@@ -93,7 +99,7 @@ class TournamentTradesProvider extends ChangeNotifier {
         _errorTrades = null;
 
         if (refresh) {
-          _selectedOverview = _myTrades?.overview?.first;
+          _selectedOverview = typeOfTrade!=null?_myTrades?.overview![1]:_myTrades?.overview?.first;
         } else {
           //
         }
@@ -296,6 +302,7 @@ class TournamentTradesProvider extends ChangeNotifier {
 
       if (stock.symbol != null && stock.symbol != '') {
         getDetail(stock.symbol ?? '', refresh: refresh);
+        getOverviewGraphData(symbol: stock.symbol);
       }
     }
   }
@@ -442,6 +449,273 @@ class TournamentTradesProvider extends ChangeNotifier {
       );
     } catch (e) {
       //
+    }
+  }
+
+  Status _statusGraph = Status.ideal;
+  Status get statusGraph => _statusGraph;
+
+  bool get isLoadingGraph => _statusGraph == Status.loading;
+
+  List<SdOverviewGraphRes>? _graphChart;
+  List<SdOverviewGraphRes>? get graphChart => _graphChart;
+
+  String? _errorGraph;
+  String? get errorGraph => _errorGraph ?? Const.errSomethingWrong;
+
+  Extra? _extraGraph;
+  Extra? get extraGraph => _extraGraph;
+
+  void clearAll() {
+    _errorGraph=null;
+  }
+
+  void setStatusOverviewG(status) {
+    _statusGraph = status;
+    notifyListeners();
+  }
+
+  LineChartData avgData({bool showDate = true}) {
+    List<SdOverviewGraphRes> reversedData =
+        _graphChart?.reversed.toList() ?? [];
+
+    List<FlSpot> spots = [];
+
+    for (int i = 0; i < reversedData.length; i++) {
+      spots.add(FlSpot(i.toDouble(), reversedData[i].close.toDouble()));
+    }
+
+    return LineChartData(
+      lineTouchData: LineTouchData(
+        getTouchLineEnd: (barData, spotIndex) {
+          return double.infinity;
+        },
+        getTouchLineStart: (barData, spotIndex) {
+          return 0.0;
+        },
+        getTouchedSpotIndicator: (barData, spotIndexes) {
+          return spotIndexes.map((spotIndex) {
+            return TouchedSpotIndicatorData(
+              FlLine(
+                // color: Colors.grey[400],
+                color: spots.first.y > spots.last.y
+                    ? ThemeColors.sos
+                    : ThemeColors.accent,
+                strokeWidth: 1,
+                dashArray: [5, 0],
+              ),
+              FlDotData(
+                show: true,
+                checkToShowDot: (spot, barData) {
+                  return true;
+                },
+              ),
+            );
+          }).toList();
+        },
+        enabled: true,
+        touchTooltipData: LineTouchTooltipData(
+          tooltipHorizontalOffset: 0,
+          tooltipRoundedRadius: 4.0,
+          showOnTopOfTheChartBoxArea: true,
+          fitInsideHorizontally: true,
+          fitInsideVertically: true,
+          maxContentWidth: 300,
+          tooltipPadding:
+          const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+          tooltipMargin: 1,
+          getTooltipItems: (touchedSpots) {
+            return touchedSpots.map(
+                  (LineBarSpot touchedSpot) {
+                return LineTooltipItem(
+                  children: [
+                    TextSpan(
+                      text: "\$${touchedSpot.y.toStringAsFixed(2)}\n",
+                      style: stylePTSansRegular(
+                        color: ThemeColors.white,
+                        fontSize: 18,
+                      ),
+                    ),
+                    TextSpan(
+                      text: !showDate
+                          ? DateFormat('dd MMM, yyyy')
+                          .format(reversedData[touchedSpot.x.toInt()].date)
+                          : '${DateFormat('dd MMM').format(reversedData[touchedSpot.x.toInt()].date)}, ${DateFormat('h:mm a').format(reversedData[touchedSpot.x.toInt()].date)}',
+                      style: stylePTSansRegular(
+                          height: 1.5,
+                          color: ThemeColors.greyText,
+                          fontSize: 13),
+                    ),
+                  ],
+                  '',
+                  stylePTSansBold(color: ThemeColors.white, fontSize: 10),
+                );
+              },
+            ).toList();
+          },
+          getTooltipColor: (touchedSpot) {
+            return const Color.fromARGB(255, 25, 25, 25);
+          },
+        ),
+      ),
+      titlesData: FlTitlesData(
+        leftTitles: const AxisTitles(
+            sideTitles: SideTitles(
+              showTitles: false,
+            )),
+        topTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+        bottomTitles: AxisTitles(
+
+          // axisNameWidget: Text(
+          //   "Time",
+          //   style: stylePTSansRegular(fontSize: 15),
+          // ),
+            sideTitles: SideTitles(
+              showTitles: false,
+              getTitlesWidget: (value, meta) {
+                int index = value.toInt();
+                if (index >= 0 && index < (spots.length)) {
+                  return Padding(
+                    padding: const EdgeInsets.only(top: 8, left: 5),
+                    child: Text(
+                      DateFormat('HH:mm').format(reversedData[index].date),
+                      style: stylePTSansRegular(fontSize: 8),
+                    ),
+                  );
+                }
+                return Text(
+                  "-",
+                  style: stylePTSansRegular(fontSize: 10),
+                );
+              },
+            )),
+        rightTitles: AxisTitles(
+          sideTitles: SideTitles(
+            reservedSize: 32,
+            showTitles: false,
+            getTitlesWidget: (double value, TitleMeta meta) {
+              return Padding(
+                padding: const EdgeInsets.only(bottom: 8, left: 5),
+                child: Text(
+                  value.toStringAsFixed(2),
+                  style: stylePTSansRegular(fontSize: 8),
+                ),
+              );
+            },
+          ),
+        ),
+      ),
+      gridData: FlGridData(
+        show: true,
+        getDrawingHorizontalLine: (value) {
+          return FlLine(
+            color: ThemeColors.white.withOpacity(0.16),
+            strokeWidth: 1,
+          );
+        },
+        getDrawingVerticalLine: (value) {
+          return FlLine(
+            color: ThemeColors.white.withOpacity(0.16),
+            strokeWidth: 1,
+          );
+        },
+      ),
+      minX: 0,
+      maxX: reversedData.length.toDouble() - 1,
+      minY: reversedData
+          .map((data) => data.close.toDouble())
+          .reduce((a, b) => a < b ? a : b),
+      maxY: reversedData
+          .map((data) => data.close.toDouble())
+          .reduce((a, b) => a > b ? a : b),
+      lineBarsData: [
+        LineChartBarData(
+          preventCurveOverShooting: true,
+
+          spots: spots,
+          // color: (_data?.keyStats?.previousCloseNUM ?? 0) > spots.last.y
+          //     ? ThemeColors.sos
+          //     : ThemeColors.accent,
+          color: spots.first.y > spots.last.y
+              ? ThemeColors.sos
+              : ThemeColors.accent,
+
+          // color: ThemeColors.accent,
+          isCurved: true,
+          barWidth: 1.5,
+          dotData: const FlDotData(show: false),
+          belowBarData: BarAreaData(
+            show: true,
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                // (_data?.keyStats?.previousCloseNUM ?? 0) > spots.last.y
+                //     ? ThemeColors.sos.withOpacity(0.1)
+                //     : ThemeColors.accent.withOpacity(0.1),
+                spots.first.y > spots.last.y
+                    ? ThemeColors.sos.withOpacity(0.1)
+                    : ThemeColors.accent.withOpacity(0.1),
+
+                // ThemeColors.accent.withOpacity(0.1),
+                ThemeColors.background,
+              ],
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Future getOverviewGraphData({
+    String? symbol,
+    String range = '1H',
+    showProgress = false,
+  }) async {
+    setStatusOverviewG(Status.loading);
+    try {
+      String newRange = range == "1H"
+          ? "1hour"
+          : range == "1D"
+          ? "1day"
+          : range == "1W"
+          ? "1week"
+          : range == "1M"
+          ? "1month"
+          : range == "1Y"
+          ? "1year"
+          : "1hour";
+
+      Map request = {
+        "token":
+        navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
+        "symbol": symbol,
+        "range": newRange,
+      };
+
+      ApiResponse response = await apiRequest(
+        url: Apis.newsAlertGraphData,
+        request: request,
+        showProgress: showProgress,
+        removeForceLogin: true,
+      );
+
+      if (response.status) {
+        _graphChart = sdOverviewGraphResFromJson(jsonEncode(response.data));
+        _extraGraph =
+        (response.extra is Extra ? response.extra as Extra : null);
+
+        avgData(showDate: newRange != "1Y");
+      } else {
+        _graphChart = null;
+        _errorGraph = response.message;
+      }
+      setStatusOverviewG(Status.loaded);
+    } catch (e) {
+      _graphChart = null;
+      Utils().showLog(e.toString());
+      _errorGraph = Const.errSomethingWrong;
+      setStatusOverviewG(Status.loaded);
     }
   }
 }

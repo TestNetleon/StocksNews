@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/tournament/models/tournament.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/tournament/screens/tournaments/widgets/play_box.dart';
+import 'package:stocks_news_new/utils/colors.dart';
 import '../../../../widgets/spacer_vertical.dart';
 import '../../../provider/tournament.dart';
 import '../dayTraining/index.dart';
@@ -39,7 +40,8 @@ class TournamentGrids extends StatelessWidget {
             imageUrl: data?.image,
             description: data?.description ?? '',
             pointText: data?.pointText ?? '',
-            points: "${data?.point ?? "0"}",
+            points: data?.point ?? "0",
+            buttonColor: ThemeColors.themeGreen,
             onButtonTap: () {
               if (index == 0) {
                 Navigator.push(

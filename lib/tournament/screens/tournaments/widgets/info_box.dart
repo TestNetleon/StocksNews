@@ -20,10 +20,11 @@ class InfoBox extends StatelessWidget {
           textAlign: TextAlign.center,
           overflow: TextOverflow.ellipsis,
         ),
-        const SpacerVertical(height: 10),
+        const SpacerVertical(height:5),
         Text(
           value,
           style: styleGeorgiaBold(fontSize: 18),
+          textAlign: TextAlign.center,
         ),
       ],
     ));

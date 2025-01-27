@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/tournament/provider/tournament.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
+import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/custom_tab_container.dart';
 
@@ -39,6 +40,7 @@ class _GameTournamentIndexState extends State<GameTournamentIndex> {
                 padding: const EdgeInsets.symmetric(vertical: 10),
                 child: Text(
                   provider.tabs[index],
+                  style: styleGeorgiaBold(fontSize: 14),
                 ),
               );
             },

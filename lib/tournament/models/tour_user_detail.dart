@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:intl/intl.dart';
+
 TournamentUserDetailRes tournamentUserDetailResFromMap(String str) => TournamentUserDetailRes.fromMap(json.decode(str));
 
 String tournamentUserDetailResToMap(TournamentUserDetailRes data) => json.encode(data.toMap());
@@ -63,23 +65,27 @@ class Chart {
 
 class GChart {
   final num? performance;
-  final String? battleDate;
+ // final String? battleDate1;
+  final DateTime? battleDate;
   final String? formatPerformance;
 
   GChart({
     this.performance,
+   // this.battleDate1,
     this.battleDate,
     this.formatPerformance,
   });
 
   factory GChart.fromMap(Map<String, dynamic> json) => GChart(
     performance: json["performance"],
-    battleDate: json["battle_date"],
+   // battleDate1: json["battle_date"],
+    battleDate: DateFormat("MM/dd/yyyy").parse(json["battle_date"]),
     formatPerformance: json["format_performance"],
   );
 
   Map<String, dynamic> toMap() => {
     "performance": performance,
+   // "battle_date": battleDate1,
     "battle_date": battleDate,
     "format_performance": formatPerformance,
   };
