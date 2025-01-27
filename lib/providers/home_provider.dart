@@ -320,31 +320,31 @@ class HomeProvider extends ChangeNotifier {
     }
   }
 
-  // Future refreshData(String? inAppMsgId) async {
-  //   notifySnackbar = await openNotificationsSettings();
+  Future refreshData(String? inAppMsgId) async {
+    notifySnackbar = await openNotificationsSettings();
 
-  //   retryCount = 0;
-  //   showAdd = true;
-  //   setAppsflyerData();
-  //   getHomeSlider();
-  //   getHomePortfolio();
-  //   // _getLastMarketOpen();
-  //   _getLastMarketOpenFW();
+    retryCount = 0;
+    showAdd = true;
+    setAppsflyerData();
+    getHomeSlider();
+    getHomePortfolio();
+    // _getLastMarketOpen();
+    _getLastMarketOpenFW();
 
-  //   getFeaturedWatchlist();
-  //   // getHomeAlerts();
-  //   getMostPurchased(home: "home");
-  //   getHomeTrendingData();
-  //   // getBenefitsDetails();
+    getFeaturedWatchlist();
+    // getHomeAlerts();
+    getMostPurchased(home: "home");
+    getHomeTrendingData();
+    // getBenefitsDetails();
 
-  //   //ADD AGAIN AFTER BACKEND MERGING
-  //   _homeTopGainerRes = null;
-  //   _homeTopLosersRes = null;
-  //   // getIpoData();
-  //   // getStockInFocus();
-  //   // getHomeSentimentData();
-  //   // getHomeInsiderData(inAppMsgId);
-  // }
+    //ADD AGAIN AFTER BACKEND MERGING
+    _homeTopGainerRes = null;
+    _homeTopLosersRes = null;
+    // getIpoData();
+    // getStockInFocus();
+    // getHomeSentimentData();
+    // getHomeInsiderData(inAppMsgId);
+  }
 
   bool canLoadLater = false;
   void setLoadLater(state) {
@@ -352,26 +352,26 @@ class HomeProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future refreshData(String? inAppMsgId) async {
-    notifySnackbar = await openNotificationsSettings();
-    setLoadLater(false);
-    retryCount = 0;
-    showAdd = true;
-    setAppsflyerData();
-    getHomeSlider();
-    getHomePortfolio();
+  // Future refreshData(String? inAppMsgId) async {
+  //   notifySnackbar = await openNotificationsSettings();
+  //   setLoadLater(false);
+  //   retryCount = 0;
+  //   showAdd = true;
+  //   setAppsflyerData();
+  //   getHomeSlider();
+  //   getHomePortfolio();
 
-    // _getLastMarketOpen();
-    _getLastMarketOpenFW();
-    getMostPurchased(home: "home");
-    getFeaturedWatchlist();
-  }
+  //   // _getLastMarketOpen();
+  //   _getLastMarketOpenFW();
+  //   getMostPurchased(home: "home");
+  //   getFeaturedWatchlist();
+  // }
 
-  Future refreshLaterData() async {
-    getHomeTrendingData();
-    _homeTopGainerRes = null;
-    _homeTopLosersRes = null;
-  }
+  // Future refreshLaterData() async {
+  //   getHomeTrendingData();
+  //   _homeTopGainerRes = null;
+  //   _homeTopLosersRes = null;
+  // }
 
   Future refreshWithCheck() async {
     if (_homeSliderRes == null) {

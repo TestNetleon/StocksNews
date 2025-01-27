@@ -42,23 +42,23 @@ class HomeContainer extends StatefulWidget {
 }
 
 class _HomeContainerState extends State<HomeContainer> {
-  Timer? _timer;
-  bool showVisibility = false;
+  // Timer? _timer;
+  // bool showVisibility = false;
   @override
   void initState() {
     super.initState();
-    _timer = Timer(
-      Duration(seconds: 3),
-      () {
-        showVisibility = true;
-        setState(() {});
-      },
-    );
+    // _timer = Timer(
+    //   Duration(seconds: 3),
+    //   () {
+    //     showVisibility = true;
+    //     setState(() {});
+    //   },
+    // );
   }
 
   @override
   void dispose() {
-    _timer?.cancel();
+    // _timer?.cancel();
     super.dispose();
   }
 
@@ -295,7 +295,7 @@ class _HomeContainerState extends State<HomeContainer> {
               ),
             ),
             Visibility(
-              visible: showVisibility,
+              // visible: showVisibility,
               child: Container(
                 margin: const EdgeInsets.only(
                     top: Dimen.homeSpacing, left: 15, right: 15),
