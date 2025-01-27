@@ -10,6 +10,7 @@ import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/stocksScanner/modals/market_scanner_res.dart';
 import 'package:stocks_news_new/stocksScanner/modals/scanner_res.dart';
 import 'package:stocks_news_new/stocksScanner/modals/sectors_res.dart';
+import 'package:stocks_news_new/stocksScanner/screens/sorting/shorting.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/utils/utils.dart';
@@ -145,8 +146,6 @@ class MarketScannerProvider extends ChangeNotifier {
     if (data == null) return;
 
     data.removeWhere((item) {
-      print('item bid ${item.bid}');
-
       if (item.identifier == _filterParams!.symbolCompany) {
         Utils().showLog(
           "***********************************************************${item.identifier}  ${_filterParams!.symbolCompany}",
@@ -198,6 +197,7 @@ class MarketScannerProvider extends ChangeNotifier {
     _offlineDataList = data.take(50).toList();
 
     if (_filterParams?.sortBy != null) {
+      Utils().showLog('----${_filterParams?.sortByAsc}');
       _offlineDataList?.sort((a, b) {
         return sortByCompareOffline(
           a,
@@ -491,7 +491,7 @@ class MarketScannerProvider extends ChangeNotifier {
 
   int sortByCompare(
       MarketScannerRes a, MarketScannerRes b, String sortBy, bool isAsc) {
-    if (sortBy == "Symbol") {
+    if (sortBy == SortByEnums.symbol.name) {
       if (a.identifier == null && b.identifier == null) return 0;
       if (a.identifier == null) return -1;
       if (b.identifier == null) return 1;
@@ -500,7 +500,7 @@ class MarketScannerProvider extends ChangeNotifier {
       } else {
         return b.identifier!.compareTo(a.identifier!);
       }
-    } else if (sortBy == "Company Name") {
+    } else if (sortBy == SortByEnums.company.name) {
       if (a.security?.name == null && b.security?.name == null) return 0;
       if (a.security?.name == null) return -1;
       if (b.security?.name == null) return 1;
@@ -509,7 +509,7 @@ class MarketScannerProvider extends ChangeNotifier {
       } else {
         return b.security!.name!.compareTo(a.security!.name!);
       }
-    } else if (sortBy == "Bid") {
+    } else if (sortBy == SortByEnums.bid.name) {
       if (a.bid == null && b.bid == null) return 0;
       if (a.bid == null) return -1;
       if (b.bid == null) return 1;
@@ -518,7 +518,7 @@ class MarketScannerProvider extends ChangeNotifier {
       } else {
         return b.bid!.compareTo(a.bid!);
       }
-    } else if (sortBy == "Ask") {
+    } else if (sortBy == SortByEnums.ask.name) {
       if (a.ask == null && b.ask == null) return 0;
       if (a.ask == null) return -1;
       if (b.ask == null) return 1;
@@ -527,7 +527,7 @@ class MarketScannerProvider extends ChangeNotifier {
       } else {
         return b.ask!.compareTo(a.ask!);
       }
-    } else if (sortBy == "Last Trade") {
+    } else if (sortBy == SortByEnums.lastTrade.name) {
       num? valueA = a.last;
       num? valueB = b.last;
       if (a.extendedHoursType == "PostMarket" ||
@@ -543,7 +543,7 @@ class MarketScannerProvider extends ChangeNotifier {
       } else {
         return valueB.compareTo(valueA);
       }
-    } else if (sortBy == "Net Change") {
+    } else if (sortBy == SortByEnums.netChange.name) {
       num? valueA = a.change;
       num? valueB = b.change;
       if (a.extendedHoursType == "PostMarket" ||
@@ -559,7 +559,7 @@ class MarketScannerProvider extends ChangeNotifier {
       } else {
         return valueB.compareTo(valueA);
       }
-    } else if (sortBy == "% Change") {
+    } else if (sortBy == SortByEnums.perChange.name) {
       num? valueA = a.percentChange;
       num? valueB = b.percentChange;
       if (a.extendedHoursType == "PostMarket" ||
@@ -575,7 +575,7 @@ class MarketScannerProvider extends ChangeNotifier {
       } else {
         return valueB.compareTo(valueA);
       }
-    } else if (sortBy == "Volume") {
+    } else if (sortBy == SortByEnums.volume.name) {
       if (a.volume == null && b.volume == null) return 0;
       if (a.volume == null) return -1;
       if (b.volume == null) return 1;
@@ -584,9 +584,9 @@ class MarketScannerProvider extends ChangeNotifier {
       } else {
         return b.volume!.compareTo(a.volume!);
       }
-    } else if (sortBy == "\$ Volume") {
-      num dolorVolumeA = (a.volume ?? 0) * (a.volume ?? 0);
-      num dolorVolumeB = (b.volume ?? 0) * (b.volume ?? 0);
+    } else if (sortBy == SortByEnums.dollarVolume.name) {
+      num dolorVolumeA = (a.volume ?? 0) * (a.last ?? 0);
+      num dolorVolumeB = (b.volume ?? 0) * (b.last ?? 0);
       if (isAsc) {
         return dolorVolumeA.compareTo(dolorVolumeB);
       } else {
@@ -598,7 +598,7 @@ class MarketScannerProvider extends ChangeNotifier {
 
   int sortByCompareOffline(
       ScannerRes a, ScannerRes b, String sortBy, bool isAsc) {
-    if (sortBy == "Symbol") {
+    if (sortBy == SortByEnums.symbol.name) {
       if (a.identifier == null && b.identifier == null) return 0;
       if (a.identifier == null) return -1;
       if (b.identifier == null) return 1;
@@ -608,7 +608,7 @@ class MarketScannerProvider extends ChangeNotifier {
         return b.identifier!.compareTo(a.identifier!);
       }
     }
-    if (sortBy == "Company Name") {
+    if (sortBy == SortByEnums.company.name) {
       if (a.name == null && b.name == null) return 0;
       if (a.name == null) return -1;
       if (b.name == null) return 1;
@@ -618,7 +618,7 @@ class MarketScannerProvider extends ChangeNotifier {
         return b.name!.compareTo(a.name!);
       }
     }
-    if (sortBy == "Bid") {
+    if (sortBy == SortByEnums.bid.name) {
       if (a.bid == null && b.bid == null) return 0;
       if (a.bid == null) return -1;
       if (b.bid == null) return 1;
@@ -628,7 +628,7 @@ class MarketScannerProvider extends ChangeNotifier {
         return b.bid!.compareTo(a.bid!);
       }
     }
-    if (sortBy == "Ask") {
+    if (sortBy == SortByEnums.ask.name) {
       if (a.ask == null && b.ask == null) return 0;
       if (a.ask == null) return -1;
       if (b.ask == null) return 1;
@@ -638,7 +638,7 @@ class MarketScannerProvider extends ChangeNotifier {
         return b.ask!.compareTo(a.ask!);
       }
     }
-    if (sortBy == "Last Trade") {
+    if (sortBy == SortByEnums.lastTrade.name) {
       if (a.price == null && b.price == null) return 0;
       if (a.price == null) return -1;
       if (b.price == null) return 1;
@@ -648,7 +648,7 @@ class MarketScannerProvider extends ChangeNotifier {
         return b.price!.compareTo(a.price!);
       }
     }
-    if (sortBy == "Post Market Price") {
+    if (sortBy == SortByEnums.postMarket.name) {
       if (a.ext?.extendedHoursPrice == null &&
           b.ext?.extendedHoursPrice == null) {
         return 0;
@@ -662,7 +662,7 @@ class MarketScannerProvider extends ChangeNotifier {
       }
     }
 
-    if (sortBy == "Net Change") {
+    if (sortBy == SortByEnums.netChange.name) {
       if (a.change == null && b.change == null) return 0;
       if (a.change == null) return -1;
       if (b.change == null) return 1;
@@ -672,7 +672,7 @@ class MarketScannerProvider extends ChangeNotifier {
         return b.change!.compareTo(a.change!);
       }
     }
-    if (sortBy == "% Change") {
+    if (sortBy == SortByEnums.perChange.name) {
       if (a.changesPercentage == null && b.changesPercentage == null) return 0;
       if (a.changesPercentage == null) return -1;
       if (b.changesPercentage == null) return 1;
@@ -682,7 +682,7 @@ class MarketScannerProvider extends ChangeNotifier {
         return b.changesPercentage!.compareTo(a.changesPercentage!);
       }
     }
-    if (sortBy == "Volume") {
+    if (sortBy == SortByEnums.volume.name) {
       if (a.volume == null && b.volume == null) return 0;
       if (a.volume == null) return -1;
       if (b.volume == null) return 1;
@@ -692,9 +692,9 @@ class MarketScannerProvider extends ChangeNotifier {
         return b.volume!.compareTo(a.volume!);
       }
     }
-    if (sortBy == "\$ Volume") {
-      num dolorVolumeA = (a.volume ?? 0) * (a.volume ?? 0);
-      num dolorVolumeB = (b.volume ?? 0) * (b.volume ?? 0);
+    if (sortBy == SortByEnums.dollarVolume.name) {
+      num dolorVolumeA = (a.volume ?? 0) * (a.price ?? 0);
+      num dolorVolumeB = (b.volume ?? 0) * (b.price ?? 0);
       if (isAsc) {
         return dolorVolumeA.compareTo(dolorVolumeB);
       } else {
@@ -733,17 +733,19 @@ class MarketScannerProvider extends ChangeNotifier {
     }
   }
 
-  void applySorting(String sortBy) {
+  void applySorting(String sortBy, bool isAscending) {
     if (sortBy == _filterParams?.sortBy) {
-      _filterParams?.sortByAsc = !(_filterParams?.sortByAsc ?? true);
+      // _filterParams?.sortByAsc = !(_filterParams?.sortByAsc ?? true);
+      _filterParams?.sortByAsc = isAscending;
     } else {
       _filterParams?.sortBy = sortBy;
-      _filterParams?.sortByAsc = true;
+      // _filterParams?.sortByAsc = true;
+      _filterParams?.sortByAsc = isAscending;
     }
 
-    if (MarketScannerStream.instance.isListening) {
-      MarketScannerStream.instance.stopListeningPorts();
-    }
+    // if (MarketScannerStream.instance.isListening) {
+    //   MarketScannerStream.instance.stopListeningPorts();
+    // }
 
     if (_dataList != null) {
       // notifyListeners();
@@ -875,7 +877,7 @@ class MarketScannerProvider extends ChangeNotifier {
   ScannerPortsRes? _port;
   ScannerPortsRes? get port => _port;
 
-  Future getScannerPorts({loading = true, start = true}) async {
+  Future getScannerPorts({loading = false, start = true}) async {
     setStatus(Status.loading);
     try {
       ApiResponse response = await apiRequest(
@@ -885,12 +887,7 @@ class MarketScannerProvider extends ChangeNotifier {
       if (response.status) {
         _port = scannerPortsResFromJson(jsonEncode(response.data));
         if (start) {
-          int called = 0;
-
-          if (called == 0) {
-            called++;
-            startListeningPorts();
-          }
+          startListeningPorts();
         }
       } else {
         _port = null;

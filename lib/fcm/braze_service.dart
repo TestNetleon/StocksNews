@@ -103,9 +103,6 @@ class BrazeNotificationService {
         if (extra?.tempUser != null) {
           BrazeService.brazeUserEvent(randomID: extra?.tempUser?.userId);
         }
-
-        Preference.saveFcmToken(value);
-        Preference.saveLocation(address);
       } else {
         //
       }

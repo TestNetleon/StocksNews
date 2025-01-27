@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
+import 'package:stocks_news_new/stocksScanner/manager/gainers_stream.dart';
+import 'package:stocks_news_new/stocksScanner/manager/losers_stream.dart';
+import 'package:stocks_news_new/stocksScanner/manager/scanner_stream.dart';
 import 'package:stocks_news_new/stocksScanner/providers/market_scanner_provider.dart';
 import 'package:stocks_news_new/stocksScanner/screens/marketScanner/market_scanner_filter.dart';
 import 'package:stocks_news_new/stocksScanner/screens/stockScanner/scanner_container.dart';
@@ -60,23 +63,30 @@ class _StocksScannerAppState extends State<StocksScannerApp> {
   @override
   Widget build(BuildContext context) {
     MarketScannerProvider provider = context.watch<MarketScannerProvider>();
-    return BaseContainer(
-      appBar: AppBarHome(
-        isPopBack: true,
-        title: "Stocks Scanner",
-        canSearch: false,
-        showTrailing: false,
-        isScannerFilter: true,
-        onFilterClick: () {
-          Navigator.push(
-            context,
-            createRoute(
-              MarketScannerFilter(),
-            ),
-          );
-        },
+    return PopScope(
+      onPopInvokedWithResult: (didPop, result) {
+        MarketScannerStream().stopListeningPorts();
+        MarketGainersStream().stopListeningPorts();
+        MarketLosersStream().stopListeningPorts();
+      },
+      child: BaseContainer(
+        appBar: AppBarHome(
+          isPopBack: true,
+          title: "Stocks Scanner",
+          canSearch: false,
+          showTrailing: false,
+          isScannerFilter: true,
+          onFilterClick: () {
+            Navigator.push(
+              context,
+              createRoute(
+                MarketScannerFilter(),
+              ),
+            );
+          },
+        ),
+        body: provider.isLoading ? Loading() : ScannerContainer(),
       ),
-      body: provider.isLoading ? Loading() : ScannerContainer(),
     );
   }
 }

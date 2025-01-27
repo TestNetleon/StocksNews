@@ -6,7 +6,6 @@ import 'package:stocks_news_new/stocksScanner/providers/top_loser_scanner_provid
 import 'package:stocks_news_new/stocksScanner/screens/topGainers/scanner_header.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
-import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import '../../../utils/utils.dart';
 import '../sorting/shorting.dart';
 import '../widget/container.dart';
@@ -70,68 +69,83 @@ class _TopLosersOfflineTwoState extends State<TopLosersOfflineTwo> {
       child: Column(
         children: [
           TopGainerScannerHeader(isOnline: false),
-          const SpacerVertical(height: 10),
-          // ScannerTopGainerFilter(
-          //   onPercentClick: () {
-          //     provider.applyFilter(2);
-          //   },
-          //   onVolumnClick: () {
-          //     provider.applyFilter(3);
-          //   },
-          //   onRestartClick: () {
-          //     MarketLosersStream().initializePorts();
-          //     provider.clearFilter();
-          //   },
-          //   isPercent: provider.filterParams?.sortBy == 2,
-          //   isVolume: provider.filterParams?.sortBy == 3,
-          //   orderByAsc: provider.filterParams?.sortByAsc,
-          // ),
-          Align(
+          Container(
+            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
             alignment: Alignment.centerRight,
             child: Visibility(
               visible: dataList.isNotEmpty == true,
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    'Sort Stocks ',
-                    style: styleGeorgiaBold(),
+                  Flexible(
+                    child: Visibility(
+                      visible: dataList.isNotEmpty,
+                      child: Text(
+                        'Total number of results: ${dataList.length}',
+                        style: styleGeorgiaBold(),
+                      ),
+                    ),
                   ),
-                  IconButton(
-                      onPressed: () {
+                  Flexible(
+                    child: GestureDetector(
+                      onTap: () {
                         scannerSorting(
+                          showPreMarket: true,
+                          sortBy: provider.filterParams?.sortByAsc,
+                          header: provider.filterParams?.sortByHeader,
                           sortByCallBack: (received) {
                             Utils().showLog(
                                 '${received.type}, ${received.ascending}');
-                            if (received.type == SortByEnums.symbol) {
-                              provider.applySorting('Symbol');
-                            } else if (received.type == SortByEnums.company) {
-                              provider.applySorting('Company Name');
-                            } else if (received.type == SortByEnums.sector) {
-                              provider.applySorting('Sector');
-                            } else if (received.type == SortByEnums.lastTrade) {
-                              provider.applySorting('Last Trade');
-                            } else if (received.type == SortByEnums.netChange) {
-                              provider.applySorting('Net Change');
-                            } else if (received.type == SortByEnums.perChange) {
-                              provider.applySorting('% Change');
-                            } else if (received.type == SortByEnums.volume) {
-                              provider.applySorting('Volume');
-                            } else if (received.type ==
-                                SortByEnums.dollarVolume) {
-                              provider.applySorting('\$ Volume');
-                            }
+                            provider.applySorting(
+                                received.type.name, received.ascending);
+
+                            // if (received.type == SortByEnums.symbol) {
+                            //   provider.applySorting(
+                            //       'Symbol', received.ascending);
+                            // } else if (received.type == SortByEnums.company) {
+                            //   provider.applySorting(
+                            //       'Company Name', received.ascending);
+                            // } else if (received.type == SortByEnums.sector) {
+                            //   provider.applySorting(
+                            //       'Sector', received.ascending);
+                            // } else if (received.type == SortByEnums.lastTrade) {
+                            //   provider.applySorting(
+                            //       'Last Trade', received.ascending);
+                            // } else if (received.type == SortByEnums.netChange) {
+                            //   provider.applySorting(
+                            //       'Net Change', received.ascending);
+                            // } else if (received.type == SortByEnums.perChange) {
+                            //   provider.applySorting(
+                            //       '% Change', received.ascending);
+                            // } else if (received.type == SortByEnums.volume) {
+                            //   provider.applySorting(
+                            //       'Volume', received.ascending);
+                            // } else if (received.type ==
+                            //     SortByEnums.dollarVolume) {
+                            //   provider.applySorting(
+                            //       '\$ Volume', received.ascending);
+                            // }
 
                             Navigator.pop(context);
                           },
                         );
                       },
-                      icon: Icon(Icons.sort)),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Text(
+                            'Sort Stocks ',
+                            style: styleGeorgiaBold(),
+                          ),
+                          Icon(Icons.sort),
+                        ],
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
           ),
-
           ScannerBaseContainerOffline(dataList: dataList),
         ],
       ),

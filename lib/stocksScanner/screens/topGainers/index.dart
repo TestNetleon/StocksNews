@@ -60,6 +60,9 @@ import 'package:stocks_news_new/stocksScanner/providers/top_gainer_scanner_provi
 import 'package:stocks_news_new/stocksScanner/screens/stockScanner/widget_preparing.dart';
 import 'package:stocks_news_new/stocksScanner/screens/topGainers/offline_data_two.dart';
 import 'package:stocks_news_new/stocksScanner/screens/topGainers/online_data.dart';
+import 'package:stocks_news_new/widgets/custom/refresh_indicator.dart';
+
+import '../../manager/gainers_stream.dart';
 
 class ScannerTopGainer extends StatefulWidget {
   const ScannerTopGainer({super.key});
@@ -82,17 +85,25 @@ class _ScannerTopGainerState extends State<ScannerTopGainer> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Consumer<TopGainerScannerProvider>(
-        builder: (context, provider, child) {
-          if (provider.dataList != null) {
-            return TopGainerOnline();
-          } else if (provider.offlineDataList != null) {
-            return TopGainerOfflineTwo();
-          } else {
-            return ScannerPreparing();
-          }
-        },
+    TopGainerScannerProvider provider =
+        context.watch<TopGainerScannerProvider>();
+    return CommonRefreshIndicator(
+      onRefresh: () async {
+        MarketGainersStream().initializePorts();
+        provider.clearFilter();
+      },
+      child: SingleChildScrollView(
+        child: Consumer<TopGainerScannerProvider>(
+          builder: (context, provider, child) {
+            if (provider.dataList != null) {
+              return TopGainerOnline();
+            } else if (provider.offlineDataList != null) {
+              return TopGainerOfflineTwo();
+            } else {
+              return ScannerPreparing();
+            }
+          },
+        ),
       ),
     );
   }

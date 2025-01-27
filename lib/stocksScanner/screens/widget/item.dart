@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:stocks_news_new/screens/stockDetail/index.dart';
 import 'package:stocks_news_new/stocksScanner/modals/scanner_res.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
@@ -32,6 +33,9 @@ class ScannerBaseItem extends StatelessWidget {
       perChange = data?.ext?.extendedHoursPercentChange ?? 0;
       lastTrade = data?.ext?.extendedHoursPrice ?? 0;
     }
+    if (showPreMarket) {
+      lastTrade = data?.price ?? 0;
+    }
     return Column(
       children: [
         Container(
@@ -47,15 +51,27 @@ class ScannerBaseItem extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  Visibility(
-                    visible: data?.image != null && data?.image != '',
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(5),
-                      child: SizedBox(
-                        height: 43,
-                        width: 43,
-                        // color: ThemeColors.greyText,
-                        child: CachedNetworkImagesWidget(data?.image ?? ''),
+                  GestureDetector(
+                    onTap: () {
+                      if (data?.identifier == null || data?.identifier == '') {
+                        return;
+                      }
+                      Navigator.push(context, MaterialPageRoute(
+                        builder: (context) {
+                          return StockDetail(symbol: data?.identifier ?? '');
+                        },
+                      ));
+                    },
+                    child: Visibility(
+                      visible: data?.image != null && data?.image != '',
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(5),
+                        child: SizedBox(
+                          height: 43,
+                          width: 43,
+                          // color: ThemeColors.greyText,
+                          child: CachedNetworkImagesWidget(data?.image ?? ''),
+                        ),
                       ),
                     ),
                   ),
@@ -181,20 +197,28 @@ class ScannerBaseItem extends StatelessWidget {
                 ),
               ),
               Flexible(
-                child: Container(
+                child: _widget(
                   margin: EdgeInsets.only(left: 10, right: 10),
-                  child: Text(
-                    netChange == 0
-                        ? '\$$netChange'
-                        : '${netChange.toFormattedPrice()} ($perChange%)',
-                    style: styleGeorgiaRegular(
-                      fontSize: 11,
-                      color:
-                          netChange >= 0 ? ThemeColors.accent : ThemeColors.sos,
-                    ),
-                  ),
+                  label: 'Change: ',
+                  value: netChange == 0
+                      ? '\$$netChange'
+                      : '${netChange.toFormattedPrice()} ($perChange%)',
+                  color: netChange >= 0 ? ThemeColors.accent : ThemeColors.sos,
                 ),
               ),
+              // Flexible(
+              //   child: Container(
+              //     margin: EdgeInsets.only(left: 10, right: 10),
+              //     child: Text(
+
+              //       style: styleGeorgiaRegular(
+              //         fontSize: 13,
+              //         color:
+              //             netChange >= 0 ? ThemeColors.accent : ThemeColors.sos,
+              //       ),
+              //     ),
+              //   ),
+              // ),
             ],
           ),
         ),
@@ -206,6 +230,7 @@ class ScannerBaseItem extends StatelessWidget {
     required String label,
     String? value,
     EdgeInsetsGeometry? margin,
+    Color? color,
   }) {
     if (value == null || value == '') {
       return SizedBox();
@@ -217,7 +242,7 @@ class ScannerBaseItem extends StatelessWidget {
         text: TextSpan(
           text: label,
           style: styleGeorgiaRegular(
-            fontSize: 11,
+            fontSize: 13,
             color: ThemeColors.greyText,
             height: 1.7,
           ),
@@ -225,8 +250,9 @@ class ScannerBaseItem extends StatelessWidget {
             TextSpan(
               text: value,
               style: styleGeorgiaRegular(
-                fontSize: 11,
+                fontSize: 13,
                 height: 1.7,
+                color: color,
               ),
             )
           ],

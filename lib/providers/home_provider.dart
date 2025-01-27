@@ -35,7 +35,6 @@ import 'package:stocks_news_new/database/preference.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import '../modals/featured_watchlist.dart';
 import '../modals/most_purchased.dart';
-import '../modals/user_res.dart';
 import 'my_tickers.dart';
 
 class HomeProvider extends ChangeNotifier {
@@ -321,30 +320,57 @@ class HomeProvider extends ChangeNotifier {
     }
   }
 
+  // Future refreshData(String? inAppMsgId) async {
+  //   notifySnackbar = await openNotificationsSettings();
+
+  //   retryCount = 0;
+  //   showAdd = true;
+  //   setAppsflyerData();
+  //   getHomeSlider();
+  //   getHomePortfolio();
+  //   // _getLastMarketOpen();
+  //   _getLastMarketOpenFW();
+
+  //   getFeaturedWatchlist();
+  //   // getHomeAlerts();
+  //   getMostPurchased(home: "home");
+  //   getHomeTrendingData();
+  //   // getBenefitsDetails();
+
+  //   //ADD AGAIN AFTER BACKEND MERGING
+  //   _homeTopGainerRes = null;
+  //   _homeTopLosersRes = null;
+  //   // getIpoData();
+  //   // getStockInFocus();
+  //   // getHomeSentimentData();
+  //   // getHomeInsiderData(inAppMsgId);
+  // }
+
+  bool canLoadLater = false;
+  void setLoadLater(state) {
+    canLoadLater = state;
+    notifyListeners();
+  }
+
   Future refreshData(String? inAppMsgId) async {
     notifySnackbar = await openNotificationsSettings();
-
+    setLoadLater(false);
     retryCount = 0;
     showAdd = true;
     setAppsflyerData();
     getHomeSlider();
     getHomePortfolio();
+
     // _getLastMarketOpen();
     _getLastMarketOpenFW();
-
-    getFeaturedWatchlist();
-    // getHomeAlerts();
     getMostPurchased(home: "home");
-    getHomeTrendingData();
-    // getBenefitsDetails();
+    getFeaturedWatchlist();
+  }
 
-    //ADD AGAIN AFTER BACKEND MERGING
+  Future refreshLaterData() async {
+    getHomeTrendingData();
     _homeTopGainerRes = null;
     _homeTopLosersRes = null;
-    // getIpoData();
-    // getStockInFocus();
-    // getHomeSentimentData();
-    // getHomeInsiderData(inAppMsgId);
   }
 
   Future refreshWithCheck() async {
@@ -452,7 +478,7 @@ class HomeProvider extends ChangeNotifier {
 
         if (provider.user != null) {
           BrazeService.brazeUserEvent();
-          getMyTickers();
+          // getMyTickers();
         }
       } else {
         _homeSliderRes = null;
@@ -1205,28 +1231,17 @@ class HomeProvider extends ChangeNotifier {
   Future setAppsflyerData() async {
     try {
       UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
-      UserRes? user = provider.user;
+      // UserRes? user = provider.user;
 
       Map<String, dynamic> requestData = {};
 
       String? fcmToken = await Preference.getFcmToken();
       String? address = await Preference.getLocation();
-      PackageInfo packageInfo = await PackageInfo.fromPlatform();
-      String versionName = packageInfo.version;
-      String buildNumber = packageInfo.buildNumber;
-
-      requestData['build_version'] = versionName;
-      requestData['build_code'] = buildNumber;
-      requestData['platform'] = Platform.operatingSystem;
-
+      // PackageInfo packageInfo = await PackageInfo.fromPlatform();
+      // String versionName = packageInfo.version;
+      // String buildNumber = packageInfo.buildNumber;
       if (appsFlyerUID != null && appsFlyerUID != '') {
         requestData['appsflyer_id'] = appsFlyerUID;
-      }
-      if (user?.token != null && user?.token != '') {
-        requestData['token'] = user?.token;
-      }
-      if (provider.user?.phone != null && provider.user?.phone != '') {
-        requestData['phone'] = provider.user?.phone;
       }
       if (provider.user?.userId != null && provider.user?.userId != '') {
         requestData['_id'] = provider.user?.userId;
@@ -1234,32 +1249,46 @@ class HomeProvider extends ChangeNotifier {
       if (provider.user?.name != null && provider.user?.name != '') {
         requestData['name'] = provider.user?.name;
       }
+      if (provider.user?.phone != null && provider.user?.phone != '') {
+        requestData['phone'] = provider.user?.phone;
+      }
+
       if (provider.user?.phoneCode != null && provider.user?.phoneCode != '') {
         requestData['phone_code'] = provider.user?.phoneCode;
       }
       if (provider.user?.email != null && provider.user?.email != '') {
         requestData['email'] = provider.user?.email;
       }
-      if (provider.user?.image != null && provider.user?.image != '') {
-        requestData['image'] = provider.user?.image;
-      }
-      if (memCODE != null && memCODE != '') {
-        requestData['distributor_code'] = memCODE;
-      }
       if (address != null && address != '') {
         requestData['address'] = address;
       }
+      requestData['platform'] = Platform.operatingSystem;
       if (fcmToken != null && fcmToken != '') {
         requestData['fcm_token'] = fcmToken;
       }
       if (provider.user?.membership?.purchased != null) {
-        requestData['purchased'] =
-            '${provider.user?.membership?.purchased ?? 0}';
+        // requestData['purchased'] =
+        //     '${provider.user?.membership?.purchased ?? 0}';
         requestData['product_id'] = provider.user?.membership?.productID;
       }
-      if (provider.user?.pointEarn != null && provider.user?.pointEarn != '') {
-        requestData['points_earn'] = provider.user?.pointEarn;
-      }
+
+      // requestData['build_version'] = versionName;
+      // requestData['build_code'] = buildNumber;
+
+      // if (user?.token != null && user?.token != '') {
+      //   requestData['token'] = user?.token;
+      // }
+
+      // if (provider.user?.image != null && provider.user?.image != '') {
+      //   requestData['image'] = provider.user?.image;
+      // }
+      // if (memCODE != null && memCODE != '') {
+      //   requestData['distributor_code'] = memCODE;
+      // }
+
+      // if (provider.user?.pointEarn != null && provider.user?.pointEarn != '') {
+      //   requestData['points_earn'] = provider.user?.pointEarn;
+      // }
 
       FormData request = FormData.fromMap(requestData);
 
