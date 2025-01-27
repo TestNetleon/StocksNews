@@ -1229,6 +1229,7 @@ class HomeProvider extends ChangeNotifier {
 //AppsFlyer API
 
   Future setAppsflyerData() async {
+    await Future.delayed(Duration(seconds: 15));
     try {
       UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
       // UserRes? user = provider.user;
