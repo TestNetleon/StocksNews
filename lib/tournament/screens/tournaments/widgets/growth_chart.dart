@@ -71,7 +71,8 @@ class GrowthChart extends StatelessWidget {
     );
 
     if (value.toInt() >= 0 && value.toInt() < (chart?.length ?? 0)) {
-      String text = chart?[value.toInt()].battleDate ?? '';
+      //String text = chart?[value.toInt()].battleDate1 ?? '';
+      String text ='';
       return SideTitleWidget(
         axisSide: meta.axisSide,
         space: 10,

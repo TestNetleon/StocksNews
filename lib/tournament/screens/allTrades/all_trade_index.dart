@@ -15,7 +15,8 @@ import 'slidable.dart';
 import 'trade_item.dart';
 
 class TournamentAllTradeIndex extends StatefulWidget {
-  const TournamentAllTradeIndex({super.key});
+  final String? typeOfTrade;
+  const TournamentAllTradeIndex({super.key,this.typeOfTrade});
 
   @override
   State<TournamentAllTradeIndex> createState() =>
@@ -27,7 +28,7 @@ class _TournamentAllTradeIndexState extends State<TournamentAllTradeIndex> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      context.read<TournamentTradesProvider>().getTradesList(refresh: true);
+      context.read<TournamentTradesProvider>().getTradesList(refresh: true,typeOfTrade: widget.typeOfTrade);
     });
   }
 
@@ -167,7 +168,7 @@ class _TournamentAllTradeIndexState extends State<TournamentAllTradeIndex> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    'Close All',
+                    'Close All Trades',
                     style: styleGeorgiaBold(color: Colors.black),
                   ),
                   Visibility(

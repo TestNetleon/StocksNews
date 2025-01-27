@@ -10,6 +10,7 @@ import 'package:stocks_news_new/tournament/screens/tournaments/widgets/growth_ch
 import 'package:stocks_news_new/tournament/screens/tournaments/widgets/info_box.dart';
 import 'package:stocks_news_new/tournament/screens/tournaments/widgets/ticker_item.dart';
 import 'package:stocks_news_new/tournament/screens/tournaments/widgets/tl_item.dart';
+import 'package:stocks_news_new/tournament/screens/tournaments/widgets/trading_line_chart.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -153,13 +154,31 @@ class _TournamentUserDetailState extends State<TournamentUserDetail> {
                         ),
                       ),
                     ),
-                    const SpacerVertical(height: 5),
+                    const SpacerVertical(height:3),
+                    Visibility(
+                      visible: provider.userData?.userStats?.rank!=null,
+                      child: Container(
+                        padding: EdgeInsets.symmetric(horizontal:10,vertical:5),
+                        decoration: BoxDecoration(
+                          border: Border.all(color: ThemeColors.greyText,width:0.5),
+                          color: ThemeColors.primary,
+                          borderRadius: BorderRadius.circular(14.0)
+                        ),
+                        child: Text(
+                          provider.userData?.userStats?.rank ?? "",
+                          textAlign: TextAlign.center,
+                          style: stylePTSansBold(
+                              fontSize: 14, color: ThemeColors.white),
+                        ),
+                      ),
+                    ),
+                    /*const SpacerVertical(height: 5),
                     Text(
                       provider.extraOfUserData?.subTitle ?? "",
                       textAlign: TextAlign.center,
                       style: stylePTSansRegular(
                           fontSize: 12, color: ThemeColors.greyText),
-                    ),
+                    ),*/
                     const SpacerVertical(height: 10),
                     Container(
                       padding: const EdgeInsets.symmetric(
@@ -179,16 +198,22 @@ class _TournamentUserDetailState extends State<TournamentUserDetail> {
                       child: Row(children: [
                         InfoBox(
                             label: 'Performance',
-                            value: "${provider.userData?.userStats?.performance ?? ""}"),
-                        InfoBox(
+                            value: "${provider.userData?.userStats?.performance ?? ""}%"),
+                       /* InfoBox(
                             label: 'Rank',
-                            value: provider.userData?.userStats?.rank ?? ""),
+                            value: provider.userData?.userStats?.rank ?? ""),*/
                         InfoBox(
                             label: 'Exp.',
                             value: provider.userData?.userStats?.exp ?? ""),
                       ]),
                     ),
-                    const SpacerVertical(height: 14),
+                    const SpacerVertical(height:14),
+                    ScreenTitle(
+                      title:"Cumulative Stats",
+                      style: styleGeorgiaBold(fontSize: 16),
+                      dividerPadding: EdgeInsets.zero,
+                    ),
+                    const SpacerVertical(height: 12),
                     GridView.builder(
                       physics: NeverScrollableScrollPhysics(),
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -205,7 +230,7 @@ class _TournamentUserDetailState extends State<TournamentUserDetail> {
                     ),
                     const SpacerVertical(height: 13),
                     Visibility(
-                      visible:(provider.userData?.recentTrades?.title!=null|| provider.userData?.recentTrades?.status!=null),
+                      visible:(provider.userData?.recentTrades?.status!=false),
                       child: ScreenTitle(
                         title: provider.userData?.recentTrades?.title??"",
                         subTitle: provider.userData?.recentTrades?.status==true?provider.userData?.recentTrades?.subTitle??"":provider.userData?.recentTrades?.message??"",
@@ -213,7 +238,10 @@ class _TournamentUserDetailState extends State<TournamentUserDetail> {
                         dividerPadding: EdgeInsets.zero,
                       ),
                     ),
-                    const SpacerVertical(height: 13),
+                    Visibility(
+                        visible:(provider.userData?.recentTrades?.status!=false),
+                        child: const SpacerVertical(height: 13)
+                    ),
                     ListView.separated(
                       shrinkWrap: true,
                       physics: NeverScrollableScrollPhysics(),
@@ -222,52 +250,6 @@ class _TournamentUserDetailState extends State<TournamentUserDetail> {
                         if (data == null) {
                           return SizedBox();
                         }
-                        if (index == 0) {
-                          return Column(
-                            children: [
-                              Divider(
-                                color: ThemeColors.greyBorder,
-                                height: 15,
-                                thickness: 1,
-                              ),
-                              Row(
-                                children: [
-                                  SizedBox(
-                                    child: AutoSizeText(
-                                      maxLines: 1,
-                                      "TICKER",
-                                      style: stylePTSansRegular(
-                                        fontSize: 12,
-                                        color: ThemeColors.greyText,
-                                      ),
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: SizedBox(),
-                                  ),
-                                  AutoSizeText(
-                                    maxLines: 1,
-                                    "PERFORMANCE",
-                                    textAlign: TextAlign.end,
-                                    style: stylePTSansRegular(
-                                      fontSize: 12,
-                                      color: ThemeColors.greyText,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              Divider(
-                                color: ThemeColors.greyBorder,
-                                height: 15,
-                                thickness: 1,
-                              ),
-                              TickerItem(
-                                data: data,
-                              ),
-                            ],
-                          );
-                        }
-
                         return TickerItem(
                           data: data,
                         );
@@ -277,26 +259,26 @@ class _TournamentUserDetailState extends State<TournamentUserDetail> {
                         return SpacerVertical(height: 10);
                       },
                     ),
-                    const SpacerVertical(height: 13),
+                    const SpacerVertical(height: 10),
                     Visibility(
                       visible:(provider.userData?.chart?.title!=null),
                       child: ScreenTitle(
                         title: provider.userData?.chart?.title??"",
+                        subTitle:  provider.userData?.chart?.subTitle??"",
                         style: styleGeorgiaBold(fontSize: 16),
                         dividerPadding: EdgeInsets.zero,
                       ),
                     ),
                     const SpacerVertical(height: 13),
+
                     Visibility(
                       visible: provider.userData?.chart != null,
-                      child: GrowthChart(
-                        chart: provider.userData?.chart?.gChart?.toList(),
-                      ),
+                      child: TradingLineChart(gChart: provider.userData?.chart?.gChart?.toList()),
                     ),
                     const SpacerVertical(height: 13),
 
                     Visibility(
-                      visible:(provider.userData?.recentBattles?.title!=null|| provider.userData?.recentBattles?.status!=null),
+                      visible:(provider.userData?.recentBattles?.status!=false),
                       child: ScreenTitle(
                         title: provider.userData?.recentBattles?.title??"",
                         subTitle: provider.userData?.recentBattles?.status==true?provider.userData?.recentBattles?.subTitle??"":provider.userData?.recentBattles?.message??"",
@@ -305,7 +287,7 @@ class _TournamentUserDetailState extends State<TournamentUserDetail> {
                       ),
                     ),
                     Visibility(
-                        visible: provider.userData?.recentBattles != null,
+                        visible:provider.userData?.recentBattles?.status!=false,
                         child: const SpacerVertical(height: 13)
                     ),
                     ListView.separated(
@@ -316,59 +298,13 @@ class _TournamentUserDetailState extends State<TournamentUserDetail> {
                         if (data == null) {
                           return SizedBox();
                         }
-                        if (index == 0) {
-                          return Column(
-                            children: [
-                              Divider(
-                                color: ThemeColors.greyBorder,
-                                height: 15,
-                                thickness: 1,
-                              ),
-                              Row(
-                                children: [
-                                  SizedBox(
-                                    child: AutoSizeText(
-                                      maxLines: 1,
-                                      "LEAGUE",
-                                      style: stylePTSansRegular(
-                                        fontSize: 12,
-                                        color: ThemeColors.greyText,
-                                      ),
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: SizedBox(),
-                                  ),
-                                  AutoSizeText(
-                                    maxLines: 1,
-                                    "REWARD POINTS",
-                                    textAlign: TextAlign.end,
-                                    style: stylePTSansRegular(
-                                      fontSize: 12,
-                                      color: ThemeColors.greyText,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              Divider(
-                                color: ThemeColors.greyBorder,
-                                height: 15,
-                                thickness: 1,
-                              ),
-                              TlItem(
-                                data: data,
-                              ),
-                            ],
-                          );
-                        }
-
                         return TlItem(
                           data: data,
                         );
                       },
                       itemCount: provider.userData?.recentBattles?.data?.length ?? 0,
                       separatorBuilder: (context, index) {
-                        return SpacerVertical(height: 10);
+                        return SpacerVertical(height: 14);
                       },
                     )
                   ],

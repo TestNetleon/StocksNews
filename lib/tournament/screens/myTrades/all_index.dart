@@ -5,7 +5,8 @@ import 'package:stocks_news_new/widgets/base_container.dart';
 import '../allTrades/all_trade_index.dart';
 
 class AllTradesOrdersIndex extends StatefulWidget {
-  const AllTradesOrdersIndex({super.key});
+  final String? typeOfTrade;
+  const AllTradesOrdersIndex({super.key, this.typeOfTrade});
 
   @override
   State<AllTradesOrdersIndex> createState() => _AllTradesOrdersIndexState();
@@ -17,6 +18,7 @@ class _AllTradesOrdersIndexState extends State<AllTradesOrdersIndex> {
     return BaseContainer(
       appBar: AppBarHome(
         isPopBack: true,
+        title: "My Trades in League",
       ),
       body: Padding(
         padding: const EdgeInsets.fromLTRB(
@@ -25,7 +27,7 @@ class _AllTradesOrdersIndexState extends State<AllTradesOrdersIndex> {
           Dimen.padding,
           0,
         ),
-        child: TournamentAllTradeIndex(),
+        child: TournamentAllTradeIndex(typeOfTrade:widget.typeOfTrade),
       ),
     );
   }

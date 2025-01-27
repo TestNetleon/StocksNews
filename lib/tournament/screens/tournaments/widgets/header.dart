@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
+import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 
 import '../../../../utils/theme.dart';
 import '../../../../widgets/spacer_vertical.dart';
@@ -61,20 +62,38 @@ class TournamentHeader extends StatelessWidget {
                     ));
                   }
                 },
-                child: Column(
+                child: Row(
                   children: [
-                    Text(
-                      provider.data?.tournamentHeader?[index].label ?? '',
-                      style: styleGeorgiaRegular(fontSize: 13),
-                      maxLines: 2,
-                      textAlign: TextAlign.center,
-                      overflow: TextOverflow.ellipsis,
+                    Expanded(
+                      child: Column(
+                        children: [
+                          Text(
+                            provider.data?.tournamentHeader?[index].label ?? '',
+                            style: styleGeorgiaBold(fontSize: 13),
+                            maxLines: 2,
+                            textAlign: TextAlign.center,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          const SpacerVertical(height:10),
+                          Text(
+                            provider.data?.tournamentHeader?[index].value ?? '',
+                            style: styleGeorgiaBold(fontSize:20),
+                          ),
+                        ],
+                      ),
                     ),
-                    const SpacerVertical(height:10),
-                    Text(
-                      provider.data?.tournamentHeader?[index].value ?? '',
-                      style: styleGeorgiaBold(fontSize: 18),
-                    ),
+
+                    Visibility(visible:index==2?false:true,child: SpacerHorizontal(width: 10)),
+                    Visibility(
+                      visible:index==2?false:true,
+                      child: Container(
+                        width:1.7,
+                        height:40,
+                        decoration: BoxDecoration(
+                          color: ThemeColors.green11
+                        ),
+                      ),
+                    )
                   ],
                 ),
               ),

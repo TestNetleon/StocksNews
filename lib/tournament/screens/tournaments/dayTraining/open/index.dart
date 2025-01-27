@@ -243,6 +243,8 @@ import 'package:stocks_news_new/screens/stockDetail/stockDetailTabs/overview/cha
 import 'package:stocks_news_new/tournament/provider/search.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
+import 'package:stocks_news_new/tournament/screens/tournaments/dayTraining/widgets/tradiding_view_chart.dart';
+import 'package:stocks_news_new/tournament/screens/tournaments/dayTraining/widgets/trading_webview.dart';
 import 'package:stocks_news_new/tradingSimulator/manager/sse.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
@@ -286,14 +288,16 @@ class _TournamentOpenIndexState extends State<TournamentOpenIndex>
 
     await Navigator.push(
       navigatorKey.currentContext!,
-      createRoute(AllTradesOrdersIndex()),
+      createRoute(AllTradesOrdersIndex(typeOfTrade: "open")),
     );
+
     TournamentTradesProvider provider =
         context.read<TournamentTradesProvider>();
     provider.setSelectedStock(
       stock: provider.selectedStock,
       clearEverything: true,
     );
+
   }
 
   _trade({StockType type = StockType.buy}) async {
@@ -407,14 +411,16 @@ class _TournamentOpenIndexState extends State<TournamentOpenIndex>
                             showPreparingText: true,
                             child: Column(
                               children: [
-                                Expanded(
-                                  child: SingleChildScrollView(
-                                    child: TournamentOpenDetail(
-                                      data: detailHolder?.data?.ticker,
-                                    ),
+                                SpacerVertical(height: 15),
+                                SingleChildScrollView(
+                                  child: TournamentOpenDetail(
+                                    data: detailHolder?.data?.ticker,
                                   ),
                                 ),
-                                SdOverviewChart(symbol: detailHolder?.data?.ticker?.symbol ?? ""),
+                              //  Expanded(child: TradingWebview(symbol: detailHolder?.data?.ticker?.symbol ?? "")),
+
+                                Expanded(child: TradingViewChart(symbol: detailHolder?.data?.ticker?.symbol ?? "")),
+
                                 if (detailHolder
                                         ?.data?.showButton?.alreadyTraded ==
                                     false)
@@ -427,6 +433,29 @@ class _TournamentOpenIndexState extends State<TournamentOpenIndex>
                                           onPressed: () =>
                                               _trade(type: StockType.sell),
                                           color: ThemeColors.sos,
+                                          child: Row(
+                                            mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                            children: [
+                                              Text(
+                                                'Sell',
+                                                style: styleGeorgiaBold(),
+                                              ),
+                                              SpacerHorizontal(width: 10),
+                                              Visibility(
+                                                visible:detailHolder?.data?.ticker?.currentPrice != null,
+                                                child: Flexible(
+                                                  child:
+                                                  Text(
+                                                    "${detailHolder?.data?.ticker?.currentPrice?.toFormattedPrice()}",
+                                                    style: styleGeorgiaBold(
+                                                      color: Colors.white
+                                                    ),
+                                                  ),
+                                                ),
+                                              )
+                                            ],
+                                          ),
                                         ),
                                       ),
                                       SpacerHorizontal(width: 10),
@@ -435,6 +464,29 @@ class _TournamentOpenIndexState extends State<TournamentOpenIndex>
                                           radius: 10,
                                           text: 'Buy',
                                           onPressed: _trade,
+                                          child: Row(
+                                            mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                            children: [
+                                              Text(
+                                                'Buy',
+                                                style: styleGeorgiaBold(),
+                                              ),
+                                              SpacerHorizontal(width: 10),
+                                              Visibility(
+                                                visible:detailHolder?.data?.ticker?.currentPrice != null,
+                                                child: Flexible(
+                                                  child:
+                                                  Text(
+                                                    "${detailHolder?.data?.ticker?.currentPrice?.toFormattedPrice()}",
+                                                    style: styleGeorgiaBold(
+                                                        color: Colors.white
+                                                    ),
+                                                  ),
+                                                ),
+                                              )
+                                            ],
+                                          ),
                                         ),
                                       ),
                                     ],
@@ -442,48 +494,79 @@ class _TournamentOpenIndexState extends State<TournamentOpenIndex>
                                 if (detailHolder
                                         ?.data?.showButton?.alreadyTraded ==
                                     true)
-                                  ThemeButton(
-                                    radius: 10,
-                                    text: 'Close',
-                                    onPressed: _close,
-                                    color: ThemeColors.white,
-                                    textColor: Colors.black,
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Text(
-                                          'Close',
-                                          style: styleGeorgiaBold(
-                                              color: Colors.black),
+                                  Row(
+                                    children: [
+                                      Expanded(
+                                        child: ThemeButton(
+                                          radius: 10,
+                                          text: 'Open Trades',
+                                          onPressed: (){
+                                            _navigateToAllTrades();
+                                          },
+                                          color: ThemeColors.themeGreen,
                                         ),
-                                        SpacerHorizontal(width: 10),
-                                        Flexible(
-                                          child: Container(
-                                            padding: EdgeInsets.symmetric(
-                                                horizontal: 15),
-                                            decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(20),
-                                              color: (detailHolder
-                                                              ?.data
-                                                              ?.showButton
-                                                              ?.orderChange ??
-                                                          0) >=
-                                                      0
-                                                  ? ThemeColors.accent
-                                                  : ThemeColors.sos,
-                                            ),
-                                            child: Text(
-                                              '${detailHolder?.data?.showButton?.orderChange?.toCurrency()}%',
-                                              style: styleGeorgiaBold(
-                                                  color: Colors.white),
-                                            ),
+                                      ),
+                                      SpacerHorizontal(width: 10),
+                                      Expanded(
+                                        child: ThemeButton(
+                                          radius: 10,
+                                          text: 'Close',
+                                          onPressed: _close,
+                                          color: ThemeColors.white,
+                                          textColor: Colors.black,
+
+                                          child: Row(
+                                            mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                            children: [
+                                              Text(
+                                                'Close',
+                                                style: styleGeorgiaBold(
+                                                    color: Colors.black),
+                                              ),
+                                              SpacerHorizontal(width: 10),
+                                              Flexible(
+                                                child:
+                                                Text(
+                                                  '${detailHolder?.data?.showButton?.orderChange?.toCurrency()}%',
+                                                  style: styleGeorgiaBold(
+                                                      color:
+                                                      (detailHolder?.data?.showButton?.orderChange ?? 0) > 0
+                                                          ? Colors.green
+                                                          : detailHolder?.data?.showButton?.orderChange ==0?
+                                                      Colors.black:
+                                                      Colors.red,
+                                                  ),
+                                                ),
+                                                /*Container(
+                                                  padding: EdgeInsets.symmetric(
+                                                      horizontal: 15),
+                                                  decoration: BoxDecoration(
+                                                    borderRadius:
+                                                    BorderRadius.circular(20),
+                                                    color: (detailHolder
+                                                        ?.data
+                                                        ?.showButton
+                                                        ?.orderChange ??
+                                                        0) >=
+                                                        0
+                                                        ? ThemeColors.accent
+                                                        : ThemeColors.sos,
+                                                  ),
+                                                  child: Text(
+                                                    '${detailHolder?.data?.showButton?.orderChange?.toCurrency()}%',
+                                                    style: styleGeorgiaBold(
+                                                        color: Colors.black),
+                                                  ),
+                                                ),*/
+                                              )
+                                            ],
                                           ),
-                                        )
-                                      ],
-                                    ),
+                                        ),
+                                      ),
+                                    ],
                                   ),
+
                                 SpacerVertical(height: 10),
                               ],
                             ),

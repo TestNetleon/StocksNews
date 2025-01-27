@@ -4,6 +4,7 @@ import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/cache_network_image.dart';
+import 'package:stocks_news_new/widgets/screen_title.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/theme_button.dart';
@@ -79,17 +80,8 @@ class PlayBoxTournament extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(10.0),
                   child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      Expanded(
-                        child: Text(
-                          title,
-                          textAlign: TextAlign.start,
-                          style: styleGeorgiaBold(
-                            fontSize: 25,
-                            color: ThemeColors.primary,
-                          ),
-                        ),
-                      ),
                       Container(
                         padding: const EdgeInsets.symmetric(
                             horizontal: 10, vertical: 4),
@@ -137,13 +129,22 @@ class PlayBoxTournament extends StatelessWidget {
               ],
             ),
             SpacerVertical(height: 5),
+            ScreenTitle(
+              title: title,
+              style:  styleGeorgiaBold(
+                fontSize: 25,
+                color: ThemeColors.primary,
+              ),
+              dividerPadding: EdgeInsets.zero,
+            ),
+           // SpacerVertical(height: 5),
             Visibility(
               visible: description != null && description != '',
               child: HtmlWidget(
                 description ?? '',
-                textStyle: styleGeorgiaBold(
+                textStyle: styleGeorgiaRegular(
                   fontSize: 14,
-                  color: ThemeColors.blackShade,
+                  color: ThemeColors.primaryLight,
                 ),
               ),
             ),

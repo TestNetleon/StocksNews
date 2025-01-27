@@ -95,6 +95,7 @@ class _TournamentsIndexState extends State<TournamentsIndex> {
                   padding: const EdgeInsets.only(top: 10),
                   child: Column(
                     children: [
+                      SpacerVertical(height:8),
                       ScreenTitle(
                         title: provider.data?.topTradingTitans?.title,
                         style: styleGeorgiaBold(fontSize: 17),
