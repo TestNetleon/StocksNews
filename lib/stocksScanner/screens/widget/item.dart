@@ -197,20 +197,28 @@ class ScannerBaseItem extends StatelessWidget {
                 ),
               ),
               Flexible(
-                child: Container(
+                child: _widget(
                   margin: EdgeInsets.only(left: 10, right: 10),
-                  child: Text(
-                    netChange == 0
-                        ? '\$$netChange'
-                        : '${netChange.toFormattedPrice()} ($perChange%)',
-                    style: styleGeorgiaRegular(
-                      fontSize: 11,
-                      color:
-                          netChange >= 0 ? ThemeColors.accent : ThemeColors.sos,
-                    ),
-                  ),
+                  label: 'Change: ',
+                  value: netChange == 0
+                      ? '\$$netChange'
+                      : '${netChange.toFormattedPrice()} ($perChange%)',
+                  color: netChange >= 0 ? ThemeColors.accent : ThemeColors.sos,
                 ),
               ),
+              // Flexible(
+              //   child: Container(
+              //     margin: EdgeInsets.only(left: 10, right: 10),
+              //     child: Text(
+
+              //       style: styleGeorgiaRegular(
+              //         fontSize: 13,
+              //         color:
+              //             netChange >= 0 ? ThemeColors.accent : ThemeColors.sos,
+              //       ),
+              //     ),
+              //   ),
+              // ),
             ],
           ),
         ),
@@ -222,6 +230,7 @@ class ScannerBaseItem extends StatelessWidget {
     required String label,
     String? value,
     EdgeInsetsGeometry? margin,
+    Color? color,
   }) {
     if (value == null || value == '') {
       return SizedBox();
@@ -233,7 +242,7 @@ class ScannerBaseItem extends StatelessWidget {
         text: TextSpan(
           text: label,
           style: styleGeorgiaRegular(
-            fontSize: 11,
+            fontSize: 13,
             color: ThemeColors.greyText,
             height: 1.7,
           ),
@@ -241,8 +250,9 @@ class ScannerBaseItem extends StatelessWidget {
             TextSpan(
               text: value,
               style: styleGeorgiaRegular(
-                fontSize: 11,
+                fontSize: 13,
                 height: 1.7,
+                color: color,
               ),
             )
           ],

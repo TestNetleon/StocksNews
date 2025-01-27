@@ -99,8 +99,16 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     });
 
     String? address = await BrazeNotificationService.instance.getUserLocation();
-    BrazeNotificationService.instance
-        .saveFCMApi(value: fcmToken, address: address);
+    Preference.saveFcmToken(fcmToken);
+    Preference.saveLocation(address);
+    Timer(
+      Duration(seconds: 15),
+      () async {
+        BrazeNotificationService.instance
+            .saveFCMApi(value: fcmToken, address: address);
+      },
+    );
+
     // await Preference.setAmplitudeFirstOpen(true);
   }
 

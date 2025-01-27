@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
@@ -40,6 +42,26 @@ class HomeContainer extends StatefulWidget {
 }
 
 class _HomeContainerState extends State<HomeContainer> {
+  Timer? _timer;
+  bool showVisibility = false;
+  @override
+  void initState() {
+    super.initState();
+    _timer = Timer(
+      Duration(seconds: 3),
+      () {
+        showVisibility = true;
+        setState(() {});
+      },
+    );
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     HomeProvider provider = context.watch<HomeProvider>();
@@ -272,14 +294,17 @@ class _HomeContainerState extends State<HomeContainer> {
                 ),
               ),
             ),
-            Container(
-              margin: const EdgeInsets.only(
-                  top: Dimen.homeSpacing, left: 15, right: 15),
-              child: HomePartialLoading(
-                loadingWidget: const Loading(),
-                loading: provider.isLoadingTrending,
-                onRefresh: provider.refreshWithCheck,
-                child: const HomeInnerTabs(),
+            Visibility(
+              visible: showVisibility,
+              child: Container(
+                margin: const EdgeInsets.only(
+                    top: Dimen.homeSpacing, left: 15, right: 15),
+                child: HomePartialLoading(
+                  loadingWidget: const Loading(),
+                  loading: provider.isLoadingTrending,
+                  onRefresh: provider.refreshWithCheck,
+                  child: const HomeInnerTabs(),
+                ),
               ),
             ),
             Visibility(
@@ -346,3 +371,84 @@ class _HomeContainerState extends State<HomeContainer> {
     );
   }
 }
+
+// import 'package:flutter/material.dart';
+// import 'package:visibility_detector/visibility_detector.dart';
+
+// class HomeContainer extends StatefulWidget {
+//   const HomeContainer({super.key});
+
+//   @override
+//   State<HomeContainer> createState() => _HomeContainerState();
+// }
+
+// class _HomeContainerState extends State<HomeContainer> {
+//   bool _laterCallTriggered = false;
+
+//   @override
+//   void initState() {
+//     super.initState();
+//     WidgetsBinding.instance.addPostFrameCallback((_) {
+//       callOne(); // Trigger the first API call on screen load
+//     });
+//   }
+
+//   void callOne() {
+//     // Initial API call
+//     print("callOne API triggered");
+//   }
+
+//   void laterCall() {
+//     // API call triggered after a specific widget becomes visible
+//     print("laterCall API triggered");
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return SingleChildScrollView(
+//       child: Column(
+//         children: [
+//           Container(
+//             color: Colors.amber,
+//             height: 100,
+//           ),
+//           Container(
+//             color: Colors.red,
+//             height: 200,
+//           ),
+//           Container(
+//             color: Colors.green,
+//             height: 300,
+//           ),
+//           Container(
+//             color: Colors.yellow,
+//             height: 400,
+//             child: const Center(
+//               child: Text(
+//                 "This triggers the laterCall API!",
+//                 style: TextStyle(fontSize: 16, color: Colors.white),
+//               ),
+//             ),
+//           ),
+//           VisibilityDetector(
+//             key: const Key('laterCallDetector'),
+//             onVisibilityChanged: (visibilityInfo) {
+//               if (visibilityInfo.visibleFraction > 0 && !_laterCallTriggered) {
+//                 _laterCallTriggered = true; // Trigger only once
+//                 laterCall();
+//               }
+//             },
+//             child: Container(
+//               color: Colors.purple,
+//               height: 500,
+//             ),
+//           ),
+//           Container(
+//             color: Colors.blue,
+//             height: 600,
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+// }

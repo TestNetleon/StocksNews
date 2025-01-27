@@ -69,58 +69,75 @@ class _TopLosersOnlineState extends State<TopLosersOnline> {
             alignment: Alignment.centerRight,
             child: Visibility(
               visible: dataList.isNotEmpty == true,
-              child: GestureDetector(
-                onTap: () {
-                  scannerSorting(
-                    sortBy: provider.filterParams?.sortByAsc,
-                    header: provider.filterParams?.sortByHeader,
-                    sortByCallBack: (received) {
-                      Utils()
-                          .showLog('${received.type}, ${received.ascending}');
-                      provider.applySorting(
-                          received.type.name, received.ascending);
-
-                      // if (received.type == SortByEnums.symbol) {
-                      //   provider.applySorting(
-                      //       'Symbol', received.ascending);
-                      // } else if (received.type == SortByEnums.company) {
-                      //   provider.applySorting(
-                      //       'Company Name', received.ascending);
-                      // } else if (received.type == SortByEnums.sector) {
-                      //   provider.applySorting(
-                      //       'Sector', received.ascending);
-                      // } else if (received.type == SortByEnums.lastTrade) {
-                      //   provider.applySorting(
-                      //       'Last Trade', received.ascending);
-                      // } else if (received.type == SortByEnums.netChange) {
-                      //   provider.applySorting(
-                      //       'Net Change', received.ascending);
-                      // } else if (received.type == SortByEnums.perChange) {
-                      //   provider.applySorting(
-                      //       '% Change', received.ascending);
-                      // } else if (received.type == SortByEnums.volume) {
-                      //   provider.applySorting(
-                      //       'Volume', received.ascending);
-                      // } else if (received.type ==
-                      //     SortByEnums.dollarVolume) {
-                      //   provider.applySorting(
-                      //       '\$ Volume', received.ascending);
-                      // }
-
-                      Navigator.pop(context);
-                    },
-                  );
-                },
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Text(
-                      'Sort Stocks ',
-                      style: styleGeorgiaBold(),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Flexible(
+                    child: Visibility(
+                      visible: dataList.isNotEmpty,
+                      child: Text(
+                        'Total number of results: ${dataList.length}',
+                        style: styleGeorgiaBold(),
+                      ),
                     ),
-                    Icon(Icons.sort),
-                  ],
-                ),
+                  ),
+                  Flexible(
+                    child: GestureDetector(
+                      onTap: () {
+                        scannerSorting(
+                          showPreMarket: true,
+                          sortBy: provider.filterParams?.sortByAsc,
+                          header: provider.filterParams?.sortByHeader,
+                          sortByCallBack: (received) {
+                            Utils().showLog(
+                                '${received.type}, ${received.ascending}');
+                            provider.applySorting(
+                                received.type.name, received.ascending);
+
+                            // if (received.type == SortByEnums.symbol) {
+                            //   provider.applySorting(
+                            //       'Symbol', received.ascending);
+                            // } else if (received.type == SortByEnums.company) {
+                            //   provider.applySorting(
+                            //       'Company Name', received.ascending);
+                            // } else if (received.type == SortByEnums.sector) {
+                            //   provider.applySorting(
+                            //       'Sector', received.ascending);
+                            // } else if (received.type == SortByEnums.lastTrade) {
+                            //   provider.applySorting(
+                            //       'Last Trade', received.ascending);
+                            // } else if (received.type == SortByEnums.netChange) {
+                            //   provider.applySorting(
+                            //       'Net Change', received.ascending);
+                            // } else if (received.type == SortByEnums.perChange) {
+                            //   provider.applySorting(
+                            //       '% Change', received.ascending);
+                            // } else if (received.type == SortByEnums.volume) {
+                            //   provider.applySorting(
+                            //       'Volume', received.ascending);
+                            // } else if (received.type ==
+                            //     SortByEnums.dollarVolume) {
+                            //   provider.applySorting(
+                            //       '\$ Volume', received.ascending);
+                            // }
+
+                            Navigator.pop(context);
+                          },
+                        );
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Text(
+                            'Sort Stocks ',
+                            style: styleGeorgiaBold(),
+                          ),
+                          Icon(Icons.sort),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
           ),

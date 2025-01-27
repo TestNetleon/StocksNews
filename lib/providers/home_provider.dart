@@ -320,30 +320,57 @@ class HomeProvider extends ChangeNotifier {
     }
   }
 
+  // Future refreshData(String? inAppMsgId) async {
+  //   notifySnackbar = await openNotificationsSettings();
+
+  //   retryCount = 0;
+  //   showAdd = true;
+  //   setAppsflyerData();
+  //   getHomeSlider();
+  //   getHomePortfolio();
+  //   // _getLastMarketOpen();
+  //   _getLastMarketOpenFW();
+
+  //   getFeaturedWatchlist();
+  //   // getHomeAlerts();
+  //   getMostPurchased(home: "home");
+  //   getHomeTrendingData();
+  //   // getBenefitsDetails();
+
+  //   //ADD AGAIN AFTER BACKEND MERGING
+  //   _homeTopGainerRes = null;
+  //   _homeTopLosersRes = null;
+  //   // getIpoData();
+  //   // getStockInFocus();
+  //   // getHomeSentimentData();
+  //   // getHomeInsiderData(inAppMsgId);
+  // }
+
+  bool canLoadLater = false;
+  void setLoadLater(state) {
+    canLoadLater = state;
+    notifyListeners();
+  }
+
   Future refreshData(String? inAppMsgId) async {
     notifySnackbar = await openNotificationsSettings();
-
+    setLoadLater(false);
     retryCount = 0;
     showAdd = true;
     setAppsflyerData();
     getHomeSlider();
     getHomePortfolio();
+
     // _getLastMarketOpen();
     _getLastMarketOpenFW();
-
-    getFeaturedWatchlist();
-    // getHomeAlerts();
     getMostPurchased(home: "home");
-    getHomeTrendingData();
-    // getBenefitsDetails();
+    getFeaturedWatchlist();
+  }
 
-    //ADD AGAIN AFTER BACKEND MERGING
+  Future refreshLaterData() async {
+    getHomeTrendingData();
     _homeTopGainerRes = null;
     _homeTopLosersRes = null;
-    // getIpoData();
-    // getStockInFocus();
-    // getHomeSentimentData();
-    // getHomeInsiderData(inAppMsgId);
   }
 
   Future refreshWithCheck() async {

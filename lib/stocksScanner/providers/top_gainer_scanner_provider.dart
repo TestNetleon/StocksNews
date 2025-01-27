@@ -441,8 +441,8 @@ class TopGainerScannerProvider extends ChangeNotifier {
         return b.volume!.compareTo(a.volume!);
       }
     } else if (sortBy == SortByEnums.dollarVolume.name) {
-      num dolorVolumeA = (a.volume ?? 0) * (a.volume ?? 0);
-      num dolorVolumeB = (b.volume ?? 0) * (b.volume ?? 0);
+      num dolorVolumeA = (a.volume ?? 0) * (a.last ?? 0);
+      num dolorVolumeB = (b.volume ?? 0) * (b.last ?? 0);
       if (isAsc) {
         return dolorVolumeA.compareTo(dolorVolumeB);
       } else {
@@ -552,8 +552,8 @@ class TopGainerScannerProvider extends ChangeNotifier {
         return b.volume!.compareTo(a.volume!);
       }
     } else if (sortBy == SortByEnums.dollarVolume.name) {
-      num dolorVolumeA = (a.volume ?? 0) * (a.volume ?? 0);
-      num dolorVolumeB = (b.volume ?? 0) * (b.volume ?? 0);
+      num dolorVolumeA = (a.volume ?? 0) * (a.price ?? 0);
+      num dolorVolumeB = (b.volume ?? 0) * (b.price ?? 0);
       if (isAsc) {
         return dolorVolumeA.compareTo(dolorVolumeB);
       } else {
