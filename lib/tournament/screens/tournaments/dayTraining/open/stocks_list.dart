@@ -136,7 +136,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/tournament/provider/search.dart';
 import 'package:stocks_news_new/utils/colors.dart';
-import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import '../../../../../tradingSimulator/modals/trading_search_res.dart';
 import '../../../../../widgets/cache_network_image.dart';
@@ -247,13 +246,13 @@ class _OpenTopStockState extends State<OpenTopStock>
               );
             },
             child: Container(
-              height:55,
-              width:55,
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: const Color.fromARGB(255, 37, 37, 37),
-               /* boxShadow: [
+                height: 55,
+                width: 55,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: const Color.fromARGB(255, 37, 37, 37),
+                  /* boxShadow: [
                   BoxShadow(
                     color: const Color.fromARGB(255, 0, 16, 3),
                     offset: Offset(4, 0),
@@ -261,14 +260,13 @@ class _OpenTopStockState extends State<OpenTopStock>
                     spreadRadius: 15,
                   ),
                 ],*/
-              ),
-              child:
-                Icon(Icons.search)
-              /*Text(
+                ),
+                child: Icon(Icons.search)
+                /*Text(
                 'All',
                 style: styleGeorgiaBold(),
               ),*/
-            ),
+                ),
           ),
         ],
       ),

@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:provider/provider.dart';
 import 'package:stocks_news_new/tournament/models/tour_user_detail.dart';
-import 'package:stocks_news_new/tournament/provider/tournament.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 
 import 'package:stocks_news_new/widgets/cache_network_image.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
-import 'package:svg_flutter/svg_flutter.dart';
 import '../../../../utils/colors.dart';
 import '../../../../widgets/spacer_horizontal.dart';
 
@@ -31,8 +28,7 @@ class TickerItem extends StatelessWidget {
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(5),
                   topRight: Radius.circular(5),
-                )
-            ),
+                )),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -42,9 +38,7 @@ class TickerItem extends StatelessWidget {
                         width: 43.sp,
                         height: 43.sp,
                         padding: EdgeInsets.all(5.sp),
-                        child:
-                        CachedNetworkImagesWidget(data?.image)
-                    ),
+                        child: CachedNetworkImagesWidget(data?.image)),
                     const SpacerHorizontal(width: 10),
                     Expanded(
                       child: Column(
@@ -55,7 +49,8 @@ class TickerItem extends StatelessWidget {
                             children: [
                               Row(
                                 crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
                                     data?.symbol ?? '',
@@ -74,14 +69,14 @@ class TickerItem extends StatelessWidget {
                                                 ? ThemeColors.themeGreen
                                                 : ThemeColors.darkRed,
                                           ),
-                                          borderRadius: BorderRadius.circular(
-                                              20)),
+                                          borderRadius:
+                                              BorderRadius.circular(20)),
                                       child: Text(
                                         data?.type != "sell" ? "BUY" : "SELL",
                                         style: stylePTSansBold(
                                           fontSize: 10,
-                                          color: data?.type != "sell" ?
-                                          ThemeColors.themeGreen
+                                          color: data?.type != "sell"
+                                              ? ThemeColors.themeGreen
                                               : ThemeColors.darkRed,
                                         ),
                                       ),
@@ -112,8 +107,6 @@ class TickerItem extends StatelessWidget {
                                       : Colors.green),
                             ),
                           ),*/
-
-
                         ],
                       ),
                     ),
@@ -148,15 +141,13 @@ class TickerItem extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Flexible(
-                      child:
-                      _richPrices(
+                      child: _richPrices(
                           label: "Order price: ", value: data?.orderPrice),
                     ),
                     const SpacerHorizontal(width: 10),
                     Flexible(
                         child: _richPrices(
-                            label: "Close price: ", value: data?.closePrice)
-                    ),
+                            label: "Close price: ", value: data?.closePrice)),
                   ],
                 ),
               ],
@@ -169,22 +160,19 @@ class TickerItem extends StatelessWidget {
                 borderRadius: BorderRadius.only(
                   bottomLeft: Radius.circular(5),
                   bottomRight: Radius.circular(5),
-                )
-            ),
+                )),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Flexible(
                     child: _richPrices1(
-                        label: "Gain/Loss: ", value: data?.gainLoss ?? "0")
-                ),
+                        label: "Gain/Loss: ", value: data?.gainLoss ?? "0")),
                 const SpacerHorizontal(width: 10),
                 Flexible(
-                  child:
-                  _richPrices1(label: "Performance: ",
+                  child: _richPrices1(
+                      label: "Performance: ",
                       value: "${data?.performance ?? "0"}%"),
                 ),
-
               ],
             ),
           ),
@@ -216,16 +204,14 @@ class TickerItem extends StatelessWidget {
               color: ThemeColors.greyText,
             ),
             children: [
-              TextSpan(
-                text: value,
-                style:  stylePTSansBold(
-                  fontSize: 14,
-                  color: ThemeColors.white,
-                ),
-              )
-            ]
-        )
-    );
+          TextSpan(
+            text: value,
+            style: stylePTSansBold(
+              fontSize: 14,
+              color: ThemeColors.white,
+            ),
+          )
+        ]));
   }
 
   Widget _richPrices1({String? label, String? value}) {
@@ -238,20 +224,16 @@ class TickerItem extends StatelessWidget {
               color: ThemeColors.greyText,
             ),
             children: [
-              TextSpan(
-                text: value,
-                style:
-                stylePTSansBold(fontSize: 14,
-                    color: (data?.performance ?? 0) > 0
-                        ? ThemeColors.themeGreen
-                        :
-                    (data?.performance ?? 0) == 0?
-                    ThemeColors.white:
-                    ThemeColors.darkRed
-                ),
-              )
-            ]
-        )
-    );
+          TextSpan(
+            text: value,
+            style: stylePTSansBold(
+                fontSize: 14,
+                color: (data?.performance ?? 0) > 0
+                    ? ThemeColors.themeGreen
+                    : (data?.performance ?? 0) == 0
+                        ? ThemeColors.white
+                        : ThemeColors.darkRed),
+          )
+        ]));
   }
 }

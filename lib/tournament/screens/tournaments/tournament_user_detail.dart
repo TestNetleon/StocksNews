@@ -1,4 +1,3 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -6,7 +5,6 @@ import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/tournament/models/tour_user_detail.dart';
 import 'package:stocks_news_new/tournament/provider/tournament.dart';
 import 'package:stocks_news_new/tournament/screens/tournaments/widgets/grid_boxs.dart';
-import 'package:stocks_news_new/tournament/screens/tournaments/widgets/growth_chart.dart';
 import 'package:stocks_news_new/tournament/screens/tournaments/widgets/info_box.dart';
 import 'package:stocks_news_new/tournament/screens/tournaments/widgets/ticker_item.dart';
 import 'package:stocks_news_new/tournament/screens/tournaments/widgets/tl_item.dart';
@@ -17,7 +15,6 @@ import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/cache_network_image.dart';
-import 'package:stocks_news_new/widgets/loading.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:svg_flutter/svg_flutter.dart';
@@ -32,7 +29,7 @@ class TournamentUserDetail extends StatefulWidget {
 
 class _TournamentUserDetailState extends State<TournamentUserDetail> {
   late DateTime currentDate;
- /* List<GChart> gchart=[
+  /* List<GChart> gchart=[
     GChart(
       performance:800,
       battleDate: "2024-12-23",
@@ -81,7 +78,6 @@ class _TournamentUserDetailState extends State<TournamentUserDetail> {
           DateTime.now().year, DateTime.now().month, DateTime.now().day);
       _getData();
     });
-
   }
 
   void _getData() async {
@@ -154,16 +150,17 @@ class _TournamentUserDetailState extends State<TournamentUserDetail> {
                         ),
                       ),
                     ),
-                    const SpacerVertical(height:3),
+                    const SpacerVertical(height: 3),
                     Visibility(
-                      visible: provider.userData?.userStats?.rank!=null,
+                      visible: provider.userData?.userStats?.rank != null,
                       child: Container(
-                        padding: EdgeInsets.symmetric(horizontal:10,vertical:5),
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                         decoration: BoxDecoration(
-                          border: Border.all(color: ThemeColors.greyText,width:0.5),
-                          color: ThemeColors.primary,
-                          borderRadius: BorderRadius.circular(14.0)
-                        ),
+                            border: Border.all(
+                                color: ThemeColors.greyText, width: 0.5),
+                            color: ThemeColors.primary,
+                            borderRadius: BorderRadius.circular(14.0)),
                         child: Text(
                           provider.userData?.userStats?.rank ?? "",
                           textAlign: TextAlign.center,
@@ -198,8 +195,9 @@ class _TournamentUserDetailState extends State<TournamentUserDetail> {
                       child: Row(children: [
                         InfoBox(
                             label: 'Performance',
-                            value: "${provider.userData?.userStats?.performance ?? ""}%"),
-                       /* InfoBox(
+                            value:
+                                "${provider.userData?.userStats?.performance ?? ""}%"),
+                        /* InfoBox(
                             label: 'Rank',
                             value: provider.userData?.userStats?.rank ?? ""),*/
                         InfoBox(
@@ -207,9 +205,9 @@ class _TournamentUserDetailState extends State<TournamentUserDetail> {
                             value: provider.userData?.userStats?.exp ?? ""),
                       ]),
                     ),
-                    const SpacerVertical(height:14),
+                    const SpacerVertical(height: 14),
                     ScreenTitle(
-                      title:"Cumulative Stats",
+                      title: "Cumulative Stats",
                       style: styleGeorgiaBold(fontSize: 16),
                       dividerPadding: EdgeInsets.zero,
                     ),
@@ -230,23 +228,28 @@ class _TournamentUserDetailState extends State<TournamentUserDetail> {
                     ),
                     const SpacerVertical(height: 13),
                     Visibility(
-                      visible:(provider.userData?.recentTrades?.status!=false),
+                      visible:
+                          (provider.userData?.recentTrades?.status != false),
                       child: ScreenTitle(
-                        title: provider.userData?.recentTrades?.title??"",
-                        subTitle: provider.userData?.recentTrades?.status==true?provider.userData?.recentTrades?.subTitle??"":provider.userData?.recentTrades?.message??"",
+                        title: provider.userData?.recentTrades?.title ?? "",
+                        subTitle: provider.userData?.recentTrades?.status ==
+                                true
+                            ? provider.userData?.recentTrades?.subTitle ?? ""
+                            : provider.userData?.recentTrades?.message ?? "",
                         style: styleGeorgiaBold(fontSize: 16),
                         dividerPadding: EdgeInsets.zero,
                       ),
                     ),
                     Visibility(
-                        visible:(provider.userData?.recentTrades?.status!=false),
-                        child: const SpacerVertical(height: 13)
-                    ),
+                        visible:
+                            (provider.userData?.recentTrades?.status != false),
+                        child: const SpacerVertical(height: 13)),
                     ListView.separated(
                       shrinkWrap: true,
                       physics: NeverScrollableScrollPhysics(),
                       itemBuilder: (context, index) {
-                        RecentTradeRes? data = provider.userData?.recentTrades?.dataTrade?[index];
+                        RecentTradeRes? data =
+                            provider.userData?.recentTrades?.dataTrade?[index];
                         if (data == null) {
                           return SizedBox();
                         }
@@ -254,47 +257,53 @@ class _TournamentUserDetailState extends State<TournamentUserDetail> {
                           data: data,
                         );
                       },
-                      itemCount: provider.userData?.recentTrades?.dataTrade?.length ?? 0,
+                      itemCount:
+                          provider.userData?.recentTrades?.dataTrade?.length ??
+                              0,
                       separatorBuilder: (context, index) {
                         return SpacerVertical(height: 10);
                       },
                     ),
                     const SpacerVertical(height: 10),
                     Visibility(
-                      visible:(provider.userData?.chart?.title!=null),
+                      visible: (provider.userData?.chart?.title != null),
                       child: ScreenTitle(
-                        title: provider.userData?.chart?.title??"",
-                        subTitle:  provider.userData?.chart?.subTitle??"",
+                        title: provider.userData?.chart?.title ?? "",
+                        subTitle: provider.userData?.chart?.subTitle ?? "",
                         style: styleGeorgiaBold(fontSize: 16),
                         dividerPadding: EdgeInsets.zero,
                       ),
                     ),
                     const SpacerVertical(height: 13),
-
                     Visibility(
                       visible: provider.userData?.chart != null,
-                      child: TradingLineChart(gChart: provider.userData?.chart?.gChart?.toList()),
+                      child: TradingLineChart(
+                          gChart: provider.userData?.chart?.gChart?.toList()),
                     ),
                     const SpacerVertical(height: 13),
-
                     Visibility(
-                      visible:(provider.userData?.recentBattles?.status!=false),
+                      visible:
+                          (provider.userData?.recentBattles?.status != false),
                       child: ScreenTitle(
-                        title: provider.userData?.recentBattles?.title??"",
-                        subTitle: provider.userData?.recentBattles?.status==true?provider.userData?.recentBattles?.subTitle??"":provider.userData?.recentBattles?.message??"",
+                        title: provider.userData?.recentBattles?.title ?? "",
+                        subTitle: provider.userData?.recentBattles?.status ==
+                                true
+                            ? provider.userData?.recentBattles?.subTitle ?? ""
+                            : provider.userData?.recentBattles?.message ?? "",
                         style: styleGeorgiaBold(fontSize: 16),
                         dividerPadding: EdgeInsets.zero,
                       ),
                     ),
                     Visibility(
-                        visible:provider.userData?.recentBattles?.status!=false,
-                        child: const SpacerVertical(height: 13)
-                    ),
+                        visible:
+                            provider.userData?.recentBattles?.status != false,
+                        child: const SpacerVertical(height: 13)),
                     ListView.separated(
                       shrinkWrap: true,
                       physics: NeverScrollableScrollPhysics(),
                       itemBuilder: (context, index) {
-                        RecentBattlesRes? data = provider.userData?.recentBattles?.data?[index];
+                        RecentBattlesRes? data =
+                            provider.userData?.recentBattles?.data?[index];
                         if (data == null) {
                           return SizedBox();
                         }
@@ -302,7 +311,8 @@ class _TournamentUserDetailState extends State<TournamentUserDetail> {
                           data: data,
                         );
                       },
-                      itemCount: provider.userData?.recentBattles?.data?.length ?? 0,
+                      itemCount:
+                          provider.userData?.recentBattles?.data?.length ?? 0,
                       separatorBuilder: (context, index) {
                         return SpacerVertical(height: 14);
                       },

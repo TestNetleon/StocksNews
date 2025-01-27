@@ -23,7 +23,7 @@ class GrowthChart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height:250,
+      height: 250,
       child: BarChart(
         BarChartData(
           barTouchData: barTouchData,
@@ -67,24 +67,23 @@ class GrowthChart extends StatelessWidget {
     final style = TextStyle(
       color: Color.fromARGB(255, 247, 247, 247),
       fontWeight: FontWeight.bold,
-      fontSize:8,
+      fontSize: 8,
     );
 
     if (value.toInt() >= 0 && value.toInt() < (chart?.length ?? 0)) {
       //String text = chart?[value.toInt()].battleDate1 ?? '';
-      String text ='';
+      String text = '';
       return SideTitleWidget(
         axisSide: meta.axisSide,
         space: 10,
-        angle:70,
+        angle: 70,
         child: Text(text, style: style),
       );
     }
     return SideTitleWidget(
       axisSide: meta.axisSide,
       space: 10,
-      angle:70,
-
+      angle: 70,
       child: Text("N/A", style: style),
     );
   }
@@ -123,13 +122,13 @@ class GrowthChart extends StatelessWidget {
       );
 
   LinearGradient get _blueGradient => LinearGradient(
-    colors: const [
-      Color.fromARGB(255, 23, 131, 238),
-      Color.fromARGB(255, 15, 236, 243),
-    ],
-    begin: Alignment.bottomCenter,
-    end: Alignment.topCenter,
-  );
+        colors: const [
+          Color.fromARGB(255, 23, 131, 238),
+          Color.fromARGB(255, 15, 236, 243),
+        ],
+        begin: Alignment.bottomCenter,
+        end: Alignment.topCenter,
+      );
 
   LinearGradient get _redGradient => LinearGradient(
         colors: const [
@@ -178,7 +177,7 @@ class GrowthChart extends StatelessWidget {
     if (chart == null || chart!.isEmpty) return [];
 
     List<BarChartGroupData> groups = [];
-    double? previousValue;
+    // double? previousValue;
 
     for (int i = 0; i < chart!.length; i++) {
       // Changed loop to go from left to right
@@ -189,15 +188,14 @@ class GrowthChart extends StatelessWidget {
       if (currentValue > 0) {
         barGradient = _greenGradient;
       }
-     /* else if(currentValue == 0){
+      /* else if(currentValue == 0){
         barGradient = _blueGradient;
       }*/
       else {
         barGradient = _redGradient;
       }
 
-
-      previousValue = currentValue;
+      // previousValue = currentValue;
 
       groups.add(
         BarChartGroupData(

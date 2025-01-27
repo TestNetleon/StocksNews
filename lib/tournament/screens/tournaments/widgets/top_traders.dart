@@ -1,8 +1,5 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
-import '../../../../utils/colors.dart';
-import '../../../../utils/theme.dart';
 import '../../../models/leaderboard.dart';
 import '../leaderboard/item.dart';
 
@@ -23,7 +20,7 @@ class TopTraders extends StatelessWidget {
             if (data == null) {
               return SizedBox();
             }
-           /* if (index == 0) {
+            /* if (index == 0) {
               return Column(
                 children: [
                   Divider(
@@ -68,7 +65,7 @@ class TopTraders extends StatelessWidget {
               );
             }*/
 
-            return TournamentLeaderboardItem(data: data,from: 1);
+            return TournamentLeaderboardItem(data: data, from: 1);
           },
           itemCount: list?.length ?? 0,
           separatorBuilder: (context, index) {

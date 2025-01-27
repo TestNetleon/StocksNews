@@ -6,7 +6,6 @@ import 'package:stocks_news_new/tradingSimulator/manager/sse.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/custom/refresh_indicator.dart';
-import 'package:stocks_news_new/widgets/screen_title.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import '../../../utils/colors.dart';
 import '../../../utils/theme.dart';
@@ -16,7 +15,7 @@ import 'trade_item.dart';
 
 class TournamentAllTradeIndex extends StatefulWidget {
   final String? typeOfTrade;
-  const TournamentAllTradeIndex({super.key,this.typeOfTrade});
+  const TournamentAllTradeIndex({super.key, this.typeOfTrade});
 
   @override
   State<TournamentAllTradeIndex> createState() =>
@@ -28,7 +27,9 @@ class _TournamentAllTradeIndexState extends State<TournamentAllTradeIndex> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      context.read<TournamentTradesProvider>().getTradesList(refresh: true,typeOfTrade: widget.typeOfTrade);
+      context
+          .read<TournamentTradesProvider>()
+          .getTradesList(refresh: true, typeOfTrade: widget.typeOfTrade);
     });
   }
 
@@ -108,7 +109,7 @@ class _TournamentAllTradeIndexState extends State<TournamentAllTradeIndex> {
               ),
             ),
           ),
-        /*  Visibility(
+          /*  Visibility(
             visible: provider.myTrades?.data!= null,
             child: ScreenTitle(
               subTitle: provider.selectedOverview?.message??"",
