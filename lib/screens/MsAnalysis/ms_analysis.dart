@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/stockAnalysis/provider.dart';
 import 'package:stocks_news_new/screens/MsAnalysis/faq/faq.dart';
-import 'package:stocks_news_new/screens/MsAnalysis/predictionChart/chart.dart';
 import 'package:stocks_news_new/screens/MsAnalysis/widget/peer_comparison.dart';
 import 'package:stocks_news_new/screens/MsAnalysis/widget/price_volatility.dart';
 import 'package:stocks_news_new/screens/drawer/base_drawer.dart';
@@ -189,7 +188,7 @@ class _MsAnalysisState extends State<MsAnalysis> {
                   ),
                   const MsTabs(),
                   const SpacerVertical(height: Dimen.padding),
-                   MsForecastChart(),
+                 //  MsForecastChart(),
                   Visibility(
                     visible: provider.completeData?.peerComparison != null,
                     child: const MsPeerComparison(),
