@@ -399,6 +399,7 @@ class TsOpenListProvider extends ChangeNotifier {
       Utils().showLog('$symbol=> return $returnData');
       totalMarketValue += stock.currentInvested ?? 0;
       todaysReturn += returnData['todaysReturn'] ?? 0;
+      Utils().showLog('$symbol=> end of return value $todaysReturn');
     }
 
     provider.updateBalance(totalReturn: 0);
