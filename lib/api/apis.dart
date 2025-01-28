@@ -113,7 +113,7 @@ class Apis {
   static const qrCodeScan = "/token-login";
   static const stocks = "/stocks";
   static const blogs = "/blogs";
-  static const blogDetails = "/blog-detail";
+  static const blogDetails = "blog-detail-secure-v2";
   static const trendingIndustries = "/trending-industries";
   static const stockDetailMention = "/trading-stock";
   static const nudgeFriend = '/referrals/nudge-your-friend';

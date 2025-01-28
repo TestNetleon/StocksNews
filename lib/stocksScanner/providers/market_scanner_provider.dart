@@ -12,9 +12,7 @@ import 'package:stocks_news_new/stocksScanner/modals/scanner_res.dart';
 import 'package:stocks_news_new/stocksScanner/modals/sectors_res.dart';
 import 'package:stocks_news_new/stocksScanner/screens/sorting/shorting.dart';
 import 'package:stocks_news_new/utils/constants.dart';
-import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/utils/utils.dart';
-import 'package:http/http.dart' as http;
 
 import '../manager/scanner_stream.dart';
 import '../modals/ports.dart';
@@ -95,33 +93,33 @@ class MarketScannerProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future getOfflineData({showProgress = false}) async {
-    showGlobalProgressDialog();
-    try {
-      final url = Uri.parse(
-        'https://dev.stocks.news:8080/getScreener?sector=Consumer Cyclical',
-      );
-      final response = await http.get(url);
-      if (response.statusCode == 200) {
-        Utils().showLog("$url");
-        Utils().showLog(response.body);
-        // _dataList = scannerResFromJson(jsonDecode(response.body));
-        final List<dynamic> decodedResponse = jsonDecode(response.body);
-        _offlineDataList = scannerResFromJson(decodedResponse);
-        _fullOfflineDataList = List.empty(growable: true);
-        _fullOfflineDataList?.addAll(_offlineDataList ?? []);
-        _offlineDataList = _offlineDataList?.take(50).toList();
-        Utils().showLog("LENGTH => ${_offlineDataList?.length}");
-        notifyListeners();
-      } else {
-        Utils().showLog('Error fetching data from $url');
-      }
-    } catch (err) {
-      Utils().showLog('Error: $err');
-    }
-    closeGlobalProgressDialog();
-    // notifyListeners();
-  }
+  // Future getOfflineData({showProgress = false}) async {
+  //   showGlobalProgressDialog();
+  //   try {
+  //     final url = Uri.parse(
+  //       'https://dev.stocks.news:8080/getScreener?sector=Consumer Cyclical',
+  //     );
+  //     final response = await http.get(url);
+  //     if (response.statusCode == 200) {
+  //       Utils().showLog("$url");
+  //       Utils().showLog(response.body);
+  //       // _dataList = scannerResFromJson(jsonDecode(response.body));
+  //       final List<dynamic> decodedResponse = jsonDecode(response.body);
+  //       _offlineDataList = scannerResFromJson(decodedResponse);
+  //       _fullOfflineDataList = List.empty(growable: true);
+  //       _fullOfflineDataList?.addAll(_offlineDataList ?? []);
+  //       _offlineDataList = _offlineDataList?.take(50).toList();
+  //       Utils().showLog("LENGTH => ${_offlineDataList?.length}");
+  //       notifyListeners();
+  //     } else {
+  //       Utils().showLog('Error fetching data from $url');
+  //     }
+  //   } catch (err) {
+  //     Utils().showLog('Error: $err');
+  //   }
+  //   closeGlobalProgressDialog();
+  //   // notifyListeners();
+  // }
 
   void updateOfflineData(List<ScannerRes>? data, {applyFilter = false}) {
     if (!applyFilter) {
@@ -297,6 +295,17 @@ class MarketScannerProvider extends ChangeNotifier {
 
   void updateData(List<MarketScannerRes>? data) {
     if (data == null) return;
+    for (var a in data) {
+      if (a.identifier == 'TSLA') {
+        Utils().showLog('Data:Volume ${a.volume}');
+        Utils().showLog('Data:Last ${a.last}');
+        Utils().showLog('Data:ExtPrice ${a.extendedHoursPrice}');
+
+        Utils().showLog(
+            'Dollar vol.: ${(a.volume ?? 0) * (a.extendedHoursPrice ?? 0)}');
+        Utils().showLog('Dollar vol.1: ${(a.volume ?? 0) * (a.last ?? 0)}');
+      }
+    }
 
     data.removeWhere((item) {
       if (item.sector == (_filterParams?.sector ?? "Consumer Cyclical")) {
@@ -330,6 +339,139 @@ class MarketScannerProvider extends ChangeNotifier {
 
         // Return false (item is not removed) if the item passes all filter conditions
         bool shouldRemove = false;
+
+        // Apply filter for last trade
+        if (_filterParams?.lastTradeStart != null &&
+            _filterParams?.lastTradeEnd != null) {
+          if (!(item.last! >= _filterParams!.lastTradeStart! &&
+              item.last! <= _filterParams!.lastTradeEnd!)) {
+            shouldRemove = true;
+          }
+        } else if (_filterParams?.lastTradeStart != null) {
+          if (!(item.last! >= _filterParams!.lastTradeStart!)) {
+            shouldRemove = true;
+          }
+        } else if (_filterParams?.lastTradeEnd != null) {
+          if (!(item.last! <= _filterParams!.lastTradeEnd!)) {
+            shouldRemove = true;
+          }
+        }
+
+        bool preMarket = item.extendedHoursType == 'PreMarket';
+        bool postMarket = item.extendedHoursType == 'PostMarket';
+
+        // Apply filter for last trade
+        if (_filterParams?.lastTradeStart != null &&
+            _filterParams?.lastTradeEnd != null) {
+          if (preMarket || postMarket) {
+            if (!(item.extendedHoursPrice! >= _filterParams!.lastTradeStart! &&
+                item.extendedHoursPrice! <= _filterParams!.lastTradeEnd!)) {
+              shouldRemove = true;
+            }
+          } else {
+            if (!(item.last! >= _filterParams!.lastTradeStart! &&
+                item.last! <= _filterParams!.lastTradeEnd!)) {
+              shouldRemove = true;
+            }
+          }
+        } else if (_filterParams?.lastTradeStart != null) {
+          if (preMarket || postMarket) {
+            if (!(item.extendedHoursPrice! >= _filterParams!.lastTradeStart!)) {
+              shouldRemove = true;
+            }
+          } else {
+            if (!(item.last! >= _filterParams!.lastTradeStart!)) {
+              shouldRemove = true;
+            }
+          }
+        } else if (_filterParams?.lastTradeEnd != null) {
+          if (preMarket || postMarket) {
+            if (!(item.extendedHoursPrice! <= _filterParams!.lastTradeEnd!)) {
+              shouldRemove = true;
+            }
+          } else {
+            if (!(item.last! <= _filterParams!.lastTradeEnd!)) {
+              shouldRemove = true;
+            }
+          }
+        }
+
+        //filter by change
+        if (_filterParams?.netChangeStart != null &&
+            _filterParams?.netChangeEnd != null) {
+          if (preMarket || postMarket) {
+            if (!(item.extendedHoursChange! >= _filterParams!.netChangeStart! &&
+                item.extendedHoursChange! <= _filterParams!.netChangeEnd!)) {
+              shouldRemove = true;
+            }
+          } else {
+            if (!(item.change! >= _filterParams!.netChangeStart! &&
+                item.change! <= _filterParams!.netChangeEnd!)) {
+              shouldRemove = true;
+            }
+          }
+        } else if (_filterParams?.netChangeStart != null) {
+          if (preMarket || postMarket) {
+            if (!(item.extendedHoursChange! >=
+                _filterParams!.netChangeStart!)) {
+              shouldRemove = true;
+            }
+          } else {
+            if (!(item.change! >= _filterParams!.netChangeStart!)) {
+              shouldRemove = true;
+            }
+          }
+        } else if (_filterParams?.netChangeEnd != null) {
+          if (preMarket || postMarket) {
+            if (!(item.extendedHoursChange! <= _filterParams!.netChangeEnd!)) {
+              shouldRemove = true;
+            }
+          } else {
+            if (!(item.change! <= _filterParams!.netChangeEnd!)) {
+              shouldRemove = true;
+            }
+          }
+        }
+
+        num dollarVolumeLive = (item.volume ?? 0) * (item.last ?? 0);
+        num dollarVolumePrePost =
+            (item.volume ?? 0) * (item.extendedHoursPrice ?? 0);
+
+        //filter by dollar volume
+        if (_filterParams?.dolorVolumeStart != null &&
+            _filterParams?.dolorVolumeEnd != null) {
+          if (preMarket || postMarket) {
+            if (!(dollarVolumePrePost >= _filterParams!.dolorVolumeStart! &&
+                dollarVolumePrePost <= _filterParams!.dolorVolumeEnd!)) {
+              shouldRemove = true;
+            }
+          } else {
+            if (!(dollarVolumeLive >= _filterParams!.dolorVolumeStart! &&
+                dollarVolumeLive <= _filterParams!.dolorVolumeStart!)) {
+              shouldRemove = true;
+            }
+          }
+        } else if (_filterParams?.dolorVolumeStart != null) {
+          if (preMarket || postMarket) {
+            if (!(dollarVolumePrePost >= _filterParams!.dolorVolumeStart!)) {
+              shouldRemove = true;
+            }
+          } else {
+            if (!(dollarVolumeLive >= _filterParams!.dolorVolumeStart!)) {
+              shouldRemove = true;
+            }
+          }
+        } else if (_filterParams?.dolorVolumeEnd != null) {
+          if (preMarket || postMarket) {
+            if (!(dollarVolumePrePost <= _filterParams!.dolorVolumeEnd!)) {
+              shouldRemove = true;
+            }
+          } else {
+            if (!(dollarVolumeLive <= _filterParams!.dolorVolumeEnd!)) {
+              shouldRemove = true;
+            }
+          }
+        }
 
         // Apply filter for bid range (bidStart <= item.bid <= bidEnd)
         if (_filterParams?.bidStart != null && _filterParams?.bidEnd != null) {
@@ -366,17 +508,44 @@ class MarketScannerProvider extends ChangeNotifier {
         // Apply filter for percentChange range
         if (_filterParams?.perChangeStart != null &&
             _filterParams?.perChangeEnd != null) {
-          if (!(item.percentChange! >= _filterParams!.perChangeStart! &&
-              item.percentChange! <= _filterParams!.perChangeEnd!)) {
-            shouldRemove = true;
+          if (preMarket || postMarket) {
+            if (!(item.extendedHoursPercentChange! >=
+                    _filterParams!.perChangeStart! &&
+                item.extendedHoursPercentChange! <=
+                    _filterParams!.perChangeEnd!)) {
+              shouldRemove = true;
+            }
+          } else {
+            if (!(item.extendedHoursPercentChange! >=
+                    _filterParams!.perChangeStart! &&
+                item.extendedHoursPercentChange! <=
+                    _filterParams!.perChangeEnd!)) {
+              shouldRemove = true;
+            }
           }
         } else if (_filterParams?.perChangeStart != null) {
-          if (!(item.percentChange! >= _filterParams!.perChangeStart!)) {
-            shouldRemove = true;
+          if (preMarket || postMarket) {
+            if (!(item.extendedHoursPercentChange! >=
+                _filterParams!.perChangeStart!)) {
+              shouldRemove = true;
+            }
+          } else {
+            if (!(item.extendedHoursPercentChange! >=
+                _filterParams!.perChangeStart!)) {
+              shouldRemove = true;
+            }
           }
         } else if (_filterParams?.perChangeEnd != null) {
-          if (!(item.percentChange! <= _filterParams!.perChangeEnd!)) {
-            shouldRemove = true;
+          if (preMarket || postMarket) {
+            if (!(item.extendedHoursPercentChange! <=
+                _filterParams!.perChangeEnd!)) {
+              shouldRemove = true;
+            }
+          } else {
+            if (!(item.extendedHoursPercentChange! <=
+                _filterParams!.perChangeEnd!)) {
+              shouldRemove = true;
+            }
           }
         }
 
@@ -587,6 +756,11 @@ class MarketScannerProvider extends ChangeNotifier {
     } else if (sortBy == SortByEnums.dollarVolume.name) {
       num dolorVolumeA = (a.volume ?? 0) * (a.last ?? 0);
       num dolorVolumeB = (b.volume ?? 0) * (b.last ?? 0);
+      if (a.extendedHoursType == "PostMarket" ||
+          a.extendedHoursType == "PreMarket") {
+        dolorVolumeA = (a.volume ?? 0) * (a.extendedHoursPrice ?? 0);
+        dolorVolumeB = (b.volume ?? 0) * (b.extendedHoursPrice ?? 0);
+      }
       if (isAsc) {
         return dolorVolumeA.compareTo(dolorVolumeB);
       } else {
@@ -663,23 +837,33 @@ class MarketScannerProvider extends ChangeNotifier {
     }
 
     if (sortBy == SortByEnums.netChange.name) {
-      if (a.change == null && b.change == null) return 0;
-      if (a.change == null) return -1;
-      if (b.change == null) return 1;
+      if (a.ext?.extendedHoursChange == null &&
+          b.ext?.extendedHoursChange == null) {
+        return 0;
+      }
+      if (a.ext?.extendedHoursChange == null) return -1;
+      if (b.ext?.extendedHoursChange == null) return 1;
       if (isAsc) {
-        return a.change!.compareTo(b.change!);
+        return a.ext?.extendedHoursChange!
+            .compareTo(b.ext?.extendedHoursChange!);
       } else {
-        return b.change!.compareTo(a.change!);
+        return b.ext?.extendedHoursChange!
+            .compareTo(a.ext?.extendedHoursChange!);
       }
     }
     if (sortBy == SortByEnums.perChange.name) {
-      if (a.changesPercentage == null && b.changesPercentage == null) return 0;
-      if (a.changesPercentage == null) return -1;
-      if (b.changesPercentage == null) return 1;
+      if (a.ext?.extendedHoursPercentChange == null &&
+          b.ext?.extendedHoursPercentChange == null) {
+        return 0;
+      }
+      if (a.ext?.extendedHoursPercentChange == null) return -1;
+      if (b.ext?.extendedHoursPercentChange == null) return 1;
       if (isAsc) {
-        return a.changesPercentage!.compareTo(b.changesPercentage!);
+        return a.ext?.extendedHoursPercentChange!
+            .compareTo(b.ext?.extendedHoursPercentChange!);
       } else {
-        return b.changesPercentage!.compareTo(a.changesPercentage!);
+        return b.ext?.extendedHoursPercentChange!
+            .compareTo(a.ext?.extendedHoursPercentChange!);
       }
     }
     if (sortBy == SortByEnums.volume.name) {
@@ -757,6 +941,7 @@ class MarketScannerProvider extends ChangeNotifier {
   }
 
   void applyFilter(FilterParams params) {
+    print('LAST TRADE=> ${params.lastTradeStart}, ${params.lastTradeEnd}');
     if (_dataList != null) {
       _filterParams = params;
       Utils().showLog("----");

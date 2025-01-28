@@ -66,6 +66,11 @@ class _MarketScannerHeaderState extends State<MarketScannerHeader> {
       return SizedBox();
     } else if (dataList != null && dataList.isNotEmpty) {
       marketStatus = dataList[0].extendedHoursType ?? "";
+      if (marketStatus == 'PreMarket') {
+        marketStatus = 'Pre Market';
+      } else if (marketStatus == 'PostMarket') {
+        marketStatus = 'Post Market';
+      }
       if (!(dataList[0].extendedHoursType == "PostMarket" ||
           dataList[0].extendedHoursType == "PreMarket")) {
         marketStatus = "Live";
@@ -74,7 +79,11 @@ class _MarketScannerHeaderState extends State<MarketScannerHeader> {
       marketStatus = offlineData[0].ext?.extendedHoursType ?? "Closed";
       _lastUpdated = offlineData[0].closeDate;
     } else if (marketStatus == "") {
-      marketStatus = provider.marketStatus ?? "";
+      marketStatus = provider.marketStatus == "PostMarket"
+          ? 'Post Market'
+          : provider.marketStatus == "PreMarket"
+              ? 'Pre Market'
+              : '';
     }
     // Utils().showLog("DTAE => ${dataList![0].time}");
 

@@ -97,6 +97,7 @@ enum SocialTrendingType { now, recently, cap }
 enum AdPlaces { place1, place2, place3 }
 
 enum AdScreen { home, newsDetail, aiNews }
+
 enum TournamentsHead { tradTotal, pPaid, playTraders }
 
 // ------ These are global constants to access in complete app --------
@@ -488,6 +489,15 @@ extension IntExtention on num {
       return NumberFormat("\$0").format(this);
     }
     return NumberFormat("\$#,##,##0.00").format(this < 0 ? this * -1 : this);
+  }
+
+  String toUSDFormat({bool showDollar = true}) {
+    if (this == 0) {
+      return showDollar ? NumberFormat("\$0").format(this) : "0";
+    }
+    return showDollar
+        ? NumberFormat.currency(locale: "en_US", symbol: "\$").format(this)
+        : NumberFormat("#,##0", "en_US").format(this);
   }
 
   String toRuppeeFormat() {

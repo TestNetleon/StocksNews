@@ -82,7 +82,7 @@ class _TopGainerOfflineTwoState extends State<TopGainerOfflineTwo> {
                     child: Visibility(
                       visible: dataList.isNotEmpty,
                       child: Text(
-                        'Total number of results: ${dataList.length}',
+                        'No. of Results: ${dataList.length}',
                         style: styleGeorgiaBold(),
                       ),
                     ),

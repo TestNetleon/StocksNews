@@ -179,6 +179,7 @@
 
 import 'dart:async';
 import 'dart:convert';
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
@@ -273,30 +274,35 @@ class MarketScannerStream {
     } catch (e) {
       Utils().showLog("Failed to connect to $url: $e");
       _activeConnections.remove(url);
-      await _retryConnection(url, provider);
+      getOfflineData();
+
+      // await _retryConnection(url, provider);
     }
   }
 
-  Future<void> _retryConnection(
-      String url, MarketScannerProvider provider) async {
-    int retryCount = 0;
-    const maxRetries = 2;
-    const retryDelay = Duration(seconds: 5);
+  // Future<void> _retryConnection(
+  //     String url, MarketScannerProvider provider) async {
+  //   int retryCount = 0;
+  //   const maxRetries = 1;
+  //   const retryDelay = Duration(seconds: 2);
 
-    while (retryCount < maxRetries) {
-      try {
-        Utils().showLog("Retrying connection to $url...");
-        await Future.delayed(retryDelay * retryCount);
-        await _connectToSseClient(url, provider);
-        break;
-      } catch (e) {
-        retryCount++;
-        if (retryCount == maxRetries) {
-          Utils().showLog("Failed to connect after $maxRetries attempts: $e");
-        }
-      }
-    }
-  }
+  //   while (retryCount < maxRetries) {
+  //     try {
+  //       Utils().showLog("Retrying connection to $url...");
+  //       await Future.delayed(retryDelay * retryCount);
+  //       await _connectToSseClient(url, provider);
+  //       if (retryCount == maxRetries) {
+  //         getOfflineData();
+  //       }
+  //       break;
+  //     } catch (e) {
+  //       retryCount++;
+  //       if (retryCount == maxRetries) {
+  //         Utils().showLog("Failed to connect after $maxRetries attempts: $e");
+  //       }
+  //     }
+  //   }
+  // }
 
   void _handleEventData(String data, MarketScannerProvider provider) {
     try {
@@ -304,7 +310,9 @@ class MarketScannerStream {
       final List<dynamic> decodedResponse = jsonDecode(data);
 
       provider.updateData(marketScannerResFromJson(decodedResponse));
-      Utils().showLog("Event data processed successfully");
+      if (kDebugMode) {
+        print("-----------------------------");
+      }
     } catch (e) {
       Utils().showLog("Error processing event data: $e");
     }

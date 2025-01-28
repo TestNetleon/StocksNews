@@ -65,12 +65,23 @@ class _TopLoserScannerHeaderState extends State<TopLoserScannerHeader> {
       return SizedBox();
     } else if (dataList != null && dataList.isNotEmpty) {
       marketStatus = dataList[0].extendedHoursType ?? "";
+      if (marketStatus == 'PreMarket') {
+        marketStatus = 'Pre Market';
+      } else if (marketStatus == 'PostMarket') {
+        marketStatus = 'Post Market';
+      }
+
       if (!(dataList[0].extendedHoursType == "PostMarket" ||
           dataList[0].extendedHoursType == "PreMarket")) {
         marketStatus = "Live";
       }
     } else if (offlineData != null) {
       marketStatus = offlineData[0].ext?.extendedHoursType ?? "Closed";
+      if (marketStatus == 'PreMarket') {
+        marketStatus = 'Pre Market';
+      } else if (marketStatus == 'PostMarket') {
+        marketStatus = 'Post Market';
+      }
       _lastUpdated = offlineData[0].closeDate;
     }
 

@@ -276,7 +276,7 @@ class _MarketScannerFilterState extends State<MarketScannerFilter> {
                       endController: _volumeEnd,
                     ),
                     FilterRow(
-                      label: "\$ Volume:",
+                      label: "\$Volume:",
                       startHint: "\$ Volume Start",
                       startController: _dolorVolumeStart,
                       endHint: "\$ Volume End",

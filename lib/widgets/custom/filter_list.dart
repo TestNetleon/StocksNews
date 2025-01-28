@@ -79,7 +79,7 @@ class FilterListing extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 35),
+      padding: const EdgeInsets.only(bottom: 35),
       child: ListView.separated(
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),

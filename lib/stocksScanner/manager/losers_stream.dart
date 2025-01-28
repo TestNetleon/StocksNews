@@ -187,28 +187,29 @@ class MarketLosersStream {
         }
       }
     } catch (e) {
-      await _handleConnectionError();
+      _activeConnections.remove(url);
+      getOfflineData();
     }
   }
 
-  Future<void> _handleConnectionError() async {
-    int retryCount = 0;
-    const maxRetries = 2;
-    const retryDelay = Duration(seconds: 3);
+  // Future<void> _handleConnectionError() async {
+  //   int retryCount = 0;
+  //   const maxRetries = 2;
+  //   const retryDelay = Duration(seconds: 3);
 
-    while (retryCount < maxRetries) {
-      try {
-        await Future.delayed(retryDelay * retryCount);
-        await initializePorts(); // Retry initialization
-        break; // Success, exit loop
-      } catch (e) {
-        retryCount++;
-        if (retryCount == maxRetries) {
-          await getOfflineData(); // Fall back after max retries
-        }
-      }
-    }
-  }
+  //   while (retryCount < maxRetries) {
+  //     try {
+  //       await Future.delayed(retryDelay * retryCount);
+  //       await initializePorts(); // Retry initialization
+  //       break; // Success, exit loop
+  //     } catch (e) {
+  //       retryCount++;
+  //       if (retryCount == maxRetries) {
+  //         await getOfflineData(); // Fall back after max retries
+  //       }
+  //     }
+  //   }
+  // }
 
   Future<void> _handleNetworkFailure() async {
     if (!isOfflineCalled) {

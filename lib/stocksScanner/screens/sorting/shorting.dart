@@ -35,6 +35,7 @@ scannerSorting({
   bool? sortBy,
   String? header,
   bool showPreMarket = false,
+  bool showSector = true,
 }) {
   showModalBottomSheet(
     context: navigatorKey.currentContext!,
@@ -51,6 +52,8 @@ scannerSorting({
         sortByCallBack: sortByCallBack,
         sortBy: sortBy,
         header: header,
+        showPreMarket: showPreMarket,
+        showSector: showSector,
       );
     },
   );
@@ -61,9 +64,11 @@ class MarketScannerSorting extends StatefulWidget {
   final bool? sortBy;
   final String? header;
   final bool showPreMarket;
+  final bool showSector;
 
   const MarketScannerSorting({
     super.key,
+    this.showSector = true,
     this.sortByCallBack,
     this.sortBy,
     this.header,
@@ -193,8 +198,8 @@ class _MarketScannerSortingState extends State<MarketScannerSorting> {
             visible: widget.showPreMarket,
             child: _buildSortOption(
               'Pre-Market Price',
-              SortByEnums.lastTrade,
-              sortBy: widget.header == SortByEnums.lastTrade.name
+              SortByEnums.postMarket,
+              sortBy: widget.header == SortByEnums.postMarket.name
                   ? widget.sortBy
                   : null,
             ),
@@ -258,11 +263,15 @@ class _MarketScannerSortingState extends State<MarketScannerSorting> {
           ),
 
           // Sort by Sector
-          _buildSortOption(
-            'Sector-wise',
-            SortByEnums.sector,
-            sortBy:
-                widget.header == SortByEnums.sector.name ? widget.sortBy : null,
+          Visibility(
+            visible: widget.showSector,
+            child: _buildSortOption(
+              'Sector-wise',
+              SortByEnums.sector,
+              sortBy: widget.header == SortByEnums.sector.name
+                  ? widget.sortBy
+                  : null,
+            ),
           ),
 
           SpacerVertical(height: 20),
