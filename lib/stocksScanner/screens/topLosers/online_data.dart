@@ -76,7 +76,7 @@ class _TopLosersOnlineState extends State<TopLosersOnline> {
                     child: Visibility(
                       visible: dataList.isNotEmpty,
                       child: Text(
-                        'Total number of results: ${dataList.length}',
+                        'No. of Results: ${dataList.length}',
                         style: styleGeorgiaBold(),
                       ),
                     ),
@@ -85,7 +85,6 @@ class _TopLosersOnlineState extends State<TopLosersOnline> {
                     child: GestureDetector(
                       onTap: () {
                         scannerSorting(
-                          showPreMarket: true,
                           sortBy: provider.filterParams?.sortByAsc,
                           header: provider.filterParams?.sortByHeader,
                           sortByCallBack: (received) {

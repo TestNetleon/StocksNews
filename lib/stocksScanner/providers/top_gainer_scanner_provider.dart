@@ -373,6 +373,24 @@ class TopGainerScannerProvider extends ChangeNotifier {
       } else {
         return b.security!.name!.compareTo(a.security!.name!);
       }
+    } else if (sortBy == SortByEnums.bid.name) {
+      if (a.bid == null && b.bid == null) return 0;
+      if (a.bid == null) return -1;
+      if (b.bid == null) return 1;
+      if (isAsc) {
+        return a.bid!.compareTo(b.bid!);
+      } else {
+        return b.bid!.compareTo(a.bid!);
+      }
+    } else if (sortBy == SortByEnums.ask.name) {
+      if (a.ask == null && b.ask == null) return 0;
+      if (a.ask == null) return -1;
+      if (b.ask == null) return 1;
+      if (isAsc) {
+        return a.ask!.compareTo(b.ask!);
+      } else {
+        return b.ask!.compareTo(a.ask!);
+      }
     } else if (sortBy == SortByEnums.sector.name) {
       if (a.sector == null && b.sector == null) return 0;
       if (a.sector == null) return -1;
@@ -443,6 +461,11 @@ class TopGainerScannerProvider extends ChangeNotifier {
     } else if (sortBy == SortByEnums.dollarVolume.name) {
       num dolorVolumeA = (a.volume ?? 0) * (a.last ?? 0);
       num dolorVolumeB = (b.volume ?? 0) * (b.last ?? 0);
+      if (a.extendedHoursType == "PostMarket" ||
+          a.extendedHoursType == "PreMarket") {
+        dolorVolumeA = (a.volume ?? 0) * (a.extendedHoursPrice ?? 0);
+        dolorVolumeB = (b.volume ?? 0) * (b.extendedHoursPrice ?? 0);
+      }
       if (isAsc) {
         return dolorVolumeA.compareTo(dolorVolumeB);
       } else {
@@ -471,6 +494,24 @@ class TopGainerScannerProvider extends ChangeNotifier {
         return a.name!.compareTo(b.name!);
       } else {
         return b.name!.compareTo(a.name!);
+      }
+    } else if (sortBy == SortByEnums.bid.name) {
+      if (a.bid == null && b.bid == null) return 0;
+      if (a.bid == null) return -1;
+      if (b.bid == null) return 1;
+      if (isAsc) {
+        return a.bid!.compareTo(b.bid!);
+      } else {
+        return b.bid!.compareTo(a.bid!);
+      }
+    } else if (sortBy == SortByEnums.ask.name) {
+      if (a.ask == null && b.ask == null) return 0;
+      if (a.ask == null) return -1;
+      if (b.ask == null) return 1;
+      if (isAsc) {
+        return a.ask!.compareTo(b.ask!);
+      } else {
+        return b.ask!.compareTo(a.ask!);
       }
     } else if (sortBy == SortByEnums.sector.name) {
       if (a.sector == null && b.sector == null) return 0;
@@ -511,8 +552,8 @@ class TopGainerScannerProvider extends ChangeNotifier {
         return valueB.compareTo(valueA);
       }
     } else if (sortBy == SortByEnums.netChange.name) {
-      num? valueA = a.change;
-      num? valueB = b.change;
+      num? valueA = a.ext?.extendedHoursChange;
+      num? valueB = b.ext?.extendedHoursChange;
       // if (a.extendedHoursType == "PostMarket" ||
       //     a.extendedHoursType == "PreMarket") {
       //   valueA = a.extendedHoursChange ?? 0;
@@ -527,8 +568,8 @@ class TopGainerScannerProvider extends ChangeNotifier {
         return valueB.compareTo(valueA);
       }
     } else if (sortBy == SortByEnums.perChange.name) {
-      num? valueA = a.changesPercentage;
-      num? valueB = b.changesPercentage;
+      num? valueA = a.ext?.extendedHoursPercentChange;
+      num? valueB = b.ext?.extendedHoursPercentChange;
       // if (a.extendedHoursType == "PostMarket" ||
       //     a.extendedHoursType == "PreMarket") {
       //   valueA = a.extendedHoursPercentChange ?? 0;

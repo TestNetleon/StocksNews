@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:stocks_news_new/stocksScanner/screens/marketScanner/index.dart';
 import 'package:stocks_news_new/stocksScanner/screens/topGainers/index.dart';
 import 'package:stocks_news_new/stocksScanner/screens/topLosers/index.dart';
+import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/custom_tab_container.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
@@ -18,6 +19,7 @@ class ScannerContainer extends StatelessWidget {
       FontAwesomeIcons.arrowTrendUp,
       FontAwesomeIcons.arrowTrendDown,
     ];
+
     return CustomTabContainer(
       tabs: List.generate(
         tabs.length,
@@ -27,7 +29,15 @@ class ScannerContainer extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                FaIcon(tabIcons[index], size: 14),
+                FaIcon(
+                  tabIcons[index],
+                  size: 14,
+                  color: tabs[index] == 'GAINERS'
+                      ? ThemeColors.themeGreen
+                      : tabs[index] == 'LOSERS'
+                          ? ThemeColors.sos
+                          : ThemeColors.white,
+                ),
                 SpacerHorizontal(width: 5),
                 Text(
                   tabs[index],

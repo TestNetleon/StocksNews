@@ -421,7 +421,8 @@ class TsOpenListProvider extends ChangeNotifier {
       todayReturn: todaysReturn,
     );
 
-    // Utils().showLog('Final Portfolio Return: $todaysReturn');
+    Utils().showLog('Final Portfolio Return: $todaysReturn');
+    notifyListeners();
   }
 
   void _removeStockFromMap(String symbol) {

@@ -73,7 +73,7 @@ class _MarketScannerOfflineTwoState extends State<MarketScannerOfflineTwo> {
                       visible:
                           dataList.isNotEmpty && provider.isFilterApplied(),
                       child: Text(
-                        'Total number of results: ${dataList.length}',
+                        'No. of Results: ${dataList.length}',
                         style: styleGeorgiaBold(),
                       ),
                     ),
@@ -82,6 +82,7 @@ class _MarketScannerOfflineTwoState extends State<MarketScannerOfflineTwo> {
                     child: GestureDetector(
                       onTap: () {
                         scannerSorting(
+                          showSector: false,
                           showPreMarket: true,
                           sortBy: provider.filterParams?.sortByAsc,
                           header: provider.filterParams?.sortBy,

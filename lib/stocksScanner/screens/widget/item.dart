@@ -21,20 +21,34 @@ class ScannerBaseItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String dollarVolume =
-        num.parse("${(data?.volume ?? 0) * (data?.price ?? 0)}").toRuppees();
-    num? postMarketPrice = data?.ext?.extendedHoursPrice;
+        num.parse("${(data?.volume ?? 0) * (data?.price ?? 0)}").toUSDFormat();
 
+    String volume =
+        num.parse("${(data?.volume ?? 0)}").toUSDFormat(showDollar: false);
+    bool preMarket = data?.ext?.extendedHoursType == "PreMarket";
+    bool postMarket = data?.ext?.extendedHoursType == "PostMarket";
+
+    String? prePost = postMarket
+        ? 'Post Mkt. Price'
+        : preMarket
+            ? 'Pre Mkt. Price'
+            : null;
     num lastTrade = data?.price ?? 0;
     num netChange = data?.change ?? 0;
     num perChange = data?.changesPercentage ?? 0;
-    if (data?.ext?.extendedHoursType == "PostMarket" ||
-        data?.ext?.extendedHoursType == "PreMarket") {
+
+    num? postMarketPrice = data?.ext?.extendedHoursPrice ?? 0;
+    num? postMarketChange = data?.ext?.extendedHoursChange ?? 0;
+    num? postMarketChangePer = data?.ext?.extendedHoursPercentChange ?? 0;
+
+    if (!showPreMarket && (preMarket || postMarket)) {
+      lastTrade = data?.ext?.extendedHoursPrice ?? 0;
       netChange = data?.ext?.extendedHoursChange ?? 0;
       perChange = data?.ext?.extendedHoursPercentChange ?? 0;
-      lastTrade = data?.ext?.extendedHoursPrice ?? 0;
-    }
-    if (showPreMarket) {
-      lastTrade = data?.price ?? 0;
+
+      dollarVolume = num.parse(
+              "${(data?.volume ?? 0) * (data?.ext?.extendedHoursPrice ?? 0)}")
+          .toUSDFormat();
     }
     return Column(
       children: [
@@ -50,6 +64,7 @@ class ScannerBaseItem extends StatelessWidget {
           child: Column(
             children: [
               Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   GestureDetector(
                     onTap: () {
@@ -85,22 +100,44 @@ class ScannerBaseItem extends StatelessWidget {
                               data?.identifier != '',
                           child: Text(
                             data?.identifier ?? '',
-                            style: stylePTSansBold(fontSize: 14),
+                            style: stylePTSansBold(fontSize: 18),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                           ),
                         ),
-                        const SpacerVertical(height: 5),
+                        const SpacerVertical(height: 3),
                         Visibility(
                           visible: data?.name != null && data?.name != '',
                           child: Text(
                             data?.name ?? '',
                             style: stylePTSansRegular(
                               color: ThemeColors.greyText,
-                              fontSize: 12,
+                              fontSize: 13,
                             ),
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                        //  Visibility(
+                        //    visible: data?.sector != null,
+                        //    child: _widget(
+                        //      label: 'Sector: ',
+                        //      value: data?.sector,
+                        //    ),
+                        //  ),
+                        Visibility(
+                          visible: data?.sector != null && data?.sector != '',
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 3),
+                            child: Text(
+                              'Sector: ${data?.sector}',
+                              style: stylePTSansRegular(
+                                color: ThemeColors.greyText,
+                                fontSize: 13,
+                              ),
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                            ),
                           ),
                         ),
                       ],
@@ -110,37 +147,42 @@ class ScannerBaseItem extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      Row(
-                        children: [
-                          Visibility(
-                            visible: data?.bid != null,
-                            child: _widget(
-                              label: 'Bid: ',
-                              value: '\$${data?.bid}',
-                            ),
-                          ),
-                          Visibility(
-                            visible: data?.ask != null,
-                            child: _widget(
-                              margin: EdgeInsets.only(left: 10),
-                              label: 'Ask: ',
-                              value: '\$${data?.ask}',
-                            ),
-                          ),
-                        ],
+                      Text(
+                        '\$${lastTrade.toCurrency()}',
+                        style: stylePTSansBold(fontSize: 18),
                       ),
-                      Visibility(
-                        visible: data?.volume != null,
-                        child: _widget(
-                          label: 'Volume: ',
-                          value: '${data?.volume}',
+                      const SpacerVertical(height: 5),
+                      RichText(
+                        text: TextSpan(
+                          children: [
+                            TextSpan(
+                              text: netChange == 0
+                                  ? "\$$netChange"
+                                  : "\$$netChange ($perChange%)",
+                              style: stylePTSansRegular(
+                                fontSize: 14,
+                                height: 0.0,
+                                color:
+                                    perChange > 0 ? Colors.green : Colors.red,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                       Visibility(
-                        visible: dollarVolume != '',
-                        child: _widget(
-                          label: '\$Volume: ',
-                          value: dollarVolume,
+                        visible: prePost != null && prePost != '',
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8),
+                            color: const Color.fromARGB(255, 50, 49, 49),
+                          ),
+                          margin: const EdgeInsets.only(top: 5),
+                          padding:
+                              EdgeInsets.symmetric(horizontal: 10, vertical: 2),
+                          child: Text(
+                            preMarket ? 'Pre Market' : 'Post Market',
+                            style: styleGeorgiaRegular(fontSize: 13),
+                          ),
                         ),
                       ),
                     ],
@@ -148,36 +190,85 @@ class ScannerBaseItem extends StatelessWidget {
                 ],
               ),
               Visibility(
+                visible: showPreMarket,
+                child: Divider(
+                  color: ThemeColors.greyBorder,
+                ),
+              ),
+              Visibility(
+                visible: showPreMarket,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Flexible(
                       child: Visibility(
-                        visible: data?.sector != null,
+                        visible: postMarketPrice != null && showPreMarket,
                         child: _widget(
-                          label: 'Sector: ',
-                          value: data?.sector,
+                          fontSize: 14,
+                          margin: EdgeInsets.only(top: 0),
+                          label: '$prePost: ',
+                          value: '\$$postMarketPrice',
                         ),
                       ),
                     ),
+                    const SpacerHorizontal(width: 5),
                     Flexible(
-                      child: Visibility(
-                        visible: postMarketPrice != null && showPreMarket,
-                        child: _widget(
-                          margin: EdgeInsets.only(left: 10),
-                          label: 'Post Market Price: ',
-                          value: '\$$postMarketPrice',
+                      child: RichText(
+                        text: TextSpan(
+                          children: [
+                            TextSpan(
+                              text: postMarketChange == 0
+                                  ? "\$$postMarketChange"
+                                  : "\$$postMarketChange ($postMarketChangePer%)",
+                              style: stylePTSansRegular(
+                                fontSize: 14,
+                                height: 0.0,
+                                color: (postMarketChangePer ?? 0) > 0
+                                    ? Colors.green
+                                    : Colors.red,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ),
                   ],
                 ),
+              ),
+              Divider(
+                color: ThemeColors.greyBorder,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Flexible(
+                    child: Visibility(
+                      visible: volume != '',
+                      child: _widget(
+                        label: 'Vol.: ',
+                        value: volume,
+                        fontSize: 14,
+                      ),
+                    ),
+                  ),
+                  Flexible(
+                    child: Visibility(
+                      visible: dollarVolume != '',
+                      child: _widget(
+                        textAlign: TextAlign.end,
+                        label: '\$Vol.: ',
+                        fontSize: 14,
+                        value: dollarVolume,
+                      ),
+                    ),
+                  ),
+                ],
               )
             ],
           ),
         ),
         Container(
-          padding: EdgeInsets.symmetric(vertical: 5),
+          padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
           decoration: BoxDecoration(
             color: ThemeColors.gradientLight,
             borderRadius: BorderRadius.only(
@@ -186,39 +277,27 @@ class ScannerBaseItem extends StatelessWidget {
             ),
           ),
           child: Row(
-            mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Flexible(
-                child: _widget(
-                  margin: EdgeInsets.only(left: 10),
-                  label: 'Last Trade: ',
-                  value: '\$$lastTrade',
+                child: Visibility(
+                  visible: data?.bid != null,
+                  child: _widget(
+                    label: 'Bid: ',
+                    value: '\$${data?.bid}',
+                  ),
                 ),
               ),
               Flexible(
-                child: _widget(
-                  margin: EdgeInsets.only(left: 10, right: 10),
-                  label: 'Change: ',
-                  value: netChange == 0
-                      ? '\$$netChange'
-                      : '${netChange.toFormattedPrice()} ($perChange%)',
-                  color: netChange >= 0 ? ThemeColors.accent : ThemeColors.sos,
+                child: Visibility(
+                  visible: data?.ask != null,
+                  child: _widget(
+                    margin: EdgeInsets.only(left: 10),
+                    label: 'Ask: ',
+                    value: '\$${data?.ask}',
+                  ),
                 ),
               ),
-              // Flexible(
-              //   child: Container(
-              //     margin: EdgeInsets.only(left: 10, right: 10),
-              //     child: Text(
-
-              //       style: styleGeorgiaRegular(
-              //         fontSize: 13,
-              //         color:
-              //             netChange >= 0 ? ThemeColors.accent : ThemeColors.sos,
-              //       ),
-              //     ),
-              //   ),
-              // ),
             ],
           ),
         ),
@@ -231,6 +310,8 @@ class ScannerBaseItem extends StatelessWidget {
     String? value,
     EdgeInsetsGeometry? margin,
     Color? color,
+    double fontSize = 13,
+    TextAlign textAlign = TextAlign.start,
   }) {
     if (value == null || value == '') {
       return SizedBox();
@@ -239,20 +320,21 @@ class ScannerBaseItem extends StatelessWidget {
       margin: margin,
       padding: const EdgeInsets.only(bottom: 5),
       child: RichText(
+        textAlign: textAlign,
         text: TextSpan(
           text: label,
-          style: styleGeorgiaRegular(
-            fontSize: 13,
+          style: styleGeorgiaBold(
+            fontSize: fontSize,
             color: ThemeColors.greyText,
-            height: 1.7,
+            // height: 1.7,
           ),
           children: [
             TextSpan(
               text: value,
-              style: styleGeorgiaRegular(
-                fontSize: 13,
-                height: 1.7,
-                color: color,
+              style: styleGeorgiaBold(
+                fontSize: fontSize,
+                // height: 1.7,
+                color: color ?? Colors.white,
               ),
             )
           ],
