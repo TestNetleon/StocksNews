@@ -207,6 +207,7 @@ import 'package:stocks_news_new/tradingSimulator/modals/trading_search_res.dart'
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/tradingSimulator/providers/trade_provider.dart';
+import 'package:stocks_news_new/tradingSimulator/screens/ConditionalOrder/ConditionalTrades.dart';
 import 'package:stocks_news_new/tradingSimulator/screens/tradeBuySell/index.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/utils.dart';
@@ -379,6 +380,31 @@ class TradingSearchProvider extends ChangeNotifier {
             builder: (context) => TradeBuySellIndex(
               selectedStock: StockType.short,
               qty: 0,
+            ),
+          ),
+        );
+      }
+      return ApiResponse(status: response.status);
+    } catch (e) {
+      Utils().showLog('stock holding: $e');
+      return ApiResponse(status: false);
+    }
+  }
+
+  Future bucketRedirection(String symbol) async {
+    try {
+      TradeProviderNew provider =
+      navigatorKey.currentContext!.read<TradeProviderNew>();
+      ApiResponse response = await provider.getDetailTopData(
+        symbol: symbol,
+        showProgress: true,
+      );
+      if (response.status) {
+        Navigator.pushReplacement(
+          navigatorKey.currentContext!,
+          MaterialPageRoute(
+            builder: (context) => ConditionalTradesIndex(
+              conditionalType: ConditionType.bracketOrder,
             ),
           ),
         );

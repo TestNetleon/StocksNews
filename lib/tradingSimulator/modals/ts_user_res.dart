@@ -52,12 +52,14 @@ class TsUserRes {
   num? totalReturn;
   num? todayReturn;
   // num? staticTotalReturn;
+  final UserConditionalOrderPermissionRes? userConditionalOrderPermission;
   TsUserRes({
     required this.tradeBalance,
     this.investedAmount,
     this.marketValue,
     this.totalReturn,
     this.todayReturn,
+    this.userConditionalOrderPermission,
     // this.staticTotalReturn,s
   });
 
@@ -67,7 +69,8 @@ class TsUserRes {
         marketValue: json['market_value'],
         totalReturn: json['total_return'],
         todayReturn: json['today_return'],
-      );
+    userConditionalOrderPermission: json["user_conditional_order_permission"] == null ? null : UserConditionalOrderPermissionRes.fromMap(json["user_conditional_order_permission"])
+  );
 
   Map<String, dynamic> toJson() => {
         "trade_balance": tradeBalance,
@@ -75,5 +78,41 @@ class TsUserRes {
         "market_value": marketValue,
         'total_return': totalReturn,
         'today_return': todayReturn,
+    "user_conditional_order_permission": userConditionalOrderPermission?.toMap(),
       };
+}
+class UserConditionalOrderPermissionRes {
+  final bool? limitOrder;
+  final bool? bracketOrder;
+  final bool? stopOrder;
+  final bool? trailingOrder;
+  final bool? stopLimitOrder;
+  final bool? recurringOrder;
+
+  UserConditionalOrderPermissionRes({
+    this.limitOrder,
+    this.bracketOrder,
+    this.stopOrder,
+    this.trailingOrder,
+    this.stopLimitOrder,
+    this.recurringOrder,
+  });
+
+  factory UserConditionalOrderPermissionRes.fromMap(Map<String, dynamic> json) => UserConditionalOrderPermissionRes(
+    limitOrder: json["LIMIT_ORDER"],
+    bracketOrder: json["BRACKET_ORDER"],
+    stopOrder: json["STOP_ORDER"],
+    trailingOrder: json["TRAILING_ORDER"],
+    stopLimitOrder: json["STOP_LIMIT_ORDER"],
+    recurringOrder: json["RECURRING_ORDER"],
+  );
+
+  Map<String, dynamic> toMap() => {
+    "LIMIT_ORDER": limitOrder,
+    "BRACKET_ORDER": bracketOrder,
+    "STOP_ORDER": stopOrder,
+    "TRAILING_ORDER": trailingOrder,
+    "STOP_LIMIT_ORDER": stopLimitOrder,
+    "RECURRING_ORDER": recurringOrder,
+  };
 }

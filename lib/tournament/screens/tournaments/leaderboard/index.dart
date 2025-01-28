@@ -71,14 +71,12 @@ class _TournamentLeaderboardState extends State<TournamentLeaderboard> {
                       from: 2,
                     );
                   }
-                  else{
+                  else if((data.performance ?? 0) > 0){
                     if (index == 0) {
                       return Column(
                         children: [
                           SizedBox(
-                            // height: 300,
                             width: double.infinity,
-                            // color: ThemeColors.accent,
                             child: Stack(
                               children: [
                                 if((data.performance ?? 0) > 0)
@@ -106,7 +104,6 @@ class _TournamentLeaderboardState extends State<TournamentLeaderboard> {
                                 ?.length ??
                                 0) >
                                 3,
-                            // visible: listData.length > 3,
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -114,32 +111,18 @@ class _TournamentLeaderboardState extends State<TournamentLeaderboard> {
                                   color: ThemeColors.greyBorder,
                                   height: 15,
                                 ),
-                                // Row(
-                                //   mainAxisAlignment:
-                                //       MainAxisAlignment.spaceBetween,
-                                //   children: [
-                                //     Text(
-                                //       "RANKING",
-                                //       style: stylePTSansRegular(
-                                //           color: ThemeColors.greyBorder),
-                                //     ),
-                                //     Text(
-                                //       "POINTS",
-                                //       style: stylePTSansRegular(
-                                //           color: ThemeColors.greyBorder),
-                                //     ),
-                                //   ],
-                                // ),
-                                // const Divider(
-                                //   color: ThemeColors.greyBorder,
-                                //   height: 15,
-                                // ),
                               ],
                             ),
                           )
                         ],
                       );
                     }
+                  }
+                  else{
+                    return TournamentLeaderboardItem(
+                      data: data,
+                      from: 2,
+                    );
                   }
                   if (index == 1 || index == 2) {
                     return const SizedBox();

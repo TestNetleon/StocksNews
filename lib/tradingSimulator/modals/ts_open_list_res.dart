@@ -24,6 +24,10 @@ class TsOpenListRes {
   final bool? executable;
   final num? previousClose;
   final String? tradeType;
+  final num? targetPrice;
+  final num? stopPrice;
+  final String? orderTypeOriginal;
+  final String? orderType;
 
   TsOpenListRes({
     this.tradeType,
@@ -42,6 +46,10 @@ class TsOpenListRes {
     this.changesPercentage,
     this.company,
     this.avgPrice,
+    this.targetPrice,
+    this.stopPrice,
+    this.orderTypeOriginal,
+    this.orderType,
   });
 
   factory TsOpenListRes.fromJson(Map<String, dynamic> json) => TsOpenListRes(
@@ -63,6 +71,10 @@ class TsOpenListRes {
         change: json["change"],
         changesPercentage: json["changesPercentage"],
         company: json["company"],
+    targetPrice: json["target_price"],
+    stopPrice: json["stop_price"],
+    orderTypeOriginal: json["order_type_original"],
+    orderType: json["order_type"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -79,6 +91,10 @@ class TsOpenListRes {
         "changesPercentage": changesPercentage,
         "company": company,
         "average_price": avgPrice,
+        "target_price": targetPrice,
+        "stop_price": stopPrice,
+        "order_type_original": orderTypeOriginal,
+        "order_type": orderType,
       };
 }
 

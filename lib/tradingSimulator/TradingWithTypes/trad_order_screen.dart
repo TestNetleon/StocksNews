@@ -335,6 +335,7 @@ import 'package:stocks_news_new/tradingSimulator/manager/sse.dart';
 import 'package:stocks_news_new/tradingSimulator/modals/trading_search_res.dart';
 import 'package:stocks_news_new/tradingSimulator/providers/trade_provider.dart';
 import 'package:stocks_news_new/tradingSimulator/providers/trading_search_provider.dart';
+import 'package:stocks_news_new/tradingSimulator/providers/ts_portfollo_provider.dart';
 import 'package:stocks_news_new/tradingSimulator/screens/searchTradingTicker/index.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
@@ -417,6 +418,7 @@ class _TradOrderScreenState extends State<TradOrderScreen> {
   @override
   Widget build(BuildContext context) {
     TradeProviderNew provider = context.watch<TradeProviderNew>();
+    TsPortfolioProvider tsProvider = context.watch<TsPortfolioProvider>();
     StockDataManagerRes? stock = provider.tappedStock;
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
@@ -564,7 +566,36 @@ class _TradOrderScreenState extends State<TradOrderScreen> {
               }
             },
           ),
-          SpacerVertical(height: 20),
+          SpacerVertical(height: 10),
+          Visibility(
+            visible: tsProvider.userData?.userConditionalOrderPermission?.bracketOrder==true,
+            child: Text(
+              "Conditional orders",
+              style: stylePTSansBold(
+                fontSize: 18,
+                color: ThemeColors.blackShade,
+              ),
+            ),
+          ),
+          Visibility(
+            visible: tsProvider.userData?.userConditionalOrderPermission?.bracketOrder==true,
+            child: BuyOrderItem(
+                title: "Bracket Order",
+                subtitle: "Bracket ${widget.symbol} at a maximum price or lower.",
+                onTap: () {
+                  if (widget.symbol != null) {
+                    navigatorKey.currentContext!
+                        .read<TradingSearchProvider>()
+                        .bucketRedirection(widget.symbol ?? "");
+                  } else {
+                    Navigator.push(
+                      context,
+                      createRoute(
+                          SearchTradingTicker()),
+                    );
+                  }
+                }),
+          ),
         ],
       ),
     );
