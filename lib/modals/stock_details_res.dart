@@ -101,7 +101,9 @@ class CompanyInfo {
   final String? isin;
   final String? description;
   final String? image;
+  final bool? isActivelyTrading;
   String? redditRssId, twitterRssId;
+
 
   CompanyInfo({
     this.companyName,
@@ -116,6 +118,7 @@ class CompanyInfo {
     this.description,
     this.twitterRssId,
     this.image,
+    this.isActivelyTrading,
     this.industrySlug,
     this.redditRssId,
     this.sectorSlug,
@@ -136,7 +139,9 @@ class CompanyInfo {
       sectorSlug: json["sector_slug"],
       redditRssId: json["reddit_rss_id"],
       twitterRssId: json["twitter_rss_id"],
-      industrySlug: json["industry_slug"]);
+      industrySlug: json["industry_slug"],
+    isActivelyTrading: json["isActivelyTrading"],
+  );
 
   Map<String, dynamic> toJson() => {
         "companyName": companyName,
@@ -154,6 +159,7 @@ class CompanyInfo {
         "twitter_rss_id": twitterRssId,
         "sector_slug": sectorSlug,
         "industry_slug": industrySlug,
+        "isActivelyTrading": isActivelyTrading,
       };
 }
 

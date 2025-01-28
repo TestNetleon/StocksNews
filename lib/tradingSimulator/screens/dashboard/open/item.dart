@@ -246,6 +246,99 @@ class TsOpenListItem extends StatelessWidget {
                     ),
                   ],
                 ),
+                const Divider(color: ThemeColors.greyBorder, height: 10),
+                const SpacerVertical(height: 5),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Visibility(
+                      visible: item?.targetPrice != null,
+                      child: Expanded(
+                        child: Container(
+                          alignment: Alignment.centerLeft,
+                          padding: const EdgeInsets.only(right: 40),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Target Price",
+                                style: stylePTSansRegular(
+                                  color: ThemeColors.greyText,
+                                  fontSize: 12,
+                                ),
+                              ),
+                              const SpacerVertical(height: 3),
+                              Text(
+                                textAlign: TextAlign.start,
+                                item?.targetPrice?.toFormattedPrice()??"",
+                                style: stylePTSansBold(
+                                    color: ThemeColors.white, fontSize: 12),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                    Visibility(
+                      visible: item?.stopPrice != null,
+                      child: Expanded(
+                        child: Container(
+                          alignment: Alignment.centerRight,
+                          padding: const EdgeInsets.only(right: 40),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text(
+                                "Stop Price",
+                                style: stylePTSansRegular(
+                                  color: ThemeColors.greyText,
+                                  fontSize: 12,
+                                ),
+                              ),
+                              const SpacerVertical(height: 3),
+                              Text(
+                                textAlign: TextAlign.center,
+                                "${item?.stopPrice??""}",
+                                style: stylePTSansBold(
+                                    color: ThemeColors.white, fontSize: 12),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                    Visibility(
+                      visible: item?.orderTypeOriginal != null,
+                      child: Expanded(
+                        child: Align(
+                          alignment: Alignment.centerRight,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              Text(
+                                textAlign: TextAlign.center,
+                                "Order Type",
+                                style: stylePTSansRegular(
+                                  color: ThemeColors.greyText,
+                                  fontSize: 12,
+                                ),
+                              ),
+                              const SpacerVertical(height: 3),
+                              Text(
+                                textAlign: TextAlign.end,
+                                item?.orderType??"",
+                                style: stylePTSansRegular(
+                                  color: ThemeColors.greyText,
+                                  fontSize: 12,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ],
             ),
           ),

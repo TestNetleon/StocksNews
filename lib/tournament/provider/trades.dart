@@ -23,6 +23,7 @@ import '../models/all_trades.dart';
 import '../models/ticker_detail.dart';
 
 enum StockType { buy, sell, hold,short,btc}
+enum ConditionType {bracketOrder}
 
 class TournamentTradesProvider extends ChangeNotifier {
 //MARK: All Trades

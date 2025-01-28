@@ -22,7 +22,7 @@ class _CustomDateSelectorState extends State<CustomDateSelector> {
   late List<DateTime> fullDates;
   late List<DateTime> visibleDates;
   late DateTime selectedDate;
-
+  bool gameValue= false;
   @override
   void initState() {
     super.initState();
@@ -39,6 +39,12 @@ class _CustomDateSelectorState extends State<CustomDateSelector> {
       currentDate.difference(startDate).inDays + 1,
           (index) => startDate.add(Duration(days: index)),
     );
+   /* if (!gameValue) {
+      fullDates.removeWhere((date) =>
+      date.year == currentDate.year &&
+          date.month == currentDate.month &&
+          date.day == currentDate.day);
+    }*/
     int selectedIndex = fullDates.indexWhere((date) =>
     date.year == selectedDate.year &&
         date.month == selectedDate.month &&

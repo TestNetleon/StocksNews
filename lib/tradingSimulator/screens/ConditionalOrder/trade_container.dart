@@ -5,12 +5,18 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
+import 'package:stocks_news_new/screens/contactUs/contact_us_item.dart';
 import 'package:stocks_news_new/tournament/provider/trades.dart';
+import 'package:stocks_news_new/tradingSimulator/manager/sse.dart';
+import 'package:stocks_news_new/tradingSimulator/modals/ts_topbar.dart';
+import 'package:stocks_news_new/tradingSimulator/providers/trade_provider.dart';
 import 'package:stocks_news_new/tradingSimulator/providers/ts_open_list_provider.dart';
 import 'package:stocks_news_new/tradingSimulator/providers/ts_pending_list_provider.dart';
 import 'package:stocks_news_new/tradingSimulator/providers/ts_portfollo_provider.dart';
+import 'package:stocks_news_new/tradingSimulator/screens/ConditionalOrder/show_conditional_sheet.dart';
+import 'package:stocks_news_new/tradingSimulator/screens/ConditionalOrder/widgert/trade_custome_sliding.dart';
 import 'package:stocks_news_new/tradingSimulator/screens/dashboard/index.dart';
-import 'package:stocks_news_new/tradingSimulator/screens/trade/sheet.dart';
+import 'package:stocks_news_new/tradingSimulator/screens/detailTop/top.dart';
 import 'package:stocks_news_new/tradingSimulator/screens/tradeBuySell/text_field.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
@@ -19,44 +25,44 @@ import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/theme_button.dart';
-import '../../manager/sse.dart';
-import '../../modals/ts_topbar.dart';
-import '../../providers/trade_provider.dart';
-import '../detailTop/top.dart';
+import 'package:stocks_news_new/widgets/theme_input_field.dart';
 
-class BuySellContainer extends StatefulWidget {
-  final StockType? selectedStock;
+
+class ConditionalContainer extends StatefulWidget {
   final num? qty;
   final num? editTradeID;
+  final ConditionType? conditionalType;
 
-  const BuySellContainer({
+  const ConditionalContainer({
     super.key,
-    this.selectedStock,
+    this.conditionalType,
     this.qty,
     this.editTradeID,
   });
 
   @override
-  State<BuySellContainer> createState() => _BuySellContainerState();
+  State<ConditionalContainer> createState() => _ConditionalContainerState();
 }
 
-class _BuySellContainerState extends State<BuySellContainer> {
+class _ConditionalContainerState extends State<ConditionalContainer> {
   TextEditingController controller = TextEditingController();
-  TextEditingController limitController = TextEditingController();
-  TextEditingController targetController = TextEditingController();
-  TextEditingController stopLossController = TextEditingController();
+  TextEditingController targetPriceController = TextEditingController();
+  TextEditingController stopPriceController = TextEditingController();
 
   TypeTrade _selectedSegment = TypeTrade.shares;
+  StockType _selectedTock = StockType.buy;
+
   FocusNode focusNode = FocusNode();
   String _currentText = "0";
   String _lastEntered = "";
   String _previousText = "";
   int _keyCounter = 0;
   num _availableBalance = 0;
-  // bool _limitOrder = false;
-  // bool _bracketOrder = false;
-
-  // String text = "";
+  int selectedIndex = 0;
+  List<String> menus = [
+    'Buy',
+    'Short',
+  ];
   @override
   void initState() {
     super.initState();
@@ -70,9 +76,8 @@ class _BuySellContainerState extends State<BuySellContainer> {
   @override
   void dispose() {
     controller.dispose();
-    limitController.dispose();
-    targetController.dispose();
-    stopLossController.dispose();
+    targetPriceController.dispose();
+    stopPriceController.dispose();
     SSEManager.instance.disconnectScreen(SimulatorEnum.detail);
     super.dispose();
   }
@@ -138,11 +143,9 @@ class _BuySellContainerState extends State<BuySellContainer> {
 
           symbol: detailRes?.symbol,
           invested: invested,
-          selectedStock: widget.selectedStock,
+          //selectedStock: widget.selectedStock,
           date: response.data['result']['created_date'],
         );
-        // Navigator.pop(context);
-        // Navigator.pop(context);
         Navigator.popUntil(
             navigatorKey.currentContext!, (route) => route.isFirst);
         Navigator.push(
@@ -152,10 +155,7 @@ class _BuySellContainerState extends State<BuySellContainer> {
           ),
         );
         _clear();
-        // widget.buy
-        //     ? tradeProviderNew.addOrderData(order)
-        //     : tradeProviderNew.sellOrderData(order);
-        await showTsOrderSuccessSheet(order, widget.selectedStock);
+       // await showTsOrderSuccessSheet(order, widget.selectedStock);
       } else {
         popUpAlert(
           message: "${response.message}",
@@ -176,7 +176,24 @@ class _BuySellContainerState extends State<BuySellContainer> {
       return;
     }
 
-    if (widget.selectedStock == StockType.buy) {
+    if (targetPriceController.text.isEmpty || num.parse(targetPriceController.text) == 0.0) {
+      popUpAlert(
+        message: "Target price can't be empty",
+        title: "Alert",
+        icon: Images.alertPopGIF,
+      );
+      return;
+    }
+    if (stopPriceController.text.isEmpty || num.parse(stopPriceController.text) == 0.0) {
+      popUpAlert(
+        message: "Stop price can't be empty",
+        title: "Alert",
+        icon: Images.alertPopGIF,
+      );
+      return;
+    }
+
+    if (_selectedTock==StockType.buy) {
       if (invested > (portfolioProvider.userData?.tradeBalance ?? 0)) {
         popUpAlert(
           message: "Insufficient available balance to place this order.",
@@ -186,35 +203,16 @@ class _BuySellContainerState extends State<BuySellContainer> {
         return;
       } else {
         final Map<String, dynamic> request = {
-          "token":
-              navigatorKey.currentContext!.read<UserProvider>().user?.token ??
-                  "",
+          "token": navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
           "action": "BUY",
           "symbol": detailRes?.symbol,
-          "quantity": controller.text, //entered value
-          "order_type": 'MARKET_ORDER',
-          "duration": "GOOD_UNTIL_CANCELLED"
-          // "current_price": provider.tabRes?.keyStats?.price
-          //         ?.replaceAll(RegExp(r'[^\d.]'), '') ??
-          //     "",
-          // "type": _selectedSegment == TypeTrade.shares
-          //     ? "1"
-          //     : "2", // 1 = share , 2 = amount
-          // "image": provider.tabRes?.companyInfo?.image, //entered value
+          "quantity": controller.text,
+          "order_type": 'BRACKET_ORDER',
+          "duration": "GOOD_UNTIL_CANCELLED",
+          "target_price":targetPriceController.text,
+          "stop_price": stopPriceController.text
+
         };
-
-        // Conditionally add optional parameters if they have values
-        // if (limitController.text.isNotEmpty) {
-        //   request["limit_order"] = limitController.text;
-        // }
-
-        // if (targetController.text.isNotEmpty) {
-        //   request["target_price"] = targetController.text;
-        // }
-
-        // if (stopLossController.text.isNotEmpty) {
-        //   request["stop_loss"] = stopLossController.text;
-        // }
 
         ApiResponse response =
             await provider.requestBuyShare(request, showProgress: true);
@@ -222,9 +220,7 @@ class _BuySellContainerState extends State<BuySellContainer> {
         if (response.status) {
           context.read<TsPortfolioProvider>().getDashboardData();
           context.read<TsOpenListProvider>().getData();
-          // Navigator.pop(context);
           num? numPrice = response.data['result']['executed_at'];
-
           final order = SummaryOrderNew(
             isShare: _selectedSegment == TypeTrade.shares,
             change: '${detailRes?.change?.toFormattedPrice()}',
@@ -241,11 +237,9 @@ class _BuySellContainerState extends State<BuySellContainer> {
             currentPrice: numPrice,
             symbol: detailRes?.symbol,
             invested: invested,
-            selectedStock: widget.selectedStock,
             date: response.data['result']['created_date'],
           );
-          // Navigator.pop(context);
-          // Navigator.pop(context);
+         // await Future.delayed(Duration(seconds: 1));
           Navigator.popUntil(
               navigatorKey.currentContext!, (route) => route.isFirst);
           Navigator.push(
@@ -255,10 +249,9 @@ class _BuySellContainerState extends State<BuySellContainer> {
             ),
           );
           _clear();
-          // widget.buy
-          //     ? tradeProviderNew.addOrderData(order)
-          //     : tradeProviderNew.sellOrderData(order);
-          await showTsOrderSuccessSheet(order, widget.selectedStock);
+
+          await showCOrderSuccessSheet(order, widget.conditionalType);
+
         } else {
           popUpAlert(
             message: "${response.message}",
@@ -267,26 +260,22 @@ class _BuySellContainerState extends State<BuySellContainer> {
           );
         }
       }
-    } else {
+    }
+    else {
       FormData request = FormData.fromMap({
         "token":
             navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
-        "action": widget.selectedStock == StockType.sell
-            ? "SELL"
-            : widget.selectedStock == StockType.short
-                ? "SHORT"
+        "action": _selectedTock==StockType.short
+            ? "SHORT"
+            : _selectedTock==StockType.sell
+                ? "SELL"
                 : "BUY_TO_COVER",
         "symbol": detailRes?.symbol,
-        "order_type": 'MARKET_ORDER',
+        "order_type":  widget.conditionalType == ConditionType.bracketOrder?'BRACKET_ORDER':"",
         "duration": "GOOD_UNTIL_CANCELLED",
-        // "current_price": provider.tabRes?.keyStats?.price
-        //         ?.replaceAll(RegExp(r'[^\d.]'), '') ??
-        //     "",
-        // "type": _selectedSegment == TypeTrade.shares
-        //     ? "1"
-        //     : "2", // 1 = share , 2 = amount
-        "quantity": controller.text, //entered value
-        // "image": provider.tabRes?.companyInfo?.image, //entered value
+        "quantity": controller.text,
+        "target_price":targetPriceController.text,
+        "stop_price": stopPriceController.text
       });
 
       ApiResponse response =
@@ -296,7 +285,6 @@ class _BuySellContainerState extends State<BuySellContainer> {
       if (response.status) {
         num? numPrice = response.data['result']['executed_at'];
 
-        // context.read<HomeProvider>().getHomeSlider();
         context.read<TsOpenListProvider>().getData();
         final order = SummaryOrderNew(
           isShare: _selectedSegment == TypeTrade.shares,
@@ -314,27 +302,22 @@ class _BuySellContainerState extends State<BuySellContainer> {
           currentPrice: numPrice,
           symbol: detailRes?.symbol,
           invested: invested,
-          selectedStock: widget.selectedStock,
+         // selectedStock: widget.selectedStock,
           date: response.data['result']['created_date'],
         );
 
         _clear();
-
-        Navigator.pop(context);
-        Navigator.pop(context);
+       // await Future.delayed(Duration(seconds: 1));
+        Navigator.popUntil(
+            navigatorKey.currentContext!, (route) => route.isFirst);
         Navigator.push(
           context,
           MaterialPageRoute(
             builder: (_) => TsDashboard(initialIndex: isPending ? 1 : 0),
           ),
         );
-
-        // widget.buy
-        //     ? tradeProviderNew.addOrderData(order)
-        //     : tradeProviderNew.sellOrderData(order);
-        await showTsOrderSuccessSheet(order, widget.selectedStock);
+        await showCOrderSuccessSheet(order, widget.conditionalType);
       } else {
-        // TODO:
         popUpAlert(message: "${response.message}", title: "Alert");
       }
     }
@@ -358,7 +341,6 @@ class _BuySellContainerState extends State<BuySellContainer> {
       });
     }
   }
-
   _onChange(String text) {
     try {
       Utils().showLog("TEXT=>$text");
@@ -403,7 +385,6 @@ class _BuySellContainerState extends State<BuySellContainer> {
     num invested = _selectedSegment == TypeTrade.shares
         ? (detailRes?.currentPrice ?? 0) * parsedCurrentText
         : parsedCurrentText;
-    print(widget.selectedStock);
     return Container(
       padding: const EdgeInsets.all(10),
       decoration: const BoxDecoration(
@@ -449,63 +430,20 @@ class _BuySellContainerState extends State<BuySellContainer> {
             ],
           ),
           const SpacerVertical(),
-          Visibility(
-            visible: widget.selectedStock != StockType.short,
-            child: ThemeButton(
-              disabledBackgroundColor: ThemeColors.greyBorder,
-              text: widget.selectedStock == StockType.buy
-                  ? widget.editTradeID != null
-                      ? 'Update Buy Order'
-                      : "Proceed Buy Order"
-                  : widget.selectedStock == StockType.sell
-                      ? widget.editTradeID != null
-                          ? 'Update Sell Order'
-                          : "Proceed Sell Order"
-                      : widget.editTradeID != null
-                          ? 'Update Buy to Cover Order'
-                          : "Proceed Buy to Cover Order",
-              color: widget.selectedStock == StockType.buy
-                  ? (invested > _availableBalance || invested == 0)
-                      ? ThemeColors.greyText
-                      : ThemeColors.accent
-                  : (controller.text.isEmpty ||
-                          num.parse(controller.text) > (widget.qty ?? 0) ||
-                          invested == 0)
-                      ? ThemeColors.greyText
-                      : ThemeColors.sos,
-              onPressed: (widget.selectedStock == StockType.buy
-                      ? (invested > _availableBalance || invested == 0)
-                      : (controller.text.isEmpty ||
-                          num.parse(controller.text) > (widget.qty ?? 0))
-              )
-                  ? null
-                  : _onTap,
-            ),
+          ThemeButton(
+            disabledBackgroundColor: ThemeColors.greyBorder,
+            text:widget.editTradeID != null
+                ? 'Update Bracket Order'
+                : "Proceed Bracket Order",
+            color: (invested > _availableBalance || invested == 0)
+                ? ThemeColors.greyText
+                : ThemeColors.accent,
+            onPressed:
+            (invested > _availableBalance || invested == 0)?null:
+            _onTap,
           ),
           Visibility(
-            visible: widget.selectedStock == StockType.short,
-            child: ThemeButton(
-              disabledBackgroundColor: ThemeColors.greyBorder,
-              text: widget.editTradeID != null
-                  ? 'Update Short Order'
-                  : "Proceed Short Order",
-              color: (invested > _availableBalance || invested == 0)
-                  ? ThemeColors.greyText
-                  : (controller.text.isEmpty)
-                      ? ThemeColors.greyText
-                      : ThemeColors.sos,
-              onPressed: (invested > _availableBalance || invested == 0)
-                  ? null
-                  : (controller.text.isEmpty)
-                      ? null
-                      : _onTap,
-            ),
-          ),
-          Visibility(
-            visible: controller.text.isNotEmpty &&
-                (widget.selectedStock == StockType.buy ||
-                    widget.selectedStock == StockType.short) &&
-                (invested > _availableBalance),
+            visible: controller.text.isNotEmpty && (_selectedTock==StockType.buy ||_selectedTock==StockType.short) && (invested > _availableBalance),
             child: Container(
               padding: EdgeInsets.only(top: 10),
               child: RichText(
@@ -520,36 +458,9 @@ class _BuySellContainerState extends State<BuySellContainer> {
                     ),
                     TextSpan(
                         style:
-                            styleGeorgiaRegular(color: const Color(0xFFC7C8CC)),
+                        styleGeorgiaRegular(color: const Color(0xFFC7C8CC)),
                         text:
-                            '. You cannot purchase shares with an order value that exceeds your available balance.')
-                  ],
-                ),
-              ),
-            ),
-          ),
-          Visibility(
-            visible: controller.text.isNotEmpty &&
-                (widget.selectedStock == StockType.sell ||
-                    widget.selectedStock == StockType.btc) &&
-                num.parse(controller.text) > (widget.qty ?? 0),
-            child: Container(
-              padding: EdgeInsets.only(top: 10),
-              child: RichText(
-                text: TextSpan(
-                  text: 'Your current share holding is ',
-                  style: styleGeorgiaRegular(color: const Color(0xFFC7C8CC)),
-                  children: [
-                    TextSpan(
-                      text: '${widget.qty}',
-                      style: styleGeorgiaBold(
-                          color: ThemeColors.white, fontSize: 15),
-                    ),
-                    TextSpan(
-                        style:
-                            styleGeorgiaRegular(color: const Color(0xFFC7C8CC)),
-                        text:
-                            '. You cannot sell more shares than you currently own.')
+                        '. You cannot purchase shares with an order value that exceeds your available balance.')
                   ],
                 ),
               ),
@@ -571,6 +482,19 @@ class _BuySellContainerState extends State<BuySellContainer> {
               child: Column(
                 children: [
                   const TsTopWidget(),
+                  const SpacerVertical(height: 5),
+                  TradeCustomeSliding(
+                    menus: menus,
+                    onValueChanged: (index) {
+                      setState(() {
+                        selectedIndex = index;
+                        _selectedTock=selectedIndex==0?StockType.buy:StockType.short;
+                      });
+
+                    },
+                    selectedIndex: selectedIndex,
+                  ),
+                  const SpacerVertical(height: 5),
                   TextfieldTrade(
                     controller: controller,
                     focusNode: focusNode,
@@ -586,8 +510,7 @@ class _BuySellContainerState extends State<BuySellContainer> {
                     'Enter number of shares',
                     style: styleGeorgiaRegular(color: ThemeColors.greyText),
                   ),
-                  if (widget.qty != null &&
-                      widget.selectedStock != StockType.short)
+                  if (widget.qty != null)
                     Container(
                       margin: EdgeInsets.only(top: 10),
                       child: Text(
@@ -596,6 +519,29 @@ class _BuySellContainerState extends State<BuySellContainer> {
                       ),
                     ),
                   SpacerVertical(),
+                  Align(alignment:Alignment.centerLeft,child: showAsteriskText(text: "Target Price", bold: true,showAsterisk: false)),
+                  const SpacerVertical(height: 5),
+                  ThemeInputField(
+                    cursorColor: Colors.white,
+                    fillColor: ThemeColors.primaryLight,
+                    borderColor: ThemeColors.primaryLight,
+                    controller: targetPriceController,
+                    placeholder: "Target Price",
+                    keyboardType: TextInputType.numberWithOptions(decimal: true),
+                    style: stylePTSansRegular(color: Colors.white),
+                  ),
+                  const SpacerVertical(),
+                  Align(alignment:Alignment.centerLeft,child: showAsteriskText(text: "Stop Price", bold: true,showAsterisk: false)),
+                  const SpacerVertical(height: 5),
+                  ThemeInputField(
+                    cursorColor: Colors.white,
+                    fillColor: ThemeColors.primaryLight,
+                    borderColor: ThemeColors.primaryLight,
+                    controller: stopPriceController,
+                    placeholder: "Stop Price",
+                    keyboardType: TextInputType.numberWithOptions(decimal: true),
+                    style: stylePTSansRegular(color: Colors.white),
+                  ),
                 ],
               ),
             ),

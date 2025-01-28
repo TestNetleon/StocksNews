@@ -21,6 +21,7 @@ simTradeSheet({
         topRight: Radius.circular(10),
       ),
     ),
+    isScrollControlled: true,
     builder: (context) {
       return TradOrderScreen(
         symbol: symbol,
