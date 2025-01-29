@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
@@ -166,7 +167,9 @@ class MarketLosersStream {
       return;
     }
     final url = 'https://dev.stocks.news:$port/topGainersLosers?type=losers';
-
+    if (kDebugMode) {
+      print('Loser $url');
+    }
     final sseClient = SSEClient(url);
     _activeConnections[url] = sseClient;
     Timer(Duration(milliseconds: checkOfflineInterval), () async {
