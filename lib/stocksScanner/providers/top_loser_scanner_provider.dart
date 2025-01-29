@@ -21,7 +21,7 @@ class TopLoserScannerProvider extends ChangeNotifier {
   String? _error;
   String? get error => _error ?? Const.errSomethingWrong;
 
-  List<ScannerRes>? _fullOfflineDataList;
+  // List<ScannerRes>? _fullOfflineDataList;
   List<ScannerRes>? _offlineDataList;
   List<ScannerRes>? get offlineDataList => _offlineDataList;
 
@@ -49,7 +49,7 @@ class TopLoserScannerProvider extends ChangeNotifier {
 
   void startListeningPorts() {
     _offlineDataList = null;
-    _fullOfflineDataList = null;
+    // _fullOfflineDataList = null;
     _dataList = null;
     notifyListeners();
     MarketLosersStream().initializePorts();
@@ -97,10 +97,10 @@ class TopLoserScannerProvider extends ChangeNotifier {
     //   _offlineDataList = data?.toList();
     // } else {
     // if (_fullOfflineDataList == null && data != null) {
-    if (data != null) {
-      _fullOfflineDataList = List.empty(growable: true);
-      _fullOfflineDataList?.addAll(data);
-    }
+    // if (data != null) {
+    //   _fullOfflineDataList = List.empty(growable: true);
+    //   _fullOfflineDataList?.addAll(data);
+    // }
     // List<ScannerRes>? list = List.empty(growable: true);
     // list.addAll(data!);
     updateOfflineDataFilter(data);
@@ -123,8 +123,8 @@ class TopLoserScannerProvider extends ChangeNotifier {
 
     if (_filterParams?.sortBy == 2) {
       data.sort((a, b) {
-        double valueA = a.changesPercentage ?? 0;
-        double valueB = b.changesPercentage ?? 0;
+        num valueA = a.changesPercentage ?? 0;
+        num valueB = b.changesPercentage ?? 0;
         if (_filterParams?.sortByAsc == true) {
           return valueB.compareTo(valueA);
         }
@@ -362,7 +362,8 @@ class TopLoserScannerProvider extends ChangeNotifier {
       // updateData(_fullDataList);
     } else if (_offlineDataList != null) {
       // Utils().showLog("---- ******  ${_fullOfflineDataList?.length}");
-      updateOfflineData(_fullOfflineDataList, applyFilter: true);
+      // updateOfflineData(_fullOfflineDataList, applyFilter: true);
+      updateOfflineData(_offlineDataList, applyFilter: true);
     } else {
       notifyListeners();
     }
@@ -414,7 +415,8 @@ class TopLoserScannerProvider extends ChangeNotifier {
       });
       notifyListeners();
     } else if (_offlineDataList != null) {
-      updateOfflineData(_fullOfflineDataList, applyFilter: true);
+      // updateOfflineData(_fullOfflineDataList, applyFilter: true);
+      updateOfflineData(_offlineDataList, applyFilter: true);
     }
   }
 

@@ -21,7 +21,7 @@ class TopGainerScannerProvider extends ChangeNotifier {
   String? _error;
   String? get error => _error ?? Const.errSomethingWrong;
 
-  List<ScannerRes>? _fullOfflineDataList;
+  // List<ScannerRes>? _fullOfflineDataList;
   List<ScannerRes>? _offlineDataList;
   List<ScannerRes>? get offlineDataList => _offlineDataList;
 
@@ -50,7 +50,7 @@ class TopGainerScannerProvider extends ChangeNotifier {
 
   void startListeningPorts() {
     _offlineDataList = null;
-    _fullOfflineDataList = null;
+    // _fullOfflineDataList = null;
     _dataList = null;
     notifyListeners();
     MarketGainersStream().initializePorts();
@@ -108,10 +108,10 @@ class TopGainerScannerProvider extends ChangeNotifier {
     //   List<ScannerRes>? list = List.empty(growable: true);
     //   list.addAll(data!);
     // }
-    if (data != null) {
-      _fullOfflineDataList = List.empty(growable: true);
-      _fullOfflineDataList?.addAll(data);
-    }
+    // if (data != null) {
+    //   _fullOfflineDataList = List.empty(growable: true);
+    //   _fullOfflineDataList?.addAll(data);
+    // }
     updateOfflineDataFilter(data);
     notifyListeners();
   }
@@ -350,7 +350,8 @@ class TopGainerScannerProvider extends ChangeNotifier {
       updateData(_dataList);
     } else if (_offlineDataList != null) {
       // Utils().showLog("---- ******  ${_fullOfflineDataList?.length}");
-      updateOfflineData(_fullOfflineDataList, applyFilter: true);
+      // updateOfflineData(_fullOfflineDataList, applyFilter: true);
+      updateOfflineData(_offlineDataList, applyFilter: true);
       notifyListeners();
     } else {
       notifyListeners();
@@ -410,7 +411,8 @@ class TopGainerScannerProvider extends ChangeNotifier {
       notifyListeners();
       // updateData(tempList);
     } else if (_offlineDataList != null) {
-      updateOfflineData(_fullOfflineDataList, applyFilter: true);
+      // updateOfflineData(_fullOfflineDataList, applyFilter: true);
+      updateOfflineData(_offlineDataList, applyFilter: true);
     }
   }
 
@@ -613,8 +615,10 @@ class TopGainerScannerProvider extends ChangeNotifier {
         return valueB.compareTo(valueA);
       }
     } else if (sortBy == SortByEnums.netChange.name) {
-      num? valueA = a.ext?.extendedHoursChange;
-      num? valueB = b.ext?.extendedHoursChange;
+      num? valueA = a.change;
+      num? valueB = b.change;
+      // num? valueA = a.ext?.extendedHoursChange;
+      // num? valueB = b.ext?.extendedHoursChange;
       // if (a.extendedHoursType == "PostMarket" ||
       //     a.extendedHoursType == "PreMarket") {
       //   valueA = a.extendedHoursChange ?? 0;
@@ -629,8 +633,10 @@ class TopGainerScannerProvider extends ChangeNotifier {
         return valueB.compareTo(valueA);
       }
     } else if (sortBy == SortByEnums.perChange.name) {
-      num? valueA = a.ext?.extendedHoursPercentChange;
-      num? valueB = b.ext?.extendedHoursPercentChange;
+      // num? valueA = a.ext?.extendedHoursPercentChange;
+      // num? valueB = b.ext?.extendedHoursPercentChange;
+      num? valueA = a.changesPercentage;
+      num? valueB = b.changesPercentage;
       // if (a.extendedHoursType == "PostMarket" ||
       //     a.extendedHoursType == "PreMarket") {
       //   valueA = a.extendedHoursPercentChange ?? 0;

@@ -77,14 +77,12 @@ class _TopLoserScannerHeaderState extends State<TopLoserScannerHeader> {
       // }
 
       int count = 0;
-// Loop through the first 4 items (or until the list length if it's smaller than 4)
       for (int i = 0; i < dataList.length && i < 4; i++) {
         if (!(dataList[i].extendedHoursType == "PostMarket" ||
             dataList[i].extendedHoursType == "PreMarket")) {
           count++;
         }
       }
-// If at least 4 of the first 4 entries have "PreMarket" or "PostMarket", set marketStatus to "Live"
       if (count >= 1) {
         marketStatus = "Live";
       }

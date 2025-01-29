@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:convert';
-import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
@@ -12,124 +11,6 @@ import 'package:stocks_news_new/utils/utils.dart';
 
 import '../manager/client.dart';
 import '../providers/market_scanner_provider.dart';
-
-// class MarketLosersStream {
-//   static final MarketLosersStream instance = MarketLosersStream._internal();
-
-//   MarketLosersStream._internal();
-
-//   factory MarketLosersStream() {
-//     return instance;
-//   }
-
-//   bool subscribed = true;
-//   var isOfflineCalled = false;
-//   var listening = true;
-//   int checkInterval = 12000;
-//   int checkOfflineInterval = 5000;
-//   final Map<String, SSEClient> _activeConnections = {};
-
-//   void initializePorts() async {
-//     listening = true;
-//     isOfflineCalled = false;
-
-//     final provider =
-//         navigatorKey.currentContext!.read<TopLoserScannerProvider>();
-//     final scannerProvider =
-//         navigatorKey.currentContext!.read<MarketScannerProvider>();
-
-//     int? port = scannerProvider.port?.port?.gainerLoserPort?.loser ?? 8021;
-
-//     // Check if we need offline data first
-//     final callOffline =
-//         scannerProvider.port?.port?.checkMarketOpenApi?.checkPostMarket ??
-//             false;
-//     if (callOffline) {
-//       await getOfflineData();
-//       return;
-//     }
-
-//     try {
-//       final url = 'https://dev.stocks.news:$port/topGainersLosers?type=losers';
-//       Utils().showLog('running for.. $url');
-
-//       // Handle offline data check periodically
-//       Timer(Duration(milliseconds: checkOfflineInterval), () async {
-//         if (!isOfflineCalled) {
-//           isOfflineCalled = true;
-//           if (navigatorKey.currentContext!
-//                       .read<TopLoserScannerProvider>()
-//                       .offlineDataList ==
-//                   null &&
-//               listening) {
-//             await getOfflineData();
-//           }
-//         }
-//       });
-
-//       // Connect to SSE stream
-//       final sseClient = SSEClient(url);
-
-//       // Track active SSE connection
-//       _activeConnections[url] = sseClient;
-//       await for (var eventData in sseClient.listen()) {
-//         if (!listening) break;
-
-//         try {
-//           final List<dynamic> decodedResponse = jsonDecode(eventData);
-//           await provider.updateData(marketScannerResFromJson(decodedResponse));
-//           isOfflineCalled = true;
-//         } catch (e) {
-//           Utils().showLog("Error processing event data: $e");
-//         }
-//       }
-//     } catch (e) {
-//       // Handle network failures
-//       if (!isOfflineCalled) {
-//         isOfflineCalled = true;
-//         if (provider.offlineDataList == null) {
-//           await getOfflineData();
-//         }
-//       }
-//     }
-//   }
-
-//   Future<void> getOfflineData() async {
-//     try {
-//       final scannerProvider =
-//           navigatorKey.currentContext!.read<MarketScannerProvider>();
-//       int? port = scannerProvider.port?.port?.otherPortRes?.offline ?? 8080;
-//       final url = Uri.parse('https://dev.stocks.news:$port/topLoser?shortBy=2');
-
-//       Utils().showLog("$url");
-
-//       final response = await http.get(url);
-
-//       if (response.statusCode == 200) {
-//         final List<dynamic> decodedResponse = jsonDecode(response.body);
-//         final provider =
-//             navigatorKey.currentContext!.read<TopLoserScannerProvider>();
-//         provider.updateOfflineData(scannerResFromJson(decodedResponse));
-//       } else {
-//         Utils().showLog('Error fetching data from $url');
-//       }
-//     } catch (err) {
-//       Utils().showLog('Error fetching offline data: $err');
-//     }
-//   }
-
-//   Future<void> stopListeningPorts() async {
-//     listening = false;
-
-//     // Close all active SSE connections
-//     for (final client in _activeConnections.values) {
-//       client.close(); // Close each SSE connection
-//     }
-
-//     _activeConnections.clear(); // Clear the map after closing connections
-//     Utils().showLog("Stopped all SSE connections.");
-//   }
-// }
 
 class MarketLosersStream {
   static final MarketLosersStream instance = MarketLosersStream._internal();
@@ -277,7 +158,7 @@ class MarketLosersStream {
         Utils().showLog('Error fetching data from $url');
       }
     } catch (err) {
-      Utils().showLog('Error fetching offline data: $err');
+      Utils().showLog('Error fetching offline data lose: $err');
     }
   }
 

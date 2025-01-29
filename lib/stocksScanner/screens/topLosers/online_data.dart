@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/stocksScanner/manager/losers_stream.dart';
@@ -7,7 +6,6 @@ import 'package:stocks_news_new/stocksScanner/modals/market_scanner_res.dart';
 import 'package:stocks_news_new/stocksScanner/providers/top_loser_scanner_provider.dart';
 import 'package:stocks_news_new/stocksScanner/screens/topGainers/top_gainer_filter.dart';
 import 'package:stocks_news_new/stocksScanner/screens/topLosers/scanner_header.dart';
-import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import '../../../utils/utils.dart';
 import '../sorting/shorting.dart';
