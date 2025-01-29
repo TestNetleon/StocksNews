@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/tournament/provider/trades.dart';
+import 'package:stocks_news_new/tournament/screens/tournaments/dayTraining/open/index.dart';
 import 'package:stocks_news_new/tradingSimulator/manager/sse.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/custom/refresh_indicator.dart';
+import 'package:stocks_news_new/widgets/screen_title.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import '../../../utils/colors.dart';
 import '../../../utils/theme.dart';
@@ -109,12 +111,7 @@ class _TournamentAllTradeIndexState extends State<TournamentAllTradeIndex> {
               ),
             ),
           ),
-          /*  Visibility(
-            visible: provider.myTrades?.data!= null,
-            child: ScreenTitle(
-              subTitle: provider.selectedOverview?.message??"",
-            ),
-          ),*/
+
           Expanded(
             child: CommonRefreshIndicator(
               onRefresh: () async {
@@ -145,19 +142,39 @@ class _TournamentAllTradeIndexState extends State<TournamentAllTradeIndex> {
               ),
             ),
           ),
-          // Visibility(
-          //   visible: provider.myTrades?.overview?[1].value != 0,
-          //   child: ThemeButton(
-          //     radius: 10,
-          //     text: sumOfAll == null
-          //         ? 'Close All'
-          //         : 'Close All ${sumOfAll.toCurrency()}',
-          //     onPressed: () => _close(cancleAll: true),
-          //     color: ThemeColors.white,
-          //     textColor: Colors.black,
-          //   ),
-          // ),
 
+          Visibility(
+            visible:provider.myTrades?.data?.length==0,
+            child: ThemeButton(
+              color: Colors.white,
+              radius: 10,
+              onPressed: () {
+                Navigator.popUntil(context, (route) => route.isFirst);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => TournamentOpenIndex(),
+                  ),
+                );
+              },
+              textColor: Colors.black,
+              text:'Place New Order',
+            ),
+          ),
+
+
+         /* Visibility(
+            visible:( provider.myTrades?.overview?[1].value == 0||provider.myTrades?.overview?[2].value != 0||provider.myTrades?.overview?[0].value != 0),
+            child: ThemeButton(
+              color: Colors.white,
+              radius: 10,
+              onPressed: () {
+
+              },
+              textColor: Colors.black,
+              text:'Place New Order',
+            ),
+          ),*/
           Visibility(
             visible: provider.myTrades?.overview?[1].value != 0,
             child: ThemeButton(
@@ -195,7 +212,6 @@ class _TournamentAllTradeIndexState extends State<TournamentAllTradeIndex> {
               ),
             ),
           ),
-
           SpacerVertical(height: 10),
         ],
       ),

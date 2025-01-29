@@ -2586,11 +2586,12 @@ class StockDetailProviderNew extends ChangeNotifier {
             screenType: 'stock_analysis', source: _tabRes?.shareUrl ?? '');
 
         try {
-          SSEManager.instance.connectStock(
-            screen: SimulatorEnum.detail,
-            symbol:symbol ?? "",
-          );
 
+          if(_tabRes?.showExtendedHoursData!=false){
+            SSEManager.instance.connectStock(
+              screen: SimulatorEnum.detail,
+              symbol:symbol ?? "",
+            );
             _tabRes?.extendedHoursData?.extendedHoursTime = _formatExtendedHoursTime(_tabRes?.extendedHoursData?.extendedHoursTime);
             SSEManager.instance.addListener(
               symbol ?? "",
@@ -2626,6 +2627,8 @@ class StockDetailProviderNew extends ChangeNotifier {
               },
               SimulatorEnum.detail,
             );
+          }
+
 
         } catch (e) {
           //

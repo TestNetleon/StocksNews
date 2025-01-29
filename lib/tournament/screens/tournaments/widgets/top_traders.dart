@@ -20,50 +20,6 @@ class TopTraders extends StatelessWidget {
             if (data == null) {
               return SizedBox();
             }
-            /* if (index == 0) {
-              return Column(
-                children: [
-                  Divider(
-                    color: ThemeColors.greyBorder,
-                    height: 15,
-                    thickness: 1,
-                  ),
-                  Row(
-                    children: [
-                      SizedBox(
-                        width: constraints.maxWidth * .5,
-                        child: AutoSizeText(
-                          maxLines: 1,
-                          "POSITION",
-                          style: stylePTSansRegular(
-                            fontSize: 12,
-                            color: ThemeColors.greyText,
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                        child: SizedBox(),
-                      ),
-                      AutoSizeText(
-                        maxLines: 1,
-                        "POINTS",
-                        textAlign: TextAlign.end,
-                        style: stylePTSansRegular(
-                          fontSize: 12,
-                          color: ThemeColors.greyText,
-                        ),
-                      ),
-                    ],
-                  ),
-                  Divider(
-                    color: ThemeColors.greyBorder,
-                    height: 15,
-                    thickness: 1,
-                  ),
-                  TournamentLeaderboardItem(data: data,from: 1),
-                ],
-              );
-            }*/
 
             return TournamentLeaderboardItem(data: data, from: 1);
           },

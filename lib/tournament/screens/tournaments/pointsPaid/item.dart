@@ -132,7 +132,7 @@ class PointsPaidItem extends StatelessWidget {
                       visible: data?.performance!=null,
                       child:  Text(
                         "${data?.performance??"0"}%",
-                        style: stylePTSansRegular(fontSize: 12, color: (data?.performance ?? 0) > 0 ? Colors.green : Colors.red,),
+                        style: stylePTSansRegular(fontSize: 12, color: (data?.performance ?? 0) > 0 ? Colors.green :data?.performance==0?ThemeColors.white: Colors.red,),
                       ),
                     ),
                   ],

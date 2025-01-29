@@ -111,7 +111,7 @@ class TournamentTradesProvider extends ChangeNotifier {
       setStatusTrades(Status.loaded);
     } catch (e) {
       _myTrades = null;
-      _errorTrades = null;
+      _errorTrades = Const.errSomethingWrong;
       Utils().showLog('Trades Overview Error: $e');
       setStatusTrades(Status.loaded);
     }

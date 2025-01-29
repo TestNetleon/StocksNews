@@ -95,6 +95,30 @@ class TradeProviderNew extends ChangeNotifier {
     }
   }
 
+  Future<ApiResponse> tsAddConditional(request, {showProgress = false}) async {
+    notifyListeners();
+    try {
+      ApiResponse response = await apiRequest(
+        url: Apis.tsAddConditional,
+        formData: request,
+        showProgress: showProgress,
+      );
+      notifyListeners();
+      return response;
+      // if (response.status) {
+      //   // _dataNew = searchNewResFromJson(jsonEncode(response.data));
+      // } else {
+      //   // _dataNew = null;
+      //   // _errorS = response.message;
+      // }
+    } catch (e) {
+      Utils().showLog(e.toString());
+      notifyListeners();
+      return ApiResponse(status: false, message: Const.errSomethingWrong);
+    }
+  }
+
+
   //MARK: Update Share API
   Future<ApiResponse> requestUpdateShare({
     Map? request,

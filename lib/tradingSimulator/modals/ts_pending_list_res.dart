@@ -23,7 +23,9 @@ class TsPendingListRes {
   final String? date;
   num? change;
   num? changesPercentage;
-
+  final String? orderTypeOriginal;
+  final num? targetPrice;
+  final num? stopPrice;
   TsPendingListRes({
     this.change,
     this.changesPercentage,
@@ -39,6 +41,9 @@ class TsPendingListRes {
     this.tradeStatus,
     this.investedValue,
     this.date,
+    this.orderTypeOriginal,
+    this.targetPrice,
+    this.stopPrice,
   });
 
   factory TsPendingListRes.fromJson(Map<String, dynamic> json) =>
@@ -58,6 +63,9 @@ class TsPendingListRes {
         date: json['updated_at'],
         change: json["change"],
         changesPercentage: json["changesPercentage"],
+        targetPrice: json["target_price"],
+        stopPrice: json["stop_price"],
+        orderTypeOriginal: json["order_type_original"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -76,6 +84,9 @@ class TsPendingListRes {
         "updated_at": date,
         "change": change,
         "changesPercentage": changesPercentage,
+        "target_price": targetPrice,
+        "stop_price": stopPrice,
+        "order_type_original": orderTypeOriginal,
       };
 }
 

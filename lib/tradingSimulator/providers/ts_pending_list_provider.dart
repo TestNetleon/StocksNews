@@ -8,6 +8,7 @@ import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/service/braze/service.dart';
 import 'package:stocks_news_new/tradingSimulator/modals/ts_pending_list_res.dart';
+import 'package:stocks_news_new/tradingSimulator/screens/ConditionalOrder/ConditionalTrades.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/utils/utils.dart';
@@ -208,6 +209,32 @@ class TsPendingListProvider extends ChangeNotifier {
             builder: (context) => TradeBuySellIndex(
               selectedStock: StockType.short,
               qty: 0,
+              editTradeID: data?[index].id,
+            ),
+          ),
+        );
+      }
+      return ApiResponse(status: response.status);
+    } catch (e) {
+      Utils().showLog('stock holding: $e');
+      return ApiResponse(status: false);
+    }
+  }
+
+  Future conditionalRedirection({required int index}) async {
+    try {
+      TradeProviderNew provider =
+      navigatorKey.currentContext!.read<TradeProviderNew>();
+      ApiResponse response = await provider.getDetailTopData(
+        symbol:  _data?[index].symbol ?? '',
+        showProgress: true,
+      );
+      if (response.status) {
+        Navigator.pushReplacement(
+          navigatorKey.currentContext!,
+          MaterialPageRoute(
+            builder: (context) => ConditionalTradesIndex(
+              conditionalType: ConditionType.bracketOrder,
               editTradeID: data?[index].id,
             ),
           ),
