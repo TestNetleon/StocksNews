@@ -64,13 +64,16 @@ class TsUserRes {
   });
 
   factory TsUserRes.fromJson(Map<String, dynamic> json) => TsUserRes(
-        tradeBalance: json["trade_balance"],
-        investedAmount: json['invested_amount'],
-        marketValue: json['market_value'],
-        totalReturn: json['total_return'],
-        todayReturn: json['today_return'],
-    userConditionalOrderPermission: json["user_conditional_order_permission"] == null ? null : UserConditionalOrderPermissionRes.fromMap(json["user_conditional_order_permission"])
-  );
+      tradeBalance: json["trade_balance"],
+      investedAmount: json['invested_amount'],
+      marketValue: json['market_value'],
+      totalReturn: json['total_return'],
+      todayReturn: json['today_return'],
+      userConditionalOrderPermission:
+          json["user_conditional_order_permission"] == null
+              ? null
+              : UserConditionalOrderPermissionRes.fromMap(
+                  json["user_conditional_order_permission"]));
 
   Map<String, dynamic> toJson() => {
         "trade_balance": tradeBalance,
@@ -78,9 +81,11 @@ class TsUserRes {
         "market_value": marketValue,
         'total_return': totalReturn,
         'today_return': todayReturn,
-    "user_conditional_order_permission": userConditionalOrderPermission?.toMap(),
+        "user_conditional_order_permission":
+            userConditionalOrderPermission?.toMap(),
       };
 }
+
 class UserConditionalOrderPermissionRes {
   final bool? limitOrder;
   final bool? bracketOrder;
@@ -98,21 +103,23 @@ class UserConditionalOrderPermissionRes {
     this.recurringOrder,
   });
 
-  factory UserConditionalOrderPermissionRes.fromMap(Map<String, dynamic> json) => UserConditionalOrderPermissionRes(
-    limitOrder: json["LIMIT_ORDER"],
-    bracketOrder: json["BRACKET_ORDER"],
-    stopOrder: json["STOP_ORDER"],
-    trailingOrder: json["TRAILING_ORDER"],
-    stopLimitOrder: json["STOP_LIMIT_ORDER"],
-    recurringOrder: json["RECURRING_ORDER"],
-  );
+  factory UserConditionalOrderPermissionRes.fromMap(
+          Map<String, dynamic> json) =>
+      UserConditionalOrderPermissionRes(
+        limitOrder: json["LIMIT_ORDER"],
+        bracketOrder: json["BRACKET_ORDER"],
+        stopOrder: json["STOP_ORDER"],
+        trailingOrder: json["TRAILING_ORDER"],
+        stopLimitOrder: json["STOP_LIMIT_ORDER"],
+        recurringOrder: json["RECURRING_ORDER"],
+      );
 
   Map<String, dynamic> toMap() => {
-    "LIMIT_ORDER": limitOrder,
-    "BRACKET_ORDER": bracketOrder,
-    "STOP_ORDER": stopOrder,
-    "TRAILING_ORDER": trailingOrder,
-    "STOP_LIMIT_ORDER": stopLimitOrder,
-    "RECURRING_ORDER": recurringOrder,
-  };
+        "LIMIT_ORDER": limitOrder,
+        "BRACKET_ORDER": bracketOrder,
+        "STOP_ORDER": stopOrder,
+        "TRAILING_ORDER": trailingOrder,
+        "STOP_LIMIT_ORDER": stopLimitOrder,
+        "RECURRING_ORDER": recurringOrder,
+      };
 }
