@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:stocks_news_new/stocksScanner/manager/losers_stream.dart';
 import 'package:stocks_news_new/stocksScanner/modals/scanner_res.dart';
 import 'package:stocks_news_new/stocksScanner/providers/top_loser_scanner_provider.dart';
 import 'package:stocks_news_new/stocksScanner/screens/topGainers/scanner_header.dart';
@@ -36,10 +37,11 @@ class _TopLosersOfflineTwoState extends State<TopLosersOfflineTwo> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      // TopLoserScannerProvider provider =
-      //     context.read<TopLoserScannerProvider>();
+      TopLoserScannerProvider provider =
+          context.read<TopLoserScannerProvider>();
       // provider.startListeningPorts();
       // provider.getOfflineData();
+      provider.clearFilter();
     });
   }
 
@@ -93,11 +95,36 @@ class _TopLosersOfflineTwoState extends State<TopLosersOfflineTwo> {
                           showPreMarket: true,
                           sortBy: provider.filterParams?.sortByAsc,
                           header: provider.filterParams?.sortByHeader,
-                          sortByCallBack: (received) {
+                          sortByCallBack: (received) async {
                             Utils().showLog(
                                 '${received.type}, ${received.ascending}');
+
+                            if (received.type == SortByEnums.volume &&
+                                (provider.filterParams == null ||
+                                    provider.filterParams?.sortByHeader ==
+                                        SortByEnums.perChange.name)) {
+                              Utils().showLog("--- By Volume");
+                              provider.applyFilterValuesOnly(
+                                  received.type.name, received.ascending);
+                              await MarketLosersStream.instance
+                                  .getOfflineData();
+                            } else if (received.type == SortByEnums.perChange &&
+                                provider.filterParams?.sortByHeader ==
+                                    SortByEnums.volume.name) {
+                              Utils().showLog("--- By % change");
+                              provider.applyFilterValuesOnly(
+                                  received.type.name, received.ascending);
+                              await MarketLosersStream.instance
+                                  .getOfflineData();
+                            }
+                            // else {
+                            Utils().showLog("--- Sorting");
                             provider.applySorting(
                                 received.type.name, received.ascending);
+                            // }
+
+                            // Timer(const Duration(milliseconds: 300), () {
+                            // });
 
                             // if (received.type == SortByEnums.symbol) {
                             //   provider.applySorting(

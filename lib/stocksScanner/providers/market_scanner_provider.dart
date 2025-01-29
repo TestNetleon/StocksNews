@@ -145,12 +145,12 @@ class MarketScannerProvider extends ChangeNotifier {
 
     data.removeWhere((item) {
       if (item.identifier == _filterParams!.symbolCompany) {
-        Utils().showLog(
-          "***********************************************************${item.identifier}  ${_filterParams!.symbolCompany}",
-        );
-        Utils().showLog(
-          " ===>>>> ******** ${item.sector}  ${_filterParams?.sector} ${item.sector == (_filterParams?.sector ?? "Consumer Cyclical")}",
-        );
+        // Utils().showLog(
+        //   "***********************************************************${item.identifier}  ${_filterParams!.symbolCompany}",
+        // );
+        // Utils().showLog(
+        //   " ===>>>> ******** ${item.sector}  ${_filterParams?.sector} ${item.sector == (_filterParams?.sector ?? "Consumer Cyclical")}",
+        // );
       }
       if (item.sector == (_filterParams?.sector ?? "Consumer Cyclical")) {
         num lastTrade = (item.price ?? 0);
@@ -831,35 +831,35 @@ class MarketScannerProvider extends ChangeNotifier {
         return b.ext?.extendedHoursPrice!.compareTo(a.ext?.extendedHoursPrice!);
       }
     }
-
     if (sortBy == SortByEnums.netChange.name) {
-      if (a.ext?.extendedHoursChange == null &&
-          b.ext?.extendedHoursChange == null) {
-        return 0;
-      }
-      if (a.ext?.extendedHoursChange == null) return -1;
-      if (b.ext?.extendedHoursChange == null) return 1;
+      // dynamic valueA = a.ext?.extendedHoursChange;
+      // dynamic valueB = b.ext?.extendedHoursChange;
+      dynamic valueA = a.change;
+      dynamic valueB = b.change;
+
+      if (valueA == null && valueB == null) return 0;
+      if (valueA == null) return -1;
+      if (valueB == null) return 1;
       if (isAsc) {
-        return a.ext?.extendedHoursChange!
-            .compareTo(b.ext?.extendedHoursChange!);
+        return valueA!.compareTo(valueB!);
       } else {
-        return b.ext?.extendedHoursChange!
-            .compareTo(a.ext?.extendedHoursChange!);
+        return valueB!.compareTo(valueA!);
       }
     }
     if (sortBy == SortByEnums.perChange.name) {
-      if (a.ext?.extendedHoursPercentChange == null &&
-          b.ext?.extendedHoursPercentChange == null) {
-        return 0;
-      }
-      if (a.ext?.extendedHoursPercentChange == null) return -1;
-      if (b.ext?.extendedHoursPercentChange == null) return 1;
+      // dynamic valueA = a.ext?.extendedHoursPercentChange;
+      // dynamic valueB = b.ext?.extendedHoursPercentChange;
+      dynamic valueA = a.changesPercentage;
+      dynamic valueB = b.changesPercentage;
+
+      if (valueA == null && valueB == null) return 0;
+      if (valueA == null) return -1;
+      if (valueB == null) return 1;
+
       if (isAsc) {
-        return a.ext?.extendedHoursPercentChange!
-            .compareTo(b.ext?.extendedHoursPercentChange!);
+        return valueA!.compareTo(valueB!);
       } else {
-        return b.ext?.extendedHoursPercentChange!
-            .compareTo(a.ext?.extendedHoursPercentChange!);
+        return valueB!.compareTo(valueA!);
       }
     }
     if (sortBy == SortByEnums.volume.name) {

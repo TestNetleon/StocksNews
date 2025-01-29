@@ -83,21 +83,30 @@ class TopGainerScannerProvider extends ChangeNotifier {
     // _offlineDataList = data;
     // notifyListeners();
 
-    if (!applyFilter) {
-      if (_fullOfflineDataList == null && data != null) {
-        _fullOfflineDataList = List.empty(growable: true);
-        _fullOfflineDataList?.addAll(data);
-      }
-      _offlineDataList = data?.take(50).toList();
-    } else {
-      if (_fullOfflineDataList == null && data != null) {
-        _fullOfflineDataList = List.empty(growable: true);
-        _fullOfflineDataList?.addAll(data);
-      }
-      List<ScannerRes>? list = List.empty(growable: true);
-      list.addAll(data!);
-      updateOfflineDataFilter(list);
+    // if (!applyFilter) {
+    //   if (_fullOfflineDataList == null && data != null) {
+    //     _fullOfflineDataList = List.empty(growable: true);
+    //     _fullOfflineDataList?.addAll(data);
+    //   }
+    //   // _offlineDataList = data?.take(50).toList();
+    //   // _offlineDataList = data?.toList();
+    //   if (data != null) {
+    //     _offlineDataList = List.empty(growable: true);
+    //     _offlineDataList?.addAll(data);
+    //   }
+    // } else {
+    //   if (_fullOfflineDataList == null && data != null) {
+    //     _fullOfflineDataList = List.empty(growable: true);
+    //     _fullOfflineDataList?.addAll(data);
+    //   }
+    //   List<ScannerRes>? list = List.empty(growable: true);
+    //   list.addAll(data!);
+    // }
+    if (data != null) {
+      _fullOfflineDataList = List.empty(growable: true);
+      _fullOfflineDataList?.addAll(data);
     }
+    updateOfflineDataFilter(data);
     notifyListeners();
   }
 
@@ -105,7 +114,9 @@ class TopGainerScannerProvider extends ChangeNotifier {
     if (data == null) return;
 
     if (_filterParams == null) {
-      _offlineDataList = data.take(50).toList();
+      // _offlineDataList = data.take(50).toList();
+      _offlineDataList = List.empty(growable: true);
+      _offlineDataList?.addAll(data);
       notifyListeners();
       return;
     }
@@ -143,7 +154,9 @@ class TopGainerScannerProvider extends ChangeNotifier {
       });
     }
 
-    _offlineDataList = data.take(50).toList();
+    // _offlineDataList = data.take(50).toList();
+    _offlineDataList = List.empty(growable: true);
+    _offlineDataList?.addAll(data);
     // Notify listeners to update UI
     notifyListeners();
   }
@@ -279,37 +292,46 @@ class TopGainerScannerProvider extends ChangeNotifier {
     });
   }
 
-  void applyFilter(sortBy) {
-    // MarketGainersStream().stopListeningPorts();
-    if (sortBy == _filterParams?.sortBy) {
-      _filterParams = FilterParamsGainerLoser(
-        sortBy: sortBy,
-        sortByAsc: !(_filterParams?.sortByAsc ?? true),
-        sortByHeader: null,
-      );
-    } else {
-      _filterParams = FilterParamsGainerLoser(
-        sortBy: sortBy,
-        sortByAsc: true,
-        sortByHeader: null,
-      );
-    }
-    if (MarketGainersStream().listening) {
-      MarketGainersStream().stopListeningPorts();
-    }
-    if (_dataList != null) {
-      Utils().showLog("----");
-      // updateData(_dataList,);
-      // notifyListeners();
-      updateData(_fullDataList);
-    } else if (_offlineDataList != null) {
-      Utils().showLog("---- ******  ${_fullOfflineDataList?.length}");
-      updateOfflineData(_fullOfflineDataList, applyFilter: true);
-      notifyListeners();
-    } else {
-      notifyListeners();
-    }
+  void applyFilterValuesOnly(String sortBy, bool isAscending) {
+    _filterParams = FilterParamsGainerLoser(
+      sortBy: null,
+      sortByAsc: isAscending,
+      sortByHeader: sortBy,
+    );
+
+    // notifyListeners();
   }
+  // void applyFilter(sortBy) {
+  //   // MarketGainersStream().stopListeningPorts();
+  //   if (sortBy == _filterParams?.sortBy) {
+  //     _filterParams = FilterParamsGainerLoser(
+  //       sortBy: sortBy,
+  //       sortByAsc: !(_filterParams?.sortByAsc ?? true),
+  //       sortByHeader: null,
+  //     );
+  //   } else {
+  //     _filterParams = FilterParamsGainerLoser(
+  //       sortBy: sortBy,
+  //       sortByAsc: true,
+  //       sortByHeader: null,
+  //     );
+  //   }
+  //   if (MarketGainersStream().listening) {
+  //     MarketGainersStream().stopListeningPorts();
+  //   }
+  //   if (_dataList != null) {
+  //     Utils().showLog("----");
+  //     // updateData(_dataList,);
+  //     // notifyListeners();
+  //     updateData(_fullDataList);
+  //   } else if (_offlineDataList != null) {
+  //     Utils().showLog("---- ******  ${_fullOfflineDataList?.length}");
+  //     updateOfflineData(_fullOfflineDataList, applyFilter: true);
+  //     notifyListeners();
+  //   } else {
+  //     notifyListeners();
+  //   }
+  // }
 
   void clearFilter() {
     _filterParams = null;
@@ -317,20 +339,20 @@ class TopGainerScannerProvider extends ChangeNotifier {
   }
 
   void applySorting(String sortBy, bool isAscending) {
-    if (sortBy == _filterParams?.sortByHeader) {
-      _filterParams = FilterParamsGainerLoser(
-        sortByHeader: sortBy,
-        sortBy: null,
-        // sortByAsc: !(_filterParams?.sortByAsc ?? true),
-        sortByAsc: isAscending,
-      );
-    } else {
-      _filterParams = FilterParamsGainerLoser(
-        sortByHeader: sortBy,
-        sortBy: null,
-        sortByAsc: isAscending,
-      );
-    }
+    // if (sortBy == _filterParams?.sortByHeader) {
+    //   _filterParams = FilterParamsGainerLoser(
+    //     sortByHeader: sortBy,
+    //     sortBy: null,
+    //     // sortByAsc: !(_filterParams?.sortByAsc ?? true),
+    //     sortByAsc: isAscending,
+    //   );
+    // } else {
+    _filterParams = FilterParamsGainerLoser(
+      sortByHeader: sortBy,
+      sortBy: null,
+      sortByAsc: isAscending,
+    );
+    // }
 
     if (MarketGainersStream().listening) {
       MarketGainersStream().stopListeningPorts();

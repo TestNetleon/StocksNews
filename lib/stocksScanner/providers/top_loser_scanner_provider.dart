@@ -79,32 +79,38 @@ class TopLoserScannerProvider extends ChangeNotifier {
   }
 
   void updateOfflineData(List<ScannerRes>? data, {applyFilter = false}) {
+    // Utils().showLog("Length %%% => ${data?.length}");
     // _offlineDataList = data;
     // notifyListeners();
 
-    if (!applyFilter) {
-      if (_fullOfflineDataList == null && data != null) {
-        _fullOfflineDataList = List.empty(growable: true);
-        _fullOfflineDataList?.addAll(data);
-      }
-      _offlineDataList = data?.take(50).toList();
-    } else {
-      if (_fullOfflineDataList == null && data != null) {
-        _fullOfflineDataList = List.empty(growable: true);
-        _fullOfflineDataList?.addAll(data);
-      }
-      List<ScannerRes>? list = List.empty(growable: true);
-      list.addAll(data!);
-      updateOfflineDataFilter(list);
+    // if (!applyFilter) {
+    //   if (_fullOfflineDataList == null && data != null) {
+    //     _fullOfflineDataList = List.empty(growable: true);
+    //     _fullOfflineDataList?.addAll(data);
+    //   }
+    //   _offlineDataList = data?.toList();
+    // } else {
+    // if (_fullOfflineDataList == null && data != null) {
+    if (data != null) {
+      _fullOfflineDataList = List.empty(growable: true);
+      _fullOfflineDataList?.addAll(data);
     }
+    // List<ScannerRes>? list = List.empty(growable: true);
+    // list.addAll(data!);
+    updateOfflineDataFilter(data);
+    // }
     notifyListeners();
   }
 
   void updateOfflineDataFilter(List<ScannerRes>? data) {
+    Utils().showLog("Length => ${data?.length}");
     if (data == null) return;
 
     if (_filterParams == null) {
-      _offlineDataList = data.take(50).toList();
+      // _offlineDataList = data.take(50).toList();
+      // _offlineDataList = data.toList();
+      _offlineDataList = List.empty(growable: true);
+      _offlineDataList?.addAll(data);
       notifyListeners();
       return;
     }
@@ -142,7 +148,9 @@ class TopLoserScannerProvider extends ChangeNotifier {
       });
     }
 
-    _offlineDataList = data.take(50).toList();
+    // _offlineDataList = data.take(50).toList();
+    _offlineDataList = List.empty(growable: true);
+    _offlineDataList?.addAll(data);
     // Notify listeners to update UI
     notifyListeners();
   }
@@ -299,36 +307,44 @@ class TopLoserScannerProvider extends ChangeNotifier {
     });
   }
 
-  void applyFilter(sortBy) {
-    if (sortBy == _filterParams?.sortBy) {
-      _filterParams = FilterParamsGainerLoser(
-        sortBy: sortBy,
-        sortByAsc: !(_filterParams?.sortByAsc ?? true),
-        sortByHeader: null,
-      );
-    } else {
-      _filterParams = FilterParamsGainerLoser(
-        sortBy: sortBy,
-        sortByAsc: (_filterParams?.sortByAsc ?? true),
-        sortByHeader: null,
-      );
-    }
-    if (MarketLosersStream().listening) {
-      MarketLosersStream().stopListeningPorts();
-    }
-    if (_dataList != null) {
-      Utils().showLog("----");
-      // updateData(_dataList);
-      updateData(_fullDataList);
-    } else if (_offlineDataList != null) {
-      Utils().showLog("---- ******  ${_fullOfflineDataList?.length}");
-      updateOfflineData(_fullOfflineDataList, applyFilter: true);
-    } else {
-      notifyListeners();
-    }
-
+  void applyFilterValuesOnly(String sortBy, bool isAscending) {
+    _filterParams = FilterParamsGainerLoser(
+      sortBy: null,
+      sortByAsc: isAscending,
+      sortByHeader: sortBy,
+    );
     notifyListeners();
   }
+  // void applyFilter(sortBy) {
+  //   if (sortBy == _filterParams?.sortBy) {
+  //     _filterParams = FilterParamsGainerLoser(
+  //       sortBy: sortBy,
+  //       sortByAsc: !(_filterParams?.sortByAsc ?? true),
+  //       sortByHeader: null,
+  //     );
+  //   } else {
+  //     _filterParams = FilterParamsGainerLoser(
+  //       sortBy: sortBy,
+  //       sortByAsc: (_filterParams?.sortByAsc ?? true),
+  //       sortByHeader: null,
+  //     );
+  //   }
+  //   if (MarketLosersStream().listening) {
+  //     MarketLosersStream().stopListeningPorts();
+  //   }
+  //   if (_dataList != null) {
+  //     Utils().showLog("----");
+  //     // updateData(_dataList);
+  //     updateData(_fullDataList);
+  //   } else if (_offlineDataList != null) {
+  //     Utils().showLog("---- ******  ${_fullOfflineDataList?.length}");
+  //     updateOfflineData(_fullOfflineDataList, applyFilter: true);
+  //   } else {
+  //     notifyListeners();
+  //   }
+
+  //   notifyListeners();
+  // }
 
   void clearFilter() {
     _filterParams = null;
@@ -336,20 +352,20 @@ class TopLoserScannerProvider extends ChangeNotifier {
   }
 
   void applySorting(String sortBy, bool isAscending) {
-    if (sortBy == _filterParams?.sortByHeader) {
-      _filterParams = FilterParamsGainerLoser(
-        sortByHeader: sortBy,
-        sortBy: null,
-        // sortByAsc: !(_filterParams?.sortByAsc ?? true),
-        sortByAsc: isAscending,
-      );
-    } else {
-      _filterParams = FilterParamsGainerLoser(
-        sortByHeader: sortBy,
-        sortBy: null,
-        sortByAsc: isAscending,
-      );
-    }
+    // if (sortBy == _filterParams?.sortByHeader) {
+    //   _filterParams = FilterParamsGainerLoser(
+    //     sortByHeader: sortBy,
+    //     sortBy: null,
+    //     // sortByAsc: !(_filterParams?.sortByAsc ?? true),
+    //     sortByAsc: isAscending,
+    //   );
+    // } else {
+    _filterParams = FilterParamsGainerLoser(
+      sortByHeader: sortBy,
+      sortBy: null,
+      sortByAsc: isAscending,
+    );
+    // }
     if (MarketLosersStream().listening) {
       MarketLosersStream().stopListeningPorts();
     }
@@ -493,6 +509,8 @@ class TopLoserScannerProvider extends ChangeNotifier {
 
   int sortByCompareOffline(
       ScannerRes a, ScannerRes b, String sortBy, bool isAsc) {
+    Utils().showLog("Compare => $sortBy $isAsc");
+
     if (sortBy == SortByEnums.symbol.name) {
       if (a.identifier == null && b.identifier == null) return 0;
       if (a.identifier == null) return -1;
@@ -568,8 +586,10 @@ class TopLoserScannerProvider extends ChangeNotifier {
         return valueB.compareTo(valueA);
       }
     } else if (sortBy == SortByEnums.netChange.name) {
-      num? valueA = a.ext?.extendedHoursChange;
-      num? valueB = b.ext?.extendedHoursChange;
+      // num? valueA = a.ext?.extendedHoursChange;
+      // num? valueB = b.ext?.extendedHoursChange;
+      num? valueA = a.change;
+      num? valueB = b.change;
       // if (a.extendedHoursType == "PostMarket" ||
       //     a.extendedHoursType == "PreMarket") {
       //   valueA = a.extendedHoursChange ?? 0;
@@ -584,8 +604,10 @@ class TopLoserScannerProvider extends ChangeNotifier {
         return valueB.compareTo(valueA);
       }
     } else if (sortBy == SortByEnums.perChange.name) {
-      num? valueA = a.ext?.extendedHoursPercentChange;
-      num? valueB = b.ext?.extendedHoursPercentChange;
+      // num valueA = a.ext?.extendedHoursPercentChange ?? 0;
+      // num valueB = b.ext?.extendedHoursPercentChange ?? 0;
+      num? valueA = a.changesPercentage;
+      num? valueB = b.changesPercentage;
       // if (a.extendedHoursType == "PostMarket" ||
       //     a.extendedHoursType == "PreMarket") {
       //   valueA = a.extendedHoursPercentChange ?? 0;
