@@ -8,10 +8,11 @@ String tsOpenListResToJson(List<TsOpenListRes> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class TsOpenListRes {
+  final int? id;
   final String? symbol;
-  final num? quantity;
+  num? quantity;
   num? currentPrice;
-  final num? invested;
+  num? invested;
   num? currentInvested;
   num? investedChange;
   num? investedChangePercentage;
@@ -19,10 +20,10 @@ class TsOpenListRes {
   num? change;
   num? changesPercentage;
   final String? company;
-  final num? avgPrice;
-  final DateTime? createdAt;
+  num? avgPrice;
+  DateTime? createdAt;
   final bool? executable;
-  final num? previousClose;
+  num? previousClose;
   final String? tradeType;
   final num? targetPrice;
   final num? stopPrice;
@@ -30,6 +31,7 @@ class TsOpenListRes {
   final String? orderType;
 
   TsOpenListRes({
+    this.id,
     this.tradeType,
     this.symbol,
     this.previousClose,
@@ -54,6 +56,7 @@ class TsOpenListRes {
 
   factory TsOpenListRes.fromJson(Map<String, dynamic> json) => TsOpenListRes(
         symbol: json["symbol"],
+        id: json['id'],
         tradeType: json['trade_type'],
         previousClose: json['previous_close'],
         executable: json['is_trade_executable'],
@@ -71,14 +74,15 @@ class TsOpenListRes {
         change: json["change"],
         changesPercentage: json["changesPercentage"],
         company: json["company"],
-    targetPrice: json["target_price"],
-    stopPrice: json["stop_price"],
-    orderTypeOriginal: json["order_type_original"],
-    orderType: json["order_type"],
+        targetPrice: json["target_price"],
+        stopPrice: json["stop_price"],
+        orderTypeOriginal: json["order_type_original"],
+        orderType: json["order_type"],
       );
 
   Map<String, dynamic> toJson() => {
         "symbol": symbol,
+        'id': id,
         'trade_type': tradeType,
         'previous_close': previousClose,
         'is_trade_executable': executable,
@@ -162,3 +166,18 @@ class TsOpenListRes {
 //         // "created_at": createdAt.toIso8601String(),
 //       };
 // }
+
+
+
+    //  symbol: json["symbol"],
+    //     previousClose: json['previous_close'],
+    //     avgPrice: json['average_price'],
+    //     currentPrice: json["currentPrice"],
+    //     currentInvested: json['current_invested'],
+    //     investedChange: json['invested_change'],
+    //     investedChangePercentage: json['invested_change_percentage'],
+    //     change: json["change"],
+    //     changesPercentage: json["changesPercentage"],
+
+
+   

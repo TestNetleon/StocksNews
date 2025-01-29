@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:stocks_news_new/stocksScanner/manager/gainers_stream.dart';
 import 'package:stocks_news_new/stocksScanner/modals/scanner_res.dart';
 import 'package:stocks_news_new/stocksScanner/providers/top_gainer_scanner_provider.dart';
 import 'package:stocks_news_new/stocksScanner/screens/topGainers/scanner_header.dart';
 // import 'package:stocks_news_new/stocksScanner/providers/market_scanner_provider.dart';
 import 'package:stocks_news_new/utils/colors.dart';
+import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 
 import '../../../utils/utils.dart';
@@ -20,27 +22,28 @@ class TopGainerOfflineTwo extends StatefulWidget {
 }
 
 class _TopGainerOfflineTwoState extends State<TopGainerOfflineTwo> {
-  List<String> columnHeader = [
-    // "Time",
-    "Company Name",
-    "Sector",
-    // "Bid",
-    // "Ask",
-    "Last Trade",
-    "Net Change",
-    "% Change",
-    "Volume",
-    "\$ Volume"
-  ];
+  // List<String> columnHeader = [
+  //   // "Time",
+  //   "Company Name",
+  //   "Sector",
+  //   // "Bid",
+  //   // "Ask",
+  //   "Last Trade",
+  //   "Net Change",
+  //   "% Change",
+  //   "Volume",
+  //   "\$ Volume"
+  // ];
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      // TopGainerScannerProvider provider =
-      //     context.read<TopGainerScannerProvider>();
+      TopGainerScannerProvider provider =
+          context.read<TopGainerScannerProvider>();
       // provider.startListeningPorts();
       // provider.getOfflineData();
+      provider.clearFilter();
     });
   }
 
@@ -54,18 +57,18 @@ class _TopGainerOfflineTwoState extends State<TopGainerOfflineTwo> {
     TopGainerScannerProvider provider =
         context.watch<TopGainerScannerProvider>();
     List<ScannerRes>? dataList = provider.offlineDataList;
-    bool? gotPostMarket = dataList?.any(
-      (element) => element.ext?.extendedHoursType == 'PostMarket',
-    );
+    // bool? gotPostMarket = dataList?.any(
+    //   (element) => element.ext?.extendedHoursType == 'PostMarket',
+    // );
     if (dataList == null) {
       return SizedBox();
     }
-    if (gotPostMarket == true) {
-      int lastTradeIndex = columnHeader.indexOf("Last Trade");
-      if (lastTradeIndex != -1 && !columnHeader.contains("Post Market Price")) {
-        columnHeader.insert(lastTradeIndex + 1, "Post Market Price");
-      }
-    }
+    // if (gotPostMarket == true) {
+    //   int lastTradeIndex = columnHeader.indexOf("Last Trade");
+    //   if (lastTradeIndex != -1 && !columnHeader.contains("Post Market Price")) {
+    //     columnHeader.insert(lastTradeIndex + 1, "Post Market Price");
+    //   }
+    // }
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -94,12 +97,32 @@ class _TopGainerOfflineTwoState extends State<TopGainerOfflineTwo> {
                           showPreMarket: true,
                           sortBy: provider.filterParams?.sortByAsc,
                           header: provider.filterParams?.sortByHeader,
-                          sortByCallBack: (received) {
+                          sortByCallBack: (received) async {
                             Utils().showLog(
-                                '${received.type}, ${received.ascending}');
+                                '${received.type}, ${received.ascending} ');
+                            if (received.type == SortByEnums.volume &&
+                                (provider.filterParams == null ||
+                                    provider.filterParams?.sortByHeader ==
+                                        SortByEnums.perChange.name)) {
+                              provider.applyFilterValuesOnly(
+                                  received.type.name, received.ascending);
+                              showGlobalProgressDialog();
+                              await MarketGainersStream.instance
+                                  .getOfflineData();
+                              closeGlobalProgressDialog();
+                            } else if (received.type == SortByEnums.perChange &&
+                                provider.filterParams?.sortByHeader ==
+                                    SortByEnums.volume.name) {
+                              provider.applyFilterValuesOnly(
+                                  received.type.name, received.ascending);
+                              showGlobalProgressDialog();
+                              await MarketGainersStream.instance
+                                  .getOfflineData();
+                              closeGlobalProgressDialog();
+                            }
+
                             provider.applySorting(
                                 received.type.name, received.ascending);
-
                             // if (received.type == SortByEnums.symbol) {
                             //   provider.applySorting(
                             //       'Symbol', received.ascending);
@@ -126,7 +149,6 @@ class _TopGainerOfflineTwoState extends State<TopGainerOfflineTwo> {
                             //   provider.applySorting(
                             //       '\$ Volume', received.ascending);
                             // }
-
                             Navigator.pop(context);
                           },
                         );
