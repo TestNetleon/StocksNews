@@ -22,7 +22,9 @@ class TradingOrderTypeContainer extends StatelessWidget {
         padding: EdgeInsets.symmetric(vertical: 4, horizontal: 10),
         margin: EdgeInsets.symmetric(horizontal: 15),
         decoration: BoxDecoration(
-          color: ThemeColors.sos,
+          color: tradeType == 'Buy to Cover'
+              ? ThemeColors.darkGreen
+              : ThemeColors.sos,
           borderRadius: BorderRadius.only(
             bottomLeft: Radius.circular(8),
             bottomRight: Radius.circular(8),

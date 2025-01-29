@@ -183,7 +183,7 @@ class TsTransactionListItem extends StatelessWidget {
             tradeType: item?.tradeType == 'Short'
                 ? 'Short'
                 : item?.tradeType == 'Buy To Cover'
-                    ? 'Buy To Cover'
+                    ? 'Buy to Cover'
                     : null,
           ),
         ],
