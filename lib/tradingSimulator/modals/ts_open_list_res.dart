@@ -20,10 +20,10 @@ class TsOpenListRes {
   num? change;
   num? changesPercentage;
   final String? company;
-  final num? avgPrice;
-  final DateTime? createdAt;
+  num? avgPrice;
+  DateTime? createdAt;
   final bool? executable;
-  final num? previousClose;
+  num? previousClose;
   final String? tradeType;
   final num? targetPrice;
   final num? stopPrice;
@@ -166,3 +166,18 @@ class TsOpenListRes {
 //         // "created_at": createdAt.toIso8601String(),
 //       };
 // }
+
+
+
+    //  symbol: json["symbol"],
+    //     previousClose: json['previous_close'],
+    //     avgPrice: json['average_price'],
+    //     currentPrice: json["currentPrice"],
+    //     currentInvested: json['current_invested'],
+    //     investedChange: json['invested_change'],
+    //     investedChangePercentage: json['invested_change_percentage'],
+    //     change: json["change"],
+    //     changesPercentage: json["changesPercentage"],
+
+
+   

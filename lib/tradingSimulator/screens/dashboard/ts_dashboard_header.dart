@@ -196,6 +196,7 @@ class _TsDashboardHeaderState extends State<TsDashboardHeader> {
     TsOpenListProvider orderProvider = context.read<TsOpenListProvider>();
     TsPortfolioProvider provider = context.read<TsPortfolioProvider>();
     orderProvider.setStatus(Status.ideal);
+    // orderProvider.clearAll();
     await provider.getDashboardData();
     // orderProvider.getData();
   }
