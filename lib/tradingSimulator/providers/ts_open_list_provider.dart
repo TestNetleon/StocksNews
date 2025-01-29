@@ -1016,7 +1016,6 @@ class TsOpenListProvider extends ChangeNotifier {
       // totalReturn:
       //     (totalMarketValue - (provider.userData?.investedAmount ?? 0)),
       totalReturn: mainReturn,
-
       todayReturn: todaysReturn,
     );
 

@@ -214,6 +214,7 @@ class MarketGainersStream {
         navigatorKey.currentContext!.read<MarketScannerProvider>();
     int? port = scannerProvider.port?.port?.otherPortRes?.offline ?? 8080;
     final url = Uri.parse('https://dev.stocks.news:$port/topGainer?shortBy=2');
+    print('$url');
 
     try {
       final response = await http.get(url);

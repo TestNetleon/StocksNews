@@ -170,7 +170,8 @@ class ScannerBaseItem extends StatelessWidget {
                         ),
                       ),
                       Visibility(
-                        visible: prePost != null && prePost != '',
+                        visible:
+                            prePost != null && prePost != '' && !showPreMarket,
                         child: Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(8),
@@ -206,7 +207,9 @@ class ScannerBaseItem extends StatelessWidget {
                         child: _widget(
                           fontSize: 14,
                           margin: EdgeInsets.only(top: 0),
-                          label: '$prePost: ',
+                          label: prePost != null
+                              ? '$prePost: '
+                              : 'Post Mkt. Price: ',
                           value: '\$$postMarketPrice',
                         ),
                       ),
