@@ -90,7 +90,7 @@ class _ScannerTopGainerState extends State<ScannerTopGainer> {
     return CommonRefreshIndicator(
       onRefresh: () async {
         MarketGainersStream().initializePorts();
-        provider.clearFilter();
+        provider.resetLiveFilter();
       },
       child: SingleChildScrollView(
         child: Consumer<TopGainerScannerProvider>(

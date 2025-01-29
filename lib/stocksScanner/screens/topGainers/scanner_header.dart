@@ -8,7 +8,6 @@ import 'package:stocks_news_new/stocksScanner/modals/scanner_res.dart';
 import 'package:stocks_news_new/stocksScanner/providers/top_gainer_scanner_provider.dart';
 // import 'package:stocks_news_new/stocksScanner/providers/market_scanner_provider.dart';
 import 'package:stocks_news_new/utils/theme.dart';
-import 'package:stocks_news_new/utils/utils.dart';
 import 'package:timezone/timezone.dart' as tz;
 import 'package:timezone/data/latest_all.dart' as tz;
 
@@ -63,15 +62,26 @@ class _TopGainerScannerHeaderState extends State<TopGainerScannerHeader> {
       return SizedBox();
     } else if (dataList != null && dataList.isNotEmpty) {
       marketStatus = dataList[0].extendedHoursType ?? "";
-      Utils().showLog('-------$marketStatus');
+      // Utils().showLog('-------$marketStatus');
       if (marketStatus == 'PreMarket') {
         marketStatus = 'Pre Market';
       } else if (marketStatus == 'PostMarket') {
         marketStatus = 'Post Market';
       }
-
-      if (!(dataList[0].extendedHoursType == "PostMarket" ||
-          dataList[0].extendedHoursType == "PreMarket")) {
+      // if (!(dataList[0].extendedHoursType == "PostMarket" ||
+      //     dataList[0].extendedHoursType == "PreMarket")) {
+      //   marketStatus = "Live";
+      // }
+      int count = 0;
+// Loop through the first 4 items (or until the list length if it's smaller than 4)
+      for (int i = 0; i < dataList.length && i < 4; i++) {
+        if (dataList[i].extendedHoursType == "PostMarket" ||
+            dataList[i].extendedHoursType == "PreMarket") {
+          count++;
+        }
+      }
+// If at least 4 of the first 4 entries have "PreMarket" or "PostMarket", set marketStatus to "Live"
+      if (count >= 4) {
         marketStatus = "Live";
       }
     } else if (offlineData != null) {

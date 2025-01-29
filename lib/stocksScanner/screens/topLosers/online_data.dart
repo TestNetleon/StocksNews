@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
+import 'package:stocks_news_new/stocksScanner/manager/losers_stream.dart';
 import 'package:stocks_news_new/stocksScanner/modals/market_scanner_res.dart';
 import 'package:stocks_news_new/stocksScanner/providers/top_loser_scanner_provider.dart';
+import 'package:stocks_news_new/stocksScanner/screens/topGainers/top_gainer_filter.dart';
 import 'package:stocks_news_new/stocksScanner/screens/topLosers/scanner_header.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -40,6 +42,9 @@ class _TopLosersOnlineState extends State<TopLosersOnline> {
       // MarketScannerProvider provider = context.read<MarketScannerProvider>();
       // provider.startListeningPorts();
       // provider.getOfflineData();
+      TopLoserScannerProvider provider =
+          navigatorKey.currentContext!.read<TopLoserScannerProvider>();
+      provider.resetLiveFilter();
     });
   }
 
@@ -64,6 +69,21 @@ class _TopLosersOnlineState extends State<TopLosersOnline> {
       child: Column(
         children: [
           TopLoserScannerHeader(isOnline: true),
+          ScannerTopGainerFilter(
+            onPercentClick: () {
+              provider.applyFilter(2);
+            },
+            onVolumnClick: () {
+              provider.applyFilter(3);
+            },
+            onRestartClick: () {
+              MarketLosersStream().initializePorts();
+              // provider.clearFilter();
+            },
+            isPercent: provider.filterParams?.sortBy == 2,
+            isVolume: provider.filterParams?.sortBy == 3,
+            orderByAsc: provider.filterParams?.sortByAsc,
+          ),
           Container(
             padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
             alignment: Alignment.centerRight,
@@ -142,27 +162,6 @@ class _TopLosersOnlineState extends State<TopLosersOnline> {
           ),
           ScannerBaseContainer(dataList: dataList),
         ],
-      ),
-    );
-  }
-
-  DataCell _dataCell({required String text, bool change = false, num? value}) {
-    return DataCell(
-      ConstrainedBox(
-        constraints: BoxConstraints(
-          maxWidth: ScreenUtil().screenWidth * .3,
-        ),
-        child: Text(
-          // userPercent ? "$text%" : "$text",
-          text,
-          style: styleGeorgiaBold(
-            fontSize: 12,
-            // color: Colors.white,
-            color: value != null
-                ? (value >= 0 ? ThemeColors.accent : ThemeColors.sos)
-                : Colors.white,
-          ),
-        ),
       ),
     );
   }

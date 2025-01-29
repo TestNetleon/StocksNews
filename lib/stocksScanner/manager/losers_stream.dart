@@ -165,7 +165,14 @@ class MarketLosersStream {
       await getOfflineData();
       return;
     }
-    final url = 'https://dev.stocks.news:$port/topGainersLosers?type=losers';
+
+    // final url = 'https://dev.stocks.news:$port/topGainersLosers?type=losers';
+
+    final url = provider.filterParams?.sortBy == 3
+        ? 'https://dev.stocks.news:$port/topGainersLosers?type=losersVolumeAsc'
+        : 'https://dev.stocks.news:$port/topGainersLosers?type=losers';
+
+    Utils().showLog("LIVE URL => $url");
 
     final sseClient = SSEClient(url);
     _activeConnections[url] = sseClient;
@@ -180,6 +187,17 @@ class MarketLosersStream {
         if (!listening) break;
         isOfflineCalled = true;
         try {
+          // TO STOP MIXING streaming because streaming not closing at all
+          if (provider.filterParams?.sortBy == 2 &&
+              sseClient.url !=
+                  "https://dev.stocks.news:$port/topGainersLosers?type=losers") {
+            return;
+          } else if (provider.filterParams?.sortBy == 3 &&
+              sseClient.url !=
+                  "https://dev.stocks.news:$port/topGainersLosers?type=losersVolumeAsc") {
+            return;
+          }
+          Utils().showLog("--- ${sseClient.url}");
           final List<dynamic> decodedResponse = jsonDecode(eventData);
           await provider.updateData(marketScannerResFromJson(decodedResponse));
         } catch (e) {

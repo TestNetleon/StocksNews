@@ -35,8 +35,8 @@ class _MarketScannerOnlineState extends State<MarketScannerOnline> {
       return SizedBox();
     }
 
-    Utils().showLog('header ${provider.tableHeader.length}');
-    Utils().showLog('data ${dataList.length}');
+    // Utils().showLog('header ${provider.tableHeader.length}');
+    // Utils().showLog('data ${dataList.length}');
 
     return SingleChildScrollView(
       child: Column(

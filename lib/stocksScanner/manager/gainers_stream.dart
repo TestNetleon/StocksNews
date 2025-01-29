@@ -37,13 +37,16 @@ class MarketGainersStream {
     bool? callOffline =
         scannerProvider.port?.port?.checkMarketOpenApi?.checkPostMarket == true;
     Utils().showLog('Call Offline $callOffline');
+
     if (callOffline) {
       await getOfflineData();
       return;
     }
 
     int? port = scannerProvider.port?.port?.gainerLoserPort?.gainer ?? 8021;
-    final url = 'https://dev.stocks.news:$port/topGainersLosers?type=gainers';
+    final url = provider.filterParams?.sortBy == 3
+        ? 'https://dev.stocks.news:$port/topGainersLosers?type=gainersVolumeDesc'
+        : 'https://dev.stocks.news:$port/topGainersLosers?type=gainers';
 
     final sseClient = SSEClient(url);
     _activeConnections[url] = sseClient;
@@ -56,10 +59,24 @@ class MarketGainersStream {
     });
 
     try {
+      Utils().showLog("Updated URL => $url");
+
       await for (var eventData in sseClient.listen()) {
         if (!listening) break;
         isOfflineCalled = true;
         try {
+          // TO STOP MIXING streaming because streaming not closing at all
+          if (provider.filterParams?.sortBy == 2 &&
+              sseClient.url !=
+                  "https://dev.stocks.news:$port/topGainersLosers?type=gainers") {
+            return;
+          } else if (provider.filterParams?.sortBy == 3 &&
+              sseClient.url !=
+                  "https://dev.stocks.news:$port/topGainersLosers?type=gainersVolumeDesc") {
+            return;
+          }
+          Utils().showLog("--- ${sseClient.url}");
+
           final List<dynamic> decodedResponse = jsonDecode(eventData);
           await provider.updateData(marketScannerResFromJson(decodedResponse));
         } catch (e) {
