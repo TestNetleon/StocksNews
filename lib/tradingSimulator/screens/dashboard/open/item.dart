@@ -246,8 +246,15 @@ class TsOpenListItem extends StatelessWidget {
                     ),
                   ],
                 ),
-                const Divider(color: ThemeColors.greyBorder, height: 10),
-                const SpacerVertical(height: 5),
+                Visibility(
+                  visible: item?.orderType != null && item?.orderType != '',
+                  child: Column(
+                    children: [
+                      const Divider(color: ThemeColors.greyBorder, height: 10),
+                      const SpacerVertical(height: 5),
+                    ],
+                  ),
+                ),
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -270,7 +277,7 @@ class TsOpenListItem extends StatelessWidget {
                               const SpacerVertical(height: 3),
                               Text(
                                 textAlign: TextAlign.start,
-                                item?.targetPrice?.toFormattedPrice()??"",
+                                item?.targetPrice?.toFormattedPrice() ?? "",
                                 style: stylePTSansBold(
                                     color: ThemeColors.white, fontSize: 12),
                               ),
@@ -298,7 +305,7 @@ class TsOpenListItem extends StatelessWidget {
                               const SpacerVertical(height: 3),
                               Text(
                                 textAlign: TextAlign.center,
-                                "${item?.stopPrice??""}",
+                                item?.stopPrice?.toFormattedPrice() ?? "",
                                 style: stylePTSansBold(
                                     color: ThemeColors.white, fontSize: 12),
                               ),
@@ -308,7 +315,7 @@ class TsOpenListItem extends StatelessWidget {
                       ),
                     ),
                     Visibility(
-                      visible: item?.orderTypeOriginal != null,
+                      visible: item?.orderType != null && item?.orderType != '',
                       child: Expanded(
                         child: Align(
                           alignment: Alignment.centerRight,
@@ -326,7 +333,7 @@ class TsOpenListItem extends StatelessWidget {
                               const SpacerVertical(height: 3),
                               Text(
                                 textAlign: TextAlign.end,
-                                item?.orderType??"",
+                                item?.orderType ?? "",
                                 style: stylePTSansRegular(
                                   color: ThemeColors.greyText,
                                   fontSize: 12,

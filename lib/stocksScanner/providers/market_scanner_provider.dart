@@ -447,7 +447,7 @@ class MarketScannerProvider extends ChangeNotifier {
             }
           } else {
             if (!(dollarVolumeLive >= _filterParams!.dolorVolumeStart! &&
-                dollarVolumeLive <= _filterParams!.dolorVolumeStart!)) {
+                dollarVolumeLive <= _filterParams!.dolorVolumeEnd!)) {
               shouldRemove = true;
             }
           }
@@ -516,10 +516,8 @@ class MarketScannerProvider extends ChangeNotifier {
               shouldRemove = true;
             }
           } else {
-            if (!(item.extendedHoursPercentChange! >=
-                    _filterParams!.perChangeStart! &&
-                item.extendedHoursPercentChange! <=
-                    _filterParams!.perChangeEnd!)) {
+            if (!(item.percentChange! >= _filterParams!.perChangeStart! &&
+                item.percentChange! <= _filterParams!.perChangeEnd!)) {
               shouldRemove = true;
             }
           }
@@ -530,8 +528,7 @@ class MarketScannerProvider extends ChangeNotifier {
               shouldRemove = true;
             }
           } else {
-            if (!(item.extendedHoursPercentChange! >=
-                _filterParams!.perChangeStart!)) {
+            if (!(item.percentChange! >= _filterParams!.perChangeStart!)) {
               shouldRemove = true;
             }
           }
@@ -542,8 +539,7 @@ class MarketScannerProvider extends ChangeNotifier {
               shouldRemove = true;
             }
           } else {
-            if (!(item.extendedHoursPercentChange! <=
-                _filterParams!.perChangeEnd!)) {
+            if (!(item.percentChange! <= _filterParams!.perChangeEnd!)) {
               shouldRemove = true;
             }
           }

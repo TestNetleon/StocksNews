@@ -157,7 +157,7 @@ class _MarketScannerSortingState extends State<MarketScannerSorting> {
             children: [
               Expanded(
                 child: ScreenTitle(
-                  title: 'Sort Stocks by',
+                  title: 'Sort stocks by',
                   style: styleGeorgiaBold(
                       color: ThemeColors.background, fontSize: 23),
                   dividerPadding: EdgeInsets.zero,
