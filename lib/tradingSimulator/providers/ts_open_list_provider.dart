@@ -34,34 +34,97 @@ class TsOpenListProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void _updateStockData(int id, StockDataManagerRes stockData) {
+  void _updateStockData(
+      TsOpenListRes holdingStk, StockDataManagerRes stockData) {
     Utils().showLog('Holding: ${stockData.toMap()}');
     if (_data == null) return;
 
-    int index = _data!.indexWhere((stock) => stock.id == id);
-    if (index == -1) return;
+    // int index = _data!.indexWhere((stock) {
+    //   // Utils().showLog('Holding: $id == ${stockData.symbol}');
+    //   return stock.id == holdingStk.id;
+    // });
 
-    TsOpenListRes stock = _data![index];
-    num shares = stock.quantity ?? 0;
-    num invested = stock.invested ?? 0;
+    List<TsOpenListRes>? tempData = _data!.where((stock) {
+      // Utils().showLog('Holding: $id == ${stockData.symbol}');
+      return stock.symbol == holdingStk.symbol;
+    }).toList();
 
-    stock.currentPrice = stockData.price ?? stock.currentPrice;
-    stock.change = stockData.change ?? stock.change;
-    stock.changesPercentage =
-        stockData.changePercentage ?? stock.changesPercentage;
-    stock.previousClose = stockData.previousClose ?? stock.previousClose;
+    for (final stk in tempData) {
+      int index = _data!.indexWhere((stock) {
+        // Utils().showLog('Holding: $id == ${stockData.symbol}');
+        return stock.id == stk.id;
+      });
 
-    stock.currentInvested = (stock.currentPrice ?? 0) * shares;
-    num investedChange = (stock.tradeType == 'Short')
-        ? invested - (stock.currentInvested ?? 0)
-        : (stock.currentInvested ?? 0) - invested;
+      if (index == -1) return;
 
-    stock.investedChange = investedChange;
+      TsOpenListRes stock = _data![index];
 
-    stock.investedChangePercentage =
-        (invested > 0) ? (investedChange / invested) * 100 : 0;
+      // Utils().showLog('Updated Index : index == $index');
+      // Utils().showLog(
+      //   'Match with Holding: ${stock.symbol} == ${stockData.symbol}',
+      // );
 
-    _data![index] = stock;
+      num shares = stock.quantity ?? 0;
+      num invested = stock.invested ?? 0;
+
+      stock.currentPrice = stockData.price ?? stock.currentPrice;
+
+      stock.change = stockData.change ?? stock.change;
+
+      stock.changesPercentage =
+          stockData.changePercentage ?? stock.changesPercentage;
+
+      stock.previousClose = stockData.previousClose ?? stock.previousClose;
+
+      stock.currentInvested = (stock.currentPrice ?? 0) * shares;
+      num investedChange = (stock.tradeType == 'Short')
+          ? invested - (stock.currentInvested ?? 0)
+          : (stock.currentInvested ?? 0) - invested;
+
+      stock.investedChange = investedChange;
+
+      stock.investedChangePercentage =
+          (invested > 0) ? (investedChange / invested) * 100 : 0;
+
+      _data![index] = stock;
+    }
+
+    // Utils().showLog(
+    //     'Holding: $id == ${stockData.symbol} index=$index  list length = ${_data?.length}');
+
+    // if (index == -1) return;
+
+    // TsOpenListRes stock = _data![index];
+
+    // Utils().showLog('Updated Index : index == $index');
+    // // Utils().showLog(
+    // //   'Match with Holding: ${stock.symbol} == ${stockData.symbol}',
+    // // );
+
+    // num shares = stock.quantity ?? 0;
+    // num invested = stock.invested ?? 0;
+
+    // stock.currentPrice = stockData.price ?? stock.currentPrice;
+
+    // stock.change = stockData.change ?? stock.change;
+
+    // stock.changesPercentage =
+    //     stockData.changePercentage ?? stock.changesPercentage;
+
+    // stock.previousClose = stockData.previousClose ?? stock.previousClose;
+
+    // stock.currentInvested = (stock.currentPrice ?? 0) * shares;
+    // num investedChange = (stock.tradeType == 'Short')
+    //     ? invested - (stock.currentInvested ?? 0)
+    //     : (stock.currentInvested ?? 0) - invested;
+
+    // stock.investedChange = investedChange;
+
+    // stock.investedChangePercentage =
+    //     (invested > 0) ? (investedChange / invested) * 100 : 0;
+
+    // _data![index] = stock;
+
     notifyListeners();
 
     TsPortfolioProvider provider =
@@ -78,7 +141,13 @@ class TsOpenListProvider extends ChangeNotifier {
     });
 
     for (var stock in _data!) {
-      Map<String, num> returnData = _calculateTodaysReturn(stockData, stock);
+      // TODO:
+
+      Map<String, num> returnData = _calculateTodaysReturn(
+          // stockData,
+          stock);
+
+      // Utils().showLog("RETURN DATA => ${stock.id} = $returnData");
 
       totalMarketValue += stock.currentInvested ?? 0;
 
@@ -122,15 +191,27 @@ class TsOpenListProvider extends ChangeNotifier {
   }
 
   Map<String, num> _calculateTodaysReturn(
-      StockDataManagerRes stockData, TsOpenListRes stock) {
+      // StockDataManagerRes stockData,
+      TsOpenListRes stock) {
+    // Utils().showLog("IDS==> ${stock.id}");
+
     num todaysReturn = 0;
     num todaysReturnPercentage = 0;
-    num price = stockData.price ?? stock.currentPrice ?? 0;
+    num price =
+        // stockData.price ??
+        stock.currentPrice ?? 0;
+    // Utils().showLog("TODAYS price => ${stock.symbol}(${stock.id}) => $price");
 
     bool boughtToday = _isStockBoughtToday(stock, _extra!.reponseTime!);
     num referencePrice = boughtToday
         ? (stock.avgPrice ?? 0)
-        : (stockData.previousClose ?? stock.previousClose ?? 0);
+        : (
+            // stockData.previousClose ??
+            stock.previousClose ?? 0);
+
+    // Utils().showLog(
+    //     "TODAYS referencePrice => ${stock.symbol}(${stock.id}) => $referencePrice"
+    // );
 
     if (referencePrice > 0) {
       if (stock.tradeType == 'Short') {
@@ -138,6 +219,8 @@ class TsOpenListProvider extends ChangeNotifier {
         todaysReturnPercentage = ((referencePrice - price) / price) * 100;
       } else {
         todaysReturn = (price - referencePrice) * stock.quantity!;
+        // Utils().showLog(
+        //     "TODAYS RET => ${stock.symbol}(${stock.id}) \n Quantity => ${stock.quantity}\nCurrentPrice = > ${stock.currentPrice}\nPrice => ${price}\nERef Price => ${referencePrice}\nTodays return => ${todaysReturn}");
         todaysReturnPercentage =
             ((price - referencePrice) / referencePrice) * 100;
       }
@@ -193,7 +276,7 @@ class TsOpenListProvider extends ChangeNotifier {
 
         List<String> symbols =
             _data?.map((stock) => stock.symbol ?? '').toList() ?? [];
-
+        symbols = symbols.toSet().toList();
         _connectSSEForSymbols(symbols);
       } else {
         _data = null;
@@ -216,9 +299,11 @@ class TsOpenListProvider extends ChangeNotifier {
         _data?.isNotEmpty == true &&
         (_extra?.executable == true || kDebugMode)) {
       for (var data in _data!) {
+        // Utils().showLog("Listening for != > ${data.id}");
+
         if (data.id == null) return;
         _updateStockData(
-          data.id ?? 0,
+          data,
           StockDataManagerRes(
             symbol: data.symbol ?? "",
             change: data.change,
@@ -236,8 +321,9 @@ class TsOpenListProvider extends ChangeNotifier {
           SSEManager.instance.addListener(
             data.symbol ?? '',
             (StockDataManagerRes stockData) {
+              // Utils().showLog("Listening for = > ${data.id}");
               if (data.id == null) return;
-              _updateStockData(data.id ?? 0, stockData);
+              _updateStockData(data, stockData);
             },
             SimulatorEnum.open,
           );
