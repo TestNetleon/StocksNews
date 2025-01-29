@@ -43,15 +43,18 @@ class TsPortfolioProvider extends ChangeNotifier {
     num? marketValue,
     num? todayReturn,
   }) {
+    if (todayReturn != null) {
+      _userData?.todayReturn = todayReturn;
+      print('1D Return $todayReturn');
+      notifyListeners();
+    }
     if (totalReturn != null) {
       _userData?.totalReturn = totalReturn;
     }
     if (marketValue != null) {
       _userData?.marketValue = marketValue;
     }
-    if (todayReturn != null) {
-      _userData?.todayReturn = todayReturn;
-    }
+
     notifyListeners();
   }
 

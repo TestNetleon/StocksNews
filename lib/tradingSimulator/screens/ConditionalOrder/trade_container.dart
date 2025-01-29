@@ -112,60 +112,7 @@ class _ConditionalContainerState extends State<ConditionalContainer> {
     num invested = _selectedSegment == TypeTrade.shares
         ? (detailRes?.currentPrice ?? 0) * num.parse(_currentText)
         : num.parse(_currentText);
-    if (widget.editTradeID != null) {
-      final Map<String, dynamic> request = {
-        "token":
-            navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
-        "quantity": controller.text,
-        "order_type": 'MARKET_ORDER',
-        "duration": "GOOD_UNTIL_CANCELLED"
-      };
-      ApiResponse response = await provider.requestUpdateShare(
-        id: widget.editTradeID ?? 0,
-        request: request,
-        showProgress: true,
-      );
-      if (response.status) {
-        context.read<TsPendingListProvider>().getData();
 
-        final order = SummaryOrderNew(
-          isShare: _selectedSegment == TypeTrade.shares,
-          dollars: _selectedSegment == TypeTrade.dollar
-              ? num.parse(_currentText)
-              : (num.parse(_currentText) * (detailRes?.currentPrice ?? 0)),
-          shares: _selectedSegment == TypeTrade.shares
-              ? num.parse(_currentText)
-              : (num.parse(_currentText) / (detailRes?.currentPrice ?? 0)),
-          image: detailRes?.image,
-          name: detailRes?.company,
-          // price: '${detailRes?.currentPrice?.toFormattedPrice()}',
-          price: null,
-
-          symbol: detailRes?.symbol,
-          invested: invested,
-          //selectedStock: widget.selectedStock,
-          date: response.data['result']['created_date'],
-        );
-        Navigator.popUntil(
-            navigatorKey.currentContext!, (route) => route.isFirst);
-        Navigator.push(
-          navigatorKey.currentContext!,
-          MaterialPageRoute(
-            builder: (_) => TsDashboard(initialIndex: 1),
-          ),
-        );
-        _clear();
-       // await showTsOrderSuccessSheet(order, widget.selectedStock);
-      } else {
-        popUpAlert(
-          message: "${response.message}",
-          title: "Alert",
-          icon: Images.alertPopGIF,
-        );
-      }
-
-      return;
-    }
     closeKeyboard();
     if (controller.text.isEmpty || num.parse(controller.text) == 0.0) {
       popUpAlert(
@@ -193,6 +140,60 @@ class _ConditionalContainerState extends State<ConditionalContainer> {
       return;
     }
 
+    if (widget.editTradeID != null) {
+      final Map<String, dynamic> request = {
+        "token":
+            navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
+        "quantity": controller.text,
+        "order_type":  widget.conditionalType == ConditionType.bracketOrder?'BRACKET_ORDER':"",
+        "duration": "GOOD_UNTIL_CANCELLED",
+        "target_price":targetPriceController.text,
+        "stop_price": stopPriceController.text
+
+      };
+      ApiResponse response = await provider.requestUpdateShare(
+        id: widget.editTradeID ?? 0,
+        request: request,
+        showProgress: true,
+      );
+      if (response.status) {
+        context.read<TsPendingListProvider>().getData();
+
+        final order = SummaryOrderNew(
+          isShare: _selectedSegment == TypeTrade.shares,
+          dollars: _selectedSegment == TypeTrade.dollar
+              ? num.parse(_currentText)
+              : (num.parse(_currentText) * (detailRes?.currentPrice ?? 0)),
+          shares: _selectedSegment == TypeTrade.shares
+              ? num.parse(_currentText)
+              : (num.parse(_currentText) / (detailRes?.currentPrice ?? 0)),
+          image: detailRes?.image,
+          name: detailRes?.company,
+          price: null,
+          symbol: detailRes?.symbol,
+          invested: invested,
+          date: response.data['result']['created_date'],
+        );
+        Navigator.popUntil(
+            navigatorKey.currentContext!, (route) => route.isFirst);
+        Navigator.push(
+          navigatorKey.currentContext!,
+          MaterialPageRoute(
+            builder: (_) => TsDashboard(initialIndex: 1),
+          ),
+        );
+        _clear();
+        await showCOrderSuccessSheet(order, widget.conditionalType);
+      } else {
+        popUpAlert(
+          message: "${response.message}",
+          title: "Alert",
+          icon: Images.alertPopGIF,
+        );
+      }
+
+      return;
+    }
     if (_selectedTock==StockType.buy) {
       if (invested > (portfolioProvider.userData?.tradeBalance ?? 0)) {
         popUpAlert(
@@ -211,7 +212,6 @@ class _ConditionalContainerState extends State<ConditionalContainer> {
           "duration": "GOOD_UNTIL_CANCELLED",
           "target_price":targetPriceController.text,
           "stop_price": stopPriceController.text
-
         };
 
         ApiResponse response =
@@ -239,7 +239,6 @@ class _ConditionalContainerState extends State<ConditionalContainer> {
             invested: invested,
             date: response.data['result']['created_date'],
           );
-         // await Future.delayed(Duration(seconds: 1));
           Navigator.popUntil(
               navigatorKey.currentContext!, (route) => route.isFirst);
           Navigator.push(
@@ -284,7 +283,6 @@ class _ConditionalContainerState extends State<ConditionalContainer> {
 
       if (response.status) {
         num? numPrice = response.data['result']['executed_at'];
-
         context.read<TsOpenListProvider>().getData();
         final order = SummaryOrderNew(
           isShare: _selectedSegment == TypeTrade.shares,
@@ -298,16 +296,12 @@ class _ConditionalContainerState extends State<ConditionalContainer> {
               : (num.parse(_currentText) / (detailRes?.currentPrice ?? 0)),
           image: detailRes?.image,
           name: detailRes?.company,
-          // price: numPrice?.toFormattedPrice(),
           currentPrice: numPrice,
           symbol: detailRes?.symbol,
           invested: invested,
-         // selectedStock: widget.selectedStock,
           date: response.data['result']['created_date'],
         );
-
         _clear();
-       // await Future.delayed(Duration(seconds: 1));
         Navigator.popUntil(
             navigatorKey.currentContext!, (route) => route.isFirst);
         Navigator.push(

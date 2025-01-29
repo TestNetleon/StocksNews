@@ -33,8 +33,6 @@ class TournamentLeaderboardItem extends StatelessWidget {
             decoration: decorate
                 ? BoxDecoration(
                     color: ThemeColors.background,
-                    /// pengin for others condition, like border radius
-                    //borderRadius: BorderRadius.circular(5),
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(5),
                   topRight: Radius.circular(5),

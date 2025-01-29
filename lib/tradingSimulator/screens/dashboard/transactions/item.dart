@@ -128,6 +128,27 @@ class TsTransactionListItem extends StatelessWidget {
                     ],
                   ),
                 ),
+                Align(
+                  alignment: Alignment.center,
+                  child: Visibility(
+                    visible: item?.closePrice != null && item?.closePrice != '',
+                    child: Container(
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8),
+                          color: const Color.fromARGB(255, 65, 62, 62)),
+                      margin: EdgeInsets.only(top: 8),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 10, vertical: 2),
+                      child: Text(
+                        "Auto closed at: ${item?.closePrice ?? '\$221'}",
+                        style: styleGeorgiaBold(
+                            fontSize: 14, color: ThemeColors.white),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                  ),
+                ),
                 Container(
                   margin: EdgeInsets.only(top: 15),
                   alignment: Alignment.center,

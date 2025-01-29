@@ -3,6 +3,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:stocks_news_new/tournament/models/battle_res.dart';
 import '../../api/api_requester.dart';
 import '../../api/api_response.dart';
 import '../../api/apis.dart';
@@ -32,8 +33,25 @@ class TournamentLeaderboardProvider extends ChangeNotifier {
   TournamentLeaderboardRes? _leaderboardRes;
   TournamentLeaderboardRes? get leaderboardRes => _leaderboardRes;
 
+
+  BattleRes? _battleRes;
+  BattleRes? get battleRes => _battleRes;
+
+  String? _errorBattels;
+  String? get errorBattels => _errorBattels ?? Const.errSomethingWrong;
+
   void setStatusLeaderboard(status) {
     _statusLeaderboard = status;
+    notifyListeners();
+  }
+  Status _statusBattle = Status.ideal;
+  Status get statusBattle => _statusBattle;
+  bool get isLoadingBattle =>
+      _statusBattle == Status.loading ||
+          _statusBattle == Status.ideal;
+
+  void setStatusBattle(status) {
+    _statusBattle = status;
     notifyListeners();
   }
 
@@ -51,6 +69,7 @@ class TournamentLeaderboardProvider extends ChangeNotifier {
    clearEditedDate(){
     editedDate = null;
   }
+
 
 // MARK: DATE LEADERBOARD
   Future leaderboard({loadMore = false}) async {
@@ -101,4 +120,27 @@ class TournamentLeaderboardProvider extends ChangeNotifier {
       Utils().showLog('error $e');
     }
   }
+
+  Future showLeaderboard() async {
+    setStatusBattle(Status.loading);
+    try {
+      ApiResponse response = await apiRequest(
+        url: Apis.tShowLeaderboard,
+      );
+      if (response.status) {
+        _battleRes = battleResFromMap(jsonEncode(response.data));
+        notifyListeners();
+      } else {
+        _battleRes = null;
+        _errorBattels = response.message;
+      }
+      setStatusBattle(Status.loaded);
+    } catch (e) {
+      _battleRes = null;
+      _errorBattels = Const.errSomethingWrong;
+      setStatusBattle(Status.loaded);
+      Utils().showLog('error $e');
+    }
+  }
+
 }

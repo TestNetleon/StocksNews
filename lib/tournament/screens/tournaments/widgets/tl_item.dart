@@ -175,7 +175,7 @@ class TlItem extends StatelessWidget {
               TextSpan(
                 text: value,
                 style: label=="Per. Points: "?stylePTSansRegular(fontSize: 14, color: ThemeColors.white):
-                stylePTSansBold(fontSize: 14, color: (data?.performance ?? 0) > 0 ? ThemeColors.themeGreen:ThemeColors.darkRed)
+                stylePTSansBold(fontSize: 14, color: (data?.performance ?? 0) > 0 ? ThemeColors.themeGreen:data?.performance ==0?ThemeColors.white:ThemeColors.darkRed)
               )
             ]
         )

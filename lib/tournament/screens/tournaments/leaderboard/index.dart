@@ -23,7 +23,8 @@ class _TournamentLeaderboardState extends State<TournamentLeaderboard> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {});
+   // WidgetsBinding.instance.addPostFrameCallback((_) {});
+    //context.read<TournamentLeaderboardProvider>().showLeaderboard();
   }
 
   @override
@@ -32,14 +33,15 @@ class _TournamentLeaderboardState extends State<TournamentLeaderboard> {
     super.deactivate();
   }
 
+
   @override
   Widget build(BuildContext context) {
-    TournamentLeaderboardProvider provider =
-        context.watch<TournamentLeaderboardProvider>();
+    TournamentLeaderboardProvider provider = context.watch<TournamentLeaderboardProvider>();
     return Column(
       children: [
         CustomDateSelector(
           editedDate: provider.editedDate,
+          gameValue: provider.battleRes?.battle,
           onDateSelected: (date) {
             provider.getSelectedDate(date);
             WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -47,6 +49,22 @@ class _TournamentLeaderboardState extends State<TournamentLeaderboard> {
             });
           },
         ),
+       /* BaseUiContainer(
+          hasData: provider.battleRes != null,
+          isLoading: provider.isLoadingBattle,
+          error: provider.errorBattels,
+          showPreparingText: true,
+          child: CustomDateSelector(
+            editedDate: provider.editedDate,
+            gameValue: provider.battleRes?.battle,
+            onDateSelected: (date) {
+              provider.getSelectedDate(date);
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                context.read<TournamentLeaderboardProvider>().leaderboard();
+              });
+            },
+          ),
+        ),*/
         Expanded(
           child: BaseUiContainer(
             hasData: provider.leaderboardRes != null,

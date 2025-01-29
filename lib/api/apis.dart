@@ -213,6 +213,7 @@ class Apis {
   static const tsTransaction = '/simulator/trade/history';
   static const tradingMostSearch = "/simulator/most-search-symbol";
   static const tsRequestTrade = "/simulator/trade/store";
+  static const tsAddConditional = "trade/add-conditional-order/";
   static const tsSearchSymbol = "/simulator/trade/search-symbol";
   static const tsOpenList = "/simulator/list-purchased-shares";
   static const stockHoldings = '/simulator/stock-holdings-new';
@@ -271,6 +272,7 @@ class Apis {
   static const tPlayTraders = '/tournament/titans';
   static const tTradingTotal = '/tournament/all';
   static const tUser = '/tournament/user-profile';
+  static const tShowLeaderboard = '/tournament/show-today-leaderboard';
   // static const tShow = '/tournament/trade-show';
   //
   static const appsflyerUsers = '/appsflyer-users';

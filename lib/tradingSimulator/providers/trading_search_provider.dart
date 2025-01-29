@@ -391,7 +391,7 @@ class TradingSearchProvider extends ChangeNotifier {
     }
   }
 
-  Future bucketRedirection(String symbol) async {
+  Future conditionalRedirection(String symbol) async {
     try {
       TradeProviderNew provider =
       navigatorKey.currentContext!.read<TradeProviderNew>();

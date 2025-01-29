@@ -12,6 +12,7 @@ import 'package:stocks_news_new/screens/stockDetail/stockDetailTabs/overview/sd_
 import 'package:stocks_news_new/screens/stockDetail/stockDetailTabs/ownership/ownership.dart';
 import 'package:stocks_news_new/screens/stockDetail/stockDetailTabs/secFiling/sd_sec_filing.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
+import 'package:stocks_news_new/tradingSimulator/manager/sse.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
@@ -57,7 +58,7 @@ class _StockDetailState extends State<StockDetail> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _callApi();
-      _addSocket();
+     // _addSocket();
       FirebaseAnalytics.instance.logEvent(
         name: 'ScreensVisit',
         parameters: {'screen_name': "Stock Detail"},
@@ -135,7 +136,8 @@ class _StockDetailState extends State<StockDetail> {
 
   @override
   void dispose() {
-    _webSocketService?.disconnect();
+   // _webSocketService?.disconnect();
+    SSEManager.instance.disconnectScreen(SimulatorEnum.detail);
     super.dispose();
   }
 
@@ -146,141 +148,147 @@ class _StockDetailState extends State<StockDetail> {
     KeyStats? keyStats = provider.tabRes?.keyStats;
     CompanyInfo? companyInfo = provider.tabRes?.companyInfo;
 
-    return BaseContainer(
-      appBar: AppBarHome(
-        isPopBack: true,
-        title: keyStats?.symbol ?? "",
-        subTitle: keyStats?.name ?? "",
-        widget: keyStats?.symbol == null
-            ? null
-            : Row(
-                children: [
-                  Container(
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      // color: Colors.white,
-                      color: Colors.transparent,
-                      // border: Border.all(color: ThemeColors.white),
-                      border: Border.all(color: ThemeColors.accent),
+    return PopScope(
+      canPop: true,
+      onPopInvokedWithResult: (didPop, result) {
+        SSEManager.instance.disconnectScreen(SimulatorEnum.detail);
+      },
+      child: BaseContainer(
+        appBar: AppBarHome(
+          isPopBack: true,
+          title: keyStats?.symbol ?? "",
+          subTitle: keyStats?.name ?? "",
+          widget: keyStats?.symbol == null
+              ? null
+              : Row(
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        // color: Colors.white,
+                        color: Colors.transparent,
+                        // border: Border.all(color: ThemeColors.white),
+                        border: Border.all(color: ThemeColors.accent),
+                      ),
+                      padding: const EdgeInsets.all(8),
+                      width: 48,
+                      height: 48,
+                      child: ThemeImageView(
+                        url: companyInfo?.image ?? "",
+                        fit: BoxFit.contain,
+                      ),
                     ),
-                    padding: const EdgeInsets.all(8),
-                    width: 48,
-                    height: 48,
-                    child: ThemeImageView(
-                      url: companyInfo?.image ?? "",
-                      fit: BoxFit.contain,
-                    ),
-                  ),
-                  SpacerHorizontal(width: 8),
-                  Flexible(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            Text(
-                              keyStats?.symbol ?? "",
-                              style: stylePTSansBold(fontSize: 17),
-                            ),
-                            Container(
-                              decoration: BoxDecoration(
-                                color: ThemeColors.greyBorder,
-                                borderRadius: BorderRadius.circular(30),
+                    SpacerHorizontal(width: 8),
+                    Flexible(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              Text(
+                                keyStats?.symbol ?? "",
+                                style: stylePTSansBold(fontSize: 17),
                               ),
-                              padding: EdgeInsets.symmetric(
-                                  vertical: 2, horizontal: 8),
-                              margin: EdgeInsets.only(left: 5),
-                              child: Text(
-                                keyStats?.exchange ?? "",
-                                style: stylePTSansRegular(fontSize: 10),
+                              Container(
+                                decoration: BoxDecoration(
+                                  color: ThemeColors.greyBorder,
+                                  borderRadius: BorderRadius.circular(30),
+                                ),
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 2, horizontal: 8),
+                                margin: EdgeInsets.only(left: 5),
+                                child: Text(
+                                  keyStats?.exchange ?? "",
+                                  style: stylePTSansRegular(fontSize: 10),
+                                ),
                               ),
-                            ),
-                          ],
-                        ),
-                        Text(
-                          keyStats?.name ?? "",
-                          style: stylePTSansRegular(
-                            fontSize: 13,
-                            color: ThemeColors.greyText,
+                            ],
                           ),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ],
+                          Text(
+                            keyStats?.name ?? "",
+                            style: stylePTSansRegular(
+                              fontSize: 13,
+                              color: ThemeColors.greyText,
+                            ),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                ],
-              ),
-      ),
-      body: BaseUiContainer(
-        hasData: !provider.isLoadingTab && provider.tabRes != null,
-        isLoading: provider.isLoadingTab,
-        error: provider.errorTab,
-        showPreparingText: true,
-        onRefresh: _callApi,
-        child: Column(
-          children: [
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.only(top: 8),
-                child: CommonTabContainer(
-                  onChange: (index) {
-                    closeKeyboard();
-
-                    provider.setOpenIndex(-1);
-                  },
-                  padding: const EdgeInsets.only(bottom: 10),
-                  physics: const NeverScrollableScrollPhysics(),
-                  tabPaddingNew: false,
-                  scrollable: true,
-                  tabs: List.generate(
-                    provider.tabRes?.tabs?.length ?? 0,
-                    (index) => provider.tabRes?.tabs?[index].name ?? "",
-                  ),
-                  widgets: [
-                    SdOverview(symbol: widget.symbol),
-                    const SdKeyStats(),
-                    SdAnalysis(symbol: widget.symbol),
-                    SdTechnical(symbol: widget.symbol),
-                    SdForecast(symbol: widget.symbol),
-                    // SdSocialActivities(symbol: widget.symbol),
-                    // SdNews(symbol: widget.symbol),
-                    SdNewsN(symbol: widget.symbol),
-                    SdEarnings(symbol: widget.symbol),
-                    SdDividends(symbol: widget.symbol),
-                    SdInsiderTrade(symbol: widget.symbol),
-                    SdCompetitor(symbol: widget.symbol),
-                    SdOwnership(symbol: widget.symbol),
-                    SdCharts(symbol: widget.symbol),
-                    SdFinancial(symbol: widget.symbol),
-                    SdSecFilings(symbol: widget.symbol),
-                    SdMergers(symbol: widget.symbol),
                   ],
                 ),
-              ),
-            ),
-            // ThemeButton(
-            //   onPressed: () {
-            //     Navigator.push(
-            //       context,
-            //       MaterialPageRoute(
-            //         builder: (context) => BuyAndSellIndex(),
-            //       ),
-            //     );
-            //   },
-            // ),
-            BaseAuth(),
-            Container(
-              decoration: BoxDecoration(
-                color: ThemeColors.background.withOpacity(0.8),
-                border: const Border(
-                  top: BorderSide(color: ThemeColors.greyBorder),
+        ),
+        body: BaseUiContainer(
+          hasData: !provider.isLoadingTab && provider.tabRes != null,
+          isLoading: provider.isLoadingTab,
+          error: provider.errorTab,
+          showPreparingText: true,
+          onRefresh: _callApi,
+          child: Column(
+            children: [
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 8),
+                  child: CommonTabContainer(
+                    onChange: (index) {
+                      closeKeyboard();
+
+                      provider.setOpenIndex(-1);
+                    },
+                    padding: const EdgeInsets.only(bottom: 10),
+                    physics: const NeverScrollableScrollPhysics(),
+                    tabPaddingNew: false,
+                    scrollable: true,
+                    tabs: List.generate(
+                      provider.tabRes?.tabs?.length ?? 0,
+                      (index) => provider.tabRes?.tabs?[index].name ?? "",
+                    ),
+                    widgets: [
+                      SdOverview(symbol: widget.symbol),
+                      const SdKeyStats(),
+                      SdAnalysis(symbol: widget.symbol),
+                      SdTechnical(symbol: widget.symbol),
+                      SdForecast(symbol: widget.symbol),
+                      // SdSocialActivities(symbol: widget.symbol),
+                      // SdNews(symbol: widget.symbol),
+                      SdNewsN(symbol: widget.symbol),
+                      SdEarnings(symbol: widget.symbol),
+                      SdDividends(symbol: widget.symbol),
+                      SdInsiderTrade(symbol: widget.symbol),
+                      SdCompetitor(symbol: widget.symbol),
+                      SdOwnership(symbol: widget.symbol),
+                      SdCharts(symbol: widget.symbol),
+                      SdFinancial(symbol: widget.symbol),
+                      SdSecFilings(symbol: widget.symbol),
+                      SdMergers(symbol: widget.symbol),
+                    ],
+                  ),
                 ),
               ),
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: const AddToAlertWatchlist(),
-            ),
-          ],
+              // ThemeButton(
+              //   onPressed: () {
+              //     Navigator.push(
+              //       context,
+              //       MaterialPageRoute(
+              //         builder: (context) => BuyAndSellIndex(),
+              //       ),
+              //     );
+              //   },
+              // ),
+              BaseAuth(),
+              Container(
+                decoration: BoxDecoration(
+                  color: ThemeColors.background.withOpacity(0.8),
+                  border: const Border(
+                    top: BorderSide(color: ThemeColors.greyBorder),
+                  ),
+                ),
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: const AddToAlertWatchlist(),
+              ),
+            ],
+          ),
         ),
       ),
     );

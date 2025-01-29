@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/stockDetailRes/tab.dart';
 import 'package:stocks_news_new/modals/stock_details_res.dart';
@@ -15,7 +14,8 @@ class SdTopDisclaimer extends StatelessWidget {
   Widget build(BuildContext context) {
     StockDetailProviderNew provider = context.watch<StockDetailProviderNew>();
     KeyStats? keyStats = provider.tabRes?.keyStats;
-    ExtendedHoursDataRes? extendedHoursDataRes = provider.tabRes?.extendedHoursData;
+    ExtendedHoursDataRes? extendedHoursDataRes =
+        provider.tabRes?.extendedHoursData;
 
     if (keyStats?.exchange == null || keyStats?.marketStatus == null) {
       return const SizedBox();
@@ -59,19 +59,23 @@ class SdTopDisclaimer extends StatelessWidget {
                   ),
           ),
         ),
-        if(provider.tabRes?.showExtendedHoursData==true)
-        Flexible(
-          child: Visibility(
-            visible: (extendedHoursDataRes?.extendedHoursType=="PostMarket"||extendedHoursDataRes?.extendedHoursType=="PreMarket")?true:false,
-            child: Text(
-              "Last update: ${extendedHoursDataRes?.extendedHoursTime??""}",
-              style: stylePTSansRegular(
-                color: ThemeColors.greyText,
-                fontSize: 12,
+        if (provider.tabRes?.showExtendedHoursData == true)
+          Flexible(
+            child: Visibility(
+              visible: (extendedHoursDataRes?.extendedHoursType ==
+                          "PostMarket" ||
+                      extendedHoursDataRes?.extendedHoursType == "PreMarket")
+                  ? true
+                  : false,
+              child: Text(
+                "Last update: ${extendedHoursDataRes?.extendedHoursTime ?? ""}",
+                style: stylePTSansRegular(
+                  color: ThemeColors.greyText,
+                  fontSize: 12,
+                ),
               ),
             ),
           ),
-        ),
       ],
     );
   }
