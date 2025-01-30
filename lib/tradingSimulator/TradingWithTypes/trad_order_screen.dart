@@ -570,7 +570,9 @@ class _TradOrderScreenState extends State<TradOrderScreen> {
           ),
           SpacerVertical(height: 10),
           Visibility(
-            visible: tsProvider.userData?.userConditionalOrderPermission?.bracketOrder==true,
+            visible: tsProvider
+                    .userData?.userConditionalOrderPermission?.bracketOrder ==
+                true,
             child: Text(
               "Conditional orders",
               style: stylePTSansBold(
@@ -580,20 +582,23 @@ class _TradOrderScreenState extends State<TradOrderScreen> {
             ),
           ),
           Visibility(
-            visible: tsProvider.userData?.userConditionalOrderPermission?.bracketOrder==true,
+            visible: tsProvider
+                    .userData?.userConditionalOrderPermission?.bracketOrder ==
+                true,
             child: BuyOrderItem(
                 title: "Bracket Order",
-                subtitle: "Bracket ${widget.symbol} at a maximum price or lower.",
+                subtitle:
+                    "Bracket ${widget.symbol} at a maximum price or lower.",
                 onTap: () {
                   if (widget.symbol != null) {
                     navigatorKey.currentContext!
                         .read<TradingSearchProvider>()
-                        .conditionalRedirection(widget.symbol ?? "",tickerID:widget.tickerID,qty: widget.qty);
+                        .conditionalRedirection(widget.symbol ?? "",
+                            tickerID: widget.tickerID, qty: widget.qty);
                   } else {
                     Navigator.push(
                       context,
-                      createRoute(
-                          SearchTradingTicker()),
+                      createRoute(SearchTradingTicker()),
                     );
                   }
                 }),
