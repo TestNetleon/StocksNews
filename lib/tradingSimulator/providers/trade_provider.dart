@@ -95,12 +95,12 @@ class TradeProviderNew extends ChangeNotifier {
     }
   }
 
-  Future<ApiResponse> tsAddConditional(request, {showProgress = false}) async {
+  Future<ApiResponse> tsAddConditional(request,num id, {showProgress = false}) async {
     notifyListeners();
     try {
       ApiResponse response = await apiRequest(
-        url: Apis.tsAddConditional,
-        formData: request,
+      url: '${Apis.tsAddConditional}$id',
+        request: request,
         showProgress: showProgress,
       );
       notifyListeners();
