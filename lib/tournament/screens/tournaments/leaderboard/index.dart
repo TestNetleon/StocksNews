@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/tournament/provider/leaderboard.dart';
 import 'package:stocks_news_new/tournament/screens/tournaments/leaderboard/item.dart';
+import 'package:stocks_news_new/tournament/screens/tournaments/leaderboard/top_no_item.dart';
+import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import '../../../../utils/colors.dart';
@@ -76,7 +79,86 @@ class _TournamentLeaderboardState extends State<TournamentLeaderboard> {
               canLoadMore: provider.canLoadMore,
               onLoadMore: () async =>
                   await provider.leaderboard(loadMore: true),
-              child: ListView.separated(
+              child:
+              ListView.separated(
+                padding: EdgeInsets.only(top: 10),
+                itemBuilder: (context, index) {
+                  LeaderboardByDateRes? data = provider.leaderboardRes?.leaderboardByDate?[index];
+                  if (data == null) return SizedBox();
+                  if (provider.leaderboardRes?.showLeaderboard == false) {
+                    return TournamentLeaderboardItem(
+                      data: data,
+                      from: 2,
+                    );
+                  }
+                  bool isTopPerformer = (data.performance ?? 0) > 0;
+
+                  if (index == 0 && isTopPerformer) {
+                    return Column(
+                      children: [
+                        SizedBox(
+                          width: double.infinity,
+                          child: Stack(
+                            children: [
+                              if (provider.leaderboardRes!.leaderboardByDate!.length > 2 &&
+                                  (provider.leaderboardRes!.leaderboardByDate![1].performance ?? 0) > 0)
+                                const Positioned(
+                                  left: 0,
+                                  top: 70,
+                                  child: TournamentLeaderboardTopItem(index: 1),
+                                )
+                              else Positioned(
+                                left: 0,
+                                top: 70,
+                                child: TopNoItem(index: 1),
+                              ),
+                              if (provider.leaderboardRes!.leaderboardByDate!.length > 3 &&
+                                  (provider.leaderboardRes!.leaderboardByDate![2].performance ?? 0) > 0)
+                                const Positioned(
+                                  right: 0,
+                                  top: 70,
+                                  child: TournamentLeaderboardTopItem(index: 2),
+                                )
+                              else Positioned(
+                                right: 0,
+                                top: 70,
+                                child: TopNoItem(index: 2),
+                              ),
+                              if (isTopPerformer)
+                                const Align(
+                                  alignment: Alignment.topCenter,
+                                  child: TournamentLeaderboardTopItem(index: 0),
+                                ),
+                            ],
+                          ),
+                        ),
+                        if ((provider.leaderboardRes?.leaderboardByDate?.length ?? 0) > 3)
+                          const Divider(
+                            color: ThemeColors.greyBorder,
+                            height: 15,
+                          ),
+                      ],
+                    );
+                  }
+
+                  /*if (index == 1) {
+                    return const SizedBox();
+                  }*/
+
+                  return TournamentLeaderboardItem(
+                    data: data,
+                    from: 2,
+                  );
+                },
+                itemCount: provider.leaderboardRes?.leaderboardByDate?.length ?? 0,
+                separatorBuilder: (context, index) {
+
+                  return SpacerVertical(height: 15);
+                },
+              )
+
+
+              /* ListView.separated(
                 padding: EdgeInsets.only(top: 10),
                 itemBuilder: (context, index) {
                   LeaderboardByDateRes? data = provider.leaderboardRes?.leaderboardByDate?[index];
@@ -103,13 +185,13 @@ class _TournamentLeaderboardState extends State<TournamentLeaderboard> {
                                   top: 70,
                                   child: TournamentLeaderboardTopItem(index: 1),
                                 ),
-                                if((data.performance ?? 0) > 0)
+                              if((data.performance ?? 0) > 0)
                                 const Positioned(
                                   right: 0,
                                   top: 70,
                                   child: TournamentLeaderboardTopItem(index: 2),
                                 ),
-                                if((data.performance ?? 0) > 0)
+                              if((data.performance ?? 0) > 0)
                                 const Align(
                                   alignment: Alignment.topCenter,
                                   child: TournamentLeaderboardTopItem(index: 0),
@@ -153,13 +235,12 @@ class _TournamentLeaderboardState extends State<TournamentLeaderboard> {
                 itemCount:
                     provider.leaderboardRes?.leaderboardByDate?.length ?? 0,
                 separatorBuilder: (context, index) {
-                  //if((provider.leaderboardRes?.leaderboardByDate?[index].performance ?? 0) > 0) return SpacerVertical(height: 15);
                   if ((index == 1 || index == 2) && (provider.leaderboardRes?.leaderboardByDate?[index].performance ?? 0) > 0) {
                     return const SizedBox();
                   }
                   return SpacerVertical(height: 15);
                 },
-              ),
+              ),*/
             ),
           ),
         ),

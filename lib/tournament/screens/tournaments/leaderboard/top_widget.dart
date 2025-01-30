@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/tournament/provider/leaderboard.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/widgets/cache_network_image.dart';
+import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:svg_flutter/svg_flutter.dart';
 import '../../../../utils/theme.dart';
 import '../../../../widgets/spacer_vertical.dart';
@@ -45,7 +46,7 @@ class TournamentLeaderboardTopItem extends StatelessWidget {
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   color: index == 2
-                      ? ThemeColors.sos
+                      ? ThemeColors.bronze
                       : index == 1
                           ? Colors.orange
                           : ThemeColors.accent,
@@ -74,13 +75,13 @@ class TournamentLeaderboardTopItem extends StatelessWidget {
               CircleAvatar(
                 radius: 12,
                 backgroundColor: index == 2
-                    ? ThemeColors.sos
+                    ? ThemeColors.bronze
                     : index == 1
                         ? Colors.orange
                         : ThemeColors.accent,
                 child: Text(
                   "${index + 1}",
-                  style: stylePTSansBold(),
+                  style:  index == 2 ?stylePTSansBold(color: ThemeColors.primary):stylePTSansBold(),
                 ),
               ),
             ],
@@ -92,7 +93,7 @@ class TournamentLeaderboardTopItem extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: stylePTSansBold(
               color: index == 2
-                  ? ThemeColors.sos
+                  ? ThemeColors.bronze
                   : index == 1
                   ? Colors.orange
                   : ThemeColors.accent,
@@ -104,7 +105,7 @@ class TournamentLeaderboardTopItem extends StatelessWidget {
               "${data?[index].rank}",
               style: stylePTSansBold(
                 color: index == 2
-                    ? ThemeColors.sos
+                    ? ThemeColors.bronze
                     : index == 1
                     ? Colors.orange
                     : ThemeColors.accent,
@@ -118,7 +119,7 @@ class TournamentLeaderboardTopItem extends StatelessWidget {
               "${data?[index].totalPoints}",
               style: stylePTSansBold(
                   color: index == 2
-                      ? ThemeColors.sos
+                      ? ThemeColors.bronze
                       : index == 1
                       ? Colors.orange
                       : ThemeColors.accent,
@@ -126,6 +127,21 @@ class TournamentLeaderboardTopItem extends StatelessWidget {
               ),
             ),
           ),
+          Visibility(
+            visible: data?[index].performance!=null,
+            child: Text(
+              "${data?[index].performance}%",
+              style: stylePTSansBold(
+                  color: index == 2
+                      ? ThemeColors.bronze
+                      : index == 1
+                      ? Colors.orange
+                      : ThemeColors.accent,
+                  fontSize: 12
+              ),
+            ),
+          ),
+
 
           /*Visibility(
             visible: data?[index].performance!=null,
