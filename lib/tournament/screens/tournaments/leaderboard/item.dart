@@ -27,18 +27,16 @@ class TournamentLeaderboardItem extends StatelessWidget {
       child: Column(
         children: [
           Container(
-            padding: decorate
-                ? const EdgeInsets.symmetric(horizontal: 10, vertical: 10)
-                : null,
-            decoration: decorate
-                ? BoxDecoration(
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+            decoration: BoxDecoration(
                     color: ThemeColors.background,
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(5),
                   topRight: Radius.circular(5),
+                  bottomLeft: Radius.circular((from == 1||from == 3)?5:0),
+                  bottomRight: Radius.circular((from == 1||from == 3)?5:0),
                 )
-                  )
-                : null,
+            ),
             child: Column(
               children: [
                 Row(

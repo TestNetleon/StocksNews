@@ -391,7 +391,7 @@ class TradingSearchProvider extends ChangeNotifier {
     }
   }
 
-  Future conditionalRedirection(String symbol) async {
+  Future conditionalRedirection(String symbol,{int? tickerID,num? qty}) async {
     try {
       TradeProviderNew provider =
       navigatorKey.currentContext!.read<TradeProviderNew>();
@@ -405,6 +405,8 @@ class TradingSearchProvider extends ChangeNotifier {
           MaterialPageRoute(
             builder: (context) => ConditionalTradesIndex(
               conditionalType: ConditionType.bracketOrder,
+                tickerID:tickerID,
+              qty:qty,
             ),
           ),
         );

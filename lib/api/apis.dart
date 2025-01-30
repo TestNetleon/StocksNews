@@ -4,12 +4,14 @@ import 'package:flutter/foundation.dart';
 
 class Apis {
   // Main live server
-  static const baseUrl = "https://app.stocks.news/api/v1";
+  // static const baseUrl = "https://app.stocks.news/api/v1";
 
   // maintenance
   static const baseUrlLocal = "https://notification.stocks.news/api/v1";
 
   // With Debug condition
+  static const baseUrl = "https://app.stocks.news/api/v1";
+
   // static const baseUrl = kDebugMode
   //     ? "https://dev.stocks.news/api/v1"
   //     : "https://app.stocks.news/api/v1";
@@ -213,7 +215,7 @@ class Apis {
   static const tsTransaction = '/simulator/trade/history';
   static const tradingMostSearch = "/simulator/most-search-symbol";
   static const tsRequestTrade = "/simulator/trade/store";
-  static const tsAddConditional = "trade/add-conditional-order/";
+  static const tsAddConditional = "/simulator/trade/add-conditional-order/";
   static const tsSearchSymbol = "/simulator/trade/search-symbol";
   static const tsOpenList = "/simulator/list-purchased-shares";
   static const stockHoldings = '/simulator/stock-holdings-new';

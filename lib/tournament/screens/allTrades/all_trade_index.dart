@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/tournament/provider/trades.dart';
+import 'package:stocks_news_new/tournament/screens/game_tournament_index.dart';
 import 'package:stocks_news_new/tournament/screens/tournaments/dayTraining/open/index.dart';
 import 'package:stocks_news_new/tradingSimulator/manager/sse.dart';
 import 'package:stocks_news_new/utils/constants.dart';
@@ -151,11 +152,10 @@ class _TournamentAllTradeIndexState extends State<TournamentAllTradeIndex> {
               onPressed: () {
                 Navigator.popUntil(context, (route) => route.isFirst);
                 Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => TournamentOpenIndex(),
-                  ),
-                );
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => GameTournamentIndex(),
+                    ));
               },
               textColor: Colors.black,
               text:'Place New Order',

@@ -52,7 +52,6 @@ class TournamentLeaderboardProvider extends ChangeNotifier {
 
   void setStatusBattle(status) {
     _statusBattle = status;
-    notifyListeners();
   }
 
   String? selectedDate;
@@ -122,7 +121,7 @@ class TournamentLeaderboardProvider extends ChangeNotifier {
   }
 
   Future showLeaderboard() async {
-    setStatusBattle(Status.loading);
+    //setStatusBattle(Status.loading);
     try {
       ApiResponse response = await apiRequest(
         url: Apis.tShowLeaderboard,
@@ -134,11 +133,11 @@ class TournamentLeaderboardProvider extends ChangeNotifier {
         _battleRes = null;
         _errorBattels = response.message;
       }
-      setStatusBattle(Status.loaded);
+      //setStatusBattle(Status.loaded);
     } catch (e) {
       _battleRes = null;
       _errorBattels = Const.errSomethingWrong;
-      setStatusBattle(Status.loaded);
+     // setStatusBattle(Status.loaded);
       Utils().showLog('error $e');
     }
   }

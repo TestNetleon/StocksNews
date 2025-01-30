@@ -8,6 +8,7 @@ class TextfieldTrade extends StatelessWidget {
   final String? text;
   final String lastEntered;
   final int counter;
+  final bool readOnly;
   final void Function(String) change;
 
   const TextfieldTrade({
@@ -16,6 +17,7 @@ class TextfieldTrade extends StatelessWidget {
     required this.focusNode,
     required this.change,
     this.text,
+    this.readOnly=false,
     required this.lastEntered,
     required this.counter,
   });
@@ -47,6 +49,7 @@ class TextfieldTrade extends StatelessWidget {
           ),
           style: const TextStyle(fontSize: 80, color: Colors.transparent),
           cursorColor: Colors.transparent,
+          readOnly: readOnly,
         ),
         Positioned.fill(
           child: Align(

@@ -32,12 +32,13 @@ class ConditionalContainer extends StatefulWidget {
   final num? qty;
   final num? editTradeID;
   final ConditionType? conditionalType;
+  final int? tickerID;
 
   const ConditionalContainer({
     super.key,
     this.conditionalType,
     this.qty,
-    this.editTradeID,
+    this.editTradeID, this.tickerID,
   });
 
   @override
@@ -68,8 +69,10 @@ class _ConditionalContainerState extends State<ConditionalContainer> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       focusNode.requestFocus();
-      _availableBalance =
-          context.read<TsPortfolioProvider>().userData?.tradeBalance ?? 0;
+      _availableBalance = context.read<TsPortfolioProvider>().userData?.tradeBalance ?? 0;
+      if(widget.tickerID!=null){
+        controller.text=widget.qty.toString();
+      }
     });
   }
 
@@ -194,96 +197,20 @@ class _ConditionalContainerState extends State<ConditionalContainer> {
 
       return;
     }
-    if (_selectedTock==StockType.buy) {
-      if (invested > (portfolioProvider.userData?.tradeBalance ?? 0)) {
-        popUpAlert(
-          message: "Insufficient available balance to place this order.",
-          title: "Alert",
-          icon: Images.alertPopGIF,
-        );
-        return;
-      } else {
-        final Map<String, dynamic> request = {
-          "token": navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
-          "action": "BUY",
-          "symbol": detailRes?.symbol,
-          "quantity": controller.text,
-          "order_type": 'BRACKET_ORDER',
-          "duration": "GOOD_UNTIL_CANCELLED",
-          "target_price":targetPriceController.text,
-          "stop_price": stopPriceController.text
-        };
-
-        ApiResponse response =
-            await provider.requestBuyShare(request, showProgress: true);
-        Utils().showLog('~~~~~${response.status}~~~~');
-        if (response.status) {
-          context.read<TsPortfolioProvider>().getDashboardData();
-          context.read<TsOpenListProvider>().getData();
-          num? numPrice = response.data['result']['executed_at'];
-          final order = SummaryOrderNew(
-            isShare: _selectedSegment == TypeTrade.shares,
-            change: '${detailRes?.change?.toFormattedPrice()}',
-            changePercentage: detailRes?.changePercentage,
-            dollars: _selectedSegment == TypeTrade.dollar
-                ? num.parse(_currentText)
-                : (num.parse(_currentText) * (detailRes?.currentPrice ?? 0)),
-            shares: _selectedSegment == TypeTrade.shares
-                ? num.parse(_currentText)
-                : (num.parse(_currentText) / (detailRes?.currentPrice ?? 0)),
-            image: detailRes?.image,
-            name: detailRes?.company,
-            // price: numPrice?.toFormattedPrice(),
-            currentPrice: numPrice,
-            symbol: detailRes?.symbol,
-            invested: invested,
-            date: response.data['result']['created_date'],
-          );
-          Navigator.popUntil(
-              navigatorKey.currentContext!, (route) => route.isFirst);
-          Navigator.push(
-            navigatorKey.currentContext!,
-            MaterialPageRoute(
-              builder: (_) => TsDashboard(initialIndex: isPending ? 1 : 0),
-            ),
-          );
-          _clear();
-
-          await showCOrderSuccessSheet(order, widget.conditionalType);
-
-        } else {
-          popUpAlert(
-            message: "${response.message}",
-            title: "Alert",
-            icon: Images.alertPopGIF,
-          );
-        }
-      }
-    }
-    else {
-      FormData request = FormData.fromMap({
-        "token":
-            navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
-        "action": _selectedTock==StockType.short
-            ? "SHORT"
-            : _selectedTock==StockType.sell
-                ? "SELL"
-                : "BUY_TO_COVER",
-        "symbol": detailRes?.symbol,
-        "order_type":  widget.conditionalType == ConditionType.bracketOrder?'BRACKET_ORDER':"",
-        "duration": "GOOD_UNTIL_CANCELLED",
-        "quantity": controller.text,
+    if(widget.tickerID!=null){
+      final Map<String, dynamic> request = {
+        "token": navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
+        "order_type": 'BRACKET_ORDER',
         "target_price":targetPriceController.text,
         "stop_price": stopPriceController.text
-      });
+      };
 
-      ApiResponse response =
-          await provider.requestSellShare(request, showProgress: true);
+      ApiResponse response = await provider.tsAddConditional(request,widget.tickerID!.toInt(), showProgress: true);
       Utils().showLog('~~~~~${response.status}~~~~');
-
       if (response.status) {
-        num? numPrice = response.data['result']['executed_at'];
+        context.read<TsPortfolioProvider>().getDashboardData();
         context.read<TsOpenListProvider>().getData();
+        num? numPrice = response.data['result']['executed_at'];
         final order = SummaryOrderNew(
           isShare: _selectedSegment == TypeTrade.shares,
           change: '${detailRes?.change?.toFormattedPrice()}',
@@ -296,23 +223,152 @@ class _ConditionalContainerState extends State<ConditionalContainer> {
               : (num.parse(_currentText) / (detailRes?.currentPrice ?? 0)),
           image: detailRes?.image,
           name: detailRes?.company,
+          // price: numPrice?.toFormattedPrice(),
           currentPrice: numPrice,
           symbol: detailRes?.symbol,
           invested: invested,
           date: response.data['result']['created_date'],
         );
-        _clear();
         Navigator.popUntil(
             navigatorKey.currentContext!, (route) => route.isFirst);
         Navigator.push(
-          context,
+          navigatorKey.currentContext!,
           MaterialPageRoute(
             builder: (_) => TsDashboard(initialIndex: isPending ? 1 : 0),
           ),
         );
+        _clear();
+
         await showCOrderSuccessSheet(order, widget.conditionalType);
+
       } else {
-        popUpAlert(message: "${response.message}", title: "Alert");
+        popUpAlert(
+          message: "${response.message}",
+          title: "Alert",
+          icon: Images.alertPopGIF,
+        );
+      }
+    }
+    else{
+      if (_selectedTock==StockType.buy) {
+        if (invested > (portfolioProvider.userData?.tradeBalance ?? 0)) {
+          popUpAlert(
+            message: "Insufficient available balance to place this order.",
+            title: "Alert",
+            icon: Images.alertPopGIF,
+          );
+          return;
+        } else {
+          final Map<String, dynamic> request = {
+            "token": navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
+            "action": "BUY",
+            "symbol": detailRes?.symbol,
+            "quantity": controller.text,
+            "order_type": 'BRACKET_ORDER',
+            "duration": "GOOD_UNTIL_CANCELLED",
+            "target_price":targetPriceController.text,
+            "stop_price": stopPriceController.text
+          };
+
+          ApiResponse response = await provider.requestBuyShare(request, showProgress: true);
+          Utils().showLog('~~~~~${response.status}~~~~');
+          if (response.status) {
+            context.read<TsPortfolioProvider>().getDashboardData();
+            context.read<TsOpenListProvider>().getData();
+            num? numPrice = response.data['result']['executed_at'];
+            final order = SummaryOrderNew(
+              isShare: _selectedSegment == TypeTrade.shares,
+              change: '${detailRes?.change?.toFormattedPrice()}',
+              changePercentage: detailRes?.changePercentage,
+              dollars: _selectedSegment == TypeTrade.dollar
+                  ? num.parse(_currentText)
+                  : (num.parse(_currentText) * (detailRes?.currentPrice ?? 0)),
+              shares: _selectedSegment == TypeTrade.shares
+                  ? num.parse(_currentText)
+                  : (num.parse(_currentText) / (detailRes?.currentPrice ?? 0)),
+              image: detailRes?.image,
+              name: detailRes?.company,
+              // price: numPrice?.toFormattedPrice(),
+              currentPrice: numPrice,
+              symbol: detailRes?.symbol,
+              invested: invested,
+              date: response.data['result']['created_date'],
+            );
+            Navigator.popUntil(
+                navigatorKey.currentContext!, (route) => route.isFirst);
+            Navigator.push(
+              navigatorKey.currentContext!,
+              MaterialPageRoute(
+                builder: (_) => TsDashboard(initialIndex: isPending ? 1 : 0),
+              ),
+            );
+            _clear();
+
+            await showCOrderSuccessSheet(order, widget.conditionalType);
+
+          } else {
+            popUpAlert(
+              message: "${response.message}",
+              title: "Alert",
+              icon: Images.alertPopGIF,
+            );
+          }
+        }
+      }
+      else {
+        FormData request = FormData.fromMap({
+          "token":
+          navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
+          "action": _selectedTock==StockType.short
+              ? "SHORT"
+              : _selectedTock==StockType.sell
+              ? "SELL"
+              : "BUY_TO_COVER",
+          "symbol": detailRes?.symbol,
+          "order_type":  widget.conditionalType == ConditionType.bracketOrder?'BRACKET_ORDER':"",
+          "duration": "GOOD_UNTIL_CANCELLED",
+          "quantity": controller.text,
+          "target_price":targetPriceController.text,
+          "stop_price": stopPriceController.text
+        });
+
+        ApiResponse response =
+        await provider.requestSellShare(request, showProgress: true);
+        Utils().showLog('~~~~~${response.status}~~~~');
+
+        if (response.status) {
+          num? numPrice = response.data['result']['executed_at'];
+          context.read<TsOpenListProvider>().getData();
+          final order = SummaryOrderNew(
+            isShare: _selectedSegment == TypeTrade.shares,
+            change: '${detailRes?.change?.toFormattedPrice()}',
+            changePercentage: detailRes?.changePercentage,
+            dollars: _selectedSegment == TypeTrade.dollar
+                ? num.parse(_currentText)
+                : (num.parse(_currentText) * (detailRes?.currentPrice ?? 0)),
+            shares: _selectedSegment == TypeTrade.shares
+                ? num.parse(_currentText)
+                : (num.parse(_currentText) / (detailRes?.currentPrice ?? 0)),
+            image: detailRes?.image,
+            name: detailRes?.company,
+            currentPrice: numPrice,
+            symbol: detailRes?.symbol,
+            invested: invested,
+            date: response.data['result']['created_date'],
+          );
+          _clear();
+          Navigator.popUntil(
+              navigatorKey.currentContext!, (route) => route.isFirst);
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (_) => TsDashboard(initialIndex: isPending ? 1 : 0),
+            ),
+          );
+          await showCOrderSuccessSheet(order, widget.conditionalType);
+        } else {
+          popUpAlert(message: "${response.message}", title: "Alert");
+        }
       }
     }
   }
@@ -477,18 +533,21 @@ class _ConditionalContainerState extends State<ConditionalContainer> {
                 children: [
                   const TsTopWidget(),
                   const SpacerVertical(height: 5),
-                  TradeCustomeSliding(
-                    menus: menus,
-                    onValueChanged: (index) {
-                      setState(() {
-                        selectedIndex = index;
-                        _selectedTock=selectedIndex==0?StockType.buy:StockType.short;
-                      });
+                  Visibility(
+                    visible: widget.tickerID==null,
+                    child: TradeCustomeSliding(
+                      menus: menus,
+                      onValueChanged: (index) {
+                        setState(() {
+                          selectedIndex = index;
+                          _selectedTock=selectedIndex==0?StockType.buy:StockType.short;
+                        });
 
-                    },
-                    selectedIndex: selectedIndex,
+                      },
+                      selectedIndex: selectedIndex,
+                    ),
                   ),
-                  const SpacerVertical(height: 5),
+                  Visibility(visible: widget.tickerID==null,child: const SpacerVertical(height: 5)),
                   TextfieldTrade(
                     controller: controller,
                     focusNode: focusNode,
@@ -499,6 +558,7 @@ class _ConditionalContainerState extends State<ConditionalContainer> {
                     change: _onChange,
                     counter: _keyCounter,
                     lastEntered: _lastEntered,
+                    readOnly: (widget.tickerID==null?false:true),
                   ),
                   Text(
                     'Enter number of shares',

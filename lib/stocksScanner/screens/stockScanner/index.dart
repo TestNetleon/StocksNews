@@ -79,9 +79,7 @@ class _StocksScannerAppState extends State<StocksScannerApp> {
           onFilterClick: () {
             Navigator.push(
               context,
-              createRoute(
-                MarketScannerFilter(),
-              ),
+              createRoute(MarketScannerFilter()),
             );
           },
         ),
