@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:stocks_news_new/screens/stockDetail/index.dart';
 import 'package:stocks_news_new/stocksScanner/modals/scanner_res.dart';
+import 'package:stocks_news_new/stocksScanner/providers/market_scanner_provider.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/cache_network_image.dart';
@@ -171,22 +173,29 @@ class ScannerBaseItem extends StatelessWidget {
                           ],
                         ),
                       ),
-                      Visibility(
-                        visible: false,
-                        //prePost != null && prePost != '' && !showPreMarket,
-                        child: Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(8),
-                            color: const Color.fromARGB(255, 50, 49, 49),
-                          ),
-                          margin: const EdgeInsets.only(top: 5),
-                          padding:
-                              EdgeInsets.symmetric(horizontal: 10, vertical: 2),
-                          child: Text(
-                            preMarket ? 'Pre Market' : 'Post Market',
-                            style: styleGeorgiaRegular(fontSize: 13),
-                          ),
-                        ),
+                      Consumer<MarketScannerProvider>(
+                        builder: (context, value, child) {
+                          return Visibility(
+                            // visible: false,
+                            visible: value.port?.port?.checkMarketOpenApi
+                                    ?.checkPreMarket ==
+                                true,
+                            //prePost != null && prePost != '' && !showPreMarket,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+                                color: const Color.fromARGB(255, 50, 49, 49),
+                              ),
+                              margin: const EdgeInsets.only(top: 5),
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 10, vertical: 2),
+                              child: Text(
+                                'Pre Market',
+                                style: styleGeorgiaRegular(fontSize: 13),
+                              ),
+                            ),
+                          );
+                        },
                       ),
                     ],
                   )
