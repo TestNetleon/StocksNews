@@ -127,7 +127,8 @@ class MarketScannerProvider extends ChangeNotifier {
         _fullOfflineDataList = List.empty(growable: true);
         _fullOfflineDataList?.addAll(data);
       }
-      _offlineDataList = data?.take(50).toList();
+      // _offlineDataList = data?.take(50).toList();
+      _offlineDataList = data;
     } else {
       if (_fullOfflineDataList == null && data != null) {
         _fullOfflineDataList = List.empty(growable: true);
@@ -192,7 +193,8 @@ class MarketScannerProvider extends ChangeNotifier {
     //   }
     // }
 
-    _offlineDataList = data.take(50).toList();
+    // _offlineDataList = data.take(50).toList();
+    _offlineDataList = data;
 
     if (_filterParams?.sortBy != null) {
       Utils().showLog('----${_filterParams?.sortByAsc}');
@@ -965,7 +967,7 @@ class MarketScannerProvider extends ChangeNotifier {
     _filterParams = FilterParams(sector: "Consumer Cyclical");
     if (_offlineDataList != null && _fullOfflineDataList != null) {
       _offlineDataList = _fullOfflineDataList;
-      _offlineDataList = _offlineDataList?.take(50).toList();
+      // _offlineDataList = _offlineDataList?.take(50).toList();
     }
     MarketScannerStream.instance.getOfflineData();
     notifyListeners();

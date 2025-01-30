@@ -76,11 +76,26 @@ class TsOpenListItem extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Visibility(
+                            visible: item?.symbol != null && item?.symbol != '',
+                            child: Container(
+                              margin: EdgeInsets.only(bottom: 2),
+                              child: Text(
+                                "${item?.symbol}",
+                                style: styleGeorgiaBold(fontSize: 18),
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                          ),
+                          Visibility(
                             visible:
                                 item?.company != null && item?.company != '',
                             child: Text(
                               "${item?.company}",
-                              style: styleGeorgiaBold(fontSize: 18),
+                              style: styleGeorgiaRegular(
+                                fontSize: 15,
+                                color: ThemeColors.greyText,
+                              ),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                             ),
