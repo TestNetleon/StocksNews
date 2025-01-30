@@ -18,12 +18,13 @@ class ConditionalTradesIndex extends StatelessWidget {
   final num? qty;
   final num? editTradeID;
   final ConditionType? conditionalType;
+  final int? tickerID;
 
   const ConditionalTradesIndex({
     super.key,
     this.qty,
     this.editTradeID,
-    this.conditionalType,
+    this.conditionalType, this.tickerID,
   });
 
   @override
@@ -107,6 +108,7 @@ class ConditionalTradesIndex extends StatelessWidget {
           conditionalType: conditionalType,
           qty: qty,
           editTradeID: editTradeID,
+          tickerID: tickerID,
         ),
       ),
     );

@@ -8,6 +8,7 @@ simTradeSheet({
   String? symbol,
   dynamic qty,
   TradingSearchTickerRes? data,
+  int? tickerID,
 }) {
   showModalBottomSheet(
     // useSafeArea: true,
@@ -27,6 +28,7 @@ simTradeSheet({
         symbol: symbol,
         data: data,
         qty: qty,
+          tickerID:tickerID
       );
     },
   );

@@ -349,11 +349,13 @@ class TradOrderScreen extends StatefulWidget {
   final String? symbol;
   final dynamic qty;
   final TradingSearchTickerRes? data;
+  final int? tickerID;
   const TradOrderScreen({
     super.key,
     this.symbol,
     this.data,
     this.qty,
+    this.tickerID,
   });
 
   @override
@@ -586,7 +588,7 @@ class _TradOrderScreenState extends State<TradOrderScreen> {
                   if (widget.symbol != null) {
                     navigatorKey.currentContext!
                         .read<TradingSearchProvider>()
-                        .conditionalRedirection(widget.symbol ?? "");
+                        .conditionalRedirection(widget.symbol ?? "",tickerID:widget.tickerID);
                   } else {
                     Navigator.push(
                       context,

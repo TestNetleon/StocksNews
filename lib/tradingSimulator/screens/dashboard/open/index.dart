@@ -79,6 +79,7 @@ class _TsOpenListState extends State<TsOpenList> {
                     symbol: item.symbol,
                   ),
                   qty: item.quantity,
+                  tickerID:item.id
                 );
 
                 // Navigator.push(
