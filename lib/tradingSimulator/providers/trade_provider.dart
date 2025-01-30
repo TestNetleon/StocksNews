@@ -263,7 +263,7 @@ class TradeProviderNew extends ChangeNotifier {
 
 class SummaryOrderNew {
   String? image, symbol, name, change, price;
-  num? changePercentage, invested, shares, dollars, currentPrice;
+  num? changePercentage, invested, shares, dollars, currentPrice,targetPrice,stopPrice;
   bool isShare;
   StockType? selectedStock;
   String? date;
@@ -276,6 +276,8 @@ class SummaryOrderNew {
     this.change,
     this.price,
     this.currentPrice,
+    this.targetPrice,
+    this.stopPrice,
     this.changePercentage,
     this.invested,
     this.date,

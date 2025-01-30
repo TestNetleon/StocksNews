@@ -48,7 +48,6 @@ class _TsPendingListState extends State<TsPendingList> {
         if (item.tradeType == "Short") {
           provider.shortRedirection(index: index);
         }
-
         else if (item.orderTypeOriginal == "BRACKET_ORDER") {
           provider.conditionalRedirection(index: index,qty:item.quantity);
         }
