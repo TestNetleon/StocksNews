@@ -71,16 +71,15 @@ class _TsOpenListState extends State<TsOpenList> {
                 ));
 
                 simTradeSheet(
-                  symbol: item.symbol,
-                  data: TradingSearchTickerRes(
-                    image: item.image,
-                    name: item.company,
-                    currentPrice: item.currentPrice,
                     symbol: item.symbol,
-                  ),
-                  qty: item.quantity,
-                  tickerID:item.id
-                );
+                    data: TradingSearchTickerRes(
+                      image: item.image,
+                      name: item.company,
+                      currentPrice: item.currentPrice,
+                      symbol: item.symbol,
+                    ),
+                    qty: item.quantity,
+                    tickerID: item.id);
 
                 // Navigator.push(
                 //   context,

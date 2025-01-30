@@ -31,10 +31,13 @@ class BuyOrderItem extends StatelessWidget {
           color: ThemeColors.blackShade,
         ),
       ),
-      subtitle: Text(
-        subtitle ?? "",
-        style: styleGeorgiaRegular(fontSize: 12, color: ThemeColors.greyText),
-      ),
+      subtitle: subtitle != null && subtitle != ""
+          ? Text(
+              subtitle ?? "",
+              style: styleGeorgiaRegular(
+                  fontSize: 12, color: ThemeColors.greyText),
+            )
+          : null,
       trailing: Icon(
         Icons.arrow_forward_ios_sharp,
         color: ThemeColors.greyText,

@@ -201,7 +201,6 @@ class SuccessConditionalSheet extends StatelessWidget {
                     height: 15,
                   ),
                 ),
-
                 Visibility(
                   visible: order?.targetPrice != null,
                   child: Row(
@@ -231,7 +230,6 @@ class SuccessConditionalSheet extends StatelessWidget {
                     height: 15,
                   ),
                 ),
-
                 Visibility(
                   visible: order?.stopPrice != null,
                   child: Row(
@@ -261,7 +259,6 @@ class SuccessConditionalSheet extends StatelessWidget {
                     height: 15,
                   ),
                 ),
-
                 Visibility(
                   child: Column(
                     children: [
