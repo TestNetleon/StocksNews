@@ -153,7 +153,8 @@ class _TournamentLeaderboardState extends State<TournamentLeaderboard> {
                 itemCount:
                     provider.leaderboardRes?.leaderboardByDate?.length ?? 0,
                 separatorBuilder: (context, index) {
-                  if (index == 1 || index == 2) {
+                  //if((provider.leaderboardRes?.leaderboardByDate?[index].performance ?? 0) > 0) return SpacerVertical(height: 15);
+                  if ((index == 1 || index == 2) && (provider.leaderboardRes?.leaderboardByDate?[index].performance ?? 0) > 0) {
                     return const SizedBox();
                   }
                   return SpacerVertical(height: 15);

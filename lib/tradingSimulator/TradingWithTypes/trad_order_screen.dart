@@ -586,22 +586,22 @@ class _TradOrderScreenState extends State<TradOrderScreen> {
                     .userData?.userConditionalOrderPermission?.bracketOrder ==
                 true,
             child: BuyOrderItem(
-              title: "Bracket Order",
-              subtitle: "Bracket ${widget.symbol} at a maximum price or lower.",
-              onTap: () {
-                if (widget.symbol != null) {
-                  navigatorKey.currentContext!
-                      .read<TradingSearchProvider>()
-                      .conditionalRedirection(widget.symbol ?? "",
-                          tickerID: widget.tickerID);
-                } else {
-                  Navigator.push(
-                    context,
-                    createRoute(SearchTradingTicker()),
-                  );
-                }
-              },
-            ),
+                title: "Bracket Order",
+                subtitle:
+                    "Bracket ${widget.symbol} at a maximum price or lower.",
+                onTap: () {
+                  if (widget.symbol != null) {
+                    navigatorKey.currentContext!
+                        .read<TradingSearchProvider>()
+                        .conditionalRedirection(widget.symbol ?? "",
+                            tickerID: widget.tickerID, qty: widget.qty);
+                  } else {
+                    Navigator.push(
+                      context,
+                      createRoute(SearchTradingTicker()),
+                    );
+                  }
+                }),
           ),
         ],
       ),

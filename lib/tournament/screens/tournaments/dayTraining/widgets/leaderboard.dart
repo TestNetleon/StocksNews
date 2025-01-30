@@ -43,7 +43,6 @@ class DayTrainingLeaderboard extends StatelessWidget {
 
               return TournamentLeaderboardItem(
                 data: data,
-                //decorate: false,
                 from: 3,
               );
             },
