@@ -282,7 +282,7 @@ Future<ApiResponse> apiRequest({
       navigatorKey.currentContext!.read<HomeProvider>().checkMaintenanceMode();
     }
 
-    Utils().showLog('Catch error =>> ${e.toString()}');
+    Utils().showLog('Catch error =>> ${e.toString()}  \n ERROR ON => $url');
     if (showProgress) closeGlobalProgressDialog();
     return ApiResponse(status: false, message: Const.errSomethingWrong);
   }

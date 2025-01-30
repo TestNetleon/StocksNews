@@ -326,6 +326,7 @@
 //   }
 // }
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
@@ -570,9 +571,10 @@ class _TradOrderScreenState extends State<TradOrderScreen> {
           ),
           SpacerVertical(height: 10),
           Visibility(
-            visible: tsProvider
-                    .userData?.userConditionalOrderPermission?.bracketOrder ==
-                true,
+            visible: tsProvider.userData?.userConditionalOrderPermission
+                        ?.bracketOrder ==
+                    true ||
+                kDebugMode,
             child: Text(
               "Conditional orders",
               style: stylePTSansBold(
@@ -582,9 +584,10 @@ class _TradOrderScreenState extends State<TradOrderScreen> {
             ),
           ),
           Visibility(
-            visible: tsProvider
-                    .userData?.userConditionalOrderPermission?.bracketOrder ==
-                true,
+            visible: tsProvider.userData?.userConditionalOrderPermission
+                        ?.bracketOrder ==
+                    true ||
+                kDebugMode,
             child: BuyOrderItem(
                 title: "Bracket Order",
                 subtitle:
