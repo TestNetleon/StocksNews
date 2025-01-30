@@ -13,7 +13,8 @@ import 'package:stocks_news_new/widgets/theme_button.dart';
 
 import '../../../utils/colors.dart';
 
-Future showCOrderSuccessSheet(SummaryOrderNew? order, ConditionType? conditionalType) async {
+Future showCOrderSuccessSheet(
+    SummaryOrderNew? order, ConditionType? conditionalType) async {
   await showModalBottomSheet(
     useSafeArea: true,
     shape: const RoundedRectangleBorder(
@@ -40,7 +41,10 @@ class SuccessConditionalSheet extends StatelessWidget {
   final ConditionType? conditionalType;
   final bool close;
   const SuccessConditionalSheet(
-      {super.key, this.order, required this.conditionalType, this.close = false});
+      {super.key,
+      this.order,
+      required this.conditionalType,
+      this.close = false});
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +59,7 @@ class SuccessConditionalSheet extends StatelessWidget {
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
           colors: [
-            conditionalType==ConditionType.bracketOrder
+            conditionalType == ConditionType.bracketOrder
                 ? ThemeColors.bottomsheetGradient
                 : const Color.fromARGB(255, 35, 0, 0),
             Colors.black,
@@ -101,8 +105,8 @@ class SuccessConditionalSheet extends StatelessWidget {
                           ),
                           Text(
                             order?.name ?? 'N/A',
-                            style:
-                                styleGeorgiaRegular(color: ThemeColors.greyText),
+                            style: styleGeorgiaRegular(
+                                color: ThemeColors.greyText),
                           ),
                         ],
                       ),
@@ -210,7 +214,9 @@ class SuccessConditionalSheet extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            conditionalType==ConditionType.bracketOrder? "Bracket Order":"Buy To Cover",
+                            conditionalType == ConditionType.bracketOrder
+                                ? "Bracket Order"
+                                : "Buy to Cover",
                             style: styleGeorgiaRegular(
                               color: ThemeColors.white,
                             ),

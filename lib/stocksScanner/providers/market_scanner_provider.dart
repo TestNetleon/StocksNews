@@ -295,17 +295,17 @@ class MarketScannerProvider extends ChangeNotifier {
 
   void updateData(List<MarketScannerRes>? data) {
     if (data == null) return;
-    for (var a in data) {
-      if (a.identifier == 'TSLA') {
-        Utils().showLog('Data:Volume ${a.volume}');
-        Utils().showLog('Data:Last ${a.last}');
-        Utils().showLog('Data:ExtPrice ${a.extendedHoursPrice}');
+    // for (var a in data) {
+    //   if (a.identifier == 'TSLA') {
+    //     Utils().showLog('Data:Volume ${a.volume}');
+    //     Utils().showLog('Data:Last ${a.last}');
+    //     Utils().showLog('Data:ExtPrice ${a.extendedHoursPrice}');
 
-        Utils().showLog(
-            'Dollar vol.: ${(a.volume ?? 0) * (a.extendedHoursPrice ?? 0)}');
-        Utils().showLog('Dollar vol.1: ${(a.volume ?? 0) * (a.last ?? 0)}');
-      }
-    }
+    //     Utils().showLog(
+    //         'Dollar vol.: ${(a.volume ?? 0) * (a.extendedHoursPrice ?? 0)}');
+    //     Utils().showLog('Dollar vol.1: ${(a.volume ?? 0) * (a.last ?? 0)}');
+    //   }
+    // }
 
     data.removeWhere((item) {
       if (item.sector == (_filterParams?.sector ?? "Consumer Cyclical")) {

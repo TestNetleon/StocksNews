@@ -35,7 +35,9 @@ class TsOpenListProvider extends ChangeNotifier {
   }
 
   void _updateStockData(
-      TsOpenListRes holdingStk, StockDataManagerRes stockData) {
+    TsOpenListRes holdingStk,
+    StockDataManagerRes stockData,
+  ) {
     Utils().showLog('Holding: ${stockData.toMap()}');
     if (_data == null) return;
 
@@ -146,7 +148,6 @@ class TsOpenListProvider extends ChangeNotifier {
       totalMarketValue += stock.currentInvested ?? 0;
 
       todaysReturn += returnData['todaysReturn'] ?? 0;
-
       if (_dataMap.containsKey(stock.id)) {
         _dataMap[stock.id]!['todaysReturn'] = returnData['todaysReturn']!;
       } else {
@@ -156,12 +157,14 @@ class TsOpenListProvider extends ChangeNotifier {
           'todaysReturnPercentage': returnData['todaysReturnPercentage']!,
         };
       }
+      notifyListeners();
     }
 
 // Log the final results
     // if (kDebugMode) {
     //   Utils().showLog("Total Market Value: $totalMarketValue");
     // }
+
     if (kDebugMode) {
       Utils().showLog("Total Today's Return: $todaysReturn");
     }
@@ -175,14 +178,13 @@ class TsOpenListProvider extends ChangeNotifier {
           .map((item) => item.investedChange ?? 0.0)
           .fold(0.0, (prev, element) => prev + element);
     }
+    notifyListeners();
 
     provider.updateBalance(
       marketValue: totalMarketValue,
       totalReturn: mainReturn,
       todayReturn: todaysReturn,
     );
-
-    notifyListeners();
   }
 
   Map<String, num> _calculateTodaysReturn(
@@ -248,7 +250,7 @@ class TsOpenListProvider extends ChangeNotifier {
   Future<void> getData() async {
     TsPortfolioProvider provider =
         navigatorKey.currentContext!.read<TsPortfolioProvider>();
-    provider.getDashboardData();
+    await provider.getDashboardData();
 
     setStatus(Status.loading);
 

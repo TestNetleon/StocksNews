@@ -35,10 +35,13 @@ class TournamentSearchProvider extends ChangeNotifier {
   Future getSearchDefaults() async {
     setStatus(Status.loading);
     try {
-      TournamentProvider provider = navigatorKey.currentContext!.read<TournamentProvider>();
+      TournamentProvider provider =
+          navigatorKey.currentContext!.read<TournamentProvider>();
       Map request = {
-        "token": navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
-         "tournament_battle_id":'${provider.detailRes?.tournamentBattleId ?? ''}',
+        "token":
+            navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
+        "tournament_battle_id":
+            '${provider.detailRes?.tournamentBattleId ?? ''}',
       };
 
       ApiResponse response = await apiRequest(
@@ -128,8 +131,8 @@ class TournamentSearchProvider extends ChangeNotifier {
 
       SSEManager.instance.addListener(
         stock?.symbol ?? '',
-            (data) {
-          Utils().showLog('Detail: ${data.toMap()}');
+        (data) {
+          // Utils().showLog('Detail: ${data.toMap()}');
           _tappedStock = data;
           _tappedStock?.price = data.price;
           _tappedStock?.change = data.change;
@@ -144,7 +147,7 @@ class TournamentSearchProvider extends ChangeNotifier {
               buttonRes?.orderChange = ((OP - CP) / CP) * 100;
             }
             Map<String, dynamic> logData = {
-              'Symbol':  stock?.symbol ?? '',
+              'Symbol': stock?.symbol ?? '',
               'CurrentPrice': CP,
               'OrderPrice': OP,
               'OrderChange': buttonRes?.orderChange,
@@ -157,7 +160,6 @@ class TournamentSearchProvider extends ChangeNotifier {
         SimulatorEnum.detail,
         // SimulatorEnum.detail,
       );
-
     } catch (e) {
       Utils().showLog('---$e');
     }

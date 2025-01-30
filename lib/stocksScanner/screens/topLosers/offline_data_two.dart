@@ -5,7 +5,9 @@ import 'package:stocks_news_new/stocksScanner/manager/losers_stream.dart';
 import 'package:stocks_news_new/stocksScanner/modals/scanner_res.dart';
 import 'package:stocks_news_new/stocksScanner/providers/top_loser_scanner_provider.dart';
 import 'package:stocks_news_new/stocksScanner/screens/topGainers/scanner_header.dart';
+import 'package:stocks_news_new/stocksScanner/screens/topGainers/top_gainer_filter.dart';
 import 'package:stocks_news_new/utils/colors.dart';
+import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import '../../../utils/utils.dart';
 import '../sorting/shorting.dart';
@@ -41,7 +43,7 @@ class _TopLosersOfflineTwoState extends State<TopLosersOfflineTwo> {
           context.read<TopLoserScannerProvider>();
       // provider.startListeningPorts();
       // provider.getOfflineData();
-      provider.clearFilter();
+      provider.resetLiveFilter();
     });
   }
 
@@ -71,6 +73,29 @@ class _TopLosersOfflineTwoState extends State<TopLosersOfflineTwo> {
       child: Column(
         children: [
           TopGainerScannerHeader(isOnline: false),
+          ScannerTopGainerFilter(
+            onPercentClick: () async {
+              provider.applyFilter(2);
+              provider.applyFilterValuesOnly(SortByEnums.perChange.name, true);
+              showGlobalProgressDialog();
+              await MarketLosersStream.instance.getOfflineData();
+              closeGlobalProgressDialog();
+            },
+            onVolumnClick: () async {
+              provider.applyFilter(3);
+              provider.applyFilterValuesOnly(SortByEnums.volume.name, true);
+              showGlobalProgressDialog();
+              await MarketLosersStream.instance.getOfflineData();
+              closeGlobalProgressDialog();
+            },
+            onRestartClick: () {
+              MarketLosersStream().initializePorts();
+              // provider.clearFilter();
+            },
+            isPercent: provider.filterParams?.sortBy == 2,
+            isVolume: provider.filterParams?.sortBy == 3,
+            orderByAsc: provider.filterParams?.sortByAsc,
+          ),
           Container(
             padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
             alignment: Alignment.centerRight,
@@ -99,24 +124,28 @@ class _TopLosersOfflineTwoState extends State<TopLosersOfflineTwo> {
                             Utils().showLog(
                                 '${received.type}, ${received.ascending}');
 
-                            if (received.type == SortByEnums.volume &&
-                                (provider.filterParams == null ||
-                                    provider.filterParams?.sortByHeader ==
-                                        SortByEnums.perChange.name)) {
-                              Utils().showLog("--- By Volume");
-                              provider.applyFilterValuesOnly(
-                                  received.type.name, received.ascending);
-                              await MarketLosersStream.instance
-                                  .getOfflineData();
-                            } else if (received.type == SortByEnums.perChange &&
-                                provider.filterParams?.sortByHeader ==
-                                    SortByEnums.volume.name) {
-                              Utils().showLog("--- By % change");
-                              provider.applyFilterValuesOnly(
-                                  received.type.name, received.ascending);
-                              await MarketLosersStream.instance
-                                  .getOfflineData();
-                            }
+                            // if (received.type == SortByEnums.volume &&
+                            //     (provider.filterParams == null ||
+                            //         provider.filterParams?.sortByHeader ==
+                            //             SortByEnums.perChange.name)) {
+                            //   Utils().showLog("--- By Volume");
+                            //   provider.applyFilterValuesOnly(
+                            //       received.type.name, received.ascending);
+                            //   showGlobalProgressDialog();
+                            //   await MarketLosersStream.instance
+                            //       .getOfflineData();
+                            //   closeGlobalProgressDialog();
+                            // } else if (received.type == SortByEnums.perChange &&
+                            //     provider.filterParams?.sortByHeader ==
+                            //         SortByEnums.volume.name) {
+                            //   Utils().showLog("--- By % change");
+                            //   provider.applyFilterValuesOnly(
+                            //       received.type.name, received.ascending);
+                            //   showGlobalProgressDialog();
+                            //   await MarketLosersStream.instance
+                            //       .getOfflineData();
+                            //   closeGlobalProgressDialog();
+                            // }
                             // else {
                             Utils().showLog("--- Sorting");
                             provider.applySorting(

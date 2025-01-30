@@ -71,8 +71,19 @@ class _TopLoserScannerHeaderState extends State<TopLoserScannerHeader> {
         marketStatus = 'Post Market';
       }
 
-      if (!(dataList[0].extendedHoursType == "PostMarket" ||
-          dataList[0].extendedHoursType == "PreMarket")) {
+      // if (!(dataList[0].extendedHoursType == "PostMarket" ||
+      //     dataList[0].extendedHoursType == "PreMarket")) {
+      //   marketStatus = "Live";
+      // }
+
+      int count = 0;
+      for (int i = 0; i < dataList.length && i < 4; i++) {
+        if (!(dataList[i].extendedHoursType == "PostMarket" ||
+            dataList[i].extendedHoursType == "PreMarket")) {
+          count++;
+        }
+      }
+      if (count >= 1) {
         marketStatus = "Live";
       }
     } else if (offlineData != null) {

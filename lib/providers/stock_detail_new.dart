@@ -2586,32 +2586,38 @@ class StockDetailProviderNew extends ChangeNotifier {
             screenType: 'stock_analysis', source: _tabRes?.shareUrl ?? '');
 
         try {
-
-          if(_tabRes?.showExtendedHoursData!=false){
+          if (_tabRes?.showExtendedHoursData != false) {
             SSEManager.instance.connectStock(
               screen: SimulatorEnum.detail,
-              symbol:symbol ?? "",
+              symbol: symbol ?? "",
             );
-            _tabRes?.extendedHoursData?.extendedHoursTime = _formatExtendedHoursTime(_tabRes?.extendedHoursData?.extendedHoursTime);
+            _tabRes?.extendedHoursData?.extendedHoursTime =
+                _formatExtendedHoursTime(
+                    _tabRes?.extendedHoursData?.extendedHoursTime);
             SSEManager.instance.addListener(
               symbol ?? "",
-                  (stockData) {
+              (stockData) {
                 Utils().showLog('Detail: ${stockData.toMap()}');
 
                 if (stockData.price != null) {
-                  _tabRes?.extendedHoursData?.extendedHoursPrice = stockData.price;
-                  _tabRes?.extendedHoursData?.extendedHoursChange = stockData.change;
+                  _tabRes?.extendedHoursData?.extendedHoursPrice =
+                      stockData.price;
+                  _tabRes?.extendedHoursData?.extendedHoursChange =
+                      stockData.change;
                 }
                 if (stockData.change != null) {
-                  _tabRes?.extendedHoursData?.extendedHoursChange = stockData.change;
+                  _tabRes?.extendedHoursData?.extendedHoursChange =
+                      stockData.change;
                 }
                 if (stockData.changePercentage != null) {
-                  _tabRes?.extendedHoursData?.extendedHoursPercentChange = stockData.changePercentage;
+                  _tabRes?.extendedHoursData?.extendedHoursPercentChange =
+                      stockData.changePercentage;
                 }
                 _tabRes?.extendedHoursData?.extendedHoursType = stockData.type;
 
                 if (stockData.time != null) {
-                  _tabRes?.extendedHoursData?.extendedHoursTime = _formatExtendedHoursTime(stockData.time);
+                  _tabRes?.extendedHoursData?.extendedHoursTime =
+                      _formatExtendedHoursTime(stockData.time);
                 }
                 if (stockData.price != null) {
                   _tabRes?.extendedHoursData?.last = stockData.price;
@@ -2621,15 +2627,14 @@ class StockDetailProviderNew extends ChangeNotifier {
                   _tabRes?.extendedHoursData?.change = stockData.change;
                 }
                 if (stockData.changePercentage != null) {
-                  _tabRes?.extendedHoursData?.percentChange = stockData.changePercentage;
+                  _tabRes?.extendedHoursData?.percentChange =
+                      stockData.changePercentage;
                 }
                 notifyListeners();
               },
               SimulatorEnum.detail,
             );
           }
-
-
         } catch (e) {
           //
         }

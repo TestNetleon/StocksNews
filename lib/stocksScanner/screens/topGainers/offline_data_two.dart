@@ -5,6 +5,7 @@ import 'package:stocks_news_new/stocksScanner/manager/gainers_stream.dart';
 import 'package:stocks_news_new/stocksScanner/modals/scanner_res.dart';
 import 'package:stocks_news_new/stocksScanner/providers/top_gainer_scanner_provider.dart';
 import 'package:stocks_news_new/stocksScanner/screens/topGainers/scanner_header.dart';
+import 'package:stocks_news_new/stocksScanner/screens/topGainers/top_gainer_filter.dart';
 // import 'package:stocks_news_new/stocksScanner/providers/market_scanner_provider.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
@@ -43,7 +44,7 @@ class _TopGainerOfflineTwoState extends State<TopGainerOfflineTwo> {
           context.read<TopGainerScannerProvider>();
       // provider.startListeningPorts();
       // provider.getOfflineData();
-      provider.clearFilter();
+      provider.resetLiveFilter();
     });
   }
 
@@ -73,6 +74,29 @@ class _TopGainerOfflineTwoState extends State<TopGainerOfflineTwo> {
       child: Column(
         children: [
           TopGainerScannerHeader(isOnline: false),
+          ScannerTopGainerFilter(
+            onPercentClick: () async {
+              provider.applyFilter(2);
+              provider.applyFilterValuesOnly(SortByEnums.perChange.name, true);
+              showGlobalProgressDialog();
+              await MarketGainersStream.instance.getOfflineData();
+              closeGlobalProgressDialog();
+            },
+            onVolumnClick: () async {
+              provider.applyFilter(3);
+              provider.applyFilterValuesOnly(SortByEnums.volume.name, true);
+              showGlobalProgressDialog();
+              await MarketGainersStream.instance.getOfflineData();
+              closeGlobalProgressDialog();
+            },
+            onRestartClick: () {
+              MarketGainersStream().initializePorts();
+              // provider.clearFilter();
+            },
+            isPercent: provider.filterParams?.sortBy == 2,
+            isVolume: provider.filterParams?.sortBy == 3,
+            orderByAsc: provider.filterParams?.sortByAsc,
+          ),
           Container(
             padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
             alignment: Alignment.centerRight,
@@ -100,26 +124,26 @@ class _TopGainerOfflineTwoState extends State<TopGainerOfflineTwo> {
                           sortByCallBack: (received) async {
                             Utils().showLog(
                                 '${received.type}, ${received.ascending} ');
-                            if (received.type == SortByEnums.volume &&
-                                (provider.filterParams == null ||
-                                    provider.filterParams?.sortByHeader ==
-                                        SortByEnums.perChange.name)) {
-                              provider.applyFilterValuesOnly(
-                                  received.type.name, received.ascending);
-                              showGlobalProgressDialog();
-                              await MarketGainersStream.instance
-                                  .getOfflineData();
-                              closeGlobalProgressDialog();
-                            } else if (received.type == SortByEnums.perChange &&
-                                provider.filterParams?.sortByHeader ==
-                                    SortByEnums.volume.name) {
-                              provider.applyFilterValuesOnly(
-                                  received.type.name, received.ascending);
-                              showGlobalProgressDialog();
-                              await MarketGainersStream.instance
-                                  .getOfflineData();
-                              closeGlobalProgressDialog();
-                            }
+                            // if (received.type == SortByEnums.volume &&
+                            //     (provider.filterParams == null ||
+                            //         provider.filterParams?.sortByHeader ==
+                            //             SortByEnums.perChange.name)) {
+                            //   provider.applyFilterValuesOnly(
+                            //       received.type.name, received.ascending);
+                            //   showGlobalProgressDialog();
+                            //   await MarketGainersStream.instance
+                            //       .getOfflineData();
+                            //   closeGlobalProgressDialog();
+                            // } else if (received.type == SortByEnums.perChange &&
+                            //     provider.filterParams?.sortByHeader ==
+                            //         SortByEnums.volume.name) {
+                            //   provider.applyFilterValuesOnly(
+                            //       received.type.name, received.ascending);
+                            //   showGlobalProgressDialog();
+                            //   await MarketGainersStream.instance
+                            //       .getOfflineData();
+                            //   closeGlobalProgressDialog();
+                            // }
 
                             provider.applySorting(
                                 received.type.name, received.ascending);

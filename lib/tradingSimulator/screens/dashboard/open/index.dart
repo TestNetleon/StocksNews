@@ -32,7 +32,7 @@ class _TsOpenListState extends State<TsOpenList> {
 
   Future _getData() async {
     TsOpenListProvider provider = context.read<TsOpenListProvider>();
-    await provider.getData();
+    provider.getData();
   }
 
   @override
@@ -54,9 +54,7 @@ class _TsOpenListState extends State<TsOpenList> {
       onRefresh: _getData,
       showPreparingText: true,
       child: CommonRefreshIndicator(
-        onRefresh: () async {
-          await _getData();
-        },
+        onRefresh: _getData,
         child: ListView.separated(
           padding: EdgeInsets.only(bottom: 20),
           itemBuilder: (context, index) {

@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
+import 'package:stocks_news_new/stocksScanner/manager/gainers_stream.dart';
 import 'package:stocks_news_new/stocksScanner/modals/market_scanner_res.dart';
 import 'package:stocks_news_new/stocksScanner/providers/top_gainer_scanner_provider.dart';
 import 'package:stocks_news_new/stocksScanner/screens/topGainers/scanner_header.dart';
+import 'package:stocks_news_new/stocksScanner/screens/topGainers/top_gainer_filter.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import '../../../utils/utils.dart';
@@ -40,6 +42,9 @@ class _TopGainerOnlineState extends State<TopGainerOnline> {
       // MarketScannerProvider provider = context.read<MarketScannerProvider>();
       // provider.startListeningPorts();
       // provider.getOfflineData();
+      TopGainerScannerProvider provider =
+          context.read<TopGainerScannerProvider>();
+      provider.resetLiveFilter();
     });
   }
 
@@ -67,6 +72,21 @@ class _TopGainerOnlineState extends State<TopGainerOnline> {
           child: Column(
             children: [
               TopGainerScannerHeader(isOnline: true),
+              ScannerTopGainerFilter(
+                onPercentClick: () {
+                  provider.applyFilter(2);
+                },
+                onVolumnClick: () {
+                  provider.applyFilter(3);
+                },
+                onRestartClick: () {
+                  MarketGainersStream().initializePorts();
+                  // provider.clearFilter();
+                },
+                isPercent: provider.filterParams?.sortBy == 2,
+                isVolume: provider.filterParams?.sortBy == 3,
+                orderByAsc: provider.filterParams?.sortByAsc,
+              ),
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                 alignment: Alignment.centerRight,
@@ -147,7 +167,21 @@ class _TopGainerOnlineState extends State<TopGainerOnline> {
             ],
           ),
         ),
-        // ScannerTopGainerFilter(),
+        // ScannerTopGainerFilter(
+        //   onPercentClick: () {
+        //     provider.applyFilter(2);
+        //   },
+        //   onVolumnClick: () {
+        //     provider.applyFilter(3);
+        //   },
+        //   onRestartClick: () {
+        //     MarketGainersStream().initializePorts();
+        //     provider.clearFilter();
+        //   },
+        //   isPercent: provider.filterParams?.sortBy == 2,
+        //   isVolume: provider.filterParams?.sortBy == 3,
+        //   orderByAsc: provider.filterParams?.sortByAsc,
+        // ),
       ],
     );
   }

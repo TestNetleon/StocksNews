@@ -224,9 +224,9 @@ class TsPendingListProvider extends ChangeNotifier {
   Future conditionalRedirection({required int index}) async {
     try {
       TradeProviderNew provider =
-      navigatorKey.currentContext!.read<TradeProviderNew>();
+          navigatorKey.currentContext!.read<TradeProviderNew>();
       ApiResponse response = await provider.getDetailTopData(
-        symbol:  _data?[index].symbol ?? '',
+        symbol: _data?[index].symbol ?? '',
         showProgress: true,
       );
       if (response.status) {
