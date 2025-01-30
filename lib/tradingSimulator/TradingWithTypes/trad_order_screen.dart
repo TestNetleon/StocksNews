@@ -588,7 +588,7 @@ class _TradOrderScreenState extends State<TradOrderScreen> {
                   if (widget.symbol != null) {
                     navigatorKey.currentContext!
                         .read<TradingSearchProvider>()
-                        .conditionalRedirection(widget.symbol ?? "",tickerID:widget.tickerID);
+                        .conditionalRedirection(widget.symbol ?? "",tickerID:widget.tickerID,qty: widget.qty);
                   } else {
                     Navigator.push(
                       context,

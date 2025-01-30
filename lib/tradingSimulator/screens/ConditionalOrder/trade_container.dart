@@ -69,8 +69,10 @@ class _ConditionalContainerState extends State<ConditionalContainer> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       focusNode.requestFocus();
-      _availableBalance =
-          context.read<TsPortfolioProvider>().userData?.tradeBalance ?? 0;
+      _availableBalance = context.read<TsPortfolioProvider>().userData?.tradeBalance ?? 0;
+      if(widget.tickerID!=null){
+        controller.text=widget.qty.toString();
+      }
     });
   }
 
@@ -195,15 +197,10 @@ class _ConditionalContainerState extends State<ConditionalContainer> {
 
       return;
     }
-    Utils().showLog('~~~~~${widget.tickerID}~~~~');
     if(widget.tickerID!=null){
       final Map<String, dynamic> request = {
         "token": navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
-       // "action": "BUY",
-        //"symbol": detailRes?.symbol,
-       // "quantity": controller.text,
         "order_type": 'BRACKET_ORDER',
-       // "duration": "GOOD_UNTIL_CANCELLED",
         "target_price":targetPriceController.text,
         "stop_price": stopPriceController.text
       };
@@ -374,7 +371,6 @@ class _ConditionalContainerState extends State<ConditionalContainer> {
         }
       }
     }
-
   }
 
   _clear() {
@@ -537,18 +533,21 @@ class _ConditionalContainerState extends State<ConditionalContainer> {
                 children: [
                   const TsTopWidget(),
                   const SpacerVertical(height: 5),
-                  TradeCustomeSliding(
-                    menus: menus,
-                    onValueChanged: (index) {
-                      setState(() {
-                        selectedIndex = index;
-                        _selectedTock=selectedIndex==0?StockType.buy:StockType.short;
-                      });
+                  Visibility(
+                    visible: widget.tickerID==null,
+                    child: TradeCustomeSliding(
+                      menus: menus,
+                      onValueChanged: (index) {
+                        setState(() {
+                          selectedIndex = index;
+                          _selectedTock=selectedIndex==0?StockType.buy:StockType.short;
+                        });
 
-                    },
-                    selectedIndex: selectedIndex,
+                      },
+                      selectedIndex: selectedIndex,
+                    ),
                   ),
-                  const SpacerVertical(height: 5),
+                  Visibility(visible: widget.tickerID==null,child: const SpacerVertical(height: 5)),
                   TextfieldTrade(
                     controller: controller,
                     focusNode: focusNode,
@@ -559,6 +558,7 @@ class _ConditionalContainerState extends State<ConditionalContainer> {
                     change: _onChange,
                     counter: _keyCounter,
                     lastEntered: _lastEntered,
+                    readOnly: (widget.tickerID==null?false:true),
                   ),
                   Text(
                     'Enter number of shares',

@@ -96,41 +96,9 @@ class TickerItem extends StatelessWidget {
                               ),
                             ],
                           ),
-                          /*Visibility(
-                            visible: data?.type != null,
-                            child: Text(
-                              data?.type == "sell" ? "SELL" : "BUY",
-                              style: stylePTSansRegular(
-                                  fontSize: 12,
-                                  color:data?.type == "sell"
-                                      ? Colors.red
-                                      : Colors.green),
-                            ),
-                          ),*/
                         ],
                       ),
                     ),
-                    /* const SpacerHorizontal(width: 10),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        Visibility(
-                          visible: data?.performance!=null,
-                          child:  Text(
-                            "${data?.performance??"0"}%",
-                            style: stylePTSansRegular(color: (data?.performance ?? 0) > 0 ? Colors.green : Colors.red,),
-                          ),
-                        ),
-                        Visibility(
-                          visible: data?.gainLoss!=null,
-                          child:  Text(
-                            data?.gainLoss??"0",
-                            style: stylePTSansRegular(fontSize: 12, color: (data?.performance ?? 0) > 0 ? Colors.green : Colors.red),
-                          ),
-                        ),
-                      ],
-                    )
-*/
                   ],
                 ),
                 Divider(

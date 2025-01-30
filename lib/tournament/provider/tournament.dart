@@ -482,12 +482,10 @@ class TournamentProvider extends ChangeNotifier {
       );
       if (response.status) {
         _userData = tournamentUserDetailResFromMap(jsonEncode(response.data));
-        //isSVG = isSvgFromUrl(_userData?.userStats?.image);
         _errorUserData = null;
       } else {
         _userData = null;
         _errorUserData = response.message ?? Const.errSomethingWrong;
-        // showErrorMessage(message: response.message);
       }
       _extraOfUserData =
           (response.extra is Extra ? response.extra as Extra : null);
