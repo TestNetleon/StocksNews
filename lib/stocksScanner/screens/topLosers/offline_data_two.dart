@@ -76,14 +76,14 @@ class _TopLosersOfflineTwoState extends State<TopLosersOfflineTwo> {
           ScannerTopGainerFilter(
             onPercentClick: () async {
               provider.applyFilter(2);
-              provider.applyFilterValuesOnly(SortByEnums.perChange.name, true);
+              // provider.applyFilterValuesOnly(SortByEnums.perChange.name, true);
               showGlobalProgressDialog();
               await MarketLosersStream.instance.getOfflineData();
               closeGlobalProgressDialog();
             },
             onVolumnClick: () async {
               provider.applyFilter(3);
-              provider.applyFilterValuesOnly(SortByEnums.volume.name, true);
+              // provider.applyFilterValuesOnly(SortByEnums.volume.name, true);
               showGlobalProgressDialog();
               await MarketLosersStream.instance.getOfflineData();
               closeGlobalProgressDialog();

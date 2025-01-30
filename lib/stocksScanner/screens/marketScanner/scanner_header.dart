@@ -54,39 +54,58 @@ class _MarketScannerHeaderState extends State<MarketScannerHeader> {
   @override
   Widget build(BuildContext context) {
     MarketScannerProvider provider = context.watch<MarketScannerProvider>();
-    List<MarketScannerRes>? dataList = provider.dataList;
-    List<ScannerRes>? offlineData = provider.offlineDataList;
-
     String marketStatus = "";
+    if (provider.port?.port?.checkMarketOpenApi?.isMarketOpen == true) {
+      marketStatus = "Live";
+    } else if (provider.port?.port?.checkMarketOpenApi?.checkPreMarket ==
+        true) {
+      marketStatus = "Pre Market";
+    } else {
+      _lastUpdated =
+          provider.port?.port?.checkMarketOpenApi?.extendedHoursDate ?? "";
+      marketStatus = "Post Market";
+    }
+
+    // MarketScannerProvider provider = context.watch<MarketScannerProvider>();
+    // List<MarketScannerRes>? dataList = provider.dataList;
+    // List<ScannerRes>? offlineData = provider.offlineDataList;
+    // if (offlineData != null && offlineData.isNotEmpty) {
+    //   _lastUpdated =
+    //       provider.port?.port?.checkMarketOpenApi?.extendedHoursDate ?? "";
+    // }
+
     // if (dataList == null && offlineData == null) {
     //   return SizedBox();
     // }
-    if ((dataList == null || dataList.isEmpty) &&
-        (offlineData == null || offlineData.isEmpty)) {
-      return SizedBox();
-    } else if (dataList != null && dataList.isNotEmpty) {
-      marketStatus = dataList[0].extendedHoursType ?? "";
-      if (marketStatus == 'PreMarket') {
-        marketStatus = 'Pre Market';
-      } else if (marketStatus == 'PostMarket') {
-        marketStatus = 'Post Market';
-      }
-      if (!(dataList[0].extendedHoursType == "PostMarket" ||
-          dataList[0].extendedHoursType == "PreMarket")) {
-        marketStatus = "Live";
-      }
-    } else if (offlineData != null && offlineData.isNotEmpty) {
-      marketStatus = offlineData[0].ext?.extendedHoursType ?? "Closed";
-      _lastUpdated = offlineData[0].closeDate;
-    } else if (marketStatus == "") {
-      marketStatus = provider.marketStatus == "PostMarket"
-          ? 'Post Market'
-          : provider.marketStatus == "PreMarket"
-              ? 'Pre Market'
-              : '';
-    }
-    // Utils().showLog("DTAE => ${dataList![0].time}");
 
+    // if ((dataList == null || dataList.isEmpty) &&
+    //     (offlineData == null || offlineData.isEmpty)) {
+    //   return SizedBox();
+    // } else if (dataList != null && dataList.isNotEmpty) {
+    //   marketStatus = dataList[0].extendedHoursType ?? "";
+    //   if (marketStatus == 'PreMarket') {
+    //     marketStatus = 'Pre Market';
+    //   } else if (marketStatus == 'PostMarket') {
+    //     marketStatus = 'Post Market';
+    //   }
+    //   if (!(dataList[0].extendedHoursType == "PostMarket" ||
+    //       dataList[0].extendedHoursType == "PreMarket")) {
+    //     marketStatus = "Live";
+    //   }
+    // } else if (offlineData != null && offlineData.isNotEmpty) {
+    //   marketStatus = offlineData[0].ext?.extendedHoursType == "PostMarket"
+    //       ? 'Post Market'
+    //       : 'Post Market';
+    //   // offlineData[0].ext?.extendedHoursType ?? "Post Market";
+    //   _lastUpdated = offlineData[0].closeDate;
+    // } else if (marketStatus == "") {
+    //   marketStatus = provider.marketStatus == "PostMarket"
+    //       ? 'Post Market'
+    //       : provider.marketStatus == "PreMarket"
+    //           ? 'Pre Market'
+    //           : '';
+    // }
+    // Utils().showLog("DATE => ${dataList![0].time}");
     return Text(
       "Market Status : $marketStatus  |   Last Updated : $_lastUpdated",
       // "Market Status : $marketStatus  |   Last Updated : ",

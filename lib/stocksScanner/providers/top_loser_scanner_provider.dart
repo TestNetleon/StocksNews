@@ -307,11 +307,12 @@ class TopLoserScannerProvider extends ChangeNotifier {
   //   });
   // }
 
-  void applyFilterValuesOnly(String sortBy, bool isAscending) {
+  void applyFilterValuesOnly(String sortByHeader, bool isAscending,
+      {int? sortBy}) {
     _filterParams = FilterParamsGainerLoser(
       sortBy: _filterParams?.sortBy,
       sortByAsc: isAscending,
-      sortByHeader: sortBy,
+      sortByHeader: sortByHeader,
     );
     notifyListeners();
   }
@@ -381,7 +382,6 @@ class TopLoserScannerProvider extends ChangeNotifier {
       sortByAsc: true,
       sortByHeader: SortByEnums.perChange.name,
     );
-
     notifyListeners();
   }
 

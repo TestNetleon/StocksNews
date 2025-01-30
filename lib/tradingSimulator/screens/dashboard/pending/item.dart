@@ -46,11 +46,26 @@ class TsPendingListItem extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Visibility(
+                            visible: item?.symbol != null && item?.symbol != '',
+                            child: Container(
+                              margin: EdgeInsets.only(bottom: 2),
+                              child: Text(
+                                "${item?.symbol}",
+                                style: styleGeorgiaBold(fontSize: 18),
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                          ),
+                          Visibility(
                             visible:
                                 item?.company != null && item?.company != '',
                             child: Text(
                               "${item?.company}",
-                              style: styleGeorgiaBold(fontSize: 18),
+                              style: styleGeorgiaBold(
+                                fontSize: 15,
+                                color: ThemeColors.greyText,
+                              ),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                             ),
@@ -61,7 +76,6 @@ class TsPendingListItem extends StatelessWidget {
                               child: Text(
                                 // "Price: ${item?.price}",
                                 "Price at Market",
-
                                 style: styleGeorgiaRegular(
                                   // color: ThemeColors.greyText,
                                   fontSize: 14,
@@ -118,7 +132,8 @@ class TsPendingListItem extends StatelessWidget {
                   ],
                 ),
                 Visibility(
-                  visible: item?.orderTypeOriginal != null && item?.orderTypeOriginal != 'MARKET_ORDER',
+                  visible: item?.orderTypeOriginal != null &&
+                      item?.orderTypeOriginal != 'MARKET_ORDER',
                   child: Column(
                     children: [
                       const Divider(color: ThemeColors.greyBorder, height: 10),
@@ -186,7 +201,8 @@ class TsPendingListItem extends StatelessWidget {
                       ),
                     ),
                     Visibility(
-                      visible: item?.orderTypeOriginal != null && item?.orderTypeOriginal != 'MARKET_ORDER',
+                      visible: item?.orderTypeOriginal != null &&
+                          item?.orderTypeOriginal != 'MARKET_ORDER',
                       child: Expanded(
                         child: Align(
                           alignment: Alignment.centerRight,
@@ -217,6 +233,7 @@ class TsPendingListItem extends StatelessWidget {
                     ),
                   ],
                 ),
+
                 // Visibility(
                 //   visible: item?.orderType.limitOrder.status ??
                 //       item?.orderType.targetPrice.status ??

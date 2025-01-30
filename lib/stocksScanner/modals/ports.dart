@@ -13,9 +13,7 @@ String scannerPortsResToJson(ScannerPortsRes data) =>
 class ScannerPortsRes {
   final PortRes? port;
 
-  ScannerPortsRes({
-    this.port,
-  });
+  ScannerPortsRes({this.port});
 
   factory ScannerPortsRes.fromJson(Map<String, dynamic> json) =>
       ScannerPortsRes(
@@ -67,7 +65,7 @@ class CheckMarketOpenApiRes {
   final bool? isMarketOpen;
   final String? extendedHoursType;
   final String? extendedHoursTime;
-  final DateTime? extendedHoursDate;
+  final String? extendedHoursDate;
   final bool? checkPostMarket;
   final bool? checkPreMarket;
   final String? dateTime;
@@ -89,9 +87,7 @@ class CheckMarketOpenApiRes {
         isMarketOpen: json["isMarketOpen"],
         extendedHoursType: json["ExtendedHoursType"],
         extendedHoursTime: json["ExtendedHoursTime"],
-        extendedHoursDate: json["ExtendedHoursDate"] == null
-            ? null
-            : DateTime.parse(json["ExtendedHoursDate"]),
+        extendedHoursDate: json["ExtendedHoursDate"],
         checkPostMarket: json["checkPostMarket"],
         checkPreMarket: json["checkPreMarket"],
         dateTime: json["dateTime"],
@@ -102,8 +98,7 @@ class CheckMarketOpenApiRes {
         "isMarketOpen": isMarketOpen,
         "ExtendedHoursType": extendedHoursType,
         "ExtendedHoursTime": extendedHoursTime,
-        "ExtendedHoursDate":
-            "${extendedHoursDate!.year.toString().padLeft(4, '0')}-${extendedHoursDate!.month.toString().padLeft(2, '0')}-${extendedHoursDate!.day.toString().padLeft(2, '0')}",
+        "ExtendedHoursDate": extendedHoursDate,
         "checkPostMarket": checkPostMarket,
         "checkPreMarket": checkPreMarket,
         "dateTime": dateTime,

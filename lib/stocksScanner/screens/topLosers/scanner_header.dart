@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/stocksScanner/modals/market_scanner_res.dart';
 import 'package:stocks_news_new/stocksScanner/modals/scanner_res.dart';
+import 'package:stocks_news_new/stocksScanner/providers/market_scanner_provider.dart';
 import 'package:stocks_news_new/stocksScanner/providers/top_loser_scanner_provider.dart';
 // import 'package:stocks_news_new/stocksScanner/providers/top_gainer_scanner_provider.dart';
 // import 'package:stocks_news_new/stocksScanner/providers/market_scanner_provider.dart';
@@ -56,46 +57,55 @@ class _TopLoserScannerHeaderState extends State<TopLoserScannerHeader> {
 
   @override
   Widget build(BuildContext context) {
-    TopLoserScannerProvider provider = context.watch<TopLoserScannerProvider>();
-    List<MarketScannerRes>? dataList = provider.dataList;
-    List<ScannerRes>? offlineData = provider.offlineDataList;
-
+    MarketScannerProvider provider = context.watch<MarketScannerProvider>();
     String marketStatus = "";
-    if (dataList == null && offlineData == null) {
-      return SizedBox();
-    } else if (dataList != null && dataList.isNotEmpty) {
-      marketStatus = dataList[0].extendedHoursType ?? "";
-      if (marketStatus == 'PreMarket') {
-        marketStatus = 'Pre Market';
-      } else if (marketStatus == 'PostMarket') {
-        marketStatus = 'Post Market';
-      }
-
-      // if (!(dataList[0].extendedHoursType == "PostMarket" ||
-      //     dataList[0].extendedHoursType == "PreMarket")) {
-      //   marketStatus = "Live";
-      // }
-
-      int count = 0;
-      for (int i = 0; i < dataList.length && i < 4; i++) {
-        if (!(dataList[i].extendedHoursType == "PostMarket" ||
-            dataList[i].extendedHoursType == "PreMarket")) {
-          count++;
-        }
-      }
-      if (count >= 1) {
-        marketStatus = "Live";
-      }
-    } else if (offlineData != null) {
-      marketStatus = offlineData[0].ext?.extendedHoursType ?? "Closed";
-      if (marketStatus == 'PreMarket') {
-        marketStatus = 'Pre Market';
-      } else if (marketStatus == 'PostMarket') {
-        marketStatus = 'Post Market';
-      }
-      _lastUpdated = offlineData[0].closeDate;
+    if (provider.port?.port?.checkMarketOpenApi?.isMarketOpen == true) {
+      marketStatus = "Live";
+    } else if (provider.port?.port?.checkMarketOpenApi?.checkPreMarket ==
+        true) {
+      marketStatus = "Pre Market";
+    } else {
+      _lastUpdated =
+          provider.port?.port?.checkMarketOpenApi?.extendedHoursDate ?? "";
+      marketStatus = "Post Market";
     }
 
+    // TopLoserScannerProvider provider = context.watch<TopLoserScannerProvider>();
+    // List<MarketScannerRes>? dataList = provider.dataList;
+    // List<ScannerRes>? offlineData = provider.offlineDataList;
+    // String marketStatus = "";
+    // if (dataList == null && offlineData == null) {
+    //   return SizedBox();
+    // } else if (dataList != null && dataList.isNotEmpty) {
+    //   marketStatus = dataList[0].extendedHoursType ?? "";
+    //   if (marketStatus == 'PreMarket') {
+    //     marketStatus = 'Pre Market';
+    //   } else if (marketStatus == 'PostMarket') {
+    //     marketStatus = 'Post Market';
+    //   }
+    //   // if (!(dataList[0].extendedHoursType == "PostMarket" ||
+    //   //     dataList[0].extendedHoursType == "PreMarket")) {
+    //   //   marketStatus = "Live";
+    //   // }
+    //   int count = 0;
+    //   for (int i = 0; i < dataList.length && i < 4; i++) {
+    //     if (!(dataList[i].extendedHoursType == "PostMarket" ||
+    //         dataList[i].extendedHoursType == "PreMarket")) {
+    //       count++;
+    //     }
+    //   }
+    //   if (count >= 1) {
+    //     marketStatus = "Live";
+    //   }
+    // } else if (offlineData != null) {
+    //   marketStatus = offlineData[0].ext?.extendedHoursType ?? "Closed";
+    //   if (marketStatus == 'PreMarket') {
+    //     marketStatus = 'Pre Market';
+    //   } else if (marketStatus == 'PostMarket') {
+    //     marketStatus = 'Post Market';
+    //   }
+    //   _lastUpdated = offlineData[0].closeDate;
+    // }
     // if (marketStatus == "") {
     //   marketStatus = provider.marketStatus ?? "";
     // }

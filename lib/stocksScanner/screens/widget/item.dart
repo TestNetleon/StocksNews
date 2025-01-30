@@ -25,6 +25,7 @@ class ScannerBaseItem extends StatelessWidget {
 
     String volume =
         num.parse("${(data?.volume ?? 0)}").toUSDFormat(showDollar: false);
+
     bool preMarket = data?.ext?.extendedHoursType == "PreMarket";
     bool postMarket = data?.ext?.extendedHoursType == "PostMarket";
 
@@ -33,6 +34,7 @@ class ScannerBaseItem extends StatelessWidget {
         : preMarket
             ? 'Pre Mkt. Price'
             : null;
+
     num lastTrade = data?.price ?? 0;
     num netChange = data?.change ?? 0;
     num perChange = data?.changesPercentage ?? 0;
@@ -170,8 +172,8 @@ class ScannerBaseItem extends StatelessWidget {
                         ),
                       ),
                       Visibility(
-                        visible:
-                            prePost != null && prePost != '' && !showPreMarket,
+                        visible: false,
+                        //prePost != null && prePost != '' && !showPreMarket,
                         child: Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(8),
