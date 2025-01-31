@@ -133,7 +133,10 @@ class TournamentLeaderboardItem extends StatelessWidget {
                               ),
                               Text(
                                 'Reward Points',
-                                style: stylePTSansRegular(fontSize: 10,color: ThemeColors.greyText),
+                                style: stylePTSansRegular(
+                                  fontSize: 14,
+                                  color:ThemeColors.greyText
+                                ),
                               ),
                             ],
                           ),
@@ -170,7 +173,7 @@ class TournamentLeaderboardItem extends StatelessWidget {
                     Visibility(
                       visible:from == 3? false:true,
                       child: Flexible(
-                          child: _richPrices1(label: "Gain/Loss: ",value: "${data.performance??"0"}%")
+                          child: _richPrices1(label: "Performance: ",value: "${data.performance??"0"}%")
                       ),
                     ),
                     Visibility(
@@ -183,7 +186,7 @@ class TournamentLeaderboardItem extends StatelessWidget {
                     if(from == 2)
                       Flexible(
                         child:
-                        Visibility(child: _richPrices(label: "Per. Points: ",value: "${data.performancePoint}")),
+                        Visibility(child: _richPrices(label: "Perf. Points: ",value: "${data.performancePoint}")),
                       ),
                   ],
                 ),

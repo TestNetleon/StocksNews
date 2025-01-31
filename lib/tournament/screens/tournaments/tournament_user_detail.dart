@@ -167,11 +167,14 @@ class _TournamentUserDetailState extends State<TournamentUserDetail> {
                               value: provider.userData?.userStats?.exp ?? ""),
                         ]),
                       ),
-                      const SpacerVertical(height: 14),
-                      ScreenTitle(
-                        title: "Cumulative Stats",
-                        style: styleGeorgiaBold(fontSize: 16),
-                        dividerPadding: EdgeInsets.zero,
+                      Visibility(visible: provider.userData?.userStats?.name!=null||provider.userData?.userStats?.name!='',child: const SpacerVertical(height: 14)),
+                      Visibility(
+                        visible: provider.userData?.userStats?.name!=null||provider.userData?.userStats?.name!='',
+                        child: ScreenTitle(
+                          title: "${provider.userData?.userStats?.name ??""} Stats",
+                          style: styleGeorgiaBold(fontSize: 16),
+                          dividerPadding: EdgeInsets.zero,
+                        ),
                       ),
                       const SpacerVertical(height: 12),
                       GridView.builder(

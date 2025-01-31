@@ -92,6 +92,9 @@ class _TradingLineChartState extends State<TradingLineChart>  with SingleTickerP
                 rightTitles: AxisTitles(
                   sideTitles: SideTitles(showTitles: false),
                 ),
+                topTitles: AxisTitles(
+                  sideTitles: SideTitles(showTitles: false),
+                ),
                 bottomTitles: AxisTitles(
                   sideTitles: SideTitles(
                     showTitles: true,
