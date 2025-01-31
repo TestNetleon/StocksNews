@@ -91,6 +91,8 @@ class ThemeColors {
   static const transparentGreen = Color.fromARGB(92, 146, 247, 106);
   static const lightGreen = Color.fromARGB(255, 111, 252, 120);
   static const sos = Color(0xFFF44336);
+  static const gold = Color(0xfff9f0c2);
+  static const silver = Color(0xffedf1f4);
   static const bronze = Color(0xffccb593);
   static const blue = Color(0xFF21DEF3);
   static const white = Colors.white;

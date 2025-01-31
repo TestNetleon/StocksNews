@@ -103,7 +103,7 @@ class TlItem extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Flexible(
-                        child: _richPrices(label: "Gain/Loss: ",value: "${data?.performance??"0"}%")
+                        child: _richPrices(label: "Performance: ",value: "${data?.performance??"0"}%")
                     ),
                     const SpacerHorizontal(width: 10),
                     Flexible(

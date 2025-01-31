@@ -5,10 +5,13 @@ import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/tournament/models/tour_user_detail.dart';
 import 'package:stocks_news_new/tournament/provider/tournament.dart';
 import 'package:stocks_news_new/tournament/screens/tournaments/widgets/grid_boxs.dart';
+import 'package:stocks_news_new/tournament/screens/tournaments/widgets/growth_chart.dart';
 import 'package:stocks_news_new/tournament/screens/tournaments/widgets/info_box.dart';
+import 'package:stocks_news_new/tournament/screens/tournaments/widgets/line_chart_9.dart';
 import 'package:stocks_news_new/tournament/screens/tournaments/widgets/ticker_item.dart';
 import 'package:stocks_news_new/tournament/screens/tournaments/widgets/tl_item.dart';
 import 'package:stocks_news_new/tournament/screens/tournaments/widgets/trading_line_chart.dart';
+import 'package:stocks_news_new/tradingSimulator/manager/sse.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -47,6 +50,12 @@ class _TournamentUserDetailState extends State<TournamentUserDetail> {
 
   String formatDate(DateTime date) {
     return DateFormat('dd MMM yyyy').format(date);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    SSEManager.instance.disconnectScreen(SimulatorEnum.tournament);
   }
 
   @override
@@ -131,13 +140,7 @@ class _TournamentUserDetailState extends State<TournamentUserDetail> {
                           ),
                         ),
                       ),
-                      /*const SpacerVertical(height: 5),
-                      Text(
-                        provider.extraOfUserData?.subTitle ?? "",
-                        textAlign: TextAlign.center,
-                        style: stylePTSansRegular(
-                            fontSize: 12, color: ThemeColors.greyText),
-                      ),*/
+
                       const SpacerVertical(height: 10),
                       Container(
                         padding: const EdgeInsets.symmetric(
@@ -157,17 +160,17 @@ class _TournamentUserDetailState extends State<TournamentUserDetail> {
                         child: Row(children: [
                           InfoBox(
                               label: 'Performance',
-                              value:
-                                  "${provider.userData?.userStats?.performance ?? ""}%"),
-                          /* InfoBox(
-                              label: 'Rank',
-                              value: provider.userData?.userStats?.rank ?? ""),*/
+                              value: "${provider.userData?.userStats?.performance ?? ""}%",
+                            values: provider.userData?.userStats?.performance ?? 0,
+                          ),
                           InfoBox(
                               label: 'Exp.',
-                              value: provider.userData?.userStats?.exp ?? ""),
+                              value: provider.userData?.userStats?.exp ?? "",
+                            values: provider.userData?.userStats?.performance ?? 0
+                          ),
                         ]),
                       ),
-                      Visibility(visible: provider.userData?.userStats?.name!=null||provider.userData?.userStats?.name!='',child: const SpacerVertical(height: 14)),
+                     /* Visibility(visible: provider.userData?.userStats?.name!=null||provider.userData?.userStats?.name!='',child: const SpacerVertical(height: 14)),
                       Visibility(
                         visible: provider.userData?.userStats?.name!=null||provider.userData?.userStats?.name!='',
                         child: ScreenTitle(
@@ -175,7 +178,7 @@ class _TournamentUserDetailState extends State<TournamentUserDetail> {
                           style: styleGeorgiaBold(fontSize: 16),
                           dividerPadding: EdgeInsets.zero,
                         ),
-                      ),
+                      ),*/
                       const SpacerVertical(height: 12),
                       GridView.builder(
                         physics: NeverScrollableScrollPhysics(),
@@ -188,10 +191,12 @@ class _TournamentUserDetailState extends State<TournamentUserDetail> {
                         shrinkWrap: true,
                         itemBuilder: (context, index) {
                           Info? info = provider.userData?.userStats?.info?[index];
-                          return GridBoxs(info: info);
+                          String valueString = info?.value ?? "";
+                          bool isNegative = valueString.contains('-');
+                          return GridBoxs(info: info,isNegative:isNegative);
                         },
                       ),
-                      const SpacerVertical(height: 13),
+                      const SpacerVertical(height: 20),
                       Visibility(
                         visible:
                             (provider.userData?.recentTrades?.status != false),
@@ -208,7 +213,7 @@ class _TournamentUserDetailState extends State<TournamentUserDetail> {
                       Visibility(
                           visible:
                               (provider.userData?.recentTrades?.status != false),
-                          child: const SpacerVertical(height: 13)),
+                          child: const SpacerVertical(height:20)),
                       ListView.separated(
                         shrinkWrap: true,
                         physics: NeverScrollableScrollPhysics(),
@@ -229,7 +234,7 @@ class _TournamentUserDetailState extends State<TournamentUserDetail> {
                           return SpacerVertical(height: 10);
                         },
                       ),
-                      const SpacerVertical(height: 10),
+                      const SpacerVertical(height: 15),
                       Visibility(
                         visible: (provider.userData?.chart?.title != null),
                         child: ScreenTitle(
@@ -239,13 +244,15 @@ class _TournamentUserDetailState extends State<TournamentUserDetail> {
                           dividerPadding: EdgeInsets.zero,
                         ),
                       ),
-                      const SpacerVertical(height: 13),
+                      const SpacerVertical(),
                       Visibility(
                         visible: provider.userData?.chart != null,
-                        child: TradingLineChart(
-                            gChart: provider.userData?.chart?.gChart?.toList()),
+                        child: GrowthChart(
+                            chart: provider.userData?.chart?.gChart?.toList()),
                       ),
-                      const SpacerVertical(height: 13),
+
+                   //   LineChartSample9(gChart: provider.userData?.chart?.gChart?.toList()),
+                      const SpacerVertical(height: 25),
                       Visibility(
                         visible:
                             (provider.userData?.recentBattles?.status != false),
@@ -259,10 +266,12 @@ class _TournamentUserDetailState extends State<TournamentUserDetail> {
                           dividerPadding: EdgeInsets.zero,
                         ),
                       ),
+
                       Visibility(
                           visible:
                               provider.userData?.recentBattles?.status != false,
-                          child: const SpacerVertical(height: 13)),
+                          child: const SpacerVertical(height: 13)
+                      ),
                       ListView.separated(
                         shrinkWrap: true,
                         physics: NeverScrollableScrollPhysics(),

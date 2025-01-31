@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stocks_news_new/tournament/models/tour_user_detail.dart';
+import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 
 import 'package:stocks_news_new/widgets/cache_network_image.dart';
@@ -52,9 +53,28 @@ class TickerItem extends StatelessWidget {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text(
-                                    data?.symbol ?? '',
-                                    style: styleGeorgiaBold(fontSize: 17),
+                                  Row(
+                                    children: [
+                                      Text(
+                                        data?.symbol ?? '',
+                                        style: styleGeorgiaBold(fontSize: 17),
+                                      ),
+                                      Visibility(visible: data?.status == 0,child: const SpacerHorizontal(width: 5)),
+                                      Visibility(
+                                        visible: data?.status == 0,
+                                        child: Text(
+                                          '(${data?.currentPrice?.toFormattedPrice() ?? '\$0'})',
+                                          style: stylePTSansBold(
+                                              fontSize: 14,
+                                              color: (data?.currentPrice ?? 0) > 0
+                                                  ? ThemeColors.themeGreen
+                                                  : (data?.currentPrice ?? 0) == 0
+                                                  ? ThemeColors.white
+                                                  : ThemeColors.darkRed
+                                          ),
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                   Visibility(
                                     visible: data?.type != null,
@@ -99,6 +119,7 @@ class TickerItem extends StatelessWidget {
                         ],
                       ),
                     ),
+
                   ],
                 ),
                 Divider(
@@ -110,12 +131,12 @@ class TickerItem extends StatelessWidget {
                   children: [
                     Flexible(
                       child: _richPrices(
-                          label: "Order price: ", value: data?.orderPrice),
+                          label: "Order price: ", value: data?.orderPrice?.toFormattedPrice() ?? '\$0'),
                     ),
                     const SpacerHorizontal(width: 10),
                     Flexible(
                         child: _richPrices(
-                            label: "Close price: ", value: data?.closePrice)),
+                            label: "Close price: ", value: data?.closePrice?.toFormattedPrice() ?? '\$0')),
                   ],
                 ),
               ],
@@ -133,13 +154,15 @@ class TickerItem extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Flexible(
-                    child: _richPrices1(
-                        label: "Gain/Loss: ", value: data?.gainLoss ?? "0")),
+                    child: _richPrices1(label: "Gain/Loss: ", value: data?.gainLoss?.toFormattedPrice() ?? '\$0',values: data?.gainLoss??0)),
                 const SpacerHorizontal(width: 10),
                 Flexible(
                   child: _richPrices1(
                       label: "Performance: ",
-                      value: "${data?.performance ?? "0"}%"),
+                      value: "${data?.performance?.toCurrency()??"0"}%",
+                      values: data?.performance??0
+                  ),
+
                 ),
               ],
             ),
@@ -182,7 +205,7 @@ class TickerItem extends StatelessWidget {
         ]));
   }
 
-  Widget _richPrices1({String? label, String? value}) {
+  Widget _richPrices1({String? label, String? value, num? values}) {
     if (value == null || value.isEmpty) return SizedBox();
     return RichText(
         text: TextSpan(
@@ -196,9 +219,9 @@ class TickerItem extends StatelessWidget {
             text: value,
             style: stylePTSansBold(
                 fontSize: 14,
-                color: (data?.performance ?? 0) > 0
+                color: (values ?? 0) > 0
                     ? ThemeColors.themeGreen
-                    : (data?.performance ?? 0) == 0
+                    : (values ?? 0) == 0
                         ? ThemeColors.white
                         : ThemeColors.darkRed),
           )

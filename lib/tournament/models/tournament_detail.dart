@@ -28,6 +28,8 @@ class TournamentDetailRes {
   final String? image;
   final String? leaderboardSubTitle;
   final String? leaderboardTitle;
+  final String? tournamentLastDate;
+  final String? tournamentNextDate;
 
   TournamentDetailRes({
     this.tournamentRules,
@@ -48,6 +50,8 @@ class TournamentDetailRes {
     this.image,
     this.leaderboardSubTitle,
     this.leaderboardTitle,
+    this.tournamentLastDate,
+    this.tournamentNextDate,
   });
 
   factory TournamentDetailRes.fromJson(Map<String, dynamic> json) =>
@@ -83,6 +87,8 @@ class TournamentDetailRes {
         leaderboardSubTitle: json["leaderboard_sub_title"],
         leaderboardTitle: json["leaderboard_title"],
         isMarketOpen: json["isMarketOpen"],
+        tournamentLastDate: json["tournament_last_date"],
+        tournamentNextDate: json["tournament_next_date"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -110,6 +116,8 @@ class TournamentDetailRes {
             ? []
             : List<dynamic>.from(todayLeaderboard!.map((x) => x.toJson())),
         "isMarketOpen": isMarketOpen,
+        "tournament_last_date": tournamentLastDate,
+        "tournament_next_date": tournamentNextDate,
       };
 }
 

@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:stocks_news_new/screens/tabs/home/widgets/featured/widgets/title.dart';
 import 'package:stocks_news_new/tournament/provider/tournament.dart';
+import 'package:stocks_news_new/tournament/screens/tournaments/pointsPaid/index.dart';
 import 'package:stocks_news_new/tournament/screens/tournaments/widgets/header.dart';
+import 'package:stocks_news_new/tournament/screens/tournaments/widgets/info_box.dart';
+import 'package:stocks_news_new/utils/colors.dart';
+import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/custom/refresh_indicator.dart';
@@ -45,6 +50,35 @@ class _TournamentsIndexState extends State<TournamentsIndex> {
         child: CustomScrollView(
           physics: AlwaysScrollableScrollPhysics(),
           slivers: [
+           /* SliverToBoxAdapter(
+              child: Container(
+                margin:const EdgeInsets.only(bottom: 10),
+                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  gradient: const LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    transform: GradientRotation(0.9),
+                    colors: [
+                      ThemeColors.bottomsheetGradient,
+                      ThemeColors.accent,
+                    ],
+                  ),
+                ),
+                child: Row(children: [
+                  InfoBox(
+                      label: 'Performance',
+                      value:""),
+                   InfoBox(
+                                label: 'Rank',
+                                value:""),
+                  InfoBox(
+                      label: 'Points',
+                      value:""),
+                ]),
+              ),
+            ),*/
             SliverToBoxAdapter(
               child: Visibility(
                 visible: provider.data?.heading != null &&
@@ -95,18 +129,28 @@ class _TournamentsIndexState extends State<TournamentsIndex> {
                   padding: const EdgeInsets.only(top: 10),
                   child: Column(
                     children: [
-                      SpacerVertical(height:8),
+                      const SpacerVertical(height:8),
+                      FeaturedWatchlistTitle(
+                        title:provider.data?.topTradingTitans?.title,
+                        onTap: () {
+                          var selectedTournament = TournamentsHead.playTraders;
+                          Navigator.push(context, MaterialPageRoute(
+                            builder: (context) {
+                              return TournamentPointsPaidIndex(selectedTournament:selectedTournament);
+                            },
+                          ));
+                        },
+                      ),
+                      const SpacerVertical(height:3),
                       ScreenTitle(
-                        title: provider.data?.topTradingTitans?.title,
-                        style: styleGeorgiaBold(fontSize: 17),
                         subTitle: provider.data?.topTradingTitans?.subTitle,
                         dividerPadding: EdgeInsets.zero,
                       ),
-                      SpacerVertical(height:10),
+                      const SpacerVertical(height:10),
                       TopTraders(
                         list: provider.data?.topTradingTitans?.data,
                       ),
-                      SpacerVertical(),
+                      const SpacerVertical(),
                     ],
                   ),
                 ),

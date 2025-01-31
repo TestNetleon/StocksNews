@@ -154,7 +154,7 @@ class _TradingLineChartState extends State<TradingLineChart>  with SingleTickerP
       color: color,
       barWidth: 2,
       isStrokeCapRound: true,
-      belowBarData: BarAreaData(show: true),
+      belowBarData: BarAreaData(show: false),
       dotData: FlDotData(
         show: true,
         getDotPainter: (spot, percent, barData, index) {

@@ -9,7 +9,10 @@ import 'package:stocks_news_new/screens/auth/base/base_auth.dart';
 import 'package:stocks_news_new/tournament/models/leaderboard.dart';
 import 'package:stocks_news_new/tournament/models/tour_user_detail.dart';
 import 'package:stocks_news_new/tournament/provider/leaderboard.dart';
+import 'package:stocks_news_new/tournament/provider/trades.dart';
 import 'package:stocks_news_new/tournament/screens/tournaments/tournament_user_detail.dart';
+import 'package:stocks_news_new/tradingSimulator/manager/sse.dart';
+import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
 import '../../api/api_requester.dart';
@@ -26,7 +29,10 @@ import '../screens/tournaments/dayTraining/open/index.dart';
 
 class TournamentProvider extends ChangeNotifier {
   int selectedTab = 0;
-
+  double progress = 0.0;
+  late Duration? _totalDuration;
+  Duration? _remainingTime = Duration.zero;
+  Color progressColor = ThemeColors.transparentGreen;
   onTabChange(index) {
     selectedTab = index;
     notifyListeners();
@@ -50,6 +56,7 @@ class TournamentProvider extends ChangeNotifier {
       hours = 24;
       minutes = 0;
       seconds = 0;
+      progress = 0;
       startCountdown();
     } else {
       _timer?.cancel();
@@ -91,17 +98,24 @@ class TournamentProvider extends ChangeNotifier {
       hours = 0;
       minutes = 0;
       seconds = 0;
+      progress = 0;
       notifyListeners();
     }
   }
 
   void _startTimer(Duration initialDuration, {required bool isStart}) {
-    // Set initial time
     hours = initialDuration.inHours;
     minutes = initialDuration.inMinutes % 60;
     seconds = initialDuration.inSeconds % 60;
+    // _totalDuration = _detailRes?.battleTime?.currentTime!.difference(_detailRes?.battleTime!.endTime??DateTime.now());
+    // _remainingTime = _totalDuration;
 
-    // Start the periodic timer
+    _totalDuration = _detailRes?.battleTime?.endTime!.difference(_detailRes?.battleTime!.startTime??DateTime.now());
+
+    // Calculate remaining time
+    _remainingTime = _detailRes?.battleTime?.endTime!.difference(DateTime.now());
+
+
     _timer = Timer.periodic(Duration(seconds: 1), (timer) {
       if (hours == 0 && minutes == 0 && seconds == 0) {
         // Stop the timer when countdown reaches zero
@@ -132,6 +146,15 @@ class TournamentProvider extends ChangeNotifier {
         // Decrement the countdown
         if (seconds > 0) {
           seconds--;
+          int elapsedSeconds = _totalDuration!.inSeconds - _remainingTime!.inSeconds;
+
+          // Progress calculation: fraction of elapsed time over total duration
+          progress = elapsedSeconds / _totalDuration!.inSeconds;
+
+         /* _remainingTime = _detailRes?.battleTime?.currentTime!.difference(DateTime.now());
+          progress = (_totalDuration!.inSeconds - _remainingTime!.inSeconds) / _totalDuration!.inSeconds;*/
+          progressColor = ThemeColors.transparentGreen;
+          print('progress $progress');
         } else {
           if (minutes > 0) {
             minutes--;
@@ -144,7 +167,6 @@ class TournamentProvider extends ChangeNotifier {
             }
           }
         }
-
         // Example: Notify 5 minutes before start or end
         if (hours == 0 && minutes == 5 && seconds == 0) {
           Utils().showLog(isStart
@@ -154,6 +176,16 @@ class TournamentProvider extends ChangeNotifier {
       }
       notifyListeners();
     });
+  }
+
+  Color _getProgressColor(double progress) {
+    if (progress <= 0.3) {
+      return Colors.greenAccent;
+    } else if (progress <= 0.7) {
+      return Colors.yellowAccent;
+    } else {
+      return Colors.redAccent;
+    }
   }
 
   void stopCountdown() {
@@ -482,6 +514,9 @@ class TournamentProvider extends ChangeNotifier {
       );
       if (response.status) {
         _userData = tournamentUserDetailResFromMap(jsonEncode(response.data));
+        if(_userData?.recentTrades?.dataTrade!= null && _userData?.recentTrades?.dataTrade!.isNotEmpty == true){
+          _startSseTrades();
+        }
         _errorUserData = null;
       } else {
         _userData = null;
@@ -497,5 +532,65 @@ class TournamentProvider extends ChangeNotifier {
       Utils().showLog('Error getDashboardData $e');
       setStatusUserData(Status.loaded);
     }
+  }
+
+  void _startSseTrades() {
+    List<String>? _symbols;
+    if (_userData?.recentTrades?.dataTrade != null && _userData?.recentTrades?.dataTrade!.isNotEmpty == true) {
+      _symbols = _userData?.recentTrades?.dataTrade
+          ?.where((trade) => trade.status == 0 && trade.symbol != null)
+          .map((trade) => trade.symbol!)
+          .toList();
+    }
+
+    if(_userData?.recentTrades?.dataTrade!=null){
+      List<RecentTradeRes> dataTrade = _userData?.recentTrades?.dataTrade??[];
+
+      for (var data in dataTrade) {
+        num currentPrice = data.currentPrice ?? 0;
+        num orderPrice = data.orderPrice ?? 0;
+        if (data.status == 0) {
+          print(data.status);
+          if (_symbols != null && _symbols.isNotEmpty == true) {
+            if (data.type == "buy") {
+              data.performance = orderPrice == 0 || currentPrice == 0 ? 0 : (((currentPrice - orderPrice) / orderPrice) * 100);
+            } else {
+              data.performance = currentPrice == 0 || orderPrice == 0 ? 0 : (((orderPrice - currentPrice) / currentPrice) * 100);
+            }
+            data.gainLoss = orderPrice == 0 || currentPrice == 0 ? 0 :(currentPrice - orderPrice);
+
+            notifyListeners();
+
+            SSEManager.instance.connectMultipleStocks(
+              symbols: _symbols,
+              screen: SimulatorEnum.tournament,
+            );
+
+            SSEManager.instance.addListener(
+              data.symbol ?? '',
+                  (stockData) {
+                num? newPrice = stockData.price;
+                if (newPrice != null) {
+                  if (data.type == "buy") {
+                    data.performance = (((newPrice - orderPrice) / orderPrice) * 100);
+                  } else {
+                    data.performance = (((orderPrice - newPrice) / newPrice) * 100);
+                  }
+                  data.gainLoss = (newPrice - orderPrice);
+                  data.currentPrice = newPrice;
+                }
+                Utils().showLog('Recent Activities ${data.symbol}, ${data.performance}, ${data.gainLoss}, ${data.currentPrice}');
+                notifyListeners();
+              },
+              SimulatorEnum.tournament,
+            );
+          }
+        }
+        else {
+          print(data.status);
+        }
+      }
+    }
+
   }
 }

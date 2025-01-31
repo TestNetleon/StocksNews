@@ -80,7 +80,7 @@ class PlayTraderItem extends StatelessWidget {
                       Visibility(
                         visible: data?.userName != null,
                         child: Text(
-                          data?.userName ?? "",
+                          data?.userName ?? "N/A",
                           style: stylePTSansRegular(fontSize: 14),
                         ),
                       ),
@@ -95,40 +95,54 @@ class PlayTraderItem extends StatelessWidget {
                     ],
                   ),
                 ),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Visibility(
-                        visible: data?.totalPoints != null,
-                        child: Text(
-                          '${data?.totalPoints}',
-                          style: styleGeorgiaBold(
-                            fontSize: 14,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                      Visibility(
-                        visible: data?.performance!=null,
-                        child: Align(
-                          alignment: Alignment.centerRight,
-                          child: Text(
-                            "${data?.performance??"0"}%",
-                            style: stylePTSansRegular(fontSize: 12, color: (data?.performance ?? 0) > 0 ? Colors.green :data?.performance==0?Colors.white: Colors.red,),
-                          ),
-                        ),
-                      ),
-                    ],
+              ],
+            ),
+            Divider(
+              color: ThemeColors.greyBorder,
+            ),
+
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Visibility(
+                  visible: data?.performance!=null,
+                  child: Flexible(
+                      child: _richPrices1(label: "Performance: ",value: "${data?.performance??"0"}%")
                   ),
-                )
+                ),
+                Visibility(
+                  visible: data?.totalPoints != null,
+                  child: Flexible(
+                    child:
+                    _richPrices1(label: "Reward Points: ",value: "${data?.totalPoints}"),
+                  ),
+                ),
 
               ],
             ),
-
           ],
         ),
       ),
+    );
+  }
+
+  Widget _richPrices1 ({String? label,String? value}) {
+    if(value==null||value.isEmpty) return SizedBox();
+    return RichText(
+        text: TextSpan(
+            text: label,
+            style: stylePTSansBold(
+              fontSize: 14,
+              color:ThemeColors.greyText,
+            ),
+            children: [
+              TextSpan(
+                  text: value,
+                  style: label=="Reward Points: "?stylePTSansRegular(fontSize: 14, color: ThemeColors.white):
+                  stylePTSansBold(fontSize: 14, color: (data?.performance ?? 0) > 0 ? ThemeColors.themeGreen:data?.performance==0?ThemeColors.white:ThemeColors.darkRed)
+              )
+            ]
+        )
     );
   }
 }
