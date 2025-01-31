@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/tournament/provider/leaderboard.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/widgets/cache_network_image.dart';
-import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:svg_flutter/svg_flutter.dart';
 import '../../../../utils/theme.dart';
 import '../../../../widgets/spacer_vertical.dart';
@@ -81,7 +80,9 @@ class TournamentLeaderboardTopItem extends StatelessWidget {
                         : ThemeColors.accent,
                 child: Text(
                   "${index + 1}",
-                  style:  index == 2 ?stylePTSansBold(color: ThemeColors.primary):stylePTSansBold(),
+                  style: index == 2
+                      ? stylePTSansBold(color: ThemeColors.primary)
+                      : stylePTSansBold(),
                 ),
               ),
             ],
@@ -95,53 +96,49 @@ class TournamentLeaderboardTopItem extends StatelessWidget {
               color: index == 2
                   ? ThemeColors.bronze
                   : index == 1
-                  ? Colors.orange
-                  : ThemeColors.accent,
+                      ? Colors.orange
+                      : ThemeColors.accent,
             ),
           ),
           Visibility(
-            visible: data?[index].rank!=null,
+            visible: data?[index].rank != null,
             child: Text(
               "${data?[index].rank}",
               style: stylePTSansBold(
-                color: index == 2
-                    ? ThemeColors.bronze
-                    : index == 1
-                    ? Colors.orange
-                    : ThemeColors.accent,
-                  fontSize: 12
-              ),
+                  color: index == 2
+                      ? ThemeColors.bronze
+                      : index == 1
+                          ? Colors.orange
+                          : ThemeColors.accent,
+                  fontSize: 12),
             ),
           ),
           Visibility(
-            visible: data?[index].totalPoints!=null,
+            visible: data?[index].totalPoints != null,
             child: Text(
               "${data?[index].totalPoints}",
               style: stylePTSansBold(
                   color: index == 2
                       ? ThemeColors.bronze
                       : index == 1
-                      ? Colors.orange
-                      : ThemeColors.accent,
-                  fontSize: 12
-              ),
+                          ? Colors.orange
+                          : ThemeColors.accent,
+                  fontSize: 12),
             ),
           ),
           Visibility(
-            visible: data?[index].performance!=null,
+            visible: data?[index].performance != null,
             child: Text(
               "${data?[index].performance}%",
               style: stylePTSansBold(
                   color: index == 2
                       ? ThemeColors.bronze
                       : index == 1
-                      ? Colors.orange
-                      : ThemeColors.accent,
-                  fontSize: 12
-              ),
+                          ? Colors.orange
+                          : ThemeColors.accent,
+                  fontSize: 12),
             ),
           ),
-
 
           /*Visibility(
             visible: data?[index].performance!=null,
