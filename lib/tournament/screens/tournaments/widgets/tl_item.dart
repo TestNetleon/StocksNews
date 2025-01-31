@@ -39,10 +39,6 @@ class TlItem extends StatelessWidget {
                       child: SizedBox(
                         width: 40.sp,
                         height: 40.sp,
-                      /*  decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            border: Border.all(color: ThemeColors.greyBorder)
-                        ),*/
                         child:
                         CachedNetworkImagesWidget(
                           data?.tournamentImage?? "",
@@ -67,24 +63,6 @@ class TlItem extends StatelessWidget {
                                   fontSize: 12, color: ThemeColors.greyText),
                             ),
                           ),
-                          /*Visibility(
-                            visible: data?.status != null,
-                            child: Text(
-                              data?.status == 1 ? "Live" : "Closed",
-                              style: stylePTSansRegular(
-                                  fontSize: 12,
-                                  color: data?.status == 1
-                                      ? Colors.green
-                                      : Colors.red),
-                            ),
-                          ),*/
-                          /*Visibility(
-                            visible: data?.performancePoints != null,
-                            child: Text(
-                              'Per. Points: ${data?.performancePoints}',
-                              style: stylePTSansRegular(fontSize: 12,color:ThemeColors.greyText),
-                            ),
-                          ),*/
                         ],
                       ),
                     ),
@@ -112,13 +90,6 @@ class TlItem extends StatelessWidget {
                             ),
                           ),
                         ),
-                       /* Visibility(
-                          visible: data?.performance!=null,
-                          child:  Text(
-                            "${data?.performance??"0"}%",
-                            style: stylePTSansRegular(fontSize: 14, color: (data?.performance ?? 0) > 0 ? Colors.green : Colors.red,),
-                          ),
-                        ),*/
                       ],
                     )
 
@@ -132,12 +103,12 @@ class TlItem extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Flexible(
-                        child: _richPrices(label: "Gain/Loss: ",value: "${data?.performance??"0"}%")
+                        child: _richPrices(label: "Performance: ",value: "${data?.performance??"0"}%")
                     ),
                     const SpacerHorizontal(width: 10),
                     Flexible(
                       child:
-                      _richPrices(label: "Per. Points: ",value: "${data?.performancePoints}"),
+                      _richPrices(label: "Perf. Points: ",value: "${data?.performancePoints}"),
                     ),
                   ],
                 ),
@@ -174,7 +145,7 @@ class TlItem extends StatelessWidget {
             children: [
               TextSpan(
                 text: value,
-                style: label=="Per. Points: "?stylePTSansRegular(fontSize: 14, color: ThemeColors.white):
+                style: label=="Perf. Points: "?stylePTSansRegular(fontSize: 14, color: ThemeColors.white):
                 stylePTSansBold(fontSize: 14, color: (data?.performance ?? 0) > 0 ? ThemeColors.themeGreen:data?.performance ==0?ThemeColors.white:ThemeColors.darkRed)
               )
             ]

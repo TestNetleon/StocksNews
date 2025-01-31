@@ -64,34 +64,18 @@ class TournamentTradeItem extends StatelessWidget {
                     ],
                   ),
                 ),
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 2),
-                  decoration: BoxDecoration(
-                    color: (data?.orderChange ?? 0) < 0
+                Text(
+                  "${data?.orderChange?.toCurrency() ?? 0} %",
+                  style: styleGeorgiaBold(
+                    fontSize: 13,
+                    color:(data?.orderChange ?? 0) < 0
                         ? ThemeColors.sos
-                        : ThemeColors.accent,
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  child: Text(
-                    "${data?.orderChange?.toCurrency() ?? 0} %",
-                    style: styleGeorgiaBold(
-                      fontSize: 13,
-                      color: ThemeColors.white,
-                    ),
+                        :
+                    data?.orderChange==0?
+                    ThemeColors.white:
+                    ThemeColors.accent,
                   ),
                 ),
-                // SpacerHorizontal(width: 10),
-                // Container(
-                //   decoration: BoxDecoration(
-                //     shape: BoxShape.circle,
-                //     color: data?.status == 1
-                //         ? ThemeColors.greyBorder
-                //         : data?.type == StockType.sell
-                //             ? ThemeColors.sos
-                //             : ThemeColors.accent,
-                //   ),
-                //   padding: EdgeInsets.all(10),
-                // )
               ],
             ),
           ),

@@ -92,6 +92,9 @@ class _TradingLineChartState extends State<TradingLineChart>  with SingleTickerP
                 rightTitles: AxisTitles(
                   sideTitles: SideTitles(showTitles: false),
                 ),
+                topTitles: AxisTitles(
+                  sideTitles: SideTitles(showTitles: false),
+                ),
                 bottomTitles: AxisTitles(
                   sideTitles: SideTitles(
                     showTitles: true,
@@ -151,7 +154,7 @@ class _TradingLineChartState extends State<TradingLineChart>  with SingleTickerP
       color: color,
       barWidth: 2,
       isStrokeCapRound: true,
-      belowBarData: BarAreaData(show: true),
+      belowBarData: BarAreaData(show: false),
       dotData: FlDotData(
         show: true,
         getDotPainter: (spot, percent, barData, index) {

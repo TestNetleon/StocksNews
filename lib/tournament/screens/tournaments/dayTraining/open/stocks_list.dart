@@ -194,7 +194,7 @@ class _OpenTopStockState extends State<OpenTopStock>
         context.watch<TournamentSearchProvider>();
 
     return Container(
-      margin: EdgeInsets.only(top: 15),
+      margin: EdgeInsets.only(top:5),
       child: Stack(
         alignment: Alignment.centerRight,
         children: [
@@ -203,7 +203,7 @@ class _OpenTopStockState extends State<OpenTopStock>
             indicatorColor: Colors.transparent,
             isScrollable: true,
             controller: _tabController,
-            labelPadding: EdgeInsets.only(right: 10),
+            labelPadding: EdgeInsets.only(right: 8),
             onTap: (index) {
               if (selectedIndex != index) {
                 selectedIndex = index;
@@ -246,26 +246,14 @@ class _OpenTopStockState extends State<OpenTopStock>
               );
             },
             child: Container(
-                height: 55,
-                width: 55,
+                height: 50,
+                width: 50,
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   color: const Color.fromARGB(255, 37, 37, 37),
-                  /* boxShadow: [
-                  BoxShadow(
-                    color: const Color.fromARGB(255, 0, 16, 3),
-                    offset: Offset(4, 0),
-                    blurRadius: 10,
-                    spreadRadius: 15,
-                  ),
-                ],*/
                 ),
                 child: Icon(Icons.search)
-                /*Text(
-                'All',
-                style: styleGeorgiaBold(),
-              ),*/
                 ),
           ),
         ],

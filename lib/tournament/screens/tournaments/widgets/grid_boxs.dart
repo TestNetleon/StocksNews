@@ -8,7 +8,8 @@ import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 class GridBoxs extends StatelessWidget {
   final Info? info;
-  const GridBoxs({super.key, this.info});
+  final bool? isNegative;
+  const GridBoxs({super.key, this.info, this.isNegative});
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +44,7 @@ class GridBoxs extends StatelessWidget {
                 child: Text(
                   info?.value ?? "",
                   style:
-                      styleGeorgiaBold(fontSize: 18, color: ThemeColors.white),
+                  styleGeorgiaBold(fontSize: 18, color: isNegative!? ThemeColors.darkRed:ThemeColors.themeGreen),
                   maxLines: 1,
                   textAlign: TextAlign.center,
                   overflow: TextOverflow.ellipsis,
