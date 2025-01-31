@@ -106,6 +106,7 @@ class _TournamentsIndexState extends State<TournamentsIndex> {
                       TopTraders(
                         list: provider.data?.topTradingTitans?.data,
                       ),
+                      SpacerVertical(),
                     ],
                   ),
                 ),

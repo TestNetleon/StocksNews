@@ -43,33 +43,33 @@ class DayTrainingTitle extends StatelessWidget {
                         alignment: PlaceholderAlignment.middle,
                         child: Text(
                           ' ${provider.timeRemaining['hours']} ',
-                          style: styleGeorgiaBold(fontSize: 20),
+                          style: styleGeorgiaBold(fontSize: 18),
                         ),
                       ),
                       TextSpan(
-                        text: ' hours : ',
+                        text: ' Hours : ',
                         style: styleGeorgiaRegular(color: ThemeColors.greyText),
                       ),
                       WidgetSpan(
                         alignment: PlaceholderAlignment.middle,
                         child: Text(
                           ' ${provider.timeRemaining['minutes']} ',
-                          style: styleGeorgiaBold(fontSize: 20),
+                          style: styleGeorgiaBold(fontSize: 18),
                         ),
                       ),
                       TextSpan(
-                        text: ' minutes : ',
+                        text: ' Minutes : ',
                         style: styleGeorgiaRegular(color: ThemeColors.greyText),
                       ),
                       WidgetSpan(
                         alignment: PlaceholderAlignment.middle,
                         child: Text(
                           ' ${provider.timeRemaining['seconds']} ',
-                          style: styleGeorgiaBold(fontSize: 20),
+                          style: styleGeorgiaBold(fontSize: 18),
                         ),
                       ),
                       TextSpan(
-                        text: ' seconds ',
+                        text: ' Seconds ',
                         style: styleGeorgiaRegular(color: ThemeColors.greyText),
                       ),
                     ],
@@ -79,7 +79,7 @@ class DayTrainingTitle extends StatelessWidget {
                   color: ThemeColors.greyText,
                 ),
                 Text(
-                  'Trading league Time',
+                  'Trading League Time',
                   style: styleGeorgiaBold(),
                 ),
                 Padding(
@@ -121,7 +121,8 @@ class DayTrainingTitle extends StatelessWidget {
                       ),
                     ],
                   ),
-                )
+                ),
+
               ],
             ),
           ),

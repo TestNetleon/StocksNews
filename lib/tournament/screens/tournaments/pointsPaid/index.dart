@@ -51,8 +51,6 @@ class _TournamentPointsPaidIndexState extends State<TournamentPointsPaidIndex> {
         showTrailing: false,
         title: provider.extraOfPointPaid?.title ?? 'Trades Executed',
         subTitle: provider.extraOfPointPaid?.subTitle,
-
-        /// displayed title,subtitle with dynamic value
       ),
       body: BaseUiContainer(
         hasData: provider.tradesExecuted != null &&
@@ -74,7 +72,7 @@ class _TournamentPointsPaidIndexState extends State<TournamentPointsPaidIndex> {
                     if (data == null) {
                       return SizedBox();
                     }
-                    if (index == 0) {
+                   /* if (index == 0) {
                       return Column(
                         children: [
                           Divider(
@@ -118,7 +116,7 @@ class _TournamentPointsPaidIndexState extends State<TournamentPointsPaidIndex> {
                           ),
                         ],
                       );
-                    }
+                    }*/
                     return LeagueTotalItem(
                       data: data,
                     );

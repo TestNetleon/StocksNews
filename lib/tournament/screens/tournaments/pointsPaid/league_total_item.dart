@@ -55,41 +55,77 @@ class LeagueTotalItem extends StatelessWidget {
                         data?.tournamentName ?? '',
                         style: styleGeorgiaBold(),
                       ),
-                      const SpacerVertical(height: 3),
+                      _richPrices(
+                        label: "User Joined: ",
+                        value: '${data?.joinUsers ?? 0}'
+                      ),
                       Visibility(
-                        visible: data?.status != null,
+                        visible: data?.date != null,
                         child: Text(
-                          data?.status == 1 ? "Live" : "Closed",
+                          data?.date ?? "",
                           style: stylePTSansRegular(
-                              fontSize: 14,
-                              color: data?.status == 1
-                                  ? Colors.green
-                                  : Colors.red),
+                              fontSize: 12, color: ThemeColors.greyText),
                         ),
                       ),
+
                     ],
                   ),
                 ),
-                Text(
-                  '${data?.joinUsers ?? 0}',
-                  style: styleGeorgiaBold(),
+                Visibility(
+                  visible: data?.status != null,
+                  child: Container(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 15,
+                      vertical: 2,
+                    ),
+                    decoration: BoxDecoration(
+                        border: Border.all(
+                          color: data?.status == 1
+                              ? ThemeColors.themeGreen
+                              : ThemeColors.darkRed,
+                        ),
+                        borderRadius:
+                        BorderRadius.circular(20)),
+                    child: Text(
+                      data?.status == 1 ? "Live" : "Closed",
+                      style: stylePTSansBold(
+                        fontSize: 10,
+                        color:data?.status == 1
+                            ? ThemeColors.themeGreen
+                            : ThemeColors.darkRed,
+                      ),
+                    ),
+                  ),
                 ),
+
               ],
             ),
-            Visibility(
-              visible: data?.date != null,
-              child: Align(
-                alignment: Alignment.centerRight,
-                child: Text(
-                  data?.date ?? "",
-                  style: stylePTSansRegular(
-                      fontSize: 12, color: ThemeColors.greyText),
-                ),
-              ),
-            ),
+
           ],
         ),
       ),
     );
   }
+
+  Widget _richPrices ({String? label,String? value}) {
+    if(value==null||value.isEmpty) return SizedBox();
+    return RichText(
+        text: TextSpan(
+            text: label,
+            style: stylePTSansBold(
+              fontSize: 14,
+              color:ThemeColors.greyText,
+            ),
+            children: [
+              TextSpan(
+                text: value,
+                style: stylePTSansRegular(
+                    fontSize: 14, color: ThemeColors.white
+                ),
+              )
+            ]
+        )
+    );
+  }
+
 }

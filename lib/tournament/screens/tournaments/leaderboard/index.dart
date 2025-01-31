@@ -141,10 +141,6 @@ class _TournamentLeaderboardState extends State<TournamentLeaderboard> {
                     );
                   }
 
-                  /*if (index == 1) {
-                    return const SizedBox();
-                  }*/
-
                   return TournamentLeaderboardItem(
                     data: data,
                     from: 2,
@@ -155,7 +151,7 @@ class _TournamentLeaderboardState extends State<TournamentLeaderboard> {
 
                   return SpacerVertical(height: 15);
                 },
-              )
+              ),
 
 
               /* ListView.separated(
