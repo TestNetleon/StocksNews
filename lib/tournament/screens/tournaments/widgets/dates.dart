@@ -1,11 +1,7 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:stocks_news_new/tournament/provider/leaderboard.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:intl/intl.dart';
-import 'package:stocks_news_new/utils/utils.dart';
 
 class CustomDateSelector extends StatefulWidget {
   final Function(DateTime) onDateSelected;
@@ -33,19 +29,21 @@ class _CustomDateSelectorState extends State<CustomDateSelector> {
   }
 
   void _createdDates() {
-    DateTime currentDate = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
-    if (widget.gameValue==false) {
+    DateTime currentDate =
+        DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
+    if (widget.gameValue == false) {
       currentDate = currentDate.subtract(Duration(days: 1));
     }
 
     selectedDate = widget.editedDate ?? currentDate;
-    final DateTime startDate = DateTime(selectedDate.year, selectedDate.month - 2, selectedDate.day);
+    final DateTime startDate =
+        DateTime(selectedDate.year, selectedDate.month - 2, selectedDate.day);
     fullDates = List.generate(
       currentDate.difference(startDate).inDays + 1,
-          (index) => startDate.add(Duration(days: index)),
+      (index) => startDate.add(Duration(days: index)),
     );
     int selectedIndex = fullDates.indexWhere((date) =>
-    date.year == selectedDate.year &&
+        date.year == selectedDate.year &&
         date.month == selectedDate.month &&
         date.day == selectedDate.day);
     if (selectedIndex >= 2) {
@@ -58,10 +56,9 @@ class _CustomDateSelectorState extends State<CustomDateSelector> {
     }
     widget.onDateSelected(selectedDate);
     setState(() {});
-
   }
 
- /* void shiftLeft() {
+  /* void shiftLeft() {
     setState(() {
       int currentIndex = fullDates.indexOf(selectedDate);
       if (currentIndex > 0) {
@@ -139,7 +136,6 @@ class _CustomDateSelectorState extends State<CustomDateSelector> {
     visibleDates = fullDates.sublist(startIdx, endIdx + 1);
     widget.onDateSelected(selectedDate);
   }
-
 
   String formatDate(DateTime date) {
     return DateFormat('dd MMM yy').format(date);

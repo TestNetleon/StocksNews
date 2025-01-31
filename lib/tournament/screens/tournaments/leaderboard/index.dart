@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/tournament/provider/leaderboard.dart';
 import 'package:stocks_news_new/tournament/screens/tournaments/leaderboard/item.dart';
 import 'package:stocks_news_new/tournament/screens/tournaments/leaderboard/top_no_item.dart';
-import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import '../../../../utils/colors.dart';
@@ -26,7 +24,7 @@ class _TournamentLeaderboardState extends State<TournamentLeaderboard> {
   @override
   void initState() {
     super.initState();
-   // WidgetsBinding.instance.addPostFrameCallback((_) {});
+    // WidgetsBinding.instance.addPostFrameCallback((_) {});
     //context.read<TournamentLeaderboardProvider>().showLeaderboard();
   }
 
@@ -36,10 +34,10 @@ class _TournamentLeaderboardState extends State<TournamentLeaderboard> {
     super.deactivate();
   }
 
-
   @override
   Widget build(BuildContext context) {
-    TournamentLeaderboardProvider provider = context.watch<TournamentLeaderboardProvider>();
+    TournamentLeaderboardProvider provider =
+        context.watch<TournamentLeaderboardProvider>();
     return Column(
       children: [
         CustomDateSelector(
@@ -52,7 +50,7 @@ class _TournamentLeaderboardState extends State<TournamentLeaderboard> {
             });
           },
         ),
-       /* BaseUiContainer(
+        /* BaseUiContainer(
           hasData: provider.battleRes != null,
           isLoading: provider.isLoadingBattle,
           error: provider.errorBattels,
@@ -79,11 +77,11 @@ class _TournamentLeaderboardState extends State<TournamentLeaderboard> {
               canLoadMore: provider.canLoadMore,
               onLoadMore: () async =>
                   await provider.leaderboard(loadMore: true),
-              child:
-              ListView.separated(
+              child: ListView.separated(
                 padding: EdgeInsets.only(top: 10),
                 itemBuilder: (context, index) {
-                  LeaderboardByDateRes? data = provider.leaderboardRes?.leaderboardByDate?[index];
+                  LeaderboardByDateRes? data =
+                      provider.leaderboardRes?.leaderboardByDate?[index];
                   if (data == null) return SizedBox();
                   if (provider.leaderboardRes?.showLeaderboard == false) {
                     return TournamentLeaderboardItem(
@@ -100,30 +98,46 @@ class _TournamentLeaderboardState extends State<TournamentLeaderboard> {
                           width: double.infinity,
                           child: Stack(
                             children: [
-                              if (provider.leaderboardRes!.leaderboardByDate!.length > 2 &&
-                                  (provider.leaderboardRes!.leaderboardByDate![1].performance ?? 0) > 0)
+                              if (provider.leaderboardRes!.leaderboardByDate!
+                                          .length >
+                                      2 &&
+                                  (provider
+                                              .leaderboardRes!
+                                              .leaderboardByDate![1]
+                                              .performance ??
+                                          0) >
+                                      0)
                                 const Positioned(
                                   left: 0,
                                   top: 70,
                                   child: TournamentLeaderboardTopItem(index: 1),
                                 )
-                              else Positioned(
-                                left: 0,
-                                top: 70,
-                                child: TopNoItem(index: 1),
-                              ),
-                              if (provider.leaderboardRes!.leaderboardByDate!.length > 3 &&
-                                  (provider.leaderboardRes!.leaderboardByDate![2].performance ?? 0) > 0)
+                              else
+                                Positioned(
+                                  left: 0,
+                                  top: 70,
+                                  child: TopNoItem(index: 1),
+                                ),
+                              if (provider.leaderboardRes!.leaderboardByDate!
+                                          .length >
+                                      3 &&
+                                  (provider
+                                              .leaderboardRes!
+                                              .leaderboardByDate![2]
+                                              .performance ??
+                                          0) >
+                                      0)
                                 const Positioned(
                                   right: 0,
                                   top: 70,
                                   child: TournamentLeaderboardTopItem(index: 2),
                                 )
-                              else Positioned(
-                                right: 0,
-                                top: 70,
-                                child: TopNoItem(index: 2),
-                              ),
+                              else
+                                Positioned(
+                                  right: 0,
+                                  top: 70,
+                                  child: TopNoItem(index: 2),
+                                ),
                               if (isTopPerformer)
                                 const Align(
                                   alignment: Alignment.topCenter,
@@ -132,7 +146,10 @@ class _TournamentLeaderboardState extends State<TournamentLeaderboard> {
                             ],
                           ),
                         ),
-                        if ((provider.leaderboardRes?.leaderboardByDate?.length ?? 0) > 3)
+                        if ((provider.leaderboardRes?.leaderboardByDate
+                                    ?.length ??
+                                0) >
+                            3)
                           const Divider(
                             color: ThemeColors.greyBorder,
                             height: 15,
@@ -146,13 +163,12 @@ class _TournamentLeaderboardState extends State<TournamentLeaderboard> {
                     from: 2,
                   );
                 },
-                itemCount: provider.leaderboardRes?.leaderboardByDate?.length ?? 0,
+                itemCount:
+                    provider.leaderboardRes?.leaderboardByDate?.length ?? 0,
                 separatorBuilder: (context, index) {
-
                   return SpacerVertical(height: 15);
                 },
               ),
-
 
               /* ListView.separated(
                 padding: EdgeInsets.only(top: 10),

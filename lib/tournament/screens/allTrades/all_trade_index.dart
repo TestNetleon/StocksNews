@@ -3,12 +3,10 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/tournament/provider/trades.dart';
 import 'package:stocks_news_new/tournament/screens/game_tournament_index.dart';
-import 'package:stocks_news_new/tournament/screens/tournaments/dayTraining/open/index.dart';
 import 'package:stocks_news_new/tradingSimulator/manager/sse.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/custom/refresh_indicator.dart';
-import 'package:stocks_news_new/widgets/screen_title.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import '../../../utils/colors.dart';
 import '../../../utils/theme.dart';
@@ -112,7 +110,6 @@ class _TournamentAllTradeIndexState extends State<TournamentAllTradeIndex> {
               ),
             ),
           ),
-
           Expanded(
             child: CommonRefreshIndicator(
               onRefresh: () async {
@@ -143,9 +140,8 @@ class _TournamentAllTradeIndexState extends State<TournamentAllTradeIndex> {
               ),
             ),
           ),
-
           Visibility(
-            visible:provider.myTrades?.data?.length==0,
+            visible: provider.myTrades?.data?.length == 0,
             child: ThemeButton(
               color: Colors.white,
               radius: 10,
@@ -158,12 +154,11 @@ class _TournamentAllTradeIndexState extends State<TournamentAllTradeIndex> {
                     ));
               },
               textColor: Colors.black,
-              text:'Place New Order',
+              text: 'Place New Order',
             ),
           ),
 
-
-         /* Visibility(
+          /* Visibility(
             visible:( provider.myTrades?.overview?[1].value == 0||provider.myTrades?.overview?[2].value != 0||provider.myTrades?.overview?[0].value != 0),
             child: ThemeButton(
               color: Colors.white,
