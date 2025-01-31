@@ -41,6 +41,29 @@ class RevenueCatService {
         ..appUserID = userRes?.userId ?? "";
     }
 
+    Map<String, String> attributes = {};
+
+    if (userRes?.username != null && userRes?.username != '') {
+      attributes['name'] = userRes?.username ?? 'N/A';
+    }
+
+    if (userRes?.email != null && userRes?.email != '') {
+      attributes['email'] = userRes?.email ?? 'N/A';
+    }
+    if (userRes?.email != null && userRes?.email != '') {
+      attributes['email'] = userRes?.email ?? 'N/A';
+    }
+
+    if (userRes?.phone != null && userRes?.phone != '') {
+      if (userRes?.phoneCode == null || userRes?.phoneCode == '') {
+        attributes['phone'] = userRes?.phone ?? 'N/A';
+      } else {
+        attributes['phone'] = '${userRes?.phoneCode}${userRes?.phone}';
+      }
+    }
+
+    Purchases.setAttributes(attributes);
+
     try {
       navigatorKey.currentContext!
           .read<MembershipProvider>()
