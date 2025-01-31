@@ -3,10 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:stocks_news_new/stocksScanner/modals/market_scanner_res.dart';
-import 'package:stocks_news_new/stocksScanner/modals/scanner_res.dart';
 import 'package:stocks_news_new/stocksScanner/providers/market_scanner_provider.dart';
-import 'package:stocks_news_new/stocksScanner/providers/top_loser_scanner_provider.dart';
 // import 'package:stocks_news_new/stocksScanner/providers/top_gainer_scanner_provider.dart';
 // import 'package:stocks_news_new/stocksScanner/providers/market_scanner_provider.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -65,8 +62,7 @@ class _TopLoserScannerHeaderState extends State<TopLoserScannerHeader> {
         true) {
       marketStatus = "Pre Market";
     } else {
-      _lastUpdated =
-          provider.port?.port?.checkMarketOpenApi?.extendedHoursDate ?? "";
+      _lastUpdated = provider.port?.port?.checkMarketOpenApi?.dateTime ?? "";
       marketStatus = "Post Market";
     }
 
