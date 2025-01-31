@@ -326,6 +326,7 @@
 //   }
 // }
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
@@ -417,6 +418,11 @@ class _TradOrderScreenState extends State<TradOrderScreen> {
     super.dispose();
   }
 
+  String? subtitleWithSymbol(String? text, String? symbol) {
+    if (text == null && text == "") return "";
+    return text?.replaceFirst("<symbol>", "$symbol");
+  }
+
   @override
   Widget build(BuildContext context) {
     TradeProviderNew provider = context.watch<TradeProviderNew>();
@@ -497,7 +503,7 @@ class _TradOrderScreenState extends State<TradOrderScreen> {
           ),
           SpacerVertical(height: 5),
           Text(
-            "Buy orders",
+            "Regular orders",
             style: stylePTSansBold(
               fontSize: 18,
               color: ThemeColors.blackShade,
@@ -505,58 +511,14 @@ class _TradOrderScreenState extends State<TradOrderScreen> {
           ),
           SpacerVertical(height: 5),
           BuyOrderItem(
-              title: "Buy Order",
-              subtitle: "Buy ${widget.symbol} at a maximum price or lower.",
-              onTap: () {
-                var selectedStock = StockType.buy;
-                if (widget.symbol != null) {
-                  _onTap(symbol: widget.symbol, selectedStock: selectedStock);
-                } else {
-                  Navigator.push(
-                    context,
-                    createRoute(
-                        SearchTradingTicker(selectedStock: selectedStock)),
-                  );
-                }
-              }),
-          BuyOrderItem(
-              title: "Sell Order",
-              subtitle: "Sell ${widget.symbol} at a maximum price or lower.",
-              onTap: () {
-                var selectedStock = StockType.sell;
-                if (widget.symbol != null) {
-                  _onTap(symbol: widget.symbol, selectedStock: selectedStock);
-                } else {
-                  Navigator.push(
-                    context,
-                    createRoute(
-                        SearchTradingTicker(selectedStock: selectedStock)),
-                  );
-                }
-              }),
-          BuyOrderItem(
-              title: "Short Order",
-              subtitle: "Short ${widget.symbol} at a maximum price or lower.",
-              onTap: () {
-                var selectedStock = StockType.short;
-                if (widget.symbol != null) {
-                  navigatorKey.currentContext!
-                      .read<TradingSearchProvider>()
-                      .shortRedirection(widget.symbol ?? "");
-                } else {
-                  Navigator.push(
-                    context,
-                    createRoute(
-                        SearchTradingTicker(selectedStock: selectedStock)),
-                  );
-                }
-              }),
-          BuyOrderItem(
-            title: "Buy to Cover Order",
-            subtitle:
-                "Buy to Cover ${widget.symbol} at a maximum price or lower.",
+            title: "Buy Order",
+            subtitle: subtitleWithSymbol(
+              tsProvider.userData?.ordersSubTitle?.buyOrder,
+              widget.symbol,
+            ),
+            // subtitle: "Buy ${widget.symbol} at a maximum price or lower.",
             onTap: () {
-              var selectedStock = StockType.btc;
+              var selectedStock = StockType.buy;
               if (widget.symbol != null) {
                 _onTap(symbol: widget.symbol, selectedStock: selectedStock);
               } else {
@@ -568,11 +530,76 @@ class _TradOrderScreenState extends State<TradOrderScreen> {
               }
             },
           ),
+          BuyOrderItem(
+            title: "Sell Order",
+            subtitle: subtitleWithSymbol(
+              tsProvider.userData?.ordersSubTitle?.sellOrder,
+              widget.symbol,
+            ),
+            // subtitle: "Sell ${widget.symbol} at a maximum price or lower.",
+            onTap: () {
+              var selectedStock = StockType.sell;
+              if (widget.symbol != null) {
+                _onTap(symbol: widget.symbol, selectedStock: selectedStock);
+              } else {
+                Navigator.push(
+                  context,
+                  createRoute(
+                      SearchTradingTicker(selectedStock: selectedStock)),
+                );
+              }
+            },
+          ),
+          BuyOrderItem(
+            title: "Short Order",
+            subtitle: subtitleWithSymbol(
+              tsProvider.userData?.ordersSubTitle?.shortOrder,
+              widget.symbol,
+            ),
+            // subtitle: "Short ${widget.symbol} at a maximum price or lower.",
+            onTap: () {
+              var selectedStock = StockType.short;
+              if (widget.symbol != null) {
+                navigatorKey.currentContext!
+                    .read<TradingSearchProvider>()
+                    .shortRedirection(widget.symbol ?? "");
+              } else {
+                Navigator.push(
+                  context,
+                  createRoute(
+                      SearchTradingTicker(selectedStock: selectedStock)),
+                );
+              }
+            },
+          ),
+          BuyOrderItem(
+            title: "Buy to Cover Order",
+            subtitle: subtitleWithSymbol(
+              tsProvider.userData?.ordersSubTitle?.buyToCoverOrder,
+              widget.symbol,
+            ),
+            // subtitle:
+            //     "Buy to Cover ${widget.symbol} at a maximum price or lower.",
+            onTap: () {
+              var selectedStock = StockType.btc;
+              if (widget.symbol != null) {
+                _onTap(symbol: widget.symbol, selectedStock: selectedStock);
+              } else {
+                Navigator.push(
+                  context,
+                  createRoute(
+                    SearchTradingTicker(selectedStock: selectedStock),
+                  ),
+                );
+              }
+            },
+          ),
           SpacerVertical(height: 10),
           Visibility(
-            visible: tsProvider
-                    .userData?.userConditionalOrderPermission?.bracketOrder ==
-                true,
+            visible: tsProvider.userData?.userConditionalOrderPermission
+                        ?.bracketOrder ==
+                    true ||
+                kDebugMode,
             child: Text(
               "Conditional orders",
               style: stylePTSansBold(
@@ -582,26 +609,32 @@ class _TradOrderScreenState extends State<TradOrderScreen> {
             ),
           ),
           Visibility(
-            visible: tsProvider
-                    .userData?.userConditionalOrderPermission?.bracketOrder ==
-                true,
+            visible: tsProvider.userData?.userConditionalOrderPermission
+                        ?.bracketOrder ==
+                    true ||
+                kDebugMode,
             child: BuyOrderItem(
-                title: "Bracket Order",
-                subtitle:
-                    "Bracket ${widget.symbol} at a maximum price or lower.",
-                onTap: () {
-                  if (widget.symbol != null) {
-                    navigatorKey.currentContext!
-                        .read<TradingSearchProvider>()
-                        .conditionalRedirection(widget.symbol ?? "",
-                            tickerID: widget.tickerID, qty: widget.qty);
-                  } else {
-                    Navigator.push(
-                      context,
-                      createRoute(SearchTradingTicker()),
-                    );
-                  }
-                }),
+              title: "Bracket Order",
+              subtitle: subtitleWithSymbol(
+                tsProvider.userData?.ordersSubTitle?.bracketOrder,
+                widget.symbol,
+              ),
+              // subtitle:
+              //     "Bracket ${widget.symbol} at a maximum price or lower.",
+              onTap: () {
+                if (widget.symbol != null) {
+                  navigatorKey.currentContext!
+                      .read<TradingSearchProvider>()
+                      .conditionalRedirection(widget.symbol ?? "",
+                          tickerID: widget.tickerID, qty: widget.qty);
+                } else {
+                  Navigator.push(
+                    context,
+                    createRoute(SearchTradingTicker()),
+                  );
+                }
+              },
+            ),
           ),
         ],
       ),

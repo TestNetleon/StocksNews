@@ -251,7 +251,6 @@ class TsOpenListProvider extends ChangeNotifier {
     TsPortfolioProvider provider =
         navigatorKey.currentContext!.read<TsPortfolioProvider>();
     await provider.getDashboardData();
-
     setStatus(Status.loading);
 
     try {
@@ -289,8 +288,38 @@ class TsOpenListProvider extends ChangeNotifier {
     }
   }
 
-// MARK: SSE Manager
+  Future squareOffRequest(id) async {
+    // TsPortfolioProvider provider =
+    //     navigatorKey.currentContext!.read<TsPortfolioProvider>();
+    // await provider.getDashboardData();
+    setStatus(Status.loading);
+    try {
+      Map request = {
+        "token":
+            navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
+        "portfolio_trade_id": id
+      };
 
+      ApiResponse response = await apiRequest(
+        url: Apis.squareOff,
+        request: request,
+        showProgress: false,
+      );
+
+      if (response.status) {
+        //
+      } else {
+        //
+      }
+
+      setStatus(Status.loaded);
+    } catch (e) {
+      Utils().showLog('Open data: $e');
+      setStatus(Status.loaded);
+    }
+  }
+
+// MARK: SSE Manager
   void _connectSSEForSymbols(List<String> symbols) {
     if (_data != null &&
         _data?.isNotEmpty == true &&

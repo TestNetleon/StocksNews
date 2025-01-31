@@ -400,9 +400,9 @@ class TopLoserScannerProvider extends ChangeNotifier {
       sortByAsc: isAscending,
     );
     // }
-    if (MarketLosersStream().listening) {
-      MarketLosersStream().stopListeningPorts();
-    }
+    // if (MarketLosersStream().listening) {
+    //   MarketLosersStream().stopListeningPorts();
+    // }
 
     if (_dataList != null) {
       _dataList!.sort((a, b) {

@@ -51,29 +51,40 @@ class TsUserRes {
   num? marketValue;
   num? totalReturn;
   num? todayReturn;
+  num? totalPortfolioStateAmount;
   // num? staticTotalReturn;
   final UserConditionalOrderPermissionRes? userConditionalOrderPermission;
+  final OrdersSubTitle? ordersSubTitle;
+
   TsUserRes({
     required this.tradeBalance,
     this.investedAmount,
     this.marketValue,
     this.totalReturn,
     this.todayReturn,
+    this.totalPortfolioStateAmount,
     this.userConditionalOrderPermission,
+    this.ordersSubTitle,
     // this.staticTotalReturn,s
   });
 
   factory TsUserRes.fromJson(Map<String, dynamic> json) => TsUserRes(
-      tradeBalance: json["trade_balance"],
-      investedAmount: json['invested_amount'],
-      marketValue: json['market_value'],
-      totalReturn: json['total_return'],
-      todayReturn: json['today_return'],
-      userConditionalOrderPermission:
-          json["user_conditional_order_permission"] == null
-              ? null
-              : UserConditionalOrderPermissionRes.fromMap(
-                  json["user_conditional_order_permission"]));
+        tradeBalance: json["trade_balance"],
+        investedAmount: json['invested_amount'],
+        marketValue: json['market_value'],
+        totalReturn: json['total_return'],
+        todayReturn: json['today_return'],
+        totalPortfolioStateAmount: json['total_portfolio_state_amount'],
+        userConditionalOrderPermission:
+            json["user_conditional_order_permission"] == null
+                ? null
+                : UserConditionalOrderPermissionRes.fromMap(
+                    json["user_conditional_order_permission"],
+                  ),
+        ordersSubTitle: json["orders_sub_title"] == null
+            ? null
+            : OrdersSubTitle.fromJson(json["orders_sub_title"]),
+      );
 
   Map<String, dynamic> toJson() => {
         "trade_balance": tradeBalance,
@@ -81,8 +92,10 @@ class TsUserRes {
         "market_value": marketValue,
         'total_return': totalReturn,
         'today_return': todayReturn,
+        'total_portfolio_state_amount': totalPortfolioStateAmount,
         "user_conditional_order_permission":
             userConditionalOrderPermission?.toMap(),
+        "orders_sub_title": ordersSubTitle?.toJson(),
       };
 }
 
@@ -121,5 +134,37 @@ class UserConditionalOrderPermissionRes {
         "TRAILING_ORDER": trailingOrder,
         "STOP_LIMIT_ORDER": stopLimitOrder,
         "RECURRING_ORDER": recurringOrder,
+      };
+}
+
+class OrdersSubTitle {
+  final String? buyOrder;
+  final String? sellOrder;
+  final String? shortOrder;
+  final String? buyToCoverOrder;
+  final String? bracketOrder;
+
+  OrdersSubTitle({
+    required this.buyOrder,
+    required this.sellOrder,
+    required this.shortOrder,
+    required this.buyToCoverOrder,
+    required this.bracketOrder,
+  });
+
+  factory OrdersSubTitle.fromJson(Map<String, dynamic> json) => OrdersSubTitle(
+        buyOrder: json["buy_order"],
+        sellOrder: json["sell_order"],
+        shortOrder: json["short_order"],
+        buyToCoverOrder: json["buy_to_cover_order"],
+        bracketOrder: json["bracket_order"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "buy_order": buyOrder,
+        "sell_order": sellOrder,
+        "short_order": shortOrder,
+        "buy_to_cover_order": buyToCoverOrder,
+        "bracket_order": bracketOrder,
       };
 }

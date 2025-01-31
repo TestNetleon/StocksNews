@@ -10,14 +10,9 @@ class Apis {
   static const baseUrlLocal = "https://notification.stocks.news/api/v1";
 
   // With Debug condition
-  static const baseUrl = "https://app.stocks.news/api/v1";
-
-  // static const baseUrl = kDebugMode
-  //     ? "https://dev.stocks.news/api/v1"
-  //     : "https://app.stocks.news/api/v1";
-
-  // Set direct Local
-  // static const baseUrl = 'https://dev.stocks.news/api/v1';
+  static const baseUrl = kDebugMode
+      ? "https://dev.stocks.news/api/v1"
+      : "https://app.stocks.news/api/v1";
 
   static const stocksScreenerWebUrl =
       'https://app.stocks.news/stockScannerMobile/screener';
@@ -221,6 +216,8 @@ class Apis {
   static const stockHoldings = '/simulator/stock-holdings-new';
   static const cancleOrder = '/simulator/trade/cancel/';
   static const updateOrder = '/simulator/trade/update/';
+
+  static const squareOff = '/simulator/trade/close-conditional-trade';
 
   // static const tsOrderList = "/simulator/order-list";
   // static const tsRequestSell = "/simulator/sell";

@@ -71,7 +71,10 @@ class _ConditionalContainerState extends State<ConditionalContainer> {
       focusNode.requestFocus();
       _availableBalance = context.read<TsPortfolioProvider>().userData?.tradeBalance ?? 0;
       if(widget.tickerID!=null){
-        controller.text=widget.qty.toString();
+        setState(() {
+          _currentText=widget.qty.toString();
+          controller.text=widget.qty.toString();
+        });
       }
     });
   }
@@ -176,6 +179,8 @@ class _ConditionalContainerState extends State<ConditionalContainer> {
           symbol: detailRes?.symbol,
           invested: invested,
           date: response.data['result']['created_date'],
+          targetPrice: num.parse(targetPriceController.text.toString()),
+          stopPrice: num.parse(stopPriceController.text.toString()),
         );
         Navigator.popUntil(
             navigatorKey.currentContext!, (route) => route.isFirst);
@@ -223,11 +228,12 @@ class _ConditionalContainerState extends State<ConditionalContainer> {
               : (num.parse(_currentText) / (detailRes?.currentPrice ?? 0)),
           image: detailRes?.image,
           name: detailRes?.company,
-          // price: numPrice?.toFormattedPrice(),
           currentPrice: numPrice,
           symbol: detailRes?.symbol,
           invested: invested,
           date: response.data['result']['created_date'],
+          targetPrice: num.parse(targetPriceController.text.toString()),
+          stopPrice: num.parse(stopPriceController.text.toString()),
         );
         Navigator.popUntil(
             navigatorKey.currentContext!, (route) => route.isFirst);
@@ -293,6 +299,8 @@ class _ConditionalContainerState extends State<ConditionalContainer> {
               symbol: detailRes?.symbol,
               invested: invested,
               date: response.data['result']['created_date'],
+              targetPrice: num.parse(targetPriceController.text.toString()),
+              stopPrice: num.parse(stopPriceController.text.toString()),
             );
             Navigator.popUntil(
                 navigatorKey.currentContext!, (route) => route.isFirst);
@@ -355,6 +363,8 @@ class _ConditionalContainerState extends State<ConditionalContainer> {
             symbol: detailRes?.symbol,
             invested: invested,
             date: response.data['result']['created_date'],
+            targetPrice: num.parse(targetPriceController.text.toString()),
+            stopPrice: num.parse(stopPriceController.text.toString()),
           );
           _clear();
           Navigator.popUntil(
@@ -523,6 +533,7 @@ class _ConditionalContainerState extends State<ConditionalContainer> {
 
   @override
   Widget build(BuildContext context) {
+
     return Padding(
       padding: const EdgeInsets.fromLTRB(Dimen.padding, 0, Dimen.padding, 0),
       child: Column(

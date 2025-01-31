@@ -75,11 +75,14 @@ class ScannerBaseItem extends StatelessWidget {
                       if (data?.identifier == null || data?.identifier == '') {
                         return;
                       }
-                      Navigator.push(context, MaterialPageRoute(
-                        builder: (context) {
-                          return StockDetail(symbol: data?.identifier ?? '');
-                        },
-                      ));
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) {
+                            return StockDetail(symbol: data?.identifier ?? '');
+                          },
+                        ),
+                      );
                     },
                     child: Visibility(
                       visible: data?.image != null && data?.image != '',
@@ -152,7 +155,8 @@ class ScannerBaseItem extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       Text(
-                        '\$${lastTrade.toCurrency()}',
+                        lastTrade.toFormattedPrice(),
+                        // '\$${lastTrade.toCurrency()}',
                         style: stylePTSansBold(fontSize: 18),
                       ),
                       const SpacerVertical(height: 5),

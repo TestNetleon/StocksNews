@@ -100,6 +100,16 @@ enum AdScreen { home, newsDetail, aiNews }
 
 enum TournamentsHead { tradTotal, pPaid, playTraders }
 
+enum TsOrderTypes {
+  LIMIT_ORDER,
+  BRACKET_ORDER,
+  STOP_ORDER,
+  TRAILING_ORDER,
+  STOP_LIMIT_ORDER,
+  RECURRING_ORDER,
+  MARKET_ORDER
+}
+
 // ------ These are global constants to access in complete app --------
 bool isPhone = true;
 bool isAppInForeground = false;

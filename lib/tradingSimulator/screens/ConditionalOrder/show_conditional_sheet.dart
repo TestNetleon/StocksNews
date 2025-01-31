@@ -202,6 +202,64 @@ class SuccessConditionalSheet extends StatelessWidget {
                   ),
                 ),
                 Visibility(
+                  visible: order?.targetPrice != null,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "Target Price",
+                        style: styleGeorgiaRegular(
+                          color: ThemeColors.white,
+                        ),
+                      ),
+                      Flexible(
+                        child: Text(
+                          ((order?.targetPrice ?? 0)).toFormattedPrice(),
+                          style: styleGeorgiaRegular(
+                            color: ThemeColors.white,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Visibility(
+                  visible: order?.targetPrice != null,
+                  child: Divider(
+                    color: ThemeColors.greyText,
+                    height: 15,
+                  ),
+                ),
+                Visibility(
+                  visible: order?.stopPrice != null,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "Stop Price",
+                        style: styleGeorgiaRegular(
+                          color: ThemeColors.white,
+                        ),
+                      ),
+                      Flexible(
+                        child: Text(
+                          (order?.stopPrice ?? 0).toFormattedPrice(),
+                          style: styleGeorgiaRegular(
+                            color: ThemeColors.white,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Visibility(
+                  visible: order?.stopPrice != null,
+                  child: Divider(
+                    color: ThemeColors.greyText,
+                    height: 15,
+                  ),
+                ),
+                Visibility(
                   child: Column(
                     children: [
                       Row(

@@ -43,6 +43,9 @@ class _TsDashboardState extends State<TsDashboard> {
   @override
   Widget build(BuildContext context) {
     TsPortfolioProvider provider = context.watch<TsPortfolioProvider>();
+
+    num profitLoss = provider.userData?.totalPortfolioStateAmount ?? 0;
+
     return PopScope(
       onPopInvokedWithResult: (didPop, result) {
         SSEManager.instance.disconnectAllScreens();
@@ -82,28 +85,64 @@ class _TsDashboardState extends State<TsDashboard> {
                 children: [
                   Container(
                     margin: EdgeInsets.symmetric(horizontal: 10),
-                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                     decoration: BoxDecoration(
-                        color: ThemeColors.accent,
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(8),
-                          topRight: Radius.circular(8),
-                        )),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      // color: ThemeColors.accent,
+                      border: Border(
+                        left: BorderSide(color: ThemeColors.accent, width: 1),
+                        right: BorderSide(color: ThemeColors.accent, width: 1),
+                        top: BorderSide(color: ThemeColors.accent, width: 1),
+                      ),
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(8),
+                        topRight: Radius.circular(8),
+                      ),
+                    ),
+                    child: Column(
                       children: [
-                        Flexible(
-                            child: Text(
-                          'Portfolio Balance',
-                          style: styleGeorgiaBold(),
-                        )),
-                        Flexible(
-                            child: Text(
-                          provider.userData?.tradeBalance != null
-                              ? '${provider.userData?.tradeBalance.toFormattedPrice()}'
-                              : '\$0',
-                          style: styleGeorgiaBold(),
-                        )),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Flexible(
+                                child: Text(
+                              'Portfolio Balance',
+                              style: styleGeorgiaBold(),
+                            )),
+                            Flexible(
+                              child: Text(
+                                provider.userData?.tradeBalance != null
+                                    ? '${provider.userData?.tradeBalance.toFormattedPrice()}'
+                                    : '\$0',
+                                style: styleGeorgiaBold(),
+                              ),
+                            ),
+                          ],
+                        ),
+                        Divider(
+                          height: 14,
+                          color: ThemeColors.divider,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Flexible(
+                              child: Text(
+                                'Cumulative Gain & Loss',
+                                style: styleGeorgiaBold(),
+                              ),
+                            ),
+                            Flexible(
+                              child: Text(
+                                profitLoss.toFormattedPrice(),
+                                style: styleGeorgiaBold(
+                                  color: profitLoss < 0
+                                      ? Colors.red
+                                      : Colors.green,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       ],
                     ),
                   ),
