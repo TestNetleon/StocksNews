@@ -233,6 +233,16 @@ class _MarketScannerFilterState extends State<MarketScannerFilter> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    Text("Symbol Name/Company Name", style: styleGeorgiaBold()),
+                    // Text("Symbol Name", style: styleGeorgiaBold()),
+                    const SpacerVertical(height: 5),
+                    TextInputField(
+                      controller: _symbolCompany,
+                      style: stylePTSansBold(color: Colors.black),
+                      hintText: "Symbol Name/Company Name",
+                      // hintText: "Symbol Name",
+                    ),
+                    const SpacerVertical(height: 16),
                     FilterRow(
                       label: "Bid:",
                       startHint: "Bid Start",
@@ -309,16 +319,16 @@ class _MarketScannerFilterState extends State<MarketScannerFilter> {
                       ),
                     ),
                     const SpacerVertical(height: 16),
-                    // Text("Symbol Name/Company Name", style: styleGeorgiaBold()),
-                    Text("Symbol Name", style: styleGeorgiaBold()),
-                    const SpacerVertical(height: 5),
-                    TextInputField(
-                      controller: _symbolCompany,
-                      style: stylePTSansBold(color: Colors.black),
-                      // hintText: "Symbol Name/Company Name",
-                      hintText: "Symbol Name",
-                    ),
-                    const SpacerVertical(height: 16),
+                    // // Text("Symbol Name/Company Name", style: styleGeorgiaBold()),
+                    // Text("Symbol Name", style: styleGeorgiaBold()),
+                    // const SpacerVertical(height: 5),
+                    // TextInputField(
+                    //   controller: _symbolCompany,
+                    //   style: stylePTSansBold(color: Colors.black),
+                    //   // hintText: "Symbol Name/Company Name",
+                    //   hintText: "Symbol Name",
+                    // ),
+                    // const SpacerVertical(height: 16),
                   ],
                 ),
               ),

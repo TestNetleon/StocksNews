@@ -47,12 +47,10 @@ class _TsPendingListState extends State<TsPendingList> {
         TsPendingListProvider provider = context.read<TsPendingListProvider>();
         if (item.tradeType == "Short") {
           provider.shortRedirection(index: index);
-        }
-        else if (item.orderTypeOriginal == "BRACKET_ORDER") {
-          provider.conditionalRedirection(index: index,qty:item.quantity);
-        }
-
-        else {
+        } else if (item.orderTypeOriginal == "BRACKET_ORDER") {
+          Navigator.pop(context);
+          provider.conditionalRedirection(index: index, qty: item.quantity);
+        } else {
           provider.editStock(index: index);
         }
       },

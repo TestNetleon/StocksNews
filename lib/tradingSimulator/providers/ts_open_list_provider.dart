@@ -10,6 +10,7 @@ import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/tradingSimulator/modals/ts_open_list_res.dart';
 import 'package:stocks_news_new/tradingSimulator/providers/ts_portfollo_provider.dart';
 import 'package:stocks_news_new/utils/constants.dart';
+import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import '../manager/sse.dart';
 
@@ -38,7 +39,7 @@ class TsOpenListProvider extends ChangeNotifier {
     TsOpenListRes holdingStk,
     StockDataManagerRes stockData,
   ) {
-    Utils().showLog('Holding: ${stockData.toMap()}');
+    // Utils().showLog('Holding: ${stockData.toMap()}');
     if (_data == null) return;
 
     // int index = _data!.indexWhere((stock) {
@@ -165,9 +166,9 @@ class TsOpenListProvider extends ChangeNotifier {
     //   Utils().showLog("Total Market Value: $totalMarketValue");
     // }
 
-    if (kDebugMode) {
-      Utils().showLog("Total Today's Return: $todaysReturn");
-    }
+    // if (kDebugMode) {
+    //   Utils().showLog("Total Today's Return: $todaysReturn");
+    // }
 
     provider.updateBalance(totalReturn: 0);
 
@@ -288,7 +289,7 @@ class TsOpenListProvider extends ChangeNotifier {
     }
   }
 
-  Future squareOffRequest(id) async {
+  Future<bool> squareOffRequest(id) async {
     // TsPortfolioProvider provider =
     //     navigatorKey.currentContext!.read<TsPortfolioProvider>();
     // await provider.getDashboardData();
@@ -306,16 +307,18 @@ class TsOpenListProvider extends ChangeNotifier {
         showProgress: false,
       );
 
-      if (response.status) {
-        //
-      } else {
-        //
-      }
-
       setStatus(Status.loaded);
+      if (response.status) {
+        return true;
+      } else {
+        showErrorMessage(message: response.message);
+        return false;
+      }
     } catch (e) {
       Utils().showLog('Open data: $e');
+      showErrorMessage(message: Const.errSomethingWrong);
       setStatus(Status.loaded);
+      return false;
     }
   }
 

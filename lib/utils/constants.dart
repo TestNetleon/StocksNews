@@ -133,12 +133,11 @@ bool notifySnackbar = false;
 String? geoCountryCode;
 bool isSVG = false;
 bool showAdd = false;
-
 bool oneSignalInitialized = false;
-
 bool withLoginMembership = true;
 String? memCODE;
 String? appsFlyerUID;
+bool isOnTsScreen = false;
 
 // bool memTrack = false;
 

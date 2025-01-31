@@ -33,7 +33,7 @@ class TradeProviderNew extends ChangeNotifier {
       SSEManager.instance.addListener(
         stock?.symbol ?? '',
         (data) {
-          Utils().showLog('Detail: ${data.toMap()}');
+          // Utils().showLog('Detail: ${data.toMap()}');
           _tappedStock = data;
           notifyListeners();
         },
@@ -95,11 +95,12 @@ class TradeProviderNew extends ChangeNotifier {
     }
   }
 
-  Future<ApiResponse> tsAddConditional(request,num id, {showProgress = false}) async {
+  Future<ApiResponse> tsAddConditional(request, num id,
+      {showProgress = false}) async {
     notifyListeners();
     try {
       ApiResponse response = await apiRequest(
-      url: '${Apis.tsAddConditional}$id',
+        url: '${Apis.tsAddConditional}$id',
         request: request,
         showProgress: showProgress,
       );
@@ -117,7 +118,6 @@ class TradeProviderNew extends ChangeNotifier {
       return ApiResponse(status: false, message: Const.errSomethingWrong);
     }
   }
-
 
   //MARK: Update Share API
   Future<ApiResponse> requestUpdateShare({
@@ -197,7 +197,7 @@ class TradeProviderNew extends ChangeNotifier {
           SSEManager.instance.addListener(
             symbol,
             (stockData) {
-              Utils().showLog('Detail: ${stockData.toMap()}');
+              // Utils().showLog('Detail: ${stockData.toMap()}');
 
               if (stockData.price != null) {
                 _detailRes?.currentPrice = stockData.price;
@@ -263,7 +263,13 @@ class TradeProviderNew extends ChangeNotifier {
 
 class SummaryOrderNew {
   String? image, symbol, name, change, price;
-  num? changePercentage, invested, shares, dollars, currentPrice,targetPrice,stopPrice;
+  num? changePercentage,
+      invested,
+      shares,
+      dollars,
+      currentPrice,
+      targetPrice,
+      stopPrice;
   bool isShare;
   StockType? selectedStock;
   String? date;

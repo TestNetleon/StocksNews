@@ -13,7 +13,6 @@ import 'package:stocks_news_new/widgets/base_container.dart';
 import '../../../../widgets/spacer_horizontal.dart';
 import '../../../../widgets/theme_image_view.dart';
 
-
 class ConditionalTradesIndex extends StatelessWidget {
   final num? qty;
   final num? editTradeID;
@@ -24,7 +23,8 @@ class ConditionalTradesIndex extends StatelessWidget {
     super.key,
     this.qty,
     this.editTradeID,
-    this.conditionalType, this.tickerID,
+    this.conditionalType,
+    this.tickerID,
   });
 
   @override

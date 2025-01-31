@@ -46,15 +46,17 @@ class TsOpenListItem extends StatelessWidget {
                     onTap: () async {
                       //     .deleteItem(data.id, data.symbol, data.name);
                       Navigator.pop(navigatorKey.currentContext!);
-                      await context
+                      final result = await context
                           .read<TsOpenListProvider>()
                           .squareOffRequest(item?.id?.toString());
-                      Navigator.pushReplacement(
-                        navigatorKey.currentContext!,
-                        MaterialPageRoute(
-                          builder: (context) => const TsDashboard(),
-                        ),
-                      );
+                      if (result == true) {
+                        Navigator.pushReplacement(
+                          navigatorKey.currentContext!,
+                          MaterialPageRoute(
+                            builder: (context) => const TsDashboard(),
+                          ),
+                        );
+                      }
                     },
                   );
                 },
