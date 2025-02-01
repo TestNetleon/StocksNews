@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/drawer_res.dart';
 import 'package:stocks_news_new/modals/user_res.dart';
@@ -215,7 +216,10 @@ class _AboutStocksNewsState extends State<AboutStocksNews> {
     if (provider.extra?.showTradingSimulator == true || kDebugMode) {
       visibleAboutTiles.add(
         DrawerRes(
-          iconData: Icons.bakery_dining_outlined,
+          // iconData: Icons.trending_up,
+          iconData: FontAwesomeIcons.chartLine,
+          // iconData: FontAwesomeIcons.chartBar,
+          // iconData: FontAwesomeIcons.coins,
           text: "Trading Simulator",
           onTap: () {
             _closeDrawer();
@@ -233,7 +237,7 @@ class _AboutStocksNewsState extends State<AboutStocksNews> {
     if (provider.extra?.showStockScanner == true || kDebugMode) {
       visibleAboutTiles.add(
         DrawerRes(
-          iconData: Icons.bakery_dining_outlined,
+          iconData: FontAwesomeIcons.magnifyingGlassChart,
           text: "Stock Scanner",
           onTap: () {
             _closeDrawer();
@@ -248,7 +252,7 @@ class _AboutStocksNewsState extends State<AboutStocksNews> {
     if (provider.extra?.showStockScannerApp == true || kDebugMode) {
       visibleAboutTiles.add(
         DrawerRes(
-          iconData: Icons.bakery_dining_outlined,
+          iconData: FontAwesomeIcons.magnifyingGlassChart,
           text: "Stock Scanner",
           onTap: () {
             _closeDrawer();

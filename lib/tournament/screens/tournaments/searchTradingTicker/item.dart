@@ -81,38 +81,7 @@ class TournamentDefaultItem extends StatelessWidget {
                         overflow: TextOverflow.ellipsis,
                       ),
                       const SpacerVertical(height: 5),
-                      Row(
-                        children: const [
-                          // RichText(
-                          //   text: TextSpan(
-                          //     children: [
-                          //       TextSpan(
-                          //         text: "Mentions: ${data.mention?.toInt()} ",
-                          //         style: stylePTSansRegular(fontSize: 12),
-                          //       ),
-                          //     ],
-                          //   ),
-                          // ),
-                          // Flexible(
-                          //   child: RichText(
-                          //     text: TextSpan(
-                          //       children: [
-                          //         TextSpan(
-                          //           text:
-                          //               "(${data.mentionChange.toCurrency()}%)",
-                          //           style: stylePTSansRegular(
-                          //             fontSize: 12,
-                          //             color: data.mentionChange >= 0
-                          //                 ? ThemeColors.accent
-                          //                 : ThemeColors.sos,
-                          //           ),
-                          //         ),
-                          //       ],
-                          //     ),
-                          //   ),
-                          // ),
-                        ],
-                      ),
+
                     ],
                   ),
                 ),

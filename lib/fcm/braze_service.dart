@@ -306,12 +306,10 @@ class BrazeNotificationService {
       } else if (slug != '' &&
           slug != null &&
           type == NotificationType.simulator.name) {
-        if (whenAppKilled) {
+        if (whenAppKilled || !isOnTsScreen) {
           Navigator.push(
             navigatorKey.currentContext!,
-            MaterialPageRoute(
-              builder: (_) => TsDashboard(),
-            ),
+            MaterialPageRoute(builder: (_) => TsDashboard()),
           );
         } else {
           popHome = true;

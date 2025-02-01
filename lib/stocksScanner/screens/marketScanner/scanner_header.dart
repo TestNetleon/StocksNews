@@ -3,8 +3,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:stocks_news_new/stocksScanner/modals/market_scanner_res.dart';
-import 'package:stocks_news_new/stocksScanner/modals/scanner_res.dart';
 import 'package:stocks_news_new/stocksScanner/providers/market_scanner_provider.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:timezone/timezone.dart' as tz;
@@ -61,8 +59,7 @@ class _MarketScannerHeaderState extends State<MarketScannerHeader> {
         true) {
       marketStatus = "Pre Market";
     } else {
-      _lastUpdated =
-          provider.port?.port?.checkMarketOpenApi?.extendedHoursDate ?? "";
+      _lastUpdated = provider.port?.port?.checkMarketOpenApi?.dateTime ?? "";
       marketStatus = "Post Market";
     }
 

@@ -9,7 +9,9 @@ import 'package:stocks_news_new/tradingSimulator/screens/dashboard/ts_dashboard_
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
+import 'package:stocks_news_new/widgets/custom/card.dart';
 import 'package:stocks_news_new/widgets/custom_tab_container.dart';
+import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/theme_button.dart';
 import '../../../utils/colors.dart';
@@ -33,11 +35,18 @@ class _TsDashboardState extends State<TsDashboard> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      isOnTsScreen = true;
       context.read<TsPortfolioProvider>().getStreamKeysData();
       context
           .read<MarketScannerProvider>()
           .getScannerPorts(loading: false, start: false);
     });
+  }
+
+  @override
+  void dispose() {
+    isOnTsScreen = false;
+    super.dispose();
   }
 
   @override
@@ -83,69 +92,130 @@ class _TsDashboardState extends State<TsDashboard> {
               // ),
               Column(
                 children: [
-                  Container(
-                    margin: EdgeInsets.symmetric(horizontal: 10),
-                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                    decoration: BoxDecoration(
-                      // color: ThemeColors.accent,
-                      border: Border(
-                        left: BorderSide(color: ThemeColors.accent, width: 1),
-                        right: BorderSide(color: ThemeColors.accent, width: 1),
-                        top: BorderSide(color: ThemeColors.accent, width: 1),
-                      ),
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(8),
-                        topRight: Radius.circular(8),
-                      ),
-                    ),
-                    child: Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Flexible(
-                                child: Text(
-                              'Portfolio Balance',
-                              style: styleGeorgiaBold(),
-                            )),
-                            Flexible(
-                              child: Text(
+                  // Container(
+                  //   margin: EdgeInsets.symmetric(horizontal: 10),
+                  //   padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                  //   decoration: BoxDecoration(
+                  //     // color: ThemeColors.accent,
+                  //     border: Border(
+                  //       left: BorderSide(color: ThemeColors.accent, width: 1),
+                  //       right: BorderSide(color: ThemeColors.accent, width: 1),
+                  //       top: BorderSide(color: ThemeColors.accent, width: 1),
+                  //     ),
+                  //     borderRadius: BorderRadius.only(
+                  //       topLeft: Radius.circular(8),
+                  //       topRight: Radius.circular(8),
+                  //     ),
+                  //   ),
+                  //   child: Column(
+                  //     children: [
+                  //       Row(
+                  //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //         children: [
+                  //           Flexible(
+                  //               child: Text(
+                  //             'Portfolio Balance',
+                  //             style: styleGeorgiaBold(),
+                  //           )),
+                  //           Flexible(
+                  //             child: Text(
+                  //               provider.userData?.tradeBalance != null
+                  //                   ? '${provider.userData?.tradeBalance.toFormattedPrice()}'
+                  //                   : '\$0',
+                  //               style: styleGeorgiaBold(),
+                  //             ),
+                  //           ),
+                  //         ],
+                  //       ),
+                  //       Divider(
+                  //         height: 14,
+                  //         color: ThemeColors.divider,
+                  //       ),
+                  //       Row(
+                  //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //         children: [
+                  //           Flexible(
+                  //             child: Text(
+                  //               'Cumulative Gain & Loss',
+                  //               style: styleGeorgiaBold(),
+                  //             ),
+                  //           ),
+                  //           Flexible(
+                  //             child: Text(
+                  //               profitLoss.toFormattedPrice(),
+                  //               style: styleGeorgiaBold(
+                  //                 color: profitLoss < 0
+                  //                     ? Colors.red
+                  //                     : Colors.green,
+                  //               ),
+                  //             ),
+                  //           ),
+                  //         ],
+                  //       ),
+                  //     ],
+                  //   ),
+                  // ),
+                  // SpacerVertical(height: 10),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        child: CommonCard(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
                                 provider.userData?.tradeBalance != null
                                     ? '${provider.userData?.tradeBalance.toFormattedPrice()}'
                                     : '\$0',
-                                style: styleGeorgiaBold(),
+                                style: styleGeorgiaBold(
+                                  fontSize: 20,
+                                ),
                               ),
-                            ),
-                          ],
-                        ),
-                        Divider(
-                          height: 14,
-                          color: ThemeColors.divider,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Flexible(
-                              child: Text(
-                                'Cumulative Gain & Loss',
-                                style: styleGeorgiaBold(),
+                              SpacerVertical(height: 5),
+                              Text(
+                                'Portfolio Balance'.toUpperCase(),
+                                style: styleGeorgiaBold(
+                                  fontSize: 14,
+                                  color: ThemeColors.greyText,
+                                ),
                               ),
-                            ),
-                            Flexible(
-                              child: Text(
+                            ],
+                          ),
+                        ),
+                      ),
+                      const SpacerHorizontal(width: 12),
+                      Expanded(
+                        child: CommonCard(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              Text(
                                 profitLoss.toFormattedPrice(),
                                 style: styleGeorgiaBold(
+                                  fontSize: 20,
                                   color: profitLoss < 0
                                       ? Colors.red
                                       : Colors.green,
                                 ),
                               ),
-                            ),
-                          ],
+                              SpacerVertical(height: 5),
+                              Text(
+                                'Gain & Loss'.toUpperCase(),
+                                style: styleGeorgiaBold(
+                                  fontSize: 14,
+                                  color: ThemeColors.greyText,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
+                  SpacerVertical(height: 10),
                   TsDashboardHeader(),
                 ],
               ),

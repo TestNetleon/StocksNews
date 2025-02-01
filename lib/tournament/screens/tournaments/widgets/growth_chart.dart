@@ -1,6 +1,8 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:stocks_news_new/tournament/models/tour_user_detail.dart';
+import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 
 class GrowthChart extends StatelessWidget {
@@ -30,8 +32,14 @@ class GrowthChart extends StatelessWidget {
           titlesData: titlesData,
           borderData: borderData,
           barGroups: barGroups,
-          gridData: const FlGridData(show: false),
-          alignment: BarChartAlignment.spaceEvenly,
+          gridData: FlGridData(
+            show: true,
+            drawHorizontalLine: true,
+            drawVerticalLine: false,
+            horizontalInterval: 1.5,
+            verticalInterval: 5,
+          ),
+          alignment: BarChartAlignment.spaceAround,
           maxY: _calculateMaxY(),
         ),
       ),
@@ -41,11 +49,11 @@ class GrowthChart extends StatelessWidget {
   BarTouchData get barTouchData => BarTouchData(
         enabled: false,
         touchTooltipData: BarTouchTooltipData(
-          fitInsideHorizontally: true,
-          fitInsideVertically: true,
+          fitInsideHorizontally: false,
+          fitInsideVertically: false,
           getTooltipColor: (group) => Colors.transparent,
           tooltipPadding: EdgeInsets.zero,
-          tooltipMargin: 2,
+          tooltipMargin:1,
           getTooltipItem: (
             BarChartGroupData group,
             int groupIndex,
@@ -55,7 +63,7 @@ class GrowthChart extends StatelessWidget {
             return BarTooltipItem(
               "${chart?[groupIndex].formatPerformance}",
               styleGeorgiaBold(
-                color: Colors.white,
+                color: Colors.transparent,
                 fontSize: 10,
               ),
             );
@@ -63,43 +71,106 @@ class GrowthChart extends StatelessWidget {
         ),
       );
 
+  /*String formatDate(DateTime date) {
+    return DateFormat('dd MMM').format(date);
+  }
   Widget getTitles(double value, TitleMeta meta) {
     final style = TextStyle(
-      color: Color.fromARGB(255, 247, 247, 247),
+      color:ThemeColors.white,
       fontWeight: FontWeight.bold,
-      fontSize: 8,
+      fontSize: 14,
     );
-
     if (value.toInt() >= 0 && value.toInt() < (chart?.length ?? 0)) {
-      //String text = chart?[value.toInt()].battleDate1 ?? '';
-      String text = '';
+      String text = chart?[value.toInt()].battleDate1 ?? '';
+
+      print(formatDate(chart?[value.toInt()].battleDate??DateTime.now()));
       return SideTitleWidget(
-        axisSide: meta.axisSide,
-        space: 10,
-        angle: 70,
-        child: Text(text, style: style),
+        space: 16,
+        axisSide: AxisSide.bottom,
+        child: Text(formatDate(chart?[value.toInt()].battleDate??DateTime.now()),style: style),
       );
     }
     return SideTitleWidget(
-      axisSide: meta.axisSide,
-      space: 10,
-      angle: 70,
-      child: Text("N/A", style: style),
+      space: 16,
+      axisSide: AxisSide.bottom,
+      child: Text(meta.formattedValue, style: style),
+    );
+  }*/
+
+  Widget bottomTitleWidgets(double value, TitleMeta meta) {
+    if (value % 1 != 0) {
+      return Container();
+    }
+    final style = TextStyle(
+      color:ThemeColors.white,
+      fontWeight: FontWeight.bold,
+      fontSize: 14,
+    );
+    return SideTitleWidget(
+      // meta: meta,
+      space: 16,
+      axisSide: AxisSide.bottom,
+      child: Text(meta.formattedValue, style: style),
     );
   }
+  Widget leftTitleWidgets(double value, TitleMeta meta) {
+    final style = TextStyle(
+      color: ThemeColors.white,
+      fontWeight: FontWeight.bold,
+      fontSize:14,
+    );
+    return SideTitleWidget(
+      space: 16,
+      axisSide: AxisSide.left,
+      child: Text(meta.formattedValue, style: style),
+    );
+  }
+
+  double _calculateInterval() {
+    DateTime minDate = chart!.first.battleDate!;
+    DateTime maxDate = chart!.length == 1
+        ? DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day)
+        : chart!.last.battleDate!;
+
+    int totalDays = maxDate == minDate ? 1 : maxDate.difference(minDate).inDays;
+
+    // Set a maximum number of labels you want to display
+    int maxLabels = 5; // For example, 5 labels
+    double interval = totalDays / maxLabels;
+
+    // Ensure the interval is at least 1 day to avoid zero or negative intervals
+    return interval.ceilToDouble();
+  }
+
 
   FlTitlesData get titlesData => FlTitlesData(
         show: true,
         bottomTitles: AxisTitles(
           sideTitles: SideTitles(
-            showTitles: true,
+            showTitles: false,
             reservedSize: 30,
-            getTitlesWidget: getTitles,
+            getTitlesWidget: (value, meta) {
+              DateTime minDate = chart!.first.battleDate!;
+              DateTime currentDate = minDate.add(Duration(days: value.toInt()));
+              String formattedDate = DateFormat('dd MMM').format(currentDate);
+              return Text(
+                formattedDate,
+                style: const TextStyle(color: Colors.white, fontSize: 10),
+              );
+            },
+            //interval: _calculateInterval(),
           ),
+
+
         ),
-        leftTitles: const AxisTitles(
-          sideTitles: SideTitles(showTitles: false),
-        ),
+    leftTitles: AxisTitles(
+      sideTitles: SideTitles(
+        showTitles: true,
+        getTitlesWidget: (value, meta) => leftTitleWidgets(value, meta),
+        reservedSize: 56,
+      ),
+      drawBelowEverything: false,
+    ),
         topTitles: const AxisTitles(
           sideTitles: SideTitles(showTitles: false),
         ),
@@ -205,8 +276,8 @@ class GrowthChart extends StatelessWidget {
               toY: currentValue,
               width: 20,
               borderRadius: BorderRadius.vertical(
-                top: Radius.circular(5),
-                bottom: Radius.circular(5),
+                top: Radius.circular(0),
+                bottom: Radius.circular(0),
               ),
               gradient: barGradient,
             ),

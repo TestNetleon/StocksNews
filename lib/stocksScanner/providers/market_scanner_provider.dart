@@ -297,12 +297,12 @@ class MarketScannerProvider extends ChangeNotifier {
 
   void updateData(List<MarketScannerRes>? data) {
     if (data == null) return;
+
     // for (var a in data) {
     //   if (a.identifier == 'TSLA') {
     //     Utils().showLog('Data:Volume ${a.volume}');
     //     Utils().showLog('Data:Last ${a.last}');
     //     Utils().showLog('Data:ExtPrice ${a.extendedHoursPrice}');
-
     //     Utils().showLog(
     //         'Dollar vol.: ${(a.volume ?? 0) * (a.extendedHoursPrice ?? 0)}');
     //     Utils().showLog('Dollar vol.1: ${(a.volume ?? 0) * (a.last ?? 0)}');
@@ -566,12 +566,21 @@ class MarketScannerProvider extends ChangeNotifier {
 
         // Apply filter for symbolCompany
         if (_filterParams?.symbolCompany != null) {
-          if (!(item.identifier
-                  ?.toLowerCase()
-                  .contains(_filterParams!.symbolCompany!.toLowerCase()) ??
-              false)) {
+          String searchText = _filterParams!.symbolCompany!.toLowerCase();
+          // Check if either the identifier or security name contains the search text
+          bool matchesIdentifier =
+              item.identifier?.toLowerCase().contains(searchText) ?? false;
+          bool matchesCompanyName =
+              item.security?.name?.toLowerCase().contains(searchText) ?? false;
+          if (!(matchesIdentifier || matchesCompanyName)) {
             shouldRemove = true;
           }
+          // if (!(item.security.name
+          //         ?.toLowerCase()
+          //         .contains(_filterParams!.symbolCompany!.toLowerCase()) ??
+          //     false)) {
+          //   shouldRemove = true;
+          // }
         }
 
         // Apply filter for sector

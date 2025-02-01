@@ -27,6 +27,7 @@ class TsPendingListRes {
   final num? targetPrice;
   final num? stopPrice;
   final String? closePrice;
+  final String? closePriceLabel;
 
   TsPendingListRes({
     this.closePrice,
@@ -47,6 +48,7 @@ class TsPendingListRes {
     this.orderTypeOriginal,
     this.targetPrice,
     this.stopPrice,
+    this.closePriceLabel,
   });
 
   factory TsPendingListRes.fromJson(Map<String, dynamic> json) =>
@@ -70,6 +72,7 @@ class TsPendingListRes {
         targetPrice: json["target_price"],
         stopPrice: json["stop_price"],
         orderTypeOriginal: json["order_type_original"],
+        closePriceLabel: json["portfolio_close_price_label"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -92,6 +95,7 @@ class TsPendingListRes {
         "target_price": targetPrice,
         "stop_price": stopPrice,
         "order_type_original": orderTypeOriginal,
+        "portfolio_close_price_label": closePriceLabel,
       };
 }
 

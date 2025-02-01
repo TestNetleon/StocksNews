@@ -8,6 +8,7 @@ import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/screens/contactUs/contact_us_item.dart';
 import 'package:stocks_news_new/tournament/provider/trades.dart';
 import 'package:stocks_news_new/tradingSimulator/manager/sse.dart';
+import 'package:stocks_news_new/tradingSimulator/modals/ts_pending_list_res.dart';
 import 'package:stocks_news_new/tradingSimulator/modals/ts_topbar.dart';
 import 'package:stocks_news_new/tradingSimulator/providers/trade_provider.dart';
 import 'package:stocks_news_new/tradingSimulator/providers/ts_open_list_provider.dart';
@@ -27,7 +28,6 @@ import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/theme_button.dart';
 import 'package:stocks_news_new/widgets/theme_input_field.dart';
 
-
 class ConditionalContainer extends StatefulWidget {
   final num? qty;
   final num? editTradeID;
@@ -38,7 +38,8 @@ class ConditionalContainer extends StatefulWidget {
     super.key,
     this.conditionalType,
     this.qty,
-    this.editTradeID, this.tickerID,
+    this.editTradeID,
+    this.tickerID,
   });
 
   @override
@@ -64,17 +65,36 @@ class _ConditionalContainerState extends State<ConditionalContainer> {
     'Buy',
     'Short',
   ];
+
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       focusNode.requestFocus();
-      _availableBalance = context.read<TsPortfolioProvider>().userData?.tradeBalance ?? 0;
-      if(widget.tickerID!=null){
+      _availableBalance =
+          context.read<TsPortfolioProvider>().userData?.tradeBalance ?? 0;
+      if (widget.tickerID != null) {
         setState(() {
-          _currentText=widget.qty.toString();
-          controller.text=widget.qty.toString();
+          _currentText = widget.qty.toString();
+          controller.text = widget.qty.toString();
         });
+      } else if (widget.editTradeID != null) {
+        TsPendingListRes? data = context
+            .read<TsPendingListProvider>()
+            .data
+            ?.firstWhere((ele) => ele.id == widget.editTradeID);
+        if (data != null) {
+          Utils().showLog("BRACKET ORDER DATA => ${data.toJson()}");
+          setState(() {
+            _currentText = (data.quantity ?? 0).toString();
+            controller.text = _currentText;
+            targetPriceController.text = data.targetPrice.toString();
+            stopPriceController.text = data.stopPrice.toString();
+            selectedIndex = menus.indexWhere(
+              (element) => element == data.tradeType,
+            );
+          });
+        }
       }
     });
   }
@@ -93,7 +113,9 @@ class _ConditionalContainerState extends State<ConditionalContainer> {
     TradeProviderNew provider = context.read<TradeProviderNew>();
     TsStockDetailRes? detailRes = provider.detailRes;
 
-    if (detailRes?.executable == false && widget.editTradeID == null) {
+    if (detailRes?.executable == false
+        // && widget.editTradeID == null
+        ) {
       popUpAlert(
         title: "Confirm Order",
         message:
@@ -129,7 +151,8 @@ class _ConditionalContainerState extends State<ConditionalContainer> {
       return;
     }
 
-    if (targetPriceController.text.isEmpty || num.parse(targetPriceController.text) == 0.0) {
+    if (targetPriceController.text.isEmpty ||
+        num.parse(targetPriceController.text) == 0.0) {
       popUpAlert(
         message: "Target price can't be empty",
         title: "Alert",
@@ -137,7 +160,8 @@ class _ConditionalContainerState extends State<ConditionalContainer> {
       );
       return;
     }
-    if (stopPriceController.text.isEmpty || num.parse(stopPriceController.text) == 0.0) {
+    if (stopPriceController.text.isEmpty ||
+        num.parse(stopPriceController.text) == 0.0) {
       popUpAlert(
         message: "Stop price can't be empty",
         title: "Alert",
@@ -151,11 +175,12 @@ class _ConditionalContainerState extends State<ConditionalContainer> {
         "token":
             navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
         "quantity": controller.text,
-        "order_type":  widget.conditionalType == ConditionType.bracketOrder?'BRACKET_ORDER':"",
+        "order_type": widget.conditionalType == ConditionType.bracketOrder
+            ? 'BRACKET_ORDER'
+            : "",
         "duration": "GOOD_UNTIL_CANCELLED",
-        "target_price":targetPriceController.text,
+        "target_price": targetPriceController.text,
         "stop_price": stopPriceController.text
-
       };
       ApiResponse response = await provider.requestUpdateShare(
         id: widget.editTradeID ?? 0,
@@ -202,15 +227,18 @@ class _ConditionalContainerState extends State<ConditionalContainer> {
 
       return;
     }
-    if(widget.tickerID!=null){
+    if (widget.tickerID != null) {
       final Map<String, dynamic> request = {
-        "token": navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
+        "token":
+            navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
         "order_type": 'BRACKET_ORDER',
-        "target_price":targetPriceController.text,
+        "target_price": targetPriceController.text,
         "stop_price": stopPriceController.text
       };
 
-      ApiResponse response = await provider.tsAddConditional(request,widget.tickerID!.toInt(), showProgress: true);
+      ApiResponse response = await provider.tsAddConditional(
+          request, widget.tickerID!.toInt(),
+          showProgress: true);
       Utils().showLog('~~~~~${response.status}~~~~');
       if (response.status) {
         context.read<TsPortfolioProvider>().getDashboardData();
@@ -246,7 +274,6 @@ class _ConditionalContainerState extends State<ConditionalContainer> {
         _clear();
 
         await showCOrderSuccessSheet(order, widget.conditionalType);
-
       } else {
         popUpAlert(
           message: "${response.message}",
@@ -254,9 +281,8 @@ class _ConditionalContainerState extends State<ConditionalContainer> {
           icon: Images.alertPopGIF,
         );
       }
-    }
-    else{
-      if (_selectedTock==StockType.buy) {
+    } else {
+      if (_selectedTock == StockType.buy) {
         if (invested > (portfolioProvider.userData?.tradeBalance ?? 0)) {
           popUpAlert(
             message: "Insufficient available balance to place this order.",
@@ -266,17 +292,20 @@ class _ConditionalContainerState extends State<ConditionalContainer> {
           return;
         } else {
           final Map<String, dynamic> request = {
-            "token": navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
+            "token":
+                navigatorKey.currentContext!.read<UserProvider>().user?.token ??
+                    "",
             "action": "BUY",
             "symbol": detailRes?.symbol,
             "quantity": controller.text,
             "order_type": 'BRACKET_ORDER',
             "duration": "GOOD_UNTIL_CANCELLED",
-            "target_price":targetPriceController.text,
+            "target_price": targetPriceController.text,
             "stop_price": stopPriceController.text
           };
 
-          ApiResponse response = await provider.requestBuyShare(request, showProgress: true);
+          ApiResponse response =
+              await provider.requestBuyShare(request, showProgress: true);
           Utils().showLog('~~~~~${response.status}~~~~');
           if (response.status) {
             context.read<TsPortfolioProvider>().getDashboardData();
@@ -302,6 +331,7 @@ class _ConditionalContainerState extends State<ConditionalContainer> {
               targetPrice: num.parse(targetPriceController.text.toString()),
               stopPrice: num.parse(stopPriceController.text.toString()),
             );
+
             Navigator.popUntil(
                 navigatorKey.currentContext!, (route) => route.isFirst);
             Navigator.push(
@@ -313,7 +343,6 @@ class _ConditionalContainerState extends State<ConditionalContainer> {
             _clear();
 
             await showCOrderSuccessSheet(order, widget.conditionalType);
-
           } else {
             popUpAlert(
               message: "${response.message}",
@@ -322,26 +351,28 @@ class _ConditionalContainerState extends State<ConditionalContainer> {
             );
           }
         }
-      }
-      else {
+      } else {
         FormData request = FormData.fromMap({
           "token":
-          navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
-          "action": _selectedTock==StockType.short
+              navigatorKey.currentContext!.read<UserProvider>().user?.token ??
+                  "",
+          "action": _selectedTock == StockType.short
               ? "SHORT"
-              : _selectedTock==StockType.sell
-              ? "SELL"
-              : "BUY_TO_COVER",
+              : _selectedTock == StockType.sell
+                  ? "SELL"
+                  : "BUY_TO_COVER",
           "symbol": detailRes?.symbol,
-          "order_type":  widget.conditionalType == ConditionType.bracketOrder?'BRACKET_ORDER':"",
+          "order_type": widget.conditionalType == ConditionType.bracketOrder
+              ? 'BRACKET_ORDER'
+              : "",
           "duration": "GOOD_UNTIL_CANCELLED",
           "quantity": controller.text,
-          "target_price":targetPriceController.text,
+          "target_price": targetPriceController.text,
           "stop_price": stopPriceController.text
         });
 
         ApiResponse response =
-        await provider.requestSellShare(request, showProgress: true);
+            await provider.requestSellShare(request, showProgress: true);
         Utils().showLog('~~~~~${response.status}~~~~');
 
         if (response.status) {
@@ -401,6 +432,7 @@ class _ConditionalContainerState extends State<ConditionalContainer> {
       });
     }
   }
+
   _onChange(String text) {
     try {
       Utils().showLog("TEXT=>$text");
@@ -492,18 +524,20 @@ class _ConditionalContainerState extends State<ConditionalContainer> {
           const SpacerVertical(),
           ThemeButton(
             disabledBackgroundColor: ThemeColors.greyBorder,
-            text:widget.editTradeID != null
+            text: widget.editTradeID != null
                 ? 'Update Bracket Order'
                 : "Proceed Bracket Order",
             color: (invested > _availableBalance || invested == 0)
                 ? ThemeColors.greyText
                 : ThemeColors.accent,
             onPressed:
-            (invested > _availableBalance || invested == 0)?null:
-            _onTap,
+                (invested > _availableBalance || invested == 0) ? null : _onTap,
           ),
           Visibility(
-            visible: controller.text.isNotEmpty && (_selectedTock==StockType.buy ||_selectedTock==StockType.short) && (invested > _availableBalance),
+            visible: controller.text.isNotEmpty &&
+                (_selectedTock == StockType.buy ||
+                    _selectedTock == StockType.short) &&
+                (invested > _availableBalance),
             child: Container(
               padding: EdgeInsets.only(top: 10),
               child: RichText(
@@ -518,9 +552,9 @@ class _ConditionalContainerState extends State<ConditionalContainer> {
                     ),
                     TextSpan(
                         style:
-                        styleGeorgiaRegular(color: const Color(0xFFC7C8CC)),
+                            styleGeorgiaRegular(color: const Color(0xFFC7C8CC)),
                         text:
-                        '. You cannot purchase shares with an order value that exceeds your available balance.')
+                            '. You cannot purchase shares with an order value that exceeds your available balance.')
                   ],
                 ),
               ),
@@ -533,7 +567,6 @@ class _ConditionalContainerState extends State<ConditionalContainer> {
 
   @override
   Widget build(BuildContext context) {
-
     return Padding(
       padding: const EdgeInsets.fromLTRB(Dimen.padding, 0, Dimen.padding, 0),
       child: Column(
@@ -545,20 +578,24 @@ class _ConditionalContainerState extends State<ConditionalContainer> {
                   const TsTopWidget(),
                   const SpacerVertical(height: 5),
                   Visibility(
-                    visible: widget.tickerID==null,
+                    visible:
+                        widget.tickerID == null && widget.editTradeID == null,
                     child: TradeCustomeSliding(
                       menus: menus,
                       onValueChanged: (index) {
                         setState(() {
                           selectedIndex = index;
-                          _selectedTock=selectedIndex==0?StockType.buy:StockType.short;
+                          _selectedTock = selectedIndex == 0
+                              ? StockType.buy
+                              : StockType.short;
                         });
-
                       },
                       selectedIndex: selectedIndex,
                     ),
                   ),
-                  Visibility(visible: widget.tickerID==null,child: const SpacerVertical(height: 5)),
+                  Visibility(
+                      visible: widget.tickerID == null,
+                      child: const SpacerVertical(height: 5)),
                   TextfieldTrade(
                     controller: controller,
                     focusNode: focusNode,
@@ -569,7 +606,7 @@ class _ConditionalContainerState extends State<ConditionalContainer> {
                     change: _onChange,
                     counter: _keyCounter,
                     lastEntered: _lastEntered,
-                    readOnly: (widget.tickerID==null?false:true),
+                    readOnly: (widget.tickerID == null ? false : true),
                   ),
                   Text(
                     'Enter number of shares',
@@ -584,7 +621,12 @@ class _ConditionalContainerState extends State<ConditionalContainer> {
                       ),
                     ),
                   SpacerVertical(),
-                  Align(alignment:Alignment.centerLeft,child: showAsteriskText(text: "Target Price", bold: true,showAsterisk: false)),
+                  Align(
+                      alignment: Alignment.centerLeft,
+                      child: showAsteriskText(
+                          text: "Target Price",
+                          bold: true,
+                          showAsterisk: false)),
                   const SpacerVertical(height: 5),
                   ThemeInputField(
                     cursorColor: Colors.white,
@@ -592,11 +634,15 @@ class _ConditionalContainerState extends State<ConditionalContainer> {
                     borderColor: ThemeColors.primaryLight,
                     controller: targetPriceController,
                     placeholder: "Target Price",
-                    keyboardType: TextInputType.numberWithOptions(decimal: true),
+                    keyboardType:
+                        TextInputType.numberWithOptions(decimal: true),
                     style: stylePTSansRegular(color: Colors.white),
                   ),
                   const SpacerVertical(),
-                  Align(alignment:Alignment.centerLeft,child: showAsteriskText(text: "Stop Price", bold: true,showAsterisk: false)),
+                  Align(
+                      alignment: Alignment.centerLeft,
+                      child: showAsteriskText(
+                          text: "Stop Price", bold: true, showAsterisk: false)),
                   const SpacerVertical(height: 5),
                   ThemeInputField(
                     cursorColor: Colors.white,
@@ -604,7 +650,8 @@ class _ConditionalContainerState extends State<ConditionalContainer> {
                     borderColor: ThemeColors.primaryLight,
                     controller: stopPriceController,
                     placeholder: "Stop Price",
-                    keyboardType: TextInputType.numberWithOptions(decimal: true),
+                    keyboardType:
+                        TextInputType.numberWithOptions(decimal: true),
                     style: stylePTSansRegular(color: Colors.white),
                   ),
                 ],

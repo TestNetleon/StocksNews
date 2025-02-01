@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/tournament/provider/tournament.dart';
 import 'package:stocks_news_new/tournament/screens/tournaments/widgets/play_box.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import '../../../../../utils/colors.dart';
 import '../../../../../utils/theme.dart';
 import '../../../../models/tournament_detail.dart';
@@ -75,58 +76,108 @@ class DayTrainingTitle extends StatelessWidget {
                     ],
                   ),
                 ),
-                Divider(
+                /*Divider(
                   color: ThemeColors.greyText,
+                ),*/
+                const SpacerVertical(height: 5),
+                Visibility(
+                  visible: provider.detailRes?.tournamentBattleId != null,
+                  child:LinearProgressIndicator(
+                    value: provider.progress,
+                    backgroundColor: ThemeColors.white.withAlpha(20),
+                    minHeight: 8.0,
+                    valueColor: AlwaysStoppedAnimation<Color>(provider.progressColor),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
                 ),
+                Visibility(
+                  visible: provider.detailRes?.tournamentBattleId == null,
+                  child:LinearProgressIndicator(
+                    value: provider.progress,
+                    backgroundColor: ThemeColors.white.withAlpha(20),
+                    minHeight: 8.0,
+                    valueColor: AlwaysStoppedAnimation<Color>(provider.progressColor),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                ),
+
+                const SpacerVertical(height: 5),
                 Text(
                   'Trading League Time',
                   style: styleGeorgiaBold(),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 5),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Flexible(
-                        child: RichText(
-                          text: TextSpan(
-                            text: 'Start Time: ',
-                            style: styleGeorgiaRegular(
-                                color: ThemeColors.greyText, fontSize: 14),
-                            children: [
-                              TextSpan(
-                                style: styleGeorgiaRegular(fontSize: 14),
-                                text:
-                                    '${provider.detailRes?.tournamentStartTime}',
-                              ),
-                            ],
+                SpacerVertical(height:5),
+                Row(
+                  children: [
+                    Visibility(
+                      visible: provider.detailRes?.tournamentLastDate != null,
+                      child: Flexible(
+                        child: Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            provider.detailRes?.tournamentLastDate??"",
+                            style: styleGeorgiaRegular(fontSize: 11),
                           ),
                         ),
                       ),
-                      Flexible(
-                        child: RichText(
-                          text: TextSpan(
-                            text: 'End Time: ',
-                            style: styleGeorgiaRegular(
-                                color: ThemeColors.greyText, fontSize: 14),
-                            children: [
-                              TextSpan(
-                                style: styleGeorgiaRegular(fontSize: 14),
-                                text:
-                                    '${provider.detailRes?.tournamentEndTime}',
-                              ),
-                            ],
+                    ),
+                    Visibility(
+                      visible: provider.detailRes?.tournamentNextDate != null,
+                      child: Flexible(
+                        child: Align(
+                          alignment: Alignment.centerRight,
+                          child: Text(
+                            provider.detailRes?.tournamentNextDate??"",
+                            style: styleGeorgiaRegular(fontSize: 11),
                           ),
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-
+                SpacerVertical(height:5),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Flexible(
+                      child: RichText(
+                        text: TextSpan(
+                          text: 'Start Time: ',
+                          style: styleGeorgiaRegular(
+                              color: ThemeColors.greyText, fontSize: 14),
+                          children: [
+                            TextSpan(
+                              style: styleGeorgiaRegular(fontSize: 14),
+                              text:
+                              '${provider.detailRes?.tournamentStartTime}',
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Flexible(
+                      child: RichText(
+                        text: TextSpan(
+                          text: 'End Time: ',
+                          style: styleGeorgiaRegular(
+                              color: ThemeColors.greyText, fontSize: 14),
+                          children: [
+                            TextSpan(
+                              style: styleGeorgiaRegular(fontSize: 14),
+                              text:
+                              '${provider.detailRes?.tournamentEndTime}',
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ],
             ),
           ),
         ),
+
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 10.0),
           child: PlayBoxTournament(
@@ -135,6 +186,7 @@ class DayTrainingTitle extends StatelessWidget {
             description: provider.detailRes?.description ?? '',
             pointText: 'Prize Pool',
             points: detailRes?.point ?? '',
+            tournamentPoints:detailRes?.tournamentPoints??[],
             onButtonTap: () {
               if (provider.detailRes?.joined == false) {
                 provider.joinTounament(id: tournamentId);

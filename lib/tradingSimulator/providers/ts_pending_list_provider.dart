@@ -221,7 +221,7 @@ class TsPendingListProvider extends ChangeNotifier {
     }
   }
 
-  Future conditionalRedirection({required int index,num? qty}) async {
+  Future conditionalRedirection({required int index, num? qty}) async {
     try {
       TradeProviderNew provider =
           navigatorKey.currentContext!.read<TradeProviderNew>();

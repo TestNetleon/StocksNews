@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
+import 'package:stocks_news_new/tournament/models/tournament_detail.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -21,6 +22,7 @@ class PlayBoxTournament extends StatelessWidget {
   final Color gradientEndColor;
   final Color buttonColor;
   final bool buttonVisibility;
+  final List<TournamentPointRes>? tournamentPoints;
 
   const PlayBoxTournament({
     super.key,
@@ -35,6 +37,7 @@ class PlayBoxTournament extends StatelessWidget {
     this.gradientEndColor = Colors.lightBlue,
     this.buttonColor = Colors.lightBlue,
     this.buttonVisibility = true,
+    this.tournamentPoints,
   });
 
   @override
@@ -148,7 +151,67 @@ class PlayBoxTournament extends StatelessWidget {
                 ),
               ),
             ),
-            SpacerVertical(height: 5),
+            SpacerVertical(height:10),
+            Visibility(
+              visible: tournamentPoints!=null,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.max,
+                  children: List.generate(tournamentPoints?.length??0, (index) {
+                    final price = tournamentPoints![index];
+                    Color bgColor;
+                    if (price.points == 500) {
+                      bgColor = ThemeColors.gold;
+                    } else if (price.points == 300) {
+                      bgColor = ThemeColors.silver;
+                    } else {
+                      bgColor = ThemeColors.bronze;
+                    }
+
+                    return Row(
+                      children: [
+                        Container(
+
+                          padding: EdgeInsets.symmetric(horizontal:20,vertical:8),
+                          decoration: BoxDecoration(
+                            color: bgColor,
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Container(
+                                padding: EdgeInsets.all(5),
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: Colors.white,
+                                ),
+                                child: Text(
+                                  '#${index + 1}',
+                                  style:styleGeorgiaBold(
+                                    fontSize:14,
+                                    color: ThemeColors.primary,
+                                  ),
+                                ),
+                              ),
+                              const SpacerHorizontal(width: 5),
+                              Text(
+                                '${price.points??""}',
+                                style: styleGeorgiaBold(
+                                  fontSize:18,
+                                  color: ThemeColors.primary,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    );
+                  }),
+            )
+            ),
+            SpacerVertical(height:10),
             Visibility(
               visible: buttonVisibility,
               child: Align(

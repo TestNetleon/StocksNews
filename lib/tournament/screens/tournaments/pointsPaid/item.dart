@@ -17,7 +17,6 @@ class PointsPaidItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    /// updated UI structure
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
       decoration: BoxDecoration(
@@ -104,57 +103,87 @@ class PointsPaidItem extends StatelessWidget {
                           style: stylePTSansRegular(fontSize: 14),
                         ),
                       ),
+
                       Visibility(
-                        visible: data?.totalPoints != null,
-                        child: Text(
-                          'Reward Points: ${data?.totalPoints}',
-                          style: stylePTSansRegular(fontSize: 12,color:ThemeColors.greyText),
+                        visible: data?.date != null,
+                        child:Text(
+                          data?.date ?? "",
+                          style: stylePTSansRegular(
+                              fontSize: 12, color: ThemeColors.greyText),
                         ),
                       ),
-
-
                     ],
                   ),
                 ),
-                const SpacerHorizontal(width: 10),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Visibility(
-                      visible: data?.performancePoint != null,
-                      child: Text(
-                        '${data?.performancePoint}',
-                        style: styleGeorgiaBold(
+                Visibility(
+                  visible: data?.totalPoints != null,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      const SpacerVertical(height:5),
+                      Text(
+                        '${data?.totalPoints}',
+                        style: styleGeorgiaBold(),
+                      ),
+                      Text(
+                        'Reward Points',
+                        style: stylePTSansBold(
+                            fontSize: 14,
+                            color:ThemeColors.greyText
                         ),
                       ),
-                    ),
-                    Visibility(
-                      visible: data?.performance!=null,
-                      child:  Text(
-                        "${data?.performance??"0"}%",
-                        style: stylePTSansRegular(fontSize: 12, color: (data?.performance ?? 0) > 0 ? Colors.green :data?.performance==0?ThemeColors.white: Colors.red,),
-                      ),
-                    ),
-                  ],
-                )
-
-
+                    ],
+                  ),
+                ),
               ],
             ),
           ),
-          Visibility(
-            visible: data?.date != null,
-            child: Align(
-              alignment: Alignment.centerRight,
-              child: Text(
-                data?.date ?? "",
-                style: stylePTSansRegular(
-                    fontSize: 12, color: ThemeColors.greyText),
-              ),
-            ),
+          Divider(
+            color: ThemeColors.greyBorder,
           ),
+
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Visibility(
+                visible: data?.performance!=null,
+                child: Flexible(
+                    child: _richPrices1(label: "Performance: ",value: "${data?.performance??"0"}%")
+                ),
+              ),
+              Visibility(
+                visible: data?.performancePoint != null,
+                child: Flexible(
+                  child:
+                  _richPrices1(label: "Pref. Points: ",value: "${data?.performancePoint}"),
+                ),
+              ),
+
+            ],
+          ),
+
         ],
       ),
+    );
+  }
+
+  Widget _richPrices1 ({String? label,String? value}) {
+    if(value==null||value.isEmpty) return SizedBox();
+    return RichText(
+        text: TextSpan(
+            text: label,
+            style: stylePTSansBold(
+              fontSize: 14,
+              color:ThemeColors.greyText,
+            ),
+            children: [
+              TextSpan(
+                  text: value,
+                  style: label=="Pref. Points: "?stylePTSansRegular(fontSize: 14, color: ThemeColors.white):
+                  stylePTSansBold(fontSize: 14, color: (data?.performance ?? 0) > 0 ? ThemeColors.themeGreen:data?.performance==0?ThemeColors.white:ThemeColors.darkRed)
+              )
+            ]
+        )
     );
   }
 }

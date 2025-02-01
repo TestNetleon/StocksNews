@@ -1,7 +1,5 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
-
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/search_res.dart';
@@ -18,7 +16,6 @@ import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/cache_network_image.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
-
 import '../../../provider/search.dart';
 
 class TournamentInputFieldSearch extends StatefulWidget {

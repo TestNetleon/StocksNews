@@ -65,27 +65,27 @@ class Chart {
 
 class GChart {
   final num? performance;
- // final String? battleDate1;
+  final String? battleDate1;
   final DateTime? battleDate;
   final String? formatPerformance;
 
   GChart({
     this.performance,
-   // this.battleDate1,
+    this.battleDate1,
     this.battleDate,
     this.formatPerformance,
   });
 
   factory GChart.fromMap(Map<String, dynamic> json) => GChart(
     performance: json["performance"],
-   // battleDate1: json["battle_date"],
+    battleDate1: json["battle_date"],
     battleDate: DateFormat("MM/dd/yyyy").parse(json["battle_date"]),
     formatPerformance: json["format_performance"],
   );
 
   Map<String, dynamic> toMap() => {
     "performance": performance,
-   // "battle_date": battleDate1,
+    "battle_date": battleDate1,
     "battle_date": battleDate,
     "format_performance": formatPerformance,
   };
@@ -201,10 +201,11 @@ class RecentTradeRes {
   final String? image;
   final String? type;
   final int? status;
-  final String? orderPrice;
-  final String? closePrice;
-  final String? gainLoss;
-  final num? performance;
+   num? orderPrice;
+  num? closePrice;
+  num? currentPrice;
+  num? gainLoss;
+  num? performance;
 
   RecentTradeRes({
     this.symbol,
@@ -214,6 +215,7 @@ class RecentTradeRes {
     this.status,
     this.orderPrice,
     this.closePrice,
+    this.currentPrice,
     this.gainLoss,
     this.performance,
 
@@ -227,6 +229,7 @@ class RecentTradeRes {
     status: json["status"],
     orderPrice: json["order_price"],
     closePrice: json["close_price"],
+    currentPrice: json['price'],
     gainLoss: json["gain_loss"],
     performance: json["performance"]?.toDouble(),
 
@@ -240,6 +243,7 @@ class RecentTradeRes {
     "status": status,
     "order_price": orderPrice,
     "close_price": closePrice,
+    "price": currentPrice,
     "gain_loss": gainLoss,
     "performance": performance,
   };

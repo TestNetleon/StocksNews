@@ -180,7 +180,7 @@ class TournamentLeaderboardItem extends StatelessWidget {
                       visible:(from == 3||from == 2)? false:true,
                       child: Flexible(
                         child:
-                        _richPrices1(label: "Points Earned: ",value: "${data.totalPoints}"),
+                        _richPrices1(label: "Points Earned: ",value: "${((data.totalPoints??0)+(data.performancePoint??0))}"),
                       ),
                     ),
                     if(from == 2)
