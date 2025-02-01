@@ -14,7 +14,6 @@ class TopTraders extends StatelessWidget {
         return ListView.separated(
           shrinkWrap: true,
           physics: NeverScrollableScrollPhysics(),
-          //padding: EdgeInsets.only(top: 5),
           itemBuilder: (context, index) {
             LeaderboardByDateRes? data = list?[index];
             if (data == null) {

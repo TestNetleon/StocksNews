@@ -7,10 +7,8 @@ import 'package:stocks_news_new/tournament/provider/tournament.dart';
 import 'package:stocks_news_new/tournament/screens/tournaments/widgets/grid_boxs.dart';
 import 'package:stocks_news_new/tournament/screens/tournaments/widgets/growth_chart.dart';
 import 'package:stocks_news_new/tournament/screens/tournaments/widgets/info_box.dart';
-import 'package:stocks_news_new/tournament/screens/tournaments/widgets/line_chart_9.dart';
 import 'package:stocks_news_new/tournament/screens/tournaments/widgets/ticker_item.dart';
 import 'package:stocks_news_new/tournament/screens/tournaments/widgets/tl_item.dart';
-import 'package:stocks_news_new/tournament/screens/tournaments/widgets/trading_line_chart.dart';
 import 'package:stocks_news_new/tradingSimulator/manager/sse.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
@@ -193,7 +191,9 @@ class _TournamentUserDetailState extends State<TournamentUserDetail> {
                           Info? info = provider.userData?.userStats?.info?[index];
                           String valueString = info?.value ?? "";
                           bool isNegative = valueString.contains('-');
-                          return GridBoxs(info: info,isNegative:isNegative);
+                          num valueWithOutSymbol = valueString.contains('%')?num.parse(valueString.replaceAll(RegExp(r'[%\-]'), '').trim()):0;
+
+                          return GridBoxs(info: info,isNegative:isNegative,valueWithOutSymbol:valueWithOutSymbol);
                         },
                       ),
                       const SpacerVertical(height: 20),

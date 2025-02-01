@@ -58,56 +58,6 @@ class _CustomDateSelectorState extends State<CustomDateSelector> {
     setState(() {});
   }
 
-  /* void shiftLeft() {
-    setState(() {
-      int currentIndex = fullDates.indexOf(selectedDate);
-      if (currentIndex > 0) {
-        DateTime previousDate = fullDates[currentIndex - 1];
-        if (visibleDates.contains(previousDate)) {
-          selectedDate = previousDate;
-        } else {
-          // Shift the visibleDates array
-          if (fullDates.indexOf(visibleDates.first) > 0) {
-            visibleDates.insert(
-                0, fullDates[fullDates.indexOf(visibleDates.first) - 1]);
-            visibleDates.removeLast();
-          }
-          selectedDate = visibleDates.first;
-        }
-
-        widget.onDateSelected(selectedDate);
-      }
-    });
-  }
-
-  void shiftRight() {
-    setState(() {
-      int currentIndex = fullDates.indexOf(selectedDate);
-
-      // Check if the next date exists in visibleDates
-      if (currentIndex < fullDates.length - 1) {
-        DateTime nextDate = fullDates[currentIndex + 1];
-
-        if (visibleDates.contains(nextDate)) {
-          selectedDate = nextDate;
-        } else {
-          // Shift the visibleDates array
-          if (fullDates.indexOf(visibleDates.last) < fullDates.length - 1) {
-            visibleDates
-                .add(fullDates[fullDates.indexOf(visibleDates.last) + 1]);
-
-            visibleDates.removeAt(0);
-          }
-          selectedDate = visibleDates.last;
-        }
-
-        widget.onDateSelected(selectedDate);
-      } else {
-        Utils().showLog('ELSE');
-      }
-    });
-  }*/
-
   void shiftLeft() {
     int currentIndex = fullDates.indexOf(selectedDate);
     if (currentIndex > 0) {

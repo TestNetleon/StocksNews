@@ -9,6 +9,7 @@ import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/api/apis.dart';
 import 'package:stocks_news_new/modals/stockDetailRes/overview_graph.dart';
 import 'package:stocks_news_new/tournament/provider/tournament.dart';
+import 'package:stocks_news_new/tournament/screens/game_tournament_index.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -62,6 +63,15 @@ class TournamentTradesProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  void redirectToTrade(){
+    Navigator.popUntil(navigatorKey.currentContext!, (route) => route.isFirst);
+    Navigator.push(
+        navigatorKey.currentContext!,
+        MaterialPageRoute(
+          builder: (context) => GameTournamentIndex(),
+        ));
+  }
+
   Future getTradesList({
     bool refresh = false,
     showProgress = false,
@@ -97,16 +107,18 @@ class TournamentTradesProvider extends ChangeNotifier {
           _startSseTrades();
         }
 
-        _errorTrades = null;
-
         if (refresh) {
+          print("where is go oo first");
           _selectedOverview = typeOfTrade!=null?_myTrades?.overview![1]:_myTrades?.overview?.first;
+          _errorTrades= _selectedOverview?.value==0?_selectedOverview?.message??"":"";
+          print("where is go oo first message ${_errorTrades}");
         } else {
-          //
+          _errorTrades= _selectedOverview?.value==0?_selectedOverview?.message??"":"";
+          print("where is go oo first message else ${_errorTrades}");
         }
       } else {
         _myTrades = null;
-        _errorTrades = null;
+        _errorTrades = response.message;
       }
       setStatusTrades(Status.loaded);
     } catch (e) {

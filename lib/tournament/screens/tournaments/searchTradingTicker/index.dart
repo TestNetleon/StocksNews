@@ -30,7 +30,6 @@ class _TournamentSearchState extends State<TournamentSearch> {
 
   @override
   void dispose() {
-    // context.read<TradingSearchProvider>().dispose();
     super.dispose();
   }
 

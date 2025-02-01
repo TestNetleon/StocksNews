@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/tournament/provider/tournament.dart';
-import 'package:stocks_news_new/tournament/screens/tournaments/widgets/linear_progress.dart';
 import 'package:stocks_news_new/tournament/screens/tournaments/widgets/play_box.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import '../../../../../utils/colors.dart';
@@ -32,7 +30,6 @@ class DayTrainingTitle extends StatelessWidget {
             ),
             child: Column(
               children: [
-
                 RichText(
                   textAlign: TextAlign.center,
                   text: TextSpan(
@@ -79,94 +76,37 @@ class DayTrainingTitle extends StatelessWidget {
                     ],
                   ),
                 ),
-                Divider(
+                /*Divider(
                   color: ThemeColors.greyText,
-                ),
-                /*Visibility(
+                ),*/
+                const SpacerVertical(height: 5),
+                Visibility(
                   visible: provider.detailRes?.tournamentBattleId != null,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Closes in",
-                        style: styleGeorgiaRegular(fontSize: 12,color: ThemeColors.white),
-                      ),
-                      SpacerVertical(height: 5),
-                      LinearProgressIndicator(
-                        value: provider.progress,
-                        backgroundColor: ThemeColors.lightGreen.withAlpha(30),
-                        minHeight: 7.0,
-                        valueColor: AlwaysStoppedAnimation<Color>(provider.progressColor),
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                    ],
+                  child:LinearProgressIndicator(
+                    value: provider.progress,
+                    backgroundColor: ThemeColors.white.withAlpha(20),
+                    minHeight: 8.0,
+                    valueColor: AlwaysStoppedAnimation<Color>(provider.progressColor),
+                    borderRadius: BorderRadius.circular(20),
                   ),
                 ),
                 Visibility(
                   visible: provider.detailRes?.tournamentBattleId == null,
-                  child: Column(
-                    children: [
-                      Text(
-                        "Started At",
-                        style: styleGeorgiaRegular(fontSize: 12,color: ThemeColors.primary),
-                      ),
-                      LinearProgressIndicator(
-                        value: provider.progress,
-                        backgroundColor: ThemeColors.lightGreen.withAlpha(30),
-                        minHeight: 7.0,
-                        valueColor: AlwaysStoppedAnimation<Color>(provider.progressColor),
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                    ],
+                  child:LinearProgressIndicator(
+                    value: provider.progress,
+                    backgroundColor: ThemeColors.white.withAlpha(20),
+                    minHeight: 8.0,
+                    valueColor: AlwaysStoppedAnimation<Color>(provider.progressColor),
+                    borderRadius: BorderRadius.circular(20),
                   ),
-                ),*/
+                ),
 
                 const SpacerVertical(height: 5),
                 Text(
                   'Trading League Time',
                   style: styleGeorgiaBold(),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 5),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Flexible(
-                        child: RichText(
-                          text: TextSpan(
-                            text: 'Start Time: ',
-                            style: styleGeorgiaRegular(
-                                color: ThemeColors.greyText, fontSize: 14),
-                            children: [
-                              TextSpan(
-                                style: styleGeorgiaRegular(fontSize: 14),
-                                text:
-                                    '${provider.detailRes?.tournamentStartTime}',
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      Flexible(
-                        child: RichText(
-                          text: TextSpan(
-                            text: 'End Time: ',
-                            style: styleGeorgiaRegular(
-                                color: ThemeColors.greyText, fontSize: 14),
-                            children: [
-                              TextSpan(
-                                style: styleGeorgiaRegular(fontSize: 14),
-                                text:
-                                    '${provider.detailRes?.tournamentEndTime}',
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                SpacerVertical(height: 3),
+                SpacerVertical(height:5),
                 Row(
                   children: [
                     Visibility(
@@ -194,8 +134,45 @@ class DayTrainingTitle extends StatelessWidget {
                       ),
                     ),
                   ],
-                )
-
+                ),
+                SpacerVertical(height:5),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Flexible(
+                      child: RichText(
+                        text: TextSpan(
+                          text: 'Start Time: ',
+                          style: styleGeorgiaRegular(
+                              color: ThemeColors.greyText, fontSize: 14),
+                          children: [
+                            TextSpan(
+                              style: styleGeorgiaRegular(fontSize: 14),
+                              text:
+                              '${provider.detailRes?.tournamentStartTime}',
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Flexible(
+                      child: RichText(
+                        text: TextSpan(
+                          text: 'End Time: ',
+                          style: styleGeorgiaRegular(
+                              color: ThemeColors.greyText, fontSize: 14),
+                          children: [
+                            TextSpan(
+                              style: styleGeorgiaRegular(fontSize: 14),
+                              text:
+                              '${provider.detailRes?.tournamentEndTime}',
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ],
             ),
           ),

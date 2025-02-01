@@ -24,8 +24,6 @@ class _TournamentLeaderboardState extends State<TournamentLeaderboard> {
   @override
   void initState() {
     super.initState();
-    // WidgetsBinding.instance.addPostFrameCallback((_) {});
-    //context.read<TournamentLeaderboardProvider>().showLeaderboard();
   }
 
   @override
@@ -50,22 +48,7 @@ class _TournamentLeaderboardState extends State<TournamentLeaderboard> {
             });
           },
         ),
-        /* BaseUiContainer(
-          hasData: provider.battleRes != null,
-          isLoading: provider.isLoadingBattle,
-          error: provider.errorBattels,
-          showPreparingText: true,
-          child: CustomDateSelector(
-            editedDate: provider.editedDate,
-            gameValue: provider.battleRes?.battle,
-            onDateSelected: (date) {
-              provider.getSelectedDate(date);
-              WidgetsBinding.instance.addPostFrameCallback((_) {
-                context.read<TournamentLeaderboardProvider>().leaderboard();
-              });
-            },
-          ),
-        ),*/
+
         Expanded(
           child: BaseUiContainer(
             hasData: provider.leaderboardRes != null,
@@ -90,7 +73,6 @@ class _TournamentLeaderboardState extends State<TournamentLeaderboard> {
                     );
                   }
                   bool isTopPerformer = (data.performance ?? 0) > 0;
-
                   if (index == 0 && isTopPerformer) {
                     return Column(
                       children: [
@@ -157,6 +139,9 @@ class _TournamentLeaderboardState extends State<TournamentLeaderboard> {
                       ],
                     );
                   }
+                  if ((index == 1||index == 2) && isTopPerformer){
+                    return const SizedBox();
+                  }
 
                   return TournamentLeaderboardItem(
                     data: data,
@@ -166,93 +151,14 @@ class _TournamentLeaderboardState extends State<TournamentLeaderboard> {
                 itemCount:
                     provider.leaderboardRes?.leaderboardByDate?.length ?? 0,
                 separatorBuilder: (context, index) {
+                  bool isTopPerformer = (provider.leaderboardRes?.leaderboardByDate?[index].performance ?? 0) > 0;
+                  if ((index == 0||index == 1||index == 2) && isTopPerformer){
+                    return SpacerVertical(height:5);
+                  }
                   return SpacerVertical(height: 15);
                 },
               ),
 
-              /* ListView.separated(
-                padding: EdgeInsets.only(top: 10),
-                itemBuilder: (context, index) {
-                  LeaderboardByDateRes? data = provider.leaderboardRes?.leaderboardByDate?[index];
-                  if (data == null) {
-                    return SizedBox();
-                  }
-                  if(provider.leaderboardRes?.showLeaderboard==false){
-                    return TournamentLeaderboardItem(
-                      data: data,
-                      from: 2,
-                    );
-                  }
-                  else if((data.performance ?? 0) > 0){
-                    if (index == 0) {
-                      return Column(
-                        children: [
-                          SizedBox(
-                            width: double.infinity,
-                            child: Stack(
-                              children: [
-                                if((data.performance ?? 0) > 0)
-                                const Positioned(
-                                  left: 0,
-                                  top: 70,
-                                  child: TournamentLeaderboardTopItem(index: 1),
-                                ),
-                              if((data.performance ?? 0) > 0)
-                                const Positioned(
-                                  right: 0,
-                                  top: 70,
-                                  child: TournamentLeaderboardTopItem(index: 2),
-                                ),
-                              if((data.performance ?? 0) > 0)
-                                const Align(
-                                  alignment: Alignment.topCenter,
-                                  child: TournamentLeaderboardTopItem(index: 0),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Visibility(
-                            visible: (provider.leaderboardRes?.leaderboardByDate
-                                ?.length ??
-                                0) >
-                                3,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const Divider(
-                                  color: ThemeColors.greyBorder,
-                                  height: 15,
-                                ),
-                              ],
-                            ),
-                          )
-                        ],
-                      );
-                    }
-                  }
-                  else{
-                    return TournamentLeaderboardItem(
-                      data: data,
-                      from: 2,
-                    );
-                  }
-                  if (index == 1 || index == 2) {
-                    return const SizedBox();
-                  }
-                  return TournamentLeaderboardItem(
-                    data: data,
-                    from: 2,
-                  );
-                },
-                itemCount:
-                    provider.leaderboardRes?.leaderboardByDate?.length ?? 0,
-                separatorBuilder: (context, index) {
-                  if ((index == 1 || index == 2) && (provider.leaderboardRes?.leaderboardByDate?[index].performance ?? 0) > 0) {
-                    return const SizedBox();
-                  }
-                  return SpacerVertical(height: 15);
-                },
-              ),*/
             ),
           ),
         ),

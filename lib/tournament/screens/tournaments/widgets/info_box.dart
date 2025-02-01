@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
-
 import '../../../../utils/theme.dart';
 
 class InfoBox extends StatelessWidget {
