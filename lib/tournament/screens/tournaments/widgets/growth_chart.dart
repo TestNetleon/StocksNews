@@ -1,7 +1,6 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/tournament/models/tour_user_detail.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';

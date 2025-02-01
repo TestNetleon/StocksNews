@@ -4,8 +4,6 @@ import 'package:stocks_news_new/screens/tabs/home/widgets/featured/widgets/title
 import 'package:stocks_news_new/tournament/provider/tournament.dart';
 import 'package:stocks_news_new/tournament/screens/tournaments/pointsPaid/index.dart';
 import 'package:stocks_news_new/tournament/screens/tournaments/widgets/header.dart';
-import 'package:stocks_news_new/tournament/screens/tournaments/widgets/info_box.dart';
-import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';

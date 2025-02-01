@@ -3,9 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/tournament/provider/tournament.dart';
 import 'package:stocks_news_new/utils/theme.dart';
-
 import 'package:stocks_news_new/widgets/cache_network_image.dart';
-import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import '../../../../utils/colors.dart';
 import '../../../../widgets/spacer_horizontal.dart';
 import '../../../models/leaderboard.dart';

@@ -7,6 +7,7 @@ import 'package:stocks_news_new/tradingSimulator/manager/sse.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/custom/refresh_indicator.dart';
+import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import '../../../utils/colors.dart';
 import '../../../utils/theme.dart';
@@ -110,101 +111,109 @@ class _TournamentAllTradeIndexState extends State<TournamentAllTradeIndex> {
               ),
             ),
           ),
+
           Expanded(
-            child: CommonRefreshIndicator(
-              onRefresh: () async {
-                provider.getTradesList();
-              },
-              child: ListView.separated(
-                padding: EdgeInsets.only(top: 10),
-                itemBuilder: (context, index) {
-                  return provider.myTrades?.data?[index].status == 0
-                      ? TournamentCloseSlidableMenu(
-                          close: () => _close(
-                            id: provider.myTrades?.data?[index].id,
-                            ticker: provider.myTrades?.data?[index].symbol,
-                          ),
-                          index: index,
-                          child: TournamentTradeItem(
+            child: BaseUiContainer(
+              hasData: provider.myTrades!= null && (provider.myTrades?.data?.isNotEmpty ?? false),
+              isLoading: provider.isLoadingTrades && provider.myTrades == null,
+              error: provider.errorTrades,
+              onRefresh: () => provider.getTradesList(refresh: true),
+              child: CommonRefreshIndicator(
+                onRefresh: () async {
+                  provider.getTradesList();
+                },
+                child: ListView.separated(
+                  padding: EdgeInsets.only(top: 10),
+                  itemBuilder: (context, index) {
+                    return provider.myTrades?.data?[index].status == 0
+                        ? TournamentCloseSlidableMenu(
+                            close: () => _close(
+                              id: provider.myTrades?.data?[index].id,
+                              ticker: provider.myTrades?.data?[index].symbol,
+                            ),
+                            index: index,
+                            child: TournamentTradeItem(
+                              data: provider.myTrades?.data?[index],
+                            ),
+                          )
+                        : TournamentTradeItem(
                             data: provider.myTrades?.data?[index],
-                          ),
-                        )
-                      : TournamentTradeItem(
-                          data: provider.myTrades?.data?[index],
-                        );
-                },
-                separatorBuilder: (context, index) {
-                  return SpacerVertical(height: 10);
-                },
-                itemCount: provider.myTrades?.data?.length ?? 0,
+                          );
+                  },
+                  separatorBuilder: (context, index) {
+                    return SpacerVertical(height: 10);
+                  },
+                  itemCount: provider.myTrades?.data?.length ?? 0,
+                ),
               ),
             ),
           ),
           Visibility(
-            visible: provider.myTrades?.data?.length == 0,
+            visible: !(provider.myTrades!= null && (provider.myTrades?.data?.isNotEmpty ?? false)),
             child: ThemeButton(
               color: Colors.white,
               radius: 10,
               onPressed: () {
-                Navigator.popUntil(context, (route) => route.isFirst);
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => GameTournamentIndex(),
-                    ));
+                provider.redirectToTrade();
               },
               textColor: Colors.black,
               text: 'Place New Order',
             ),
           ),
 
-          /* Visibility(
-            visible:( provider.myTrades?.overview?[1].value == 0||provider.myTrades?.overview?[2].value != 0||provider.myTrades?.overview?[0].value != 0),
-            child: ThemeButton(
-              color: Colors.white,
-              radius: 10,
-              onPressed: () {
-
-              },
-              textColor: Colors.black,
-              text:'Place New Order',
-            ),
-          ),*/
           Visibility(
             visible: provider.myTrades?.overview?[1].value != 0,
-            child: ThemeButton(
-              color: Colors.white,
-              radius: 10,
-              onPressed: () => _close(cancleAll: true),
-              textColor: Colors.black,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'Close All Trades',
-                    style: styleGeorgiaBold(color: Colors.black),
+            child: Row(
+              children: [
+                Expanded(
+                  child: ThemeButton(
+                    radius: 10,
+                    text: 'Place New Trade',
+                    onPressed: () {
+                      provider.redirectToTrade();
+                    },
+                    color: ThemeColors.accent,
+                    textColor: Colors.white,
+                    textSize: 16,
                   ),
-                  Visibility(
-                    visible: sumOfAll != null,
-                    child: Flexible(
-                      child: Container(
-                        margin: EdgeInsets.only(left: 10),
-                        padding: EdgeInsets.symmetric(horizontal: 15),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          color: (sumOfAll ?? 0) >= 0
-                              ? ThemeColors.accent
-                              : ThemeColors.sos,
+                ),
+                const SpacerHorizontal(width: 10),
+                Expanded(
+                  child: ThemeButton(
+                    color: Colors.white,
+                    radius: 10,
+                    onPressed: () => _close(cancleAll: true),
+                    textColor: Colors.black,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Close All',
+                          style: styleGeorgiaBold(color: Colors.black),
                         ),
-                        child: Text(
-                          '${sumOfAll?.toCurrency()}%',
-                          style: styleGeorgiaBold(color: Colors.white),
-                        ),
-                      ),
+                        const SpacerHorizontal(width: 5),
+                        Visibility(
+                          visible: sumOfAll != null,
+                          child: Flexible(
+                            child: Text(
+                              '${sumOfAll?.toCurrency()}%',
+                              style: styleGeorgiaBold(
+                                  color:
+                                  (sumOfAll ?? 0) > 0
+                                      ? ThemeColors.accent
+                                      :
+                                  (sumOfAll ?? 0) == 0?
+                                  ThemeColors.primary:
+                                  ThemeColors.sos
+                              ),
+                            ),
+                          ),
+                        )
+                      ],
                     ),
-                  )
-                ],
-              ),
+                  ),
+                ),
+              ],
             ),
           ),
           SpacerVertical(height: 10),

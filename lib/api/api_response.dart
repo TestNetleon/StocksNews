@@ -56,6 +56,7 @@ class Extra {
   final List<KeyValueElement>? cap;
   final List<KeyValueElement>? sector;
   final List<KeyValueElement>? txnSize;
+  final List<KeyValueElement>? ranks;
   final List<SdTopRes>? period;
   final List<SdTopRes>? type;
   final TextRes? text;
@@ -221,6 +222,7 @@ class Extra {
     this.showWhatWeDo,
     this.showFAQ,
     this.txnSize,
+    this.ranks,
     this.totalPages,
     this.userAlert,
     this.subTitle,
@@ -395,6 +397,12 @@ class Extra {
             ? []
             : List<KeyValueElement>.from(
                 json["txn_size"]!.map((x) => KeyValueElement.fromJson(x))),
+
+    ranks: json["ranks"] == null
+        ? []
+        : List<KeyValueElement>.from(
+        json["ranks"]!.map((x) => KeyValueElement.fromJson(x))),
+
         notificationCount: json["notification_count"],
         inAppMsg: json["in_app_notification"] == null
             ? null
@@ -518,6 +526,10 @@ class Extra {
         "txn_size": txnSize == null
             ? []
             : List<dynamic>.from(txnSize!.map((x) => x.toJson())),
+
+    "ranks": ranks == null
+        ? []
+        : List<dynamic>.from(ranks!.map((x) => x.toJson())),
         "notification_count": notificationCount,
         "text": text?.toJson(),
         "in_app_notification": inAppMsg?.toJson(),

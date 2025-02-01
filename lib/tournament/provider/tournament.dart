@@ -107,23 +107,24 @@ class TournamentProvider extends ChangeNotifier {
     hours = initialDuration.inHours;
     minutes = initialDuration.inMinutes % 60;
     seconds = initialDuration.inSeconds % 60;
-    // _totalDuration = _detailRes?.battleTime?.currentTime!.difference(_detailRes?.battleTime!.endTime??DateTime.now());
-    // _remainingTime = _totalDuration;
 
-    _totalDuration = _detailRes?.battleTime?.endTime!.difference(_detailRes?.battleTime!.startTime??DateTime.now());
-
-    // Calculate remaining time
-    _remainingTime = _detailRes?.battleTime?.endTime!.difference(DateTime.now());
+    if (isStart) {
+      _totalDuration = _detailRes?.battleTime?.startTime!.difference(_detailRes?.battleTime!.currentTime ?? DateTime.now());
+      _remainingTime = _detailRes?.battleTime?.startTime!.difference(DateTime.now());
+    }
+    else{
+      _totalDuration = _detailRes?.battleTime?.endTime!.difference(_detailRes?.battleTime!.currentTime ?? DateTime.now());
+      _remainingTime = _detailRes?.battleTime?.endTime!.difference(DateTime.now());
+    }
 
 
     _timer = Timer.periodic(Duration(seconds: 1), (timer) {
       if (hours == 0 && minutes == 0 && seconds == 0) {
-        // Stop the timer when countdown reaches zero
         stopCountdown();
-
-        // Call the respective API for start or end
         if (isStart) {
-          tournamentDetail(_id);
+          Future.delayed(Duration(seconds: 5), () {
+            tournamentDetail(_id);
+          });
         } else {
           // _endTournament();
           popUpAlert(
@@ -147,14 +148,10 @@ class TournamentProvider extends ChangeNotifier {
         if (seconds > 0) {
           seconds--;
           int elapsedSeconds = _totalDuration!.inSeconds - _remainingTime!.inSeconds;
-
-          // Progress calculation: fraction of elapsed time over total duration
+          print('elapsedSeconds $elapsedSeconds');
           progress = elapsedSeconds / _totalDuration!.inSeconds;
-
-         /* _remainingTime = _detailRes?.battleTime?.currentTime!.difference(DateTime.now());
-          progress = (_totalDuration!.inSeconds - _remainingTime!.inSeconds) / _totalDuration!.inSeconds;*/
           progressColor = ThemeColors.transparentGreen;
-          print('progress $progress');
+          //print('progress $progress');
         } else {
           if (minutes > 0) {
             minutes--;
@@ -371,24 +368,81 @@ class TournamentProvider extends ChangeNotifier {
   /// value as per _extraOfPointPaid
   bool get canLoadMore => _page <= (_extraOfPointPaid?.totalPages ?? 1);
 
+  TextEditingController date = TextEditingController();
+  TextEditingController searchController = TextEditingController();
+  TextEditingController txnSizeController = TextEditingController();
+
+  List<KeyValueElement>? _ranks;
+  List<KeyValueElement>? get ranks => _ranks;
+
+
   void setStatusTradeExecuted(status) {
     _statusCommonList = status;
     notifyListeners();
   }
 
+  String dateSend = "";
+  String valueSearch = "";
+  String keyRank = "";
+  String valueRank = "";
+
+  Future<void> pickDate() async {
+    final DateTime? picked = await showDatePicker(
+      context: navigatorKey.currentContext!,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2000),
+      lastDate: DateTime.now(),
+    );
+    if (picked != null) {
+      date.text = DateFormat("MMM dd, yyyy").format(picked);
+      dateSend = DateFormat("yyyy-MM-dd").format(picked);
+    }
+
+    notifyListeners();
+  }
+
+  void _clearVariables() {
+    dateSend = "";
+    valueSearch = "";
+    valueRank = "";
+    keyRank = "";
+    date.clear();
+    searchController.clear();
+    txnSizeController.clear();
+    notifyListeners();
+  }
+
+  void onChangeTransactionSize({KeyValueElement? selectedItem}) {
+    keyRank = selectedItem?.key ?? "";
+    valueRank = selectedItem?.value ?? "";
+    txnSizeController.text = selectedItem?.value ?? "";
+    notifyListeners();
+  }
+
+
   String getApiUrl(TournamentsHead tournament) {
     switch (tournament) {
       case TournamentsHead.tradTotal:
-        return Apis.tTradingTotal;
+        return "${Apis.tTradingTotal}?date=$dateSend";
       case TournamentsHead.pPaid:
-        return Apis.tPointsPaid;
+        return "${Apis.tPointsPaid}?date=$dateSend";
       case TournamentsHead.playTraders:
-        return Apis.tPlayTraders;
+        return "${Apis.tPlayTraders}?s=$valueSearch&rank=$keyRank";
     }
   }
 
-  Future pointsPaidAPI(
-      {loadMore = false, required TournamentsHead selectedTournament}) async {
+  String getApiUrlWithFilter(TournamentsHead tournament) {
+    switch (tournament) {
+      case TournamentsHead.tradTotal:
+        return "${Apis.tTradingTotal}?date=$dateSend";
+      case TournamentsHead.pPaid:
+        return "${Apis.tPointsPaid}?date=$dateSend";
+      case TournamentsHead.playTraders:
+        return "${Apis.tPlayTraders}?s=$valueSearch&rank=$keyRank";
+    }
+  }
+
+  Future pointsPaidAPI({loadMore = false,bool clear = true, required TournamentsHead selectedTournament}) async {
     if (loadMore) {
       _page++;
       setStatusTradeExecuted(Status.loadingMore);
@@ -397,9 +451,9 @@ class TournamentProvider extends ChangeNotifier {
       setStatusTradeExecuted(Status.loading);
     }
 
+    if (clear) _clearVariables();
     try {
       UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
-
       Map requst = {
         'token': provider.user?.token ?? '',
         'page': '$_page',
@@ -425,10 +479,13 @@ class TournamentProvider extends ChangeNotifier {
           _errorCommonList = response.message;
         }
       }
+      _extraOfPointPaid = (response.extra is Extra ? response.extra as Extra : null);
 
-      /// get extra point values
-      _extraOfPointPaid =
-          (response.extra is Extra ? response.extra as Extra : null);
+      if(selectedTournament==TournamentsHead.playTraders){
+        _ranks = response.extra.ranks;
+        print(_ranks?.length.toString());
+      }
+
       setStatusTradeExecuted(Status.loaded);
     } catch (e) {
       _pointsPaid = null;

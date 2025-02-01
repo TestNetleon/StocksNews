@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:stocks_news_new/tournament/models/tour_user_detail.dart';
