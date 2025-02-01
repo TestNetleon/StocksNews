@@ -10,9 +10,9 @@ class Apis {
   static const baseUrlLocal = "https://notification.stocks.news/api/v1";
 
   // With Debug condition
-  static const baseUrl = kDebugMode
-      ? "https://dev.stocks.news/api/v1"
-      : "https://app.stocks.news/api/v1";
+  // static const baseUrl = kDebugMode
+  //     ? "https://dev.stocks.news/api/v1"
+  //     : "https://app.stocks.news/api/v1";
 
   static const stocksScreenerWebUrl =
       'https://app.stocks.news/stockScannerMobile/screener';
@@ -269,6 +269,7 @@ class Apis {
   static const tCancle = '/tournament/trade-close';
   static const tPointsPaid = '/tournament/points-paid';
   static const tPlayTraders = '/tournament/titans';
+  static const tTopTitans = '/tournament/top-titans';
   static const tTradingTotal = '/tournament/all';
   static const tUser = '/tournament/user-profile';
   static const tShowLeaderboard = '/tournament/show-today-leaderboard';

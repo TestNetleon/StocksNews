@@ -58,7 +58,7 @@ class LeagueFilter extends StatelessWidget {
         children: [
 
           Visibility(
-            visible: selectedTournament==TournamentsHead.playTraders,
+            visible: (selectedTournament==TournamentsHead.playTraders|| selectedTournament==TournamentsHead.topTitan),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -85,12 +85,12 @@ class LeagueFilter extends StatelessWidget {
             ),
           ),
           Visibility(
-              visible: selectedTournament==TournamentsHead.playTraders,
+              visible:(selectedTournament==TournamentsHead.playTraders|| selectedTournament==TournamentsHead.topTitan),
               child: const SpacerVertical(height: 20)
           ),
 
           Visibility(
-            visible: selectedTournament==TournamentsHead.playTraders,
+            visible: (selectedTournament==TournamentsHead.playTraders|| selectedTournament==TournamentsHead.topTitan),
             child: GestureDetector(
               onTap: () => showTransactionSizePicker(context),
               child: Column(
@@ -118,7 +118,7 @@ class LeagueFilter extends StatelessWidget {
             ),
           ),
           Visibility(
-            visible: selectedTournament!=TournamentsHead.playTraders,
+            visible:!(selectedTournament==TournamentsHead.playTraders||selectedTournament==TournamentsHead.topTitan),
             child: GestureDetector(
               onTap: provider.pickDate,
               child: Column(

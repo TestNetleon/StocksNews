@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:intl/intl.dart';
+import 'package:stocks_news_new/utils/utils.dart';
 
 class CustomDateSelector extends StatefulWidget {
   final Function(DateTime) onDateSelected;
@@ -59,34 +60,50 @@ class _CustomDateSelectorState extends State<CustomDateSelector> {
   }
 
   void shiftLeft() {
-    int currentIndex = fullDates.indexOf(selectedDate);
-    if (currentIndex > 0) {
-      setState(() {
-        selectedDate = fullDates[currentIndex - 1];
-        _updateVisibleDates();
-      });
-    }
+    setState(() {
+      int currentIndex = fullDates.indexOf(selectedDate);
+      if (currentIndex > 0) {
+        DateTime previousDate = fullDates[currentIndex - 1];
+        if (visibleDates.contains(previousDate)) {
+          selectedDate = previousDate;
+        } else {
+          if (fullDates.indexOf(visibleDates.first) > 0) {
+            visibleDates.insert(
+                0, fullDates[fullDates.indexOf(visibleDates.first) - 1]);
+            visibleDates.removeLast();
+          }
+          selectedDate = visibleDates.first;
+        }
+
+        widget.onDateSelected(selectedDate);
+      }
+    });
   }
 
   void shiftRight() {
-    int currentIndex = fullDates.indexOf(selectedDate);
-    if (currentIndex < fullDates.length - 1) {
-      setState(() {
-        selectedDate = fullDates[currentIndex + 1];
-        _updateVisibleDates();
-      });
-    }
+    setState(() {
+      int currentIndex = fullDates.indexOf(selectedDate);
+      if (currentIndex < fullDates.length - 1) {
+        DateTime nextDate = fullDates[currentIndex + 1];
+
+        if (visibleDates.contains(nextDate)) {
+          selectedDate = nextDate;
+        } else {
+          if (fullDates.indexOf(visibleDates.last) < fullDates.length - 1) {
+            visibleDates
+                .add(fullDates[fullDates.indexOf(visibleDates.last) + 1]);
+
+            visibleDates.removeAt(0);
+          }
+          selectedDate = visibleDates.last;
+        }
+
+        widget.onDateSelected(selectedDate);
+      } else {
+        Utils().showLog('ELSE');
+      }
+    });
   }
-
-  void _updateVisibleDates() {
-    int selectedIndex = fullDates.indexOf(selectedDate);
-    int startIdx = (selectedIndex - 2).clamp(0, fullDates.length - 3);
-    int endIdx = (selectedIndex + 1).clamp(2, fullDates.length);
-
-    visibleDates = fullDates.sublist(startIdx, endIdx + 1);
-    widget.onDateSelected(selectedDate);
-  }
-
   String formatDate(DateTime date) {
     return DateFormat('dd MMM yy').format(date);
   }
@@ -143,8 +160,8 @@ class _CustomDateSelectorState extends State<CustomDateSelector> {
                               alignment: Alignment.center,
                               decoration: BoxDecoration(
                                 color: selectedDate.day == date.day
-                                    ? ThemeColors.accent.withOpacity(0.7)
-                                    : ThemeColors.greyBorder.withOpacity(0.7),
+                                    ? ThemeColors.accent.withAlpha(150)
+                                    : ThemeColors.greyBorder.withAlpha(150),
                                 borderRadius: visibleDates.first == date
                                     ? BorderRadius.only(
                                         topLeft: Radius.circular(10),
