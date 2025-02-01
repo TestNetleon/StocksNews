@@ -1,7 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
-
-import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
@@ -12,6 +9,7 @@ import '../../api/apis.dart';
 import '../../modals/membership/membership_info_res.dart';
 import '../../modals/user_res.dart';
 import '../../routes/my_app.dart';
+import '../../service/revenueCat/service.dart';
 import '../../utils/constants.dart';
 import '../../utils/utils.dart';
 import '../home_provider.dart';
@@ -94,34 +92,14 @@ class ChristmasProvider extends ChangeNotifier {
             ?.revenueCatKeys;
         UserRes? userRes = provider.user;
 
-        PurchasesConfiguration? configuration;
-        if (Platform.isAndroid) {
-          configuration =
-              PurchasesConfiguration(keys?.playStore ?? ApiKeys.androidKey)
-                ..appUserID = userRes?.userId ?? "";
-        } else if (Platform.isIOS) {
-          Utils().showLog("---Platform.isIOS-----");
-          configuration =
-              PurchasesConfiguration(keys?.appStore ?? ApiKeys.iosKey)
-                ..appUserID = userRes?.userId ?? "";
-        }
+        RevenueCatManager.instance.initialize(user: userRes, keys: keys);
 
         try {
-          if (configuration != null) {
-            Utils().showLog("--integrating configuration----");
-            await Purchases.configure(configuration);
-            FirebaseAnalytics analytics = FirebaseAnalytics.instance;
-            String? firebaseAppInstanceId = await analytics.appInstanceId;
-            if (firebaseAppInstanceId != null && firebaseAppInstanceId != '') {
-              Purchases.setFirebaseAppInstanceId(firebaseAppInstanceId);
-              Utils().showLog('Set app instance ID => $firebaseAppInstanceId');
-            }
-          }
-          Offerings? offerings;
-          offerings = await Purchases.getOfferings();
+          Offerings? offerings =
+              await RevenueCatManager.instance.getOfferings();
           for (var i = 0; i < (_membershipInfoRes?.plans?.length ?? 0); i++) {
             Offering? offering = offerings
-                .getOffering(_membershipInfoRes?.plans?[i].type ?? 'access');
+                ?.getOffering(_membershipInfoRes?.plans?[i].type ?? 'access');
 
             if (offering != null) {
               var availablePackage = offering.availablePackages.first;

@@ -1,0 +1,305 @@
+import 'dart:io';
+
+import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:purchases_flutter/purchases_flutter.dart';
+import 'package:stocks_news_new/routes/my_app.dart';
+import '../../api/api_response.dart';
+import '../../api/apis.dart';
+import '../../modals/user_res.dart';
+import '../../utils/constants.dart';
+import '../../utils/utils.dart';
+import 'package:superwallkit_flutter/superwallkit_flutter.dart' as superwall;
+
+import '../success.dart';
+import '../superwall/controller.dart';
+
+class RevenueCatManager {
+  static final RevenueCatManager instance = RevenueCatManager._internal();
+
+  RevenueCatManager._internal();
+
+  RCPurchaseController purchaseController = RCPurchaseController();
+
+  static superwall.PurchaseResult cancelled =
+      superwall.PurchaseResultCancelled();
+
+  static superwall.PurchaseResult purchased =
+      superwall.PurchaseResultPurchased();
+
+  static superwall.PurchaseResult restored = superwall.PurchaseResultRestored();
+
+  ///
+  static superwall.PurchaseResult pending = superwall.PurchaseResultPending();
+
+  Future<void> initialize({UserRes? user, RevenueCatKeyRes? keys}) async {
+    try {
+      Purchases.setLogLevel(LogLevel.debug);
+
+      String? appUserId = user?.userId;
+      String apiKey = Platform.isAndroid
+          ? keys?.playStore ?? ApiKeys.androidKey
+          : keys?.appStore ?? ApiKeys.iosKey;
+
+      PurchasesConfiguration configuration = PurchasesConfiguration(apiKey);
+      if (appUserId != null) {
+        configuration.appUserID = appUserId;
+      }
+
+      await Purchases.configure(configuration);
+
+      if (appUserId != null && appUserId.isNotEmpty) {
+        Purchases.logIn(appUserId);
+        _setUserAttributes(user);
+      }
+
+      await _setFirebaseAnalyticsId();
+      await _setAppsFlyerId();
+
+      if (Platform.isIOS) {
+        await Purchases.enableAdServicesAttributionTokenCollection();
+      }
+    } catch (e) {
+      //
+    }
+  }
+
+  Future<void> _setFirebaseAnalyticsId() async {
+    try {
+      FirebaseAnalytics analytics = FirebaseAnalytics.instance;
+      String? firebaseAppInstanceId = await analytics.appInstanceId;
+      if (firebaseAppInstanceId != null && firebaseAppInstanceId.isNotEmpty) {
+        Purchases.setFirebaseAppInstanceId(firebaseAppInstanceId);
+        Utils().showLog('Set app instance ID => $firebaseAppInstanceId');
+      }
+    } catch (e) {
+      //
+    }
+  }
+
+  Future<void> _setAppsFlyerId() async {
+    try {
+      if (appsFlyerUID != null && appsFlyerUID?.isNotEmpty == true) {
+        await Purchases.setAppsflyerID(appsFlyerUID ?? '');
+        Utils().showLog('Successfully set purchase AppsFlyer ID $appsFlyerUID');
+      }
+    } catch (e) {
+      //
+    }
+  }
+
+  void _setUserAttributes(UserRes? userRes) {
+    try {
+      Map<String, String> attributes = {};
+
+      if (userRes?.name != null && userRes?.name != '') {
+        attributes['\$displayName'] = userRes?.name ?? '';
+      }
+
+      if (userRes?.email != null && userRes?.email != '') {
+        attributes['\$email'] = userRes?.email ?? '';
+      }
+
+      if (userRes?.phone != null && userRes?.phone != '') {
+        attributes['\$phoneNumber'] =
+            userRes?.phoneCode != null && userRes?.phoneCode != ''
+                ? '${userRes?.phoneCode}${userRes?.phone}'
+                : userRes?.phone ?? '';
+      }
+
+      Purchases.setAttributes(attributes);
+      Utils().showLog('User attributes set: $attributes');
+    } catch (e) {
+      Utils().showLog('Error while setting attributes: $e');
+    }
+  }
+
+  Future<Offerings?> getOfferings() async {
+    try {
+      Offerings offerings = await Purchases.getOfferings();
+      return offerings;
+    } catch (e) {
+      Utils().showLog('Error retrieving offerings: $e');
+      return null;
+    }
+  }
+
+  //MARK: SUPERWALL
+  initializeSuperWall() async {
+    try {
+      String apiKey = ApiKeys.superWall;
+      superwall.Superwall.configure(
+        apiKey,
+        purchaseController: purchaseController,
+      );
+
+      purchaseController.syncSubscriptionStatus();
+      Utils().showLog('SuperWall initialized successfully');
+
+      superwall.Superwall.shared.registerEvent('stocks_news_plans');
+
+      superwall.Superwall.shared.setDelegate(SWDelegate());
+    } catch (e) {
+      if (kDebugMode) {
+        print('Superwall Error $e');
+      }
+    }
+  }
+}
+
+class SWDelegate extends superwall.SuperwallDelegate {
+  @override
+  void handleSuperwallEvent(superwall.SuperwallEventInfo eventInfo) async {
+    // Handle events here
+    switch (eventInfo.event.type) {
+      case superwall.EventType.transactionComplete:
+        await Navigator.push(
+          navigatorKey.currentContext!,
+          MaterialPageRoute(
+            builder: (context) => SubscriptionPurchased(isMembership: true),
+          ),
+        );
+        break;
+      case superwall.EventType.transactionFail:
+        // Show error screen
+        break;
+      // Handle other events as needed
+      case superwall.EventType.firstSeen:
+      // //throw UnimplementedError();
+      case superwall.EventType.appOpen:
+      // //throw UnimplementedError();
+      case superwall.EventType.appLaunch:
+      //throw UnimplementedError();
+      case superwall.EventType.identityAlias:
+      //throw UnimplementedError();
+      case superwall.EventType.appInstall:
+      //throw UnimplementedError();
+      case superwall.EventType.restoreStart:
+      //throw UnimplementedError();
+      case superwall.EventType.restoreComplete:
+      //throw UnimplementedError();
+      case superwall.EventType.restoreFail:
+      //throw UnimplementedError();
+      case superwall.EventType.sessionStart:
+      //throw UnimplementedError();
+      case superwall.EventType.deviceAttributes:
+      //throw UnimplementedError();
+      case superwall.EventType.subscriptionStatusDidChange:
+      //throw UnimplementedError();
+      case superwall.EventType.appClose:
+      //throw UnimplementedError();
+      case superwall.EventType.deepLink:
+      //throw UnimplementedError();
+      case superwall.EventType.triggerFire:
+      //throw UnimplementedError();
+      case superwall.EventType.paywallOpen:
+      //throw UnimplementedError();
+      case superwall.EventType.paywallClose:
+      //throw UnimplementedError();
+      case superwall.EventType.paywallDecline:
+      //throw UnimplementedError();
+      case superwall.EventType.transactionStart:
+      //throw UnimplementedError();
+      case superwall.EventType.transactionAbandon:
+      //throw UnimplementedError();
+      case superwall.EventType.subscriptionStart:
+      //throw UnimplementedError();
+      case superwall.EventType.freeTrialStart:
+      //throw UnimplementedError();
+      case superwall.EventType.transactionRestore:
+      //throw UnimplementedError();
+      case superwall.EventType.transactionTimeout:
+      //throw UnimplementedError();
+      case superwall.EventType.userAttributes:
+      //throw UnimplementedError();
+      case superwall.EventType.nonRecurringProductPurchase:
+      //throw UnimplementedError();
+      case superwall.EventType.paywallResponseLoadStart:
+      //throw UnimplementedError();
+      case superwall.EventType.paywallResponseLoadNotFound:
+      //throw UnimplementedError();
+      case superwall.EventType.paywallResponseLoadFail:
+      //throw UnimplementedError();
+      case superwall.EventType.paywallResponseLoadComplete:
+      //throw UnimplementedError();
+      case superwall.EventType.paywallWebviewLoadStart:
+      //throw UnimplementedError();
+      case superwall.EventType.paywallWebviewLoadFail:
+      //throw UnimplementedError();
+      case superwall.EventType.paywallWebviewLoadComplete:
+      //throw UnimplementedError();
+      case superwall.EventType.paywallWebviewLoadTimeout:
+      //throw UnimplementedError();
+      case superwall.EventType.paywallWebviewLoadFallback:
+      //throw UnimplementedError();
+      case superwall.EventType.paywallProductsLoadRetry:
+      //throw UnimplementedError();
+      case superwall.EventType.paywallProductsLoadStart:
+      //throw UnimplementedError();
+      case superwall.EventType.paywallProductsLoadFail:
+      //throw UnimplementedError();
+      case superwall.EventType.paywallProductsLoadComplete:
+      //throw UnimplementedError();
+      case superwall.EventType.surveyResponse:
+      //throw UnimplementedError();
+      case superwall.EventType.paywallPresentationRequest:
+      //throw UnimplementedError();
+      case superwall.EventType.touchesBegan:
+      //throw UnimplementedError();
+      case superwall.EventType.surveyClose:
+      //throw UnimplementedError();
+      case superwall.EventType.reset:
+      //throw UnimplementedError();
+      case superwall.EventType.configRefresh:
+      //throw UnimplementedError();
+      case superwall.EventType.customPlacement:
+      //throw UnimplementedError();
+      case superwall.EventType.configAttributes:
+      //throw UnimplementedError();
+      case superwall.EventType.confirmAllAssignments:
+      //throw UnimplementedError();
+      case superwall.EventType.configFail:
+      //throw UnimplementedError();
+      case superwall.EventType.adServicesTokenRequestStart:
+      //throw UnimplementedError();
+      case superwall.EventType.adServicesTokenRequestFail:
+      //throw UnimplementedError();
+      case superwall.EventType.adServicesTokenRequestComplete:
+      //throw UnimplementedError();
+      case superwall.EventType.shimmerViewStart:
+      //throw UnimplementedError();
+      case superwall.EventType.shimmerViewComplete:
+      //throw UnimplementedError();
+    }
+  }
+
+  @override
+  void didDismissPaywall(superwall.PaywallInfo paywallInfo) {}
+
+  @override
+  void didPresentPaywall(superwall.PaywallInfo paywallInfo) {}
+
+  @override
+  void handleCustomPaywallAction(String name) {}
+
+  @override
+  void handleLog(
+      String level, String scope, String? message, Map? info, String? error) {}
+
+  @override
+  void paywallWillOpenDeepLink(Uri url) {}
+
+  @override
+  void paywallWillOpenURL(Uri url) {}
+
+  @override
+  void subscriptionStatusDidChange(superwall.SubscriptionStatus newValue) {}
+
+  @override
+  void willDismissPaywall(superwall.PaywallInfo paywallInfo) {}
+
+  @override
+  void willPresentPaywall(superwall.PaywallInfo paywallInfo) {}
+}

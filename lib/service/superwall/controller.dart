@@ -1,4 +1,3 @@
-/*
 import 'dart:io';
 
 import 'package:flutter/services.dart';
@@ -15,6 +14,9 @@ class RCPurchaseController extends PurchaseController {
     PurchasesConfiguration configuration = Platform.isIOS
         ? PurchasesConfiguration("appl_kHwXNrngqMNktkEZJqYhEgLjbcC")
         : PurchasesConfiguration("goog_KXHVJRLChlyjoOamWsqCWQSJZfI");
+    // configuration.purchasesAreCompletedBy = PurchasesAreCompletedByMyApp(
+    //   storeKitVersion: StoreKitVersion.storeKit2,
+    // );
     await Purchases.configure(configuration);
 
     // Listen for changes
@@ -289,4 +291,3 @@ extension PurchasesAdditions on Purchases {
     return combinedProducts;
   }
 }
-*/

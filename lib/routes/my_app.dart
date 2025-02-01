@@ -5,11 +5,9 @@ import 'package:country_code_picker/country_code_picker.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:stocks_news_new/fcm/braze_notification_handler.dart';
 import 'package:stocks_news_new/fcm/braze_service.dart';
 import 'package:stocks_news_new/modals/user_res.dart';
@@ -18,12 +16,12 @@ import 'package:stocks_news_new/routes/navigation_observer.dart';
 import 'package:stocks_news_new/routes/routes.dart';
 import 'package:stocks_news_new/screens/splash/splash.dart';
 import 'package:stocks_news_new/service/braze/service.dart';
+import 'package:stocks_news_new/service/revenueCat/service.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/database/preference.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/utils/utils.dart';
-import '../api/apis.dart';
 import '../screens/auth/base/base_auth.dart';
 
 final _appLinks = AppLinks();
@@ -369,38 +367,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
 Future<void> configureRevenueCatAttribute() async {
   try {
     UserRes? user = await Preference.getUser();
-    String? appUserId = user?.userId;
-
-    // Set the API keys based on the platform
-    String apiKey = Platform.isAndroid ? ApiKeys.androidKey : ApiKeys.iosKey;
-
-    // Configure Purchases
-    PurchasesConfiguration configuration = PurchasesConfiguration(apiKey);
-    if (appUserId != null) {
-      configuration.appUserID = appUserId;
-    }
-
-    await Purchases.configure(configuration);
-
-    FirebaseAnalytics analytics = FirebaseAnalytics.instance;
-    String? firebaseAppInstanceId = await analytics.appInstanceId;
-    if (firebaseAppInstanceId != null && firebaseAppInstanceId != '') {
-      Purchases.setFirebaseAppInstanceId(firebaseAppInstanceId);
-      Utils().showLog('Set app instance ID => $firebaseAppInstanceId');
-    }
-    try {
-      if (appsFlyerUID != null && appsFlyerUID != '') {
-        await Purchases.setAppsflyerID(appsFlyerUID ?? '');
-        Utils().showLog('successfully set purchase appsflyer ID $appsFlyerUID');
-      }
-    } catch (e) {
-      if (kDebugMode) {
-        print('error while setting Purchase Appsflyer ID $e');
-      }
-    }
-    if (Platform.isIOS) {
-      await Purchases.enableAdServicesAttributionTokenCollection();
-    }
+    RevenueCatManager.instance.initialize(user: user);
   } catch (e) {
     Utils().showLog("Error in configure RevenueCat: $e");
   }

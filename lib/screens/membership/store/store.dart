@@ -176,13 +176,6 @@ class _StoreState extends State<Store> {
                               points: "${data?.points[index].point}",
                               price: "${data?.points[index].price}",
                               onTap: () {
-                                // if (kDebugMode) {
-                                //   RevenueCatService.initializeSubscription(
-                                //     type: "1 Point Bundle",
-                                //   );
-                                // } else {
-
-                                // }
                                 RevenueCatService.initializeSubscription(
                                   type: data?.points[index].lookupKey,
                                   fromMembership: false,

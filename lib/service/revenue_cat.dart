@@ -1,5 +1,3 @@
-import 'dart:io';
-import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
@@ -10,15 +8,12 @@ import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/membership.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
+import 'package:stocks_news_new/service/revenueCat/service.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
-import '../api/apis.dart';
 import '../utils/utils.dart';
-import 'appsFlyer/service.dart';
 import 'success.dart';
 
 class RevenueCatService {
-  static bool _adServicesAttributionEnabled = false;
-
   static Future initializeSubscription({
     String? type,
     bool fromMembership = true,
@@ -31,91 +26,27 @@ class RevenueCatService {
     UserRes? userRes = navigatorKey.currentContext?.read<UserProvider>().user;
     Utils().showLog("${userRes?.userId}");
 
-    PurchasesConfiguration? configuration;
-    if (Platform.isAndroid) {
-      configuration =
-          PurchasesConfiguration(keys?.playStore ?? ApiKeys.androidKey)
-            ..appUserID = userRes?.userId ?? "";
-    } else if (Platform.isIOS) {
-      configuration = PurchasesConfiguration(keys?.appStore ?? ApiKeys.iosKey)
-        ..appUserID = userRes?.userId ?? "";
-    }
-
-    Map<String, String> attributes = {};
-
-    if (userRes?.username != null && userRes?.username != '') {
-      attributes['name'] = userRes?.username ?? 'N/A';
-    }
-
-    if (userRes?.email != null && userRes?.email != '') {
-      attributes['email'] = userRes?.email ?? 'N/A';
-    }
-    if (userRes?.email != null && userRes?.email != '') {
-      attributes['email'] = userRes?.email ?? 'N/A';
-    }
-
-    if (userRes?.phone != null && userRes?.phone != '') {
-      if (userRes?.phoneCode == null || userRes?.phoneCode == '') {
-        attributes['phone'] = userRes?.phone ?? 'N/A';
-      } else {
-        attributes['phone'] = '${userRes?.phoneCode}${userRes?.phone}';
-      }
-    }
-
-    Purchases.setAttributes(attributes);
+    RevenueCatManager.instance.initialize(user: userRes, keys: keys);
 
     try {
       navigatorKey.currentContext!
           .read<MembershipProvider>()
           .getMembershipSuccess(isMembership: fromMembership);
       showGlobalProgressDialog();
-      if (configuration != null) {
-        await Purchases.configure(configuration);
-        FirebaseAnalytics analytics = FirebaseAnalytics.instance;
-        String? firebaseAppInstanceId = await analytics.appInstanceId;
-        if (firebaseAppInstanceId != null && firebaseAppInstanceId != '') {
-          Purchases.setFirebaseAppInstanceId(firebaseAppInstanceId);
-          Utils().showLog('Set app instance ID => $firebaseAppInstanceId');
-        }
+      Offerings? offerings;
+      offerings = await Purchases.getOfferings();
+      closeGlobalProgressDialog();
+      Offering? singleOffering =
+          offerings.getOffering(type ?? 'monthly-premium');
 
-        await configureAppsFlyer();
-        if (Platform.isIOS && !_adServicesAttributionEnabled) {
-          await Purchases.enableAdServicesAttributionTokenCollection();
+      PaywallResult result =
+          await RevenueCatUI.presentPaywall(offering: singleOffering);
 
-          _adServicesAttributionEnabled = true;
-          Utils().showLog("Ad Services Attribution Enabled");
-        }
-
-        Offerings? offerings;
-        offerings = await Purchases.getOfferings();
-        closeGlobalProgressDialog();
-        Offering? singleOffering =
-            offerings.getOffering(type ?? 'monthly-premium');
-
-        Utils().showLog('Single offering: $singleOffering');
-        PaywallResult result =
-            await RevenueCatUI.presentPaywall(offering: singleOffering);
-
-        await _handlePaywallResult(result, isMembership: fromMembership);
-      } else {
-        closeGlobalProgressDialog();
-      }
+      await _handlePaywallResult(result, isMembership: fromMembership);
     } catch (e) {
       closeGlobalProgressDialog();
 
       Utils().showLog("Error $e");
-    }
-  }
-
-  static configureAppsFlyer() async {
-    try {
-      // AppsFlyerService(
-      //   ApiKeys.appsFlyerKey,
-      //   ApiKeys.iosAppID,
-      // );
-      AppsFlyerService.instance.initializeSdk();
-    } catch (e) {
-      Utils().showLog('Error in configure Apps Flyer => $e');
     }
   }
 

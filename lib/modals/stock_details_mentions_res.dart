@@ -212,7 +212,7 @@ class Mentions {
   Mentions({
     required this.website,
     required this.mentionCount,
-    this.color = ThemeColors.accent,
+    this.color = const Color(0xFF35BA46),
   });
 
   factory Mentions.fromJson(Map<String, dynamic> json) => Mentions(
