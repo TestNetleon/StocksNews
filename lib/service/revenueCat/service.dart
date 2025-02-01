@@ -31,7 +31,6 @@ class RevenueCatManager {
 
   static superwall.PurchaseResult restored = superwall.PurchaseResultRestored();
 
-  ///
   static superwall.PurchaseResult pending = superwall.PurchaseResultPending();
 
   Future<void> initialize({UserRes? user, RevenueCatKeyRes? keys}) async {
