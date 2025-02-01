@@ -98,7 +98,7 @@ enum AdPlaces { place1, place2, place3 }
 
 enum AdScreen { home, newsDetail, aiNews }
 
-enum TournamentsHead { tradTotal, pPaid, playTraders }
+enum TournamentsHead { tradTotal, pPaid, playTraders,topTitan}
 
 enum TsOrderTypes {
   LIMIT_ORDER,

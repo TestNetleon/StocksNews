@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/tournament/models/tour_user_detail.dart';
@@ -30,13 +29,10 @@ class TournamentUserDetail extends StatefulWidget {
 }
 
 class _TournamentUserDetailState extends State<TournamentUserDetail> {
-  late DateTime currentDate;
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      currentDate = DateTime(
-          DateTime.now().year, DateTime.now().month, DateTime.now().day);
       _getData();
     });
   }
@@ -44,10 +40,6 @@ class _TournamentUserDetailState extends State<TournamentUserDetail> {
   Future _getData() async {
     TournamentProvider provider = context.read<TournamentProvider>();
     await provider.getUserDetail(userID: widget.userId);
-  }
-
-  String formatDate(DateTime date) {
-    return DateFormat('dd MMM yyyy').format(date);
   }
 
   @override

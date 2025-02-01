@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/user_res.dart';
 import 'package:stocks_news_new/screens/auth/base/base_auth.dart';
+import 'package:stocks_news_new/screens/stockDetail/index.dart';
 import 'package:stocks_news_new/tournament/models/leaderboard.dart';
 import 'package:stocks_news_new/tournament/models/tour_user_detail.dart';
 import 'package:stocks_news_new/tournament/provider/leaderboard.dart';
@@ -428,17 +429,9 @@ class TournamentProvider extends ChangeNotifier {
         return "${Apis.tPointsPaid}?date=$dateSend";
       case TournamentsHead.playTraders:
         return "${Apis.tPlayTraders}?s=$valueSearch&rank=$keyRank";
-    }
-  }
 
-  String getApiUrlWithFilter(TournamentsHead tournament) {
-    switch (tournament) {
-      case TournamentsHead.tradTotal:
-        return "${Apis.tTradingTotal}?date=$dateSend";
-      case TournamentsHead.pPaid:
-        return "${Apis.tPointsPaid}?date=$dateSend";
-      case TournamentsHead.playTraders:
-        return "${Apis.tPlayTraders}?s=$valueSearch&rank=$keyRank";
+      case TournamentsHead.topTitan:
+        return "${Apis.tTopTitans}?s=$valueSearch&rank=$keyRank";
     }
   }
 
@@ -481,7 +474,7 @@ class TournamentProvider extends ChangeNotifier {
       }
       _extraOfPointPaid = (response.extra is Extra ? response.extra as Extra : null);
 
-      if(selectedTournament==TournamentsHead.playTraders){
+      if(selectedTournament==TournamentsHead.playTraders||selectedTournament==TournamentsHead.topTitan){
         _ranks = response.extra.ranks;
         print(_ranks?.length.toString());
       }
@@ -649,5 +642,13 @@ class TournamentProvider extends ChangeNotifier {
       }
     }
 
+  }
+
+  void tickerDetailRedirection(String symbol){
+    Navigator.push(
+      navigatorKey.currentContext!,
+      MaterialPageRoute(
+          builder: (_) => StockDetail(symbol: symbol)),
+    );
   }
 }

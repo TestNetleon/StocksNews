@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -16,7 +17,9 @@ class TournamentTradeItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      // onTap: () => Navigator.pop(context, data),
+      onTap: (){
+        context.read<TournamentTradesProvider>().tickerDetailRedirection(data?.symbol ?? "");
+      },
       child: Column(
         children: [
           Container(

@@ -48,7 +48,6 @@ class _TournamentLeaderboardState extends State<TournamentLeaderboard> {
             });
           },
         ),
-
         Expanded(
           child: BaseUiContainer(
             hasData: provider.leaderboardRes != null,

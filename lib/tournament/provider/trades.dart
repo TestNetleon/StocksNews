@@ -8,6 +8,7 @@ import 'package:stocks_news_new/api/api_requester.dart';
 import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/api/apis.dart';
 import 'package:stocks_news_new/modals/stockDetailRes/overview_graph.dart';
+import 'package:stocks_news_new/screens/stockDetail/index.dart';
 import 'package:stocks_news_new/tournament/provider/tournament.dart';
 import 'package:stocks_news_new/tournament/screens/game_tournament_index.dart';
 import 'package:stocks_news_new/utils/colors.dart';
@@ -70,6 +71,14 @@ class TournamentTradesProvider extends ChangeNotifier {
         MaterialPageRoute(
           builder: (context) => GameTournamentIndex(),
         ));
+  }
+
+  void tickerDetailRedirection(String symbol){
+    Navigator.push(
+      navigatorKey.currentContext!,
+      MaterialPageRoute(
+          builder: (_) => StockDetail(symbol: symbol)),
+    );
   }
 
   Future getTradesList({

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 import 'package:stocks_news_new/tournament/models/tour_user_detail.dart';
+import 'package:stocks_news_new/tournament/provider/tournament.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 
@@ -18,7 +20,7 @@ class TickerItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        // context.read<TournamentProvider>().leagueToLeaderboard(selectedDate: data?.date ?? "");
+         context.read<TournamentProvider>().tickerDetailRedirection(data?.symbol ?? "");
       },
       child: Column(
         children: [
