@@ -97,9 +97,7 @@ extension StockTypeExtension on StockType {
         return "short";
       case StockType.btc:
         return "BUY_TO_COVER";
-
     }
-
   }
 
   static StockType fromJson(String value) {

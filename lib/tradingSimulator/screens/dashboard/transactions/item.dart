@@ -149,18 +149,26 @@ class TsTransactionListItem extends StatelessWidget {
                 Align(
                   alignment: Alignment.center,
                   child: Visibility(
-                    visible: item?.closePrice != null && item?.closePrice != '',
+                    // visible: item?.closePrice != null && item?.closePrice != '',
+                    visible: item?.closePriceLabel != null &&
+                        item?.closePriceLabel != '',
                     child: Container(
                       decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8),
-                          color: const Color.fromARGB(255, 65, 62, 62)),
+                        borderRadius: BorderRadius.circular(8),
+                        color: const Color.fromARGB(255, 65, 62, 62),
+                      ),
                       margin: EdgeInsets.only(top: 8),
                       padding: const EdgeInsets.symmetric(
                           horizontal: 10, vertical: 2),
                       child: Text(
-                        "Auto closed at: ${item?.closePrice ?? '\$221'}",
+                        // "Auto closed at: ${item?.closePrice ?? '\$221'}",
+                        // "Closed at: ${item?.closePrice ?? '\$221'}",
+                        "${item?.closePriceLabel} ${item?.closePrice}",
+                        // item?.closePriceLabel ?? "",
                         style: styleGeorgiaBold(
-                            fontSize: 14, color: ThemeColors.white),
+                          fontSize: 14,
+                          color: ThemeColors.white,
+                        ),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
