@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/tournament/provider/search.dart';
 import 'package:stocks_news_new/tradingSimulator/modals/trading_search_res.dart';
-import 'package:stocks_news_new/tradingSimulator/providers/trading_search_provider.dart';
 import 'package:stocks_news_new/widgets/custom/refresh_indicator.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
@@ -18,7 +17,7 @@ class TournamentDefaultSearch extends StatelessWidget {
 
     return CommonRefreshIndicator(
       onRefresh: () =>
-          context.read<TradingSearchProvider>().getSearchDefaults(),
+          context.read<TournamentSearchProvider>().getSearchDefaults(),
       child: SingleChildScrollView(
         child: Column(
           children: [

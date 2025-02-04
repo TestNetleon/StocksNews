@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/featured/widgets/title.dart';
 import 'package:stocks_news_new/tournament/provider/tournament.dart';
-import 'package:stocks_news_new/tournament/screens/tournaments/pointsPaid/index.dart';
 import 'package:stocks_news_new/tournament/screens/tournaments/widgets/header.dart';
 import 'package:stocks_news_new/tournament/screens/tournaments/widgets/top_tading.dart';
 import 'package:stocks_news_new/utils/constants.dart';
@@ -33,7 +32,6 @@ class _TournamentsIndexState extends State<TournamentsIndex> {
   Future _callAPI() async {
     TournamentProvider provider = context.read<TournamentProvider>();
     provider.tournament();
-    // provider.getSearchDefaults();
   }
 
   @override

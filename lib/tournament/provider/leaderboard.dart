@@ -69,8 +69,9 @@ class TournamentLeaderboardProvider extends ChangeNotifier {
     editedDate = null;
   }
 
-
-// MARK: DATE LEADERBOARD
+  List<LeaderboardByDateRes?> topPerformers = [];
+  List<LeaderboardByDateRes?> allData=[];
+  bool isTopPerformer=false;
   Future leaderboard({loadMore = false}) async {
     if (loadMore) {
       _page++;
@@ -79,7 +80,7 @@ class TournamentLeaderboardProvider extends ChangeNotifier {
       _page = 1;
       setStatusLeaderboard(Status.loading);
     }
-
+    topPerformers=[];
     try {
       Map request = {
         "token":
@@ -94,8 +95,21 @@ class TournamentLeaderboardProvider extends ChangeNotifier {
 
       if (response.status) {
         if (_page == 1) {
-          _leaderboardRes =
-              tournamentLeaderboardResFromJson(jsonEncode(response.data));
+          _leaderboardRes = tournamentLeaderboardResFromJson(jsonEncode(response.data));
+          topPerformers = (_leaderboardRes?.leaderboardByDate ?? [])
+              .where((data) => (data.performance ?? 0) > 0)
+              .take(3)
+              .toList();
+
+        /*  for (int i = 0; i < (_leaderboardRes?.leaderboardByDate?.length ?? 0); i++) {
+            LeaderboardByDateRes? data = _leaderboardRes?.leaderboardByDate?[i];
+            if (data == null) continue;
+            isTopPerformer = (data.performance ?? 0) > 0;
+            if (isTopPerformer && topPerformers.length <3){
+              topPerformers.add(data);
+            }
+          }*/
+          print(topPerformers.length);
           _extra = response.extra is Extra ? response.extra : null;
         } else {
           _leaderboardRes?.leaderboardByDate?.addAll(

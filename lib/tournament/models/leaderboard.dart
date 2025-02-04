@@ -10,7 +10,7 @@ String tournamentLeaderboardResToJson(TournamentLeaderboardRes data) =>
 
 class TournamentLeaderboardRes {
   final List<LeaderboardByDateRes>? leaderboardByDate;
-  final LoginUserPositionRes? loginUserPosition;
+    final LoginUserPositionRes? loginUserPosition;
   final bool? showLeaderboard;
 
   TournamentLeaderboardRes({
@@ -25,9 +25,9 @@ class TournamentLeaderboardRes {
             ? []
             : List<LeaderboardByDateRes>.from(json["leaderboard"]!
                 .map((x) => LeaderboardByDateRes.fromJson(x))),
-        loginUserPosition: json["login_user_position"] == null
+        loginUserPosition: json["my_position"] == null
             ? null
-            : LoginUserPositionRes.fromJson(json["login_user_position"]),
+            : LoginUserPositionRes.fromJson(json["my_position"]),
         showLeaderboard: json['show_leaderboard'],
       );
 
@@ -35,7 +35,7 @@ class TournamentLeaderboardRes {
         "leaderboard": leaderboardByDate == null
             ? []
             : List<dynamic>.from(leaderboardByDate!.map((x) => x.toJson())),
-        "login_user_position": loginUserPosition?.toJson(),
+        "my_position": loginUserPosition?.toJson(),
         "showLeaderboard": showLeaderboard,
       };
 }

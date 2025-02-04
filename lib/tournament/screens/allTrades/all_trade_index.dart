@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/tournament/provider/trades.dart';
-import 'package:stocks_news_new/tournament/screens/game_tournament_index.dart';
 import 'package:stocks_news_new/tradingSimulator/manager/sse.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
@@ -39,6 +38,7 @@ class _TournamentAllTradeIndexState extends State<TournamentAllTradeIndex> {
     cancleAll = false,
     int? id,
     String? ticker,
+    num? tournamentBattleId,
   }) async {
     TournamentTradesProvider provider =
         context.read<TournamentTradesProvider>();
@@ -48,6 +48,7 @@ class _TournamentAllTradeIndexState extends State<TournamentAllTradeIndex> {
       tradeId: id,
       ticker: ticker,
       callTickerDetail: false,
+      tournamentBattleId: tournamentBattleId,
     );
     if (response.status) {
       context.read<TournamentTradesProvider>().getTradesList(refresh: true);
@@ -68,7 +69,6 @@ class _TournamentAllTradeIndexState extends State<TournamentAllTradeIndex> {
     num? sumOfAll = provider.myTrades?.data
         ?.map((trade) => trade.orderChange)
         .fold(0, (prev, change) => (prev ?? 0) + (change ?? 0));
-
     return BaseUiContainer(
       hasData: provider.myTrades != null,
       isLoading: provider.isLoadingTrades && provider.myTrades == null,
@@ -123,13 +123,14 @@ class _TournamentAllTradeIndexState extends State<TournamentAllTradeIndex> {
                   provider.getTradesList();
                 },
                 child: ListView.separated(
-                  padding: EdgeInsets.only(top: 10),
+                  padding: EdgeInsets.only(top: 10,bottom: 10),
                   itemBuilder: (context, index) {
                     return provider.myTrades?.data?[index].status == 0
                         ? TournamentCloseSlidableMenu(
                             close: () => _close(
                               id: provider.myTrades?.data?[index].id,
                               ticker: provider.myTrades?.data?[index].symbol,
+                              tournamentBattleId: provider.myTrades?.data?[index].tournamentBattleId,
                             ),
                             index: index,
                             child: TournamentTradeItem(
@@ -141,15 +142,16 @@ class _TournamentAllTradeIndexState extends State<TournamentAllTradeIndex> {
                           );
                   },
                   separatorBuilder: (context, index) {
-                    return SpacerVertical(height: 10);
+                    return SpacerVertical(height: 15);
                   },
                   itemCount: provider.myTrades?.data?.length ?? 0,
                 ),
               ),
             ),
           ),
+          if(provider.selectedOverview?.value == 0)
           Visibility(
-            visible: !(provider.myTrades!= null && (provider.myTrades?.data?.isNotEmpty ?? false)),
+            visible: (provider.myTrades!= null && (provider.myTrades?.data?.isNotEmpty ?? false)),
             child: ThemeButton(
               color: Colors.white,
               radius: 10,
@@ -161,6 +163,7 @@ class _TournamentAllTradeIndexState extends State<TournamentAllTradeIndex> {
             ),
           ),
 
+          if(provider.selectedOverview?.key != "All")
           Visibility(
             visible: provider.myTrades?.overview?[1].value != 0,
             child: Row(
@@ -177,39 +180,42 @@ class _TournamentAllTradeIndexState extends State<TournamentAllTradeIndex> {
                     textSize: 16,
                   ),
                 ),
-                const SpacerHorizontal(width: 10),
-                Expanded(
-                  child: ThemeButton(
-                    color: Colors.white,
-                    radius: 10,
-                    onPressed: () => _close(cancleAll: true),
-                    textColor: Colors.black,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          'Close All',
-                          style: styleGeorgiaBold(color: Colors.black),
-                        ),
-                        const SpacerHorizontal(width: 5),
-                        Visibility(
-                          visible: sumOfAll != null,
-                          child: Flexible(
-                            child: Text(
-                              '${sumOfAll?.toCurrency()}%',
-                              style: styleGeorgiaBold(
-                                  color:
-                                  (sumOfAll ?? 0) > 0
-                                      ? ThemeColors.accent
-                                      :
-                                  (sumOfAll ?? 0) == 0?
-                                  ThemeColors.primary:
-                                  ThemeColors.sos
+                Visibility(visible: provider.selectedOverview?.key != "Closed",child: const SpacerHorizontal(width: 10)),
+                Visibility(
+                  visible: provider.selectedOverview?.key != "Closed",
+                  child: Expanded(
+                    child: ThemeButton(
+                      color: Colors.white,
+                      radius: 10,
+                      onPressed: () => _close(cancleAll: true),
+                      textColor: Colors.black,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            'Close All',
+                            style: styleGeorgiaBold(color: Colors.black),
+                          ),
+                          const SpacerHorizontal(width: 5),
+                          Visibility(
+                            visible: sumOfAll != null,
+                            child: Flexible(
+                              child: Text(
+                                '${sumOfAll?.toCurrency()}%',
+                                style: styleGeorgiaBold(
+                                    color:
+                                    (sumOfAll ?? 0) > 0
+                                        ? ThemeColors.accent
+                                        :
+                                    (sumOfAll ?? 0) == 0?
+                                    ThemeColors.primary:
+                                    ThemeColors.sos
+                                ),
                               ),
                             ),
-                          ),
-                        )
-                      ],
+                          )
+                        ],
+                      ),
                     ),
                   ),
                 ),

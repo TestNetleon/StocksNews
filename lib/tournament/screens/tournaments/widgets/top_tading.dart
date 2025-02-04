@@ -55,7 +55,7 @@ class _TournamentPointsPaidIndexState extends State<TopTading> {
           isPopBack: true,
           canSearch: false,
           showTrailing: false,
-          title: provider.extraOfPointPaid?.title ?? 'Trades Executed',
+          title: provider.extraOfPointPaid?.title ?? '',
           onFilterClick: _filterClick
       ),
       body: BaseUiContainer(

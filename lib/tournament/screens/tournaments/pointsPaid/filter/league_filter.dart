@@ -68,7 +68,7 @@ class LeagueFilter extends StatelessWidget {
                 ),
                 const SpacerVertical(height: 5),
                 TextInputField(
-                  hintText: "Search...",
+                  hintText: "Search name",
                   style: stylePTSansRegular(
                     fontSize: 15,
                     color: ThemeColors.background,
@@ -135,7 +135,7 @@ class LeagueFilter extends StatelessWidget {
                       fontSize: 15,
                       color: ThemeColors.background,
                     ),
-                    hintText: "mm dd, yyyy",
+                    hintText: "MM DD, YYYY",
                     editable: false,
                     contentPadding: const EdgeInsets.symmetric(horizontal: 12),
                     controller: provider.date,

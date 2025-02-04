@@ -56,7 +56,7 @@ class _TournamentPointsPaidIndexState extends State<TournamentPointsPaidIndex> {
         isPopBack: true,
         canSearch: false,
         showTrailing: false,
-        title: provider.extraOfPointPaid?.title ?? 'Trades Executed',
+        title: provider.extraOfPointPaid?.title ?? '',
         subTitle: provider.extraOfPointPaid?.subTitle,
         onFilterClick: _filterClick
       ),

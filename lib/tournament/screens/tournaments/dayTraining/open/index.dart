@@ -298,14 +298,14 @@ class _TournamentOpenIndexState extends State<TournamentOpenIndex>
                                                                     ?.orderChange ??
                                                                 0) >
                                                             0
-                                                        ? Colors.green
+                                                        ?  ThemeColors.accent
                                                         : detailHolder
                                                                     ?.data
                                                                     ?.showButton
                                                                     ?.orderChange ==
                                                                 0
-                                                            ? Colors.black
-                                                            : Colors.red,
+                                                            ? ThemeColors.primary
+                                                            :  ThemeColors.sos
                                                   ),
                                                 ),
                                               )

@@ -13,6 +13,7 @@ String tradingSearchTickerResToJson(List<TradingSearchTickerRes> data) =>
 
 class TradingSearchTickerRes {
   final int? id;
+  final num? tournamentBattleId;
   final String? symbol;
   final String? name;
   final String? image;
@@ -25,6 +26,7 @@ class TradingSearchTickerRes {
   num? orderPrice;
   num? closePrice;
   num? orderChange;
+  num? gainLoss;
   final ShowButtonRes? showButton;
 
   TradingSearchTickerRes({
@@ -34,6 +36,7 @@ class TradingSearchTickerRes {
     this.name,
     this.image,
     this.id,
+    this.tournamentBattleId,
     this.price,
     this.change,
     this.changesPercentage,
@@ -41,6 +44,7 @@ class TradingSearchTickerRes {
     this.type,
     this.currentPrice,
     this.orderChange,
+    this.gainLoss,
     this.showButton,
   });
 
@@ -51,6 +55,7 @@ class TradingSearchTickerRes {
         orderChange: json['order_change'],
         symbol: json["symbol"],
         id: json['id'],
+        tournamentBattleId: json['tournament_battle_id'],
         name: json["name"],
         type: json['type'] != null
             ? StockTypeExtension.fromJson(json['type'])
@@ -61,6 +66,7 @@ class TradingSearchTickerRes {
         price: json["price"],
         change: json["change"],
         changesPercentage: json["changesPercentage"],
+        gainLoss: json["gain_loss"],
         showButton: json["show_button"] == null
             ? null
             : ShowButtonRes.fromJson(json["show_button"]),
@@ -68,18 +74,20 @@ class TradingSearchTickerRes {
 
   Map<String, dynamic> toJson() => {
         'order_price': orderPrice,
-        'order)change': orderChange,
+        'order_change': orderChange,
         'close_price': closePrice,
         "symbol": symbol,
         "name": name,
         "image": image,
         "price": price,
         'id': id,
+        'tournament_battle_id': tournamentBattleId,
         'status': status,
         "change": change,
         'type': type?.toJson(),
         'current_price': currentPrice,
         "changesPercentage": changesPercentage,
+        "gain_loss": gainLoss,
         "show_button": showButton?.toJson(),
       };
 }

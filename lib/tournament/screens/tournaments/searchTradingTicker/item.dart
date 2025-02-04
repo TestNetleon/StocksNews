@@ -36,7 +36,7 @@ class TournamentDefaultItem extends StatelessWidget {
             name: data.name,
             currentPrice: data.currentPrice,
             symbol: data.symbol,
-            showButton: data.showButton
+            showButton: data.showButton,
           ),
         );
       },

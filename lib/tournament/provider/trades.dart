@@ -117,13 +117,10 @@ class TournamentTradesProvider extends ChangeNotifier {
         }
 
         if (refresh) {
-          print("where is go oo first");
           _selectedOverview = typeOfTrade!=null?_myTrades?.overview![1]:_myTrades?.overview?.first;
           _errorTrades= _selectedOverview?.value==0?_selectedOverview?.message??"":"";
-          print("where is go oo first message ${_errorTrades}");
         } else {
           _errorTrades= _selectedOverview?.value==0?_selectedOverview?.message??"":"";
-          print("where is go oo first message else ${_errorTrades}");
         }
       } else {
         _myTrades = null;
@@ -151,41 +148,21 @@ class TournamentTradesProvider extends ChangeNotifier {
       num currentPrice = data.currentPrice ?? 0;
       num orderPrice = data.orderPrice ?? 0;
       num closePrice = data.closePrice ?? 0;
-      if (data.status == 1) {
-        print('CLOSE TAB');
-
-        //CLOSE TAB
-
-        if (data.type == StockType.buy) {
-          data.orderChange = closePrice == 0
-              ? 0
-              : ((orderPrice - closePrice) / closePrice) * 100;
-        } else {
-          data.orderChange = orderPrice == 0
-              ? 0
-              : ((closePrice - orderPrice) / orderPrice) * 100;
-        }
-        notifyListeners();
-
-        // SSEManager.instance.disconnect(
-        //   data.symbol ?? '',
-        //   SimulatorEnum.tournament,
-        // );
-      } else {
+      if (data.status == 0) {
         print('OPEN TAB');
-
-        //OPEN TAB
-
         if (_symbols != null && _symbols.isNotEmpty == true) {
           if (data.type == StockType.buy) {
             data.orderChange = orderPrice == 0 || currentPrice == 0
                 ? 0
-                : ((currentPrice - orderPrice) / orderPrice) * 100;
+                : (((currentPrice - orderPrice) / orderPrice) * 100);
+            data.gainLoss = (currentPrice - orderPrice);
           } else {
             data.orderChange = currentPrice == 0 || orderPrice == 0
                 ? 0
-                : ((orderPrice - currentPrice) / currentPrice) * 100;
+                : (((orderPrice - currentPrice) / currentPrice) * 100);
+            data.gainLoss =(orderPrice-currentPrice);
           }
+         // data.gainLoss = orderPrice == 0 || currentPrice == 0 ? 0 :(currentPrice - orderPrice);
           notifyListeners();
 
           SSEManager.instance.connectMultipleStocks(
@@ -195,23 +172,38 @@ class TournamentTradesProvider extends ChangeNotifier {
 
           SSEManager.instance.addListener(
             data.symbol ?? '',
-            (stockData) {
+                (stockData) {
               num? newPrice = stockData.price;
 
               if (newPrice != null) {
                 if (data.type == StockType.buy) {
                   data.orderChange =
-                      ((newPrice - orderPrice) / orderPrice) * 100;
+                  (((newPrice - orderPrice) / orderPrice) * 100);
+                  data.gainLoss = (newPrice - orderPrice);
                 } else {
-                  data.orderChange = ((orderPrice - newPrice) / newPrice) * 100;
+                  data.orderChange = (((orderPrice - newPrice) / newPrice) * 100);
+                  data.gainLoss =(orderPrice-newPrice);
                 }
+                //data.gainLoss = (newPrice - orderPrice);
+                data.currentPrice = newPrice;
               }
-              Utils().showLog('Symbol ${data.symbol}, ${data.orderChange}');
+              Utils().showLog('Symbol11 ${data.symbol}, ${data.orderChange}, ${data.gainLoss} ,${data.currentPrice}');
               notifyListeners();
             },
             SimulatorEnum.tournament,
           );
         }
+        notifyListeners();
+
+      }
+      else {
+        print('CLOSE TAB');
+        data.orderChange =  data.changesPercentage;
+        /* if (data.type == StockType.buy) {
+          data.changesPercentage = closePrice == 0 ? 0 : (((orderPrice - closePrice) / closePrice) * 100);
+        } else {
+          data.changesPercentage = orderPrice == 0 ? 0 : (((closePrice - orderPrice) / orderPrice) * 100);
+        }*/
       }
     }
   }
@@ -259,6 +251,7 @@ class TournamentTradesProvider extends ChangeNotifier {
   Future tradeCancle({
     bool cancleAll = false,
     num? tradeId,
+    num? tournamentBattleId,
     String? ticker,
     bool callTickerDetail = true,
   }) async {
@@ -269,8 +262,7 @@ class TournamentTradesProvider extends ChangeNotifier {
         'token':
             navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
         'ticker_symbol': ticker ?? _selectedStock?.symbol ?? '',
-        'tournament_battle_id':
-            '${provider.detailRes?.tournamentBattleId ?? ''}',
+        'tournament_battle_id': tournamentBattleId!=null?tournamentBattleId.toString():'${provider.detailRes?.tournamentBattleId ?? ''}',
         'trade_id': tradeId != null
             ? '$tradeId'
             : cancleAll
@@ -417,10 +409,10 @@ class TournamentTradesProvider extends ChangeNotifier {
       num OP = buttonRes?.orderPrice ?? 0;
 
       if (buttonRes?.orderType == StockType.buy.name) {
-        buttonRes?.orderChange = ((CP - OP) / OP) * 100;
+        buttonRes?.orderChange = (((CP - OP) / OP) * 100);
         Utils().showLog('Buy orderChange: ${buttonRes?.orderChange}');
       } else {
-        buttonRes?.orderChange = ((OP - CP) / CP) * 100;
+        buttonRes?.orderChange = (((OP - CP) / CP) * 100);
         Utils().showLog('Sell orderChange: ${buttonRes?.orderChange}');
       }
     }
@@ -449,9 +441,9 @@ class TournamentTradesProvider extends ChangeNotifier {
             num OP = buttonRes?.orderPrice ?? 0;
 
             if (buttonRes?.orderType == StockType.buy.name) {
-              buttonRes?.orderChange = ((CP - OP) / OP) * 100;
+              buttonRes?.orderChange = (((CP - OP) / OP) * 100);
             } else {
-              buttonRes?.orderChange = ((OP - CP) / CP) * 100;
+              buttonRes?.orderChange = (((OP - CP) / CP) * 100);
             }
             Map<String, dynamic> logData = {
               'Symbol': symbol,
