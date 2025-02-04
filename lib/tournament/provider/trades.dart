@@ -24,8 +24,9 @@ import '../../utils/constants.dart';
 import '../models/all_trades.dart';
 import '../models/ticker_detail.dart';
 
-enum StockType { buy, sell, hold,short,btc}
-enum ConditionType {bracketOrder}
+enum StockType { buy, sell, hold, short, btc }
+
+enum ConditionType { bracketOrder }
 
 class TournamentTradesProvider extends ChangeNotifier {
 //MARK: All Trades
@@ -64,7 +65,7 @@ class TournamentTradesProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void redirectToTrade(){
+  void redirectToTrade() {
     Navigator.popUntil(navigatorKey.currentContext!, (route) => route.isFirst);
     Navigator.push(
         navigatorKey.currentContext!,
@@ -73,11 +74,10 @@ class TournamentTradesProvider extends ChangeNotifier {
         ));
   }
 
-  void tickerDetailRedirection(String symbol){
+  void tickerDetailRedirection(String symbol) {
     Navigator.push(
       navigatorKey.currentContext!,
-      MaterialPageRoute(
-          builder: (_) => StockDetail(symbol: symbol)),
+      MaterialPageRoute(builder: (_) => StockDetail(symbol: symbol)),
     );
   }
 
@@ -101,7 +101,9 @@ class TournamentTradesProvider extends ChangeNotifier {
             navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
         'tournament_battle_id':
             '${provider.detailRes?.tournamentBattleId ?? ''}',
-        'type': typeOfTrade??_selectedOverview?.key?.toString().toLowerCase() ?? 'all',
+        'type': typeOfTrade ??
+            _selectedOverview?.key?.toString().toLowerCase() ??
+            'all',
       };
 
       ApiResponse response = await apiRequest(
@@ -117,10 +119,16 @@ class TournamentTradesProvider extends ChangeNotifier {
         }
 
         if (refresh) {
-          _selectedOverview = typeOfTrade!=null?_myTrades?.overview![1]:_myTrades?.overview?.first;
-          _errorTrades= _selectedOverview?.value==0?_selectedOverview?.message??"":"";
+          _selectedOverview = typeOfTrade != null
+              ? _myTrades?.overview![1]
+              : _myTrades?.overview?.first;
+          _errorTrades = _selectedOverview?.value == 0
+              ? _selectedOverview?.message ?? ""
+              : "";
         } else {
-          _errorTrades= _selectedOverview?.value==0?_selectedOverview?.message??"":"";
+          _errorTrades = _selectedOverview?.value == 0
+              ? _selectedOverview?.message ?? ""
+              : "";
         }
       } else {
         _myTrades = null;
@@ -147,7 +155,7 @@ class TournamentTradesProvider extends ChangeNotifier {
     for (var data in _myTrades!.data!) {
       num currentPrice = data.currentPrice ?? 0;
       num orderPrice = data.orderPrice ?? 0;
-      num closePrice = data.closePrice ?? 0;
+      // num closePrice = data.closePrice ?? 0;
       if (data.status == 0) {
         print('OPEN TAB');
         if (_symbols != null && _symbols.isNotEmpty == true) {
@@ -160,9 +168,9 @@ class TournamentTradesProvider extends ChangeNotifier {
             data.orderChange = currentPrice == 0 || orderPrice == 0
                 ? 0
                 : (((orderPrice - currentPrice) / currentPrice) * 100);
-            data.gainLoss =(orderPrice-currentPrice);
+            data.gainLoss = (orderPrice - currentPrice);
           }
-         // data.gainLoss = orderPrice == 0 || currentPrice == 0 ? 0 :(currentPrice - orderPrice);
+          // data.gainLoss = orderPrice == 0 || currentPrice == 0 ? 0 :(currentPrice - orderPrice);
           notifyListeners();
 
           SSEManager.instance.connectMultipleStocks(
@@ -172,33 +180,33 @@ class TournamentTradesProvider extends ChangeNotifier {
 
           SSEManager.instance.addListener(
             data.symbol ?? '',
-                (stockData) {
+            (stockData) {
               num? newPrice = stockData.price;
 
               if (newPrice != null) {
                 if (data.type == StockType.buy) {
                   data.orderChange =
-                  (((newPrice - orderPrice) / orderPrice) * 100);
+                      (((newPrice - orderPrice) / orderPrice) * 100);
                   data.gainLoss = (newPrice - orderPrice);
                 } else {
-                  data.orderChange = (((orderPrice - newPrice) / newPrice) * 100);
-                  data.gainLoss =(orderPrice-newPrice);
+                  data.orderChange =
+                      (((orderPrice - newPrice) / newPrice) * 100);
+                  data.gainLoss = (orderPrice - newPrice);
                 }
                 //data.gainLoss = (newPrice - orderPrice);
                 data.currentPrice = newPrice;
               }
-              Utils().showLog('Symbol11 ${data.symbol}, ${data.orderChange}, ${data.gainLoss} ,${data.currentPrice}');
+              Utils().showLog(
+                  'Symbol11 ${data.symbol}, ${data.orderChange}, ${data.gainLoss} ,${data.currentPrice}');
               notifyListeners();
             },
             SimulatorEnum.tournament,
           );
         }
         notifyListeners();
-
-      }
-      else {
+      } else {
         print('CLOSE TAB');
-        data.orderChange =  data.changesPercentage;
+        data.orderChange = data.changesPercentage;
         /* if (data.type == StockType.buy) {
           data.changesPercentage = closePrice == 0 ? 0 : (((orderPrice - closePrice) / closePrice) * 100);
         } else {
@@ -209,14 +217,14 @@ class TournamentTradesProvider extends ChangeNotifier {
   }
 
 //MARK: BUY/SELL
-  Future tradeBuySell({StockType type = StockType.buy,String? symbol}) async {
+  Future tradeBuySell({StockType type = StockType.buy, String? symbol}) async {
     try {
       TournamentProvider provider =
           navigatorKey.currentContext!.read<TournamentProvider>();
       Map request = {
         'token':
             navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
-        'symbol':symbol ?? _selectedStock?.symbol,
+        'symbol': symbol ?? _selectedStock?.symbol,
         'tournament_battle_id':
             '${provider.detailRes?.tournamentBattleId ?? ''}',
         'trade_type': type.name,
@@ -262,7 +270,9 @@ class TournamentTradesProvider extends ChangeNotifier {
         'token':
             navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
         'ticker_symbol': ticker ?? _selectedStock?.symbol ?? '',
-        'tournament_battle_id': tournamentBattleId!=null?tournamentBattleId.toString():'${provider.detailRes?.tournamentBattleId ?? ''}',
+        'tournament_battle_id': tournamentBattleId != null
+            ? tournamentBattleId.toString()
+            : '${provider.detailRes?.tournamentBattleId ?? ''}',
         'trade_id': tradeId != null
             ? '$tradeId'
             : cancleAll
@@ -481,7 +491,7 @@ class TournamentTradesProvider extends ChangeNotifier {
   Extra? get extraGraph => _extraGraph;
 
   void clearAll() {
-    _errorGraph=null;
+    _errorGraph = null;
   }
 
   void setStatusOverviewG(status) {
@@ -536,11 +546,11 @@ class TournamentTradesProvider extends ChangeNotifier {
           fitInsideVertically: true,
           maxContentWidth: 300,
           tooltipPadding:
-          const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+              const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
           tooltipMargin: 1,
           getTooltipItems: (touchedSpots) {
             return touchedSpots.map(
-                  (LineBarSpot touchedSpot) {
+              (LineBarSpot touchedSpot) {
                 return LineTooltipItem(
                   children: [
                     TextSpan(
@@ -553,7 +563,7 @@ class TournamentTradesProvider extends ChangeNotifier {
                     TextSpan(
                       text: !showDate
                           ? DateFormat('dd MMM, yyyy')
-                          .format(reversedData[touchedSpot.x.toInt()].date)
+                              .format(reversedData[touchedSpot.x.toInt()].date)
                           : '${DateFormat('dd MMM').format(reversedData[touchedSpot.x.toInt()].date)}, ${DateFormat('h:mm a').format(reversedData[touchedSpot.x.toInt()].date)}',
                       style: stylePTSansRegular(
                           height: 1.5,
@@ -575,34 +585,34 @@ class TournamentTradesProvider extends ChangeNotifier {
       titlesData: FlTitlesData(
         leftTitles: const AxisTitles(
             sideTitles: SideTitles(
-              showTitles: false,
-            )),
+          showTitles: false,
+        )),
         topTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
         bottomTitles: AxisTitles(
 
-          // axisNameWidget: Text(
-          //   "Time",
-          //   style: stylePTSansRegular(fontSize: 15),
-          // ),
+            // axisNameWidget: Text(
+            //   "Time",
+            //   style: stylePTSansRegular(fontSize: 15),
+            // ),
             sideTitles: SideTitles(
-              showTitles: false,
-              getTitlesWidget: (value, meta) {
-                int index = value.toInt();
-                if (index >= 0 && index < (spots.length)) {
-                  return Padding(
-                    padding: const EdgeInsets.only(top: 8, left: 5),
-                    child: Text(
-                      DateFormat('HH:mm').format(reversedData[index].date),
-                      style: stylePTSansRegular(fontSize: 8),
-                    ),
-                  );
-                }
-                return Text(
-                  "-",
-                  style: stylePTSansRegular(fontSize: 10),
-                );
-              },
-            )),
+          showTitles: false,
+          getTitlesWidget: (value, meta) {
+            int index = value.toInt();
+            if (index >= 0 && index < (spots.length)) {
+              return Padding(
+                padding: const EdgeInsets.only(top: 8, left: 5),
+                child: Text(
+                  DateFormat('HH:mm').format(reversedData[index].date),
+                  style: stylePTSansRegular(fontSize: 8),
+                ),
+              );
+            }
+            return Text(
+              "-",
+              style: stylePTSansRegular(fontSize: 10),
+            );
+          },
+        )),
         rightTitles: AxisTitles(
           sideTitles: SideTitles(
             reservedSize: 32,
@@ -691,18 +701,18 @@ class TournamentTradesProvider extends ChangeNotifier {
       String newRange = range == "1H"
           ? "1hour"
           : range == "1D"
-          ? "1day"
-          : range == "1W"
-          ? "1week"
-          : range == "1M"
-          ? "1month"
-          : range == "1Y"
-          ? "1year"
-          : "1hour";
+              ? "1day"
+              : range == "1W"
+                  ? "1week"
+                  : range == "1M"
+                      ? "1month"
+                      : range == "1Y"
+                          ? "1year"
+                          : "1hour";
 
       Map request = {
         "token":
-        navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
+            navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
         "symbol": symbol,
         "range": newRange,
       };
@@ -717,7 +727,7 @@ class TournamentTradesProvider extends ChangeNotifier {
       if (response.status) {
         _graphChart = sdOverviewGraphResFromJson(jsonEncode(response.data));
         _extraGraph =
-        (response.extra is Extra ? response.extra as Extra : null);
+            (response.extra is Extra ? response.extra as Extra : null);
 
         avgData(showDate: newRange != "1Y");
       } else {
