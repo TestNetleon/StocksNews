@@ -32,10 +32,10 @@ class CommonLock extends StatelessWidget {
     if (provider.user == null) {
       Utils().showLog("is Locked? $isLocked");
 
-      //Ask for LOGIN
+      // Ask for LOGIN
       // Navigator.pop(context);
-
       // isPhone ? await loginSheet() : await loginSheetTablet();
+
       await loginFirstSheet();
 
       if (provider.user == null) {

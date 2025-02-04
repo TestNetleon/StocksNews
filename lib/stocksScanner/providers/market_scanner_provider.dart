@@ -706,11 +706,11 @@ class MarketScannerProvider extends ChangeNotifier {
     } else if (sortBy == SortByEnums.lastTrade.name) {
       num? valueA = a.last;
       num? valueB = b.last;
-      if (a.extendedHoursType == "PostMarket" ||
-          a.extendedHoursType == "PreMarket") {
-        valueA = a.extendedHoursPrice ?? 0;
-        valueB = b.extendedHoursPrice ?? 0;
-      }
+      // if (a.extendedHoursType == "PostMarket" ||
+      //     a.extendedHoursType == "PreMarket") {
+      //   valueA = a.extendedHoursPrice ?? 0;
+      //   valueB = b.extendedHoursPrice ?? 0;
+      // }
       if (valueA == null && valueB == null) return 0;
       if (valueA == null) return -1;
       if (valueB == null) return 1;
@@ -750,6 +750,17 @@ class MarketScannerProvider extends ChangeNotifier {
         return valueA.compareTo(valueB);
       } else {
         return valueB.compareTo(valueA);
+      }
+    } else if (sortBy == SortByEnums.postMarket.name) {
+      if (a.extendedHoursPrice == null && b.extendedHoursPrice == null) {
+        return 0;
+      }
+      if (a.extendedHoursPrice == null) return -1;
+      if (b.extendedHoursPrice == null) return 1;
+      if (isAsc) {
+        return a.extendedHoursPrice!.compareTo(b.extendedHoursPrice!);
+      } else {
+        return b.extendedHoursPrice!.compareTo(a.extendedHoursPrice!);
       }
     } else if (sortBy == SortByEnums.volume.name) {
       if (a.volume == null && b.volume == null) return 0;

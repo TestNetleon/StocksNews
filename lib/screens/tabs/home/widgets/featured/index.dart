@@ -11,15 +11,18 @@ class FeaturedStocksIndex extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     HomeProvider provider = context.watch<HomeProvider>();
+    // UserProvider userProvider = context.watch<UserProvider>();
 
-    List<FeaturedTicker>? featured = provider.fwData?.featuredTickers;
-    List<FeaturedTicker>? watchlist = provider.fwData?.watchlist;
+    List<FeaturedTicker>? featured = provider.homeSliderRes?.featuredTickers;
+    List<FeaturedTicker>? watchlist = provider.homeSliderRes?.watchlist;
+    // print('watchlist ${watchlist?.length}');
+    // print('featuredTickers ${featured?.length}');
 
     return Column(
       children: [
         Visibility(
           visible: (featured?.isNotEmpty == true && featured != null) &&
-              provider.extraFW?.showFeatured == true,
+              provider.extra?.showFeatured == true,
           child: Container(
             margin: const EdgeInsets.only(top: Dimen.homeSpacing),
             child: FeaturedWatchlistStockView(
@@ -30,7 +33,7 @@ class FeaturedStocksIndex extends StatelessWidget {
         ),
         Visibility(
           visible: (watchlist?.isNotEmpty == true && watchlist != null) &&
-              provider.extraFW?.showWatchlist == true,
+              provider.extra?.showWatchlist == true,
           child: Padding(
             padding: const EdgeInsets.only(top: Dimen.homeSpacing),
             child: FeaturedWatchlistStockView(

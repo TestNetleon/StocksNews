@@ -1,9 +1,7 @@
 import 'dart:io';
-
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
 import '../../api/api_response.dart';

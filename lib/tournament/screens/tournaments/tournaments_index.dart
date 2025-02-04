@@ -47,7 +47,7 @@ class _TournamentsIndexState extends State<TournamentsIndex> {
         child: CustomScrollView(
           physics: AlwaysScrollableScrollPhysics(),
           slivers: [
-           /* SliverToBoxAdapter(
+            /* SliverToBoxAdapter(
               child: Container(
                 margin:const EdgeInsets.only(bottom: 10),
                 padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
@@ -126,24 +126,26 @@ class _TournamentsIndexState extends State<TournamentsIndex> {
                   padding: const EdgeInsets.only(top: 10),
                   child: Column(
                     children: [
-                      const SpacerVertical(height:8),
+                      const SpacerVertical(height: 8),
                       FeaturedWatchlistTitle(
-                        title:provider.data?.topTradingTitans?.title,
+                        title: provider.data?.topTradingTitans?.title,
                         onTap: () {
                           var selectedTournament = TournamentsHead.topTitan;
                           Navigator.push(context, MaterialPageRoute(
                             builder: (context) {
-                              return TopTading(title:provider.data?.topTradingTitans?.title, selectedTournament: selectedTournament);
+                              return TopTading(
+                                  title: provider.data?.topTradingTitans?.title,
+                                  selectedTournament: selectedTournament);
                             },
                           ));
                         },
                       ),
-                      const SpacerVertical(height:3),
+                      const SpacerVertical(height: 3),
                       ScreenTitle(
                         subTitle: provider.data?.topTradingTitans?.subTitle,
                         dividerPadding: EdgeInsets.zero,
                       ),
-                      const SpacerVertical(height:10),
+                      const SpacerVertical(height: 10),
                       TopTraders(
                         list: provider.data?.topTradingTitans?.data,
                       ),

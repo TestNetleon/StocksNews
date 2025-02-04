@@ -111,10 +111,10 @@ class _TournamentAllTradeIndexState extends State<TournamentAllTradeIndex> {
               ),
             ),
           ),
-
           Expanded(
             child: BaseUiContainer(
-              hasData: provider.myTrades!= null && (provider.myTrades?.data?.isNotEmpty ?? false),
+              hasData: provider.myTrades != null &&
+                  (provider.myTrades?.data?.isNotEmpty ?? false),
               isLoading: provider.isLoadingTrades && provider.myTrades == null,
               error: provider.errorTrades,
               onRefresh: () => provider.getTradesList(refresh: true),
@@ -123,7 +123,7 @@ class _TournamentAllTradeIndexState extends State<TournamentAllTradeIndex> {
                   provider.getTradesList();
                 },
                 child: ListView.separated(
-                  padding: EdgeInsets.only(top: 10,bottom: 10),
+                  padding: EdgeInsets.only(top: 10),
                   itemBuilder: (context, index) {
                     return provider.myTrades?.data?[index].status == 0
                         ? TournamentCloseSlidableMenu(

@@ -24,6 +24,12 @@
 @import app_settings;
 #endif
 
+#if __has_include(<app_tracking_transparency/AppTrackingTransparencyPlugin.h>)
+#import <app_tracking_transparency/AppTrackingTransparencyPlugin.h>
+#else
+@import app_tracking_transparency;
+#endif
+
 #if __has_include(<appsflyer_sdk/AppsflyerSdkPlugin.h>)
 #import <appsflyer_sdk/AppsflyerSdkPlugin.h>
 #else
@@ -282,6 +288,7 @@
   [AmplitudeFlutterPlugin registerWithRegistrar:[registry registrarForPlugin:@"AmplitudeFlutterPlugin"]];
   [AppLinksPlugin registerWithRegistrar:[registry registrarForPlugin:@"AppLinksPlugin"]];
   [AppSettingsPlugin registerWithRegistrar:[registry registrarForPlugin:@"AppSettingsPlugin"]];
+  [AppTrackingTransparencyPlugin registerWithRegistrar:[registry registrarForPlugin:@"AppTrackingTransparencyPlugin"]];
   [AppsflyerSdkPlugin registerWithRegistrar:[registry registrarForPlugin:@"AppsflyerSdkPlugin"]];
   [AudioSessionPlugin registerWithRegistrar:[registry registrarForPlugin:@"AudioSessionPlugin"]];
   [AudioplayersDarwinPlugin registerWithRegistrar:[registry registrarForPlugin:@"AudioplayersDarwinPlugin"]];

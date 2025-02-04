@@ -36,6 +36,7 @@ scannerSorting({
   String? header,
   bool showPreMarket = false,
   bool showSector = true,
+  String? text,
 }) {
   showModalBottomSheet(
     context: navigatorKey.currentContext!,
@@ -54,6 +55,7 @@ scannerSorting({
         header: header,
         showPreMarket: showPreMarket,
         showSector: showSector,
+        text: text,
       );
     },
   );
@@ -65,8 +67,9 @@ class MarketScannerSorting extends StatefulWidget {
   final String? header;
   final bool showPreMarket;
   final bool showSector;
-
+  final String? text;
   const MarketScannerSorting({
+    this.text,
     super.key,
     this.showSector = true,
     this.sortByCallBack,
@@ -195,9 +198,9 @@ class _MarketScannerSortingState extends State<MarketScannerSorting> {
           ),
 
           Visibility(
-            visible: widget.showPreMarket,
+            visible: widget.text != null && widget.text != '',
             child: _buildSortOption(
-              'Pre-Market Price',
+              '${widget.text} Price',
               SortByEnums.postMarket,
               sortBy: widget.header == SortByEnums.postMarket.name
                   ? widget.sortBy

@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
@@ -10,7 +9,6 @@ import 'package:stocks_news_new/screens/tabs/home/widgets/featured/index.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/home_partial_loading_widget.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/membership_coins_option.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/plaid/index.dart';
-import 'package:stocks_news_new/service/revenueCat/service.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 // import 'package:stocks_news_new/utils/utils.dart';
@@ -22,6 +20,7 @@ import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/theme_button_small.dart';
 // import 'package:upgrader/upgrader.dart';
 import '../../../modals/home_insider_res.dart';
+import '../../../service/transparency.dart';
 import '../../../utils/colors.dart';
 import '../../../utils/utils.dart';
 import '../../../widgets/custom/refer.dart';
@@ -54,6 +53,7 @@ class _HomeContainerState extends State<HomeContainer> {
     //     setState(() {});
     //   },
     // );
+    requestATT();
   }
 
   @override
@@ -83,15 +83,22 @@ class _HomeContainerState extends State<HomeContainer> {
     }
     return Column(
       children: [
-        Visibility(
-          visible: kDebugMode,
-          child: ThemeButtonSmall(
-            text: 'Base Plan',
-            onPressed: () async {
-              RevenueCatManager.instance.initializeSuperWall();
-            },
-          ),
-        ),
+        // Visibility(
+        //   visible: kDebugMode,
+        //   child: ThemeButtonSmall(
+        //     // text: 'Base Plan',
+        //     text: 'Live Activity',
+        //     onPressed: () async {
+        //       // RevenueCatManager.instance.initializeSuperWall();
+        //       Navigator.push(
+        //         context,
+        //         MaterialPageRoute(
+        //           builder: (context) => LiveActivityIndex(),
+        //         ),
+        //       );
+        //     },
+        //   ),
+        // ),
         Visibility(
           visible: provider.extra?.phoneCodeError != null &&
               provider.extra?.phoneCodeError != '',
