@@ -95,7 +95,7 @@ class LogoutPopUpCustom extends StatelessWidget {
                                 .read<UserProvider>()
                                 .logoutUser(request, pop);
                             homeProvider.getHomeSlider(showProgress: true);
-                            homeProvider.getFeaturedWatchlist(userAvail: false);
+                            // homeProvider.getFeaturedWatchlist(userAvail: false);
                           },
                           child: Text(
                             "LOGOUT",

@@ -25,7 +25,7 @@ class FeaturedWatchlistStockView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     HomeProvider provider = context.watch<HomeProvider>();
-    Extra? extra = provider.extraFW;
+    Extra? extra = provider.extra;
 
     return Stack(
       children: [

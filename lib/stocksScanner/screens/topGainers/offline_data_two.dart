@@ -23,6 +23,10 @@ class TopGainerOfflineTwo extends StatefulWidget {
 }
 
 class _TopGainerOfflineTwoState extends State<TopGainerOfflineTwo> {
+  bool preMarket = false;
+  bool postMarket = false;
+  String? text;
+
   // List<String> columnHeader = [
   //   // "Time",
   //   "Company Name",
@@ -40,17 +44,43 @@ class _TopGainerOfflineTwoState extends State<TopGainerOfflineTwo> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      TopGainerScannerProvider provider =
-          context.read<TopGainerScannerProvider>();
       // provider.startListeningPorts();
       // provider.getOfflineData();
-      provider.resetLiveFilter();
+      _setPrePost();
     });
   }
 
   @override
   void dispose() {
     super.dispose();
+  }
+
+  _setPrePost() {
+    TopGainerScannerProvider provider =
+        context.read<TopGainerScannerProvider>();
+
+    provider.resetLiveFilter();
+    List<ScannerRes>? dataList = provider.offlineDataList;
+
+    preMarket = dataList?.any(
+          (element) {
+            return element.ext?.extendedHoursType == 'PreMarket';
+          },
+        ) ==
+        true;
+
+    postMarket = dataList?.any(
+          (element) {
+            return element.ext?.extendedHoursType == 'PostMarket';
+          },
+        ) ==
+        true;
+
+    text = preMarket
+        ? 'Pre-Market'
+        : postMarket
+            ? 'Post-Market'
+            : null;
   }
 
   @override
@@ -119,6 +149,7 @@ class _TopGainerOfflineTwoState extends State<TopGainerOfflineTwo> {
                       onTap: () {
                         scannerSorting(
                           showPreMarket: true,
+                          text: text,
                           sortBy: provider.filterParams?.sortByAsc,
                           header: provider.filterParams?.sortByHeader,
                           sortByCallBack: (received) async {

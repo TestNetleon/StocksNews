@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/tournament/provider/trades.dart';
-import 'package:stocks_news_new/tournament/screens/game_tournament_index.dart';
 import 'package:stocks_news_new/tradingSimulator/manager/sse.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
@@ -111,10 +110,10 @@ class _TournamentAllTradeIndexState extends State<TournamentAllTradeIndex> {
               ),
             ),
           ),
-
           Expanded(
             child: BaseUiContainer(
-              hasData: provider.myTrades!= null && (provider.myTrades?.data?.isNotEmpty ?? false),
+              hasData: provider.myTrades != null &&
+                  (provider.myTrades?.data?.isNotEmpty ?? false),
               isLoading: provider.isLoadingTrades && provider.myTrades == null,
               error: provider.errorTrades,
               onRefresh: () => provider.getTradesList(refresh: true),
@@ -149,7 +148,8 @@ class _TournamentAllTradeIndexState extends State<TournamentAllTradeIndex> {
             ),
           ),
           Visibility(
-            visible: !(provider.myTrades!= null && (provider.myTrades?.data?.isNotEmpty ?? false)),
+            visible: !(provider.myTrades != null &&
+                (provider.myTrades?.data?.isNotEmpty ?? false)),
             child: ThemeButton(
               color: Colors.white,
               radius: 10,
@@ -160,7 +160,6 @@ class _TournamentAllTradeIndexState extends State<TournamentAllTradeIndex> {
               text: 'Place New Order',
             ),
           ),
-
           Visibility(
             visible: provider.myTrades?.overview?[1].value != 0,
             child: Row(
@@ -198,14 +197,11 @@ class _TournamentAllTradeIndexState extends State<TournamentAllTradeIndex> {
                             child: Text(
                               '${sumOfAll?.toCurrency()}%',
                               style: styleGeorgiaBold(
-                                  color:
-                                  (sumOfAll ?? 0) > 0
+                                  color: (sumOfAll ?? 0) > 0
                                       ? ThemeColors.accent
-                                      :
-                                  (sumOfAll ?? 0) == 0?
-                                  ThemeColors.primary:
-                                  ThemeColors.sos
-                              ),
+                                      : (sumOfAll ?? 0) == 0
+                                          ? ThemeColors.primary
+                                          : ThemeColors.sos),
                             ),
                           ),
                         )

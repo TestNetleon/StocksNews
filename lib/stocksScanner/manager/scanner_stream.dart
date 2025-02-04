@@ -36,12 +36,19 @@ class MarketScannerStream {
     final provider = navigatorKey.currentContext!.read<MarketScannerProvider>();
     final startingPort = provider.port?.port?.scannerPort?.start ?? 8021;
     final endingPort = provider.port?.port?.scannerPort?.end ?? 8040;
-    final callOffline =
+    // final callOffline =
+    //     provider.port?.port?.checkMarketOpenApi?.checkPostMarket == true;
+
+    final checkPostMarket =
         provider.port?.port?.checkMarketOpenApi?.checkPostMarket == true;
 
-    Utils().showLog('Call Offline $callOffline');
+    final postMarketStream =
+        provider.port?.port?.checkMarketOpenApi?.postMarketStream == true;
 
-    if (callOffline) {
+    Utils().showLog(
+        'Call Offline ${checkPostMarket && postMarketStream == false}');
+
+    if (checkPostMarket && !postMarketStream) {
       await getOfflineData();
       return;
     }

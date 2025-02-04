@@ -111,10 +111,7 @@ class _ScannerBaseContainerOfflineState
       padding: EdgeInsets.symmetric(horizontal: 10),
       itemBuilder: (context, index) {
         ScannerRes? data = widget.dataList?[index];
-        return ScannerBaseItem(
-          data: data,
-          showPreMarket: true,
-        );
+        return ScannerBaseItem(data: data);
       },
       separatorBuilder: (context, index) {
         return SpacerVertical(height: 15);

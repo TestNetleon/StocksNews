@@ -16,10 +16,39 @@ class MarketScannerOnline extends StatefulWidget {
 }
 
 class _MarketScannerOnlineState extends State<MarketScannerOnline> {
+  bool preMarket = false;
+  bool postMarket = false;
+  String? text;
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {});
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _setPrePost();
+    });
+  }
+
+  _setPrePost() {
+    MarketScannerProvider provider = context.read<MarketScannerProvider>();
+    List<MarketScannerRes>? dataList = provider.dataList;
+    preMarket = dataList?.any(
+          (element) {
+            return element.extendedHoursType == 'PreMarket';
+          },
+        ) ==
+        true;
+
+    postMarket = dataList?.any(
+          (element) {
+            return element.extendedHoursType == 'PostMarket';
+          },
+        ) ==
+        true;
+
+    text = preMarket
+        ? 'Pre-Market'
+        : postMarket
+            ? 'Post-Market'
+            : null;
   }
 
   @override
@@ -66,6 +95,8 @@ class _MarketScannerOnlineState extends State<MarketScannerOnline> {
                       onTap: () {
                         scannerSorting(
                           showSector: false,
+                          showPreMarket: !(preMarket || postMarket),
+                          text: text,
                           sortBy: provider.filterParams?.sortByAsc,
                           header: provider.filterParams?.sortBy,
                           sortByCallBack: (received) {

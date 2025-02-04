@@ -69,6 +69,7 @@ class CheckMarketOpenApiRes {
   final bool? checkPostMarket;
   final bool? checkPreMarket;
   final String? dateTime;
+  final bool? postMarketStream;
 
   CheckMarketOpenApiRes({
     this.isHoliday,
@@ -79,19 +80,20 @@ class CheckMarketOpenApiRes {
     this.checkPostMarket,
     this.checkPreMarket,
     this.dateTime,
+    this.postMarketStream,
   });
 
   factory CheckMarketOpenApiRes.fromJson(Map<String, dynamic> json) =>
       CheckMarketOpenApiRes(
-        isHoliday: json["isHoliday"],
-        isMarketOpen: json["isMarketOpen"],
-        extendedHoursType: json["ExtendedHoursType"],
-        extendedHoursTime: json["ExtendedHoursTime"],
-        extendedHoursDate: json["ExtendedHoursDate"],
-        checkPostMarket: json["checkPostMarket"],
-        checkPreMarket: json["checkPreMarket"],
-        dateTime: json["dateTime"],
-      );
+          isHoliday: json["isHoliday"],
+          isMarketOpen: json["isMarketOpen"],
+          extendedHoursType: json["ExtendedHoursType"],
+          extendedHoursTime: json["ExtendedHoursTime"],
+          extendedHoursDate: json["ExtendedHoursDate"],
+          checkPostMarket: json["checkPostMarket"],
+          checkPreMarket: json["checkPreMarket"],
+          dateTime: json["dateTime"],
+          postMarketStream: json['postMarketStream']);
 
   Map<String, dynamic> toJson() => {
         "isHoliday": isHoliday,
@@ -102,6 +104,7 @@ class CheckMarketOpenApiRes {
         "checkPostMarket": checkPostMarket,
         "checkPreMarket": checkPreMarket,
         "dateTime": dateTime,
+        "postMarketStream": postMarketStream,
       };
 }
 

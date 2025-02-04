@@ -307,15 +307,15 @@ class TopLoserScannerProvider extends ChangeNotifier {
   //   });
   // }
 
-  void applyFilterValuesOnly(String sortByHeader, bool isAscending,
-      {int? sortBy}) {
-    _filterParams = FilterParamsGainerLoser(
-      sortBy: _filterParams?.sortBy,
-      sortByAsc: isAscending,
-      sortByHeader: sortByHeader,
-    );
-    notifyListeners();
-  }
+  // void applyFilterValuesOnly(String sortByHeader, bool isAscending,
+  //     {int? sortBy}) {
+  //   _filterParams = FilterParamsGainerLoser(
+  //     sortBy: _filterParams?.sortBy,
+  //     sortByAsc: isAscending,
+  //     sortByHeader: sortByHeader,
+  //   );
+  //   notifyListeners();
+  // }
 
   void applyFilter(sortBy) {
     if (sortBy != _filterParams?.sortBy) {
@@ -483,6 +483,17 @@ class TopLoserScannerProvider extends ChangeNotifier {
       } else {
         return valueB.compareTo(valueA);
       }
+    } else if (sortBy == SortByEnums.postMarket.name) {
+      if (a.extendedHoursPrice == null && b.extendedHoursPrice == null) {
+        return 0;
+      }
+      if (a.extendedHoursPrice == null) return -1;
+      if (b.extendedHoursPrice == null) return 1;
+      if (isAsc) {
+        return a.extendedHoursPrice!.compareTo(b.extendedHoursPrice!);
+      } else {
+        return b.extendedHoursPrice!.compareTo(a.extendedHoursPrice!);
+      }
     } else if (sortBy == SortByEnums.netChange.name) {
       num? valueA = a.change;
       num? valueB = b.change;
@@ -502,11 +513,11 @@ class TopLoserScannerProvider extends ChangeNotifier {
     } else if (sortBy == SortByEnums.perChange.name) {
       num? valueA = a.percentChange;
       num? valueB = b.percentChange;
-      if (a.extendedHoursType == "PostMarket" ||
-          a.extendedHoursType == "PreMarket") {
-        valueA = a.extendedHoursPercentChange ?? 0;
-        valueB = b.extendedHoursPercentChange ?? 0;
-      }
+      // if (a.extendedHoursType == "PostMarket" ||
+      //     a.extendedHoursType == "PreMarket") {
+      //   valueA = a.extendedHoursPercentChange ?? 0;
+      //   valueB = b.extendedHoursPercentChange ?? 0;
+      // }
 
       if (valueA == null && valueB == null) return 0;
       if (valueA == null) return -1;

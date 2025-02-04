@@ -331,7 +331,7 @@ class HomeProvider extends ChangeNotifier {
     // _getLastMarketOpen();
     _getLastMarketOpenFW();
 
-    getFeaturedWatchlist();
+    // getFeaturedWatchlist();
     // getHomeAlerts();
     getMostPurchased(home: "home");
     getHomeTrendingData();
@@ -434,6 +434,11 @@ class HomeProvider extends ChangeNotifier {
       );
       _extra = (response.extra is Extra ? response.extra as Extra : null);
 
+      if (_extra?.user != null) {
+        navigatorKey.currentContext!
+            .read<UserProvider>()
+            .setUser(_extra!.user!);
+      }
       if (response.status) {
         //...........PLAID KEYS SET............
         // String basePlaidUrl = "https://sandbox.plaid.com";
@@ -462,11 +467,6 @@ class HomeProvider extends ChangeNotifier {
         if (_extra?.messageObject?.error != null) {
           Const.errSomethingWrong = _extra?.messageObject?.error ?? "";
           Const.loadingMessage = _extra?.messageObject?.loading ?? "";
-          if (_extra?.user != null) {
-            navigatorKey.currentContext!
-                .read<UserProvider>()
-                .setUser(_extra!.user!);
-          }
         }
 
         if (_extra != null) {
@@ -480,6 +480,7 @@ class HomeProvider extends ChangeNotifier {
           BrazeService.brazeUserEvent();
           // getMyTickers();
         }
+        _updateFeaturedChartData();
       } else {
         _homeSliderRes = null;
       }
@@ -664,39 +665,39 @@ class HomeProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  FeaturedWatchlistRes? _fwData;
-  FeaturedWatchlistRes? get fwData => _fwData;
+  // FeaturedWatchlistRes? _fwData;
+  // FeaturedWatchlistRes? get fwData => _fwData;
 
-  Future getFeaturedWatchlist({bool userAvail = true}) async {
-    UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
-    setStatusFW(Status.loading);
-    try {
-      Map request = {
-        "token": userAvail ? provider.user?.token ?? "" : "",
-      };
-      ApiResponse response = await apiRequest(
-        url: Apis.featuredWatchlist,
-        request: request,
-        showProgress: false,
-        onRefresh: () => refreshData(null),
-        removeForceLogin: true,
-      );
-      setStatusFW(Status.loading);
+  // Future getFeaturedWatchlist({bool userAvail = true}) async {
+  //   UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
+  //   setStatusFW(Status.loading);
+  //   try {
+  //     Map request = {
+  //       "token": userAvail ? provider.user?.token ?? "" : "",
+  //     };
+  //     ApiResponse response = await apiRequest(
+  //       url: Apis.featuredWatchlist,
+  //       request: request,
+  //       showProgress: false,
+  //       onRefresh: () => refreshData(null),
+  //       removeForceLogin: true,
+  //     );
+  //     setStatusFW(Status.loading);
 
-      if (response.status) {
-        _extraFW = (response.extra is Extra ? response.extra as Extra : null);
-        _fwData = featuredWatchlistResFromJson(jsonEncode(response.data));
-      } else {
-        _fwData = null;
-      }
-      apiKeyFMP = response.extra?.apiKeyFMP ?? "";
-      _updateFeaturedChartData();
-    } catch (e) {
-      _fwData = null;
-      setStatusFW(Status.loading);
-      Utils().showLog("ERRORr $e");
-    }
-  }
+  //     if (response.status) {
+  //       _extraFW = (response.extra is Extra ? response.extra as Extra : null);
+  //       _fwData = featuredWatchlistResFromJson(jsonEncode(response.data));
+  //     } else {
+  //       _fwData = null;
+  //     }
+  //     apiKeyFMP = response.extra?.apiKeyFMP ?? "";
+  //     _updateFeaturedChartData();
+  //   } catch (e) {
+  //     _fwData = null;
+  //     setStatusFW(Status.loading);
+  //     Utils().showLog("ERRORr $e");
+  //   }
+  // }
 
   Future getHomeAlerts({bool userAvail = true}) async {
     _statusHomeAlert = Status.loading;
@@ -887,17 +888,17 @@ class HomeProvider extends ChangeNotifier {
   // -------------  Start Update Chart data on HomePage ------------
   int retryCountFW = 0;
   void _updateFeaturedChartData() async {
-    if (_fwData == null ||
-        (_fwData?.featuredTickers == null ||
-            _fwData?.featuredTickers?.isEmpty == true)) return;
-    for (var item in _fwData!.featuredTickers!) {
+    List<FeaturedTicker>? fwData = _homeSliderRes?.featuredTickers;
+
+    if (fwData == null || (fwData.isEmpty == true)) return;
+    for (var item in fwData) {
       if (item.chart == null || (item.chart?.isEmpty ?? true)) {
         await getHomeAlertsGraphDataFW(symbol: item.symbol);
       }
     }
 
     bool callAgain = false;
-    for (var item in _fwData!.featuredTickers!) {
+    for (var item in fwData) {
       if (item.chart == null || (item.chart?.isEmpty ?? true)) {
         callAgain = true;
         break;
@@ -1008,18 +1009,19 @@ class HomeProvider extends ChangeNotifier {
       ApiResponse response = await third_party_api.apiRequest(
         url:
             // "historical-chart/$interval/$symbol?from=$formattedToday&to=$formattedToday&apikey=5e5573e6668fcd5327987ab3b912ef3e",
-            "historical-chart/$interval/$symbol?from=$formattedToday&to=$formattedToday&apikey=$apiKeyFMP",
+            "historical-chart/$interval/$symbol?from=$formattedToday&to=$formattedToday&apikey=5e5573e6668fcd5327987ab3b912ef3e",
         showProgress: false,
       );
 
       if (response.status == true) {
+        List<FeaturedTicker>? fwData = _homeSliderRes?.featuredTickers;
+
         List<Chart> data = response.data == null
             ? []
             : List<Chart>.from(response.data!.map((x) => Chart.fromJson(x)));
-        int? index = _fwData?.featuredTickers
-            ?.indexWhere((element) => element.symbol == symbol);
+        int? index = fwData?.indexWhere((element) => element.symbol == symbol);
         if (index != null && index >= 0) {
-          _fwData?.featuredTickers?[index].chart = data;
+          fwData?[index].chart = data;
           notifyListeners();
         }
       }
@@ -1065,7 +1067,7 @@ class HomeProvider extends ChangeNotifier {
       ApiResponse response = await third_party_api.apiRequest(
         url:
             // "historical-chart/$interval/$symbol?from=$formattedToday&to=$formattedToday&apikey=5e5573e6668fcd5327987ab3b912ef3e",
-            "historical-chart/$interval/$symbol?from=$formattedToday&to=$formattedToday&apikey=$apiKeyFMP",
+            "historical-chart/$interval/$symbol?from=$formattedToday&to=$formattedToday&apikey=5e5573e6668fcd5327987ab3b912ef3e",
         showProgress: false,
       );
 

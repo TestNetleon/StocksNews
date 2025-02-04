@@ -19,6 +19,9 @@ class MarketScannerOfflineTwo extends StatefulWidget {
 }
 
 class _MarketScannerOfflineTwoState extends State<MarketScannerOfflineTwo> {
+  bool preMarket = false;
+  bool postMarket = false;
+  String? text;
   @override
   void initState() {
     super.initState();
@@ -27,11 +30,36 @@ class _MarketScannerOfflineTwoState extends State<MarketScannerOfflineTwo> {
     //   provider.startListeningPorts();
     //   // provider.getOfflineData();
     // });
+    _setPrePost();
   }
 
   @override
   void dispose() {
     super.dispose();
+  }
+
+  _setPrePost() {
+    MarketScannerProvider provider = context.read<MarketScannerProvider>();
+    List<ScannerRes>? dataList = provider.offlineDataList;
+    preMarket = dataList?.any(
+          (element) {
+            return element.ext?.extendedHoursType == 'PreMarket';
+          },
+        ) ==
+        true;
+
+    postMarket = dataList?.any(
+          (element) {
+            return element.ext?.extendedHoursType == 'PostMarket';
+          },
+        ) ==
+        true;
+
+    text = preMarket
+        ? 'Pre-Market'
+        : postMarket
+            ? 'Post-Market'
+            : null;
   }
 
   @override
@@ -86,6 +114,7 @@ class _MarketScannerOfflineTwoState extends State<MarketScannerOfflineTwo> {
                           showPreMarket: true,
                           sortBy: provider.filterParams?.sortByAsc,
                           header: provider.filterParams?.sortBy,
+                          text: text,
                           sortByCallBack: (received) {
                             Utils().showLog(
                                 '${received.type}, ${received.ascending}');
