@@ -392,7 +392,7 @@ class TradingSearchProvider extends ChangeNotifier {
   }
 
   Future conditionalRedirection(String symbol,
-      {int? tickerID, num? qty}) async {
+      {int? tickerID, num? qty,ConditionType? conditionalType}) async {
     try {
       TradeProviderNew provider =
           navigatorKey.currentContext!.read<TradeProviderNew>();
@@ -405,7 +405,7 @@ class TradingSearchProvider extends ChangeNotifier {
           navigatorKey.currentContext!,
           MaterialPageRoute(
             builder: (context) => ConditionalTradesIndex(
-              conditionalType: ConditionType.bracketOrder,
+              conditionalType: conditionalType,
               tickerID: tickerID,
               qty: qty,
             ),
@@ -419,7 +419,7 @@ class TradingSearchProvider extends ChangeNotifier {
     }
   }
 
-  Future _showSheet(SummaryOrderNew? order, bool buy) async {
+  /*Future _showSheet(SummaryOrderNew? order, bool buy) async {
     await showModalBottomSheet(
       useSafeArea: true,
       shape: const RoundedRectangleBorder(
@@ -435,12 +435,12 @@ class TradingSearchProvider extends ChangeNotifier {
         return SizedBox();
 
         /// not call _show sheet
-        /*SuccessTradeSheet(
+        SuccessTradeSheet(
           order: order,
           buy: buy,
           close: true,
-        );*/
+        );
       },
     );
-  }
+  }*/
 }

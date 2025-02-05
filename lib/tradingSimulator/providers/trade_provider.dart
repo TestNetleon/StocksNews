@@ -269,7 +269,8 @@ class SummaryOrderNew {
       dollars,
       currentPrice,
       targetPrice,
-      stopPrice;
+      stopPrice,
+      limitPrice;
   bool isShare;
   StockType? selectedStock;
   String? date;
@@ -284,6 +285,7 @@ class SummaryOrderNew {
     this.currentPrice,
     this.targetPrice,
     this.stopPrice,
+    this.limitPrice,
     this.changePercentage,
     this.invested,
     this.date,

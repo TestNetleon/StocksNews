@@ -178,7 +178,7 @@ class TsPendingListProvider extends ChangeNotifier {
                         ? StockType.sell
                         : StockType.btc,
                 qty: res.data['quantity'],
-                editTradeID: data?[index].id,
+                editTradeID: _data?[index].id,
               ),
             ),
           );
@@ -209,7 +209,7 @@ class TsPendingListProvider extends ChangeNotifier {
             builder: (context) => TradeBuySellIndex(
               selectedStock: StockType.short,
               qty: 0,
-              editTradeID: data?[index].id,
+              editTradeID: _data?[index].id,
             ),
           ),
         );
@@ -234,8 +234,8 @@ class TsPendingListProvider extends ChangeNotifier {
           navigatorKey.currentContext!,
           MaterialPageRoute(
             builder: (context) => ConditionalTradesIndex(
-              conditionalType: ConditionType.bracketOrder,
-              editTradeID: data?[index].id,
+              conditionalType: _data?[index].orderTypeOriginal == "BRACKET_ORDER" ? ConditionType.bracketOrder:ConditionType.limitOrder,
+              editTradeID: _data?[index].id,
             ),
           ),
         );

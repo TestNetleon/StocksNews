@@ -69,7 +69,6 @@ class _TsOpenListState extends State<TsOpenList> {
                   changePercentage: item.changesPercentage,
                   price: item.currentPrice,
                 ));
-
                 simTradeSheet(
                     symbol: item.symbol,
                     data: TradingSearchTickerRes(
@@ -79,7 +78,11 @@ class _TsOpenListState extends State<TsOpenList> {
                       symbol: item.symbol,
                     ),
                     qty: item.quantity,
-                    tickerID: item.id);
+                    tickerID: item.id,
+                    fromTo: 1,
+                  portfolioTradeType: item.portfolioTradeType,
+
+                );
 
                 // Navigator.push(
                 //   context,

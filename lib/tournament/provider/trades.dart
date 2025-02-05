@@ -26,7 +26,7 @@ import '../models/ticker_detail.dart';
 
 enum StockType { buy, sell, hold, short, btc }
 
-enum ConditionType { bracketOrder }
+enum ConditionType { bracketOrder,limitOrder }
 
 class TournamentTradesProvider extends ChangeNotifier {
 //MARK: All Trades

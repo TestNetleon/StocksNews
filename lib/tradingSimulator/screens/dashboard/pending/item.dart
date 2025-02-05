@@ -145,7 +145,7 @@ class TsPendingListItem extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Visibility(
-                      visible: item?.targetPrice != null,
+                      visible: item?.targetPrice != null && item?.targetPrice != 0,
                       child: Expanded(
                         child: Container(
                           alignment: Alignment.centerLeft,
@@ -173,7 +173,35 @@ class TsPendingListItem extends StatelessWidget {
                       ),
                     ),
                     Visibility(
-                      visible: item?.stopPrice != null,
+                      visible: item?.limitPrice != null && item?.limitPrice != 0,
+                      child: Expanded(
+                        child: Container(
+                          alignment: Alignment.centerLeft,
+                          padding: const EdgeInsets.only(right: 40),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Limit Price",
+                                style: stylePTSansRegular(
+                                  color: ThemeColors.greyText,
+                                  fontSize: 12,
+                                ),
+                              ),
+                              const SpacerVertical(height: 3),
+                              Text(
+                                textAlign: TextAlign.start,
+                                item?.limitPrice?.toFormattedPrice() ?? "",
+                                style: stylePTSansBold(
+                                    color: ThemeColors.white, fontSize: 12),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                    Visibility(
+                      visible: item?.stopPrice != null && item?.stopPrice != 0,
                       child: Expanded(
                         child: Container(
                           alignment: Alignment.centerRight,

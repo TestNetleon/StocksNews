@@ -202,7 +202,7 @@ class SuccessConditionalSheet extends StatelessWidget {
                   ),
                 ),
                 Visibility(
-                  visible: order?.targetPrice != null,
+                  visible: order?.targetPrice != null && order?.targetPrice != 0,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -224,14 +224,14 @@ class SuccessConditionalSheet extends StatelessWidget {
                   ),
                 ),
                 Visibility(
-                  visible: order?.targetPrice != null,
+                  visible: order?.targetPrice != null && order?.targetPrice != 0,
                   child: Divider(
                     color: ThemeColors.greyText,
                     height: 15,
                   ),
                 ),
                 Visibility(
-                  visible: order?.stopPrice != null,
+                  visible: order?.stopPrice != null && order?.stopPrice != 0,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -253,7 +253,36 @@ class SuccessConditionalSheet extends StatelessWidget {
                   ),
                 ),
                 Visibility(
-                  visible: order?.stopPrice != null,
+                  visible: order?.stopPrice != null && order?.stopPrice != 0,
+                  child: Divider(
+                    color: ThemeColors.greyText,
+                    height: 15,
+                  ),
+                ),
+                Visibility(
+                  visible: order?.limitPrice != null && order?.limitPrice != 0,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "Limit Price",
+                        style: styleGeorgiaRegular(
+                          color: ThemeColors.white,
+                        ),
+                      ),
+                      Flexible(
+                        child: Text(
+                          (order?.limitPrice ?? 0).toFormattedPrice(),
+                          style: styleGeorgiaRegular(
+                            color: ThemeColors.white,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Visibility(
+                  visible: order?.limitPrice != null && order?.limitPrice != 0,
                   child: Divider(
                     color: ThemeColors.greyText,
                     height: 15,
@@ -274,7 +303,7 @@ class SuccessConditionalSheet extends StatelessWidget {
                           Text(
                             conditionalType == ConditionType.bracketOrder
                                 ? "Bracket Order"
-                                : "Buy to Cover",
+                                : "Limit Order",
                             style: styleGeorgiaRegular(
                               color: ThemeColors.white,
                             ),

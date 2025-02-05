@@ -24,6 +24,7 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
+import 'package:stocks_news_new/widgets/screen_title.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/theme_button.dart';
 import 'package:stocks_news_new/widgets/theme_input_field.dart';
@@ -49,6 +50,7 @@ class ConditionalContainer extends StatefulWidget {
 class _ConditionalContainerState extends State<ConditionalContainer> {
   TextEditingController controller = TextEditingController();
   TextEditingController targetPriceController = TextEditingController();
+  TextEditingController limitPriceController = TextEditingController();
   TextEditingController stopPriceController = TextEditingController();
 
   TypeTrade _selectedSegment = TypeTrade.shares;
@@ -90,6 +92,7 @@ class _ConditionalContainerState extends State<ConditionalContainer> {
             controller.text = _currentText;
             targetPriceController.text = data.targetPrice.toString();
             stopPriceController.text = data.stopPrice.toString();
+            limitPriceController.text = data.limitPrice.toString();
             selectedIndex = menus.indexWhere(
               (element) => element == data.tradeType,
             );
@@ -104,6 +107,7 @@ class _ConditionalContainerState extends State<ConditionalContainer> {
     controller.dispose();
     targetPriceController.dispose();
     stopPriceController.dispose();
+    limitPriceController.dispose();
     SSEManager.instance.disconnectScreen(SimulatorEnum.detail);
     super.dispose();
   }
@@ -151,36 +155,19 @@ class _ConditionalContainerState extends State<ConditionalContainer> {
       return;
     }
 
-    if (targetPriceController.text.isEmpty ||
-        num.parse(targetPriceController.text) == 0.0) {
-      popUpAlert(
-        message: "Target price can't be empty",
-        title: "Alert",
-        icon: Images.alertPopGIF,
-      );
-      return;
-    }
-    if (stopPriceController.text.isEmpty ||
-        num.parse(stopPriceController.text) == 0.0) {
-      popUpAlert(
-        message: "Stop price can't be empty",
-        title: "Alert",
-        icon: Images.alertPopGIF,
-      );
-      return;
-    }
-
     if (widget.editTradeID != null) {
       final Map<String, dynamic> request = {
         "token":
             navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
         "quantity": controller.text,
         "order_type": widget.conditionalType == ConditionType.bracketOrder
-            ? 'BRACKET_ORDER'
-            : "",
+            ? 'BRACKET_ORDER':
+        widget.conditionalType == ConditionType.limitOrder
+            ?'LIMIT_ORDER' : "",
         "duration": "GOOD_UNTIL_CANCELLED",
         "target_price": targetPriceController.text,
-        "stop_price": stopPriceController.text
+        "stop_price": stopPriceController.text,
+        "limit_price": limitPriceController.text,
       };
       ApiResponse response = await provider.requestUpdateShare(
         id: widget.editTradeID ?? 0,
@@ -204,8 +191,9 @@ class _ConditionalContainerState extends State<ConditionalContainer> {
           symbol: detailRes?.symbol,
           invested: invested,
           date: response.data['result']['created_date'],
-          targetPrice: num.parse(targetPriceController.text.toString()),
-          stopPrice: num.parse(stopPriceController.text.toString()),
+          targetPrice: targetPriceController.text.isNotEmpty?num.parse(targetPriceController.text):0,
+          stopPrice:  stopPriceController.text.isNotEmpty?num.parse(stopPriceController.text):0,
+          limitPrice:  limitPriceController.text.isNotEmpty?num.parse(limitPriceController.text):0,
         );
         Navigator.popUntil(
             navigatorKey.currentContext!, (route) => route.isFirst);
@@ -227,6 +215,7 @@ class _ConditionalContainerState extends State<ConditionalContainer> {
 
       return;
     }
+
     if (widget.tickerID != null) {
       final Map<String, dynamic> request = {
         "token":
@@ -260,8 +249,9 @@ class _ConditionalContainerState extends State<ConditionalContainer> {
           symbol: detailRes?.symbol,
           invested: invested,
           date: response.data['result']['created_date'],
-          targetPrice: num.parse(targetPriceController.text.toString()),
-          stopPrice: num.parse(stopPriceController.text.toString()),
+          targetPrice: targetPriceController.text.isNotEmpty?num.parse(targetPriceController.text):0,
+          stopPrice:  stopPriceController.text.isNotEmpty?num.parse(stopPriceController.text):0,
+          //limitPrice:  targetPriceController.text.isNotEmpty?num.parse(limitPriceController.text):0,
         );
         Navigator.popUntil(
             navigatorKey.currentContext!, (route) => route.isFirst);
@@ -281,7 +271,8 @@ class _ConditionalContainerState extends State<ConditionalContainer> {
           icon: Images.alertPopGIF,
         );
       }
-    } else {
+    }
+    else {
       if (_selectedTock == StockType.buy) {
         if (invested > (portfolioProvider.userData?.tradeBalance ?? 0)) {
           popUpAlert(
@@ -298,10 +289,12 @@ class _ConditionalContainerState extends State<ConditionalContainer> {
             "action": "BUY",
             "symbol": detailRes?.symbol,
             "quantity": controller.text,
-            "order_type": 'BRACKET_ORDER',
+            "order_type":  widget.conditionalType == ConditionType.bracketOrder
+          ? 'BRACKET_ORDER': widget.conditionalType == ConditionType.limitOrder ?'LIMIT_ORDER' : "",
             "duration": "GOOD_UNTIL_CANCELLED",
             "target_price": targetPriceController.text,
-            "stop_price": stopPriceController.text
+            "stop_price": stopPriceController.text,
+            "limit_price": limitPriceController.text,
           };
 
           ApiResponse response =
@@ -328,8 +321,9 @@ class _ConditionalContainerState extends State<ConditionalContainer> {
               symbol: detailRes?.symbol,
               invested: invested,
               date: response.data['result']['created_date'],
-              targetPrice: num.parse(targetPriceController.text.toString()),
-              stopPrice: num.parse(stopPriceController.text.toString()),
+              targetPrice: targetPriceController.text.isNotEmpty?num.parse(targetPriceController.text):0,
+              stopPrice:  stopPriceController.text.isNotEmpty?num.parse(stopPriceController.text):0,
+              limitPrice:  limitPriceController.text.isNotEmpty?num.parse(limitPriceController.text):0,
             );
 
             Navigator.popUntil(
@@ -362,13 +356,14 @@ class _ConditionalContainerState extends State<ConditionalContainer> {
                   ? "SELL"
                   : "BUY_TO_COVER",
           "symbol": detailRes?.symbol,
-          "order_type": widget.conditionalType == ConditionType.bracketOrder
-              ? 'BRACKET_ORDER'
-              : "",
+          "order_type":  widget.conditionalType == ConditionType.bracketOrder
+              ? 'BRACKET_ORDER': widget.conditionalType == ConditionType.limitOrder
+              ?'LIMIT_ORDER' : "",
           "duration": "GOOD_UNTIL_CANCELLED",
           "quantity": controller.text,
           "target_price": targetPriceController.text,
-          "stop_price": stopPriceController.text
+          "stop_price": stopPriceController.text,
+          "limit_price": limitPriceController.text,
         });
 
         ApiResponse response =
@@ -394,8 +389,9 @@ class _ConditionalContainerState extends State<ConditionalContainer> {
             symbol: detailRes?.symbol,
             invested: invested,
             date: response.data['result']['created_date'],
-            targetPrice: num.parse(targetPriceController.text.toString()),
-            stopPrice: num.parse(stopPriceController.text.toString()),
+            targetPrice: targetPriceController.text.isNotEmpty?num.parse(targetPriceController.text):0,
+            stopPrice:  stopPriceController.text.isNotEmpty?num.parse(stopPriceController.text):0,
+            limitPrice:  limitPriceController.text.isNotEmpty?num.parse(limitPriceController.text):0,
           );
           _clear();
           Navigator.popUntil(
@@ -522,17 +518,71 @@ class _ConditionalContainerState extends State<ConditionalContainer> {
             ],
           ),
           const SpacerVertical(),
-          ThemeButton(
-            disabledBackgroundColor: ThemeColors.greyBorder,
-            text: widget.editTradeID != null
-                ? 'Update Bracket Order'
-                : "Proceed Bracket Order",
-            color: (invested > _availableBalance || invested == 0)
-                ? ThemeColors.greyText
-                : ThemeColors.accent,
-            onPressed:
-                (invested > _availableBalance || invested == 0) ? null : _onTap,
+          Visibility(
+            visible:widget.conditionalType == ConditionType.bracketOrder,
+            child: ThemeButton(
+              disabledBackgroundColor: ThemeColors.greyBorder,
+              text: widget.editTradeID != null
+                  ? 'Update Bracket Order'
+                  : "Proceed Bracket Order",
+              color: (invested > _availableBalance || invested == 0)
+                  ? ThemeColors.greyText
+                  : ThemeColors.accent,
+              onPressed:
+                  (invested > _availableBalance || invested == 0) ? null : (){
+                    if (targetPriceController.text.isEmpty ||
+                        num.parse(targetPriceController.text) == 0.0) {
+                      popUpAlert(
+                        message: "Target price can't be empty",
+                        title: "Alert",
+                        icon: Images.alertPopGIF,
+                      );
+                      return;
+                    }
+                    else if (stopPriceController.text.isEmpty ||
+                        num.parse(stopPriceController.text) == 0.0) {
+                      popUpAlert(
+                        message: "Stop price can't be empty",
+                        title: "Alert",
+                        icon: Images.alertPopGIF,
+                      );
+                      return;
+                    }
+
+                    else{
+                      _onTap();
+                    }
+                  },
+            ),
           ),
+
+          Visibility(
+            visible:widget.conditionalType == ConditionType.limitOrder,
+            child: ThemeButton(
+              disabledBackgroundColor: ThemeColors.greyBorder,
+              text: widget.editTradeID != null
+                  ? 'Update Limit Order'
+                  : "Proceed Limit Order",
+              color: (invested > _availableBalance || invested == 0)
+                  ? ThemeColors.greyText
+                  : ThemeColors.accent,
+              onPressed:
+              (invested > _availableBalance || invested == 0) ? null : (){
+                if (limitPriceController.text.isEmpty || num.parse(limitPriceController.text) == 0.0) {
+                  popUpAlert(
+                    message: "Limit price can't be empty",
+                    title: "Alert",
+                    icon: Images.alertPopGIF,
+                  );
+                  return;
+                }
+                else{
+                  _onTap();
+                }
+              },
+            ),
+          ),
+
           Visibility(
             visible: controller.text.isNotEmpty &&
                 (_selectedTock == StockType.buy ||
@@ -567,6 +617,7 @@ class _ConditionalContainerState extends State<ConditionalContainer> {
 
   @override
   Widget build(BuildContext context) {
+    TsPortfolioProvider portfolioProvider = context.read<TsPortfolioProvider>();
     return Padding(
       padding: const EdgeInsets.fromLTRB(Dimen.padding, 0, Dimen.padding, 0),
       child: Column(
@@ -621,39 +672,83 @@ class _ConditionalContainerState extends State<ConditionalContainer> {
                       ),
                     ),
                   SpacerVertical(),
-                  Align(
-                      alignment: Alignment.centerLeft,
-                      child: showAsteriskText(
-                          text: "Target Price",
-                          bold: true,
-                          showAsterisk: false)),
-                  const SpacerVertical(height: 5),
-                  ThemeInputField(
-                    cursorColor: Colors.white,
-                    fillColor: ThemeColors.primaryLight,
-                    borderColor: ThemeColors.primaryLight,
-                    controller: targetPriceController,
-                    placeholder: "Target Price",
-                    keyboardType:
-                        TextInputType.numberWithOptions(decimal: true),
-                    style: stylePTSansRegular(color: Colors.white),
+
+                  Visibility(
+                    visible:widget.conditionalType == ConditionType.bracketOrder,
+                    child: Column(
+                      children: [
+                        ScreenTitle(
+                          title: "Target Price",
+                          style: stylePTSansBold(color: Colors.white),
+                          subTitle:
+                          selectedIndex==0?
+                          portfolioProvider.userData?.labelInfoStrings?.buy?.bracketOrder?.targetPrice??"":
+                          portfolioProvider.userData?.labelInfoStrings?.short?.bracketOrder?.targetPrice??"",
+                          dividerPadding: EdgeInsets.symmetric(vertical: 5),
+                        ),
+                        ThemeInputField(
+                          cursorColor: Colors.white,
+                          fillColor: ThemeColors.primaryLight,
+                          borderColor: ThemeColors.primaryLight,
+                          controller: targetPriceController,
+                          placeholder: "Target Price",
+                          keyboardType:
+                          TextInputType.numberWithOptions(decimal: true),
+                          style: stylePTSansRegular(color: Colors.white),
+                        ),
+                        const SpacerVertical(),
+                        ScreenTitle(
+                          title: "Stop Price",
+                          style: stylePTSansBold(color: Colors.white),
+                          subTitle:
+                          selectedIndex==0?
+                          portfolioProvider.userData?.labelInfoStrings?.buy?.bracketOrder?.stopPrice??"":
+                          portfolioProvider.userData?.labelInfoStrings?.short?.bracketOrder?.stopPrice??"",
+                          dividerPadding: EdgeInsets.symmetric(vertical: 5),
+                        ),
+                        ThemeInputField(
+                          cursorColor: Colors.white,
+                          fillColor: ThemeColors.primaryLight,
+                          borderColor: ThemeColors.primaryLight,
+                          controller: stopPriceController,
+                          placeholder: "Stop Price",
+                          keyboardType:
+                          TextInputType.numberWithOptions(decimal: true),
+                          style: stylePTSansRegular(color: Colors.white),
+                        ),
+
+                      ],
+                    ),
                   ),
-                  const SpacerVertical(),
-                  Align(
-                      alignment: Alignment.centerLeft,
-                      child: showAsteriskText(
-                          text: "Stop Price", bold: true, showAsterisk: false)),
-                  const SpacerVertical(height: 5),
-                  ThemeInputField(
-                    cursorColor: Colors.white,
-                    fillColor: ThemeColors.primaryLight,
-                    borderColor: ThemeColors.primaryLight,
-                    controller: stopPriceController,
-                    placeholder: "Stop Price",
-                    keyboardType:
-                        TextInputType.numberWithOptions(decimal: true),
-                    style: stylePTSansRegular(color: Colors.white),
-                  ),
+
+                  Visibility(
+                    visible:  widget.conditionalType == ConditionType.limitOrder,
+                    child: Column(
+                      children: [
+                        ScreenTitle(
+                          title: "Limit Price",
+                          style: stylePTSansBold(color: Colors.white),
+                          subTitle:
+                          selectedIndex==0?
+                          portfolioProvider.userData?.labelInfoStrings?.buy?.limitOrder?.limitPrice??"":
+                          portfolioProvider.userData?.labelInfoStrings?.short?.limitOrder?.limitPrice??"",
+                          dividerPadding: EdgeInsets.symmetric(vertical: 5),
+                        ),
+                        ThemeInputField(
+                          cursorColor: Colors.white,
+                          fillColor: ThemeColors.primaryLight,
+                          borderColor: ThemeColors.primaryLight,
+                          controller: limitPriceController,
+                          placeholder: "Limit Price",
+                          keyboardType:
+                          TextInputType.numberWithOptions(decimal: true),
+                          style: stylePTSansRegular(color: Colors.white),
+                        ),
+
+                      ],
+                    ),
+                  )
+
                 ],
               ),
             ),

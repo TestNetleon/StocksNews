@@ -26,6 +26,7 @@ class TsPendingListRes {
   final String? orderTypeOriginal;
   final num? targetPrice;
   final num? stopPrice;
+  final num? limitPrice;
   final String? closePrice;
   final String? closePriceLabel;
 
@@ -48,6 +49,7 @@ class TsPendingListRes {
     this.orderTypeOriginal,
     this.targetPrice,
     this.stopPrice,
+    this.limitPrice,
     this.closePriceLabel,
   });
 
@@ -71,6 +73,7 @@ class TsPendingListRes {
         changesPercentage: json["changesPercentage"],
         targetPrice: json["target_price"],
         stopPrice: json["stop_price"],
+        limitPrice: json["limit_price"],
         orderTypeOriginal: json["order_type_original"],
         closePriceLabel: json["portfolio_close_price_label"],
       );
@@ -94,6 +97,7 @@ class TsPendingListRes {
         "changesPercentage": changesPercentage,
         "target_price": targetPrice,
         "stop_price": stopPrice,
+        "limit_price": limitPrice,
         "order_type_original": orderTypeOriginal,
         "portfolio_close_price_label": closePriceLabel,
       };

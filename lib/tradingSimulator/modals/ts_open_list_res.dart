@@ -27,8 +27,10 @@ class TsOpenListRes {
   final String? tradeType;
   final num? targetPrice;
   final num? stopPrice;
+  final num? limitPrice;
   final String? orderTypeOriginal;
   final String? orderType;
+  final num? portfolioTradeType;
 
   TsOpenListRes({
     this.id,
@@ -50,8 +52,10 @@ class TsOpenListRes {
     this.avgPrice,
     this.targetPrice,
     this.stopPrice,
+    this.limitPrice,
     this.orderTypeOriginal,
     this.orderType,
+    this.portfolioTradeType,
   });
 
   factory TsOpenListRes.fromJson(Map<String, dynamic> json) => TsOpenListRes(
@@ -76,8 +80,10 @@ class TsOpenListRes {
         company: json["company"],
         targetPrice: json["target_price"],
         stopPrice: json["stop_price"],
+    limitPrice: json["limit_price"],
         orderTypeOriginal: json["order_type_original"],
         orderType: json["order_type"],
+    portfolioTradeType: json["portfolio_trade_type"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -96,9 +102,11 @@ class TsOpenListRes {
         "company": company,
         "average_price": avgPrice,
         "target_price": targetPrice,
+        "limit_price": limitPrice,
         "stop_price": stopPrice,
         "order_type_original": orderTypeOriginal,
         "order_type": orderType,
+        "portfolio_trade_type": portfolioTradeType,
       };
 }
 
