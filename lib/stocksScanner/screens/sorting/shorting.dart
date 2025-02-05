@@ -19,6 +19,8 @@ enum SortByEnums {
   bid,
   ask,
   postMarket,
+  postMarketNetChange,
+  postMarketPerChange,
 }
 
 class SortByClass {
@@ -84,7 +86,8 @@ class MarketScannerSorting extends StatefulWidget {
 
 class _MarketScannerSortingState extends State<MarketScannerSorting> {
   // This method will handle the sorting callback for all enums.
-  Widget _buildSortOption(String label, SortByEnums type, {bool? sortBy}) {
+  Widget _buildSortOption(String label, SortByEnums type,
+      {bool? sortBy, bool textBold = false}) {
     return Column(
       children: [
         Row(
@@ -92,8 +95,15 @@ class _MarketScannerSortingState extends State<MarketScannerSorting> {
             Expanded(
               child: Text(
                 label,
-                style: styleGeorgiaRegular(
-                    color: ThemeColors.background, fontSize: 18),
+                style: textBold
+                    ? styleGeorgiaBold(
+                        color: ThemeColors.background,
+                        fontSize: 18,
+                      )
+                    : styleGeorgiaRegular(
+                        color: ThemeColors.background,
+                        fontSize: 18,
+                      ),
               ),
             ),
             SpacerHorizontal(width: 5),
@@ -205,6 +215,29 @@ class _MarketScannerSortingState extends State<MarketScannerSorting> {
               sortBy: widget.header == SortByEnums.postMarket.name
                   ? widget.sortBy
                   : null,
+              textBold: true,
+            ),
+          ),
+          Visibility(
+            visible: widget.text != null && widget.text != '',
+            child: _buildSortOption(
+              '${widget.text} Net Change',
+              SortByEnums.postMarketNetChange,
+              sortBy: widget.header == SortByEnums.postMarketNetChange.name
+                  ? widget.sortBy
+                  : null,
+              textBold: true,
+            ),
+          ),
+          Visibility(
+            visible: widget.text != null && widget.text != '',
+            child: _buildSortOption(
+              '${widget.text} Percentage Change',
+              SortByEnums.postMarketPerChange,
+              sortBy: widget.header == SortByEnums.postMarketPerChange.name
+                  ? widget.sortBy
+                  : null,
+              textBold: true,
             ),
           ),
 

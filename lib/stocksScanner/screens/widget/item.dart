@@ -523,7 +523,7 @@ class ScannerBaseItem extends StatelessWidget {
                       ),
                       const SpacerVertical(height: 5),
                       Visibility(
-                        visible: !(preMarket || postMarket),
+                        // visible: (preMarket || postMarket),
                         child: RichText(
                           text: TextSpan(
                             children: [
@@ -569,7 +569,6 @@ class ScannerBaseItem extends StatelessWidget {
               Visibility(
                 // visible: showPreMarket,
                 visible: prePost != null && prePost != '',
-
                 child: Divider(
                   color: ThemeColors.greyBorder,
                 ),
@@ -577,7 +576,6 @@ class ScannerBaseItem extends StatelessWidget {
               Visibility(
                 // visible: showPreMarket,
                 visible: prePost != null && prePost != '',
-
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [

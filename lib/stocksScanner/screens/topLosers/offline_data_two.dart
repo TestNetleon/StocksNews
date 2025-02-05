@@ -57,7 +57,7 @@ class _TopLosersOfflineTwoState extends State<TopLosersOfflineTwo> {
   }
 
   _setPrePost() {
-    TopLoserScannerProvider provider = context.watch<TopLoserScannerProvider>();
+    TopLoserScannerProvider provider = context.read<TopLoserScannerProvider>();
     List<ScannerRes>? dataList = provider.offlineDataList;
     provider.resetLiveFilter();
 
@@ -80,12 +80,17 @@ class _TopLosersOfflineTwoState extends State<TopLosersOfflineTwo> {
         : postMarket
             ? 'Post-Market'
             : null;
+
+    // Utils()
+    //     .showLog("Offline 0=> $text  ${dataList?[0].ext?.extendedHoursType}");
   }
 
   @override
   Widget build(BuildContext context) {
     TopLoserScannerProvider provider = context.watch<TopLoserScannerProvider>();
     List<ScannerRes>? dataList = provider.offlineDataList;
+
+    // Utils().showLog("Offline => $text");
 
     bool? gotPostMarket = dataList?.any(
       (element) => element.ext?.extendedHoursType == 'PostMarket',

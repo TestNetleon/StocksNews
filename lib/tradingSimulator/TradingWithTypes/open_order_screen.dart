@@ -53,7 +53,8 @@ class _OpenOrderScreenState extends State<OpenOrderScreen> {
     disposeSheet = false;
     setState(() {});
     try {
-      TradingSearchProvider provider = navigatorKey.currentContext!.read<TradingSearchProvider>();
+      TradingSearchProvider provider =
+          navigatorKey.currentContext!.read<TradingSearchProvider>();
       if (symbol != null && symbol != '') {
         provider.stockHolding(symbol, selectedStock: selectedStock);
       }
@@ -155,7 +156,7 @@ class _OpenOrderScreenState extends State<OpenOrderScreen> {
             height: 20,
           ),
           Visibility(
-            visible:widget.portfolioTradeType!=3,
+            visible: widget.portfolioTradeType != 3,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -169,9 +170,9 @@ class _OpenOrderScreenState extends State<OpenOrderScreen> {
                 ),
                 SpacerVertical(height: 5),
                 Visibility(
-                  visible: widget.portfolioTradeType==1,
+                  visible: widget.portfolioTradeType == 1,
                   child: BuyOrderItem(
-                    title: "Buy more Stocks",
+                    title: "Buy More Stocks",
                     subtitle: subtitleWithSymbol(
                       tsProvider.userData?.ordersSubTitle?.buyOrder,
                       widget.symbol,
@@ -179,19 +180,21 @@ class _OpenOrderScreenState extends State<OpenOrderScreen> {
                     onTap: () {
                       var selectedStock = StockType.buy;
                       if (widget.symbol != null) {
-                        _onTap(symbol: widget.symbol, selectedStock: selectedStock);
+                        _onTap(
+                            symbol: widget.symbol,
+                            selectedStock: selectedStock);
                       } else {
                         Navigator.push(
                           context,
-                          createRoute(
-                              SearchTradingTicker(selectedStock: selectedStock)),
+                          createRoute(SearchTradingTicker(
+                              selectedStock: selectedStock)),
                         );
                       }
                     },
                   ),
                 ),
                 Visibility(
-                  visible: widget.portfolioTradeType==1,
+                  visible: widget.portfolioTradeType == 1,
                   child: BuyOrderItem(
                     title: "Sell Stocks",
                     subtitle: subtitleWithSymbol(
@@ -201,19 +204,21 @@ class _OpenOrderScreenState extends State<OpenOrderScreen> {
                     onTap: () {
                       var selectedStock = StockType.sell;
                       if (widget.symbol != null) {
-                        _onTap(symbol: widget.symbol, selectedStock: selectedStock);
+                        _onTap(
+                            symbol: widget.symbol,
+                            selectedStock: selectedStock);
                       } else {
                         Navigator.push(
                           context,
-                          createRoute(
-                              SearchTradingTicker(selectedStock: selectedStock)),
+                          createRoute(SearchTradingTicker(
+                              selectedStock: selectedStock)),
                         );
                       }
                     },
                   ),
                 ),
                 Visibility(
-                  visible: widget.portfolioTradeType==2,
+                  visible: widget.portfolioTradeType == 2,
                   child: BuyOrderItem(
                     title: "Increase Short Order",
                     subtitle: subtitleWithSymbol(
@@ -229,15 +234,15 @@ class _OpenOrderScreenState extends State<OpenOrderScreen> {
                       } else {
                         Navigator.push(
                           context,
-                          createRoute(
-                              SearchTradingTicker(selectedStock: selectedStock)),
+                          createRoute(SearchTradingTicker(
+                              selectedStock: selectedStock)),
                         );
                       }
                     },
                   ),
                 ),
                 Visibility(
-                  visible: widget.portfolioTradeType==2,
+                  visible: widget.portfolioTradeType == 2,
                   child: BuyOrderItem(
                     title: "Buy to Cover Order",
                     subtitle: subtitleWithSymbol(
@@ -247,7 +252,9 @@ class _OpenOrderScreenState extends State<OpenOrderScreen> {
                     onTap: () {
                       var selectedStock = StockType.btc;
                       if (widget.symbol != null) {
-                        _onTap(symbol: widget.symbol, selectedStock: selectedStock);
+                        _onTap(
+                            symbol: widget.symbol,
+                            selectedStock: selectedStock);
                       } else {
                         Navigator.push(
                           context,
@@ -265,33 +272,38 @@ class _OpenOrderScreenState extends State<OpenOrderScreen> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              if(widget.portfolioTradeType!=3)
-              Visibility(
-                visible: tsProvider.userData?.userConditionalOrderPermission?.bracketOrder == true || kDebugMode,
-                child: BuyOrderItem(
-                  title: "Stop Loss and Target",
-                  subtitle: subtitleWithSymbol(
-                    tsProvider.userData?.ordersSubTitle?.bracketOrder,
-                    widget.symbol,
+              if (widget.portfolioTradeType != 3)
+                Visibility(
+                  visible: tsProvider.userData?.userConditionalOrderPermission
+                              ?.bracketOrder ==
+                          true ||
+                      kDebugMode,
+                  child: BuyOrderItem(
+                    title: "Stop Loss and Target",
+                    subtitle: subtitleWithSymbol(
+                      tsProvider.userData?.ordersSubTitle?.bracketOrder,
+                      widget.symbol,
+                    ),
+                    onTap: () {
+                      var conditionalType = ConditionType.bracketOrder;
+                      if (widget.symbol != null) {
+                        navigatorKey.currentContext!
+                            .read<TradingSearchProvider>()
+                            .conditionalRedirection(widget.symbol ?? "",
+                                tickerID: widget.tickerID,
+                                qty: widget.qty,
+                                conditionalType: conditionalType);
+                      } else {
+                        Navigator.push(
+                          context,
+                          createRoute(SearchTradingTicker()),
+                        );
+                      }
+                    },
                   ),
-                  onTap: () {
-                    var conditionalType = ConditionType.bracketOrder;
-                    if (widget.symbol != null) {
-                      navigatorKey.currentContext!
-                          .read<TradingSearchProvider>()
-                          .conditionalRedirection(widget.symbol ?? "",
-                          tickerID: widget.tickerID, qty: widget.qty,conditionalType: conditionalType);
-                    } else {
-                      Navigator.push(
-                        context,
-                        createRoute(SearchTradingTicker()),
-                      );
-                    }
-                  },
                 ),
-              ),
               Visibility(
-                visible:widget.portfolioTradeType==3,
+                visible: widget.portfolioTradeType == 3,
                 child: ThemeButton(
                   text: "SQUARE OFF",
                   color: ThemeColors.sos,
@@ -299,7 +311,8 @@ class _OpenOrderScreenState extends State<OpenOrderScreen> {
                     popUpAlert(
                       cancel: true,
                       title: "Square Off Order",
-                      message: "Are you sure you want to square off this order?",
+                      message:
+                          "Are you sure you want to square off this order?",
                       okText: "Square Off",
                       icon: Images.alertPopGIF,
                       onTap: () async {
@@ -323,7 +336,6 @@ class _OpenOrderScreenState extends State<OpenOrderScreen> {
               ),
             ],
           )
-
         ],
       ),
     );

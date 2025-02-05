@@ -490,6 +490,24 @@ class TopGainerScannerProvider extends ChangeNotifier {
       } else {
         return b.extendedHoursPrice!.compareTo(a.extendedHoursPrice!);
       }
+    } else if (sortBy == SortByEnums.postMarketNetChange.name) {
+      num? valueA = a.extendedHoursChange ?? 0;
+      num? valueB = b.extendedHoursChange ?? 0;
+
+      if (isAsc) {
+        return valueA.compareTo(valueB);
+      } else {
+        return valueB.compareTo(valueA);
+      }
+    } else if (sortBy == SortByEnums.postMarketPerChange.name) {
+      num? valueA = a.extendedHoursPercentChange ?? 0;
+      num? valueB = b.extendedHoursPercentChange ?? 0;
+
+      if (isAsc) {
+        return valueA.compareTo(valueB);
+      } else {
+        return valueB.compareTo(valueA);
+      }
     } else if (sortBy == SortByEnums.netChange.name) {
       num? valueA = a.change;
       num? valueB = b.change;
@@ -509,11 +527,11 @@ class TopGainerScannerProvider extends ChangeNotifier {
     } else if (sortBy == SortByEnums.perChange.name) {
       num? valueA = a.percentChange;
       num? valueB = b.percentChange;
-      if (a.extendedHoursType == "PostMarket" ||
-          a.extendedHoursType == "PreMarket") {
-        valueA = a.extendedHoursPercentChange ?? 0;
-        valueB = b.extendedHoursPercentChange ?? 0;
-      }
+      // if (a.extendedHoursType == "PostMarket" ||
+      //     a.extendedHoursType == "PreMarket") {
+      //   valueA = a.extendedHoursPercentChange ?? 0;
+      //   valueB = b.extendedHoursPercentChange ?? 0;
+      // }
 
       if (valueA == null && valueB == null) return 0;
       if (valueA == null) return -1;
@@ -615,6 +633,33 @@ class TopGainerScannerProvider extends ChangeNotifier {
     } else if (sortBy == SortByEnums.postMarket.name) {
       num? valueA = a.ext?.extendedHoursPrice ?? 0;
       num? valueB = b.ext?.extendedHoursPrice ?? 0;
+      if (valueA == null && valueB == null) {
+        return 0;
+      }
+      if (valueA == null) return -1;
+      if (valueB == null) return 1;
+      if (isAsc) {
+        return valueA.compareTo(valueB);
+      } else {
+        return valueB.compareTo(valueA);
+      }
+    } else if (sortBy == SortByEnums.postMarketNetChange.name) {
+      num? valueA = a.ext?.extendedHoursChange ?? 0;
+      num? valueB = b.ext?.extendedHoursChange ?? 0;
+
+      if (valueA == null && valueB == null) {
+        return 0;
+      }
+      if (valueA == null) return -1;
+      if (valueB == null) return 1;
+      if (isAsc) {
+        return valueA.compareTo(valueB);
+      } else {
+        return valueB.compareTo(valueA);
+      }
+    } else if (sortBy == SortByEnums.postMarketPerChange.name) {
+      num? valueA = a.ext?.extendedHoursPercentChange ?? 0;
+      num? valueB = b.ext?.extendedHoursPercentChange ?? 0;
       if (valueA == null && valueB == null) {
         return 0;
       }
