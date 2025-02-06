@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/services.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:superwallkit_flutter/superwallkit_flutter.dart' hide LogLevel;
@@ -11,13 +9,13 @@ class RCPurchaseController extends PurchaseController {
   Future<void> syncSubscriptionStatus() async {
     // Configure RevenueCat
     await Purchases.setLogLevel(LogLevel.debug);
-    PurchasesConfiguration configuration = Platform.isIOS
-        ? PurchasesConfiguration("appl_kHwXNrngqMNktkEZJqYhEgLjbcC")
-        : PurchasesConfiguration("goog_KXHVJRLChlyjoOamWsqCWQSJZfI");
-    // configuration.purchasesAreCompletedBy = PurchasesAreCompletedByMyApp(
-    //   storeKitVersion: StoreKitVersion.storeKit2,
-    // );
-    await Purchases.configure(configuration);
+    // PurchasesConfiguration configuration = Platform.isIOS
+    //     ? PurchasesConfiguration("appl_kHwXNrngqMNktkEZJqYhEgLjbcC")
+    //     : PurchasesConfiguration("goog_KXHVJRLChlyjoOamWsqCWQSJZfI");
+    // // configuration.purchasesAreCompletedBy = PurchasesAreCompletedByMyApp(
+    // //   storeKitVersion: StoreKitVersion.storeKit2,
+    // // );
+    // await Purchases.configure(configuration);
 
     // Listen for changes
     Purchases.addCustomerInfoUpdateListener((customerInfo) {

@@ -11,6 +11,8 @@ import 'package:stocks_news_new/screens/auth/membershipAsk/ask.dart';
 import 'package:stocks_news_new/screens/auth/refer/refer_code.dart';
 import 'package:stocks_news_new/screens/membership/store/store.dart';
 import 'package:stocks_news_new/screens/membership_new/membership.dart';
+import 'package:stocks_news_new/screens/tabs/tabs.dart';
+import 'package:stocks_news_new/service/revenue_cat.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -144,24 +146,25 @@ class _NewsDetailsLockState extends State<NewsDetailsLock> {
           ),
         );
       } else {
-        await Navigator.push(
-          navigatorKey.currentContext!,
-          MaterialPageRoute(
-            builder: (context) => const NewMembership(),
-          ),
-        );
+        subscribe();
+        // await Navigator.push(
+        //   navigatorKey.currentContext!,
+        //   MaterialPageRoute(
+        //     builder: (context) => const NewMembership(),
+        //   ),
+        // );
       }
     }
   }
 
-  Future _navigateToStore() async {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (_) => const Store(),
-      ),
-    );
-  }
+  // Future _navigateToStore() async {
+  //   Navigator.push(
+  //     context,
+  //     MaterialPageRoute(
+  //       builder: (_) => const Store(),
+  //     ),
+  //   );
+  // }
 
   // Future _membership() async {
   //   UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
@@ -184,35 +187,58 @@ class _NewsDetailsLockState extends State<NewsDetailsLock> {
     UserProvider userProvider = context.watch<UserProvider>();
 
     bool isLogin = userProvider.user != null;
-    bool hasMembership = userProvider.user?.membership?.purchased == 1;
-    bool havePoints = provider.data?.postDetail?.totalPoints != null &&
-        (provider.data?.postDetail?.totalPoints > 0);
+    bool showUpgradeBtn = provider.data?.postDetail?.showUpgradeBtn ?? false;
+    bool showViewReport = provider.data?.postDetail?.balanceStatus ?? false;
+    bool showSubscribe = provider.data?.postDetail?.showSubscribeBtn ?? false;
 
-    bool haveEnoughPoints = (provider.data?.postDetail?.totalPoints == null ||
-            provider.data?.postDetail?.pointsRequired == null)
-        ? false
-        : (provider.data?.postDetail?.totalPoints! >=
-            provider.data?.postDetail?.pointsRequired!);
+    bool isLocked = (provider.data?.postDetail?.premiumReaderOnly ?? false) ||
+        provider.data?.postDetail?.readingStatus == false;
 
-    bool showLoginButton = !isLogin;
-    bool showViewReport = isLogin && havePoints && haveEnoughPoints;
-    bool showRefer = isLogin && (!havePoints || !haveEnoughPoints);
-    bool showSubscribe = isLogin &&
-        !hasMembership &&
-        showMembership &&
-        (!havePoints || !haveEnoughPoints);
-    bool showStore = isLogin &&
-        hasMembership &&
-        showMembership &&
-        (!havePoints || !haveEnoughPoints);
+    // bool hasMembership = userProvider.user?.membership?.purchased == 1;
+    // bool pointRequired = provider.data?.postDetail?.pointDeduction != null &&
+    //     (provider.data?.postDetail?.pointDeduction > 0);
+    // bool havePoints = provider.data?.postDetail?.totalPoints != null &&
+    //     (provider.data?.postDetail?.totalPoints > 0);
+    // bool haveEnoughPoints = (provider.data?.postDetail?.totalPoints == null ||
+    //         provider.data?.postDetail?.pointsRequired == null)
+    //     ? false
+    //     : (provider.data?.postDetail?.totalPoints! >=
+    //         provider.data?.postDetail?.pointsRequired!);
+    // bool showLoginButton = !isLogin;
+    // bool showViewReport = isLogin && havePoints && haveEnoughPoints;
+    // bool showRefer = isLogin && (!havePoints || !haveEnoughPoints);
+    // bool showSubscribe = //isLogin &&
+    //     (!hasMembership && showMembership) || (pointRequired && !havePoints)
+    // &&s(!havePoints || !haveEnoughPoints)
+    // bool showStore = isLogin &&
+    //     hasMembership &&
+    //     showMembership &&
+    //     (!havePoints || !haveEnoughPoints);
+    // bool isLocked = provider.data?.postDetail?.premiumReaderOnly ?? false;
+    // bool showUpgrade = false;
+    // if (userProvider.user?.membership?.purchased == 1) {
+    //   isLocked = userProvider.user?.membership?.permissions?.any((element) =>
+    //           (element.key == "news-detail" && element.status == 0)) ??
+    //       false;
+    //   // showUpgrade = hasMembership && isLocked;
+    // }
+    // double height = (ScreenUtil().screenHeight -
+    //         ScreenUtil().bottomBarHeight -
+    //         ScreenUtil().statusBarHeight) /
+    //     2.2;
 
     double height = (ScreenUtil().screenHeight -
-            ScreenUtil().bottomBarHeight -
-            ScreenUtil().statusBarHeight) /
-        2.2;
+        ScreenUtil().bottomBarHeight -
+        ScreenUtil().statusBarHeight);
 
-    if ((provider.data?.postDetail?.readingStatus == false) &&
-        !provider.isLoading) {
+    // Utils().showLog("Locked 1=> ${hasMembership}");
+    // Utils().showLog("Locked 2=> ${showMembership}");
+    // Utils().showLog("Locked 3=> ${pointRequired}");
+    // Utils().showLog("Locked 4=> ${!havePoints}");
+    // Utils().showLog(
+    //     "Locked => ${(!hasMembership && showMembership) || (pointRequired && !havePoints)}");
+
+    if (isLocked && !provider.isLoading) {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisSize: MainAxisSize.min,
@@ -233,7 +259,7 @@ class _NewsDetailsLockState extends State<NewsDetailsLock> {
             ),
           ),
           Container(
-            // height: height / 1.1,
+            height: height / 2,
             alignment: Alignment.center,
             decoration: const BoxDecoration(
               color: ThemeColors.tabBack,
@@ -262,25 +288,26 @@ class _NewsDetailsLockState extends State<NewsDetailsLock> {
                     textAlign: TextAlign.center,
                   ),
                   const SpacerVertical(height: 10),
-                  if (showLoginButton)
-                    ThemeButtonSmall(
-                      onPressed: () {
-                        _onLoginClick(context);
-                      },
-                      mainAxisSize: MainAxisSize.max,
-                      text: "Register/Login to Continue",
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 5,
-                        vertical: 11,
-                      ),
-                      textSize: 15,
-                      fontBold: true,
-                      iconFront: true,
-                      icon: Icons.lock,
-                      radius: 30,
-                      margin: const EdgeInsets.only(bottom: 10),
-                    ),
-                  if (showViewReport)
+                  // if (showLoginButton)
+                  //   ThemeButtonSmall(
+                  //     onPressed: () {
+                  //       _onLoginClick(context);
+                  //     },
+                  //     mainAxisSize: MainAxisSize.max,
+                  //     text: "Register/Login to Continue",
+                  //     padding: const EdgeInsets.symmetric(
+                  //       horizontal: 5,
+                  //       vertical: 11,
+                  //     ),
+                  //     textSize: 15,
+                  //     fontBold: true,
+                  //     iconFront: true,
+                  //     icon: Icons.lock,
+                  //     radius: 30,
+                  //     margin: const EdgeInsets.only(bottom: 10),
+                  //   ),
+                  if (showViewReport &&
+                      provider.data?.postDetail?.readingStatus == false)
                     ThemeButtonSmall(
                       padding: const EdgeInsets.symmetric(
                         horizontal: 5,
@@ -296,33 +323,34 @@ class _NewsDetailsLockState extends State<NewsDetailsLock> {
                       text: "View News",
                       margin: const EdgeInsets.only(bottom: 10),
                     ),
-                  if (showRefer)
-                    ThemeButtonSmall(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 5,
-                        vertical: 11,
-                      ),
-                      textSize: 15,
-                      fontBold: true,
-                      iconWidget: Padding(
-                        padding: const EdgeInsets.only(right: 10),
-                        child: Image.asset(
-                          Images.referAndEarn,
-                          height: 18,
-                          width: 18,
-                          color: ThemeColors.white,
-                        ),
-                      ),
-                      iconFront: true,
-                      icon: Icons.earbuds_rounded,
-                      mainAxisSize: MainAxisSize.max,
-                      radius: 30,
-                      onPressed: () async {
-                        await _onReferClick(context);
-                      },
-                      text: "Refer and Earn",
-                      margin: const EdgeInsets.only(bottom: 10),
-                    ),
+
+                  // if (showRefer)
+                  //   ThemeButtonSmall(
+                  //     padding: const EdgeInsets.symmetric(
+                  //       horizontal: 5,
+                  //       vertical: 11,
+                  //     ),
+                  //     textSize: 15,
+                  //     fontBold: true,
+                  //     iconWidget: Padding(
+                  //       padding: const EdgeInsets.only(right: 10),
+                  //       child: Image.asset(
+                  //         Images.referAndEarn,
+                  //         height: 18,
+                  //         width: 18,
+                  //         color: ThemeColors.white,
+                  //       ),
+                  //     ),
+                  //     iconFront: true,
+                  //     icon: Icons.earbuds_rounded,
+                  //     mainAxisSize: MainAxisSize.max,
+                  //     radius: 30,
+                  //     onPressed: () async {
+                  //       await _onReferClick(context);
+                  //     },
+                  //     text: "Refer and Earn",
+                  //     margin: const EdgeInsets.only(bottom: 10),
+                  //   ),
                   if (showSubscribe)
                     ThemeButtonSmall(
                       color: const Color.fromARGB(
@@ -361,13 +389,19 @@ class _NewsDetailsLockState extends State<NewsDetailsLock> {
                       showArrow: false,
                       margin: const EdgeInsets.only(bottom: 10),
                     ),
-                  if (showStore)
+
+                  if (showUpgradeBtn)
                     ThemeButtonSmall(
-                      color: const Color.fromARGB(255, 255, 255, 255),
+                      color: const Color.fromARGB(
+                        255,
+                        194,
+                        216,
+                        51,
+                      ),
                       textColor: Colors.black,
                       padding: const EdgeInsets.symmetric(
                         horizontal: 5,
-                        vertical: 7,
+                        vertical: 11,
                       ),
                       textSize: 15,
                       fontBold: true,
@@ -380,18 +414,82 @@ class _NewsDetailsLockState extends State<NewsDetailsLock> {
                           right: 10,
                         ),
                         child: Image.asset(
-                          Images.pointIcon3,
-                          height: 28,
-                          width: 28,
-                          // color: Colors.black,
+                          Images.membership,
+                          height: 18,
+                          width: 18,
+                          color: Colors.black,
                         ),
                       ),
                       mainAxisSize: MainAxisSize.max,
-                      onPressed: _navigateToStore,
-                      text: "Buy Points",
+                      onPressed: () async {
+                        await _membership();
+                      },
+                      text: "Upgrade Membership",
                       showArrow: false,
                       margin: const EdgeInsets.only(bottom: 10),
                     ),
+
+                  Visibility(
+                    visible: !isLogin,
+                    child: GestureDetector(
+                      onTap: () async {
+                        // isPhone ? await loginSheet() : await loginSheetTablet();
+                        await loginFirstSheet();
+                        if (!isLogin) {
+                          return;
+                        }
+                        Navigator.popUntil(navigatorKey.currentContext!,
+                            (route) => route.isFirst);
+                        Navigator.pushReplacement(
+                          navigatorKey.currentContext!,
+                          MaterialPageRoute(
+                            builder: (_) => const Tabs(index: 0),
+                          ),
+                        );
+                      },
+                      child: Text(
+                        "Already have an account? Log in",
+                        style: stylePTSansRegular(
+                          fontSize: 16,
+                          height: 1.3,
+                          color: ThemeColors.themeGreen,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ),
+
+                  // if (showStore)
+                  //   ThemeButtonSmall(
+                  //     color: const Color.fromARGB(255, 255, 255, 255),
+                  //     textColor: Colors.black,
+                  //     padding: const EdgeInsets.symmetric(
+                  //       horizontal: 5,
+                  //       vertical: 7,
+                  //     ),
+                  //     textSize: 15,
+                  //     fontBold: true,
+                  //     iconFront: true,
+                  //     radius: 30,
+                  //     icon: Icons.card_membership,
+                  //     textAlign: TextAlign.start,
+                  //     iconWidget: Padding(
+                  //       padding: const EdgeInsets.only(
+                  //         right: 10,
+                  //       ),
+                  //       child: Image.asset(
+                  //         Images.pointIcon3,
+                  //         height: 28,
+                  //         width: 28,
+                  //         // color: Colors.black,
+                  //       ),
+                  //     ),
+                  //     mainAxisSize: MainAxisSize.max,
+                  //     onPressed: _navigateToStore,
+                  //     text: "Buy Points",
+                  //     showArrow: false,
+                  //     margin: const EdgeInsets.only(bottom: 10),
+                  //   ),
                   WarningTextOnLock(
                     warningText: provider.data?.postDetail?.warningText,
                   ),

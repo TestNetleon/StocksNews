@@ -226,10 +226,14 @@ class BlogProvider extends ChangeNotifier {
       notifyListeners();
     } catch (e) {
       _blogsDetail = null;
-
       Utils().showLog('error there $e');
-      // setStatus(Status.loaded);
       _statusDetail = Status.loading;
+      getBlogDetailData(
+        slug: slug,
+        inAppMsgId: inAppMsgId,
+        notificationId: notificationId,
+        pointsDeducted: pointsDeducted,
+      );
       notifyListeners();
     }
   }

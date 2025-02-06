@@ -10,6 +10,7 @@ import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/screens/affiliate/pointsTransaction/trasnsaction.dart';
 import 'package:stocks_news_new/screens/offerMembership/christmas/index.dart';
 import 'package:stocks_news_new/service/braze/service.dart';
+import 'package:stocks_news_new/service/revenue_cat.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/database/preference.dart';
 import '../api/api_requester.dart';
@@ -266,12 +267,13 @@ class BrazeNotificationService {
             ),
           );
         } else {
-          Navigator.push(
-            navigatorKey.currentContext!,
-            MaterialPageRoute(
-              builder: (context) => const NewMembership(),
-            ),
-          );
+          // Navigator.push(
+          //   navigatorKey.currentContext!,
+          //   MaterialPageRoute(
+          //     builder: (context) => const NewMembership(),
+          //   ),
+          // );
+          subscribe();
         }
       } else if (type == NotificationType.pointTransaction.name) {
         Navigator.push(

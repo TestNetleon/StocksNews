@@ -308,8 +308,8 @@ class BlogDetailContainer extends StatelessWidget {
         ),
 
         BlogDetailsLock(slug: slug),
-        if (provider.blogsDetail?.premiumReaderOnly == true)
-          CommonLock(isLocked: true),
+        // if (provider.blogsDetail?.premiumReaderOnly == true)
+        //   CommonLock(isLocked: true),
 
         // if ((provider.blogsDetail?.readingStatus == false) &&
         //     !provider.isLoadingDetail)

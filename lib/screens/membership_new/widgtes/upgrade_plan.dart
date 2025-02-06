@@ -300,12 +300,13 @@ class _NewMembershipUpgradeCurrentPlanState
       return;
     }
 
-    if (membershipProvider.membershipInfoRes?.plans?[index].activeText != '' &&
-        membershipProvider.membershipInfoRes?.plans?[index].activeText !=
-            null) {
-      Utils().showLog("---As this membership is already purchased----");
-      return;
-    }
+    //MARK: Commented Because intermediate screen is removed now
+    // if (membershipProvider.membershipInfoRes?.plans?[index].activeText != '' &&
+    //     membershipProvider.membershipInfoRes?.plans?[index].activeText !=
+    //         null) {
+    //   Utils().showLog("---As this membership is already purchased----");
+    //   return;
+    // }
 
     if (provider.user?.phone == null || provider.user?.phone == '') {
       Utils().showLog("Ask phone for membership-----");

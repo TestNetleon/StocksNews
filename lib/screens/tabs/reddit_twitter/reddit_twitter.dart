@@ -74,9 +74,9 @@ class _RedditTwitterState extends State<RedditTwitter> {
         false;
 
     // bool isLocked = true;
-
+    bool? havePermissions;
     if (purchased && isLocked) {
-      bool havePermissions = userProvider.user?.membership?.permissions?.any(
+      havePermissions = userProvider.user?.membership?.permissions?.any(
               (element) =>
                   (element.key == "reddit-twitter" && element.status == 1)) ??
           false;
@@ -117,7 +117,12 @@ class _RedditTwitterState extends State<RedditTwitter> {
               ),
             ],
           ),
-          if (isLocked) CommonLock(showLogin: true, isLocked: isLocked),
+          if (isLocked)
+            CommonLock(
+              showLogin: true,
+              isLocked: isLocked,
+              showUpgradeBtn: havePermissions == false,
+            ),
         ],
       ),
     );

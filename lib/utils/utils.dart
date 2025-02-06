@@ -23,6 +23,7 @@ import 'package:stocks_news_new/screens/marketData/pennyStocks/index.dart';
 import 'package:stocks_news_new/screens/membership_new/membership.dart';
 import 'package:stocks_news_new/screens/stocks/index.dart';
 import 'package:stocks_news_new/screens/t&cAndPolicy/tc_policy.dart';
+import 'package:stocks_news_new/service/revenue_cat.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:intl/intl.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -711,12 +712,13 @@ void handleDeepLinkNavigation({
             ),
           );
         } else {
-          Navigator.push(
-            navigatorKey.currentContext!,
-            MaterialPageRoute(
-              builder: (context) => const NewMembership(),
-            ),
-          );
+          subscribe();
+          // Navigator.push(
+          //   navigatorKey.currentContext!,
+          //   MaterialPageRoute(
+          //     builder: (context) => const NewMembership(),
+          //   ),
+          // );
         }
       });
       return;
@@ -932,12 +934,13 @@ void handleNavigation({
     //     navigatorKey.currentContext!.read<UserProvider>();
 
     if (provider.user == null || provider.user?.membership?.purchased != 1) {
-      Navigator.push(
-        navigatorKey.currentContext!,
-        MaterialPageRoute(
-          builder: (_) => const NewMembership(),
-        ),
-      );
+      subscribe();
+      // Navigator.push(
+      //   navigatorKey.currentContext!,
+      //   MaterialPageRoute(
+      //     builder: (_) => const NewMembership(),
+      //   ),
+      // );
     } else {
       Navigator.popUntil(
           navigatorKey.currentContext!, (route) => route.isFirst);

@@ -12,6 +12,7 @@ import 'package:stocks_news_new/screens/marketData/widget/market_data_title.dart
 import 'package:stocks_news_new/utils/bottom_sheets.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
+import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/refresh_controll.dart';
 
@@ -72,12 +73,12 @@ class _CongressionalContainerState extends State<CongressionalContainer> {
                 element.status == 0)) ??
         false;
 
+    bool? havePermissions;
     if (purchased && isLocked) {
-      bool havePermissions = userProvider.user?.membership?.permissions?.any(
+      havePermissions = userProvider.user?.membership?.permissions?.any(
               (element) => (element.key == "congress-stock-trades" &&
                   element.status == 1)) ??
           false;
-
       isLocked = !havePermissions;
     }
 
@@ -188,6 +189,7 @@ class _CongressionalContainerState extends State<CongressionalContainer> {
           CommonLock(
             showLogin: true,
             isLocked: isLocked,
+            showUpgradeBtn: havePermissions == false,
           ),
       ],
     );

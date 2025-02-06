@@ -43,9 +43,10 @@ class _BaseAuthEmailState extends State<BaseAuthEmail> {
 
     if (!isEmail(email.text)) {
       popUpAlert(
-          message: "Please enter valid email address.",
-          title: "Alert",
-          icon: Images.alertPopGIF);
+        message: "Please enter valid email address.",
+        title: "Alert",
+        icon: Images.alertPopGIF,
+      );
       return;
     }
     Map request = {

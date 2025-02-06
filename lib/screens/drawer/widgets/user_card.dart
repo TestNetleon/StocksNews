@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
+import 'package:stocks_news_new/providers/membership.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
+import 'package:stocks_news_new/screens/auth/base/base_auth.dart';
+import 'package:stocks_news_new/screens/auth/membershipAsk/ask.dart';
 import 'package:stocks_news_new/screens/membership/index.dart';
 import 'package:stocks_news_new/screens/membership_new/membership.dart';
+import 'package:stocks_news_new/service/revenue_cat.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
@@ -277,12 +281,13 @@ class _UserCardState extends State<UserCard> {
         ),
       );
     } else {
-      Navigator.push(
-        navigatorKey.currentContext!,
-        MaterialPageRoute(
-          builder: (context) => const NewMembership(),
-        ),
-      );
+      subscribe();
+      // Navigator.push(
+      //   navigatorKey.currentContext!,
+      //   MaterialPageRoute(
+      //     builder: (context) => const NewMembership(),
+      //   ),
+      // );
     }
   }
 }
