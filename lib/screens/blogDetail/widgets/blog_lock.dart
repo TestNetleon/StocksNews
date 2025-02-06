@@ -11,6 +11,8 @@ import 'package:stocks_news_new/screens/auth/membershipAsk/ask.dart';
 import 'package:stocks_news_new/screens/auth/refer/refer_code.dart';
 import 'package:stocks_news_new/screens/membership/store/store.dart';
 import 'package:stocks_news_new/screens/membership_new/membership.dart';
+import 'package:stocks_news_new/screens/tabs/tabs.dart';
+import 'package:stocks_news_new/service/revenue_cat.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -109,24 +111,25 @@ class _BlogDetailsLockState extends State<BlogDetailsLock> {
           ),
         );
       } else {
-        Navigator.push(
-          navigatorKey.currentContext!,
-          MaterialPageRoute(
-            builder: (context) => const NewMembership(),
-          ),
-        );
+        subscribe();
+        // Navigator.push(
+        //   navigatorKey.currentContext!,
+        //   MaterialPageRoute(
+        //     builder: (context) => const NewMembership(),
+        //   ),
+        // );
       }
     }
   }
 
-  Future _navigateToStore() async {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (_) => const Store(),
-      ),
-    );
-  }
+  // Future _navigateToStore() async {
+  //   Navigator.push(
+  //     context,
+  //     MaterialPageRoute(
+  //       builder: (_) => const Store(),
+  //     ),
+  //   );
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -134,42 +137,45 @@ class _BlogDetailsLockState extends State<BlogDetailsLock> {
     UserProvider userProvider = context.watch<UserProvider>();
 
     bool isLogin = userProvider.user != null;
-    bool hasMembership = userProvider.user?.membership?.purchased == 1;
-    bool havePoints = provider.blogsDetail?.totalPoints != null &&
-        (provider.blogsDetail?.totalPoints > 0);
+    bool showUpgradeBtn = provider.blogsDetail?.showUpgradeBtn ?? false;
+    bool showViewReport = provider.blogsDetail?.balanceStatus ?? false;
+    bool showSubscribe = provider.blogsDetail?.showSubscribeBtn ?? false;
+    bool isLocked = (provider.blogsDetail?.premiumReaderOnly ?? false) ||
+        provider.blogsDetail?.readingStatus == false;
 
-    bool haveEnoughPoints = (provider.blogsDetail?.totalPoints == null ||
-            provider.blogsDetail?.pointsRequired == null)
-        ? false
-        : (provider.blogsDetail!.totalPoints! >=
-            provider.blogsDetail!.pointsRequired!);
+    Utils().showLog("BLOG LOCK => $isLocked  ${!provider.isLoadingDetail}");
+
+    // bool isLogin = userProvider.user != null;
+    // bool hasMembership = userProvider.user?.membership?.purchased == 1;
+    // bool havePoints = provider.blogsDetail?.totalPoints != null &&
+    //     (provider.blogsDetail?.totalPoints > 0);
+
+    // bool haveEnoughPoints = (provider.blogsDetail?.totalPoints == null ||
+    //         provider.blogsDetail?.pointsRequired == null)
+    //     ? false
+    //     : (provider.blogsDetail!.totalPoints! >=
+    //         provider.blogsDetail!.pointsRequired!);
 
     // bool showLoginButton = !isLogin;
     // bool showViewReport = isLogin && havePoints && haveEnoughPoints;
     // bool showRefer = isLogin && (!havePoints || !haveEnoughPoints);
-    // bool showSubscribe =
-    //     isLogin && !hasMembership && showMembership && !havePoints;
-    // bool showStore = isLogin && hasMembership && showMembership && !havePoints;
-
-    bool showLoginButton = !isLogin;
-    bool showViewReport = isLogin && havePoints && haveEnoughPoints;
-    bool showRefer = isLogin && (!havePoints || !haveEnoughPoints);
-    bool showSubscribe = isLogin &&
-        !hasMembership &&
-        showMembership &&
-        (!havePoints || !haveEnoughPoints);
-    bool showStore = isLogin &&
-        hasMembership &&
-        showMembership &&
-        (!havePoints || !haveEnoughPoints);
+    // bool showSubscribe = isLogin &&
+    //     !hasMembership &&
+    //     showMembership &&
+    //     (!havePoints || !haveEnoughPoints);
+    // bool showStore = isLogin &&
+    //     hasMembership &&
+    //     showMembership &&
+    //     (!havePoints || !haveEnoughPoints);
 
     double height = (ScreenUtil().screenHeight -
             ScreenUtil().bottomBarHeight -
             ScreenUtil().statusBarHeight) /
         2.2;
 
-    if ((provider.blogsDetail?.readingStatus == false) &&
-        !provider.isLoadingDetail) {
+    if (isLocked && !provider.isLoadingDetail) {
+      // if ((provider.blogsDetail?.readingStatus == false) &&
+      //     !provider.isLoadingDetail) {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisSize: MainAxisSize.min,
@@ -219,24 +225,24 @@ class _BlogDetailsLockState extends State<BlogDetailsLock> {
                     textAlign: TextAlign.center,
                   ),
                   const SpacerVertical(height: 10),
-                  if (showLoginButton)
-                    ThemeButtonSmall(
-                      onPressed: () {
-                        _onLoginClick(context);
-                      },
-                      mainAxisSize: MainAxisSize.max,
-                      text: "Register/Login to Continue",
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 5,
-                        vertical: 11,
-                      ),
-                      textSize: 15,
-                      fontBold: true,
-                      iconFront: true,
-                      icon: Icons.lock,
-                      radius: 30,
-                      margin: const EdgeInsets.only(bottom: 10),
-                    ),
+                  // if (showLoginButton)
+                  //   ThemeButtonSmall(
+                  //     onPressed: () {
+                  //       _onLoginClick(context);
+                  //     },
+                  //     mainAxisSize: MainAxisSize.max,
+                  //     text: "Register/Login to Continue",
+                  //     padding: const EdgeInsets.symmetric(
+                  //       horizontal: 5,
+                  //       vertical: 11,
+                  //     ),
+                  //     textSize: 15,
+                  //     fontBold: true,
+                  //     iconFront: true,
+                  //     icon: Icons.lock,
+                  //     radius: 30,
+                  //     margin: const EdgeInsets.only(bottom: 10),
+                  //   ),
                   if (showViewReport)
                     ThemeButtonSmall(
                       padding: const EdgeInsets.symmetric(
@@ -253,33 +259,33 @@ class _BlogDetailsLockState extends State<BlogDetailsLock> {
                       text: "View Blog",
                       margin: const EdgeInsets.only(bottom: 10),
                     ),
-                  if (showRefer)
-                    ThemeButtonSmall(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 5,
-                        vertical: 11,
-                      ),
-                      textSize: 15,
-                      fontBold: true,
-                      iconWidget: Padding(
-                        padding: const EdgeInsets.only(right: 10),
-                        child: Image.asset(
-                          Images.referAndEarn,
-                          height: 18,
-                          width: 18,
-                          color: ThemeColors.white,
-                        ),
-                      ),
-                      iconFront: true,
-                      icon: Icons.earbuds_rounded,
-                      mainAxisSize: MainAxisSize.max,
-                      radius: 30,
-                      onPressed: () async {
-                        await _onReferClick(context);
-                      },
-                      text: "Refer and Earn",
-                      margin: const EdgeInsets.only(bottom: 10),
-                    ),
+                  // if (showRefer)
+                  //   ThemeButtonSmall(
+                  //     padding: const EdgeInsets.symmetric(
+                  //       horizontal: 5,
+                  //       vertical: 11,
+                  //     ),
+                  //     textSize: 15,
+                  //     fontBold: true,
+                  //     iconWidget: Padding(
+                  //       padding: const EdgeInsets.only(right: 10),
+                  //       child: Image.asset(
+                  //         Images.referAndEarn,
+                  //         height: 18,
+                  //         width: 18,
+                  //         color: ThemeColors.white,
+                  //       ),
+                  //     ),
+                  //     iconFront: true,
+                  //     icon: Icons.earbuds_rounded,
+                  //     mainAxisSize: MainAxisSize.max,
+                  //     radius: 30,
+                  //     onPressed: () async {
+                  //       await _onReferClick(context);
+                  //     },
+                  //     text: "Refer and Earn",
+                  //     margin: const EdgeInsets.only(bottom: 10),
+                  //   ),
                   if (showSubscribe)
                     ThemeButtonSmall(
                       color: const Color.fromARGB(
@@ -319,13 +325,48 @@ class _BlogDetailsLockState extends State<BlogDetailsLock> {
                       showArrow: false,
                       margin: const EdgeInsets.only(bottom: 10),
                     ),
-                  if (showStore)
+                  // if (showStore)
+                  //   ThemeButtonSmall(
+                  //     color: const Color.fromARGB(255, 255, 255, 255),
+                  //     textColor: Colors.black,
+                  //     padding: const EdgeInsets.symmetric(
+                  //       horizontal: 5,
+                  //       vertical: 7,
+                  //     ),
+                  //     textSize: 15,
+                  //     fontBold: true,
+                  //     iconFront: true,
+                  //     radius: 30,
+                  //     icon: Icons.card_membership,
+                  //     textAlign: TextAlign.start,
+                  //     iconWidget: Padding(
+                  //       padding: const EdgeInsets.only(right: 10),
+                  //       child: Image.asset(
+                  //         Images.pointIcon3,
+                  //         height: 28,
+                  //         width: 28,
+                  //         // color: Colors.black,
+                  //       ),
+                  //     ),
+                  //     mainAxisSize: MainAxisSize.max,
+                  //     onPressed: _navigateToStore,
+                  //     text: "Buy Points",
+                  //     showArrow: false,
+                  //     margin: const EdgeInsets.only(bottom: 10),
+                  //   ),
+
+                  if (showUpgradeBtn)
                     ThemeButtonSmall(
-                      color: const Color.fromARGB(255, 255, 255, 255),
+                      color: const Color.fromARGB(
+                        255,
+                        194,
+                        216,
+                        51,
+                      ),
                       textColor: Colors.black,
                       padding: const EdgeInsets.symmetric(
                         horizontal: 5,
-                        vertical: 7,
+                        vertical: 11,
                       ),
                       textSize: 15,
                       fontBold: true,
@@ -334,20 +375,55 @@ class _BlogDetailsLockState extends State<BlogDetailsLock> {
                       icon: Icons.card_membership,
                       textAlign: TextAlign.start,
                       iconWidget: Padding(
-                        padding: const EdgeInsets.only(right: 10),
+                        padding: const EdgeInsets.only(
+                          right: 10,
+                        ),
                         child: Image.asset(
-                          Images.pointIcon3,
-                          height: 28,
-                          width: 28,
-                          // color: Colors.black,
+                          Images.membership,
+                          height: 18,
+                          width: 18,
+                          color: Colors.black,
                         ),
                       ),
                       mainAxisSize: MainAxisSize.max,
-                      onPressed: _navigateToStore,
-                      text: "Buy Points",
+                      onPressed: () async {
+                        await _membership();
+                      },
+                      text: "Upgrade Membership",
                       showArrow: false,
                       margin: const EdgeInsets.only(bottom: 10),
                     ),
+
+                  Visibility(
+                    visible: !isLogin,
+                    child: GestureDetector(
+                      onTap: () async {
+                        // isPhone ? await loginSheet() : await loginSheetTablet();
+                        await loginFirstSheet();
+                        if (!isLogin) {
+                          return;
+                        }
+                        Navigator.popUntil(navigatorKey.currentContext!,
+                            (route) => route.isFirst);
+                        Navigator.pushReplacement(
+                          navigatorKey.currentContext!,
+                          MaterialPageRoute(
+                            builder: (_) => const Tabs(index: 0),
+                          ),
+                        );
+                      },
+                      child: Text(
+                        "Already have an account? Log in",
+                        style: stylePTSansRegular(
+                          fontSize: 16,
+                          height: 1.3,
+                          color: ThemeColors.themeGreen,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ),
+
                   WarningTextOnLock(
                     warningText: provider.blogsDetail?.warningText,
                   ),

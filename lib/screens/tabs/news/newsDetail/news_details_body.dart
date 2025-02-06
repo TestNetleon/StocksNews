@@ -15,6 +15,8 @@ import 'package:stocks_news_new/screens/blogDetail/widgets/item.dart';
 import 'package:stocks_news_new/screens/tabs/news/newsAuthor/index.dart';
 import 'package:stocks_news_new/screens/tabs/news/newsDetail/article_feedback.dart';
 import 'package:stocks_news_new/screens/tabs/news/newsDetail/new_detail.dart';
+import 'package:stocks_news_new/screens/tabs/news/newsDetail/widget/news_lock%20copy.dart';
+import 'package:stocks_news_new/screens/tabs/news/newsDetail/widget/news_lock.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -735,8 +737,8 @@ class _NewsDetailsBodyState extends State<NewsDetailsBody> {
                     //   ),
                     // ),
                     NewsDetailsLock(slug: widget.slug),
-                    if (provider.data?.postDetail?.premiumReaderOnly == true)
-                      CommonLock(isLocked: true),
+                    // if (provider.data?.postDetail?.premiumReaderOnly == true)
+                    //   CommonLock(isLocked: true),
                   ],
                 ),
               )

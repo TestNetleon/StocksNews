@@ -150,6 +150,9 @@ class UserMembershipRes {
   final List<MembershipPermissionRes>? permissions;
   final UpgradeMembershipTextRes? upgradeText;
 
+  final LockContentRes? lockContentPurchase;
+  final LockContentRes? lockContentUpgrade;
+
   UserMembershipRes({
     this.purchased,
     this.displayName,
@@ -158,6 +161,8 @@ class UserMembershipRes {
     // this.color,
     this.permissions,
     this.upgradeText,
+    this.lockContentPurchase,
+    this.lockContentUpgrade,
   });
 
   factory UserMembershipRes.fromJson(Map<String, dynamic> json) =>
@@ -176,6 +181,12 @@ class UserMembershipRes {
         upgradeText: json["upgrade_text"] == null
             ? null
             : UpgradeMembershipTextRes.fromJson(json["upgrade_text"]),
+        lockContentPurchase: json["lock_content_purchase"] == null
+            ? null
+            : LockContentRes.fromJson(json["lock_content_purchase"]),
+        lockContentUpgrade: json["lock_content_upgrade"] == null
+            ? null
+            : LockContentRes.fromJson(json["lock_content_upgrade"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -188,6 +199,8 @@ class UserMembershipRes {
             ? []
             : List<dynamic>.from(permissions!.map((x) => x.toJson())),
         "upgrade_text": upgradeText?.toJson(),
+        "lock_content_purchase": lockContentPurchase?.toJson(),
+        "lock_content_upgrade": lockContentUpgrade?.toJson(),
       };
 }
 
@@ -279,5 +292,29 @@ class BlackFridayRes {
         "html": html,
         "yes_btn": yesBtn,
         "no_btn": noBtn,
+      };
+}
+
+class LockContentRes {
+  final String? title;
+  final String? message;
+  final String? buttonText;
+
+  LockContentRes({
+    this.title,
+    this.message,
+    this.buttonText,
+  });
+
+  factory LockContentRes.fromJson(Map<String, dynamic> json) => LockContentRes(
+        title: json["title"],
+        message: json["message"],
+        buttonText: json["button_text"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "title": title,
+        "message": message,
+        "button_text": buttonText,
       };
 }

@@ -33,6 +33,8 @@ class BlogsDetailRes {
   final String? popUpMessage;
   final String? popUpButton;
   final bool? premiumReaderOnly;
+  dynamic showUpgradeBtn;
+  dynamic showSubscribeBtn;
 
   BlogsDetailRes({
     required this.id,
@@ -58,6 +60,8 @@ class BlogsDetailRes {
     this.totalPoints,
     this.pointsRequired,
     this.premiumReaderOnly,
+    this.showUpgradeBtn,
+    this.showSubscribeBtn,
   });
 
   factory BlogsDetailRes.fromJson(Map<String, dynamic> json) => BlogsDetailRes(
@@ -95,6 +99,8 @@ class BlogsDetailRes {
         balanceStatus: json["balance_status"],
         totalPoints: json["total_points"],
         pointsRequired: json["point_required"],
+        showUpgradeBtn: json["show_upgrade_btn"],
+        showSubscribeBtn: json["show_subscribe_btn"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -126,5 +132,7 @@ class BlogsDetailRes {
         "balance_status": balanceStatus,
         "total_points": totalPoints,
         "point_required": pointsRequired,
+        "show_upgrade_btn": showUpgradeBtn,
+        "show_subscribe_btn": showSubscribeBtn,
       };
 }

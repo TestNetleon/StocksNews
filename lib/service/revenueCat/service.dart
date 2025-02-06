@@ -2,7 +2,10 @@ import 'dart:io';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
+import 'package:stocks_news_new/providers/membership.dart';
+import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
 import '../../api/api_response.dart';
 import '../../api/apis.dart';
@@ -123,7 +126,7 @@ class RevenueCatManager {
     }
   }
 
-  //MARK: SUPERWALL
+  // MARK: SUPERWALL
   initializeSuperWall() async {
     try {
       String apiKey = ApiKeys.superWall;
@@ -132,10 +135,33 @@ class RevenueCatManager {
         purchaseController: purchaseController,
       );
 
+      // SET USER ID TO Superwall
+      UserRes? userRes = navigatorKey.currentContext?.read<UserProvider>().user;
+      superwall.Superwall.shared.identify(userRes?.userId ?? "");
+
+      // SET USER ATTRIBUTES TO Superwall
+      Map<String, String> attributes = {};
+      if (userRes?.name != null && userRes?.name != '') {
+        attributes['\$displayName'] = userRes?.name ?? '';
+      }
+      if (userRes?.email != null && userRes?.email != '') {
+        attributes['\$email'] = userRes?.email ?? '';
+      }
+      if (userRes?.phone != null && userRes?.phone != '') {
+        attributes['\$phoneNumber'] =
+            userRes?.phoneCode != null && userRes?.phoneCode != ''
+                ? '${userRes?.phoneCode}${userRes?.phone}'
+                : userRes?.phone ?? '';
+      }
+      superwall.Superwall.shared.setUserAttributes(attributes);
+      //------------------------
+
       purchaseController.syncSubscriptionStatus();
       Utils().showLog('SuperWall initialized successfully');
 
-      superwall.Superwall.shared.registerEvent('stocks_news_plans');
+      superwall.Superwall.shared.registerEvent(Platform.isAndroid
+          ? 'stocks_news_plans_android'
+          : 'stocks_news_plans');
 
       superwall.Superwall.shared.setDelegate(SWDelegate());
     } catch (e) {
@@ -152,6 +178,9 @@ class SWDelegate extends superwall.SuperwallDelegate {
     // Handle events here
     switch (eventInfo.event.type) {
       case superwall.EventType.transactionComplete:
+        await navigatorKey.currentContext!
+            .read<MembershipProvider>()
+            .getMembershipSuccess(isMembership: true);
         await Navigator.push(
           navigatorKey.currentContext!,
           MaterialPageRoute(

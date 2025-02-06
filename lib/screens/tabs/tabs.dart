@@ -21,6 +21,7 @@ import 'package:stocks_news_new/screens/tabs/news/news.dart';
 import 'package:stocks_news_new/screens/tabs/reddit_twitter/reddit_twitter.dart';
 import 'package:stocks_news_new/screens/tabs/trending/trending.dart';
 import 'package:stocks_news_new/service/amplitude/service.dart';
+import 'package:stocks_news_new/service/revenue_cat.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -107,12 +108,13 @@ class _TabsState extends State<Tabs> {
         ),
       );
     } else {
-      Navigator.push(
-        navigatorKey.currentContext!,
-        createRoute(
-          const NewMembership(cancel: true),
-        ),
-      );
+      subscribe();
+      // Navigator.push(
+      //   navigatorKey.currentContext!,
+      //   createRoute(
+      //     const NewMembership(cancel: true),
+      //   ),
+      // );
     }
   }
 

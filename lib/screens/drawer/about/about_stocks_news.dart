@@ -258,7 +258,8 @@ class _AboutStocksNewsState extends State<AboutStocksNews> {
             _closeDrawer();
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (_) => StocksScannerApp()),
+              // MaterialPageRoute(builder: (_) => StocksScannerApp()),
+              MaterialPageRoute(builder: (_) => StocksScannerIndex()),
             );
           },
         ),

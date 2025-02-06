@@ -4,6 +4,7 @@ import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/screens/membership/store/store.dart';
 import 'package:stocks_news_new/screens/offerMembership/christmas/index.dart';
+import 'package:stocks_news_new/service/revenue_cat.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/theme_button_small.dart';
@@ -51,12 +52,13 @@ class UpdateMembershipCard extends StatelessWidget {
           //   );
           //   return;
           // }
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const NewMembership(),
-            ),
-          );
+          subscribe();
+          // Navigator.push(
+          //   context,
+          //   MaterialPageRoute(
+          //     builder: (context) => const NewMembership(),
+          //   ),
+          // );
         }
       },
     );

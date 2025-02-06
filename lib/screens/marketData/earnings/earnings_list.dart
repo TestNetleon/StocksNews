@@ -92,8 +92,9 @@ class _EarningsListState extends State<EarningsList> {
             (element) => (element.key == "earnings" && element.status == 0)) ??
         false;
 
+    bool? havePermissions;
     if (purchased && isLocked) {
-      bool havePermissions = userProvider.user?.membership?.permissions?.any(
+      havePermissions = userProvider.user?.membership?.permissions?.any(
               (element) =>
                   (element.key == "earnings" && element.status == 1)) ??
           false;
@@ -215,6 +216,7 @@ class _EarningsListState extends State<EarningsList> {
           CommonLock(
             showLogin: true,
             isLocked: isLocked,
+            showUpgradeBtn: havePermissions == false,
           ),
       ],
     );

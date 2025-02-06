@@ -179,16 +179,18 @@ class _BaseDrawerState extends State<BaseDrawer> {
                             ),
                           ),
                           Visibility(
-                            visible: !(userProvider.user != null &&
-                                userProvider.user?.membership?.purchased == 1),
+                            visible: false,
+                            // visible: !(userProvider.user != null &&
+                            //     userProvider.user?.membership?.purchased == 1),
                             child: Divider(
                               color: ThemeColors.greyBorder,
                               height: 40.sp,
                             ),
                           ),
                           Visibility(
-                            visible: userProvider.user != null &&
-                                userProvider.user?.membership?.purchased == 1,
+                            visible: false,
+                            // visible: userProvider.user != null &&
+                            //     userProvider.user?.membership?.purchased == 1,
                             child: GestureDetector(
                               onTap: () {
                                 _closeDrawer();
@@ -267,6 +269,17 @@ class _BaseDrawerState extends State<BaseDrawer> {
                               ),
                             ),
                           ),
+                          Visibility(
+                            // visible: userProvider.user != null &&
+                            //     userProvider.user?.membership?.purchased == 1,
+                            child: Container(
+                              margin: const EdgeInsets.only(
+                                bottom: 15,
+                                top: 15,
+                              ),
+                            ),
+                          ),
+
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [

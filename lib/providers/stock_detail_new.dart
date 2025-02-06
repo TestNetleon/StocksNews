@@ -3080,6 +3080,7 @@ class StockDetailProviderNew extends ChangeNotifier {
   Future getOverviewData({
     String? symbol,
     pointsDeducted,
+    requestAccess,
   }) async {
     setStatusOverview(Status.loading);
     try {
@@ -3097,7 +3098,9 @@ class StockDetailProviderNew extends ChangeNotifier {
                       ?.token ??
                   "",
               "symbol": symbol ?? "",
-              "point_deduction": "$pointsDeducted",
+              // "point_deduction": "$pointsDeducted",
+              "request_access": "$requestAccess",
+              "elite_plan_access": "true",
             }
           : {
               "token": navigatorKey.currentContext!
@@ -3106,6 +3109,7 @@ class StockDetailProviderNew extends ChangeNotifier {
                       ?.token ??
                   "",
               "symbol": symbol ?? "",
+              "elite_plan_access": "true",
             };
 
       ApiResponse response = await apiRequest(
