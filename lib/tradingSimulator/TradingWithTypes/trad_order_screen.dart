@@ -365,34 +365,10 @@ class TradOrderScreen extends StatefulWidget {
 
 class _TradOrderScreenState extends State<TradOrderScreen> {
   bool disposeSheet = true;
-  List<dynamic> listOfORders = [];
 
   @override
   void initState() {
     super.initState();
-    listOfORders.add({
-      "title": "Recurring investments",
-      "description": 'Invest in ${widget.symbol} on a recurring schedule.'
-    });
-    listOfORders.add({
-      "title": "Limit order",
-      "description": 'Buy ${widget.symbol} at a maximum price or lower.'
-    });
-    listOfORders.add({
-      "title": "Trailing stop order",
-      "description":
-          'If ${widget.symbol} rises above its lowest price by a specific amount, trigger a market buy.'
-    });
-    listOfORders.add({
-      "title": "Stop order",
-      "description":
-          'If ${widget.symbol} rises to a fixed stop price, trigger a market buy.'
-    });
-    listOfORders.add({
-      "title": "Stop limit order",
-      "description":
-          'If ${widget.symbol} rises to a fixed stop price, trigger a limit buy.'
-    });
   }
 
   Future _onTap({String? symbol, StockType? selectedStock}) async {
@@ -516,7 +492,6 @@ class _TradOrderScreenState extends State<TradOrderScreen> {
               tsProvider.userData?.ordersSubTitle?.buyOrder,
               widget.symbol,
             ),
-            // subtitle: "Buy ${widget.symbol} at a maximum price or lower.",
             onTap: () {
               var selectedStock = StockType.buy;
               if (widget.symbol != null) {
@@ -536,7 +511,6 @@ class _TradOrderScreenState extends State<TradOrderScreen> {
               tsProvider.userData?.ordersSubTitle?.sellOrder,
               widget.symbol,
             ),
-            // subtitle: "Sell ${widget.symbol} at a maximum price or lower.",
             onTap: () {
               var selectedStock = StockType.sell;
               if (widget.symbol != null) {
@@ -556,7 +530,6 @@ class _TradOrderScreenState extends State<TradOrderScreen> {
               tsProvider.userData?.ordersSubTitle?.shortOrder,
               widget.symbol,
             ),
-            // subtitle: "Short ${widget.symbol} at a maximum price or lower.",
             onTap: () {
               var selectedStock = StockType.short;
               if (widget.symbol != null) {
@@ -578,8 +551,6 @@ class _TradOrderScreenState extends State<TradOrderScreen> {
               tsProvider.userData?.ordersSubTitle?.buyToCoverOrder,
               widget.symbol,
             ),
-            // subtitle:
-            //     "Buy to Cover ${widget.symbol} at a maximum price or lower.",
             onTap: () {
               var selectedStock = StockType.btc;
               if (widget.symbol != null) {
@@ -619,14 +590,43 @@ class _TradOrderScreenState extends State<TradOrderScreen> {
                 tsProvider.userData?.ordersSubTitle?.bracketOrder,
                 widget.symbol,
               ),
-              // subtitle:
-              //     "Bracket ${widget.symbol} at a maximum price or lower.",
               onTap: () {
+                var conditionalType = ConditionType.bracketOrder;
                 if (widget.symbol != null) {
                   navigatorKey.currentContext!
                       .read<TradingSearchProvider>()
                       .conditionalRedirection(widget.symbol ?? "",
-                          tickerID: widget.tickerID, qty: widget.qty);
+                          tickerID: widget.tickerID,
+                      qty: widget.qty,
+                    conditionalType: conditionalType
+                  );
+                } else {
+                  Navigator.push(
+                    context,
+                    createRoute(SearchTradingTicker()),
+                  );
+                }
+              },
+            ),
+          ),
+          Visibility(
+            visible: tsProvider.userData?.userConditionalOrderPermission
+                ?.limitOrder ==
+                true ||
+                kDebugMode,
+            child: BuyOrderItem(
+              title: "Limit Order",
+              subtitle: subtitleWithSymbol(
+                tsProvider.userData?.ordersSubTitle?.limitOrder,
+                widget.symbol,
+              ),
+              onTap: () {
+                var conditionalType = ConditionType.limitOrder;
+                if (widget.symbol != null) {
+                  navigatorKey.currentContext!
+                      .read<TradingSearchProvider>()
+                      .conditionalRedirection(widget.symbol ?? "",
+                      tickerID: widget.tickerID, qty: widget.qty,conditionalType: conditionalType);
                 } else {
                   Navigator.push(
                     context,

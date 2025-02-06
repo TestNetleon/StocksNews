@@ -1,8 +1,6 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:stocks_news_new/modals/home_insider_res.dart';
-import 'package:stocks_news_new/utils/colors.dart';
 
 StockDetailMentionRes stockDetailMentionResFromJson(String str) =>
     StockDetailMentionRes.fromJson(json.decode(str));

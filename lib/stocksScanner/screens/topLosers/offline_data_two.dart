@@ -21,6 +21,9 @@ class TopLosersOfflineTwo extends StatefulWidget {
 }
 
 class _TopLosersOfflineTwoState extends State<TopLosersOfflineTwo> {
+  bool preMarket = false;
+  bool postMarket = false;
+  String? text;
   List<String> columnHeader = [
     // "Time",
     // "Symbol",
@@ -39,11 +42,12 @@ class _TopLosersOfflineTwoState extends State<TopLosersOfflineTwo> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      TopLoserScannerProvider provider =
-          context.read<TopLoserScannerProvider>();
+      // TopLoserScannerProvider provider =
+      //     context.read<TopLoserScannerProvider>();
       // provider.startListeningPorts();
       // provider.getOfflineData();
-      provider.resetLiveFilter();
+      // provider.resetLiveFilter();
+      _setPrePost();
     });
   }
 
@@ -52,10 +56,41 @@ class _TopLosersOfflineTwoState extends State<TopLosersOfflineTwo> {
     super.dispose();
   }
 
+  _setPrePost() {
+    TopLoserScannerProvider provider = context.read<TopLoserScannerProvider>();
+    List<ScannerRes>? dataList = provider.offlineDataList;
+    provider.resetLiveFilter();
+
+    preMarket = dataList?.any(
+          (element) {
+            return element.ext?.extendedHoursType == 'PreMarket';
+          },
+        ) ==
+        true;
+
+    postMarket = dataList?.any(
+          (element) {
+            return element.ext?.extendedHoursType == 'PostMarket';
+          },
+        ) ==
+        true;
+
+    text = preMarket
+        ? 'Pre-Market'
+        : postMarket
+            ? 'Post-Market'
+            : null;
+
+    // Utils()
+    //     .showLog("Offline 0=> $text  ${dataList?[0].ext?.extendedHoursType}");
+  }
+
   @override
   Widget build(BuildContext context) {
     TopLoserScannerProvider provider = context.watch<TopLoserScannerProvider>();
     List<ScannerRes>? dataList = provider.offlineDataList;
+
+    // Utils().showLog("Offline => $text");
 
     bool? gotPostMarket = dataList?.any(
       (element) => element.ext?.extendedHoursType == 'PostMarket',
@@ -118,6 +153,7 @@ class _TopLosersOfflineTwoState extends State<TopLosersOfflineTwo> {
                       onTap: () {
                         scannerSorting(
                           showPreMarket: true,
+                          text: text,
                           sortBy: provider.filterParams?.sortByAsc,
                           header: provider.filterParams?.sortByHeader,
                           sortByCallBack: (received) async {

@@ -17,26 +17,23 @@ class TournamentLeaderboardTopItem extends StatelessWidget {
   Widget build(BuildContext context) {
     TournamentLeaderboardProvider provider =
         context.watch<TournamentLeaderboardProvider>();
-    List<LeaderboardByDateRes>? data =
-        provider.leaderboardRes?.leaderboardByDate;
+    List<LeaderboardByDateRes?> data = provider.topPerformers;
 
-    if (data?.isEmpty == true) {
+    if (data.isEmpty == true) {
       return const SizedBox();
     }
-    if (data?.length == 1 && (index == 1 || index == 2)) {
+    if (data.length == 1 && (index == 1 || index == 2)) {
       return const SizedBox();
     }
-    if (data?.length == 2 && index == 2) {
+    if (data.length == 2 && index == 2) {
       return const SizedBox();
     }
 
-    return SizedBox(
-      // color: ThemeColors.sos,
+    return
+      SizedBox(
       width: ScreenUtil().screenWidth / 3,
       child: Column(
         children: [
-          // if (index == 1 || index == 2)
-          //   Container(color: ThemeColors.blue, height: 50),
           Stack(
             alignment: Alignment.topCenter,
             children: [
@@ -47,18 +44,18 @@ class TournamentLeaderboardTopItem extends StatelessWidget {
                   color: index == 2
                       ? ThemeColors.bronze
                       : index == 1
-                          ? Colors.orange
-                          : ThemeColors.accent,
+                          ? ThemeColors.silver
+                          : ThemeColors.gold,
                 ),
-                padding: const EdgeInsets.all(2),
+                padding: const EdgeInsets.all(1),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(200),
                   child: CircleAvatar(
-                    radius: index == 1 || index == 2 ? 40 : 50,
-                    child: data?[index].imageType == "svg"
+                    radius: index == 1 || index == 2 ? 35: 45,
+                    child: data[index]?.imageType == "svg"
                         ? SvgPicture.network(
                             fit: BoxFit.cover,
-                            data?[index].userImage ?? "",
+                            data[index]?.userImage ?? "",
                             placeholderBuilder: (BuildContext context) =>
                                 Container(
                               padding: const EdgeInsets.all(30.0),
@@ -67,7 +64,7 @@ class TournamentLeaderboardTopItem extends StatelessWidget {
                               ),
                             ),
                           )
-                        : CachedNetworkImagesWidget(data?[index].userImage),
+                        : CachedNetworkImagesWidget(data[index]?.userImage),
                   ),
                 ),
               ),
@@ -76,102 +73,46 @@ class TournamentLeaderboardTopItem extends StatelessWidget {
                 backgroundColor: index == 2
                     ? ThemeColors.bronze
                     : index == 1
-                        ? Colors.orange
-                        : ThemeColors.accent,
+                        ? ThemeColors.silver
+                        : ThemeColors.gold,
                 child: Text(
                   "${index + 1}",
-                  style: index == 2
-                      ? stylePTSansBold(color: ThemeColors.primary)
-                      : stylePTSansBold(),
+                  style: styleGeorgiaBold(color: ThemeColors.primary)
+
                 ),
               ),
             ],
           ),
-          const SpacerVertical(height: 5),
+          const SpacerVertical(height: 7),
           Text(
-            data?[index].userName ?? 'N/A',
+            data[index]?.userName ?? 'N/A',
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: stylePTSansBold(
+            style: styleGeorgiaRegular(
               color: index == 2
                   ? ThemeColors.bronze
                   : index == 1
-                      ? Colors.orange
-                      : ThemeColors.accent,
+                      ? ThemeColors.silver
+                      : ThemeColors.gold,
+                fontSize: 14
             ),
+            textAlign: TextAlign.center,
           ),
           Visibility(
-            visible: data?[index].rank != null,
+            visible: data[index]?.rank != null,
             child: Text(
-              "${data?[index].rank}",
-              style: stylePTSansBold(
+              "${data[index]?.rank}",
+              style: stylePTSansRegular(
                   color: index == 2
                       ? ThemeColors.bronze
                       : index == 1
-                          ? Colors.orange
-                          : ThemeColors.accent,
-                  fontSize: 12),
+                          ? ThemeColors.silver
+                          : ThemeColors.gold,
+                  fontSize: 11),
+              textAlign: TextAlign.center,
             ),
           ),
-          Visibility(
-            visible: data?[index].totalPoints != null,
-            child: Text(
-              "${data?[index].totalPoints}",
-              style: stylePTSansBold(
-                  color: index == 2
-                      ? ThemeColors.bronze
-                      : index == 1
-                          ? Colors.orange
-                          : ThemeColors.accent,
-                  fontSize: 12),
-            ),
-          ),
-          Visibility(
-            visible: data?[index].performance != null,
-            child: Text(
-              "${data?[index].performance}%",
-              style: stylePTSansBold(
-                  color: index == 2
-                      ? ThemeColors.bronze
-                      : index == 1
-                          ? Colors.orange
-                          : ThemeColors.accent,
-                  fontSize: 12),
-            ),
-          ),
-
-          /*Visibility(
-            visible: data?[index].performance!=null,
-            child: Text(
-              "${data?[index].performance}%",
-              style: stylePTSansBold(
-                  color: index == 2
-                      ? ThemeColors.sos
-                      : index == 1
-                      ? Colors.orange
-                      : ThemeColors.accent,
-                  fontSize: 12
-              ),
-            ),
-          ),
-          Visibility(
-            visible: (data?[index].totalTrades!=null||data?[index].winRatio!=null),
-            child: Text(
-              "${data?[index].winRatio}% , ${data?[index].totalTrades}",
-              style: stylePTSansBold(
-                  color: index == 2
-                      ? ThemeColors.sos
-                      : index == 1
-                      ? Colors.orange
-                      : ThemeColors.accent,
-                  fontSize: 12
-              ),
-            ),
-          ),
-*/
-          const SpacerVertical(
-            height: 50,
-          )
+          const SpacerVertical(height:50)
         ],
       ),
     );

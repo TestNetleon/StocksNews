@@ -4,7 +4,7 @@ import 'package:flutter/foundation.dart';
 
 class Apis {
   // Main live server
-  // static const baseUrl = "https://app.stocks.news/api/v1";
+   //static const baseUrl = "https://app.stocks.news/api/v1";
 
   // maintenance
   static const baseUrlLocal = "https://notification.stocks.news/api/v1";

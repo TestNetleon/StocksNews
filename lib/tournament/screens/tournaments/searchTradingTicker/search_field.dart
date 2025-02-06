@@ -240,7 +240,6 @@ class _TournamentInputFieldSearchCommonState
                                       showButton: data?.showButton
                                   ),
                                 );
-                              //  _onTap(symbol: data?.symbol ?? "");
                               },
                               child: Padding(
                                 padding: EdgeInsets.symmetric(vertical: 6.sp),

@@ -11,7 +11,6 @@ import 'package:stocks_news_new/modals/news_datail_res.dart';
 import 'package:stocks_news_new/providers/news_detail.provider.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/screens/AdManager/manager.dart';
-import 'package:stocks_news_new/screens/auth/base/base_auth_bottom.dart';
 import 'package:stocks_news_new/screens/blogDetail/widgets/item.dart';
 import 'package:stocks_news_new/screens/tabs/news/newsAuthor/index.dart';
 import 'package:stocks_news_new/screens/tabs/news/newsDetail/article_feedback.dart';
@@ -44,6 +43,7 @@ import '../../../marketData/lock/common_lock.dart';
 import '../../../t&cAndPolicy/tc_policy.dart';
 import 'mentioned_by.dart';
 import 'news_details_list.dart';
+import 'widget/news_lock copy.dart';
 
 class NewsDetailsBody extends StatefulWidget {
   final String? slug;
@@ -714,7 +714,7 @@ class _NewsDetailsBodyState extends State<NewsDetailsBody> {
                             ],
                           ),
                         ),
-                        BaseAuth(),
+                        // BaseAuth(),
                         BaseAuthEmail(),
                       ],
                     ),

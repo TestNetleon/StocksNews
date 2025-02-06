@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
+import 'package:stocks_news_new/tradingSimulator/TradingWithTypes/open_order_screen.dart';
 
 import '../TradingWithTypes/trad_order_screen.dart';
 import '../modals/trading_search_res.dart';
@@ -9,6 +10,8 @@ simTradeSheet({
   dynamic qty,
   TradingSearchTickerRes? data,
   int? tickerID,
+  int? fromTo,
+  num? portfolioTradeType,
 }) {
   showModalBottomSheet(
     // useSafeArea: true,
@@ -24,12 +27,24 @@ simTradeSheet({
     ),
     isScrollControlled: true,
     builder: (context) {
-      return TradOrderScreen(
-        symbol: symbol,
-        data: data,
-        qty: qty,
-          tickerID:tickerID
-      );
+      if(fromTo==1){
+        return OpenOrderScreen(
+            symbol: symbol,
+            data: data,
+            qty: qty,
+            tickerID:tickerID,
+          portfolioTradeType: portfolioTradeType,
+        );
+      }
+      else{
+        return TradOrderScreen(
+            symbol: symbol,
+            data: data,
+            qty: qty,
+            tickerID:tickerID
+        );
+      }
+
     },
   );
 }

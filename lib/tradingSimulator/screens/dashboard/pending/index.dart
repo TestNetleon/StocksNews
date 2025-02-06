@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:stocks_news_new/tradingSimulator/TradingWithTypes/action_in_orders.dart';
 import 'package:stocks_news_new/tradingSimulator/modals/ts_pending_list_res.dart';
 import 'package:stocks_news_new/tradingSimulator/providers/ts_pending_list_provider.dart';
 import 'package:stocks_news_new/tradingSimulator/screens/dashboard/pending/item.dart';
@@ -35,8 +36,7 @@ class _TsPendingListState extends State<TsPendingList> {
     await provider.getData(loadMore: loadMore);
   }
 
-  void _onEditClick(TsPendingListRes item, index) {
-    //
+  /*void _onEditClick(TsPendingListRes item, index) {
     popUpAlert(
       icon: Images.alertPopGIF,
       title: "Confirm",
@@ -71,7 +71,7 @@ class _TsPendingListState extends State<TsPendingList> {
       },
     );
     //
-  }
+  }*/
 
   @override
   Widget build(BuildContext context) {
@@ -84,12 +84,7 @@ class _TsPendingListState extends State<TsPendingList> {
       errorDispCommon: false,
       onRefresh: _getData,
       showPreparingText: true,
-      child:
-          // provider.data==null
-          //   ? const SummaryErrorWidget(title: "No open orders")
-          //   :
-          RefreshControl(
-        // onRefresh: _getData,
+      child: RefreshControl(
         onRefresh: () async {
           await _getData();
         },
@@ -99,59 +94,44 @@ class _TsPendingListState extends State<TsPendingList> {
           padding: EdgeInsets.only(bottom: 20),
           itemBuilder: (context, index) {
             TsPendingListRes item = provider.data![index];
-            return TsPendingSlidableMenu(
+            return TsPendingListItem(
+              item: item,
+              onTap: () {
+                TradeProviderNew trade = context.read<TradeProviderNew>();
+                trade.setTappedStock(StockDataManagerRes(
+                  symbol: item.symbol ?? '',
+                  change: item.change,
+                  changePercentage: item.changesPercentage,
+                  price: item.currentPrice,
+                ));
+                showModalBottomSheet(
+                  enableDrag: true,
+                  isDismissible: true,
+                  context: context,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(10),
+                      topRight: Radius.circular(10),
+                    ),
+                  ),
+                  isScrollControlled: true,
+                  builder: (context) {
+                    return ActionInOrders(
+                      symbol:  item.symbol,
+                      item: item,
+                      index: index,
+                    );
+                  },
+                );
+              },
+            );
+
+             /* TsPendingSlidableMenu(
               onEditClick: () => _onEditClick(item, index),
               onCancelClick: () => _onCancelClick(item),
               index: index,
-              child: TsPendingListItem(
-                item: item,
-                onTap: () {
-                  TradeProviderNew trade = context.read<TradeProviderNew>();
-                  trade.setTappedStock(StockDataManagerRes(
-                    symbol: item.symbol ?? '',
-                    change: item.change,
-                    changePercentage: item.changesPercentage,
-                    price: item.currentPrice,
-                  ));
-
-                  simTradeSheet(
-                    symbol: item.symbol,
-                    data: TradingSearchTickerRes(
-                      image: item.image,
-                      name: item.company,
-                      currentPrice: item.currentPrice,
-                      symbol: item.symbol,
-                    ),
-                    qty: item.quantity,
-                  );
-
-                  // Navigator.push(
-                  //   context,
-                  //   createRoute(TradOrderScreen(
-                  //     symbol: item.symbol,
-                  //     data: TradingSearchTickerRes(
-                  //       image: item.image,
-                  //       name: item.company,
-                  //       currentPrice: item.currentPrice,
-                  //       symbol: item.symbol,
-                  //     ),
-                  //     qty: item.quantity,
-                  //   )),
-                  // );
-                  /* tradeSheet(
-                    symbol: item.symbol,
-                    doPop: false,
-                    qty: item.quantity,
-                    data: TradingSearchTickerRes(
-                      image: item.image,
-                      name: item.company,
-                      currentPrice: item.currentPrice,
-                      symbol: item.symbol,
-                    ),
-                  );*/
-                },
-              ),
-            );
+              child: ,
+            );*/
           },
           separatorBuilder: (context, index) {
             return const SpacerVertical();

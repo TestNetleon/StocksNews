@@ -26,94 +26,94 @@ import '../../../../auth/base/base_auth.dart';
 import '../../../../offerMembership/blackFriday/index.dart';
 import '../../../../offerMembership/christmas/index.dart';
 
-class NewsDetailsLock extends StatefulWidget {
-  final String? slug;
+// class NewsDetailsLock extends StatefulWidget {
+//   final String? slug;
 
-  const NewsDetailsLock({super.key, this.slug});
+//   const NewsDetailsLock({super.key, this.slug});
 
-  @override
-  State<NewsDetailsLock> createState() => _NewsDetailsLockState();
-}
+//   @override
+//   State<NewsDetailsLock> createState() => _NewsDetailsLockState();
+// }
 
-class _NewsDetailsLockState extends State<NewsDetailsLock> {
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      // _getInitialData();
-    });
-  }
+// class _NewsDetailsLockState extends State<NewsDetailsLock> {
+//   @override
+//   void initState() {
+//     super.initState();
+//     WidgetsBinding.instance.addPostFrameCallback((_) {
+//       // _getInitialData();
+//     });
+//   }
 
-  void _onSubmit(value) async {
-    UserProvider userProvider = context.read<UserProvider>();
-    NewsDetailProvider provider = context.read<NewsDetailProvider>();
-    if (userProvider.user == null) {
-      // await loginSheet();
-      await loginFirstSheet();
+//   void _onSubmit(value) async {
+//     UserProvider userProvider = context.read<UserProvider>();
+//     NewsDetailProvider provider = context.read<NewsDetailProvider>();
+//     if (userProvider.user == null) {
+//       // await loginSheet();
+//       await loginFirstSheet();
 
-      if (context.read<UserProvider>().user != null) {
-        await provider.getNewsDetailData(
-          showProgress: false,
-          slug: widget.slug,
-        );
-      }
-      return;
-    }
+//       if (context.read<UserProvider>().user != null) {
+//         await provider.getNewsDetailData(
+//           showProgress: false,
+//           slug: widget.slug,
+//         );
+//       }
+//       return;
+//     }
 
-    provider.requestFeedbackSubmit(
-      showProgress: true,
-      feedbackType: "news",
-      id: provider.data!.postDetail!.id!,
-      type: value,
-    );
-  }
+//     provider.requestFeedbackSubmit(
+//       showProgress: true,
+//       feedbackType: "news",
+//       id: provider.data!.postDetail!.id!,
+//       type: value,
+//     );
+//   }
 
-  void _onLoginClick(context) async {
-    // await loginSheet();
-    await loginFirstSheet();
+//   void _onLoginClick(context) async {
+//     // await loginSheet();
+//     await loginFirstSheet();
 
-    UserProvider userProvider =
-        Provider.of<UserProvider>(context, listen: false);
-    NewsDetailProvider provider =
-        Provider.of<NewsDetailProvider>(context, listen: false);
+//     UserProvider userProvider =
+//         Provider.of<UserProvider>(context, listen: false);
+//     NewsDetailProvider provider =
+//         Provider.of<NewsDetailProvider>(context, listen: false);
 
-    if (userProvider.user != null) {
-      provider.getNewsDetailData(slug: widget.slug);
-    }
-  }
+//     if (userProvider.user != null) {
+//       provider.getNewsDetailData(slug: widget.slug);
+//     }
+//   }
 
-  Future _onReferClick(BuildContext context) async {
-    UserProvider userProvider = context.read<UserProvider>();
+//   Future _onReferClick(BuildContext context) async {
+//     UserProvider userProvider = context.read<UserProvider>();
 
-    // if (userProvider.user?.phone == null || userProvider.user?.phone == '') {
-    if (userProvider.user?.affiliateStatus != 1) {
-      await referLogin();
-    } else {
-      if (userProvider.user != null) {
-        await Share.share(
-          "${navigatorKey.currentContext!.read<HomeProvider>().extra?.referral?.shareText}${"\n\n"}${shareUri.toString()}",
-        );
-      }
-    }
-  }
+//     // if (userProvider.user?.phone == null || userProvider.user?.phone == '') {
+//     if (userProvider.user?.affiliateStatus != 1) {
+//       await referLogin();
+//     } else {
+//       if (userProvider.user != null) {
+//         await Share.share(
+//           "${navigatorKey.currentContext!.read<HomeProvider>().extra?.referral?.shareText}${"\n\n"}${shareUri.toString()}",
+//         );
+//       }
+//     }
+//   }
 
-  Future _onViewNewsClick(context) async {
-    NewsDetailProvider provider =
-        Provider.of<NewsDetailProvider>(context, listen: false);
+//   Future _onViewNewsClick(context) async {
+//     NewsDetailProvider provider =
+//         Provider.of<NewsDetailProvider>(context, listen: false);
 
-    confirmationPopUp(
-      points: provider.data?.postDetail?.pointsRequired,
-      message: provider.data?.postDetail?.popUpMessage,
-      buttonText: provider.data?.postDetail?.popUpButton,
-      onTap: () async {
-        HomeProvider homeProvider =
-            Provider.of<HomeProvider>(context, listen: false);
-        await provider.getNewsDetailData(
-            slug: widget.slug, pointsDeducted: true);
-        homeProvider.getHomeSlider();
-      },
-    );
-  }
+//     confirmationPopUp(
+//       points: provider.data?.postDetail?.pointsRequired,
+//       message: provider.data?.postDetail?.popUpMessage,
+//       buttonText: provider.data?.postDetail?.popUpButton,
+//       onTap: () async {
+//         HomeProvider homeProvider =
+//             Provider.of<HomeProvider>(context, listen: false);
+//         await provider.getNewsDetailData(
+//             slug: widget.slug, pointsDeducted: true);
+//         homeProvider.getHomeSlider();
+//       },
+//     );
+//   }
 
   Future _membership() async {
     UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
@@ -166,25 +166,25 @@ class _NewsDetailsLockState extends State<NewsDetailsLock> {
   //   );
   // }
 
-  // Future _membership() async {
-  //   UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
-  //   await askToSubscribe(
-  //     onPressed: () async {
-  //       Navigator.pop(navigatorKey.currentContext!);
-  //       if (provider.user?.phone == null || provider.user?.phone == '') {
-  //         await membershipLogin();
-  //       }
-  //       if (provider.user?.phone != null && provider.user?.phone != '') {
-  //         await RevenueCatService.initializeSubscription();
-  //       }
-  //     },
-  //   );
-  // }
+//   // Future _membership() async {
+//   //   UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
+//   //   await askToSubscribe(
+//   //     onPressed: () async {
+//   //       Navigator.pop(navigatorKey.currentContext!);
+//   //       if (provider.user?.phone == null || provider.user?.phone == '') {
+//   //         await membershipLogin();
+//   //       }
+//   //       if (provider.user?.phone != null && provider.user?.phone != '') {
+//   //         await RevenueCatService.initializeSubscription();
+//   //       }
+//   //     },
+//   //   );
+//   // }
 
-  @override
-  Widget build(BuildContext context) {
-    NewsDetailProvider provider = context.watch<NewsDetailProvider>();
-    UserProvider userProvider = context.watch<UserProvider>();
+//   @override
+//   Widget build(BuildContext context) {
+//     NewsDetailProvider provider = context.watch<NewsDetailProvider>();
+//     UserProvider userProvider = context.watch<UserProvider>();
 
     bool isLogin = userProvider.user != null;
     bool showUpgradeBtn = provider.data?.postDetail?.showUpgradeBtn ?? false;

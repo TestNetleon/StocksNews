@@ -74,7 +74,7 @@ class _TsTransactionListState extends State<TsTransactionList> {
             return TsTransactionListItem(
               item: item,
               onTap: () {
-                TradeProviderNew trade = context.read<TradeProviderNew>();
+                /*TradeProviderNew trade = context.read<TradeProviderNew>();
                 trade.setTappedStock(StockDataManagerRes(
                   symbol: item.symbol ?? '',
                   change: item.change,
@@ -91,31 +91,6 @@ class _TsTransactionListState extends State<TsTransactionList> {
                     symbol: item.symbol,
                   ),
                   qty: item.quantity,
-                );
-                // Navigator.push(
-                //   context,
-                //   createRoute(TradOrderScreen(
-                //     symbol: item.symbol,
-                //     data: TradingSearchTickerRes(
-                //       image: item.image,
-                //       name: item.company,
-                //       currentPrice: item.currentPrice,
-                //       symbol: item.symbol,
-                //     ),
-                //     qty: item.quantity,
-                //   )),
-                // );
-
-                /*tradeSheet(
-                  symbol: item.symbol,
-                  doPop: false,
-                  qty: item.quantity,
-                  data: TradingSearchTickerRes(
-                    image: item.image,
-                    name: item.company,
-                    currentPrice: item.currentPrice,
-                    symbol: item.symbol,
-                  ),
                 );*/
               },
             );

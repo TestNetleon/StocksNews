@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/tournament/provider/leaderboard.dart';
 import 'package:stocks_news_new/utils/colors.dart';
-
 import '../../../../utils/theme.dart';
 import '../../../models/leaderboard.dart';
 
@@ -42,18 +41,18 @@ class TopNoItem extends StatelessWidget {
                     color: index == 2
                         ? ThemeColors.bronze
                         : index == 1
-                        ? Colors.orange
-                        : ThemeColors.accent,
+                        ? ThemeColors.silver
+                        : ThemeColors.gold,
                   ),
                   padding: const EdgeInsets.all(2),
                   child:SizedBox(
-                    height:90,
-                    width:90,
+                    height:75,
+                    width:75,
                     child:
                     Center(
                       child: Text(
                         "No Leaders",
-                        style: stylePTSansBold(
+                        style: styleGeorgiaRegular(
                             color: ThemeColors.primary,
                             fontSize: 12
                         ),
@@ -66,11 +65,11 @@ class TopNoItem extends StatelessWidget {
                 backgroundColor: index == 2
                     ? ThemeColors.bronze
                     : index == 1
-                    ? Colors.orange
-                    : ThemeColors.accent,
+                    ? ThemeColors.silver
+                    : ThemeColors.gold,
                 child: Text(
                   "${index + 1}",
-                  style:  index == 2 ?stylePTSansBold(color: ThemeColors.primary):stylePTSansBold(),
+                  style:styleGeorgiaBold(color: ThemeColors.primary),
                 ),
               ),
             ],

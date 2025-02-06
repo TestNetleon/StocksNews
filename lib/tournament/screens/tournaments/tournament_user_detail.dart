@@ -56,7 +56,7 @@ class _TournamentUserDetailState extends State<TournamentUserDetail> {
           isPopBack: true,
           canSearch: false,
           showTrailing: false,
-          title: provider.extraOfUserData?.title ?? "",
+          title:provider.isLoadingUserData?"":provider.extraOfUserData?.title ?? "",
         ),
         body: BaseUiContainer(
             hasData: provider.userData != null,
@@ -69,6 +69,7 @@ class _TournamentUserDetailState extends State<TournamentUserDetail> {
             child: CommonRefreshIndicator(
               onRefresh: _getData,
               child: SingleChildScrollView(
+                physics: AlwaysScrollableScrollPhysics(),
                 child: Padding(
                   padding:
                       EdgeInsets.fromLTRB(Dimen.padding, 0, Dimen.padding, 0),
@@ -160,15 +161,6 @@ class _TournamentUserDetailState extends State<TournamentUserDetail> {
                           ),
                         ]),
                       ),
-                     /* Visibility(visible: provider.userData?.userStats?.name!=null||provider.userData?.userStats?.name!='',child: const SpacerVertical(height: 14)),
-                      Visibility(
-                        visible: provider.userData?.userStats?.name!=null||provider.userData?.userStats?.name!='',
-                        child: ScreenTitle(
-                          title: "${provider.userData?.userStats?.name ??""} Stats",
-                          style: styleGeorgiaBold(fontSize: 16),
-                          dividerPadding: EdgeInsets.zero,
-                        ),
-                      ),*/
                       const SpacerVertical(height: 12),
                       GridView.builder(
                         physics: NeverScrollableScrollPhysics(),
@@ -282,7 +274,8 @@ class _TournamentUserDetailState extends State<TournamentUserDetail> {
                         separatorBuilder: (context, index) {
                           return SpacerVertical(height: 14);
                         },
-                      )
+                      ),
+                      const SpacerVertical(height: 10)
                     ],
                   ),
                 ),

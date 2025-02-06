@@ -55,6 +55,7 @@ class TsUserRes {
   // num? staticTotalReturn;
   final UserConditionalOrderPermissionRes? userConditionalOrderPermission;
   final OrdersSubTitle? ordersSubTitle;
+  final LabelInfoStrings? labelInfoStrings;
 
   TsUserRes({
     required this.tradeBalance,
@@ -65,6 +66,7 @@ class TsUserRes {
     this.totalPortfolioStateAmount,
     this.userConditionalOrderPermission,
     this.ordersSubTitle,
+    this.labelInfoStrings,
     // this.staticTotalReturn,s
   });
 
@@ -84,6 +86,7 @@ class TsUserRes {
         ordersSubTitle: json["orders_sub_title"] == null
             ? null
             : OrdersSubTitle.fromJson(json["orders_sub_title"]),
+    labelInfoStrings: json["label_info_strings"] == null ? null : LabelInfoStrings.fromMap(json["label_info_strings"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -96,6 +99,7 @@ class TsUserRes {
         "user_conditional_order_permission":
             userConditionalOrderPermission?.toMap(),
         "orders_sub_title": ordersSubTitle?.toJson(),
+    "label_info_strings": labelInfoStrings?.toMap(),
       };
 }
 
@@ -143,6 +147,7 @@ class OrdersSubTitle {
   final String? shortOrder;
   final String? buyToCoverOrder;
   final String? bracketOrder;
+  final String? limitOrder;
 
   OrdersSubTitle({
     required this.buyOrder,
@@ -150,6 +155,7 @@ class OrdersSubTitle {
     required this.shortOrder,
     required this.buyToCoverOrder,
     required this.bracketOrder,
+    required this.limitOrder,
   });
 
   factory OrdersSubTitle.fromJson(Map<String, dynamic> json) => OrdersSubTitle(
@@ -158,6 +164,7 @@ class OrdersSubTitle {
         shortOrder: json["short_order"],
         buyToCoverOrder: json["buy_to_cover_order"],
         bracketOrder: json["bracket_order"],
+    limitOrder: json["limit_order"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -166,5 +173,138 @@ class OrdersSubTitle {
         "short_order": shortOrder,
         "buy_to_cover_order": buyToCoverOrder,
         "bracket_order": bracketOrder,
+        "limit_order": limitOrder,
       };
+}
+
+class LabelInfoStrings {
+  final Buy? buy;
+  final Buy? sell;
+  final Buy? short;
+  final Buy? buyToCover;
+
+  LabelInfoStrings({
+    this.buy,
+    this.sell,
+    this.short,
+    this.buyToCover,
+  });
+
+  factory LabelInfoStrings.fromMap(Map<String, dynamic> json) => LabelInfoStrings(
+    buy: json["buy"] == null ? null : Buy.fromMap(json["buy"]),
+    sell: json["sell"] == null ? null : Buy.fromMap(json["sell"]),
+    short: json["short"] == null ? null : Buy.fromMap(json["short"]),
+    buyToCover: json["buy_to_cover"] == null ? null : Buy.fromMap(json["buy_to_cover"]),
+  );
+
+  Map<String, dynamic> toMap() => {
+    "buy": buy?.toMap(),
+    "sell": sell?.toMap(),
+    "short": short?.toMap(),
+    "buy_to_cover": buyToCover?.toMap(),
+  };
+}
+
+class Buy {
+  final BracketOrder? bracketOrder;
+  final LimitOrder? limitOrder;
+  final Order? stopOrder;
+  final StopLimitOrder? stopLimitOrder;
+  final Order? trailingOrder;
+
+  Buy({
+    this.bracketOrder,
+    this.limitOrder,
+    this.stopOrder,
+    this.stopLimitOrder,
+    this.trailingOrder,
+  });
+
+  factory Buy.fromMap(Map<String, dynamic> json) => Buy(
+    bracketOrder: json["bracket_order"] == null ? null : BracketOrder.fromMap(json["bracket_order"]),
+    limitOrder: json["limit_order"] == null ? null : LimitOrder.fromMap(json["limit_order"]),
+    stopOrder: json["stop_order"] == null ? null : Order.fromMap(json["stop_order"]),
+    stopLimitOrder: json["stop_limit_order"] == null ? null : StopLimitOrder.fromMap(json["stop_limit_order"]),
+    trailingOrder: json["trailing_order"] == null ? null : Order.fromMap(json["trailing_order"]),
+  );
+
+  Map<String, dynamic> toMap() => {
+    "bracket_order": bracketOrder?.toMap(),
+    "limit_order": limitOrder?.toMap(),
+    "stop_order": stopOrder?.toMap(),
+    "stop_limit_order": stopLimitOrder?.toMap(),
+    "trailing_order": trailingOrder?.toMap(),
+  };
+}
+
+class BracketOrder {
+  final String? stopPrice;
+  final String? targetPrice;
+
+  BracketOrder({
+    this.stopPrice,
+    this.targetPrice,
+  });
+
+  factory BracketOrder.fromMap(Map<String, dynamic> json) => BracketOrder(
+    stopPrice: json["stop-price"],
+    targetPrice: json["target-price"],
+  );
+
+  Map<String, dynamic> toMap() => {
+    "stop-price": stopPrice,
+    "target-price": targetPrice,
+  };
+}
+
+class LimitOrder {
+  final String? limitPrice;
+
+  LimitOrder({
+    this.limitPrice,
+  });
+
+  factory LimitOrder.fromMap(Map<String, dynamic> json) => LimitOrder(
+    limitPrice: json["limit-price"],
+  );
+
+  Map<String, dynamic> toMap() => {
+    "limit-price": limitPrice,
+  };
+}
+
+class StopLimitOrder {
+  final String? stopPrice;
+  final String? limitPrice;
+
+  StopLimitOrder({
+    this.stopPrice,
+    this.limitPrice,
+  });
+
+  factory StopLimitOrder.fromMap(Map<String, dynamic> json) => StopLimitOrder(
+    stopPrice: json["stop-price"],
+    limitPrice: json["limit-price"],
+  );
+
+  Map<String, dynamic> toMap() => {
+    "stop-price": stopPrice,
+    "limit-price": limitPrice,
+  };
+}
+
+class Order {
+  final String? stopPrice;
+
+  Order({
+    this.stopPrice,
+  });
+
+  factory Order.fromMap(Map<String, dynamic> json) => Order(
+    stopPrice: json["stop-price"],
+  );
+
+  Map<String, dynamic> toMap() => {
+    "stop-price": stopPrice,
+  };
 }

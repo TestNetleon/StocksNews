@@ -38,12 +38,17 @@ class MarketLosersStream {
         navigatorKey.currentContext!.read<MarketScannerProvider>();
 
     int? port = scannerProvider.port?.port?.gainerLoserPort?.loser ?? 8021;
-    final callOffline =
-        scannerProvider.port?.port?.checkMarketOpenApi?.checkPostMarket ??
-            false;
-    Utils().showLog('Call Offline $callOffline');
+    final checkPostMarket =
+        scannerProvider.port?.port?.checkMarketOpenApi?.checkPostMarket == true;
 
-    if (callOffline) {
+    final postMarketStream =
+        scannerProvider.port?.port?.checkMarketOpenApi?.postMarketStream ==
+            true;
+
+    Utils().showLog(
+        'Call Offline ${checkPostMarket && postMarketStream == false}');
+
+    if (checkPostMarket && !postMarketStream) {
       await getOfflineData();
       return;
     }

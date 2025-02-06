@@ -21,6 +21,9 @@ class TopGainerOnline extends StatefulWidget {
 }
 
 class _TopGainerOnlineState extends State<TopGainerOnline> {
+  bool preMarket = false;
+  bool postMarket = false;
+  String? text;
   List<String> columnHeader = [
     // "Time",
     // "Symbol",
@@ -42,10 +45,36 @@ class _TopGainerOnlineState extends State<TopGainerOnline> {
       // MarketScannerProvider provider = context.read<MarketScannerProvider>();
       // provider.startListeningPorts();
       // provider.getOfflineData();
-      TopGainerScannerProvider provider =
-          context.read<TopGainerScannerProvider>();
-      provider.resetLiveFilter();
+
+      _setPrePost();
     });
+  }
+
+  _setPrePost() {
+    TopGainerScannerProvider provider =
+        context.read<TopGainerScannerProvider>();
+
+    provider.resetLiveFilter();
+    List<MarketScannerRes>? dataList = provider.dataList;
+    preMarket = dataList?.any(
+          (element) {
+            return element.extendedHoursType == 'PreMarket';
+          },
+        ) ==
+        true;
+
+    postMarket = dataList?.any(
+          (element) {
+            return element.extendedHoursType == 'PostMarket';
+          },
+        ) ==
+        true;
+
+    text = preMarket
+        ? 'Pre-Market'
+        : postMarket
+            ? 'Post-Market'
+            : null;
   }
 
   @override
@@ -108,6 +137,8 @@ class _TopGainerOnlineState extends State<TopGainerOnline> {
                         child: GestureDetector(
                           onTap: () {
                             scannerSorting(
+                              showPreMarket: !(preMarket || postMarket),
+                              text: text,
                               sortBy: provider.filterParams?.sortByAsc,
                               header: provider.filterParams?.sortByHeader,
                               sortByCallBack: (received) {

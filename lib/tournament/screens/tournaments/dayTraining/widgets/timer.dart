@@ -76,16 +76,13 @@ class DayTrainingTitle extends StatelessWidget {
                     ],
                   ),
                 ),
-                /*Divider(
-                  color: ThemeColors.greyText,
-                ),*/
                 const SpacerVertical(height: 5),
                 Visibility(
                   visible: provider.detailRes?.tournamentBattleId != null,
                   child:LinearProgressIndicator(
                     value: provider.progress,
                     backgroundColor: ThemeColors.white.withAlpha(20),
-                    minHeight: 8.0,
+                    minHeight: 4.0,
                     valueColor: AlwaysStoppedAnimation<Color>(provider.progressColor),
                     borderRadius: BorderRadius.circular(20),
                   ),
@@ -95,7 +92,7 @@ class DayTrainingTitle extends StatelessWidget {
                   child:LinearProgressIndicator(
                     value: provider.progress,
                     backgroundColor: ThemeColors.white.withAlpha(20),
-                    minHeight: 8.0,
+                    minHeight: 4.0,
                     valueColor: AlwaysStoppedAnimation<Color>(provider.progressColor),
                     borderRadius: BorderRadius.circular(20),
                   ),

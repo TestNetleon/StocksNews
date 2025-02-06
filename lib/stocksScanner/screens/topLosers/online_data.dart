@@ -19,6 +19,9 @@ class TopLosersOnline extends StatefulWidget {
 }
 
 class _TopLosersOnlineState extends State<TopLosersOnline> {
+  bool preMarket = false;
+  bool postMarket = false;
+  String? text;
   List<String> columnHeader = [
     // "Time",
     // "Symbol",
@@ -40,9 +43,10 @@ class _TopLosersOnlineState extends State<TopLosersOnline> {
       // MarketScannerProvider provider = context.read<MarketScannerProvider>();
       // provider.startListeningPorts();
       // provider.getOfflineData();
-      TopLoserScannerProvider provider =
-          navigatorKey.currentContext!.read<TopLoserScannerProvider>();
-      provider.resetLiveFilter();
+      // TopLoserScannerProvider provider =
+      //     navigatorKey.currentContext!.read<TopLoserScannerProvider>();
+      // provider.resetLiveFilter();
+      _setPrePost();
     });
   }
 
@@ -52,6 +56,32 @@ class _TopLosersOnlineState extends State<TopLosersOnline> {
         navigatorKey.currentContext!.read<TopLoserScannerProvider>();
     provider.stopListeningPorts();
     super.dispose();
+  }
+
+  _setPrePost() {
+    TopLoserScannerProvider provider = context.read<TopLoserScannerProvider>();
+
+    List<MarketScannerRes>? dataList = provider.dataList;
+    provider.resetLiveFilter();
+    preMarket = dataList?.any(
+          (element) {
+            return element.extendedHoursType == 'PreMarket';
+          },
+        ) ==
+        true;
+
+    postMarket = dataList?.any(
+          (element) {
+            return element.extendedHoursType == 'PostMarket';
+          },
+        ) ==
+        true;
+
+    text = preMarket
+        ? 'Pre-Market'
+        : postMarket
+            ? 'Post-Market'
+            : null;
   }
 
   @override
@@ -103,6 +133,8 @@ class _TopLosersOnlineState extends State<TopLosersOnline> {
                     child: GestureDetector(
                       onTap: () {
                         scannerSorting(
+                          showPreMarket: !(preMarket || postMarket),
+                          text: text,
                           sortBy: provider.filterParams?.sortByAsc,
                           header: provider.filterParams?.sortByHeader,
                           sortByCallBack: (received) {

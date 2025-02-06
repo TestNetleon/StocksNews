@@ -19,6 +19,8 @@ enum SortByEnums {
   bid,
   ask,
   postMarket,
+  postMarketNetChange,
+  postMarketPerChange,
 }
 
 class SortByClass {
@@ -36,6 +38,7 @@ scannerSorting({
   String? header,
   bool showPreMarket = false,
   bool showSector = true,
+  String? text,
 }) {
   showModalBottomSheet(
     context: navigatorKey.currentContext!,
@@ -54,6 +57,7 @@ scannerSorting({
         header: header,
         showPreMarket: showPreMarket,
         showSector: showSector,
+        text: text,
       );
     },
   );
@@ -65,8 +69,9 @@ class MarketScannerSorting extends StatefulWidget {
   final String? header;
   final bool showPreMarket;
   final bool showSector;
-
+  final String? text;
   const MarketScannerSorting({
+    this.text,
     super.key,
     this.showSector = true,
     this.sortByCallBack,
@@ -81,7 +86,8 @@ class MarketScannerSorting extends StatefulWidget {
 
 class _MarketScannerSortingState extends State<MarketScannerSorting> {
   // This method will handle the sorting callback for all enums.
-  Widget _buildSortOption(String label, SortByEnums type, {bool? sortBy}) {
+  Widget _buildSortOption(String label, SortByEnums type,
+      {bool? sortBy, bool textBold = false}) {
     return Column(
       children: [
         Row(
@@ -89,8 +95,15 @@ class _MarketScannerSortingState extends State<MarketScannerSorting> {
             Expanded(
               child: Text(
                 label,
-                style: styleGeorgiaRegular(
-                    color: ThemeColors.background, fontSize: 18),
+                style: textBold
+                    ? styleGeorgiaBold(
+                        color: ThemeColors.background,
+                        fontSize: 18,
+                      )
+                    : styleGeorgiaRegular(
+                        color: ThemeColors.background,
+                        fontSize: 18,
+                      ),
               ),
             ),
             SpacerHorizontal(width: 5),
@@ -195,13 +208,36 @@ class _MarketScannerSortingState extends State<MarketScannerSorting> {
           ),
 
           Visibility(
-            visible: widget.showPreMarket,
+            visible: widget.text != null && widget.text != '',
             child: _buildSortOption(
-              'Pre-Market Price',
+              '${widget.text} Price',
               SortByEnums.postMarket,
               sortBy: widget.header == SortByEnums.postMarket.name
                   ? widget.sortBy
                   : null,
+              textBold: true,
+            ),
+          ),
+          Visibility(
+            visible: widget.text != null && widget.text != '',
+            child: _buildSortOption(
+              '${widget.text} Net Change',
+              SortByEnums.postMarketNetChange,
+              sortBy: widget.header == SortByEnums.postMarketNetChange.name
+                  ? widget.sortBy
+                  : null,
+              textBold: true,
+            ),
+          ),
+          Visibility(
+            visible: widget.text != null && widget.text != '',
+            child: _buildSortOption(
+              '${widget.text} Percentage Change',
+              SortByEnums.postMarketPerChange,
+              sortBy: widget.header == SortByEnums.postMarketPerChange.name
+                  ? widget.sortBy
+                  : null,
+              textBold: true,
             ),
           ),
 

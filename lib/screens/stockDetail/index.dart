@@ -21,7 +21,6 @@ import 'package:stocks_news_new/widgets/custom_tab_container.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 // import 'package:stocks_news_new/widgets/theme_button.dart';
 import 'package:stocks_news_new/widgets/theme_image_view.dart';
-import '../../socket/socket.dart';
 import '../../utils/constants.dart';
 // import '../simulator/buyAndSell/index.dart';
 import '../../utils/utils.dart';
@@ -58,7 +57,7 @@ class _StockDetailState extends State<StockDetail> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _callApi();
-     // _addSocket();
+      // _addSocket();
       FirebaseAnalytics.instance.logEvent(
         name: 'ScreensVisit',
         parameters: {'screen_name': "Stock Detail"},
@@ -77,66 +76,66 @@ class _StockDetailState extends State<StockDetail> {
     // }
   }
 
-  WebSocketService? _webSocketService;
+  // WebSocketService? _webSocketService;
   String? tickerPrice;
   num? tickerChange;
   num? tickerPercentage;
   String? tickerChangeString;
 
-  _addSocket() {
-    StockDetailProviderNew provider = context.read<StockDetailProviderNew>();
-    try {
-      _webSocketService = WebSocketService(
-        url: 'wss://websockets.financialmodelingprep.com',
-        apiKey: apiKeyFMP,
-        ticker: widget.symbol,
-      );
-      _webSocketService?.connect();
+//   _addSocket() {
+//     StockDetailProviderNew provider = context.read<StockDetailProviderNew>();
+//     try {
+//       _webSocketService = WebSocketService(
+//         url: 'wss://websockets.financialmodelingprep.com',
+//         apiKey: apiKeyFMP,
+//         ticker: widget.symbol,
+//       );
+//       _webSocketService?.connect();
 
-      // _webSocketService?.onDataReceived =
-      //     (price, change, percentage, changeString) {
-      //   setState(() {
-      //     tickerPrice = price;
-      //     tickerChange = change;
-      //     tickerPercentage = percentage;
-      //     tickerChangeString = changeString;
-      //   });
-      //   provider.updateSocket(
-      //     change: tickerChange,
-      //     changePercentage: tickerPercentage,
-      //     changeString: tickerChangeString,
-      //     price: tickerPrice,
-      //   );
-      // };
-      _webSocketService?.onDataReceived = ({
-        required String price,
-        required num change,
-        required num percentage,
-        required String changeString,
-        num? priceValue,
-      }) {
-        setState(() {
-          tickerPrice = price;
-          tickerChange = change;
-          tickerPercentage = percentage;
-          tickerChangeString = changeString;
-        });
+//       // _webSocketService?.onDataReceived =
+//       //     (price, change, percentage, changeString) {
+//       //   setState(() {
+//       //     tickerPrice = price;
+//       //     tickerChange = change;
+//       //     tickerPercentage = percentage;
+//       //     tickerChangeString = changeString;
+//       //   });
+//       //   provider.updateSocket(
+//       //     change: tickerChange,
+//       //     changePercentage: tickerPercentage,
+//       //     changeString: tickerChangeString,
+//       //     price: tickerPrice,
+//       //   );
+//       // };
+//       _webSocketService?.onDataReceived = ({
+//         required String price,
+//         required num change,
+//         required num percentage,
+//         required String changeString,
+//         num? priceValue,
+//       }) {
+//         setState(() {
+//           tickerPrice = price;
+//           tickerChange = change;
+//           tickerPercentage = percentage;
+//           tickerChangeString = changeString;
+//         });
 
-        provider.updateSocket(
-          change: tickerChange,
-          changePercentage: tickerPercentage,
-          changeString: tickerChangeString,
-          price: tickerPrice,
-        );
-      };
-    } catch (e) {
-//
-    }
-  }
+//         provider.updateSocket(
+//           change: tickerChange,
+//           changePercentage: tickerPercentage,
+//           changeString: tickerChangeString,
+//           price: tickerPrice,
+//         );
+//       };
+//     } catch (e) {
+// //
+//     }
+//   }
 
   @override
   void dispose() {
-   // _webSocketService?.disconnect();
+    // _webSocketService?.disconnect();
     SSEManager.instance.disconnectScreen(SimulatorEnum.detail);
     super.dispose();
   }

@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'drawer_data_res.dart';
+import 'featured_watchlist.dart';
 import 'news_datail_res.dart';
 
 HomeSliderRes homeSliderResFromJson(String str) =>
@@ -19,8 +20,12 @@ class HomeSliderRes {
   final TextSliderRes? text;
   final Rating? rating;
   final AffiliateAdv? affiliateAdv;
+  final List<FeaturedTicker>? watchlist;
+  final List<FeaturedTicker>? featuredTickers;
 
   HomeSliderRes({
+    this.watchlist,
+    this.featuredTickers,
     this.sliderPosts,
     this.whatsappLink,
     this.telegramLink,
@@ -34,6 +39,14 @@ class HomeSliderRes {
   });
 //
   factory HomeSliderRes.fromJson(Map<String, dynamic> json) => HomeSliderRes(
+        featuredTickers: json["featured_tickers"] == null
+            ? []
+            : List<FeaturedTicker>.from(json["featured_tickers"]!
+                .map((x) => FeaturedTicker.fromJson(x))),
+        watchlist: json["watchlist"] == null
+            ? []
+            : List<FeaturedTicker>.from(
+                json["watchlist"]!.map((x) => FeaturedTicker.fromJson(x))),
         totalAlerts: json["total_alerts"],
         whatsappLink: json["whats-app-link"],
         text:
@@ -53,6 +66,12 @@ class HomeSliderRes {
       );
 
   Map<String, dynamic> toJson() => {
+        "featured_tickers": featuredTickers == null
+            ? []
+            : List<dynamic>.from(featuredTickers!.map((x) => x.toJson())),
+        "watchlist": watchlist == null
+            ? []
+            : List<dynamic>.from(watchlist!.map((x) => x.toJson())),
         "slider_posts": sliderPosts == null
             ? []
             : List<dynamic>.from(sliderPosts!.map((x) => x.toJson())),

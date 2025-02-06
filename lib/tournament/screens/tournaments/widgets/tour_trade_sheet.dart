@@ -59,7 +59,7 @@ class _TournamentTickerState extends State<TournamentTicker> {
   void dispose() {
     if (disposeSheet) {
       Utils().showLog('Disposing tradeSheet');
-      SSEManager.instance.disconnectScreen(SimulatorEnum.detail);
+      SSEManager.instance.disconnectScreen(SimulatorEnum.tradeSheet);
     }
     super.dispose();
   }
@@ -69,9 +69,7 @@ class _TournamentTickerState extends State<TournamentTicker> {
     context.read<TournamentTradesProvider>();
     ApiResponse res = await provider.tradeBuySell(type: type,symbol: symbol);
     if (res.status) {
-      // Handle successful trade response
-      SSEManager.instance.disconnectAllScreens();
-      //navigatorKey.currentContext!.read<TournamentSearchProvider>().getSearchDefaults();
+      SSEManager.instance.disconnectScreen(SimulatorEnum.tradeSheet);
       Navigator.pop(navigatorKey.currentContext!);
       Navigator.pop(navigatorKey.currentContext!);
       await Navigator.push(
@@ -84,8 +82,6 @@ class _TournamentTickerState extends State<TournamentTicker> {
         stock: provider.selectedStock,
         clearEverything: true,
       );
-
-      /// open sheet after api call with updated response
     }
   }
   _close({
@@ -94,10 +90,9 @@ class _TournamentTickerState extends State<TournamentTicker> {
   }) async {
     TournamentTradesProvider provider =
     navigatorKey.currentContext!.read<TournamentTradesProvider>();
-
-    ApiResponse res = await provider.tradeCancle();
+    ApiResponse res = await provider.tradeCancle(ticker: ticker,tradeId: id);
     if (res.status) {
-     // navigatorKey.currentContext!.read<TournamentSearchProvider>().getSearchDefaults();
+      SSEManager.instance.disconnectScreen(SimulatorEnum.tradeSheet);
       Navigator.pop(navigatorKey.currentContext!);
       Navigator.pop(navigatorKey.currentContext!);
     }
@@ -284,7 +279,7 @@ class _TournamentTickerState extends State<TournamentTicker> {
               margin: const EdgeInsets.fromLTRB(10, 10, 10,10),
               onPressed: (){
                 _close(
-                  //id: provider.myTrades?.data?[index].id,
+                  id:  widget.data?.showButton?.tradeId?.toInt(),
                   ticker: widget.data?.symbol,
                 );
               },

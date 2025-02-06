@@ -34,7 +34,7 @@ class _ScannerTopLosersState extends State<ScannerTopLosers> {
     return CommonRefreshIndicator(
       onRefresh: () async {
         MarketLosersStream().initializePorts();
-        provider.clearFilter();
+        provider.resetLiveFilter();
       },
       child: SingleChildScrollView(
         child: Consumer<TopLoserScannerProvider>(

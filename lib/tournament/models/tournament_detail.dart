@@ -122,25 +122,39 @@ class TournamentDetailRes {
 }
 
 class LoginUserPositionRes {
-  final String? position;
-  final num? totalChange;
-  // final String? imageType;
+  final num? position;
+  final int? userId;
+  final num? performance;
+  final String? imageType;
+  final String? userImage;
+  final String? userName;
 
   LoginUserPositionRes({
+    this.userId,
     this.position,
-    this.totalChange,
-    // this.imageType,
+    this.performance,
+    this.imageType,
+    this.userImage,
+    this.userName,
   });
 
   factory LoginUserPositionRes.fromJson(Map<String, dynamic> json) =>
       LoginUserPositionRes(
+        userId: json["user_id"],
         position: json["position"],
-        totalChange: json["total_change"],
+        performance: json["performance"],
+        imageType: json["image_type"],
+        userImage: json["user_image"],
+        userName: json["user_name"],
       );
 
   Map<String, dynamic> toJson() => {
+        "user_id": userId,
         "position": position,
-        "total_change": totalChange,
+        "performance": performance,
+        "image_type": imageType,
+        "user_image": userImage,
+        "user_name": userName,
       };
 }
 
