@@ -27,7 +27,6 @@ import 'package:stocks_news_new/screens/affiliate/index.dart';
 import 'package:stocks_news_new/screens/auth/refer/refer_code.dart';
 import 'package:stocks_news_new/screens/blogDetail/index.dart';
 import 'package:stocks_news_new/screens/deepLinkScreen/webscreen.dart';
-import 'package:stocks_news_new/screens/membership_new/membership.dart';
 import 'package:stocks_news_new/screens/tabs/tabs.dart';
 import '../screens/drawer/widgets/review_app_pop_up.dart';
 import '../screens/helpDesk/chats/index.dart';
@@ -267,6 +266,9 @@ class BrazeNotificationService {
             ),
           );
         } else {
+          popHome = false;
+          if (whenAppKilled) await Future.delayed(const Duration(seconds: 3));
+
           // Navigator.push(
           //   navigatorKey.currentContext!,
           //   MaterialPageRoute(

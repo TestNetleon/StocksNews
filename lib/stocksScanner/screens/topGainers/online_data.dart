@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/stocksScanner/manager/gainers_stream.dart';
 import 'package:stocks_news_new/stocksScanner/modals/market_scanner_res.dart';
+import 'package:stocks_news_new/stocksScanner/providers/market_scanner_provider.dart';
 import 'package:stocks_news_new/stocksScanner/providers/top_gainer_scanner_provider.dart';
 import 'package:stocks_news_new/stocksScanner/screens/topGainers/scanner_header.dart';
 import 'package:stocks_news_new/stocksScanner/screens/topGainers/top_gainer_filter.dart';
@@ -55,20 +56,27 @@ class _TopGainerOnlineState extends State<TopGainerOnline> {
         context.read<TopGainerScannerProvider>();
 
     provider.resetLiveFilter();
-    List<MarketScannerRes>? dataList = provider.dataList;
-    preMarket = dataList?.any(
-          (element) {
-            return element.extendedHoursType == 'PreMarket';
-          },
-        ) ==
-        true;
+    // List<MarketScannerRes>? dataList = provider.dataList;
+    // preMarket = dataList?.any(
+    //       (element) {
+    //         return element.extendedHoursType == 'PreMarket';
+    //       },
+    //     ) ==
+    //     true;
 
-    postMarket = dataList?.any(
-          (element) {
-            return element.extendedHoursType == 'PostMarket';
-          },
-        ) ==
-        true;
+    // postMarket = dataList?.any(
+    //       (element) {
+    //         return element.extendedHoursType == 'PostMarket';
+    //       },
+    //     ) ==
+    //     true;
+    MarketScannerProvider scannerProvider =
+        context.read<MarketScannerProvider>();
+    preMarket =
+        scannerProvider.port?.port?.checkMarketOpenApi?.checkPreMarket ?? false;
+    postMarket =
+        scannerProvider.port?.port?.checkMarketOpenApi?.checkPostMarket ??
+            false;
 
     text = preMarket
         ? 'Pre-Market'

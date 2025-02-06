@@ -142,13 +142,13 @@ class RevenueCatManager {
       // SET USER ATTRIBUTES TO Superwall
       Map<String, String> attributes = {};
       if (userRes?.name != null && userRes?.name != '') {
-        attributes['\$displayName'] = userRes?.name ?? '';
+        attributes['displayName'] = userRes?.name ?? '';
       }
       if (userRes?.email != null && userRes?.email != '') {
-        attributes['\$email'] = userRes?.email ?? '';
+        attributes['email'] = userRes?.email ?? '';
       }
       if (userRes?.phone != null && userRes?.phone != '') {
-        attributes['\$phoneNumber'] =
+        attributes['phoneNumber'] =
             userRes?.phoneCode != null && userRes?.phoneCode != ''
                 ? '${userRes?.phoneCode}${userRes?.phone}'
                 : userRes?.phone ?? '';
@@ -159,9 +159,11 @@ class RevenueCatManager {
       purchaseController.syncSubscriptionStatus();
       Utils().showLog('SuperWall initialized successfully');
 
-      superwall.Superwall.shared.registerEvent(Platform.isAndroid
-          ? 'stocks_news_plans_android'
-          : 'stocks_news_plans');
+      superwall.Superwall.shared.registerEvent(
+        Platform.isAndroid ? 'stocks_news_plans_android' : 'stocks_news_plans',
+        params: {"via": "upgrade_page"},
+        handler: superwall.PaywallPresentationHandler(),
+      );
 
       superwall.Superwall.shared.setDelegate(SWDelegate());
     } catch (e) {
@@ -193,111 +195,63 @@ class SWDelegate extends superwall.SuperwallDelegate {
         break;
       // Handle other events as needed
       case superwall.EventType.firstSeen:
-      // //throw UnimplementedError();
       case superwall.EventType.appOpen:
-      // //throw UnimplementedError();
       case superwall.EventType.appLaunch:
-      //throw UnimplementedError();
       case superwall.EventType.identityAlias:
-      //throw UnimplementedError();
       case superwall.EventType.appInstall:
-      //throw UnimplementedError();
       case superwall.EventType.restoreStart:
-      //throw UnimplementedError();
       case superwall.EventType.restoreComplete:
-      //throw UnimplementedError();
       case superwall.EventType.restoreFail:
-      //throw UnimplementedError();
       case superwall.EventType.sessionStart:
-      //throw UnimplementedError();
       case superwall.EventType.deviceAttributes:
-      //throw UnimplementedError();
       case superwall.EventType.subscriptionStatusDidChange:
-      //throw UnimplementedError();
       case superwall.EventType.appClose:
-      //throw UnimplementedError();
       case superwall.EventType.deepLink:
-      //throw UnimplementedError();
       case superwall.EventType.triggerFire:
-      //throw UnimplementedError();
       case superwall.EventType.paywallOpen:
-      //throw UnimplementedError();
+      // print('paywallOpen');
       case superwall.EventType.paywallClose:
-      //throw UnimplementedError();
+      // print('paywallClose');
+
       case superwall.EventType.paywallDecline:
-      //throw UnimplementedError();
+      // print('paywallDecline');
+
       case superwall.EventType.transactionStart:
-      //throw UnimplementedError();
       case superwall.EventType.transactionAbandon:
-      //throw UnimplementedError();
       case superwall.EventType.subscriptionStart:
-      //throw UnimplementedError();
       case superwall.EventType.freeTrialStart:
-      //throw UnimplementedError();
       case superwall.EventType.transactionRestore:
-      //throw UnimplementedError();
       case superwall.EventType.transactionTimeout:
-      //throw UnimplementedError();
       case superwall.EventType.userAttributes:
-      //throw UnimplementedError();
       case superwall.EventType.nonRecurringProductPurchase:
-      //throw UnimplementedError();
       case superwall.EventType.paywallResponseLoadStart:
-      //throw UnimplementedError();
       case superwall.EventType.paywallResponseLoadNotFound:
-      //throw UnimplementedError();
       case superwall.EventType.paywallResponseLoadFail:
-      //throw UnimplementedError();
       case superwall.EventType.paywallResponseLoadComplete:
-      //throw UnimplementedError();
       case superwall.EventType.paywallWebviewLoadStart:
-      //throw UnimplementedError();
       case superwall.EventType.paywallWebviewLoadFail:
-      //throw UnimplementedError();
       case superwall.EventType.paywallWebviewLoadComplete:
-      //throw UnimplementedError();
       case superwall.EventType.paywallWebviewLoadTimeout:
-      //throw UnimplementedError();
       case superwall.EventType.paywallWebviewLoadFallback:
-      //throw UnimplementedError();
       case superwall.EventType.paywallProductsLoadRetry:
-      //throw UnimplementedError();
       case superwall.EventType.paywallProductsLoadStart:
-      //throw UnimplementedError();
       case superwall.EventType.paywallProductsLoadFail:
-      //throw UnimplementedError();
       case superwall.EventType.paywallProductsLoadComplete:
-      //throw UnimplementedError();
       case superwall.EventType.surveyResponse:
-      //throw UnimplementedError();
       case superwall.EventType.paywallPresentationRequest:
-      //throw UnimplementedError();
       case superwall.EventType.touchesBegan:
-      //throw UnimplementedError();
       case superwall.EventType.surveyClose:
-      //throw UnimplementedError();
       case superwall.EventType.reset:
-      //throw UnimplementedError();
       case superwall.EventType.configRefresh:
-      //throw UnimplementedError();
       case superwall.EventType.customPlacement:
-      //throw UnimplementedError();
       case superwall.EventType.configAttributes:
-      //throw UnimplementedError();
       case superwall.EventType.confirmAllAssignments:
-      //throw UnimplementedError();
       case superwall.EventType.configFail:
-      //throw UnimplementedError();
       case superwall.EventType.adServicesTokenRequestStart:
-      //throw UnimplementedError();
       case superwall.EventType.adServicesTokenRequestFail:
-      //throw UnimplementedError();
       case superwall.EventType.adServicesTokenRequestComplete:
-      //throw UnimplementedError();
       case superwall.EventType.shimmerViewStart:
-      //throw UnimplementedError();
       case superwall.EventType.shimmerViewComplete:
-      //throw UnimplementedError();
     }
   }
 

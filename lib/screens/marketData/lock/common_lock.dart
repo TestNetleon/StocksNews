@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/user_res.dart';
-import 'package:stocks_news_new/screens/membership_new/membership.dart';
 import 'package:stocks_news_new/service/revenue_cat.dart';
 import '../../../api/api_response.dart';
 import '../../../providers/home_provider.dart';

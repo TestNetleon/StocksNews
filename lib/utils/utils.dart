@@ -20,7 +20,6 @@ import 'package:stocks_news_new/screens/marketData/indices/index.dart';
 import 'package:stocks_news_new/screens/marketData/lowPriceStocks/index.dart';
 import 'package:stocks_news_new/screens/marketData/mostActive/index.dart';
 import 'package:stocks_news_new/screens/marketData/pennyStocks/index.dart';
-import 'package:stocks_news_new/screens/membership_new/membership.dart';
 import 'package:stocks_news_new/screens/stocks/index.dart';
 import 'package:stocks_news_new/screens/t&cAndPolicy/tc_policy.dart';
 import 'package:stocks_news_new/service/revenue_cat.dart';

@@ -29,7 +29,6 @@ import 'package:vibration/vibration.dart';
 import '../../api/api_response.dart';
 import '../../utils/utils.dart';
 import '../offerMembership/blackFriday/index.dart';
-import '../membership_new/membership.dart';
 import '../offerMembership/christmas/index.dart';
 
 class Tabs extends StatefulWidget {

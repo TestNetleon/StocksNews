@@ -4,16 +4,12 @@ import 'package:stocks_news_new/tradingSimulator/TradingWithTypes/action_in_orde
 import 'package:stocks_news_new/tradingSimulator/modals/ts_pending_list_res.dart';
 import 'package:stocks_news_new/tradingSimulator/providers/ts_pending_list_provider.dart';
 import 'package:stocks_news_new/tradingSimulator/screens/dashboard/pending/item.dart';
-import 'package:stocks_news_new/tradingSimulator/screens/dashboard/pending/ts_slidable_menu.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
-import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
 import 'package:stocks_news_new/widgets/refresh_controll.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import '../../../manager/sse.dart';
-import '../../../modals/trading_search_res.dart';
 import '../../../providers/trade_provider.dart';
-import '../../../widgets/sim_trade_sheet.dart';
 
 class TsPendingList extends StatefulWidget {
   const TsPendingList({super.key});
@@ -117,7 +113,7 @@ class _TsPendingListState extends State<TsPendingList> {
                   isScrollControlled: true,
                   builder: (context) {
                     return ActionInOrders(
-                      symbol:  item.symbol,
+                      symbol: item.symbol,
                       item: item,
                       index: index,
                     );
@@ -126,7 +122,7 @@ class _TsPendingListState extends State<TsPendingList> {
               },
             );
 
-             /* TsPendingSlidableMenu(
+            /* TsPendingSlidableMenu(
               onEditClick: () => _onEditClick(item, index),
               onCancelClick: () => _onCancelClick(item),
               index: index,

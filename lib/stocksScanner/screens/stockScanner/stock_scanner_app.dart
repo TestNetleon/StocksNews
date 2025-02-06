@@ -1,14 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
-import 'package:stocks_news_new/stocksScanner/manager/gainers_stream.dart';
-import 'package:stocks_news_new/stocksScanner/manager/losers_stream.dart';
-import 'package:stocks_news_new/stocksScanner/manager/scanner_stream.dart';
 import 'package:stocks_news_new/stocksScanner/providers/market_scanner_provider.dart';
-import 'package:stocks_news_new/stocksScanner/screens/marketScanner/market_scanner_filter.dart';
 import 'package:stocks_news_new/stocksScanner/screens/stockScanner/scanner_container.dart';
-import 'package:stocks_news_new/utils/utils.dart';
-import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/loading.dart';
 
 //MARK: APP

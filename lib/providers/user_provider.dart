@@ -28,15 +28,12 @@ import 'package:stocks_news_new/screens/offerMembership/christmas/index.dart';
 import 'package:stocks_news_new/screens/tabs/tabs.dart';
 import 'package:stocks_news_new/service/revenue_cat.dart';
 import 'package:stocks_news_new/utils/constants.dart';
-
 import 'package:stocks_news_new/database/preference.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
-
 import '../fcm/dynamic_links.service.dart';
 import '../modals/advertiser.dart';
 import '../screens/offerMembership/blackFriday/index.dart';
-import '../screens/membership_new/membership.dart';
 import '../service/amplitude/service.dart';
 import '../service/braze/service.dart';
 import '../utils/dialogs.dart';

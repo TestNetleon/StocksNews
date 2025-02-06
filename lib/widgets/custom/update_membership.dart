@@ -9,7 +9,6 @@ import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/theme_button_small.dart';
 import '../../screens/offerMembership/blackFriday/index.dart';
-import '../../screens/membership_new/membership.dart';
 import '../../utils/constants.dart';
 import '../../utils/utils.dart';
 

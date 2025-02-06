@@ -8,9 +8,7 @@ import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/stocksScanner/manager/gainers_stream.dart';
 import 'package:stocks_news_new/stocksScanner/manager/losers_stream.dart';
 import 'package:stocks_news_new/stocksScanner/manager/scanner_stream.dart';
-import 'package:stocks_news_new/stocksScanner/providers/market_scanner_provider.dart';
 import 'package:stocks_news_new/stocksScanner/screens/marketScanner/market_scanner_filter.dart';
-import 'package:stocks_news_new/stocksScanner/screens/stockScanner/scanner_container.dart';
 import 'package:stocks_news_new/stocksScanner/screens/stockScanner/scanner_webview.dart';
 import 'package:stocks_news_new/stocksScanner/screens/stockScanner/stock_scanner_app.dart';
 import 'package:stocks_news_new/utils/colors.dart';
@@ -18,7 +16,6 @@ import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/custom_tab_container.dart';
-import 'package:stocks_news_new/widgets/loading.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 
 //MARK: WEB
@@ -58,7 +55,7 @@ class StocksScannerIndex extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    MarketScannerProvider provider = context.watch<MarketScannerProvider>();
+    // MarketScannerProvider provider = context.watch<MarketScannerProvider>();
 
     UserProvider userProvider = context.watch<UserProvider>();
     HomeProvider homeProvider = context.watch<HomeProvider>();

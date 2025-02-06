@@ -1,19 +1,10 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
-import 'package:stocks_news_new/tournament/provider/trades.dart';
-import 'package:stocks_news_new/tradingSimulator/TradingWithTypes/widgets/buy_order_item.dart';
 import 'package:stocks_news_new/tradingSimulator/manager/sse.dart';
-import 'package:stocks_news_new/tradingSimulator/modals/trading_search_res.dart';
 import 'package:stocks_news_new/tradingSimulator/modals/ts_pending_list_res.dart';
 import 'package:stocks_news_new/tradingSimulator/providers/trade_provider.dart';
-import 'package:stocks_news_new/tradingSimulator/providers/trading_search_provider.dart';
-import 'package:stocks_news_new/tradingSimulator/providers/ts_open_list_provider.dart';
 import 'package:stocks_news_new/tradingSimulator/providers/ts_pending_list_provider.dart';
-import 'package:stocks_news_new/tradingSimulator/providers/ts_portfollo_provider.dart';
-import 'package:stocks_news_new/tradingSimulator/screens/dashboard/index.dart';
-import 'package:stocks_news_new/tradingSimulator/screens/searchTradingTicker/index.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -29,12 +20,8 @@ class ActionInOrders extends StatefulWidget {
   final TsPendingListRes? item;
   final int index;
 
-  const ActionInOrders({
-    super.key,
-    this.symbol,
-    this.item,
-    required this.index
-  });
+  const ActionInOrders(
+      {super.key, this.symbol, this.item, required this.index});
 
   @override
   State<ActionInOrders> createState() => _ActionInOrdersState();
@@ -48,7 +35,6 @@ class _ActionInOrdersState extends State<ActionInOrders> {
     super.initState();
   }
 
-
   void _onEditClick() {
     disposeSheet = false;
     setState(() {});
@@ -61,16 +47,17 @@ class _ActionInOrdersState extends State<ActionInOrders> {
       onTap: () {
         Navigator.pop(navigatorKey.currentContext!);
         TsPendingListProvider provider = context.read<TsPendingListProvider>();
-        if(widget.item?.orderTypeOriginal == "MARKET_ORDER"){
+        if (widget.item?.orderTypeOriginal == "MARKET_ORDER") {
           if (widget.item?.tradeType == "Short") {
             provider.shortRedirection(index: widget.index);
           } else {
-            provider.editStock(index:  widget.index);
+            provider.editStock(index: widget.index);
           }
-        }
-        else{
-          if ((widget.item?.orderTypeOriginal == "BRACKET_ORDER")||(widget.item?.orderTypeOriginal == "LIMIT_ORDER")) {
-            provider.conditionalRedirection(index:  widget.index, qty: widget.item?.quantity);
+        } else {
+          if ((widget.item?.orderTypeOriginal == "BRACKET_ORDER") ||
+              (widget.item?.orderTypeOriginal == "LIMIT_ORDER")) {
+            provider.conditionalRedirection(
+                index: widget.index, qty: widget.item?.quantity);
           }
         }
       },
@@ -103,8 +90,6 @@ class _ActionInOrdersState extends State<ActionInOrders> {
     }
     super.dispose();
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -189,7 +174,7 @@ class _ActionInOrdersState extends State<ActionInOrders> {
                 child: ThemeButton(
                   text: "Edit Order",
                   color: const Color.fromARGB(255, 210, 191, 15),
-                  onPressed:_onEditClick,
+                  onPressed: _onEditClick,
                   textColor: ThemeColors.primary,
                 ),
               ),
@@ -198,7 +183,7 @@ class _ActionInOrdersState extends State<ActionInOrders> {
                 child: ThemeButton(
                   text: "Cancel Order",
                   color: ThemeColors.darkRed,
-                  onPressed:_onCancelClick,
+                  onPressed: _onCancelClick,
                 ),
               ),
             ],

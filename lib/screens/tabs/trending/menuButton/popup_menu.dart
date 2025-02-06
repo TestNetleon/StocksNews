@@ -5,13 +5,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/screens/auth/membershipAsk/ask.dart';
-import 'package:stocks_news_new/screens/membership_new/membership.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:provider/provider.dart';
 import '../../../../routes/my_app.dart';
+import '../../../../service/revenue_cat.dart';
 import '../../../../utils/utils.dart';
 import '../../../auth/base/base_auth.dart';
 import '../../../offerMembership/blackFriday/index.dart';
@@ -65,12 +65,14 @@ class PopUpMenuButtonCommon extends StatelessWidget {
           ),
         );
       } else {
-        await Navigator.push(
-          navigatorKey.currentContext!,
-          MaterialPageRoute(
-            builder: (context) => const NewMembership(),
-          ),
-        );
+        await subscribe();
+
+        // await Navigator.push(
+        //   navigatorKey.currentContext!,
+        //   MaterialPageRoute(
+        //     builder: (context) => const NewMembership(),
+        //   ),
+        // );
       }
     }
   }

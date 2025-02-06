@@ -16,10 +16,10 @@ import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/screens/blogDetail/index.dart';
 import 'package:stocks_news_new/screens/blogNew/blogsNew/index.dart';
-import 'package:stocks_news_new/screens/membership_new/membership.dart';
 import 'package:stocks_news_new/screens/stocks/index.dart';
 import 'package:stocks_news_new/screens/tabs/news/newsDetail/new_detail.dart';
 import 'package:stocks_news_new/screens/tabs/tabs.dart';
+import 'package:stocks_news_new/service/revenue_cat.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/utils/in_app_messages.dart';
@@ -448,16 +448,17 @@ void navigateToRequiredScreen(InAppNotification? inAppMsg) {
     );
   } else if (inAppMsg?.redirectOn == 'membership') {
     Navigator.pop(navigatorKey.currentContext!);
-    Navigator.push(
-      navigatorKey.currentContext!,
-      // BlogDetail.path,
-      MaterialPageRoute(
-        builder: (_) => NewMembership(
-          inAppMsgId: inAppMsg?.id,
-        ),
-      ),
-      // arguments: {"slug": inAppMsg?.slug, "inAppMsgId": inAppMsg?.id},
-    );
+    subscribe();
+    // Navigator.push(
+    //   navigatorKey.currentContext!,
+    //   // BlogDetail.path,
+    //   MaterialPageRoute(
+    //     builder: (_) => NewMembership(
+    //       inAppMsgId: inAppMsg?.id,
+    //     ),
+    //   ),
+    //   // arguments: {"slug": inAppMsg?.slug, "inAppMsgId": inAppMsg?.id},
+    // );
   }
 }
 

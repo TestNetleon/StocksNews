@@ -14,6 +14,7 @@ import 'package:stocks_news_new/widgets/base_container.dart';
 import '../../api/api_response.dart';
 import '../../database/preference.dart';
 import '../../providers/home_provider.dart';
+import '../../service/revenue_cat.dart';
 import '../auth/base/base_auth.dart';
 import '../auth/refer/refer_code.dart';
 import '../offerMembership/blackFriday/index.dart';
@@ -21,7 +22,6 @@ import '../blogDetail/index.dart';
 import '../deepLinkScreen/webscreen.dart';
 import '../drawer/widgets/review_app_pop_up.dart';
 import '../helpDesk/chats/index.dart';
-import '../membership_new/membership.dart';
 import '../offerMembership/christmas/index.dart';
 import '../stockDetail/index.dart';
 
@@ -274,14 +274,15 @@ class _HomeSplashState extends State<HomeSplash> {
             ),
           );
         } else {
-          Navigator.push(
-            navigatorKey.currentContext!,
-            MaterialPageRoute(
-              builder: (context) => NewMembership(
-                notificationId: notificationId,
-              ),
-            ),
-          );
+          subscribe();
+          // Navigator.push(
+          //   navigatorKey.currentContext!,
+          //   MaterialPageRoute(
+          //     builder: (context) => NewMembership(
+          //       notificationId: notificationId,
+          //     ),
+          //   ),
+          // );
         }
       } else {
         // arguments: {"notificationId": notificationId},

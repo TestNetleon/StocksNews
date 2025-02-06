@@ -29,26 +29,33 @@ class _MarketScannerOnlineState extends State<MarketScannerOnline> {
 
   _setPrePost() {
     MarketScannerProvider provider = context.read<MarketScannerProvider>();
-    List<MarketScannerRes>? dataList = provider.dataList;
-    preMarket = dataList?.any(
-          (element) {
-            return element.extendedHoursType == 'PreMarket';
-          },
-        ) ==
-        true;
+    // List<MarketScannerRes>? dataList = provider.dataList;
 
-    postMarket = dataList?.any(
-          (element) {
-            return element.extendedHoursType == 'PostMarket';
-          },
-        ) ==
-        true;
+    // preMarket = dataList?.any(
+    //       (element) {
+    //         return element.extendedHoursType == 'PreMarket';
+    //       },
+    //     ) ==
+    //     true;
+    preMarket =
+        provider.port?.port?.checkMarketOpenApi?.checkPreMarket ?? false;
+    postMarket =
+        provider.port?.port?.checkMarketOpenApi?.checkPostMarket ?? false;
+
+    // postMarket = dataList?.any(
+    //       (element) {
+    //         return element.extendedHoursType == 'PostMarket';
+    //       },
+    //     ) ==
+    //     true;
 
     text = preMarket
         ? 'Pre-Market'
         : postMarket
             ? 'Post-Market'
             : null;
+    Utils().showLog('---HI-- $text');
+    setState(() {});
   }
 
   @override

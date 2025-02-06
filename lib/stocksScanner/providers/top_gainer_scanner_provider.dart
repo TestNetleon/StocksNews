@@ -1,18 +1,16 @@
 import 'dart:async';
-import 'dart:convert';
-
 import 'package:flutter/foundation.dart';
+import 'package:provider/provider.dart';
 import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/stocksScanner/modals/filter_params_gaienr_loser.dart';
 import 'package:stocks_news_new/stocksScanner/modals/market_scanner_res.dart';
 import 'package:stocks_news_new/stocksScanner/modals/scanner_res.dart';
 import 'package:stocks_news_new/utils/constants.dart';
-import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/utils/utils.dart';
-import 'package:http/http.dart' as http;
-
+import '../../routes/my_app.dart';
 import '../manager/gainers_stream.dart';
 import '../screens/sorting/shorting.dart';
+import 'market_scanner_provider.dart';
 
 class TopGainerScannerProvider extends ChangeNotifier {
   Status _status = Status.ideal;
@@ -62,28 +60,28 @@ class TopGainerScannerProvider extends ChangeNotifier {
     MarketGainersStream().stopListeningPorts();
   }
 
-  Future getOfflineData({showProgress = false}) async {
-    showGlobalProgressDialog();
-    try {
-      final url = Uri.parse(
-        'https://dev.stocks.news:8080/topGainer?shortBy=2',
-      );
-      final response = await http.get(url);
-      if (response.statusCode == 200) {
-        Utils().showLog("$url");
-        Utils().showLog(response.body);
-        // _dataList = scannerResFromJson(jsonDecode(response.body));
-        final List<dynamic> decodedResponse = jsonDecode(response.body);
-        _offlineDataList = scannerResFromJson(decodedResponse);
-      } else {
-        Utils().showLog('Error fetching data from $url');
-      }
-    } catch (err) {
-      Utils().showLog('Error: $err');
-    }
-    closeGlobalProgressDialog();
-    notifyListeners();
-  }
+  // Future getOfflineData({showProgress = false}) async {
+  //   showGlobalProgressDialog();
+  //   try {
+  //     final url = Uri.parse(
+  //       'https://dev.stocks.news:8080/topGainer?shortBy=2',
+  //     );
+  //     final response = await http.get(url);
+  //     if (response.statusCode == 200) {
+  //       Utils().showLog("$url");
+  //       Utils().showLog(response.body);
+  //       // _dataList = scannerResFromJson(jsonDecode(response.body));
+  //       final List<dynamic> decodedResponse = jsonDecode(response.body);
+  //       _offlineDataList = scannerResFromJson(decodedResponse);
+  //     } else {
+  //       Utils().showLog('Error fetching data from $url');
+  //     }
+  //   } catch (err) {
+  //     Utils().showLog('Error: $err');
+  //   }
+  //   closeGlobalProgressDialog();
+  //   notifyListeners();
+  // }
 
   void updateOfflineData(List<ScannerRes>? data, {applyFilter = false}) {
     // _offlineDataList = data;
@@ -118,6 +116,7 @@ class TopGainerScannerProvider extends ChangeNotifier {
 
   void updateOfflineDataFilter(List<ScannerRes>? data) {
     if (data == null) return;
+    Utils().showLog('SORT BY: ${_filterParams?.sortBy}');
 
     if (_filterParams == null) {
       // _offlineDataList = data.take(50).toList();
@@ -129,8 +128,12 @@ class TopGainerScannerProvider extends ChangeNotifier {
 
     if (_filterParams?.sortBy == 2) {
       data.sort((a, b) {
-        num valueA = a.changesPercentage ?? 0;
-        num valueB = b.changesPercentage ?? 0;
+        // num valueA = a.changesPercentage ?? 0;
+        // num valueB = b.changesPercentage ?? 0;
+
+        num valueA = a.ext?.extendedHoursPercentChange ?? 0;
+        num valueB = b.ext?.extendedHoursPercentChange ?? 0;
+
         if (_filterParams?.sortByAsc == true) {
           return valueB.compareTo(valueA);
         }
@@ -218,7 +221,7 @@ class TopGainerScannerProvider extends ChangeNotifier {
     //     }
     //   }
     // }
-
+    Utils().showLog('SORT BY: ${_filterParams?.sortBy}');
     if (_filterParams?.sortByHeader != null) {
       prChangeAr.sort((a, b) {
         return sortByCompare(
@@ -228,7 +231,7 @@ class TopGainerScannerProvider extends ChangeNotifier {
           _filterParams?.sortByAsc ?? true,
         );
       });
-    } else if (_filterParams?.sortBy != 3) {
+    } else if (_filterParams?.sortBy != 2) {
       Utils().showLog("-----------------------------------------------");
       prChangeAr.sort((a, b) {
         num valueA = a.percentChange ?? 0;
@@ -313,11 +316,22 @@ class TopGainerScannerProvider extends ChangeNotifier {
       if (MarketGainersStream().listening) {
         MarketGainersStream().stopListeningPorts();
       }
+
+      MarketScannerProvider provider =
+          navigatorKey.currentContext!.read<MarketScannerProvider>();
+
+      bool isLIVE =
+          provider.port?.port?.checkMarketOpenApi?.isMarketOpen == true;
+      Utils().showLog('--Applying Filter $isLIVE');
+
       _filterParams = FilterParamsGainerLoser(
         sortBy: sortBy,
         sortByAsc: false,
-        sortByHeader:
-            sortBy == 2 ? SortByEnums.perChange.name : SortByEnums.volume.name,
+        sortByHeader: sortBy == 2
+            ? isLIVE
+                ? SortByEnums.perChange.name
+                : SortByEnums.postMarketPerChange.name
+            : SortByEnums.volume.name,
       );
       Timer(const Duration(milliseconds: 500), () {
         MarketGainersStream().initializePorts();
@@ -326,11 +340,21 @@ class TopGainerScannerProvider extends ChangeNotifier {
       // MarketGainersStream().stopListeningPorts();
       // if (sortBy == _filterParams?.sortBy) {
       // sortByAsc: !(_filterParams?.sortByAsc ?? true),
+
+      MarketScannerProvider provider =
+          navigatorKey.currentContext!.read<MarketScannerProvider>();
+
+      bool isLIVE =
+          provider.port?.port?.checkMarketOpenApi?.isMarketOpen == true;
+
       _filterParams = FilterParamsGainerLoser(
         sortBy: sortBy,
         sortByAsc: false,
-        sortByHeader:
-            sortBy == 2 ? SortByEnums.perChange.name : SortByEnums.volume.name,
+        sortByHeader: sortBy == 2
+            ? isLIVE
+                ? SortByEnums.perChange.name
+                : SortByEnums.postMarketPerChange.name
+            : SortByEnums.volume.name,
       );
     }
     // } else {
@@ -364,11 +388,23 @@ class TopGainerScannerProvider extends ChangeNotifier {
   }
 
   void resetLiveFilter() {
+    MarketScannerProvider provider =
+        navigatorKey.currentContext!.read<MarketScannerProvider>();
+
+    bool isLIVE = provider.port?.port?.checkMarketOpenApi?.isMarketOpen == true;
     _filterParams = FilterParamsGainerLoser(
       sortBy: 2,
       sortByAsc: false,
-      sortByHeader: SortByEnums.perChange.name,
+      sortByHeader: isLIVE
+          ? SortByEnums.perChange.name
+          : SortByEnums.postMarketPerChange.name,
     );
+
+    // _filterParams = FilterParamsGainerLoser(
+    //   sortBy: 2,
+    //   sortByAsc: false,
+    //   sortByHeader: SortByEnums.postMarketPerChange.name,
+    // );
 
     notifyListeners();
   }
@@ -511,11 +547,11 @@ class TopGainerScannerProvider extends ChangeNotifier {
     } else if (sortBy == SortByEnums.netChange.name) {
       num? valueA = a.change;
       num? valueB = b.change;
-      if (a.extendedHoursType == "PostMarket" ||
-          a.extendedHoursType == "PreMarket") {
-        valueA = a.extendedHoursChange ?? 0;
-        valueB = b.extendedHoursChange ?? 0;
-      }
+      // if (a.extendedHoursType == "PostMarket" ||
+      //     a.extendedHoursType == "PreMarket") {
+      //   valueA = a.extendedHoursChange ?? 0;
+      //   valueB = b.extendedHoursChange ?? 0;
+      // }
       if (valueA == null && valueB == null) return 0;
       if (valueA == null) return -1;
       if (valueB == null) return 1;
@@ -716,8 +752,8 @@ class TopGainerScannerProvider extends ChangeNotifier {
         return b.volume!.compareTo(a.volume!);
       }
     } else if (sortBy == SortByEnums.dollarVolume.name) {
-      num dolorVolumeA = (a.volume ?? 0) * (a.price ?? 0);
-      num dolorVolumeB = (b.volume ?? 0) * (b.price ?? 0);
+      num dolorVolumeA = (a.volume ?? 0) * (a.ext?.extendedHoursPrice ?? 0);
+      num dolorVolumeB = (b.volume ?? 0) * (b.ext?.extendedHoursPrice ?? 0);
       if (isAsc) {
         return dolorVolumeA.compareTo(dolorVolumeB);
       } else {

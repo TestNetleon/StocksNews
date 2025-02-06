@@ -212,7 +212,6 @@ import 'package:stocks_news_new/tradingSimulator/screens/tradeBuySell/index.dart
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
-import '../../utils/colors.dart';
 
 class TradingSearchProvider extends ChangeNotifier {
   Status _status = Status.ideal;
@@ -392,7 +391,7 @@ class TradingSearchProvider extends ChangeNotifier {
   }
 
   Future conditionalRedirection(String symbol,
-      {int? tickerID, num? qty,ConditionType? conditionalType}) async {
+      {int? tickerID, num? qty, ConditionType? conditionalType}) async {
     try {
       TradeProviderNew provider =
           navigatorKey.currentContext!.read<TradeProviderNew>();

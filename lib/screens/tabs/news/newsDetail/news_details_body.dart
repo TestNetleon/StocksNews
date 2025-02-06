@@ -15,7 +15,6 @@ import 'package:stocks_news_new/screens/blogDetail/widgets/item.dart';
 import 'package:stocks_news_new/screens/tabs/news/newsAuthor/index.dart';
 import 'package:stocks_news_new/screens/tabs/news/newsDetail/article_feedback.dart';
 import 'package:stocks_news_new/screens/tabs/news/newsDetail/new_detail.dart';
-import 'package:stocks_news_new/screens/tabs/news/newsDetail/widget/news_lock%20copy.dart';
 import 'package:stocks_news_new/screens/tabs/news/newsDetail/widget/news_lock.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
@@ -39,11 +38,9 @@ import '../../../auth/base/base_auth.dart';
 import '../../../auth/base/base_auth_email_bottom.dart';
 import '../../../auth/refer/refer_code.dart';
 import '../../../blogs/index.dart';
-import '../../../marketData/lock/common_lock.dart';
 import '../../../t&cAndPolicy/tc_policy.dart';
 import 'mentioned_by.dart';
 import 'news_details_list.dart';
-import 'widget/news_lock copy.dart';
 
 class NewsDetailsBody extends StatefulWidget {
   final String? slug;

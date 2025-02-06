@@ -9,8 +9,6 @@ import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/screens/auth/membershipAsk/ask.dart';
 import 'package:stocks_news_new/screens/auth/refer/refer_code.dart';
-import 'package:stocks_news_new/screens/membership/store/store.dart';
-import 'package:stocks_news_new/screens/membership_new/membership.dart';
 import 'package:stocks_news_new/screens/tabs/tabs.dart';
 import 'package:stocks_news_new/service/revenue_cat.dart';
 import 'package:stocks_news_new/utils/colors.dart';

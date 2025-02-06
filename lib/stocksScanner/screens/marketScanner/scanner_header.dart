@@ -39,6 +39,9 @@ class _MarketScannerHeaderState extends State<MarketScannerHeader> {
                 DateFormat("MM/dd/yy hh:mm:ss a").format(nowInNewYork);
           });
         });
+      } else {
+        MarketScannerProvider provider = context.read<MarketScannerProvider>();
+        _lastUpdated = provider.port?.port?.checkMarketOpenApi?.dateTime ?? "";
       }
     });
   }
@@ -59,7 +62,6 @@ class _MarketScannerHeaderState extends State<MarketScannerHeader> {
         true) {
       marketStatus = "Pre Market";
     } else {
-      _lastUpdated = provider.port?.port?.checkMarketOpenApi?.dateTime ?? "";
       marketStatus = "Post Market";
     }
 
