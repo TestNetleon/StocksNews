@@ -303,7 +303,9 @@ class SuccessConditionalSheet extends StatelessWidget {
                           Text(
                             conditionalType == ConditionType.bracketOrder
                                 ? "Bracket Order"
-                                : "Limit Order",
+                                :
+                            conditionalType == ConditionType.limitOrder?
+                            "Limit Order":"Stop Order",
                             style: styleGeorgiaRegular(
                               color: ThemeColors.white,
                             ),

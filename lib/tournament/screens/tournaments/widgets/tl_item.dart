@@ -17,9 +17,7 @@ class TlItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        context
-            .read<TournamentProvider>()
-            .leagueToLeaderboard(selectedDate: data?.date ?? "");
+        context.read<TournamentProvider>().tradesRedirection("${data?.tournamentBattleId ?? ""}");
       },
       child: Column(
         children: [

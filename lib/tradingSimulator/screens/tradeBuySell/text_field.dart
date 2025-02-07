@@ -48,13 +48,14 @@ class TextfieldTrade extends StatelessWidget {
             ),
           ),
           style: const TextStyle(fontSize: 80, color: Colors.transparent),
-          cursorColor: Colors.transparent,
+          cursorColor: Colors.black,
+          cursorHeight: 50,
           readOnly: readOnly,
         ),
         Positioned.fill(
           child: Align(
             alignment: Alignment.center,
-            child: GestureDetector(
+            child: InkWell(
               onTap: () {
                 focusNode.requestFocus();
               },

@@ -44,7 +44,7 @@ class DayTrainingTitle extends StatelessWidget {
                         alignment: PlaceholderAlignment.middle,
                         child: Text(
                           ' ${provider.timeRemaining['hours']} ',
-                          style: styleGeorgiaBold(fontSize: 18),
+                          style: styleGeorgiaBold(fontSize: 16),
                         ),
                       ),
                       TextSpan(
@@ -55,7 +55,7 @@ class DayTrainingTitle extends StatelessWidget {
                         alignment: PlaceholderAlignment.middle,
                         child: Text(
                           ' ${provider.timeRemaining['minutes']} ',
-                          style: styleGeorgiaBold(fontSize: 18),
+                          style: styleGeorgiaBold(fontSize: 16),
                         ),
                       ),
                       TextSpan(
@@ -66,11 +66,11 @@ class DayTrainingTitle extends StatelessWidget {
                         alignment: PlaceholderAlignment.middle,
                         child: Text(
                           ' ${provider.timeRemaining['seconds']} ',
-                          style: styleGeorgiaBold(fontSize: 18),
+                          style: styleGeorgiaBold(fontSize: 16),
                         ),
                       ),
                       TextSpan(
-                        text: ' Seconds ',
+                        text: ' Seconds',
                         style: styleGeorgiaRegular(color: ThemeColors.greyText),
                       ),
                     ],

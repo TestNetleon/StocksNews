@@ -148,6 +148,7 @@ class OrdersSubTitle {
   final String? buyToCoverOrder;
   final String? bracketOrder;
   final String? limitOrder;
+  final String? stopOrder;
 
   OrdersSubTitle({
     required this.buyOrder,
@@ -156,6 +157,7 @@ class OrdersSubTitle {
     required this.buyToCoverOrder,
     required this.bracketOrder,
     required this.limitOrder,
+    required this.stopOrder,
   });
 
   factory OrdersSubTitle.fromJson(Map<String, dynamic> json) => OrdersSubTitle(
@@ -165,6 +167,7 @@ class OrdersSubTitle {
         buyToCoverOrder: json["buy_to_cover_order"],
         bracketOrder: json["bracket_order"],
     limitOrder: json["limit_order"],
+    stopOrder: json["stop_order"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -174,6 +177,7 @@ class OrdersSubTitle {
         "buy_to_cover_order": buyToCoverOrder,
         "bracket_order": bracketOrder,
         "limit_order": limitOrder,
+        "stop_order": stopOrder,
       };
 }
 

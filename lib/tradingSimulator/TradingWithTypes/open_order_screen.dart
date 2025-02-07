@@ -28,6 +28,7 @@ class OpenOrderScreen extends StatefulWidget {
   final TradingSearchTickerRes? data;
   final int? tickerID;
   final num? portfolioTradeType;
+  final Map<String, String>? allTradType;
   const OpenOrderScreen({
     super.key,
     this.symbol,
@@ -35,6 +36,7 @@ class OpenOrderScreen extends StatefulWidget {
     this.qty,
     this.tickerID,
     this.portfolioTradeType,
+    this.allTradType,
   });
 
   @override
@@ -57,6 +59,20 @@ class _OpenOrderScreenState extends State<OpenOrderScreen> {
           navigatorKey.currentContext!.read<TradingSearchProvider>();
       if (symbol != null && symbol != '') {
         provider.stockHolding(symbol, selectedStock: selectedStock);
+      }
+    } catch (e) {
+      //
+    }
+  }
+
+  Future _onTapCondition({String? symbol, String? selectedStock,ConditionType? conditionalType}) async {
+    disposeSheet = false;
+    setState(() {});
+    try {
+      TradingSearchProvider provider =
+      navigatorKey.currentContext!.read<TradingSearchProvider>();
+      if (symbol != null && symbol != '') {
+        provider.stockHoldingOfCondition(symbol, selectedStock: selectedStock,conditionalType: conditionalType);
       }
     } catch (e) {
       //
@@ -272,7 +288,7 @@ class _OpenOrderScreenState extends State<OpenOrderScreen> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              if (widget.portfolioTradeType != 3)
+              if (widget.portfolioTradeType == 1||widget.portfolioTradeType == 2)
                 Visibility(
                   visible: tsProvider.userData?.userConditionalOrderPermission
                               ?.bracketOrder ==
@@ -302,17 +318,78 @@ class _OpenOrderScreenState extends State<OpenOrderScreen> {
                     },
                   ),
                 ),
+              if(widget.portfolioTradeType == 3 && widget.allTradType?['order_type_original']!="BRACKET_ORDER")
+                Column(
+                  children: [
+                    Visibility(
+                      visible:widget.allTradType?['trade_type']=="Buy",
+                      child: BuyOrderItem(
+                        title: "Buy More Stocks",
+                        subtitle: subtitleWithSymbol(
+                          tsProvider.userData?.ordersSubTitle?.buyOrder,
+                          widget.symbol,
+                        ),
+                        onTap: () {
+                          var conditionalType = widget.allTradType?['order_type_original']=="LIMIT_ORDER"?ConditionType.limitOrder:ConditionType.stopOrder;
+                          _onTapCondition(symbol: widget.symbol ?? "",selectedStock: "Buy",conditionalType: conditionalType);
+                        },
+                      ),
+                    ),
+                    Visibility(
+                      visible: widget.allTradType?['trade_type']=="Buy",
+                      child: BuyOrderItem(
+                        title: "Sell Stocks",
+                        subtitle: subtitleWithSymbol(
+                          tsProvider.userData?.ordersSubTitle?.sellOrder,
+                          widget.symbol,
+                        ),
+                        onTap: () {
+                          var conditionalType = widget.allTradType?['order_type_original']=="LIMIT_ORDER"?ConditionType.limitOrder:ConditionType.stopOrder;
+                          _onTapCondition(symbol: widget.symbol ?? "",selectedStock: "Sell",conditionalType: conditionalType);
+                        },
+                      ),
+                    ),
+                    Visibility(
+                      visible:widget.allTradType?['trade_type']=="Short",
+                      child: BuyOrderItem(
+                        title: "Short More Stocks",
+                        subtitle: subtitleWithSymbol(
+                          tsProvider.userData?.ordersSubTitle?.buyOrder,
+                          widget.symbol,
+                        ),
+                        onTap: () {
+                          var conditionalType = widget.allTradType?['order_type_original']=="LIMIT_ORDER"?ConditionType.limitOrder:ConditionType.stopOrder;
+                           _onTapCondition(symbol: widget.symbol ?? "",selectedStock: "Short",conditionalType: conditionalType);
+                        },
+                      ),
+                    ),
+                    Visibility(
+                      visible:widget.allTradType?['trade_type']=="Short",
+                      child: BuyOrderItem(
+                        title: "Buy to Cover Stocks",
+                        subtitle: subtitleWithSymbol(
+                          tsProvider.userData?.ordersSubTitle?.sellOrder,
+                          widget.symbol,
+                        ),
+                        onTap: () {
+                          var conditionalType = widget.allTradType?['order_type_original']=="LIMIT_ORDER"?ConditionType.limitOrder:ConditionType.stopOrder;
+                          _onTapCondition(symbol: widget.symbol ?? "",selectedStock: "BUY_TO_COVER",conditionalType: conditionalType);
+                        },
+                      ),
+                    ),
+                  ],
+                ),
               Visibility(
-                visible: widget.portfolioTradeType == 3,
-                child: ThemeButton(
-                  text: "SQUARE OFF",
-                  color: ThemeColors.sos,
-                  onPressed: () {
+                visible: (widget.portfolioTradeType == 3),
+                child: BuyOrderItem(
+                  title: "Square Off Order",
+                  subtitle: subtitleWithSymbol(tsProvider.userData?.ordersSubTitle?.sellOrder, widget.symbol),
+                  onTap: () {
                     popUpAlert(
                       cancel: true,
                       title: "Square Off Order",
                       message:
-                          "Are you sure you want to square off this order?",
+                      "Are you sure you want to square off this order?",
                       okText: "Square Off",
                       icon: Images.alertPopGIF,
                       onTap: () async {

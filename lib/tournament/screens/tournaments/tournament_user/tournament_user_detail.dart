@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
+import 'package:stocks_news_new/screens/tabs/home/widgets/featured/widgets/title.dart';
 import 'package:stocks_news_new/tournament/models/tour_user_detail.dart';
 import 'package:stocks_news_new/tournament/provider/tournament.dart';
 import 'package:stocks_news_new/tournament/screens/tournaments/widgets/grid_boxs.dart';
@@ -181,13 +182,20 @@ class _TournamentUserDetailState extends State<TournamentUserDetail> {
                         },
                       ),
                       const SpacerVertical(height: 20),
+
                       Visibility(
-                        visible:
-                            (provider.userData?.recentTrades?.status != false),
-                        child: ScreenTitle(
+                        visible: (provider.userData?.recentTrades?.status != false),
+                        child: FeaturedWatchlistTitle(
                           title: provider.userData?.recentTrades?.title ?? "",
-                          subTitle: provider.userData?.recentTrades?.status ==
-                                  true
+                          onTap: () {
+                            provider.tradesRedirection("${provider.userData?.recentTrades?.tournamentBattleId ?? ""}");
+                          },
+                        ),
+                      ),
+                      Visibility(
+                        visible: (provider.userData?.recentTrades?.status != false),
+                        child: ScreenTitle(
+                          subTitle: provider.userData?.recentTrades?.status == true
                               ? provider.userData?.recentTrades?.subTitle ?? ""
                               : provider.userData?.recentTrades?.message ?? "",
                           style: styleGeorgiaBold(fontSize: 16),

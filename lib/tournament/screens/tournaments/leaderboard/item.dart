@@ -45,7 +45,7 @@ class TournamentLeaderboardItem extends StatelessWidget {
                       child: Row(
                         children: [
                           Visibility(
-                            visible: (from==1||from==2)?false:true,
+                            visible:from==1?false:true,
                             child: Container(
                               margin: EdgeInsets.only(right: 5),
                               padding: EdgeInsets.all(4),

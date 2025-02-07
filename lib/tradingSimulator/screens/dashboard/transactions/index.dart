@@ -5,11 +5,7 @@ import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/refresh_controll.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
-import '../../../manager/sse.dart';
-import '../../../modals/trading_search_res.dart';
-import '../../../providers/trade_provider.dart';
 import '../../../providers/ts_transaction_list.dart';
-import '../../../widgets/sim_trade_sheet.dart';
 import 'item.dart';
 
 class TsTransactionList extends StatefulWidget {

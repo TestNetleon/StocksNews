@@ -136,7 +136,6 @@ class TsPendingListProvider extends ChangeNotifier {
     Utils().showLog('Checking holdings for ${_data?[index].tradeType ?? ''}');
     try {
       UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
-
       Map request = {
         'token': provider.user?.token ?? '',
         'symbol': _data?[index].symbol ?? '',
@@ -146,6 +145,8 @@ class TsPendingListProvider extends ChangeNotifier {
                 ? "BUY"
                 : "BUY_TO_COVER",
         'edit': '1',
+        'order_type':"MARKET_ORDER",
+        'trade_id':"${_data?[index].id ?? ''}",
       };
 
       ApiResponse res = await apiRequest(
@@ -221,7 +222,59 @@ class TsPendingListProvider extends ChangeNotifier {
     }
   }
 
-  Future conditionalRedirection({required int index, num? qty}) async {
+  Future stockHoldingOfCondition({required int index}) async {
+    try {
+      UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
+      Map request = {
+        'token': provider.user?.token ?? '',
+        'symbol': _data?[index].symbol ?? '',
+        'action':_data?[index].tradeType=="Buy To Cover"?"BUY_TO_COVER":_data?[index].tradeType?.toUpperCase()??'',
+        'order_type': _data?[index].orderTypeOriginal??"",
+        'trade_id':"${_data?[index].id ?? ''}",
+        'edit': '1',
+      };
+      ApiResponse res = await apiRequest(
+          url: Apis.stockHoldings, request: request, showProgress: true);
+      if (res.status) {
+        if ((_data?[index].tradeType == "Sell"||
+            _data?[index].tradeType == "But To Cover") && res.data['quantity'] <= 0) {
+          popUpAlert(
+              title: 'Alert',
+              message: "You don't own the shares of this stock");
+          return;
+        }
+        TradeProviderNew provider =
+        navigatorKey.currentContext!.read<TradeProviderNew>();
+
+        ApiResponse response = await provider.getDetailTopData(
+          symbol: _data?[index].symbol ?? '',
+          showProgress: true,
+        );
+        if (response.status) {
+          Navigator.pushReplacement(
+            navigatorKey.currentContext!,
+            MaterialPageRoute(
+              builder: (context) => ConditionalTradesIndex(
+                conditionalType: _data?[index].orderTypeOriginal == "BRACKET_ORDER"?ConditionType.bracketOrder:
+                _data?[index].orderTypeOriginal == "LIMIT_ORDER"?ConditionType.limitOrder:ConditionType.stopOrder,
+                editTradeID: _data?[index].id,
+                qty: res.data['quantity'],
+              ),
+            ),
+          );
+        }
+      } else {
+        //
+      }
+      return ApiResponse(status: res.status);
+    } catch (e) {
+      Utils().showLog('stock holding: $e');
+      return ApiResponse(status: false);
+    }
+  }
+
+
+  /*Future conditionalRedirection({required int index, num? qty}) async {
     try {
       TradeProviderNew provider =
           navigatorKey.currentContext!.read<TradeProviderNew>();
@@ -245,5 +298,5 @@ class TsPendingListProvider extends ChangeNotifier {
       Utils().showLog('stock holding: $e');
       return ApiResponse(status: false);
     }
-  }
+  }*/
 }

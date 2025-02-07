@@ -5,6 +5,7 @@ import 'package:stocks_news_new/tournament/provider/trades.dart';
 import 'package:stocks_news_new/tradingSimulator/manager/sse.dart';
 import 'package:stocks_news_new/tradingSimulator/modals/ts_topbar.dart';
 import 'package:stocks_news_new/tradingSimulator/providers/trade_provider.dart';
+import 'package:stocks_news_new/tradingSimulator/screens/ConditionalOrder/container_conditioal_buy_sell.dart';
 import 'package:stocks_news_new/tradingSimulator/screens/ConditionalOrder/trade_container.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
@@ -18,13 +19,14 @@ class ConditionalTradesIndex extends StatelessWidget {
   final num? editTradeID;
   final ConditionType? conditionalType;
   final int? tickerID;
+  final String? tradeType;
 
   const ConditionalTradesIndex({
     super.key,
     this.qty,
     this.editTradeID,
     this.conditionalType,
-    this.tickerID,
+    this.tickerID, this.tradeType,
   });
 
   @override
@@ -104,7 +106,14 @@ class ConditionalTradesIndex extends StatelessWidget {
                   ],
                 ),
         ),
-        body: ConditionalContainer(
+        body:
+        tradeType!=null?
+        ContainerConditioalBuySell(
+          conditionalType: conditionalType,
+          qty: qty,
+          tradeType: tradeType,
+        ):
+        ConditionalContainer(
           conditionalType: conditionalType,
           qty: qty,
           editTradeID: editTradeID,

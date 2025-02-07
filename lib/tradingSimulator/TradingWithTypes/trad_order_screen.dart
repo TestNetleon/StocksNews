@@ -636,6 +636,33 @@ class _TradOrderScreenState extends State<TradOrderScreen> {
               },
             ),
           ),
+          Visibility(
+            visible: tsProvider.userData?.userConditionalOrderPermission
+                ?.stopOrder ==
+                true ||
+                kDebugMode,
+            child: BuyOrderItem(
+              title: "Stop Order",
+              subtitle: subtitleWithSymbol(
+                tsProvider.userData?.ordersSubTitle?.stopOrder,
+                widget.symbol,
+              ),
+              onTap: () {
+                var conditionalType = ConditionType.stopOrder;
+                if (widget.symbol != null) {
+                  navigatorKey.currentContext!
+                      .read<TradingSearchProvider>()
+                      .conditionalRedirection(widget.symbol ?? "",
+                      tickerID: widget.tickerID, qty: widget.qty,conditionalType: conditionalType);
+                } else {
+                  Navigator.push(
+                    context,
+                    createRoute(SearchTradingTicker()),
+                  );
+                }
+              },
+            ),
+          ),
         ],
       ),
     );

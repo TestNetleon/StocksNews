@@ -45,7 +45,6 @@ class _TsOpenListState extends State<TsOpenList> {
   @override
   Widget build(BuildContext context) {
     TsOpenListProvider provider = context.watch<TsOpenListProvider>();
-
     return BaseUiContainer(
       hasData: provider.data != null && !provider.isLoading,
       isLoading: provider.isLoading || provider.status == Status.ideal,
@@ -69,6 +68,10 @@ class _TsOpenListState extends State<TsOpenList> {
                   changePercentage: item.changesPercentage,
                   price: item.currentPrice,
                 ));
+                Map<String, String>? allTradType = {
+                  "order_type_original":item.orderTypeOriginal??"",
+                  "trade_type":item.tradeType??"",
+                };
                 simTradeSheet(
                     symbol: item.symbol,
                     data: TradingSearchTickerRes(
@@ -81,34 +84,9 @@ class _TsOpenListState extends State<TsOpenList> {
                     tickerID: item.id,
                     fromTo: 1,
                   portfolioTradeType: item.portfolioTradeType,
+                    allTradType:allTradType
 
                 );
-
-                // Navigator.push(
-                //   context,
-                //   createRoute(TradOrderScreen(
-                //     symbol: item.symbol,
-                //     data: TradingSearchTickerRes(
-                //       image: item.image,
-                //       name: item.company,
-                //       currentPrice: item.currentPrice,
-                //       symbol: item.symbol,
-                //     ),
-                //     qty: item.quantity,
-                //   )),
-                // );
-
-                /* tradeSheet(
-                  symbol: item.symbol,
-                  doPop: false,
-                  qty: item.quantity,
-                  data: TradingSearchTickerRes(
-                    image: item.image,
-                    name: item.company,
-                    currentPrice: item.currentPrice,
-                    symbol: item.symbol,
-                  ),
-                );*/
               },
             );
           },

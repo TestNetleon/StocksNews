@@ -74,13 +74,10 @@ class TsPendingListItem extends StatelessWidget {
                             child: Padding(
                               padding: const EdgeInsets.only(top: 5),
                               child: Text(
-                                // "Price: ${item?.price}",
                                 "Price at Market",
                                 style: styleGeorgiaRegular(
-                                  // color: ThemeColors.greyText,
                                   fontSize: 14,
                                 ),
-                                // maxLines: 2,
                                 overflow: TextOverflow.ellipsis,
                               ),
                             ),
@@ -100,33 +97,6 @@ class TsPendingListItem extends StatelessWidget {
                             style: stylePTSansBold(fontSize: 18),
                           ),
                         ),
-                        // Visibility(
-                        //   visible:
-                        //       item?.tradeType != null && item?.tradeType != '',
-                        //   child: Container(
-                        //     padding: EdgeInsets.symmetric(
-                        //       horizontal: 15,
-                        //       vertical: 2,
-                        //     ),
-                        //     margin: EdgeInsets.only(top: 5),
-                        //     decoration: BoxDecoration(
-                        //         border: Border.all(
-                        //           color: item?.tradeType == "Buy"
-                        //               ? ThemeColors.themeGreen
-                        //               : ThemeColors.darkRed,
-                        //         ),
-                        //         borderRadius: BorderRadius.circular(20)),
-                        //     child: Text(
-                        //       "${item?.tradeType ?? 'N/A'}",
-                        //       style: stylePTSansBold(
-                        //         fontSize: 14,
-                        //         color: item?.tradeType == "Buy"
-                        //             ? ThemeColors.themeGreen
-                        //             : ThemeColors.darkRed,
-                        //       ),
-                        //     ),
-                        //   ),
-                        // ),
                       ],
                     ),
                   ],
@@ -146,87 +116,18 @@ class TsPendingListItem extends StatelessWidget {
                   children: [
                     Visibility(
                       visible: item?.targetPrice != null && item?.targetPrice != 0,
-                      child: Expanded(
-                        child: Container(
-                          alignment: Alignment.centerLeft,
-                          padding: const EdgeInsets.only(right: 40),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "Target Price",
-                                style: stylePTSansRegular(
-                                  color: ThemeColors.greyText,
-                                  fontSize: 12,
-                                ),
-                              ),
-                              const SpacerVertical(height: 3),
-                              Text(
-                                textAlign: TextAlign.start,
-                                item?.targetPrice?.toFormattedPrice() ?? "",
-                                style: stylePTSansBold(
-                                    color: ThemeColors.white, fontSize: 12),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                    Visibility(
-                      visible: item?.limitPrice != null && item?.limitPrice != 0,
-                      child: Expanded(
-                        child: Container(
-                          alignment: Alignment.centerLeft,
-                          padding: const EdgeInsets.only(right: 40),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "Limit Price",
-                                style: stylePTSansRegular(
-                                  color: ThemeColors.greyText,
-                                  fontSize: 12,
-                                ),
-                              ),
-                              const SpacerVertical(height: 3),
-                              Text(
-                                textAlign: TextAlign.start,
-                                item?.limitPrice?.toFormattedPrice() ?? "",
-                                style: stylePTSansBold(
-                                    color: ThemeColors.white, fontSize: 12),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
+                      child:
+                      orderWithType(Alignment.centerLeft,label: "Target Price",prices: item?.targetPrice)
                     ),
                     Visibility(
                       visible: item?.stopPrice != null && item?.stopPrice != 0,
-                      child: Expanded(
-                        child: Container(
-                          alignment: Alignment.centerRight,
-                          padding: const EdgeInsets.only(right: 40),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Text(
-                                "Stop Price",
-                                style: stylePTSansRegular(
-                                  color: ThemeColors.greyText,
-                                  fontSize: 12,
-                                ),
-                              ),
-                              const SpacerVertical(height: 3),
-                              Text(
-                                textAlign: TextAlign.center,
-                                item?.stopPrice?.toFormattedPrice() ?? "",
-                                style: stylePTSansBold(
-                                    color: ThemeColors.white, fontSize: 12),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
+                      child:
+                      orderWithType(item?.orderTypeOriginal=="BRACKET_ORDER"?Alignment.centerRight:Alignment.centerLeft,label: "Stop Price",prices: item?.stopPrice)
+                    ),
+
+                    Visibility(
+                      visible: item?.limitPrice != null && item?.limitPrice != 0,
+                      child:orderWithType(Alignment.centerLeft,label: "Limit Price",prices: item?.limitPrice)
                     ),
                     Visibility(
                       visible: item?.orderTypeOriginal != null &&
@@ -261,89 +162,6 @@ class TsPendingListItem extends StatelessWidget {
                     ),
                   ],
                 ),
-
-                // Visibility(
-                //   visible: item?.orderType.limitOrder.status ??
-                //       item?.orderType.targetPrice.status ??
-                //       item?.orderType.stopLoss.status ??
-                //       false,
-                //   child: const Divider(color: ThemeColors.greyBorder, height: 10),
-                // ),
-                // Row(
-                //   children: [
-                //     Flexible(
-                //       child: Visibility(
-                //         visible: item?.orderType.limitOrder.status ?? false,
-                //         child: Column(
-                //           children: [
-                //             Text(
-                //               "Limit Order",
-                //               style: stylePTSansRegular(
-                //                 color: ThemeColors.greyText,
-                //                 fontSize: 13,
-                //               ),
-                //             ),
-                //             const SpacerVertical(height: 3),
-                //             Text(
-                //               "${item?.orderType.limitOrder.price}",
-                //               style: stylePTSansBold(
-                //                 color: ThemeColors.white,
-                //                 fontSize: 14,
-                //               ),
-                //             ),
-                //           ],
-                //         ),
-                //       ),
-                //     ),
-                //     const SpacerHorizontal(width: 40),
-                //     Flexible(
-                //       child: Visibility(
-                //         visible: item?.orderType.targetPrice.status ?? false,
-                //         child: Column(
-                //           children: [
-                //             Text(
-                //               "Target Price",
-                //               style: stylePTSansRegular(
-                //                 color: ThemeColors.greyText,
-                //                 fontSize: 13,
-                //               ),
-                //             ),
-                //             const SpacerVertical(height: 3),
-                //             Text(
-                //               "${item?.orderType.targetPrice.price}",
-                //               style: stylePTSansBold(
-                //                 color: ThemeColors.white,
-                //                 fontSize: 14,
-                //               ),
-                //             ),
-                //           ],
-                //         ),
-                //       ),
-                //     ),
-                //     const SpacerHorizontal(width: 40),
-                //     Flexible(
-                //       child: Visibility(
-                //         visible: item?.orderType.stopLoss.status ?? false,
-                //         child: Column(
-                //           children: [
-                //             Text(
-                //               "Stop Loss",
-                //               style: stylePTSansRegular(
-                //                 color: ThemeColors.greyText,
-                //                 fontSize: 13,
-                //               ),
-                //             ),
-                //             const SpacerVertical(height: 3),
-                //             Text(
-                //               "${item?.orderType.stopLoss.price}",
-                //               style: stylePTSansBold(fontSize: 14),
-                //             ),
-                //           ],
-                //         ),
-                //       ),
-                //     ),
-                //   ],
-                // ),
               ],
             ),
           ),
@@ -370,6 +188,34 @@ class TsPendingListItem extends StatelessWidget {
                 : null,
           ),
         ],
+      ),
+    );
+  }
+
+  Widget orderWithType(Alignment alignment,{String? label, num? prices}) {
+    return Expanded(
+      child: Container(
+        alignment: alignment,
+        padding: const EdgeInsets.only(right: 40),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              label??"",
+              style: stylePTSansRegular(
+                color: ThemeColors.greyText,
+                fontSize: 12,
+              ),
+            ),
+            const SpacerVertical(height: 3),
+            Text(
+              textAlign: TextAlign.start,
+              prices?.toFormattedPrice() ?? "",
+              style: stylePTSansBold(
+                  color: ThemeColors.white, fontSize: 12),
+            ),
+          ],
+        ),
       ),
     );
   }

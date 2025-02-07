@@ -12,11 +12,10 @@ simTradeSheet({
   int? tickerID,
   int? fromTo,
   num? portfolioTradeType,
+  Map<String, String>? allTradType,
 }) {
   showModalBottomSheet(
-    // useSafeArea: true,
     enableDrag: true,
-    // backgroundColor: Colors.transparent,
     isDismissible: true,
     context: navigatorKey.currentContext!,
     shape: RoundedRectangleBorder(
@@ -34,6 +33,7 @@ simTradeSheet({
             qty: qty,
             tickerID:tickerID,
           portfolioTradeType: portfolioTradeType,
+          allTradType: allTradType,
         );
       }
       else{

@@ -273,6 +273,7 @@ class Apis {
   static const tTradingTotal = '/tournament/all';
   static const tUser = '/tournament/user-profile';
   static const tShowLeaderboard = '/tournament/show-today-leaderboard';
+  static const tTradeAll = '/tournament/league-date/trade-list';
   // static const tShow = '/tournament/trade-show';
   //
   static const appsflyerUsers = '/appsflyer-users';

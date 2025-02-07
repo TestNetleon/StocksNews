@@ -212,7 +212,6 @@ import 'package:stocks_news_new/tradingSimulator/screens/tradeBuySell/index.dart
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
-import '../../utils/colors.dart';
 
 class TradingSearchProvider extends ChangeNotifier {
   Status _status = Status.ideal;
@@ -324,6 +323,8 @@ class TradingSearchProvider extends ChangeNotifier {
             : selectedStock == StockType.buy
                 ? "BUY"
                 : "BUY_TO_COVER",
+        'order_type':"MARKET_ORDER"
+
       };
       ApiResponse res = await apiRequest(
           url: Apis.stockHoldings, request: request, showProgress: true);
@@ -391,8 +392,57 @@ class TradingSearchProvider extends ChangeNotifier {
     }
   }
 
+
+  Future stockHoldingOfCondition(String symbol, {String? selectedStock, ConditionType? conditionalType}) async {
+    Utils().showLog('Checking holdings for ${conditionalType?.name}');
+    try {
+      UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
+      Map request = {
+        'token': provider.user?.token ?? '',
+        'symbol': symbol,
+        'action': selectedStock?.toUpperCase(),
+        'order_type':  conditionalType == ConditionType.limitOrder?"LIMIT_ORDER":"STOP_ORDER",
+      };
+      ApiResponse res = await apiRequest(
+          url: Apis.stockHoldings, request: request, showProgress: true);
+      if (res.status) {
+        if ((selectedStock == "Sell" || selectedStock == "BUY_TO_COVER") && res.data['quantity'] <= 0) {
+          popUpAlert(
+              title: 'Alert',
+              message: "You don't own the shares of this stock");
+          return;
+        }
+        TradeProviderNew provider =
+        navigatorKey.currentContext!.read<TradeProviderNew>();
+
+        ApiResponse response = await provider.getDetailTopData(
+          symbol: symbol,
+          showProgress: true,
+        );
+        if (response.status) {
+          Navigator.pushReplacement(
+            navigatorKey.currentContext!,
+            MaterialPageRoute(
+              builder: (context) => ConditionalTradesIndex(
+                conditionalType: conditionalType,
+                qty:  res.data['quantity'],
+                tradeType: selectedStock,
+              ),
+            ),
+          );
+        }
+      } else {
+        //
+      }
+      return ApiResponse(status: res.status);
+    } catch (e) {
+      Utils().showLog('stock holding: $e');
+      return ApiResponse(status: false);
+    }
+  }
+
   Future conditionalRedirection(String symbol,
-      {int? tickerID, num? qty,ConditionType? conditionalType}) async {
+      {int? tickerID, num? qty,ConditionType? conditionalType, String? tradeType}) async {
     try {
       TradeProviderNew provider =
           navigatorKey.currentContext!.read<TradeProviderNew>();

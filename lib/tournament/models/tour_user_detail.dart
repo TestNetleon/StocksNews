@@ -148,6 +148,7 @@ class RecentBattlesRes {
   final num? performance;
   final num? points;
   final num? performancePoints;
+  final num? tournamentBattleId;
 
   RecentBattlesRes({
     this.tournamentName,
@@ -157,6 +158,7 @@ class RecentBattlesRes {
     this.performance,
     this.points,
     this.performancePoints,
+    this.tournamentBattleId,
   });
 
   factory RecentBattlesRes.fromMap(Map<String, dynamic> json) =>
@@ -168,6 +170,7 @@ class RecentBattlesRes {
         performance: json["performance"],
         points: json["points"],
         performancePoints: json["performance_points"],
+        tournamentBattleId: json["tournament_battle_id"],
       );
 
   Map<String, dynamic> toMap() => {
@@ -178,8 +181,13 @@ class RecentBattlesRes {
         "performance": performance,
         "points": points,
         "performance_points": performancePoints,
+        "tournament_battle_id": tournamentBattleId,
       };
 }
+
+List<RecentTradeRes> allTradesResFromJson(String str) =>
+    List<RecentTradeRes>.from(
+        json.decode(str).map((x) => RecentTradeRes.fromMap(x)));
 
 class RecentTrades {
   final String? title;
@@ -187,13 +195,14 @@ class RecentTrades {
   final String? message;
   final bool? status;
   final List<RecentTradeRes>? dataTrade;
-
+  final num? tournamentBattleId;
   RecentTrades({
     this.title,
     this.subTitle,
     this.message,
     this.status,
     this.dataTrade,
+    this.tournamentBattleId,
   });
 
   factory RecentTrades.fromMap(Map<String, dynamic> json) => RecentTrades(
@@ -201,6 +210,7 @@ class RecentTrades {
         subTitle: json["sub_title"],
         message: json["message"],
         status: json["status"],
+        tournamentBattleId: json["tournament_battle_id"],
         dataTrade: json["data"] == null
             ? []
             : List<RecentTradeRes>.from(
@@ -212,6 +222,7 @@ class RecentTrades {
         "sub_title": subTitle,
         "message": message,
         "status": status,
+        "tournament_battle_id": tournamentBattleId,
         "data": dataTrade == null
             ? []
             : List<dynamic>.from(dataTrade!.map((x) => x.toMap())),
@@ -224,6 +235,7 @@ class RecentTradeRes {
   final String? image;
   final String? type;
   final int? status;
+
   num? orderPrice;
   num? closePrice;
   num? currentPrice;
@@ -253,7 +265,7 @@ class RecentTradeRes {
         closePrice: json["close_price"],
         currentPrice: json['price'],
         gainLoss: json["gain_loss"],
-        performance: json["performance"]?.toDouble(),
+        performance: json["performance"],
       );
 
   Map<String, dynamic> toMap() => {

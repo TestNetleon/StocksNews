@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:stocks_news_new/tournament/provider/leaderboard.dart';
 import 'package:stocks_news_new/tournament/provider/tournament.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -25,7 +24,6 @@ class _GameTournamentIndexState extends State<GameTournamentIndex> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    context.read<TournamentLeaderboardProvider>().showLeaderboard();
   }
   @override
   Widget build(BuildContext context) {
@@ -37,7 +35,7 @@ class _GameTournamentIndexState extends State<GameTournamentIndex> {
         subTitle: provider.extra?.subTitle,
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: Dimen.padding),
+        padding: const EdgeInsets.symmetric(horizontal: Dimen.padding-2),
         child: CustomTabContainer(
           initialIndex: widget.setIndex ?? 0,
           tabs: List.generate(
@@ -47,10 +45,11 @@ class _GameTournamentIndexState extends State<GameTournamentIndex> {
                 padding: const EdgeInsets.symmetric(vertical: 10),
                 child: Text(
                   provider.tabs[index],
-                  style: styleGeorgiaBold(fontSize: 14),
+                  style: styleGeorgiaBold(fontSize: 13),
                 ),
               );
             },
+
           ),
           widgets: [
             TournamentsIndex(),
