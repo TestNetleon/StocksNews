@@ -10,6 +10,7 @@ class RCPurchaseController extends PurchaseController {
   Future<void> syncSubscriptionStatus() async {
     // Configure RevenueCat
     await Purchases.setLogLevel(LogLevel.debug);
+    Superwall.shared.setSubscriptionStatus(SubscriptionStatus.unknown);
 
     // Listen for changes
     Purchases.addCustomerInfoUpdateListener((customerInfo) {
@@ -17,7 +18,7 @@ class RCPurchaseController extends PurchaseController {
       bool hasActiveEntitlementOrSubscription =
           customerInfo.hasActiveEntitlementOrSubscription();
       if (hasActiveEntitlementOrSubscription) {
-        Superwall.shared.setSubscriptionStatus(SubscriptionStatus.active);
+        Superwall.shared.setSubscriptionStatus(SubscriptionStatus.inactive);
         Utils().showLog('Active');
       } else {
         Superwall.shared.setSubscriptionStatus(SubscriptionStatus.inactive);

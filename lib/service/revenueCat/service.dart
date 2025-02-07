@@ -5,11 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:stocks_news_new/providers/membership.dart';
-import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
 import '../../api/api_response.dart';
 import '../../api/apis.dart';
 import '../../modals/user_res.dart';
+import '../../providers/user_provider.dart';
 import '../../utils/constants.dart';
 import '../../utils/utils.dart';
 import 'package:superwallkit_flutter/superwallkit_flutter.dart' as superwall;
@@ -137,7 +137,9 @@ class RevenueCatManager {
 
       // SET USER ID TO Superwall
       UserRes? userRes = navigatorKey.currentContext?.read<UserProvider>().user;
-      superwall.Superwall.shared.identify(userRes?.userId ?? "");
+      if (userRes?.userId != null && userRes?.userId != '') {
+        superwall.Superwall.shared.identify(userRes?.userId ?? "");
+      }
 
       // SET USER ATTRIBUTES TO Superwall
       Map<String, String> attributes = {};
@@ -161,7 +163,7 @@ class RevenueCatManager {
 
       superwall.Superwall.shared.registerEvent(
         Platform.isAndroid ? 'stocks_news_plans_android' : 'stocks_news_plans',
-        params: {"via": "upgrade_page"},
+        params: {"ignore_subscription_status": true},
         handler: superwall.PaywallPresentationHandler(),
       );
 
@@ -180,18 +182,20 @@ class SWDelegate extends superwall.SuperwallDelegate {
     // Handle events here
     switch (eventInfo.event.type) {
       case superwall.EventType.transactionComplete:
+        superwall.Superwall.shared
+            .setSubscriptionStatus(superwall.SubscriptionStatus.active);
         await navigatorKey.currentContext!
             .read<MembershipProvider>()
             .getMembershipSuccess(isMembership: true);
         await Navigator.push(
-          navigatorKey.currentContext!,
-          MaterialPageRoute(
-            builder: (context) => SubscriptionPurchased(isMembership: true),
-          ),
-        );
+            navigatorKey.currentContext!,
+            MaterialPageRoute(
+              builder: (context) => SubscriptionPurchased(isMembership: true),
+            ));
         break;
       case superwall.EventType.transactionFail:
-        // Show error screen
+        print("Transaction failed: ${eventInfo.event.error}");
+
         break;
       // Handle other events as needed
       case superwall.EventType.firstSeen:
