@@ -31,7 +31,6 @@ import '../../widgets/cache_network_image.dart';
 import '../auth/base/base_auth.dart';
 import '../auth/base/base_auth_bottom.dart';
 import '../auth/base/base_auth_email_bottom.dart';
-import '../marketData/lock/common_lock.dart';
 import '../tabs/news/newsDetail/news_details_body.dart';
 import 'blog_mention_by.dart';
 
@@ -308,8 +307,8 @@ class BlogDetailContainer extends StatelessWidget {
         ),
 
         BlogDetailsLock(slug: slug),
-        if (provider.blogsDetail?.premiumReaderOnly == true)
-          CommonLock(isLocked: true),
+        // if (provider.blogsDetail?.premiumReaderOnly == true)
+        //   CommonLock(isLocked: true),
 
         // if ((provider.blogsDetail?.readingStatus == false) &&
         //     !provider.isLoadingDetail)

@@ -43,12 +43,16 @@ class BenefitPoints extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.only(top: 10.0),
-                        child: Image.network(
-                          points?[index].image ?? "",
-                          width: 40,
-                          height: 40,
+                      Visibility(
+                        visible: points?[index].image != null &&
+                            points?[index].image != '',
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 10.0),
+                          child: Image.network(
+                            points?[index].image ?? "",
+                            width: 40,
+                            height: 40,
+                          ),
                         ),
                       ),
                       const SpacerHorizontal(width: 10),
@@ -64,7 +68,7 @@ class BenefitPoints extends StatelessWidget {
                             ),
                             const SpacerVertical(height: 5),
                             Text(
-                              "${data?.text}",
+                              data?.text ?? '',
                               overflow: TextOverflow.fade,
                               style: stylePTSansRegular(
                                 fontSize: 14,

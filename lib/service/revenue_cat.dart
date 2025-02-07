@@ -8,7 +8,10 @@ import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/membership.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
+import 'package:stocks_news_new/screens/auth/base/base_auth.dart';
+import 'package:stocks_news_new/screens/auth/membershipAsk/ask.dart';
 import 'package:stocks_news_new/service/revenueCat/service.dart';
+import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
 import '../utils/utils.dart';
 import 'success.dart';
@@ -19,30 +22,29 @@ class RevenueCatService {
     bool fromMembership = true,
   }) async {
     Utils().showLog("---TYPE $type");
-
     Purchases.setLogLevel(LogLevel.debug);
     RevenueCatKeyRes? keys =
         navigatorKey.currentContext!.read<HomeProvider>().extra?.revenueCatKeys;
     UserRes? userRes = navigatorKey.currentContext?.read<UserProvider>().user;
     Utils().showLog("${userRes?.userId}");
 
+    showGlobalProgressDialog();
     RevenueCatManager.instance.initialize(user: userRes, keys: keys);
-
+    closeGlobalProgressDialog();
     try {
-      navigatorKey.currentContext!
-          .read<MembershipProvider>()
-          .getMembershipSuccess(isMembership: fromMembership);
-      showGlobalProgressDialog();
-      Offerings? offerings;
-      offerings = await Purchases.getOfferings();
-      closeGlobalProgressDialog();
-      Offering? singleOffering =
-          offerings.getOffering(type ?? 'monthly-premium');
-
-      PaywallResult result =
-          await RevenueCatUI.presentPaywall(offering: singleOffering);
-
-      await _handlePaywallResult(result, isMembership: fromMembership);
+      RevenueCatManager.instance.initializeSuperWall();
+      // navigatorKey.currentContext!
+      //     .read<MembershipProvider>()
+      //     .getMembershipSuccess(isMembership: fromMembership);
+      // showGlobalProgressDialog();
+      // Offerings? offerings;
+      // offerings = await Purchases.getOfferings();
+      // closeGlobalProgressDialog();
+      // Offering? singleOffering =
+      //     offerings.getOffering(type ?? 'monthly-premium');
+      // PaywallResult result =
+      //     await RevenueCatUI.presentPaywall(offering: singleOffering);
+      // await _handlePaywallResult(result, isMembership: fromMembership);
     } catch (e) {
       closeGlobalProgressDialog();
 
@@ -71,6 +73,39 @@ class RevenueCatService {
       case PaywallResult.restored:
         break;
     }
+  }
+}
+
+// All Cases Testing Here
+Future subscribe({type}) async {
+  UserProvider? provider = navigatorKey.currentContext!.read<UserProvider>();
+  MembershipProvider? membershipProvider =
+      navigatorKey.currentContext!.read<MembershipProvider>();
+  withLoginMembership = false;
+  if (provider.user == null) {
+    Utils().showLog("Ask login-----");
+    // isPhone ? await loginSheet() : await loginSheetTablet();
+    await loginFirstSheet();
+
+    if (provider.user?.membership?.purchased == 1) {
+      Utils().showLog("---user already purchased membership----");
+      await membershipProvider.getMembershipInfo();
+      // membershipProvider.selectedIndex(index);
+    }
+  }
+  withLoginMembership = true;
+
+  if (provider.user == null) {
+    Utils().showLog("---still user not found----");
+    return;
+  }
+  if (provider.user?.phone == null || provider.user?.phone == '') {
+    Utils().showLog("Ask phone for membership-----");
+    await membershipLogin();
+  }
+  if (provider.user?.phone != null && provider.user?.phone != '') {
+    Utils().showLog("Open Paywall-----");
+    await RevenueCatService.initializeSubscription(type: type);
   }
 }
 

@@ -72,6 +72,9 @@ class PostDetail {
   final String? popUpButton;
   dynamic totalPoints;
   dynamic pointsRequired;
+  dynamic pointDeduction;
+  dynamic showUpgradeBtn;
+  dynamic showSubscribeBtn;
   final bool? premiumReaderOnly;
 
   // final int? status;
@@ -109,6 +112,9 @@ class PostDetail {
     this.balanceStatus,
     this.totalPoints,
     this.pointsRequired,
+    this.pointDeduction,
+    this.showUpgradeBtn,
+    this.showSubscribeBtn,
     this.popUpMessage,
     this.popUpButton,
     this.premiumReaderOnly,
@@ -167,6 +173,9 @@ class PostDetail {
         url: json["url"],
         totalPoints: json["total_points"],
         pointsRequired: json["point_required"],
+        pointDeduction: json["point_deduction"],
+        showUpgradeBtn: json["show_upgrade_btn"],
+        showSubscribeBtn: json["show_subscribe_btn"],
         // status: json["status"],
         // sector: json["sector"],
         // mentionStatus: json["mention_status"],
@@ -227,6 +236,9 @@ class PostDetail {
         // "views": views,
         "total_points": totalPoints,
         "point_required": pointsRequired,
+        "point_deduction": pointDeduction,
+        "show_upgrade_btn": showUpgradeBtn,
+        "show_subscribe_btn": showSubscribeBtn,
       };
 }
 

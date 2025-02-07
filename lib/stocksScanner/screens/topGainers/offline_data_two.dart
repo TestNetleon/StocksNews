@@ -12,6 +12,7 @@ import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 
 import '../../../utils/utils.dart';
+import '../../providers/market_scanner_provider.dart';
 import '../sorting/shorting.dart';
 import '../widget/container.dart';
 
@@ -60,21 +61,29 @@ class _TopGainerOfflineTwoState extends State<TopGainerOfflineTwo> {
         context.read<TopGainerScannerProvider>();
 
     provider.resetLiveFilter();
-    List<ScannerRes>? dataList = provider.offlineDataList;
+    // List<ScannerRes>? dataList = provider.offlineDataList;
 
-    preMarket = dataList?.any(
-          (element) {
-            return element.ext?.extendedHoursType == 'PreMarket';
-          },
-        ) ==
-        true;
+    // preMarket = dataList?.any(
+    //       (element) {
+    //         return element.ext?.extendedHoursType == 'PreMarket';
+    //       },
+    //     ) ==
+    //     true;
 
-    postMarket = dataList?.any(
-          (element) {
-            return element.ext?.extendedHoursType == 'PostMarket';
-          },
-        ) ==
-        true;
+    // postMarket = dataList?.any(
+    //       (element) {
+    //         return element.ext?.extendedHoursType == 'PostMarket';
+    //       },
+    //     ) ==
+    //     true;
+
+    MarketScannerProvider scannerProvider =
+        context.read<MarketScannerProvider>();
+    preMarket =
+        scannerProvider.port?.port?.checkMarketOpenApi?.checkPreMarket ?? false;
+    postMarket =
+        scannerProvider.port?.port?.checkMarketOpenApi?.checkPostMarket ??
+            false;
 
     text = preMarket
         ? 'Pre-Market'

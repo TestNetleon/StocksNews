@@ -2,10 +2,13 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
+import 'package:provider/provider.dart';
 import 'package:stocks_news_new/api/api_response.dart';
+import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/stocksScanner/modals/filter_params_gaienr_loser.dart';
 import 'package:stocks_news_new/stocksScanner/modals/market_scanner_res.dart';
 import 'package:stocks_news_new/stocksScanner/modals/scanner_res.dart';
+import 'package:stocks_news_new/stocksScanner/providers/market_scanner_provider.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/utils/utils.dart';
@@ -123,8 +126,12 @@ class TopLoserScannerProvider extends ChangeNotifier {
 
     if (_filterParams?.sortBy == 2) {
       data.sort((a, b) {
-        num valueA = a.changesPercentage ?? 0;
-        num valueB = b.changesPercentage ?? 0;
+        num valueA = a.ext?.extendedHoursPercentChange ?? 0;
+        num valueB = b.ext?.extendedHoursPercentChange ?? 0;
+
+        // num valueA = a.changesPercentage ?? 0;
+        // num valueB = b.changesPercentage ?? 0;
+
         if (_filterParams?.sortByAsc == true) {
           return valueB.compareTo(valueA);
         }
@@ -318,6 +325,12 @@ class TopLoserScannerProvider extends ChangeNotifier {
   // }
 
   void applyFilter(sortBy) {
+    MarketScannerProvider provider =
+        navigatorKey.currentContext!.read<MarketScannerProvider>();
+
+    bool isLIVE = provider.port?.port?.checkMarketOpenApi?.isMarketOpen == true;
+    Utils().showLog('--Applying Filter $isLIVE,  Sort By $sortBy');
+
     if (sortBy != _filterParams?.sortBy) {
       if (MarketLosersStream().listening) {
         MarketLosersStream().stopListeningPorts();
@@ -325,8 +338,11 @@ class TopLoserScannerProvider extends ChangeNotifier {
       _filterParams = FilterParamsGainerLoser(
         sortBy: sortBy,
         sortByAsc: true,
-        sortByHeader:
-            sortBy == 2 ? SortByEnums.perChange.name : SortByEnums.volume.name,
+        sortByHeader: sortBy == 2
+            ? isLIVE
+                ? SortByEnums.perChange.name
+                : SortByEnums.postMarketPerChange.name
+            : SortByEnums.volume.name,
       );
       Timer(const Duration(milliseconds: 500), () {
         MarketLosersStream().initializePorts();
@@ -335,8 +351,11 @@ class TopLoserScannerProvider extends ChangeNotifier {
       _filterParams = FilterParamsGainerLoser(
         sortBy: sortBy,
         sortByAsc: true,
-        sortByHeader:
-            sortBy == 2 ? SortByEnums.perChange.name : SortByEnums.volume.name,
+        sortByHeader: sortBy == 2
+            ? isLIVE
+                ? SortByEnums.perChange.name
+                : SortByEnums.postMarketPerChange.name
+            : SortByEnums.volume.name,
       );
     }
 
@@ -377,10 +396,16 @@ class TopLoserScannerProvider extends ChangeNotifier {
   }
 
   void resetLiveFilter() {
+    MarketScannerProvider provider =
+        navigatorKey.currentContext!.read<MarketScannerProvider>();
+
+    bool isLIVE = provider.port?.port?.checkMarketOpenApi?.isMarketOpen == true;
     _filterParams = FilterParamsGainerLoser(
       sortBy: 2,
       sortByAsc: true,
-      sortByHeader: SortByEnums.perChange.name,
+      sortByHeader: isLIVE
+          ? SortByEnums.perChange.name
+          : SortByEnums.postMarketPerChange.name,
     );
     notifyListeners();
   }
@@ -421,7 +446,11 @@ class TopLoserScannerProvider extends ChangeNotifier {
   }
 
   int sortByCompare(
-      MarketScannerRes a, MarketScannerRes b, String sortBy, bool isAsc) {
+    MarketScannerRes a,
+    MarketScannerRes b,
+    String sortBy,
+    bool isAsc,
+  ) {
     if (sortBy == SortByEnums.symbol.name) {
       if (a.identifier == null && b.identifier == null) return 0;
       if (a.identifier == null) return -1;
@@ -470,11 +499,11 @@ class TopLoserScannerProvider extends ChangeNotifier {
     } else if (sortBy == SortByEnums.lastTrade.name) {
       num? valueA = a.last;
       num? valueB = b.last;
-      if (a.extendedHoursType == "PostMarket" ||
-          a.extendedHoursType == "PreMarket") {
-        valueA = a.extendedHoursPrice ?? 0;
-        valueB = b.extendedHoursPrice ?? 0;
-      }
+      // if (a.extendedHoursType == "PostMarket" ||
+      //     a.extendedHoursType == "PreMarket") {
+      //   valueA = a.extendedHoursPrice ?? 0;
+      //   valueB = b.extendedHoursPrice ?? 0;
+      // }
       if (valueA == null && valueB == null) return 0;
       if (valueA == null) return -1;
       if (valueB == null) return 1;
@@ -515,11 +544,11 @@ class TopLoserScannerProvider extends ChangeNotifier {
     } else if (sortBy == SortByEnums.netChange.name) {
       num? valueA = a.change;
       num? valueB = b.change;
-      if (a.extendedHoursType == "PostMarket" ||
-          a.extendedHoursType == "PreMarket") {
-        valueA = a.extendedHoursChange ?? 0;
-        valueB = b.extendedHoursChange ?? 0;
-      }
+      // if (a.extendedHoursType == "PostMarket" ||
+      //     a.extendedHoursType == "PreMarket") {
+      //   valueA = a.extendedHoursChange ?? 0;
+      //   valueB = b.extendedHoursChange ?? 0;
+      // }
       if (valueA == null && valueB == null) return 0;
       if (valueA == null) return -1;
       if (valueB == null) return 1;
@@ -722,8 +751,8 @@ class TopLoserScannerProvider extends ChangeNotifier {
         return b.volume!.compareTo(a.volume!);
       }
     } else if (sortBy == SortByEnums.dollarVolume.name) {
-      num dolorVolumeA = (a.volume ?? 0) * (a.price ?? 0);
-      num dolorVolumeB = (b.volume ?? 0) * (b.price ?? 0);
+      num dolorVolumeA = (a.volume ?? 0) * (a.ext?.extendedHoursPrice ?? 0);
+      num dolorVolumeB = (b.volume ?? 0) * (b.ext?.extendedHoursPrice ?? 0);
       if (isAsc) {
         return dolorVolumeA.compareTo(dolorVolumeB);
       } else {

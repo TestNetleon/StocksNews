@@ -34,33 +34,36 @@ class _MembershipCoinsOptionState extends State<MembershipCoinsOption> {
   Widget build(BuildContext context) {
     HomeProvider provider = context.watch<HomeProvider>();
     UserProvider userProvider = context.watch<UserProvider>();
-    LeaderBoardProvider leaderProvider = context.watch<LeaderBoardProvider>();
+    // LeaderBoardProvider leaderProvider = context.watch<LeaderBoardProvider>();
 
     return Visibility(
-      visible: showMembership && provider.homeSliderRes != null,
-      child: userProvider.user?.membership?.purchased != 1
-          ? Container(
-              margin: const EdgeInsets.fromLTRB(
-                Dimen.padding,
-                Dimen.homeSpacing,
-                Dimen.padding,
-                0,
-              ),
-              child: const UpdateMembershipCard(),
-            )
-          : leaderProvider.extra?.balance == null
-              ? const SizedBox()
-              : (leaderProvider.extra?.balance ?? 0) < 10
-                  ? Container(
-                      margin: const EdgeInsets.fromLTRB(
-                        Dimen.padding,
-                        Dimen.homeSpacing,
-                        Dimen.padding,
-                        0,
-                      ),
-                      child: const UpdateStoreCard(),
-                    )
-                  : const SizedBox(),
-    );
+        visible: showMembership &&
+            provider.homeSliderRes != null &&
+            (userProvider.user == null ||
+                userProvider.user?.membership?.purchased == 0),
+        child: Container(
+          margin: const EdgeInsets.fromLTRB(
+            Dimen.padding,
+            Dimen.homeSpacing,
+            Dimen.padding,
+            0,
+          ),
+          child: const UpdateMembershipCard(),
+        )
+
+        // leaderProvider.extra?.balance == null
+        //     ? const SizedBox()
+        //     : (leaderProvider.extra?.balance ?? 0) < 10
+        //         ? Container(
+        //             margin: const EdgeInsets.fromLTRB(
+        //               Dimen.padding,
+        //               Dimen.homeSpacing,
+        //               Dimen.padding,
+        //               0,
+        //             ),
+        //             child: const UpdateStoreCard(),
+        //           )
+        //         : const SizedBox(),
+        );
   }
 }

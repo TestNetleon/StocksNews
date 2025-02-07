@@ -10,6 +10,7 @@ import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/screens/affiliate/pointsTransaction/trasnsaction.dart';
 import 'package:stocks_news_new/screens/offerMembership/christmas/index.dart';
 import 'package:stocks_news_new/service/braze/service.dart';
+import 'package:stocks_news_new/service/revenue_cat.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/database/preference.dart';
 import '../api/api_requester.dart';
@@ -26,7 +27,6 @@ import 'package:stocks_news_new/screens/affiliate/index.dart';
 import 'package:stocks_news_new/screens/auth/refer/refer_code.dart';
 import 'package:stocks_news_new/screens/blogDetail/index.dart';
 import 'package:stocks_news_new/screens/deepLinkScreen/webscreen.dart';
-import 'package:stocks_news_new/screens/membership_new/membership.dart';
 import 'package:stocks_news_new/screens/tabs/tabs.dart';
 import '../screens/drawer/widgets/review_app_pop_up.dart';
 import '../screens/helpDesk/chats/index.dart';
@@ -266,12 +266,16 @@ class BrazeNotificationService {
             ),
           );
         } else {
-          Navigator.push(
-            navigatorKey.currentContext!,
-            MaterialPageRoute(
-              builder: (context) => const NewMembership(),
-            ),
-          );
+          popHome = false;
+          if (whenAppKilled) await Future.delayed(const Duration(seconds: 3));
+
+          // Navigator.push(
+          //   navigatorKey.currentContext!,
+          //   MaterialPageRoute(
+          //     builder: (context) => const NewMembership(),
+          //   ),
+          // );
+          subscribe();
         }
       } else if (type == NotificationType.pointTransaction.name) {
         Navigator.push(

@@ -234,7 +234,7 @@ class _AboutStocksNewsState extends State<AboutStocksNews> {
       );
     }
     // Stock Scanner
-    if (provider.extra?.showStockScanner == true || kDebugMode) {
+    if (provider.extra?.showStockScanner == true) {
       visibleAboutTiles.add(
         DrawerRes(
           iconData: FontAwesomeIcons.magnifyingGlassChart,
@@ -258,7 +258,8 @@ class _AboutStocksNewsState extends State<AboutStocksNews> {
             _closeDrawer();
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (_) => StocksScannerApp()),
+              // MaterialPageRoute(builder: (_) => StocksScannerApp()),
+              MaterialPageRoute(builder: (_) => StocksScannerIndex()),
             );
           },
         ),

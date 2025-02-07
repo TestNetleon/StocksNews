@@ -42,6 +42,9 @@ class _TopLoserScannerHeaderState extends State<TopLoserScannerHeader> {
                 DateFormat("MM/dd/yy hh:mm:ss a").format(nowInNewYork);
           });
         });
+      } else {
+        MarketScannerProvider provider = context.read<MarketScannerProvider>();
+        _lastUpdated = provider.port?.port?.checkMarketOpenApi?.dateTime ?? "";
       }
     });
   }
@@ -62,7 +65,7 @@ class _TopLoserScannerHeaderState extends State<TopLoserScannerHeader> {
         true) {
       marketStatus = "Pre Market";
     } else {
-      _lastUpdated = provider.port?.port?.checkMarketOpenApi?.dateTime ?? "";
+      // _lastUpdated = provider.port?.port?.checkMarketOpenApi?.dateTime ?? "";
       marketStatus = "Post Market";
     }
 

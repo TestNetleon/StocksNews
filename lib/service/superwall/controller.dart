@@ -1,7 +1,6 @@
-import 'dart:io';
-
 import 'package:flutter/services.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
+import 'package:stocks_news_new/utils/utils.dart';
 import 'package:superwallkit_flutter/superwallkit_flutter.dart' hide LogLevel;
 
 class RCPurchaseController extends PurchaseController {
@@ -11,23 +10,19 @@ class RCPurchaseController extends PurchaseController {
   Future<void> syncSubscriptionStatus() async {
     // Configure RevenueCat
     await Purchases.setLogLevel(LogLevel.debug);
-    PurchasesConfiguration configuration = Platform.isIOS
-        ? PurchasesConfiguration("appl_kHwXNrngqMNktkEZJqYhEgLjbcC")
-        : PurchasesConfiguration("goog_KXHVJRLChlyjoOamWsqCWQSJZfI");
-    // configuration.purchasesAreCompletedBy = PurchasesAreCompletedByMyApp(
-    //   storeKitVersion: StoreKitVersion.storeKit2,
-    // );
-    await Purchases.configure(configuration);
+    Superwall.shared.setSubscriptionStatus(SubscriptionStatus.unknown);
 
     // Listen for changes
     Purchases.addCustomerInfoUpdateListener((customerInfo) {
       // Gets called whenever new CustomerInfo is available
-      bool hasActiveEntitlementOrSubscription = customerInfo
-          .hasActiveEntitlementOrSubscription(); // Why? -> https://www.revenuecat.com/docs/entitlements#entitlements
+      bool hasActiveEntitlementOrSubscription =
+          customerInfo.hasActiveEntitlementOrSubscription();
       if (hasActiveEntitlementOrSubscription) {
-        Superwall.shared.setSubscriptionStatus(SubscriptionStatus.active);
+        Superwall.shared.setSubscriptionStatus(SubscriptionStatus.inactive);
+        Utils().showLog('Active');
       } else {
         Superwall.shared.setSubscriptionStatus(SubscriptionStatus.inactive);
+        Utils().showLog('Inactive');
       }
     });
   }

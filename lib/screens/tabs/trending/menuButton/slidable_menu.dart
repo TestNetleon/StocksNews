@@ -242,6 +242,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:provider/provider.dart';
+import 'package:stocks_news_new/service/revenue_cat.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
@@ -252,7 +253,6 @@ import '../../../../utils/colors.dart';
 import '../../../auth/base/base_auth.dart';
 import '../../../auth/membershipAsk/ask.dart';
 import '../../../offerMembership/blackFriday/index.dart';
-import '../../../membership_new/membership.dart';
 import '../../../offerMembership/christmas/index.dart';
 
 class SlidableMenuWidget extends StatefulWidget {
@@ -376,12 +376,13 @@ class _SlidableMenuWidgetState extends State<SlidableMenuWidget>
           ),
         );
       } else {
-        await Navigator.push(
-          navigatorKey.currentContext!,
-          MaterialPageRoute(
-            builder: (context) => const NewMembership(),
-          ),
-        );
+        await subscribe();
+        // await Navigator.push(
+        //   navigatorKey.currentContext!,
+        //   MaterialPageRoute(
+        //     builder: (context) => const NewMembership(),
+        //   ),
+        // );
       }
     }
   }

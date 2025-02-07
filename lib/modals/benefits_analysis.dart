@@ -28,26 +28,34 @@ class BenefitsRes {
 }
 
 class Earn {
-  final String title;
-  final String subTitle;
-  final BannerRes banner;
-  final List<Point> points;
+  final String? title;
+  final String? subTitle;
+  final BannerRes? banner;
+  final List<Point>? points;
   final List<Benefit>? faq;
 
   Earn({
-    required this.title,
-    required this.subTitle,
-    required this.banner,
-    required this.points,
-    required this.faq,
+    this.title,
+    this.subTitle,
+    this.banner,
+    this.points,
+    this.faq,
   });
 
   factory Earn.fromJson(Map<String, dynamic> json) => Earn(
         title: json["title"],
         subTitle: json["sub_title"],
-        faq: List<Benefit>.from(json["faq"].map((x) => Benefit.fromJson(x))),
-        banner: BannerRes.fromJson(json["banner"]),
-        points: List<Point>.from(json["points"].map((x) => Point.fromJson(x))),
+        // faq: List<Benefit>.from(json["faq"].map((x) => Benefit.fromJson(x))),
+        faq: json["faq"] == null
+            ? []
+            : List<Benefit>.from(json["faq"]!.map((x) => Benefit.fromJson(x))),
+
+        banner:
+            json["banner"] == null ? null : BannerRes.fromJson(json["banner"]),
+        // points: List<Point>.from(json["points"].map((x) => Point.fromJson(x))),
+        points: json["points"] == null
+            ? []
+            : List<Point>.from(json["points"]!.map((x) => Point.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -56,20 +64,23 @@ class Earn {
             ? null
             : List<dynamic>.from(faq!.map((x) => x.toJson())),
         "sub_title": subTitle,
-        "banner": banner.toJson(),
-        "points": List<dynamic>.from(points.map((x) => x.toJson())),
+        "banner": banner?.toJson(),
+        // "points": List<dynamic>.from(points.map((x) => x.toJson())),
+        "points": points == null
+            ? []
+            : List<dynamic>.from(points!.map((x) => x.toJson())),
       };
 }
 
 class BannerRes {
-  final String title;
-  final String subTitle;
-  final String text;
+  final String? title;
+  final String? subTitle;
+  final String? text;
 
   BannerRes({
-    required this.title,
-    required this.subTitle,
-    required this.text,
+    this.title,
+    this.subTitle,
+    this.text,
   });
 
   factory BannerRes.fromJson(Map<String, dynamic> json) => BannerRes(
@@ -86,16 +97,16 @@ class BannerRes {
 }
 
 class Point {
-  final String key;
+  final String? key;
   final int? point;
-  final String text;
+  final String? text;
   final String? image;
 
   Point({
-    required this.key,
-    required this.point,
-    required this.text,
-    required this.image,
+    this.key,
+    this.point,
+    this.text,
+    this.image,
   });
 
   factory Point.fromJson(Map<String, dynamic> json) => Point(

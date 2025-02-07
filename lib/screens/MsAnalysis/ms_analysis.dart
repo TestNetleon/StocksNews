@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/stockAnalysis/provider.dart';
+import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/screens/MsAnalysis/faq/faq.dart';
 import 'package:stocks_news_new/screens/MsAnalysis/widget/peer_comparison.dart';
 import 'package:stocks_news_new/screens/MsAnalysis/widget/price_volatility.dart';
 import 'package:stocks_news_new/screens/drawer/base_drawer.dart';
+import 'package:stocks_news_new/screens/marketData/lock/common_lock.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
@@ -110,6 +113,26 @@ class _MsAnalysisState extends State<MsAnalysis> {
         provider.completeData?.score?.isNotEmpty == true &&
         provider.completeData?.text?.stockScore?.status == true;
 //------------------------------------------------------------------------------------
+
+    UserProvider userProvider = context.watch<UserProvider>();
+    HomeProvider homeProvider = context.watch<HomeProvider>();
+
+    bool purchased = userProvider.user?.membership?.purchased == 1;
+
+    bool isLocked = homeProvider.extra?.membership?.permissions?.any(
+            (element) =>
+                (element.key == "ai-portfolio" && element.status == 0)) ??
+        false;
+
+    bool? havePermissions;
+    if (purchased && isLocked) {
+      havePermissions = userProvider.user?.membership?.permissions?.any(
+              (element) =>
+                  (element.key == "ai-portfolio" && element.status == 1)) ??
+          false;
+      isLocked = !havePermissions;
+    }
+
     return BaseContainer(
       drawer: const BaseDrawer(resetIndex: true),
       baseColor: provider.isLoadingComplete && provider.completeData == null
@@ -124,99 +147,118 @@ class _MsAnalysisState extends State<MsAnalysis> {
         subTitle: "",
         widget: PredictionAppBar(),
       ),
-      body: CommonRefreshIndicator(
-        onRefresh: () async {
-          provider.callAPIs(symbol: widget.symbol);
-        },
-        child: BaseUiContainer(
-          hasData: !provider.isLoadingComplete && provider.completeData != null,
-          isLoading: provider.isLoadingComplete,
-          showPreparingText: true,
-          error: provider.errorComplete,
-          onRefresh: () {
-            provider.callAPIs(symbol: widget.symbol);
-          },
-          child: SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const MsTopWidgetDetail(),
-                  // const SpacerVertical(height: Dimen.padding),
-                  Visibility(
-                    visible: provider.completeData?.radarChart != null &&
-                        provider.completeData?.radarChart?.isNotEmpty == true,
-                    child: const MsRadarGraph(),
+      body: Stack(
+        children: [
+          CommonRefreshIndicator(
+            onRefresh: () async {
+              provider.callAPIs(symbol: widget.symbol);
+            },
+            child: BaseUiContainer(
+              hasData:
+                  !provider.isLoadingComplete && provider.completeData != null,
+              isLoading: provider.isLoadingComplete,
+              showPreparingText: true,
+              error: provider.errorComplete,
+              onRefresh: () {
+                provider.callAPIs(symbol: widget.symbol);
+              },
+              child: SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const MsTopWidgetDetail(),
+                      // const SpacerVertical(height: Dimen.padding),
+                      Visibility(
+                        visible: provider.completeData?.radarChart != null &&
+                            provider.completeData?.radarChart?.isNotEmpty ==
+                                true,
+                        child: const MsRadarGraph(),
+                      ),
+                      Visibility(
+                        visible: provider.completeData?.timeFrameText != null &&
+                            provider.completeData?.timeFrameText != '',
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 15),
+                          child: _tile(
+                              provider.completeData?.timeFrameText ?? "", 20),
+                        ),
+                      ),
+                      Visibility(
+                        visible: showStockScore,
+                        child: const MsStockScore(),
+                      ),
+                      const MsOtherStocks(),
+                      Visibility(
+                        visible: provider.completeData?.keyHighlights != null &&
+                            provider.completeData?.keyHighlights?.isNotEmpty ==
+                                true,
+                        child: const MsOurTake(),
+                      ),
+                      Visibility(
+                        visible:
+                            provider.completeData?.stockHighLights != null &&
+                                provider.completeData?.stockHighLights
+                                        ?.isNotEmpty ==
+                                    true,
+                        child: const MsOurHighlights(),
+                      ),
+                      Visibility(
+                        visible: provider.completeData?.swotAnalysis != null,
+                        child: const MsSwotAnalysis(),
+                      ),
+                      Visibility(
+                        visible:
+                            provider.completeData?.priceVolatilityNew != null,
+                        child: const Padding(
+                          padding:
+                              EdgeInsets.symmetric(vertical: Dimen.padding),
+                          child: MsPriceVolatility(),
+                        ),
+                      ),
+                      const MsTabs(),
+                      const SpacerVertical(height: Dimen.padding),
+                      //  MsForecastChart(),
+                      Visibility(
+                        visible: provider.completeData?.peerComparison != null,
+                        child: const MsPeerComparison(),
+                      ),
+                      // SpacerVertical(height: Dimen.padding),
+                      // MsFundamentalAnalysisMetrics(),
+                      const SpacerVertical(height: Dimen.padding),
+                      // MsTechnicalAnalysis(),
+                      // SpacerVertical(height: Dimen.padding),
+                      Visibility(
+                        visible:
+                            provider.completeData?.lastUpdateDate != null &&
+                                provider.completeData?.lastUpdateDate != '',
+                        child: _tile(
+                            provider.completeData?.lastUpdateDate ?? "", 15),
+                      ),
+                      Visibility(
+                        visible: provider.completeData?.faqData != null &&
+                            provider.completeData?.faqData?.isNotEmpty == true,
+                        child: const MsFAQs(),
+                      ),
+                      if (provider.extraTop?.disclaimer != null &&
+                          provider.extraTop?.disclaimer != '')
+                        DisclaimerWidget(
+                          data: provider.extraTop?.disclaimer ?? '',
+                        ),
+                    ],
                   ),
-                  Visibility(
-                    visible: provider.completeData?.timeFrameText != null &&
-                        provider.completeData?.timeFrameText != '',
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 15),
-                      child:
-                          _tile(provider.completeData?.timeFrameText ?? "", 20),
-                    ),
-                  ),
-                  Visibility(
-                    visible: showStockScore,
-                    child: const MsStockScore(),
-                  ),
-                  const MsOtherStocks(),
-                  Visibility(
-                    visible: provider.completeData?.keyHighlights != null &&
-                        provider.completeData?.keyHighlights?.isNotEmpty ==
-                            true,
-                    child: const MsOurTake(),
-                  ),
-                  Visibility(
-                    visible: provider.completeData?.stockHighLights != null &&
-                        provider.completeData?.stockHighLights?.isNotEmpty ==
-                            true,
-                    child: const MsOurHighlights(),
-                  ),
-                  Visibility(
-                    visible: provider.completeData?.swotAnalysis != null,
-                    child: const MsSwotAnalysis(),
-                  ),
-                  Visibility(
-                    visible: provider.completeData?.priceVolatilityNew != null,
-                    child: const Padding(
-                      padding: EdgeInsets.symmetric(vertical: Dimen.padding),
-                      child: MsPriceVolatility(),
-                    ),
-                  ),
-                  const MsTabs(),
-                  const SpacerVertical(height: Dimen.padding),
-                 //  MsForecastChart(),
-                  Visibility(
-                    visible: provider.completeData?.peerComparison != null,
-                    child: const MsPeerComparison(),
-                  ),
-                  // SpacerVertical(height: Dimen.padding),
-                  // MsFundamentalAnalysisMetrics(),
-                  const SpacerVertical(height: Dimen.padding),
-                  // MsTechnicalAnalysis(),
-                  // SpacerVertical(height: Dimen.padding),
-                  Visibility(
-                    visible: provider.completeData?.lastUpdateDate != null &&
-                        provider.completeData?.lastUpdateDate != '',
-                    child:
-                        _tile(provider.completeData?.lastUpdateDate ?? "", 15),
-                  ),
-                  Visibility(
-                    visible: provider.completeData?.faqData != null &&
-                        provider.completeData?.faqData?.isNotEmpty == true,
-                    child: const MsFAQs(),
-                  ),
-                  if (provider.extraTop?.disclaimer != null &&
-                      provider.extraTop?.disclaimer != '')
-                    DisclaimerWidget(data: provider.extraTop?.disclaimer ?? ''),
-                ],
+                ),
               ),
             ),
           ),
-        ),
+          if (isLocked)
+            CommonLock(
+              showLogin: true,
+              isLocked: isLocked,
+              showUpgradeBtn: havePermissions == false,
+            ),
+        ],
       ),
     );
   }

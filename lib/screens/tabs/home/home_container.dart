@@ -89,13 +89,13 @@ class _HomeContainerState extends State<HomeContainer> {
         //     // text: 'Base Plan',
         //     text: 'Live Activity',
         //     onPressed: () async {
-        //       // RevenueCatManager.instance.initializeSuperWall();
-        //       Navigator.push(
-        //         context,
-        //         MaterialPageRoute(
-        //           builder: (context) => LiveActivityIndex(),
-        //         ),
-        //       );
+        //       subscribe();
+        //       // Navigator.push(
+        //       //   context,
+        //       //   MaterialPageRoute(
+        //       //     builder: (context) => LiveActivityIndex(),
+        //       //   ),
+        //       // );
         //     },
         //   ),
         // ),

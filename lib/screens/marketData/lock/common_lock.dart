@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import 'package:stocks_news_new/screens/membership_new/membership.dart';
+import 'package:stocks_news_new/modals/user_res.dart';
+import 'package:stocks_news_new/service/revenue_cat.dart';
 import '../../../api/api_response.dart';
 import '../../../providers/home_provider.dart';
 import '../../../providers/user_provider.dart';
@@ -21,10 +22,12 @@ import '../../tabs/tabs.dart';
 class CommonLock extends StatelessWidget {
   final bool showLogin;
   final bool isLocked;
+  final bool? showUpgradeBtn;
   const CommonLock({
     super.key,
     this.showLogin = false,
     this.isLocked = false,
+    this.showUpgradeBtn = false,
   });
 
   void onBecomeMemberClick(BuildContext context) async {
@@ -73,12 +76,13 @@ class CommonLock extends StatelessWidget {
               ),
             );
           } else {
-            await Navigator.push(
-              navigatorKey.currentContext!,
-              MaterialPageRoute(
-                builder: (context) => const NewMembership(),
-              ),
-            );
+            subscribe();
+            // await Navigator.push(
+            //   navigatorKey.currentContext!,
+            //   MaterialPageRoute(
+            //     builder: (context) => const NewMembership(),
+            //   ),
+            // );
           }
         }
       }
@@ -129,6 +133,24 @@ class CommonLock extends StatelessWidget {
             ScreenUtil().statusBarHeight) /
         1.3;
     UserProvider provider = context.watch<UserProvider>();
+
+    HomeProvider homeProvider = context.watch<HomeProvider>();
+    UserMembershipRes? membership = homeProvider.extra?.membership;
+
+    String title = (showUpgradeBtn == true
+            ? membership?.lockContentUpgrade?.title
+            : membership?.lockContentPurchase?.title) ??
+        "Premium Content";
+
+    String message = (showUpgradeBtn == true
+            ? membership?.lockContentUpgrade?.message
+            : membership?.lockContentPurchase?.message) ??
+        "This content is only available for premium members. Please become a paid member to access.";
+
+    String btnText = (showUpgradeBtn == true
+            ? membership?.lockContentUpgrade?.buttonText
+            : membership?.lockContentPurchase?.buttonText) ??
+        "Become a Premium Member";
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -182,12 +204,12 @@ class CommonLock extends StatelessWidget {
                 // ),
                 // const SpacerVertical(height: 5),
                 Text(
-                  "Premium Content",
+                  title,
                   style: stylePTSansBold(fontSize: 25),
                 ),
                 const SpacerVertical(height: 10),
                 Text(
-                  "This content is only available for premium members. Please become a paid member to access.",
+                  message,
                   style: stylePTSansRegular(
                     fontSize: 15,
                     height: 1.3,
@@ -196,7 +218,7 @@ class CommonLock extends StatelessWidget {
                 ),
                 const SpacerVertical(height: 10),
                 Visibility(
-                  visible: showMembership,
+                  visible: showMembership && showUpgradeBtn == false,
                   child: ThemeButtonSmall(
                     onPressed: () {
                       onBecomeMemberClick(context);
@@ -209,7 +231,26 @@ class CommonLock extends StatelessWidget {
                     icon: Icons.lock,
                     radius: 30,
                     mainAxisSize: MainAxisSize.max,
-                    text: "Become a Premium Member",
+                    text: btnText,
+                    // showArrow: false,
+                  ),
+                ),
+                const SpacerVertical(height: 10),
+                Visibility(
+                  visible: showUpgradeBtn ?? false,
+                  child: ThemeButtonSmall(
+                    onPressed: () {
+                      onBecomeMemberClick(context);
+                    },
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 5, vertical: 11),
+                    textSize: 15,
+                    fontBold: true,
+                    iconFront: true,
+                    icon: Icons.lock,
+                    radius: 30,
+                    mainAxisSize: MainAxisSize.max,
+                    text: btnText,
                     // showArrow: false,
                   ),
                 ),

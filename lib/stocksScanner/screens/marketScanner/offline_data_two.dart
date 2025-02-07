@@ -40,20 +40,24 @@ class _MarketScannerOfflineTwoState extends State<MarketScannerOfflineTwo> {
 
   _setPrePost() {
     MarketScannerProvider provider = context.read<MarketScannerProvider>();
-    List<ScannerRes>? dataList = provider.offlineDataList;
-    preMarket = dataList?.any(
-          (element) {
-            return element.ext?.extendedHoursType == 'PreMarket';
-          },
-        ) ==
-        true;
+    // List<ScannerRes>? dataList = provider.offlineDataList;
+    // preMarket = dataList?.any(
+    //       (element) {
+    //         return element.ext?.extendedHoursType == 'PreMarket';
+    //       },
+    //     ) ==
+    //     true;
 
-    postMarket = dataList?.any(
-          (element) {
-            return element.ext?.extendedHoursType == 'PostMarket';
-          },
-        ) ==
-        true;
+    // postMarket = dataList?.any(
+    //       (element) {
+    //         return element.ext?.extendedHoursType == 'PostMarket';
+    //       },
+    //     ) ==
+    //     true;
+    preMarket =
+        provider.port?.port?.checkMarketOpenApi?.checkPreMarket ?? false;
+    postMarket =
+        provider.port?.port?.checkMarketOpenApi?.checkPostMarket ?? false;
 
     text = preMarket
         ? 'Pre-Market'

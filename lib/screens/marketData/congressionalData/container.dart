@@ -72,12 +72,12 @@ class _CongressionalContainerState extends State<CongressionalContainer> {
                 element.status == 0)) ??
         false;
 
+    bool? havePermissions;
     if (purchased && isLocked) {
-      bool havePermissions = userProvider.user?.membership?.permissions?.any(
+      havePermissions = userProvider.user?.membership?.permissions?.any(
               (element) => (element.key == "congress-stock-trades" &&
                   element.status == 1)) ??
           false;
-
       isLocked = !havePermissions;
     }
 
@@ -188,6 +188,7 @@ class _CongressionalContainerState extends State<CongressionalContainer> {
           CommonLock(
             showLogin: true,
             isLocked: isLocked,
+            showUpgradeBtn: havePermissions == false,
           ),
       ],
     );

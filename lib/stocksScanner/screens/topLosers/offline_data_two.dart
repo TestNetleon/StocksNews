@@ -4,14 +4,15 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/stocksScanner/manager/losers_stream.dart';
 import 'package:stocks_news_new/stocksScanner/modals/scanner_res.dart';
 import 'package:stocks_news_new/stocksScanner/providers/top_loser_scanner_provider.dart';
-import 'package:stocks_news_new/stocksScanner/screens/topGainers/scanner_header.dart';
 import 'package:stocks_news_new/stocksScanner/screens/topGainers/top_gainer_filter.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import '../../../utils/utils.dart';
+import '../../providers/market_scanner_provider.dart';
 import '../sorting/shorting.dart';
 import '../widget/container.dart';
+import 'scanner_header.dart';
 
 class TopLosersOfflineTwo extends StatefulWidget {
   const TopLosersOfflineTwo({super.key});
@@ -58,22 +59,30 @@ class _TopLosersOfflineTwoState extends State<TopLosersOfflineTwo> {
 
   _setPrePost() {
     TopLoserScannerProvider provider = context.read<TopLoserScannerProvider>();
-    List<ScannerRes>? dataList = provider.offlineDataList;
+    MarketScannerProvider scannerProvider =
+        context.read<MarketScannerProvider>();
+    preMarket =
+        scannerProvider.port?.port?.checkMarketOpenApi?.checkPreMarket ?? false;
+    postMarket =
+        scannerProvider.port?.port?.checkMarketOpenApi?.checkPostMarket ??
+            false;
+
+    // List<ScannerRes>? dataList = provider.offlineDataList;
     provider.resetLiveFilter();
 
-    preMarket = dataList?.any(
-          (element) {
-            return element.ext?.extendedHoursType == 'PreMarket';
-          },
-        ) ==
-        true;
+    // preMarket = dataList?.any(
+    //       (element) {
+    //         return element.ext?.extendedHoursType == 'PreMarket';
+    //       },
+    //     ) ==
+    //     true;
 
-    postMarket = dataList?.any(
-          (element) {
-            return element.ext?.extendedHoursType == 'PostMarket';
-          },
-        ) ==
-        true;
+    // postMarket = dataList?.any(
+    //       (element) {
+    //         return element.ext?.extendedHoursType == 'PostMarket';
+    //       },
+    //     ) ==
+    //     true;
 
     text = preMarket
         ? 'Pre-Market'
@@ -107,7 +116,7 @@ class _TopLosersOfflineTwoState extends State<TopLosersOfflineTwo> {
     return SingleChildScrollView(
       child: Column(
         children: [
-          TopGainerScannerHeader(isOnline: false),
+          TopLoserScannerHeader(isOnline: false),
           ScannerTopGainerFilter(
             onPercentClick: () async {
               provider.applyFilter(2);

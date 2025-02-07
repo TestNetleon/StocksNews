@@ -722,11 +722,43 @@ class MarketScannerProvider extends ChangeNotifier {
     } else if (sortBy == SortByEnums.netChange.name) {
       num? valueA = a.change;
       num? valueB = b.change;
-      if (a.extendedHoursType == "PostMarket" ||
-          a.extendedHoursType == "PreMarket") {
-        valueA = a.extendedHoursChange ?? 0;
-        valueB = b.extendedHoursChange ?? 0;
+      // if (a.extendedHoursType == "PostMarket" ||
+      //     a.extendedHoursType == "PreMarket") {
+      //   valueA = a.extendedHoursChange ?? 0;
+      //   valueB = b.extendedHoursChange ?? 0;
+      // }
+      if (valueA == null && valueB == null) return 0;
+      if (valueA == null) return -1;
+      if (valueB == null) return 1;
+      if (isAsc) {
+        return valueA.compareTo(valueB);
+      } else {
+        return valueB.compareTo(valueA);
       }
+    } else if (sortBy == SortByEnums.postMarketNetChange.name) {
+      num? valueA = a.extendedHoursChange;
+      num? valueB = b.extendedHoursChange;
+      // if (a.extendedHoursType == "PostMarket" ||
+      //     a.extendedHoursType == "PreMarket") {
+      //   valueA = a.extendedHoursChange ?? 0;
+      //   valueB = b.extendedHoursChange ?? 0;
+      // }
+      if (valueA == null && valueB == null) return 0;
+      if (valueA == null) return -1;
+      if (valueB == null) return 1;
+      if (isAsc) {
+        return valueA.compareTo(valueB);
+      } else {
+        return valueB.compareTo(valueA);
+      }
+    } else if (sortBy == SortByEnums.postMarketPerChange.name) {
+      num? valueA = a.extendedHoursPercentChange;
+      num? valueB = b.extendedHoursPercentChange;
+      // if (a.extendedHoursType == "PostMarket" ||
+      //     a.extendedHoursType == "PreMarket") {
+      //   valueA = a.extendedHoursChange ?? 0;
+      //   valueB = b.extendedHoursChange ?? 0;
+      // }
       if (valueA == null && valueB == null) return 0;
       if (valueA == null) return -1;
       if (valueB == null) return 1;
@@ -738,11 +770,11 @@ class MarketScannerProvider extends ChangeNotifier {
     } else if (sortBy == SortByEnums.perChange.name) {
       num? valueA = a.percentChange;
       num? valueB = b.percentChange;
-      if (a.extendedHoursType == "PostMarket" ||
-          a.extendedHoursType == "PreMarket") {
-        valueA = a.extendedHoursPercentChange ?? 0;
-        valueB = b.extendedHoursPercentChange ?? 0;
-      }
+      // if (a.extendedHoursType == "PostMarket" ||
+      //     a.extendedHoursType == "PreMarket") {
+      //   valueA = a.extendedHoursPercentChange ?? 0;
+      //   valueB = b.extendedHoursPercentChange ?? 0;
+      // }
       if (valueA == null && valueB == null) return 0;
       if (valueA == null) return -1;
       if (valueB == null) return 1;
@@ -868,6 +900,39 @@ class MarketScannerProvider extends ChangeNotifier {
         return valueB!.compareTo(valueA!);
       }
     }
+
+    if (sortBy == SortByEnums.postMarketNetChange.name) {
+      dynamic valueA = a.ext?.extendedHoursChange;
+      dynamic valueB = b.ext?.extendedHoursChange;
+      // dynamic valueA = a.change;
+      // dynamic valueB = b.change;
+
+      if (valueA == null && valueB == null) return 0;
+      if (valueA == null) return -1;
+      if (valueB == null) return 1;
+      if (isAsc) {
+        return valueA!.compareTo(valueB!);
+      } else {
+        return valueB!.compareTo(valueA!);
+      }
+    }
+    if (sortBy == SortByEnums.postMarketPerChange.name) {
+      dynamic valueA = a.ext?.extendedHoursPercentChange;
+      dynamic valueB = b.ext?.extendedHoursPercentChange;
+      // dynamic valueA = a.changesPercentage;
+      // dynamic valueB = b.changesPercentage;
+
+      if (valueA == null && valueB == null) return 0;
+      if (valueA == null) return -1;
+      if (valueB == null) return 1;
+
+      if (isAsc) {
+        return valueA!.compareTo(valueB!);
+      } else {
+        return valueB!.compareTo(valueA!);
+      }
+    }
+
     if (sortBy == SortByEnums.perChange.name) {
       // dynamic valueA = a.ext?.extendedHoursPercentChange;
       // dynamic valueB = b.ext?.extendedHoursPercentChange;
@@ -895,8 +960,9 @@ class MarketScannerProvider extends ChangeNotifier {
       }
     }
     if (sortBy == SortByEnums.dollarVolume.name) {
-      num dolorVolumeA = (a.volume ?? 0) * (a.price ?? 0);
-      num dolorVolumeB = (b.volume ?? 0) * (b.price ?? 0);
+      num dolorVolumeA = (a.volume ?? 0) * (a.ext?.extendedHoursPrice ?? 0);
+      num dolorVolumeB = (b.volume ?? 0) * (b.ext?.extendedHoursPrice ?? 0);
+
       if (isAsc) {
         return dolorVolumeA.compareTo(dolorVolumeB);
       } else {

@@ -7,12 +7,12 @@ import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/stock_detail_new.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
-import 'package:stocks_news_new/screens/membership_new/membership.dart';
 import 'package:stocks_news_new/screens/watchlist/watchlist.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:vibration/vibration.dart';
+import '../../../../service/revenue_cat.dart';
 import '../../../../utils/dialogs.dart';
 import '../../../alerts/alerts.dart';
 import '../../../auth/base/base_auth.dart';
@@ -70,12 +70,14 @@ class AddToAlertWatchlist extends StatelessWidget {
           ),
         );
       } else {
-        await Navigator.push(
-          navigatorKey.currentContext!,
-          MaterialPageRoute(
-            builder: (context) => const NewMembership(),
-          ),
-        );
+        await subscribe();
+
+        // await Navigator.push(
+        //   navigatorKey.currentContext!,
+        //   MaterialPageRoute(
+        //     builder: (context) => const NewMembership(),
+        //   ),
+        // );
       }
     }
   }

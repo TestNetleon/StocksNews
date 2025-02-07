@@ -50,8 +50,9 @@ class Insider extends StatelessWidget {
 
     // bool isLocked = true;
 
+    bool? havePermissions;
     if (purchased && isLocked) {
-      bool havePermissions = userProvider.user?.membership?.permissions?.any(
+      havePermissions = userProvider.user?.membership?.permissions?.any(
               (element) =>
                   (element.key == "insider-trading" && element.status == 1)) ??
           false;
@@ -106,7 +107,12 @@ class Insider extends StatelessWidget {
               ],
             ),
           ),
-          if (isLocked) CommonLock(showLogin: true, isLocked: isLocked),
+          if (isLocked)
+            CommonLock(
+              showLogin: true,
+              isLocked: isLocked,
+              showUpgradeBtn: havePermissions == false,
+            ),
         ],
       ),
     );

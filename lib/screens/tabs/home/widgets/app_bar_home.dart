@@ -618,30 +618,30 @@ class _AppBarHomeState extends State<AppBarHome> {
                           ),
                         ),
                       ),
-                    if (widget.isScannerFilter)
-                      Consumer<MarketScannerProvider>(
-                          builder: (context, value, child) {
-                        return Visibility(
-                          visible:
-                              widget.onFilterClick != null && value.visible,
-                          child: Stack(
-                            children: [
-                              IconButton(
-                                onPressed: () async {
-                                  await navigatorKey.currentContext!
-                                      .read<MarketScannerProvider>()
-                                      .getScannerPorts();
-                                  value.startListeningPorts();
-                                },
-                                icon: const Icon(
-                                  Icons.restart_alt,
-                                  color: ThemeColors.white,
-                                ),
-                              ),
-                            ],
-                          ),
-                        );
-                      }),
+                    // if (widget.isScannerFilter)
+                    //   Consumer<MarketScannerProvider>(
+                    //       builder: (context, value, child) {
+                    //     return Visibility(
+                    //       visible:
+                    //           widget.onFilterClick != null && value.visible,
+                    //       child: Stack(
+                    //         children: [
+                    //           IconButton(
+                    //             onPressed: () async {
+                    //               await navigatorKey.currentContext!
+                    //                   .read<MarketScannerProvider>()
+                    //                   .getScannerPorts();
+                    //               value.startListeningPorts();
+                    //             },
+                    //             icon: const Icon(
+                    //               Icons.restart_alt,
+                    //               color: ThemeColors.white,
+                    //             ),
+                    //           ),
+                    //         ],
+                    //       ),
+                    //     );
+                    //   }),
                     if (widget.isScannerFilter)
                       Consumer<MarketScannerProvider>(
                           builder: (context, value, child) {

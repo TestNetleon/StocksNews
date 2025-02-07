@@ -8,6 +8,9 @@ class LockInformation {
   final int? pointRequired;
   final String? popUpMessage;
   final String? popUpButton;
+  final dynamic showSubscribeBtn;
+  final dynamic showUpgradeBtn;
+  final dynamic showViewBtn;
 
   LockInformation({
     this.readingStatus,
@@ -19,6 +22,9 @@ class LockInformation {
     this.pointRequired,
     this.popUpMessage,
     this.popUpButton,
+    this.showSubscribeBtn,
+    this.showUpgradeBtn,
+    this.showViewBtn,
   });
 
   factory LockInformation.fromJson(Map<String, dynamic> json) =>
@@ -32,6 +38,9 @@ class LockInformation {
         pointRequired: json["point_required"],
         popUpMessage: json["popup_message"],
         popUpButton: json["popup_button"],
+        showSubscribeBtn: json["show_subscribe_btn"],
+        showUpgradeBtn: json["show_upgrade_btn"],
+        showViewBtn: json["show_view_btn"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -44,5 +53,8 @@ class LockInformation {
         "point_required": pointRequired,
         "popup_message": popUpMessage,
         "popup_button": popUpButton,
+        "show_subscribe_btn": showSubscribeBtn,
+        "show_upgrade_btn": showUpgradeBtn,
+        "show_view_btn": showViewBtn,
       };
 }
