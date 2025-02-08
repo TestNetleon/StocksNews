@@ -22,7 +22,10 @@ import 'package:stocks_news_new/database/preference.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/utils/utils.dart';
+import 'package:superwallkit_flutter/superwallkit_flutter.dart';
+import '../api/apis.dart';
 import '../screens/auth/base/base_auth.dart';
+import '../service/superwall/controller.dart';
 
 final _appLinks = AppLinks();
 //
@@ -368,6 +371,18 @@ Future<void> configureRevenueCatAttribute() async {
   try {
     UserRes? user = await Preference.getUser();
     RevenueCatManager.instance.initialize(user: user);
+    try {
+      RCPurchaseController purchaseController = RCPurchaseController();
+
+      String apiKey =
+          Platform.isAndroid ? ApiKeys.superWallAndroid : ApiKeys.superWallIOS;
+      Superwall.configure(
+        apiKey,
+        purchaseController: purchaseController,
+      );
+    } catch (e) {
+      //
+    }
   } catch (e) {
     Utils().showLog("Error in configure RevenueCat: $e");
   }

@@ -129,12 +129,6 @@ class RevenueCatManager {
   // MARK: SUPERWALL
   initializeSuperWall() async {
     try {
-      String apiKey = ApiKeys.superWall;
-      superwall.Superwall.configure(
-        apiKey,
-        purchaseController: purchaseController,
-      );
-
       // SET USER ID TO Superwall
       UserRes? userRes = navigatorKey.currentContext?.read<UserProvider>().user;
       if (userRes?.userId != null && userRes?.userId != '') {

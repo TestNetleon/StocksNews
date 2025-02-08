@@ -300,6 +300,8 @@ class ApiKeys {
   static const amplitudeKey = 'ff8ab349a2ddf801c985a59e3be1bedf';
 
   //SuperWall
-  static const superWall =
+  static const superWallIOS =
       'pk_12e4abaf1b222772aa2033514213dd673b31001945d628d2';
+  static const superWallAndroid =
+      'pk_df185ee9c5de2887e44fa3a357cf333b7f5d35d8dd9d839c';
 }
