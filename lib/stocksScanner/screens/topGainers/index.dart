@@ -76,11 +76,23 @@ class _ScannerTopGainerState extends State<ScannerTopGainer> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      _callPort();
       context.read<MarketScannerProvider>().stopListeningPorts();
       TopGainerScannerProvider provider =
           context.read<TopGainerScannerProvider>();
       provider.startListeningPorts();
     });
+  }
+
+  _callPort() async {
+    MarketScannerProvider scannerProvider =
+        context.read<MarketScannerProvider>();
+
+    await scannerProvider.getScannerPorts(
+      loading: true,
+      start: false,
+      set: false,
+    );
   }
 
   @override
@@ -89,6 +101,7 @@ class _ScannerTopGainerState extends State<ScannerTopGainer> {
         context.watch<TopGainerScannerProvider>();
     return CommonRefreshIndicator(
       onRefresh: () async {
+        await _callPort();
         MarketGainersStream().initializePorts();
         provider.resetLiveFilter();
       },

@@ -1146,29 +1146,42 @@ class MarketScannerProvider extends ChangeNotifier {
   ScannerPortsRes? _port;
   ScannerPortsRes? get port => _port;
 
-  Future getScannerPorts({loading = false, start = true}) async {
-    setStatus(Status.loading);
+  Future getScannerPorts({loading = false, start = true, set = true}) async {
+    if (loading) {
+      notifyListeners();
+    } else {
+      setStatus(Status.loading);
+    }
     try {
       ApiResponse response = await apiRequest(
         url: Apis.stockScannerPort,
-        showProgress: loading,
+        showProgress: loading && set,
       );
       if (response.status) {
         _port = scannerPortsResFromJson(jsonEncode(response.data));
+        // _port?.port?.checkMarketOpenApi?.postMarketBannerMessage = 'aaaa';
         if (start) {
           startListeningPorts();
         }
       } else {
         _port = null;
       }
-      setStatus(Status.loaded);
+      if (loading) {
+        notifyListeners();
+      } else {
+        setStatus(Status.loaded);
+      }
       return ApiResponse(
         status: response.status,
         data: _port,
       );
     } catch (e) {
       _port = null;
-      setStatus(Status.loaded);
+      if (loading) {
+        notifyListeners();
+      } else {
+        setStatus(Status.loaded);
+      }
       return ApiResponse(status: false);
     }
   }

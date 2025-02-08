@@ -70,6 +70,8 @@ class CheckMarketOpenApiRes {
   final bool? checkPreMarket;
   final String? dateTime;
   final bool? postMarketStream;
+  // String? postMarketBannerMessage;
+  String? bannerImage;
 
   CheckMarketOpenApiRes({
     this.isHoliday,
@@ -81,19 +83,24 @@ class CheckMarketOpenApiRes {
     this.checkPreMarket,
     this.dateTime,
     this.postMarketStream,
+    // this.postMarketBannerMessage,
+    this.bannerImage,
   });
 
   factory CheckMarketOpenApiRes.fromJson(Map<String, dynamic> json) =>
       CheckMarketOpenApiRes(
-          isHoliday: json["isHoliday"],
-          isMarketOpen: json["isMarketOpen"],
-          extendedHoursType: json["ExtendedHoursType"],
-          extendedHoursTime: json["ExtendedHoursTime"],
-          extendedHoursDate: json["ExtendedHoursDate"],
-          checkPostMarket: json["checkPostMarket"],
-          checkPreMarket: json["checkPreMarket"],
-          dateTime: json["dateTime"],
-          postMarketStream: json['postMarketStream']);
+        isHoliday: json["isHoliday"],
+        isMarketOpen: json["isMarketOpen"],
+        extendedHoursType: json["ExtendedHoursType"],
+        extendedHoursTime: json["ExtendedHoursTime"],
+        extendedHoursDate: json["ExtendedHoursDate"],
+        checkPostMarket: json["checkPostMarket"],
+        checkPreMarket: json["checkPreMarket"],
+        dateTime: json["dateTime"],
+        postMarketStream: json['postMarketStream'],
+        // postMarketBannerMessage: json['postMarketBannerMessage'],
+        bannerImage: json['banner_image'],
+      );
 
   Map<String, dynamic> toJson() => {
         "isHoliday": isHoliday,
@@ -105,6 +112,8 @@ class CheckMarketOpenApiRes {
         "checkPreMarket": checkPreMarket,
         "dateTime": dateTime,
         "postMarketStream": postMarketStream,
+        // 'postMarketBannerMessage': postMarketBannerMessage,
+        'banner_image': bannerImage,
       };
 }
 

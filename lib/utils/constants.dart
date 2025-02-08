@@ -98,7 +98,7 @@ enum AdPlaces { place1, place2, place3 }
 
 enum AdScreen { home, newsDetail, aiNews }
 
-enum TournamentsHead { tradTotal, pPaid, playTraders,topTitan}
+enum TournamentsHead { tradTotal, pPaid, playTraders, topTitan }
 
 enum TsOrderTypes {
   LIMIT_ORDER,
@@ -170,6 +170,7 @@ Map<AdScreen, Map<AdPlaces, bool>> adVisibilityMap = {
 //------------------------------------------------
 
 class Images {
+  static const String scannerStop = 'assets/images/scanner_stop.png';
   static const String logo = "assets/images/logo.png";
   static const String logoP = "assets/images/logo_holder.png";
   static const String login = "assets/images/log-in.png";

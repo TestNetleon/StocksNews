@@ -18,6 +18,8 @@ import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/custom_tab_container.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 
+import '../../providers/market_scanner_provider.dart';
+
 //MARK: WEB
 class StocksScanner extends StatefulWidget {
   const StocksScanner({super.key});
@@ -55,7 +57,11 @@ class StocksScannerIndex extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // MarketScannerProvider provider = context.watch<MarketScannerProvider>();
+    MarketScannerProvider provider = context.watch<MarketScannerProvider>();
+    // String? msg =
+    //     provider.port?.port?.checkMarketOpenApi?.postMarketBannerMessage;
+
+    String? bannerImage = provider.port?.port?.checkMarketOpenApi?.bannerImage;
 
     UserProvider userProvider = context.watch<UserProvider>();
     HomeProvider homeProvider = context.watch<HomeProvider>();
@@ -89,12 +95,14 @@ class StocksScannerIndex extends StatelessWidget {
           canSearch: false,
           showTrailing: false,
           isScannerFilter: true,
-          onFilterClick: () {
-            Navigator.push(
-              context,
-              createRoute(MarketScannerFilter()),
-            );
-          },
+          onFilterClick: bannerImage == null || bannerImage == ''
+              ? () {
+                  Navigator.push(
+                    context,
+                    createRoute(MarketScannerFilter()),
+                  );
+                }
+              : null,
         ),
         body: isLocked
             ? Stack(

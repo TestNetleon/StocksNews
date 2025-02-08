@@ -20,6 +20,7 @@ class _ScannerTopLosersState extends State<ScannerTopLosers> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      _callPort();
       context.read<MarketScannerProvider>().stopListeningPorts();
       TopLoserScannerProvider provider =
           context.read<TopLoserScannerProvider>();
@@ -28,11 +29,27 @@ class _ScannerTopLosersState extends State<ScannerTopLosers> {
     });
   }
 
+  _callPort() async {
+    MarketScannerProvider scannerProvider =
+        context.read<MarketScannerProvider>();
+
+    await scannerProvider.getScannerPorts(
+      loading: true,
+      start: false,
+      set: false,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     TopLoserScannerProvider provider = context.read<TopLoserScannerProvider>();
     return CommonRefreshIndicator(
       onRefresh: () async {
+        _callPort();
+        // MarketScannerProvider scannerProvider =
+        //     context.read<MarketScannerProvider>();
+
+        // await scannerProvider.getScannerPorts(loading: true, start: false);
         MarketLosersStream().initializePorts();
         provider.resetLiveFilter();
       },

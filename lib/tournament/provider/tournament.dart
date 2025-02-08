@@ -107,7 +107,8 @@ class TournamentProvider extends ChangeNotifier {
     hours = initialDuration.inHours;
     minutes = initialDuration.inMinutes % 60;
     seconds = initialDuration.inSeconds % 60;
-    _totalDuration = _detailRes?.battleTime?.endTime!.difference(_detailRes?.battleTime!.startTime ?? DateTime.now());
+    _totalDuration = _detailRes?.battleTime?.endTime!
+        .difference(_detailRes?.battleTime!.startTime ?? DateTime.now());
     _timer = Timer.periodic(Duration(seconds: 1), (timer) {
       if (hours == 0 && minutes == 0 && seconds == 0) {
         stopCountdown();
@@ -137,7 +138,8 @@ class TournamentProvider extends ChangeNotifier {
         // Decrement the countdown
         if (seconds > 0) {
           seconds--;
-          int elapsedSeconds = _totalDuration!.inSeconds - initialDuration.inSeconds;
+          int elapsedSeconds =
+              _totalDuration!.inSeconds - initialDuration.inSeconds;
           progress = elapsedSeconds / _totalDuration!.inSeconds;
           progressColor = ThemeColors.transparentGreen;
         } else {
@@ -363,7 +365,6 @@ class TournamentProvider extends ChangeNotifier {
   List<KeyValueElement>? _ranks;
   List<KeyValueElement>? get ranks => _ranks;
 
-
   void setStatusTradeExecuted(status) {
     _statusCommonList = status;
     notifyListeners();
@@ -407,7 +408,6 @@ class TournamentProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-
   String getApiUrl(TournamentsHead tournament) {
     switch (tournament) {
       case TournamentsHead.tradTotal:
@@ -422,7 +422,10 @@ class TournamentProvider extends ChangeNotifier {
     }
   }
 
-  Future pointsPaidAPI({loadMore = false,bool clear = true, required TournamentsHead selectedTournament}) async {
+  Future pointsPaidAPI(
+      {loadMore = false,
+      bool clear = true,
+      required TournamentsHead selectedTournament}) async {
     if (loadMore) {
       _page++;
       setStatusTradeExecuted(Status.loadingMore);
@@ -459,9 +462,11 @@ class TournamentProvider extends ChangeNotifier {
           _errorCommonList = response.message;
         }
       }
-      _extraOfPointPaid = (response.extra is Extra ? response.extra as Extra : null);
+      _extraOfPointPaid =
+          (response.extra is Extra ? response.extra as Extra : null);
 
-      if(selectedTournament==TournamentsHead.playTraders||selectedTournament==TournamentsHead.topTitan){
+      if (selectedTournament == TournamentsHead.playTraders ||
+          selectedTournament == TournamentsHead.topTitan) {
         _ranks = response.extra.ranks;
         print(_ranks?.length.toString());
       }
@@ -475,8 +480,6 @@ class TournamentProvider extends ChangeNotifier {
       setStatusTradeExecuted(Status.loaded);
     }
   }
-
-
 
   /// league redirection to leaderboard
   void leagueToLeaderboard({String? selectedDate}) {
@@ -577,7 +580,8 @@ class TournamentProvider extends ChangeNotifier {
       );
       if (response.status) {
         _userData = tournamentUserDetailResFromMap(jsonEncode(response.data));
-        if(_userData?.recentTrades?.dataTrade!= null && _userData?.recentTrades?.dataTrade!.isNotEmpty == true){
+        if (_userData?.recentTrades?.dataTrade != null &&
+            _userData?.recentTrades?.dataTrade!.isNotEmpty == true) {
           _startSseTrades();
         }
         _errorUserData = null;
@@ -610,18 +614,18 @@ class TournamentProvider extends ChangeNotifier {
       Map requst = {
         'token': provider.user?.token ?? '',
         'tournament_battle_id': '$selectedBattleID',
-        'user_id': _userData?.userStats?.userId??"",
+        'user_id': _userData?.userStats?.userId ?? "",
         'page': '$_page',
       };
       ApiResponse response = await apiRequest(
-        url:Apis.tTradeAll,
+        url: Apis.tTradeAll,
         showProgress: false,
         request: requst,
       );
       if (response.status) {
         if (_page == 1) {
           _allTrades = allTradesResFromJson(jsonEncode(response.data));
-          if(_allTrades!= null && _allTrades!.isNotEmpty == true){
+          if (_allTrades != null && _allTrades!.isNotEmpty == true) {
             _startSseTradesAll();
           }
           _errorTradeList = null;
@@ -635,7 +639,8 @@ class TournamentProvider extends ChangeNotifier {
           _errorTradeList = response.message;
         }
       }
-      _extraOfTrade = (response.extra is Extra ? response.extra as Extra : null);
+      _extraOfTrade =
+          (response.extra is Extra ? response.extra as Extra : null);
       setStatusTrade(Status.loaded);
     } catch (e) {
       _allTrades = null;
@@ -646,18 +651,18 @@ class TournamentProvider extends ChangeNotifier {
     }
   }
 
-
   void _startSseTrades() {
     List<String>? _symbols;
-    if (_userData?.recentTrades?.dataTrade != null && _userData?.recentTrades?.dataTrade!.isNotEmpty == true) {
+    if (_userData?.recentTrades?.dataTrade != null &&
+        _userData?.recentTrades?.dataTrade!.isNotEmpty == true) {
       _symbols = _userData?.recentTrades?.dataTrade
           ?.where((trade) => trade.status == 0 && trade.symbol != null)
           .map((trade) => trade.symbol!)
           .toList();
     }
 
-    if(_userData?.recentTrades?.dataTrade!=null){
-      List<RecentTradeRes> dataTrade = _userData?.recentTrades?.dataTrade??[];
+    if (_userData?.recentTrades?.dataTrade != null) {
+      List<RecentTradeRes> dataTrade = _userData?.recentTrades?.dataTrade ?? [];
 
       for (var data in dataTrade) {
         num currentPrice = data.currentPrice ?? 0;
@@ -666,11 +671,19 @@ class TournamentProvider extends ChangeNotifier {
           print(data.status);
           if (_symbols != null && _symbols.isNotEmpty == true) {
             if (data.type == "buy") {
-              data.performance = orderPrice == 0 || currentPrice == 0 ? 0 : (((currentPrice - orderPrice) / orderPrice) * 100);
-              data.gainLoss = orderPrice == 0 || currentPrice == 0 ? 0 :(currentPrice - orderPrice);
+              data.performance = orderPrice == 0 || currentPrice == 0
+                  ? 0
+                  : (((currentPrice - orderPrice) / orderPrice) * 100);
+              data.gainLoss = orderPrice == 0 || currentPrice == 0
+                  ? 0
+                  : (currentPrice - orderPrice);
             } else {
-              data.performance = currentPrice == 0 || orderPrice == 0 ? 0 : (((orderPrice - currentPrice) / currentPrice) * 100);
-              data.gainLoss = orderPrice == 0 || currentPrice == 0 ? 0 :(orderPrice-currentPrice);
+              data.performance = currentPrice == 0 || orderPrice == 0
+                  ? 0
+                  : (((orderPrice - currentPrice) / currentPrice) * 100);
+              data.gainLoss = orderPrice == 0 || currentPrice == 0
+                  ? 0
+                  : (orderPrice - currentPrice);
             }
             notifyListeners();
             SSEManager.instance.connectMultipleStocks(
@@ -680,27 +693,29 @@ class TournamentProvider extends ChangeNotifier {
 
             SSEManager.instance.addListener(
               data.symbol ?? '',
-                  (stockData) {
+              (stockData) {
                 num? newPrice = stockData.price;
                 if (newPrice != null) {
                   if (data.type == "buy") {
-                    data.performance = (((newPrice - orderPrice) / orderPrice) * 100);
+                    data.performance =
+                        (((newPrice - orderPrice) / orderPrice) * 100);
                     data.gainLoss = (newPrice - orderPrice);
                   } else {
-                    data.performance = (((orderPrice - newPrice) / newPrice) * 100);
-                    data.gainLoss =(orderPrice-newPrice);
+                    data.performance =
+                        (((orderPrice - newPrice) / newPrice) * 100);
+                    data.gainLoss = (orderPrice - newPrice);
                   }
-               //   data.gainLoss = (newPrice - orderPrice);
+                  //   data.gainLoss = (newPrice - orderPrice);
                   data.currentPrice = newPrice;
                 }
-                Utils().showLog('Recent Activities ${data.symbol}, ${data.performance}, ${data.gainLoss}, ${data.currentPrice}');
+                Utils().showLog(
+                    'Recent Activities ${data.symbol}, ${data.performance}, ${data.gainLoss}, ${data.currentPrice}');
                 notifyListeners();
               },
               SimulatorEnum.tournament,
             );
           }
-        }
-        else {
+        } else {
           print(data.status);
         }
       }
@@ -709,15 +724,15 @@ class TournamentProvider extends ChangeNotifier {
 
   void _startSseTradesAll() {
     List<String>? _symbols;
-    if (_allTrades!= null && _allTrades!.isNotEmpty == true) {
-      _symbols =_allTrades
+    if (_allTrades != null && _allTrades!.isNotEmpty == true) {
+      _symbols = _allTrades
           ?.where((trade) => trade.status == 0 && trade.symbol != null)
           .map((trade) => trade.symbol!)
           .toList();
     }
 
-    if(_allTrades!=null){
-      List<RecentTradeRes> dataTrade = _allTrades??[];
+    if (_allTrades != null) {
+      List<RecentTradeRes> dataTrade = _allTrades ?? [];
 
       for (var data in dataTrade) {
         num currentPrice = data.currentPrice ?? 0;
@@ -726,11 +741,19 @@ class TournamentProvider extends ChangeNotifier {
           print(data.status);
           if (_symbols != null && _symbols.isNotEmpty == true) {
             if (data.type == "buy") {
-              data.performance = orderPrice == 0 || currentPrice == 0 ? 0 : (((currentPrice - orderPrice) / orderPrice) * 100);
-              data.gainLoss = orderPrice == 0 || currentPrice == 0 ? 0 :(currentPrice - orderPrice);
+              data.performance = orderPrice == 0 || currentPrice == 0
+                  ? 0
+                  : (((currentPrice - orderPrice) / orderPrice) * 100);
+              data.gainLoss = orderPrice == 0 || currentPrice == 0
+                  ? 0
+                  : (currentPrice - orderPrice);
             } else {
-              data.performance = currentPrice == 0 || orderPrice == 0 ? 0 : (((orderPrice - currentPrice) / currentPrice) * 100);
-              data.gainLoss = orderPrice == 0 || currentPrice == 0 ? 0 :(orderPrice-currentPrice);
+              data.performance = currentPrice == 0 || orderPrice == 0
+                  ? 0
+                  : (((orderPrice - currentPrice) / currentPrice) * 100);
+              data.gainLoss = orderPrice == 0 || currentPrice == 0
+                  ? 0
+                  : (orderPrice - currentPrice);
             }
             notifyListeners();
             SSEManager.instance.connectMultipleStocks(
@@ -739,40 +762,42 @@ class TournamentProvider extends ChangeNotifier {
             );
             SSEManager.instance.addListener(
               data.symbol ?? '',
-                  (stockData) {
+              (stockData) {
                 num? newPrice = stockData.price;
                 if (newPrice != null) {
                   if (data.type == "buy") {
-                    data.performance = (((newPrice - orderPrice) / orderPrice) * 100);
+                    data.performance =
+                        (((newPrice - orderPrice) / orderPrice) * 100);
                     data.gainLoss = (newPrice - orderPrice);
                   } else {
-                    data.performance = (((orderPrice - newPrice) / newPrice) * 100);
-                    data.gainLoss =(orderPrice-newPrice);
+                    data.performance =
+                        (((orderPrice - newPrice) / newPrice) * 100);
+                    data.gainLoss = (orderPrice - newPrice);
                   }
                   data.currentPrice = newPrice;
                 }
-                Utils().showLog('Recent Activities of All trade ${data.symbol}, ${data.performance}, ${data.gainLoss}, ${data.currentPrice}');
+                Utils().showLog(
+                    'Recent Activities of All trade ${data.symbol}, ${data.performance}, ${data.gainLoss}, ${data.currentPrice}');
                 notifyListeners();
               },
               SimulatorEnum.tournamentTrade,
             );
           }
-        }
-        else {
+        } else {
           print(data.status);
         }
       }
     }
   }
 
-  void tickerDetailRedirection(String symbol){
+  void tickerDetailRedirection(String symbol) {
     Navigator.push(
       navigatorKey.currentContext!,
-      MaterialPageRoute(
-          builder: (_) => StockDetail(symbol: symbol)),
+      MaterialPageRoute(builder: (_) => StockDetail(symbol: symbol)),
     );
   }
-  void tradesRedirection(String selectedBattleID){
+
+  void tradesRedirection(String selectedBattleID) {
     Navigator.push(
       navigatorKey.currentContext!,
       MaterialPageRoute(

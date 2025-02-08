@@ -40,9 +40,7 @@ class _TsDashboardState extends State<TsDashboard> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       isOnTsScreen = true;
       context.read<TsPortfolioProvider>().getStreamKeysData();
-      context
-          .read<MarketScannerProvider>()
-          .getScannerPorts(loading: false, start: false);
+      context.read<MarketScannerProvider>().getScannerPorts(start: false);
     });
   }
 

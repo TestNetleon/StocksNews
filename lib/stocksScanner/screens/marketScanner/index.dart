@@ -73,9 +73,21 @@ class _MarketScannerState extends State<MarketScanner> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      _callPort();
       MarketScannerProvider provider = context.read<MarketScannerProvider>();
       provider.startListeningPorts();
     });
+  }
+
+  _callPort() async {
+    MarketScannerProvider scannerProvider =
+        context.read<MarketScannerProvider>();
+
+    await scannerProvider.getScannerPorts(
+      loading: true,
+      start: false,
+      set: false,
+    );
   }
 
   @override
@@ -90,7 +102,9 @@ class _MarketScannerState extends State<MarketScanner> {
   Widget build(BuildContext context) {
     return CommonRefreshIndicator(
       onRefresh: () async {
-        context.read<MarketScannerProvider>().startListeningPorts();
+        _callPort();
+        MarketScannerProvider provider = context.read<MarketScannerProvider>();
+        provider.startListeningPorts();
       },
       child: SingleChildScrollView(
         child: Consumer<MarketScannerProvider>(

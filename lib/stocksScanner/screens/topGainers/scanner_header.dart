@@ -41,6 +41,7 @@ class _TopGainerScannerHeaderState extends State<TopGainerScannerHeader> {
       } else {
         MarketScannerProvider provider = context.read<MarketScannerProvider>();
         _lastUpdated = provider.port?.port?.checkMarketOpenApi?.dateTime ?? "";
+        setState(() {});
       }
     });
   }

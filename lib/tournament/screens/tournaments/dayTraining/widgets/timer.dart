@@ -79,31 +79,32 @@ class DayTrainingTitle extends StatelessWidget {
                 const SpacerVertical(height: 5),
                 Visibility(
                   visible: provider.detailRes?.tournamentBattleId != null,
-                  child:LinearProgressIndicator(
+                  child: LinearProgressIndicator(
                     value: provider.progress,
                     backgroundColor: ThemeColors.white.withAlpha(20),
                     minHeight: 4.0,
-                    valueColor: AlwaysStoppedAnimation<Color>(provider.progressColor),
+                    valueColor:
+                        AlwaysStoppedAnimation<Color>(provider.progressColor),
                     borderRadius: BorderRadius.circular(20),
                   ),
                 ),
                 Visibility(
                   visible: provider.detailRes?.tournamentBattleId == null,
-                  child:LinearProgressIndicator(
+                  child: LinearProgressIndicator(
                     value: provider.progress,
                     backgroundColor: ThemeColors.white.withAlpha(20),
                     minHeight: 4.0,
-                    valueColor: AlwaysStoppedAnimation<Color>(provider.progressColor),
+                    valueColor:
+                        AlwaysStoppedAnimation<Color>(provider.progressColor),
                     borderRadius: BorderRadius.circular(20),
                   ),
                 ),
-
                 const SpacerVertical(height: 5),
                 Text(
                   'Trading League Time',
                   style: styleGeorgiaBold(),
                 ),
-                SpacerVertical(height:5),
+                SpacerVertical(height: 5),
                 Row(
                   children: [
                     Visibility(
@@ -112,7 +113,7 @@ class DayTrainingTitle extends StatelessWidget {
                         child: Align(
                           alignment: Alignment.centerLeft,
                           child: Text(
-                            provider.detailRes?.tournamentLastDate??"",
+                            provider.detailRes?.tournamentLastDate ?? "",
                             style: styleGeorgiaRegular(fontSize: 11),
                           ),
                         ),
@@ -124,7 +125,7 @@ class DayTrainingTitle extends StatelessWidget {
                         child: Align(
                           alignment: Alignment.centerRight,
                           child: Text(
-                            provider.detailRes?.tournamentNextDate??"",
+                            provider.detailRes?.tournamentNextDate ?? "",
                             style: styleGeorgiaRegular(fontSize: 11),
                           ),
                         ),
@@ -132,7 +133,7 @@ class DayTrainingTitle extends StatelessWidget {
                     ),
                   ],
                 ),
-                SpacerVertical(height:5),
+                SpacerVertical(height: 5),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -146,7 +147,7 @@ class DayTrainingTitle extends StatelessWidget {
                             TextSpan(
                               style: styleGeorgiaRegular(fontSize: 14),
                               text:
-                              '${provider.detailRes?.tournamentStartTime}',
+                                  '${provider.detailRes?.tournamentStartTime}',
                             ),
                           ],
                         ),
@@ -161,8 +162,7 @@ class DayTrainingTitle extends StatelessWidget {
                           children: [
                             TextSpan(
                               style: styleGeorgiaRegular(fontSize: 14),
-                              text:
-                              '${provider.detailRes?.tournamentEndTime}',
+                              text: '${provider.detailRes?.tournamentEndTime}',
                             ),
                           ],
                         ),
@@ -174,7 +174,6 @@ class DayTrainingTitle extends StatelessWidget {
             ),
           ),
         ),
-
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 10.0),
           child: PlayBoxTournament(
@@ -183,7 +182,7 @@ class DayTrainingTitle extends StatelessWidget {
             description: provider.detailRes?.description ?? '',
             pointText: 'Prize Pool',
             points: detailRes?.point ?? '',
-            tournamentPoints:detailRes?.tournamentPoints??[],
+            tournamentPoints: detailRes?.tournamentPoints ?? [],
             onButtonTap: () {
               if (provider.detailRes?.joined == false) {
                 provider.joinTounament(id: tournamentId);
