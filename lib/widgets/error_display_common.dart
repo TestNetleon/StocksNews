@@ -51,11 +51,13 @@ class ErrorDisplayWidget extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   /// replace text with html widget
-                  HtmlWidget(
-                    error ?? Const.errSomethingWrong,
-                    textStyle:stylePTSansRegular(fontSize: fontSize)
+                  Align(
+                    child: HtmlWidget(
+                      error ?? Const.errSomethingWrong,
+                      textStyle: stylePTSansRegular(fontSize: fontSize),
+                    ),
                   ),
-                 /* Text(
+                  /* Text(
                     error ?? Const.errSomethingWrong,
                     style: stylePTSansRegular(fontSize: fontSize),
                     textAlign: TextAlign.center,

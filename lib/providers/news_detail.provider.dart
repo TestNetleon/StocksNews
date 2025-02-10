@@ -33,6 +33,14 @@ class NewsDetailProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  int _limitCall = 0;
+  int get limitCall => _limitCall;
+
+  void clearLimitCall() {
+    _limitCall = 0;
+    notifyListeners();
+  }
+
   Future getNewsDetailData({
     showProgress = false,
     String? slug,
@@ -87,6 +95,8 @@ class NewsDetailProvider extends ChangeNotifier {
           );
         },
       );
+      _extra = (response.extra is Extra ? response.extra as Extra : null);
+      notifyListeners();
       if (response.status) {
         _data = newsDetailDataResFromJson(jsonEncode(response.data));
         Preference.saveReferInput(_extra?.affiliateInput == 1);
@@ -107,19 +117,44 @@ class NewsDetailProvider extends ChangeNotifier {
         } catch (e) {
           //
         }
+        setStatus(Status.loaded);
       } else {
         _data = null;
         _error = response.message;
-        // showErrorMessage(message: response.message);
+        setStatus(Status.loading);
+
+        _limitCall++;
+        if (_limitCall < 4) {
+          await Future.delayed(Duration(milliseconds: 100));
+          getNewsDetailData(
+            slug: slug,
+            inAppMsgId: inAppMsgId,
+            notificationId: notificationId,
+            pointsDeducted: pointsDeducted,
+          );
+        } else {
+          setStatus(Status.loaded);
+        }
       }
-      _extra = (response.extra is Extra ? response.extra as Extra : null);
-      setStatus(Status.loaded);
     } catch (e) {
-      // getNewsDetailData(slug: slug);
       _data = null;
       _error = Const.errSomethingWrong;
+      // getNewsDetailData(slug: slug);
+      setStatus(Status.loading);
+      _limitCall++;
+      if (_limitCall < 4) {
+        await Future.delayed(Duration(milliseconds: 100));
+        getNewsDetailData(
+          slug: slug,
+          inAppMsgId: inAppMsgId,
+          notificationId: notificationId,
+          pointsDeducted: pointsDeducted,
+        );
+      } else {
+        setStatus(Status.loaded);
+      }
+
       Utils().showLog(e.toString());
-      setStatus(Status.loaded);
     }
   }
 

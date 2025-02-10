@@ -69,6 +69,7 @@ class _NewsDetailsBodyState extends State<NewsDetailsBody> {
   void _getInitialData() async {
     NewsDetailProvider newsProvider = context.read<NewsDetailProvider>();
     UserProvider userProvider = context.read<UserProvider>();
+    newsProvider.clearLimitCall();
     await newsProvider.getNewsDetailData(
       showProgress: false,
       slug: widget.slug,
@@ -744,10 +745,12 @@ class _NewsDetailsBodyState extends State<NewsDetailsBody> {
                     ? UpdateError(error: provider.error)
                     : Center(
                         child: ErrorDisplayWidget(
-                          error: provider.error,
-                          onRefresh: () => provider.getNewsDetailData(
-                              slug: widget.slug, showProgress: false),
-                        ),
+                            error: provider.error,
+                            onRefresh: () {
+                              provider.clearLimitCall();
+                              provider.getNewsDetailData(
+                                  slug: widget.slug, showProgress: false);
+                            }),
                       )
                 : provider.isLoading
                     ? const Loading()

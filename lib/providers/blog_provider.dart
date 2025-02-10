@@ -169,6 +169,14 @@ class BlogProvider extends ChangeNotifier {
     }
   }
 
+  int _limitCall = 0;
+  int get limitCall => _limitCall;
+
+  void clearLimitCall() {
+    _limitCall = 0;
+    notifyListeners();
+  }
+
   Future getBlogDetailData({
     String? slug,
     inAppMsgId,
@@ -216,25 +224,53 @@ class BlogProvider extends ChangeNotifier {
           screenType: 'article',
           source: _blogsDetail?.slug ?? '',
         );
+        _statusDetail = Status.loaded;
+        notifyListeners();
       } else {
+        print('--->>HII2');
         _blogsDetail = null;
         _error = response.message;
         // showErrorMessage(message: response.message);
+        _statusDetail = Status.loading;
+        notifyListeners();
+
+        _limitCall++; // Increment limit call count
+
+        if (_limitCall < 4) {
+          await Future.delayed(Duration(milliseconds: 100));
+          getBlogDetailData(
+            slug: slug,
+            inAppMsgId: inAppMsgId,
+            notificationId: notificationId,
+            pointsDeducted: pointsDeducted,
+          );
+        } else {
+          _statusDetail = Status.loaded;
+          notifyListeners();
+        }
       }
       // setStatus(Status.loaded);
-      _statusDetail = Status.loaded;
-      notifyListeners();
     } catch (e) {
-      _blogsDetail = null;
+      // _blogsDetail = null;
       Utils().showLog('error there $e');
       _statusDetail = Status.loading;
-      getBlogDetailData(
-        slug: slug,
-        inAppMsgId: inAppMsgId,
-        notificationId: notificationId,
-        pointsDeducted: pointsDeducted,
-      );
       notifyListeners();
+      _limitCall++; // Increment limit call count
+
+      if (_limitCall < 4) {
+        await Future.delayed(Duration(milliseconds: 100));
+        getBlogDetailData(
+          slug: slug,
+          inAppMsgId: inAppMsgId,
+          notificationId: notificationId,
+          pointsDeducted: pointsDeducted,
+        );
+      } else {
+        _blogsDetail = null;
+        _error = Const.errSomethingWrong;
+        _statusDetail = Status.loaded;
+        notifyListeners();
+      }
     }
   }
 

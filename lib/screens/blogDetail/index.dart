@@ -44,7 +44,7 @@ class _BlogDetailState extends State<BlogDetail> {
   void _getInitialData() async {
     BlogProvider blogProvider = context.read<BlogProvider>();
     UserProvider userProvider = context.read<UserProvider>();
-
+    blogProvider.clearLimitCall();
     await blogProvider.getBlogDetailData(
       slug: widget.slug,
       inAppMsgId: widget.inAppMsgId,

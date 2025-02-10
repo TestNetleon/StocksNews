@@ -151,7 +151,10 @@ class BlogDetailContainer extends StatelessWidget {
             isLoading: provider.isLoadingDetail,
             showPreparingText: true,
             isOldApp: provider.extra?.isOldApp,
-            onRefresh: () => provider.getBlogDetailData(slug: slug),
+            onRefresh: () {
+              provider.clearLimitCall();
+              provider.getBlogDetailData(slug: slug);
+            },
             child: CommonRefreshIndicator(
               onRefresh: () => provider.getBlogDetailData(slug: slug),
               child: Stack(
