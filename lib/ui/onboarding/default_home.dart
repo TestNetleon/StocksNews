@@ -7,6 +7,7 @@ import 'package:stocks_news_new/widgets/base_container.dart';
 
 //MARK: DefaultHome
 class DefaultHome extends StatefulWidget {
+  static const path = 'DefaultHome';
   const DefaultHome({super.key});
 
   @override
@@ -25,23 +26,15 @@ class _DefaultHomeState extends State<DefaultHome> {
   void _navigate() {
     OnboardingManager provider = context.read<OnboardingManager>();
     if (provider.data == null) {
-      Navigator.pushAndRemoveUntil(
+      Navigator.pushNamedAndRemoveUntil(
         context,
-        MaterialPageRoute(
-          builder: (context) {
-            return Tabs();
-          },
-        ),
+        Tabs.path,
         (route) => false,
       );
     } else {
-      Navigator.pushAndRemoveUntil(
+      Navigator.pushNamedAndRemoveUntil(
         context,
-        MaterialPageRoute(
-          builder: (context) {
-            return OnboardingSlides();
-          },
-        ),
+        OnboardingSlides.path,
         (route) => false,
       );
     }

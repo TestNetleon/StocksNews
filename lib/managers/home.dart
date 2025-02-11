@@ -13,11 +13,14 @@ import '../models/my_home.dart';
 import '../utils/constants.dart';
 
 class MyHomeManager extends ChangeNotifier {
+  //MARK: Home
   String? _error;
+  String? get error => _error ?? Const.errSomethingWrong;
+
   Status _status = Status.ideal;
   Status get status => _status;
+
   bool get isLoading => _status == Status.loading || _status == Status.ideal;
-  String? get error => _error ?? Const.errSomethingWrong;
 
   MyHomeRes? _data;
   MyHomeRes? get data => _data;

@@ -357,7 +357,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
             theme: lightTheme,
             home: child,
             routes: Routes.routes,
-            // onGenerateRoute: Routes.getRouteGenerate,
+            onGenerateRoute: Routes.getRouteGenerate,
           ),
         );
       },

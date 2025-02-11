@@ -12,11 +12,14 @@ import 'package:stocks_news_new/routes/my_app.dart';
 import '../utils/constants.dart';
 
 class OnboardingManager extends ChangeNotifier {
+  //MARK: Onboarding
   String? _error;
+  String? get error => _error ?? Const.errSomethingWrong;
+
   Status _status = Status.ideal;
   Status get status => _status;
+
   bool get isLoading => _status == Status.loading || _status == Status.ideal;
-  String? get error => _error ?? Const.errSomethingWrong;
 
   OnboardingRes? _data;
   OnboardingRes? get data => _data;

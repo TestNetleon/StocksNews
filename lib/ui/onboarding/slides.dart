@@ -15,6 +15,7 @@ import 'slide_item.dart';
 
 //MARK: Slides Index
 class OnboardingSlides extends StatefulWidget {
+  static const path = 'OnboardingSlides';
   const OnboardingSlides({super.key});
 
   @override
