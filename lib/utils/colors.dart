@@ -130,4 +130,5 @@ class ThemeColors {
   static const splashBG = Color(0xFF012054);
 
   //CATEGORY
+  static const lightGrey = Color(0xFFF0F2F6);
 }

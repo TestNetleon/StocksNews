@@ -6,7 +6,7 @@ import 'package:stocks_news_new/utils/constants.dart';
 final lightTheme = ThemeData(
   useMaterial3: false,
   primarySwatch: ThemeColors.primaryPalette,
-  scaffoldBackgroundColor: ThemeColors.background,
+  scaffoldBackgroundColor: ThemeColors.white,
   drawerTheme: const DrawerThemeData(
     backgroundColor: ThemeColors.background,
     width: double.infinity,

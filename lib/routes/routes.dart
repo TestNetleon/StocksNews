@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:stocks_news_new/managers/home.dart';
+import 'package:stocks_news_new/managers/market/market.dart';
 import 'package:stocks_news_new/tournament/provider/leaderboard.dart';
 import 'package:stocks_news_new/tournament/provider/tournament.dart';
 import 'package:stocks_news_new/tournament/provider/search.dart';
@@ -647,6 +648,7 @@ class Routes {
       //MARK: New UI providers
       ChangeNotifierProvider(create: (_) => OnboardingManager()),
       ChangeNotifierProvider(create: (_) => MyHomeManager()),
+      ChangeNotifierProvider(create: (_) => MarketManager()),
     ];
   }
 }

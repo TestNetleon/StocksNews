@@ -12,6 +12,7 @@ import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/service/amplitude/service.dart';
 import 'package:stocks_news_new/service/revenue_cat.dart';
+import 'package:stocks_news_new/ui/tabs/market/index.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -103,7 +104,7 @@ class _TabsState extends State<Tabs> {
 
   BottomNavigationBarItem bottomTab({
     icon,
-    lable,
+    label,
     bool selected = false,
   }) {
     return BottomNavigationBarItem(
@@ -120,7 +121,7 @@ class _TabsState extends State<Tabs> {
           color: selected ? ThemeColors.black : ThemeColors.neutral60,
         ),
       ),
-      label: lable,
+      label: label,
     );
   }
 
@@ -133,7 +134,8 @@ class _TabsState extends State<Tabs> {
       //   isHome: _selectedIndex == 0,
       // ),
       // drawer: const BaseDrawer(),
-      body: Screens.screens(widget.trendingIndex).elementAt(_selectedIndex),
+      // body: Screens.screens(widget.trendingIndex).elementAt(_selectedIndex),
+      body: Screens.screens(_selectedIndex).elementAt(_selectedIndex),
       bottomNavigationBar: BottomNavigationBar(
         unselectedItemColor: ThemeColors.neutral60,
         selectedItemColor: ThemeColors.black,
@@ -159,27 +161,27 @@ class _TabsState extends State<Tabs> {
         items: [
           bottomTab(
             icon: Images.bottomHome,
-            lable: "Home",
+            label: "Home",
             selected: _selectedIndex == 0,
           ),
           bottomTab(
             icon: Images.bottomMarket,
-            lable: "Market",
+            label: "Market",
             selected: _selectedIndex == 1,
           ),
           bottomTab(
             icon: Images.bottomSignals,
-            lable: "Signals",
+            label: "Signals",
             selected: _selectedIndex == 2,
           ),
           bottomTab(
             icon: Images.bottomTools,
-            lable: "Tools",
+            label: "Tools",
             selected: _selectedIndex == 3,
           ),
           bottomTab(
             icon: Images.bottomMore,
-            lable: "More",
+            label: "More",
             selected: _selectedIndex == 4,
           ),
         ],
@@ -272,7 +274,7 @@ class Screens {
   static List<Widget> screens(int? trendingIndex) {
     return <Widget>[
       HomeIndex(),
-      Container(),
+      MarketIndex(),
       Container(),
       Container(),
       Container(),
