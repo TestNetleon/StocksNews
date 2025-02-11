@@ -12,6 +12,7 @@ import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/service/amplitude/service.dart';
 import 'package:stocks_news_new/service/revenue_cat.dart';
+import 'package:stocks_news_new/ui/tabs/market/index.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -133,7 +134,8 @@ class _TabsState extends State<Tabs> {
       //   isHome: _selectedIndex == 0,
       // ),
       // drawer: const BaseDrawer(),
-      body: Screens.screens(widget.trendingIndex).elementAt(_selectedIndex),
+      // body: Screens.screens(widget.trendingIndex).elementAt(_selectedIndex),
+      body: Screens.screens(_selectedIndex).elementAt(_selectedIndex),
       bottomNavigationBar: BottomNavigationBar(
         unselectedItemColor: ThemeColors.neutral60,
         selectedItemColor: ThemeColors.black,
@@ -272,7 +274,7 @@ class Screens {
   static List<Widget> screens(int? trendingIndex) {
     return <Widget>[
       HomeIndex(),
-      Container(),
+      MarketIndex(),
       Container(),
       Container(),
       Container(),
