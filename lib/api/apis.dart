@@ -19,6 +19,7 @@ class Apis {
   static const onBoarding = '/onboarding';
   static const myHome = '/home';
   static const marketData = '/market-data';
+  static const myHomePremium = '/home-premium';
 
 //----------------------------------------------
 

@@ -144,3 +144,41 @@ TextStyle styleSansBold({
     // letterSpacing: letterSpacing,
   );
 }
+
+TextStyle styleBaseBold({
+  color = ThemeColors.black,
+  double fontSize = 16,
+  letterSpacing = 0.70,
+  height = 0.0,
+  String? fontFamily,
+  decoration,
+}) {
+  return TextStyle(
+    fontSize: fontSize,
+    color: color,
+    fontFamily: fontFamily ?? Fonts.ptSans,
+    fontWeight: FontWeight.bold,
+    decoration: decoration,
+    decorationColor: color,
+    height: height,
+  );
+}
+
+TextStyle styleBaseRegular({
+  color = ThemeColors.black,
+  double fontSize = 16,
+  letterSpacing = 0.70,
+  height = 0.0,
+  String? fontFamily,
+  decoration,
+}) {
+  return TextStyle(
+    fontSize: fontSize,
+    color: color,
+    fontFamily: fontFamily ?? Fonts.ptSans,
+    fontWeight: FontWeight.normal,
+    decoration: decoration,
+    decorationColor: color,
+    height: height,
+  );
+}

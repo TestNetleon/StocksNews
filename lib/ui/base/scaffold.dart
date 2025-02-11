@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 
-class BaseContainer extends StatefulWidget {
-  const BaseContainer({
+class BaseScaffold extends StatefulWidget {
+  const BaseScaffold({
     required this.body,
     this.appBar,
     this.floatingAlingment,
@@ -37,10 +37,10 @@ class BaseContainer extends StatefulWidget {
   final Color? bgColor;
 
   @override
-  State<BaseContainer> createState() => _BaseContainerState();
+  State<BaseScaffold> createState() => _BaseScaffoldState();
 }
 
-class _BaseContainerState extends State<BaseContainer> {
+class _BaseScaffoldState extends State<BaseScaffold> {
 //
   @override
   Widget build(BuildContext context) {

@@ -389,6 +389,7 @@ class Dimen {
 
 class Pad {
   static const double pad5 = 5;
+  static const double pad8 = 8;
   static const double pad10 = 10;
   static const double pad16 = 16;
   static const double pad24 = 24;

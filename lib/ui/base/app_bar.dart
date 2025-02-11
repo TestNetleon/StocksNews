@@ -257,7 +257,7 @@ class _BaseAppBarState extends State<BaseAppBar> {
                             Flexible(
                               child: Text(
                                 "${widget.title}",
-                                style: stylePTSansBold(fontSize: 18),
+                                style: styleBaseBold(fontSize: 18),
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                               ),

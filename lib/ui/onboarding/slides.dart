@@ -6,7 +6,7 @@ import 'package:stocks_news_new/managers/onboarding.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
-import 'package:stocks_news_new/widgets/base_container.dart';
+import '../base/scaffold.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/theme_button.dart';
 
@@ -40,7 +40,7 @@ class _OnboardingSlidesState extends State<OnboardingSlides> {
   @override
   Widget build(BuildContext context) {
     OnboardingManager provider = context.watch<OnboardingManager>();
-    return BaseContainer(
+    return BaseScaffold(
       body: Container(
         padding: const EdgeInsets.symmetric(
           horizontal: Pad.pad16,
@@ -54,7 +54,7 @@ class _OnboardingSlidesState extends State<OnboardingSlides> {
                 alignment: Alignment.centerRight,
                 child: Text(
                   'Skip',
-                  style: stylePTSansRegular(
+                  style: styleBaseRegular(
                     color: ThemeColors.secondary100,
                     fontSize: 16,
                   ),
@@ -113,13 +113,13 @@ class _OnboardingSlidesState extends State<OnboardingSlides> {
         const SizedBox(height: 20),
         Text(
           title,
-          style: stylePTSansRegular(fontSize: 20, color: Colors.black),
+          style: styleBaseRegular(fontSize: 20),
         ),
         const SizedBox(height: 10),
         Text(
           description,
           textAlign: TextAlign.center,
-          style: stylePTSansRegular(fontSize: 16, color: Colors.grey),
+          style: styleBaseRegular(fontSize: 16, color: Colors.grey),
         ),
       ],
     );

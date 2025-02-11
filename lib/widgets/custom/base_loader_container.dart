@@ -11,6 +11,7 @@ class BaseLoaderContainer extends StatelessWidget {
     this.error,
     required this.isLoading,
     this.showPreparingText = false,
+    this.removeErrorWidget = false,
     this.onRefresh,
     this.onNavigate,
     this.navBtnText,
@@ -21,6 +22,7 @@ class BaseLoaderContainer extends StatelessWidget {
   final Widget child;
   final bool hasData;
   final String? error;
+  final bool removeErrorWidget;
   final bool isLoading;
   final bool showPreparingText;
   final String? navBtnText;
@@ -41,12 +43,14 @@ class BaseLoaderContainer extends StatelessWidget {
               ? child
               : error?.contains('Please update your application') == true
                   ? UpdateError(error: error)
-                  : ErrorDisplayNewWidget(
-                      error: error ?? Const.errNoRecord,
-                      onRefresh: onRefresh,
-                      onNavigate: onNavigate,
-                      navBtnText: navBtnText,
-                    ),
+                  : removeErrorWidget
+                      ? Container(height: 50)
+                      : ErrorDisplayNewWidget(
+                          error: error ?? Const.errNoRecord,
+                          onRefresh: onRefresh,
+                          onNavigate: onNavigate,
+                          navBtnText: navBtnText,
+                        ),
     );
   }
 }

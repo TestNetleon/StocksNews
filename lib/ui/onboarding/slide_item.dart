@@ -24,7 +24,7 @@ class OnboardingSlideItem extends StatelessWidget {
               visible: data.title != null && data.title != '',
               child: Text(
                 data.title ?? '',
-                style: styleGeorgiaBold(
+                style: styleBaseBold(
                   color: ThemeColors.black,
                   fontSize: 28,
                 ),
@@ -34,7 +34,7 @@ class OnboardingSlideItem extends StatelessWidget {
               visible: data.subTitle != null && data.subTitle != '',
               child: Text(
                 data.subTitle ?? '',
-                style: styleGeorgiaRegular(
+                style: styleBaseRegular(
                   color: ThemeColors.black,
                   fontSize: 18,
                 ),
