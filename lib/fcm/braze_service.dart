@@ -22,6 +22,7 @@ import '../screens/auth/base/base_auth.dart';
 import '../screens/offerMembership/blackFriday/index.dart';
 import '../tradingSimulator/providers/ts_pending_list_provider.dart';
 import '../tradingSimulator/screens/dashboard/index.dart';
+import '../ui/tabs/tabs.dart';
 import '../utils/utils.dart';
 import 'package:stocks_news_new/screens/affiliate/index.dart';
 import 'package:stocks_news_new/screens/auth/refer/refer_code.dart';

@@ -36,6 +36,7 @@ import '../modals/advertiser.dart';
 import '../screens/offerMembership/blackFriday/index.dart';
 import '../service/amplitude/service.dart';
 import '../service/braze/service.dart';
+import '../ui/tabs/tabs.dart';
 import '../utils/dialogs.dart';
 import '../widgets/ios_emailerror.dart';
 

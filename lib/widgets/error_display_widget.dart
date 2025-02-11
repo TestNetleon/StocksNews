@@ -28,27 +28,11 @@ class ErrorDisplayNewWidget extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           const SpacerVertical(),
-          /// replace text with html widget
           HtmlWidget(
-              error ?? Const.errSomethingWrong,
-              textStyle:stylePTSansBold()
-          ),
-          /*Text(
             error ?? Const.errSomethingWrong,
-            style: stylePTSansBold(),
-          ),*/
+            textStyle: stylePTSansBold(color: ThemeColors.black),
+          ),
           const SpacerVertical(),
-          // Visibility(
-          //   visible: onRefresh != null,
-          //   child: ThemeButton(
-          //     onPressed: () {
-          //       FocusManager.instance.primaryFocus?.unfocus();
-          //       if (onRefresh != null) onRefresh!();
-          //     },
-          //     padding: EdgeInsets.symmetric(horizontal: 16.sp, vertical: 5.sp),
-          //     text: "Refresh",
-          //   ),
-          // ),
           Visibility(
             visible: onRefresh != null,
             child: GestureDetector(

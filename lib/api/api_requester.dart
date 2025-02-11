@@ -33,6 +33,7 @@ import 'package:stocks_news_new/widgets/custom/required_login.dart';
 import '../screens/AdManager/item.dart';
 import '../screens/auth/base/base_auth.dart';
 import '../screens/stockDetail/index.dart';
+import '../ui/tabs/tabs.dart';
 
 String? validAuthToken;
 

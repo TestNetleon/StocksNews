@@ -7,6 +7,7 @@ import '../../../api/api_response.dart';
 import '../../../providers/home_provider.dart';
 import '../../../providers/user_provider.dart';
 import '../../../routes/my_app.dart';
+import '../../../ui/tabs/tabs.dart';
 import '../../../utils/colors.dart';
 import '../../../utils/constants.dart';
 import '../../../utils/theme.dart';

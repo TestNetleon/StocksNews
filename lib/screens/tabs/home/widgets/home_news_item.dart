@@ -11,6 +11,8 @@ import 'package:stocks_news_new/widgets/screen_title.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/view_more_widget.dart';
 
+import '../../../../ui/tabs/tabs.dart';
+
 class HomeNewsItem extends StatelessWidget {
   const HomeNewsItem({super.key});
 

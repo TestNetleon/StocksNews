@@ -11,6 +11,8 @@ import 'package:stocks_news_new/widgets/info_bottom.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 
+import '../../../../ui/tabs/tabs.dart';
+
 class SocialSentimentsGraph extends StatelessWidget {
   const SocialSentimentsGraph({super.key});
 

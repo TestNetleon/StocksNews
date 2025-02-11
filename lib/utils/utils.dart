@@ -37,7 +37,7 @@ import '../screens/blogDetail/index.dart';
 import '../screens/offerMembership/christmas/index.dart';
 import '../screens/stockDetail/index.dart';
 import '../screens/tabs/news/newsDetail/new_detail.dart';
-import '../screens/tabs/tabs.dart';
+import '../ui/tabs/tabs.dart';
 
 // import 'package:whatsapp_share/whatsapp_share.dart';
 

@@ -15,6 +15,8 @@ import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 
+import '../../../../ui/tabs/tabs.dart';
+
 class AppBarStockAnalysis extends StatefulWidget
     implements PreferredSizeWidget {
   final bool isHome;

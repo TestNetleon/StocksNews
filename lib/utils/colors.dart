@@ -95,11 +95,37 @@ class ThemeColors {
   static const silver = Color(0xffedf1f4);
   static const bronze = Color(0xffccb593);
   static const blue = Color(0xFF21DEF3);
-  static const white = Colors.white;
   static const bottomsheetGradient = Color.fromARGB(255, 0, 35, 5);
   static const buttonLightRed = Color.fromARGB(255, 252, 193, 189);
   static const buttonLightGreen = Color.fromARGB(255, 231, 253, 232);
   static const buttonBlue = Colors.blue;
   static const tabBack = Color.fromARGB(255, 32, 32, 32);
   static const green11 = Color.fromARGB(92, 19, 56, 4);
+
+//New UI
+
+  //PRIMARY
+  static const primary120 = Color(0xFF06C9BC);
+  static const primary100 = Color(0xFF17DBD1);
+  static const primary20 = Color(0xFF95E9E4);
+  static const primary10 = Color(0xFFD7F6F5);
+
+  //SECONDARY
+  static const secondary120 = Color(0xFF3240D1);
+  static const secondary100 = Color(0xFF555ED9);
+  static const secondary20 = Color(0xFFC5C6F1);
+  static const secondary10 = Color(0xFFE8E8FA);
+
+  //Neutral
+  static const neutral80 = Color(0xFF465F8C);
+  static const neutral60 = Color(0xFF59719B);
+  static const neutral40 = Color(0xFF6E85AE);
+  static const neutral20 = Color(0xFF98A7C2);
+  static const neutral10 = Color(0xFFC0C9DB);
+  static const neutral5 = Color(0xFFF0F2F6);
+
+  //OTHER
+  static const black = Color(0xFF282B41);
+  static const white = Color(0xFFFFFFFF);
+  static const splashBG = Color(0xFF012054);
 }

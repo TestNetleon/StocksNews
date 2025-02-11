@@ -18,6 +18,7 @@ import 'package:stocks_news_new/widgets/custom/confirmation_point_popup.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/theme_button_small.dart';
 import '../../../api/api_response.dart';
+import '../../../ui/tabs/tabs.dart';
 import '../../../utils/utils.dart';
 import '../../../widgets/custom/warning_text.dart';
 import '../../auth/base/base_auth.dart';

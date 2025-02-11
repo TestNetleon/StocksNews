@@ -16,6 +16,8 @@ import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/screens/tabs/reddit_twitter/reddit_twitter_content.dart';
 import 'package:stocks_news_new/widgets/view_more_widget.dart';
 
+import '../../../../ui/tabs/tabs.dart';
+
 //
 class InsiderSocialTabs extends StatefulWidget {
   const InsiderSocialTabs({super.key});

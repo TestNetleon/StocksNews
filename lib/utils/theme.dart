@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:stocks_news_new/utils/colors.dart';
@@ -23,11 +21,13 @@ final lightTheme = ThemeData(
       fontFamily: Fonts.ptSans,
     ),
     systemOverlayStyle: SystemUiOverlayStyle(
-      statusBarColor: Colors.black,
-      statusBarIconBrightness:
-          Platform.isAndroid ? Brightness.light : Brightness.dark,
-      statusBarBrightness:
-          Platform.isAndroid ? Brightness.light : Brightness.dark,
+      // statusBarColor: Colors.black,
+      // statusBarIconBrightness: Brightness.light,
+      // statusBarBrightness:
+      //     Platform.isAndroid ? Brightness.light : Brightness.dark,
+      statusBarColor: Colors.transparent,
+      statusBarIconBrightness: Brightness.dark,
+      statusBarBrightness: Brightness.light,
     ),
   ),
   fontFamily: Fonts.ptSans,
@@ -40,7 +40,7 @@ final lightTheme = ThemeData(
 );
 
 TextStyle styleGeorgiaRegular({
-  color = Colors.white,
+  color = ThemeColors.black,
   double fontSize = 15,
   FontStyle? fontStyle,
   height = 1.2,
@@ -62,7 +62,7 @@ TextStyle styleGeorgiaRegular({
 }
 
 TextStyle styleGeorgiaBold({
-  color = Colors.white,
+  color = ThemeColors.black,
   double fontSize = 16,
   letterSpacing = 0.70,
   FontStyle? fontStyle,
@@ -81,7 +81,7 @@ TextStyle styleGeorgiaBold({
 }
 
 TextStyle stylePTSansRegular({
-  color = Colors.white,
+  color = ThemeColors.black,
   double fontSize = 15,
   height = 1.2,
   letterSpacing = 0.70,
@@ -104,7 +104,7 @@ TextStyle stylePTSansRegular({
 }
 
 TextStyle stylePTSansBold({
-  color = Colors.white,
+  color = ThemeColors.black,
   double fontSize = 16,
   letterSpacing = 0.70,
   String? fontFamily,
@@ -125,7 +125,7 @@ TextStyle stylePTSansBold({
 }
 
 TextStyle styleSansBold({
-  color = Colors.black,
+  color = ThemeColors.black,
   double fontSize = 16,
   letterSpacing = 0.70,
   height = 1.2,

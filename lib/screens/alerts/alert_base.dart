@@ -170,6 +170,7 @@ import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/login_error.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
+import '../../ui/tabs/tabs.dart';
 import '../auth/base/base_auth.dart';
 import 'alert_container.dart';
 

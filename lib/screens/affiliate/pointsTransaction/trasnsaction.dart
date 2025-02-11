@@ -20,6 +20,7 @@ import 'package:stocks_news_new/widgets/theme_button.dart';
 
 import '../../../modals/affiliate/transaction.dart';
 import '../../../routes/my_app.dart';
+import '../../../ui/tabs/tabs.dart';
 import '../../../utils/colors.dart';
 import '../../../utils/constants.dart';
 import '../../../utils/utils.dart';

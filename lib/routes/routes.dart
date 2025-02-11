@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:stocks_news_new/managers/home.dart';
 import 'package:stocks_news_new/tournament/provider/leaderboard.dart';
 import 'package:stocks_news_new/tournament/provider/tournament.dart';
 import 'package:stocks_news_new/tournament/provider/search.dart';
@@ -95,7 +96,6 @@ import 'package:stocks_news_new/screens/homeSpash/index.dart';
 import 'package:stocks_news_new/screens/myAccount/my_account.dart';
 import 'package:stocks_news_new/screens/notifications/index.dart';
 import 'package:stocks_news_new/screens/search/search.dart';
-import 'package:stocks_news_new/screens/splash/splash.dart';
 import 'package:stocks_news_new/screens/start/index.dart';
 import 'package:stocks_news_new/screens/stockDetail/index.dart';
 import 'package:stocks_news_new/screens/tabs/compareNew/index.dart';
@@ -111,6 +111,7 @@ import 'package:stocks_news_new/tradingSimulator/providers/ts_pending_list_provi
 import 'package:stocks_news_new/tradingSimulator/providers/ts_portfollo_provider.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/utils.dart';
+import '../managers/onboarding.dart';
 import '../tournament/provider/trades.dart';
 import '../providers/offerMembership/black_friday.dart';
 import '../providers/featured_ticker.dart';
@@ -128,6 +129,8 @@ import '../screens/marketData/congressionalData/index.dart';
 import '../screens/marketData/lowPriceStocks/index.dart';
 import '../screens/whatWeDo/index.dart';
 import '../tradingSimulator/providers/ts_transaction_list.dart';
+import '../ui/onboarding/splash.dart';
+import '../ui/tabs/tabs.dart';
 
 class Routes {
   static var routes = {
@@ -612,6 +615,10 @@ class Routes {
       ChangeNotifierProvider(create: (_) => TournamentSearchProvider()),
       ChangeNotifierProvider(create: (_) => TournamentLeaderboardProvider()),
       // ChangeNotifierProvider(create: (_) => ScannerProvider()),
+
+      //MARK: New UI providers
+      ChangeNotifierProvider(create: (_) => OnboardingManager()),
+      ChangeNotifierProvider(create: (_) => MyHomeManager()),
     ];
   }
 }

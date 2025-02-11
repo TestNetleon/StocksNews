@@ -14,7 +14,6 @@ import 'package:stocks_news_new/modals/user_res.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/routes/navigation_observer.dart';
 import 'package:stocks_news_new/routes/routes.dart';
-import 'package:stocks_news_new/screens/splash/splash.dart';
 import 'package:stocks_news_new/service/braze/service.dart';
 import 'package:stocks_news_new/service/revenueCat/service.dart';
 import 'package:stocks_news_new/utils/constants.dart';
@@ -26,6 +25,7 @@ import 'package:superwallkit_flutter/superwallkit_flutter.dart';
 import '../api/apis.dart';
 import '../screens/auth/base/base_auth.dart';
 import '../service/superwall/controller.dart';
+import '../ui/onboarding/splash.dart';
 
 final _appLinks = AppLinks();
 //

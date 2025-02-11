@@ -14,6 +14,8 @@ import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/theme_button_small.dart';
 
+import '../../ui/tabs/tabs.dart';
+
 class AppMaintenance extends StatefulWidget {
   static const path = "ServerErrorWidget";
 

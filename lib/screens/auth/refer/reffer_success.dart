@@ -17,6 +17,7 @@ import 'package:stocks_news_new/widgets/theme_button_small.dart';
 import '../../../../modals/refer.dart';
 import '../../../../providers/home_provider.dart';
 import '../../../routes/my_app.dart';
+import '../../../ui/tabs/tabs.dart';
 
 class ReferSuccess extends StatefulWidget {
   const ReferSuccess({super.key});

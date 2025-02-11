@@ -170,6 +170,22 @@ Map<AdScreen, Map<AdPlaces, bool>> adVisibilityMap = {
 //------------------------------------------------
 
 class Images {
+  //MARK: New UI
+  static const String base = 'assets/images/';
+  static const String mainLogo = '${base}splashLogo.png';
+  static const String mainBlackLogo = '${base}mainBlackLogo.png';
+  static const String notification = '${base}notification.png';
+  static const String search = '${base}search.png';
+
+  static const String bottomHome = '${base}bottom_home.png';
+  static const String bottomMarket = '${base}bottom_market.png';
+  static const String bottomMore = '${base}bottom_more.png';
+  static const String bottomSignals = '${base}bottom_signals.png';
+  static const String bottomTools = '${base}bottom_tools.png';
+  static const String trendingUP = '${base}trending_up.png';
+  static const String trendingDOWN = '${base}trending_down.png';
+
+  //-------------------------------------------------------------------------------
   static const String scannerStop = 'assets/images/scanner_stop.png';
   static const String logo = "assets/images/logo.png";
   static const String logoP = "assets/images/logo_holder.png";
@@ -369,6 +385,15 @@ class Dimen {
   static const double itemSpacing = 12;
   static const double radius = 10;
   static const double homeSpacing = 30;
+}
+
+class Pad {
+  static const double pad5 = 5;
+  static const double pad10 = 10;
+  static const double pad16 = 16;
+  static const double pad24 = 24;
+  static const double pad32 = 32;
+  static const double pad999 = 999;
 }
 
 class Fonts {

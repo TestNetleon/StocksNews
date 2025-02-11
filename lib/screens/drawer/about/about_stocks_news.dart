@@ -32,6 +32,7 @@ import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import '../../../stocksScanner/screens/stockScanner/index.dart';
 import '../../../tournament/screens/game_tournament_index.dart';
 import '../../../tradingSimulator/screens/dashboard/index.dart';
+import '../../../ui/tabs/tabs.dart';
 import '../../../utils/constants.dart';
 import '../../../utils/theme.dart';
 import '../../../widgets/spacer_vertical.dart';

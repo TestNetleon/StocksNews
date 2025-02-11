@@ -15,6 +15,7 @@ import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 import 'package:stocks_news_new/widgets/theme_button_small.dart';
+import '../../ui/tabs/tabs.dart';
 import '../auth/base/base_auth.dart';
 
 class StartIndex extends StatefulWidget {

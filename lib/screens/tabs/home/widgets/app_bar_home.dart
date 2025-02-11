@@ -410,6 +410,8 @@ import 'package:stocks_news_new/widgets/cache_network_image.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:svg_flutter/svg_flutter.dart';
 
+import '../../../../ui/tabs/tabs.dart';
+
 class AppBarHome extends StatefulWidget implements PreferredSizeWidget {
   final bool isHome;
   final bool showTrailing, isPopBack, canSearch, showPortfolio, showTitleLogo;
