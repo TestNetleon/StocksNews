@@ -14,13 +14,16 @@ class CachedNetworkImagesWidget extends StatelessWidget {
     this.extraSpacing = false,
     this.showLoading = false,
     this.placeHolder,
+    this.color,
   });
+
   final String? imagesUrl;
   final double? height, width;
   final BoxFit fit;
   final bool extraSpacing;
   final bool showLoading;
   final String? placeHolder;
+  final Color? color;
 
   @override
   Widget build(BuildContext context) {
@@ -29,6 +32,7 @@ class CachedNetworkImagesWidget extends StatelessWidget {
       height: height,
       fit: fit,
       imageUrl: imagesUrl ?? "",
+      color: color,
       placeholder: (context, url) => showLoading
           ? Center(
               child: CircularProgressIndicator(

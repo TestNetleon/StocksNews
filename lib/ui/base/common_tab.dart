@@ -11,6 +11,7 @@ class CommonTabs extends StatefulWidget {
     this.showDivider = true,
     this.rightChild,
     this.child,
+    this.textStyle,
   });
 
   final Widget? child;
@@ -19,6 +20,7 @@ class CommonTabs extends StatefulWidget {
   final List<dynamic> data;
   final Function(int index) onTap;
   final bool showDivider;
+  final TextStyle? textStyle;
 
   @override
   State<CommonTabs> createState() => _CommonTabsState();
@@ -31,7 +33,7 @@ class _CommonTabsState extends State<CommonTabs>
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 3, vsync: this);
+    _tabController = TabController(length: widget.data.length, vsync: this);
   }
 
   @override
@@ -46,10 +48,13 @@ class _CommonTabsState extends State<CommonTabs>
                 isScrollable: widget.isScrollable,
                 tabs: (widget.data.map(
                   (e) {
-                    return TabItem(label: e.title);
+                    return TabItem(
+                      label: e.title,
+                      textStyle: widget.textStyle ?? styleBaseBold(),
+                    );
                   },
                 )).toList(),
-                labelStyle: TextStyle(fontWeight: FontWeight.bold),
+                // labelStyle: widget.textStyle ?? styleBaseBold(),
                 indicator: CustomTabIndicator(),
                 onTap: (int index) {
                   widget.onTap(index);
@@ -61,7 +66,7 @@ class _CommonTabsState extends State<CommonTabs>
         ),
         if (widget.showDivider)
           Divider(
-            color: ThemeColors.border,
+            color: ThemeColors.neutral5,
             height: 1,
             thickness: 1,
           ),
@@ -85,9 +90,10 @@ class _CommonTabsState extends State<CommonTabs>
 }
 
 class TabItem extends StatelessWidget {
-  const TabItem({super.key, required this.label});
+  const TabItem({super.key, required this.label, this.textStyle});
 
   final String label;
+  final TextStyle? textStyle;
 
   @override
   Widget build(BuildContext context) {
@@ -95,7 +101,7 @@ class TabItem extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 12),
       child: Text(
         label,
-        style: styleGeorgiaBold(),
+        style: textStyle,
       ),
     );
   }

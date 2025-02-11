@@ -2,7 +2,9 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:stocks_news_new/managers/home.dart';
+import 'package:stocks_news_new/managers/market/alerts_watchlist_action.dart';
 import 'package:stocks_news_new/managers/market/market.dart';
+import 'package:stocks_news_new/managers/market/most_bullish.dart';
 import 'package:stocks_news_new/tournament/provider/leaderboard.dart';
 import 'package:stocks_news_new/tournament/provider/tournament.dart';
 import 'package:stocks_news_new/tournament/provider/search.dart';
@@ -649,6 +651,8 @@ class Routes {
       ChangeNotifierProvider(create: (_) => OnboardingManager()),
       ChangeNotifierProvider(create: (_) => MyHomeManager()),
       ChangeNotifierProvider(create: (_) => MarketManager()),
+      // ChangeNotifierProvider(create: (_) => AlertsWatchlistAction()),
+      ChangeNotifierProvider(create: (_) => MostBullishProvider()),
     ];
   }
 }

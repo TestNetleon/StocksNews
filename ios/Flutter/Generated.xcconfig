@@ -4,8 +4,8 @@ FLUTTER_APPLICATION_PATH=/Users/netleontechnologies/Documents/workspace/StocksNe
 COCOAPODS_PARALLEL_CODE_SIGN=true
 FLUTTER_TARGET=/Users/netleontechnologies/Documents/workspace/StocksNews/lib/main.dart
 FLUTTER_BUILD_DIR=build
-FLUTTER_BUILD_NAME=1.1.61
-FLUTTER_BUILD_NUMBER=192
+FLUTTER_BUILD_NAME=1.1.62
+FLUTTER_BUILD_NUMBER=193
 EXCLUDED_ARCHS[sdk=iphonesimulator*]=i386
 EXCLUDED_ARCHS[sdk=iphoneos*]=armv7
 DART_OBFUSCATION=false

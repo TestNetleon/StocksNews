@@ -184,6 +184,8 @@ class Images {
   static const String bottomTools = '${base}bottom_tools.png';
   static const String trendingUP = '${base}trending_up.png';
   static const String trendingDOWN = '${base}trending_down.png';
+  static const String watchlist = '${base}watchlist.png';
+  static const String alerts = '${base}alerts.png';
 
   //-------------------------------------------------------------------------------
   static const String scannerStop = 'assets/images/scanner_stop.png';

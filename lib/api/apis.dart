@@ -14,12 +14,13 @@ class Apis {
       ? "https://dev.stocks.news/api/v2"
       : "https://app.stocks.news/api/v1";
 
-//MARK: New UI APIs
+  // MARK: New UI APIs
 
   static const onBoarding = '/onboarding';
   static const myHome = '/home';
   static const marketData = '/market-data';
   static const myHomePremium = '/home-premium';
+  static const mostBullish = '/most-bullish';
 
 //----------------------------------------------
 
