@@ -22,8 +22,9 @@ class BaseNewsItem extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           ClipRRect(
-              borderRadius: BorderRadius.circular(8),
-              child: CachedNetworkImagesWidget(data.image)),
+            borderRadius: BorderRadius.circular(8),
+            child: CachedNetworkImagesWidget(data.image),
+          ),
           Padding(
             padding: const EdgeInsets.only(top: Pad.pad10),
             child: Text(

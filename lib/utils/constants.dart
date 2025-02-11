@@ -394,6 +394,7 @@ class Pad {
   static const double pad8 = 8;
   static const double pad10 = 10;
   static const double pad16 = 16;
+  static const double pad20 = 20;
   static const double pad24 = 24;
   static const double pad32 = 32;
   static const double pad999 = 999;

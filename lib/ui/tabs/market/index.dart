@@ -10,6 +10,8 @@ import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/custom/base_loader_container.dart';
 
+import '../../base/common_tab.dart';
+
 class MarketIndex extends StatefulWidget {
   const MarketIndex({super.key});
 

@@ -9,6 +9,7 @@ import 'package:stocks_news_new/widgets/custom/base_loader_container.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 import '../../base/scaffold.dart';
 import 'home_premium.dart';
+import 'home_trending.dart';
 import 'news/news.dart';
 
 class HomeIndex extends StatefulWidget {
@@ -34,6 +35,7 @@ class _HomeIndexState extends State<HomeIndex> {
         child: BaseScroll(
           onRefresh: provider.getHomeData,
           children: [
+            HomeTrendingIndex(),
             HomeNewsIndex(newsData: provider.data?.recentNews),
             VisibilityDetector(
               key: const Key('home_premium_visibility'),

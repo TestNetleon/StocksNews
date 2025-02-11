@@ -19,15 +19,15 @@ class MyHomeRes {
         recentNews: json["recent_news"] == null
             ? null
             : HomeNewsRes.fromJson(json["recent_news"]),
-        tickers: json["tickers"] == null
+        tickers: json["trending"] == null
             ? null
             : List<BaseTickerRes>.from(
-                json["tickers"].map((x) => BaseTickerRes.fromJson(x))),
+                json["trending"].map((x) => BaseTickerRes.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
         "recent_news": recentNews?.toJson(),
-        "tickers": tickers == null
+        "trending": tickers == null
             ? null
             : List<dynamic>.from(tickers!.map((x) => x.toJson())),
       };
