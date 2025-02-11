@@ -20,7 +20,7 @@ import '../../api/api_response.dart';
 import '../../screens/offerMembership/blackFriday/index.dart';
 import '../../screens/offerMembership/christmas/index.dart';
 import '../../utils/utils.dart';
-import 'home/home_index.dart';
+import 'home/home.dart';
 
 class Tabs extends StatefulWidget {
   static const String path = "Tabs";
@@ -145,8 +145,8 @@ class _TabsState extends State<Tabs> {
         type: BottomNavigationBarType.fixed,
 
         unselectedLabelStyle:
-            styleGeorgiaRegular(color: ThemeColors.white, fontSize: 14),
-        selectedLabelStyle: stylePTSansBold(fontSize: 14),
+            styleBaseRegular(color: ThemeColors.white, fontSize: 14),
+        selectedLabelStyle: styleBaseBold(fontSize: 14),
         onTap: (index) {
           context.read<SearchProvider>().clearSearch();
           if (_selectedIndex != index) {

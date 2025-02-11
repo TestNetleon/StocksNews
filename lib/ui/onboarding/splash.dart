@@ -12,7 +12,7 @@ import 'package:stocks_news_new/ui/onboarding/default_home.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/database/preference.dart';
-import 'package:stocks_news_new/widgets/base_container.dart';
+import '../base/scaffold.dart';
 import '../../managers/onboarding.dart';
 
 //MARK: Splash
@@ -112,7 +112,7 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    return BaseContainer(
+    return BaseScaffold(
       bgColor: ThemeColors.splashBG,
       body: Container(
         alignment: Alignment.topCenter,

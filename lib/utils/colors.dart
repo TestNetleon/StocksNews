@@ -128,4 +128,6 @@ class ThemeColors {
   static const black = Color(0xFF282B41);
   static const white = Color(0xFFFFFFFF);
   static const splashBG = Color(0xFF012054);
+
+  //CATEGORY
 }

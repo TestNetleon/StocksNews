@@ -1,8 +1,6 @@
-// To parse this JSON data, do
-//
-//     final myHomeRes = myHomeResFromJson(jsonString);
-
 import 'dart:convert';
+
+import 'ticker.dart';
 
 MyHomeRes myHomeResFromJson(String str) => MyHomeRes.fromJson(json.decode(str));
 
@@ -10,31 +8,28 @@ String myHomeResToJson(MyHomeRes data) => json.encode(data.toJson());
 
 class MyHomeRes {
   final HomeNewsRes? recentNews;
-  final HomeNewsRes? featuredNews;
-  final HomeNewsRes? financialNews;
 
+  final List<BaseTickerRes>? tickers;
   MyHomeRes({
     this.recentNews,
-    this.featuredNews,
-    this.financialNews,
+    this.tickers,
   });
 
   factory MyHomeRes.fromJson(Map<String, dynamic> json) => MyHomeRes(
         recentNews: json["recent_news"] == null
             ? null
             : HomeNewsRes.fromJson(json["recent_news"]),
-        featuredNews: json["featured_news"] == null
+        tickers: json["tickers"] == null
             ? null
-            : HomeNewsRes.fromJson(json["featured_news"]),
-        financialNews: json["financial_news"] == null
-            ? null
-            : HomeNewsRes.fromJson(json["financial_news"]),
+            : List<BaseTickerRes>.from(
+                json["tickers"].map((x) => BaseTickerRes.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
         "recent_news": recentNews?.toJson(),
-        "featured_news": featuredNews?.toJson(),
-        "financial_news": financialNews?.toJson(),
+        "tickers": tickers == null
+            ? null
+            : List<dynamic>.from(tickers!.map((x) => x.toJson())),
       };
 }
 
@@ -73,7 +68,7 @@ class NewsItemRes {
   final String? image;
   final String? slug;
   final List<NewsAuthorRes>? authors;
-  final DateTime? publishedDate;
+  final String? publishedDate;
   final String? site;
 
   NewsItemRes({
@@ -95,9 +90,7 @@ class NewsItemRes {
             ? []
             : List<NewsAuthorRes>.from(
                 json["authors"]!.map((x) => NewsAuthorRes.fromJson(x))),
-        publishedDate: json["published_date"] == null
-            ? null
-            : DateTime.parse(json["published_date"]),
+        publishedDate: json["published_date"],
         site: json["site"],
       );
 
@@ -109,7 +102,7 @@ class NewsItemRes {
         "authors": authors == null
             ? []
             : List<dynamic>.from(authors!.map((x) => x.toJson())),
-        "published_date": publishedDate?.toIso8601String(),
+        "published_date": publishedDate,
         "site": site,
       };
 }

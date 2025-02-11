@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/managers/onboarding.dart';
 import 'package:stocks_news_new/ui/onboarding/slides.dart';
 import 'package:stocks_news_new/ui/tabs/tabs.dart';
-import 'package:stocks_news_new/widgets/base_container.dart';
+import '../base/scaffold.dart';
 
 //MARK: DefaultHome
 class DefaultHome extends StatefulWidget {
@@ -42,7 +42,7 @@ class _DefaultHomeState extends State<DefaultHome> {
 
   @override
   Widget build(BuildContext context) {
-    return BaseContainer(
+    return BaseScaffold(
       body: Container(),
     );
   }
