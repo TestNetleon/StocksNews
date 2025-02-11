@@ -103,7 +103,7 @@ class _TabsState extends State<Tabs> {
 
   BottomNavigationBarItem bottomTab({
     icon,
-    lable,
+    label,
     bool selected = false,
   }) {
     return BottomNavigationBarItem(
@@ -120,7 +120,7 @@ class _TabsState extends State<Tabs> {
           color: selected ? ThemeColors.black : ThemeColors.neutral60,
         ),
       ),
-      label: lable,
+      label: label,
     );
   }
 
@@ -159,27 +159,27 @@ class _TabsState extends State<Tabs> {
         items: [
           bottomTab(
             icon: Images.bottomHome,
-            lable: "Home",
+            label: "Home",
             selected: _selectedIndex == 0,
           ),
           bottomTab(
             icon: Images.bottomMarket,
-            lable: "Market",
+            label: "Market",
             selected: _selectedIndex == 1,
           ),
           bottomTab(
             icon: Images.bottomSignals,
-            lable: "Signals",
+            label: "Signals",
             selected: _selectedIndex == 2,
           ),
           bottomTab(
             icon: Images.bottomTools,
-            lable: "Tools",
+            label: "Tools",
             selected: _selectedIndex == 3,
           ),
           bottomTab(
             icon: Images.bottomMore,
-            lable: "More",
+            label: "More",
             selected: _selectedIndex == 4,
           ),
         ],
