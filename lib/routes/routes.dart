@@ -129,12 +129,20 @@ import '../screens/marketData/congressionalData/index.dart';
 import '../screens/marketData/lowPriceStocks/index.dart';
 import '../screens/whatWeDo/index.dart';
 import '../tradingSimulator/providers/ts_transaction_list.dart';
+import '../ui/onboarding/default_home.dart';
+import '../ui/onboarding/slides.dart';
 import '../ui/onboarding/splash.dart';
 import '../ui/tabs/tabs.dart';
 
 class Routes {
   static var routes = {
+    //NEW routes
     Splash.path: (_) => const Splash(),
+    DefaultHome.path: (_) => const DefaultHome(),
+    OnboardingSlides.path: (_) => const OnboardingSlides(),
+
+    //--------------------------------------
+
     Login.path: (_) => const Login(),
     SignUpSuccess.path: (_) => const SignUpSuccess(),
     Search.path: (_) => const Search(),
@@ -186,37 +194,57 @@ class Routes {
 
   static Route getRouteGenerate(RouteSettings settings) {
     var routingData = settings.name;
-    Utils().showLog("GENERATED ROUT 1 ***=> $settings ,  ");
-    Utils().showLog("GENERATED ROUT 2 ***=> ${isValidUrl(routingData)}");
+    switch (routingData) {
+      case Tabs.path:
+        return MaterialPageRoute(
+          builder: (context) {
+            final arguments = settings.arguments as Map<String, dynamic>?;
+            int index = arguments?['index'];
+            int trendingIndex = arguments?['trendingIndex'];
+            String inAppMsgId = arguments?['inAppMsgId'];
+            return Tabs(
+              index: index,
+              trendingIndex: trendingIndex,
+              inAppMsgId: inAppMsgId,
+            );
+          },
+        );
 
-    if (routingData != null &&
-        (
-            // isValidUrl(routingData) ||
-            routingData.contains("stock-detail") ||
-                routingData.contains("login") ||
-                routingData.contains("sign-up") ||
-                routingData.contains("blog") ||
-                routingData.contains("news"))) {
-      Uri? uri = Uri.tryParse(routingData);
-      if (uri != null) {
-        onDeepLinking = true;
-        return handleDeepLink(uri);
-      }
+      default:
     }
 
-    bool isReferral = routingData?.contains("page.link") ??
-        routingData?.contains("/install") ??
-        false;
+    // var routingData = settings.name;
+    // Utils().showLog("GENERATED ROUT 1 ***=> $settings ,  ");
+    // Utils().showLog("GENERATED ROUT 2 ***=> ${isValidUrl(routingData)}");
 
-    if (isReferral) {
-      return MaterialPageRoute(builder: (context) {
-        return const Splash();
-      });
-    }
+    // if (routingData != null &&
+    //     (
+    //         // isValidUrl(routingData) ||
+    //         routingData.contains("stock-detail") ||
+    //             routingData.contains("login") ||
+    //             routingData.contains("sign-up") ||
+    //             routingData.contains("blog") ||
+    //             routingData.contains("news"))) {
+    //   Uri? uri = Uri.tryParse(routingData);
+    //   if (uri != null) {
+    //     onDeepLinking = true;
+    //     return handleDeepLink(uri);
+    //   }
+    // }
 
-    Utils().showLog(
-      "=> ${settings.arguments}, \n${jsonEncode(settings.arguments.toString())}",
-    );
+    // bool isReferral = routingData?.contains("page.link") ??
+    //     routingData?.contains("/install") ??
+    //     false;
+
+    // if (isReferral) {
+    //   return MaterialPageRoute(builder: (context) {
+    //     return const Splash();
+    //   });
+    // }
+
+    // Utils().showLog(
+    //   "=> ${settings.arguments}, \n${jsonEncode(settings.arguments.toString())}",
+    // );
 
     // switch (routingData) {
     //   case TCandPolicy.path:

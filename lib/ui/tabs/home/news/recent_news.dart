@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:stocks_news_new/utils/theme.dart';
 
 import '../../../../models/my_home.dart';
 
@@ -10,7 +11,10 @@ class HomeNewsIndex extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Text('data'),
+        Text(
+          '${newsData?.title}',
+          style: styleGeorgiaBold(),
+        ),
       ],
     );
   }

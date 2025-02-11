@@ -10,7 +10,6 @@ import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/search_provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
-import 'package:stocks_news_new/screens/auth/refer/refer_code.dart';
 import 'package:stocks_news_new/service/amplitude/service.dart';
 import 'package:stocks_news_new/service/revenue_cat.dart';
 import 'package:stocks_news_new/utils/colors.dart';
@@ -27,16 +26,13 @@ class Tabs extends StatefulWidget {
   static const String path = "Tabs";
   final int index;
   final String? inAppMsgId;
-  final bool showRef;
-  final bool showMembership;
+
   final int trendingIndex;
 
   const Tabs({
     super.key,
     this.index = 0,
     this.inAppMsgId,
-    this.showRef = false,
-    this.showMembership = false,
     this.trendingIndex = 0,
   });
 
@@ -57,10 +53,7 @@ class _TabsState extends State<Tabs> {
         _selectedIndex = widget.index;
         activeContainerApiCalls(currentIndex: _selectedIndex);
       });
-      //Because we are asking membership thats why hiding refer
-      if (widget.showRef) referLogin();
-      if (widget.showMembership) _showMembership();
-      // appTrack();
+
       AmplitudeService.logFirstOpenEvent();
     });
   }

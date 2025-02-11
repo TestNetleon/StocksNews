@@ -55,15 +55,15 @@ class SignUpSuccess extends StatelessWidget {
                   onPressed: () {
                     Navigator.popUntil(
                         navigatorKey.currentContext!, (route) => route.isFirst);
-                    Navigator.pushReplacement(
-                      navigatorKey.currentContext!,
-                      MaterialPageRoute(
-                        builder: (_) => const Tabs(
-                          showRef: false,
-                          showMembership: true,
-                        ),
-                      ),
-                    );
+                    // Navigator.pushReplacement(
+                    //   navigatorKey.currentContext!,
+                    //   MaterialPageRoute(
+                    //     builder: (_) => const Tabs(
+                    //       showRef: false,
+                    //       showMembership: true,
+                    //     ),
+                    //   ),
+                    // );
                     Timer(const Duration(seconds: 1), () {
                       navigatorKey.currentContext!
                           .read<UserProvider>()
