@@ -8,14 +8,19 @@ String myHomeResToJson(MyHomeRes data) => json.encode(data.toJson());
 
 class MyHomeRes {
   final HomeNewsRes? recentNews;
-
   final List<BaseTickerRes>? tickers;
+  final HomeLoginBoxRes? loginBox;
+
   MyHomeRes({
     this.recentNews,
     this.tickers,
+    this.loginBox,
   });
 
   factory MyHomeRes.fromJson(Map<String, dynamic> json) => MyHomeRes(
+        loginBox: json["login_box"] == null
+            ? null
+            : HomeLoginBoxRes.fromJson(json["login_box"]),
         recentNews: json["recent_news"] == null
             ? null
             : HomeNewsRes.fromJson(json["recent_news"]),
@@ -26,10 +31,40 @@ class MyHomeRes {
       );
 
   Map<String, dynamic> toJson() => {
+        "login_box": loginBox?.toJson(),
         "recent_news": recentNews?.toJson(),
         "trending": tickers == null
             ? null
             : List<dynamic>.from(tickers!.map((x) => x.toJson())),
+      };
+}
+
+class HomeLoginBoxRes {
+  final String? id;
+  final String? agreeUrl;
+  final String? buttonText;
+  final String? verifyButtonText;
+
+  HomeLoginBoxRes({
+    this.id,
+    this.agreeUrl,
+    this.buttonText,
+    this.verifyButtonText,
+  });
+
+  factory HomeLoginBoxRes.fromJson(Map<String, dynamic> json) =>
+      HomeLoginBoxRes(
+        id: json["id"],
+        agreeUrl: json["agree_url"],
+        buttonText: json['btn_text'],
+        verifyButtonText: json['verify_btn_text'],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "agree_url": agreeUrl,
+        "btn_text": buttonText,
+        'verify_btn_text': verifyButtonText,
       };
 }
 

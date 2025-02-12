@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -5,13 +6,16 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/api/api_requester.dart';
 import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/api/apis.dart';
+import 'package:stocks_news_new/database/preference.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 
 import '../models/my_home.dart';
 import '../models/my_home_premium.dart';
+import '../models/ticker.dart';
 import '../utils/constants.dart';
+import 'user.dart';
 
 class MyHomeManager extends ChangeNotifier {
   //MARK: Home
@@ -48,7 +52,13 @@ class MyHomeManager extends ChangeNotifier {
       if (response.session) {
         _data = myHomeResFromJson(jsonEncode(response.data));
         _error = null;
-        // getHomePremiumData();
+
+        bool firstTime = await Preference.isFirstOpen();
+        if (_data?.loginBox != null && firstTime) {
+          Timer(Duration(seconds: 2), () {
+            navigatorKey.currentContext!.read<UserManager>().askLoginScreen();
+          });
+        }
       } else {
         _data = null;
         _error = response.message;
@@ -120,6 +130,54 @@ class MyHomeManager extends ChangeNotifier {
       Utils().showLog('Error in ${Apis.myHome}: $e');
     } finally {
       setStatusHomePremium(Status.loaded);
+    }
+  }
+
+  //MARK: WATCHLIST
+  String? _errorWatchlist;
+  String? get errorWatchlist => _errorWatchlist ?? Const.errSomethingWrong;
+
+  Status _statusWatchlist = Status.ideal;
+  Status get statusWatchlist => _statusWatchlist;
+
+  bool get isLoadingWatchlist =>
+      _statusWatchlist == Status.loading || _statusWatchlist == Status.ideal;
+
+  List<BaseTickerRes>? _watchlist;
+
+  List<BaseTickerRes>? get watchlist => _watchlist;
+
+  setStatusWatchlist(status) {
+    _statusWatchlist = status;
+    notifyListeners();
+  }
+
+  Future getHomeWatchlist() async {
+    try {
+      UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
+
+      Map request = {
+        'token': provider.user?.token ?? '',
+      };
+
+      setStatusWatchlist(Status.loading);
+      ApiResponse response = await apiRequest(
+        url: Apis.myHomeWatchlist,
+        request: request,
+      );
+      if (response.session) {
+        _watchlist = baseTickerResFromJson(jsonEncode(response.data));
+        _errorWatchlist = null;
+      } else {
+        _watchlist = null;
+        _errorWatchlist = response.message;
+      }
+    } catch (e) {
+      _watchlist = null;
+      _errorWatchlist = Const.errSomethingWrong;
+      Utils().showLog('Error in ${Apis.myHome}: $e');
+    } finally {
+      setStatusWatchlist(Status.loaded);
     }
   }
 }

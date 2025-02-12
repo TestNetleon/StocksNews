@@ -1,0 +1,90 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
+import 'package:provider/provider.dart';
+import 'package:stocks_news_new/managers/home.dart';
+import '../../../utils/colors.dart';
+import '../../../utils/theme.dart';
+import '../../../utils/utils.dart';
+
+class AccountAgreeText extends StatefulWidget {
+  final bool showFull;
+  final int defaultLength;
+
+  const AccountAgreeText({
+    super.key,
+    this.showFull = false,
+    this.defaultLength = 150,
+  });
+
+  @override
+  State<AccountAgreeText> createState() => _AccountAgreeTextState();
+}
+
+class _AccountAgreeTextState extends State<AccountAgreeText> {
+  bool _isExpanded = false;
+
+  String get _truncatedContent {
+    MyHomeManager provider = context.read<MyHomeManager>();
+
+    String content = provider.data?.loginBox?.agreeUrl ?? '';
+
+    return content.length > widget.defaultLength
+        ? '${content.substring(0, widget.defaultLength)}...'
+        : content;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    MyHomeManager provider = context.watch<MyHomeManager>();
+
+    if (provider.data?.loginBox == null ||
+        provider.data?.loginBox?.id == null ||
+        provider.data?.loginBox?.id == '') {
+      return SizedBox();
+    }
+
+    String content = widget.showFull || _isExpanded
+        ? provider.data?.loginBox?.agreeUrl ?? ""
+        : _truncatedContent;
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.end,
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        HtmlWidget(
+          content,
+          customStylesBuilder: (element) {
+            if (element.localName == 'a') {
+              return {'color': '#1bb449', 'text-decoration': 'none'};
+            }
+            return null;
+          },
+          onTapUrl: (url) async {
+            if (!(url.startsWith('https:') || url.startsWith('http:'))) {
+              //
+            } else {
+              openUrl(url);
+            }
+
+            return true;
+          },
+          textStyle: styleGeorgiaRegular(fontSize: 14),
+        ),
+        if (content.length > widget.defaultLength && !widget.showFull)
+          GestureDetector(
+            onTap: () {
+              setState(() {
+                _isExpanded = !_isExpanded;
+              });
+            },
+            child: Text(
+              _isExpanded ? 'Read Less' : 'Read More',
+              style: stylePTSansRegular(
+                color: ThemeColors.primary120,
+              ),
+            ),
+          ),
+      ],
+    );
+  }
+}

@@ -8,6 +8,13 @@ import '../tradingSimulator/modals/stream_data.dart';
 
 StreamRes? streamKeysRes;
 
+enum ToasterEnum {
+  success,
+  info,
+  warning,
+  error,
+}
+
 enum EventAppsFlyer {
   af_firstopen,
   af_signup,
@@ -176,6 +183,12 @@ class Images {
   static const String mainBlackLogo = '${base}mainBlackLogo.png';
   static const String notification = '${base}notification.png';
   static const String search = '${base}search.png';
+  static const String appleSignUP = '${base}apple_signup.png';
+  static const String googleSignUP = '${base}google_signup.png';
+  static const String tickCircle = '${base}tick-circle.png';
+  static const String infoCircle = '${base}info-circle.png';
+  static const String warningCircle = '${base}warning-circle.png';
+  static const String closeCircle = '${base}close-circle.png';
 
   static const String bottomHome = '${base}bottom_home.png';
   static const String bottomMarket = '${base}bottom_market.png';

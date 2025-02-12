@@ -150,17 +150,17 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
           // }
         }
       } else {
-        bool isFirstOpen = await Preference.isFirstOpen();
-        if (isFirstOpen) {
-          Timer(const Duration(seconds: 8), () {
-            if (navigatorKey.currentContext!.read<UserProvider>().user ==
-                    null &&
-                !signUpVisible) {
-              // signupSheet();
-              loginFirstSheet();
-            }
-          });
-        }
+        // bool isFirstOpen = await Preference.isFirstOpen();
+        // if (isFirstOpen) {
+        //   Timer(const Duration(seconds: 8), () {
+        //     if (navigatorKey.currentContext!.read<UserProvider>().user ==
+        //             null &&
+        //         !signUpVisible) {
+        //       // signupSheet();
+        //       loginFirstSheet();
+        //     }
+        //   });
+        // }
       }
 
       FirebaseDynamicLinks.instance.onLink.listen(

@@ -18,8 +18,10 @@ class Apis {
 
   static const onBoarding = '/onboarding';
   static const myHome = '/home';
-  static const marketData = '/market-data';
   static const myHomePremium = '/home-premium';
+  static const myHomeWatchlist = '/home-watchlist-data';
+
+  static const marketData = '/market-data';
   static const mostBullish = '/most-bullish';
   static const notificationSettings = '/notification-settings';
   static const phoneLogin = '/phone-login';

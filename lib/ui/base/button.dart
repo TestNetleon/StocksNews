@@ -7,7 +7,8 @@ class BaseButton extends StatelessWidget {
   const BaseButton({
     this.onPressed,
     this.text = "Submit",
-    this.color = ThemeColors.accent,
+    this.color = ThemeColors.primary100,
+    this.disableTextColor = ThemeColors.primary100,
     this.textColor = Colors.white,
     this.textSize = 18,
     this.fullWidth = false,
@@ -25,6 +26,8 @@ class BaseButton extends StatelessWidget {
   final String text;
   final Color? color;
   final Color textColor;
+  final Color disableTextColor;
+
   final Function()? onPressed;
   final double textSize;
   final double radius;
@@ -43,15 +46,11 @@ class BaseButton extends StatelessWidget {
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
           disabledBackgroundColor:
-              disabledBackgroundColor ?? ThemeColors.border,
-
+              disabledBackgroundColor ?? ThemeColors.primary10,
           backgroundColor: color,
           elevation: 0,
           minimumSize: const Size.fromHeight(45),
           padding: padding ?? EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-          // (fullWidth
-          //     ? EdgeInsets.symmetric(horizontal: 16.sp, vertical: 8.sp)
-          //     : EdgeInsets.symmetric(horizontal: 5.sp, vertical: 5.sp)),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(radius),
           ),
@@ -62,11 +61,11 @@ class BaseButton extends StatelessWidget {
           style: fontBold
               ? stylePTSansBold(
                   fontSize: textSize,
-                  color: textColor,
+                  color: onPressed == null ? disableTextColor : textColor,
                 )
               : stylePTSansRegular(
                   fontSize: textSize,
-                  color: textColor,
+                  color: onPressed == null ? disableTextColor : textColor,
                 ),
         ),
       ),

@@ -13,19 +13,22 @@ class AccountSentCodeText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Text(
-          'Please enter the $digit-digit code sent to',
-          style: stylePTSansRegular(fontSize: 18),
-        ),
-        SpacerVertical(height: 8),
-        Text(
-          text,
-          style: styleBaseBold(fontSize: 18),
-        ),
-      ],
+    return Align(
+      alignment: Alignment.center,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Text(
+            'Please enter the $digit-digit code sent to',
+            style: stylePTSansRegular(fontSize: 18),
+          ),
+          SpacerVertical(height: 8),
+          Text(
+            text,
+            style: styleBaseBold(fontSize: 18),
+          ),
+        ],
+      ),
     );
   }
 }

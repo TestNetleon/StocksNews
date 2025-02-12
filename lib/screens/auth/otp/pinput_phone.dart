@@ -28,7 +28,7 @@ class CommonPinputPhone extends StatelessWidget {
         closeKeyboardWhenCompleted: true,
         cursor: Text(
           "|",
-          style: stylePTSansRegular(color: ThemeColors.white, fontSize: 30),
+          style: stylePTSansRegular(color: ThemeColors.black, fontSize: 30),
         ),
         showCursor: true,
         separatorBuilder: (index) {
@@ -37,32 +37,32 @@ class CommonPinputPhone extends StatelessWidget {
         mouseCursor: SystemMouseCursors.basic,
         defaultPinTheme: PinTheme(
           width: 56.sp,
-          height: 65.sp,
+          height: 56.sp,
           textStyle: stylePTSansBold(color: ThemeColors.white, fontSize: 30),
           decoration: BoxDecoration(
-            color: ThemeColors.transparent,
+            color: ThemeColors.white,
             borderRadius: BorderRadius.circular(8),
-            border: Border.all(color: Colors.grey),
+            border: Border.all(color: ThemeColors.neutral10),
           ),
         ),
         focusedPinTheme: PinTheme(
           width: 56.sp,
-          height: 70.sp,
-          textStyle: stylePTSansBold(color: ThemeColors.white, fontSize: 30),
+          height: 56.sp,
+          textStyle: stylePTSansBold(color: ThemeColors.black, fontSize: 30),
           decoration: BoxDecoration(
             // color: Colors.white,
             borderRadius: BorderRadius.circular(8),
-            border: Border.all(color: ThemeColors.accent),
+            border: Border.all(color: ThemeColors.neutral80),
           ),
         ),
         submittedPinTheme: PinTheme(
           width: 56.sp,
-          height: 70.sp,
-          textStyle: stylePTSansBold(color: ThemeColors.white, fontSize: 30),
+          height: 56.sp,
+          textStyle: stylePTSansBold(color: ThemeColors.black, fontSize: 30),
           decoration: BoxDecoration(
             // color: Colors.grey[300],
             borderRadius: BorderRadius.circular(8),
-            border: Border.all(color: ThemeColors.accent),
+            border: Border.all(color: ThemeColors.neutral10),
           ),
         ),
         onCompleted: onCompleted,

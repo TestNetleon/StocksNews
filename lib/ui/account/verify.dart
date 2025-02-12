@@ -190,77 +190,76 @@ class _AccountVerificationIndexState extends State<AccountVerificationIndex>
     return BaseContainer(
       appBar: BaseAppBar(showBack: true),
       body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(Dimen.authScreenPadding),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Align(
-                    alignment: Alignment.center,
-                    child: Text(
-                      "Enter Validation Code",
-                      style: stylePTSansBold(fontSize: 32),
-                    ),
-                  ),
-                  const SpacerVertical(height: 8),
-                  AccountSentCodeText(
-                      text: "${widget.countryCode} ${widget.phone}"),
-                  const SpacerVertical(),
-                  CommonPinputPhone(
-                    focusNode: myFocusNode,
-                    controller: _controller,
-                    onCompleted: (p0) {
-                      _onVeryClick();
-                    },
-                  ),
-                  startTiming == 30
-                      ? Container(
-                          margin: EdgeInsets.only(
-                            right: 8.sp,
-                            top: 20.sp,
-                          ),
-                          alignment: Alignment.center,
-                          child: GestureDetector(
-                            onTap: _onResendOtpClick,
-                            child: RichText(
-                              textAlign: TextAlign.center,
-                              text: TextSpan(
-                                text: "Resend OTP",
-                                style: stylePTSansBold(
-                                    fontSize: 15, color: ThemeColors.accent),
-                              ),
-                            ),
-                          ),
-                        )
-                      : Container(
-                          margin: EdgeInsets.only(
-                            right: 8.sp,
-                            top: 20.sp,
-                          ),
-                          alignment: Alignment.center,
-                          child: RichText(
-                            text: TextSpan(
-                              children: [
-                                TextSpan(
-                                  text: "${startTiming}Sec",
-                                  style: stylePTSansBold(
-                                    fontSize: 15,
-                                    color: ThemeColors.accent,
-                                  ),
-                                ),
-                              ],
-                              text: "Resend OTP in ",
-                              style: stylePTSansRegular(fontSize: 15),
+        child: Padding(
+          padding: const EdgeInsets.all(Pad.pad24),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Align(
+                alignment: Alignment.center,
+                child: Text(
+                  "Enter Validation Code",
+                  style: stylePTSansBold(fontSize: 32),
+                ),
+              ),
+              const SpacerVertical(height: 8),
+              AccountSentCodeText(
+                text: "${widget.countryCode} ${widget.phone}",
+              ),
+              const SpacerVertical(),
+              CommonPinputPhone(
+                focusNode: myFocusNode,
+                controller: _controller,
+                onCompleted: (p0) {
+                  _onVeryClick();
+                },
+              ),
+              startTiming == 30
+                  ? Container(
+                      margin: EdgeInsets.only(
+                        right: 8.sp,
+                        top: 20.sp,
+                      ),
+                      alignment: Alignment.center,
+                      child: GestureDetector(
+                        onTap: _onResendOtpClick,
+                        child: RichText(
+                          textAlign: TextAlign.center,
+                          text: TextSpan(
+                            text: "Re-send Code",
+                            style: stylePTSansBold(
+                              fontSize: 18,
+                              color: ThemeColors.secondary100,
                             ),
                           ),
                         ),
-                  const SpacerVertical(),
-                ],
-              ),
-            ),
-          ],
+                      ),
+                    )
+                  : Container(
+                      margin: EdgeInsets.only(
+                        right: 8.sp,
+                        top: 20.sp,
+                      ),
+                      alignment: Alignment.center,
+                      child: RichText(
+                        text: TextSpan(
+                          children: [
+                            TextSpan(
+                              text: "${startTiming}Sec",
+                              style: stylePTSansBold(
+                                fontSize: 18,
+                                color: ThemeColors.secondary100,
+                              ),
+                            ),
+                          ],
+                          text: "Resend OTP in ",
+                          style: stylePTSansRegular(fontSize: 18),
+                        ),
+                      ),
+                    ),
+              const SpacerVertical(),
+            ],
+          ),
         ),
       ),
     );

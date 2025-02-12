@@ -4,7 +4,6 @@ import 'package:stocks_news_new/managers/home.dart';
 import 'package:stocks_news_new/ui/base/app_bar.dart';
 import 'package:stocks_news_new/ui/base/base_scroll.dart';
 import 'package:stocks_news_new/utils/colors.dart';
-import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/custom/base_loader_container.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 import '../../base/scaffold.dart';
@@ -34,7 +33,7 @@ class _HomeIndexState extends State<HomeIndex> {
         hasData: provider.data != null && !provider.isLoading,
         showPreparingText: true,
         error: provider.error,
-        onRefresh: () {},
+        onRefresh: provider.getHomeData,
         child: BaseScroll(
           onRefresh: provider.getHomeData,
           children: [
@@ -44,7 +43,6 @@ class _HomeIndexState extends State<HomeIndex> {
               key: const Key('home_premium_visibility'),
               onVisibilityChanged: (VisibilityInfo info) {
                 if (info.visibleFraction > 0.1 && !provider.homePremiumLoaded) {
-                  Utils().showLog('HI----');
                   provider.setPremiumLoaded(true);
                   provider.getHomePremiumData();
                 }

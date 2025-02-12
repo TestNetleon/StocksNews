@@ -36,12 +36,16 @@ class UserManager extends ChangeNotifier {
   UserRes? get user => _user;
 
   askLoginScreen() async {
-    await Navigator.push(
-      navigatorKey.currentContext!,
-      createRoute(
-        AccountLoginIndex(),
-      ),
-    );
+    if (_user != null) {
+      return;
+    } else {
+      await Navigator.push(
+        navigatorKey.currentContext!,
+        createRoute(
+          AccountLoginIndex(),
+        ),
+      );
+    }
   }
 
   setStatus(status) {

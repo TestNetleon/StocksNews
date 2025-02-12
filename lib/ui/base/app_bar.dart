@@ -10,6 +10,7 @@ import '../../../../ui/tabs/tabs.dart';
 
 class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
   final bool isHome, showBack, showSearch, showNotification;
+  final bool showClose;
   final String? title;
   final Function()? onSaveClick;
 
@@ -21,6 +22,7 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.showSearch = false,
     this.showNotification = false,
     this.onSaveClick,
+    this.showClose = false,
   });
 
   @override

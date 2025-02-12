@@ -137,6 +137,10 @@ class ThemeColors {
   static const success = Color(0xFF47C189);
   static const success10 = Color(0xFFEFFBF5);
 
+  static const warning120 = Color(0xFFEABF3B);
+  static const warning = Color(0xFFF6C941);
+  static const warning10 = Color(0xFFFDF4D9);
+
   static const error120 = Color(0xFFFF4D4C);
   static const error = Color(0xFFFC7272);
   static const error10 = Color(0xFFFFF1F1);

@@ -206,12 +206,12 @@ class Routes {
         return MaterialPageRoute(
           builder: (context) {
             final arguments = settings.arguments as Map<String, dynamic>?;
-            int index = arguments?['index'];
-            int trendingIndex = arguments?['trendingIndex'];
-            String inAppMsgId = arguments?['inAppMsgId'];
+            int? index = arguments?['index'];
+            int? trendingIndex = arguments?['trendingIndex'];
+            String? inAppMsgId = arguments?['inAppMsgId'];
             return Tabs(
-              index: index,
-              trendingIndex: trendingIndex,
+              index: index ?? 0,
+              trendingIndex: trendingIndex ?? 0,
               inAppMsgId: inAppMsgId,
             );
           },

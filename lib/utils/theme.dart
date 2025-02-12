@@ -171,7 +171,7 @@ TextStyle styleBaseRegular({
   letterSpacing = 0.70,
   height = 0.0,
   String? fontFamily,
-  decoration,
+  TextDecoration? decoration,
 }) {
   return TextStyle(
     fontSize: fontSize,

@@ -19,7 +19,6 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:vibration/vibration.dart';
 import '../../api/api_response.dart';
-import '../../managers/user.dart';
 import '../../screens/offerMembership/blackFriday/index.dart';
 import '../../screens/offerMembership/christmas/index.dart';
 import '../../utils/utils.dart';
@@ -214,7 +213,6 @@ class _TabsState extends State<Tabs> {
         if (provider.data == null) {
           provider.getHomeData();
         }
-        context.read<UserManager>().askLoginScreen();
 
         // final HomeProvider homeProvider = context.read<HomeProvider>();
         // if (homeProvider.homeSliderRes == null &&
