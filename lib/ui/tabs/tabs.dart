@@ -13,6 +13,7 @@ import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/service/amplitude/service.dart';
 import 'package:stocks_news_new/service/revenue_cat.dart';
 import 'package:stocks_news_new/ui/tabs/market/index.dart';
+import 'package:stocks_news_new/ui/tabs/more/index.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -277,7 +278,7 @@ class Screens {
       MarketIndex(),
       Container(),
       Container(),
-      Container(),
+      MoreIndex(),
     ];
   }
 }

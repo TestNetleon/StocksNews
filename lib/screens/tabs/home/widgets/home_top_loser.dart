@@ -168,8 +168,10 @@ class _HomeTopLoserState extends State<HomeTopLoser> {
               context: context,
               showClose: false,
               content: AlertPopup(
-                insetPadding:
-                    EdgeInsets.symmetric(horizontal: 15.sp, vertical: 10.sp),
+                insetPadding: EdgeInsets.symmetric(
+                  horizontal: 15.sp,
+                  vertical: 10.sp,
+                ),
                 symbol: symbol,
                 companyName: companyName,
                 index: index ?? 0,
@@ -184,7 +186,9 @@ class _HomeTopLoserState extends State<HomeTopLoser> {
           }
         }
         // ignore: empty_catches
-      } catch (e) {}
+      } catch (e) {
+        //
+      }
     }
   }
 

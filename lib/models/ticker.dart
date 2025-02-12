@@ -15,6 +15,8 @@ class BaseTickerRes {
   final String? name;
   final String? change;
   final num? changesPercentage;
+  dynamic isAlertAdded;
+  dynamic isWatchlistAdded;
 
   BaseTickerRes({
     this.id,
@@ -24,6 +26,8 @@ class BaseTickerRes {
     this.name,
     this.change,
     this.changesPercentage,
+    this.isAlertAdded,
+    this.isWatchlistAdded,
   });
 
   factory BaseTickerRes.fromJson(Map<String, dynamic> json) => BaseTickerRes(
@@ -34,6 +38,8 @@ class BaseTickerRes {
         name: json["name"],
         change: json["change"],
         changesPercentage: json["changesPercentage"],
+        isAlertAdded: json["is_alert_added"],
+        isWatchlistAdded: json["is_watchlist_added"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -44,5 +50,7 @@ class BaseTickerRes {
         "name": name,
         "change": change,
         "changesPercentage": changesPercentage,
+        "is_alert_added": isAlertAdded,
+        "is_watchlist_added": isWatchlistAdded,
       };
 }
