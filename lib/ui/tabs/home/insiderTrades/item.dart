@@ -4,48 +4,36 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
-import 'package:stocks_news_new/widgets/cache_network_image.dart';
-
 import '../../../../models/my_home_premium.dart';
 import '../../../../widgets/spacer_vertical.dart';
 
-class HomePoliticianTradeItem extends StatelessWidget {
-  final PoliticianTradeRes data;
-  const HomePoliticianTradeItem({super.key, required this.data});
+class HomeInsiderTradeItem extends StatelessWidget {
+  final InsiderTradeRes data;
+  const HomeInsiderTradeItem({super.key, required this.data});
 
   @override
   Widget build(BuildContext context) {
-    // bool showAuthor = data.authors != null && data.authors?.isNotEmpty == true;
-    // bool showSite = data.site != null && data.site != '';
-    // bool showDate = data.publishedDate != null && data.publishedDate != '';
-
     return Container(
-      width: 224.sp,
+      width: 200.sp,
       margin: EdgeInsets.only(bottom: Pad.pad24, right: Pad.pad24),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(8),
-            child: CachedNetworkImagesWidget(
-              height: 224.sp,
-              width: 224.sp,
-              data.userImage,
-              fit: BoxFit.cover,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: Pad.pad10),
+          Visibility(
+            visible: data.reportingName != null && data.reportingName != '',
             child: Text(
-              data.name ?? '',
+              data.reportingName ?? '',
               style: styleBaseBold(fontSize: 16),
             ),
           ),
-          Text(
-            'House - ${data.memberType}',
-            style: styleBaseBold(
-              fontSize: 14,
-              color: ThemeColors.neutral40,
+          Visibility(
+            visible: data.typeOfOwner != null && data.typeOfOwner != '',
+            child: Text(
+              '${data.typeOfOwner}',
+              style: styleBaseBold(
+                fontSize: 14,
+                color: ThemeColors.neutral40,
+              ),
             ),
           ),
           Padding(
@@ -74,7 +62,7 @@ class HomePoliticianTradeItem extends StatelessWidget {
                               style: styleBaseBold(),
                             ),
                             Text(
-                              data.name ?? '',
+                              data.companyName ?? '',
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: styleBaseRegular(
@@ -92,16 +80,16 @@ class HomePoliticianTradeItem extends StatelessWidget {
                 Container(
                   padding: EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                   decoration: BoxDecoration(
-                    color: data.type == 'Purchase'
+                    color: data.transactionType == 'Buy'
                         ? ThemeColors.success10
                         : ThemeColors.error10,
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Text(
-                    data.type ?? '',
+                    data.transactionType ?? '',
                     style: styleBaseBold(
                       fontSize: 14,
-                      color: data.type == 'Purchase'
+                      color: data.transactionType == 'Buy'
                           ? ThemeColors.success120
                           : ThemeColors.error120,
                     ),

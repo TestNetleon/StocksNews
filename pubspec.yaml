@@ -107,7 +107,8 @@ dependencies:
   amplitude_flutter: ^3.16.5
   flutter_rating: ^2.0.2
   app_settings: ^5.1.1
-  braze_plugin: ^12.0.0
+  # braze_plugin: ^12.0.0
+  braze_plugin: ^12.1.0
   widget_zoom: ^0.0.4
   socket_io_client: ^3.0.2
   # eventsource3: ^1.0.1
