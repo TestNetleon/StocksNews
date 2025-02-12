@@ -21,6 +21,7 @@ class Apis {
   static const marketData = '/market-data';
   static const myHomePremium = '/home-premium';
   static const mostBullish = '/most-bullish';
+  static const notificationSettings = '/notification-settings';
 
 //----------------------------------------------
 
@@ -207,7 +208,7 @@ class Apis {
   static const christmasMembership = "/membership/christmas-plans";
   static const newYearMembership = "/membership/new-year-plans";
   static const aiNewsList = "/latest-news-v2";
-  static const notificationSettings = "/notification-settings";
+  // static const notificationSettings = "/notification-settings";
   static const updateNotificationSettings = "/update-notification-setting";
 
   //MARK: Simulator API

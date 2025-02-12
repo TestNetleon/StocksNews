@@ -25,7 +25,10 @@ class _HomeIndexState extends State<HomeIndex> {
     MyHomeManager provider = context.watch<MyHomeManager>();
 
     return BaseScaffold(
-      appBar: BaseAppBar(),
+      appBar: BaseAppBar(
+        showNotification: true,
+        showSearch: true,
+      ),
       body: BaseLoaderContainer(
         isLoading: provider.isLoading,
         hasData: provider.data != null && !provider.isLoading,

@@ -196,6 +196,7 @@ class Images {
   static const String moreFeedback = '${base}more_feedback.png';
   static const String moreLegal = '${base}more_legal.png';
   static const String moreLogout = '${base}more_logout.png';
+  static const String back = '${base}back.png';
 
   //-------------------------------------------------------------------------------
   static const String scannerStop = 'assets/images/scanner_stop.png';

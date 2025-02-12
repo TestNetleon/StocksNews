@@ -22,13 +22,13 @@ class _MostBullishState extends State<MostBullish> {
   }
 
   void _callAPI() {
-    MostBullishProvider provider = context.read<MostBullishProvider>();
+    MostBullishManager provider = context.read<MostBullishManager>();
     provider.getData();
   }
 
   @override
   Widget build(BuildContext context) {
-    MostBullishProvider provider = context.watch<MostBullishProvider>();
+    MostBullishManager provider = context.watch<MostBullishManager>();
     return BaseLoaderContainer(
       isLoading: provider.isLoading,
       hasData: provider.data != null && !provider.isLoading,
