@@ -15,7 +15,7 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 
-class MostBullishProvider extends ChangeNotifier {
+class MostBullishManager extends ChangeNotifier {
   MostBullishRes? _data;
   MostBullishRes? get data => _data;
 

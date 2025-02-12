@@ -1,10 +1,9 @@
 import 'dart:async';
-import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:stocks_news_new/managers/home.dart';
-import 'package:stocks_news_new/managers/market/alerts_watchlist_action.dart';
 import 'package:stocks_news_new/managers/market/market.dart';
 import 'package:stocks_news_new/managers/market/most_bullish.dart';
+import 'package:stocks_news_new/managers/notification/most_bullish.dart';
 import 'package:stocks_news_new/tournament/provider/leaderboard.dart';
 import 'package:stocks_news_new/tournament/provider/tournament.dart';
 import 'package:stocks_news_new/tournament/provider/search.dart';
@@ -105,13 +104,13 @@ import 'package:stocks_news_new/screens/tabs/compareNew/index.dart';
 import 'package:stocks_news_new/screens/tabs/compareStocks/compare_stocks.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/plaid/portfolio/index.dart';
 import 'package:stocks_news_new/screens/tabs/news/newsDetail/new_detail.dart';
-import 'package:stocks_news_new/screens/tabs/tabs.dart';
 import 'package:stocks_news_new/screens/trendingIndustries/index.dart';
 import 'package:stocks_news_new/screens/watchlist/watchlist.dart';
 import 'package:stocks_news_new/tradingSimulator/providers/trading_search_provider.dart';
 import 'package:stocks_news_new/tradingSimulator/providers/ts_open_list_provider.dart';
 import 'package:stocks_news_new/tradingSimulator/providers/ts_pending_list_provider.dart';
 import 'package:stocks_news_new/tradingSimulator/providers/ts_portfollo_provider.dart';
+import 'package:stocks_news_new/ui/tabs/more/notificationSettings/index.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import '../managers/onboarding.dart';
@@ -146,6 +145,7 @@ class Routes {
     Splash.path: (_) => const Splash(),
     DefaultHome.path: (_) => const DefaultHome(),
     OnboardingSlides.path: (_) => const OnboardingSlides(),
+    NotificationSettings.path: (_) => const NotificationSettings(),
     AccountLoginIndex.path: (_) => const AccountLoginIndex(),
 
     //--------------------------------------
@@ -671,7 +671,8 @@ class Routes {
       ChangeNotifierProvider(create: (_) => MyHomeManager()),
       ChangeNotifierProvider(create: (_) => MarketManager()),
       // ChangeNotifierProvider(create: (_) => AlertsWatchlistAction()),
-      ChangeNotifierProvider(create: (_) => MostBullishProvider()),
+      ChangeNotifierProvider(create: (_) => MostBullishManager()),
+      ChangeNotifierProvider(create: (_) => NotificationSettingsManager()),
       ChangeNotifierProvider(create: (_) => UserManager()),
     ];
   }

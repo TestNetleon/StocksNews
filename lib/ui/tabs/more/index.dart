@@ -4,6 +4,7 @@ import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/ui/base/heading.dart';
 import 'package:stocks_news_new/ui/base/scaffold.dart';
 import 'package:stocks_news_new/ui/tabs/more/more_item.dart';
+import 'package:stocks_news_new/ui/tabs/more/notificationSettings/index.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -12,6 +13,10 @@ import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 class MoreIndex extends StatelessWidget {
   const MoreIndex({super.key});
+
+  void _navigateToNotificationSettings(context) {
+    Navigator.pushNamed(context, NotificationSettings.path);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -80,7 +85,9 @@ class MoreIndex extends StatelessWidget {
             MoreItem(
               icon: Images.alerts,
               label: "Notifications",
-              onTap: () {},
+              onTap: () {
+                _navigateToNotificationSettings(context);
+              },
             ),
             BaseHeading(
               margin: EdgeInsets.only(left: Pad.pad16, top: Pad.pad20),

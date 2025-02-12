@@ -17,31 +17,35 @@ class MoreItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      // padding: EdgeInsets.all(Pad.pad16),
-      padding: EdgeInsets.symmetric(horizontal: Pad.pad16, vertical: 12),
-      decoration: BoxDecoration(
-        border: Border(
-          bottom: BorderSide(color: ThemeColors.neutral5),
+    return GestureDetector(
+      onTap: onTap,
+      behavior: HitTestBehavior.translucent,
+      child: Container(
+        // padding: EdgeInsets.all(Pad.pad16),
+        padding: EdgeInsets.symmetric(horizontal: Pad.pad16, vertical: 12),
+        decoration: BoxDecoration(
+          border: Border(
+            bottom: BorderSide(color: ThemeColors.neutral5),
+          ),
         ),
-      ),
-      child: Row(
-        children: [
-          Image.asset(
-            icon,
-            width: 32,
-            height: 32,
-            color: Colors.black,
-          ),
-          SpacerHorizontal(width: Pad.pad8),
-          Expanded(
-            child: Text(
-              label,
-              style: styleBaseRegular(fontSize: 16, height: 1.2),
+        child: Row(
+          children: [
+            Image.asset(
+              icon,
+              width: 32,
+              height: 32,
+              color: Colors.black,
             ),
-          ),
-          Image.asset(Images.moreItem, width: 24, height: 24),
-        ],
+            SpacerHorizontal(width: Pad.pad8),
+            Expanded(
+              child: Text(
+                label,
+                style: styleBaseRegular(fontSize: 16, height: 1.2),
+              ),
+            ),
+            Image.asset(Images.moreItem, width: 24, height: 24),
+          ],
+        ),
       ),
     );
   }
