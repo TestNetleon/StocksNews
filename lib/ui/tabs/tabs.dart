@@ -19,6 +19,7 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:vibration/vibration.dart';
 import '../../api/api_response.dart';
+import '../../managers/user.dart';
 import '../../screens/offerMembership/blackFriday/index.dart';
 import '../../screens/offerMembership/christmas/index.dart';
 import '../../utils/utils.dart';
@@ -26,7 +27,7 @@ import 'home/home.dart';
 
 class Tabs extends StatefulWidget {
   static const String path = "Tabs";
-  final int index;
+  final int? index;
   final String? inAppMsgId;
 
   final int trendingIndex;
@@ -52,7 +53,7 @@ class _TabsState extends State<Tabs> {
     splashLoaded = true;
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       setState(() {
-        _selectedIndex = widget.index;
+        _selectedIndex = widget.index ?? 0;
         activeContainerApiCalls(currentIndex: _selectedIndex);
       });
 
@@ -213,6 +214,7 @@ class _TabsState extends State<Tabs> {
         if (provider.data == null) {
           provider.getHomeData();
         }
+        context.read<UserManager>().askLoginScreen();
 
         // final HomeProvider homeProvider = context.read<HomeProvider>();
         // if (homeProvider.homeSliderRes == null &&

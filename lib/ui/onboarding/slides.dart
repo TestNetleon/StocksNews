@@ -6,9 +6,9 @@ import 'package:stocks_news_new/managers/onboarding.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
+import '../base/button.dart';
 import '../base/scaffold.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
-import 'package:stocks_news_new/widgets/theme_button.dart';
 
 import '../tabs/tabs.dart';
 import 'slide_item.dart';
@@ -91,7 +91,7 @@ class _OnboardingSlidesState extends State<OnboardingSlides> {
             Visibility(
               visible: provider.data?.btnName != null &&
                   provider.data?.btnName != '',
-              child: ThemeButton(
+              child: BaseButton(
                 radius: 8,
                 onPressed: () {},
                 color: ThemeColors.primary100,

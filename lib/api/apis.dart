@@ -21,6 +21,7 @@ class Apis {
   static const marketData = '/market-data';
   static const myHomePremium = '/home-premium';
   static const mostBullish = '/most-bullish';
+  static const phoneLogin = '/phone-login';
 
 //----------------------------------------------
 
@@ -29,7 +30,7 @@ class Apis {
 
   static const proxyAdvertiser = "/proxy/advertiser";
   static const checkServer = "/check-server-status";
-  static const phoneLogin = '/phone-login';
+  // static const phoneLogin = '/phone-login';
   static const signup = "/sign-up";
   static const verifySignupOtp = "/check-signup-otp";
   static const resendOtp = "/resend-otp";

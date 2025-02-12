@@ -41,11 +41,14 @@ class HomePoliticianTradeItem extends StatelessWidget {
               style: styleBaseBold(fontSize: 16),
             ),
           ),
-          Text(
-            'House - ${data.memberType}',
-            style: styleBaseBold(
-              fontSize: 14,
-              color: ThemeColors.neutral40,
+          Visibility(
+            visible: data.memberType != null && data.memberType != '',
+            child: Text(
+              'House - ${data.memberType}',
+              style: styleBaseRegular(
+                fontSize: 14,
+                color: ThemeColors.neutral40,
+              ),
             ),
           ),
           Padding(

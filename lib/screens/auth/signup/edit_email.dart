@@ -24,13 +24,6 @@ class EditEmail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // return Text(
-    //   "Please enter the 4-digit verification code that was sent to $email. The code is valid for 10 minutes.",
-    //   style: stylePTSansRegular(
-    //     color: Colors.white,
-    //   ),
-    // );
-
     return RichText(
       textAlign: TextAlign.center,
       text: TextSpan(
@@ -55,8 +48,7 @@ class EditEmail extends StatelessWidget {
             ),
           ),
         ],
-        text:
-            "Please enter the $digit-digit verification code that was sent to ",
+        text: "Please enter the $digit-digit code sent to ",
         style: stylePTSansRegular(
           height: 1.5,
         ),

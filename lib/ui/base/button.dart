@@ -3,8 +3,8 @@ import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 
 //
-class ThemeButton extends StatelessWidget {
-  const ThemeButton({
+class BaseButton extends StatelessWidget {
+  const BaseButton({
     this.onPressed,
     this.text = "Submit",
     this.color = ThemeColors.accent,
@@ -16,7 +16,6 @@ class ThemeButton extends StatelessWidget {
     this.elevation = 2,
     this.padding,
     this.margin,
-    this.child,
     this.textAlign = TextAlign.center,
     this.textUppercase = false,
     this.disabledBackgroundColor,
@@ -33,7 +32,6 @@ class ThemeButton extends StatelessWidget {
   final double elevation;
   final EdgeInsets? padding, margin;
   final TextAlign? textAlign;
-  final Widget? child;
   final bool textUppercase;
   final Color? disabledBackgroundColor;
 
@@ -58,20 +56,19 @@ class ThemeButton extends StatelessWidget {
             borderRadius: BorderRadius.circular(radius),
           ),
         ),
-        child: child ??
-            Text(
-              textAlign: textAlign,
-              textUppercase ? text.toUpperCase() : text,
-              style: fontBold
-                  ? stylePTSansBold(
-                      fontSize: textSize,
-                      color: textColor,
-                    )
-                  : stylePTSansRegular(
-                      fontSize: textSize,
-                      color: textColor,
-                    ),
-            ),
+        child: Text(
+          textAlign: textAlign,
+          textUppercase ? text.toUpperCase() : text,
+          style: fontBold
+              ? stylePTSansBold(
+                  fontSize: textSize,
+                  color: textColor,
+                )
+              : stylePTSansRegular(
+                  fontSize: textSize,
+                  color: textColor,
+                ),
+        ),
       ),
     );
   }

@@ -30,7 +30,7 @@ class HomeInsiderTradeItem extends StatelessWidget {
             visible: data.typeOfOwner != null && data.typeOfOwner != '',
             child: Text(
               '${data.typeOfOwner}',
-              style: styleBaseBold(
+              style: styleBaseRegular(
                 fontSize: 14,
                 color: ThemeColors.neutral40,
               ),

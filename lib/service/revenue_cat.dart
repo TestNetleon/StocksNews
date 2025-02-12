@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:purchases_ui_flutter/purchases_ui_flutter.dart';
 import 'package:stocks_news_new/api/api_response.dart';
+import 'package:stocks_news_new/managers/user.dart';
 import 'package:stocks_news_new/modals/user_res.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/membership.dart';
@@ -78,7 +79,7 @@ class RevenueCatService {
 
 // All Cases Testing Here
 Future subscribe({type}) async {
-  UserProvider? provider = navigatorKey.currentContext!.read<UserProvider>();
+  UserManager? provider = navigatorKey.currentContext!.read<UserManager>();
   MembershipProvider? membershipProvider =
       navigatorKey.currentContext!.read<MembershipProvider>();
   withLoginMembership = false;

@@ -115,6 +115,7 @@ import 'package:stocks_news_new/tradingSimulator/providers/ts_portfollo_provider
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import '../managers/onboarding.dart';
+import '../managers/user.dart';
 import '../tournament/provider/trades.dart';
 import '../providers/offerMembership/black_friday.dart';
 import '../providers/featured_ticker.dart';
@@ -132,6 +133,8 @@ import '../screens/marketData/congressionalData/index.dart';
 import '../screens/marketData/lowPriceStocks/index.dart';
 import '../screens/whatWeDo/index.dart';
 import '../tradingSimulator/providers/ts_transaction_list.dart';
+import '../ui/account/login.dart';
+import '../ui/account/verify.dart';
 import '../ui/onboarding/default_home.dart';
 import '../ui/onboarding/slides.dart';
 import '../ui/onboarding/splash.dart';
@@ -143,6 +146,7 @@ class Routes {
     Splash.path: (_) => const Splash(),
     DefaultHome.path: (_) => const DefaultHome(),
     OnboardingSlides.path: (_) => const OnboardingSlides(),
+    AccountLoginIndex.path: (_) => const AccountLoginIndex(),
 
     //--------------------------------------
 
@@ -209,6 +213,21 @@ class Routes {
               index: index,
               trendingIndex: trendingIndex,
               inAppMsgId: inAppMsgId,
+            );
+          },
+        );
+
+      case AccountVerificationIndex.path:
+        return MaterialPageRoute(
+          builder: (context) {
+            final arguments = settings.arguments as Map<String, dynamic>?;
+            String countryCode = arguments?['countryCode'];
+            String phone = arguments?['phone'];
+            String verificationId = arguments?['verificationId'];
+            return AccountVerificationIndex(
+              countryCode: countryCode,
+              phone: phone,
+              verificationId: verificationId,
             );
           },
         );
@@ -653,6 +672,7 @@ class Routes {
       ChangeNotifierProvider(create: (_) => MarketManager()),
       // ChangeNotifierProvider(create: (_) => AlertsWatchlistAction()),
       ChangeNotifierProvider(create: (_) => MostBullishProvider()),
+      ChangeNotifierProvider(create: (_) => UserManager()),
     ];
   }
 }
