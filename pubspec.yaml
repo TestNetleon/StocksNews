@@ -146,6 +146,7 @@ flutter:
     - assets/fonts/ptSans/
     - assets/
     - assets/images/
+    - assets/image/
     - assets/audios/
     - assets/audios/alert_watchlist.mp3
     - assets/audios/refresh.wav

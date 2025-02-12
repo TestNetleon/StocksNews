@@ -171,7 +171,7 @@ Map<AdScreen, Map<AdPlaces, bool>> adVisibilityMap = {
 
 class Images {
   //MARK: New UI
-  static const String base = 'assets/images/';
+  static const String base = 'assets/image/';
   static const String mainLogo = '${base}splashLogo.png';
   static const String mainBlackLogo = '${base}mainBlackLogo.png';
   static const String notification = '${base}notification.png';
@@ -186,6 +186,16 @@ class Images {
   static const String trendingDOWN = '${base}trending_down.png';
   static const String watchlist = '${base}watchlist.png';
   static const String alerts = '${base}alerts.png';
+  static const String userPlaceholderNew = '${base}user_placeholder_new.png';
+  static const String moreItem = '${base}more_item.png';
+  static const String morePersonalDetails = '${base}more_personal_details.png';
+  static const String moreStockAlerts = '${base}more_stock_alerts.png';
+  static const String moreMySubscription = '${base}more_my_subscription.png';
+  static const String moreFaqs = '${base}more_faqs.png';
+  static const String moreContactUs = '${base}more_contact_us.png';
+  static const String moreFeedback = '${base}more_feedback.png';
+  static const String moreLegal = '${base}more_legal.png';
+  static const String moreLogout = '${base}more_logout.png';
 
   //-------------------------------------------------------------------------------
   static const String scannerStop = 'assets/images/scanner_stop.png';

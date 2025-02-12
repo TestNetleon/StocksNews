@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/managers/market/market.dart';
-import 'package:stocks_news_new/models/market/market_res.dart';
 import 'package:stocks_news_new/ui/base/common_tab.dart';
 import 'package:stocks_news_new/ui/tabs/market/market_tabs.dart';
 import 'package:stocks_news_new/ui/tabs/market/trending/most_bullish.dart';
@@ -9,8 +8,6 @@ import 'package:stocks_news_new/utils/theme.dart';
 
 import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/custom/base_loader_container.dart';
-
-import '../../base/common_tab.dart';
 
 class MarketIndex extends StatefulWidget {
   const MarketIndex({super.key});

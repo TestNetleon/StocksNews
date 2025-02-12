@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:stocks_news_new/managers/market/alerts_watchlist_action.dart';
 import 'package:stocks_news_new/models/ticker.dart';
 import 'package:stocks_news_new/ui/base/slidable_menu.dart';
 import 'package:stocks_news_new/utils/colors.dart';
@@ -29,8 +30,22 @@ class BaseStockItem extends StatelessWidget {
         //   companyName: data.name ?? "",
         //   index: index,
         // );
+        AlertsWatchlistAction().createAlertSend(
+          alertName: "",
+          symbol: data.symbol ?? "",
+          companyName: data.name ?? "",
+          index: index,
+          onSuccess: () {},
+        );
       },
-      onClickWatchlist: () {},
+      onClickWatchlist: () {
+        AlertsWatchlistAction().addToWishList(
+          symbol: data.symbol ?? "",
+          companyName: data.name ?? "",
+          index: index,
+          onSuccess: () {},
+        );
+      },
       index: index,
       child: Container(
         padding: EdgeInsets.all(16),
