@@ -188,7 +188,7 @@ class _AccountVerificationIndexState extends State<AccountVerificationIndex>
   @override
   Widget build(BuildContext context) {
     return BaseContainer(
-      appBar: BaseAppBar(isPopBack: true),
+      appBar: BaseAppBar(showBack: true),
       body: SingleChildScrollView(
         child: Column(
           children: [
