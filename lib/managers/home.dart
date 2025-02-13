@@ -49,7 +49,7 @@ class MyHomeManager extends ChangeNotifier {
         url: Apis.myHome,
         request: request,
       );
-      if (response.session) {
+      if (response.status) {
         _data = myHomeResFromJson(jsonEncode(response.data));
         _error = null;
 
@@ -117,7 +117,7 @@ class MyHomeManager extends ChangeNotifier {
         url: Apis.myHomePremium,
         request: request,
       );
-      if (response.session) {
+      if (response.status) {
         _homePremiumData = myHomePremiumResFromJson(jsonEncode(response.data));
         _errorHomePremium = null;
       } else {
@@ -140,8 +140,7 @@ class MyHomeManager extends ChangeNotifier {
   Status _statusWatchlist = Status.ideal;
   Status get statusWatchlist => _statusWatchlist;
 
-  bool get isLoadingWatchlist =>
-      _statusWatchlist == Status.loading || _statusWatchlist == Status.ideal;
+  bool get isLoadingWatchlist => _statusWatchlist == Status.loading;
 
   List<BaseTickerRes>? _watchlist;
 
@@ -165,12 +164,14 @@ class MyHomeManager extends ChangeNotifier {
         url: Apis.myHomeWatchlist,
         request: request,
       );
-      if (response.session) {
+      if (response.status) {
         _watchlist = baseTickerResFromJson(jsonEncode(response.data));
         _errorWatchlist = null;
+        print('HI-----1');
       } else {
         _watchlist = null;
         _errorWatchlist = response.message;
+        print('HI-----');
       }
     } catch (e) {
       _watchlist = null;

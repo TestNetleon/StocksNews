@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/managers/home.dart';
 import 'package:stocks_news_new/ui/tabs/home/trendingWatchlist/trending.dart';
 import 'package:stocks_news_new/ui/tabs/home/trendingWatchlist/watchlist.dart';
+import 'package:stocks_news_new/widgets/custom/base_loader_container.dart';
 import '../../../models/ticker.dart';
 import 'trendingWatchlist/tab.dart';
 
@@ -19,6 +20,13 @@ class _HomeTrendingIndexState extends State<HomeTrendingIndex> {
   onChange(index) {
     _selectedIndex = index;
     setState(() {});
+    if (_selectedIndex == 1) {
+      MyHomeManager manager = context.read<MyHomeManager>();
+      if (manager.watchlist != null && manager.watchlist?.isNotEmpty == true) {
+        return;
+      }
+      context.read<MyHomeManager>().getHomeWatchlist();
+    }
   }
 
   @override
@@ -39,7 +47,15 @@ class _HomeTrendingIndexState extends State<HomeTrendingIndex> {
               visible: trending != null && trending.isNotEmpty,
               child: HomeTrendingContainer(),
             ),
-          if (_selectedIndex == 1) HomeWatchlistContainer(),
+          if (_selectedIndex == 1)
+            BaseLoaderContainer(
+              hasData: provider.watchlist != null &&
+                  provider.watchlist?.isNotEmpty == true,
+              isLoading: provider.isLoadingWatchlist,
+              showPreparingText: true,
+              error: provider.errorWatchlist,
+              child: HomeWatchlistContainer(),
+            ),
         ],
       ),
     );
