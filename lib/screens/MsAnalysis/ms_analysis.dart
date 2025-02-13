@@ -15,7 +15,6 @@ import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
-import '../../socket/socket.dart';
 import '../../widgets/custom/refresh_indicator.dart';
 import '../../widgets/disclaimer_widget.dart';
 import 'highlights/index.dart';
@@ -41,65 +40,10 @@ class _MsAnalysisState extends State<MsAnalysis> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      _addSocket();
       context
           .read<MSAnalysisProvider>()
           .callAPIs(symbol: widget.symbol, reset: true);
     });
-  }
-
-  WebSocketService? _webSocketService;
-
-  _addSocket() {
-    MSAnalysisProvider provider = context.read<MSAnalysisProvider>();
-
-    try {
-      _webSocketService = WebSocketService(
-        url: 'wss://websockets.financialmodelingprep.com',
-        apiKey: apiKeyFMP,
-        ticker: widget.symbol,
-      );
-      _webSocketService?.connect();
-
-      // _webSocketService?.onDataReceived =
-      //     (price, change, percentage, changeString) {
-      //   tickerPrice = price;
-      //   tickerChange = change;
-      //   tickerPercentage = percentage;
-      //   tickerChangeString = changeString;
-
-      //   provider.updateSocket(
-      //     change: tickerChange,
-      //     changePercentage: tickerPercentage,
-      //     changeString: tickerChangeString,
-      //     price: tickerPrice,
-      //   );
-      // };
-
-      _webSocketService?.onDataReceived = ({
-        required String price,
-        required num change,
-        required num percentage,
-        required String changeString,
-        num? priceValue,
-      }) {
-        provider.updateSocket(
-          change: change,
-          changePercentage: percentage,
-          changeString: changeString,
-          price: price,
-          priceVal: priceValue,
-        );
-      };
-    } catch (e) {
-//
-    }
-  }
-
-  @override
-  void dispose() {
-    _webSocketService?.disconnect();
-    super.dispose();
   }
 
   @override

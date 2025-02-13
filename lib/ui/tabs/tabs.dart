@@ -12,6 +12,7 @@ import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/service/amplitude/service.dart';
 import 'package:stocks_news_new/service/revenue_cat.dart';
+import 'package:stocks_news_new/socket/socket.dart';
 import 'package:stocks_news_new/ui/tabs/market/index.dart';
 import 'package:stocks_news_new/ui/tabs/more/index.dart';
 import 'package:stocks_news_new/utils/colors.dart';
@@ -51,6 +52,8 @@ class _TabsState extends State<Tabs> {
     super.initState();
     splashLoaded = true;
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      SocketService.instance.connect();
+
       setState(() {
         _selectedIndex = widget.index ?? 0;
         activeContainerApiCalls(currentIndex: _selectedIndex);
@@ -209,6 +212,7 @@ class _TabsState extends State<Tabs> {
 
     switch (currentIndex) {
       case 0:
+        SocketService.instance.emitUpdateUser(SocketEnum.home);
         MyHomeManager provider = context.read<MyHomeManager>();
         if (provider.data == null) {
           provider.getHomeData();
@@ -239,6 +243,8 @@ class _TabsState extends State<Tabs> {
 
         break;
       case 3:
+        SocketService.instance.emitUpdateUser(SocketEnum.tools);
+
         // if (redditTwitterProvider.socialSentimentRes == null) {
         //   redditTwitterProvider.getRedditTwitterData(reset: true);
         // }

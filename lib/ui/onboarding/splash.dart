@@ -45,8 +45,6 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
   }
 
   void _startProcess() async {
-    // _callAPI();
-
     try {
       PackageInfo packageInfo = await PackageInfo.fromPlatform();
       appVersion = packageInfo.version;
