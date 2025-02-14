@@ -75,21 +75,19 @@ class BaseNewsItem extends StatelessWidget {
                     ),
                   ),
                 ),
-                Flexible(
-                  child: Visibility(
-                    visible: showSite,
-                    child: Container(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                      decoration: BoxDecoration(
-                          color: ThemeColors.secondary10,
-                          borderRadius: BorderRadius.circular(8)),
-                      child: Text(
-                        data.site ?? '',
-                        style: styleBaseRegular(
-                          fontSize: 14,
-                          color: ThemeColors.secondary120,
-                        ),
+                Visibility(
+                  visible: showSite,
+                  child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                    decoration: BoxDecoration(
+                      color: ThemeColors.secondary10,
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Text(
+                      data.site ?? '',
+                      style: styleBaseRegular(
+                        fontSize: 14,
+                        color: ThemeColors.secondary120,
                       ),
                     ),
                   ),

@@ -18,11 +18,15 @@ class Apis {
 
   static const onBoarding = '/onboarding';
   static const myHome = '/home';
+  static const compareStocks = '/compare';
+  static const addCompareStock = '/add-compare';
+  static const deleteCompareStock = '/delete-compare';
+
   static const myHomePremium = '/home-premium';
   static const tools = '/tools';
   static const savePlaid = '/save-plaid-portfolio';
   static const getPortfolio = '/plaid-portfolio';
-
+  static const removePortfolio = '/remove-plaid-portfolio';
   static const myHomeWatchlist = '/home-watchlist-data';
   static const marketData = '/market-data';
   static const mostBullish = '/most-bullish';

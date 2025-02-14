@@ -8,12 +8,14 @@ class BaseScroll extends StatelessWidget {
   final Future<void> Function()? onRefresh;
   final List<Widget> children;
   final EdgeInsets? margin;
+  final ScrollPhysics? physics;
 
   const BaseScroll({
     super.key,
     this.onRefresh,
     required this.children,
     this.margin,
+    this.physics,
   });
 
   @override
@@ -29,6 +31,7 @@ class BaseScroll extends StatelessWidget {
       child: Container(
         margin: margin ?? EdgeInsets.symmetric(horizontal: Pad.pad16),
         child: CustomScrollView(
+          physics: physics,
           slivers: [
             SliverList(
               delegate: SliverChildBuilderDelegate(

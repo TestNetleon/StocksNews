@@ -33,8 +33,8 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
         padding: const EdgeInsets.all(Pad.pad8),
         child: Stack(
           children: [
-            if (title == null) CenterLogo(isHome: isHome),
-            if (title != null) CenterTitle(title: title!),
+            if (title == null || title == '') CenterLogo(isHome: isHome),
+            if (title != null && title != '') CenterTitle(title: title!),
             Positioned(
               left: 0,
               right: 0,

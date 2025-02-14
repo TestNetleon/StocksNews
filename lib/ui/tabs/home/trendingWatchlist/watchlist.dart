@@ -18,7 +18,7 @@ class _HomeWatchlistContainerState extends State<HomeWatchlistContainer> {
   @override
   Widget build(BuildContext context) {
     MyHomeManager provider = context.watch<MyHomeManager>();
-    List<BaseTickerRes>? watchlist = provider.watchlist;
+    List<BaseTickerRes>? watchlist = provider.watchlist?.data;
 
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,

@@ -22,7 +22,8 @@ class _HomeTrendingIndexState extends State<HomeTrendingIndex> {
     setState(() {});
     if (_selectedIndex == 1) {
       MyHomeManager manager = context.read<MyHomeManager>();
-      if (manager.watchlist != null && manager.watchlist?.isNotEmpty == true) {
+      if (manager.watchlist?.data != null &&
+          manager.watchlist?.data?.isNotEmpty == true) {
         return;
       }
       context.read<MyHomeManager>().getHomeWatchlist();
@@ -49,8 +50,8 @@ class _HomeTrendingIndexState extends State<HomeTrendingIndex> {
             ),
           if (_selectedIndex == 1)
             BaseLoaderContainer(
-              hasData: provider.watchlist != null &&
-                  provider.watchlist?.isNotEmpty == true,
+              hasData: provider.watchlist?.data != null &&
+                  provider.watchlist?.data?.isNotEmpty == true,
               isLoading: provider.isLoadingWatchlist,
               showPreparingText: true,
               error: provider.errorWatchlist,

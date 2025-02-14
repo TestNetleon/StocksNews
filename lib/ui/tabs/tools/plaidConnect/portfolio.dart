@@ -8,7 +8,11 @@ import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/custom/base_loader_container.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
+import '../../../../models/ticker.dart';
+import '../../../base/base_list_divider.dart';
 import '../../../base/scaffold.dart';
+import '../../../base/stock_item.dart';
 
 class ToolsPortfolioIndex extends StatefulWidget {
   static const path = 'ToolsPortfolioIndex';
@@ -34,6 +38,7 @@ class _ToolsPortfolioIndexState extends State<ToolsPortfolioIndex> {
       appBar: BaseAppBar(
         showBack: true,
         showSearch: true,
+        title: manager.portfolioData?.title,
       ),
       body: BaseLoaderContainer(
         isLoading: manager.isLoadingPortfolio,
@@ -53,27 +58,33 @@ class _ToolsPortfolioIndexState extends State<ToolsPortfolioIndex> {
               width: double.infinity,
               child: Column(
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      manager.portfolioData?.balanceBox?.text ?? '',
-                      style: styleBaseRegular(
-                        fontSize: 14,
-                        color: ThemeColors.neutral40,
+                  Text(
+                    manager.portfolioData?.balanceBox?.text ?? '',
+                    style: styleBaseRegular(
+                      fontSize: 14,
+                      color: ThemeColors.neutral40,
+                    ),
+                  ),
+                  Visibility(
+                    visible:
+                        manager.portfolioData?.balanceBox?.balance != null &&
+                            manager.portfolioData?.balanceBox?.balance != '',
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: Pad.pad8),
+                      child: Text(
+                        manager.portfolioData?.balanceBox?.balance ?? '',
+                        style: styleBaseBold(
+                          fontSize: 25,
+                          color: ThemeColors.black,
+                        ),
                       ),
                     ),
                   ),
-                  Text(
-                    manager.portfolioData?.balanceBox?.balance ?? '',
-                    style: styleBaseBold(
-                      fontSize: 25,
-                      color: ThemeColors.black,
-                    ),
-                  ),
+                  SpacerVertical(height: 16),
                   IntrinsicWidth(
                     child: BaseButton(
                       fullWidth: false,
-                      onPressed: () {},
+                      onPressed: manager.removePortfolio,
                       text: manager.portfolioData?.balanceBox?.btnText ??
                           'Disconnect',
                       color: ThemeColors.white,
@@ -82,6 +93,32 @@ class _ToolsPortfolioIndexState extends State<ToolsPortfolioIndex> {
                     ),
                   ),
                 ],
+              ),
+            ),
+            BaseLoaderContainer(
+              isLoading: manager.isLoadingPortfolio,
+              hasData: manager.portfolioData?.data != null,
+              showPreparingText: true,
+              error: manager.errorPortfolio,
+              onRefresh: () {},
+              child: ListView.separated(
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+                itemBuilder: (context, index) {
+                  BaseTickerRes? data = manager.portfolioData?.data?[index];
+                  if (data == null) {
+                    return SizedBox();
+                  }
+                  return BaseStockItem(
+                    slidable: false,
+                    data: data,
+                    index: index,
+                  );
+                },
+                separatorBuilder: (context, index) {
+                  return BaseListDivider();
+                },
+                itemCount: manager.portfolioData?.data?.length ?? 0,
               ),
             ),
           ],

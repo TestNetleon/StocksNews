@@ -4,17 +4,19 @@ import 'package:stocks_news_new/managers/tools.dart';
 import 'package:stocks_news_new/managers/user.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/ui/base/base_scroll.dart';
+import 'package:stocks_news_new/ui/tabs/tools/compareStocks/compare.dart';
 import 'package:stocks_news_new/ui/tabs/tools/item.dart';
 import 'package:stocks_news_new/ui/tabs/tools/plaidConnect/plaid_service.dart';
 import 'package:stocks_news_new/widgets/custom/base_loader_container.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
+import '../../../models/tools.dart';
 import '../../base/scaffold.dart';
 import 'plaidConnect/portfolio.dart';
 
 class ToolsIndex extends StatelessWidget {
   const ToolsIndex({super.key});
   _onCompareStock() {
-    //
+    Navigator.pushNamed(navigatorKey.currentContext!, ToolsCompareIndex.path);
   }
 
   _onSyncPortfolio(bool connected) async {
@@ -23,12 +25,22 @@ class ToolsIndex extends StatelessWidget {
           navigatorKey.currentContext!, ToolsPortfolioIndex.path);
     } else {
       UserManager manager = navigatorKey.currentContext!.read<UserManager>();
+      ToolsManager toolsManager =
+          navigatorKey.currentContext!.read<ToolsManager>();
+
       await manager.askLoginScreen();
+
       if (manager.user != null) {
-        if (manager.user?.signupStatus != true &&
-            manager.user?.membership?.purchased != 1) {
-          PlaidService.instance.init();
-          PlaidService.instance.initiatePlaid();
+        if (manager.user?.signupStatus != true) {
+          await toolsManager.getToolsData();
+          bool isConnected = toolsManager.data?.plaid?.connected ?? false;
+          if (isConnected == true) {
+            Navigator.pushNamed(
+                navigatorKey.currentContext!, ToolsPortfolioIndex.path);
+          } else {
+            PlaidService.instance.init();
+            PlaidService.instance.initiatePlaid();
+          }
         }
       }
     }

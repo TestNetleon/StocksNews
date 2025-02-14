@@ -32,11 +32,11 @@ class MarketResData {
   final List<dynamic>? filter;
 
   MarketResData({
-    required this.icon,
-    required this.slug,
-    required this.title,
-    required this.data,
-    required this.filter,
+    this.icon,
+    this.slug,
+    this.title,
+    this.data,
+    this.filter,
   });
 
   factory MarketResData.fromJson(Map<String, dynamic> json) => MarketResData(

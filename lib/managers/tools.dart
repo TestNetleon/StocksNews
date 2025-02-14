@@ -3,12 +3,15 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/managers/user.dart';
+import 'package:stocks_news_new/models/ticker.dart';
 import 'package:stocks_news_new/models/tools.dart';
 import 'package:stocks_news_new/ui/base/toaster.dart';
+import 'package:stocks_news_new/utils/utils.dart';
 
 import '../api/api_requester.dart';
 import '../api/api_response.dart';
 import '../api/apis.dart';
+import '../models/compare.dart';
 import '../models/plaid_portfolio.dart';
 import '../routes/my_app.dart';
 import '../utils/constants.dart';
@@ -155,6 +158,188 @@ class ToolsManager extends ChangeNotifier {
       _errorPortfolio = Const.errSomethingWrong;
     } finally {
       setStatusPortfolio(Status.loaded);
+    }
+  }
+
+//MARK: Remove Portfolio
+  Future removePortfolio() async {
+    try {
+      setStatus(Status.loading);
+      UserManager provider = navigatorKey.currentContext!.read<UserManager>();
+      Map request = {
+        'token': provider.user?.token ?? '',
+      };
+
+      ApiResponse response = await apiRequest(
+        url: Apis.removePortfolio,
+        request: request,
+        showProgress: true,
+      );
+
+      TopSnackbar.show(
+        message: response.message ?? '',
+        type: response.status ? ToasterEnum.success : ToasterEnum.error,
+      );
+      Navigator.pop(navigatorKey.currentContext!);
+      await getToolsData();
+    } catch (e) {
+      TopSnackbar.show(
+        message: Const.errSomethingWrong,
+        type: ToasterEnum.error,
+      );
+    } finally {
+      setStatus(Status.loaded);
+    }
+  }
+
+//MARK: Compare Stocks
+  String? _errorCompare;
+  String? get errorCompare => _errorCompare ?? Const.errSomethingWrong;
+
+  Status _statusCompare = Status.ideal;
+  Status get statusCompare => _statusCompare;
+
+  bool get isLoadingCompare =>
+      _statusCompare == Status.loading || _statusCompare == Status.ideal;
+
+  ToolsCompareRes? _compareData;
+  ToolsCompareRes? get compareData => _compareData;
+
+  final List<String> tableRow = [
+    //Total 25
+    'Overall',
+    'Fundamental',
+    'Short-term Technical',
+    'Long-term Technical',
+    'Analyst Ranking',
+    'Valuation',
+    // 'Social Sentiment',
+    'Price',
+    'Change',
+    'Change Percentage',
+    'Day Low',
+    'Day High',
+    'Year Low',
+    'Year High',
+    'Market Cap',
+    'Price Avg 50',
+    'Price Avg 200',
+    'Exchange',
+    'Volume',
+    'Average Volume',
+    'Open',
+    'Previous Close',
+    'EPS',
+    'PE',
+    'Earnings Announcement',
+  ];
+
+  setStatusCompare(status) {
+    _statusCompare = status;
+    notifyListeners();
+  }
+
+  Future getCompareData({bool showDefault = true}) async {
+    try {
+      setStatusCompare(Status.loading);
+      UserManager provider = navigatorKey.currentContext!.read<UserManager>();
+      Map request = {
+        'token': provider.user?.token ?? '',
+      };
+      if (showDefault) {
+        request['default_compare_add'] = '1';
+      }
+
+      ApiResponse response = await apiRequest(
+        url: Apis.compareStocks,
+        request: request,
+      );
+      if (response.status) {
+        _compareData = toolsCompareResFromJson(jsonEncode(response.data));
+        _errorCompare = response.message;
+      } else {
+        _compareData = null;
+        _errorCompare = response.message;
+      }
+    } catch (e) {
+      _compareData = null;
+      _errorCompare = Const.errSomethingWrong;
+      Utils().showLog('Error in ${Apis.compareStocks}: $e');
+    } finally {
+      setStatusCompare(Status.loaded);
+    }
+  }
+
+//MARK: Add Compare
+  Future addToCompare(String symbol) async {
+    try {
+      UserManager provider = navigatorKey.currentContext!.read<UserManager>();
+      Map request = {
+        'token': provider.user?.token ?? '',
+        'symbol': symbol,
+      };
+
+      ApiResponse response = await apiRequest(
+        url: Apis.addCompareStock,
+        request: request,
+        showProgress: true,
+      );
+      if (response.status) {
+        BaseTickerRes tickerRes = BaseTickerRes.fromJson(response.data);
+
+        _compareData?.data?.add(tickerRes);
+      }
+
+      TopSnackbar.show(
+        message: response.message ?? '',
+        type: response.status ? ToasterEnum.success : ToasterEnum.error,
+      );
+    } catch (e) {
+      TopSnackbar.show(
+        message: Const.errSomethingWrong,
+        type: ToasterEnum.error,
+      );
+    } finally {
+      notifyListeners();
+    }
+  }
+
+//MARK: Delete Compare
+  Future deleteFromCompare(index) async {
+    try {
+      UserManager provider = navigatorKey.currentContext!.read<UserManager>();
+      Map request = {
+        'token': provider.user?.token ?? '',
+        'symbol': _compareData?.data?[index].symbol ?? '',
+      };
+
+      ApiResponse response = await apiRequest(
+        url: Apis.deleteCompareStock,
+        request: request,
+        showProgress: true,
+      );
+      if (response.status) {
+        if (_compareData?.data?.isNotEmpty == true &&
+            _compareData?.data != null) {
+          _compareData?.data?.removeAt(index);
+          if (_compareData?.data?.length == 1) {
+            Utils().showLog('--calling compare data');
+            await getCompareData();
+          }
+        }
+      }
+
+      TopSnackbar.show(
+        message: response.message ?? '',
+        type: response.status ? ToasterEnum.success : ToasterEnum.error,
+      );
+    } catch (e) {
+      TopSnackbar.show(
+        message: Const.errSomethingWrong,
+        type: ToasterEnum.error,
+      );
+    } finally {
+      notifyListeners();
     }
   }
 }

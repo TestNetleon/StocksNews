@@ -25,6 +25,7 @@ import '../../screens/offerMembership/blackFriday/index.dart';
 import '../../screens/offerMembership/christmas/index.dart';
 import '../../utils/utils.dart';
 import 'home/home.dart';
+import 'signals/signals.dart';
 import 'tools/tools.dart';
 
 class Tabs extends StatefulWidget {
@@ -283,7 +284,7 @@ class Screens {
     return <Widget>[
       HomeIndex(),
       MarketIndex(),
-      Container(),
+      SignalsIndex(),
       ToolsIndex(),
       MoreIndex(),
     ];

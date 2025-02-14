@@ -111,9 +111,11 @@ import 'package:stocks_news_new/tradingSimulator/providers/ts_open_list_provider
 import 'package:stocks_news_new/tradingSimulator/providers/ts_pending_list_provider.dart';
 import 'package:stocks_news_new/tradingSimulator/providers/ts_portfollo_provider.dart';
 import 'package:stocks_news_new/ui/tabs/more/notificationSettings/index.dart';
+import 'package:stocks_news_new/ui/tabs/tools/compareStocks/compare.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import '../managers/onboarding.dart';
+import '../managers/signals.dart';
 import '../managers/tools.dart';
 import '../managers/user.dart';
 import '../tournament/provider/trades.dart';
@@ -150,6 +152,7 @@ class Routes {
     NotificationSettings.path: (_) => const NotificationSettings(),
     AccountLoginIndex.path: (_) => const AccountLoginIndex(),
     ToolsPortfolioIndex.path: (_) => const ToolsPortfolioIndex(),
+    ToolsCompareIndex.path: (_) => const ToolsCompareIndex(),
 
     //--------------------------------------
 
@@ -419,6 +422,7 @@ class Routes {
       ChangeNotifierProvider(create: (_) => NotificationSettingsManager()),
       ChangeNotifierProvider(create: (_) => UserManager()),
       ChangeNotifierProvider(create: (_) => ToolsManager()),
+      ChangeNotifierProvider(create: (_) => SignalsManager()),
     ];
   }
 }

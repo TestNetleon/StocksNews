@@ -24,15 +24,12 @@ class LinearBarCommon extends StatelessWidget {
       lineHeight: !isPhone ? 14 : 20,
       barRadius: const Radius.circular(5),
       padding: const EdgeInsets.only(right: 5),
-      // padding: EdgeInsets.only(right: 20.sp, top: 1.sp),
-      backgroundColor: ThemeColors.greyBorder,
+      backgroundColor: ThemeColors.neutral10,
       center: Visibility(
         visible: showText,
         child: Text(
           "$value%",
-          style: stylePTSansBold(
-            fontSize: 11,
-          ),
+          style: stylePTSansBold(fontSize: 11, color: ThemeColors.white),
         ),
       ),
       progressColor: value >= 0 && value < 25

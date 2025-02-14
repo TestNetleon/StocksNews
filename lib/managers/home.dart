@@ -13,6 +13,7 @@ import '../models/my_home.dart';
 import '../models/my_home_premium.dart';
 import '../models/ticker.dart';
 import '../utils/constants.dart';
+import 'home_watchlist.dart';
 import 'user.dart';
 
 class MyHomeManager extends ChangeNotifier {
@@ -143,9 +144,8 @@ class MyHomeManager extends ChangeNotifier {
 
   bool get isLoadingWatchlist => _statusWatchlist == Status.loading;
 
-  List<BaseTickerRes>? _watchlist;
-
-  List<BaseTickerRes>? get watchlist => _watchlist;
+  HomeWatchlistRes? _watchlist;
+  HomeWatchlistRes? get watchlist => _watchlist;
 
   setStatusWatchlist(status) {
     _statusWatchlist = status;
@@ -166,13 +166,11 @@ class MyHomeManager extends ChangeNotifier {
         request: request,
       );
       if (response.status) {
-        _watchlist = baseTickerResFromJson(jsonEncode(response.data));
+        _watchlist = homeWatchlistResFromJson(jsonEncode(response.data));
         _errorWatchlist = null;
-        print('HI-----1');
       } else {
         _watchlist = null;
         _errorWatchlist = response.message;
-        print('HI-----');
       }
     } catch (e) {
       _watchlist = null;
