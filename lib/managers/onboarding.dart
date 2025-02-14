@@ -1,15 +1,14 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/api/api_requester.dart';
 import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/api/apis.dart';
 import 'package:stocks_news_new/models/onboarding.dart';
-import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
 
 import '../utils/constants.dart';
+import 'user.dart';
 
 class OnboardingManager extends ChangeNotifier {
   //MARK: Onboarding
@@ -32,7 +31,7 @@ class OnboardingManager extends ChangeNotifier {
   Future getOnBoardingData() async {
     try {
       setStatus(Status.loading);
-      UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
+      UserManager provider = navigatorKey.currentContext!.read<UserManager>();
       Map request = {
         'token': provider.user?.token ?? '',
       };

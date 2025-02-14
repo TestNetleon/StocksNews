@@ -5,9 +5,9 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 import 'package:stocks_news_new/api/api_response.dart';
+import 'package:stocks_news_new/managers/user.dart';
 import 'package:stocks_news_new/modals/user_res.dart';
 import 'package:stocks_news_new/modals/welcome_res.dart';
-import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/ui/onboarding/default_home.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
@@ -67,12 +67,12 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
     }
 
     try {
-      UserProvider provider = context.read<UserProvider>();
+      UserManager provider = context.read<UserManager>();
       UserRes? user = await Preference.getUser();
       if (user != null) {
         provider.setUser(user);
       } else {
-        provider.callAdvertiserAPI();
+        //
       }
       MessageRes? messageObject = await Preference.getLocalDataBase();
 

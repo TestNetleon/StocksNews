@@ -21,6 +21,7 @@ class BaseButton extends StatelessWidget {
     this.textUppercase = false,
     this.disabledBackgroundColor,
     super.key,
+    this.side = BorderSide.none,
   });
 
   final String text;
@@ -37,11 +38,13 @@ class BaseButton extends StatelessWidget {
   final TextAlign? textAlign;
   final bool textUppercase;
   final Color? disabledBackgroundColor;
+  final BorderSide side;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: margin,
+      // width: fullWidth ? double.infinity : null,
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
@@ -53,6 +56,7 @@ class BaseButton extends StatelessWidget {
           padding: padding ?? EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(radius),
+            side: side,
           ),
         ),
         child: Text(

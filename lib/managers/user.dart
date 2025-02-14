@@ -35,6 +35,13 @@ class UserManager extends ChangeNotifier {
   UserRes? _user;
   UserRes? get user => _user;
 
+  Future setUser(UserRes? user) async {
+    if (user == null) return;
+    _user = user;
+    Preference.saveUser(_user);
+    notifyListeners();
+  }
+
   askLoginScreen() async {
     if (_user != null) {
       return;

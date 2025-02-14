@@ -114,6 +114,7 @@ import 'package:stocks_news_new/ui/tabs/more/notificationSettings/index.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import '../managers/onboarding.dart';
+import '../managers/tools.dart';
 import '../managers/user.dart';
 import '../tournament/provider/trades.dart';
 import '../providers/offerMembership/black_friday.dart';
@@ -138,6 +139,7 @@ import '../ui/onboarding/default_home.dart';
 import '../ui/onboarding/slides.dart';
 import '../ui/onboarding/splash.dart';
 import '../ui/tabs/tabs.dart';
+import '../ui/tabs/tools/plaidConnect/portfolio.dart';
 
 class Routes {
   static var routes = {
@@ -147,6 +149,7 @@ class Routes {
     OnboardingSlides.path: (_) => const OnboardingSlides(),
     NotificationSettings.path: (_) => const NotificationSettings(),
     AccountLoginIndex.path: (_) => const AccountLoginIndex(),
+    ToolsPortfolioIndex.path: (_) => const ToolsPortfolioIndex(),
 
     //--------------------------------------
 
@@ -235,265 +238,6 @@ class Routes {
       default:
     }
 
-    // var routingData = settings.name;
-    // Utils().showLog("GENERATED ROUT 1 ***=> $settings ,  ");
-    // Utils().showLog("GENERATED ROUT 2 ***=> ${isValidUrl(routingData)}");
-
-    // if (routingData != null &&
-    //     (
-    //         // isValidUrl(routingData) ||
-    //         routingData.contains("stock-detail") ||
-    //             routingData.contains("login") ||
-    //             routingData.contains("sign-up") ||
-    //             routingData.contains("blog") ||
-    //             routingData.contains("news"))) {
-    //   Uri? uri = Uri.tryParse(routingData);
-    //   if (uri != null) {
-    //     onDeepLinking = true;
-    //     return handleDeepLink(uri);
-    //   }
-    // }
-
-    // bool isReferral = routingData?.contains("page.link") ??
-    //     routingData?.contains("/install") ??
-    //     false;
-
-    // if (isReferral) {
-    //   return MaterialPageRoute(builder: (context) {
-    //     return const Splash();
-    //   });
-    // }
-
-    // Utils().showLog(
-    //   "=> ${settings.arguments}, \n${jsonEncode(settings.arguments.toString())}",
-    // );
-
-    // switch (routingData) {
-    //   case TCandPolicy.path:
-    //     return MaterialPageRoute(
-    //       builder: (context) {
-    //         return TCandPolicy(
-    //           policyType: PolicyType.aboutUs,
-    //           slug: settings.arguments as String,
-    //         );
-    //       },
-    //     );
-    //   case StocksIndex.path:
-    //     return MaterialPageRoute(
-    //       builder: (context) {
-    //         return StocksIndex(inAppMsgId: settings.arguments as String?);
-    //       },
-    //     );
-    //   case NewsDetails.path:
-    //     return MaterialPageRoute(
-    //       builder: (context) {
-    //         var arguments = settings.arguments as Map<String, dynamic>;
-    //         String? slug = arguments['slug'] as String?;
-    //         String? inAppMsgId = arguments['inAppMsgId'] as String?;
-    //         String? notificationId = arguments['notificationId'] as String?;
-    //         return NewsDetails(
-    //           slug: slug,
-    //           inAppMsgId: inAppMsgId,
-    //           notificationId: notificationId,
-    //         );
-    //         // return NewsDetails(
-    //         //   slug: settings.arguments["slug"],
-    //         // );
-    //       },
-    //     );
-    //   // case StockDetails.path:
-    //   //   return MaterialPageRoute(
-    //   //     builder: (context) {
-    //   //       final arguments = settings.arguments as Map<String, dynamic>?;
-    //   //       return StockDetails(
-    //   //         symbol: arguments!['slug'],
-    //   //         inAppMsgId: arguments['inAppMsgId'],
-    //   //         notificationId: arguments['notificationId'],
-    //   //       );
-    //   //       // return StockDetails(symbol: settings.arguments as String);
-    //   //     },
-    //   //   );
-    //   case StockDetail.path:
-    //     return MaterialPageRoute(
-    //       builder: (context) {
-    //         final arguments = settings.arguments as Map<String, dynamic>?;
-    //         return StockDetail(
-    //           symbol: arguments?['slug'],
-    //           inAppMsgId: arguments?['inAppMsgId'],
-    //           notificationId: arguments?['notificationId'],
-    //         );
-    //         // return StockDetails(symbol: settings.arguments as String);
-    //       },
-    //     );
-    //   // case StockDetailiFrameItem.path:
-    //   //   return MaterialPageRoute(
-    //   //     builder: (context) {
-    //   //       return StockDetailiFrameItem(
-    //   //           type: settings.arguments as CommentType);
-    //   //     },
-    //   //   );
-    //   case Blog.path:
-    //     final arguments = settings.arguments as Map<String, dynamic>?;
-    //     String? id = arguments?['id'] as String?;
-    //     BlogsType? type = arguments?['type'] as BlogsType?;
-    //     String? inAppMsgId = arguments?['inAppMsgId'] as String?;
-    //     String? notificationId = arguments?['notificationId'] as String?;
-    //     return MaterialPageRoute(
-    //       builder: (context) {
-    //         return Blog(
-    //           type: type ?? BlogsType.blog,
-    //           id: id ?? "",
-    //           inAppMsgId: inAppMsgId,
-    //           notificationId: notificationId,
-    //         );
-    //       },
-    //     );
-    //   case BlogDetail.path:
-    //     return MaterialPageRoute(
-    //       builder: (context) {
-    //         final arguments = settings.arguments as Map<String, dynamic>?;
-    //         return BlogDetail(
-    //           slug: arguments?['slug'],
-    //           inAppMsgId: arguments?['inAppMsgId'],
-    //           notificationId: arguments?['notificationId'],
-    //         );
-    //       },
-    //     );
-    //   case Tabs.path:
-    //     return MaterialPageRoute(
-    //       builder: (context) {
-    //         final arguments = settings.arguments as Map<String, dynamic>?;
-    //         bool showRef = (arguments?["showRef"] as bool?) ?? false;
-    //         int index = (arguments?["index"] as int?) ?? 0;
-    //         return Tabs(index: index, showRef: showRef);
-    //       },
-    //     );
-    //   case NewsAuthorIndex.path:
-    //     final arguments = settings.arguments as Map<String, dynamic>;
-    //     DetailListType data = arguments["data"] as DetailListType;
-    //     BlogsType type = arguments["type"] as BlogsType;
-    //     return MaterialPageRoute(
-    //       builder: (context) {
-    //         return NewsAuthorIndex(
-    //           data: data,
-    //           type: type,
-    //         );
-    //       },
-    //     );
-    //   case SectorIndustry.path:
-    //     final arguments = settings.arguments as Map<String, dynamic>;
-    //     StockStates type = arguments["type"] as StockStates;
-    //     String name = arguments["name"] as String;
-    //     String titleName = arguments["titleName"] as String;
-    //     return MaterialPageRoute(
-    //       builder: (context) {
-    //         return SectorIndustry(
-    //           name: name,
-    //           stockStates: type,
-    //           titleName: titleName,
-    //         );
-    //       },
-    //     );
-    //   case GainersLosersIndex.path:
-    //     final arguments = settings.arguments as Map<String, dynamic>;
-    //     StocksType type = arguments["type"] as StocksType;
-    //     return MaterialPageRoute(
-    //       builder: (context) {
-    //         return GainersLosersIndex(type: type);
-    //       },
-    //     );
-    //   case GapUpDownStocks.path:
-    //     // final arguments = settings.arguments as Map<String, dynamic>;
-    //     // StocksType type = arguments["type"] as StocksType;
-    //     return MaterialPageRoute(
-    //       builder: (context) {
-    //         return const GapUpDownStocks();
-    //       },
-    //     );
-    //   case PennyStocks.path:
-    //     // final arguments = settings.arguments as Map<String, dynamic>;
-    //     // StocksType type = arguments["type"] as StocksType;
-    //     return MaterialPageRoute(
-    //       builder: (context) {
-    //         return const PennyStocks();
-    //       },
-    //     );
-    //   case InsiderDetailsType.path:
-    //     final arguments = settings.arguments as Map<String, dynamic>;
-    //     final companySlug = arguments['companySlug'] as String?;
-    //     final reportingSlug = arguments['reportingSlug'] as String?;
-    //     final companyName = arguments['companyName'] as String?;
-    //     final reportingName = arguments['reportingName'] as String?;
-    //     return MaterialPageRoute(
-    //       builder: (context) {
-    //         return InsiderDetailsType(
-    //           companySlug: companySlug ?? "",
-    //           reportingSlug: reportingSlug ?? "",
-    //           companyName: companyName ?? "",
-    //           reportingName: reportingName ?? "",
-    //         );
-    //       },
-    //     );
-    //   case BlogIndexNew.path:
-    //     final arguments = settings.arguments as Map<String, dynamic>?;
-    //     String? inAppMsgId = arguments?['inAppMsgId'] as String?;
-    //     String? notificationId = arguments?['notificationId'] as String?;
-    //     return MaterialPageRoute(
-    //       builder: (context) {
-    //         return BlogIndexNew(
-    //           inAppMsgId: inAppMsgId,
-    //           notificationId: notificationId,
-    //         );
-    //       },
-    //     );
-    //   case CongressionalDetail.path:
-    //     final arguments = settings.arguments as Map<String, dynamic>?;
-    //     String slug = arguments?['slug'] as String;
-    //     return MaterialPageRoute(
-    //       builder: (context) {
-    //         return CongressionalDetail(slug: slug);
-    //       },
-    //     );
-    //   case HelpDesk.path:
-    //     final arguments = settings.arguments as Map<String, dynamic>?;
-    //     String? slug = arguments?['slug'] as String?;
-    //     return MaterialPageRoute(
-    //       builder: (context) {
-    //         return HelpDesk(slug: slug);
-    //       },
-    //     );
-    //   case ChatScreen.path:
-    //     final arguments = settings.arguments as Map<String, dynamic>?;
-    //     String? slug = arguments?['slug'] as String?;
-    //     String? ticketId = arguments?['ticketId'] as String?;
-    //     return MaterialPageRoute(
-    //       builder: (context) {
-    //         return ChatScreen(slug: slug, ticketId: ticketId);
-    //       },
-    //     );
-    //   case ViewAllList.path:
-    //     final arguments = settings.arguments as Map<String, dynamic>?;
-    //     String? slug = arguments?['slug'] as String?;
-    //     return MaterialPageRoute(
-    //       builder: (context) {
-    //         return ViewAllList(slug: slug);
-    //       },
-    //     );
-    //   default:
-    //     Preference.saveDataList(
-    //       DeeplinkData(
-    //         uri: null,
-    //         from: "Splash called **  as DEFAULT PATH",
-    //         onDeepLink: onDeepLinking,
-    //       ),
-    //     );
-    //     return MaterialPageRoute(
-    //       builder: (context) {
-    //         return const Splash();
-    //       },
-    //     );
-    // }
-    // // return _errorRoute();
     return MaterialPageRoute(
       builder: (context) {
         return const Splash();
@@ -674,6 +418,7 @@ class Routes {
       ChangeNotifierProvider(create: (_) => MostBullishManager()),
       ChangeNotifierProvider(create: (_) => NotificationSettingsManager()),
       ChangeNotifierProvider(create: (_) => UserManager()),
+      ChangeNotifierProvider(create: (_) => ToolsManager()),
     ];
   }
 }

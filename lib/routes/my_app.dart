@@ -107,8 +107,8 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       Timer(
         Duration(seconds: 15),
         () async {
-          BrazeNotificationService.instance
-              .saveFCMApi(value: fcmToken, address: address);
+          // BrazeNotificationService.instance
+          //     .saveFCMApi(value: fcmToken, address: address);
         },
       );
     }

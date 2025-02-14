@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:stocks_news_new/modals/user_res.dart';
+
 import 'ticker.dart';
 
 MyHomeRes myHomeResFromJson(String str) => MyHomeRes.fromJson(json.decode(str));
@@ -10,14 +12,17 @@ class MyHomeRes {
   final HomeNewsRes? recentNews;
   final List<BaseTickerRes>? tickers;
   final HomeLoginBoxRes? loginBox;
+  final UserRes? user;
 
   MyHomeRes({
     this.recentNews,
     this.tickers,
     this.loginBox,
+    this.user,
   });
 
   factory MyHomeRes.fromJson(Map<String, dynamic> json) => MyHomeRes(
+        user: json["user"] == null ? null : UserRes.fromJson(json["user"]),
         loginBox: json["login_box"] == null
             ? null
             : HomeLoginBoxRes.fromJson(json["login_box"]),
@@ -32,6 +37,7 @@ class MyHomeRes {
 
   Map<String, dynamic> toJson() => {
         "login_box": loginBox?.toJson(),
+        "user": user?.toJson(),
         "recent_news": recentNews?.toJson(),
         "trending": tickers == null
             ? null

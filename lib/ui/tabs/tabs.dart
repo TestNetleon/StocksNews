@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/managers/home.dart';
+import 'package:stocks_news_new/managers/tools.dart';
 import 'package:stocks_news_new/providers/compare_stocks_provider.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/search_provider.dart';
@@ -24,6 +25,7 @@ import '../../screens/offerMembership/blackFriday/index.dart';
 import '../../screens/offerMembership/christmas/index.dart';
 import '../../utils/utils.dart';
 import 'home/home.dart';
+import 'tools/tools.dart';
 
 class Tabs extends StatefulWidget {
   static const String path = "Tabs";
@@ -194,8 +196,8 @@ class _TabsState extends State<Tabs> {
   }
 
   void activeContainerApiCalls({required int currentIndex}) async {
-    // final homeProvider = context.read<HomeProvider>();
-    // homeProvider.callMaintenance();
+    MyHomeManager manager = context.read<MyHomeManager>();
+    ToolsManager toolsManager = context.read<ToolsManager>();
 
     try {
       if (Platform.isAndroid) {
@@ -213,9 +215,8 @@ class _TabsState extends State<Tabs> {
     switch (currentIndex) {
       case 0:
         SocketService.instance.emitUpdateUser(SocketEnum.home);
-        MyHomeManager provider = context.read<MyHomeManager>();
-        if (provider.data == null) {
-          provider.getHomeData();
+        if (manager.data == null) {
+          manager.getHomeData();
         }
 
         // final HomeProvider homeProvider = context.read<HomeProvider>();
@@ -245,9 +246,9 @@ class _TabsState extends State<Tabs> {
       case 3:
         SocketService.instance.emitUpdateUser(SocketEnum.tools);
 
-        // if (redditTwitterProvider.socialSentimentRes == null) {
-        //   redditTwitterProvider.getRedditTwitterData(reset: true);
-        // }
+        if (toolsManager.data == null) {
+          toolsManager.getToolsData();
+        }
         // AmplitudeService.logUserInteractionEvent(type: "Market Sentiment");
 
         break;
@@ -283,7 +284,7 @@ class Screens {
       HomeIndex(),
       MarketIndex(),
       Container(),
-      Container(),
+      ToolsIndex(),
       MoreIndex(),
     ];
   }

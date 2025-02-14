@@ -19,8 +19,11 @@ class Apis {
   static const onBoarding = '/onboarding';
   static const myHome = '/home';
   static const myHomePremium = '/home-premium';
-  static const myHomeWatchlist = '/home-watchlist-data';
+  static const tools = '/tools';
+  static const savePlaid = '/save-plaid-portfolio';
+  static const getPortfolio = '/plaid-portfolio';
 
+  static const myHomeWatchlist = '/home-watchlist-data';
   static const marketData = '/market-data';
   static const mostBullish = '/most-bullish';
   static const notificationSettings = '/notification-settings';

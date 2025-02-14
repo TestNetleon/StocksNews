@@ -1,13 +1,11 @@
 import 'dart:async';
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/api/api_requester.dart';
 import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/api/apis.dart';
 import 'package:stocks_news_new/database/preference.dart';
-import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 
@@ -38,7 +36,7 @@ class MyHomeManager extends ChangeNotifier {
   Future getHomeData() async {
     setPremiumLoaded(false);
     try {
-      UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
+      UserManager provider = navigatorKey.currentContext!.read<UserManager>();
 
       Map request = {
         'token': provider.user?.token ?? '',
@@ -51,6 +49,9 @@ class MyHomeManager extends ChangeNotifier {
       );
       if (response.status) {
         _data = myHomeResFromJson(jsonEncode(response.data));
+        if (_data?.user != null) {
+          provider.setUser(data?.user);
+        }
         _error = null;
 
         bool firstTime = await Preference.isFirstOpen();
@@ -106,7 +107,7 @@ class MyHomeManager extends ChangeNotifier {
 
   Future getHomePremiumData() async {
     try {
-      UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
+      UserManager provider = navigatorKey.currentContext!.read<UserManager>();
 
       Map request = {
         'token': provider.user?.token ?? '',
@@ -153,7 +154,7 @@ class MyHomeManager extends ChangeNotifier {
 
   Future getHomeWatchlist() async {
     try {
-      UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
+      UserManager provider = navigatorKey.currentContext!.read<UserManager>();
 
       Map request = {
         'token': provider.user?.token ?? '',
