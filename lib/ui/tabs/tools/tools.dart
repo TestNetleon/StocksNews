@@ -9,7 +9,6 @@ import 'package:stocks_news_new/ui/tabs/tools/item.dart';
 import 'package:stocks_news_new/ui/tabs/tools/plaidConnect/plaid_service.dart';
 import 'package:stocks_news_new/widgets/custom/base_loader_container.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
-import '../../../models/tools.dart';
 import '../../base/scaffold.dart';
 import 'plaidConnect/portfolio.dart';
 

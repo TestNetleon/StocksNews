@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:stocks_news_new/ui/base/app_bar.dart';
 import 'package:stocks_news_new/ui/base/scaffold.dart';
 
-import '../../base/common_tab.dart';
-
 class SignalsIndex extends StatefulWidget {
   const SignalsIndex({super.key});
 
