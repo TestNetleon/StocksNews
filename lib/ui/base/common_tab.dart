@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 
-class CommonTabs extends StatefulWidget {
-  const CommonTabs({
+class BaseCommonTabs extends StatefulWidget {
+  const BaseCommonTabs({
     super.key,
     required this.data,
     required this.onTap,
@@ -23,10 +23,10 @@ class CommonTabs extends StatefulWidget {
   final TextStyle? textStyle;
 
   @override
-  State<CommonTabs> createState() => _CommonTabsState();
+  State<BaseCommonTabs> createState() => _CommonTabsState();
 }
 
-class _CommonTabsState extends State<CommonTabs>
+class _CommonTabsState extends State<BaseCommonTabs>
     with SingleTickerProviderStateMixin {
   TabController? _tabController;
 

@@ -18,6 +18,8 @@ class BaseTickerRes {
   final String? investmentValue;
   final num? quantity;
   final num? changesPercentage;
+  final num? mentionCount;
+  final String? mentionDate;
   dynamic isAlertAdded;
   dynamic isWatchlistAdded;
   //extra
@@ -44,6 +46,7 @@ class BaseTickerRes {
   final num? valuationPercent;
   final num? analystRankingPercent;
   final num? sentimentPercent;
+  final List<TickerAdditionalInfoRes>? additionalInfo;
 
   BaseTickerRes({
     this.id,
@@ -58,6 +61,9 @@ class BaseTickerRes {
     this.changesPercentage,
     this.isAlertAdded,
     this.isWatchlistAdded,
+    this.mentionCount,
+    this.mentionDate,
+
     //extra
     this.mktCap,
     this.dayLow,
@@ -82,6 +88,7 @@ class BaseTickerRes {
     this.valuationPercent,
     this.analystRankingPercent,
     this.sentimentPercent,
+    this.additionalInfo,
   });
 
   factory BaseTickerRes.fromJson(Map<String, dynamic> json) => BaseTickerRes(
@@ -97,6 +104,9 @@ class BaseTickerRes {
         changesPercentage: json["changesPercentage"],
         isAlertAdded: json["is_alert_added"],
         isWatchlistAdded: json["is_watchlist_added"],
+        mentionCount: json["mention_count"],
+        mentionDate: json["mention_date"],
+
         //extra
         mktCap: json["mktCap"],
         dayLow: json["dayLow"],
@@ -121,6 +131,10 @@ class BaseTickerRes {
         valuationPercent: json["valuation_percent"],
         analystRankingPercent: json["analyst_ranking_percent"],
         sentimentPercent: json["sentiment_percent"],
+        additionalInfo: json["additional_info"] == null
+            ? []
+            : List<TickerAdditionalInfoRes>.from(json["additional_info"]!
+                .map((x) => TickerAdditionalInfoRes.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -136,6 +150,9 @@ class BaseTickerRes {
         "changesPercentage": changesPercentage,
         "is_alert_added": isAlertAdded,
         "is_watchlist_added": isWatchlistAdded,
+        "mention_count": mentionCount,
+        "mention_date": mentionDate,
+
         //extra
         "mktCap": mktCap,
         "dayLow": dayLow,
@@ -160,5 +177,29 @@ class BaseTickerRes {
         "valuation_percent": valuationPercent,
         "analyst_ranking_percent": analystRankingPercent,
         "sentiment_percent": sentimentPercent,
+        "additional_info": additionalInfo == null
+            ? []
+            : List<dynamic>.from(additionalInfo!.map((x) => x.toJson())),
+      };
+}
+
+class TickerAdditionalInfoRes {
+  final String? name;
+  final String? value;
+
+  TickerAdditionalInfoRes({
+    this.name,
+    this.value,
+  });
+
+  factory TickerAdditionalInfoRes.fromJson(Map<String, dynamic> json) =>
+      TickerAdditionalInfoRes(
+        name: json["name"],
+        value: json["value"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "name": name,
+        "value": value,
       };
 }

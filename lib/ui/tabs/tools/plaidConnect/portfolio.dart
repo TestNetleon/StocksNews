@@ -47,6 +47,7 @@ class _ToolsPortfolioIndexState extends State<ToolsPortfolioIndex> {
         error: manager.errorPortfolio,
         onRefresh: manager.getPortfolioData,
         child: BaseScroll(
+          margin: EdgeInsets.zero,
           onRefresh: manager.getPortfolioData,
           children: [
             Container(
@@ -55,6 +56,7 @@ class _ToolsPortfolioIndexState extends State<ToolsPortfolioIndex> {
                 border: Border.all(color: ThemeColors.neutral5),
               ),
               padding: EdgeInsets.all(Pad.pad16),
+              margin: EdgeInsets.all(Pad.pad16),
               width: double.infinity,
               child: Column(
                 children: [

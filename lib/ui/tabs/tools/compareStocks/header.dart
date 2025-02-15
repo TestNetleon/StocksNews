@@ -4,8 +4,9 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/managers/tools.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
-
+import 'package:stocks_news_new/utils/utils.dart';
 import '../../../../models/ticker.dart';
+import '../../../base/search/base_search.dart';
 
 class ToolsCompareHeaderStocks extends StatelessWidget {
   const ToolsCompareHeaderStocks({super.key});
@@ -71,7 +72,23 @@ class ToolsCompareHeaderStocks extends StatelessWidget {
               ),
               if ((data?.length ?? 0) < 4)
                 GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      createRoute(
+                        BaseSearch(
+                          callRecent: false,
+                          stockClick: (stock) {
+                            if (stock.symbol == null || stock.symbol == '') {
+                              return;
+                            }
+                            Navigator.pop(context);
+                            manager.addToCompare(stock.symbol ?? '');
+                          },
+                        ),
+                      ),
+                    );
+                  },
                   child: Container(
                     height: 68,
                     width: 68,

@@ -7,15 +7,20 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import '../../../../ui/tabs/tabs.dart';
+import 'search/base_search.dart';
 
 class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
   final bool isHome, showBack, showSearch, showNotification;
+  final Widget? searchFieldWidget;
   final bool showClose;
   final String? title;
   final Function()? onSaveClick;
+  final double toolbarHeight;
 
   const BaseAppBar({
     super.key,
+    this.toolbarHeight = 56,
+    this.searchFieldWidget,
     this.isHome = false,
     this.showBack = false,
     this.title,
@@ -33,7 +38,9 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
         padding: const EdgeInsets.all(Pad.pad8),
         child: Stack(
           children: [
-            if (title == null || title == '') CenterLogo(isHome: isHome),
+            if (searchFieldWidget != null) searchFieldWidget ?? SizedBox(),
+            if ((title == null || title == '') && searchFieldWidget == null)
+              CenterLogo(isHome: isHome),
             if (title != null && title != '') CenterTitle(title: title!),
             Positioned(
               left: 0,
@@ -68,9 +75,9 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
                           icon: Images.search,
                           onTap: () {
                             Navigator.push(
-                              navigatorKey.currentContext!,
-                              MaterialPageRoute(
-                                builder: (_) => const Notifications(),
+                              context,
+                              createRoute(
+                                BaseSearch(),
                               ),
                             );
                           },
@@ -386,7 +393,7 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   @override
-  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
+  Size get preferredSize => Size.fromHeight(toolbarHeight);
 }
 
 class CenterLogo extends StatelessWidget {

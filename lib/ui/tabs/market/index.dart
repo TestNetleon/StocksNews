@@ -63,7 +63,7 @@ class _MarketIndexState extends State<MarketIndex> {
             ? const SizedBox()
             : Column(
                 children: [
-                  CommonTabs(
+                  BaseCommonTabs(
                     data: provider.data!.data!,
                     textStyle: styleBaseBold(fontSize: 16),
                     onTap: (index) {
@@ -87,7 +87,7 @@ class _MarketIndexState extends State<MarketIndex> {
                     ),
                   if (_screenIndex == 0 &&
                       provider.data!.data![0].data![_marketIndex].data != null)
-                    CommonTabs(
+                    BaseCommonTabs(
                       data: provider.data!.data![0].data![_marketIndex].data!,
                       onTap: (index) {
                         setState(() {

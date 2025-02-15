@@ -49,6 +49,7 @@ class SocketService {
         disconnect();
       });
       _socket?.onError((data) {
+        _socket?.disconnect();
         if (kDebugMode) {
           print('Error----SOCKET : $data');
         }

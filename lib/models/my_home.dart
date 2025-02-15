@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:stocks_news_new/modals/user_res.dart';
 
+import 'news.dart';
 import 'ticker.dart';
 
 MyHomeRes myHomeResFromJson(String str) => MyHomeRes.fromJson(json.decode(str));
@@ -77,7 +78,7 @@ class HomeLoginBoxRes {
 class HomeNewsRes {
   final String? title;
   final String? subTitle;
-  final List<NewsItemRes>? data;
+  final List<BaseNewsRes>? data;
 
   HomeNewsRes({
     this.title,
@@ -90,8 +91,8 @@ class HomeNewsRes {
         subTitle: json["sub_title"],
         data: json["data"] == null
             ? []
-            : List<NewsItemRes>.from(
-                json["data"]!.map((x) => NewsItemRes.fromJson(x))),
+            : List<BaseNewsRes>.from(
+                json["data"]!.map((x) => BaseNewsRes.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -100,70 +101,5 @@ class HomeNewsRes {
         "data": data == null
             ? []
             : List<dynamic>.from(data!.map((x) => x.toJson())),
-      };
-}
-
-class NewsItemRes {
-  final String? id;
-  final String? title;
-  final String? image;
-  final String? slug;
-  final List<NewsAuthorRes>? authors;
-  final String? publishedDate;
-  final String? site;
-
-  NewsItemRes({
-    this.id,
-    this.title,
-    this.image,
-    this.slug,
-    this.authors,
-    this.publishedDate,
-    this.site,
-  });
-
-  factory NewsItemRes.fromJson(Map<String, dynamic> json) => NewsItemRes(
-        id: json["id"],
-        title: json["title"],
-        image: json["image"],
-        slug: json["slug"],
-        authors: json["authors"] == null
-            ? []
-            : List<NewsAuthorRes>.from(
-                json["authors"]!.map((x) => NewsAuthorRes.fromJson(x))),
-        publishedDate: json["published_date"],
-        site: json["site"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "title": title,
-        "image": image,
-        "slug": slug,
-        "authors": authors == null
-            ? []
-            : List<dynamic>.from(authors!.map((x) => x.toJson())),
-        "published_date": publishedDate,
-        "site": site,
-      };
-}
-
-class NewsAuthorRes {
-  final String? id;
-  final String? name;
-
-  NewsAuthorRes({
-    this.id,
-    this.name,
-  });
-
-  factory NewsAuthorRes.fromJson(Map<String, dynamic> json) => NewsAuthorRes(
-        id: json["_id"],
-        name: json["name"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "_id": id,
-        "name": name,
       };
 }

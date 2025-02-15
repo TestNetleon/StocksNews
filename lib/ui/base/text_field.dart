@@ -25,6 +25,8 @@ class BaseTextField extends StatelessWidget {
     this.onChanged,
     this.contentPadding,
     this.focusNode,
+    this.prefixIcon,
+    this.suffixIcon,
     super.key,
   });
 
@@ -33,6 +35,8 @@ class BaseTextField extends StatelessWidget {
   final int maxLength;
   final int minLines;
   final int? maxLines;
+  final Widget? prefixIcon;
+  final Widget? suffixIcon;
 
   final bool editable;
   final bool shadow;
@@ -70,6 +74,8 @@ class BaseTextField extends StatelessWidget {
       inputFormatters: inputFormatters ?? [allSpecialSymbolsRemove],
       style: stylePTSansRegular(fontSize: 16),
       decoration: InputDecoration(
+        prefixIcon: prefixIcon,
+        suffixIcon: suffixIcon,
         labelText: placeholder,
         floatingLabelBehavior: FloatingLabelBehavior.auto,
         labelStyle: stylePTSansRegular(),

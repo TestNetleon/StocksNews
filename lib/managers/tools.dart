@@ -321,10 +321,12 @@ class ToolsManager extends ChangeNotifier {
       if (response.status) {
         if (_compareData?.data?.isNotEmpty == true &&
             _compareData?.data != null) {
-          _compareData?.data?.removeAt(index);
           if (_compareData?.data?.length == 1) {
             Utils().showLog('--calling compare data');
+            _compareData?.data?.removeAt(index);
             await getCompareData();
+          } else {
+            _compareData?.data?.removeAt(index);
           }
         }
       }

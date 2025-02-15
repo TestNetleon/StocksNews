@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:stocks_news_new/managers/signals.dart';
 import 'package:stocks_news_new/ui/base/app_bar.dart';
 import 'package:stocks_news_new/ui/base/scaffold.dart';
+import '../../../utils/theme.dart';
+import '../../base/common_tab.dart';
+import 'sentiment.dart';
+import 'stocks.dart';
 
 class SignalsIndex extends StatefulWidget {
   const SignalsIndex({super.key});
@@ -13,33 +19,35 @@ class _SignalsIndexState extends State<SignalsIndex> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {});
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      SignalsManager manager = context.read<SignalsManager>();
+      manager.onScreenChange(0);
+    });
   }
 
   @override
   Widget build(BuildContext context) {
+    SignalsManager manager = context.watch<SignalsManager>();
     return BaseScaffold(
       appBar: BaseAppBar(
         showSearch: true,
       ),
-      body: Container(
-        child: Column(
-          children: [
-            // CommonTabs(
-            //       data: provider.data!.data!,
-            //       textStyle: styleBaseBold(fontSize: 16),
-            //       onTap: (index) {
-            //         setState(() {
-            //           _screenIndex = index;
-            //         });
-            //       },
-            //       rightChild: Padding(
-            //         padding: const EdgeInsets.only(right: 16),
-            //         child: Icon(Icons.search, color: Colors.black),
-            //       ),
-            //     ),
-          ],
-        ),
+      body: Column(
+        children: [
+          BaseCommonTabs(
+            data: manager.tabs,
+            textStyle: styleBaseBold(fontSize: 16),
+            onTap: manager.onScreenChange,
+          ),
+          if (manager.selectedScreen == 0)
+            Expanded(
+              child: SignalStocks(),
+            ),
+          if (manager.selectedScreen == 1)
+            Expanded(
+              child: SignalSentiment(),
+            ),
+        ],
       ),
     );
   }

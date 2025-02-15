@@ -21,7 +21,6 @@ class Apis {
   static const compareStocks = '/compare';
   static const addCompareStock = '/add-compare';
   static const deleteCompareStock = '/delete-compare';
-
   static const myHomePremium = '/home-premium';
   static const tools = '/tools';
   static const savePlaid = '/save-plaid-portfolio';
@@ -32,6 +31,13 @@ class Apis {
   static const mostBullish = '/most-bullish';
   static const notificationSettings = '/notification-settings';
   static const phoneLogin = '/phone-login';
+  //Search---
+  static const recentSearch = '/recent-search';
+  static const searchWithNews = '/search-with-news';
+  static const search = "/search";
+  //Signals---
+  static const signalStocks = '/signals/stocks';
+  static const signalSentiment = '/signals/sentiment';
 
 //----------------------------------------------
 
@@ -94,8 +100,6 @@ class Apis {
   static const mostActivePenny = "/most-active-penny-stocks";
   static const mostPopularPenny = "/most-popular-penny-stocks";
   static const topPennyStocksToday = "/top-penny-stocks-today";
-  static const search = "/search";
-  static const searchWithNews = "/search_with_news";
   static const getMostSearch = "/most-search-symbol";
   static const latestNews = "/latest-news";
   // static const trending = "/trending";

@@ -115,6 +115,7 @@ import 'package:stocks_news_new/ui/tabs/tools/compareStocks/compare.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import '../managers/onboarding.dart';
+import '../managers/search.dart';
 import '../managers/signals.dart';
 import '../managers/tools.dart';
 import '../managers/user.dart';
@@ -423,6 +424,7 @@ class Routes {
       ChangeNotifierProvider(create: (_) => UserManager()),
       ChangeNotifierProvider(create: (_) => ToolsManager()),
       ChangeNotifierProvider(create: (_) => SignalsManager()),
+      ChangeNotifierProvider(create: (_) => SearchManager()),
     ];
   }
 }

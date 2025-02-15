@@ -15,6 +15,7 @@ class _ToolsCompareSearchState extends State<ToolsCompareSearch> {
     return BaseScaffold(
       appBar: BaseAppBar(
         showBack: true,
+        title: 'Search',
       ),
       body: Container(),
     );

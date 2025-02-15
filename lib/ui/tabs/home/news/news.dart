@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:stocks_news_new/ui/base/news_item.dart';
 import '../../../../models/my_home.dart';
+import '../../../../models/news.dart';
 import '../../../base/heading.dart';
 
 class HomeNewsIndex extends StatelessWidget {
@@ -17,7 +18,7 @@ class HomeNewsIndex extends StatelessWidget {
           children: List.generate(
             newsData?.data?.length ?? 0,
             (index) {
-              NewsItemRes? data = newsData?.data?[index];
+              BaseNewsRes? data = newsData?.data?[index];
               if (data == null) {
                 return SizedBox();
               }

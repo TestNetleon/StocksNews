@@ -32,9 +32,7 @@ class ApiResponse {
   factory ApiResponse.fromJson(Map<String, dynamic> json) => ApiResponse(
         status: json["status"] ?? json["success"],
         message: json["message"],
-        data: json["data"] is List
-            ? List<dynamic>.from(json["data"])
-            : json["data"],
+        data: json["data"],
         extra: json["extra"] == null
             ? null
             : json["extra"] is List
@@ -398,10 +396,10 @@ class Extra {
             : List<KeyValueElement>.from(
                 json["txn_size"]!.map((x) => KeyValueElement.fromJson(x))),
 
-    ranks: json["ranks"] == null
-        ? []
-        : List<KeyValueElement>.from(
-        json["ranks"]!.map((x) => KeyValueElement.fromJson(x))),
+        ranks: json["ranks"] == null
+            ? []
+            : List<KeyValueElement>.from(
+                json["ranks"]!.map((x) => KeyValueElement.fromJson(x))),
 
         notificationCount: json["notification_count"],
         inAppMsg: json["in_app_notification"] == null
@@ -527,9 +525,9 @@ class Extra {
             ? []
             : List<dynamic>.from(txnSize!.map((x) => x.toJson())),
 
-    "ranks": ranks == null
-        ? []
-        : List<dynamic>.from(ranks!.map((x) => x.toJson())),
+        "ranks": ranks == null
+            ? []
+            : List<dynamic>.from(ranks!.map((x) => x.toJson())),
         "notification_count": notificationCount,
         "text": text?.toJson(),
         "in_app_notification": inAppMsg?.toJson(),

@@ -8,7 +8,7 @@ class BaseHeading extends StatelessWidget {
   final TextStyle? titleStyle;
   final TextStyle? subtitleStyle;
   final EdgeInsets? margin;
-
+  final CrossAxisAlignment crossAxisAlignment;
   const BaseHeading({
     super.key,
     this.title,
@@ -16,6 +16,7 @@ class BaseHeading extends StatelessWidget {
     this.titleStyle,
     this.subtitleStyle,
     this.margin,
+    this.crossAxisAlignment = CrossAxisAlignment.start,
   });
 
   @override
@@ -23,7 +24,7 @@ class BaseHeading extends StatelessWidget {
     return Container(
       margin: margin ?? EdgeInsets.symmetric(vertical: Pad.pad10),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: crossAxisAlignment,
         children: [
           Visibility(
             visible: title != null && title != '',
