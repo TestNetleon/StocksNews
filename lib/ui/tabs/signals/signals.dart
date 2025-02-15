@@ -5,7 +5,7 @@ import 'package:stocks_news_new/ui/base/app_bar.dart';
 import 'package:stocks_news_new/ui/base/scaffold.dart';
 import '../../../utils/theme.dart';
 import '../../base/common_tab.dart';
-import 'sentiment.dart';
+import 'sentiment/sentiment.dart';
 import 'stocks.dart';
 
 class SignalsIndex extends StatefulWidget {
