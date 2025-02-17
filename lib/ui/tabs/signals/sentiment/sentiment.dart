@@ -8,14 +8,14 @@ import '../../../../widgets/custom/base_loader_container.dart';
 import 'recent_mentions.dart';
 import 'sentiment_gauge.dart';
 
-class SignalSentiment extends StatefulWidget {
-  const SignalSentiment({super.key});
+class SignalSentimentIndex extends StatefulWidget {
+  const SignalSentimentIndex({super.key});
 
   @override
-  State<SignalSentiment> createState() => _SignalSentimentState();
+  State<SignalSentimentIndex> createState() => _SignalSentimentState();
 }
 
-class _SignalSentimentState extends State<SignalSentiment> {
+class _SignalSentimentState extends State<SignalSentimentIndex> {
   @override
   Widget build(BuildContext context) {
     SignalsManager manager = context.watch<SignalsManager>();

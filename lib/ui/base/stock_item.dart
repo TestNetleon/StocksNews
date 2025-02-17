@@ -67,7 +67,7 @@ class BaseStockItem extends StatelessWidget {
               }
             : null,
         child: Container(
-          padding: EdgeInsets.all(16),
+          padding: EdgeInsets.all(Pad.pad16),
           child: Column(
             children: [
               Row(
@@ -222,8 +222,7 @@ class BaseStockItem extends StatelessWidget {
                     children: List.generate(
                       data.additionalInfo?.length ?? 0,
                       (index) {
-                        TickerAdditionalInfoRes? info =
-                            data.additionalInfo?[index];
+                        AdditionalInfoRes? info = data.additionalInfo?[index];
                         if (info == null) {
                           return SizedBox();
                         }
@@ -231,15 +230,15 @@ class BaseStockItem extends StatelessWidget {
                           child: Column(
                             children: [
                               Text(
-                                info.name ?? '',
+                                info.title ?? '',
                                 style: styleBaseRegular(),
                               ),
                               Text(
                                 info.value ?? '',
                                 style: styleBaseSemiBold(
-                                  color: info.name == 'Bullish'
+                                  color: info.title == 'Bullish'
                                       ? ThemeColors.success120
-                                      : info.name == 'Bearish'
+                                      : info.title == 'Bearish'
                                           ? ThemeColors.error120
                                           : ThemeColors.black,
                                 ),

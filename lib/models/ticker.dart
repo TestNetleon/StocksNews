@@ -46,7 +46,7 @@ class BaseTickerRes {
   final num? valuationPercent;
   final num? analystRankingPercent;
   final num? sentimentPercent;
-  final List<TickerAdditionalInfoRes>? additionalInfo;
+  final List<AdditionalInfoRes>? additionalInfo;
 
   BaseTickerRes({
     this.id,
@@ -133,8 +133,8 @@ class BaseTickerRes {
         sentimentPercent: json["sentiment_percent"],
         additionalInfo: json["additional_info"] == null
             ? []
-            : List<TickerAdditionalInfoRes>.from(json["additional_info"]!
-                .map((x) => TickerAdditionalInfoRes.fromJson(x))),
+            : List<AdditionalInfoRes>.from(json["additional_info"]!
+                .map((x) => AdditionalInfoRes.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -183,23 +183,23 @@ class BaseTickerRes {
       };
 }
 
-class TickerAdditionalInfoRes {
-  final String? name;
+class AdditionalInfoRes {
+  final String? title;
   final String? value;
 
-  TickerAdditionalInfoRes({
-    this.name,
+  AdditionalInfoRes({
+    this.title,
     this.value,
   });
 
-  factory TickerAdditionalInfoRes.fromJson(Map<String, dynamic> json) =>
-      TickerAdditionalInfoRes(
-        name: json["name"],
+  factory AdditionalInfoRes.fromJson(Map<String, dynamic> json) =>
+      AdditionalInfoRes(
+        title: json["title"],
         value: json["value"],
       );
 
   Map<String, dynamic> toJson() => {
-        "name": name,
+        "name": title,
         "value": value,
       };
 }

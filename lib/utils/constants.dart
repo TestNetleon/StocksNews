@@ -210,6 +210,8 @@ class Images {
   static const String moreLegal = '${base}more_legal.png';
   static const String moreLogout = '${base}more_logout.png';
   static const String back = '${base}back.png';
+  static const String arrowUP = '${base}arrow_up.png';
+  static const String arrowDOWN = '${base}arrow_down.png';
 
   //-------------------------------------------------------------------------------
   static const String scannerStop = 'assets/images/scanner_stop.png';

@@ -119,6 +119,7 @@ import '../managers/search.dart';
 import '../managers/signals.dart';
 import '../managers/tools.dart';
 import '../managers/user.dart';
+import '../models/my_home_premium.dart';
 import '../tournament/provider/trades.dart';
 import '../providers/offerMembership/black_friday.dart';
 import '../providers/featured_ticker.dart';
@@ -141,6 +142,8 @@ import '../ui/account/verify.dart';
 import '../ui/onboarding/default_home.dart';
 import '../ui/onboarding/slides.dart';
 import '../ui/onboarding/splash.dart';
+import '../ui/tabs/signals/insiders/company/from_company.dart';
+import '../ui/tabs/signals/insiders/reporting/from_reporting.dart';
 import '../ui/tabs/tabs.dart';
 import '../ui/tabs/tools/plaidConnect/portfolio.dart';
 
@@ -236,6 +239,26 @@ class Routes {
               phone: phone,
               verificationId: verificationId,
             );
+          },
+        );
+
+      case SignalInsidersCompanyIndex.path:
+        return MaterialPageRoute(
+          builder: (context) {
+            final arguments = settings.arguments as Map<String, dynamic>?;
+            InsiderTradeRes data = arguments?['data'];
+
+            return SignalInsidersCompanyIndex(data: data);
+          },
+        );
+
+      case SignalInsidersReportingIndex.path:
+        return MaterialPageRoute(
+          builder: (context) {
+            final arguments = settings.arguments as Map<String, dynamic>?;
+            InsiderTradeRes data = arguments?['data'];
+
+            return SignalInsidersReportingIndex(data: data);
           },
         );
 

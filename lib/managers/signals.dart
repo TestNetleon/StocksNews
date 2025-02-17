@@ -7,6 +7,7 @@ import '../api/api_requester.dart';
 import '../api/api_response.dart';
 import '../api/apis.dart';
 import '../models/market/market_res.dart';
+import '../models/signals/insiders.dart';
 import '../models/signals/sentiment.dart';
 import '../models/signals/stock.dart';
 import '../routes/my_app.dart';
@@ -35,6 +36,10 @@ class SignalsManager extends ChangeNotifier {
 
         case 1:
           getSignalSentimentData();
+          break;
+
+        case 2:
+          getInsidersData();
           break;
 
         default:
@@ -178,11 +183,227 @@ class SignalsManager extends ChangeNotifier {
   Status _statusInsiders = Status.ideal;
   Status get statusInsiders => _statusInsiders;
 
+  int _pageInsiders = 1;
+  bool get canLoadMoreInsiders =>
+      _pageInsiders <= (_signalInsidersData?.totalPages ?? 1);
+
   bool get isLoadingInsiders =>
       _statusInsiders == Status.loading || _statusInsiders == Status.ideal;
+
+  SignalInsidersRes? _signalInsidersData;
+  SignalInsidersRes? get signalInsidersData => _signalInsidersData;
+
+  int _openIndex = -1;
+  int get openIndex => _openIndex;
+
+  void openMore(index) {
+    _openIndex = index;
+    notifyListeners();
+  }
 
   setStatusInsiders(status) {
     _statusInsiders = status;
     notifyListeners();
+  }
+
+  Future getInsidersData({bool loadMore = false}) async {
+    if (loadMore) {
+      _pageInsiders++;
+      setStatusInsiders(Status.loadingMore);
+    } else {
+      _pageInsiders = 1;
+      setStatusInsiders(Status.loading);
+    }
+    try {
+      UserManager provider = navigatorKey.currentContext!.read<UserManager>();
+      Map request = {
+        'token': provider.user?.token ?? '',
+        'page': '$_pageInsiders',
+      };
+
+      ApiResponse response = await apiRequest(
+        url: Apis.signalInsiders,
+        request: request,
+      );
+      if (response.status) {
+        if (_pageInsiders == 1) {
+          _signalInsidersData =
+              signalInsidersResFromJson(jsonEncode(response.data));
+          _errorInsiders = null;
+        } else {
+          _signalInsidersData?.data?.addAll(
+              signalInsidersResFromJson(jsonEncode(response.data)).data ?? []);
+        }
+      } else {
+        if (_pageInsiders == 1) {
+          _signalInsidersData = null;
+          _errorInsiders = response.message;
+        }
+      }
+    } catch (e) {
+      _pageInsiders = 1;
+      _signalInsidersData = null;
+      _errorInsiders = Const.errSomethingWrong;
+    } finally {
+      setStatusInsiders(Status.loaded);
+    }
+  }
+
+  //MARK: Insiders: Company
+
+  String? _errorInsidersCompany;
+  String? get errorInsidersCompany => _errorInsidersCompany;
+
+  Status _statusInsidersCompany = Status.ideal;
+  Status get statusInsidersCompany => _statusInsidersCompany;
+
+  int _pageInsidersCompany = 1;
+  bool get canLoadMoreInsidersCompany =>
+      _pageInsidersCompany <= (_signalInsidersCompanyData?.totalPages ?? 1);
+
+  bool get isLoadingInsidersCompany =>
+      _statusInsidersCompany == Status.loading ||
+      _statusInsidersCompany == Status.ideal;
+
+  SignalInsidersRes? _signalInsidersCompanyData;
+  SignalInsidersRes? get signalInsidersCompanyData =>
+      _signalInsidersCompanyData;
+
+  int _openIndexCompany = -1;
+  int get openIndexCompany => _openIndexCompany;
+
+  void openMoreCompany(index) {
+    _openIndexCompany = index;
+    notifyListeners();
+  }
+
+  setStatusInsidersCompany(status) {
+    _statusInsidersCompany = status;
+    notifyListeners();
+  }
+
+  Future getInsidersCompanyData(
+      {bool loadMore = false, required String cik}) async {
+    if (loadMore) {
+      _pageInsidersCompany++;
+      setStatusInsidersCompany(Status.loadingMore);
+    } else {
+      _pageInsidersCompany = 1;
+      setStatusInsidersCompany(Status.loading);
+    }
+    try {
+      UserManager provider = navigatorKey.currentContext!.read<UserManager>();
+      Map request = {
+        'token': provider.user?.token ?? '',
+        'page': '$_pageInsidersCompany',
+        'companyCik': cik,
+      };
+
+      ApiResponse response = await apiRequest(
+        url: Apis.signalInsiders,
+        request: request,
+      );
+      if (response.status) {
+        if (_pageInsidersCompany == 1) {
+          _signalInsidersCompanyData =
+              signalInsidersResFromJson(jsonEncode(response.data));
+          _errorInsidersCompany = null;
+        } else {
+          _signalInsidersCompanyData?.data?.addAll(
+              signalInsidersResFromJson(jsonEncode(response.data)).data ?? []);
+        }
+      } else {
+        if (_pageInsidersCompany == 1) {
+          _signalInsidersCompanyData = null;
+          _errorInsidersCompany = response.message;
+        }
+      }
+    } catch (e) {
+      _pageInsidersCompany = 1;
+      _signalInsidersCompanyData = null;
+      _errorInsidersCompany = Const.errSomethingWrong;
+      Utils().showLog('Error in ${Apis.signalInsiders}: $e');
+    } finally {
+      setStatusInsidersCompany(Status.loaded);
+    }
+  }
+
+  //MARK: Insiders: Reporting
+
+  String? _errorInsidersReporting;
+  String? get errorInsidersReporting => _errorInsidersReporting;
+
+  Status _statusInsidersReporting = Status.ideal;
+  Status get statusInsidersReporting => _statusInsidersReporting;
+
+  int _pageInsidersReporting = 1;
+  bool get canLoadMoreInsidersReporting =>
+      _pageInsidersReporting <= (_signalInsidersReportingData?.totalPages ?? 1);
+
+  bool get isLoadingInsidersReporting =>
+      _statusInsidersReporting == Status.loading ||
+      _statusInsidersReporting == Status.ideal;
+
+  SignalInsidersRes? _signalInsidersReportingData;
+  SignalInsidersRes? get signalInsidersReportingData =>
+      _signalInsidersReportingData;
+
+  int _openIndexReporting = -1;
+  int get openIndexReporting => _openIndexReporting;
+
+  void openMoreReporting(index) {
+    _openIndexReporting = index;
+    notifyListeners();
+  }
+
+  setStatusInsidersReporting(status) {
+    _statusInsidersReporting = status;
+    notifyListeners();
+  }
+
+  Future getInsidersReportingData(
+      {bool loadMore = false, required String cik}) async {
+    if (loadMore) {
+      _pageInsidersReporting++;
+      setStatusInsidersReporting(Status.loadingMore);
+    } else {
+      _pageInsidersReporting = 1;
+      setStatusInsidersReporting(Status.loading);
+    }
+    try {
+      UserManager provider = navigatorKey.currentContext!.read<UserManager>();
+      Map request = {
+        'token': provider.user?.token ?? '',
+        'page': '$_pageInsidersReporting',
+        'reportingCik': cik,
+      };
+
+      ApiResponse response = await apiRequest(
+        url: Apis.signalInsiders,
+        request: request,
+      );
+      if (response.status) {
+        if (_pageInsidersReporting == 1) {
+          _signalInsidersReportingData =
+              signalInsidersResFromJson(jsonEncode(response.data));
+          _errorInsidersReporting = null;
+        } else {
+          _signalInsidersReportingData?.data?.addAll(
+              signalInsidersResFromJson(jsonEncode(response.data)).data ?? []);
+        }
+      } else {
+        if (_pageInsidersReporting == 1) {
+          _signalInsidersReportingData = null;
+          _errorInsidersReporting = response.message;
+        }
+      }
+    } catch (e) {
+      _pageInsidersReporting = 1;
+      _signalInsidersReportingData = null;
+      _errorInsidersReporting = Const.errSomethingWrong;
+      Utils().showLog('Error in ${Apis.signalInsiders}: $e');
+    } finally {
+      setStatusInsidersReporting(Status.loaded);
+    }
   }
 }

@@ -7,8 +7,8 @@ import '../../../widgets/custom/base_loader_container.dart';
 import '../../base/base_list_divider.dart';
 import '../../base/stock_item.dart';
 
-class SignalStocks extends StatelessWidget {
-  const SignalStocks({super.key});
+class SignalStocksIndex extends StatelessWidget {
+  const SignalStocksIndex({super.key});
 
   @override
   Widget build(BuildContext context) {

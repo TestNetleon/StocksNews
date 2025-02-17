@@ -214,7 +214,6 @@ class IpoItem extends StatelessWidget {
                 Text(
                   // "${data?.securitiesTransacted} Shares @ ${data?.price}",
                   "securitiesTransacted Shares @ price",
-
                   style: stylePTSansRegular(
                     color: ThemeColors.greyText,
                     fontSize: 12,
