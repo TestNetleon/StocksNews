@@ -6,6 +6,7 @@ import 'package:stocks_news_new/ui/base/scaffold.dart';
 import '../../../utils/theme.dart';
 import '../../base/common_tab.dart';
 import 'insiders/insiders.dart';
+import 'politicians/politicians.dart';
 import 'sentiment/sentiment.dart';
 import 'stocks.dart';
 
@@ -51,6 +52,10 @@ class _SignalsIndexState extends State<SignalsIndex> {
           if (manager.selectedScreen == 2)
             Expanded(
               child: SignalInsidersIndex(),
+            ),
+          if (manager.selectedScreen == 3)
+            Expanded(
+              child: SignalPoliticiansIndex(),
             ),
         ],
       ),

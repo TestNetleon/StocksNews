@@ -62,7 +62,7 @@ class HomeInsiderTradeItem extends StatelessWidget {
                               style: styleBaseBold(),
                             ),
                             Text(
-                              data.companyName ?? '',
+                              data.name ?? '',
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: styleBaseRegular(

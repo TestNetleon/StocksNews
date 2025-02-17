@@ -144,6 +144,7 @@ import '../ui/onboarding/slides.dart';
 import '../ui/onboarding/splash.dart';
 import '../ui/tabs/signals/insiders/company/from_company.dart';
 import '../ui/tabs/signals/insiders/reporting/from_reporting.dart';
+import '../ui/tabs/signals/politicians/detail.dart';
 import '../ui/tabs/tabs.dart';
 import '../ui/tabs/tools/plaidConnect/portfolio.dart';
 
@@ -259,6 +260,16 @@ class Routes {
             InsiderTradeRes data = arguments?['data'];
 
             return SignalInsidersReportingIndex(data: data);
+          },
+        );
+
+      case SignalPoliticianDetailIndex.path:
+        return MaterialPageRoute(
+          builder: (context) {
+            final arguments = settings.arguments as Map<String, dynamic>?;
+            PoliticianTradeRes data = arguments?['data'];
+
+            return SignalPoliticianDetailIndex(data: data);
           },
         );
 

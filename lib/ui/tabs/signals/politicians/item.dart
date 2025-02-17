@@ -1,20 +1,17 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:stocks_news_new/models/my_home_premium.dart';
+import 'package:stocks_news_new/ui/tabs/signals/politicians/detail.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
-import 'package:stocks_news_new/utils/utils.dart';
 
-import 'company/from_company.dart';
-import 'reporting/from_reporting.dart';
-
-class BaseInsiderItem extends StatelessWidget {
+class BasePoliticianItem extends StatelessWidget {
   // final int index;
   final void Function()? onTap;
-  final InsiderTradeRes data;
+  final PoliticianTradeRes data;
   final bool isOpen;
-  const BaseInsiderItem({
+  const BasePoliticianItem({
     super.key,
     required this.data,
     this.onTap,
@@ -23,11 +20,10 @@ class BaseInsiderItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool namePresent = data.reportingName != null && data.reportingName != '';
-    bool typeOwnerPresent = data.typeOfOwner != null && data.typeOfOwner != '';
+    bool namePresent = data.userName != null && data.userName != '';
+    bool officePresent = data.office != null && data.office != '';
     bool companyNamePresent = data.name != null && data.name != '';
-    bool securityTransactedPresent =
-        data.securityTransacted != null && data.securityTransacted != '';
+
     return Container(
       padding: EdgeInsets.all(Pad.pad16),
       child: Column(
@@ -37,41 +33,58 @@ class BaseInsiderItem extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Visibility(
-                visible: namePresent || typeOwnerPresent,
+                visible: namePresent || officePresent,
                 child: Flexible(
                   child: InkWell(
                     onTap: () {
-                      if (data.reportingCik == null ||
-                          data.reportingCik == '') {
-                        return;
-                      }
-
                       Navigator.pushNamed(
-                          context, SignalInsidersReportingIndex.path,
-                          arguments: {'data': data});
+                          context, SignalPoliticianDetailIndex.path,
+                          arguments: {
+                            'data': data,
+                          });
                     },
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                    child: Row(
                       children: [
                         Visibility(
-                          visible: namePresent,
-                          child: Text(
-                            data.reportingName ?? "",
-                            style: styleBaseBold(fontSize: 14),
-                          ),
-                        ),
-                        Visibility(
-                          visible: typeOwnerPresent,
-                          child: Padding(
-                            padding: const EdgeInsets.only(top: 2),
-                            child: Text(
-                              data.typeOfOwner ?? "",
-                              style: styleBaseRegular(
-                                fontSize: 12,
-                                color: ThemeColors.neutral40,
+                          visible:
+                              data.userImage != null && data.userImage != '',
+                          child: Container(
+                            margin: EdgeInsets.only(right: Pad.pad8),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(8),
+                              child: CachedNetworkImage(
+                                imageUrl: data.userImage ?? '',
+                                height: 50,
+                                width: 50,
+                                fit: BoxFit.cover,
                               ),
                             ),
                           ),
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Visibility(
+                              visible: namePresent,
+                              child: Text(
+                                data.name ?? "",
+                                style: styleBaseBold(fontSize: 14),
+                              ),
+                            ),
+                            Visibility(
+                              visible: officePresent,
+                              child: Padding(
+                                padding: const EdgeInsets.only(top: 2),
+                                child: Text(
+                                  data.office ?? "",
+                                  style: styleBaseRegular(
+                                    fontSize: 12,
+                                    color: ThemeColors.neutral40,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ],
                     ),
@@ -84,16 +97,16 @@ class BaseInsiderItem extends StatelessWidget {
                     padding: EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                     margin: EdgeInsets.only(left: Pad.pad8, right: Pad.pad8),
                     decoration: BoxDecoration(
-                      color: data.transactionType == 'Buy'
+                      color: data.type == 'Purchase'
                           ? ThemeColors.success10
                           : ThemeColors.error10,
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: Text(
-                      data.transactionType ?? '',
+                      data.type ?? '',
                       style: styleBaseBold(
                         fontSize: 14,
-                        color: data.transactionType == 'Buy'
+                        color: data.type == 'Purchase'
                             ? ThemeColors.success120
                             : ThemeColors.error120,
                       ),
@@ -121,9 +134,7 @@ class BaseInsiderItem extends StatelessWidget {
           Visibility(
             child: GestureDetector(
               onTap: () {
-                if (data.companyCik == null || data.companyCik == '') return;
-                Navigator.pushNamed(context, SignalInsidersCompanyIndex.path,
-                    arguments: {'data': data});
+                //Navigate to ticker detail
               },
               child: Container(
                 margin: EdgeInsets.only(top: Pad.pad8),
@@ -148,24 +159,28 @@ class BaseInsiderItem extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Visibility(
-                                visible: data.name != null && data.name != '',
+                                visible: companyNamePresent,
                                 child: Flexible(
-                                  child: Text(
-                                    data.name ?? '',
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: styleBaseBold(),
+                                  child: Visibility(
+                                    visible:
+                                        data.name != null && data.name != '',
+                                    child: Text(
+                                      data.name ?? '',
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: styleBaseBold(),
+                                    ),
                                   ),
                                 ),
                               ),
                               Visibility(
-                                visible: data.totalTransaction != null &&
-                                    data.totalTransaction != '',
+                                visible:
+                                    data.amount != null && data.amount != '',
                                 child: Flexible(
                                   child: Container(
                                     margin: EdgeInsets.only(left: Pad.pad10),
                                     child: Text(
-                                      data.totalTransaction ?? '',
+                                      data.amount ?? '',
                                       style: styleBaseBold(),
                                     ),
                                   ),
@@ -174,40 +189,13 @@ class BaseInsiderItem extends StatelessWidget {
                             ],
                           ),
                           Visibility(
-                            visible:
-                                companyNamePresent || securityTransactedPresent,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Visibility(
-                                  visible:
-                                      data.symbol != null && data.symbol != '',
-                                  child: Flexible(
-                                    child: Text(
-                                      '${data.exchangeShortName ?? 'N/A'}: ${data.symbol ?? 'N/A'}',
-                                      style: styleBaseRegular(
-                                        fontSize: 13,
-                                        color: ThemeColors.neutral40,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                Visibility(
-                                  visible: data.securityTransacted != null &&
-                                      data.securityTransacted != '',
-                                  child: Flexible(
-                                    child: Container(
-                                      margin: EdgeInsets.only(left: Pad.pad10),
-                                      child: Text(
-                                        "${data.securityTransacted} Shares @ ${data.price}",
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: styleBaseRegular(fontSize: 13),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
+                            visible: data.symbol != null && data.symbol != '',
+                            child: Text(
+                              '${data.exchangeShortName}: ${data.symbol}',
+                              style: styleBaseRegular(
+                                fontSize: 13,
+                                color: ThemeColors.neutral40,
+                              ),
                             ),
                           ),
                         ],
@@ -230,27 +218,12 @@ class BaseInsiderItem extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   _dropBox(
-                    label: 'Shares held after transaction',
-                    value: data.securitiesOwned ?? 'N/A',
-                  ),
-                  _dropBox(
                     label: 'Transaction Date',
                     value: data.transactionDate ?? 'N/A',
                   ),
-                  Visibility(
-                    visible: data.link != null && data.link != '',
-                    child: InkWell(
-                      onTap: () {
-                        openUrl(data.link);
-                      },
-                      child: Text(
-                        'View Details',
-                        style: styleBaseSemiBold(
-                          color: ThemeColors.secondary100,
-                          fontSize: 13,
-                        ),
-                      ),
-                    ),
+                  _dropBox(
+                    label: 'Filed Date',
+                    value: data.receivedDate ?? 'N/A',
                   ),
                 ],
               ),

@@ -75,55 +75,62 @@ class PoliticianTradeListRes {
 }
 
 class PoliticianTradeRes {
-  final String? id;
   final String? image;
-  final String? name;
-  final String? slug;
+  final String? userName;
+  final String? userSlug;
   final String? symbol;
-  final String? company;
+  final String? name;
   final String? type;
   final String? userImage;
-  final String? memberType;
   final String? office;
+  final String? exchangeShortName;
+  final String? amount;
+  final String? transactionDate;
+  final String? receivedDate;
 
   PoliticianTradeRes({
-    this.id,
     this.image,
-    this.name,
-    this.slug,
+    this.userName,
+    this.userSlug,
     this.symbol,
-    this.company,
+    this.name,
     this.type,
     this.userImage,
-    this.memberType,
     this.office,
+    this.amount,
+    this.exchangeShortName,
+    this.transactionDate,
+    this.receivedDate,
   });
 
   factory PoliticianTradeRes.fromJson(Map<String, dynamic> json) =>
       PoliticianTradeRes(
-        id: json["_id"],
         image: json["image"],
-        name: json["name"],
-        slug: json["slug"],
+        userName: json["user_name"],
+        userSlug: json["user_slug"],
         symbol: json["symbol"],
-        company: json["company"],
+        name: json["name"],
         type: json["type"],
         userImage: json["user_image"],
-        memberType: json["member_type"],
         office: json["office"],
+        amount: json['amount'],
+        transactionDate: json['transactionDate'],
+        exchangeShortName: json['exchange_short_name'],
+        receivedDate: json['receivedDate'],
       );
 
   Map<String, dynamic> toJson() => {
-        "_id": id,
         "image": image,
-        "name": name,
-        "slug": slug,
+        "user_name": userName,
+        "user_slug": userSlug,
         "symbol": symbol,
-        "company": company,
+        "name": name,
         "type": type,
         "user_image": userImage,
-        "member_type": memberType,
         "office": office,
+        'exchange_short_name': exchangeShortName,
+        'transactionDate': transactionDate,
+        'receivedDate': receivedDate,
       };
 }
 
@@ -165,7 +172,7 @@ class InsiderTradeRes {
   final String? symbol;
   final String? price;
   final String? exchangeShortName;
-  final String? companyName;
+  final String? name;
   final String? companyCik;
   final String? image;
   final String? transactionType;
@@ -185,7 +192,7 @@ class InsiderTradeRes {
     this.symbol,
     this.price,
     this.exchangeShortName,
-    this.companyName,
+    this.name,
     this.companyCik,
     this.image,
     this.totalTransaction,
@@ -209,7 +216,7 @@ class InsiderTradeRes {
         typeOfOwner: json["typeOfOwner"],
         symbol: json["symbol"],
         exchangeShortName: json["exchange_short_name"],
-        companyName: json["name"],
+        name: json["name"],
         companyCik: json["companyCik"],
         image: json["image"],
         transactionDate: json['transactionDate'],
@@ -229,7 +236,7 @@ class InsiderTradeRes {
         "typeOfOwner": typeOfOwner,
         "symbol": symbol,
         "exchange_short_name": exchangeShortName,
-        "name": companyName,
+        "name": name,
         "companyCik": companyCik,
         "image": image,
         "transactionType": transactionType,

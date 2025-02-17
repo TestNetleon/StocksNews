@@ -39,6 +39,7 @@ class Apis {
   static const signalStocks = '/signals/stocks';
   static const signalSentiment = '/signals/sentiment';
   static const signalInsiders = '/signals/insiders';
+  static const signalPoliticians = '/signals/politicians';
 
 //----------------------------------------------
 

@@ -42,9 +42,9 @@ class HomePoliticianTradeItem extends StatelessWidget {
             ),
           ),
           Visibility(
-            visible: data.memberType != null && data.memberType != '',
+            visible: data.office != null && data.office != '',
             child: Text(
-              'House - ${data.memberType}',
+              data.office ?? '',
               style: styleBaseRegular(
                 fontSize: 14,
                 color: ThemeColors.neutral40,

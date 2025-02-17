@@ -8,6 +8,7 @@ import '../api/api_response.dart';
 import '../api/apis.dart';
 import '../models/market/market_res.dart';
 import '../models/signals/insiders.dart';
+import '../models/signals/politicians.dart';
 import '../models/signals/sentiment.dart';
 import '../models/signals/stock.dart';
 import '../routes/my_app.dart';
@@ -40,6 +41,10 @@ class SignalsManager extends ChangeNotifier {
 
         case 2:
           getInsidersData();
+          break;
+
+        case 3:
+          getPoliticianData();
           break;
 
         default:
@@ -212,6 +217,7 @@ class SignalsManager extends ChangeNotifier {
       setStatusInsiders(Status.loadingMore);
     } else {
       _pageInsiders = 1;
+      openMore(-1);
       setStatusInsiders(Status.loading);
     }
     try {
@@ -289,6 +295,7 @@ class SignalsManager extends ChangeNotifier {
       setStatusInsidersCompany(Status.loadingMore);
     } else {
       _pageInsidersCompany = 1;
+      openMoreCompany(-1);
       setStatusInsidersCompany(Status.loading);
     }
     try {
@@ -368,6 +375,7 @@ class SignalsManager extends ChangeNotifier {
       setStatusInsidersReporting(Status.loadingMore);
     } else {
       _pageInsidersReporting = 1;
+      openMoreReporting(-1);
       setStatusInsidersReporting(Status.loading);
     }
     try {
@@ -404,6 +412,167 @@ class SignalsManager extends ChangeNotifier {
       Utils().showLog('Error in ${Apis.signalInsiders}: $e');
     } finally {
       setStatusInsidersReporting(Status.loaded);
+    }
+  }
+
+  //MARK: Politicians
+
+  String? _errorPolitician;
+  String? get errorPolitician => _errorPolitician;
+
+  Status _statusPolitician = Status.ideal;
+  Status get statusPolitician => _statusPolitician;
+
+  int _pagePolitician = 1;
+  bool get canLoadMorePolitician =>
+      _pagePolitician <= (_signalPoliticianData?.totalPages ?? 1);
+
+  bool get isLoadingPolitician =>
+      _statusPolitician == Status.loading || _statusPolitician == Status.ideal;
+
+  SignalPoliticiansRes? _signalPoliticianData;
+  SignalPoliticiansRes? get signalPoliticianData => _signalPoliticianData;
+
+  setStatusPolitician(status) {
+    _statusPolitician = status;
+    notifyListeners();
+  }
+
+  int _openIndexPolitician = -1;
+  int get openIndexPolitician => _openIndexPolitician;
+
+  void openMorePolitician(index) {
+    _openIndexPolitician = index;
+    notifyListeners();
+  }
+
+  Future getPoliticianData({bool loadMore = false}) async {
+    if (loadMore) {
+      _pagePolitician++;
+      setStatusPolitician(Status.loadingMore);
+    } else {
+      _pagePolitician = 1;
+      openMorePolitician(-1);
+
+      setStatusPolitician(Status.loading);
+    }
+    try {
+      UserManager provider = navigatorKey.currentContext!.read<UserManager>();
+      Map request = {
+        'token': provider.user?.token ?? '',
+        'page': '$_pagePolitician',
+      };
+
+      ApiResponse response = await apiRequest(
+        url: Apis.signalPoliticians,
+        request: request,
+      );
+      if (response.status) {
+        if (_pagePolitician == 1) {
+          _signalPoliticianData =
+              signalPoliticiansResFromJson(jsonEncode(response.data));
+          _errorPolitician = null;
+        } else {
+          _signalPoliticianData?.data?.addAll(
+              signalPoliticiansResFromJson(jsonEncode(response.data)).data ??
+                  []);
+        }
+      } else {
+        if (_pagePolitician == 1) {
+          _signalPoliticianData = null;
+          _errorPolitician = response.message;
+        }
+      }
+    } catch (e) {
+      _pagePolitician = 1;
+      _signalPoliticianData = null;
+      _errorPolitician = Const.errSomethingWrong;
+      Utils().showLog('Error in ${Apis.signalPoliticians}: $e');
+    } finally {
+      setStatusPolitician(Status.loaded);
+    }
+  }
+
+  //MARK: Politicians: Detail
+
+  String? _errorPoliticianDetail;
+  String? get errorPoliticianDetail => _errorPoliticianDetail;
+
+  Status _statusPoliticianDetail = Status.ideal;
+  Status get statusPoliticianDetail => _statusPoliticianDetail;
+
+  int _pagePoliticianDetail = 1;
+  bool get canLoadMorePoliticianDetail =>
+      _pagePoliticianDetail <= (_signalPoliticianDetailData?.totalPages ?? 1);
+
+  bool get isLoadingPoliticianDetail =>
+      _statusPoliticianDetail == Status.loading ||
+      _statusPoliticianDetail == Status.ideal;
+
+  SignalPoliticiansRes? _signalPoliticianDetailData;
+  SignalPoliticiansRes? get signalPoliticianDetailData =>
+      _signalPoliticianDetailData;
+
+  setStatusPoliticianDetail(status) {
+    _statusPoliticianDetail = status;
+    notifyListeners();
+  }
+
+  int _openIndexPoliticianDetail = -1;
+  int get openIndexPoliticianDetail => _openIndexPoliticianDetail;
+
+  void openMorePoliticianDetail(index) {
+    _openIndexPoliticianDetail = index;
+    notifyListeners();
+  }
+
+  Future getPoliticianDetailData({
+    bool loadMore = false,
+    required String userSlug,
+  }) async {
+    if (loadMore) {
+      _pagePoliticianDetail++;
+      setStatusPoliticianDetail(Status.loadingMore);
+    } else {
+      _pagePoliticianDetail = 1;
+      openMorePoliticianDetail(-1);
+      setStatusPoliticianDetail(Status.loading);
+    }
+    try {
+      UserManager provider = navigatorKey.currentContext!.read<UserManager>();
+      Map request = {
+        'token': provider.user?.token ?? '',
+        'page': '$_pagePoliticianDetail',
+        'user_slug': userSlug,
+      };
+
+      ApiResponse response = await apiRequest(
+        url: Apis.signalPoliticians,
+        request: request,
+      );
+      if (response.status) {
+        if (_pagePoliticianDetail == 1) {
+          _signalPoliticianDetailData =
+              signalPoliticiansResFromJson(jsonEncode(response.data));
+          _errorPoliticianDetail = null;
+        } else {
+          _signalPoliticianDetailData?.data?.addAll(
+              signalPoliticiansResFromJson(jsonEncode(response.data)).data ??
+                  []);
+        }
+      } else {
+        if (_pagePoliticianDetail == 1) {
+          _signalPoliticianDetailData = null;
+          _errorPoliticianDetail = response.message;
+        }
+      }
+    } catch (e) {
+      _pagePoliticianDetail = 1;
+      _signalPoliticianDetailData = null;
+      _errorPoliticianDetail = Const.errSomethingWrong;
+      Utils().showLog('Error in ${Apis.signalPoliticians}: $e');
+    } finally {
+      setStatusPoliticianDetail(Status.loaded);
     }
   }
 }

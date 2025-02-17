@@ -22,8 +22,7 @@ class BaseInsiderReportingItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool companyNamePresent =
-        data.companyName != null && data.companyName != '';
+    bool companyNamePresent = data.name != null && data.name != '';
     bool securityTransactedPresent =
         data.securityTransacted != null && data.securityTransacted != '';
     return Container(
@@ -61,10 +60,12 @@ class BaseInsiderReportingItem extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Visibility(
-                              visible: data.symbol != null && data.symbol != '',
+                              visible: data.name != null && data.name != '',
                               child: Flexible(
                                 child: Text(
-                                  data.symbol ?? '',
+                                  data.name ?? '',
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
                                   style: styleBaseBold(),
                                 ),
                               ),
@@ -91,13 +92,11 @@ class BaseInsiderReportingItem extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Visibility(
-                                visible: data.companyName != null &&
-                                    data.companyName != '',
+                                visible:
+                                    data.symbol != null && data.symbol != '',
                                 child: Flexible(
                                   child: Text(
-                                    data.companyName ?? '',
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
+                                    '${data.exchangeShortName ?? 'N/A'}: ${data.symbol ?? 'N/A'}',
                                     style: styleBaseRegular(
                                       fontSize: 13,
                                       color: ThemeColors.neutral40,
