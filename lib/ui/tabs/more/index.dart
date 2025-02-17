@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:stocks_news_new/managers/user.dart';
+import 'package:stocks_news_new/modals/user_res.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/ui/base/heading.dart';
 import 'package:stocks_news_new/ui/base/scaffold.dart';
@@ -11,6 +13,8 @@ import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
+import 'news/index.dart';
+
 class MoreIndex extends StatelessWidget {
   const MoreIndex({super.key});
 
@@ -18,8 +22,14 @@ class MoreIndex extends StatelessWidget {
     Navigator.pushNamed(context, NotificationSettings.path);
   }
 
+  void _navigateToNews(context) {
+    Navigator.pushNamed(context, CategoriesNewsIndex.path);
+  }
+
   @override
   Widget build(BuildContext context) {
+    UserManager manager = context.watch<UserManager>();
+    UserRes? user = manager.user;
     return BaseScaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -41,13 +51,16 @@ class MoreIndex extends StatelessWidget {
                   ),
                   SpacerVertical(height: Pad.pad8),
                   Text(
-                    "User Name",
+                    user?.name ?? 'User',
                     style: styleBaseBold(fontSize: 25, height: 1.5),
                   ),
                   // SpacerVertical(height: Pad.pad5),
-                  Text(
-                    "email@gmail.com",
-                    style: styleBaseRegular(fontSize: 16, height: 1.5),
+                  Visibility(
+                    visible: user?.email != null && user?.email != '',
+                    child: Text(
+                      user?.email ?? '',
+                      style: styleBaseRegular(fontSize: 16, height: 1.5),
+                    ),
                   )
                 ],
               ),
@@ -75,6 +88,23 @@ class MoreIndex extends StatelessWidget {
             MoreItem(
               icon: Images.moreMySubscription,
               label: "My Subscription",
+              onTap: () {},
+            ),
+            BaseHeading(
+              margin: EdgeInsets.only(left: Pad.pad16, top: Pad.pad20),
+              title: "Resources",
+              titleStyle: styleBaseBold(fontSize: 20),
+            ),
+            MoreItem(
+              icon: Images.watchlist,
+              label: "News",
+              onTap: () {
+                _navigateToNews(context);
+              },
+            ),
+            MoreItem(
+              icon: Images.watchlist,
+              label: "Blogs",
               onTap: () {},
             ),
             BaseHeading(

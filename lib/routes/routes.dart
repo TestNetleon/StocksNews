@@ -114,6 +114,7 @@ import 'package:stocks_news_new/ui/tabs/more/notificationSettings/index.dart';
 import 'package:stocks_news_new/ui/tabs/tools/compareStocks/compare.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/utils.dart';
+import '../managers/news.dart';
 import '../managers/onboarding.dart';
 import '../managers/search.dart';
 import '../managers/signals.dart';
@@ -142,6 +143,7 @@ import '../ui/account/verify.dart';
 import '../ui/onboarding/default_home.dart';
 import '../ui/onboarding/slides.dart';
 import '../ui/onboarding/splash.dart';
+import '../ui/tabs/more/news/index.dart';
 import '../ui/tabs/signals/insiders/company/from_company.dart';
 import '../ui/tabs/signals/insiders/reporting/from_reporting.dart';
 import '../ui/tabs/signals/politicians/detail.dart';
@@ -158,6 +160,7 @@ class Routes {
     AccountLoginIndex.path: (_) => const AccountLoginIndex(),
     ToolsPortfolioIndex.path: (_) => const ToolsPortfolioIndex(),
     ToolsCompareIndex.path: (_) => const ToolsCompareIndex(),
+    CategoriesNewsIndex.path: (_) => const CategoriesNewsIndex(),
 
     //--------------------------------------
 
@@ -459,6 +462,7 @@ class Routes {
       ChangeNotifierProvider(create: (_) => ToolsManager()),
       ChangeNotifierProvider(create: (_) => SignalsManager()),
       ChangeNotifierProvider(create: (_) => SearchManager()),
+      ChangeNotifierProvider(create: (_) => NewsManager()),
     ];
   }
 }

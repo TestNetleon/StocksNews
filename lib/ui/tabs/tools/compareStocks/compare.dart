@@ -39,9 +39,12 @@ class _ToolsCompareIndexState extends State<ToolsCompareIndex> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: Pad.pad16),
-            child: ToolsCompareHeaderStocks(),
+          Visibility(
+            visible: !manager.isLoadingCompare,
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: Pad.pad16),
+              child: ToolsCompareHeaderStocks(),
+            ),
           ),
           Expanded(
             child: BaseLoaderContainer(

@@ -34,7 +34,7 @@ class BaseNewsRes {
             ? []
             : List<NewsAuthorRes>.from(
                 json["authors"]!.map((x) => NewsAuthorRes.fromJson(x))),
-        publishedDate: json["published_date"],
+        publishedDate: json["date"],
         site: json["site"],
       );
 
@@ -46,7 +46,7 @@ class BaseNewsRes {
         "authors": authors == null
             ? []
             : List<dynamic>.from(authors!.map((x) => x.toJson())),
-        "published_date": publishedDate,
+        "date": publishedDate,
         "site": site,
       };
 }

@@ -2,11 +2,11 @@ import 'dart:convert';
 
 import 'package:stocks_news_new/modals/news_res.dart';
 
-List<NewsTabsRes> nesCategoryTabResFromJson(String str) =>
+List<NewsTabsRes> newsCategoryTabResFromJson(String str) =>
     List<NewsTabsRes>.from(
         json.decode(str).map((x) => NewsTabsRes.fromJson(x)));
 
-String nesCategoryTabResToJson(List<NewsTabsRes> data) =>
+String newsCategoryTabResToJson(List<NewsTabsRes> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class NewsTabsRes {

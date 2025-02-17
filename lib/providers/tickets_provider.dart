@@ -289,7 +289,7 @@ class NewsCategoryProvider extends ChangeNotifier {
         showProgress: showProgress,
       );
       if (response.status) {
-        _tabs = nesCategoryTabResFromJson(jsonEncode(response.data));
+        _tabs = newsCategoryTabResFromJson(jsonEncode(response.data));
         if (_tabs != null) {
           getNewsData(id: _tabs?[selectedIndex].id);
         }
