@@ -18,7 +18,6 @@ import '../../auth/base/base_auth.dart';
 import '../../auth/membershipAsk/ask.dart';
 import '../../offerMembership/blackFriday/index.dart';
 import '../../offerMembership/christmas/index.dart';
-import '../../tabs/tabs.dart';
 
 class CommonLock extends StatelessWidget {
   final bool showLogin;

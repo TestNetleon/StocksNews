@@ -14,7 +14,6 @@ import 'package:stocks_news_new/screens/marketData/lowPriceStocks/index.dart';
 import 'package:stocks_news_new/screens/marketData/mostActive/index.dart';
 import 'package:stocks_news_new/screens/marketData/pennyStocks/index.dart';
 import 'package:stocks_news_new/screens/stocks/index.dart';
-import 'package:stocks_news_new/screens/tabs/tabs.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 
 import '../../../ui/tabs/tabs.dart';

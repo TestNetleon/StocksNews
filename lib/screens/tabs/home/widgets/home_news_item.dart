@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/home_insider_res.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/screens/tabs/news/news_item.dart';
-import 'package:stocks_news_new/screens/tabs/tabs.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';

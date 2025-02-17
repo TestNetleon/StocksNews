@@ -25,7 +25,6 @@ import 'package:stocks_news_new/screens/auth/signup/signup_success.dart';
 import 'package:stocks_news_new/screens/drawer/widgets/review_app_pop_up.dart';
 import 'package:stocks_news_new/screens/myAccount/widgets/phone_email_otp.dart';
 import 'package:stocks_news_new/screens/offerMembership/christmas/index.dart';
-import 'package:stocks_news_new/screens/tabs/tabs.dart';
 import 'package:stocks_news_new/service/revenue_cat.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/database/preference.dart';

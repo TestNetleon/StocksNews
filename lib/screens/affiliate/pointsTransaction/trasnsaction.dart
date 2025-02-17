@@ -27,7 +27,6 @@ import '../../../utils/utils.dart';
 import '../../blogDetail/index.dart';
 import '../../helpDesk/chats/index.dart';
 import '../../stockDetail/index.dart';
-import '../../tabs/tabs.dart';
 
 class AffiliateTransaction extends StatefulWidget {
   const AffiliateTransaction({super.key, this.fromDrawer = false});

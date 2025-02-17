@@ -6,7 +6,6 @@ import 'package:stocks_news_new/providers/reddit_twitter_provider.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/custom_tab_item_label.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/home_item_insider_trending.dart';
 import 'package:stocks_news_new/screens/tabs/reddit_twitter/reddit_twitter_item.dart';
-import 'package:stocks_news_new/screens/tabs/tabs.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
