@@ -54,19 +54,31 @@ class BaseNewsRes {
 class NewsAuthorRes {
   final String? id;
   final String? name;
+  final dynamic text;
+  final String? slug;
+  final bool? showBio;
 
   NewsAuthorRes({
     this.id,
     this.name,
+    this.text,
+    this.slug,
+    this.showBio,
   });
 
   factory NewsAuthorRes.fromJson(Map<String, dynamic> json) => NewsAuthorRes(
         id: json["_id"],
         name: json["name"],
+        text: json["text"],
+        slug: json["slug"],
+        showBio: json["show_bio"],
       );
 
   Map<String, dynamic> toJson() => {
         "_id": id,
         "name": name,
+        "text": text,
+        "slug": slug,
+        "show_bio": showBio,
       };
 }

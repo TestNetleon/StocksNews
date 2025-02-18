@@ -16,20 +16,23 @@ class BaseNewsItem extends StatelessWidget {
     bool showSite = data.site != null && data.site != '';
     bool showDate = data.publishedDate != null && data.publishedDate != '';
 
-    return InkWell(
+    return GestureDetector(
       onTap: onTap != null
           ? () {
               onTap!(data);
             }
           : null,
       child: Container(
+        color: Colors.white,
         margin: EdgeInsets.only(bottom: Pad.pad24),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(8),
-              child: CachedNetworkImagesWidget(data.image),
+              child: CachedNetworkImagesWidget(
+                data.image,
+              ),
             ),
             Padding(
               padding: const EdgeInsets.only(top: Pad.pad10),

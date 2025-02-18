@@ -43,6 +43,11 @@ class Apis {
   //News---
   static const newsCategories = '/news-categories';
   static const news = '/news';
+  static const newsDetail = '/news-detail';
+  static const sendFeedback = "/send-feedback";
+  //Blogs---
+  static const secureBlogs = "/secure-blogs";
+  static const secureBlogDetail = '/secure-blog-detail';
 
 //----------------------------------------------
 
@@ -139,7 +144,6 @@ class Apis {
   static const deleteUser = "/delete-user";
   static const qrCodeScan = "/token-login";
   static const stocks = "/stocks";
-  static const blogs = "/blogs";
   static const blogDetails = "/blog-detail-secure-v2-stocks";
   static const trendingIndustries = "/trending-industries";
   static const stockDetailMention = "/trading-stock";
@@ -212,7 +216,6 @@ class Apis {
   static const detailFinancial = "/stock-detail-financial";
   static const stockDetailMergers = "/stock-detail-mergers";
   // Stock Detail New ended ----
-  static const sendFeedback = "/send-feedback";
   static const getTickets = "/get-tickets";
   static const sendTicket = "/send-ticket";
   static const ticketDetail = "/ticket-detail";

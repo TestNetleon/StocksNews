@@ -7,6 +7,7 @@ import 'package:stocks_news_new/ui/base/base_scroll.dart';
 import 'package:stocks_news_new/ui/base/heading.dart';
 import 'package:stocks_news_new/ui/base/news_item.dart';
 import 'package:stocks_news_new/ui/base/stock_item.dart';
+import 'package:stocks_news_new/ui/tabs/more/news/detail.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -138,36 +139,51 @@ class BaseSearchData extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              BaseHeading(title: newsRes?.title),
+              BaseHeading(
+                title: newsRes?.title,
+                margin: EdgeInsets.symmetric(horizontal: Pad.pad16),
+              ),
               ListView.separated(
                 shrinkWrap: true,
                 physics: NeverScrollableScrollPhysics(),
+                padding: EdgeInsets.symmetric(
+                  horizontal: Pad.pad16,
+                ),
                 itemBuilder: (context, index) {
                   BaseNewsRes? data = newsRes?.data?[index];
                   if (data == null) {
                     return SizedBox();
                   }
-                  return Container(
-                    margin: EdgeInsets.symmetric(vertical: Pad.pad10),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Flexible(
-                          child: Text(
-                            data.title ?? '',
-                            style: styleBaseRegular(fontSize: 14),
+                  return GestureDetector(
+                    onTap: () {
+                      if (data.slug == null || data.slug == '') return;
+                      Navigator.pushNamed(context, NewsDetailIndex.path,
+                          arguments: {
+                            'slug': data.slug,
+                          });
+                    },
+                    child: Container(
+                      margin: EdgeInsets.symmetric(vertical: Pad.pad10),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Flexible(
+                            child: Text(
+                              data.title ?? '',
+                              style: styleBaseRegular(fontSize: 14),
+                            ),
                           ),
-                        ),
-                        Container(
-                          margin: EdgeInsets.only(left: 10),
-                          width: 100,
-                          height: 70,
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(8),
-                            child: CachedNetworkImagesWidget(data.image),
+                          Container(
+                            margin: EdgeInsets.only(left: 10),
+                            width: 100,
+                            height: 70,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(8),
+                              child: CachedNetworkImagesWidget(data.image),
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   );
                 },

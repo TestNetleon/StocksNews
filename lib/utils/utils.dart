@@ -349,7 +349,10 @@ commonShare({String? url, String? title}) {
   if (url == null || url == '') {
     // showErrorMessage(message: "No url found.");
   } else {
-    Share.share("$title $url", subject: title);
+    Share.share(
+      "$title $url",
+      subject: title,
+    );
   }
 }
 

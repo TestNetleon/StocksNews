@@ -35,7 +35,7 @@ class _HomeWatchlistContainerState extends State<HomeWatchlistContainer> {
               return Container(
                 width: 180.sp,
                 margin: const EdgeInsets.only(right: 16),
-                child: HomeTrendingWatchlistItem(data: data),
+                child: TickerBoxItem(data: data),
               );
             },
           ),

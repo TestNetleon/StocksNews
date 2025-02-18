@@ -1,29 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:provider/provider.dart';
-
-import '../../../../managers/home.dart';
 import '../../../../models/ticker.dart';
-import 'item.dart';
+import '../../home/trendingWatchlist/item.dart';
 
-class HomeTrendingContainer extends StatelessWidget {
-  const HomeTrendingContainer({
+class TickersBoxIndex extends StatelessWidget {
+  final List<BaseTickerRes>? tickers;
+  const TickersBoxIndex({
     super.key,
+    this.tickers,
   });
 
   @override
   Widget build(BuildContext context) {
-    MyHomeManager provider = context.watch<MyHomeManager>();
-    List<BaseTickerRes>? trending = provider.data?.tickers;
+    if (tickers == null || tickers?.isEmpty == true) {
+      return SizedBox();
+    }
 
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: IntrinsicHeight(
         child: Row(
           children: List.generate(
-            trending?.length ?? 0,
+            tickers?.length ?? 0,
             (index) {
-              BaseTickerRes? data = trending?[index];
+              BaseTickerRes? data = tickers?[index];
 
               if (data == null) {
                 return SizedBox();

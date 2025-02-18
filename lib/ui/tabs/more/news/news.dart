@@ -7,6 +7,7 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import '../../../../managers/news.dart';
 import '../../../../widgets/custom/base_loader_container.dart';
+import 'detail.dart';
 
 class NewsIndex extends StatelessWidget {
   final String id;
@@ -38,7 +39,16 @@ class NewsIndex extends StatelessWidget {
               if (data == null) {
                 return SizedBox();
               }
-              return BaseNewsItem(data: data);
+              return BaseNewsItem(
+                data: data,
+                onTap: (data) {
+                  if (data.slug == null || data.slug == '') return;
+                  Navigator.pushNamed(context, NewsDetailIndex.path,
+                      arguments: {
+                        'slug': data.slug,
+                      });
+                },
+              );
             },
             separatorBuilder: (context, index) {
               return SpacerVertical(height: 10);

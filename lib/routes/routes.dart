@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:stocks_news_new/managers/blogs.dart';
 import 'package:stocks_news_new/managers/home.dart';
 import 'package:stocks_news_new/managers/market/market.dart';
 import 'package:stocks_news_new/managers/market/most_bullish.dart';
@@ -143,6 +144,9 @@ import '../ui/account/verify.dart';
 import '../ui/onboarding/default_home.dart';
 import '../ui/onboarding/slides.dart';
 import '../ui/onboarding/splash.dart';
+import '../ui/tabs/more/articles/detail.dart';
+import '../ui/tabs/more/articles/index.dart';
+import '../ui/tabs/more/news/detail.dart';
 import '../ui/tabs/more/news/index.dart';
 import '../ui/tabs/signals/insiders/company/from_company.dart';
 import '../ui/tabs/signals/insiders/reporting/from_reporting.dart';
@@ -193,6 +197,7 @@ class Routes {
     EarningsScreen.path: (_) => const EarningsScreen(),
     HomePlaidAdded.path: (_) => const HomePlaidAdded(),
     ReferAFriend.path: (_) => const ReferAFriend(),
+    BlogsIndex.path: (_) => const BlogsIndex(),
   };
 
   static Route bottomToTopScreenRoute(widget) {
@@ -273,6 +278,26 @@ class Routes {
             PoliticianTradeRes data = arguments?['data'];
 
             return SignalPoliticianDetailIndex(data: data);
+          },
+        );
+
+      case NewsDetailIndex.path:
+        return MaterialPageRoute(
+          builder: (context) {
+            final arguments = settings.arguments as Map<String, dynamic>?;
+            String slug = arguments?['slug'];
+
+            return NewsDetailIndex(slug: slug);
+          },
+        );
+
+      case BlogsDetailIndex.path:
+        return MaterialPageRoute(
+          builder: (context) {
+            final arguments = settings.arguments as Map<String, dynamic>?;
+            String slug = arguments?['slug'];
+
+            return BlogsDetailIndex(slug: slug);
           },
         );
 
@@ -463,6 +488,7 @@ class Routes {
       ChangeNotifierProvider(create: (_) => SignalsManager()),
       ChangeNotifierProvider(create: (_) => SearchManager()),
       ChangeNotifierProvider(create: (_) => NewsManager()),
+      ChangeNotifierProvider(create: (_) => BlogsManager()),
     ];
   }
 }

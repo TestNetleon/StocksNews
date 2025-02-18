@@ -120,7 +120,7 @@ class BlogProvider extends ChangeNotifier {
       }
 
       ApiResponse response = await apiRequest(
-        url: Apis.blogs,
+        url: Apis.secureBlogs,
         request: request,
         showProgress: showProgress,
       );

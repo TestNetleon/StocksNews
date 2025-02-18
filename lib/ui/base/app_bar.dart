@@ -7,6 +7,7 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import '../../../../ui/tabs/tabs.dart';
+import '../tabs/more/news/detail.dart';
 import 'search/base_search.dart';
 
 class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -15,7 +16,9 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
   final bool showClose;
   final String? title;
   final Function()? onSaveClick;
+  final Function()? shareURL;
   final double toolbarHeight;
+  final bool showLogo;
 
   const BaseAppBar({
     super.key,
@@ -27,7 +30,9 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.showSearch = false,
     this.showNotification = false,
     this.onSaveClick,
+    this.shareURL,
     this.showClose = false,
+    this.showLogo = true,
   });
 
   @override
@@ -39,7 +44,9 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
         child: Stack(
           children: [
             if (searchFieldWidget != null) searchFieldWidget ?? SizedBox(),
-            if ((title == null || title == '') && searchFieldWidget == null)
+            if ((title == null || title == '') &&
+                searchFieldWidget == null &&
+                showLogo)
               CenterLogo(isHome: isHome),
             if (title != null && title != '') CenterTitle(title: title!),
             Positioned(
@@ -77,10 +84,30 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
                             Navigator.push(
                               context,
                               createRoute(
-                                BaseSearch(),
+                                BaseSearch(
+                                  newsClick: (data) {
+                                    if (data.slug == null || data.slug == '') {
+                                      return;
+                                    }
+                                    Navigator.pushNamed(
+                                        context, NewsDetailIndex.path,
+                                        arguments: {
+                                          'slug': data.slug,
+                                        });
+                                  },
+                                ),
                               ),
                             );
                           },
+                        ),
+                      if (shareURL != null)
+                        Padding(
+                          padding: const EdgeInsets.only(left: 8),
+                          child: ActionButton(
+                            size: 38,
+                            icon: Images.shareURL,
+                            onTap: shareURL!,
+                          ),
                         ),
                       if (onSaveClick != null)
                         SaveAction(onSaveClick: onSaveClick!),
@@ -454,11 +481,13 @@ class CenterTitle extends StatelessWidget {
 class ActionButton extends StatelessWidget {
   const ActionButton({
     super.key,
+    this.size = 32,
     required this.icon,
     required this.onTap,
   });
 
   final String icon;
+  final double size;
   final Function() onTap;
 
   @override
@@ -467,8 +496,8 @@ class ActionButton extends StatelessWidget {
       onTap: onTap,
       child: Image.asset(
         icon,
-        width: 32,
-        height: 32,
+        width: size,
+        height: size,
       ),
     );
   }

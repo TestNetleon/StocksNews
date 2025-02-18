@@ -3,6 +3,7 @@ import 'package:stocks_news_new/ui/base/news_item.dart';
 import '../../../../models/my_home.dart';
 import '../../../../models/news.dart';
 import '../../../base/heading.dart';
+import '../../more/news/detail.dart';
 
 class HomeNewsIndex extends StatelessWidget {
   final HomeNewsRes? newsData;
@@ -22,7 +23,16 @@ class HomeNewsIndex extends StatelessWidget {
               if (data == null) {
                 return SizedBox();
               }
-              return BaseNewsItem(data: data);
+              return BaseNewsItem(
+                data: data,
+                onTap: (data) {
+                  if (data.slug == null || data.slug == '') return;
+                  Navigator.pushNamed(context, NewsDetailIndex.path,
+                      arguments: {
+                        'slug': data.slug,
+                      });
+                },
+              );
             },
           ),
         )

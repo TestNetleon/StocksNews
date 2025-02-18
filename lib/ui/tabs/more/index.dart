@@ -5,6 +5,7 @@ import 'package:stocks_news_new/modals/user_res.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/ui/base/heading.dart';
 import 'package:stocks_news_new/ui/base/scaffold.dart';
+import 'package:stocks_news_new/ui/tabs/more/articles/index.dart';
 import 'package:stocks_news_new/ui/tabs/more/more_item.dart';
 import 'package:stocks_news_new/ui/tabs/more/notificationSettings/index.dart';
 import 'package:stocks_news_new/utils/colors.dart';
@@ -24,6 +25,10 @@ class MoreIndex extends StatelessWidget {
 
   void _navigateToNews(context) {
     Navigator.pushNamed(context, CategoriesNewsIndex.path);
+  }
+
+  void _navigateToBlogs(context) {
+    Navigator.pushNamed(context, BlogsIndex.path);
   }
 
   @override
@@ -105,7 +110,9 @@ class MoreIndex extends StatelessWidget {
             MoreItem(
               icon: Images.watchlist,
               label: "Blogs",
-              onTap: () {},
+              onTap: () {
+                _navigateToBlogs(context);
+              },
             ),
             BaseHeading(
               margin: EdgeInsets.only(left: Pad.pad16, top: Pad.pad20),

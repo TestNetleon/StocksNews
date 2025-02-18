@@ -189,6 +189,7 @@ class Images {
   static const String infoCircle = '${base}info-circle.png';
   static const String warningCircle = '${base}warning-circle.png';
   static const String closeCircle = '${base}close-circle.png';
+  static const String shareURL = '${base}share.png';
 
   static const String bottomHome = '${base}bottom_home.png';
   static const String bottomMarket = '${base}bottom_market.png';

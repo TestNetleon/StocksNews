@@ -58,7 +58,7 @@ class _BaseSearchState extends State<BaseSearch> {
   }
 
   @override
-  void deactivate() {
+  void dispose() {
     if (kDebugMode) {
       print('Search deactivated');
     }
@@ -68,12 +68,13 @@ class _BaseSearchState extends State<BaseSearch> {
       manager.clearSearchData();
     });
 
-    super.deactivate();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     SearchManager manager = context.watch<SearchManager>();
+
     return BaseScaffold(
       appBar: BaseAppBar(
         toolbarHeight: 70,
@@ -103,6 +104,7 @@ class _BaseSearchState extends State<BaseSearch> {
               newsRes: manager.searchData?.news,
               fromSearch: true,
               stockClick: widget.stockClick,
+              newsClick: widget.newsClick,
             ),
     );
   }

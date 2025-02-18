@@ -3,13 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
-
 import '../../../../models/ticker.dart';
-import '../../../../widgets/spacer_vertical.dart';
 
-class HomeTrendingWatchlistItem extends StatelessWidget {
+class TickerBoxItem extends StatelessWidget {
   final BaseTickerRes data;
-  const HomeTrendingWatchlistItem({super.key, required this.data});
+  const TickerBoxItem({super.key, required this.data});
 
   @override
   Widget build(BuildContext context) {
@@ -45,9 +43,11 @@ class HomeTrendingWatchlistItem extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        data.symbol ?? '',
-                        style: styleBaseBold(),
+                      Visibility(
+                        child: Text(
+                          data.symbol ?? '',
+                          style: styleBaseBold(),
+                        ),
                       ),
                       Text(
                         data.name ?? '',
@@ -63,46 +63,40 @@ class HomeTrendingWatchlistItem extends StatelessWidget {
                 ),
               ],
             ),
-            SpacerVertical(height: 12),
             Visibility(
               visible: data.price != null && data.price != '',
-              child: Text(
-                data.price ?? "",
-                style: styleBaseBold(fontSize: 19),
+              child: Padding(
+                padding: const EdgeInsets.only(top: 12),
+                child: Text(
+                  data.price ?? "",
+                  style: styleBaseBold(fontSize: 19),
+                ),
               ),
             ),
-            RichText(
-              text: TextSpan(
-                children: [
-                  if (data.changesPercentage != null)
-                    WidgetSpan(
-                      alignment: PlaceholderAlignment.middle,
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 4),
-                        child: Image.asset(
-                          (data.changesPercentage ?? 0) >= 0
-                              ? Images.trendingUP
-                              : Images.trendingDOWN,
-                          height: 20,
-                          width: 20,
-                          color: (data.changesPercentage ?? 0) >= 0
-                              ? ThemeColors.accent
-                              : ThemeColors.sos,
+            Visibility(
+              visible: data.change != null,
+              child: RichText(
+                text: TextSpan(
+                  children: [
+                    if (data.changesPercentage != null)
+                      WidgetSpan(
+                        alignment: PlaceholderAlignment.middle,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 4),
+                          child: Image.asset(
+                            (data.changesPercentage ?? 0) >= 0
+                                ? Images.trendingUP
+                                : Images.trendingDOWN,
+                            height: 20,
+                            width: 20,
+                            color: (data.changesPercentage ?? 0) >= 0
+                                ? ThemeColors.accent
+                                : ThemeColors.sos,
+                          ),
                         ),
                       ),
-                    ),
-                  TextSpan(
-                    text: data.change,
-                    style: styleBaseRegular(
-                      fontSize: 13,
-                      color: (data.changesPercentage ?? 0) >= 0
-                          ? ThemeColors.accent
-                          : ThemeColors.sos,
-                    ),
-                  ),
-                  if (data.changesPercentage != null)
                     TextSpan(
-                      text: ' (${data.changesPercentage}%)',
+                      text: data.change,
                       style: styleBaseRegular(
                         fontSize: 13,
                         color: (data.changesPercentage ?? 0) >= 0
@@ -110,7 +104,18 @@ class HomeTrendingWatchlistItem extends StatelessWidget {
                             : ThemeColors.sos,
                       ),
                     ),
-                ],
+                    if (data.changesPercentage != null)
+                      TextSpan(
+                        text: ' (${data.changesPercentage}%)',
+                        style: styleBaseRegular(
+                          fontSize: 13,
+                          color: (data.changesPercentage ?? 0) >= 0
+                              ? ThemeColors.accent
+                              : ThemeColors.sos,
+                        ),
+                      ),
+                  ],
+                ),
               ),
             ),
           ],
