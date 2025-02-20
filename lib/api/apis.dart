@@ -53,6 +53,9 @@ class Apis {
   static const secureBlogs = "/secure-blogs";
   static const secureBlogDetail = '/secure-blog-detail';
 
+  //Subscription
+  static const mySubscription = '/membership/my-subscription';
+
 //----------------------------------------------
 
   static const stocksScreenerWebUrl =

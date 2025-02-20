@@ -144,6 +144,9 @@ import '../ui/account/verify.dart';
 import '../ui/onboarding/default_home.dart';
 import '../ui/onboarding/slides.dart';
 import '../ui/onboarding/splash.dart';
+import '../ui/subscription/manager.dart';
+import '../ui/subscription/screens/view/plans.dart';
+import '../ui/subscription/screens/start/subscription.dart';
 import '../ui/tabs/more/articles/detail.dart';
 import '../ui/tabs/more/articles/index.dart';
 import '../ui/tabs/more/news/detail.dart';
@@ -165,6 +168,9 @@ class Routes {
     ToolsPortfolioIndex.path: (_) => const ToolsPortfolioIndex(),
     ToolsCompareIndex.path: (_) => const ToolsCompareIndex(),
     CategoriesNewsIndex.path: (_) => const CategoriesNewsIndex(),
+    BlogsIndex.path: (_) => const BlogsIndex(),
+    MySubscriptionIndex.path: (_) => const MySubscriptionIndex(),
+    SubscriptionPlansIndex.path: (_) => const SubscriptionPlansIndex(),
 
     //--------------------------------------
 
@@ -197,7 +203,6 @@ class Routes {
     EarningsScreen.path: (_) => const EarningsScreen(),
     HomePlaidAdded.path: (_) => const HomePlaidAdded(),
     ReferAFriend.path: (_) => const ReferAFriend(),
-    BlogsIndex.path: (_) => const BlogsIndex(),
   };
 
   static Route bottomToTopScreenRoute(widget) {
@@ -489,6 +494,7 @@ class Routes {
       ChangeNotifierProvider(create: (_) => SearchManager()),
       ChangeNotifierProvider(create: (_) => NewsManager()),
       ChangeNotifierProvider(create: (_) => BlogsManager()),
+      ChangeNotifierProvider(create: (_) => SubscriptionManager()),
     ];
   }
 }

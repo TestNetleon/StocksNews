@@ -4,6 +4,7 @@ import 'package:stocks_news_new/managers/user.dart';
 import 'package:stocks_news_new/modals/user_res.dart';
 import 'package:stocks_news_new/ui/base/heading.dart';
 import 'package:stocks_news_new/ui/base/scaffold.dart';
+import 'package:stocks_news_new/ui/subscription/screens/start/subscription.dart';
 import 'package:stocks_news_new/ui/tabs/more/articles/index.dart';
 import 'package:stocks_news_new/ui/tabs/more/more_item.dart';
 import 'package:stocks_news_new/ui/tabs/more/notificationSettings/index.dart';
@@ -28,6 +29,10 @@ class MoreIndex extends StatelessWidget {
 
   void _navigateToBlogs(context) {
     Navigator.pushNamed(context, BlogsIndex.path);
+  }
+
+  void _navigateToMySubscription(context) {
+    Navigator.pushNamed(context, MySubscriptionIndex.path);
   }
 
   @override
@@ -92,7 +97,9 @@ class MoreIndex extends StatelessWidget {
             MoreItem(
               icon: Images.moreMySubscription,
               label: "My Subscription",
-              onTap: () {},
+              onTap: () {
+                _navigateToMySubscription(context);
+              },
             ),
             BaseHeading(
               margin: EdgeInsets.only(left: Pad.pad16, top: Pad.pad20),

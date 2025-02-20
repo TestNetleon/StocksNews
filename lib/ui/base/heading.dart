@@ -9,6 +9,7 @@ class BaseHeading extends StatelessWidget {
   final TextStyle? subtitleStyle;
   final EdgeInsets? margin;
   final CrossAxisAlignment crossAxisAlignment;
+  final TextAlign? textAlign;
   const BaseHeading({
     super.key,
     this.title,
@@ -16,6 +17,7 @@ class BaseHeading extends StatelessWidget {
     this.titleStyle,
     this.subtitleStyle,
     this.margin,
+    this.textAlign,
     this.crossAxisAlignment = CrossAxisAlignment.start,
   });
 
@@ -30,6 +32,7 @@ class BaseHeading extends StatelessWidget {
             visible: title != null && title != '',
             child: Text(
               title ?? '',
+              textAlign: textAlign,
               style: titleStyle ?? styleBaseBold(fontSize: 28),
             ),
           ),
