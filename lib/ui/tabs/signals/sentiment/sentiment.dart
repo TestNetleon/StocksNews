@@ -5,6 +5,7 @@ import 'package:stocks_news_new/ui/base/base_scroll.dart';
 import 'package:stocks_news_new/ui/tabs/signals/sentiment/most_mentions.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import '../../../../widgets/custom/base_loader_container.dart';
+import '../../../base/lock.dart';
 import 'recent_mentions.dart';
 import 'sentiment_gauge.dart';
 
@@ -25,16 +26,24 @@ class _SignalSentimentState extends State<SignalSentimentIndex> {
       hasData: manager.signalSentimentData != null,
       showPreparingText: true,
       error: manager.errorSentiment,
-      child: BaseScroll(
-        margin: EdgeInsets.zero,
-        onRefresh: manager.getSignalSentimentData,
+      child: Stack(
         children: [
-          Container(
-            margin: EdgeInsets.symmetric(horizontal: Pad.pad16),
-            child: SignalsSentimentGauge(),
+          BaseScroll(
+            margin: EdgeInsets.zero,
+            onRefresh: manager.getSignalSentimentData,
+            children: [
+              Container(
+                margin: EdgeInsets.symmetric(horizontal: Pad.pad16),
+                child: SignalsSentimentGauge(),
+              ),
+              SignalMostMentions(),
+              SignalRecentMentions(),
+            ],
           ),
-          SignalMostMentions(),
-          SignalRecentMentions(),
+          BaseLockItem(
+            manager: manager,
+            callAPI: manager.getSignalSentimentData,
+          ),
         ],
       ),
     );

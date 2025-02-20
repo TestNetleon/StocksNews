@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import '../lock.dart';
 import '../ticker.dart';
 
 SignalSentimentRes signalSentimentResFromJson(String str) =>
@@ -12,15 +13,20 @@ class SignalSentimentRes {
   final SignalMentionsRes? mostMentions;
   final SignalMentionsRes? recentMentions;
   final Sentiment? sentiment;
+  final BaseLockInfoRes? lockInfo;
 
   SignalSentimentRes({
     this.mostMentions,
     this.recentMentions,
     this.sentiment,
+    this.lockInfo,
   });
 
   factory SignalSentimentRes.fromJson(Map<String, dynamic> json) =>
       SignalSentimentRes(
+        lockInfo: json["lock_info"] == null
+            ? null
+            : BaseLockInfoRes.fromJson(json["lock_info"]),
         mostMentions: json["most_mentions"] == null
             ? null
             : SignalMentionsRes.fromJson(json["most_mentions"]),
@@ -33,6 +39,7 @@ class SignalSentimentRes {
       );
 
   Map<String, dynamic> toJson() => {
+        "lock_info": lockInfo?.toJson(),
         "most_mentions": mostMentions?.toJson(),
         "recent_mentions": recentMentions?.toJson(),
         "sentiment": sentiment?.toJson(),

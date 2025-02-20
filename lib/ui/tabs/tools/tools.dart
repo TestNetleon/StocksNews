@@ -14,7 +14,14 @@ import 'plaidConnect/portfolio.dart';
 
 class ToolsIndex extends StatelessWidget {
   const ToolsIndex({super.key});
-  _onCompareStock() {
+  Future _onCompareStock() async {
+    UserManager manager = navigatorKey.currentContext!.read<UserManager>();
+
+    await manager.askLoginScreen();
+    if (manager.user == null) {
+      return;
+    }
+
     Navigator.pushNamed(navigatorKey.currentContext!, ToolsCompareIndex.path);
   }
 

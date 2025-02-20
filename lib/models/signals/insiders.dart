@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import '../lock.dart';
 import '../my_home_premium.dart';
 import '../ticker.dart';
 
@@ -15,17 +16,22 @@ class SignalInsidersRes {
   final List<AdditionalInfoRes>? additionalInfo;
   final List<InsiderTradeRes>? data;
   final int? totalPages;
+  final BaseLockInfoRes? lockInfo;
 
   SignalInsidersRes({
     this.title,
     this.subTitle,
     this.data,
     this.totalPages,
+    this.lockInfo,
     this.additionalInfo,
   });
 
   factory SignalInsidersRes.fromJson(Map<String, dynamic> json) =>
       SignalInsidersRes(
+        lockInfo: json["lock_info"] == null
+            ? null
+            : BaseLockInfoRes.fromJson(json["lock_info"]),
         title: json["title"],
         subTitle: json["sub_title"],
         data: json["data"] == null
@@ -40,6 +46,7 @@ class SignalInsidersRes {
       );
 
   Map<String, dynamic> toJson() => {
+        "lock_info": lockInfo?.toJson(),
         "title": title,
         "sub_title": subTitle,
         "data": data == null

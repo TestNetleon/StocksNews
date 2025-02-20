@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/managers/user.dart';
 import 'package:stocks_news_new/modals/user_res.dart';
-import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/ui/base/heading.dart';
 import 'package:stocks_news_new/ui/base/scaffold.dart';
 import 'package:stocks_news_new/ui/tabs/more/articles/index.dart';
@@ -151,36 +150,37 @@ class MoreIndex extends StatelessWidget {
               label: "Legal",
               onTap: () {},
             ),
-            GestureDetector(
-              onTap: () {
-                context.read<UserProvider>().logoutUser(
-                  {"token": context.read<UserProvider>().user?.token},
-                  false,
-                );
-              },
-              behavior: HitTestBehavior.translucent,
-              child: Container(
-                margin: EdgeInsets.only(top: Pad.pad24, bottom: Pad.pad24),
-                padding: EdgeInsets.all(Pad.pad16),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Image.asset(
-                      Images.moreLogout,
-                      width: 32,
-                      height: 32,
-                      color: ThemeColors.neutral60,
-                    ),
-                    SpacerHorizontal(width: Pad.pad8),
-                    Text(
-                      "Logout",
-                      style: styleBaseRegular(
-                        fontSize: 16,
-                        height: 1.2,
+            Visibility(
+              visible: user != null,
+              child: GestureDetector(
+                onTap: () {
+                  UserManager manager = context.read<UserManager>();
+                  manager.logoutUser();
+                },
+                behavior: HitTestBehavior.translucent,
+                child: Container(
+                  margin: EdgeInsets.only(top: Pad.pad24, bottom: Pad.pad24),
+                  padding: EdgeInsets.all(Pad.pad16),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset(
+                        Images.moreLogout,
+                        width: 32,
+                        height: 32,
                         color: ThemeColors.neutral60,
                       ),
-                    ),
-                  ],
+                      SpacerHorizontal(width: Pad.pad8),
+                      Text(
+                        "Logout",
+                        style: styleBaseRegular(
+                          fontSize: 16,
+                          height: 1.2,
+                          color: ThemeColors.neutral60,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),

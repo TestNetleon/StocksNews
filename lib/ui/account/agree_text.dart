@@ -26,12 +26,15 @@ class _AccountAgreeTextState extends State<AccountAgreeText> {
   String get _truncatedContent {
     MyHomeManager provider = context.read<MyHomeManager>();
 
-    String content = provider.data?.loginBox?.agreeUrl ?? '';
+    String content = provider.data?.loginBox?.agreeUrl ?? _agreeUrl;
 
     return content.length > widget.defaultLength
         ? '${content.substring(0, widget.defaultLength)}...'
         : content;
   }
+
+  final String _agreeUrl =
+      'By CHECKING THE BOX, I agree that Stocks.News and our affiliates including <b><span id=\"advertiser_id\">InteractiveOffers<\/span><\/b> may contact me at the number I entered, with offers and other info, including possible use of automated technology, recorded and SMS messages. Consent is not a condition of purchase. Additionally, By CHECKING THE BOX I agree to the following <a style=\"color:#1bb449;\" href=\"terms-of-service\">terms of service<\/a>, <a style=\"color:#1bb449;\" href=\"privacy-policy\">privacy policy<\/a> and <a style=\"color:#1bb449;\" href=\"https:\/\/www.interactiveoffers.com\/privacy-policy\" target=\"_blank\">affiliate privacy policy<\/a>.<br><br>';
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +47,7 @@ class _AccountAgreeTextState extends State<AccountAgreeText> {
     }
 
     String content = widget.showFull || _isExpanded
-        ? provider.data?.loginBox?.agreeUrl ?? ""
+        ? provider.data?.loginBox?.agreeUrl ?? _agreeUrl
         : _truncatedContent;
 
     return Column(

@@ -3,7 +3,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:provider/provider.dart';
+import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import 'package:stocks_news_new/managers/home.dart';
 import 'package:stocks_news_new/managers/user.dart';
 import 'package:stocks_news_new/modals/user_res.dart';
@@ -38,6 +40,8 @@ class _AccountLoginIndexState extends State<AccountLoginIndex> {
   bool boxChecked = false;
   bool changingCountryCode = false;
   bool isLoading = false;
+  final GoogleSignIn _googleSignIn = GoogleSignIn();
+  AuthorizationCredentialAppleID? credential;
 
   @override
   void initState() {
@@ -138,6 +142,64 @@ class _AccountLoginIndexState extends State<AccountLoginIndex> {
     }
   }
 
+  void _googleVerification() async {
+    closeKeyboard();
+
+    UserManager manager = context.read<UserManager>();
+
+    if (await _googleSignIn.isSignedIn()) {
+      await _googleSignIn.signOut();
+    }
+
+    try {
+      GoogleSignInAccount? account = await _googleSignIn.signIn();
+
+      if (account != null) {
+        Map request = {
+          "displayName": account.displayName ?? "",
+          "email": account.email,
+          "id": account.id,
+          "photoUrl": account.photoUrl ?? "",
+        };
+
+        manager.googleVerification(extraRequest: request);
+      }
+    } catch (error) {
+      //
+    }
+  }
+
+  void _appleVerification() async {
+    closeKeyboard();
+    try {
+      credential = await SignInWithApple.getAppleIDCredential(
+        scopes: [
+          AppleIDAuthorizationScopes.email,
+          AppleIDAuthorizationScopes.fullName,
+        ],
+      );
+
+      UserManager manager = context.read<UserManager>();
+      if (credential != null) {
+        String? name =
+            credential?.givenName != null && credential?.givenName != ''
+                ? "${credential?.givenName} ${credential?.familyName}"
+                : null;
+
+        Map request = {
+          "displayName": name ?? '',
+          "email": credential?.email ?? '',
+          "id": credential?.userIdentifier ?? '',
+        };
+
+        manager.appleVerification(extraRequest: request);
+      }
+    } catch (e) {
+      Utils().showLog('error $e');
+      if (e.toString().contains("SignInWithAppleNotSupportedException")) {}
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     MyHomeManager manager = context.watch<MyHomeManager>();
@@ -173,6 +235,7 @@ class _AccountLoginIndexState extends State<AccountLoginIndex> {
               ),
               SpacerVertical(height: 8),
               Text(
+                textAlign: TextAlign.center,
                 'Please enter your phone number to continue.',
                 style: styleBaseRegular(fontSize: 18),
               ),
@@ -250,13 +313,9 @@ class _AccountLoginIndexState extends State<AccountLoginIndex> {
                     ),
                   ),
                   Flexible(
-                    child: Visibility(
-                      visible: manager.data?.loginBox?.agreeUrl != null &&
-                          manager.data?.loginBox?.agreeUrl != '',
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: Pad.pad10),
-                        child: AccountAgreeText(),
-                      ),
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: Pad.pad10),
+                      child: AccountAgreeText(),
                     ),
                   ),
                 ],
@@ -286,12 +345,12 @@ class _AccountLoginIndexState extends State<AccountLoginIndex> {
               SpacerVertical(height: 24),
               AccountSocialButton(
                 text: 'Continue with Google',
-                onPressed: () {},
+                onPressed: _googleVerification,
               ),
               SpacerVertical(height: 16),
               AccountSocialButton(
                 text: 'Continue with Apple',
-                onPressed: () {},
+                onPressed: _appleVerification,
               ),
             ],
           ),

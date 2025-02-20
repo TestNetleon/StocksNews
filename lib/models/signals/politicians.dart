@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import '../lock.dart';
 import '../my_home_premium.dart';
 import '../ticker.dart';
 
@@ -13,7 +14,7 @@ class SignalPoliticiansRes {
   final String? title;
   final List<PoliticianTradeRes>? data;
   final List<AdditionalInfoRes>? additionalInfo;
-
+  final BaseLockInfoRes? lockInfo;
   final int? totalPages;
 
   SignalPoliticiansRes({
@@ -21,10 +22,14 @@ class SignalPoliticiansRes {
     this.data,
     this.additionalInfo,
     this.totalPages,
+    this.lockInfo,
   });
 
   factory SignalPoliticiansRes.fromJson(Map<String, dynamic> json) =>
       SignalPoliticiansRes(
+        lockInfo: json["lock_info"] == null
+            ? null
+            : BaseLockInfoRes.fromJson(json["lock_info"]),
         title: json["title"],
         data: json["data"] == null
             ? []
@@ -38,6 +43,7 @@ class SignalPoliticiansRes {
       );
 
   Map<String, dynamic> toJson() => {
+        "lock_info": lockInfo?.toJson(),
         "title": title,
         "data": data == null
             ? []

@@ -9,12 +9,26 @@ import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/ui/base/toaster.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 
+import '../models/lock.dart';
 import '../models/news/detail.dart';
 import '../models/news/news.dart';
 import '../utils/constants.dart';
 import 'user.dart';
 
 class NewsManager extends ChangeNotifier {
+  //MARK: Clear Data
+  void clearAllData() {
+    //clear category data
+    _categoriesData = null;
+    //clear news data
+    _newsData = {};
+    //clear news detail data
+    _newsDetail = null;
+    //clear lock info
+    _lockInformation = null;
+    notifyListeners();
+  }
+
   // MARK: News Categories
   String? _error;
   String? get error => _error ?? Const.errSomethingWrong;
@@ -88,7 +102,7 @@ class NewsManager extends ChangeNotifier {
   }
 
   // MARK: News
-  final Map<String, HoldingNews?> _newsData = {};
+  Map<String, HoldingNews?> _newsData = {};
   Map<String, HoldingNews?> get newsData => _newsData;
 
   Future onRefresh() async {
@@ -195,6 +209,14 @@ class NewsManager extends ChangeNotifier {
     notifyListeners();
   }
 
+  BaseLockInfoRes? _lockInformation;
+  BaseLockInfoRes? get lockInformation => _lockInformation;
+
+  BaseLockInfoRes? getLockINFO() {
+    BaseLockInfoRes? info = _lockInformation;
+    return info;
+  }
+
   Future<void> getNewsDetailData(String slug, {reset = true}) async {
     if (reset) {
       _newsDetail = null;
@@ -215,6 +237,7 @@ class NewsManager extends ChangeNotifier {
       if (response.status) {
         _newsDetail = newsDetailResFromJson(jsonEncode(response.data));
         _errorDetail = null;
+        _lockInformation = _newsDetail?.lockInfo;
       } else {
         _newsDetail = null;
         _errorDetail = response.message;

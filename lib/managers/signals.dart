@@ -6,6 +6,7 @@ import 'package:stocks_news_new/utils/utils.dart';
 import '../api/api_requester.dart';
 import '../api/api_response.dart';
 import '../api/apis.dart';
+import '../models/lock.dart';
 import '../models/market/market_res.dart';
 import '../models/signals/insiders.dart';
 import '../models/signals/politicians.dart';
@@ -16,8 +17,34 @@ import '../utils/constants.dart';
 import 'user.dart';
 
 class SignalsManager extends ChangeNotifier {
-  //MARK: Signals
+  //MARK: Clear Data
+  void clearAllData() {
+    //clear selected tab
+    selectedScreen = null;
+    //clear stocks data
+    _signalSocksData = null;
+    //clear lock screen data
+    _lockStocks = null;
+    _lockSentiment = null;
+    _lockInsiders = null;
+    _lockPoliticians = null;
+    //clear sentiment data
+    _signalSentimentData = null;
+    //clear insiders data
+    _signalInsidersData = null;
+    _signalInsidersCompanyData = null;
+    _openIndexCompany = -1;
+    _signalInsidersReportingData = null;
+    _openIndexReporting = -1;
+    //clear politicians data
+    _signalPoliticianData = null;
+    _openIndexPolitician = -1;
+    _signalPoliticianDetailData = null;
+    _openIndexPoliticianDetail == -1;
+    notifyListeners();
+  }
 
+  //MARK: Signals
   List<MarketResData> tabs = [
     MarketResData(title: 'Stocks'),
     MarketResData(title: 'Sentiment'),
@@ -73,6 +100,45 @@ class SignalsManager extends ChangeNotifier {
     notifyListeners();
   }
 
+//setting up lock for common lock
+  BaseLockInfoRes? _lockStocks;
+  BaseLockInfoRes? get lockStocks => _lockStocks;
+
+  BaseLockInfoRes? _lockSentiment;
+  BaseLockInfoRes? get lockSentiment => _lockSentiment;
+
+  BaseLockInfoRes? _lockInsiders;
+  BaseLockInfoRes? get lockInsiders => _lockInsiders;
+
+  BaseLockInfoRes? _lockPoliticians;
+  BaseLockInfoRes? get lockPoliticians => _lockPoliticians;
+
+  BaseLockInfoRes? getLockINFO() {
+    BaseLockInfoRes? info;
+
+    switch (selectedScreen) {
+      case 0:
+        info = _lockStocks;
+        break;
+
+      case 1:
+        info = _lockSentiment;
+        break;
+
+      case 2:
+        info = _lockInsiders;
+        break;
+
+      case 3:
+        info = _lockPoliticians;
+        break;
+
+      default:
+    }
+
+    return info;
+  }
+
   Future getStocksData({bool loadMore = false}) async {
     if (loadMore) {
       _page++;
@@ -96,6 +162,7 @@ class SignalsManager extends ChangeNotifier {
         if (_page == 1) {
           _signalSocksData = signalSocksResFromJson(jsonEncode(response.data));
           _errorStocks = null;
+          _lockStocks = _signalSocksData?.lockInfo;
         } else {
           _signalSocksData?.data?.addAll(
               signalSocksResFromJson(jsonEncode(response.data)).data ?? []);
@@ -156,6 +223,7 @@ class SignalsManager extends ChangeNotifier {
         if (dataAll == 1) {
           _signalSentimentData =
               signalSentimentResFromJson(jsonEncode(response.data));
+          _lockSentiment = _signalSentimentData?.lockInfo;
         } else {
           _signalSentimentData?.mostMentions?.data =
               signalSentimentResFromJson(jsonEncode(response.data))
@@ -236,6 +304,7 @@ class SignalsManager extends ChangeNotifier {
           _signalInsidersData =
               signalInsidersResFromJson(jsonEncode(response.data));
           _errorInsiders = null;
+          _lockInsiders = _signalInsidersData?.lockInfo;
         } else {
           _signalInsidersData?.data?.addAll(
               signalInsidersResFromJson(jsonEncode(response.data)).data ?? []);
@@ -472,6 +541,7 @@ class SignalsManager extends ChangeNotifier {
           _signalPoliticianData =
               signalPoliticiansResFromJson(jsonEncode(response.data));
           _errorPolitician = null;
+          _lockPoliticians = _signalPoliticianData?.lockInfo;
         } else {
           _signalPoliticianData?.data?.addAll(
               signalPoliticiansResFromJson(jsonEncode(response.data)).data ??

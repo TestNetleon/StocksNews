@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/managers/home.dart';
+import 'package:stocks_news_new/managers/signals.dart';
 import 'package:stocks_news_new/managers/tools.dart';
 import 'package:stocks_news_new/providers/compare_stocks_provider.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
@@ -199,6 +200,7 @@ class _TabsState extends State<Tabs> {
   void activeContainerApiCalls({required int currentIndex}) async {
     MyHomeManager manager = context.read<MyHomeManager>();
     ToolsManager toolsManager = context.read<ToolsManager>();
+    SignalsManager signalsManager = context.read<SignalsManager>();
 
     try {
       if (Platform.isAndroid) {
@@ -242,6 +244,8 @@ class _TabsState extends State<Tabs> {
         //   insiderProvider.getData(showProgress: false);
         // }
         // AmplitudeService.logUserInteractionEvent(type: "Insider Trades");
+
+        signalsManager.onScreenChange(-1);
 
         break;
       case 3:

@@ -31,6 +31,10 @@ class Apis {
   static const mostBullish = '/most-bullish';
   static const notificationSettings = '/notification-settings';
   static const phoneLogin = '/phone-login';
+  static const googleLogin = "/signup-google";
+  static const appleLogin = "/signup-apple";
+  static const logout = "/logout";
+
   //Search---
   static const recentSearch = '/recent-search';
   static const searchWithNews = '/search-with-news';
@@ -62,8 +66,7 @@ class Apis {
   static const resendOtp = "/resend-otp";
   static const signupResendOtp = "/signup-resend-otp";
   static const login = "/login";
-  static const googleLogin = "/signup-google";
-  static const appleLogin = "/signup-apple";
+
   static const homePortfolio = "/home-plaid-portfolio";
   static const verifyLoginOtp = "/check-login-otp";
   static const home = "/home";
@@ -126,7 +129,6 @@ class Apis {
   static const updateProfile = "/update-profile";
   static const updateProfileEmail = "/update-profile-otp";
   static const updateProfileOTP = "/update-profile-resend-otp";
-  static const logout = "/logout";
   static const faQs = "/faq";
   static const contactUs = "/contact-us";
   static const infoPage = "/info-page";

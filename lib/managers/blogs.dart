@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/api/api_requester.dart';
 import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/api/apis.dart';
+import 'package:stocks_news_new/models/lock.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/ui/base/toaster.dart';
 import 'package:stocks_news_new/utils/utils.dart';
@@ -14,6 +15,16 @@ import '../utils/constants.dart';
 import 'user.dart';
 
 class BlogsManager extends ChangeNotifier {
+  //MARK: Clear Data
+  void clearAllData() {
+    //clear blogs data
+    _blogs = null;
+    //clear blog detail data
+    _blogsDetail = null;
+    _lockInformation = null;
+    notifyListeners();
+  }
+
   // MARK: Blogs
   String? _error;
   String? get error => _error ?? Const.errSomethingWrong;
@@ -101,6 +112,15 @@ class BlogsManager extends ChangeNotifier {
     notifyListeners();
   }
 
+//setting up lock for common lock
+  BaseLockInfoRes? _lockInformation;
+  BaseLockInfoRes? get lockInformation => _lockInformation;
+
+  BaseLockInfoRes? getLockINFO() {
+    BaseLockInfoRes? info = _lockInformation;
+    return info;
+  }
+
   Future<void> getBlogsDetailData(String slug, {reset = true}) async {
     if (reset) {
       _blogsDetail = null;
@@ -121,6 +141,8 @@ class BlogsManager extends ChangeNotifier {
       if (response.status) {
         _blogsDetail = newsDetailResFromJson(jsonEncode(response.data));
         _errorDetail = null;
+
+        _lockInformation = _blogsDetail?.lockInfo;
       } else {
         _blogsDetail = null;
         _errorDetail = response.message;

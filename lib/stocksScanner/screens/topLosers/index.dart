@@ -20,7 +20,7 @@ class _ScannerTopLosersState extends State<ScannerTopLosers> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      _callPort();
+      // _callPort();
       context.read<MarketScannerProvider>().stopListeningPorts();
       TopLoserScannerProvider provider =
           context.read<TopLoserScannerProvider>();

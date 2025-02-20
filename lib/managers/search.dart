@@ -13,6 +13,17 @@ import '../utils/constants.dart';
 import 'user.dart';
 
 class SearchManager extends ChangeNotifier {
+  //MARK: Clear Data
+  void clearAllData() {
+    //clear search data
+    _searchData = null;
+    _errorSearch = null;
+    //clear recent search data
+    _errorRecentSearch = null;
+    _recentSearchData = null;
+    notifyListeners();
+  }
+
   Status _statusSearch = Status.ideal;
   Status get statusSearch => _statusSearch;
 
@@ -26,14 +37,6 @@ class SearchManager extends ChangeNotifier {
 
   setStatusSearch(status) {
     _statusSearch = status;
-    notifyListeners();
-  }
-
-  clearSearchData() {
-    _searchData = null;
-    _errorSearch = null;
-    _errorRecentSearch = null;
-    _recentSearchData = null;
     notifyListeners();
   }
 

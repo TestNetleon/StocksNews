@@ -73,7 +73,7 @@ class _MarketScannerState extends State<MarketScanner> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      _callPort();
+      // _callPort();
       MarketScannerProvider provider = context.read<MarketScannerProvider>();
       provider.startListeningPorts();
     });

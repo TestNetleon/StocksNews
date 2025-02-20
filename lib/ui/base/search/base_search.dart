@@ -37,7 +37,7 @@ class _BaseSearchState extends State<BaseSearch> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       SearchManager manager = context.read<SearchManager>();
-      manager.clearSearchData();
+      manager.clearAllData();
       if (widget.callRecent) {
         manager.getRecentSearchData();
       }
@@ -65,7 +65,7 @@ class _BaseSearchState extends State<BaseSearch> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       SearchManager manager =
           navigatorKey.currentContext!.read<SearchManager>();
-      manager.clearSearchData();
+      manager.clearAllData();
     });
 
     super.dispose();

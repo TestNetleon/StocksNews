@@ -11,10 +11,22 @@ import 'package:stocks_news_new/utils/utils.dart';
 import '../models/my_home.dart';
 import '../models/my_home_premium.dart';
 import '../utils/constants.dart';
-import 'home_watchlist.dart';
+import '../models/home_watchlist.dart';
 import 'user.dart';
 
 class MyHomeManager extends ChangeNotifier {
+  //MARK: Clear Data
+  void clearAllData() {
+    //clear home data
+    _data = null;
+    //clear home premium data
+    _homePremiumData = null;
+    //clear watchlist data
+    _watchlist = null;
+
+    notifyListeners();
+  }
+
   //MARK: Home
   String? _error;
   String? get error => _error ?? Const.errSomethingWrong;

@@ -17,6 +17,17 @@ import '../routes/my_app.dart';
 import '../utils/constants.dart';
 
 class ToolsManager extends ChangeNotifier {
+  //MARK: Clear Data
+  void clearAllData() {
+    //clear tools data
+    _data = null;
+    //clear portfolio data
+    _portfolioData = null;
+    //clear compare data
+    _compareData = null;
+    notifyListeners();
+  }
+
   //MARK: Tools
   String? _error;
   String? get error => _error ?? Const.errSomethingWrong;

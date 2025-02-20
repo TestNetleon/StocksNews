@@ -7,6 +7,7 @@ import 'package:stocks_news_new/ui/tabs/signals/politicians/item.dart';
 
 import '../../../../widgets/custom/base_loader_container.dart';
 import '../../../base/base_list_divider.dart';
+import '../../../base/lock.dart';
 
 class SignalPoliticiansIndex extends StatelessWidget {
   const SignalPoliticiansIndex({super.key});
@@ -22,29 +23,37 @@ class SignalPoliticiansIndex extends StatelessWidget {
       showPreparingText: true,
       error: manager.errorPolitician,
       onRefresh: manager.getPoliticianData,
-      child: BaseLoadMore(
-        onRefresh: manager.getPoliticianData,
-        onLoadMore: () async => manager.getPoliticianData(loadMore: true),
-        canLoadMore: manager.canLoadMorePolitician,
-        child: ListView.separated(
-          itemBuilder: (context, index) {
-            PoliticianTradeRes? data =
-                manager.signalPoliticianData?.data?[index];
-            bool isOpen = manager.openIndexPolitician == index;
-            if (data == null) {
-              return SizedBox();
-            }
-            return BasePoliticianItem(
-              data: data,
-              isOpen: isOpen,
-              onTap: () => manager.openMorePolitician(isOpen ? -1 : index),
-            );
-          },
-          separatorBuilder: (context, index) {
-            return BaseListDivider();
-          },
-          itemCount: manager.signalPoliticianData?.data?.length ?? 0,
-        ),
+      child: Stack(
+        children: [
+          BaseLoadMore(
+            onRefresh: manager.getPoliticianData,
+            onLoadMore: () async => manager.getPoliticianData(loadMore: true),
+            canLoadMore: manager.canLoadMorePolitician,
+            child: ListView.separated(
+              itemBuilder: (context, index) {
+                PoliticianTradeRes? data =
+                    manager.signalPoliticianData?.data?[index];
+                bool isOpen = manager.openIndexPolitician == index;
+                if (data == null) {
+                  return SizedBox();
+                }
+                return BasePoliticianItem(
+                  data: data,
+                  isOpen: isOpen,
+                  onTap: () => manager.openMorePolitician(isOpen ? -1 : index),
+                );
+              },
+              separatorBuilder: (context, index) {
+                return BaseListDivider();
+              },
+              itemCount: manager.signalPoliticianData?.data?.length ?? 0,
+            ),
+          ),
+          BaseLockItem(
+            manager: manager,
+            callAPI: manager.getPoliticianData,
+          ),
+        ],
       ),
     );
   }

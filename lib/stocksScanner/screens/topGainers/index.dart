@@ -76,7 +76,7 @@ class _ScannerTopGainerState extends State<ScannerTopGainer> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      _callPort();
+      // _callPort();
       context.read<MarketScannerProvider>().stopListeningPorts();
       TopGainerScannerProvider provider =
           context.read<TopGainerScannerProvider>();

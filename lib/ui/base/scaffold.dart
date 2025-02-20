@@ -6,7 +6,7 @@ class BaseScaffold extends StatefulWidget {
   const BaseScaffold({
     required this.body,
     this.appBar,
-    this.floatingAlingment,
+    this.floatingAlignment,
     this.bottomNavigationBar,
     this.showSync = false,
     this.showBehind = true,
@@ -25,7 +25,7 @@ class BaseScaffold extends StatefulWidget {
   final Widget? bottomNavigationBar;
   final Widget? floatingActionButton;
   final PreferredSizeWidget? appBar;
-  final FloatingActionButtonLocation? floatingAlingment;
+  final FloatingActionButtonLocation? floatingAlignment;
   final Widget body;
   final bool showSync;
   final bool showBehind;
@@ -79,7 +79,7 @@ class _BaseScaffoldState extends State<BaseScaffold> {
           ),
           bottomNavigationBar: widget.bottomNavigationBar,
           floatingActionButton: widget.floatingActionButton,
-          floatingActionButtonLocation: widget.floatingAlingment,
+          floatingActionButtonLocation: widget.floatingAlignment,
         ),
       ),
     );

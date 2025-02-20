@@ -1,14 +1,20 @@
 import 'dart:io';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:provider/provider.dart';
+import 'package:stocks_news_new/managers/blogs.dart';
+import 'package:stocks_news_new/managers/home.dart';
+import 'package:stocks_news_new/managers/news.dart';
+import 'package:stocks_news_new/managers/search.dart';
+import 'package:stocks_news_new/managers/signals.dart';
+import 'package:stocks_news_new/managers/tools.dart';
 import 'package:stocks_news_new/modals/user_res.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/ui/account/login.dart';
+import 'package:stocks_news_new/ui/base/toaster.dart';
 import 'package:stocks_news_new/ui/tabs/tabs.dart';
 import 'package:stocks_news_new/utils/utils.dart';
-
 import '../api/api_requester.dart';
 import '../api/api_response.dart';
 import '../api/apis.dart';
@@ -18,7 +24,6 @@ import '../service/amplitude/service.dart';
 import '../service/braze/service.dart';
 import '../service/revenue_cat.dart';
 import '../utils/constants.dart';
-import '../widgets/custom/alert_popup.dart';
 
 class UserManager extends ChangeNotifier {
   String? _error;
@@ -29,8 +34,8 @@ class UserManager extends ChangeNotifier {
 
   bool get isLoading => _status == Status.loading || _status == Status.ideal;
 
-  Extra? _extra;
-  Extra? get extra => _extra;
+  // Extra? _extra;
+  // Extra? get extra => _extra;
 
   UserRes? _user;
   UserRes? get user => _user;
@@ -60,10 +65,89 @@ class UserManager extends ChangeNotifier {
     notifyListeners();
   }
 
+//MARK: Phone Login
   Future verifyAccount({Map? extraRequest}) async {
+    try {
+      ApiResponse response = await _saveData(
+        url: Apis.phoneLogin,
+        extraRequest: extraRequest,
+      );
+      if (response.status) {
+        if (_user?.signupStatus == true) {
+          Navigator.popUntil(
+              navigatorKey.currentContext!, (route) => route.isFirst);
+          Navigator.pushReplacementNamed(
+              navigatorKey.currentContext!, Tabs.path);
+        } else {
+          Utils().showLog('popping back');
+          Navigator.pop(navigatorKey.currentContext!);
+          Navigator.pop(navigatorKey.currentContext!);
+        }
+      }
+
+      return ApiResponse(status: response.status);
+    } catch (e) {
+      return ApiResponse(status: false);
+    }
+  }
+
+//MARK: Google Login
+  Future googleVerification({Map? extraRequest}) async {
+    try {
+      ApiResponse response = await _saveData(
+        url: Apis.googleLogin,
+        extraRequest: extraRequest,
+      );
+      if (response.status) {
+        if (_user?.signupStatus == true) {
+          Navigator.popUntil(
+              navigatorKey.currentContext!, (route) => route.isFirst);
+          Navigator.pushReplacementNamed(
+              navigatorKey.currentContext!, Tabs.path);
+        } else {
+          Utils().showLog('popping back');
+          Navigator.pop(navigatorKey.currentContext!);
+        }
+      }
+
+      return ApiResponse(status: response.status);
+    } catch (e) {
+      return ApiResponse(status: false);
+    }
+  }
+
+//MARK: Apple Login
+  Future appleVerification({Map? extraRequest}) async {
+    try {
+      ApiResponse response = await _saveData(
+        url: Apis.appleLogin,
+        extraRequest: extraRequest,
+      );
+      if (response.status) {
+        if (_user?.signupStatus == true) {
+          Navigator.popUntil(
+              navigatorKey.currentContext!, (route) => route.isFirst);
+          Navigator.pushReplacementNamed(
+              navigatorKey.currentContext!, Tabs.path);
+        } else {
+          Utils().showLog('popping back');
+          Navigator.pop(navigatorKey.currentContext!);
+        }
+      }
+
+      return ApiResponse(status: response.status);
+    } catch (e) {
+      return ApiResponse(status: false);
+    }
+  }
+
+//MARK: Save Data
+  Future<ApiResponse> _saveData({
+    required String url,
+    Map? extraRequest,
+  }) async {
     closeKeyboard();
     setStatus(Status.loading);
-
     try {
       String? fcmToken = await Preference.getFcmToken();
       String? address = await Preference.getLocation();
@@ -99,62 +183,112 @@ class UserManager extends ChangeNotifier {
       }
 
       ApiResponse response = await apiRequest(
-        url: Apis.phoneLogin,
+        url: url,
         request: request,
         showProgress: true,
-        removeForceLogin: true,
       );
-      setStatus(Status.loaded);
       if (response.status) {
+        //set user
         _user = UserRes.fromJson(response.data);
         Preference.saveUser(response.data);
         BrazeService.brazeUserEvent();
-        if (_user?.signupStatus == true) {
-          Navigator.popUntil(
-              navigatorKey.currentContext!, (route) => route.isFirst);
-          Navigator.pushReplacementNamed(
-              navigatorKey.currentContext!, Tabs.path);
-        } else {
-          Utils().showLog('popping back');
-          Navigator.pop(navigatorKey.currentContext!);
-          Navigator.pop(navigatorKey.currentContext!);
-        }
 
-        isSVG = isSvgFromUrl(_user?.image);
-        Utils().showLog('IS SVG $isSVG');
+        //creating share link
         shareUri = await DynamicLinkService.instance.getDynamicLink();
 
-        if ((_user?.membership?.purchased != 1) && withLoginMembership) {
+        if (_user?.membership?.purchased != 1) {
           if (kDebugMode) {
             print('Calling membership page');
           }
           subscribe();
         }
 
-        _extra = (response.extra is Extra ? response.extra as Extra : null);
-
         if (_user?.signupStatus != null) {
           AmplitudeService.logLoginSignUpEvent(
             isRegistered: (_user?.signupStatus ?? false) ? 1 : 0,
           );
         }
-      } else {
-        popUpAlert(
-          message: "${response.message}",
-          title: "Alert",
-          icon: Images.alertPopGIF,
-        );
       }
+      TopSnackbar.show(
+        message: response.message ?? '',
+        type: response.status ? ToasterEnum.success : ToasterEnum.error,
+      );
 
-      return ApiResponse(status: response.status);
+      return ApiResponse(status: response.status, data: response.data);
     } catch (e) {
-      Utils().showLog(e.toString());
-      popUpAlert(
-          message: Const.errSomethingWrong,
-          title: "Alert",
-          icon: Images.alertPopGIF);
-      setStatus(Status.loaded);
+      Utils().showLog('Error in $url');
+      TopSnackbar.show(
+        message: Const.errSomethingWrong,
+        type: ToasterEnum.error,
+      );
       return ApiResponse(status: false);
+    } finally {
+      setStatus(Status.loaded);
     }
+  }
+
+//MARK: Logout
+
+  Future logoutUser() async {
+    try {
+      UserManager manager = navigatorKey.currentContext!.read<UserManager>();
+      Map request = {
+        "token": manager.user?.token ?? '',
+      };
+      ApiResponse response = await apiRequest(
+        url: Apis.logout,
+        request: request,
+        showProgress: true,
+      );
+      _clearUser();
+      TopSnackbar.show(
+        message: response.message ?? '',
+        type: response.status ? ToasterEnum.success : ToasterEnum.error,
+      );
+    } catch (e) {
+      Utils().showLog('Error in ${Apis.logout}: $e');
+      TopSnackbar.show(
+        message: Const.errSomethingWrong,
+        type: ToasterEnum.error,
+      );
+    } finally {
+      setStatus(Status.loaded);
+    }
+  }
+
+  //MARK: Clear User
+  _clearUser() {
+    Preference.logout();
+    _user = null;
+    notifyListeners();
+    MyHomeManager homeManager =
+        navigatorKey.currentContext!.read<MyHomeManager>();
+
+    SignalsManager signalsManager =
+        navigatorKey.currentContext!.read<SignalsManager>();
+
+    ToolsManager toolsManager =
+        navigatorKey.currentContext!.read<ToolsManager>();
+
+    SearchManager searchManager =
+        navigatorKey.currentContext!.read<SearchManager>();
+
+    NewsManager newsManager = navigatorKey.currentContext!.read<NewsManager>();
+
+    BlogsManager blogsManager =
+        navigatorKey.currentContext!.read<BlogsManager>();
+
+    homeManager.clearAllData();
+    signalsManager.clearAllData();
+    toolsManager.clearAllData();
+    searchManager.clearAllData();
+    newsManager.clearAllData();
+    blogsManager.clearAllData();
+
+    Navigator.popUntil(navigatorKey.currentContext!, (route) => route.isFirst);
+    Navigator.pushReplacement(
+      navigatorKey.currentContext!,
+      MaterialPageRoute(builder: (_) => const Tabs()),
+    );
   }
 }

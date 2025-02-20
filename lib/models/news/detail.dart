@@ -8,6 +8,8 @@ import 'package:stocks_news_new/models/market/market_res.dart';
 import 'package:stocks_news_new/models/news.dart';
 import 'package:stocks_news_new/models/ticker.dart';
 
+import '../lock.dart';
+
 NewsDetailRes newsDetailResFromJson(String str) =>
     NewsDetailRes.fromJson(json.decode(str));
 
@@ -17,14 +19,19 @@ class NewsDetailRes {
   final NewsPostDetailRes? postDetail;
   final MoreNewsRes? moreNews;
   final FeedbackRes? feedback;
+  final BaseLockInfoRes? lockInfo;
 
   NewsDetailRes({
     this.postDetail,
     this.moreNews,
     this.feedback,
+    this.lockInfo,
   });
 
   factory NewsDetailRes.fromJson(Map<String, dynamic> json) => NewsDetailRes(
+        lockInfo: json["lock_info"] == null
+            ? null
+            : BaseLockInfoRes.fromJson(json["lock_info"]),
         feedback: json["feedback"] == null
             ? null
             : FeedbackRes.fromJson(json["feedback"]),
@@ -37,6 +44,7 @@ class NewsDetailRes {
       );
 
   Map<String, dynamic> toJson() => {
+        "lock_info": lockInfo?.toJson(),
         "feedback": feedback?.toJson(),
         "post_detail": postDetail?.toJson(),
         "more_news": moreNews?.toJson(),

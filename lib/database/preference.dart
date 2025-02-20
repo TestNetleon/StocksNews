@@ -26,17 +26,17 @@ class Preference {
 
   static Future<bool> isLoggedIn() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
-    return preferences.containsKey("@userlogin");
+    return preferences.containsKey("@userLogin");
   }
 
   static void saveUser(response) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
-    preferences.setString("@userlogin", jsonEncode(response));
+    preferences.setString("@userLogin", jsonEncode(response));
   }
 
   static Future<UserRes?> getUser() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
-    final userString = preferences.getString("@userlogin");
+    final userString = preferences.getString("@userLogin");
     if (userString == null) return null;
 
     try {
@@ -50,7 +50,7 @@ class Preference {
 
   static void logout() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
-    preferences.remove("@userlogin");
+    preferences.remove("@userLogin");
   }
 
   static Future<String?> getFcmToken() async {

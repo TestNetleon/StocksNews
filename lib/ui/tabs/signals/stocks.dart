@@ -5,6 +5,7 @@ import 'package:stocks_news_new/ui/base/load_more.dart';
 import '../../../models/ticker.dart';
 import '../../../widgets/custom/base_loader_container.dart';
 import '../../base/base_list_divider.dart';
+import '../../base/lock.dart';
 import '../../base/stock_item.dart';
 
 class SignalStocksIndex extends StatelessWidget {
@@ -20,28 +21,36 @@ class SignalStocksIndex extends StatelessWidget {
       showPreparingText: true,
       error: manager.errorStocks,
       onRefresh: manager.getStocksData,
-      child: BaseLoadMore(
-        onRefresh: manager.getStocksData,
-        onLoadMore: () async => manager.getStocksData(loadMore: true),
-        canLoadMore: manager.canLoadMoreStocks,
-        child: ListView.separated(
-          // shrinkWrap: true,
-          // physics: NeverScrollableScrollPhysics(),
-          itemBuilder: (context, index) {
-            BaseTickerRes? data = manager.signalSocksData?.data?[index];
-            if (data == null) {
-              return SizedBox();
-            }
-            return BaseStockItem(
-              data: data,
-              index: index,
-            );
-          },
-          separatorBuilder: (context, index) {
-            return BaseListDivider();
-          },
-          itemCount: manager.signalSocksData?.data?.length ?? 0,
-        ),
+      child: Stack(
+        children: [
+          BaseLoadMore(
+            onRefresh: manager.getStocksData,
+            onLoadMore: () async => manager.getStocksData(loadMore: true),
+            canLoadMore: manager.canLoadMoreStocks,
+            child: ListView.separated(
+              // shrinkWrap: true,
+              // physics: NeverScrollableScrollPhysics(),
+              itemBuilder: (context, index) {
+                BaseTickerRes? data = manager.signalSocksData?.data?[index];
+                if (data == null) {
+                  return SizedBox();
+                }
+                return BaseStockItem(
+                  data: data,
+                  index: index,
+                );
+              },
+              separatorBuilder: (context, index) {
+                return BaseListDivider();
+              },
+              itemCount: manager.signalSocksData?.data?.length ?? 0,
+            ),
+          ),
+          BaseLockItem(
+            manager: manager,
+            callAPI: manager.getStocksData,
+          ),
+        ],
       ),
     );
   }
