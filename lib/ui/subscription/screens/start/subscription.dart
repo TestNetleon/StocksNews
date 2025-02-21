@@ -7,20 +7,20 @@ import 'package:stocks_news_new/widgets/custom/base_loader_container.dart';
 
 import 'no_subscription.dart';
 
-class MySubscriptionIndex extends StatefulWidget {
-  static const path = 'MySubscriptionIndex';
-  const MySubscriptionIndex({super.key});
+class SubscriptionIndex extends StatefulWidget {
+  static const path = 'SubscriptionIndex';
+  const SubscriptionIndex({super.key});
 
   @override
-  State<MySubscriptionIndex> createState() => _MySubscriptionIndexState();
+  State<SubscriptionIndex> createState() => _SubscriptionIndexState();
 }
 
-class _MySubscriptionIndexState extends State<MySubscriptionIndex> {
+class _SubscriptionIndexState extends State<SubscriptionIndex> {
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      context.read<SubscriptionManager>().startProcess();
+      context.read<SubscriptionManager>().getSubscriptionData();
     });
   }
 

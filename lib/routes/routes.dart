@@ -169,7 +169,7 @@ class Routes {
     ToolsCompareIndex.path: (_) => const ToolsCompareIndex(),
     CategoriesNewsIndex.path: (_) => const CategoriesNewsIndex(),
     BlogsIndex.path: (_) => const BlogsIndex(),
-    MySubscriptionIndex.path: (_) => const MySubscriptionIndex(),
+    SubscriptionIndex.path: (_) => const SubscriptionIndex(),
     SubscriptionPlansIndex.path: (_) => const SubscriptionPlansIndex(),
 
     //--------------------------------------

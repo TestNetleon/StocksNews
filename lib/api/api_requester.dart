@@ -10,6 +10,7 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/api/apis.dart';
 import 'package:stocks_news_new/database/database_helper.dart';
+import 'package:stocks_news_new/managers/user.dart';
 import 'package:stocks_news_new/modals/in_app_msg_res.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
@@ -323,7 +324,7 @@ Future _checkLogin() async {
 }
 
 void _handleSessionOut() {
-  navigatorKey.currentContext!.read<UserProvider>().clearUser();
+  navigatorKey.currentContext!.read<UserManager>().clearUser();
 }
 
 void checkForInAppMessage(InAppNotification? inAppMsg) {

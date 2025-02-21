@@ -22,7 +22,6 @@ import '../database/preference.dart';
 import '../fcm/dynamic_links.service.dart';
 import '../service/amplitude/service.dart';
 import '../service/braze/service.dart';
-import '../service/revenue_cat.dart';
 import '../utils/constants.dart';
 
 class UserManager extends ChangeNotifier {
@@ -200,7 +199,7 @@ class UserManager extends ChangeNotifier {
           if (kDebugMode) {
             print('Calling membership page');
           }
-          subscribe();
+          // subscribe();
         }
 
         if (_user?.signupStatus != null) {
@@ -240,7 +239,7 @@ class UserManager extends ChangeNotifier {
         request: request,
         showProgress: true,
       );
-      _clearUser();
+      clearUser();
       TopSnackbar.show(
         message: response.message ?? '',
         type: response.status ? ToasterEnum.success : ToasterEnum.error,
@@ -257,7 +256,7 @@ class UserManager extends ChangeNotifier {
   }
 
   //MARK: Clear User
-  _clearUser() {
+  clearUser() {
     Preference.logout();
     _user = null;
     notifyListeners();

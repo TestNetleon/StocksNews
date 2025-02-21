@@ -32,7 +32,7 @@ class MoreIndex extends StatelessWidget {
   }
 
   void _navigateToMySubscription(context) {
-    Navigator.pushNamed(context, MySubscriptionIndex.path);
+    Navigator.pushNamed(context, SubscriptionIndex.path);
   }
 
   @override

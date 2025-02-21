@@ -84,7 +84,7 @@ class TopSnackbar {
                   Flexible(
                     child: Text(
                       message,
-                      textAlign: TextAlign.center,
+                      textAlign: TextAlign.start,
                       style: styleBaseRegular(
                         fontSize: 16,
                         color: ThemeColors.white,

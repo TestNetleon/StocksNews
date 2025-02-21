@@ -30,6 +30,7 @@ class SubscriptionService {
 
       if (appUserId != null && appUserId.isNotEmpty) {
         Purchases.logIn(appUserId);
+        print('login with $appUserId');
         _setUserAttributes(user);
       }
 
@@ -94,18 +95,20 @@ class SubscriptionService {
     try {
       if (normalActive) {
         CustomerInfo info = await Purchases.getCustomerInfo();
-
+        // print('User ${info.originalAppUserId}');
         return info.activeSubscriptions;
       } else {
         List<String>? subscriptions;
-
+        // Purchases.syncPurchases();
         Purchases.addCustomerInfoUpdateListener((CustomerInfo info) {
           Map<String, EntitlementInfo> entitlements = info.entitlements.all;
-
+          Utils().showLog('Entitlements $entitlements');
           subscriptions = entitlements.entries
               .where((entry) => entry.value.isActive && entry.value.willRenew)
-              .map((entry) => entry.key)
+              .map((entry) => entry.value.productIdentifier)
               .toList();
+
+          // Utils().showLog('Product Identifiers: $subscriptions');
         });
 
         return subscriptions ?? [];
@@ -118,18 +121,37 @@ class SubscriptionService {
   Future<Map<String, List<Package>>> fetchPlans() async {
     try {
       Offerings offerings = await Purchases.getOfferings();
+      Offering? offeringData = offerings.getOffering('app.stocks.news Plans');
 
-      Offering? monthlyPlans = offerings.getOffering('Stocks.News Offerings');
+      if (offeringData == null) {
+        return {
+          'monthly_plans': [],
+          'annual_plans': [],
+        };
+      }
 
-      Offering? annualPlans =
-          offerings.getOffering('Stocks.News Offerings Annual');
+      // Fetch monthly and annual plans
+      List<Package> monthlyPlans = [];
+      List<Package> annualPlans = [];
+
+      for (var package in offeringData.availablePackages) {
+        var value = package.identifier.toLowerCase();
+        // print('Real value--$value');
+
+        if (value.contains('monthly')) {
+          monthlyPlans.add(package);
+          // print('M--$value');
+        } else if (value.contains('annual')) {
+          annualPlans.add(package);
+          // print('A--$value');
+        }
+      }
 
       return {
-        'monthly_plans': monthlyPlans?.availablePackages ?? [],
-        'annual_plans': annualPlans?.availablePackages ?? [],
+        'monthly_plans': monthlyPlans,
+        'annual_plans': annualPlans,
       };
     } catch (e) {
-      //
       return {
         'monthly_plans': [],
         'annual_plans': [],

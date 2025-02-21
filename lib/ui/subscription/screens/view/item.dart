@@ -7,7 +7,7 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
-import '../../model/my_subscription.dart';
+import '../../model/subscription.dart';
 
 class ViewPlanItem extends StatefulWidget {
   final ProductPlanRes data;

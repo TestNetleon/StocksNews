@@ -10,7 +10,7 @@ import '../../../../utils/colors.dart';
 import '../../../../utils/constants.dart';
 import '../../../../utils/theme.dart';
 import '../../manager.dart';
-import '../../model/my_subscription.dart';
+import '../../model/subscription.dart';
 
 class NoSubscription extends StatelessWidget {
   const NoSubscription({super.key});

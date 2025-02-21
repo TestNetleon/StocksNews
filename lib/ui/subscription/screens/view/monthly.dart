@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/ui/base/base_scroll.dart';
 import 'package:stocks_news_new/ui/subscription/manager.dart';
 
-import '../../model/my_subscription.dart';
+import '../../model/subscription.dart';
 import 'item.dart';
 
 class ViewMonthlyPlan extends StatelessWidget {

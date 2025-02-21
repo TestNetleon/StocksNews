@@ -2,13 +2,13 @@ import 'dart:convert';
 
 import 'package:purchases_flutter/purchases_flutter.dart';
 
-MySubscriptionRes mySubscriptionResFromJson(String str) =>
-    MySubscriptionRes.fromJson(json.decode(str));
+SubscriptionRes mySubscriptionResFromJson(String str) =>
+    SubscriptionRes.fromJson(json.decode(str));
 
-String mySubscriptionResToJson(MySubscriptionRes data) =>
+String mySubscriptionResToJson(SubscriptionRes data) =>
     json.encode(data.toJson());
 
-class MySubscriptionRes {
+class SubscriptionRes {
   final String? title;
   final String? cardBtn;
   final String? btn;
@@ -16,7 +16,7 @@ class MySubscriptionRes {
   final List<ProductPlanRes>? monthlyPlan;
   final List<ProductPlanRes>? annualPlan;
 
-  MySubscriptionRes({
+  SubscriptionRes({
     this.title,
     this.cardBtn,
     this.btn,
@@ -25,8 +25,8 @@ class MySubscriptionRes {
     this.annualPlan,
   });
 
-  factory MySubscriptionRes.fromJson(Map<String, dynamic> json) =>
-      MySubscriptionRes(
+  factory SubscriptionRes.fromJson(Map<String, dynamic> json) =>
+      SubscriptionRes(
         title: json["title"],
         cardBtn: json["card_btn"],
         btn: json["btn"],

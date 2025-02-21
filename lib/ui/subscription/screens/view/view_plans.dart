@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:stocks_news_new/models/market/market_res.dart';
+import 'package:stocks_news_new/service/superwall/controller.dart';
 import 'package:stocks_news_new/ui/base/button.dart';
 import 'package:stocks_news_new/ui/base/common_tab.dart';
 import 'package:stocks_news_new/ui/subscription/screens/view/annual.dart';
@@ -51,6 +52,7 @@ class _ViewAllPlansState extends State<ViewAllPlans> {
     if (subscriptionManager.selectedPlan == null) return;
 
     if (subscriptionManager.selectedPlan?.storeProduct == null) return;
+
     UserManager manager = navigatorKey.currentContext!.read<UserManager>();
     manager.askLoginScreen();
     if (manager.user == null) {
@@ -62,13 +64,18 @@ class _ViewAllPlansState extends State<ViewAllPlans> {
 
     try {
       _purchaseClickable(false);
+      // Offerings? off = await Purchases.getOfferings();
+      // Offering? of = off.getOffering('app.stocks.news Plans');
+      // print('======> ${of?.availablePackages.first.storeProduct}');
+      // return;
       CustomerInfo customerInfo = await Purchases.purchaseStoreProduct(
         subscriptionManager.selectedPlan!.storeProduct!,
+        // of!.availablePackages.first.storeProduct,
       );
-
-      setState(() {});
+      // await Purchases.syncPurchases();
       if (kDebugMode) {
         print("Successful: ${customerInfo.entitlements.active}");
+        print("Successful: ${customerInfo.getLatestTransactionPurchaseDate()}");
       }
       TopSnackbar.show(
         message: 'You’re All Set! Start enjoying',
@@ -82,7 +89,7 @@ class _ViewAllPlansState extends State<ViewAllPlans> {
       TopSnackbar.show(message: e.message ?? '', type: ToasterEnum.error);
     } catch (e) {
       if (kDebugMode) {
-        print('finally catch');
+        print('finally catch $e');
       }
     } finally {
       _purchaseClickable(true);

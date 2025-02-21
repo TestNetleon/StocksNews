@@ -8,13 +8,17 @@ import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:stocks_news_new/api/api_requester.dart';
 import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/api/apis.dart';
+import 'package:stocks_news_new/ui/base/toaster.dart';
+import 'package:stocks_news_new/ui/subscription/screens/purchased/purchased.dart';
+import 'package:stocks_news_new/ui/subscription/screens/start/subscription.dart';
 import 'package:stocks_news_new/ui/subscription/service.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 
 import '../../managers/user.dart';
 import '../../routes/my_app.dart';
 import '../../utils/constants.dart';
-import 'model/my_subscription.dart';
+import 'model/subscription.dart';
+import 'screens/view/plans.dart';
 
 class SubscriptionManager extends ChangeNotifier {
   //MARK: SubscriptionManager
@@ -31,29 +35,56 @@ class SubscriptionManager extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future startProcess() async {
+//MARK: Start Process
+  Future startProcess({viewPlans = false}) async {
     SubscriptionService instance = SubscriptionService.instance;
     try {
       setStatus(Status.loading);
-
-      bool initialized = await instance.initialize();
+      UserManager manager = navigatorKey.currentContext!.read<UserManager>();
+      bool initialized = await instance.initialize(user: manager.user);
       Utils().showLog('Revenue Cat initialized $initialized');
       if (initialized) {
-        List<String> actives = await instance.getActiveMembership();
+        if (viewPlans) {
+          //navigate to all plans
+          Navigator.pushNamed(
+            navigatorKey.currentContext!,
+            SubscriptionPlansIndex.path,
+          );
+        } else {
+          List<String> actives =
+              await instance.getActiveMembership(normalActive: false);
 
-        if (actives.isEmpty) {
-          await getSubscriptionData();
+          if (actives.isEmpty) {
+            //navigate first time purchase
+
+            Navigator.pushNamed(
+              navigatorKey.currentContext!,
+              SubscriptionIndex.path,
+            );
+          } else {
+            //navigate first already purchased
+
+            Navigator.pushNamed(
+              navigatorKey.currentContext!,
+              PurchasedIndex.path,
+            );
+          }
+
+          if (kDebugMode) {
+            print('Actives $actives');
+          }
         }
       }
     } catch (e) {
       Utils().showLog('Error in initialization $e');
+      TopSnackbar.show(message: Const.errSomethingWrong);
     } finally {
       setStatus(Status.loaded);
     }
   }
 
-  MySubscriptionRes? _subscriptionData;
-  MySubscriptionRes? get subscriptionData => _subscriptionData;
+  SubscriptionRes? _subscriptionData;
+  SubscriptionRes? get subscriptionData => _subscriptionData;
 
   ProductPlanRes? _selectedPlan;
   ProductPlanRes? get selectedPlan => _selectedPlan;
@@ -64,6 +95,7 @@ class SubscriptionManager extends ChangeNotifier {
     notifyListeners();
   }
 
+//MARK: Subscription Plans
   Future getSubscriptionData() async {
     _selectedPlan = null;
     try {
@@ -91,29 +123,36 @@ class SubscriptionManager extends ChangeNotifier {
 
           List<Package>? monthlyPackages = getPlans['monthly_plans'];
           List<Package>? yearlyPackages = getPlans['annual_plans'];
+          print('Length ${monthlyPackages?.length}');
+          print('Length ${yearlyPackages?.length}');
 
-          // Update store product for monthly plans
-          if (_subscriptionData!.monthlyPlan != null &&
-              _subscriptionData!.monthlyPlan!.isNotEmpty) {
-            for (var plan in _subscriptionData!.monthlyPlan!) {
-              var matchedProduct = monthlyPackages?.firstWhere(
-                (p) => p.storeProduct.identifier == plan.identifier,
-              );
-              plan.storeProduct = matchedProduct?.storeProduct;
-              Utils().showLog('Monthly Product -> ${plan.storeProduct}');
-            }
-          }
+          try {
+            // Update store product for monthly plans
+            if (_subscriptionData!.monthlyPlan != null &&
+                _subscriptionData!.monthlyPlan!.isNotEmpty) {
+              for (var plan in _subscriptionData!.monthlyPlan!) {
+                var matchedProduct = monthlyPackages?.firstWhere(
+                  (p) => p.storeProduct.identifier == plan.identifier,
+                );
+                plan.storeProduct = matchedProduct?.storeProduct;
 
-          // Update store product for yearly plans
-          if (_subscriptionData?.annualPlan != null &&
-              _subscriptionData?.annualPlan?.isNotEmpty == true) {
-            for (var plan in _subscriptionData!.annualPlan!) {
-              var matchedProduct = yearlyPackages?.firstWhere(
-                (p) => p.storeProduct.identifier == plan.identifier,
-              );
-              plan.storeProduct = matchedProduct?.storeProduct;
-              Utils().showLog('Annual Product -> ${plan.storeProduct}');
+                // Utils().showLog('Monthly Product -> ${plan.storeProduct}');
+              }
             }
+
+            // Update store product for yearly plans
+            if (_subscriptionData?.annualPlan != null &&
+                _subscriptionData?.annualPlan?.isNotEmpty == true) {
+              for (var plan in _subscriptionData!.annualPlan!) {
+                var matchedProduct = yearlyPackages?.firstWhere(
+                  (p) => p.storeProduct.identifier == plan.identifier,
+                );
+                plan.storeProduct = matchedProduct?.storeProduct;
+                // Utils().showLog('Annual Product -> ${plan.storeProduct}');
+              }
+            }
+          } catch (e) {
+            Utils().showLog('Error while saving plans $e');
           }
         }
       } else {
@@ -126,5 +165,13 @@ class SubscriptionManager extends ChangeNotifier {
       setStatus(Status.loaded);
       notifyListeners(); // Notify UI about the changes
     }
+  }
+
+//MARK: My Purchased Subscription
+  Future getMyPurchasedData() async {
+    SubscriptionService instance = SubscriptionService.instance;
+    UserManager manager = navigatorKey.currentContext!.read<UserManager>();
+    bool initialized = await instance.initialize(user: manager.user);
+    if (initialized) {}
   }
 }
