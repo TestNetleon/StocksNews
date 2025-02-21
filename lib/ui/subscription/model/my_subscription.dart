@@ -62,15 +62,19 @@ class ProductPlanRes {
   final String? title;
   final String? price;
   final String? text;
+  final String? period;
   final List<String>? benefits;
   final String? popularBtn;
   StoreProduct? storeProduct;
+  final bool? isActive;
 
   ProductPlanRes({
     this.identifier,
     this.title,
     this.price,
+    this.period,
     this.text,
+    this.isActive,
     this.benefits,
     this.popularBtn,
     this.storeProduct,
@@ -81,6 +85,8 @@ class ProductPlanRes {
         title: json["title"],
         price: json["price"],
         text: json["text"],
+        isActive: json['isActive'],
+        period: json['period'],
         benefits: json["Benefits"] == null
             ? []
             : List<String>.from(json["Benefits"]!.map((x) => x)),
@@ -92,6 +98,8 @@ class ProductPlanRes {
         "title": title,
         "price": price,
         "text": text,
+        "isActive": isActive,
+        "period": period,
         "Benefits":
             benefits == null ? [] : List<dynamic>.from(benefits!.map((x) => x)),
         "popular_btn": popularBtn,

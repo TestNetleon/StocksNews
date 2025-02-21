@@ -55,7 +55,17 @@ class SubscriptionManager extends ChangeNotifier {
   MySubscriptionRes? _subscriptionData;
   MySubscriptionRes? get subscriptionData => _subscriptionData;
 
+  ProductPlanRes? _selectedPlan;
+  ProductPlanRes? get selectedPlan => _selectedPlan;
+
+  onChangePlan(ProductPlanRes? plan) {
+    _selectedPlan = plan;
+    Utils().showLog('Selected Identifier ${plan?.storeProduct?.identifier}');
+    notifyListeners();
+  }
+
   Future getSubscriptionData() async {
+    _selectedPlan = null;
     try {
       setStatus(Status.loading);
 

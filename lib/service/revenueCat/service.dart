@@ -173,6 +173,8 @@ class RevenueCatManager {
 class SWDelegate extends superwall.SuperwallDelegate {
   @override
   void handleSuperwallEvent(superwall.SuperwallEventInfo eventInfo) async {
+    print("Event: ${eventInfo.event.type}");
+
     // Handle events here
     switch (eventInfo.event.type) {
       case superwall.EventType.transactionComplete:

@@ -36,7 +36,7 @@ class _SignalsIndexState extends State<SignalsIndex> {
       ),
       body: Column(
         children: [
-          BaseCommonTabs(
+          BaseTabs(
             data: manager.tabs,
             textStyle: styleBaseBold(fontSize: 16),
             onTap: manager.onScreenChange,

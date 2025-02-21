@@ -46,7 +46,7 @@ class _CategoriesNewsIndexState extends State<CategoriesNewsIndex> {
             manager.categoriesData?.data != null && manager.selectedIndex != -1
                 ? Column(
                     children: [
-                      BaseCommonTabs(
+                      BaseTabs(
                         data: manager.categoriesData!.data!,
                         textStyle: styleBaseBold(fontSize: 16),
                         onTap: manager.onChangeTab,
