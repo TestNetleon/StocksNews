@@ -145,6 +145,7 @@ import '../ui/onboarding/default_home.dart';
 import '../ui/onboarding/slides.dart';
 import '../ui/onboarding/splash.dart';
 import '../ui/subscription/manager.dart';
+import '../ui/subscription/screens/purchased/purchased.dart';
 import '../ui/subscription/screens/view/plans.dart';
 import '../ui/subscription/screens/start/subscription.dart';
 import '../ui/tabs/more/articles/detail.dart';
@@ -171,6 +172,7 @@ class Routes {
     BlogsIndex.path: (_) => const BlogsIndex(),
     SubscriptionIndex.path: (_) => const SubscriptionIndex(),
     SubscriptionPlansIndex.path: (_) => const SubscriptionPlansIndex(),
+    PurchasedIndex.path: (_) => const PurchasedIndex(),
 
     //--------------------------------------
 

@@ -30,7 +30,6 @@ class SubscriptionService {
 
       if (appUserId != null && appUserId.isNotEmpty) {
         Purchases.logIn(appUserId);
-        print('login with $appUserId');
         _setUserAttributes(user);
       }
 
@@ -95,7 +94,6 @@ class SubscriptionService {
     try {
       if (normalActive) {
         CustomerInfo info = await Purchases.getCustomerInfo();
-        // print('User ${info.originalAppUserId}');
         return info.activeSubscriptions;
       } else {
         List<String>? subscriptions;
@@ -107,8 +105,6 @@ class SubscriptionService {
               .where((entry) => entry.value.isActive && entry.value.willRenew)
               .map((entry) => entry.value.productIdentifier)
               .toList();
-
-          // Utils().showLog('Product Identifiers: $subscriptions');
         });
 
         return subscriptions ?? [];
@@ -136,14 +132,10 @@ class SubscriptionService {
 
       for (var package in offeringData.availablePackages) {
         var value = package.identifier.toLowerCase();
-        // print('Real value--$value');
-
         if (value.contains('monthly')) {
           monthlyPlans.add(package);
-          // print('M--$value');
         } else if (value.contains('annual')) {
           annualPlans.add(package);
-          // print('A--$value');
         }
       }
 

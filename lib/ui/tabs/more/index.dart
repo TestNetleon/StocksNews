@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/managers/user.dart';
 import 'package:stocks_news_new/modals/user_res.dart';
+import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/ui/base/heading.dart';
 import 'package:stocks_news_new/ui/base/scaffold.dart';
-import 'package:stocks_news_new/ui/subscription/screens/start/subscription.dart';
+import 'package:stocks_news_new/ui/subscription/manager.dart';
 import 'package:stocks_news_new/ui/tabs/more/articles/index.dart';
 import 'package:stocks_news_new/ui/tabs/more/more_item.dart';
 import 'package:stocks_news_new/ui/tabs/more/notificationSettings/index.dart';
@@ -32,7 +33,10 @@ class MoreIndex extends StatelessWidget {
   }
 
   void _navigateToMySubscription(context) {
-    Navigator.pushNamed(context, SubscriptionIndex.path);
+    // Navigator.pushNamed(context, SubscriptionIndex.path);
+    SubscriptionManager manager =
+        navigatorKey.currentContext!.read<SubscriptionManager>();
+    manager.startProcess();
   }
 
   @override

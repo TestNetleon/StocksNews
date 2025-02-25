@@ -45,7 +45,9 @@ class SubscriptionManager extends ChangeNotifier {
       Utils().showLog('Revenue Cat initialized $initialized');
       if (initialized) {
         if (viewPlans) {
-          //navigate to all plans
+          if (kDebugMode) {
+            print('Goto - View Plans');
+          }
           Navigator.pushNamed(
             navigatorKey.currentContext!,
             SubscriptionPlansIndex.path,
@@ -55,14 +57,18 @@ class SubscriptionManager extends ChangeNotifier {
               await instance.getActiveMembership(normalActive: false);
 
           if (actives.isEmpty) {
-            //navigate first time purchase
+            if (kDebugMode) {
+              print('Goto - First Time Purchase');
+            }
 
             Navigator.pushNamed(
               navigatorKey.currentContext!,
               SubscriptionIndex.path,
             );
           } else {
-            //navigate first already purchased
+            if (kDebugMode) {
+              print('Goto - Already Purchased');
+            }
 
             Navigator.pushNamed(
               navigatorKey.currentContext!,
@@ -123,8 +129,6 @@ class SubscriptionManager extends ChangeNotifier {
 
           List<Package>? monthlyPackages = getPlans['monthly_plans'];
           List<Package>? yearlyPackages = getPlans['annual_plans'];
-          print('Length ${monthlyPackages?.length}');
-          print('Length ${yearlyPackages?.length}');
 
           try {
             // Update store product for monthly plans
@@ -135,8 +139,6 @@ class SubscriptionManager extends ChangeNotifier {
                   (p) => p.storeProduct.identifier == plan.identifier,
                 );
                 plan.storeProduct = matchedProduct?.storeProduct;
-
-                // Utils().showLog('Monthly Product -> ${plan.storeProduct}');
               }
             }
 
@@ -148,7 +150,6 @@ class SubscriptionManager extends ChangeNotifier {
                   (p) => p.storeProduct.identifier == plan.identifier,
                 );
                 plan.storeProduct = matchedProduct?.storeProduct;
-                // Utils().showLog('Annual Product -> ${plan.storeProduct}');
               }
             }
           } catch (e) {
@@ -163,15 +164,22 @@ class SubscriptionManager extends ChangeNotifier {
       Utils().showLog("Error fetching subscription data: $e");
     } finally {
       setStatus(Status.loaded);
-      notifyListeners(); // Notify UI about the changes
+      notifyListeners();
     }
   }
 
 //MARK: My Purchased Subscription
   Future getMyPurchasedData() async {
-    SubscriptionService instance = SubscriptionService.instance;
-    UserManager manager = navigatorKey.currentContext!.read<UserManager>();
-    bool initialized = await instance.initialize(user: manager.user);
-    if (initialized) {}
+    try {
+      setStatus(Status.loading);
+      Purchases.addCustomerInfoUpdateListener((CustomerInfo info) {
+        Map<String, EntitlementInfo> entitlements = info.entitlements.all;
+        Utils().showLog('Entitlements $entitlements');
+      });
+    } catch (e) {
+      Utils().showLog('Error in getMyPurchasedData: $e');
+    } finally {
+      setStatus(Status.loaded);
+    }
   }
 }
