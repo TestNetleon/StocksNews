@@ -2,15 +2,14 @@ import 'dart:convert';
 
 import 'package:purchases_flutter/purchases_flutter.dart';
 
-SubscriptionRes mySubscriptionResFromJson(String str) =>
+SubscriptionRes subscriptionResFromJson(String str) =>
     SubscriptionRes.fromJson(json.decode(str));
 
-String mySubscriptionResToJson(SubscriptionRes data) =>
+String subscriptionResToJson(SubscriptionRes data) =>
     json.encode(data.toJson());
 
 class SubscriptionRes {
   final String? title;
-  final String? cardBtn;
   final String? btn;
   final NoSubscriptionRes? noSubscription;
   final List<ProductPlanRes>? monthlyPlan;
@@ -18,7 +17,6 @@ class SubscriptionRes {
 
   SubscriptionRes({
     this.title,
-    this.cardBtn,
     this.btn,
     this.noSubscription,
     this.monthlyPlan,
@@ -28,80 +26,84 @@ class SubscriptionRes {
   factory SubscriptionRes.fromJson(Map<String, dynamic> json) =>
       SubscriptionRes(
         title: json["title"],
-        cardBtn: json["card_btn"],
         btn: json["btn"],
         noSubscription: json["no_subscription"] == null
             ? null
             : NoSubscriptionRes.fromJson(json["no_subscription"]),
-        monthlyPlan: json["monthly_plan"] == null
+        monthlyPlan: json["monthly"] == null
             ? []
             : List<ProductPlanRes>.from(
-                json["monthly_plan"]!.map((x) => ProductPlanRes.fromJson(x))),
-        annualPlan: json["yearly_plan"] == null
+                json["monthly"]!.map((x) => ProductPlanRes.fromJson(x))),
+        annualPlan: json["yearly"] == null
             ? []
             : List<ProductPlanRes>.from(
-                json["yearly_plan"]!.map((x) => ProductPlanRes.fromJson(x))),
+                json["yearly"]!.map((x) => ProductPlanRes.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
         "title": title,
-        "card_btn": cardBtn,
         "btn": btn,
         "no_subscription": noSubscription?.toJson(),
-        "monthly_plan": monthlyPlan == null
+        "monthly": monthlyPlan == null
             ? []
             : List<dynamic>.from(monthlyPlan!.map((x) => x.toJson())),
-        "yearly_plan": annualPlan == null
+        "yearly": annualPlan == null
             ? []
             : List<dynamic>.from(annualPlan!.map((x) => x.toJson())),
       };
 }
 
 class ProductPlanRes {
-  final String? identifier;
-  final String? title;
-  final String? price;
+  final String? productID;
+  final String? displayName;
+  String? price;
   final String? text;
-  final String? period;
-  final List<String>? benefits;
+  final String? periodText;
+  final List<String>? features;
   final String? popularBtn;
   StoreProduct? storeProduct;
   final bool? isActive;
+  final String? expirationDate;
+  final String? cardBtn;
 
   ProductPlanRes({
-    this.identifier,
-    this.title,
+    this.productID,
+    this.displayName,
     this.price,
-    this.period,
+    this.periodText,
     this.text,
     this.isActive,
-    this.benefits,
+    this.features,
     this.popularBtn,
     this.storeProduct,
+    this.cardBtn,
+    this.expirationDate,
   });
 
   factory ProductPlanRes.fromJson(Map<String, dynamic> json) => ProductPlanRes(
-        identifier: json["identifier"],
-        title: json["title"],
+        productID: json["product_id"],
+        displayName: json["display_name"],
         price: json["price"],
+        cardBtn: json['card_btn'],
         text: json["text"],
         isActive: json['isActive'],
-        period: json['period'],
-        benefits: json["Benefits"] == null
+        periodText: json['period_text'],
+        features: json["features"] == null
             ? []
-            : List<String>.from(json["Benefits"]!.map((x) => x)),
+            : List<String>.from(json["features"]!.map((x) => x)),
         popularBtn: json["popular_btn"],
       );
 
   Map<String, dynamic> toJson() => {
-        "identifier": identifier,
-        "title": title,
+        "product_id": productID,
+        "display_name": displayName,
         "price": price,
         "text": text,
         "isActive": isActive,
-        "period": period,
-        "Benefits":
-            benefits == null ? [] : List<dynamic>.from(benefits!.map((x) => x)),
+        'card_btn': cardBtn,
+        "period_text": periodText,
+        "features":
+            features == null ? [] : List<dynamic>.from(features!.map((x) => x)),
         "popular_btn": popularBtn,
       };
 }

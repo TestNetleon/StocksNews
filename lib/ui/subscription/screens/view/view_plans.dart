@@ -1,11 +1,13 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:stocks_news_new/models/market/market_res.dart';
-import 'package:stocks_news_new/service/superwall/controller.dart';
 import 'package:stocks_news_new/ui/base/button.dart';
 import 'package:stocks_news_new/ui/base/common_tab.dart';
+import 'package:stocks_news_new/ui/subscription/screens/purchased/purchased.dart';
 import 'package:stocks_news_new/ui/subscription/screens/view/annual.dart';
+import 'package:stocks_news_new/ui/tabs/tabs.dart';
 import 'package:stocks_news_new/utils/constants.dart';
+import 'package:stocks_news_new/utils/dialogs.dart';
 import 'monthly.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -27,7 +29,14 @@ class _ViewAllPlansState extends State<ViewAllPlans> {
 
   _purchaseClickable(value) {
     _isClickable = value;
-    setState(() {});
+    if (value) {
+      closeGlobalProgressDialog();
+    } else {
+      showGlobalProgressDialog();
+    }
+    if (mounted) {
+      setState(() {});
+    }
   }
 
   final List<MarketResData> _tabs = [
@@ -59,27 +68,24 @@ class _ViewAllPlansState extends State<ViewAllPlans> {
       return;
     }
 
-    // showGlobalProgressDialog();
-    // closeGlobalProgressDialog();
-
     try {
       _purchaseClickable(false);
-      // Offerings? off = await Purchases.getOfferings();
-      // Offering? of = off.getOffering('app.stocks.news Plans');
-      // print('======> ${of?.availablePackages.first.storeProduct}');
-      // return;
+
       CustomerInfo customerInfo = await Purchases.purchaseStoreProduct(
         subscriptionManager.selectedPlan!.storeProduct!,
-        // of!.availablePackages.first.storeProduct,
       );
-      // await Purchases.syncPurchases();
       if (kDebugMode) {
         print("Successful: ${customerInfo.entitlements.active}");
-        print("Successful: ${customerInfo.getLatestTransactionPurchaseDate()}");
       }
       TopSnackbar.show(
         message: 'You’re All Set! Start enjoying',
         type: ToasterEnum.success,
+      );
+      Navigator.popUntil(context, (route) => route.isFirst);
+      Navigator.pushReplacementNamed(context, Tabs.path);
+      Navigator.pushNamed(
+        context,
+        PurchasedIndex.path,
       );
     } on PlatformException catch (e) {
       if (kDebugMode) {

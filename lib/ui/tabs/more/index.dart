@@ -34,6 +34,12 @@ class MoreIndex extends StatelessWidget {
 
   void _navigateToMySubscription(context) {
     // Navigator.pushNamed(context, SubscriptionIndex.path);
+    UserManager userManager = navigatorKey.currentContext!.read<UserManager>();
+    userManager.askLoginScreen();
+    if (userManager.user == null) {
+      return;
+    }
+
     SubscriptionManager manager =
         navigatorKey.currentContext!.read<SubscriptionManager>();
     manager.startProcess();

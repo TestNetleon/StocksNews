@@ -100,7 +100,6 @@ class SubscriptionService {
         // Purchases.syncPurchases();
         Purchases.addCustomerInfoUpdateListener((CustomerInfo info) {
           Map<String, EntitlementInfo> entitlements = info.entitlements.all;
-          Utils().showLog('Entitlements $entitlements');
           subscriptions = entitlements.entries
               .where((entry) => entry.value.isActive && entry.value.willRenew)
               .map((entry) => entry.value.productIdentifier)

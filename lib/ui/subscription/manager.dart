@@ -17,6 +17,7 @@ import 'package:stocks_news_new/utils/utils.dart';
 import '../../managers/user.dart';
 import '../../routes/my_app.dart';
 import '../../utils/constants.dart';
+import 'model/my_subscription.dart';
 import 'model/subscription.dart';
 import 'screens/view/plans.dart';
 
@@ -114,13 +115,12 @@ class SubscriptionManager extends ChangeNotifier {
       };
 
       ApiResponse response = await apiRequest(
-        url: Apis.mySubscription,
+        url: Apis.subscription,
         request: request,
       );
 
       if (response.status) {
-        _subscriptionData =
-            mySubscriptionResFromJson(jsonEncode(response.data));
+        _subscriptionData = subscriptionResFromJson(jsonEncode(response.data));
 
         if (_subscriptionData != null) {
           // Fetch RevenueCat store products
@@ -136,9 +136,10 @@ class SubscriptionManager extends ChangeNotifier {
                 _subscriptionData!.monthlyPlan!.isNotEmpty) {
               for (var plan in _subscriptionData!.monthlyPlan!) {
                 var matchedProduct = monthlyPackages?.firstWhere(
-                  (p) => p.storeProduct.identifier == plan.identifier,
+                  (p) => p.storeProduct.identifier == plan.productID,
                 );
                 plan.storeProduct = matchedProduct?.storeProduct;
+                plan.price = plan.storeProduct?.priceString;
               }
             }
 
@@ -147,9 +148,10 @@ class SubscriptionManager extends ChangeNotifier {
                 _subscriptionData?.annualPlan?.isNotEmpty == true) {
               for (var plan in _subscriptionData!.annualPlan!) {
                 var matchedProduct = yearlyPackages?.firstWhere(
-                  (p) => p.storeProduct.identifier == plan.identifier,
+                  (p) => p.storeProduct.identifier == plan.productID,
                 );
                 plan.storeProduct = matchedProduct?.storeProduct;
+                plan.price = plan.storeProduct?.priceString;
               }
             }
           } catch (e) {
@@ -161,25 +163,46 @@ class SubscriptionManager extends ChangeNotifier {
       }
     } catch (e) {
       _subscriptionData = null;
-      Utils().showLog("Error fetching subscription data: $e");
+      Utils().showLog("Error in ${Apis.subscription}: $e");
     } finally {
       setStatus(Status.loaded);
-      notifyListeners();
     }
   }
 
 //MARK: My Purchased Subscription
+  MySubscriptionRes? _mySubscriptionData;
+  MySubscriptionRes? get mySubscriptionData => _mySubscriptionData;
+
   Future getMyPurchasedData() async {
     try {
       setStatus(Status.loading);
-      Purchases.addCustomerInfoUpdateListener((CustomerInfo info) {
-        Map<String, EntitlementInfo> entitlements = info.entitlements.all;
-        Utils().showLog('Entitlements $entitlements');
-      });
+
+      UserManager provider = navigatorKey.currentContext!.read<UserManager>();
+      Map request = {
+        'token': provider.user?.token ?? '',
+      };
+
+      ApiResponse response = await apiRequest(
+        url: Apis.mySubscription,
+        request: request,
+      );
+
+      if (response.status) {
+        _mySubscriptionData =
+            mySubscriptionResFromJson(jsonEncode(jsonEncode(response.data)));
+        _error = null;
+      } else {
+        _mySubscriptionData = null;
+        _error = response.message;
+      }
     } catch (e) {
-      Utils().showLog('Error in getMyPurchasedData: $e');
+      _mySubscriptionData = null;
+      _error = Const.errSomethingWrong;
+
+      Utils().showLog("Error in ${Apis.mySubscription}: $e");
     } finally {
       setStatus(Status.loaded);
+      notifyListeners();
     }
   }
 }

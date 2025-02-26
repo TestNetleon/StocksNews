@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
-import 'package:provider/provider.dart';
-import 'package:stocks_news_new/ui/subscription/manager.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -9,21 +7,21 @@ import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import '../../model/subscription.dart';
 
-class ViewPlanItem extends StatefulWidget {
+class PurchasedPlanItem extends StatefulWidget {
   final ProductPlanRes data;
   final int index;
 
-  const ViewPlanItem({
+  const PurchasedPlanItem({
     super.key,
     required this.data,
     required this.index,
   });
 
   @override
-  State<ViewPlanItem> createState() => _ViewPlanItemState();
+  State<PurchasedPlanItem> createState() => _PurchasedPlanItemState();
 }
 
-class _ViewPlanItemState extends State<ViewPlanItem> {
+class _PurchasedPlanItemState extends State<PurchasedPlanItem> {
   int _openIndex = -1;
 
   openBenefit(index) {
@@ -33,7 +31,7 @@ class _ViewPlanItemState extends State<ViewPlanItem> {
 
   @override
   Widget build(BuildContext context) {
-    SubscriptionManager manager = context.watch<SubscriptionManager>();
+    // SubscriptionManager manager = context.watch<SubscriptionManager>();
     bool isPopular =
         widget.data.popularBtn != null && widget.data.popularBtn != '';
     return Padding(
@@ -62,12 +60,6 @@ class _ViewPlanItemState extends State<ViewPlanItem> {
                 isPopular ? const EdgeInsets.only(top: 30) : EdgeInsets.zero,
             child: InkWell(
               borderRadius: BorderRadius.circular(Pad.pad8),
-              onTap: widget.data.isActive == true
-                  ? null
-                  : () {
-                      manager.onChangePlan(widget.data);
-                    },
-              //  canClickable ? _onPurchase : null,
               child: Container(
                 padding: EdgeInsets.all(Pad.pad24),
                 decoration: BoxDecoration(
@@ -76,9 +68,7 @@ class _ViewPlanItemState extends State<ViewPlanItem> {
                       : ThemeColors.white,
                   borderRadius: BorderRadius.circular(Pad.pad8),
                   border: Border.all(
-                    color: manager.selectedPlan == widget.data
-                        ? ThemeColors.secondary100
-                        : ThemeColors.neutral10,
+                    color: ThemeColors.secondary100,
                     width: 2,
                   ),
                 ),
@@ -144,7 +134,7 @@ class _ViewPlanItemState extends State<ViewPlanItem> {
                               child: Padding(
                                 padding: const EdgeInsets.only(left: 8),
                                 child: Text(
-                                  widget.data.cardBtn ?? '',
+                                  'See Benefits',
                                   style: styleBaseSemiBold(
                                     fontSize: 14,
                                     color: ThemeColors.secondary100,

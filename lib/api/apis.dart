@@ -54,7 +54,8 @@ class Apis {
   static const secureBlogDetail = '/secure-blog-detail';
 
   //Subscription
-  static const mySubscription = '/membership/my-subscription';
+  static const subscription = '/subscription';
+  static const mySubscription = "/my-subscription";
 
 //----------------------------------------------
 
@@ -195,7 +196,6 @@ class Apis {
   static const affiliateTnx = "/referrals/txn-report";
   static const affiliateTnxList = "/referrals/txn-report-list";
 
-  static const membership = "/membership/transactions";
   static const blackFridayTransaction = "/membership/transactions_v2";
 
   static const membershipSuccess = "/membership/success";
