@@ -63,8 +63,10 @@ class ProductPlanRes {
   final String? popularBtn;
   StoreProduct? storeProduct;
   final bool? isActive;
-  final String? expirationDate;
   final String? cardBtn;
+  final String? tagLine;
+  final String? purchaseAt;
+  final String? expiredAt;
 
   ProductPlanRes({
     this.productID,
@@ -77,14 +79,19 @@ class ProductPlanRes {
     this.popularBtn,
     this.storeProduct,
     this.cardBtn,
-    this.expirationDate,
+    this.tagLine,
+    this.purchaseAt,
+    this.expiredAt,
   });
 
   factory ProductPlanRes.fromJson(Map<String, dynamic> json) => ProductPlanRes(
         productID: json["product_id"],
         displayName: json["display_name"],
         price: json["price"],
+        tagLine: json['tag_line'],
         cardBtn: json['card_btn'],
+        expiredAt: json['expiration_at'],
+        purchaseAt: json['purchased_at'],
         text: json["text"],
         isActive: json['isActive'],
         periodText: json['period_text'],
@@ -99,7 +106,10 @@ class ProductPlanRes {
         "display_name": displayName,
         "price": price,
         "text": text,
+        'tag_line': tagLine,
         "isActive": isActive,
+        'purchased_at': purchaseAt,
+        'expiration_at': expiredAt,
         'card_btn': cardBtn,
         "period_text": periodText,
         "features":

@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/ui/base/app_bar.dart';
-import 'package:stocks_news_new/ui/base/base_scroll.dart';
 import 'package:stocks_news_new/ui/base/heading.dart';
 import 'package:stocks_news_new/ui/base/scaffold.dart';
 import 'package:stocks_news_new/ui/subscription/manager.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/custom/base_loader_container.dart';
-
 import '../../model/subscription.dart';
 import 'history.dart';
 import 'purchased_item.dart';
@@ -33,6 +31,9 @@ class _PurchasedIndexState extends State<PurchasedIndex> {
   @override
   Widget build(BuildContext context) {
     SubscriptionManager manager = context.watch<SubscriptionManager>();
+    ProductPlanRes? activeMembership =
+        manager.mySubscriptionData?.activeMembership;
+
     return BaseScaffold(
       appBar: BaseAppBar(
         showBack: true,
@@ -42,33 +43,21 @@ class _PurchasedIndexState extends State<PurchasedIndex> {
         hasData: manager.mySubscriptionData != null,
         isLoading: manager.isLoading,
         showPreparingText: true,
+        error: manager.error,
+        onRefresh: manager.getMyPurchasedData,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: Pad.pad16),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              PurchasedPlanItem(
-                data: ProductPlanRes(
-                  displayName: 'Basic',
-                  text:
-                      'Get started with the essentials to stay informed and make smarter trading decisions.',
-                  price: '\$ 9.99',
-                  periodText: '/mo',
-                ),
-                index: 0,
+              if (activeMembership != null)
+                PurchasedPlanItem(data: activeMembership, index: 0),
+              BaseHeading(
+                title: 'Payment History',
+                titleStyle: styleBaseBold(fontSize: 20),
+                margin: EdgeInsets.only(bottom: 10),
               ),
-              Expanded(
-                child: BaseScroll(
-                  margin: EdgeInsets.zero,
-                  children: [
-                    BaseHeading(
-                      title: 'Payment History',
-                      titleStyle: styleBaseBold(fontSize: 20),
-                      margin: EdgeInsets.only(bottom: 10),
-                    ),
-                    PurchasedHistory(),
-                  ],
-                ),
-              ),
+              Expanded(child: PurchasedHistory()),
             ],
           ),
         ),

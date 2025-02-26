@@ -82,8 +82,8 @@ class _ViewAllPlansState extends State<ViewAllPlans> {
         type: ToasterEnum.success,
       );
       Navigator.popUntil(context, (route) => route.isFirst);
-      Navigator.pushReplacementNamed(context, Tabs.path);
-      Navigator.pushNamed(
+      await Navigator.pushReplacementNamed(context, Tabs.path);
+      await Navigator.pushNamed(
         context,
         PurchasedIndex.path,
       );

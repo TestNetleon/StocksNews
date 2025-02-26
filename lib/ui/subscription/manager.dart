@@ -173,13 +173,24 @@ class SubscriptionManager extends ChangeNotifier {
   MySubscriptionRes? _mySubscriptionData;
   MySubscriptionRes? get mySubscriptionData => _mySubscriptionData;
 
-  Future getMyPurchasedData() async {
+  int _page = 1;
+  bool get canLoadMoreHistory =>
+      _page <= (_mySubscriptionData?.paymentHistory?.totalPages ?? 1);
+
+  Future getMyPurchasedData({loadMore = false}) async {
     try {
-      setStatus(Status.loading);
+      if (loadMore) {
+        _page++;
+        setStatus(Status.loadingMore);
+      } else {
+        _page = 1;
+        setStatus(Status.loading);
+      }
 
       UserManager provider = navigatorKey.currentContext!.read<UserManager>();
       Map request = {
         'token': provider.user?.token ?? '',
+        'page': '$_page',
       };
 
       ApiResponse response = await apiRequest(
@@ -188,17 +199,28 @@ class SubscriptionManager extends ChangeNotifier {
       );
 
       if (response.status) {
-        _mySubscriptionData =
-            mySubscriptionResFromJson(jsonEncode(jsonEncode(response.data)));
-        _error = null;
+        if (_page == 1) {
+          _mySubscriptionData =
+              mySubscriptionResFromJson(jsonEncode(response.data));
+          _error = null;
+        } else {
+          _mySubscriptionData?.paymentHistory?.data?.addAll(
+              mySubscriptionResFromJson(jsonEncode(response.data))
+                      .paymentHistory
+                      ?.data ??
+                  []);
+        }
       } else {
-        _mySubscriptionData = null;
-        _error = response.message;
+        if (_page == 1) {
+          _mySubscriptionData = null;
+          _error = response.message;
+        }
       }
     } catch (e) {
-      _mySubscriptionData = null;
-      _error = Const.errSomethingWrong;
-
+      if (_page == 1) {
+        _mySubscriptionData = null;
+        _error = Const.errSomethingWrong;
+      }
       Utils().showLog("Error in ${Apis.mySubscription}: $e");
     } finally {
       setStatus(Status.loaded);

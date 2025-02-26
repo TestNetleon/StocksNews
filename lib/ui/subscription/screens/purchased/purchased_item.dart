@@ -31,7 +31,6 @@ class _PurchasedPlanItemState extends State<PurchasedPlanItem> {
 
   @override
   Widget build(BuildContext context) {
-    // SubscriptionManager manager = context.watch<SubscriptionManager>();
     bool isPopular =
         widget.data.popularBtn != null && widget.data.popularBtn != '';
     return Padding(
@@ -104,11 +103,15 @@ class _PurchasedPlanItemState extends State<PurchasedPlanItem> {
                       ],
                     ),
                     SpacerVertical(height: Pad.pad16),
-                    Text(
-                      widget.data.text ?? '',
-                      style: styleBaseRegular(
-                        fontSize: 15,
-                        color: ThemeColors.neutral80,
+                    Visibility(
+                      visible: widget.data.tagLine != null &&
+                          widget.data.tagLine != '',
+                      child: HtmlWidget(
+                        widget.data.tagLine ?? '',
+                        textStyle: styleBaseRegular(
+                          fontSize: 15,
+                          color: ThemeColors.neutral80,
+                        ),
                       ),
                     ),
                     SpacerVertical(height: Pad.pad16),
