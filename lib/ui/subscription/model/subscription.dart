@@ -62,7 +62,7 @@ class ProductPlanRes {
   final List<String>? features;
   final String? popularBtn;
   StoreProduct? storeProduct;
-  final bool? isActive;
+  final bool? currentPlan;
   final String? cardBtn;
   final String? tagLine;
   final String? purchaseAt;
@@ -74,7 +74,7 @@ class ProductPlanRes {
     this.price,
     this.periodText,
     this.text,
-    this.isActive,
+    this.currentPlan,
     this.features,
     this.popularBtn,
     this.storeProduct,
@@ -93,7 +93,7 @@ class ProductPlanRes {
         expiredAt: json['expiration_at'],
         purchaseAt: json['purchased_at'],
         text: json["text"],
-        isActive: json['isActive'],
+        currentPlan: json['current_plan'],
         periodText: json['period_text'],
         features: json["features"] == null
             ? []
@@ -107,7 +107,7 @@ class ProductPlanRes {
         "price": price,
         "text": text,
         'tag_line': tagLine,
-        "isActive": isActive,
+        "current_plan": currentPlan,
         'purchased_at': purchaseAt,
         'expiration_at': expiredAt,
         'card_btn': cardBtn,

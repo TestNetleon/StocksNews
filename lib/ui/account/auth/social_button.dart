@@ -4,7 +4,7 @@ import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 
-import '../../utils/theme.dart';
+import '../../../utils/theme.dart';
 
 class AccountSocialButton extends StatelessWidget {
   final String text;

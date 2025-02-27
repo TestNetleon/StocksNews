@@ -60,6 +60,13 @@ class BaseTextField extends StatelessWidget {
         width: 1,
       ),
     );
+    var enabledBorder = OutlineInputBorder(
+      borderRadius: borderRadiusOnly ?? BorderRadius.circular(borderRadius),
+      borderSide: BorderSide(
+        color: ThemeColors.neutral10,
+        width: 1,
+      ),
+    );
     return TextField(
       focusNode: focusNode,
       onChanged: onChanged,
@@ -77,13 +84,13 @@ class BaseTextField extends StatelessWidget {
         prefixIcon: prefixIcon,
         suffixIcon: suffixIcon,
         labelText: placeholder,
-        floatingLabelBehavior: FloatingLabelBehavior.auto,
+        // floatingLabelBehavior: FloatingLabelBehavior.auto,
         labelStyle: stylePTSansRegular(),
         contentPadding:
             contentPadding ?? EdgeInsets.symmetric(horizontal: Pad.pad16),
         filled: true,
         fillColor: ThemeColors.white,
-        enabledBorder: outlineInputBorder,
+        enabledBorder: enabledBorder,
         border: outlineInputBorder,
         focusedBorder: outlineInputBorder,
         counterText: '',

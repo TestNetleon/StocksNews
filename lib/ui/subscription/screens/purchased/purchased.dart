@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:stocks_news_new/ui/base/app_bar.dart';
+import 'package:stocks_news_new/ui/base/button.dart';
 import 'package:stocks_news_new/ui/base/heading.dart';
 import 'package:stocks_news_new/ui/base/scaffold.dart';
 import 'package:stocks_news_new/ui/subscription/manager.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
+import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/custom/base_loader_container.dart';
 import '../../model/subscription.dart';
 import 'history.dart';
@@ -24,6 +27,7 @@ class _PurchasedIndexState extends State<PurchasedIndex> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      print('Hi4');
       context.read<SubscriptionManager>().getMyPurchasedData();
     });
   }
@@ -58,6 +62,19 @@ class _PurchasedIndexState extends State<PurchasedIndex> {
                 margin: EdgeInsets.only(bottom: 10),
               ),
               Expanded(child: PurchasedHistory()),
+              // BaseButton(
+              //   text: 'See all Plans',
+              //   onPressed: () {
+              //     Navigator.pushNamed(context, SubscriptionPlansIndex.path);
+              //   },
+              // ),
+              BaseButton(
+                text: 'Manage Subscription',
+                onPressed: () async {
+                  CustomerInfo info = await Purchases.getCustomerInfo();
+                  openUrl(info.managementURL);
+                },
+              ),
             ],
           ),
         ),

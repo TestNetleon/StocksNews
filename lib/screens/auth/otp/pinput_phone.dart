@@ -10,11 +10,13 @@ class CommonPinputPhone extends StatelessWidget {
   final TextEditingController controller;
   final FocusNode? focusNode;
   final void Function(String)? onCompleted;
+  final int length;
   const CommonPinputPhone({
     super.key,
     required this.controller,
     this.onCompleted,
     this.focusNode,
+    this.length = 6,
   });
 
   @override
@@ -23,7 +25,7 @@ class CommonPinputPhone extends StatelessWidget {
       alignment: Alignment.center,
       child: Pinput(
         focusNode: focusNode,
-        length: 6,
+        length: length,
         controller: controller,
         closeKeyboardWhenCompleted: true,
         cursor: Text(

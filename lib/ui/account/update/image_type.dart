@@ -7,10 +7,10 @@ import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 import '../../../utils/theme.dart';
 
-class MyAccountImageType extends StatelessWidget {
+class UpdateImageType extends StatelessWidget {
   final Function()? onCamera, onGallery;
 
-  const MyAccountImageType({super.key, this.onCamera, this.onGallery});
+  const UpdateImageType({super.key, this.onCamera, this.onGallery});
 //
   @override
   Widget build(BuildContext context) {

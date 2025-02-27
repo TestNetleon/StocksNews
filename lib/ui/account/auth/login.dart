@@ -15,13 +15,13 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/utils/validations.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
-import '../../models/my_home.dart';
-import '../../utils/utils.dart';
-import '../../widgets/custom/alert_popup.dart';
-import '../base/app_bar.dart';
-import '../base/button.dart';
-import '../base/country_code.dart';
-import '../base/text_field.dart';
+import '../../../models/my_home.dart';
+import '../../../utils/utils.dart';
+import '../../../widgets/custom/alert_popup.dart';
+import '../../base/app_bar.dart';
+import '../../base/button.dart';
+import '../../base/country_code.dart';
+import '../../base/text_field.dart';
 import 'agree_text.dart';
 import 'social_button.dart';
 import 'verify.dart';
@@ -39,7 +39,6 @@ class _AccountLoginIndexState extends State<AccountLoginIndex> {
   String? countryCode;
   bool boxChecked = false;
   bool changingCountryCode = false;
-  bool isLoading = false;
   final GoogleSignIn _googleSignIn = GoogleSignIn();
   AuthorizationCredentialAppleID? credential;
 
@@ -66,6 +65,8 @@ class _AccountLoginIndexState extends State<AccountLoginIndex> {
       countryCode = CountryCode.fromCountryCode("US").dialCode;
     }
   }
+
+  bool isLoading = false;
 
   setLoading(status) {
     isLoading = status;

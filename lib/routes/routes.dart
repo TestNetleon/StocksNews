@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:stocks_news_new/managers/blogs.dart';
 import 'package:stocks_news_new/managers/home.dart';
+import 'package:stocks_news_new/managers/legal.dart';
 import 'package:stocks_news_new/managers/market/market.dart';
 import 'package:stocks_news_new/managers/market/most_bullish.dart';
 import 'package:stocks_news_new/managers/notification/most_bullish.dart';
@@ -139,8 +140,11 @@ import '../screens/marketData/congressionalData/index.dart';
 import '../screens/marketData/lowPriceStocks/index.dart';
 import '../screens/whatWeDo/index.dart';
 import '../tradingSimulator/providers/ts_transaction_list.dart';
-import '../ui/account/login.dart';
-import '../ui/account/verify.dart';
+import '../ui/account/auth/login.dart';
+import '../ui/account/auth/verify.dart';
+import '../ui/account/update/email_verify.dart';
+import '../ui/account/update/index.dart';
+import '../ui/legal/index.dart';
 import '../ui/onboarding/default_home.dart';
 import '../ui/onboarding/slides.dart';
 import '../ui/onboarding/splash.dart';
@@ -173,6 +177,7 @@ class Routes {
     SubscriptionIndex.path: (_) => const SubscriptionIndex(),
     SubscriptionPlansIndex.path: (_) => const SubscriptionPlansIndex(),
     PurchasedIndex.path: (_) => const PurchasedIndex(),
+    UpdatePersonalDetailIndex.path: (_) => const UpdatePersonalDetailIndex(),
 
     //--------------------------------------
 
@@ -250,10 +255,12 @@ class Routes {
             String countryCode = arguments?['countryCode'];
             String phone = arguments?['phone'];
             String verificationId = arguments?['verificationId'];
+            bool? update = arguments?['update'];
             return AccountVerificationIndex(
               countryCode: countryCode,
               phone: phone,
               verificationId: verificationId,
+              update: update,
             );
           },
         );
@@ -305,6 +312,26 @@ class Routes {
             String slug = arguments?['slug'];
 
             return BlogsDetailIndex(slug: slug);
+          },
+        );
+
+      case LegalInfoIndex.path:
+        return MaterialPageRoute(
+          builder: (context) {
+            final arguments = settings.arguments as Map<String, dynamic>?;
+            String? slug = arguments?['slug'];
+
+            return LegalInfoIndex(slug: slug);
+          },
+        );
+
+      case AccountEmailVerificationIndex.path:
+        return MaterialPageRoute(
+          builder: (context) {
+            final arguments = settings.arguments as Map<String, dynamic>?;
+            String email = arguments?['email'];
+
+            return AccountEmailVerificationIndex(email: email);
           },
         );
 
@@ -497,6 +524,7 @@ class Routes {
       ChangeNotifierProvider(create: (_) => NewsManager()),
       ChangeNotifierProvider(create: (_) => BlogsManager()),
       ChangeNotifierProvider(create: (_) => SubscriptionManager()),
+      ChangeNotifierProvider(create: (_) => LegalInfoManager()),
     ];
   }
 }

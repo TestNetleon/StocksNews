@@ -3,8 +3,10 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/managers/user.dart';
 import 'package:stocks_news_new/modals/user_res.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
+import 'package:stocks_news_new/ui/account/update/index.dart';
 import 'package:stocks_news_new/ui/base/heading.dart';
 import 'package:stocks_news_new/ui/base/scaffold.dart';
+import 'package:stocks_news_new/ui/legal/index.dart';
 import 'package:stocks_news_new/ui/subscription/manager.dart';
 import 'package:stocks_news_new/ui/tabs/more/articles/index.dart';
 import 'package:stocks_news_new/ui/tabs/more/more_item.dart';
@@ -43,6 +45,16 @@ class MoreIndex extends StatelessWidget {
     SubscriptionManager manager =
         navigatorKey.currentContext!.read<SubscriptionManager>();
     manager.startProcess();
+  }
+
+  Future _navigateToPersonalDetail() async {
+    UserManager manager = navigatorKey.currentContext!.read<UserManager>();
+    await manager.askLoginScreen();
+    if (manager.user == null) return;
+    await Navigator.pushNamed(
+      navigatorKey.currentContext!,
+      UpdatePersonalDetailIndex.path,
+    );
   }
 
   @override
@@ -92,7 +104,7 @@ class MoreIndex extends StatelessWidget {
             MoreItem(
               icon: Images.morePersonalDetails,
               label: "Personal Details",
-              onTap: () {},
+              onTap: _navigateToPersonalDetail,
             ),
             MoreItem(
               icon: Images.moreStockAlerts,
@@ -165,7 +177,12 @@ class MoreIndex extends StatelessWidget {
             MoreItem(
               icon: Images.moreLegal,
               label: "Legal",
-              onTap: () {},
+              onTap: () {
+                Navigator.pushNamed(
+                  context,
+                  LegalInfoIndex.path,
+                );
+              },
             ),
             Visibility(
               visible: user != null,

@@ -36,6 +36,7 @@ class _ViewPlanItemState extends State<ViewPlanItem> {
     SubscriptionManager manager = context.watch<SubscriptionManager>();
     bool isPopular =
         widget.data.popularBtn != null && widget.data.popularBtn != '';
+
     return Padding(
       padding: const EdgeInsets.only(bottom: 24),
       child: Stack(
@@ -62,7 +63,7 @@ class _ViewPlanItemState extends State<ViewPlanItem> {
                 isPopular ? const EdgeInsets.only(top: 30) : EdgeInsets.zero,
             child: InkWell(
               borderRadius: BorderRadius.circular(Pad.pad8),
-              onTap: widget.data.isActive == true
+              onTap: widget.data.currentPlan == true
                   ? null
                   : () {
                       manager.onChangePlan(widget.data);
@@ -71,7 +72,7 @@ class _ViewPlanItemState extends State<ViewPlanItem> {
               child: Container(
                 padding: EdgeInsets.all(Pad.pad24),
                 decoration: BoxDecoration(
-                  color: widget.data.isActive == true
+                  color: widget.data.currentPlan == true
                       ? ThemeColors.neutral5
                       : ThemeColors.white,
                   borderRadius: BorderRadius.circular(Pad.pad8),

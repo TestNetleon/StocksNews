@@ -35,10 +35,12 @@ class UserRes {
   final bool? showBlackFriday;
   final bool? christmasMembership;
   final bool? newYearMembership;
-
   final BlackFridayRes? blackFriday;
+  final String? imageType;
+
   UserRes({
     // this.blackFridayMessage,
+    this.imageType,
     this.blackFriday,
     this.showBlackFriday,
     this.christmasMembership,
@@ -72,6 +74,7 @@ class UserRes {
 
   factory UserRes.fromJson(Map<String, dynamic> json) => UserRes(
         // blackFridayMessage: json['black_friday_message'],
+        imageType: json['image_type'],
         showBlackFriday: json['black_friday_membership'],
         christmasMembership: json['christmas_membership'],
         newYearMembership: json['new_year_membership'],
@@ -110,6 +113,7 @@ class UserRes {
   Map<String, dynamic> toJson() => {
         // 'black_friday_message': blackFridayMessage,
         'black_friday_membership': showBlackFriday,
+        'image_type': imageType,
         "christmas_membership": christmasMembership,
         'new_year_membership': newYearMembership,
         "email": email,

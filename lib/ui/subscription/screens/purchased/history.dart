@@ -48,7 +48,7 @@ class PurchasedHistory extends StatelessWidget {
                 ],
               ),
               Padding(
-                padding: const EdgeInsets.only(top: 8),
+                padding: const EdgeInsets.only(top: 5),
                 child: Text(
                   '${data.displayName}  ${data.purchaseAt} - ${data.expiredAt}',
                   style: styleBaseRegular(color: ThemeColors.neutral20),

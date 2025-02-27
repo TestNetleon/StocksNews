@@ -34,11 +34,17 @@ class CachedNetworkImagesWidget extends StatelessWidget {
       imageUrl: imagesUrl ?? "",
       color: color,
       placeholder: (context, url) => showLoading
-          ? Center(
-              child: CircularProgressIndicator(
-                color: ThemeColors.blackShade.shade600,
-              ),
-            )
+          ? placeHolder != null
+              ? Image.asset(
+                  placeHolder ?? Images.placeholder,
+                  width: width?.sp,
+                  fit: fit,
+                )
+              : Center(
+                  child: CircularProgressIndicator(
+                    color: ThemeColors.blackShade.shade600,
+                  ),
+                )
           : Padding(
               padding: EdgeInsets.symmetric(horizontal: 20.sp),
               child: Image.asset(

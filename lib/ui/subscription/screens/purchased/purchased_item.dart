@@ -62,9 +62,7 @@ class _PurchasedPlanItemState extends State<PurchasedPlanItem> {
               child: Container(
                 padding: EdgeInsets.all(Pad.pad24),
                 decoration: BoxDecoration(
-                  color: widget.data.isActive == true
-                      ? ThemeColors.neutral5
-                      : ThemeColors.white,
+                  color: ThemeColors.white,
                   borderRadius: BorderRadius.circular(Pad.pad8),
                   border: Border.all(
                     color: ThemeColors.secondary100,

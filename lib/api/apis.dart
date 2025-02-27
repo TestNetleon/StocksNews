@@ -57,6 +57,12 @@ class Apis {
   static const subscription = '/subscription';
   static const mySubscription = "/my-subscription";
 
+  static const infoPage = '/info-page';
+  static const updateProfile = "/update-profile";
+  static const checkEmailExist = '/check-email-exist';
+  static const verifyEmail = '/verify-email';
+  static const checkPhoneExist = '/check-phone-exist';
+
 //----------------------------------------------
 
   static const stocksScreenerWebUrl =
@@ -130,12 +136,11 @@ class Apis {
   static const moreStocks = "/trending_gainer_loser";
   static const congress = "/congress-stock-trades";
   static const congressMember = "/profile-congress-member";
-  static const updateProfile = "/update-profile";
   static const updateProfileEmail = "/update-profile-otp";
   static const updateProfileOTP = "/update-profile-resend-otp";
   static const faQs = "/faq";
   static const contactUs = "/contact-us";
-  static const infoPage = "/info-page";
+  // static const infoPage = "/info-page";
   static const alerts = "/alerts";
   static const stockDetails = "/stock-details";
   static const stockAnalysis = "/stock-analysis";
@@ -192,7 +197,6 @@ class Apis {
   static const disconnectPlaid = "/remove-plaid-portfolio";
   static const referralList = "/referrals/list";
   static const referralLeaderBoard = "/referrals/leaderboard";
-  static const checkPhoneExist = "/check-phone-exist";
   static const affiliateTnx = "/referrals/txn-report";
   static const affiliateTnxList = "/referrals/txn-report-list";
 

@@ -81,12 +81,21 @@ class _ViewAllPlansState extends State<ViewAllPlans> {
         message: 'You’re All Set! Start enjoying',
         type: ToasterEnum.success,
       );
-      Navigator.popUntil(context, (route) => route.isFirst);
-      await Navigator.pushReplacementNamed(context, Tabs.path);
-      await Navigator.pushNamed(
-        context,
-        PurchasedIndex.path,
-      );
+      _purchaseClickable(true);
+      Future.delayed(Duration(seconds: 1), () {
+        Navigator.pushAndRemoveUntil(
+          navigatorKey.currentContext!,
+          MaterialPageRoute(builder: (context) => Tabs()),
+          (route) => false,
+        );
+
+        Future.microtask(() {
+          Navigator.push(
+            navigatorKey.currentContext!,
+            MaterialPageRoute(builder: (context) => PurchasedIndex()),
+          );
+        });
+      });
     } on PlatformException catch (e) {
       if (kDebugMode) {
         print('finally exception $e');

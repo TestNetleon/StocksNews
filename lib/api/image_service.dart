@@ -60,10 +60,13 @@ Future requestUploadImage({
     Response response = await dio.post((baseUrl + url),
         data: request, options: Options(headers: headers));
     closeGlobalProgressDialog();
-
     // showErrorMessage(
     //     message: response.data["message"], type: SnackbarType.info);
-    return ApiResponse(status: true, data: response.data["data"]["image"]);
+    return ApiResponse(
+      status: true,
+      data: response.data["data"]["image"],
+      message: response.data["message"],
+    );
   } on DioException catch (e) {
     Utils().showLog("dio e $e");
     closeGlobalProgressDialog();
