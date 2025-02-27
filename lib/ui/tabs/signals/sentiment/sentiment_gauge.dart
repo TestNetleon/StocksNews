@@ -150,8 +150,8 @@ class SignalsSentimentGauge extends StatelessWidget {
                               cVol >= 0
                                   ? Images.trendingUP
                                   : Images.trendingDOWN,
-                              height: 30,
-                              width: 30,
+                              height: 28,
+                              width: 28,
                               color: cVol >= 0
                                   ? ThemeColors.accent
                                   : ThemeColors.sos,
@@ -190,8 +190,8 @@ class SignalsSentimentGauge extends StatelessWidget {
                               sTrend >= 0
                                   ? Images.trendingUP
                                   : Images.trendingDOWN,
-                              height: 30,
-                              width: 30,
+                              height: 28,
+                              width: 28,
                               color: sTrend >= 0
                                   ? ThemeColors.accent
                                   : ThemeColors.sos,

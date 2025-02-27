@@ -87,8 +87,8 @@ class TickerBoxItem extends StatelessWidget {
                             (data.changesPercentage ?? 0) >= 0
                                 ? Images.trendingUP
                                 : Images.trendingDOWN,
-                            height: 20,
-                            width: 20,
+                            height: 18,
+                            width: 18,
                             color: (data.changesPercentage ?? 0) >= 0
                                 ? ThemeColors.accent
                                 : ThemeColors.sos,
@@ -97,7 +97,7 @@ class TickerBoxItem extends StatelessWidget {
                       ),
                     TextSpan(
                       text: data.change,
-                      style: styleBaseRegular(
+                      style: styleBaseSemiBold(
                         fontSize: 13,
                         color: (data.changesPercentage ?? 0) >= 0
                             ? ThemeColors.accent
@@ -107,7 +107,7 @@ class TickerBoxItem extends StatelessWidget {
                     if (data.changesPercentage != null)
                       TextSpan(
                         text: ' (${data.changesPercentage}%)',
-                        style: styleBaseRegular(
+                        style: styleBaseSemiBold(
                           fontSize: 13,
                           color: (data.changesPercentage ?? 0) >= 0
                               ? ThemeColors.accent

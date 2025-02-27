@@ -63,6 +63,9 @@ class Apis {
   static const verifyEmail = '/verify-email';
   static const checkPhoneExist = '/check-phone-exist';
 
+  //Stock Detail
+  static const stockDetailTab = '/stock-tab-bar';
+
 //----------------------------------------------
 
   static const stocksScreenerWebUrl =
@@ -208,7 +211,6 @@ class Apis {
   static const adClicked = "/ad-clicked";
 
   // Stock Detail New ---
-  static const stockDetailTab = "/stock-detail-topbar";
   static const detailEarning = "/stock-detail-earning";
   static const detailDividends = "/stock-detail-dividend";
   static const detailChart = "/stock-detail-chart";

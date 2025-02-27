@@ -215,6 +215,8 @@ class Images {
   static const String arrowDOWN = '${base}arrow_down.png';
   static const String write = '${base}write.png';
   static const String photo = '${base}photo.png';
+  static const String menu = '${base}menu.png';
+  static const String tick = '${base}tick.png';
 
   //-------------------------------------------------------------------------------
   static const String scannerStop = 'assets/images/scanner_stop.png';

@@ -20,9 +20,11 @@ class BaseTickerRes {
   final num? changesPercentage;
   final num? mentionCount;
   final String? mentionDate;
-  dynamic isAlertAdded;
-  dynamic isWatchlistAdded;
+  int? isAlertAdded;
+  int? isWatchlistAdded;
   //extra
+  final String? closeDate;
+  final String? shareUrl;
   final String? mktCap;
   final String? dayLow;
   final String? dayHigh;
@@ -65,6 +67,8 @@ class BaseTickerRes {
     this.mentionDate,
 
     //extra
+    this.closeDate,
+    this.shareUrl,
     this.mktCap,
     this.dayLow,
     this.dayHigh,
@@ -108,6 +112,8 @@ class BaseTickerRes {
         mentionDate: json["mention_date"],
 
         //extra
+        shareUrl: json['share_url'],
+        closeDate: json['closeDate'],
         mktCap: json["mktCap"],
         dayLow: json["dayLow"],
         dayHigh: json["dayHigh"],
@@ -154,6 +160,8 @@ class BaseTickerRes {
         "mention_date": mentionDate,
 
         //extra
+        'share_url': shareUrl,
+        'closeDate': closeDate,
         "mktCap": mktCap,
         "dayLow": dayLow,
         "dayHigh": dayHigh,

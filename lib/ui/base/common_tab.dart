@@ -12,6 +12,8 @@ class BaseTabs extends StatefulWidget {
     this.rightChild,
     this.child,
     this.textStyle,
+    this.labelPadding,
+    this.selectedIndex = 0,
   });
 
   final Widget? child;
@@ -21,6 +23,8 @@ class BaseTabs extends StatefulWidget {
   final Function(int index) onTap;
   final bool showDivider;
   final TextStyle? textStyle;
+  final EdgeInsetsGeometry? labelPadding;
+  final int selectedIndex;
 
   @override
   State<BaseTabs> createState() => _CommonTabsState();
@@ -33,7 +37,17 @@ class _CommonTabsState extends State<BaseTabs>
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: widget.data.length, vsync: this);
+    _tabController = TabController(
+      length: widget.data.length,
+      vsync: this,
+      initialIndex: widget.selectedIndex,
+    );
+  }
+
+  @override
+  void dispose() {
+    _tabController?.dispose();
+    super.dispose();
   }
 
   @override
@@ -46,6 +60,7 @@ class _CommonTabsState extends State<BaseTabs>
               child: TabBar(
                 controller: _tabController,
                 isScrollable: widget.isScrollable,
+                labelPadding: widget.labelPadding,
                 tabs: (widget.data.map(
                   (e) {
                     return TabItem(

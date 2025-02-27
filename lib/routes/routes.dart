@@ -120,6 +120,7 @@ import '../managers/news.dart';
 import '../managers/onboarding.dart';
 import '../managers/search.dart';
 import '../managers/signals.dart';
+import '../managers/stockDetail/stock.detail.dart';
 import '../managers/tools.dart';
 import '../managers/user.dart';
 import '../models/my_home_premium.dart';
@@ -148,6 +149,7 @@ import '../ui/legal/index.dart';
 import '../ui/onboarding/default_home.dart';
 import '../ui/onboarding/slides.dart';
 import '../ui/onboarding/splash.dart';
+import '../ui/stockDetail/index.dart';
 import '../ui/subscription/manager.dart';
 import '../ui/subscription/screens/purchased/purchased.dart';
 import '../ui/subscription/screens/view/plans.dart';
@@ -332,6 +334,15 @@ class Routes {
             String email = arguments?['email'];
 
             return AccountEmailVerificationIndex(email: email);
+          },
+        );
+      case StockDetailIndex.path:
+        return MaterialPageRoute(
+          builder: (context) {
+            final arguments = settings.arguments as Map<String, dynamic>?;
+            String symbol = arguments?['symbol'];
+
+            return StockDetailIndex(symbol: symbol);
           },
         );
 
@@ -525,6 +536,7 @@ class Routes {
       ChangeNotifierProvider(create: (_) => BlogsManager()),
       ChangeNotifierProvider(create: (_) => SubscriptionManager()),
       ChangeNotifierProvider(create: (_) => LegalInfoManager()),
+      ChangeNotifierProvider(create: (_) => StocksDetailManager()),
     ];
   }
 }
