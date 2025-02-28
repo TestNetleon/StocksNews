@@ -7,12 +7,12 @@
 
 // import '../../../widgets/spacer_horizontal.dart';
 
-// class StocksDetailRange extends StatelessWidget {
+// class SDRange extends StatelessWidget {
 //   final String title;
 //   final num startValue, endValue, mainValue;
 //   final String startString, endString;
 
-//   const StocksDetailRange({
+//   const SDRange({
 //     super.key,
 //     required this.title,
 //     required this.startValue,
@@ -137,12 +137,12 @@ import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import '../../../widgets/spacer_horizontal.dart';
 
-class StocksDetailRange extends StatelessWidget {
+class SDRange extends StatelessWidget {
   final String title;
   final num startValue, endValue, mainValue;
   final String startString, endString;
 
-  const StocksDetailRange({
+  const SDRange({
     super.key,
     required this.title,
     required this.startValue,

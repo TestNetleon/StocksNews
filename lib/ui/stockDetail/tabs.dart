@@ -9,13 +9,13 @@ import '../../managers/stockDetail/stock.detail.dart';
 import '../../utils/colors.dart';
 import 'menu_sheet.dart';
 
-class StocksDetailTabs extends StatelessWidget {
+class SDTabs extends StatelessWidget {
   final List<MarketResData>? tabs;
-  const StocksDetailTabs({super.key, this.tabs});
+  const SDTabs({super.key, this.tabs});
 
   @override
   Widget build(BuildContext context) {
-    StocksDetailManager manager = context.watch<StocksDetailManager>();
+    SDManager manager = context.watch<SDManager>();
 
     if (tabs?.isEmpty == true || tabs == null) {
       return SizedBox();
@@ -39,7 +39,7 @@ class StocksDetailTabs extends StatelessWidget {
                 Navigator.push(
                   context,
                   createRoute(
-                    StocksDetailMenuSheet(
+                    SDMenuSheet(
                       tabs: manager.data!.tabs!,
                     ),
                   ),

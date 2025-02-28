@@ -1,71 +1,161 @@
 import 'dart:convert';
 
-StocksDetailOverviewRes stocksDetailOverviewResFromJson(String str) =>
-    StocksDetailOverviewRes.fromJson(json.decode(str));
+SDOverviewRes stocksDetailOverviewResFromJson(String str) =>
+    SDOverviewRes.fromJson(json.decode(str));
 
-String stocksDetailOverviewResToJson(StocksDetailOverviewRes data) =>
+String stocksDetailOverviewResToJson(SDOverviewRes data) =>
     json.encode(data.toJson());
 
-class StocksDetailOverviewRes {
-  final StocksTickerDataRes? tickerData;
-  final StockScoreRes? stockScore;
+class SDOverviewRes {
+  final SDCompanyRes? companyInfo;
+  final SDStockScoreRes? stockScore;
+  final SDAiAnalysisRes? aiAnalysis;
 
-  StocksDetailOverviewRes({
-    this.tickerData,
+  SDOverviewRes({
+    this.companyInfo,
     this.stockScore,
+    this.aiAnalysis,
   });
 
-  factory StocksDetailOverviewRes.fromJson(Map<String, dynamic> json) =>
-      StocksDetailOverviewRes(
-        tickerData: json["ticker_data"] == null
+  factory SDOverviewRes.fromJson(Map<String, dynamic> json) => SDOverviewRes(
+        companyInfo: json["company_info"] == null
             ? null
-            : StocksTickerDataRes.fromJson(json["ticker_data"]),
+            : SDCompanyRes.fromJson(json["company_info"]),
         stockScore: json["stock_score"] == null
             ? null
-            : StockScoreRes.fromJson(json["stock_score"]),
+            : SDStockScoreRes.fromJson(json["stock_score"]),
+        aiAnalysis: json["ai_analysis"] == null
+            ? null
+            : SDAiAnalysisRes.fromJson(json["ai_analysis"]),
       );
 
   Map<String, dynamic> toJson() => {
-        "ticker_data": tickerData?.toJson(),
+        "company_info": companyInfo?.toJson(),
         "stock_score": stockScore?.toJson(),
+        "ai_analysis": aiAnalysis?.toJson(),
       };
 }
 
-class StockScoreRes {
-  final String? altmanZScore;
-  final String? piotroskiScore;
-  final String? mostRepeatedGrade;
+class SDAiAnalysisRes {
+  final String? title;
+  final List<RadarChartRes>? radarChart;
 
-  StockScoreRes({
+  SDAiAnalysisRes({
+    this.title,
+    this.radarChart,
+  });
+
+  factory SDAiAnalysisRes.fromJson(Map<String, dynamic> json) =>
+      SDAiAnalysisRes(
+        title: json["title"],
+        radarChart: json["radar_chart"] == null
+            ? []
+            : List<RadarChartRes>.from(
+                json["radar_chart"]!.map((x) => RadarChartRes.fromJson(x))),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "title": title,
+        "radar_chart": radarChart == null
+            ? []
+            : List<dynamic>.from(radarChart!.map((x) => x.toJson())),
+      };
+}
+
+class RadarChartRes {
+  final String? label;
+  final num? value;
+  final String? description;
+
+  RadarChartRes({
+    this.label,
+    this.value,
+    this.description,
+  });
+
+  factory RadarChartRes.fromJson(Map<String, dynamic> json) => RadarChartRes(
+        label: json["label"],
+        value: json["value"],
+        description: json["description"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "label": label,
+        "value": value,
+        "description": description,
+      };
+}
+
+class SDStockScoreRes {
+  final String? title;
+  final BaseKeyValueRes? altmanZScore;
+  final BaseKeyValueRes? piotroskiScore;
+  final BaseKeyValueRes? mostRepeatedGrade;
+
+  SDStockScoreRes({
+    this.title,
     this.altmanZScore,
     this.piotroskiScore,
     this.mostRepeatedGrade,
   });
 
-  factory StockScoreRes.fromJson(Map<String, dynamic> json) => StockScoreRes(
-        altmanZScore: json["altman_z_score"],
-        piotroskiScore: json["piotroski_score"],
-        mostRepeatedGrade: json["most_repeated_grade"],
+  factory SDStockScoreRes.fromJson(Map<String, dynamic> json) =>
+      SDStockScoreRes(
+        title: json["title"],
+        altmanZScore: json["altman_z_score"] == null
+            ? null
+            : BaseKeyValueRes.fromJson(json["altman_z_score"]),
+        piotroskiScore: json["piotroski_score"] == null
+            ? null
+            : BaseKeyValueRes.fromJson(json["piotroski_score"]),
+        mostRepeatedGrade: json["most_repeated_grade"] == null
+            ? null
+            : BaseKeyValueRes.fromJson(json["most_repeated_grade"]),
       );
 
   Map<String, dynamic> toJson() => {
-        "altman_z_score": altmanZScore,
-        "piotroski_score": piotroskiScore,
-        "most_repeated_grade": mostRepeatedGrade,
+        "title": title,
+        "altman_z_score": altmanZScore?.toJson(),
+        "piotroski_score": piotroskiScore?.toJson(),
+        "most_repeated_grade": mostRepeatedGrade?.toJson(),
       };
 }
 
-class StocksTickerDataRes {
-  final String? ceo;
-  final String? country;
-  final String? fullTimeEmployees;
-  final String? ipoDate;
-  final String? isIn;
-  final String? sector;
-  final String? sectorSlug;
-  final String? industry;
-  final String? industrySlug;
-  final String? website;
+class BaseKeyValueRes {
+  final String? title;
+  final String? value;
+  final String? slug;
+
+  BaseKeyValueRes({
+    this.title,
+    this.value,
+    this.slug,
+  });
+
+  factory BaseKeyValueRes.fromJson(Map<String, dynamic> json) =>
+      BaseKeyValueRes(
+        title: json["title"],
+        value: json["value"],
+        slug: json['slug'],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "title": title,
+        "value": value,
+        "slug": slug,
+      };
+}
+
+class SDCompanyRes {
+  final String? title;
+  final BaseKeyValueRes? ceo;
+  final BaseKeyValueRes? country;
+  final BaseKeyValueRes? fullTimeEmployees;
+  final BaseKeyValueRes? ipoDate;
+  final BaseKeyValueRes? isIn;
+  final BaseKeyValueRes? sector;
+  final BaseKeyValueRes? industry;
+  final BaseKeyValueRes? website;
   final String? description;
   final num? dayLow;
   final num? dayHigh;
@@ -73,16 +163,15 @@ class StocksTickerDataRes {
   final num? yearHigh;
   final num? currentPrice;
 
-  StocksTickerDataRes({
+  SDCompanyRes({
+    this.title,
     this.ceo,
     this.country,
     this.fullTimeEmployees,
     this.ipoDate,
     this.isIn,
     this.sector,
-    this.sectorSlug,
     this.industry,
-    this.industrySlug,
     this.website,
     this.description,
     this.dayLow,
@@ -92,18 +181,30 @@ class StocksTickerDataRes {
     this.currentPrice,
   });
 
-  factory StocksTickerDataRes.fromJson(Map<String, dynamic> json) =>
-      StocksTickerDataRes(
-        ceo: json["ceo"],
-        country: json["country"],
-        fullTimeEmployees: json["fullTimeEmployees"],
-        ipoDate: json["ipoDate"],
-        isIn: json["isIn"],
-        sector: json["sector"],
-        sectorSlug: json["sector_slug"],
-        industry: json["industry"],
-        industrySlug: json["industry_slug"],
-        website: json["website"],
+  factory SDCompanyRes.fromJson(Map<String, dynamic> json) => SDCompanyRes(
+        title: json["title"],
+        ceo: json["ceo"] == null ? null : BaseKeyValueRes.fromJson(json["ceo"]),
+        country: json["country"] == null
+            ? null
+            : BaseKeyValueRes.fromJson(json["country"]),
+        fullTimeEmployees: json["fullTimeEmployees"] == null
+            ? null
+            : BaseKeyValueRes.fromJson(json["fullTimeEmployees"]),
+        ipoDate: json["ipoDate"] == null
+            ? null
+            : BaseKeyValueRes.fromJson(json["ipoDate"]),
+        isIn: json["isIn"] == null
+            ? null
+            : BaseKeyValueRes.fromJson(json["isIn"]),
+        sector: json["sector"] == null
+            ? null
+            : BaseKeyValueRes.fromJson(json["sector"]),
+        industry: json["industry"] == null
+            ? null
+            : BaseKeyValueRes.fromJson(json["industry"]),
+        website: json["website"] == null
+            ? null
+            : BaseKeyValueRes.fromJson(json["website"]),
         description: json["description"],
         dayLow: json["dayLow"],
         dayHigh: json["dayHigh"],
@@ -113,16 +214,15 @@ class StocksTickerDataRes {
       );
 
   Map<String, dynamic> toJson() => {
-        "ceo": ceo,
-        "country": country,
-        "fullTimeEmployees": fullTimeEmployees,
-        "ipoDate": ipoDate,
-        "isIn": isIn,
-        "sector": sector,
-        "sector_slug": sectorSlug,
-        "industry": industry,
-        "industry_slug": industrySlug,
-        "website": website,
+        "title": title,
+        "ceo": ceo?.toJson(),
+        "country": country?.toJson(),
+        "fullTimeEmployees": fullTimeEmployees?.toJson(),
+        "ipoDate": ipoDate?.toJson(),
+        "isIn": isIn?.toJson(),
+        "sector": sector?.toJson(),
+        "industry": industry?.toJson(),
+        "website": website?.toJson(),
         "description": description,
         "dayLow": dayLow,
         "dayHigh": dayHigh,

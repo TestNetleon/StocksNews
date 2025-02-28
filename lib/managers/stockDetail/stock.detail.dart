@@ -15,7 +15,7 @@ import '../../routes/my_app.dart';
 import '../../utils/constants.dart';
 import '../user.dart';
 
-class StocksDetailManager extends ChangeNotifier {
+class SDManager extends ChangeNotifier {
   //MARK: Stock Detail Tab
   String? _error;
   String? get error => _error ?? Const.errSomethingWrong;
@@ -25,8 +25,8 @@ class StocksDetailManager extends ChangeNotifier {
 
   bool get isLoading => _status == Status.loading;
 
-  StocksDetailRes? _data;
-  StocksDetailRes? get data => _data;
+  SDRes? _data;
+  SDRes? get data => _data;
 
   setStatus(status) {
     _status = status;
@@ -52,8 +52,8 @@ class StocksDetailManager extends ChangeNotifier {
         case 0:
           _dataHistoricalC = null;
           notifyListeners();
-          getStocksDetailOverview();
-          getStocksDetailHistoricalC();
+          getSDOverview();
+          getSDHistoricalC();
 
           break;
         default:
@@ -61,7 +61,20 @@ class StocksDetailManager extends ChangeNotifier {
     }
   }
 
-  Future getStocksDetailTab(String symbol) async {
+  Future onSelectedTabRefresh() async {
+    switch (_selectedIndex) {
+      case 0:
+        _dataOverview = null;
+        _dataHistoricalC = null;
+        notifyListeners();
+        getSDOverview();
+        getSDHistoricalC();
+        break;
+      default:
+    }
+  }
+
+  Future getSDTab(String symbol) async {
     _data = null;
     _selectedIndex = -1;
     _selectedStock = symbol;
@@ -104,15 +117,15 @@ class StocksDetailManager extends ChangeNotifier {
 
   bool get isLoadingOverview => _statusOverview == Status.loading;
 
-  StocksDetailOverviewRes? _dataOverview;
-  StocksDetailOverviewRes? get dataOverview => _dataOverview;
+  SDOverviewRes? _dataOverview;
+  SDOverviewRes? get dataOverview => _dataOverview;
 
   setStatusOverview(status) {
     _statusOverview = status;
     notifyListeners();
   }
 
-  Future getStocksDetailOverview() async {
+  Future getSDOverview() async {
     if (_selectedStock == '') return;
     try {
       setStatusOverview(Status.loading);
@@ -152,15 +165,15 @@ class StocksDetailManager extends ChangeNotifier {
 
   bool get isLoadingHistoricalC => _statusHistoricalC == Status.loading;
 
-  StocksDetailHistoricalChartRes? _dataHistoricalC;
-  StocksDetailHistoricalChartRes? get dataHistoricalC => _dataHistoricalC;
+  SDHistoricalChartRes? _dataHistoricalC;
+  SDHistoricalChartRes? get dataHistoricalC => _dataHistoricalC;
 
   setStatusHistoricalC(status) {
     _statusHistoricalC = status;
     notifyListeners();
   }
 
-  Future getStocksDetailHistoricalC({String range = '1hour'}) async {
+  Future getSDHistoricalC({String range = '1hour'}) async {
     if (_selectedStock == '') return;
 
     try {

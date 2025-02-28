@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/managers/stockDetail/stock.detail.dart';
-import 'package:stocks_news_new/ui/base/base_scroll.dart';
 import 'package:stocks_news_new/ui/base/scaffold.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/custom/base_loader_container.dart';
@@ -29,13 +28,13 @@ class _StockDetailIndexState extends State<StockDetailIndex> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      context.read<StocksDetailManager>().getStocksDetailTab(widget.symbol);
+      context.read<SDManager>().getSDTab(widget.symbol);
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    StocksDetailManager manager = context.watch<StocksDetailManager>();
+    SDManager manager = context.watch<SDManager>();
     BaseTickerRes? tickerDetail = manager.data?.tickerDetail;
 
     return BaseScaffold(
@@ -53,22 +52,17 @@ class _StockDetailIndexState extends State<StockDetailIndex> {
         error: manager.error,
         showPreparingText: true,
         onRefresh: () {
-          manager.getStocksDetailTab(widget.symbol);
+          manager.getSDTab(widget.symbol);
         },
         child: Column(
           children: [
             if (manager.data?.tickerDetail != null)
-              StocksDetailHeader(data: manager.data!.tickerDetail!),
-            StocksDetailTabs(tabs: manager.data?.tabs),
-            Expanded(
-              child: BaseScroll(
-                margin: EdgeInsets.zero,
-                onRefresh: () async {},
-                children: [
-                  if (manager.selectedIndex == 0) StocksDetailOverview(),
-                ],
+              SDHeader(data: manager.data!.tickerDetail!),
+            SDTabs(tabs: manager.data?.tabs),
+            if (manager.selectedIndex == 0)
+              Expanded(
+                child: SDOverview(),
               ),
-            ),
           ],
         ),
       ),

@@ -536,7 +536,7 @@ class Routes {
       ChangeNotifierProvider(create: (_) => BlogsManager()),
       ChangeNotifierProvider(create: (_) => SubscriptionManager()),
       ChangeNotifierProvider(create: (_) => LegalInfoManager()),
-      ChangeNotifierProvider(create: (_) => StocksDetailManager()),
+      ChangeNotifierProvider(create: (_) => SDManager()),
     ];
   }
 }

@@ -9,13 +9,13 @@ import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 
-class StocksDetailMenuSheet extends StatelessWidget {
+class SDMenuSheet extends StatelessWidget {
   final List<MarketResData> tabs;
-  const StocksDetailMenuSheet({super.key, required this.tabs});
+  const SDMenuSheet({super.key, required this.tabs});
 
   @override
   Widget build(BuildContext context) {
-    StocksDetailManager manager = context.watch<StocksDetailManager>();
+    SDManager manager = context.watch<SDManager>();
     return BaseScaffold(
       appBar: BaseAppBar(showBack: true),
       body: ListView.separated(

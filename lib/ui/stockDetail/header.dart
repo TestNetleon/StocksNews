@@ -5,9 +5,9 @@ import 'package:stocks_news_new/utils/theme.dart';
 
 import '../../utils/colors.dart';
 
-class StocksDetailHeader extends StatelessWidget {
+class SDHeader extends StatelessWidget {
   final BaseTickerRes data;
-  const StocksDetailHeader({super.key, required this.data});
+  const SDHeader({super.key, required this.data});
 
   @override
   Widget build(BuildContext context) {

@@ -12,16 +12,14 @@ import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import '../../../utils/colors.dart';
 import '../../../utils/constants.dart';
 
-class StocksDetailHistoricalChart extends StatefulWidget {
-  const StocksDetailHistoricalChart({super.key});
+class SDHistoricalChart extends StatefulWidget {
+  const SDHistoricalChart({super.key});
 
   @override
-  State<StocksDetailHistoricalChart> createState() =>
-      _StocksDetailHistoricalChartState();
+  State<SDHistoricalChart> createState() => _SDHistoricalChartState();
 }
 
-class _StocksDetailHistoricalChartState
-    extends State<StocksDetailHistoricalChart> {
+class _SDHistoricalChartState extends State<SDHistoricalChart> {
   // final List<String> _ranges = ['1H', '1D', '1W', '1M', '1Y'];
 
   final List<MarketResData> _ranges = [
@@ -211,8 +209,8 @@ class _StocksDetailHistoricalChartState
 
   @override
   Widget build(BuildContext context) {
-    StocksDetailManager manager = context.watch<StocksDetailManager>();
-    StocksDetailHistoricalChartRes? chart = manager.dataHistoricalC;
+    SDManager manager = context.watch<SDManager>();
+    SDHistoricalChartRes? chart = manager.dataHistoricalC;
     bool hasData = manager.dataHistoricalC != null;
     return LayoutBuilder(builder: (context, constraints) {
       return Column(
@@ -300,7 +298,7 @@ class _StocksDetailHistoricalChartState
                         if (_selectedIndex != index) {
                           _selectedIndex = index;
                           setState(() {});
-                          manager.getStocksDetailHistoricalC(
+                          manager.getSDHistoricalC(
                             range: _ranges[index].slug ?? '',
                           );
                         }
@@ -308,7 +306,7 @@ class _StocksDetailHistoricalChartState
                       child: Text(
                         _ranges[index].title ?? '',
                         style: _selectedIndex == index
-                            ? styleBaseBold()
+                            ? styleBaseBold(color: ThemeColors.secondary120)
                             : styleBaseRegular(
                                 color: ThemeColors.neutral20,
                               ),

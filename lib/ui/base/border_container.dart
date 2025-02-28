@@ -1,0 +1,34 @@
+import 'package:flutter/material.dart';
+import 'package:stocks_news_new/utils/colors.dart';
+import 'package:stocks_news_new/utils/constants.dart';
+
+class BaseBorderContainer extends StatelessWidget {
+  final Widget? child;
+  final EdgeInsetsGeometry? padding;
+  final void Function()? onTap;
+  const BaseBorderContainer({
+    super.key,
+    this.child,
+    this.padding,
+    this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: padding ?? const EdgeInsets.all(8),
+      child: InkWell(
+        borderRadius: BorderRadius.circular(Pad.pad8),
+        onTap: onTap,
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(Pad.pad8),
+            border: Border.all(color: ThemeColors.neutral5),
+          ),
+          padding: EdgeInsets.all(Pad.pad16),
+          child: child,
+        ),
+      ),
+    );
+  }
+}

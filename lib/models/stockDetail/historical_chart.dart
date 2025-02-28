@@ -1,27 +1,25 @@
 import 'dart:convert';
 
-StocksDetailHistoricalChartRes stocksDetailHistoricalChartResFromJson(
-        String str) =>
-    StocksDetailHistoricalChartRes.fromJson(json.decode(str));
+SDHistoricalChartRes stocksDetailHistoricalChartResFromJson(String str) =>
+    SDHistoricalChartRes.fromJson(json.decode(str));
 
-String stocksDetailHistoricalChartResToJson(
-        StocksDetailHistoricalChartRes data) =>
+String stocksDetailHistoricalChartResToJson(SDHistoricalChartRes data) =>
     json.encode(data.toJson());
 
-class StocksDetailHistoricalChartRes {
+class SDHistoricalChartRes {
   final num? totalChange;
   final String? label;
 
   final List<HistoricalChartRes>? chartData;
 
-  StocksDetailHistoricalChartRes({
+  SDHistoricalChartRes({
     this.label,
     this.totalChange,
     this.chartData,
   });
 
-  factory StocksDetailHistoricalChartRes.fromJson(Map<String, dynamic> json) =>
-      StocksDetailHistoricalChartRes(
+  factory SDHistoricalChartRes.fromJson(Map<String, dynamic> json) =>
+      SDHistoricalChartRes(
         label: json['label'],
         totalChange: json["total_change"],
         chartData: json["chart_data"] == null
@@ -41,37 +39,37 @@ class StocksDetailHistoricalChartRes {
 
 class HistoricalChartRes {
   final DateTime date;
-  final num open;
-  final num low;
-  final num high;
+  // final num open;
+  // final num low;
+  // final num high;
+  // final num volume;
   final num close;
-  final num volume;
 
   HistoricalChartRes({
     required this.date,
-    required this.open,
-    required this.low,
-    required this.high,
+    // required this.open,
+    // required this.low,
+    // required this.high,
+    // required this.volume,
     required this.close,
-    required this.volume,
   });
 
   factory HistoricalChartRes.fromJson(Map<String, dynamic> json) =>
       HistoricalChartRes(
         date: DateTime.parse(json["date"]),
-        open: json["open"],
-        low: json["low"],
-        high: json["high"],
+        // open: json["open"],
+        // low: json["low"],
+        // high: json["high"],
+        // volume: json["volume"],
         close: json["close"],
-        volume: json["volume"],
       );
 
   Map<String, dynamic> toJson() => {
         "date": date.toIso8601String(),
-        "open": open,
-        "low": low,
-        "high": high,
+        // "open": open,
+        // "low": low,
+        // "high": high,
+        // "volume": volume,
         "close": close,
-        "volume": volume,
       };
 }
