@@ -8,6 +8,7 @@ import '../../routes/my_app.dart';
 class BaseBottomSheet {
   bottomSheet({
     required Widget child,
+    Color? barrierColor,
   }) {
     showModalBottomSheet(
       isScrollControlled: true,
@@ -19,7 +20,7 @@ class BaseBottomSheet {
         ),
       ),
       enableDrag: true,
-      barrierColor: ThemeColors.black,
+      barrierColor: barrierColor ?? ThemeColors.black,
       context: navigatorKey.currentContext!,
       backgroundColor: Colors.transparent,
       builder: (context) {

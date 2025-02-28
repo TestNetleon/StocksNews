@@ -6,6 +6,7 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/custom/base_loader_container.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import '../../../models/stockDetail/overview.dart';
+import 'ai_chart.dart';
 import 'chart.dart';
 import 'company.dart';
 import 'range.dart';
@@ -19,6 +20,8 @@ class SDOverview extends StatelessWidget {
     SDManager manager = context.watch<SDManager>();
     SDCompanyRes? companyInfo = manager.dataOverview?.companyInfo;
     SDStockScoreRes? stockScore = manager.dataOverview?.stockScore;
+    SDAiAnalysisRes? aiAnalysis = manager.dataOverview?.aiAnalysis;
+    ;
 
     bool hideRange = companyInfo?.dayHigh == null ||
         companyInfo?.dayLow == null ||
@@ -30,7 +33,7 @@ class SDOverview extends StatelessWidget {
       isLoading: manager.isLoadingOverview,
       error: manager.errorOverview,
       showPreparingText: true,
-      onRefresh: manager.getSDOverview,
+      onRefresh: manager.onSelectedTabRefresh,
       child: BaseScroll(
         margin: EdgeInsets.zero,
         onRefresh: manager.onSelectedTabRefresh,
@@ -72,6 +75,11 @@ class SDOverview extends StatelessWidget {
           //Historical Chart
           SDHistoricalChart(),
           SDCompanyBrief(companyInfo: companyInfo),
+          SDAiChart(
+            // data: aiAnalysis?.radarChart,
+            // title: aiAnalysis?.title,
+            aiAnalysis: aiAnalysis,
+          ),
           SDStocksScore(stockScore: stockScore),
         ],
       ),

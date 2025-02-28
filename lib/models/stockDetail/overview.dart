@@ -38,16 +38,21 @@ class SDOverviewRes {
 
 class SDAiAnalysisRes {
   final String? title;
+  final BaseKeyValueRes? recommendation;
   final List<RadarChartRes>? radarChart;
 
   SDAiAnalysisRes({
     this.title,
     this.radarChart,
+    this.recommendation,
   });
 
   factory SDAiAnalysisRes.fromJson(Map<String, dynamic> json) =>
       SDAiAnalysisRes(
         title: json["title"],
+        recommendation: json["recommendation"] == null
+            ? null
+            : BaseKeyValueRes.fromJson(json["recommendation"]),
         radarChart: json["radar_chart"] == null
             ? []
             : List<RadarChartRes>.from(
@@ -56,6 +61,7 @@ class SDAiAnalysisRes {
 
   Map<String, dynamic> toJson() => {
         "title": title,
+        "recommendation": recommendation?.toJson(),
         "radar_chart": radarChart == null
             ? []
             : List<dynamic>.from(radarChart!.map((x) => x.toJson())),
@@ -125,11 +131,13 @@ class BaseKeyValueRes {
   final String? title;
   final String? value;
   final String? slug;
+  final String? color;
 
   BaseKeyValueRes({
     this.title,
     this.value,
     this.slug,
+    this.color,
   });
 
   factory BaseKeyValueRes.fromJson(Map<String, dynamic> json) =>
@@ -137,12 +145,14 @@ class BaseKeyValueRes {
         title: json["title"],
         value: json["value"],
         slug: json['slug'],
+        color: json['color'],
       );
 
   Map<String, dynamic> toJson() => {
         "title": title,
         "value": value,
         "slug": slug,
+        "color": color,
       };
 }
 

@@ -56,6 +56,9 @@ class SDManager extends ChangeNotifier {
           getSDHistoricalC();
 
           break;
+        case 1:
+          getSDKeyStats();
+          break;
         default:
       }
     }
@@ -69,6 +72,9 @@ class SDManager extends ChangeNotifier {
         notifyListeners();
         getSDOverview();
         getSDHistoricalC();
+        break;
+      case 1:
+        getSDKeyStats();
         break;
       default:
     }
@@ -205,6 +211,49 @@ class SDManager extends ChangeNotifier {
       Utils().showLog('Error in ${Apis.stockDetailHistoricalC}: $e');
     } finally {
       setStatusHistoricalC(Status.loaded);
+    }
+  }
+
+  //MARK: Stock KeyStats
+  String? _errorKeyStats;
+  String? get errorKeyStats => _errorKeyStats ?? Const.errSomethingWrong;
+
+  Status _statusKeyStats = Status.ideal;
+  Status get statusKeyStats => _statusKeyStats;
+
+  bool get isLoadingKeyStats => _statusKeyStats == Status.loading;
+
+  setStatusKeyStats(status) {
+    _statusKeyStats = status;
+    notifyListeners();
+  }
+
+  Future getSDKeyStats() async {
+    if (_selectedStock == '') return;
+
+    try {
+      setStatusKeyStats(Status.loading);
+
+      UserManager provider = navigatorKey.currentContext!.read<UserManager>();
+      Map request = {
+        'token': provider.user?.token ?? '',
+        'symbol': _selectedStock,
+      };
+
+      ApiResponse response = await apiRequest(
+        url: Apis.stockDetailHistoricalC,
+        request: request,
+      );
+      if (response.status) {
+        _errorKeyStats = null;
+      } else {
+        _errorKeyStats = response.message;
+      }
+    } catch (e) {
+      _errorKeyStats = Const.errSomethingWrong;
+      Utils().showLog('Error in ${Apis.stockDetailHistoricalC}: $e');
+    } finally {
+      setStatusKeyStats(Status.loaded);
     }
   }
 }

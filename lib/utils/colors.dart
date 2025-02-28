@@ -144,4 +144,8 @@ class ThemeColors {
   static const error120 = Color(0xFFFF4D4C);
   static const error = Color(0xFFFC7272);
   static const error10 = Color(0xFFFFF1F1);
+
+  static const orange120 = Color(0xFFFF7A00);
+  static const orange = Color(0xFFFFA500);
+  static const orange10 = Color(0xFFFFF4E5);
 }
