@@ -37,13 +37,17 @@ class StocksDetailTabs extends StatelessWidget {
                   return;
                 }
                 Navigator.push(
-                    context,
-                    createRoute(StocksDetailMenuSheet(
+                  context,
+                  createRoute(
+                    StocksDetailMenuSheet(
                       tabs: manager.data!.tabs!,
-                    )));
+                    ),
+                  ),
+                );
               },
               child: Container(
-                margin: EdgeInsets.symmetric(horizontal: 16),
+                color: Colors.white,
+                padding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
                 child: Image.asset(
                   Images.menu,
                   height: 18,

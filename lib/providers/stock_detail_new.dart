@@ -3113,7 +3113,7 @@ class StockDetailProviderNew extends ChangeNotifier {
             };
 
       ApiResponse response = await apiRequest(
-        url: Apis.detailOverview,
+        url: Apis.stockDetailOverview,
         request: request,
         showProgress: false,
         removeForceLogin: true,

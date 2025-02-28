@@ -30,7 +30,7 @@ class ErrorDisplayNewWidget extends StatelessWidget {
           const SpacerVertical(),
           HtmlWidget(
             error ?? Const.errSomethingWrong,
-            textStyle: stylePTSansBold(color: ThemeColors.black),
+            textStyle: styleBaseBold(color: ThemeColors.black),
           ),
           const SpacerVertical(),
           Visibility(

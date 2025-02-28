@@ -65,6 +65,8 @@ class Apis {
 
   //Stock Detail
   static const stockDetailTab = '/stock-tab-bar';
+  static const stockDetailOverview = "/stock-detail-overview";
+  static const stockDetailHistoricalC = "/stock-historical-chart";
 
 //----------------------------------------------
 
@@ -222,7 +224,6 @@ class Apis {
   static const stockDetailSocial = "/stock-detail-social";
   static const detailOwnership = "/stock-detail-ownership";
   static const detailCompetitor = "/stock-detail-competitior";
-  static const detailOverview = "/stock-detail-overview";
   static const stockDetailInsider = "/stock-detail-insider";
   static const detailFinancial = "/stock-detail-financial";
   static const stockDetailMergers = "/stock-detail-mergers";
