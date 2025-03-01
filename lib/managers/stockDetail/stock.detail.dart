@@ -10,6 +10,7 @@ import '../../api/api_requester.dart';
 import '../../api/api_response.dart';
 import '../../api/apis.dart';
 import '../../models/stockDetail/analyst_forecast.dart';
+import '../../models/stockDetail/earning.dart';
 import '../../models/stockDetail/historical_chart.dart';
 import '../../models/stockDetail/news.dart';
 import '../../models/stockDetail/overview.dart';
@@ -31,6 +32,8 @@ class SDManager extends ChangeNotifier {
     _dataStocksAnalysis = null;
     _dataAnalystForecast = null;
     _openAnalystForecast = -1;
+    _dataEarnings = null;
+    _openEarnings = -1;
     notifyListeners();
   }
 
@@ -101,6 +104,12 @@ class SDManager extends ChangeNotifier {
           }
           break;
 
+        case 6:
+          if (_dataEarnings == null) {
+            getSDEarnings();
+          }
+          break;
+
         default:
       }
     }
@@ -128,6 +137,10 @@ class SDManager extends ChangeNotifier {
 
       case 5:
         getSDLatestNews(reset: true);
+        break;
+
+      case 6:
+        getSDEarnings(reset: true);
         break;
 
       default:
@@ -484,6 +497,68 @@ class SDManager extends ChangeNotifier {
       Utils().showLog('Error in ${Apis.sdLatestNews}: $e');
     } finally {
       setStatusLatestNews(Status.loaded);
+    }
+  }
+
+  //MARK: Earnings
+  String? _errorEarnings;
+  String? get errorEarnings => _errorEarnings ?? Const.errSomethingWrong;
+
+  Status _statusEarnings = Status.ideal;
+  Status get statusEarnings => _statusEarnings;
+
+  bool get isLoadingEarnings => _statusEarnings == Status.loading;
+
+  SDEarningsRes? _dataEarnings;
+  SDEarningsRes? get dataEarnings => _dataEarnings;
+
+  setStatusEarnings(status) {
+    _statusEarnings = status;
+    notifyListeners();
+  }
+
+  int _openEarnings = -1;
+  int get openEarnings => _openEarnings;
+
+  openEarningsIndex(index) {
+    _openEarnings = index;
+    notifyListeners();
+  }
+
+  Future getSDEarnings({
+    bool reset = false,
+  }) async {
+    if (_selectedStock == '') return;
+    if (reset) {
+      _dataEarnings = null;
+      _openEarnings = -1;
+    }
+    try {
+      setStatusEarnings(Status.loading);
+
+      UserManager provider = navigatorKey.currentContext!.read<UserManager>();
+      Map request = {
+        'token': provider.user?.token ?? '',
+        'symbol': _selectedStock,
+      };
+
+      ApiResponse response = await apiRequest(
+        url: Apis.sdEarnings,
+        request: request,
+      );
+      if (response.status) {
+        _dataEarnings = SDEarningsResFromJson(jsonEncode(response.data));
+        _errorEarnings = null;
+      } else {
+        _dataEarnings = null;
+        _errorEarnings = response.message;
+      }
+    } catch (e) {
+      _dataEarnings = null;
+      _errorEarnings = Const.errSomethingWrong;
+      Utils().showLog('Error in ${Apis.sdEarnings}: $e');
+    } finally {
+      setStatusEarnings(Status.loaded);
     }
   }
 }

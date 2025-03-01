@@ -133,6 +133,7 @@ class BaseKeyValueRes {
   final dynamic value;
   final String? slug;
   final String? color;
+  final String? other;
 
   BaseKeyValueRes({
     this.title,
@@ -140,6 +141,7 @@ class BaseKeyValueRes {
     this.value,
     this.slug,
     this.color,
+    this.other,
   });
 
   factory BaseKeyValueRes.fromJson(Map<String, dynamic> json) =>
@@ -149,6 +151,7 @@ class BaseKeyValueRes {
         value: json["value"],
         slug: json['slug'],
         color: json['color'],
+        other: json['other'],
       );
 
   Map<String, dynamic> toJson() => {
@@ -156,6 +159,7 @@ class BaseKeyValueRes {
         'sub_title': subTitle,
         "value": value,
         "slug": slug,
+        'other': other,
         "color": color,
       };
 }

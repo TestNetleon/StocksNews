@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:stocks_news_new/ui/base/heading.dart';
-import 'package:stocks_news_new/ui/stockDetail/widgets/container.dart';
+import 'package:stocks_news_new/ui/stockDetail/extra/container.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
