@@ -42,6 +42,7 @@ class SDManager extends ChangeNotifier {
     _openInsiderTrades = -1;
     _dataCompetitors = null;
     _openCompetitors = -1;
+    _dataFinancials = null;
     notifyListeners();
   }
 
@@ -73,6 +74,7 @@ class SDManager extends ChangeNotifier {
 
 //MARK: Common TabChange
   onTabChange(int index) {
+    Utils().showLog('--Index--$index');
     if (_selectedIndex != index) {
       _selectedIndex = index;
       _selectedTab = _data?.tabs?[index];
@@ -136,6 +138,12 @@ class SDManager extends ChangeNotifier {
           }
           break;
 
+        case 12:
+          if (_dataFinancials == null) {
+            getSDFinancials();
+          }
+          break;
+
         default:
       }
     }
@@ -179,6 +187,10 @@ class SDManager extends ChangeNotifier {
 
       case 9:
         getSDCompetitors(reset: true);
+        break;
+
+      case 12:
+        getSDFinancials(reset: true);
         break;
 
       default:
@@ -785,6 +797,60 @@ class SDManager extends ChangeNotifier {
       Utils().showLog('Error in ${Apis.sdCompetitors}: $e');
     } finally {
       setStatusCompetitors(Status.loaded);
+    }
+  }
+
+  //MARK: Financial
+  String? _errorFinancial;
+  String? get errorFinancial => _errorFinancial ?? Const.errSomethingWrong;
+
+  Status _statusFinancial = Status.ideal;
+  Status get statusFinancial => _statusFinancial;
+
+  bool get isLoadingFinancial => _statusFinancial == Status.loading;
+
+  List<Map<String, dynamic>>? _dataFinancials;
+  List<Map<String, dynamic>>? get dataFinancials => _dataFinancials;
+  setStatusFinancials(status) {
+    _statusFinancial = status;
+    notifyListeners();
+  }
+
+  Future getSDFinancials({
+    bool reset = false,
+  }) async {
+    if (_selectedStock == '') return;
+    if (reset) {
+      //data clear
+    }
+    try {
+      setStatusFinancials(Status.loading);
+
+      UserManager provider = navigatorKey.currentContext!.read<UserManager>();
+      Map request = {
+        'token': provider.user?.token ?? '',
+        'symbol': _selectedStock,
+      };
+
+      ApiResponse response = await apiRequest(
+        url: Apis.sdFinancials,
+        request: request,
+      );
+      if (response.status) {
+        _dataFinancials = List<Map<String, dynamic>>.from(
+            response.data?['data']?['finance_statement'] ?? []);
+
+        _errorCompetitors = null;
+      } else {
+        _dataFinancials = null;
+        _errorCompetitors = response.message;
+      }
+    } catch (e) {
+      _dataFinancials = null;
+      _errorCompetitors = Const.errSomethingWrong;
+      Utils().showLog('Error in ${Apis.sdFinancials}: $e');
+    } finally {
+      setStatusFinancials(Status.loaded);
     }
   }
 }

@@ -11,6 +11,7 @@ import 'analysis/stock/stock_analysis.dart';
 import 'competitors/index.dart';
 import 'dividents/index.dart';
 import 'earnings/index.dart';
+import 'financials/index.dart';
 import 'forecast/analyst_forecast.dart';
 import 'header.dart';
 import 'insiderTrades/index.dart';
@@ -102,6 +103,10 @@ class _StockDetailIndexState extends State<StockDetailIndex> {
             if (manager.selectedIndex == 9)
               Expanded(
                 child: SDCompetitors(),
+              ),
+            if (manager.selectedIndex == 12)
+              Expanded(
+                child: SDFinancials(),
               ),
           ],
         ),
