@@ -64,9 +64,11 @@ class Apis {
   static const checkPhoneExist = '/check-phone-exist';
 
   //Stock Detail
-  static const stockDetailTab = '/stock-tab-bar';
-  static const stockDetailOverview = "/stock-detail-overview";
-  static const stockDetailHistoricalC = "/stock-historical-chart";
+  static const sdTab = '/stock-tab-bar';
+  static const sdOverview = "/stock-detail-overview";
+  static const sdHistoricalC = "/stock-historical-chart";
+  static const sdKeyStats = '/stock-detail-key-stats';
+  static const sdStocksAnalysis = '/stock-analysis';
 
 //----------------------------------------------
 

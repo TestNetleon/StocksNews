@@ -129,7 +129,7 @@ class SDStockScoreRes {
 
 class BaseKeyValueRes {
   final String? title;
-  final String? value;
+  final dynamic value;
   final String? slug;
   final String? color;
 

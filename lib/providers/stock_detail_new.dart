@@ -2571,7 +2571,7 @@ class StockDetailProviderNew extends ChangeNotifier {
 
       // Make the API request
       ApiResponse response = await apiRequest(
-        url: Apis.stockDetailTab,
+        url: Apis.sdTab,
         formData: request,
         showProgress: showProgress,
       );
@@ -3113,7 +3113,7 @@ class StockDetailProviderNew extends ChangeNotifier {
             };
 
       ApiResponse response = await apiRequest(
-        url: Apis.stockDetailOverview,
+        url: Apis.sdOverview,
         request: request,
         showProgress: false,
         removeForceLogin: true,

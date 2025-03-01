@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/models/market/market_res.dart';
+import 'package:stocks_news_new/models/stockDetail/key_stats.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 
 import '../../api/api_requester.dart';
@@ -10,12 +11,25 @@ import '../../api/api_response.dart';
 import '../../api/apis.dart';
 import '../../models/stockDetail/historical_chart.dart';
 import '../../models/stockDetail/overview.dart';
+import '../../models/stockDetail/stock_analysis.dart';
 import '../../models/stockDetail/tabs.dart';
 import '../../routes/my_app.dart';
 import '../../utils/constants.dart';
 import '../user.dart';
 
 class SDManager extends ChangeNotifier {
+//MARK: Clear All
+  clearAllData() {
+    _data = null;
+    _selectedIndex = -1;
+    _selectedStock = null;
+    _dataOverview = null;
+    _dataHistoricalC = null;
+    _dataKeyStats = null;
+    _dataStocksAnalysis = null;
+    notifyListeners();
+  }
+
   //MARK: Stock Detail Tab
   String? _error;
   String? get error => _error ?? Const.errSomethingWrong;
@@ -50,14 +64,27 @@ class SDManager extends ChangeNotifier {
 
       switch (index) {
         case 0:
-          _dataHistoricalC = null;
-          notifyListeners();
-          getSDOverview();
-          getSDHistoricalC();
+          if (_dataOverview == null) {
+            getSDOverview();
+          }
+
+          if (_dataHistoricalC == null) {
+            getSDHistoricalC();
+          }
+          break;
+
+        case 1:
+          if (_dataKeyStats == null) {
+            getSDKeyStats();
+          }
 
           break;
-        case 1:
-          getSDKeyStats();
+
+        case 2:
+          if (_dataStocksAnalysis == null) {
+            getSDStocksAnalysis();
+          }
+
           break;
         default:
       }
@@ -67,22 +94,23 @@ class SDManager extends ChangeNotifier {
   Future onSelectedTabRefresh() async {
     switch (_selectedIndex) {
       case 0:
-        _dataOverview = null;
-        _dataHistoricalC = null;
-        notifyListeners();
-        getSDOverview();
-        getSDHistoricalC();
+        getSDOverview(reset: true);
+        getSDHistoricalC(reset: true);
         break;
+
       case 1:
-        getSDKeyStats();
+        getSDKeyStats(reset: true);
+        break;
+
+      case 2:
+        getSDStocksAnalysis(reset: true);
         break;
       default:
     }
   }
 
   Future getSDTab(String symbol) async {
-    _data = null;
-    _selectedIndex = -1;
+    clearAllData();
     _selectedStock = symbol;
     if (symbol == '') return;
     try {
@@ -94,7 +122,7 @@ class SDManager extends ChangeNotifier {
       };
 
       ApiResponse response = await apiRequest(
-        url: Apis.stockDetailTab,
+        url: Apis.sdTab,
         request: request,
       );
       if (response.status) {
@@ -108,7 +136,7 @@ class SDManager extends ChangeNotifier {
     } catch (e) {
       _data = null;
       _error = Const.errSomethingWrong;
-      Utils().showLog('Error in ${Apis.stockDetailTab}: $e');
+      Utils().showLog('Error in ${Apis.sdTab}: $e');
     } finally {
       setStatus(Status.loaded);
     }
@@ -131,8 +159,10 @@ class SDManager extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future getSDOverview() async {
+  Future getSDOverview({bool reset = false}) async {
     if (_selectedStock == '') return;
+    if (reset) _dataOverview = null;
+
     try {
       setStatusOverview(Status.loading);
       UserManager provider = navigatorKey.currentContext!.read<UserManager>();
@@ -142,7 +172,7 @@ class SDManager extends ChangeNotifier {
       };
 
       ApiResponse response = await apiRequest(
-        url: Apis.stockDetailOverview,
+        url: Apis.sdOverview,
         request: request,
       );
       if (response.status) {
@@ -156,7 +186,7 @@ class SDManager extends ChangeNotifier {
     } catch (e) {
       _dataOverview = null;
       _errorOverview = Const.errSomethingWrong;
-      Utils().showLog('Error in ${Apis.stockDetailOverview}: $e');
+      Utils().showLog('Error in ${Apis.sdOverview}: $e');
     } finally {
       setStatusOverview(Status.loaded);
     }
@@ -179,8 +209,9 @@ class SDManager extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future getSDHistoricalC({String range = '1hour'}) async {
+  Future getSDHistoricalC({String range = '1hour', bool reset = false}) async {
     if (_selectedStock == '') return;
+    if (reset) _dataHistoricalC = null;
 
     try {
       setStatusHistoricalC(Status.loading);
@@ -193,7 +224,7 @@ class SDManager extends ChangeNotifier {
       };
 
       ApiResponse response = await apiRequest(
-        url: Apis.stockDetailHistoricalC,
+        url: Apis.sdHistoricalC,
         request: request,
         showProgress: _dataHistoricalC != null,
       );
@@ -208,7 +239,7 @@ class SDManager extends ChangeNotifier {
     } catch (e) {
       _dataHistoricalC = null;
       _errorHistoricalC = Const.errSomethingWrong;
-      Utils().showLog('Error in ${Apis.stockDetailHistoricalC}: $e');
+      Utils().showLog('Error in ${Apis.sdHistoricalC}: $e');
     } finally {
       setStatusHistoricalC(Status.loaded);
     }
@@ -223,13 +254,17 @@ class SDManager extends ChangeNotifier {
 
   bool get isLoadingKeyStats => _statusKeyStats == Status.loading;
 
+  SdKeyStatsRes? _dataKeyStats;
+  SdKeyStatsRes? get dataKeyStats => _dataKeyStats;
+
   setStatusKeyStats(status) {
     _statusKeyStats = status;
     notifyListeners();
   }
 
-  Future getSDKeyStats() async {
+  Future getSDKeyStats({bool reset = false}) async {
     if (_selectedStock == '') return;
+    if (reset) _dataKeyStats = null;
 
     try {
       setStatusKeyStats(Status.loading);
@@ -241,19 +276,74 @@ class SDManager extends ChangeNotifier {
       };
 
       ApiResponse response = await apiRequest(
-        url: Apis.stockDetailHistoricalC,
+        url: Apis.sdKeyStats,
         request: request,
       );
       if (response.status) {
+        _dataKeyStats = sdKeyStatsResFromJson(jsonEncode(response.data));
         _errorKeyStats = null;
       } else {
         _errorKeyStats = response.message;
+        _dataKeyStats = null;
       }
     } catch (e) {
       _errorKeyStats = Const.errSomethingWrong;
-      Utils().showLog('Error in ${Apis.stockDetailHistoricalC}: $e');
+      _dataKeyStats = null;
+      Utils().showLog('Error in ${Apis.sdKeyStats}: $e');
     } finally {
       setStatusKeyStats(Status.loaded);
+    }
+  }
+
+  //MARK: Stock Analysis
+  String? _errorStocksAnalysis;
+  String? get errorStocksAnalysis =>
+      _errorStocksAnalysis ?? Const.errSomethingWrong;
+
+  Status _statusStocksAnalysis = Status.ideal;
+  Status get statusStocksAnalysis => _statusStocksAnalysis;
+
+  bool get isLoadingStocksAnalysis => _statusStocksAnalysis == Status.loading;
+
+  SDStocksAnalysisRes? _dataStocksAnalysis;
+  SDStocksAnalysisRes? get dataStocksAnalysis => _dataStocksAnalysis;
+
+  setStatusStocksAnalysis(status) {
+    _statusStocksAnalysis = status;
+    notifyListeners();
+  }
+
+  Future getSDStocksAnalysis({bool reset = false}) async {
+    if (_selectedStock == '') return;
+    if (reset) _dataStocksAnalysis = null;
+
+    try {
+      setStatusStocksAnalysis(Status.loading);
+
+      UserManager provider = navigatorKey.currentContext!.read<UserManager>();
+      Map request = {
+        'token': provider.user?.token ?? '',
+        'symbol': _selectedStock,
+      };
+
+      ApiResponse response = await apiRequest(
+        url: Apis.sdStocksAnalysis,
+        request: request,
+      );
+      if (response.status) {
+        _dataStocksAnalysis =
+            sdStocksAnalysisResFromJson(jsonEncode(response.data));
+        _errorStocksAnalysis = null;
+      } else {
+        _errorStocksAnalysis = response.message;
+        _dataStocksAnalysis = null;
+      }
+    } catch (e) {
+      _errorStocksAnalysis = Const.errSomethingWrong;
+      _dataStocksAnalysis = null;
+      Utils().showLog('Error in ${Apis.sdStocksAnalysis}: $e');
+    } finally {
+      setStatusStocksAnalysis(Status.loaded);
     }
   }
 }

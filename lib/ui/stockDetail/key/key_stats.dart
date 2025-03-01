@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/managers/stockDetail/stock.detail.dart';
+import 'package:stocks_news_new/models/stockDetail/overview.dart';
 import 'package:stocks_news_new/ui/base/base_list_divider.dart';
 import 'package:stocks_news_new/widgets/custom/base_loader_container.dart';
 import 'package:stocks_news_new/widgets/custom/refresh_indicator.dart';
@@ -15,7 +16,7 @@ class SDKeyStats extends StatelessWidget {
   Widget build(BuildContext context) {
     SDManager manager = context.watch<SDManager>();
     return BaseLoaderContainer(
-      hasData: !manager.isLoadingKeyStats,
+      hasData: manager.dataKeyStats != null,
       isLoading: manager.isLoadingKeyStats,
       error: manager.errorKeyStats,
       onRefresh: manager.onSelectedTabRefresh,
@@ -24,6 +25,11 @@ class SDKeyStats extends StatelessWidget {
         onRefresh: manager.onSelectedTabRefresh,
         child: ListView.separated(
           itemBuilder: (context, index) {
+            BaseKeyValueRes? data = manager.dataKeyStats?.data?[index];
+            if (data == null) {
+              return SizedBox();
+            }
+
             return Container(
               padding: EdgeInsets.symmetric(
                 horizontal: Pad.pad16,
@@ -32,13 +38,23 @@ class SDKeyStats extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    'Day High',
-                    style: styleBaseRegular(color: ThemeColors.neutral40),
+                  Flexible(
+                    child: Text(
+                      data.title ?? '',
+                      style: styleBaseRegular(color: ThemeColors.neutral40),
+                    ),
                   ),
                   Text(
-                    '\$24.44',
-                    style: styleBaseBold(),
+                    '${data.value ?? ''}',
+                    style: styleBaseBold(
+                      color:
+                          (data.title == 'Day Low' || data.title == 'Year Low')
+                              ? ThemeColors.error120
+                              : (data.title == 'Day High' ||
+                                      data.title == 'Year High')
+                                  ? ThemeColors.success120
+                                  : ThemeColors.black,
+                    ),
                   ),
                 ],
               ),
@@ -47,7 +63,7 @@ class SDKeyStats extends StatelessWidget {
           separatorBuilder: (context, index) {
             return BaseListDivider();
           },
-          itemCount: 60,
+          itemCount: manager.dataKeyStats?.data?.length ?? 0,
         ),
       ),
     );
