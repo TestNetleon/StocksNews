@@ -10,7 +10,7 @@ import '../../api/api_requester.dart';
 import '../../api/api_response.dart';
 import '../../api/apis.dart';
 import '../../models/stockDetail/analyst_forecast.dart';
-import '../../models/stockDetail/dividents.dart';
+import '../../models/stockDetail/dividends.dart';
 import '../../models/stockDetail/earning.dart';
 import '../../models/stockDetail/historical_chart.dart';
 import '../../models/stockDetail/news.dart';

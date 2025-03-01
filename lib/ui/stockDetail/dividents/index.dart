@@ -2,15 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/managers/stockDetail/stock.detail.dart';
 import 'package:stocks_news_new/ui/base/base_scroll.dart';
-import 'package:stocks_news_new/ui/stockDetail/earnings/estimates.dart';
-import 'package:stocks_news_new/ui/stockDetail/earnings/history.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/custom/base_loader_container.dart';
 import 'package:stocks_news_new/widgets/custom_gridview.dart';
-
-import '../../../models/stockDetail/earning.dart';
+import '../../../models/stockDetail/dividends.dart';
 import '../../../models/stockDetail/overview.dart';
 import '../extra/top.dart';
+import 'history.dart';
 
 class SDDividends extends StatelessWidget {
   const SDDividends({super.key});
@@ -21,8 +19,8 @@ class SDDividends extends StatelessWidget {
 
     List<BaseKeyValueRes>? top = manager.dataDividends?.top;
 
-    SDEpsEstimatesRes? epsEstimates = manager.dataEarnings?.epsEstimates;
-    SDEarningHistoryRes? earningHistory = manager.dataEarnings?.earningHistory;
+    DividendsRes? dividendHistory = manager.dataDividends?.dividendHistory;
+    // SDEarningHistoryRes? earningHistory = manager.dataEarnings?.earningHistory;
 
     return BaseLoaderContainer(
       hasData: manager.dataDividends != null,
@@ -50,6 +48,7 @@ class SDDividends extends StatelessWidget {
               },
             ),
           ),
+          SDDividendsHistory(dividendHistory: dividendHistory),
           // SDDividendsHistory(earningHistory: earningHistory),
           // SDDividendsEstimates(epsEstimates: epsEstimates),
         ],

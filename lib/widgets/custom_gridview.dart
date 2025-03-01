@@ -43,7 +43,7 @@ class CustomGridView extends StatelessWidget {
         );
       },
       separatorBuilder: (context, index) {
-        return SizedBox(height: (paddingVertical * 1.2).sp);
+        return SizedBox(height: (paddingVertical * 1.2));
       },
       itemCount: ((length / 2) + (length % 2)).toInt(),
     );
