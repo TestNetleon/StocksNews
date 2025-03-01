@@ -179,55 +179,53 @@ class ToolsCompareTable extends StatelessWidget {
 
     switch (rowIndex) {
       case 0:
-        return '${ticker.overallPercent}';
+        return '${ticker.overallPercent ?? '-'}';
       case 1:
-        return '${ticker.fundamentalPercent}';
+        return '${ticker.fundamentalPercent ?? '-'}';
       case 2:
-        return '${ticker.shortTermPercent}';
+        return '${ticker.shortTermPercent ?? '-'}';
       case 3:
-        return '${ticker.longTermPercent}';
+        return '${ticker.longTermPercent ?? '-'}';
       case 4:
-        return '${ticker.analystRankingPercent}';
+        return '${ticker.analystRankingPercent ?? '-'}';
       case 5:
-        return '${ticker.valuationPercent}';
-      // case 6:
-      //   return '${ticker.sentimentPercent}';
+        return '${ticker.valuationPercent ?? '-'}';
       case 6:
-        return '${ticker.price}';
+        return ticker.displayPrice ?? '-';
       case 7:
-        return '${ticker.change}';
+        return ticker.displayChange ?? '-';
       case 8:
-        return '${ticker.changesPercentage}';
+        return '${ticker.changesPercentage ?? '-'}';
       case 9:
-        return '${ticker.dayLow}';
+        return ticker.dayLow ?? '-';
       case 10:
-        return '${ticker.dayHigh}';
+        return ticker.dayHigh ?? '-';
       case 11:
-        return '${ticker.yearLow}';
+        return ticker.yearLow ?? '-';
       case 12:
-        return '${ticker.yearHigh}';
+        return ticker.yearHigh ?? '-';
       case 13:
-        return '${ticker.mktCap}';
+        return ticker.mktCap ?? '-';
       case 14:
-        return '${ticker.priceAvg50}';
+        return ticker.priceAvg50 ?? '-';
       case 15:
-        return '${ticker.priceAvg200}';
+        return ticker.priceAvg200 ?? '-';
       case 16:
-        return '${ticker.exchange}';
+        return ticker.exchange ?? '-';
       case 17:
-        return '${ticker.volume}';
+        return ticker.volume ?? '-';
       case 18:
-        return '${ticker.avgVolume}';
+        return ticker.avgVolume ?? '-';
       case 19:
-        return '${ticker.open}';
+        return ticker.open ?? '-';
       case 20:
-        return '${ticker.previousClose}';
+        return ticker.previousClose ?? '-';
       case 21:
-        return '${ticker.eps}';
+        return ticker.eps ?? '-';
       case 22:
-        return '${ticker.pe}';
+        return '${ticker.pe ?? '-'}';
       case 23:
-        return '${ticker.earningsAnnouncement}';
+        return ticker.earningsAnnouncement ?? '-';
       default:
         return '-';
     }

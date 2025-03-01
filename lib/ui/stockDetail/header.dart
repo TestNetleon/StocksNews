@@ -21,11 +21,11 @@ class SDHeader extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  data.price ?? '',
+                  data.displayPrice ?? '',
                   style: styleBaseBold(fontSize: 28),
                 ),
                 Visibility(
-                  visible: data.change != null,
+                  visible: data.displayChange != null,
                   child: RichText(
                     text: TextSpan(
                       children: [
@@ -48,7 +48,7 @@ class SDHeader extends StatelessWidget {
                             ),
                           ),
                         TextSpan(
-                          text: data.change,
+                          text: data.displayChange,
                           style: styleBaseSemiBold(
                             fontSize: 13,
                             color: (data.changesPercentage ?? 0) >= 0

@@ -143,9 +143,10 @@ class BaseStockItem extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       Visibility(
-                        visible: data.price != null && data.price != '',
+                        visible: data.displayPrice != null &&
+                            data.displayPrice != '',
                         child: Text(
-                          data.price ?? '',
+                          data.displayPrice ?? '',
                           style: styleBaseBold(fontSize: 16),
                         ),
                       ),
@@ -167,14 +168,15 @@ class BaseStockItem extends StatelessWidget {
                         ),
                       ),
                       Visibility(
-                        visible: data.change != null && data.change != '',
+                        visible: data.displayChange != null &&
+                            data.displayChange != '',
                         child: Container(
                           margin: EdgeInsets.only(top: 2),
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Text(
-                                data.change ?? '',
+                                data.displayChange ?? '',
                                 style: styleBaseSemiBold(
                                   fontSize: 13,
                                   color: (data.changesPercentage ?? 0) < 0

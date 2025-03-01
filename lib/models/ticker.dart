@@ -10,14 +10,14 @@ String baseTickerResToJson(List<BaseTickerRes> data) =>
 class BaseTickerRes {
   final String? id;
   final String? symbol;
-  final String? price;
+  final String? displayPrice;
+  final String? displayChange;
+  final num? changesPercentage;
   final String? image;
   final String? name;
-  final String? change;
   final String? type;
   final String? investmentValue;
   final num? quantity;
-  final num? changesPercentage;
   final num? mentionCount;
   final String? mentionDate;
   int? isAlertAdded;
@@ -53,14 +53,14 @@ class BaseTickerRes {
   BaseTickerRes({
     this.id,
     this.symbol,
-    this.price,
+    this.displayPrice,
+    this.displayChange,
+    this.changesPercentage,
     this.image,
     this.investmentValue,
     this.type,
     this.quantity,
     this.name,
-    this.change,
-    this.changesPercentage,
     this.isAlertAdded,
     this.isWatchlistAdded,
     this.mentionCount,
@@ -101,11 +101,11 @@ class BaseTickerRes {
         quantity: json['quantity'],
         type: json['type'],
         investmentValue: json['investment_value'],
-        price: json["price"],
+        displayPrice: json["display_price"],
+        displayChange: json["display_change"],
+        changesPercentage: json["changesPercentage"],
         image: json["image"],
         name: json["name"],
-        change: json["change"],
-        changesPercentage: json["changesPercentage"],
         isAlertAdded: json["is_alert_added"],
         isWatchlistAdded: json["is_watchlist_added"],
         mentionCount: json["mention_count"],
@@ -146,13 +146,13 @@ class BaseTickerRes {
   Map<String, dynamic> toJson() => {
         "_id": id,
         "symbol": symbol,
-        "price": price,
+        "display_price": displayPrice,
         'quantity': quantity,
         "image": image,
         'investment_value': investmentValue,
         'type': type,
         "name": name,
-        "change": change,
+        "display_change": displayChange,
         "changesPercentage": changesPercentage,
         "is_alert_added": isAlertAdded,
         "is_watchlist_added": isWatchlistAdded,

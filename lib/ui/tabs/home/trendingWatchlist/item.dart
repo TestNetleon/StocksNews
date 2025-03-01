@@ -71,17 +71,17 @@ class TickerBoxItem extends StatelessWidget {
                 ],
               ),
               Visibility(
-                visible: data.price != null && data.price != '',
+                visible: data.displayPrice != null && data.displayPrice != '',
                 child: Padding(
                   padding: const EdgeInsets.only(top: 12),
                   child: Text(
-                    data.price ?? "",
+                    data.displayPrice ?? "",
                     style: styleBaseBold(fontSize: 19),
                   ),
                 ),
               ),
               Visibility(
-                visible: data.change != null,
+                visible: data.displayChange != null,
                 child: RichText(
                   text: TextSpan(
                     children: [
@@ -103,7 +103,7 @@ class TickerBoxItem extends StatelessWidget {
                           ),
                         ),
                       TextSpan(
-                        text: data.change,
+                        text: data.displayChange,
                         style: styleBaseSemiBold(
                           fontSize: 13,
                           color: (data.changesPercentage ?? 0) >= 0
