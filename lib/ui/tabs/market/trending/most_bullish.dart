@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/managers/market/most_bullish.dart';
 import 'package:stocks_news_new/ui/base/base_list_divider.dart';
-import 'package:stocks_news_new/ui/base/stock/slidable_add.dart';
+import 'package:stocks_news_new/ui/base/stock/add.dart';
 import 'package:stocks_news_new/widgets/custom/base_loader_container.dart';
 
 class MostBullish extends StatefulWidget {
@@ -40,7 +40,7 @@ class _MostBullishState extends State<MostBullish> {
           : ListView.separated(
               shrinkWrap: true,
               itemBuilder: (context, index) {
-                return SlidableStockAddItem(
+                return BaseStockAddItem(
                   data: provider.data!.mostBullish![index],
                   index: index,
                 );

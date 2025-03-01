@@ -4,12 +4,12 @@ import 'package:stocks_news_new/ui/base/stock/slidable.dart';
 import 'package:stocks_news_new/ui/base/stock/stock.dart';
 import 'package:stocks_news_new/widgets/optional_parent.dart';
 
-class SlidableStockEditItem extends StatelessWidget {
+class BaseStockAddItem extends StatelessWidget {
   final BaseTickerRes data;
   final int index;
   final bool slidable;
   final Function(BaseTickerRes)? onTap;
-  const SlidableStockEditItem({
+  const BaseStockAddItem({
     super.key,
     this.slidable = true,
     required this.data,
@@ -25,8 +25,8 @@ class SlidableStockEditItem extends StatelessWidget {
         return BaseSlidableStockItem(
           index: index,
           child: child,
-          edit: () {},
-          delete: () {},
+          addToAlert: () {},
+          addToWatchlist: () {},
         );
       },
       child: InkWell(

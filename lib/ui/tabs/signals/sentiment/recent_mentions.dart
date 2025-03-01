@@ -6,7 +6,7 @@ import 'package:stocks_news_new/utils/constants.dart';
 import '../../../../models/signals/sentiment.dart';
 import '../../../../models/ticker.dart';
 import '../../../base/base_list_divider.dart';
-import '../../../base/stock/slidable_add.dart';
+import '../../../base/stock/add.dart';
 
 class SignalRecentMentions extends StatelessWidget {
   const SignalRecentMentions({super.key});
@@ -45,7 +45,7 @@ class SignalRecentMentions extends StatelessWidget {
             if (data == null) {
               return SizedBox();
             }
-            return SlidableStockAddItem(
+            return BaseStockAddItem(
               data: data,
               index: index,
             );

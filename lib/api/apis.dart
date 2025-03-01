@@ -73,6 +73,8 @@ class Apis {
   static const sdLatestNews = '/stock-detail-news';
   static const sdEarnings = '/stock-detail-earning';
   static const sdDividends = '/stock-detail-dividend';
+  static const sdInsiderTrades = '/stock-detail-insider';
+  static const sdCompetitors = '/stock-detail-competitior';
 
 //----------------------------------------------
 
