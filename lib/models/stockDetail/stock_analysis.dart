@@ -11,45 +11,45 @@ String sdStocksAnalysisResToJson(SDStocksAnalysisRes data) =>
     json.encode(data.toJson());
 
 class SDStocksAnalysisRes {
-  final PeersData? peersData;
-  final List<BaseKeyValueRes>? data;
+  final StocksPeersRes? peersData;
+  final List<BaseKeyValueRes>? basicData;
 
   SDStocksAnalysisRes({
     this.peersData,
-    this.data,
+    this.basicData,
   });
 
   factory SDStocksAnalysisRes.fromJson(Map<String, dynamic> json) =>
       SDStocksAnalysisRes(
         peersData: json["peers_data"] == null
             ? null
-            : PeersData.fromJson(json["peers_data"]),
-        data: json["data"] == null
+            : StocksPeersRes.fromJson(json["peers_data"]),
+        basicData: json["basic_details"] == null
             ? []
             : List<BaseKeyValueRes>.from(
-                json["data"]!.map((x) => BaseKeyValueRes.fromJson(x))),
+                json["basic_details"]!.map((x) => BaseKeyValueRes.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
         "peers_data": peersData?.toJson(),
-        "data": data == null
+        "basic_details": basicData == null
             ? []
-            : List<dynamic>.from(data!.map((x) => x.toJson())),
+            : List<dynamic>.from(basicData!.map((x) => x.toJson())),
       };
 }
 
-class PeersData {
+class StocksPeersRes {
   final String? title;
   final String? subTitle;
   final List<BaseTickerRes>? data;
 
-  PeersData({
+  StocksPeersRes({
     this.title,
     this.subTitle,
     this.data,
   });
 
-  factory PeersData.fromJson(Map<String, dynamic> json) => PeersData(
+  factory StocksPeersRes.fromJson(Map<String, dynamic> json) => StocksPeersRes(
         title: json["title"],
         subTitle: json["sub_title"],
         data: json["data"] == null

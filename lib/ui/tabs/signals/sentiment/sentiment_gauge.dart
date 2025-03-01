@@ -86,28 +86,28 @@ class SignalsSentimentGauge extends StatelessWidget {
                             GaugeRange(
                               startValue: -90,
                               endValue: -45,
-                              color: Colors.red,
+                              color: ThemeColors.error120,
                               startWidth: 20,
                               endWidth: 20,
                             ),
                             GaugeRange(
                               startValue: -45,
                               endValue: 0,
-                              color: Colors.orange,
+                              color: ThemeColors.orange120,
                               startWidth: 20,
                               endWidth: 20,
                             ),
                             GaugeRange(
                               startValue: 0,
                               endValue: 45,
-                              color: Colors.yellow,
+                              color: ThemeColors.warning120,
                               startWidth: 20,
                               endWidth: 20,
                             ),
                             GaugeRange(
                               startValue: 45,
                               endValue: 90,
-                              color: Colors.green,
+                              color: ThemeColors.success120,
                               startWidth: 20,
                               endWidth: 20,
                             )

@@ -9,7 +9,9 @@ import 'package:stocks_news_new/utils/utils.dart';
 import '../../api/api_requester.dart';
 import '../../api/api_response.dart';
 import '../../api/apis.dart';
+import '../../models/stockDetail/analyst_forecast.dart';
 import '../../models/stockDetail/historical_chart.dart';
+import '../../models/stockDetail/news.dart';
 import '../../models/stockDetail/overview.dart';
 import '../../models/stockDetail/stock_analysis.dart';
 import '../../models/stockDetail/tabs.dart';
@@ -27,6 +29,8 @@ class SDManager extends ChangeNotifier {
     _dataHistoricalC = null;
     _dataKeyStats = null;
     _dataStocksAnalysis = null;
+    _dataAnalystForecast = null;
+    _openAnalystForecast = -1;
     notifyListeners();
   }
 
@@ -56,6 +60,7 @@ class SDManager extends ChangeNotifier {
   String? _selectedStock;
   String? get selectedStock => _selectedStock;
 
+//MARK: Common TabChange
   onTabChange(int index) {
     if (_selectedIndex != index) {
       _selectedIndex = index;
@@ -67,7 +72,6 @@ class SDManager extends ChangeNotifier {
           if (_dataOverview == null) {
             getSDOverview();
           }
-
           if (_dataHistoricalC == null) {
             getSDHistoricalC();
           }
@@ -77,20 +81,32 @@ class SDManager extends ChangeNotifier {
           if (_dataKeyStats == null) {
             getSDKeyStats();
           }
-
           break;
 
         case 2:
           if (_dataStocksAnalysis == null) {
             getSDStocksAnalysis();
           }
-
           break;
+
+        case 4:
+          if (_dataAnalystForecast == null) {
+            getSDAnalystForecast();
+          }
+          break;
+
+        case 5:
+          if (_dataLatestNews == null) {
+            getSDLatestNews();
+          }
+          break;
+
         default:
       }
     }
   }
 
+//MARK: Common Refresh
   Future onSelectedTabRefresh() async {
     switch (_selectedIndex) {
       case 0:
@@ -105,6 +121,15 @@ class SDManager extends ChangeNotifier {
       case 2:
         getSDStocksAnalysis(reset: true);
         break;
+
+      case 4:
+        getSDAnalystForecast(reset: true);
+        break;
+
+      case 5:
+        getSDLatestNews(reset: true);
+        break;
+
       default:
     }
   }
@@ -344,6 +369,121 @@ class SDManager extends ChangeNotifier {
       Utils().showLog('Error in ${Apis.sdStocksAnalysis}: $e');
     } finally {
       setStatusStocksAnalysis(Status.loaded);
+    }
+  }
+
+  //MARK: Analyst ForeCast
+  String? _errorAnalystForecast;
+  String? get errorAnalystForecast =>
+      _errorAnalystForecast ?? Const.errSomethingWrong;
+
+  Status _statusAnalystForecast = Status.ideal;
+  Status get statusAnalystForecast => _statusAnalystForecast;
+
+  bool get isLoadingAnalystForecast => _statusAnalystForecast == Status.loading;
+
+  SDAnalystForecastRes? _dataAnalystForecast;
+  SDAnalystForecastRes? get dataAnalystForecast => _dataAnalystForecast;
+
+  int _openAnalystForecast = -1;
+  int get openAnalystForecast => _openAnalystForecast;
+
+  openAnalystForecastIndex(index) {
+    _openAnalystForecast = index;
+    notifyListeners();
+  }
+
+  setStatusAnalystForecast(status) {
+    _statusAnalystForecast = status;
+    notifyListeners();
+  }
+
+  Future getSDAnalystForecast({bool reset = false}) async {
+    if (_selectedStock == '') return;
+    if (reset) {
+      _dataAnalystForecast = null;
+      _openAnalystForecast = -1;
+    }
+
+    try {
+      setStatusAnalystForecast(Status.loading);
+
+      UserManager provider = navigatorKey.currentContext!.read<UserManager>();
+      Map request = {
+        'token': provider.user?.token ?? '',
+        'symbol': _selectedStock,
+      };
+
+      ApiResponse response = await apiRequest(
+        url: Apis.sdAnalystForecast,
+        request: request,
+      );
+      if (response.status) {
+        _dataAnalystForecast = sdAnalysisResFromJson(jsonEncode(response.data));
+        _errorAnalystForecast = null;
+      } else {
+        _dataAnalystForecast = null;
+        _errorAnalystForecast = response.message;
+      }
+    } catch (e) {
+      _dataAnalystForecast = null;
+      _errorAnalystForecast = Const.errSomethingWrong;
+      Utils().showLog('Error in ${Apis.sdAnalystForecast}: $e');
+    } finally {
+      setStatusAnalystForecast(Status.loaded);
+    }
+  }
+
+  //MARK: Latest News
+  String? _errorLatestNews;
+  String? get errorLatestNews => _errorLatestNews ?? Const.errSomethingWrong;
+
+  Status _statusLatestNews = Status.ideal;
+  Status get statusLatestNews => _statusLatestNews;
+
+  bool get isLoadingLatestNews => _statusLatestNews == Status.loading;
+
+  SDLatestNewsRes? _dataLatestNews;
+  SDLatestNewsRes? get dataLatestNews => _dataLatestNews;
+
+  setStatusLatestNews(status) {
+    _statusLatestNews = status;
+    notifyListeners();
+  }
+
+  Future getSDLatestNews(
+      {bool reset = false, String day = '1', showProgress = false}) async {
+    if (_selectedStock == '') return;
+    if (reset) _dataLatestNews = null;
+
+    try {
+      setStatusLatestNews(Status.loading);
+
+      UserManager provider = navigatorKey.currentContext!.read<UserManager>();
+      Map request = {
+        'token': provider.user?.token ?? '',
+        'symbol': _selectedStock,
+        'day': day,
+      };
+
+      ApiResponse response = await apiRequest(
+        url: Apis.sdLatestNews,
+        request: request,
+        showProgress: showProgress,
+      );
+      if (response.status) {
+        _dataLatestNews = sdLatestNewsFromJson(jsonEncode(response.data));
+        _errorLatestNews = null;
+      } else {
+        _dataLatestNews = null;
+        _errorLatestNews = response.message;
+      }
+    } catch (e) {
+      _dataLatestNews = null;
+      _errorLatestNews = Const.errSomethingWrong;
+      Utils().showLog('Error in ${Apis.sdLatestNews}: $e');
+    } finally {
+      setStatusLatestNews(Status.loaded);
     }
   }
 }

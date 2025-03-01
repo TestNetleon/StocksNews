@@ -129,12 +129,14 @@ class SDStockScoreRes {
 
 class BaseKeyValueRes {
   final String? title;
+  final String? subTitle;
   final dynamic value;
   final String? slug;
   final String? color;
 
   BaseKeyValueRes({
     this.title,
+    this.subTitle,
     this.value,
     this.slug,
     this.color,
@@ -143,6 +145,7 @@ class BaseKeyValueRes {
   factory BaseKeyValueRes.fromJson(Map<String, dynamic> json) =>
       BaseKeyValueRes(
         title: json["title"],
+        subTitle: json['sub_title'],
         value: json["value"],
         slug: json['slug'],
         color: json['color'],
@@ -150,6 +153,7 @@ class BaseKeyValueRes {
 
   Map<String, dynamic> toJson() => {
         "title": title,
+        'sub_title': subTitle,
         "value": value,
         "slug": slug,
         "color": color,

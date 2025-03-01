@@ -22,7 +22,7 @@ class LinearBarCommon extends StatelessWidget {
       animationDuration: 1000,
       percent: value / 100,
       lineHeight: !isPhone ? 14 : 20,
-      barRadius: const Radius.circular(5),
+      barRadius: const Radius.circular(8),
       padding: const EdgeInsets.only(right: 5),
       backgroundColor: ThemeColors.neutral10,
       center: Visibility(
