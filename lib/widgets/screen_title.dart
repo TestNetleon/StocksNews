@@ -6,7 +6,7 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/utils/validations.dart';
 import 'package:stocks_news_new/widgets/custom_readmore_text.dart';
-import 'package:stocks_news_new/widgets/optiona_parent.dart';
+import 'package:stocks_news_new/widgets/optional_parent.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 
 class ScreenTitle extends StatelessWidget {

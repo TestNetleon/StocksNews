@@ -7,7 +7,7 @@ import '../../../models/ticker.dart';
 import '../../../widgets/custom/base_loader_container.dart';
 import '../../base/base_list_divider.dart';
 import '../../base/lock.dart';
-import '../../base/stock_item.dart';
+import '../../base/stock/slidable_add.dart';
 
 class SignalStocksIndex extends StatelessWidget {
   const SignalStocksIndex({super.key});
@@ -36,7 +36,7 @@ class SignalStocksIndex extends StatelessWidget {
                 if (data == null) {
                   return SizedBox();
                 }
-                return BaseStockItem(
+                return SlidableStockAddItem(
                   data: data,
                   index: index,
                   onTap: (p0) {

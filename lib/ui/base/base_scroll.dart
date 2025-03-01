@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:stocks_news_new/widgets/optiona_parent.dart';
+import 'package:stocks_news_new/widgets/optional_parent.dart';
 
 import '../../utils/constants.dart';
 import '../../widgets/custom/refresh_indicator.dart';

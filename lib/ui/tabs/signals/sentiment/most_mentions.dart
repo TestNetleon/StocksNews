@@ -8,7 +8,7 @@ import 'package:stocks_news_new/utils/theme.dart';
 import '../../../../models/signals/sentiment.dart';
 import '../../../../models/ticker.dart';
 import '../../../base/base_list_divider.dart';
-import '../../../base/stock_item.dart';
+import '../../../base/stock/slidable_add.dart';
 import 'sentiment.dart';
 
 class SignalMostMentions extends StatefulWidget {
@@ -96,7 +96,7 @@ class _SignalsMostMentionsState extends State<SignalMostMentions> {
                   if (data == null) {
                     return SizedBox();
                   }
-                  return BaseStockItem(
+                  return SlidableStockAddItem(
                     data: data,
                     index: index,
                   );

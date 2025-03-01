@@ -10,6 +10,7 @@ import '../../api/api_requester.dart';
 import '../../api/api_response.dart';
 import '../../api/apis.dart';
 import '../../models/stockDetail/analyst_forecast.dart';
+import '../../models/stockDetail/dividents.dart';
 import '../../models/stockDetail/earning.dart';
 import '../../models/stockDetail/historical_chart.dart';
 import '../../models/stockDetail/news.dart';
@@ -34,6 +35,8 @@ class SDManager extends ChangeNotifier {
     _openAnalystForecast = -1;
     _dataEarnings = null;
     _openEarnings = -1;
+    _dataDividends = null;
+    _openDividends = -1;
     notifyListeners();
   }
 
@@ -110,6 +113,12 @@ class SDManager extends ChangeNotifier {
           }
           break;
 
+        case 7:
+          if (_dataDividends == null) {
+            getSDividends();
+          }
+          break;
+
         default:
       }
     }
@@ -141,6 +150,10 @@ class SDManager extends ChangeNotifier {
 
       case 6:
         getSDEarnings(reset: true);
+        break;
+
+      case 7:
+        getSDividends(reset: true);
         break;
 
       default:
@@ -559,6 +572,68 @@ class SDManager extends ChangeNotifier {
       Utils().showLog('Error in ${Apis.sdEarnings}: $e');
     } finally {
       setStatusEarnings(Status.loaded);
+    }
+  }
+
+  //MARK: Dividends
+  String? _errorDividends;
+  String? get errorDividends => _errorDividends ?? Const.errSomethingWrong;
+
+  Status _statusDividends = Status.ideal;
+  Status get statusDividends => _statusDividends;
+
+  bool get isLoadingDividends => _statusDividends == Status.loading;
+
+  SDDividendsRes? _dataDividends;
+  SDDividendsRes? get dataDividends => _dataDividends;
+
+  setStatusDividends(status) {
+    _statusDividends = status;
+    notifyListeners();
+  }
+
+  int _openDividends = -1;
+  int get openDividends => _openDividends;
+
+  openDividendsIndex(index) {
+    _openDividends = index;
+    notifyListeners();
+  }
+
+  Future getSDividends({
+    bool reset = false,
+  }) async {
+    if (_selectedStock == '') return;
+    if (reset) {
+      _dataDividends = null;
+      _openDividends = -1;
+    }
+    try {
+      setStatusDividends(Status.loading);
+
+      UserManager provider = navigatorKey.currentContext!.read<UserManager>();
+      Map request = {
+        'token': provider.user?.token ?? '',
+        'symbol': _selectedStock,
+      };
+
+      ApiResponse response = await apiRequest(
+        url: Apis.sdDividends,
+        request: request,
+      );
+      if (response.status) {
+        _dataDividends = SDDividendsResFromJson(jsonEncode(response.data));
+        _errorDividends = null;
+      } else {
+        _dataDividends = null;
+        _errorDividends = response.message;
+      }
+    } catch (e) {
+      _dataDividends = null;
+      _errorDividends = Const.errSomethingWrong;
+      Utils().showLog('Error in ${Apis.sdDividends}: $e');
+    } finally {
+      setStatusDividends(Status.loaded);
     }
   }
 }

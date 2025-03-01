@@ -8,7 +8,7 @@ import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/alphabet_inputformatter.dart';
 import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
-import 'package:stocks_news_new/widgets/optiona_parent.dart';
+import 'package:stocks_news_new/widgets/optional_parent.dart';
 import 'package:validators/validators.dart';
 
 import '../../utils/constants.dart';

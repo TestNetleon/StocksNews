@@ -4,7 +4,7 @@ import 'package:stocks_news_new/widgets/custom/update_error.dart';
 import 'package:stocks_news_new/widgets/error_display_common.dart';
 import 'package:stocks_news_new/widgets/error_display_widget.dart';
 import 'package:stocks_news_new/widgets/loading.dart';
-import 'package:stocks_news_new/widgets/optiona_parent.dart';
+import 'package:stocks_news_new/widgets/optional_parent.dart';
 
 class BaseUiContainer extends StatelessWidget {
   const BaseUiContainer({
