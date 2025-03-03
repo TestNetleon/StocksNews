@@ -31,7 +31,7 @@ class SDFinancials extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         SizedBox(
-                          width: MediaQuery.of(context).size.width * 0.48,
+                          width: MediaQuery.of(context).size.width * 0.46,
                           child: DataTable(
                             decoration:
                                 BoxDecoration(color: ThemeColors.neutral5),

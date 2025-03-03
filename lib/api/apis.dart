@@ -39,7 +39,6 @@ class Apis {
   static const watchlist = "/watchlist";
   static const deleteWatchlist = "/delete-watchlist";
 
-
   //Search---
   static const recentSearch = '/recent-search';
   static const searchWithNews = '/search-with-news';
@@ -79,8 +78,11 @@ class Apis {
   static const sdEarnings = '/stock-detail-earning';
   static const sdDividends = '/stock-detail-dividend';
   static const sdInsiderTrades = '/stock-detail-insider';
-  static const sdCompetitors = '/stock-detail-competitior';
+  static const sdCompetitors = '/stock-detail-competitor';
   static const sdFinancials = '/stock-detail-financial';
+  static const sdSecFiling = '/stock-detail-secFiling';
+  static const sdMergers = '/stock-detail-mergers';
+  static const sdChart = '/stock-detail-chart';
 
 //----------------------------------------------
 

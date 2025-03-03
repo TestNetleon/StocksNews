@@ -7,10 +7,12 @@ import '../../../utils/theme.dart';
 
 class SDTopCards extends StatelessWidget {
   final BaseKeyValueRes top;
+  final Color? valueColor;
 
   const SDTopCards({
     super.key,
     required this.top,
+    this.valueColor,
   });
 
   @override
@@ -39,7 +41,10 @@ class SDTopCards extends StatelessWidget {
               padding: const EdgeInsets.only(bottom: 6),
               child: Text(
                 "${top.value ?? "N/A"}",
-                style: styleBaseBold(fontSize: 16),
+                style: styleBaseBold(
+                  fontSize: 16,
+                  color: valueColor ?? Colors.black,
+                ),
               ),
             ),
           ),

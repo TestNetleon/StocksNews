@@ -26,18 +26,17 @@ class BaseStockEditItem extends StatelessWidget {
     this.onTap,
   });
 
-
   _stopAlertSheet() {
     BaseBottomSheet().bottomSheet(
       child: StockDeleteItem(
-          deleteDataRes: deleteDataRes,
-        onTapKeep: (){
-            Navigator.pop(navigatorKey.currentContext!);
+        deleteDataRes: deleteDataRes,
+        onTapKeep: () {
+          Navigator.pop(navigatorKey.currentContext!);
         },
-        onTapRemove: (){
-          navigatorKey.currentContext!.read<AlertsM>().deleteItem(
-            data.symbol??""
-          );
+        onTapRemove: () {
+          navigatorKey.currentContext!
+              .read<AlertsM>()
+              .deleteItem(data.symbol ?? "");
         },
       ),
     );
@@ -47,13 +46,13 @@ class BaseStockEditItem extends StatelessWidget {
     BaseBottomSheet().bottomSheet(
       child: StockDeleteItem(
         deleteDataRes: deleteDataRes,
-        onTapKeep: (){
+        onTapKeep: () {
           Navigator.pop(navigatorKey.currentContext!);
         },
-        onTapRemove: (){
-          navigatorKey.currentContext!.read<WatchListManagers>().deleteItem(
-              data.symbol??""
-          );
+        onTapRemove: () {
+          navigatorKey.currentContext!
+              .read<WatchListManagers>()
+              .deleteItem(data.symbol ?? "");
         },
       ),
     );
@@ -68,8 +67,11 @@ class BaseStockEditItem extends StatelessWidget {
           index: index,
           //edit: () {},
 
-          delete:deleteDataRes?.type=="watchlist"?_removeWatchListSheet:_stopAlertSheet,
-          deleteLabel: deleteDataRes?.type=="watchlist"?"Remove":"Stop Alert",
+          delete: deleteDataRes?.type == "watchlist"
+              ? _removeWatchListSheet
+              : _stopAlertSheet,
+          deleteLabel:
+              deleteDataRes?.type == "watchlist" ? "Remove" : "Stop Alert",
           child: child,
         );
       },
@@ -79,7 +81,10 @@ class BaseStockEditItem extends StatelessWidget {
                 onTap!(data);
               }
             : null,
-        child: BaseStockItem(data: data),
+        child: BaseStockItem(
+          data: data,
+          index: index,
+        ),
       ),
     );
   }

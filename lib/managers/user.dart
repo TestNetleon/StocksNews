@@ -73,7 +73,6 @@ class UserManager extends ChangeNotifier {
     notifyListeners();
   }
 
-
   Future navigateToPersonalDetail() async {
     UserManager manager = navigatorKey.currentContext!.read<UserManager>();
     await manager.askLoginScreen();
@@ -83,7 +82,8 @@ class UserManager extends ChangeNotifier {
       UpdatePersonalDetailIndex.path,
     );
   }
-  Future navigateToAlerts() async{
+
+  Future navigateToAlerts() async {
     UserManager userManager = navigatorKey.currentContext!.read<UserManager>();
 
     userManager.askLoginScreen();
@@ -93,7 +93,8 @@ class UserManager extends ChangeNotifier {
       AlertIndex.path,
     );
   }
-  Future navigateToWatchList() async{
+
+  Future navigateToWatchList() async {
     UserManager userManager = navigatorKey.currentContext!.read<UserManager>();
 
     userManager.askLoginScreen();
@@ -113,12 +114,13 @@ class UserManager extends ChangeNotifier {
       return;
     }
     SubscriptionManager manager =
-    navigatorKey.currentContext!.read<SubscriptionManager>();
+        navigatorKey.currentContext!.read<SubscriptionManager>();
     manager.startProcess();
   }
 
   void navigateToNotificationSettings() {
-    Navigator.pushNamed(navigatorKey.currentContext!, NotificationSettings.path);
+    Navigator.pushNamed(
+        navigatorKey.currentContext!, NotificationSettings.path);
   }
 
   void navigateToNews() {
@@ -128,7 +130,6 @@ class UserManager extends ChangeNotifier {
   void navigateToBlogs() {
     Navigator.pushNamed(navigatorKey.currentContext!, BlogsIndex.path);
   }
-
 
 //MARK: Phone Login
   Future verifyAccount({Map? extraRequest}) async {

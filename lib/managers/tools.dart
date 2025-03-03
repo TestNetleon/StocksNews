@@ -44,7 +44,6 @@ class ToolsManager extends ChangeNotifier {
   bool _apiSubmitted = false;
   bool get apiSubmitted => _apiSubmitted;
 
-
   setSubmission(status) {
     _apiSubmitted = status;
     notifyListeners();
@@ -358,25 +357,20 @@ class ToolsManager extends ChangeNotifier {
     }
   }
 
-
-
-
-
   /// Scanner redirection
- Future scannerRedirection() async {
-   UserManager userManager = navigatorKey.currentContext!.read<UserManager>();
+  Future scannerRedirection() async {
+    //  UserManager userManager = navigatorKey.currentContext!.read<UserManager>();
 
-   /*await manager.askLoginScreen();
+    /*await manager.askLoginScreen();
    if (manager.user == null) {
      return;
    }*/
-   Navigator.pushNamed(navigatorKey.currentContext!, ScannerIndex.path);
-   Utils().showLog('--calling Scanner');
-
- }
+    Navigator.pushNamed(navigatorKey.currentContext!, ScannerIndex.path);
+    Utils().showLog('--calling Scanner');
+  }
 
   /// Simulator redirection
-  Future simulatorRedirection() async{
+  Future simulatorRedirection() async {
     UserManager manager = navigatorKey.currentContext!.read<UserManager>();
     await manager.askLoginScreen();
     if (manager.user == null) {
@@ -393,8 +387,7 @@ class ToolsManager extends ChangeNotifier {
     if (manager.user == null) {
       return;
     }
-   // Navigator.pushNamed(navigatorKey.currentContext!, ToolsCompareIndex.path);
+    // Navigator.pushNamed(navigatorKey.currentContext!, ToolsCompareIndex.path);
     Utils().showLog('--calling league');
   }
-
 }

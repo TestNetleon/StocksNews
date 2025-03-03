@@ -2,19 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/ui/base/heading.dart';
 import '../../../managers/stockDetail/stock.detail.dart';
-import '../../../models/stockDetail/dividends.dart';
+import '../../../models/stockDetail/chart.dart';
 import '../../../utils/constants.dart';
 import '../../base/base_list_divider.dart';
-import 'history_item.dart';
+import '../extra/list_heading.dart';
+import 'item.dart';
 
-class SDDividendsHistory extends StatelessWidget {
-  final DividendsRes? dividendHistory;
-  const SDDividendsHistory({super.key, this.dividendHistory});
+class SDChartHistory extends StatelessWidget {
+  final ChartPriceHistoryRes? chartHistory;
+  const SDChartHistory({super.key, this.chartHistory});
 
   @override
   Widget build(BuildContext context) {
     SDManager manager = context.watch<SDManager>();
-    List<DividendsDataRes>? list = dividendHistory?.data;
+    List<PriceHistoryDataRes>? list = chartHistory?.data;
     if (list == null || list.isEmpty) {
       return SizedBox();
     }
@@ -22,25 +23,28 @@ class SDDividendsHistory extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         BaseHeading(
-          title: dividendHistory?.title,
+          title: chartHistory?.title,
           margin: EdgeInsets.only(
-            top: Pad.pad10,
+            top: Pad.pad24,
             left: Pad.pad16,
             right: Pad.pad16,
           ),
+        ),
+        SDListHeading(
+          data: ['Date', 'Opening Price', 'Closing Price'],
         ),
         ListView.separated(
           shrinkWrap: true,
           physics: NeverScrollableScrollPhysics(),
           itemBuilder: (context, index) {
-            DividendsDataRes? data = list[index];
+            PriceHistoryDataRes? data = list[index];
 
-            bool isOpen = manager.openDividends == index;
+            bool isOpen = manager.openChart == index;
 
-            return DividendHistoryItem(
+            return ChartHistoryItem(
               data: data,
               isOpen: isOpen,
-              onTap: () => manager.openDividendsIndex(isOpen ? -1 : index),
+              onTap: () => manager.openChartIndex(isOpen ? -1 : index),
             );
           },
           itemCount: list.length,

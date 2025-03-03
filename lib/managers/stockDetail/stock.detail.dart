@@ -1,6 +1,9 @@
 import 'dart:convert';
 
+import 'package:fl_chart/fl_chart.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/models/market/market_res.dart';
 import 'package:stocks_news_new/models/stockDetail/key_stats.dart';
@@ -9,17 +12,22 @@ import '../../api/api_requester.dart';
 import '../../api/api_response.dart';
 import '../../api/apis.dart';
 import '../../models/stockDetail/analyst_forecast.dart';
+import '../../models/stockDetail/chart.dart';
 import '../../models/stockDetail/competitors.dart';
 import '../../models/stockDetail/dividends.dart';
 import '../../models/stockDetail/earning.dart';
 import '../../models/stockDetail/historical_chart.dart';
 import '../../models/stockDetail/insider_trades.dart';
+import '../../models/stockDetail/mergers.dart';
 import '../../models/stockDetail/news.dart';
 import '../../models/stockDetail/overview.dart';
+import '../../models/stockDetail/sec_filing.dart';
 import '../../models/stockDetail/stock_analysis.dart';
 import '../../models/stockDetail/tabs.dart';
 import '../../routes/my_app.dart';
+import '../../utils/colors.dart';
 import '../../utils/constants.dart';
+import '../../utils/theme.dart';
 import '../user.dart';
 
 class SDManager extends ChangeNotifier {
@@ -43,6 +51,11 @@ class SDManager extends ChangeNotifier {
     _dataCompetitors = null;
     _openCompetitors = -1;
     _dataFinancials = null;
+    _dataSecFiling = null;
+    _dataMergers = null;
+    _openMergers = -1;
+    _dataChart = null;
+    _dataCHistorical = null;
     notifyListeners();
   }
 
@@ -121,7 +134,7 @@ class SDManager extends ChangeNotifier {
           break;
 
         case 7:
-          if (_dataInsiderTrade == null) {
+          if (_dataDividends == null) {
             getSDDividends();
           }
           break;
@@ -138,9 +151,30 @@ class SDManager extends ChangeNotifier {
           }
           break;
 
+        case 11:
+          if (_dataChart == null) {
+            getSDChart();
+          }
+          if (_dataCHistorical == null) {
+            getSDCHistorical();
+          }
+          break;
+
         case 12:
           if (_dataFinancials == null) {
             getSDFinancials();
+          }
+          break;
+
+        case 13:
+          if (_dataSecFiling == null) {
+            getSDSecFiling();
+          }
+          break;
+
+        case 14:
+          if (_dataMergers == null) {
+            getSDMergers();
           }
           break;
 
@@ -189,8 +223,21 @@ class SDManager extends ChangeNotifier {
         getSDCompetitors(reset: true);
         break;
 
+      case 11:
+        getSDChart(reset: true);
+        getSDCHistorical(reset: true);
+        break;
+
       case 12:
         getSDFinancials(reset: true);
+        break;
+
+      case 13:
+        getSDSecFiling(reset: true);
+        break;
+
+      case 14:
+        getSDMergers(reset: true);
         break;
 
       default:
@@ -295,6 +342,167 @@ class SDManager extends ChangeNotifier {
   setStatusHistoricalC(status) {
     _statusHistoricalC = status;
     notifyListeners();
+  }
+
+//MARK: Line Chart
+  LineChartData avgData({
+    bool showDate = true,
+    required List<HistoricalChartRes> reversedData,
+  }) {
+    // List<HistoricalChartRes> reversedData =
+    //     historicalChartData.reversed.toList();
+
+    List<FlSpot> spots = [];
+
+    for (int i = 0; i < reversedData.length; i++) {
+      spots.add(FlSpot(i.toDouble(), reversedData[i].close.toDouble()));
+    }
+
+    return LineChartData(
+      borderData: FlBorderData(show: false),
+      lineTouchData: LineTouchData(
+        getTouchLineEnd: (barData, spotIndex) {
+          return double.infinity;
+        },
+        getTouchLineStart: (barData, spotIndex) {
+          return 0.0;
+        },
+        getTouchedSpotIndicator: (barData, spotIndexes) {
+          return spotIndexes.map((spotIndex) {
+            return TouchedSpotIndicatorData(
+              FlLine(
+                // color: Colors.grey[400],
+                color: spots.first.y > spots.last.y
+                    ? ThemeColors.sos
+                    : ThemeColors.accent,
+                strokeWidth: 1,
+                dashArray: [5, 0],
+              ),
+              FlDotData(
+                show: true,
+                checkToShowDot: (spot, barData) {
+                  return true;
+                },
+              ),
+            );
+          }).toList();
+        },
+        enabled: true,
+        touchTooltipData: LineTouchTooltipData(
+          tooltipHorizontalOffset: 0,
+          tooltipRoundedRadius: 4.0,
+          showOnTopOfTheChartBoxArea: true,
+          fitInsideHorizontally: true,
+          fitInsideVertically: true,
+          maxContentWidth: 300,
+          // tooltipPadding:
+          //     const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+          // tooltipMargin: 1,
+          getTooltipItems: (touchedSpots) {
+            return touchedSpots.map(
+              (LineBarSpot touchedSpot) {
+                return LineTooltipItem(
+                  children: [
+                    TextSpan(
+                      text: "\$${touchedSpot.y.toStringAsFixed(2)}\n",
+                      style: styleBaseSemiBold(
+                        fontSize: 18,
+                      ),
+                    ),
+                    TextSpan(
+                      text: !showDate
+                          ? DateFormat('dd MMM, yyyy')
+                              .format(reversedData[touchedSpot.x.toInt()].date)
+                          : '${DateFormat('dd MMM').format(reversedData[touchedSpot.x.toInt()].date)}, ${DateFormat('h:mm a').format(reversedData[touchedSpot.x.toInt()].date)}',
+                      style: styleBaseSemiBold(
+                          height: 1.5,
+                          color: ThemeColors.neutral20,
+                          fontSize: 13),
+                    ),
+                  ],
+                  '',
+                  styleBaseSemiBold(color: ThemeColors.white, fontSize: 10),
+                );
+              },
+            ).toList();
+          },
+          getTooltipColor: (touchedSpot) {
+            return ThemeColors.neutral5;
+          },
+        ),
+      ),
+      titlesData: FlTitlesData(
+        leftTitles: const AxisTitles(
+            sideTitles: SideTitles(
+          showTitles: false,
+        )),
+        topTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+        bottomTitles: AxisTitles(
+            sideTitles: SideTitles(
+          showTitles: false,
+        )),
+        rightTitles: AxisTitles(
+          sideTitles: SideTitles(
+            reservedSize: 32,
+            showTitles: false,
+          ),
+        ),
+      ),
+      gridData: FlGridData(
+        show: true,
+        getDrawingHorizontalLine: (value) {
+          return FlLine(
+            color: ThemeColors.white,
+            strokeWidth: 1,
+          );
+        },
+        getDrawingVerticalLine: (value) {
+          return FlLine(
+            color: ThemeColors.white,
+            strokeWidth: 1,
+          );
+        },
+      ),
+      minX: 0,
+      maxX: reversedData.length.toDouble() - 1,
+      minY: reversedData
+          .map((data) => data.close.toDouble())
+          .reduce((a, b) => a < b ? a : b),
+      maxY: reversedData
+          .map((data) => data.close.toDouble())
+          .reduce((a, b) => a > b ? a : b),
+      lineBarsData: [
+        LineChartBarData(
+          preventCurveOverShooting: true,
+          spots: spots,
+          color: spots.first.y > spots.last.y
+              ? ThemeColors.sos
+              : ThemeColors.accent,
+          isCurved: true,
+          barWidth: 2,
+          dotData: const FlDotData(show: false),
+          belowBarData: BarAreaData(
+            show: true,
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: spots.first.y > spots.last.y
+                  ? [
+                      const Color.fromRGBO(255, 99, 99, 0.18),
+                      const Color.fromRGBO(255, 150, 150, 0.15),
+                      const Color.fromRGBO(255, 255, 255, 0.0),
+                    ]
+                  : [
+                      const Color.fromRGBO(71, 193, 137, 0.18),
+                      const Color.fromRGBO(171, 227, 201, 0.15),
+                      const Color.fromRGBO(255, 255, 255, 0.0),
+                    ],
+              stops: [0.0, 0.6, 4],
+            ),
+          ),
+        ),
+      ],
+    );
   }
 
   Future getSDHistoricalC({String range = '1hour', bool reset = false}) async {
@@ -800,6 +1008,111 @@ class SDManager extends ChangeNotifier {
     }
   }
 
+  //MARK: Chart Historical
+  String? _errorCHistorical;
+  String? get errorCHistorical => _errorCHistorical ?? Const.errSomethingWrong;
+
+  SDHistoricalChartRes? _dataCHistorical;
+  SDHistoricalChartRes? get dataCHistorical => _dataCHistorical;
+
+  Future getSDCHistorical({String range = '1hour', bool reset = false}) async {
+    if (_selectedStock == '') return;
+    if (reset) _dataCHistorical = null;
+
+    try {
+      setStatusHistoricalC(Status.loading);
+
+      UserManager provider = navigatorKey.currentContext!.read<UserManager>();
+      Map request = {
+        'token': provider.user?.token ?? '',
+        'symbol': _selectedStock,
+        'range': range,
+      };
+
+      ApiResponse response = await apiRequest(
+        url: Apis.sdHistoricalC,
+        request: request,
+        showProgress: _dataCHistorical != null,
+      );
+      if (response.status) {
+        _dataCHistorical =
+            stocksDetailHistoricalChartResFromJson(jsonEncode(response.data));
+        _errorCHistorical = null;
+      } else {
+        _dataCHistorical = null;
+        _errorCHistorical = response.message;
+      }
+    } catch (e) {
+      _dataCHistorical = null;
+      _errorCHistorical = Const.errSomethingWrong;
+      Utils().showLog('Error in ${Apis.sdHistoricalC}: $e');
+    } finally {
+      setStatusHistoricalC(Status.loaded);
+    }
+  }
+
+  //MARK: Chart
+  String? _errorChart;
+  String? get errorChart => _errorChart ?? Const.errSomethingWrong;
+
+  Status _statusChart = Status.ideal;
+  Status get statusChart => _statusChart;
+
+  bool get isLoadingChart => _statusChart == Status.loading;
+
+  SDChartRes? _dataChart;
+  SDChartRes? get dataChart => _dataChart;
+
+  int _openChart = -1;
+  int get openChart => _openChart;
+
+  openChartIndex(index) {
+    _openChart = index;
+    notifyListeners();
+  }
+
+  setStatusChart(status) {
+    _statusChart = status;
+    notifyListeners();
+  }
+
+  Future getSDChart({
+    bool reset = false,
+  }) async {
+    if (_selectedStock == '') return;
+    if (reset) {
+      _dataMergers = null;
+      _openChart = -1;
+    }
+    try {
+      setStatusChart(Status.loading);
+
+      UserManager provider = navigatorKey.currentContext!.read<UserManager>();
+      Map request = {
+        'token': provider.user?.token ?? '',
+        'symbol': _selectedStock,
+      };
+
+      ApiResponse response = await apiRequest(
+        url: Apis.sdChart,
+        request: request,
+      );
+      if (response.status) {
+        _dataChart = SDChartResFromJson(jsonEncode(response.data));
+        _errorChart = null;
+      } else {
+        _dataChart = null;
+        _errorChart = response.message;
+      }
+    } catch (e) {
+      _dataChart = null;
+      _errorChart = Const.errSomethingWrong;
+      Utils().showLog('Error in ${Apis.sdChart}: $e');
+    } finally {
+      setStatusChart(Status.loaded);
+    }
+  }
+
   //MARK: Financial
   String? _errorFinancial;
   String? get errorFinancial => _errorFinancial ?? Const.errSomethingWrong;
@@ -839,7 +1152,7 @@ class SDManager extends ChangeNotifier {
       );
       if (response.status) {
         _dataFinancials = List<Map<String, dynamic>>.from(
-            response.data?['data']?['finance_statement'] ?? []);
+            response.data?['finance_statement'] ?? []);
 
         _errorCompetitors = null;
       } else {
@@ -852,6 +1165,121 @@ class SDManager extends ChangeNotifier {
       Utils().showLog('Error in ${Apis.sdFinancials}: $e');
     } finally {
       setStatusFinancials(Status.loaded);
+    }
+  }
+
+  //MARK: Sec Filing
+  String? _errorSecFiling;
+  String? get errorSecFiling => _errorSecFiling ?? Const.errSomethingWrong;
+
+  Status _statusSecFiling = Status.ideal;
+  Status get statusSecFiling => _statusSecFiling;
+
+  bool get isLoadingSecFiling => _statusSecFiling == Status.loading;
+
+  SDSecFilingRes? _dataSecFiling;
+  SDSecFilingRes? get dataSecFiling => _dataSecFiling;
+
+  setStatusSecFiling(status) {
+    _statusSecFiling = status;
+    notifyListeners();
+  }
+
+  Future getSDSecFiling({
+    bool reset = false,
+  }) async {
+    if (_selectedStock == '') return;
+    if (reset) {
+      _dataSecFiling = null;
+    }
+    try {
+      setStatusSecFiling(Status.loading);
+
+      UserManager provider = navigatorKey.currentContext!.read<UserManager>();
+      Map request = {
+        'token': provider.user?.token ?? '',
+        'symbol': _selectedStock,
+      };
+
+      ApiResponse response = await apiRequest(
+        url: Apis.sdSecFiling,
+        request: request,
+      );
+      if (response.status) {
+        _dataSecFiling = SDSecFilingResFromJson(jsonEncode(response.data));
+        _errorSecFiling = null;
+      } else {
+        _dataSecFiling = null;
+        _errorSecFiling = response.message;
+      }
+    } catch (e) {
+      _dataSecFiling = null;
+      _errorSecFiling = Const.errSomethingWrong;
+      Utils().showLog('Error in ${Apis.sdSecFiling}: $e');
+    } finally {
+      setStatusSecFiling(Status.loaded);
+    }
+  }
+
+  //MARK: Mergers
+  String? _errorMergers;
+  String? get errorMergers => _errorMergers ?? Const.errSomethingWrong;
+
+  Status _statusMergers = Status.ideal;
+  Status get statusMergers => _statusMergers;
+
+  bool get isLoadingMergers => _statusMergers == Status.loading;
+
+  SDMergersRes? _dataMergers;
+  SDMergersRes? get dataMergers => _dataMergers;
+
+  int _openMergers = -1;
+  int get openMergers => _openMergers;
+
+  openMergersIndex(index) {
+    _openMergers = index;
+    notifyListeners();
+  }
+
+  setStatusMergers(status) {
+    _statusMergers = status;
+    notifyListeners();
+  }
+
+  Future getSDMergers({
+    bool reset = false,
+  }) async {
+    if (_selectedStock == '') return;
+    if (reset) {
+      _dataMergers = null;
+    }
+    try {
+      setStatusMergers(Status.loading);
+
+      UserManager provider = navigatorKey.currentContext!.read<UserManager>();
+      Map request = {
+        'token': provider.user?.token ?? '',
+        // 'symbol': _selectedStock,
+        'symbol': kDebugMode ? 'MTAC' : _selectedStock,
+      };
+
+      ApiResponse response = await apiRequest(
+        url: Apis.sdMergers,
+        request: request,
+      );
+      if (response.status) {
+        _dataMergers = SDMergersResFromJson(jsonEncode(response.data));
+        _errorMergers = null;
+      } else {
+        _dataMergers = null;
+        _errorMergers = response.message;
+      }
+    } catch (e) {
+      _dataMergers = null;
+      _errorMergers = Const.errSomethingWrong;
+      Utils().showLog('Error in ${Apis.sdMergers}: $e');
+    } finally {
+      setStatusMergers(Status.loaded);
     }
   }
 }

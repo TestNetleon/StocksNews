@@ -5,6 +5,7 @@ import 'package:stocks_news_new/ui/base/base_scroll.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/custom/base_loader_container.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
+import '../../../models/stockDetail/historical_chart.dart';
 import '../../../models/stockDetail/overview.dart';
 import 'ai_chart.dart';
 import 'chart.dart';
@@ -21,7 +22,9 @@ class SDOverview extends StatelessWidget {
     SDCompanyRes? companyInfo = manager.dataOverview?.companyInfo;
     SDStockScoreRes? stockScore = manager.dataOverview?.stockScore;
     SDAiAnalysisRes? aiAnalysis = manager.dataOverview?.aiAnalysis;
-    ;
+
+    SDHistoricalChartRes? chart = manager.dataHistoricalC;
+    bool hasData = manager.dataHistoricalC != null;
 
     bool hideRange = companyInfo?.dayHigh == null ||
         companyInfo?.dayLow == null ||
@@ -73,7 +76,13 @@ class SDOverview extends StatelessWidget {
             ),
           ),
           //Historical Chart
-          SDHistoricalChart(),
+          SDHistoricalChart(
+            hasData: hasData,
+            chart: chart,
+            onTap: (p0) {
+              manager.getSDHistoricalC(range: p0);
+            },
+          ),
           SDCompanyBrief(companyInfo: companyInfo),
           SDAiChart(
             // data: aiAnalysis?.radarChart,

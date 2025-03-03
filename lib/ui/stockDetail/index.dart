@@ -4,20 +4,21 @@ import 'package:stocks_news_new/managers/stockDetail/stock.detail.dart';
 import 'package:stocks_news_new/ui/base/scaffold.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/custom/base_loader_container.dart';
-
 import '../../models/ticker.dart';
 import '../base/ticker_app_bar.dart';
 import 'analysis/stock/stock_analysis.dart';
-import 'competitors/index.dart';
-import 'dividents/index.dart';
+import 'chart/index.dart';
+import 'dividends/index.dart';
 import 'earnings/index.dart';
 import 'financials/index.dart';
 import 'forecast/analyst_forecast.dart';
 import 'header.dart';
 import 'insiderTrades/index.dart';
 import 'key/key_stats.dart';
+import 'mergers/index.dart';
 import 'news/index.dart';
 import 'overview/overview.dart';
+import 'secFiling/index.dart';
 import 'tabs.dart';
 
 class StockDetailIndex extends StatefulWidget {
@@ -100,13 +101,21 @@ class _StockDetailIndexState extends State<StockDetailIndex> {
               Expanded(
                 child: SDInsiderTrades(),
               ),
-            if (manager.selectedIndex == 9)
+            if (manager.selectedIndex == 11)
               Expanded(
-                child: SDCompetitors(),
+                child: SDChart(),
               ),
             if (manager.selectedIndex == 12)
               Expanded(
                 child: SDFinancials(),
+              ),
+            if (manager.selectedIndex == 13)
+              Expanded(
+                child: SDSecFiling(),
+              ),
+            if (manager.selectedIndex == 14)
+              Expanded(
+                child: SDMergers(),
               ),
           ],
         ),

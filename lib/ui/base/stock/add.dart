@@ -35,7 +35,10 @@ class BaseStockAddItem extends StatelessWidget {
                 onTap!(data);
               }
             : null,
-        child: BaseStockItem(data: data),
+        child: BaseStockItem(
+          data: data,
+          index: index,
+        ),
       ),
     );
   }
