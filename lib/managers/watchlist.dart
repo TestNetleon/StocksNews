@@ -109,7 +109,7 @@ class WatchListManagers extends ChangeNotifier{
       );
 
       if (response.status) {
-        getWatchList();
+        getWatchList(showProgress: false);
         Navigator.pop(navigatorKey.currentContext!);
 
       } else {

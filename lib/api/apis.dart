@@ -38,6 +38,8 @@ class Apis {
   static const deleteAlert = "/delete-alert";
   static const watchlist = "/watchlist";
   static const deleteWatchlist = "/delete-watchlist";
+  static const faqs = "/faq";
+  static const getTickets = "/get-tickets";
 
 
   //Search---
@@ -242,7 +244,7 @@ class Apis {
   static const detailFinancial = "/stock-detail-financial";
   static const stockDetailMergers = "/stock-detail-mergers";
   // Stock Detail New ended ----
-  static const getTickets = "/get-tickets";
+  //static const getTickets = "/get-tickets";
   static const sendTicket = "/send-ticket";
   static const ticketDetail = "/ticket-detail";
   static const ticketReply = "/ticket-reply";

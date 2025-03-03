@@ -108,7 +108,7 @@ class AlertsM extends ChangeNotifier{
       );
 
       if (response.status) {
-        getAlerts();
+        getAlerts(showProgress: false);
         Navigator.pop(navigatorKey.currentContext!);
 
       } else {

@@ -2,6 +2,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:stocks_news_new/managers/alerts.dart';
 import 'package:stocks_news_new/managers/blogs.dart';
+import 'package:stocks_news_new/managers/faq.dart';
+import 'package:stocks_news_new/managers/helpdesk.dart';
 import 'package:stocks_news_new/managers/home.dart';
 import 'package:stocks_news_new/managers/legal.dart';
 import 'package:stocks_news_new/managers/market/market.dart';
@@ -86,7 +88,6 @@ import 'package:stocks_news_new/screens/affiliate/index.dart';
 import 'package:stocks_news_new/screens/auth/qrScan/index.dart';
 import 'package:stocks_news_new/screens/auth/signup/signup_success.dart';
 import 'package:stocks_news_new/screens/blogDetail/index.dart';
-import 'package:stocks_news_new/screens/contactUs/contact_us.dart';
 import 'package:stocks_news_new/screens/marketData/dividends/dividends.dart';
 import 'package:stocks_news_new/screens/marketData/earnings/earnings.dart';
 import 'package:stocks_news_new/screens/marketData/fiftyTwoWeeks/index.dart';
@@ -111,6 +112,8 @@ import 'package:stocks_news_new/tradingSimulator/providers/ts_open_list_provider
 import 'package:stocks_news_new/tradingSimulator/providers/ts_pending_list_provider.dart';
 import 'package:stocks_news_new/tradingSimulator/providers/ts_portfollo_provider.dart';
 import 'package:stocks_news_new/ui/tabs/more/alerts/index.dart';
+import 'package:stocks_news_new/ui/tabs/more/faq/index.dart';
+import 'package:stocks_news_new/ui/tabs/more/helpdesk/front/index.dart';
 import 'package:stocks_news_new/ui/tabs/more/notificationSettings/index.dart';
 import 'package:stocks_news_new/ui/tabs/more/watchlist/index.dart';
 import 'package:stocks_news_new/ui/tabs/tools/compareStocks/compare.dart';
@@ -187,6 +190,8 @@ class Routes {
     UpdatePersonalDetailIndex.path: (_) => const UpdatePersonalDetailIndex(),
     AlertIndex.path: (_) => const AlertIndex(),
     WatchListIndex.path: (_) => const WatchListIndex(),
+    FaqIndex.path: (_) => const FaqIndex(),
+    HelpDeskIndex.path: (_) => const HelpDeskIndex(),
 
     //--------------------------------------
 
@@ -201,7 +206,7 @@ class Routes {
     CongressionalIndex.path: (_) => const CongressionalIndex(),
     StartIndex.path: (_) => const StartIndex(),
     MyAccount.path: (_) => const MyAccount(),
-    ContactUs.path: (_) => const ContactUs(),
+   // ContactUs.path: (_) => const ContactUs(),
     CompareStocks.path: (_) => const CompareStocks(),
     QrScan.path: (_) => const QrScan(),
     TrendingIndustries.path: (_) => const TrendingIndustries(),
@@ -546,6 +551,8 @@ class Routes {
       ChangeNotifierProvider(create: (_) => TopLoserScannerM()),
       ChangeNotifierProvider(create: (_) => AlertsM()),
       ChangeNotifierProvider(create: (_) => WatchListManagers()),
+      ChangeNotifierProvider(create: (_) => FaqManager()),
+      ChangeNotifierProvider(create: (_) => NewHelpDeskManager()),
     ];
   }
 }

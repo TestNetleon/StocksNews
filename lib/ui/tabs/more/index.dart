@@ -119,12 +119,12 @@ class MoreIndex extends StatelessWidget {
             MoreItem(
               icon: Images.moreFaqs,
               label: "FAQ’s",
-              onTap: () {},
+              onTap:manager.navigateToFaq,
             ),
             MoreItem(
               icon: Images.moreContactUs,
               label: "Contact Us",
-              onTap: () {},
+              onTap: manager.navigateToContactUs,
             ),
             MoreItem(
               icon: Images.moreFeedback,

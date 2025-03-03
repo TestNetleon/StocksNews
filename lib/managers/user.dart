@@ -18,6 +18,8 @@ import 'package:stocks_news_new/ui/base/toaster.dart';
 import 'package:stocks_news_new/ui/subscription/manager.dart';
 import 'package:stocks_news_new/ui/tabs/more/alerts/index.dart';
 import 'package:stocks_news_new/ui/tabs/more/articles/index.dart';
+import 'package:stocks_news_new/ui/tabs/more/faq/index.dart';
+import 'package:stocks_news_new/ui/tabs/more/helpdesk/front/index.dart';
 import 'package:stocks_news_new/ui/tabs/more/news/index.dart';
 import 'package:stocks_news_new/ui/tabs/more/notificationSettings/index.dart';
 import 'package:stocks_news_new/ui/tabs/more/watchlist/index.dart';
@@ -129,6 +131,19 @@ class UserManager extends ChangeNotifier {
     Navigator.pushNamed(navigatorKey.currentContext!, BlogsIndex.path);
   }
 
+  void navigateToFaq() {
+    Navigator.pushNamed(navigatorKey.currentContext!, FaqIndex.path);
+  }
+
+  Future navigateToContactUs() async{
+    UserManager userManager = navigatorKey.currentContext!.read<UserManager>();
+
+    userManager.askLoginScreen();
+    if (userManager.user == null) return;
+
+    Navigator.pushNamed(navigatorKey.currentContext!, HelpDeskIndex.path);
+
+  }
 
 //MARK: Phone Login
   Future verifyAccount({Map? extraRequest}) async {
