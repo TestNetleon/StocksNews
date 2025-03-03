@@ -53,7 +53,7 @@ class SDManager extends ChangeNotifier {
   Status _status = Status.ideal;
   Status get status => _status;
 
-  bool get isLoading => _status == Status.loading;
+  bool get isLoading => _status == Status.loading || _status == Status.ideal;
 
   SDRes? _data;
   SDRes? get data => _data;
@@ -811,6 +811,7 @@ class SDManager extends ChangeNotifier {
 
   List<Map<String, dynamic>>? _dataFinancials;
   List<Map<String, dynamic>>? get dataFinancials => _dataFinancials;
+
   setStatusFinancials(status) {
     _statusFinancial = status;
     notifyListeners();
@@ -821,7 +822,7 @@ class SDManager extends ChangeNotifier {
   }) async {
     if (_selectedStock == '') return;
     if (reset) {
-      //data clear
+      _dataFinancials = null;
     }
     try {
       setStatusFinancials(Status.loading);

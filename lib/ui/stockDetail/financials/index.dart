@@ -4,21 +4,13 @@ import 'package:stocks_news_new/managers/stockDetail/stock.detail.dart';
 import 'package:stocks_news_new/ui/base/base_scroll.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:stocks_news_new/widgets/loading.dart';
+import '../../../utils/constants.dart';
+import '../../../utils/utils.dart';
+import '../../../widgets/error_display_widget.dart';
 
 class SDFinancials extends StatelessWidget {
   const SDFinancials({super.key});
-
-  void openUrl(String? url) async {
-    if (url != null && url.isNotEmpty) {
-      final Uri uri = Uri.parse(url);
-      if (await canLaunchUrl(uri)) {
-        await launchUrl(uri, mode: LaunchMode.externalApplication);
-      } else {
-        debugPrint("Could not launch $url");
-      }
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,27 +22,27 @@ class SDFinancials extends StatelessWidget {
 
         return hasData
             ? BaseScroll(
+                onRefresh: manager.onSelectedTabRefresh,
+                margin: EdgeInsets.zero,
                 children: [
                   ClipRRect(
                     borderRadius: BorderRadius.circular(10),
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        // Fixed width column for labels
                         SizedBox(
-                          width: 140,
+                          width: MediaQuery.of(context).size.width * 0.48,
                           child: DataTable(
-                            headingRowColor: WidgetStatePropertyAll(
-                                ThemeColors.greyText.withOpacity(0.4)),
-                            border: TableBorder.all(
-                                color: ThemeColors.greyBorder, width: 0.9),
+                            decoration:
+                                BoxDecoration(color: ThemeColors.neutral5),
+                            border:
+                                TableBorder.all(color: ThemeColors.neutral5),
                             columns: [
                               DataColumn(
                                 label: Text(
+                                  maxLines: 2,
                                   'Period',
-                                  style: styleGeorgiaBold(
-                                      fontSize: 12,
-                                      color: ThemeColors.greyText),
+                                  style: styleBaseBold(fontSize: 13),
                                 ),
                               ),
                             ],
@@ -61,10 +53,11 @@ class SDFinancials extends StatelessWidget {
                                 cells: [
                                   DataCell(
                                     IntrinsicHeight(
-                                      // Adjusts height dynamically
                                       child: Text(
+                                        maxLines: 2,
+                                        overflow: TextOverflow.ellipsis,
                                         label,
-                                        style: styleGeorgiaBold(fontSize: 12),
+                                        style: styleBaseBold(fontSize: 13),
                                       ),
                                     ),
                                   ),
@@ -73,22 +66,30 @@ class SDFinancials extends StatelessWidget {
                             }).toList(),
                           ),
                         ),
-
-                        // Scrollable financial data columns
                         Expanded(
                           child: SingleChildScrollView(
                             scrollDirection: Axis.horizontal,
                             child: DataTable(
-                              columnSpacing: 16.0,
-                              border: TableBorder.all(
-                                  color: ThemeColors.greyBorder, width: 0.5),
+                              columnSpacing: 30,
+                              border: TableBorder(
+                                top: BorderSide(
+                                  color: ThemeColors.neutral10,
+                                  width: 0.5,
+                                ),
+                                bottom: BorderSide(
+                                  color: ThemeColors.neutral10,
+                                  width: 0.5,
+                                ),
+                                left: BorderSide(
+                                  color: ThemeColors.neutral10,
+                                  width: 0.5,
+                                ),
+                              ),
                               columns: financialData.map((row) {
                                 return DataColumn(
                                   label: Text(
                                     row["Period"]?.toString() ?? "N/A",
-                                    style: styleGeorgiaBold(
-                                        fontSize: 12,
-                                        color: ThemeColors.greyText),
+                                    style: styleBaseRegular(fontSize: 13),
                                   ),
                                 );
                               }).toList(),
@@ -102,23 +103,24 @@ class SDFinancials extends StatelessWidget {
                                           ? GestureDetector(
                                               onTap: () => openUrl(
                                                   row[label]?.toString()),
-                                              child: Row(
-                                                children: [
-                                                  Text(
-                                                    "View",
-                                                    style: TextStyle(
-                                                        color: Colors.blue,
-                                                        decoration:
-                                                            TextDecoration
-                                                                .underline),
-                                                  ),
-                                                  Icon(Icons.info_outline,
-                                                      color: Colors.blue,
-                                                      size: 16),
-                                                ],
+                                              child: Text(
+                                                "View Detail",
+                                                style: styleBaseRegular(
+                                                    fontSize: 13,
+                                                    color: ThemeColors
+                                                        .secondary120),
                                               ),
                                             )
-                                          : Text(row[label]?.toString() ?? "-"),
+                                          : Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      vertical: 10),
+                                              child: Text(
+                                                row[label]?.toString() ?? "-",
+                                                style: styleBaseRegular(
+                                                    fontSize: 13),
+                                              ),
+                                            ),
                                     );
                                   }).toList(),
                                 );
@@ -131,7 +133,12 @@ class SDFinancials extends StatelessWidget {
                   ),
                 ],
               )
-            : Center(child: Text("No financial data available"));
+            : manager.isLoadingFinancial
+                ? Loading()
+                : ErrorDisplayNewWidget(
+                    error: manager.error ?? Const.errNoRecord,
+                    onRefresh: manager.onSelectedTabRefresh,
+                  );
       },
     );
   }

@@ -200,8 +200,8 @@ class BaseInsiderItem extends StatelessWidget {
                                       margin: EdgeInsets.only(left: Pad.pad10),
                                       child: Text(
                                         "${data.securityTransacted} Shares @ ${data.price}",
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis,
+                                        // maxLines: 1,
+                                        // overflow: TextOverflow.ellipsis,
                                         style: styleBaseRegular(fontSize: 13),
                                       ),
                                     ),

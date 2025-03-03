@@ -129,7 +129,9 @@ class UserManager extends ChangeNotifier {
           Navigator.popUntil(
               navigatorKey.currentContext!, (route) => route.isFirst);
           Navigator.pushReplacementNamed(
-              navigatorKey.currentContext!, Tabs.path);
+            navigatorKey.currentContext!,
+            Tabs.path,
+          );
         } else {
           Utils().showLog('popping back');
           Navigator.pop(navigatorKey.currentContext!);
