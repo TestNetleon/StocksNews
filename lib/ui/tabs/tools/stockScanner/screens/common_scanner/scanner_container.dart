@@ -1,0 +1,59 @@
+import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:stocks_news_new/ui/tabs/tools/stockScanner/screens/market/m_index.dart';
+import 'package:stocks_news_new/ui/tabs/tools/stockScanner/screens/topGainer/g_index.dart';
+import 'package:stocks_news_new/ui/tabs/tools/stockScanner/screens/topLoser/l_index.dart';
+import 'package:stocks_news_new/utils/colors.dart';
+import 'package:stocks_news_new/utils/theme.dart';
+import 'package:stocks_news_new/widgets/custom_tab_container.dart';
+import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
+
+class ScannerContainer extends StatelessWidget {
+  const ScannerContainer({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    List<String> tabs = ["SCANNER", "GAINERS", "LOSERS"];
+    List<IconData> tabIcons = [
+      FontAwesomeIcons.magnifyingGlassChart,
+      FontAwesomeIcons.arrowTrendUp,
+      FontAwesomeIcons.arrowTrendDown,
+    ];
+
+    return CustomTabContainer(
+      initialIndex:1,
+      tabs: List.generate(
+        tabs.length,
+        (index) {
+          return Container(
+            padding: const EdgeInsets.symmetric(vertical: 10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                FaIcon(
+                  tabIcons[index],
+                  size: 14,
+                  color: tabs[index] == 'GAINERS'
+                      ? ThemeColors.themeGreen
+                      : tabs[index] == 'LOSERS'
+                          ? ThemeColors.sos
+                          : ThemeColors.white,
+                ),
+                SpacerHorizontal(width: 5),
+                Text(
+                  tabs[index],
+                  style: styleGeorgiaBold(fontSize: 12),
+                ),
+              ],
+            ),
+          );
+        },
+      ),
+      widgets: [
+        MarketScanner(),
+        ScannerTopGainer(),
+        ScannerTopLosers(),
+      ],
+    );
+  }
+}

@@ -11,7 +11,7 @@
 // import 'package:stocks_news_new/providers/user_provider.dart';
 // import 'package:stocks_news_new/routes/my_app.dart';
 // import 'package:stocks_news_new/tradingSimulator/providers/trade_provider.dart';
-// import 'package:stocks_news_new/tradingSimulator/screens/tradeBuySell/index.dart';
+// import 'package:stocks_news_new/tradingSimulator/screens/tradeBuySell/scanner.dart';
 // import 'package:stocks_news_new/utils/constants.dart';
 // import 'package:stocks_news_new/utils/utils.dart';
 // import 'package:stocks_news_new/widgets/custom/alert_popup.dart';

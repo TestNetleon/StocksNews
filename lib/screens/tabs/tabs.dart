@@ -28,8 +28,8 @@
 // import 'package:vibration/vibration.dart';
 // import '../../api/api_response.dart';
 // import '../../utils/utils.dart';
-// import '../offerMembership/blackFriday/index.dart';
-// import '../offerMembership/christmas/index.dart';
+// import '../offerMembership/blackFriday/scanner.dart';
+// import '../offerMembership/christmas/scanner.dart';
 
 // class Tabs extends StatefulWidget {
 //   static const String path = "Tabs";

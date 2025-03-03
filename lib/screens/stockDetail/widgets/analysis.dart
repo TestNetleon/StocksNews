@@ -14,7 +14,7 @@
 
 // import '../../../widgets/disclaimer_widget.dart';
 // import '../../../widgets/theme_image_view.dart';
-// import '../../stockDetail/index.dart';
+// import '../../stockDetail/scanner.dart';
 // import 'stockTopWidgets/common_heading.dart';
 
 // //

@@ -34,6 +34,11 @@ class Apis {
   static const googleLogin = "/signup-google";
   static const appleLogin = "/signup-apple";
   static const logout = "/logout";
+  static const alerts = "/alerts";
+  static const deleteAlert = "/delete-alert";
+  static const watchlist = "/watchlist";
+  static const deleteWatchlist = "/delete-watchlist";
+
 
   //Search---
   static const recentSearch = '/recent-search';
@@ -141,10 +146,10 @@ class Apis {
   static const latestNews = "/latest-news";
   // static const trending = "/trending";
   static const insiderTrading = "/insider-trading";
-  static const watchlist = "/watchlist";
+  //static const watchlist = "/watchlist";
   static const addWatchlist = "/add-watchlist";
   static const createAlert = "/add-alert";
-  static const deleteWatchlist = "/delete-watchlist";
+  //static const deleteWatchlist = "/delete-watchlist";
   static const deleteAlertlist = "/delete-alert";
 
   static const moreStocks = "/trending_gainer_loser";
@@ -155,7 +160,7 @@ class Apis {
   static const faQs = "/faq";
   static const contactUs = "/contact-us";
   // static const infoPage = "/info-page";
-  static const alerts = "/alerts";
+  //static const alerts = "/alerts";
   static const stockDetails = "/stock-details";
   static const stockAnalysis = "/stock-analysis";
   static const technicalAnalysis = "/technical-analysis";

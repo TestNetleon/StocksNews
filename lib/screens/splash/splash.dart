@@ -13,7 +13,7 @@
 // import 'package:stocks_news_new/modals/welcome_res.dart';
 // import 'package:stocks_news_new/providers/user_provider.dart';
 // import 'package:stocks_news_new/routes/my_app.dart';
-// import 'package:stocks_news_new/screens/homeSpash/index.dart';
+// import 'package:stocks_news_new/screens/homeSpash/scanner.dart';
 // import 'package:stocks_news_new/utils/colors.dart';
 // import 'package:stocks_news_new/utils/constants.dart';
 // import 'package:stocks_news_new/database/preference.dart';

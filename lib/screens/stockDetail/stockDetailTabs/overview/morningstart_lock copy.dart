@@ -23,8 +23,8 @@
 // import '../../../../utils/utils.dart';
 // import '../../../../widgets/custom/confirmation_point_popup.dart';
 // import '../../../auth/base/base_auth.dart';
-// import '../../../offerMembership/blackFriday/index.dart';
-// import '../../../offerMembership/christmas/index.dart';
+// import '../../../offerMembership/blackFriday/scanner.dart';
+// import '../../../offerMembership/christmas/scanner.dart';
 
 // class SdMorningStarLock extends StatefulWidget {
 //   final String symbol;

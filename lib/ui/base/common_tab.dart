@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:stocks_news_new/utils/colors.dart';
+import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
+import 'package:stocks_news_new/widgets/optional_parent.dart';
+import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 
 class BaseTabs extends StatefulWidget {
   const BaseTabs({
@@ -66,6 +69,7 @@ class _CommonTabsState extends State<BaseTabs>
                     return TabItem(
                       label: e.title,
                       textStyle: widget.textStyle ?? styleBaseBold(),
+                      leadingIcon: e.icon,
                     );
                   },
                 )).toList(),
@@ -105,18 +109,33 @@ class _CommonTabsState extends State<BaseTabs>
 }
 
 class TabItem extends StatelessWidget {
-  const TabItem({super.key, required this.label, this.textStyle});
+  const TabItem({super.key, required this.label, this.textStyle,this.leadingIcon});
 
   final String label;
+  final String? leadingIcon;
   final TextStyle? textStyle;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 12),
-      child: Text(
-        label,
-        style: textStyle,
+      padding: const EdgeInsets.symmetric(horizontal: 6.0, vertical: 12),
+      child: OptionalParent(
+        addParent: leadingIcon!=null && leadingIcon!="",
+        parentBuilder: (Widget child) {
+          return Row(
+            children: [
+              Image.asset(leadingIcon??"",width: 20,height: 20),
+              SpacerHorizontal(width: Pad.pad5),
+              Flexible(child: child)
+            ],
+          );
+        },
+        child: Text(
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          label,
+          style: textStyle,
+        ),
       ),
     );
   }
@@ -146,11 +165,11 @@ class _CustomTabIndicatorPainter extends BoxPainter {
         Size(width, height);
 
     // Add rounded corners to the indicator
-    final RRect rrect = RRect.fromRectAndRadius(
+    final RRect rRect = RRect.fromRectAndRadius(
       rect,
       Radius.circular(4.0),
     );
 
-    canvas.drawRRect(rrect, paint);
+    canvas.drawRRect(rRect, paint);
   }
 }

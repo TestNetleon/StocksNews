@@ -11,7 +11,7 @@
 // import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 // import 'package:stocks_news_new/widgets/theme_image_view.dart';
 
-// import '../../../stockDetail/index.dart';
+// import '../../../stockDetail/scanner.dart';
 
 // class StocksItemTrending extends StatelessWidget {
 //   final HomeTrendingData trending;

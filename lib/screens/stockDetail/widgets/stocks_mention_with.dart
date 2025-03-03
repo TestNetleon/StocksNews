@@ -12,7 +12,7 @@
 // import 'package:stocks_news_new/widgets/theme_image_view.dart';
 
 // import '../../../widgets/screen_title.dart';
-// import '../../stockDetail/index.dart';
+// import '../../stockDetail/scanner.dart';
 // import 'stockTopWidgets/common_heading.dart';
 
 // class StockMentionWith extends StatelessWidget {

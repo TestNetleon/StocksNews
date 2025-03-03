@@ -14,8 +14,8 @@
 // import '../../../widgets/theme_button_small.dart';
 // import '../../auth/base/base_auth.dart';
 // import '../../auth/membershipAsk/ask.dart';
-// import '../../offerMembership/blackFriday/index.dart';
-// import '../../offerMembership/christmas/index.dart';
+// import '../../offerMembership/blackFriday/scanner.dart';
+// import '../../offerMembership/christmas/scanner.dart';
 // import '../../tabs/tabs.dart';
 
 // class CommonLock extends StatelessWidget {
