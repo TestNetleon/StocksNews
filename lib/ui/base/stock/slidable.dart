@@ -14,6 +14,8 @@ class BaseSlidableStockItem extends StatefulWidget {
   final VoidCallback? addToWatchlist;
   final VoidCallback? edit;
   final VoidCallback? delete;
+  final dynamic isAlertAdded;
+  final dynamic isWatchlistAdded;
   final String? deleteLabel;
 
   const BaseSlidableStockItem({
@@ -24,6 +26,8 @@ class BaseSlidableStockItem extends StatefulWidget {
     this.addToWatchlist,
     this.edit,
     this.delete,
+    this.isAlertAdded,
+    this.isWatchlistAdded,
     this.deleteLabel,
   });
 
@@ -77,14 +81,18 @@ class _BaseSlidableStockItemState extends State<BaseSlidableStockItem>
               children: [
                 if (widget.addToAlert != null)
                   BaseSlidableActionItem(
-                    label: 'Add to Alerts',
+                    label: widget.isAlertAdded == 1
+                        ? 'Alert Added'
+                        : 'Add to Alerts',
                     image: Images.alerts,
                     onTap: widget.addToAlert,
                   ),
                 if (widget.addToWatchlist != null) ...[
                   const SpacerHorizontal(width: 1),
                   BaseSlidableActionItem(
-                    label: 'Add to Watchlist',
+                    label: widget.isWatchlistAdded == 1
+                        ? 'Watchlist Added'
+                        : 'Add to Watchlist',
                     image: Images.watchlist,
                     onTap: widget.addToWatchlist,
                   ),
@@ -100,7 +108,7 @@ class _BaseSlidableStockItemState extends State<BaseSlidableStockItem>
                 if (widget.delete != null) ...[
                   const SpacerHorizontal(width: 1),
                   BaseSlidableActionItem(
-                    label: widget.deleteLabel??'Stop Alert',
+                    label: widget.deleteLabel ?? 'Stop Alert',
                     image: Images.delete,
                     onTap: widget.delete,
                     bgColor: ThemeColors.error120,
@@ -137,13 +145,14 @@ class BaseSlidableActionItem extends StatelessWidget {
       child: GestureDetector(
         onTap: onTap,
         child: Container(
-          color: bgColor??ThemeColors.secondary100,
+          color: bgColor ?? ThemeColors.secondary100,
           padding: const EdgeInsets.all(5),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image.asset(image, width:24, height: 24,color: ThemeColors.white),
+              Image.asset(image,
+                  width: 24, height: 24, color: ThemeColors.white),
               const SpacerVertical(height: 8),
               Text(
                 label,

@@ -13,15 +13,15 @@ class MostBullishRes {
   MostBullishRes({required this.mostBullish});
 
   factory MostBullishRes.fromJson(Map<String, dynamic> json) => MostBullishRes(
-        mostBullish: json["most_bullish"] == null
+        mostBullish: json["data"] == null
             ? null
             : List<BaseTickerRes>.from(
-                json["most_bullish"].map((x) => BaseTickerRes.fromJson(x)),
+                json["data"].map((x) => BaseTickerRes.fromJson(x)),
               ),
       );
 
   Map<String, dynamic> toJson() => {
-        "most_bullish": mostBullish == null
+        "data": mostBullish == null
             ? null
             : List<dynamic>.from(mostBullish!.map((x) => x.toJson())),
       };

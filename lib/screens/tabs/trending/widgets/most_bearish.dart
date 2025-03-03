@@ -18,6 +18,7 @@ class MostBearish extends StatelessWidget {
   Widget build(BuildContext context) {
     TrendingProvider provider = context.watch<TrendingProvider>();
     TrendingRes? data = provider.mostBearish;
+
     FirebaseAnalytics.instance.logEvent(
       name: 'ScreensVisit',
       parameters: {'screen_name': "Trending - Most Bearish"},

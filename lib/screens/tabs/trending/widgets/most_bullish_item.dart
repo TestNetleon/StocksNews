@@ -318,7 +318,9 @@ class _MostBullishItemState extends State<MostBullishItem> {
         if (userPresent) {
           log("set HERE");
           _showAlertPopup(
-              context: navigatorKey.currentContext!, symbol: symbol);
+            context: navigatorKey.currentContext!,
+            symbol: symbol,
+          );
           return;
         }
         try {

@@ -136,12 +136,12 @@ class MostBullishManager extends ChangeNotifier {
   }
 
   Future refreshData() async {
-    getData(showProgress: true);
+    await getData(showProgress: true);
   }
 
   Future refreshWithCheck() async {
     if (_data == null || _data?.mostBullish?.isEmpty == true) {
-      getData();
+      await getData();
     }
   }
 
@@ -161,17 +161,20 @@ class MostBullishManager extends ChangeNotifier {
       );
       if (response.status) {
         _data = mostBullishResFromJson(jsonEncode(response.data));
-
         _extra = (response.extra is Extra ? response.extra as Extra : null);
       } else {
         _data = null;
         _error = response.message;
       }
+      setStatus(Status.loaded);
     } catch (e) {
+      Utils().showLog("Error => $e");
       _data = null;
       _error = Const.errSomethingWrong;
-    } finally {
       setStatus(Status.loaded);
     }
+    // finally {
+    //   setStatus(Status.loaded);
+    // }
   }
 }
