@@ -2,61 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/managers/user.dart';
 import 'package:stocks_news_new/modals/user_res.dart';
-import 'package:stocks_news_new/routes/my_app.dart';
-import 'package:stocks_news_new/ui/account/update/index.dart';
 import 'package:stocks_news_new/ui/base/heading.dart';
 import 'package:stocks_news_new/ui/base/scaffold.dart';
 import 'package:stocks_news_new/ui/legal/index.dart';
-import 'package:stocks_news_new/ui/subscription/manager.dart';
-import 'package:stocks_news_new/ui/tabs/more/articles/index.dart';
 import 'package:stocks_news_new/ui/tabs/more/more_item.dart';
-import 'package:stocks_news_new/ui/tabs/more/notificationSettings/index.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
-import 'news/index.dart';
-
 class MoreIndex extends StatelessWidget {
   const MoreIndex({super.key});
-
-  void _navigateToNotificationSettings(context) {
-    Navigator.pushNamed(context, NotificationSettings.path);
-  }
-
-  void _navigateToNews(context) {
-    Navigator.pushNamed(context, CategoriesNewsIndex.path);
-  }
-
-  void _navigateToBlogs(context) {
-    Navigator.pushNamed(context, BlogsIndex.path);
-  }
-
-  void _navigateToMySubscription(context) {
-    // Navigator.pushNamed(context, SubscriptionIndex.path);
-    UserManager userManager = navigatorKey.currentContext!.read<UserManager>();
-    userManager.askLoginScreen();
-    if (userManager.user == null) {
-      return;
-    }
-
-    SubscriptionManager manager =
-        navigatorKey.currentContext!.read<SubscriptionManager>();
-    manager.startProcess();
-  }
-
-  Future _navigateToPersonalDetail() async {
-    UserManager manager = navigatorKey.currentContext!.read<UserManager>();
-    await manager.askLoginScreen();
-    if (manager.user == null) return;
-    await Navigator.pushNamed(
-      navigatorKey.currentContext!,
-      UpdatePersonalDetailIndex.path,
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     UserManager manager = context.watch<UserManager>();
@@ -104,23 +61,23 @@ class MoreIndex extends StatelessWidget {
             MoreItem(
               icon: Images.morePersonalDetails,
               label: "Personal Details",
-              onTap: _navigateToPersonalDetail,
+              onTap: manager.navigateToPersonalDetail,
             ),
             MoreItem(
               icon: Images.moreStockAlerts,
               label: "Stock Alerts",
-              onTap: () {},
+              onTap: manager.navigateToAlerts,
             ),
             MoreItem(
               icon: Images.watchlist,
               label: "Watchlist",
-              onTap: () {},
+              onTap:  manager.navigateToWatchList,
             ),
             MoreItem(
               icon: Images.moreMySubscription,
               label: "My Subscription",
               onTap: () {
-                _navigateToMySubscription(context);
+                manager.navigateToMySubscription();
               },
             ),
             BaseHeading(
@@ -132,14 +89,14 @@ class MoreIndex extends StatelessWidget {
               icon: Images.watchlist,
               label: "News",
               onTap: () {
-                _navigateToNews(context);
+                manager.navigateToNews();
               },
             ),
             MoreItem(
               icon: Images.watchlist,
               label: "Blogs",
               onTap: () {
-                _navigateToBlogs(context);
+                manager.navigateToBlogs();
               },
             ),
             BaseHeading(
@@ -151,7 +108,7 @@ class MoreIndex extends StatelessWidget {
               icon: Images.alerts,
               label: "Notifications",
               onTap: () {
-                _navigateToNotificationSettings(context);
+                manager.navigateToNotificationSettings();
               },
             ),
             BaseHeading(

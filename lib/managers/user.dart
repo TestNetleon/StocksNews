@@ -13,7 +13,14 @@ import 'package:stocks_news_new/managers/tools.dart';
 import 'package:stocks_news_new/modals/user_res.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/ui/account/auth/login.dart';
+import 'package:stocks_news_new/ui/account/update/index.dart';
 import 'package:stocks_news_new/ui/base/toaster.dart';
+import 'package:stocks_news_new/ui/subscription/manager.dart';
+import 'package:stocks_news_new/ui/tabs/more/alerts/index.dart';
+import 'package:stocks_news_new/ui/tabs/more/articles/index.dart';
+import 'package:stocks_news_new/ui/tabs/more/news/index.dart';
+import 'package:stocks_news_new/ui/tabs/more/notificationSettings/index.dart';
+import 'package:stocks_news_new/ui/tabs/more/watchlist/index.dart';
 import 'package:stocks_news_new/ui/tabs/tabs.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import '../api/api_requester.dart';
@@ -65,6 +72,63 @@ class UserManager extends ChangeNotifier {
     _status = status;
     notifyListeners();
   }
+
+
+  Future navigateToPersonalDetail() async {
+    UserManager manager = navigatorKey.currentContext!.read<UserManager>();
+    await manager.askLoginScreen();
+    if (manager.user == null) return;
+    await Navigator.pushNamed(
+      navigatorKey.currentContext!,
+      UpdatePersonalDetailIndex.path,
+    );
+  }
+  Future navigateToAlerts() async{
+    UserManager userManager = navigatorKey.currentContext!.read<UserManager>();
+
+    userManager.askLoginScreen();
+    if (userManager.user == null) return;
+    await Navigator.pushNamed(
+      navigatorKey.currentContext!,
+      AlertIndex.path,
+    );
+  }
+  Future navigateToWatchList() async{
+    UserManager userManager = navigatorKey.currentContext!.read<UserManager>();
+
+    userManager.askLoginScreen();
+    if (userManager.user == null) return;
+
+    await Navigator.pushNamed(
+      navigatorKey.currentContext!,
+      WatchListIndex.path,
+    );
+  }
+
+  void navigateToMySubscription() {
+    UserManager userManager = navigatorKey.currentContext!.read<UserManager>();
+
+    userManager.askLoginScreen();
+    if (userManager.user == null) {
+      return;
+    }
+    SubscriptionManager manager =
+    navigatorKey.currentContext!.read<SubscriptionManager>();
+    manager.startProcess();
+  }
+
+  void navigateToNotificationSettings() {
+    Navigator.pushNamed(navigatorKey.currentContext!, NotificationSettings.path);
+  }
+
+  void navigateToNews() {
+    Navigator.pushNamed(navigatorKey.currentContext!, CategoriesNewsIndex.path);
+  }
+
+  void navigateToBlogs() {
+    Navigator.pushNamed(navigatorKey.currentContext!, BlogsIndex.path);
+  }
+
 
 //MARK: Phone Login
   Future verifyAccount({Map? extraRequest}) async {

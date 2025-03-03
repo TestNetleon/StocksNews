@@ -43,6 +43,7 @@ class BaseHeading extends StatelessWidget {
               child: Text(
                 subtitle ?? '',
                 style: subtitleStyle ?? styleBaseRegular(fontSize: 14),
+                textAlign: textAlign,
               ),
             ),
           ),

@@ -6,6 +6,7 @@ import 'package:stocks_news_new/managers/user.dart';
 import 'package:stocks_news_new/models/ticker.dart';
 import 'package:stocks_news_new/models/tools.dart';
 import 'package:stocks_news_new/ui/base/toaster.dart';
+import 'package:stocks_news_new/ui/tabs/tools/stockScanner/screens/common_scanner/scanner.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 
 import '../api/api_requester.dart';
@@ -42,6 +43,7 @@ class ToolsManager extends ChangeNotifier {
 
   bool _apiSubmitted = false;
   bool get apiSubmitted => _apiSubmitted;
+
 
   setSubmission(status) {
     _apiSubmitted = status;
@@ -355,4 +357,44 @@ class ToolsManager extends ChangeNotifier {
       notifyListeners();
     }
   }
+
+
+
+
+
+  /// Scanner redirection
+ Future scannerRedirection() async {
+   UserManager userManager = navigatorKey.currentContext!.read<UserManager>();
+
+   /*await manager.askLoginScreen();
+   if (manager.user == null) {
+     return;
+   }*/
+   Navigator.pushNamed(navigatorKey.currentContext!, ScannerIndex.path);
+   Utils().showLog('--calling Scanner');
+
+ }
+
+  /// Simulator redirection
+  Future simulatorRedirection() async{
+    UserManager manager = navigatorKey.currentContext!.read<UserManager>();
+    await manager.askLoginScreen();
+    if (manager.user == null) {
+      return;
+    }
+    //Navigator.pushNamed(navigatorKey.currentContext!, ToolsCompareIndex.path);
+    Utils().showLog('--calling Simulator');
+  }
+
+  /// league redirection
+  Future leagueRedirection() async {
+    UserManager manager = navigatorKey.currentContext!.read<UserManager>();
+    await manager.askLoginScreen();
+    if (manager.user == null) {
+      return;
+    }
+   // Navigator.pushNamed(navigatorKey.currentContext!, ToolsCompareIndex.path);
+    Utils().showLog('--calling league');
+  }
+
 }

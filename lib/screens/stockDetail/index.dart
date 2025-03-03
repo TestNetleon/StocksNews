@@ -22,7 +22,7 @@ import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 // import 'package:stocks_news_new/widgets/theme_button.dart';
 import 'package:stocks_news_new/widgets/theme_image_view.dart';
 import '../../utils/constants.dart';
-// import '../simulator/buyAndSell/index.dart';
+// import '../simulator/buyAndSell/scanner.dart';
 import '../../utils/utils.dart';
 import '../auth/base/base_auth_bottom.dart';
 import 'widgets/AlertWatchlist/add_alert_watchlist.dart';

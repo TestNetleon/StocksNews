@@ -14,6 +14,7 @@ class BaseSlidableStockItem extends StatefulWidget {
   final VoidCallback? addToWatchlist;
   final VoidCallback? edit;
   final VoidCallback? delete;
+  final String? deleteLabel;
 
   const BaseSlidableStockItem({
     super.key,
@@ -23,6 +24,7 @@ class BaseSlidableStockItem extends StatefulWidget {
     this.addToWatchlist,
     this.edit,
     this.delete,
+    this.deleteLabel,
   });
 
   @override
@@ -91,16 +93,17 @@ class _BaseSlidableStockItemState extends State<BaseSlidableStockItem>
                   const SpacerHorizontal(width: 1),
                   BaseSlidableActionItem(
                     label: 'Edit',
-                    image: Images.edit,
+                    image: Images.write,
                     onTap: widget.edit,
                   ),
                 ],
                 if (widget.delete != null) ...[
                   const SpacerHorizontal(width: 1),
                   BaseSlidableActionItem(
-                    label: 'Delete',
-                    image: Images.edit,
+                    label: widget.deleteLabel??'Stop Alert',
+                    image: Images.delete,
                     onTap: widget.delete,
+                    bgColor: ThemeColors.error120,
                   ),
                 ],
               ],
@@ -118,12 +121,14 @@ class BaseSlidableActionItem extends StatelessWidget {
   final String label;
   final String image;
   final VoidCallback? onTap;
+  final Color? bgColor;
 
   const BaseSlidableActionItem({
     super.key,
     required this.label,
     required this.image,
     required this.onTap,
+    this.bgColor,
   });
 
   @override
@@ -132,14 +137,14 @@ class BaseSlidableActionItem extends StatelessWidget {
       child: GestureDetector(
         onTap: onTap,
         child: Container(
-          color: ThemeColors.secondary100,
+          color: bgColor??ThemeColors.secondary100,
           padding: const EdgeInsets.all(5),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image.asset(image, width: 32, height: 32),
-              const SpacerVertical(height: 5),
+              Image.asset(image, width:24, height: 24,color: ThemeColors.white),
+              const SpacerVertical(height: 8),
               Text(
                 label,
                 textAlign: TextAlign.center,

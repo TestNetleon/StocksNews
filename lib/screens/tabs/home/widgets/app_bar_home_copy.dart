@@ -6,7 +6,7 @@
 // import 'package:stocks_news_new/providers/user_provider.dart';
 // import 'package:stocks_news_new/route/my_app.dart';
 // import 'package:stocks_news_new/route/navigation_observer.dart';
-// import 'package:stocks_news_new/screens/notifications/index.dart';
+// import 'package:stocks_news_new/screens/notifications/scanner.dart';
 // import 'package:stocks_news_new/screens/search/search.dart';
 // import 'package:stocks_news_new/screens/tabs/tabs.dart';
 // import 'package:stocks_news_new/utils/colors.dart';

@@ -470,7 +470,7 @@ class _TopTrendingItemState extends State<TopTrendingItem> {
 // import 'package:stocks_news_new/widgets/theme_image_view.dart';
 
 // import '../../../utils/dialogs.dart';
-// import '../../stockDetail/index.dart';
+// import '../../stockDetail/scanner.dart';
 
 // //
 // class TopTrendingItem extends StatelessWidget {

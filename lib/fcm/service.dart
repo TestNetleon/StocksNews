@@ -18,9 +18,9 @@
 // import 'package:stocks_news_new/modals/in_app_msg_res.dart';
 // import 'package:stocks_news_new/providers/home_provider.dart';
 // import 'package:stocks_news_new/providers/user_provider.dart';
-// import 'package:stocks_news_new/screens/affiliate/index.dart';
+// import 'package:stocks_news_new/screens/affiliate/scanner.dart';
 // import 'package:stocks_news_new/screens/auth/refer/refer_code.dart';
-// import 'package:stocks_news_new/screens/blogDetail/index.dart';
+// import 'package:stocks_news_new/screens/blogDetail/scanner.dart';
 // import 'package:stocks_news_new/screens/deepLinkScreen/webscreen.dart';
 // import 'package:stocks_news_new/screens/membership_new/membership.dart';
 // import 'package:stocks_news_new/screens/tabs/tabs.dart';
@@ -29,8 +29,8 @@
 // import '../routes/my_app.dart';
 // import '../screens/auth/base/base_auth.dart';
 // import '../screens/drawer/widgets/review_app_pop_up.dart';
-// import '../screens/helpDesk/chats/index.dart';
-// import '../screens/stockDetail/index.dart';
+// import '../screens/helpDesk/chats/scanner.dart';
+// import '../screens/stockDetail/scanner.dart';
 // import '../screens/tabs/news/newsDetail/new_detail.dart';
 // import '../utils/utils.dart';
 // import '../widgets/custom/alert_popup.dart';

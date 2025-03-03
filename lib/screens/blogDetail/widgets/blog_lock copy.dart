@@ -21,8 +21,8 @@
 // import '../../../utils/utils.dart';
 // import '../../../widgets/custom/warning_text.dart';
 // import '../../auth/base/base_auth.dart';
-// import '../../offerMembership/blackFriday/index.dart';
-// import '../../offerMembership/christmas/index.dart';
+// import '../../offerMembership/blackFriday/scanner.dart';
+// import '../../offerMembership/christmas/scanner.dart';
 
 // class BlogDetailsLock extends StatefulWidget {
 //   final String? slug;

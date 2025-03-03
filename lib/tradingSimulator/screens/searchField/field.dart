@@ -5,7 +5,7 @@
 // import 'package:stocks_news_new/providers/user_provider.dart';
 // import 'package:stocks_news_new/tradingSimulator/providers/trade_provider.dart';
 // import 'package:stocks_news_new/tradingSimulator/providers/trading_search_provider.dart';
-// import 'package:stocks_news_new/tradingSimulator/screens/tradeBuySell/index.dart';
+// import 'package:stocks_news_new/tradingSimulator/screens/tradeBuySell/scanner.dart';
 // import 'package:stocks_news_new/utils/colors.dart';
 
 // import '../../../api/api_response.dart';

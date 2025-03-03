@@ -4,11 +4,11 @@ import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/screens/marketData/lock/common_lock.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
-import 'package:stocks_news_new/stocksScanner/providers/market_scanner_provider.dart';
 import 'package:stocks_news_new/tradingSimulator/providers/ts_portfollo_provider.dart';
 import 'package:stocks_news_new/tradingSimulator/screens/dashboard/open/index.dart';
 import 'package:stocks_news_new/tradingSimulator/screens/dashboard/pending/index.dart';
 import 'package:stocks_news_new/tradingSimulator/screens/dashboard/ts_dashboard_header.dart';
+import 'package:stocks_news_new/ui/tabs/tools/stockScanner/managers/market_scanner.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
@@ -40,7 +40,7 @@ class _TsDashboardState extends State<TsDashboard> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       isOnTsScreen = true;
       context.read<TsPortfolioProvider>().getStreamKeysData();
-      context.read<MarketScannerProvider>().getScannerPorts(start: false);
+      context.read<MarketScannerM>().getScannerPorts(start: false);
     });
   }
 

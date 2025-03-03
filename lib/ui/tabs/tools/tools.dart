@@ -80,6 +80,24 @@ class ToolsIndex extends StatelessWidget {
                   _onSyncPortfolio(manager.data?.plaid?.connected == true);
                 },
               ),
+            SpacerVertical(height: 16),
+            if (manager.data?.scanner != null)
+              ToolsItem(
+                card: manager.data?.scanner,
+                onTap: manager.scannerRedirection,
+              ),
+            SpacerVertical(height: 16),
+            if (manager.data?.simulator != null)
+              ToolsItem(
+                card: manager.data?.simulator,
+                onTap:  manager.simulatorRedirection,
+              ),
+            SpacerVertical(height: 16),
+            if (manager.data?.league != null)
+              ToolsItem(
+                card: manager.data?.league,
+                onTap: manager.leagueRedirection,
+              ),
           ],
         ),
       ),

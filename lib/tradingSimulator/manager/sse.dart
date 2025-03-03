@@ -391,8 +391,8 @@ import 'dart:async';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:provider/provider.dart';
+import 'package:stocks_news_new/ui/tabs/tools/stockScanner/managers/market_scanner.dart';
 import '../../routes/my_app.dart';
-import '../../stocksScanner/providers/market_scanner_provider.dart';
 import '../../utils/constants.dart';
 
 class SSEManager {
@@ -427,8 +427,8 @@ class SSEManager {
 
   // Connect a stock stream to a specific screen
   void connectStock({required String symbol, required SimulatorEnum screen}) {
-    MarketScannerProvider provider =
-        navigatorKey.currentContext!.read<MarketScannerProvider>();
+    MarketScannerM provider =
+        navigatorKey.currentContext!.read<MarketScannerM>();
 
     int? port = provider.port?.port?.otherPortRes?.simulator ?? 8052;
 
@@ -488,8 +488,8 @@ class SSEManager {
         return;
       }
 
-      MarketScannerProvider provider =
-          navigatorKey.currentContext!.read<MarketScannerProvider>();
+      MarketScannerM provider =
+          navigatorKey.currentContext!.read<MarketScannerM>();
 
       int? port = provider.port?.port?.otherPortRes?.simulator ?? 8052;
 
