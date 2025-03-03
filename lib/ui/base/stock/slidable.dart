@@ -14,6 +14,8 @@ class BaseSlidableStockItem extends StatefulWidget {
   final VoidCallback? addToWatchlist;
   final VoidCallback? edit;
   final VoidCallback? delete;
+  final dynamic isAlertAdded;
+  final dynamic isWatchlistAdded;
 
   const BaseSlidableStockItem({
     super.key,
@@ -23,6 +25,8 @@ class BaseSlidableStockItem extends StatefulWidget {
     this.addToWatchlist,
     this.edit,
     this.delete,
+    this.isAlertAdded,
+    this.isWatchlistAdded,
   });
 
   @override
@@ -75,14 +79,18 @@ class _BaseSlidableStockItemState extends State<BaseSlidableStockItem>
               children: [
                 if (widget.addToAlert != null)
                   BaseSlidableActionItem(
-                    label: 'Add to Alerts',
+                    label: widget.isAlertAdded == 1
+                        ? 'Alert Added'
+                        : 'Add to Alerts',
                     image: Images.alerts,
                     onTap: widget.addToAlert,
                   ),
                 if (widget.addToWatchlist != null) ...[
                   const SpacerHorizontal(width: 1),
                   BaseSlidableActionItem(
-                    label: 'Add to Watchlist',
+                    label: widget.isWatchlistAdded == 1
+                        ? 'Watchlist Added'
+                        : 'Add to Watchlist',
                     image: Images.watchlist,
                     onTap: widget.addToWatchlist,
                   ),

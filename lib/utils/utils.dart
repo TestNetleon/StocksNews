@@ -53,6 +53,14 @@ class Utils {
       print("==================");
     }
   }
+
+  // void print(data) {
+  //   if (kDebugMode) {
+  //     print("==================");
+  //     log("$data");
+  //     print("==================");
+  //   }
+  // }
 }
 
 DateTime parseDate(String dateString) {
