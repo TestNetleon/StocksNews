@@ -38,7 +38,7 @@ class BaseTickerRes {
   final String? open;
   final String? previousClose;
   final String? eps;
-  final num? pe;
+  final dynamic pe; //TODO: change later
   final String? earningsAnnouncement;
   final String? sharesOutstanding;
   final num? overallPercent;

@@ -11,13 +11,13 @@ import 'package:stocks_news_new/ui/base/stock/stock.dart';
 import 'package:stocks_news_new/ui/base/stock_delete_item.dart';
 import 'package:stocks_news_new/widgets/optional_parent.dart';
 
-class SlidableStockEditItem extends StatelessWidget {
+class BaseStockEditItem extends StatelessWidget {
   final BaseTickerRes data;
   final DeleteBoxRes? deleteDataRes;
   final int index;
   final bool slidable;
   final Function(BaseTickerRes)? onTap;
-  const SlidableStockEditItem({
+  const BaseStockEditItem({
     super.key,
     this.slidable = true,
     required this.data,

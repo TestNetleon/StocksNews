@@ -1,31 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/managers/stockDetail/stock.detail.dart';
-import 'package:stocks_news_new/ui/base/base_scroll.dart';
-import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/custom/base_loader_container.dart';
-import 'package:stocks_news_new/widgets/custom_gridview.dart';
-import '../../../models/stockDetail/dividends.dart';
-import '../../../models/stockDetail/overview.dart';
-import '../extra/top.dart';
-import 'history.dart';
 
-class SDDividends extends StatelessWidget {
-  const SDDividends({super.key});
+import '../../../models/my_home_premium.dart';
+import '../../../models/stockDetail/overview.dart';
+import '../../../utils/constants.dart';
+import '../../../widgets/custom_gridview.dart';
+import '../../base/base_scroll.dart';
+import '../extra/top.dart';
+import 'insider_history.dart';
+
+class SDInsiderTrades extends StatelessWidget {
+  const SDInsiderTrades({super.key});
 
   @override
   Widget build(BuildContext context) {
     SDManager manager = context.watch<SDManager>();
 
-    List<BaseKeyValueRes>? top = manager.dataDividends?.top;
+    List<BaseKeyValueRes>? top = manager.dataInsiderTrade?.top;
 
-    DividendsRes? dividendHistory = manager.dataDividends?.dividendHistory;
-    // SDEarningHistoryRes? earningHistory = manager.dataEarnings?.earningHistory;
+    InsiderTradeListRes? insiderData = manager.dataInsiderTrade?.insiderData;
 
     return BaseLoaderContainer(
-      hasData: manager.dataDividends != null,
-      isLoading: manager.isLoadingDividends,
-      error: manager.errorDividends,
+      hasData: manager.dataInsiderTrade != null,
+      isLoading: manager.isLoadingInsiderTrade,
+      error: manager.errorInsiderTrade,
       onRefresh: manager.onSelectedTabRefresh,
       showPreparingText: true,
       child: BaseScroll(
@@ -48,7 +48,8 @@ class SDDividends extends StatelessWidget {
               },
             ),
           ),
-          SDDividendsHistory(dividendHistory: dividendHistory),
+          InsiderHistory(insiderData: insiderData),
+          // SDDividendsHistory(dividendHistory: dividendHistory),
           // SDDividendsHistory(earningHistory: earningHistory),
           // SDDividendsEstimates(epsEstimates: epsEstimates),
         ],

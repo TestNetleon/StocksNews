@@ -12,7 +12,7 @@ import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import '../../../../models/ticker.dart';
 import '../../../base/base_list_divider.dart';
 import '../../../base/scaffold.dart';
-import '../../../base/stock/slidable_add.dart';
+import '../../../base/stock/add.dart';
 
 class ToolsPortfolioIndex extends StatefulWidget {
   static const path = 'ToolsPortfolioIndex';
@@ -111,7 +111,7 @@ class _ToolsPortfolioIndexState extends State<ToolsPortfolioIndex> {
                   if (data == null) {
                     return SizedBox();
                   }
-                  return SlidableStockAddItem(
+                  return BaseStockAddItem(
                     slidable: false,
                     data: data,
                     index: index,

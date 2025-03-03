@@ -8,10 +8,13 @@ import 'package:stocks_news_new/widgets/custom/base_loader_container.dart';
 import '../../models/ticker.dart';
 import '../base/ticker_app_bar.dart';
 import 'analysis/stock/stock_analysis.dart';
+import 'competitors/index.dart';
 import 'dividents/index.dart';
 import 'earnings/index.dart';
+import 'financials/index.dart';
 import 'forecast/analyst_forecast.dart';
 import 'header.dart';
+import 'insiderTrades/index.dart';
 import 'key/key_stats.dart';
 import 'news/index.dart';
 import 'overview/overview.dart';
@@ -92,6 +95,18 @@ class _StockDetailIndexState extends State<StockDetailIndex> {
             if (manager.selectedIndex == 7)
               Expanded(
                 child: SDDividends(),
+              ),
+            if (manager.selectedIndex == 8)
+              Expanded(
+                child: SDInsiderTrades(),
+              ),
+            if (manager.selectedIndex == 9)
+              Expanded(
+                child: SDCompetitors(),
+              ),
+            if (manager.selectedIndex == 12)
+              Expanded(
+                child: SDFinancials(),
               ),
           ],
         ),

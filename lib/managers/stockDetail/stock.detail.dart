@@ -5,14 +5,15 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/models/market/market_res.dart';
 import 'package:stocks_news_new/models/stockDetail/key_stats.dart';
 import 'package:stocks_news_new/utils/utils.dart';
-
 import '../../api/api_requester.dart';
 import '../../api/api_response.dart';
 import '../../api/apis.dart';
 import '../../models/stockDetail/analyst_forecast.dart';
-import '../../models/stockDetail/dividents.dart';
+import '../../models/stockDetail/competitors.dart';
+import '../../models/stockDetail/dividends.dart';
 import '../../models/stockDetail/earning.dart';
 import '../../models/stockDetail/historical_chart.dart';
+import '../../models/stockDetail/insider_trades.dart';
 import '../../models/stockDetail/news.dart';
 import '../../models/stockDetail/overview.dart';
 import '../../models/stockDetail/stock_analysis.dart';
@@ -37,6 +38,11 @@ class SDManager extends ChangeNotifier {
     _openEarnings = -1;
     _dataDividends = null;
     _openDividends = -1;
+    _dataInsiderTrade = null;
+    _openInsiderTrades = -1;
+    _dataCompetitors = null;
+    _openCompetitors = -1;
+    _dataFinancials = null;
     notifyListeners();
   }
 
@@ -47,7 +53,7 @@ class SDManager extends ChangeNotifier {
   Status _status = Status.ideal;
   Status get status => _status;
 
-  bool get isLoading => _status == Status.loading;
+  bool get isLoading => _status == Status.loading || _status == Status.ideal;
 
   SDRes? _data;
   SDRes? get data => _data;
@@ -68,6 +74,7 @@ class SDManager extends ChangeNotifier {
 
 //MARK: Common TabChange
   onTabChange(int index) {
+    Utils().showLog('--Index--$index');
     if (_selectedIndex != index) {
       _selectedIndex = index;
       _selectedTab = _data?.tabs?[index];
@@ -114,8 +121,26 @@ class SDManager extends ChangeNotifier {
           break;
 
         case 7:
-          if (_dataDividends == null) {
-            getSDividends();
+          if (_dataInsiderTrade == null) {
+            getSDDividends();
+          }
+          break;
+
+        case 8:
+          if (_dataInsiderTrade == null) {
+            getSDInsiderTrades();
+          }
+          break;
+
+        case 9:
+          if (_dataCompetitors == null) {
+            getSDCompetitors();
+          }
+          break;
+
+        case 12:
+          if (_dataFinancials == null) {
+            getSDFinancials();
           }
           break;
 
@@ -153,7 +178,19 @@ class SDManager extends ChangeNotifier {
         break;
 
       case 7:
-        getSDividends(reset: true);
+        getSDDividends(reset: true);
+        break;
+
+      case 8:
+        getSDInsiderTrades(reset: true);
+        break;
+
+      case 9:
+        getSDCompetitors(reset: true);
+        break;
+
+      case 12:
+        getSDFinancials(reset: true);
         break;
 
       default:
@@ -600,7 +637,7 @@ class SDManager extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future getSDividends({
+  Future getSDDividends({
     bool reset = false,
   }) async {
     if (_selectedStock == '') return;
@@ -634,6 +671,187 @@ class SDManager extends ChangeNotifier {
       Utils().showLog('Error in ${Apis.sdDividends}: $e');
     } finally {
       setStatusDividends(Status.loaded);
+    }
+  }
+
+  //MARK: Insider Trades
+  String? _errorInsiderTrade;
+  String? get errorInsiderTrade =>
+      _errorInsiderTrade ?? Const.errSomethingWrong;
+
+  Status _statusInsiderTrade = Status.ideal;
+  Status get statusInsiderTrade => _statusInsiderTrade;
+
+  bool get isLoadingInsiderTrade => _statusInsiderTrade == Status.loading;
+
+  SDInsiderTradesRes? _dataInsiderTrade;
+  SDInsiderTradesRes? get dataInsiderTrade => _dataInsiderTrade;
+
+  setStatusInsiderTrades(status) {
+    _statusInsiderTrade = status;
+    notifyListeners();
+  }
+
+  int _openInsiderTrades = -1;
+  int get openInsiderTrades => _openInsiderTrades;
+
+  openInsiderTradesIndex(index) {
+    _openInsiderTrades = index;
+    notifyListeners();
+  }
+
+  Future getSDInsiderTrades({
+    bool reset = false,
+  }) async {
+    if (_selectedStock == '') return;
+    if (reset) {
+      _dataInsiderTrade = null;
+      _openInsiderTrades = -1;
+    }
+    try {
+      setStatusInsiderTrades(Status.loading);
+
+      UserManager provider = navigatorKey.currentContext!.read<UserManager>();
+      Map request = {
+        'token': provider.user?.token ?? '',
+        'symbol': _selectedStock,
+      };
+
+      ApiResponse response = await apiRequest(
+        url: Apis.sdInsiderTrades,
+        request: request,
+      );
+      if (response.status) {
+        _dataInsiderTrade =
+            SDInsiderTradesResFromJson(jsonEncode(response.data));
+        _errorInsiderTrade = null;
+      } else {
+        _dataInsiderTrade = null;
+        _errorInsiderTrade = response.message;
+      }
+    } catch (e) {
+      _dataInsiderTrade = null;
+      _errorInsiderTrade = Const.errSomethingWrong;
+      Utils().showLog('Error in ${Apis.sdInsiderTrades}: $e');
+    } finally {
+      setStatusInsiderTrades(Status.loaded);
+    }
+  }
+
+  //MARK: Competitors
+  String? _errorCompetitors;
+  String? get errorCompetitors => _errorCompetitors ?? Const.errSomethingWrong;
+
+  Status _statusCompetitors = Status.ideal;
+  Status get statusCompetitors => _statusCompetitors;
+
+  bool get isLoadingCompetitors => _statusCompetitors == Status.loading;
+
+  SDCompetitorsRes? _dataCompetitors;
+  SDCompetitorsRes? get dataCompetitors => _dataCompetitors;
+
+  setStatusCompetitors(status) {
+    _statusCompetitors = status;
+    notifyListeners();
+  }
+
+  int _openCompetitors = -1;
+  int get openCompetitors => _openCompetitors;
+
+  openCompetitorsIndex(index) {
+    _openCompetitors = index;
+    notifyListeners();
+  }
+
+  Future getSDCompetitors({
+    bool reset = false,
+  }) async {
+    if (_selectedStock == '') return;
+    if (reset) {
+      _dataCompetitors = null;
+      _openCompetitors = -1;
+    }
+    try {
+      setStatusCompetitors(Status.loading);
+
+      UserManager provider = navigatorKey.currentContext!.read<UserManager>();
+      Map request = {
+        'token': provider.user?.token ?? '',
+        'symbol': _selectedStock,
+      };
+
+      ApiResponse response = await apiRequest(
+        url: Apis.sdCompetitors,
+        request: request,
+      );
+      if (response.status) {
+        _dataCompetitors = SDCompetitorsResFromJson(jsonEncode(response.data));
+        _errorCompetitors = null;
+      } else {
+        _dataCompetitors = null;
+        _errorCompetitors = response.message;
+      }
+    } catch (e) {
+      _dataCompetitors = null;
+      _errorCompetitors = Const.errSomethingWrong;
+      Utils().showLog('Error in ${Apis.sdCompetitors}: $e');
+    } finally {
+      setStatusCompetitors(Status.loaded);
+    }
+  }
+
+  //MARK: Financial
+  String? _errorFinancial;
+  String? get errorFinancial => _errorFinancial ?? Const.errSomethingWrong;
+
+  Status _statusFinancial = Status.ideal;
+  Status get statusFinancial => _statusFinancial;
+
+  bool get isLoadingFinancial => _statusFinancial == Status.loading;
+
+  List<Map<String, dynamic>>? _dataFinancials;
+  List<Map<String, dynamic>>? get dataFinancials => _dataFinancials;
+
+  setStatusFinancials(status) {
+    _statusFinancial = status;
+    notifyListeners();
+  }
+
+  Future getSDFinancials({
+    bool reset = false,
+  }) async {
+    if (_selectedStock == '') return;
+    if (reset) {
+      _dataFinancials = null;
+    }
+    try {
+      setStatusFinancials(Status.loading);
+
+      UserManager provider = navigatorKey.currentContext!.read<UserManager>();
+      Map request = {
+        'token': provider.user?.token ?? '',
+        'symbol': _selectedStock,
+      };
+
+      ApiResponse response = await apiRequest(
+        url: Apis.sdFinancials,
+        request: request,
+      );
+      if (response.status) {
+        _dataFinancials = List<Map<String, dynamic>>.from(
+            response.data?['data']?['finance_statement'] ?? []);
+
+        _errorCompetitors = null;
+      } else {
+        _dataFinancials = null;
+        _errorCompetitors = response.message;
+      }
+    } catch (e) {
+      _dataFinancials = null;
+      _errorCompetitors = Const.errSomethingWrong;
+      Utils().showLog('Error in ${Apis.sdFinancials}: $e');
+    } finally {
+      setStatusFinancials(Status.loaded);
     }
   }
 }

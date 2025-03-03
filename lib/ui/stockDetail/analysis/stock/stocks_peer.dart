@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:stocks_news_new/models/ticker.dart';
 import 'package:stocks_news_new/ui/base/base_list_divider.dart';
 import 'package:stocks_news_new/ui/base/heading.dart';
-import 'package:stocks_news_new/ui/base/stock/slidable_add.dart';
+import 'package:stocks_news_new/ui/base/stock/add.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 
 import '../../../../models/stockDetail/stock_analysis.dart';
@@ -37,7 +37,7 @@ class SDStocksAnalysisPeer extends StatelessWidget {
             if (stockData == null) {
               SizedBox();
             }
-            return SlidableStockAddItem(data: stockData!, index: index);
+            return BaseStockAddItem(data: stockData!, index: index);
           },
           separatorBuilder: (context, index) {
             return BaseListDivider();
