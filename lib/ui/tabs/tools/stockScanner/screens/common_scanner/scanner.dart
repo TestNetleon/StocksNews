@@ -3,24 +3,17 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
-import 'package:stocks_news_new/screens/drawer/base_drawer.dart';
 import 'package:stocks_news_new/screens/marketData/lock/common_lock.dart';
-import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/ui/base/app_bar.dart';
 import 'package:stocks_news_new/ui/base/scaffold.dart';
-import 'package:stocks_news_new/ui/tabs/tools/stockScanner/managers/market_scanner.dart';
 import 'package:stocks_news_new/ui/tabs/tools/stockScanner/screens/common_scanner/stock_scanner_app.dart';
-import 'package:stocks_news_new/ui/tabs/tools/stockScanner/screens/market/market_scanner_filter.dart';
 import 'package:stocks_news_new/ui/tabs/tools/stockScanner/services/streams/gainers_stream.dart';
 import 'package:stocks_news_new/ui/tabs/tools/stockScanner/services/streams/losers_stream.dart';
 import 'package:stocks_news_new/ui/tabs/tools/stockScanner/services/streams/scanner_stream.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
-import 'package:stocks_news_new/utils/utils.dart';
-import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/custom_tab_container.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
-
 
 //MARK: APP
 class ScannerIndex extends StatelessWidget {
@@ -30,8 +23,8 @@ class ScannerIndex extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    MarketScannerM provider = context.watch<MarketScannerM>();
-    String? bannerImage = provider.port?.port?.checkMarketOpenApi?.bannerImage;
+    // MarketScannerM provider = context.watch<MarketScannerM>();
+    // String? bannerImage = provider.port?.port?.checkMarketOpenApi?.bannerImage;
 
     UserProvider userProvider = context.watch<UserProvider>();
     HomeProvider homeProvider = context.watch<HomeProvider>();
@@ -78,17 +71,17 @@ class ScannerIndex extends StatelessWidget {
             children: [
               isLocked
                   ? Stack(
-                    children: [
-                      ScannerContainerLocked(),
-                      if (isLocked)
-                        CommonLock(
-                          showLogin: true,
-                          isLocked: isLocked,
-                          showUpgradeBtn: havePermissions == false,
-                          //fromToPage: "scanner",
-                        ),
-                    ],
-                  )
+                      children: [
+                        ScannerContainerLocked(),
+                        if (isLocked)
+                          CommonLock(
+                            showLogin: true,
+                            isLocked: isLocked,
+                            showUpgradeBtn: havePermissions == false,
+                            //fromToPage: "scanner",
+                          ),
+                      ],
+                    )
                   : StocksScannerApp()
             ],
           )),
@@ -109,7 +102,7 @@ class ScannerContainerLocked extends StatelessWidget {
     ];
 
     return CustomTabContainer(
-      initialIndex:1,
+      initialIndex: 1,
       tabs: List.generate(
         tabs.length,
         (index) {

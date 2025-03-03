@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/ui/base/common_tab.dart';
 import 'package:stocks_news_new/ui/tabs/tools/stockScanner/managers/market_scanner.dart';
 import 'package:stocks_news_new/ui/tabs/tools/stockScanner/screens/common_scanner/scanner.dart';
-import 'package:stocks_news_new/ui/tabs/tools/stockScanner/screens/common_scanner/scanner_container.dart';
 import 'package:stocks_news_new/ui/tabs/tools/stockScanner/screens/market/m_index.dart';
 import 'package:stocks_news_new/ui/tabs/tools/stockScanner/screens/topGainer/g_index.dart';
 import 'package:stocks_news_new/ui/tabs/tools/stockScanner/screens/topLoser/l_index.dart';
@@ -93,7 +92,7 @@ class _StocksScannerAppState extends State<StocksScannerApp> {
                     selectedIndex: 1,
                     isScrollable: false,
                   ),
-                  SpacerVertical(height:10),
+                  SpacerVertical(height: 10),
                   if (manager.selectedScreen == 0)
                     Expanded(
                       child: MarketScanner(),
