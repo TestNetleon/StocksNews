@@ -6,6 +6,7 @@ import 'package:stocks_news_new/managers/faq.dart';
 import 'package:stocks_news_new/managers/helpdesk.dart';
 import 'package:stocks_news_new/managers/home.dart';
 import 'package:stocks_news_new/managers/legal.dart';
+import 'package:stocks_news_new/managers/market/alerts_watchlist_action.dart';
 import 'package:stocks_news_new/managers/market/market.dart';
 import 'package:stocks_news_new/managers/market/most_bullish.dart';
 import 'package:stocks_news_new/managers/notification/most_bullish.dart';
@@ -206,7 +207,7 @@ class Routes {
     CongressionalIndex.path: (_) => const CongressionalIndex(),
     StartIndex.path: (_) => const StartIndex(),
     MyAccount.path: (_) => const MyAccount(),
-   // ContactUs.path: (_) => const ContactUs(),
+    //ContactUs.path: (_) => const ContactUs(),
     CompareStocks.path: (_) => const CompareStocks(),
     QrScan.path: (_) => const QrScan(),
     TrendingIndustries.path: (_) => const TrendingIndustries(),
@@ -551,6 +552,7 @@ class Routes {
       ChangeNotifierProvider(create: (_) => TopLoserScannerM()),
       ChangeNotifierProvider(create: (_) => AlertsM()),
       ChangeNotifierProvider(create: (_) => WatchListManagers()),
+      ChangeNotifierProvider(create: (_) => AlertsWatchlistManager()),
       ChangeNotifierProvider(create: (_) => FaqManager()),
       ChangeNotifierProvider(create: (_) => NewHelpDeskManager()),
     ];

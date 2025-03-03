@@ -177,4 +177,21 @@ class MostBullishManager extends ChangeNotifier {
     //   setStatus(Status.loaded);
     // }
   }
+
+  void updateTickerInfo({required String symbol, alertAdded, watchListAdded}) {
+    if (_data?.mostBullish != null) {
+      final index =
+          _data?.mostBullish?.indexWhere((element) => element.symbol == symbol);
+
+      if (index != null && index != -1) {
+        if (alertAdded != null) {
+          _data?.mostBullish![index].isAlertAdded = alertAdded;
+        }
+        if (watchListAdded != null) {
+          _data?.mostBullish![index].isWatchlistAdded = watchListAdded;
+        }
+        notifyListeners();
+      }
+    }
+  }
 }

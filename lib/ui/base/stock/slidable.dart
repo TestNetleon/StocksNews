@@ -74,7 +74,7 @@ class _BaseSlidableStockItemState extends State<BaseSlidableStockItem>
       key: const ValueKey(0),
       endActionPane: ActionPane(
         motion: const ScrollMotion(),
-        extentRatio: 0.9,
+        extentRatio: 0.75,
         children: [
           Expanded(
             child: Row(
@@ -85,7 +85,10 @@ class _BaseSlidableStockItemState extends State<BaseSlidableStockItem>
                         ? 'Alert Added'
                         : 'Add to Alerts',
                     image: Images.alerts,
-                    onTap: widget.addToAlert,
+                    onTap: () {
+                      controller?.close();
+                      widget.addToAlert!();
+                    },
                   ),
                 if (widget.addToWatchlist != null) ...[
                   const SpacerHorizontal(width: 1),
@@ -94,7 +97,10 @@ class _BaseSlidableStockItemState extends State<BaseSlidableStockItem>
                         ? 'Watchlist Added'
                         : 'Add to Watchlist',
                     image: Images.watchlist,
-                    onTap: widget.addToWatchlist,
+                    onTap: () {
+                      controller?.close();
+                      widget.addToWatchlist!();
+                    },
                   ),
                 ],
                 if (widget.edit != null) ...[
@@ -151,8 +157,12 @@ class BaseSlidableActionItem extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image.asset(image,
-                  width: 24, height: 24, color: ThemeColors.white),
+              Image.asset(
+                image,
+                width: 24,
+                height: 24,
+                color: ThemeColors.white,
+              ),
               const SpacerVertical(height: 8),
               Text(
                 label,

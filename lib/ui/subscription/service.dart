@@ -27,6 +27,12 @@ class SubscriptionService {
       }
 
       await Purchases.configure(configuration);
+      try {
+        Purchases.syncPurchases();
+        Utils().showLog('SYNC');
+      } catch (e) {
+        Utils().showLog('error in sync purchase $e');
+      }
 
       if (appUserId != null && appUserId.isNotEmpty) {
         Purchases.logIn(appUserId);

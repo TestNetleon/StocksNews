@@ -103,6 +103,11 @@ Future<ApiResponse> apiRequest({
   Utils().showLog("URL  =  ${baseUrl + url}");
   Utils().showLog("HEADERS  =  ${headers.toString()}");
 
+  if (request != null) {
+    request["token"] =
+        navigatorKey.currentContext!.read<UserManager>().user?.token ?? "";
+  }
+
   if (formData != null) {
     Utils().showLog(
       "REQUEST $url  =  ${formData.fields.map((entry) => '${entry.key}: ${entry.value}').join(', ')}",

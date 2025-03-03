@@ -23,6 +23,9 @@ class BaseTickerRes {
   int? isAlertAdded;
   int? isWatchlistAdded;
   //extra
+  final String? revenue;
+  final String? employeeCount;
+  final bool? showMore;
   final String? closeDate;
   final String? shareUrl;
   final String? mktCap;
@@ -38,7 +41,7 @@ class BaseTickerRes {
   final String? open;
   final String? previousClose;
   final String? eps;
-  final dynamic pe; //TODO: change later
+  final String? pe;
   final String? earningsAnnouncement;
   final String? sharesOutstanding;
   final num? overallPercent;
@@ -67,6 +70,9 @@ class BaseTickerRes {
     this.mentionDate,
 
     //extra
+    this.revenue,
+    this.employeeCount,
+    this.showMore,
     this.closeDate,
     this.shareUrl,
     this.mktCap,
@@ -112,6 +118,9 @@ class BaseTickerRes {
         mentionDate: json["mention_date"],
 
         //extra
+        revenue: json['revenue'],
+        employeeCount: json['employee_count'],
+        showMore: json['show_more'],
         shareUrl: json['share_url'],
         closeDate: json['closeDate'],
         mktCap: json["mktCap"],
@@ -160,6 +169,9 @@ class BaseTickerRes {
         "mention_date": mentionDate,
 
         //extra
+        'revenue': revenue,
+        'employee_count': employeeCount,
+        'show_more': showMore,
         'share_url': shareUrl,
         'closeDate': closeDate,
         "mktCap": mktCap,

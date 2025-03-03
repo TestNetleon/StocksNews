@@ -9,22 +9,37 @@ import 'package:stocks_news_new/widgets/optional_parent.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
-class BaseStockItem extends StatelessWidget {
+class BaseStockItem extends StatefulWidget {
   final BaseTickerRes data;
-
+  final int index;
   const BaseStockItem({
     super.key,
     required this.data,
+    required this.index,
   });
 
   @override
+  State<BaseStockItem> createState() => _BaseStockItemState();
+}
+
+class _BaseStockItemState extends State<BaseStockItem> {
+  int _openIndex = -1;
+
+  void _toggleOpen(int index) {
+    setState(() {
+      _openIndex = (_openIndex == index) ? -1 : index;
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
+    bool isOpen = _openIndex == widget.index;
     return Container(
       padding: EdgeInsets.all(Pad.pad16),
       child: Column(
         children: [
           Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.circular(Pad.pad5),
@@ -32,7 +47,7 @@ class BaseStockItem extends StatelessWidget {
                   padding: EdgeInsets.all(3.sp),
                   color: ThemeColors.neutral5,
                   child: CachedNetworkImagesWidget(
-                    data.image,
+                    widget.data.image,
                     height: 41,
                     width: 41,
                   ),
@@ -44,7 +59,8 @@ class BaseStockItem extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     OptionalParent(
-                      addParent: data.type != null && data.type != '',
+                      addParent:
+                          widget.data.type != null && widget.data.type != '',
                       parentBuilder: (child) {
                         return Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -61,10 +77,10 @@ class BaseStockItem extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(8),
                               ),
                               child: Text(
-                                data.type ?? '',
+                                widget.data.type ?? '',
                                 style: styleBaseSemiBold(
                                   fontSize: 12,
-                                  color: data.type == 'EQUITY'
+                                  color: widget.data.type == 'EQUITY'
                                       ? ThemeColors.success120
                                       : ThemeColors.secondary120,
                                 ),
@@ -74,7 +90,7 @@ class BaseStockItem extends StatelessWidget {
                         );
                       },
                       child: Text(
-                        data.symbol ?? '',
+                        widget.data.symbol ?? '',
                         style: styleBaseBold(fontSize: 16),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
@@ -82,7 +98,7 @@ class BaseStockItem extends StatelessWidget {
                     ),
                     const SpacerVertical(height: 2),
                     Text(
-                      data.name ?? '',
+                      widget.data.name ?? '',
                       style: styleBaseRegular(
                         fontSize: 14,
                         color: ThemeColors.neutral40,
@@ -92,92 +108,129 @@ class BaseStockItem extends StatelessWidget {
                 ),
               ),
               const SpacerHorizontal(width: 16),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Visibility(
-                    visible:
-                        data.displayPrice != null && data.displayPrice != '',
-                    child: Text(
-                      data.displayPrice ?? '',
-                      style: styleBaseBold(fontSize: 16),
-                    ),
-                  ),
-                  Visibility(
-                    visible: data.mentionCount != null,
-                    child: Text(
-                      '${data.mentionCount}',
-                      style: styleBaseBold(fontSize: 16),
-                    ),
-                  ),
-                  Visibility(
-                    visible: data.mentionDate != null,
-                    child: Text(
-                      data.mentionDate ?? '',
-                      style: styleBaseRegular(
-                        fontSize: 13,
-                        color: ThemeColors.neutral40,
-                      ),
-                    ),
-                  ),
-                  Visibility(
-                    visible:
-                        data.displayChange != null && data.displayChange != '',
-                    child: Container(
-                      margin: EdgeInsets.only(top: 2),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Text(
-                            data.displayChange ?? '',
-                            style: styleBaseSemiBold(
-                              fontSize: 13,
-                              color: (data.changesPercentage ?? 0) < 0
-                                  ? ThemeColors.darkRed
-                                  : ThemeColors.darkGreen,
-                            ),
-                          ),
-                          const SpacerHorizontal(width: 5),
-                          Visibility(
-                            visible: data.changesPercentage != null,
+              widget.data.showMore == true
+                  ? Row(
+                      children: [
+                        Visibility(
+                          visible: widget.data.displayPrice != null &&
+                              widget.data.displayPrice != '',
+                          child: Container(
+                            margin: EdgeInsets.only(right: 8),
                             child: Text(
-                              "(${data.changesPercentage ?? ''}%)",
-                              style: styleBaseSemiBold(
-                                fontSize: 13,
-                                color: num.parse(
-                                            "${data.changesPercentage ?? 0}") <
-                                        0
-                                    ? ThemeColors.darkRed
-                                    : ThemeColors.darkGreen,
-                              ),
+                              textAlign: TextAlign.center,
+                              widget.data.displayPrice ?? '',
+                              style: styleBaseBold(fontSize: 16),
                             ),
                           ),
-                        ],
-                      ),
+                        ),
+                        InkWell(
+                          borderRadius: BorderRadius.circular(4),
+                          onTap: () => _toggleOpen(widget.index),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(4),
+                              border: Border.all(color: ThemeColors.neutral5),
+                            ),
+                            child: Image.asset(
+                              _openIndex == widget.index
+                                  ? Images.arrowDOWN
+                                  : Images.arrowUP,
+                              height: 24,
+                              width: 24,
+                            ),
+                          ),
+                        ),
+                      ],
+                    )
+                  : Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Visibility(
+                          visible: widget.data.displayPrice != null &&
+                              widget.data.displayPrice != '',
+                          child: Text(
+                            widget.data.displayPrice ?? '',
+                            style: styleBaseBold(fontSize: 16),
+                          ),
+                        ),
+                        Visibility(
+                          visible: widget.data.mentionCount != null,
+                          child: Text(
+                            '${widget.data.mentionCount}',
+                            style: styleBaseBold(fontSize: 16),
+                          ),
+                        ),
+                        Visibility(
+                          visible: widget.data.mentionDate != null,
+                          child: Text(
+                            widget.data.mentionDate ?? '',
+                            style: styleBaseRegular(
+                              fontSize: 13,
+                              color: ThemeColors.neutral40,
+                            ),
+                          ),
+                        ),
+                        Visibility(
+                          visible: widget.data.displayChange != null &&
+                              widget.data.displayChange != '',
+                          child: Container(
+                            margin: EdgeInsets.only(top: 2),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Text(
+                                  widget.data.displayChange ?? '',
+                                  style: styleBaseSemiBold(
+                                    fontSize: 13,
+                                    color:
+                                        (widget.data.changesPercentage ?? 0) < 0
+                                            ? ThemeColors.darkRed
+                                            : ThemeColors.darkGreen,
+                                  ),
+                                ),
+                                const SpacerHorizontal(width: 5),
+                                Visibility(
+                                  visible:
+                                      widget.data.changesPercentage != null,
+                                  child: Text(
+                                    "(${widget.data.changesPercentage ?? ''}%)",
+                                    style: styleBaseSemiBold(
+                                      fontSize: 13,
+                                      color: num.parse(
+                                                  "${widget.data.changesPercentage ?? 0}") <
+                                              0
+                                          ? ThemeColors.darkRed
+                                          : ThemeColors.darkGreen,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                  ),
-                ],
-              ),
             ],
           ),
           _bottomWidget(
             label: 'QTY',
-            slug: data.quantity,
+            slug: widget.data.quantity,
           ),
           _bottomWidget(
             label: 'Current Value(QTY X Close price)',
-            slug: data.investmentValue,
+            slug: widget.data.investmentValue,
           ),
-          if (data.additionalInfo != null &&
-              data.additionalInfo?.isNotEmpty == true)
+          if (widget.data.additionalInfo != null &&
+              widget.data.additionalInfo?.isNotEmpty == true)
             Container(
               margin: EdgeInsets.only(top: Pad.pad8),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: List.generate(
-                  data.additionalInfo?.length ?? 0,
+                  widget.data.additionalInfo?.length ?? 0,
                   (index) {
-                    AdditionalInfoRes? info = data.additionalInfo?[index];
+                    AdditionalInfoRes? info =
+                        widget.data.additionalInfo?[index];
                     if (info == null) {
                       return SizedBox();
                     }
@@ -204,7 +257,67 @@ class BaseStockItem extends StatelessWidget {
                   },
                 ),
               ),
-            )
+            ),
+          Visibility(
+            // visible: widget.data.showMore == true,
+            child: AnimatedSize(
+              duration: const Duration(milliseconds: 150),
+              child: Container(
+                height: isOpen ? null : 0,
+                margin: EdgeInsets.only(
+                  top: isOpen ? 10 : 0,
+                  bottom: isOpen ? 10 : 0,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    _dropBox(
+                      label: 'Market Cap',
+                      value: widget.data.mktCap ?? 'N/A',
+                    ),
+                    _dropBox(
+                      label: 'PE Ratio',
+                      value: widget.data.pe ?? 'N/A',
+                    ),
+                    _dropBox(
+                      label: 'Employee Count',
+                      value: widget.data.employeeCount ?? 'N/A',
+                    ),
+                    _dropBox(
+                      label: 'Revenue',
+                      value: widget.data.revenue ?? 'N/A',
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _dropBox({required String label, String? value}) {
+    return Container(
+      margin: EdgeInsets.only(bottom: Pad.pad10),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Flexible(
+            child: Text(
+              label,
+              style: styleBaseRegular(
+                color: ThemeColors.neutral40,
+                fontSize: 13,
+              ),
+            ),
+          ),
+          Flexible(
+            child: Text(
+              value ?? 'N/A',
+              style: styleBaseSemiBold(fontSize: 13),
+            ),
+          ),
         ],
       ),
     );

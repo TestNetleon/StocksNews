@@ -59,7 +59,7 @@ class SubscriptionManager extends ChangeNotifier {
 
           if (actives.isEmpty) {
             if (kDebugMode) {
-              print('Goto - First Time Purchase');
+              Utils().showLog('Goto - First Time Purchase');
             }
 
             Navigator.pushNamed(
@@ -68,7 +68,7 @@ class SubscriptionManager extends ChangeNotifier {
             );
           } else {
             if (kDebugMode) {
-              print('Goto - Already Purchased');
+              Utils().showLog('Goto - Already Purchased');
             }
 
             Navigator.pushNamed(
@@ -78,7 +78,7 @@ class SubscriptionManager extends ChangeNotifier {
           }
 
           if (kDebugMode) {
-            print('Actives $actives');
+            Utils().showLog('Actives $actives');
           }
         }
       }
