@@ -1,7 +1,7 @@
 // import 'package:flutter/material.dart';
 // import 'package:provider/provider.dart';
 // import 'package:stocks_news_new/providers/home_provider.dart';
-// import 'package:stocks_news_new/screens/tabs/home/widgets/plaid/portfolio/index.dart';
+// import 'package:stocks_news_new/screens/tabs/home/widgets/plaid/portfolio/scanner.dart';
 // import 'package:stocks_news_new/utils/colors.dart';
 // import 'package:stocks_news_new/utils/theme.dart';
 // import 'package:stocks_news_new/widgets/spacer_horizontal.dart';

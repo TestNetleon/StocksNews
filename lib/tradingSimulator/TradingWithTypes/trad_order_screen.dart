@@ -8,7 +8,7 @@
 // import 'package:stocks_news_new/tradingSimulator/modals/trading_search_res.dart';
 // import 'package:stocks_news_new/tradingSimulator/providers/trade_provider.dart';
 // import 'package:stocks_news_new/tradingSimulator/providers/trading_search_provider.dart';
-// import 'package:stocks_news_new/tradingSimulator/screens/searchTradingTicker/index.dart';
+// import 'package:stocks_news_new/tradingSimulator/screens/searchTradingTicker/scanner.dart';
 // import 'package:stocks_news_new/utils/colors.dart';
 // import 'package:stocks_news_new/utils/constants.dart';
 // import 'package:stocks_news_new/utils/theme.dart';

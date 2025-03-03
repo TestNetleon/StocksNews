@@ -7,7 +7,7 @@
 // import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 // import '../../../../../../utils/theme.dart';
 // import '../../../../widget/pointer_container.dart';
-// import '../index.dart';
+// import '../scanner.dart';
 // import 'title_subtitle.dart';
 
 // class MsPerformanceToday extends StatelessWidget {

@@ -2,7 +2,7 @@
 // import 'package:provider/provider.dart';
 // import 'package:stocks_news_new/modals/blogs_res.dart';
 // import 'package:stocks_news_new/providers/blog_provider.dart';
-// import 'package:stocks_news_new/screens/blogs/index.dart';
+// import 'package:stocks_news_new/screens/blogs/scanner.dart';
 // import 'package:stocks_news_new/utils/colors.dart';
 // import 'package:stocks_news_new/utils/constants.dart';
 // import 'package:stocks_news_new/utils/theme.dart';

@@ -7,7 +7,7 @@
 // import 'package:stocks_news_new/utils/utils.dart';
 // import '../../../providers/trade_provider.dart';
 // import '../../../route/my_app.dart';
-// import '../paperTrade/index.dart';
+// import '../paperTrade/scanner.dart';
 // import 'sheet.dart';
 
 // class SdTrade extends StatefulWidget {

@@ -51,6 +51,7 @@ class BaseButton extends StatelessWidget {
           disabledBackgroundColor:
               disabledBackgroundColor ?? ThemeColors.primary10,
           backgroundColor: color,
+          shadowColor: Colors.transparent,
           elevation: 0,
           minimumSize: const Size.fromHeight(45),
           padding: padding ?? EdgeInsets.symmetric(horizontal: 16, vertical: 8),

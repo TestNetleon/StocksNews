@@ -6,11 +6,11 @@
 // import 'package:stocks_news_new/providers/user_provider.dart';
 // import 'package:stocks_news_new/routes/my_app.dart';
 // import 'package:stocks_news_new/routes/navigation_observer.dart';
-// import 'package:stocks_news_new/screens/notifications/index.dart';
+// import 'package:stocks_news_new/screens/notifications/scanner.dart';
 // import 'package:stocks_news_new/screens/search/search.dart';
 // import 'package:stocks_news_new/screens/tabs/tabs.dart';
 // import 'package:stocks_news_new/stocksScanner/providers/market_scanner_provider.dart';
-// import 'package:stocks_news_new/tradingSimulator/screens/portfolio/index.dart';
+// import 'package:stocks_news_new/tradingSimulator/screens/portfolio/scanner.dart';
 // import 'package:stocks_news_new/utils/colors.dart';
 // import 'package:stocks_news_new/utils/constants.dart';
 // import 'package:stocks_news_new/utils/theme.dart';
@@ -399,8 +399,8 @@ import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/routes/navigation_observer.dart';
 import 'package:stocks_news_new/screens/notifications/index.dart';
 import 'package:stocks_news_new/screens/search/search.dart';
-import 'package:stocks_news_new/stocksScanner/providers/market_scanner_provider.dart';
 import 'package:stocks_news_new/tradingSimulator/screens/portfolio/index.dart';
+import 'package:stocks_news_new/ui/tabs/tools/stockScanner/managers/market_scanner.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -644,7 +644,7 @@ class _AppBarHomeState extends State<AppBarHome> {
                     //     );
                     //   }),
                     if (widget.isScannerFilter)
-                      Consumer<MarketScannerProvider>(
+                      Consumer<MarketScannerM>(
                           builder: (context, value, child) {
                         return Visibility(
                           visible:

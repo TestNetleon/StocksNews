@@ -8,9 +8,9 @@
 // import 'package:stocks_news_new/providers/home_provider.dart';
 // import 'package:stocks_news_new/providers/user_provider.dart';
 // import 'package:stocks_news_new/screens/alerts/alerts.dart';
-// import 'package:stocks_news_new/screens/allFeatured/index.dart';
+// import 'package:stocks_news_new/screens/allFeatured/scanner.dart';
 // import 'package:stocks_news_new/screens/stockDetails/stock_details.dart';
-// import 'package:stocks_news_new/screens/stocks/index.dart';
+// import 'package:stocks_news_new/screens/stocks/scanner.dart';
 // import 'package:stocks_news_new/screens/tabs/home/widgets/myAlerts/item.dart';
 // import 'package:stocks_news_new/utils/theme.dart';
 // import 'package:stocks_news_new/widgets/spacer_horizontal.dart';

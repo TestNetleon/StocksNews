@@ -1,11 +1,13 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:stocks_news_new/managers/alerts.dart';
 import 'package:stocks_news_new/managers/blogs.dart';
 import 'package:stocks_news_new/managers/home.dart';
 import 'package:stocks_news_new/managers/legal.dart';
 import 'package:stocks_news_new/managers/market/market.dart';
 import 'package:stocks_news_new/managers/market/most_bullish.dart';
 import 'package:stocks_news_new/managers/notification/most_bullish.dart';
+import 'package:stocks_news_new/managers/watchlist.dart';
 import 'package:stocks_news_new/tournament/provider/leaderboard.dart';
 import 'package:stocks_news_new/tournament/provider/tournament.dart';
 import 'package:stocks_news_new/tournament/provider/search.dart';
@@ -52,9 +54,7 @@ import 'package:stocks_news_new/providers/store_provider.dart';
 import 'package:stocks_news_new/providers/today_breackout_stocks_provider.dart';
 import 'package:stocks_news_new/providers/today_top_loser_provider.dart';
 import 'package:stocks_news_new/screens/auth/newFlow/login.dart';
-import 'package:stocks_news_new/stocksScanner/providers/market_scanner_provider.dart';
-import 'package:stocks_news_new/stocksScanner/providers/top_gainer_scanner_provider.dart';
-import 'package:stocks_news_new/stocksScanner/providers/top_loser_scanner_provider.dart';
+
 import 'package:stocks_news_new/tradingSimulator/providers/trade_provider.dart';
 import 'package:stocks_news_new/providers/unusual_trading_volume_provider.dart';
 import 'package:stocks_news_new/providers/most_volatile_stocks.dart';
@@ -83,7 +83,6 @@ import 'package:stocks_news_new/providers/watchlist_provider.dart';
 import 'package:stocks_news_new/providers/what_we_do_provider.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/screens/affiliate/index.dart';
-import 'package:stocks_news_new/screens/alerts/alerts.dart';
 import 'package:stocks_news_new/screens/auth/qrScan/index.dart';
 import 'package:stocks_news_new/screens/auth/signup/signup_success.dart';
 import 'package:stocks_news_new/screens/blogDetail/index.dart';
@@ -107,13 +106,18 @@ import 'package:stocks_news_new/screens/tabs/compareStocks/compare_stocks.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/plaid/portfolio/index.dart';
 import 'package:stocks_news_new/screens/tabs/news/newsDetail/new_detail.dart';
 import 'package:stocks_news_new/screens/trendingIndustries/index.dart';
-import 'package:stocks_news_new/screens/watchlist/watchlist.dart';
 import 'package:stocks_news_new/tradingSimulator/providers/trading_search_provider.dart';
 import 'package:stocks_news_new/tradingSimulator/providers/ts_open_list_provider.dart';
 import 'package:stocks_news_new/tradingSimulator/providers/ts_pending_list_provider.dart';
 import 'package:stocks_news_new/tradingSimulator/providers/ts_portfollo_provider.dart';
+import 'package:stocks_news_new/ui/tabs/more/alerts/index.dart';
 import 'package:stocks_news_new/ui/tabs/more/notificationSettings/index.dart';
+import 'package:stocks_news_new/ui/tabs/more/watchlist/index.dart';
 import 'package:stocks_news_new/ui/tabs/tools/compareStocks/compare.dart';
+import 'package:stocks_news_new/ui/tabs/tools/stockScanner/managers/market_scanner.dart';
+import 'package:stocks_news_new/ui/tabs/tools/stockScanner/managers/top_gainer_scanner.dart';
+import 'package:stocks_news_new/ui/tabs/tools/stockScanner/managers/top_loser_scanner.dart';
+import 'package:stocks_news_new/ui/tabs/tools/stockScanner/screens/common_scanner/scanner.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import '../managers/news.dart';
@@ -174,12 +178,15 @@ class Routes {
     AccountLoginIndex.path: (_) => const AccountLoginIndex(),
     ToolsPortfolioIndex.path: (_) => const ToolsPortfolioIndex(),
     ToolsCompareIndex.path: (_) => const ToolsCompareIndex(),
+    ScannerIndex.path: (_) => const ScannerIndex(),
     CategoriesNewsIndex.path: (_) => const CategoriesNewsIndex(),
     BlogsIndex.path: (_) => const BlogsIndex(),
     SubscriptionIndex.path: (_) => const SubscriptionIndex(),
     SubscriptionPlansIndex.path: (_) => const SubscriptionPlansIndex(),
     PurchasedIndex.path: (_) => const PurchasedIndex(),
     UpdatePersonalDetailIndex.path: (_) => const UpdatePersonalDetailIndex(),
+    AlertIndex.path: (_) => const AlertIndex(),
+    WatchListIndex.path: (_) => const WatchListIndex(),
 
     //--------------------------------------
 
@@ -188,8 +195,8 @@ class Routes {
     Search.path: (_) => const Search(),
     FAQ.path: (_) => const FAQ(),
     Notifications.path: (_) => const Notifications(),
-    Alerts.path: (_) => const Alerts(),
-    WatchList.path: (_) => const WatchList(),
+    //Alerts.path: (_) => const Alerts(),
+    //WatchList.path: (_) => const WatchList(),
     LowPriceStocksIndex.path: (_) => const LowPriceStocksIndex(),
     CongressionalIndex.path: (_) => const CongressionalIndex(),
     StartIndex.path: (_) => const StartIndex(),
@@ -514,9 +521,6 @@ class Routes {
       ChangeNotifierProvider(create: (_) => BlackFridayProvider()),
       ChangeNotifierProvider(create: (_) => ChristmasProvider()),
       ChangeNotifierProvider(create: (_) => TsTransactionListProvider()),
-      ChangeNotifierProvider(create: (_) => MarketScannerProvider()),
-      ChangeNotifierProvider(create: (_) => TopGainerScannerProvider()),
-      ChangeNotifierProvider(create: (_) => TopLoserScannerProvider()),
       ChangeNotifierProvider(create: (_) => TournamentSearchProvider()),
       ChangeNotifierProvider(create: (_) => TournamentLeaderboardProvider()),
       // ChangeNotifierProvider(create: (_) => ScannerProvider()),
@@ -537,6 +541,11 @@ class Routes {
       ChangeNotifierProvider(create: (_) => SubscriptionManager()),
       ChangeNotifierProvider(create: (_) => LegalInfoManager()),
       ChangeNotifierProvider(create: (_) => SDManager()),
+      ChangeNotifierProvider(create: (_) => MarketScannerM()),
+      ChangeNotifierProvider(create: (_) => TopGainerScannerM()),
+      ChangeNotifierProvider(create: (_) => TopLoserScannerM()),
+      ChangeNotifierProvider(create: (_) => AlertsM()),
+      ChangeNotifierProvider(create: (_) => WatchListManagers()),
     ];
   }
 }

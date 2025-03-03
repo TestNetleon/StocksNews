@@ -12,11 +12,16 @@ class ToolsRes {
   final ToolsCardsRes? compare;
   final ToolsCardsRes? plaid;
   final PlaidConfigRes? plaidConfig;
-
+  final ToolsCardsRes? scanner;
+  final ToolsCardsRes? simulator;
+  final ToolsCardsRes? league;
   ToolsRes({
     this.compare,
     this.plaid,
     this.plaidConfig,
+    this.scanner,
+    this.simulator,
+    this.league,
   });
 
   factory ToolsRes.fromJson(Map<String, dynamic> json) => ToolsRes(
@@ -29,12 +34,24 @@ class ToolsRes {
         plaidConfig: json["plaid_config"] == null
             ? null
             : PlaidConfigRes.fromJson(json["plaid_config"]),
+    scanner: json["scanner"] == null
+        ? null
+        : ToolsCardsRes.fromJson(json["scanner"]),
+    simulator: json["simulator"] == null
+        ? null
+        : ToolsCardsRes.fromJson(json["simulator"]),
+    league: json["league"] == null
+        ? null
+        : ToolsCardsRes.fromJson(json["league"]),
       );
 
   Map<String, dynamic> toJson() => {
         "compare": compare?.toJson(),
         "plaid": plaid?.toJson(),
         "plaid_config": plaidConfig?.toJson(),
+    "scanner": scanner?.toJson(),
+    "simulator":simulator?.toJson(),
+    "league": league?.toJson(),
       };
 }
 

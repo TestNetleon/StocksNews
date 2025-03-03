@@ -269,6 +269,7 @@ class Images {
   static const String microsoft = "assets/images/msft.png";
   static const String download = "assets/images/download.png";
   static const String edit = "assets/images/edit.png";
+  static const String delete = 'assets/images/delete.png';
   static const String report = "assets/images/report2.png";
 
   //Market Data icons
@@ -421,6 +422,7 @@ class Dimen {
 }
 
 class Pad {
+  static const double pad3 = 3;
   static const double pad5 = 5;
   static const double pad8 = 8;
   static const double pad10 = 10;
