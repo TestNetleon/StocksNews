@@ -7,7 +7,7 @@ import 'package:stocks_news_new/ui/base/base_list_divider.dart';
 import 'package:stocks_news_new/ui/base/load_more.dart';
 import 'package:stocks_news_new/ui/base/no_item.dart';
 import 'package:stocks_news_new/ui/base/scaffold.dart';
-import 'package:stocks_news_new/ui/base/stock/slidable_edit.dart';
+import 'package:stocks_news_new/ui/base/stock/edit.dart';
 import 'package:stocks_news_new/ui/stockDetail/index.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
@@ -88,7 +88,7 @@ class _WatchListIndexState extends State<WatchListIndex> {
                       if (data == null) {
                         return SizedBox();
                       }
-                      return SlidableStockEditItem(
+                      return BaseStockEditItem(
                         data: data,
                         deleteDataRes: manager.watchData?.deleteBox,
                         index: index,
