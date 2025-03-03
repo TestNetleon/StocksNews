@@ -360,7 +360,6 @@ class ToolsManager extends ChangeNotifier {
   /// Scanner redirection
   Future scannerRedirection() async {
     //  UserManager userManager = navigatorKey.currentContext!.read<UserManager>();
-
     /*await manager.askLoginScreen();
    if (manager.user == null) {
      return;
