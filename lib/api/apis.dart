@@ -15,7 +15,6 @@ class Apis {
       : "https://app.stocks.news/api/v1";
 
   // MARK: New UI APIs
-
   static const onBoarding = '/onboarding';
   static const myHome = '/home';
   static const compareStocks = '/compare';
@@ -28,7 +27,6 @@ class Apis {
   static const removePortfolio = '/remove-plaid-portfolio';
   static const myHomeWatchlist = '/home-watchlist-data';
   static const marketData = '/market-data';
-  static const mostBullish = '/most-bullish';
   static const notificationSettings = '/notification-settings';
   static const phoneLogin = '/phone-login';
   static const googleLogin = "/signup-google";
@@ -38,7 +36,6 @@ class Apis {
   static const deleteAlert = "/delete-alert";
   static const watchlist = "/watchlist";
   static const deleteWatchlist = "/delete-watchlist";
-
 
   //Search---
   static const recentSearch = '/recent-search';
@@ -81,6 +78,10 @@ class Apis {
   static const sdInsiderTrades = '/stock-detail-insider';
   static const sdCompetitors = '/stock-detail-competitior';
   static const sdFinancials = '/stock-detail-financial';
+
+  // Market data
+  static const mostBullish = '/most-bullish';
+  static const checkAlertLock = '/check-alert-lock';
 
 //----------------------------------------------
 

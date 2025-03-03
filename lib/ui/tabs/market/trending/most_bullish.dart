@@ -24,40 +24,42 @@ class _MostBullishState extends State<MostBullish> {
   }
 
   Future _callAPI() async {
-    MostBullishManager provider = context.read<MostBullishManager>();
-    await provider.getData();
+    MostBullishManager manager = context.read<MostBullishManager>();
+    await manager.getData();
   }
 
   @override
   Widget build(BuildContext context) {
-    MostBullishManager provider = context.watch<MostBullishManager>();
+    MostBullishManager manager = context.watch<MostBullishManager>();
 
-    Utils().showLog("Length  => ${provider.data?.mostBullish?.length ?? 0}");
+    Utils().showLog("Length  => ${manager.data?.mostBullish?.length ?? 0}");
 
     return BaseLoaderContainer(
-      isLoading: provider.isLoading,
-      hasData: provider.data != null && !provider.isLoading,
+      isLoading: manager.isLoading,
+      hasData: manager.data != null && !manager.isLoading,
       showPreparingText: true,
-      error: provider.error,
+      error: manager.error,
       onRefresh: _callAPI,
       child: BaseLoadMore(
         onLoadMore: () async {},
         onRefresh: _callAPI,
         canLoadMore: false,
-        child: (provider.data == null || provider.data?.mostBullish == null)
+        child: (manager.data == null || manager.data?.mostBullish == null)
             ? const SizedBox()
             : ListView.separated(
                 shrinkWrap: true,
                 itemBuilder: (context, index) {
                   return BaseStockAddItem(
-                    data: provider.data!.mostBullish![index],
+                    data: manager.data!.mostBullish![index],
                     index: index,
+                    onRefresh: _callAPI,
+                    manager: manager,
                   );
                 },
                 separatorBuilder: (context, index) {
                   return BaseListDivider();
                 },
-                itemCount: provider.data!.mostBullish?.length ?? 0,
+                itemCount: manager.data!.mostBullish?.length ?? 0,
               ),
       ),
     );

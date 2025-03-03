@@ -1,10 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/managers/market/alerts_watchlist_action.dart';
+import 'package:stocks_news_new/managers/user.dart';
 import 'package:stocks_news_new/models/ticker.dart';
-import 'package:stocks_news_new/providers/user_provider.dart';
+import 'package:stocks_news_new/ui/base/bottom_sheet.dart';
 import 'package:stocks_news_new/ui/base/stock/slidable.dart';
 import 'package:stocks_news_new/ui/base/stock/stock.dart';
+import 'package:stocks_news_new/ui/base/toaster.dart';
+import 'package:stocks_news_new/ui/subscription/manager.dart';
+import 'package:stocks_news_new/ui/tabs/market/extra/add_to_alert_sheet.dart';
+import 'package:stocks_news_new/ui/tabs/more/alerts/index.dart';
+import 'package:stocks_news_new/ui/tabs/more/watchlist/index.dart';
+import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/optional_parent.dart';
 
 class BaseStockAddItem extends StatelessWidget {
@@ -12,53 +19,95 @@ class BaseStockAddItem extends StatelessWidget {
   final int index;
   final bool slidable;
   final Function(BaseTickerRes)? onTap;
+  final Function()? onRefresh;
+  final dynamic manager;
+
   const BaseStockAddItem({
     super.key,
     this.slidable = true,
     required this.data,
     required this.index,
     this.onTap,
+    this.onRefresh,
+    this.manager,
   });
 
   Future<void> _onAddToAlertClick(BuildContext context) async {
-    AlertsWatchlistAction provider = context.read<AlertsWatchlistAction>();
-    UserProvider userProvider = context.read<UserProvider>();
-    // String symbol = provider.tabRes?.keyStats?.symbol ?? "";
-
-    // if (widget.up) {
+    AlertsWatchlistManager manager = context.read<AlertsWatchlistManager>();
+    UserManager userManager = context.read<UserManager>();
     if (data.isAlertAdded == 1) {
-      // _navigateToAlert();
+      await Navigator.pushNamed(context, AlertIndex.path);
+      if (onRefresh != null) onRefresh!();
     } else {
-      if (userProvider.user != null) {
-        // log("set HERE");
-        // _showAlertPopup(context: navigatorKey.currentContext!, symbol: symbol);
+      if (userManager.user != null) {
+        await manager.requestAlertLock(symbol: data.symbol ?? "");
+        if (manager.checkAlertLock?.lockInfo != null) {
+          SubscriptionManager().startProcess(viewPlans: true);
+        } else if (manager.checkAlertLock?.alertData != null) {
+          _showAlertBottomSheet(context);
+        } else {
+          TopSnackbar.show(
+            message: Const.errSomethingWrong,
+            type: ToasterEnum.error,
+          );
+        }
       } else {
-        // askLogin
+        await userManager.askLoginScreen();
+        if (userManager.user != null && onRefresh != null) {
+          onRefresh!();
+        }
       }
-      // try {
-      //   Utils().showLog("calling api..");
-      //   ApiResponse res =
-      //       await context.read<TrendingProvider>().getMostBullish();
-      //   if (res.status) {
-      //     num alertOn = navigatorKey.currentContext!
-      //             .read<TrendingProvider>()
-      //             .mostBullish
-      //             ?.mostBullish?[widget.index]
-      //             .isAlertAdded ??
-      //         0;
-      //     if (alertOn == 0) {
-      //       _showAlertPopup(
-      //           context: navigatorKey.currentContext!, symbol: symbol);
-      //     } else {
-      //       Navigator.push(
-      //         navigatorKey.currentContext!,
-      //         MaterialPageRoute(builder: (_) => const Alerts()),
-      //       );
-      //     }
-      //   }
-      // } catch (e) {
-      //   log("ERROR -> $e");
-      // }
+    }
+  }
+
+  Future _showAlertBottomSheet(BuildContext context) async {
+    BaseBottomSheet().bottomSheet(
+      child: AddToAlertSheet(symbol: data.symbol ?? "", manager: manager),
+    );
+  }
+
+  Future<void> _onAddToWatchlistClick(BuildContext context) async {
+    AlertsWatchlistManager manager = context.read<AlertsWatchlistManager>();
+    UserManager userManager = context.read<UserManager>();
+    if (data.isWatchlistAdded == 1) {
+      await Navigator.pushNamed(context, WatchListIndex.path);
+      if (onRefresh != null) onRefresh!();
+    } else {
+      if (userManager.user != null) {
+        await manager.requestAlertLock(symbol: data.symbol ?? "");
+        if (manager.checkAlertLock?.lockInfo != null) {
+          SubscriptionManager().startProcess(viewPlans: true);
+        } else if (manager.checkAlertLock?.alertData != null) {
+          _requestAddToWatchlist(context);
+        } else {
+          TopSnackbar.show(
+            message: Const.errSomethingWrong,
+            type: ToasterEnum.error,
+          );
+        }
+      } else {
+        await userManager.askLoginScreen();
+        if (userManager.user != null && onRefresh != null) {
+          onRefresh!();
+        }
+      }
+    }
+  }
+
+  void _requestAddToWatchlist(BuildContext context) async {
+    AlertsWatchlistManager alertManager =
+        context.read<AlertsWatchlistManager>();
+
+    final Map request = {"symbol": data.symbol};
+
+    final result = await alertManager.requestAddToAlert(
+      symbol: data.symbol ?? "",
+      request: request,
+    );
+
+    if (result == true) {
+      manager.updateTickerInfo(symbol: data.symbol, watchListAdded: 1);
+      // Navigator.pop(context);
     }
   }
 
@@ -70,7 +119,7 @@ class BaseStockAddItem extends StatelessWidget {
         return BaseSlidableStockItem(
           index: index,
           addToAlert: () => _onAddToAlertClick(context),
-          addToWatchlist: () {},
+          addToWatchlist: () => _onAddToWatchlistClick(context),
           isAlertAdded: data.isAlertAdded,
           isWatchlistAdded: data.isWatchlistAdded,
           child: child,
