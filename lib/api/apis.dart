@@ -87,6 +87,8 @@ class Apis {
   // Market data
   static const mostBullish = '/most-bullish';
   static const checkAlertLock = '/check-alert-lock';
+  static const mostBearish = '/most-bearish';
+  static const todaysGainers = '/todays-gainers';
 
 //----------------------------------------------
 

@@ -64,10 +64,7 @@ class _BlogsDetailIndexState extends State<BlogsDetailIndex> {
         child: Stack(
           children: [
             BlogDetailData(slug: widget.slug),
-            BaseLockItem(
-              manager: manager,
-              callAPI: _callAPI,
-            ),
+            BaseLockItem(manager: manager, callAPI: _callAPI),
           ],
         ),
       ),

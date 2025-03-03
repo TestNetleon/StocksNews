@@ -100,7 +100,7 @@ class BaseStockAddItem extends StatelessWidget {
 
     final Map request = {"symbol": data.symbol};
 
-    final result = await alertManager.requestAddToAlert(
+    final result = await alertManager.requestAddToWishList(
       symbol: data.symbol ?? "",
       request: request,
     );

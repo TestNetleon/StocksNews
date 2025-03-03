@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/managers/market/market.dart';
 import 'package:stocks_news_new/ui/base/common_tab.dart';
+import 'package:stocks_news_new/ui/tabs/market/gainer&Losers/todays_gainer.dart';
 import 'package:stocks_news_new/ui/tabs/market/market_tabs.dart';
+import 'package:stocks_news_new/ui/tabs/market/trending/most_bearish.dart';
 import 'package:stocks_news_new/ui/tabs/market/trending/most_bullish.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 
@@ -45,6 +47,14 @@ class _MarketIndexState extends State<MarketIndex> {
         _marketIndex == 0 &&
         _marketInnerIndex == 0) {
       return MostBullish();
+    } else if (_screenIndex == 0 &&
+        _marketIndex == 0 &&
+        _marketInnerIndex == 1) {
+      return MostBearish();
+    } else if (_screenIndex == 0 &&
+        _marketIndex == 1 &&
+        _marketInnerIndex == 0) {
+      return TodaysGainer();
     }
     return Container();
   }
@@ -88,6 +98,7 @@ class _MarketIndexState extends State<MarketIndex> {
                   if (_screenIndex == 0 &&
                       provider.data!.data![0].data![_marketIndex].data != null)
                     BaseTabs(
+                      selectedIndex: _marketInnerIndex,
                       data: provider.data!.data![0].data![_marketIndex].data!,
                       onTap: (index) {
                         setState(() {

@@ -9,8 +9,9 @@ import 'package:stocks_news_new/models/market/most_bullish.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/utils/constants.dart';
+import 'package:stocks_news_new/utils/utils.dart';
 
-class NotificationSettingsManager extends ChangeNotifier {
+class TodaysGainerManager extends ChangeNotifier {
   MarketDataRes? _data;
   MarketDataRes? get data => _data;
 
@@ -42,24 +43,43 @@ class NotificationSettingsManager extends ChangeNotifier {
       };
 
       ApiResponse response = await apiRequest(
-        url: Apis.notificationSettings,
+        url: Apis.todaysGainers,
         request: request,
         showProgress: showProgress,
       );
-
       if (response.status) {
         _data = marketDataResFromJson(jsonEncode(response.data));
-
         _extra = (response.extra is Extra ? response.extra as Extra : null);
       } else {
         _data = null;
         _error = response.message;
       }
+      setStatus(Status.loaded);
     } catch (e) {
+      Utils().showLog("Error => $e");
       _data = null;
       _error = Const.errSomethingWrong;
-    } finally {
       setStatus(Status.loaded);
+    }
+    // finally {
+    //   setStatus(Status.loaded);
+    // }
+  }
+
+  void updateTickerInfo({required String symbol, alertAdded, watchListAdded}) {
+    if (_data?.mostBullish != null) {
+      final index =
+          _data?.mostBullish?.indexWhere((element) => element.symbol == symbol);
+
+      if (index != null && index != -1) {
+        if (alertAdded != null) {
+          _data?.mostBullish![index].isAlertAdded = alertAdded;
+        }
+        if (watchListAdded != null) {
+          _data?.mostBullish![index].isWatchlistAdded = watchListAdded;
+        }
+        notifyListeners();
+      }
     }
   }
 }

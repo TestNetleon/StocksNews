@@ -2,17 +2,17 @@ import 'dart:convert';
 
 import 'package:stocks_news_new/models/ticker.dart';
 
-MostBullishRes mostBullishResFromJson(String str) =>
-    MostBullishRes.fromJson(json.decode(str));
+MarketDataRes marketDataResFromJson(String str) =>
+    MarketDataRes.fromJson(json.decode(str));
 
-String mostBullishResToJson(MostBullishRes data) => json.encode(data.toJson());
+String marketDataResToJson(MarketDataRes data) => json.encode(data.toJson());
 
-class MostBullishRes {
+class MarketDataRes {
   final List<BaseTickerRes>? mostBullish;
 
-  MostBullishRes({required this.mostBullish});
+  MarketDataRes({required this.mostBullish});
 
-  factory MostBullishRes.fromJson(Map<String, dynamic> json) => MostBullishRes(
+  factory MarketDataRes.fromJson(Map<String, dynamic> json) => MarketDataRes(
         mostBullish: json["data"] == null
             ? null
             : List<BaseTickerRes>.from(
