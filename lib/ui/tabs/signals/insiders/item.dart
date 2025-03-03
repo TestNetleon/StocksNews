@@ -178,6 +178,7 @@ class BaseInsiderItem extends StatelessWidget {
                                 companyNamePresent || securityTransactedPresent,
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Visibility(
                                   visible:
@@ -199,6 +200,7 @@ class BaseInsiderItem extends StatelessWidget {
                                     child: Container(
                                       margin: EdgeInsets.only(left: Pad.pad10),
                                       child: Text(
+                                        textAlign: TextAlign.end,
                                         "${data.securityTransacted} Shares @ ${data.price}",
                                         // maxLines: 1,
                                         // overflow: TextOverflow.ellipsis,
