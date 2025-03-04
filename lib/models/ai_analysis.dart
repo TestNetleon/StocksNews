@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:stocks_news_new/models/faq.dart';
+import 'package:stocks_news_new/models/news.dart';
 import 'package:stocks_news_new/models/stockDetail/overview.dart';
 import 'package:stocks_news_new/models/ticker.dart';
 
@@ -13,8 +14,17 @@ class AIRes {
   final AIradarChartRes? radarChart;
   final AIourTakeRes? ourTake;
   final AIswotRes? swot;
-  final Performance? performance;
+  final AIPerformanceRes? performance;
   final BaseFaqRes? faqs;
+//
+  final AIHighlightsRes? highlights;
+  final AIPriceVolatilityRes? priceVolatility;
+  final List<BaseNewsRes>? latestNews;
+  final List<BaseKeyValueRes>? events;
+  final AIFundamentalsRes? fundamentals;
+  final AIPeerComparisonRes? peerComparison;
+  final String? lastUpdateDate;
+  final String? usdText;
 
   AIRes({
     this.tickerDetail,
@@ -23,6 +33,15 @@ class AIRes {
     this.swot,
     this.performance,
     this.faqs,
+    //
+    this.highlights,
+    this.priceVolatility,
+    this.latestNews,
+    this.events,
+    this.fundamentals,
+    this.peerComparison,
+    this.lastUpdateDate,
+    this.usdText,
   });
 
   factory AIRes.fromJson(Map<String, dynamic> json) => AIRes(
@@ -38,8 +57,32 @@ class AIRes {
         swot: json["swot"] == null ? null : AIswotRes.fromJson(json["swot"]),
         performance: json["performance"] == null
             ? null
-            : Performance.fromJson(json["performance"]),
+            : AIPerformanceRes.fromJson(json["performance"]),
         faqs: json["faqs"] == null ? null : BaseFaqRes.fromJson(json["faqs"]),
+        //
+        highlights: json["highlights"] == null
+            ? null
+            : AIHighlightsRes.fromJson(json["highlights"]),
+        priceVolatility: json["priceVolatility"] == null
+            ? null
+            : AIPriceVolatilityRes.fromJson(json["priceVolatility"]),
+        latestNews: json["latestNews"] == null
+            ? []
+            : List<BaseNewsRes>.from(
+                json["latestNews"]!.map((x) => BaseNewsRes.fromJson(x))),
+
+        events: json["events"] == null
+            ? []
+            : List<BaseKeyValueRes>.from(
+                json["events"]!.map((x) => BaseKeyValueRes.fromJson(x))),
+        fundamentals: json["fundamentals"] == null
+            ? null
+            : AIFundamentalsRes.fromJson(json["fundamentals"]),
+        peerComparison: json["peerComparison"] == null
+            ? null
+            : AIPeerComparisonRes.fromJson(json["peerComparison"]),
+        lastUpdateDate: json["last_update_date"],
+        usdText: json["usd_text"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -49,6 +92,19 @@ class AIRes {
         "swot": swot?.toJson(),
         "performance": performance?.toJson(),
         "faqs": faqs?.toJson(),
+        //
+        "highlights": highlights?.toJson(),
+        "priceVolatility": priceVolatility?.toJson(),
+        "latestNews": latestNews == null
+            ? []
+            : List<dynamic>.from(latestNews!.map((x) => x.toJson())),
+        "events": events == null
+            ? []
+            : List<dynamic>.from(events!.map((x) => x.toJson())),
+        "fundamentals": fundamentals?.toJson(),
+        "peerComparison": peerComparison?.toJson(),
+        "last_update_date": lastUpdateDate,
+        "usd_text": usdText,
       };
 }
 
@@ -74,7 +130,7 @@ class AIourTakeRes {
       };
 }
 
-class Performance {
+class AIPerformanceRes {
   final String? title;
   final num? price;
   final num? yearHigh;
@@ -85,7 +141,7 @@ class Performance {
   final String? previousClose;
   final String? volume;
 
-  Performance({
+  AIPerformanceRes({
     this.title,
     this.price,
     this.yearHigh,
@@ -97,7 +153,8 @@ class Performance {
     this.volume,
   });
 
-  factory Performance.fromJson(Map<String, dynamic> json) => Performance(
+  factory AIPerformanceRes.fromJson(Map<String, dynamic> json) =>
+      AIPerformanceRes(
         title: json["title"],
         price: json["price"],
         yearHigh: json["yearHigh"],
@@ -168,7 +225,7 @@ class AIradarChartDataRes {
   factory AIradarChartDataRes.fromJson(Map<String, dynamic> json) =>
       AIradarChartDataRes(
         label: json["label"],
-        value: json["value"]?.toDouble(),
+        value: json["value"],
         description: json["description"],
       );
 
@@ -240,5 +297,190 @@ class AIswotDataRes {
             : List<dynamic>.from(opportunity!.map((x) => x)),
         "threats":
             threats == null ? [] : List<dynamic>.from(threats!.map((x) => x)),
+      };
+}
+
+class AIFundamentalsRes {
+  final String? title;
+  final List<String>? header;
+  final List<BaseKeyValueRes>? data;
+
+  AIFundamentalsRes({
+    this.title,
+    this.header,
+    this.data,
+  });
+
+  factory AIFundamentalsRes.fromJson(Map<String, dynamic> json) =>
+      AIFundamentalsRes(
+        title: json["title"],
+        header: json["header"] == null
+            ? []
+            : List<String>.from(json["header"]!.map((x) => x)),
+        data: json["data"] == null
+            ? []
+            : List<BaseKeyValueRes>.from(
+                json["data"]!.map((x) => BaseKeyValueRes.fromJson(x))),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "title": title,
+        "header":
+            header == null ? [] : List<dynamic>.from(header!.map((x) => x)),
+        "data": data == null
+            ? []
+            : List<dynamic>.from(data!.map((x) => x.toJson())),
+      };
+}
+
+class AIHighlightsRes {
+  final String? title;
+  final List<BaseKeyValueRes>? data;
+
+  AIHighlightsRes({
+    this.title,
+    this.data,
+  });
+
+  factory AIHighlightsRes.fromJson(Map<String, dynamic> json) =>
+      AIHighlightsRes(
+        title: json["title"],
+        data: json["data"] == null
+            ? []
+            : List<BaseKeyValueRes>.from(
+                json["data"]!.map((x) => BaseKeyValueRes.fromJson(x))),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "title": title,
+        "data": data == null
+            ? []
+            : List<dynamic>.from(data!.map((x) => x.toJson())),
+      };
+}
+
+class AIPeerComparisonRes {
+  final String? title;
+  final List<String>? headers;
+  final List<PeerComparisonElementRes>? peerComparison;
+
+  AIPeerComparisonRes({
+    this.headers,
+    this.title,
+    this.peerComparison,
+  });
+
+  factory AIPeerComparisonRes.fromJson(Map<String, dynamic> json) =>
+      AIPeerComparisonRes(
+        title: json['title'],
+        headers: json["header"] == null
+            ? []
+            : List<String>.from(json["header"]!.map((x) => x)),
+        peerComparison: json["data"] == null
+            ? []
+            : List<PeerComparisonElementRes>.from(
+                json["data"]!.map((x) => PeerComparisonElementRes.fromJson(x))),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'title': title,
+        "header":
+            headers == null ? [] : List<dynamic>.from(headers!.map((x) => x)),
+        "data": peerComparison == null
+            ? []
+            : List<dynamic>.from(peerComparison!.map((x) => x.toJson())),
+      };
+}
+
+class PeerComparisonElementRes {
+  final String? symbol;
+  final String? name;
+  final String? image;
+  final num? peRatio;
+  final num? returns;
+  final num? salesGrowth;
+  final num? profitGrowth;
+  final num? roe;
+
+  PeerComparisonElementRes({
+    this.symbol,
+    this.name,
+    this.image,
+    this.peRatio,
+    this.returns,
+    this.salesGrowth,
+    this.profitGrowth,
+    this.roe,
+  });
+
+  factory PeerComparisonElementRes.fromJson(Map<String, dynamic> json) =>
+      PeerComparisonElementRes(
+        symbol: json["symbol"],
+        name: json["name"],
+        image: json["image"],
+        peRatio: json["pe_ratio"],
+        returns: json["returns"],
+        salesGrowth: json["sales_growth"],
+        profitGrowth: json["profit_growth"],
+        roe: json["roe"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "symbol": symbol,
+        "name": name,
+        "image": image,
+        "pe_ratio": peRatio,
+        "returns": returns,
+        "sales_growth": salesGrowth,
+        "profit_growth": profitGrowth,
+        "roe": roe,
+      };
+}
+
+class AIPriceVolatilityRes {
+  final String? title;
+  final PriceVolatilityDataRes? data;
+
+  AIPriceVolatilityRes({
+    this.title,
+    this.data,
+  });
+
+  factory AIPriceVolatilityRes.fromJson(Map<String, dynamic> json) =>
+      AIPriceVolatilityRes(
+        title: json["title"],
+        data: json["data"] == null
+            ? null
+            : PriceVolatilityDataRes.fromJson(json["data"]),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "title": title,
+        "data": data?.toJson(),
+      };
+}
+
+class PriceVolatilityDataRes {
+  final num? avg;
+  final num? stockVolatility;
+  final String? text;
+
+  PriceVolatilityDataRes({
+    this.avg,
+    this.stockVolatility,
+    this.text,
+  });
+
+  factory PriceVolatilityDataRes.fromJson(Map<String, dynamic> json) =>
+      PriceVolatilityDataRes(
+        avg: json["avg"],
+        stockVolatility: json["stock_volatility"],
+        text: json["text"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "avg": avg,
+        "stock_volatility": stockVolatility,
+        "text": text,
       };
 }

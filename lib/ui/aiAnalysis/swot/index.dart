@@ -1,15 +1,85 @@
 import 'package:flutter/material.dart';
+import 'package:stocks_news_new/ui/base/base_list_divider.dart';
+import 'package:stocks_news_new/ui/base/bottom_sheet.dart';
 import 'package:stocks_news_new/ui/base/heading.dart';
 import 'package:stocks_news_new/utils/colors.dart';
+import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import '../../../models/ai_analysis.dart';
 import '../../../utils/constants.dart';
 import 'item.dart';
 
+enum SwotEnum { strength, weakness, opportunity, threat }
+
 class AISwot extends StatelessWidget {
   final AIswotRes? swot;
   const AISwot({super.key, this.swot});
+
+  _openSheet(SwotEnum type) {
+    List<String> data = [];
+    String? title;
+    switch (type) {
+      case SwotEnum.strength:
+        title = 'Strength';
+        data = swot?.data?.strengths ?? [];
+        break;
+      case SwotEnum.weakness:
+        title = 'Weakness';
+        data = swot?.data?.weaknesses ?? [];
+        break;
+      case SwotEnum.opportunity:
+        title = 'Opportunity';
+        data = swot?.data?.opportunity ?? [];
+        break;
+      case SwotEnum.threat:
+        title = 'Threat';
+        data = swot?.data?.threats ?? [];
+        break;
+    }
+    if (data.isEmpty) return;
+    BaseBottomSheet().bottomSheet(
+      barrierColor: Colors.transparent.withValues(alpha: 0.4),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          BaseHeading(title: title),
+          BaseListDivider(),
+          SpacerVertical(height: 10),
+          Column(
+            children: List.generate(
+              data.length,
+              (index) {
+                return Container(
+                  alignment: Alignment.centerLeft,
+                  padding: EdgeInsets.only(bottom: Pad.pad16),
+                  child: Row(
+                    children: [
+                      Container(
+                        margin: EdgeInsets.only(top: 2, right: 10),
+                        child: Icon(
+                          Icons.circle,
+                          color: ThemeColors.black,
+                          size: 9,
+                        ),
+                      ),
+                      Flexible(
+                        child: Text(
+                          data[index],
+                          style: styleBaseRegular(color: ThemeColors.neutral40),
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              },
+            ),
+          ),
+          SpacerVertical(height: 10),
+        ],
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,6 +113,7 @@ class AISwot extends StatelessWidget {
               Row(
                 children: [
                   MsSwotItem(
+                    onTap: () => _openSheet(SwotEnum.strength),
                     label: 'Strength',
                     value: '${data?.strengths?.length ?? 0}',
                     keyword: 'S',
@@ -56,6 +127,7 @@ class AISwot extends StatelessWidget {
                   ),
                   SpacerHorizontal(width: 10),
                   MsSwotItem(
+                    onTap: () => _openSheet(SwotEnum.weakness),
                     label: 'Weakness',
                     color: Colors.orange,
                     value: '${data?.weaknesses?.length ?? 0}',
@@ -74,6 +146,7 @@ class AISwot extends StatelessWidget {
               Row(
                 children: [
                   MsSwotItem(
+                    onTap: () => _openSheet(SwotEnum.opportunity),
                     label: 'Opportunity',
                     value: '${data?.opportunity?.length ?? 0}',
                     keyword: 'O',
@@ -87,6 +160,7 @@ class AISwot extends StatelessWidget {
                   ),
                   SpacerHorizontal(width: 10.0),
                   MsSwotItem(
+                    onTap: () => _openSheet(SwotEnum.threat),
                     label: 'Threat',
                     color: ThemeColors.sos,
                     value: '${data?.threats?.length ?? 0}',

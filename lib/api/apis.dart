@@ -94,6 +94,7 @@ class Apis {
 
   //AI
   static const aiAnalysis = '/ai-analysis';
+  static const aiFinancials = '/ai-analysis/financial';
 
 //----------------------------------------------
 
