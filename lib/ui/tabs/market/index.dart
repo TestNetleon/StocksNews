@@ -88,6 +88,7 @@ class _MarketIndexState extends State<MarketIndex> {
                   ),
                   if (_screenIndex == 0)
                     MarketTabs(
+                      key: ValueKey(provider.data!.data![_screenIndex].slug),
                       data: provider.data!.data![_screenIndex].data!,
                       onTap: (index) {
                         setState(() {

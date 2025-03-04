@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:stocks_news_new/managers/market/most_bullish.dart';
+import 'package:stocks_news_new/managers/market/todays_gainer.dart';
 import 'package:stocks_news_new/ui/base/base_list_divider.dart';
 import 'package:stocks_news_new/ui/base/load_more.dart';
 import 'package:stocks_news_new/ui/base/stock/add.dart';
@@ -24,16 +24,13 @@ class _TodaysGainerState extends State<TodaysGainer> {
   }
 
   Future _callAPI() async {
-    MostBullishManager manager = context.read<MostBullishManager>();
+    TodaysGainerManager manager = context.read<TodaysGainerManager>();
     await manager.getData();
   }
 
   @override
   Widget build(BuildContext context) {
-    MostBullishManager manager = context.watch<MostBullishManager>();
-
-    Utils().showLog("Length  => ${manager.data?.mostBullish?.length ?? 0}");
-
+    TodaysGainerManager manager = context.watch<TodaysGainerManager>();
     return BaseLoaderContainer(
       isLoading: manager.isLoading,
       hasData: manager.data != null && !manager.isLoading,

@@ -28,6 +28,9 @@ class TodaysGainerManager extends ChangeNotifier {
   Extra? _extra;
   Extra? get extra => _extra;
 
+  int _page = 1;
+  // int get page => _page;
+
   void setStatus(status) {
     _status = status;
     notifyListeners();
@@ -37,9 +40,8 @@ class TodaysGainerManager extends ChangeNotifier {
     try {
       _error = null;
       setStatus(Status.loading);
-      Map request = {
-        "token":
-            navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
+      final request = {
+        "page": "$_page",
       };
 
       ApiResponse response = await apiRequest(
@@ -70,7 +72,6 @@ class TodaysGainerManager extends ChangeNotifier {
     if (_data?.mostBullish != null) {
       final index =
           _data?.mostBullish?.indexWhere((element) => element.symbol == symbol);
-
       if (index != null && index != -1) {
         if (alertAdded != null) {
           _data?.mostBullish![index].isAlertAdded = alertAdded;

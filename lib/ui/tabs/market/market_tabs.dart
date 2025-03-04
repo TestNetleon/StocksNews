@@ -26,7 +26,28 @@ class _MarketTabsState extends State<MarketTabs>
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: widget.data.length, vsync: this);
+    // _tabController = TabController(length: widget.data.length, vsync: this);
+    _initializeTabController();
+  }
+
+  // Reinitialize the TabController when the data changes
+  @override
+  void didUpdateWidget(MarketTabs oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.data.length != oldWidget.data.length) {
+      _initializeTabController();
+    }
+  }
+
+  void _initializeTabController() {
+    if (_tabController != null) {
+      _tabController!.dispose();
+    }
+    _tabController = TabController(
+      length: widget.data.length,
+      vsync: this,
+      initialIndex: _selectedIndex,
+    );
   }
 
   @override
