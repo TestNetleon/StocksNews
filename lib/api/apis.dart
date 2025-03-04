@@ -92,6 +92,9 @@ class Apis {
   static const mostBearish = '/most-bearish';
   static const todaysGainers = '/todays-gainers';
 
+  //AI
+  static const aiAnalysis = '/ai-analysis';
+
 //----------------------------------------------
 
   static const stocksScreenerWebUrl =

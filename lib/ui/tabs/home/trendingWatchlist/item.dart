@@ -14,7 +14,7 @@ class TickerBoxItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, StockDetailIndex.path, arguments: {
+        Navigator.pushNamed(context, SDIndex.path, arguments: {
           'symbol': data.symbol,
         });
       },

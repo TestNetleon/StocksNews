@@ -2,13 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/managers/stockDetail/stock.detail.dart';
 import 'package:stocks_news_new/models/ai_analysis.dart';
+import 'package:stocks_news_new/ui/aiAnalysis/index.dart';
 import 'package:stocks_news_new/ui/base/base_scroll.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/custom/base_loader_container.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import '../../../models/stockDetail/historical_chart.dart';
 import '../../../models/stockDetail/overview.dart';
-import 'ai_chart.dart';
+import '../../../widgets/spacer_vertical.dart';
+import '../../aiAnalysis/radar.dart';
+import '../../base/heading.dart';
 import 'chart.dart';
 import 'company.dart';
 import 'range.dart';
@@ -85,10 +88,24 @@ class SDOverview extends StatelessWidget {
             },
           ),
           SDCompanyBrief(companyInfo: companyInfo),
-          SDAiChart(
-            // data: aiAnalysis?.radarChart,
-            // title: aiAnalysis?.title,
-            aiAnalysis: aiAnalysis,
+          Column(
+            children: [
+              SpacerVertical(height: Pad.pad24),
+              BaseHeading(
+                title: aiAnalysis?.title,
+                margin: EdgeInsets.symmetric(horizontal: Pad.pad16),
+                viewMore: () {
+                  if (manager.selectedStock == null ||
+                      manager.selectedStock == '') {
+                    return;
+                  }
+                  Navigator.pushNamed(context, AIindex.path, arguments: {
+                    'symbol': manager.selectedStock,
+                  });
+                },
+              ),
+              AIChart(aiAnalysis: aiAnalysis),
+            ],
           ),
           SDStocksScore(stockScore: stockScore),
         ],

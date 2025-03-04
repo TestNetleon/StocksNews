@@ -18,7 +18,7 @@ class SDChart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SDManager manager = context.watch<SDManager>();
-    SDHistoricalChartRes? chart = manager.dataCHistorical;
+    SDHistoricalChartRes? chart = manager.dataHistoricalC;
     bool hasData = manager.dataCHistorical != null;
     List<BaseKeyValueRes>? top = manager.dataChart?.top;
     ChartPriceHistoryRes? chartHistory = manager.dataChart?.priceHistory;

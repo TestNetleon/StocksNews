@@ -25,7 +25,6 @@ class AlertIndex extends StatefulWidget {
 }
 
 class _AlertIndexState extends State<AlertIndex> {
-
   @override
   void initState() {
     super.initState();
@@ -42,10 +41,10 @@ class _AlertIndexState extends State<AlertIndex> {
   @override
   Widget build(BuildContext context) {
     AlertsM manager = context.watch<AlertsM>();
-    return  BaseScaffold(
+    return BaseScaffold(
       appBar: BaseAppBar(
         showBack: true,
-        title:manager.alertData?.title ?? "Stock Alert",
+        title: manager.alertData?.title ?? "Stock Alert",
       ),
       body: BaseLoaderContainer(
           isLoading: manager.isLoading,
@@ -55,59 +54,64 @@ class _AlertIndexState extends State<AlertIndex> {
           onRefresh: () {
             _callAPI();
           },
-          child:
-          manager.alertData?.noDataRes!=null?
-          BaseNoItem(noDataRes: manager.alertData?.noDataRes,onTap: (){
-            manager.redirectToMarket();
-          }):
-          Column(
-            children: [
-              Visibility(
-                visible: manager.alertData?.subTitle != '',
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: Pad.pad16,vertical: Pad.pad8),
-                  child: Text(
-                    textAlign: TextAlign.start,
-                    manager.alertData?.subTitle ?? "",
-                    style: stylePTSansRegular(fontSize: 16,color: ThemeColors.neutral80),
-                  ),
-                ),
-              ),
-              SpacerVertical(height:10),
-              Expanded(
-                child: BaseLoadMore(
-                  onRefresh: manager.getAlerts,
-                  onLoadMore: () async => manager.getAlerts(loadMore: true),
-                  canLoadMore: manager.canLoadMore,
-                  child: ListView.separated(
-                    // shrinkWrap: true,
-                    // physics: NeverScrollableScrollPhysics(),
-                    padding: const EdgeInsets.symmetric(horizontal: Pad.pad3),
-                    itemBuilder: (context, index) {
-                      BaseTickerRes? data = manager.alertData?.alerts?[index];
-                      if (data == null) {
-                        return SizedBox();
-                      }
-                      return BaseStockEditItem(
-                        data: data,
-                        deleteDataRes: manager.alertData?.deleteBox,
-                        index: index,
-                        onTap: (p0) {
-                          Navigator.pushNamed(context, StockDetailIndex.path, arguments: {'symbol': p0.symbol});
-                        },
-                      );
-                    },
-                    separatorBuilder: (context, index) {
-                      return BaseListDivider();
-                    },
-                    itemCount: manager.alertData?.alerts?.length ?? 0,
-                  ),
-                ),
-              ),
-            ],
-          )
-      ),
+          child: manager.alertData?.noDataRes != null
+              ? BaseNoItem(
+                  noDataRes: manager.alertData?.noDataRes,
+                  onTap: () {
+                    manager.redirectToMarket();
+                  })
+              : Column(
+                  children: [
+                    Visibility(
+                      visible: manager.alertData?.subTitle != '',
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: Pad.pad16, vertical: Pad.pad8),
+                        child: Text(
+                          textAlign: TextAlign.start,
+                          manager.alertData?.subTitle ?? "",
+                          style: stylePTSansRegular(
+                              fontSize: 16, color: ThemeColors.neutral80),
+                        ),
+                      ),
+                    ),
+                    SpacerVertical(height: 10),
+                    Expanded(
+                      child: BaseLoadMore(
+                        onRefresh: manager.getAlerts,
+                        onLoadMore: () async =>
+                            manager.getAlerts(loadMore: true),
+                        canLoadMore: manager.canLoadMore,
+                        child: ListView.separated(
+                          // shrinkWrap: true,
+                          // physics: NeverScrollableScrollPhysics(),
+                          padding:
+                              const EdgeInsets.symmetric(horizontal: Pad.pad3),
+                          itemBuilder: (context, index) {
+                            BaseTickerRes? data =
+                                manager.alertData?.alerts?[index];
+                            if (data == null) {
+                              return SizedBox();
+                            }
+                            return BaseStockEditItem(
+                              data: data,
+                              deleteDataRes: manager.alertData?.deleteBox,
+                              index: index,
+                              onTap: (p0) {
+                                Navigator.pushNamed(context, SDIndex.path,
+                                    arguments: {'symbol': p0.symbol});
+                              },
+                            );
+                          },
+                          separatorBuilder: (context, index) {
+                            return BaseListDivider();
+                          },
+                          itemCount: manager.alertData?.alerts?.length ?? 0,
+                        ),
+                      ),
+                    ),
+                  ],
+                )),
     );
   }
 }
-

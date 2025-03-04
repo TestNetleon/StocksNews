@@ -126,6 +126,7 @@ import 'package:stocks_news_new/ui/tabs/tools/stockScanner/managers/top_loser_sc
 import 'package:stocks_news_new/ui/tabs/tools/stockScanner/screens/common_scanner/scanner.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/utils.dart';
+import '../managers/aiAnalysis/ai.dart';
 import '../managers/news.dart';
 import '../managers/onboarding.dart';
 import '../managers/search.dart';
@@ -155,6 +156,7 @@ import '../ui/account/auth/login.dart';
 import '../ui/account/auth/verify.dart';
 import '../ui/account/update/email_verify.dart';
 import '../ui/account/update/index.dart';
+import '../ui/aiAnalysis/index.dart';
 import '../ui/legal/index.dart';
 import '../ui/onboarding/default_home.dart';
 import '../ui/onboarding/slides.dart';
@@ -351,13 +353,23 @@ class Routes {
             return AccountEmailVerificationIndex(email: email);
           },
         );
-      case StockDetailIndex.path:
+      case SDIndex.path:
         return MaterialPageRoute(
           builder: (context) {
             final arguments = settings.arguments as Map<String, dynamic>?;
             String symbol = arguments?['symbol'];
 
-            return StockDetailIndex(symbol: symbol);
+            return SDIndex(symbol: symbol);
+          },
+        );
+
+      case AIindex.path:
+        return MaterialPageRoute(
+          builder: (context) {
+            final arguments = settings.arguments as Map<String, dynamic>?;
+            String symbol = arguments?['symbol'];
+
+            return AIindex(symbol: symbol);
           },
         );
 
@@ -559,6 +571,7 @@ class Routes {
       ChangeNotifierProvider(create: (_) => NewHelpDeskManager()),
       ChangeNotifierProvider(create: (_) => MostBearishManager()),
       ChangeNotifierProvider(create: (_) => TodaysGainerManager()),
+      ChangeNotifierProvider(create: (_) => AIManager()),
     ];
   }
 }

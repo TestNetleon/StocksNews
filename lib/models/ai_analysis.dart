@@ -9,32 +9,32 @@ AIRes AIResFromJson(String str) => AIRes.fromJson(json.decode(str));
 String AIResToJson(AIRes data) => json.encode(data.toJson());
 
 class AIRes {
-  final BaseTickerRes? tickerAIswotDataRes;
+  final BaseTickerRes? tickerDetail;
   final AIradarChartRes? radarChart;
-  final AIhighlightsRes? highlights;
+  final AIourTakeRes? ourTake;
   final AIswotRes? swot;
   final Performance? performance;
   final BaseFaqRes? faqs;
 
   AIRes({
-    this.tickerAIswotDataRes,
+    this.tickerDetail,
     this.radarChart,
-    this.highlights,
+    this.ourTake,
     this.swot,
     this.performance,
     this.faqs,
   });
 
   factory AIRes.fromJson(Map<String, dynamic> json) => AIRes(
-        tickerAIswotDataRes: json["ticker_data"] == null
+        tickerDetail: json["ticker_data"] == null
             ? null
             : BaseTickerRes.fromJson(json["ticker_data"]),
         radarChart: json["radar_chart"] == null
             ? null
             : AIradarChartRes.fromJson(json["radar_chart"]),
-        highlights: json["highlights"] == null
+        ourTake: json["our_take"] == null
             ? null
-            : AIhighlightsRes.fromJson(json["highlights"]),
+            : AIourTakeRes.fromJson(json["our_take"]),
         swot: json["swot"] == null ? null : AIswotRes.fromJson(json["swot"]),
         performance: json["performance"] == null
             ? null
@@ -43,26 +43,25 @@ class AIRes {
       );
 
   Map<String, dynamic> toJson() => {
-        "ticker_data": tickerAIswotDataRes?.toJson(),
+        "ticker_data": tickerDetail?.toJson(),
         "radar_chart": radarChart?.toJson(),
-        "highlights": highlights?.toJson(),
+        "our_take": ourTake?.toJson(),
         "swot": swot?.toJson(),
         "performance": performance?.toJson(),
         "faqs": faqs?.toJson(),
       };
 }
 
-class AIhighlightsRes {
+class AIourTakeRes {
   final String? title;
   final List<String>? data;
 
-  AIhighlightsRes({
+  AIourTakeRes({
     this.title,
     this.data,
   });
 
-  factory AIhighlightsRes.fromJson(Map<String, dynamic> json) =>
-      AIhighlightsRes(
+  factory AIourTakeRes.fromJson(Map<String, dynamic> json) => AIourTakeRes(
         title: json["title"],
         data: json["data"] == null
             ? []
@@ -77,7 +76,7 @@ class AIhighlightsRes {
 
 class Performance {
   final String? title;
-  final int? price;
+  final num? price;
   final num? yearHigh;
   final num? yearLow;
   final num? dayHigh;
@@ -157,7 +156,7 @@ class AIradarChartRes {
 
 class AIradarChartDataRes {
   final String? label;
-  final double? value;
+  final num? value;
   final String? description;
 
   AIradarChartDataRes({
