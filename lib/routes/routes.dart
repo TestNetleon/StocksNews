@@ -13,9 +13,7 @@ import 'package:stocks_news_new/managers/market/most_bullish.dart';
 import 'package:stocks_news_new/managers/market/todays_gainer.dart';
 import 'package:stocks_news_new/managers/notification/most_bullish.dart';
 import 'package:stocks_news_new/managers/watchlist.dart';
-import 'package:stocks_news_new/tournament/provider/leaderboard.dart';
-import 'package:stocks_news_new/tournament/provider/tournament.dart';
-import 'package:stocks_news_new/tournament/provider/search.dart';
+
 import 'package:stocks_news_new/providers/ad_provider.dart';
 import 'package:stocks_news_new/providers/ai_provider.dart';
 import 'package:stocks_news_new/providers/alert_provider.dart';
@@ -59,8 +57,6 @@ import 'package:stocks_news_new/providers/store_provider.dart';
 import 'package:stocks_news_new/providers/today_breackout_stocks_provider.dart';
 import 'package:stocks_news_new/providers/today_top_loser_provider.dart';
 import 'package:stocks_news_new/screens/auth/newFlow/login.dart';
-
-import 'package:stocks_news_new/tradingSimulator/providers/trade_provider.dart';
 import 'package:stocks_news_new/providers/unusual_trading_volume_provider.dart';
 import 'package:stocks_news_new/providers/most_volatile_stocks.dart';
 import 'package:stocks_news_new/providers/negative_beta_stocks_providers.dart';
@@ -110,20 +106,14 @@ import 'package:stocks_news_new/screens/tabs/compareStocks/compare_stocks.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/plaid/portfolio/index.dart';
 import 'package:stocks_news_new/screens/tabs/news/newsDetail/new_detail.dart';
 import 'package:stocks_news_new/screens/trendingIndustries/index.dart';
-import 'package:stocks_news_new/tradingSimulator/providers/trading_search_provider.dart';
-import 'package:stocks_news_new/tradingSimulator/providers/ts_open_list_provider.dart';
-import 'package:stocks_news_new/tradingSimulator/providers/ts_pending_list_provider.dart';
-import 'package:stocks_news_new/tradingSimulator/providers/ts_portfollo_provider.dart';
+
 import 'package:stocks_news_new/ui/tabs/more/alerts/index.dart';
 import 'package:stocks_news_new/ui/tabs/more/faq/index.dart';
 import 'package:stocks_news_new/ui/tabs/more/helpdesk/front/index.dart';
 import 'package:stocks_news_new/ui/tabs/more/notificationSettings/index.dart';
 import 'package:stocks_news_new/ui/tabs/more/watchlist/index.dart';
 import 'package:stocks_news_new/ui/tabs/tools/compareStocks/compare.dart';
-import 'package:stocks_news_new/ui/tabs/tools/stockScanner/managers/market_scanner.dart';
-import 'package:stocks_news_new/ui/tabs/tools/stockScanner/managers/top_gainer_scanner.dart';
-import 'package:stocks_news_new/ui/tabs/tools/stockScanner/managers/top_loser_scanner.dart';
-import 'package:stocks_news_new/ui/tabs/tools/stockScanner/screens/common_scanner/scanner.dart';
+
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import '../managers/aiAnalysis/ai.dart';
@@ -135,7 +125,6 @@ import '../managers/stockDetail/stock.detail.dart';
 import '../managers/tools.dart';
 import '../managers/user.dart';
 import '../models/my_home_premium.dart';
-import '../tournament/provider/trades.dart';
 import '../providers/offerMembership/black_friday.dart';
 import '../providers/featured_ticker.dart';
 import '../providers/high_low_pe.dart';
@@ -146,12 +135,10 @@ import '../providers/offerMembership/christmas.dart';
 import '../providers/scroll_controller.dart';
 import '../providers/stockAnalysis/provider.dart';
 import '../screens/auth/base/base_auth.dart';
-import '../tradingSimulator/providers/trading_simulator.dart';
 import '../providers/trending_industries.dart';
 import '../screens/marketData/congressionalData/index.dart';
 import '../screens/marketData/lowPriceStocks/index.dart';
 import '../screens/whatWeDo/index.dart';
-import '../tradingSimulator/providers/ts_transaction_list.dart';
 import '../ui/account/auth/login.dart';
 import '../ui/account/auth/verify.dart';
 import '../ui/account/update/email_verify.dart';
@@ -186,7 +173,6 @@ class Routes {
     AccountLoginIndex.path: (_) => const AccountLoginIndex(),
     ToolsPortfolioIndex.path: (_) => const ToolsPortfolioIndex(),
     ToolsCompareIndex.path: (_) => const ToolsCompareIndex(),
-    ScannerIndex.path: (_) => const ScannerIndex(),
     CategoriesNewsIndex.path: (_) => const CategoriesNewsIndex(),
     BlogsIndex.path: (_) => const BlogsIndex(),
     SubscriptionIndex.path: (_) => const SubscriptionIndex(),
@@ -525,24 +511,24 @@ class Routes {
       ChangeNotifierProvider(create: (_) => MorningstarTxnProvider()),
       ChangeNotifierProvider(create: (_) => AIProvider()),
       ChangeNotifierProvider(create: (_) => StoreProvider()),
-      ChangeNotifierProvider(create: (_) => TradeProviderNew()),
+      // ChangeNotifierProvider(create: (_) => TradeProviderNew()),
       ChangeNotifierProvider(create: (_) => NotificationsSettingProvider()),
-      ChangeNotifierProvider(create: (_) => TradingSimulatorProvider()),
-      ChangeNotifierProvider(create: (_) => TradingSearchProvider()),
-      ChangeNotifierProvider(create: (_) => TsOpenListProvider()),
-      ChangeNotifierProvider(create: (_) => TsPendingListProvider()),
-      ChangeNotifierProvider(create: (_) => TsPortfolioProvider()),
+      // ChangeNotifierProvider(create: (_) => TradingSimulatorProvider()),
+      // ChangeNotifierProvider(create: (_) => TradingSearchProvider()),
+      // ChangeNotifierProvider(create: (_) => TsOpenListProvider()),
+      // ChangeNotifierProvider(create: (_) => TsPendingListProvider()),
+      // ChangeNotifierProvider(create: (_) => TsPortfolioProvider()),
       ChangeNotifierProvider(create: (_) => AdProvider()),
       ChangeNotifierProvider(create: (_) => NewHelpDeskProvider()),
       ChangeNotifierProvider(create: (_) => MSAnalysisProvider()),
       ChangeNotifierProvider(create: (_) => MissionProvider()),
-      ChangeNotifierProvider(create: (_) => TournamentProvider()),
-      ChangeNotifierProvider(create: (_) => TournamentTradesProvider()),
+      // ChangeNotifierProvider(create: (_) => TournamentProvider()),
+      // ChangeNotifierProvider(create: (_) => TournamentTradesProvider()),
       ChangeNotifierProvider(create: (_) => BlackFridayProvider()),
       ChangeNotifierProvider(create: (_) => ChristmasProvider()),
-      ChangeNotifierProvider(create: (_) => TsTransactionListProvider()),
-      ChangeNotifierProvider(create: (_) => TournamentSearchProvider()),
-      ChangeNotifierProvider(create: (_) => TournamentLeaderboardProvider()),
+      // ChangeNotifierProvider(create: (_) => TsTransactionListProvider()),
+      // ChangeNotifierProvider(create: (_) => TournamentSearchProvider()),
+      // ChangeNotifierProvider(create: (_) => TournamentLeaderboardProvider()),
       // ChangeNotifierProvider(create: (_) => ScannerProvider()),
 
       //MARK: New UI providers
@@ -561,9 +547,9 @@ class Routes {
       ChangeNotifierProvider(create: (_) => SubscriptionManager()),
       ChangeNotifierProvider(create: (_) => LegalInfoManager()),
       ChangeNotifierProvider(create: (_) => SDManager()),
-      ChangeNotifierProvider(create: (_) => MarketScannerM()),
-      ChangeNotifierProvider(create: (_) => TopGainerScannerM()),
-      ChangeNotifierProvider(create: (_) => TopLoserScannerM()),
+      // ChangeNotifierProvider(create: (_) => MarketScannerM()),
+      // ChangeNotifierProvider(create: (_) => TopGainerScannerM()),
+      // ChangeNotifierProvider(create: (_) => TopLoserScannerM()),
       ChangeNotifierProvider(create: (_) => AlertsM()),
       ChangeNotifierProvider(create: (_) => WatchListManagers()),
       ChangeNotifierProvider(create: (_) => AlertsWatchlistManager()),

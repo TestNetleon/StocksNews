@@ -399,8 +399,7 @@ import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/routes/navigation_observer.dart';
 import 'package:stocks_news_new/screens/notifications/index.dart';
 import 'package:stocks_news_new/screens/search/search.dart';
-import 'package:stocks_news_new/tradingSimulator/screens/portfolio/index.dart';
-import 'package:stocks_news_new/ui/tabs/tools/stockScanner/managers/market_scanner.dart';
+
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -643,37 +642,37 @@ class _AppBarHomeState extends State<AppBarHome> {
                     //       ),
                     //     );
                     //   }),
-                    if (widget.isScannerFilter)
-                      Consumer<MarketScannerM>(
-                          builder: (context, value, child) {
-                        return Visibility(
-                          visible:
-                              widget.onFilterClick != null && value.visible,
-                          child: Stack(
-                            children: [
-                              IconButton(
-                                onPressed: widget.onFilterClick,
-                                icon: const Icon(
-                                  Icons.filter_alt,
-                                  color: ThemeColors.accent,
-                                ),
-                              ),
-                              Positioned(
-                                right: 24,
-                                top: 14,
-                                child: Container(
-                                  width: 8,
-                                  height: 8,
-                                  decoration: BoxDecoration(
-                                    color: Colors.red,
-                                    borderRadius: BorderRadius.circular(30),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        );
-                      }),
+                    // if (widget.isScannerFilter)
+                    //   Consumer<MarketScannerM>(
+                    //       builder: (context, value, child) {
+                    //     return Visibility(
+                    //       visible:
+                    //           widget.onFilterClick != null && value.visible,
+                    //       child: Stack(
+                    //         children: [
+                    //           IconButton(
+                    //             onPressed: widget.onFilterClick,
+                    //             icon: const Icon(
+                    //               Icons.filter_alt,
+                    //               color: ThemeColors.accent,
+                    //             ),
+                    //           ),
+                    //           Positioned(
+                    //             right: 24,
+                    //             top: 14,
+                    //             child: Container(
+                    //               width: 8,
+                    //               height: 8,
+                    //               decoration: BoxDecoration(
+                    //                 color: Colors.red,
+                    //                 borderRadius: BorderRadius.circular(30),
+                    //               ),
+                    //             ),
+                    //           ),
+                    //         ],
+                    //       ),
+                    //     );
+                    //   }),
 
                     // Visibility(
                     //   visible: widget.onFilterClick != null,
@@ -703,21 +702,21 @@ class _AppBarHomeState extends State<AppBarHome> {
                         ),
                       ),
                     ),
-                    Visibility(
-                      visible: widget.showPortfolio,
-                      child: IconButton(
-                        onPressed: () {
-                          Navigator.push(
-                            navigatorKey.currentContext!,
-                            createRoute(TsPortfolio()),
-                          );
-                        },
-                        icon: const Icon(
-                          Icons.person,
-                          color: ThemeColors.white,
-                        ),
-                      ),
-                    ),
+                    // Visibility(
+                    //   visible: widget.showPortfolio,
+                    //   child: IconButton(
+                    //     onPressed: () {
+                    //       Navigator.push(
+                    //         navigatorKey.currentContext!,
+                    //         createRoute(TsPortfolio()),
+                    //       );
+                    //     },
+                    //     icon: const Icon(
+                    //       Icons.person,
+                    //       color: ThemeColors.white,
+                    //     ),
+                    //   ),
+                    // ),
                     if (widget.showTrailing)
                       Stack(
                         alignment: Alignment.center,

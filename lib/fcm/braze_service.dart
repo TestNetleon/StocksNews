@@ -20,8 +20,7 @@ import '../providers/home_provider.dart';
 import '../providers/user_provider.dart';
 import '../screens/auth/base/base_auth.dart';
 import '../screens/offerMembership/blackFriday/index.dart';
-import '../tradingSimulator/providers/ts_pending_list_provider.dart';
-import '../tradingSimulator/screens/dashboard/index.dart';
+
 import '../ui/tabs/tabs.dart';
 import '../utils/utils.dart';
 import 'package:stocks_news_new/screens/affiliate/index.dart';
@@ -311,13 +310,13 @@ class BrazeNotificationService {
           slug != null &&
           type == NotificationType.simulator.name) {
         if (whenAppKilled || !isOnTsScreen) {
-          Navigator.push(
-            navigatorKey.currentContext!,
-            MaterialPageRoute(builder: (_) => TsDashboard()),
-          );
+          // Navigator.push(
+          //   navigatorKey.currentContext!,
+          //   MaterialPageRoute(builder: (_) => TsDashboard()),
+          // );
         } else {
-          popHome = true;
-          navigatorKey.currentContext!.read<TsPendingListProvider>().getData();
+          // popHome = true;
+          // navigatorKey.currentContext!.read<TsPendingListProvider>().getData();
         }
       } else {
         Navigator.popUntil(

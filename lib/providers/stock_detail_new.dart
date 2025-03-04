@@ -2123,7 +2123,6 @@ import 'package:stocks_news_new/modals/stockDetailRes/sec_filing_res.dart';
 import 'package:stocks_news_new/modals/stockDetailRes/tab.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/database/preference.dart';
-import 'package:stocks_news_new/tradingSimulator/manager/sse.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:vibration/vibration.dart';
@@ -2587,53 +2586,53 @@ class StockDetailProviderNew extends ChangeNotifier {
 
         try {
           if (_tabRes?.showExtendedHoursData != false) {
-            SSEManager.instance.connectStock(
-              screen: SimulatorEnum.detail,
-              symbol: symbol ?? "",
-            );
+            // SSEManager.instance.connectStock(
+            //   screen: SimulatorEnum.detail,
+            //   symbol: symbol ?? "",
+            // );
             _tabRes?.extendedHoursData?.extendedHoursTime =
                 _formatExtendedHoursTime(
                     _tabRes?.extendedHoursData?.extendedHoursTime);
-            SSEManager.instance.addListener(
-              symbol ?? "",
-              (stockData) {
-                Utils().showLog('Detail: ${stockData.toMap()}');
+            // SSEManager.instance.addListener(
+            //   symbol ?? "",
+            //   (stockData) {
+            //     Utils().showLog('Detail: ${stockData.toMap()}');
 
-                if (stockData.price != null) {
-                  _tabRes?.extendedHoursData?.extendedHoursPrice =
-                      stockData.price;
-                  _tabRes?.extendedHoursData?.extendedHoursChange =
-                      stockData.change;
-                }
-                if (stockData.change != null) {
-                  _tabRes?.extendedHoursData?.extendedHoursChange =
-                      stockData.change;
-                }
-                if (stockData.changePercentage != null) {
-                  _tabRes?.extendedHoursData?.extendedHoursPercentChange =
-                      stockData.changePercentage;
-                }
-                _tabRes?.extendedHoursData?.extendedHoursType = stockData.type;
+            //     if (stockData.price != null) {
+            //       _tabRes?.extendedHoursData?.extendedHoursPrice =
+            //           stockData.price;
+            //       _tabRes?.extendedHoursData?.extendedHoursChange =
+            //           stockData.change;
+            //     }
+            //     if (stockData.change != null) {
+            //       _tabRes?.extendedHoursData?.extendedHoursChange =
+            //           stockData.change;
+            //     }
+            //     if (stockData.changePercentage != null) {
+            //       _tabRes?.extendedHoursData?.extendedHoursPercentChange =
+            //           stockData.changePercentage;
+            //     }
+            //     _tabRes?.extendedHoursData?.extendedHoursType = stockData.type;
 
-                if (stockData.time != null) {
-                  _tabRes?.extendedHoursData?.extendedHoursTime =
-                      _formatExtendedHoursTime(stockData.time);
-                }
-                if (stockData.price != null) {
-                  _tabRes?.extendedHoursData?.last = stockData.price;
-                  _tabRes?.extendedHoursData?.change = stockData.change;
-                }
-                if (stockData.change != null) {
-                  _tabRes?.extendedHoursData?.change = stockData.change;
-                }
-                if (stockData.changePercentage != null) {
-                  _tabRes?.extendedHoursData?.percentChange =
-                      stockData.changePercentage;
-                }
-                notifyListeners();
-              },
-              SimulatorEnum.detail,
-            );
+            //     if (stockData.time != null) {
+            //       _tabRes?.extendedHoursData?.extendedHoursTime =
+            //           _formatExtendedHoursTime(stockData.time);
+            //     }
+            //     if (stockData.price != null) {
+            //       _tabRes?.extendedHoursData?.last = stockData.price;
+            //       _tabRes?.extendedHoursData?.change = stockData.change;
+            //     }
+            //     if (stockData.change != null) {
+            //       _tabRes?.extendedHoursData?.change = stockData.change;
+            //     }
+            //     if (stockData.changePercentage != null) {
+            //       _tabRes?.extendedHoursData?.percentChange =
+            //           stockData.changePercentage;
+            //     }
+            //     notifyListeners();
+            //   },
+            //   SimulatorEnum.detail,
+            // );
           }
         } catch (e) {
           //

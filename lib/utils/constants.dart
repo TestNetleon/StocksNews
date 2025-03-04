@@ -4,9 +4,9 @@ import 'package:intl/intl.dart';
 
 import 'package:stocks_news_new/utils/utils.dart';
 
-import '../tradingSimulator/modals/stream_data.dart';
+// import '../tradingSimulator/modals/stream_data.dart';
 
-StreamRes? streamKeysRes;
+// StreamRes? streamKeysRes;
 
 enum ToasterEnum {
   success,
