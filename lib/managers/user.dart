@@ -9,6 +9,7 @@ import 'package:stocks_news_new/managers/home.dart';
 import 'package:stocks_news_new/managers/news.dart';
 import 'package:stocks_news_new/managers/search.dart';
 import 'package:stocks_news_new/managers/signals.dart';
+import 'package:stocks_news_new/managers/stockDetail/stock.detail.dart';
 import 'package:stocks_news_new/managers/tools.dart';
 import 'package:stocks_news_new/modals/user_res.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
@@ -86,10 +87,8 @@ class UserManager extends ChangeNotifier {
   }
 
   Future navigateToAlerts() async {
-    UserManager userManager = navigatorKey.currentContext!.read<UserManager>();
-
-    userManager.askLoginScreen();
-    if (userManager.user == null) return;
+    await askLoginScreen();
+    if (_user == null) return;
     await Navigator.pushNamed(
       navigatorKey.currentContext!,
       AlertIndex.path,
@@ -97,10 +96,8 @@ class UserManager extends ChangeNotifier {
   }
 
   Future navigateToWatchList() async {
-    UserManager userManager = navigatorKey.currentContext!.read<UserManager>();
-
-    userManager.askLoginScreen();
-    if (userManager.user == null) return;
+    await askLoginScreen();
+    if (_user == null) return;
 
     await Navigator.pushNamed(
       navigatorKey.currentContext!,
@@ -108,11 +105,9 @@ class UserManager extends ChangeNotifier {
     );
   }
 
-  void navigateToMySubscription() {
-    UserManager userManager = navigatorKey.currentContext!.read<UserManager>();
-
-    userManager.askLoginScreen();
-    if (userManager.user == null) {
+  void navigateToMySubscription() async {
+    await askLoginScreen();
+    if (_user == null) {
       return;
     }
     SubscriptionManager manager =
@@ -137,14 +132,11 @@ class UserManager extends ChangeNotifier {
     Navigator.pushNamed(navigatorKey.currentContext!, FaqIndex.path);
   }
 
-  Future navigateToContactUs() async{
-    UserManager userManager = navigatorKey.currentContext!.read<UserManager>();
-
-    userManager.askLoginScreen();
-    if (userManager.user == null) return;
+  Future navigateToContactUs() async {
+    await askLoginScreen();
+    if (_user == null) return;
 
     Navigator.pushNamed(navigatorKey.currentContext!, HelpDeskIndex.path);
-
   }
 
 //MARK: Phone Login
@@ -585,12 +577,15 @@ class UserManager extends ChangeNotifier {
     BlogsManager blogsManager =
         navigatorKey.currentContext!.read<BlogsManager>();
 
+    SDManager sdManager = navigatorKey.currentContext!.read<SDManager>();
+
     homeManager.clearAllData();
     signalsManager.clearAllData();
     toolsManager.clearAllData();
     searchManager.clearAllData();
     newsManager.clearAllData();
     blogsManager.clearAllData();
+    sdManager.clearAllData();
 
     Navigator.popUntil(navigatorKey.currentContext!, (route) => route.isFirst);
     Navigator.pushReplacement(

@@ -73,6 +73,7 @@ class Apis {
   static const sdHistoricalC = "/stock-historical-chart";
   static const sdKeyStats = '/stock-detail-key-stats';
   static const sdStocksAnalysis = '/stock-analysis';
+  static const sdTechnicalAnalysis = '/technical-analysis';
   static const sdAnalystForecast = '/stock-detail-forecast';
   static const sdLatestNews = '/stock-detail-news';
   static const sdEarnings = '/stock-detail-earning';

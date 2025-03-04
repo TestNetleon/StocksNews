@@ -133,7 +133,14 @@ class BaseKeyValueRes {
   final dynamic value;
   final String? slug;
   final String? color;
-  final String? other;
+  final String? simple;
+  final String? simpleStatus;
+  final String? exponential;
+  final String? exponentialStatus;
+  final String? weighted;
+  final String? weightedStatus;
+  final String? date;
+  final String? action;
 
   BaseKeyValueRes({
     this.title,
@@ -141,7 +148,14 @@ class BaseKeyValueRes {
     this.value,
     this.slug,
     this.color,
-    this.other,
+    this.simple,
+    this.simpleStatus,
+    this.exponential,
+    this.exponentialStatus,
+    this.weighted,
+    this.weightedStatus,
+    this.date,
+    this.action,
   });
 
   factory BaseKeyValueRes.fromJson(Map<String, dynamic> json) =>
@@ -151,7 +165,14 @@ class BaseKeyValueRes {
         value: json["value"],
         slug: json['slug'],
         color: json['color'],
-        other: json['other'],
+        simple: json["simple"],
+        simpleStatus: json["simple_status"],
+        exponential: json["exponential"],
+        exponentialStatus: json["exponential_status"],
+        weighted: json["weighted"],
+        weightedStatus: json["weighted_status"],
+        date: json["date"],
+        action: json["action"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -159,8 +180,15 @@ class BaseKeyValueRes {
         'sub_title': subTitle,
         "value": value,
         "slug": slug,
-        'other': other,
         "color": color,
+        "simple": simple,
+        "simple_status": simpleStatus,
+        "exponential": exponential,
+        "exponential_status": exponentialStatus,
+        "weighted": weighted,
+        "weighted_status": weightedStatus,
+        "date": date,
+        "action": action,
       };
 }
 
