@@ -32,6 +32,8 @@ class SDListHeading extends StatelessWidget {
                     ),
                     child: Text(
                       data[index],
+                      textAlign:
+                          index == data.length - 1 ? TextAlign.end : null,
                       style: styleBaseBold(fontSize: 13),
                     ),
                   ),

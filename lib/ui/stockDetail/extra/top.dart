@@ -8,11 +8,13 @@ import '../../../utils/theme.dart';
 class SDTopCards extends StatelessWidget {
   final BaseKeyValueRes top;
   final Color? valueColor;
+  final Color? subTitleColor;
 
   const SDTopCards({
     super.key,
     required this.top,
     this.valueColor,
+    this.subTitleColor,
   });
 
   @override
@@ -28,7 +30,7 @@ class SDTopCards extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.only(bottom: 6),
               child: Text(
-                top.title?.toUpperCase() ?? "N/A",
+                top.title ?? "N/A",
                 textAlign: TextAlign.center,
                 style: styleBaseRegular(
                     fontSize: 13, color: ThemeColors.neutral80),
@@ -52,8 +54,10 @@ class SDTopCards extends StatelessWidget {
             visible: top.subTitle != null && top.subTitle != '',
             child: Text(
               top.subTitle ?? "N/A",
-              style:
-                  styleBaseRegular(fontSize: 13, color: ThemeColors.neutral40),
+              style: styleBaseRegular(
+                fontSize: 13,
+                color: subTitleColor ?? ThemeColors.neutral40,
+              ),
             ),
           ),
         ],

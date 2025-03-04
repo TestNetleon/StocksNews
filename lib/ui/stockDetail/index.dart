@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/managers/stockDetail/stock.detail.dart';
 import 'package:stocks_news_new/ui/base/scaffold.dart';
+import 'package:stocks_news_new/ui/stockDetail/competitors/index.dart';
+import 'package:stocks_news_new/ui/stockDetail/ownership/index.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/custom/base_loader_container.dart';
 import '../../models/ticker.dart';
@@ -105,6 +107,14 @@ class _StockDetailIndexState extends State<StockDetailIndex> {
             if (manager.selectedIndex == 8)
               Expanded(
                 child: SDInsiderTrades(),
+              ),
+            if (manager.selectedIndex == 9)
+              Expanded(
+                child: SDCompetitors(),
+              ),
+            if (manager.selectedIndex == 10)
+              Expanded(
+                child: SDOwnership(),
               ),
             if (manager.selectedIndex == 11)
               Expanded(

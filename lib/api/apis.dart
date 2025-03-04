@@ -84,6 +84,7 @@ class Apis {
   static const sdSecFiling = '/stock-detail-secFiling';
   static const sdMergers = '/stock-detail-mergers';
   static const sdChart = '/stock-detail-chart';
+  static const sdOwnership = '/stock-detail-ownership';
 
   // Market data
   static const mostBullish = '/most-bullish';

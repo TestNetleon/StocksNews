@@ -21,6 +21,7 @@ import '../../models/stockDetail/insider_trades.dart';
 import '../../models/stockDetail/mergers.dart';
 import '../../models/stockDetail/news.dart';
 import '../../models/stockDetail/overview.dart';
+import '../../models/stockDetail/ownership.dart';
 import '../../models/stockDetail/sec_filing.dart';
 import '../../models/stockDetail/stock_analysis.dart';
 import '../../models/stockDetail/tabs.dart';
@@ -58,6 +59,7 @@ class SDManager extends ChangeNotifier {
     _openMergers = -1;
     _dataChart = null;
     _dataCHistorical = null;
+    _dataOwnership = null;
     notifyListeners();
   }
 
@@ -159,6 +161,12 @@ class SDManager extends ChangeNotifier {
           }
           break;
 
+        case 10:
+          if (_dataOwnership == null) {
+            getSDOwnership();
+          }
+          break;
+
         case 11:
           if (_dataChart == null) {
             getSDChart();
@@ -233,6 +241,10 @@ class SDManager extends ChangeNotifier {
 
       case 9:
         getSDCompetitors(reset: true);
+        break;
+
+      case 10:
+        getSDOwnership(reset: true);
         break;
 
       case 11:
@@ -1079,6 +1091,68 @@ class SDManager extends ChangeNotifier {
     }
   }
 
+  //MARK: Ownership
+
+  String? _errorOwnership;
+  String? get errorOwnership => _errorOwnership ?? Const.errSomethingWrong;
+
+  Status _statusOwnership = Status.ideal;
+  Status get statusOwnership => _statusOwnership;
+
+  bool get isLoadingOwnership => _statusOwnership == Status.loading;
+
+  SDOwnershipRes? _dataOwnership;
+  SDOwnershipRes? get dataOwnership => _dataOwnership;
+
+  setStatusOwnership(status) {
+    _statusOwnership = status;
+    notifyListeners();
+  }
+
+  int _openOwnership = -1;
+  int get openOwnership => _openOwnership;
+
+  openOwnershipIndex(index) {
+    _openOwnership = index;
+    notifyListeners();
+  }
+
+  Future getSDOwnership({
+    bool reset = false,
+  }) async {
+    if (_selectedStock == '') return;
+    if (reset) {
+      _dataOwnership = null;
+    }
+    try {
+      setStatusOwnership(Status.loading);
+
+      UserManager provider = navigatorKey.currentContext!.read<UserManager>();
+      Map request = {
+        'token': provider.user?.token ?? '',
+        'symbol': _selectedStock,
+      };
+
+      ApiResponse response = await apiRequest(
+        url: Apis.sdOwnership,
+        request: request,
+      );
+      if (response.status) {
+        _dataOwnership = SDOwnershipResFromJson(jsonEncode(response.data));
+        _errorOwnership = null;
+      } else {
+        _dataOwnership = null;
+        _errorOwnership = response.message;
+      }
+    } catch (e) {
+      _dataOwnership = null;
+      _errorOwnership = Const.errSomethingWrong;
+      Utils().showLog('Error in ${Apis.sdOwnership}: $e');
+    } finally {
+      setStatusOwnership(Status.loaded);
+    }
+  }
+
   //MARK: Chart Historical
   String? _errorCHistorical;
   String? get errorCHistorical => _errorCHistorical ?? Const.errSomethingWrong;
@@ -1353,57 +1427,4 @@ class SDManager extends ChangeNotifier {
       setStatusMergers(Status.loaded);
     }
   }
-
-  // //MARK: Ownership
-  // String? _errorOwnership;
-  // String? get errorOwnership => _errorOwnership ?? Const.errSomethingWrong;
-
-  // Status _statusOwnership= Status.ideal;
-  // Status get statusOwnership => _statusOwnership;
-
-  // bool get isLoadingOwnership => _statusOwnership == Status.loading;
-
-  // SDOwnershipRes? _dataOwnership;
-  // SDOwnershipRes? get _dataOwnership => _dataOwnership;
-
-  // setStatusSecFiling(status) {
-  //   _statusSecFiling = status;
-  //   notifyListeners();
-  // }
-
-  // Future getSDSecFiling({
-  //   bool reset = false,
-  // }) async {
-  //   if (_selectedStock == '') return;
-  //   if (reset) {
-  //     _dataSecFiling = null;
-  //   }
-  //   try {
-  //     setStatusSecFiling(Status.loading);
-
-  //     UserManager provider = navigatorKey.currentContext!.read<UserManager>();
-  //     Map request = {
-  //       'token': provider.user?.token ?? '',
-  //       'symbol': _selectedStock,
-  //     };
-
-  //     ApiResponse response = await apiRequest(
-  //       url: Apis.sdSecFiling,
-  //       request: request,
-  //     );
-  //     if (response.status) {
-  //       _dataSecFiling = SDSecFilingResFromJson(jsonEncode(response.data));
-  //       _errorSecFiling = null;
-  //     } else {
-  //       _dataSecFiling = null;
-  //       _errorSecFiling = response.message;
-  //     }
-  //   } catch (e) {
-  //     _dataSecFiling = null;
-  //     _errorSecFiling = Const.errSomethingWrong;
-  //     Utils().showLog('Error in ${Apis.sdSecFiling}: $e');
-  //   } finally {
-  //     setStatusSecFiling(Status.loaded);
-  //   }
-  // }
 }
