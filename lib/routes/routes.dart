@@ -8,7 +8,9 @@ import 'package:stocks_news_new/managers/home.dart';
 import 'package:stocks_news_new/managers/legal.dart';
 import 'package:stocks_news_new/managers/market/alerts_watchlist_action.dart';
 import 'package:stocks_news_new/managers/market/market.dart';
+import 'package:stocks_news_new/managers/market/most_bearish.dart';
 import 'package:stocks_news_new/managers/market/most_bullish.dart';
+import 'package:stocks_news_new/managers/market/todays_gainer.dart';
 import 'package:stocks_news_new/managers/notification/most_bullish.dart';
 import 'package:stocks_news_new/managers/watchlist.dart';
 import 'package:stocks_news_new/tournament/provider/leaderboard.dart';
@@ -555,6 +557,8 @@ class Routes {
       ChangeNotifierProvider(create: (_) => AlertsWatchlistManager()),
       ChangeNotifierProvider(create: (_) => FaqManager()),
       ChangeNotifierProvider(create: (_) => NewHelpDeskManager()),
+      ChangeNotifierProvider(create: (_) => MostBearishManager()),
+      ChangeNotifierProvider(create: (_) => TodaysGainerManager()),
     ];
   }
 }

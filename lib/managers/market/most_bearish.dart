@@ -1,330 +1,78 @@
-import 'package:audioplayers/audioplayers.dart';
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:stocks_news_new/api/api_requester.dart';
 import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/api/apis.dart';
-import 'package:stocks_news_new/modals/trending_res.dart';
-import 'package:stocks_news_new/providers/home_provider.dart';
-import 'package:stocks_news_new/providers/user_provider.dart';
-import 'package:stocks_news_new/routes/my_app.dart';
-import 'package:stocks_news_new/service/braze/service.dart';
+import 'package:stocks_news_new/models/market/most_bullish.dart';
 import 'package:stocks_news_new/utils/constants.dart';
-import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 
-class TrendingProvider extends ChangeNotifier {
-  TrendingRes? _mostBullish;
-  TrendingRes? get mostBullish => _mostBullish;
+class MostBearishManager extends ChangeNotifier {
+  MarketDataRes? _data;
+  MarketDataRes? get data => _data;
 
-  TrendingRes? _mostBearish;
-  TrendingRes? get mostBearish => _mostBearish;
-//
-  TrendingRes? _trendingStories;
-  TrendingRes? get trendingStories => _trendingStories;
-
-  String? _error;
   Status _status = Status.ideal;
   Status get status => _status;
 
   bool get isLoading => _status == Status.loading || _status == Status.ideal;
+
+  String? _error;
   String? get error => _error ?? Const.errSomethingWrong;
 
-  Status _statusBullish = Status.ideal;
-  Status get statusBullish => _statusBullish;
-
-  Status _statusBearish = Status.ideal;
-  Status get statusBearish => _statusBearish;
-
-  Status _statusStories = Status.ideal;
-  Status get statusStories => _statusStories;
-
-  bool get isLoadingBullish => _statusBullish == Status.loading;
-  bool get isLoadingBearish => _statusBearish == Status.loading;
-  bool get isLoadingStories => _statusStories == Status.loading;
+  bool get isLoadingBullish => _status == Status.loading;
 
   Extra? _extra;
   Extra? get extra => _extra;
-
-  final AudioPlayer _player = AudioPlayer();
 
   void setStatus(status) {
     _status = status;
     notifyListeners();
   }
 
-  int selectedIndex = 0;
-
-  List<String> tabs = [
-    'Most Bullish',
-    'Most Bearish',
-    'Trending Stories',
-    'Trending Sectors',
-    "Trending Industries"
-  ];
-
-  // bool selectedOne = false;
-  // bool selectedTwo = false;
-
-  // void selectType({int index = 0}) {
-  //   if (index == 0) {
-  //     selectedOne = !selectedOne;
-  //   } else if (index == 1) {
-  //     selectedTwo = !selectedTwo;
-  //   }
-  //   notifyListeners();
-  // }
-
-  // void clear() {
-  //   selectedOne = false;
-  //   selectedTwo = false;
-  //   notifyListeners();
-  // }
-
-  Future createAlertSend({
-    required String alertName,
-    required String symbol,
-    required String companyName,
-    required bool up,
-    required int index,
-    bool selectedOne = false,
-    bool selectedTwo = false,
-  }) async {
-    setStatus(Status.loading);
-    Map request = {
-      "token":
-          navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
-      "symbol": symbol,
-      "alert_name": alertName,
-      "sentiment_spike": selectedOne ? "yes" : "no",
-      "mention_spike": selectedTwo ? "yes" : "no",
-    };
+  Future getData({showProgress = false}) async {
     try {
-      ApiResponse response = await apiRequest(
-        url: Apis.createAlert,
-        request: request,
-        showProgress: true,
-        removeForceLogin: true,
-      );
-      if (response.status) {
-        // AmplitudeService.logAlertUpdateEvent(
-        //   added: true,
-        //   symbol: symbol,
-        //   companyName: companyName,
-        // );
-        BrazeService.eventADAlert(symbol: symbol);
-
-        if (up) {
-          //
-          _mostBullish?.mostBullish?[index].isAlertAdded = 1;
-        } else {
-          //
-          _mostBearish?.mostBearish?[index].isAlertAdded = 1;
-        }
-        await _player.play(
-          AssetSource(AudioFiles.alertWeathlist),
-        );
-
-        navigatorKey.currentContext!
-            .read<HomeProvider>()
-            .setTotalsAlerts(response.data['total_alerts']);
-        notifyListeners();
-      }
-      Navigator.pop(navigatorKey.currentContext!);
-      Navigator.pop(navigatorKey.currentContext!);
-
-      showErrorMessage(
-          message: response.message,
-          type: response.status ? SnackbarType.info : SnackbarType.error);
-      setStatus(Status.loaded);
-      return ApiResponse(status: response.status);
-    } catch (e) {
-      Utils().showLog(e.toString());
-      setStatus(Status.loaded);
-
-      // showErrorMessage(message: Const.errSomethingWrong);
-    }
-  }
-
-  Future addToWishList({
-    required String symbol,
-    required String companyName,
-    required bool up,
-    required int index,
-  }) async {
-    setStatus(Status.loading);
-    showGlobalProgressDialog();
-
-    Map request = {
-      "token":
-          navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
-      "symbol": symbol
-    };
-    try {
-      ApiResponse response = await apiRequest(
-        url: Apis.addWatchlist,
-        request: request,
-        showProgress: false,
-        removeForceLogin: true,
-      );
-      if (response.status) {
-        // AmplitudeService.logWatchlistUpdateEvent(
-        //   added: true,
-        //   symbol: symbol,
-        //   companyName: companyName,
-        // );
-        BrazeService.eventADWatchlist(symbol: symbol);
-
-        if (up) {
-          //
-
-          _mostBullish?.mostBullish?[index].isWatchlistAdded = 1;
-        } else {
-          //
-          _mostBearish?.mostBearish?[index].isWatchlistAdded = 1;
-        }
-
-        await _player.play(AssetSource(AudioFiles.alertWeathlist));
-
-        navigatorKey.currentContext!
-            .read<HomeProvider>()
-            .setTotalsWatchList(response.data['total_watchlist']);
-      }
-      showErrorMessage(
-          message: response.message,
-          type: response.status ? SnackbarType.info : SnackbarType.error);
-
-      setStatus(Status.loaded);
-      closeGlobalProgressDialog();
-      return ApiResponse(status: response.status);
-    } catch (e) {
-      closeGlobalProgressDialog();
-
-      Utils().showLog(e.toString());
-      setStatus(Status.loaded);
-      // showErrorMessage(message: Const.errSomethingWrong);
-    }
-  }
-
-  Future refreshData() async {
-    getMostBullish(showProgress: true);
-    // getTrendingStories();
-  }
-
-  Future refreshWithCheck() async {
-    if (_mostBullish == null || _mostBullish?.mostBullish?.isEmpty == true) {
-      getMostBullish();
-    }
-    if (_mostBearish == null || _mostBearish?.mostBearish?.isEmpty == true) {
-      getMostBearish();
-    }
-    if (_trendingStories == null ||
-        _trendingStories?.generalNews?.isEmpty == true) {
-      getTrendingStories();
-    }
-  }
-
-  Future getMostBullish({showProgress = false}) async {
-    // _data = null;
-    _statusBullish = Status.loading;
-    notifyListeners();
-    try {
-      Map request = {
-        "token":
-            navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
-      };
+      _error = null;
+      setStatus(Status.loading);
 
       ApiResponse response = await apiRequest(
-        url: Apis.trendingBullish,
-        request: request,
+        url: Apis.mostBearish,
+        request: {},
         showProgress: showProgress,
       );
       if (response.status) {
-        _mostBullish = TrendingRes.fromJson(response.data);
+        _data = marketDataResFromJson(jsonEncode(response.data));
         _extra = (response.extra is Extra ? response.extra as Extra : null);
-        // if (_mostBullish?.trendingSymbolList == null ||
-        //     _mostBullish?.trendingSymbolList?.isEmpty == true) {
-        //   Utils().showLog("---------bullish trending symbol list not found----------");
-        // } else {
-        //   getMostBearish();
-        // }
-        // getMostBearish();
       } else {
-        _mostBullish = null;
+        _data = null;
+        _error = response.message;
       }
-      _statusBullish = Status.loaded;
-      notifyListeners();
-      return ApiResponse(status: response.status);
+      setStatus(Status.loaded);
     } catch (e) {
-      _mostBullish = null;
-
-      Utils().showLog(e.toString());
-      _statusBullish = Status.loaded;
-      notifyListeners();
-      return ApiResponse(status: false);
+      Utils().showLog("Error => $e");
+      _data = null;
+      _error = Const.errSomethingWrong;
+      setStatus(Status.loaded);
     }
+    // finally {
+    //   setStatus(Status.loaded);
+    // }
   }
 
-  Future getMostBearish() async {
-    // _data = null;
-    _statusBearish = Status.loading;
-    notifyListeners();
-    try {
-      Map request = {
-        "token":
-            navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
-        'symbols_list': _mostBullish?.trendingSymbolList ?? "",
-      };
-      ApiResponse response = await apiRequest(
-        url: Apis.trendingBearish,
-        request: request,
-        showProgress: false,
-      );
-      if (response.status) {
-        _mostBearish = TrendingRes.fromJson(response.data);
-      } else {
-        _mostBearish = null;
+  void updateTickerInfo({required String symbol, alertAdded, watchListAdded}) {
+    if (_data?.mostBullish != null) {
+      final index =
+          _data?.mostBullish?.indexWhere((element) => element.symbol == symbol);
+
+      if (index != null && index != -1) {
+        if (alertAdded != null) {
+          _data?.mostBullish![index].isAlertAdded = alertAdded;
+        }
+        if (watchListAdded != null) {
+          _data?.mostBullish![index].isWatchlistAdded = watchListAdded;
+        }
+        notifyListeners();
       }
-      _statusBearish = Status.loaded;
-      notifyListeners();
-      return ApiResponse(status: response.status);
-    } catch (e) {
-      _mostBearish = null;
-
-      Utils().showLog(e.toString());
-      _statusBearish = Status.loaded;
-      notifyListeners();
-      return ApiResponse(status: false);
-    }
-  }
-
-  Future getTrendingStories() async {
-    // _data = null;
-    _statusStories = Status.loading;
-    notifyListeners();
-    try {
-      Map request = {
-        "token":
-            navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
-      };
-      ApiResponse response = await apiRequest(
-        url: Apis.trendingNews,
-        request: request,
-        showProgress: false,
-      );
-      if (response.status) {
-        _trendingStories = TrendingRes.fromJson(response.data);
-      } else {
-        _trendingStories = null;
-      }
-      _statusStories = Status.loaded;
-      notifyListeners();
-    } catch (e) {
-      _trendingStories = null;
-
-      Utils().showLog(e.toString());
-      _statusStories = Status.loaded;
-      notifyListeners();
     }
   }
 }
