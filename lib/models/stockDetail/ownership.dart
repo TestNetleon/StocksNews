@@ -82,7 +82,7 @@ class OwnershipDataRes {
   final String? sharesNumber;
   final String? marketValue;
   final num? changePercent;
-  final String? ownership;
+  final num? ownership;
 
   OwnershipDataRes({
     this.reportingDate,

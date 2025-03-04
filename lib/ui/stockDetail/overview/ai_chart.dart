@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:stocks_news_new/models/ai_analysis.dart';
 import 'package:stocks_news_new/ui/base/base_list_divider.dart';
 import 'package:stocks_news_new/ui/base/border_container.dart';
 import 'package:stocks_news_new/ui/base/bottom_sheet.dart';
@@ -17,7 +18,7 @@ import '../../base/heading.dart';
 class SDAiChart extends StatefulWidget {
   // final String? title;
   // final List<RadarChartRes>? data;
-  final SDAiAnalysisRes? aiAnalysis;
+  final AIradarChartRes? aiAnalysis;
 
   const SDAiChart({
     super.key,
@@ -69,7 +70,7 @@ class _SDAiChartState extends State<SDAiChart> {
       );
   }
 
-  Future<void> _fetchChartData({List<RadarChartRes>? apiData}) async {
+  Future<void> _fetchChartData({List<AIradarChartDataRes>? apiData}) async {
     if (apiData == null || apiData.isEmpty) {
       return;
     }

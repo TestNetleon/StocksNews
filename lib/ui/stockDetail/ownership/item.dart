@@ -4,6 +4,7 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import '../../../models/stockDetail/ownership.dart';
+import '../../../widgets/linear_bar.dart';
 
 class OwnershipHistoryItem extends StatelessWidget {
   final void Function()? onTap;
@@ -56,7 +57,7 @@ class OwnershipHistoryItem extends StatelessWidget {
               Row(
                 children: [
                   Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       Visibility(
                         visible: data.sharesNumber != null,
@@ -105,6 +106,12 @@ class OwnershipHistoryItem extends StatelessWidget {
               ),
             ],
           ),
+          Padding(
+            padding: EdgeInsets.symmetric(vertical: 8),
+            child: LinearBarCommon(
+              value: data.ownership ?? 0,
+            ),
+          ),
           AnimatedSize(
             duration: const Duration(milliseconds: 150),
             child: Container(
@@ -122,7 +129,7 @@ class OwnershipHistoryItem extends StatelessWidget {
                   ),
                   _dropBox(
                     label: 'Ownership',
-                    value: data.ownership ?? 'N/A',
+                    value: '${data.ownership ?? '0'}%',
                   ),
                 ],
               ),
