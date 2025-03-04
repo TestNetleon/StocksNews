@@ -143,7 +143,8 @@ class _SDHistoricalChartState extends State<SDHistoricalChart> {
                 _ranges.length,
                 (index) {
                   return Padding(
-                    padding: EdgeInsets.only(right: 32),
+                    padding: EdgeInsets.only(
+                        right: index == _ranges.length - 1 ? 0 : 32),
                     child: GestureDetector(
                       onTap: () {
                         if (_selectedIndex != index) {

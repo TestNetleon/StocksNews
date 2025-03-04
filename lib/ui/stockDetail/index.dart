@@ -7,6 +7,7 @@ import 'package:stocks_news_new/widgets/custom/base_loader_container.dart';
 import '../../models/ticker.dart';
 import '../base/ticker_app_bar.dart';
 import 'analysis/stock/stock_analysis.dart';
+import 'analysis/technical/index.dart';
 import 'chart/index.dart';
 import 'dividends/index.dart';
 import 'earnings/index.dart';
@@ -84,6 +85,10 @@ class _StockDetailIndexState extends State<StockDetailIndex> {
             if (manager.selectedIndex == 4)
               Expanded(
                 child: SDAnalystForecast(),
+              ),
+            if (manager.selectedIndex == 3)
+              Expanded(
+                child: SDTechnicalAnalysis(),
               ),
             if (manager.selectedIndex == 5)
               Expanded(

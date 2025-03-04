@@ -24,6 +24,7 @@ import '../../models/stockDetail/overview.dart';
 import '../../models/stockDetail/sec_filing.dart';
 import '../../models/stockDetail/stock_analysis.dart';
 import '../../models/stockDetail/tabs.dart';
+import '../../models/stockDetail/technical_analysis.dart';
 import '../../routes/my_app.dart';
 import '../../utils/colors.dart';
 import '../../utils/constants.dart';
@@ -39,6 +40,7 @@ class SDManager extends ChangeNotifier {
     _dataOverview = null;
     _dataHistoricalC = null;
     _dataKeyStats = null;
+    _dataTechnicalAnalysis = null;
     _dataStocksAnalysis = null;
     _dataAnalystForecast = null;
     _openAnalystForecast = -1;
@@ -112,6 +114,12 @@ class SDManager extends ChangeNotifier {
         case 2:
           if (_dataStocksAnalysis == null) {
             getSDStocksAnalysis();
+          }
+          break;
+
+        case 3:
+          if (_dataTechnicalAnalysis == null) {
+            getSDTechnicalAnalysis();
           }
           break;
 
@@ -197,6 +205,10 @@ class SDManager extends ChangeNotifier {
 
       case 2:
         getSDStocksAnalysis(reset: true);
+        break;
+
+      case 3:
+        getSDTechnicalAnalysis(reset: true);
         break;
 
       case 4:
@@ -640,6 +652,65 @@ class SDManager extends ChangeNotifier {
       Utils().showLog('Error in ${Apis.sdStocksAnalysis}: $e');
     } finally {
       setStatusStocksAnalysis(Status.loaded);
+    }
+  }
+
+  //MARK: Technical Analysis
+  String? _errorTechnicalAnalysis;
+  String? get errorTechnicalAnalysis =>
+      _errorTechnicalAnalysis ?? Const.errSomethingWrong;
+
+  Status _statusTechnicalAnalysis = Status.ideal;
+  Status get statusTechnicalAnalysis => _statusTechnicalAnalysis;
+
+  bool get isLoadingTechnicalAnalysis =>
+      _statusTechnicalAnalysis == Status.loading;
+
+  SDTechnicalAnalysisRes? _dataTechnicalAnalysis;
+  SDTechnicalAnalysisRes? get dataTechnicalAnalysis => _dataTechnicalAnalysis;
+
+  setStatusTechnicalAnalysis(status) {
+    _statusTechnicalAnalysis = status;
+    notifyListeners();
+  }
+
+  Future getSDTechnicalAnalysis({
+    bool reset = false,
+    String interval = '5min',
+    bool showProgress = false,
+  }) async {
+    if (_selectedStock == '') return;
+    if (reset) _dataTechnicalAnalysis = null;
+
+    try {
+      setStatusTechnicalAnalysis(Status.loading);
+
+      UserManager provider = navigatorKey.currentContext!.read<UserManager>();
+      Map request = {
+        'token': provider.user?.token ?? '',
+        'symbol': _selectedStock,
+        'interval': interval,
+      };
+
+      ApiResponse response = await apiRequest(
+        url: Apis.sdTechnicalAnalysis,
+        request: request,
+        showProgress: showProgress,
+      );
+      if (response.status) {
+        _dataTechnicalAnalysis =
+            SDTechnicalAnalysisResFromJson(jsonEncode(response.data));
+        _errorTechnicalAnalysis = null;
+      } else {
+        _errorStocksAnalysis = response.message;
+        _errorTechnicalAnalysis = null;
+      }
+    } catch (e) {
+      _errorTechnicalAnalysis = Const.errSomethingWrong;
+      _dataTechnicalAnalysis = null;
+      Utils().showLog('Error in ${Apis.sdTechnicalAnalysis}: $e');
+    } finally {
+      setStatusTechnicalAnalysis(Status.loaded);
     }
   }
 
@@ -1282,4 +1353,57 @@ class SDManager extends ChangeNotifier {
       setStatusMergers(Status.loaded);
     }
   }
+
+  // //MARK: Ownership
+  // String? _errorOwnership;
+  // String? get errorOwnership => _errorOwnership ?? Const.errSomethingWrong;
+
+  // Status _statusOwnership= Status.ideal;
+  // Status get statusOwnership => _statusOwnership;
+
+  // bool get isLoadingOwnership => _statusOwnership == Status.loading;
+
+  // SDOwnershipRes? _dataOwnership;
+  // SDOwnershipRes? get _dataOwnership => _dataOwnership;
+
+  // setStatusSecFiling(status) {
+  //   _statusSecFiling = status;
+  //   notifyListeners();
+  // }
+
+  // Future getSDSecFiling({
+  //   bool reset = false,
+  // }) async {
+  //   if (_selectedStock == '') return;
+  //   if (reset) {
+  //     _dataSecFiling = null;
+  //   }
+  //   try {
+  //     setStatusSecFiling(Status.loading);
+
+  //     UserManager provider = navigatorKey.currentContext!.read<UserManager>();
+  //     Map request = {
+  //       'token': provider.user?.token ?? '',
+  //       'symbol': _selectedStock,
+  //     };
+
+  //     ApiResponse response = await apiRequest(
+  //       url: Apis.sdSecFiling,
+  //       request: request,
+  //     );
+  //     if (response.status) {
+  //       _dataSecFiling = SDSecFilingResFromJson(jsonEncode(response.data));
+  //       _errorSecFiling = null;
+  //     } else {
+  //       _dataSecFiling = null;
+  //       _errorSecFiling = response.message;
+  //     }
+  //   } catch (e) {
+  //     _dataSecFiling = null;
+  //     _errorSecFiling = Const.errSomethingWrong;
+  //     Utils().showLog('Error in ${Apis.sdSecFiling}: $e');
+  //   } finally {
+  //     setStatusSecFiling(Status.loaded);
+  //   }
+  // }
 }
