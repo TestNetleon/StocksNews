@@ -5,7 +5,6 @@ import 'package:stocks_news_new/models/ticker.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
-import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/cache_network_image.dart';
 import 'package:stocks_news_new/widgets/optional_parent.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
@@ -37,8 +36,6 @@ class _BaseStockItemState extends State<BaseStockItem> {
 
   @override
   Widget build(BuildContext context) {
-    Utils().showLog("Expandable => ${widget.expandable?.length}");
-
     bool isOpen = _openIndex == widget.index;
     return Container(
       padding: EdgeInsets.all(Pad.pad16),

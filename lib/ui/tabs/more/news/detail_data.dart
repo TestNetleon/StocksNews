@@ -24,10 +24,11 @@ class NewsDetailData extends StatelessWidget {
   final String slug;
   const NewsDetailData({super.key, required this.slug});
 
-  Future _callAPI() async {
-    await navigatorKey.currentContext!
-        .read<NewsManager>()
-        .getNewsDetailData(slug);
+  Future _callAPI({reset = true}) async {
+    await navigatorKey.currentContext!.read<NewsManager>().getNewsDetailData(
+          slug,
+          reset: reset,
+        );
   }
 
   Future _sendFeedBack(MarketResData data) async {
@@ -54,7 +55,9 @@ class NewsDetailData extends StatelessWidget {
         postDetail?.publishedDate != null && postDetail?.publishedDate != '';
 
     return BaseScroll(
-      onRefresh: _callAPI,
+      onRefresh: () async {
+        _callAPI(reset: false);
+      },
       children: [
         ClipRRect(
           borderRadius: BorderRadius.circular(8),
@@ -196,9 +199,15 @@ class NewsDetailData extends StatelessWidget {
                       data: data,
                       onTap: (news) {
                         if (data.slug == null || data.slug == '') return;
+                        // Navigator.pushReplacement(
+                        //     context,
+                        //     MaterialPageRoute(
+                        //         builder: (context) => NewsDetailIndex(
+                        //               slug: data.slug ?? '',
+                        //             )));
                         Navigator.pushReplacementNamed(
                             context, NewsDetailIndex.path,
-                            arguments: {'slug': data.slug});
+                            arguments: {'slug': news.slug});
                       },
                     );
                   },

@@ -18,7 +18,7 @@ final lightTheme = ThemeData(
       color: Colors.white,
       fontSize: 18,
       fontWeight: FontWeight.w700,
-      fontFamily: Fonts.sdPRO,
+      fontFamily: Fonts.roboto,
     ),
     systemOverlayStyle: SystemUiOverlayStyle(
       // statusBarColor: Colors.black,
@@ -30,12 +30,12 @@ final lightTheme = ThemeData(
       statusBarBrightness: Brightness.light,
     ),
   ),
-  fontFamily: Fonts.sdPRO,
+  fontFamily: Fonts.roboto,
   iconTheme: const IconThemeData(color: Colors.white),
   textTheme: ThemeData.light().textTheme.apply(
         displayColor: Colors.white,
         bodyColor: Colors.black,
-        fontFamily: Fonts.sdPRO,
+        fontFamily: Fonts.roboto,
       ),
 );
 
@@ -52,7 +52,7 @@ TextStyle styleGeorgiaRegular({
     fontStyle: fontStyle,
     fontSize: fontSize,
     color: color,
-    fontFamily: Fonts.sdPRO,
+    fontFamily: Fonts.roboto,
     fontWeight: FontWeight.normal,
     height: height,
     decoration: decoration,
@@ -71,7 +71,7 @@ TextStyle styleGeorgiaBold({
   return TextStyle(
     fontSize: fontSize,
     color: color,
-    fontFamily: Fonts.sdPRO,
+    fontFamily: Fonts.roboto,
     fontWeight: FontWeight.bold,
     fontStyle: fontStyle,
     decoration: decoration,
@@ -93,7 +93,7 @@ TextStyle stylePTSansRegular({
   return TextStyle(
     fontSize: fontSize,
     color: color,
-    fontFamily: fontFamily ?? Fonts.sdPRO,
+    fontFamily: fontFamily ?? Fonts.roboto,
     fontWeight: fontWeight ?? FontWeight.normal,
     height: height,
     decoration: decoration,
@@ -114,7 +114,7 @@ TextStyle stylePTSansBold({
   return TextStyle(
     fontSize: fontSize,
     color: color,
-    fontFamily: fontFamily ?? Fonts.sdPRO,
+    fontFamily: fontFamily ?? Fonts.roboto,
     fontWeight: FontWeight.bold,
     decoration: decoration,
     decorationColor: color,
@@ -135,7 +135,7 @@ TextStyle styleSansBold({
   return TextStyle(
     fontSize: fontSize,
     color: color,
-    fontFamily: fontFamily ?? Fonts.sdPRO,
+    fontFamily: fontFamily ?? Fonts.roboto,
     fontWeight: FontWeight.bold,
     decoration: decoration,
     decorationColor: color,
@@ -157,7 +157,7 @@ TextStyle styleBaseBold({
   return TextStyle(
     fontSize: fontSize,
     color: color,
-    fontFamily: fontFamily ?? Fonts.sdPRO,
+    fontFamily: fontFamily ?? Fonts.roboto,
     fontWeight: FontWeight.w800,
     decoration: decoration,
     decorationColor: color,
@@ -176,7 +176,7 @@ TextStyle styleBaseRegular({
   return TextStyle(
     fontSize: fontSize,
     color: color,
-    fontFamily: fontFamily ?? Fonts.sdPRO,
+    fontFamily: fontFamily ?? Fonts.roboto,
     fontWeight: FontWeight.w400,
     decoration: decoration,
     decorationColor: color,
@@ -195,7 +195,7 @@ TextStyle styleBaseSemiBold({
   return TextStyle(
     fontSize: fontSize,
     color: color,
-    fontFamily: fontFamily ?? Fonts.sdPRO,
+    fontFamily: fontFamily ?? Fonts.roboto,
     fontWeight: FontWeight.w600,
     decoration: decoration,
     decorationColor: color,

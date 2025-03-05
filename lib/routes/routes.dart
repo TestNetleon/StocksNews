@@ -145,6 +145,7 @@ import '../screens/marketData/lowPriceStocks/index.dart';
 import '../screens/whatWeDo/index.dart';
 import '../ui/account/auth/login.dart';
 import '../ui/account/auth/verify.dart';
+import '../ui/account/update/delete.dart';
 import '../ui/account/update/email_verify.dart';
 import '../ui/account/update/index.dart';
 import '../ui/aiAnalysis/index.dart';
@@ -187,6 +188,7 @@ class Routes {
     WatchListIndex.path: (_) => const WatchListIndex(),
     FaqIndex.path: (_) => const FaqIndex(),
     HelpDeskIndex.path: (_) => const HelpDeskIndex(),
+    DeletePersonalDetail.path: (_) => const DeletePersonalDetail(),
 
     //--------------------------------------
 

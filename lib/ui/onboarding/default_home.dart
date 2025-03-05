@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/managers/onboarding.dart';
 import 'package:stocks_news_new/ui/onboarding/slides.dart';
 import 'package:stocks_news_new/ui/tabs/tabs.dart';
+import '../../database/preference.dart';
 import '../base/scaffold.dart';
 
 //MARK: DefaultHome
@@ -23,9 +24,10 @@ class _DefaultHomeState extends State<DefaultHome> {
     });
   }
 
-  void _navigate() {
+  void _navigate() async {
     OnboardingManager provider = context.read<OnboardingManager>();
-    if (provider.data == null) {
+    bool firstTime = await Preference.getShowIntro();
+    if (provider.data == null && !firstTime) {
       Navigator.pushNamedAndRemoveUntil(
         context,
         Tabs.path,

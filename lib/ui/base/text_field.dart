@@ -28,6 +28,7 @@ class BaseTextField extends StatelessWidget {
     this.prefixIcon,
     this.suffixIcon,
     super.key,
+    this.hintText,
   });
 
   final TextEditingController? controller;
@@ -45,6 +46,8 @@ class BaseTextField extends StatelessWidget {
   final BorderRadius? borderRadiusOnly;
   final double borderRadius;
   final String? placeholder;
+  final String? hintText;
+
   final TextCapitalization textCapitalization;
   final List<TextInputFormatter>? inputFormatters;
   final TextInputAction? textInputAction;
@@ -84,6 +87,8 @@ class BaseTextField extends StatelessWidget {
         prefixIcon: prefixIcon,
         suffixIcon: suffixIcon,
         labelText: placeholder,
+        hintText: hintText,
+        hintStyle: stylePTSansRegular(color: ThemeColors.neutral40),
         // floatingLabelBehavior: FloatingLabelBehavior.auto,
         labelStyle: stylePTSansRegular(),
         contentPadding:

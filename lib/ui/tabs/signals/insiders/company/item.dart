@@ -115,18 +115,34 @@ class BaseInsiderCompanyItem extends StatelessWidget {
           Container(
             margin: EdgeInsets.only(top: Pad.pad8),
             alignment: Alignment.centerRight,
-            child: Visibility(
-              visible: data.securityTransacted != null &&
-                  data.securityTransacted != '',
-              child: Container(
-                margin: EdgeInsets.only(left: Pad.pad10),
-                child: Text(
-                  "${data.securityTransacted} Shares @ ${data.price}",
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: styleBaseRegular(fontSize: 13),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Visibility(
+                  visible: data.totalTransaction != null &&
+                      data.totalTransaction != '',
+                  child: Container(
+                    margin: EdgeInsets.only(left: Pad.pad10),
+                    child: Text(
+                      data.totalTransaction ?? '',
+                      style: styleBaseBold(),
+                    ),
+                  ),
                 ),
-              ),
+                Visibility(
+                  visible: data.securityTransacted != null &&
+                      data.securityTransacted != '',
+                  child: Container(
+                    margin: EdgeInsets.only(left: Pad.pad10),
+                    child: Text(
+                      "${data.securityTransacted} Shares @ ${data.price}",
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: styleBaseRegular(fontSize: 13),
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
           AnimatedSize(
@@ -140,10 +156,10 @@ class BaseInsiderCompanyItem extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  _dropBox(
-                    label: 'Total Transaction',
-                    value: data.totalTransaction ?? 'N/A',
-                  ),
+                  // _dropBox(s
+                  //   label: 'Total Transaction',
+                  //   value: data.totalTransaction ?? 'N/A',
+                  // ),
                   _dropBox(
                     label: 'Shares held after transaction',
                     value: data.securitiesOwned ?? 'N/A',

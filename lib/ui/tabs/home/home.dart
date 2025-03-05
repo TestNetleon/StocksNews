@@ -40,7 +40,7 @@ class _HomeIndexState extends State<HomeIndex> {
             // Text(
             //   'AAPL',
             //   style: TextStyle(
-            //     fontFamily: 'SFProDisplay',
+            //     fontFamily: 'Roboto',
             //     // fontFamily: Fonts.georgia,
             //     // fontFamily: Fonts.ptSans,
             //     // fontFamily: Fonts.georgia,

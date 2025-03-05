@@ -96,6 +96,7 @@ class NewsManager extends ChangeNotifier {
     } catch (e) {
       _categoriesData = null;
       _error = Const.errSomethingWrong;
+      Utils().showLog('Error on ${Apis.newsCategories}: $e');
     } finally {
       setStatus(Status.loaded);
     }

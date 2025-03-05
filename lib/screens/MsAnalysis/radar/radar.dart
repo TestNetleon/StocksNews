@@ -51,7 +51,7 @@ class _MsRadarGraphState extends State<MsRadarGraph> {
                               'red'
                           ? ThemeColors.sos
                           : ThemeColors.accent,
-                  fontFamily: Fonts.sdPRO,
+                  fontFamily: Fonts.roboto,
                 ),
               ),
             ],

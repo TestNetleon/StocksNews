@@ -69,6 +69,7 @@ class _AccountLoginIndexState extends State<AccountLoginIndex> {
   bool isLoading = false;
 
   setLoading(status) {
+    print('Status $status');
     isLoading = status;
     if (mounted) {
       setState(() {});
@@ -96,6 +97,7 @@ class _AccountLoginIndexState extends State<AccountLoginIndex> {
       }
     }
     setLoading(true);
+
     try {
       await FirebaseAuth.instance.verifyPhoneNumber(
         phoneNumber: '${countryCode ?? '+1'} ${_phone.text}',
@@ -138,8 +140,6 @@ class _AccountLoginIndexState extends State<AccountLoginIndex> {
       );
     } catch (e) {
       Utils().showLog('Firebase error $e');
-    } finally {
-      setLoading(false);
     }
   }
 

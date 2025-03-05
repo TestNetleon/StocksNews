@@ -58,25 +58,22 @@ class _BaseScaffoldState extends State<BaseScaffold> {
           appBar: widget.appBar,
           resizeToAvoidBottomInset: widget.resizeToAvoidBottomInset,
           drawer: widget.drawer,
-          body: PopScope(
-            canPop: false,
-            child: widget.bottomSafeAreaColor != null
-                ? Column(
-                    children: [
-                      Container(
-                        // color: widget.bottomSafeAreaColor,
-                        height: MediaQuery.of(context).padding.top +
-                            (widget.appBar?.preferredSize.height ?? 0),
-                      ),
-                      Expanded(child: widget.body),
-                      Container(
-                        color: widget.bottomSafeAreaColor,
-                        height: MediaQuery.of(context).padding.bottom,
-                      ),
-                    ],
-                  )
-                : SafeArea(child: widget.body),
-          ),
+          body: widget.bottomSafeAreaColor != null
+              ? Column(
+                  children: [
+                    Container(
+                      // color: widget.bottomSafeAreaColor,
+                      height: MediaQuery.of(context).padding.top +
+                          (widget.appBar?.preferredSize.height ?? 0),
+                    ),
+                    Expanded(child: widget.body),
+                    Container(
+                      color: widget.bottomSafeAreaColor,
+                      height: MediaQuery.of(context).padding.bottom,
+                    ),
+                  ],
+                )
+              : SafeArea(child: widget.body),
           bottomNavigationBar: widget.bottomNavigationBar,
           floatingActionButton: widget.floatingActionButton,
           floatingActionButtonLocation: widget.floatingAlignment,

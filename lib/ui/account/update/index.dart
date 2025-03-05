@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/managers/user.dart';
 import 'package:stocks_news_new/modals/user_res.dart';
+import 'package:stocks_news_new/ui/account/update/delete.dart';
 import 'package:stocks_news_new/ui/account/update/email_verify.dart';
 import 'package:stocks_news_new/ui/base/app_bar.dart';
 import 'package:stocks_news_new/ui/base/base_scroll.dart';
@@ -20,6 +21,7 @@ import 'package:stocks_news_new/utils/validations.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:validators/validators.dart';
 import '../../../widgets/custom/alert_popup.dart';
+import '../../base/button.dart';
 import '../../base/country_code.dart';
 import '../auth/verify.dart';
 import 'update_pic.dart';
@@ -225,119 +227,142 @@ class _UpdatePersonalDetailIndexState extends State<UpdatePersonalDetailIndex> {
         title: 'Personal Details',
         onSaveClick: _update,
       ),
-      body: BaseScroll(
+      body: Column(
         children: [
-          PersonalDetailUpdatePic(),
-          SpacerVertical(height: 25),
-          BaseTextField(
-            placeholder: 'Name',
-            controller: name,
-            textCapitalization: TextCapitalization.words,
-            keyboardType: TextInputType.name,
-          ),
-          SpacerVertical(height: 18),
-          BaseTextField(
-            controller: displayName,
-            placeholder: 'Display Name',
-            textCapitalization: TextCapitalization.words,
-          ),
-          SpacerVertical(height: 18),
-          Stack(
-            alignment: Alignment.centerRight,
-            children: [
-              BaseTextField(
-                controller: email,
-                placeholder: 'Email',
-                keyboardType: TextInputType.emailAddress,
-                textCapitalization: TextCapitalization.none,
-                onChanged: (p0) {
-                  // email.text = p0;
-                  // setState(() {});
-                  manager.onChangeEmail(p0);
-                },
-                contentPadding: EdgeInsets.only(
-                  top: Pad.pad16,
-                  bottom: Pad.pad16,
-                  left: Pad.pad16,
-                  right: 90,
+          Expanded(
+            child: BaseScroll(
+              children: [
+                PersonalDetailUpdatePic(),
+                SpacerVertical(height: 25),
+                BaseTextField(
+                  placeholder: 'Name',
+                  controller: name,
+                  textCapitalization: TextCapitalization.words,
+                  keyboardType: TextInputType.name,
                 ),
-              ),
-              Positioned(
-                right: 10,
-                child: GestureDetector(
-                  onTap: manager.emailVerified ? null : _verifyEmail,
-                  child: Text(
-                    manager.emailVerified ? 'Verified' : 'Update',
-                    style: styleBaseBold(
-                      fontSize: 14,
-                      color: ThemeColors.secondary100,
+                SpacerVertical(height: 18),
+                BaseTextField(
+                  controller: displayName,
+                  placeholder: 'Display Name',
+                  textCapitalization: TextCapitalization.words,
+                ),
+                SpacerVertical(height: 18),
+                Stack(
+                  alignment: Alignment.centerRight,
+                  children: [
+                    BaseTextField(
+                      controller: email,
+                      placeholder: 'Email',
+                      keyboardType: TextInputType.emailAddress,
+                      textCapitalization: TextCapitalization.none,
+                      onChanged: (p0) {
+                        // email.text = p0;
+                        // setState(() {});
+                        manager.onChangeEmail(p0);
+                      },
+                      contentPadding: EdgeInsets.only(
+                        top: Pad.pad16,
+                        bottom: Pad.pad16,
+                        left: Pad.pad16,
+                        right: 90,
+                      ),
                     ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-          SpacerVertical(height: 18),
-          Stack(
-            alignment: Alignment.centerRight,
-            children: [
-              Row(
-                children: [
-                  Container(
-                    decoration: const BoxDecoration(
-                      border: Border(
-                        bottom: BorderSide(
-                          color: ThemeColors.white,
+                    Positioned(
+                      right: 10,
+                      child: GestureDetector(
+                        onTap: manager.emailVerified ? null : _verifyEmail,
+                        child: Text(
+                          manager.emailVerified ? 'Verified' : 'Update',
+                          style: styleBaseBold(
+                            fontSize: 14,
+                            color: ThemeColors.secondary100,
+                          ),
                         ),
                       ),
-                      color: ThemeColors.white,
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(4),
-                        bottomLeft: Radius.circular(4),
+                    ),
+                  ],
+                ),
+                SpacerVertical(height: 18),
+                Stack(
+                  alignment: Alignment.centerRight,
+                  children: [
+                    Row(
+                      children: [
+                        Container(
+                          decoration: const BoxDecoration(
+                            border: Border(
+                              bottom: BorderSide(
+                                color: ThemeColors.white,
+                              ),
+                            ),
+                            color: ThemeColors.white,
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(4),
+                              bottomLeft: Radius.circular(4),
+                            ),
+                          ),
+                          child: BaseCountryCode(
+                            onChanged: (CountryCode value) {
+                              countryCode = value.dialCode;
+                              setState(() {});
+                              manager.onChangePhone(
+                                phone: phone.text,
+                                countryCode: countryCode!,
+                              );
+                            },
+                          ),
+                        ),
+                        Expanded(
+                          child: BaseTextField(
+                            placeholder: 'Phone number',
+                            controller: phone,
+                            keyboardType: TextInputType.phone,
+                            onChanged: (p0) {
+                              phone.text = p0;
+                              setState(() {});
+                              manager.onChangePhone(
+                                phone: phone.text,
+                                countryCode: countryCode!,
+                              );
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                    Positioned(
+                      right: 10,
+                      child: InkWell(
+                        onTap: manager.phoneVerified ? null : _verifyPhone,
+                        child: Text(
+                          manager.phoneVerified ? 'Verified' : 'Update',
+                          style: styleBaseBold(
+                            fontSize: 14,
+                            color: ThemeColors.secondary100,
+                          ),
+                        ),
                       ),
                     ),
-                    child: BaseCountryCode(
-                      onChanged: (CountryCode value) {
-                        countryCode = value.dialCode;
-                        setState(() {});
-                        manager.onChangePhone(
-                          phone: phone.text,
-                          countryCode: countryCode!,
-                        );
-                      },
-                    ),
-                  ),
-                  Expanded(
-                    child: BaseTextField(
-                      placeholder: 'Phone number',
-                      controller: phone,
-                      keyboardType: TextInputType.phone,
-                      onChanged: (p0) {
-                        phone.text = p0;
-                        setState(() {});
-                        manager.onChangePhone(
-                          phone: phone.text,
-                          countryCode: countryCode!,
-                        );
-                      },
-                    ),
-                  ),
-                ],
-              ),
-              Positioned(
-                right: 10,
-                child: InkWell(
-                  onTap: manager.phoneVerified ? null : _verifyPhone,
-                  child: Text(
-                    manager.phoneVerified ? 'Verified' : 'Update',
-                    style: styleBaseBold(
-                      fontSize: 14,
-                      color: ThemeColors.secondary100,
-                    ),
-                  ),
+                  ],
                 ),
+              ],
+            ),
+          ),
+          Container(
+            padding: EdgeInsets.symmetric(horizontal: Pad.pad16, vertical: 10),
+            child: BaseButton(
+              fontBold: false,
+              icon: Images.delete,
+              text: 'Delete Account',
+              onPressed: () {
+                Navigator.pushNamed(context, DeletePersonalDetail.path);
+              },
+              color: ThemeColors.white,
+              textColor: ThemeColors.neutral40,
+              side: BorderSide(
+                color: ThemeColors.neutral20,
+                width: 2,
               ),
-            ],
+            ),
           ),
         ],
       ),

@@ -27,6 +27,7 @@ class SubscriptionService {
       }
 
       await Purchases.configure(configuration);
+
       try {
         Purchases.syncPurchases();
         Utils().showLog('SYNC');
@@ -35,7 +36,11 @@ class SubscriptionService {
       }
 
       if (appUserId != null && appUserId.isNotEmpty) {
-        Purchases.logIn(appUserId);
+        try {
+          Purchases.logIn(appUserId);
+        } catch (e) {
+          Utils().showLog('Error on login $e');
+        }
         _setUserAttributes(user);
       }
 
@@ -103,9 +108,10 @@ class SubscriptionService {
         return info.activeSubscriptions;
       } else {
         List<String>? subscriptions;
-        // Purchases.syncPurchases();
+        Purchases.syncPurchases();
         Purchases.addCustomerInfoUpdateListener((CustomerInfo info) {
           Map<String, EntitlementInfo> entitlements = info.entitlements.all;
+          // Utils().showLog('Entitlements $entitlements');
           subscriptions = entitlements.entries
               .where((entry) => entry.value.isActive && entry.value.willRenew)
               .map((entry) => entry.value.productIdentifier)

@@ -440,7 +440,8 @@ class Fonts {
   // static const String georgia = 'Georgia';
   // static const String ptSans = "PTSans";
   // static const String merriWeather = "Merriweather";
-  static const String sdPRO = 'SFProDisplay';
+  // static const String roboto = 'SFProDisplay';
+  static const String roboto = 'Roboto';
 }
 
 class Const {

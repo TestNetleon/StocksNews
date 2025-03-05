@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
+import 'package:stocks_news_new/widgets/optional_parent.dart';
+import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 
 //
 class BaseButton extends StatelessWidget {
@@ -23,6 +25,7 @@ class BaseButton extends StatelessWidget {
     super.key,
     this.side = BorderSide.none,
     this.textStyle,
+    this.icon,
   });
 
   final String text;
@@ -41,6 +44,7 @@ class BaseButton extends StatelessWidget {
   final Color? disabledBackgroundColor;
   final BorderSide side;
   final TextStyle? textStyle;
+  final String? icon;
 
   @override
   Widget build(BuildContext context) {
@@ -62,19 +66,37 @@ class BaseButton extends StatelessWidget {
             side: side,
           ),
         ),
-        child: Text(
-          textAlign: textAlign,
-          textUppercase ? text.toUpperCase() : text,
-          style: textStyle ??
-              (fontBold
-                  ? stylePTSansBold(
-                      fontSize: textSize,
-                      color: onPressed == null ? disableTextColor : textColor,
-                    )
-                  : stylePTSansRegular(
-                      fontSize: textSize,
-                      color: onPressed == null ? disableTextColor : textColor,
-                    )),
+        child: OptionalParent(
+          addParent: icon != null,
+          parentBuilder: (child) {
+            return Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset(
+                  icon ?? '',
+                  color: ThemeColors.neutral60,
+                  height: 17,
+                  width: 17,
+                ),
+                SpacerHorizontal(width: 8),
+                child,
+              ],
+            );
+          },
+          child: Text(
+            textAlign: textAlign,
+            textUppercase ? text.toUpperCase() : text,
+            style: textStyle ??
+                (fontBold
+                    ? stylePTSansBold(
+                        fontSize: textSize,
+                        color: onPressed == null ? disableTextColor : textColor,
+                      )
+                    : styleBaseSemiBold(
+                        fontSize: textSize,
+                        color: onPressed == null ? disableTextColor : textColor,
+                      )),
+          ),
         ),
       ),
     );

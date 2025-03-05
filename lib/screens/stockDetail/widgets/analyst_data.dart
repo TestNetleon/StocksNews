@@ -428,7 +428,7 @@ class _StockDetailAnalystDataState extends State<StockDetailAnalystData> {
                                                           labelStyle:
                                                               const GaugeTextStyle(
                                                             fontFamily:
-                                                                Fonts.sdPRO,
+                                                                Fonts.roboto,
                                                             fontSize: 14,
                                                             fontWeight:
                                                                 FontWeight.bold,
@@ -449,7 +449,7 @@ class _StockDetailAnalystDataState extends State<StockDetailAnalystData> {
                                                           labelStyle:
                                                               const GaugeTextStyle(
                                                             fontFamily:
-                                                                Fonts.sdPRO,
+                                                                Fonts.roboto,
                                                             fontSize: 14,
                                                             fontWeight:
                                                                 FontWeight.bold,
@@ -470,7 +470,7 @@ class _StockDetailAnalystDataState extends State<StockDetailAnalystData> {
                                                           labelStyle:
                                                               const GaugeTextStyle(
                                                             fontFamily:
-                                                                Fonts.sdPRO,
+                                                                Fonts.roboto,
                                                             fontSize: 14,
                                                             fontWeight:
                                                                 FontWeight.bold,
@@ -491,7 +491,7 @@ class _StockDetailAnalystDataState extends State<StockDetailAnalystData> {
                                                           labelStyle:
                                                               const GaugeTextStyle(
                                                             fontFamily:
-                                                                Fonts.sdPRO,
+                                                                Fonts.roboto,
                                                             fontSize: 14,
                                                             fontWeight:
                                                                 FontWeight.bold,
@@ -512,7 +512,7 @@ class _StockDetailAnalystDataState extends State<StockDetailAnalystData> {
                                                           labelStyle:
                                                               const GaugeTextStyle(
                                                             fontFamily:
-                                                                Fonts.sdPRO,
+                                                                Fonts.roboto,
                                                             fontSize: 14,
                                                             fontWeight:
                                                                 FontWeight.bold,

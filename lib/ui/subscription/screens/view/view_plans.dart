@@ -81,8 +81,9 @@ class _ViewAllPlansState extends State<ViewAllPlans> {
         message: 'You’re All Set! Start enjoying',
         type: ToasterEnum.success,
       );
-      _purchaseClickable(true);
-      Future.delayed(Duration(seconds: 1), () {
+      // _purchaseClickable(true);
+
+      Future.delayed(Duration(milliseconds: 200), () {
         Navigator.pushAndRemoveUntil(
           navigatorKey.currentContext!,
           MaterialPageRoute(builder: (context) => Tabs()),

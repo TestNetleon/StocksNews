@@ -105,9 +105,10 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
 
   void _callAPI() async {
     bool firstTime = await Preference.getShowIntro();
-    if (firstTime) {}
-    OnboardingManager provider = context.read<OnboardingManager>();
-    provider.getOnBoardingData();
+    if (firstTime) {
+      OnboardingManager provider = context.read<OnboardingManager>();
+      provider.getOnBoardingData();
+    }
   }
 
   @override

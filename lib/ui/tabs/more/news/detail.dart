@@ -27,8 +27,10 @@ class _NewsDetailIndexState extends State<NewsDetailIndex> {
     });
   }
 
-  Future _callAPI() async {
-    await context.read<NewsManager>().getNewsDetailData(widget.slug);
+  Future _callAPI({reset = true}) async {
+    await context
+        .read<NewsManager>()
+        .getNewsDetailData(widget.slug, reset: reset);
   }
 
   @override
@@ -39,7 +41,7 @@ class _NewsDetailIndexState extends State<NewsDetailIndex> {
     return BaseScaffold(
       appBar: BaseAppBar(
         showBack: true,
-        showLogo: false,
+        showLogo: true,
         showSearch: true,
         shareURL: postDetail?.shareUrl == null || postDetail?.shareUrl == ''
             ? null

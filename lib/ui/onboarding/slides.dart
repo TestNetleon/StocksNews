@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:stocks_news_new/database/preference.dart';
 import 'package:stocks_news_new/models/onboarding.dart';
 import 'package:stocks_news_new/managers/onboarding.dart';
 import 'package:stocks_news_new/utils/colors.dart';
@@ -26,6 +27,7 @@ class _OnboardingSlidesState extends State<OnboardingSlides> {
   final PageController _pageController = PageController();
 
   _navigateToHome() {
+    Preference.setShowIntro(false);
     Navigator.pushAndRemoveUntil(
       context,
       MaterialPageRoute(

@@ -11,8 +11,8 @@ class MarketRes {
   final MarketFilter? filter;
 
   MarketRes({
-    required this.data,
-    required this.filter,
+    this.data,
+    this.filter,
   });
 
   factory MarketRes.fromJson(Map<String, dynamic> json) => MarketRes(
@@ -21,7 +21,9 @@ class MarketRes {
             : List<MarketResData>.from(
                 json["data"].map((x) => MarketResData.fromJson(x)),
               ),
-        filter: MarketFilter.fromJson(json["filter"]),
+        filter: json["filter"] == null
+            ? null
+            : MarketFilter.fromJson(json["filter"]),
       );
 
   Map<String, dynamic> toJson() => {

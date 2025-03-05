@@ -143,7 +143,7 @@ class _ChristmasUpgradeCurrentPlanState
                               textStyle: const TextStyle(
                                 color: ThemeColors.white,
                                 height: 1.5,
-                                fontFamily: Fonts.sdPRO,
+                                fontFamily: Fonts.roboto,
                                 fontSize: 16,
                               ),
                             ),

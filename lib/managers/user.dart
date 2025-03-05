@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
@@ -32,6 +33,7 @@ import '../api/apis.dart';
 import '../api/image_service.dart';
 import '../database/preference.dart';
 import '../fcm/dynamic_links.service.dart';
+import '../models/delete.dart';
 import '../service/amplitude/service.dart';
 import '../service/braze/service.dart';
 import '../utils/constants.dart';
@@ -555,9 +557,73 @@ class UserManager extends ChangeNotifier {
     Preference.saveUser(_user);
   }
 
+//MARK: Delete
+
+  DeleteUserRes? _delete;
+  DeleteUserRes? get delete => _delete;
+
+  String? _errorDelete;
+  String? get errorDelete => _errorDelete ?? Const.errSomethingWrong;
+
+  Status _statusDelete = Status.ideal;
+  Status get statusDelete => _statusDelete;
+
+  bool get isLoadingDelete =>
+      _statusDelete == Status.loading || _statusDelete == Status.ideal;
+
+  setStatusDelete(status) {
+    _statusDelete = status;
+    notifyListeners();
+  }
+
+  Future deleteUser({String? text, reset = false}) async {
+    if (reset) {
+      _delete = null;
+    }
+    try {
+      setStatusDelete(Status.loading);
+
+      UserManager manager = navigatorKey.currentContext!.read<UserManager>();
+      Map request = {
+        "token": manager.user?.token ?? '',
+      };
+      if (text != null && text != '') {
+        request['delete_request'] = text;
+      }
+      ApiResponse response = await apiRequest(
+        url: Apis.deleteUser,
+        request: request,
+        showProgress: text != null && text != '',
+      );
+      if (text == null || text == '') {
+        _delete = deleteUserResFromJson(jsonEncode(response.data));
+      } else {
+        clearUser();
+        TopSnackbar.show(
+          message: response.message ?? '',
+          type: response.status ? ToasterEnum.success : ToasterEnum.error,
+        );
+      }
+    } catch (e) {
+      Utils().showLog('Error in ${Apis.deleteUser}: $e');
+      TopSnackbar.show(
+        message: Const.errSomethingWrong,
+        type: ToasterEnum.error,
+      );
+    } finally {
+      setStatusDelete(Status.loaded);
+    }
+  }
+
   //MARK: Clear User
-  clearUser() {
+  clearUser({bool gotoOverview = false}) {
     Preference.logout();
+    // try {
+    //   Purchases.logOut();
+    // } catch (e) {
+    //   //
+    // }
+
     _user = null;
     notifyListeners();
     MyHomeManager homeManager =
@@ -587,10 +653,15 @@ class UserManager extends ChangeNotifier {
     blogsManager.clearAllData();
     sdManager.clearAllData();
 
-    Navigator.popUntil(navigatorKey.currentContext!, (route) => route.isFirst);
-    Navigator.pushReplacement(
-      navigatorKey.currentContext!,
-      MaterialPageRoute(builder: (_) => const Tabs()),
-    );
+    if (gotoOverview) {
+      //
+    } else {
+      Navigator.popUntil(
+          navigatorKey.currentContext!, (route) => route.isFirst);
+      Navigator.pushReplacement(
+        navigatorKey.currentContext!,
+        MaterialPageRoute(builder: (_) => const Tabs()),
+      );
+    }
   }
 }

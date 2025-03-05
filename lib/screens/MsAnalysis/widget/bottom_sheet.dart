@@ -55,7 +55,7 @@ class _MsBottomSheetItemState extends State<MsBottomSheetItem> {
                     widget.html ?? "",
                     textStyle: TextStyle(
                       color: ThemeColors.white,
-                      fontFamily: Fonts.sdPRO,
+                      fontFamily: Fonts.roboto,
                       height: 1.4,
                     ),
                   ),

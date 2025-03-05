@@ -34,6 +34,7 @@ class Apis {
   static const googleLogin = "/signup-google";
   static const appleLogin = "/signup-apple";
   static const logout = "/logout";
+  static const deleteUser = '/delete-user';
   static const alerts = "/alerts";
   static const deleteAlert = "/delete-alert";
   static const watchlist = "/watchlist";
@@ -191,7 +192,7 @@ class Apis {
   static const deleteCompare = "/delete-compare";
   static const addCompare = "/add-compare";
   static const notifications = "/notifications";
-  static const deleteUser = "/delete-user";
+  // static const deleteUser = "/delete-user";
   static const qrCodeScan = "/token-login";
   static const stocks = "/stocks";
   static const blogDetails = "/blog-detail-secure-v2-stocks";
