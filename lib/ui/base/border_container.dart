@@ -5,12 +5,15 @@ import 'package:stocks_news_new/utils/constants.dart';
 class BaseBorderContainer extends StatelessWidget {
   final Widget? child;
   final EdgeInsetsGeometry? padding;
+  final EdgeInsetsGeometry? innerPadding;
+
   final void Function()? onTap;
   const BaseBorderContainer({
     super.key,
     this.child,
     this.padding,
     this.onTap,
+    this.innerPadding,
   });
 
   @override
@@ -25,7 +28,7 @@ class BaseBorderContainer extends StatelessWidget {
             borderRadius: BorderRadius.circular(Pad.pad8),
             border: Border.all(color: ThemeColors.neutral5),
           ),
-          padding: EdgeInsets.all(Pad.pad16),
+          padding: innerPadding ?? EdgeInsets.all(Pad.pad16),
           child: child,
         ),
       ),

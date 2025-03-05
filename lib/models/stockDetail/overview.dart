@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import '../ai_analysis.dart';
+
 SDOverviewRes stocksDetailOverviewResFromJson(String str) =>
     SDOverviewRes.fromJson(json.decode(str));
 
@@ -9,7 +11,7 @@ String stocksDetailOverviewResToJson(SDOverviewRes data) =>
 class SDOverviewRes {
   final SDCompanyRes? companyInfo;
   final SDStockScoreRes? stockScore;
-  final SDAiAnalysisRes? aiAnalysis;
+  final AIradarChartRes? aiAnalysis;
 
   SDOverviewRes({
     this.companyInfo,
@@ -26,69 +28,13 @@ class SDOverviewRes {
             : SDStockScoreRes.fromJson(json["stock_score"]),
         aiAnalysis: json["ai_analysis"] == null
             ? null
-            : SDAiAnalysisRes.fromJson(json["ai_analysis"]),
+            : AIradarChartRes.fromJson(json["ai_analysis"]),
       );
 
   Map<String, dynamic> toJson() => {
         "company_info": companyInfo?.toJson(),
         "stock_score": stockScore?.toJson(),
         "ai_analysis": aiAnalysis?.toJson(),
-      };
-}
-
-class SDAiAnalysisRes {
-  final String? title;
-  final BaseKeyValueRes? recommendation;
-  final List<RadarChartRes>? radarChart;
-
-  SDAiAnalysisRes({
-    this.title,
-    this.radarChart,
-    this.recommendation,
-  });
-
-  factory SDAiAnalysisRes.fromJson(Map<String, dynamic> json) =>
-      SDAiAnalysisRes(
-        title: json["title"],
-        recommendation: json["recommendation"] == null
-            ? null
-            : BaseKeyValueRes.fromJson(json["recommendation"]),
-        radarChart: json["radar_chart"] == null
-            ? []
-            : List<RadarChartRes>.from(
-                json["radar_chart"]!.map((x) => RadarChartRes.fromJson(x))),
-      );
-
-  Map<String, dynamic> toJson() => {
-        "title": title,
-        "recommendation": recommendation?.toJson(),
-        "radar_chart": radarChart == null
-            ? []
-            : List<dynamic>.from(radarChart!.map((x) => x.toJson())),
-      };
-}
-
-class RadarChartRes {
-  final String? label;
-  final num? value;
-  final String? description;
-
-  RadarChartRes({
-    this.label,
-    this.value,
-    this.description,
-  });
-
-  factory RadarChartRes.fromJson(Map<String, dynamic> json) => RadarChartRes(
-        label: json["label"],
-        value: json["value"],
-        description: json["description"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "label": label,
-        "value": value,
-        "description": description,
       };
 }
 

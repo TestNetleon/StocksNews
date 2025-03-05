@@ -37,11 +37,13 @@ class BaseBottomSheet {
                   topRight: Radius.circular(Pad.pad24),
                 ),
               ),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  child,
-                ],
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    child,
+                  ],
+                ),
               ),
             ),
             Container(

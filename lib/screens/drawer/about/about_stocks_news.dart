@@ -1,9 +1,7 @@
 import 'dart:io';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/drawer_res.dart';
 import 'package:stocks_news_new/modals/user_res.dart';
@@ -28,8 +26,6 @@ import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/custom/refer.dart';
 import 'package:stocks_news_new/widgets/logout.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
-import '../../../tournament/screens/game_tournament_index.dart';
-import '../../../tradingSimulator/screens/dashboard/index.dart';
 import '../../../ui/tabs/tabs.dart';
 import '../../../utils/constants.dart';
 import '../../../utils/theme.dart';
@@ -212,26 +208,7 @@ class _AboutStocksNewsState extends State<AboutStocksNews> {
       );
     }
     // Trading Simulator
-    if (provider.extra?.showTradingSimulator == true || kDebugMode) {
-      visibleAboutTiles.add(
-        DrawerRes(
-          // iconData: Icons.trending_up,
-          iconData: FontAwesomeIcons.chartLine,
-          // iconData: FontAwesomeIcons.chartBar,
-          // iconData: FontAwesomeIcons.coins,
-          text: "Trading Simulator",
-          onTap: () {
-            _closeDrawer();
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const TsDashboard(),
-              ),
-            );
-          },
-        ),
-      );
-    }
+
     // Stock Scanner
     /*if (provider.extra?.showStockScanner == true) {
       visibleAboutTiles.add(
@@ -264,24 +241,6 @@ class _AboutStocksNewsState extends State<AboutStocksNews> {
         ),
       );
     }*/
-
-    if (provider.extra?.showArena == true || kDebugMode) {
-      visibleAboutTiles.add(
-        DrawerRes(
-          iconData: Icons.bakery_dining_outlined,
-          text: "Trading League",
-          onTap: () {
-            _closeDrawer();
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => GameTournamentIndex(),
-              ),
-            );
-          },
-        ),
-      );
-    }
 
     // Refer and Earn
 

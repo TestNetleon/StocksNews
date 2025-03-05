@@ -1,32 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/managers/stockDetail/stock.detail.dart';
+import 'package:stocks_news_new/models/stockDetail/overview.dart';
 import 'package:stocks_news_new/ui/base/base_scroll.dart';
+import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/widgets/custom/base_loader_container.dart';
-import '../../../models/stockDetail/chart.dart';
-import '../../../models/stockDetail/historical_chart.dart';
-import '../../../models/stockDetail/overview.dart';
+
+import '../../../models/stockDetail/ownership.dart';
 import '../../../utils/constants.dart';
 import '../../../widgets/custom_gridview.dart';
 import '../extra/top.dart';
-import '../overview/chart.dart';
 import 'history.dart';
 
-class SDChart extends StatelessWidget {
-  const SDChart({super.key});
+class SDOwnership extends StatelessWidget {
+  const SDOwnership({super.key});
 
   @override
   Widget build(BuildContext context) {
     SDManager manager = context.watch<SDManager>();
-    SDHistoricalChartRes? chart = manager.dataHistoricalC;
-    bool hasData = manager.dataCHistorical != null;
-    List<BaseKeyValueRes>? top = manager.dataChart?.top;
-    ChartPriceHistoryRes? chartHistory = manager.dataChart?.priceHistory;
+
+    List<BaseKeyValueRes>? top = manager.dataOwnership?.top;
+
+    OwnershipListRes? ownershipList = manager.dataOwnership?.ownershipList;
 
     return BaseLoaderContainer(
-      hasData: manager.dataChart != null,
-      isLoading: manager.isLoadingChart,
-      error: manager.errorChart,
+      hasData: manager.dataOwnership != null,
+      isLoading: manager.isLoadingOwnership,
+      error: manager.errorOwnership,
       onRefresh: manager.onSelectedTabRefresh,
       showPreparingText: true,
       child: BaseScroll(
@@ -45,25 +45,18 @@ class SDChart extends StatelessWidget {
                 if (data == null) {
                   return SizedBox();
                 }
+                String subTitle = data.subTitle ?? '';
+
                 return SDTopCards(
                   top: data,
-                  valueColor: data.value.toString().contains('+')
-                      ? Colors.green
-                      : data.value.toString().contains('-')
-                          ? Colors.red
-                          : Colors.black,
+                  subTitleColor: subTitle.contains('-')
+                      ? ThemeColors.error120
+                      : ThemeColors.success120,
                 );
               },
             ),
           ),
-          SDHistoricalChart(
-            hasData: hasData,
-            chart: chart,
-            onTap: (p0) {
-              manager.getSDHistoricalC(range: p0);
-            },
-          ),
-          SDChartHistory(chartHistory: chartHistory),
+          OwnershipHistory(ownershipList: ownershipList),
         ],
       ),
     );

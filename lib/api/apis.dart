@@ -84,12 +84,17 @@ class Apis {
   static const sdSecFiling = '/stock-detail-secFiling';
   static const sdMergers = '/stock-detail-mergers';
   static const sdChart = '/stock-detail-chart';
+  static const sdOwnership = '/stock-detail-ownership';
 
   // Market data
   static const mostBullish = '/most-bullish';
   static const checkAlertLock = '/check-alert-lock';
   static const mostBearish = '/most-bearish';
   static const todaysGainers = '/todays-gainers';
+
+  //AI
+  static const aiAnalysis = '/ai-analysis';
+  static const aiFinancials = '/ai-analysis/financial';
 
 //----------------------------------------------
 

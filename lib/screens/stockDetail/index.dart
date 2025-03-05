@@ -12,7 +12,6 @@ import 'package:stocks_news_new/screens/stockDetail/stockDetailTabs/overview/sd_
 import 'package:stocks_news_new/screens/stockDetail/stockDetailTabs/ownership/ownership.dart';
 import 'package:stocks_news_new/screens/stockDetail/stockDetailTabs/secFiling/sd_sec_filing.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
-import 'package:stocks_news_new/tradingSimulator/manager/sse.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
@@ -21,7 +20,6 @@ import 'package:stocks_news_new/widgets/custom_tab_container.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 // import 'package:stocks_news_new/widgets/theme_button.dart';
 import 'package:stocks_news_new/widgets/theme_image_view.dart';
-import '../../utils/constants.dart';
 // import '../simulator/buyAndSell/scanner.dart';
 import '../../utils/utils.dart';
 import '../auth/base/base_auth_bottom.dart';
@@ -136,7 +134,7 @@ class _StockDetailState extends State<StockDetail> {
   @override
   void dispose() {
     // _webSocketService?.disconnect();
-    SSEManager.instance.disconnectScreen(SimulatorEnum.detail);
+    // SSEManager.instance.disconnectScreen(SimulatorEnum.detail);
     super.dispose();
   }
 
@@ -150,7 +148,7 @@ class _StockDetailState extends State<StockDetail> {
     return PopScope(
       canPop: true,
       onPopInvokedWithResult: (didPop, result) {
-        SSEManager.instance.disconnectScreen(SimulatorEnum.detail);
+        // SSEManager.instance.disconnectScreen(SimulatorEnum.detail);
       },
       child: BaseContainer(
         appBar: AppBarHome(

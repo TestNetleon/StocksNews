@@ -25,7 +25,6 @@ class WatchListIndex extends StatefulWidget {
 }
 
 class _WatchListIndexState extends State<WatchListIndex> {
-
   @override
   void initState() {
     super.initState();
@@ -39,14 +38,13 @@ class _WatchListIndexState extends State<WatchListIndex> {
     manager.getWatchList(showProgress: false);
   }
 
-
   @override
   Widget build(BuildContext context) {
     WatchListManagers manager = context.watch<WatchListManagers>();
     return BaseScaffold(
         appBar: BaseAppBar(
           showBack: true,
-          title:manager.watchData?.title ?? "Watchlist",
+          title: manager.watchData?.title ?? "Watchlist",
         ),
         body: BaseLoaderContainer(
           isLoading: manager.isLoading,
@@ -56,57 +54,63 @@ class _WatchListIndexState extends State<WatchListIndex> {
           onRefresh: () {
             _callAPI();
           },
-          child:
-          manager.watchData?.noData!=null?
-          BaseNoItem(noDataRes: manager.watchData?.noData,onTap: (){
-            manager.redirectToMarket();
-          }):
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Visibility(
-                visible: manager.watchData?.subTitle != '',
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: Pad.pad16,vertical: Pad.pad8),
-                  child: Text(
-                    textAlign: TextAlign.start,
-                    manager.watchData?.subTitle ?? "",
-                    style: stylePTSansRegular(fontSize: 16,color: ThemeColors.neutral80),
-                  ),
+          child: manager.watchData?.noData != null
+              ? BaseNoItem(
+                  noDataRes: manager.watchData?.noData,
+                  onTap: () {
+                    manager.redirectToMarket();
+                  })
+              : Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Visibility(
+                      visible: manager.watchData?.subTitle != '',
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: Pad.pad16, vertical: Pad.pad8),
+                        child: Text(
+                          textAlign: TextAlign.start,
+                          manager.watchData?.subTitle ?? "",
+                          style: stylePTSansRegular(
+                              fontSize: 16, color: ThemeColors.neutral80),
+                        ),
+                      ),
+                    ),
+                    SpacerVertical(height: 10),
+                    Expanded(
+                      child: BaseLoadMore(
+                        onRefresh: manager.getWatchList,
+                        onLoadMore: () async =>
+                            manager.getWatchList(loadMore: true),
+                        canLoadMore: manager.canLoadMore,
+                        child: ListView.separated(
+                          padding:
+                              const EdgeInsets.symmetric(horizontal: Pad.pad3),
+                          itemBuilder: (context, index) {
+                            BaseTickerRes? data =
+                                manager.watchData?.watches?[index];
+                            if (data == null) {
+                              return SizedBox();
+                            }
+                            return BaseStockEditItem(
+                              data: data,
+                              deleteDataRes: manager.watchData?.deleteBox,
+                              index: index,
+                              onTap: (p0) {
+                                Navigator.pushNamed(context, SDIndex.path,
+                                    arguments: {'symbol': p0.symbol});
+                              },
+                            );
+                          },
+                          separatorBuilder: (context, index) {
+                            return BaseListDivider();
+                          },
+                          itemCount: manager.watchData?.watches?.length ?? 0,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-              ),
-              SpacerVertical(height:10),
-              Expanded(
-                child: BaseLoadMore(
-                  onRefresh: manager.getWatchList,
-                  onLoadMore: () async => manager.getWatchList(loadMore: true),
-                  canLoadMore: manager.canLoadMore,
-                  child: ListView.separated(
-                    padding: const EdgeInsets.symmetric(horizontal: Pad.pad3),
-                    itemBuilder: (context, index) {
-                      BaseTickerRes? data = manager.watchData?.watches?[index];
-                      if (data == null) {
-                        return SizedBox();
-                      }
-                      return BaseStockEditItem(
-                        data: data,
-                        deleteDataRes: manager.watchData?.deleteBox,
-                        index: index,
-                        onTap: (p0) {
-                          Navigator.pushNamed(context, StockDetailIndex.path, arguments: {'symbol': p0.symbol});
-                        },
-                      );
-                    },
-                    separatorBuilder: (context, index) {
-                      return BaseListDivider();
-                    },
-                    itemCount: manager.watchData?.watches?.length ?? 0,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        )
-    );
+        ));
   }
 }

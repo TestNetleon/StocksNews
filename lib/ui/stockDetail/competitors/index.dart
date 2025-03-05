@@ -34,7 +34,7 @@ class SDCompetitors extends StatelessWidget {
               data: data,
               index: index,
               // onTap: (p0) {
-              //   Navigator.pushNamed(context, StockDetailIndex.path,
+              //   Navigator.pushNamed(context, SDIndex.path,
               //       arguments: {'symbol': p0.symbol});
               // },
               slidable: false,
