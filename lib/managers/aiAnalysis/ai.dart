@@ -76,10 +76,11 @@ class AIManager extends ChangeNotifier {
   Status _statusFinancials = Status.ideal;
   Status get statusFinancials => _statusFinancials;
 
-  bool get isLoadingFinancials => _statusFinancials == Status.loading;
+  bool get isLoadingFinancials =>
+      _statusFinancials == Status.loading || _statusFinancials == Status.ideal;
 
   String? _errorFinancials;
-  String? get errorFinancials => _errorFinancials ?? Const.errSomethingWrong;
+  String? get errorFinancials => _errorFinancials;
 
   AiFinancialRes? _financialsData;
   AiFinancialRes? get financialsData => _financialsData;

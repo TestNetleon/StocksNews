@@ -70,8 +70,7 @@ class _AIindexState extends State<AIindex> {
           onRefresh: _callAPI,
           margin: EdgeInsets.zero,
           children: [
-            if (manager.data?.tickerDetail != null)
-              BaseStockDetailHeader(data: manager.data!.tickerDetail!),
+            if (tickerDetail != null) BaseStockDetailHeader(data: tickerDetail),
             AIChart(aiAnalysis: aiAnalysis),
             AIOurTake(ourTake: ourTake),
             AISwot(swot: swot),

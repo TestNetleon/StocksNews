@@ -24,7 +24,7 @@ class AIFinancialCharts extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 250,
+      height: 300,
       child: BarChart(
         BarChartData(
           barTouchData: barTouchData,

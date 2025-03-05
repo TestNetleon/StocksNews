@@ -217,7 +217,7 @@ class AIOverviewPerformance extends StatelessWidget {
     // num dayHigh = performance?.dayHigh ?? 0;
     // num dayLow = performance?.dayLow ?? 0;
 
-    num price = 10;
+    // num price = 10;
     num yearHigh = 100;
     num yearLow = 0;
     num dayHigh = 50;

@@ -51,7 +51,7 @@ class _AIPeerComparisonState extends State<AIPeerComparison> {
                 DataColumn(
                   label: Text(
                     'Company',
-                    style: styleBaseBold(fontSize: 12),
+                    style: styleBaseBold(fontSize: 13),
                   ),
                 ),
               ],
@@ -91,7 +91,7 @@ class _AIPeerComparisonState extends State<AIPeerComparison> {
                                   Expanded(
                                     child: Text(
                                       company.symbol ?? "",
-                                      style: styleBaseBold(fontSize: 12),
+                                      style: styleBaseBold(fontSize: 14),
                                     ),
                                   ),
                                 ],
@@ -115,7 +115,7 @@ class _AIPeerComparisonState extends State<AIPeerComparison> {
                         return DataColumn(
                           label: Text(
                             header,
-                            style: styleBaseBold(fontSize: 12),
+                            style: styleBaseBold(fontSize: 13),
                           ),
                         );
                       }).toList() ??
@@ -150,7 +150,7 @@ class _AIPeerComparisonState extends State<AIPeerComparison> {
         child: Text(
           userPercent ? "$text%" : "$text",
           style: styleGeorgiaBold(
-              fontSize: 12,
+              fontSize: 13,
               color: text >= 0 ? ThemeColors.accent : ThemeColors.sos),
         ),
       ),

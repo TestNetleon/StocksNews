@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/managers/aiAnalysis/ai.dart';
+import 'package:stocks_news_new/ui/base/border_container.dart';
 import 'package:stocks_news_new/ui/base/common_tab.dart';
+import 'package:stocks_news_new/ui/base/heading.dart';
 import 'package:stocks_news_new/utils/colors.dart';
+import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/loading.dart';
@@ -23,110 +26,119 @@ class _AIFinancialState extends State<AIFinancial>
     // MSAnalysisProvider provider = context.watch<MSAnalysisProvider>();
     AIManager manager = context.watch<AIManager>();
 
-    return Column(
-      children: [
-        SpacerVertical(height: 10),
-        BaseTabs(
-          isScrollable: false,
-          data: manager.typeMenu,
-          onTap: (index) {
-            if (manager.selectedTypeIndex != index) {
-              manager.onChangeFinancial(typeIndex: index);
-            }
-          },
-        ),
+    return Container(
+      margin: EdgeInsets.only(top: Pad.pad10),
+      child: Column(
+        children: [
+          Align(
+            alignment: Alignment.centerLeft,
+            child: BaseHeading(
+              title: 'Financials',
+              margin: EdgeInsets.symmetric(horizontal: Pad.pad16),
+            ),
+          ),
+          // SpacerVertical(height: 10),
+          BaseTabs(
+            isScrollable: false,
+            data: manager.typeMenu,
+            onTap: (index) {
+              if (manager.selectedTypeIndex != index) {
+                manager.onChangeFinancial(typeIndex: index);
+              }
+            },
+          ),
 
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 30),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: List.generate(
-              manager.periodMenu.length,
-              (index) {
-                return Padding(
-                  padding: const EdgeInsets.only(right: 20, top: 10),
-                  child: GestureDetector(
-                    onTap: () {
-                      manager.onChangeFinancial(periodIndex: index);
-                    },
-                    child: Container(
-                      // width: 80,
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 30),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: List.generate(
+                manager.periodMenu.length,
+                (index) {
+                  return Padding(
+                    padding: const EdgeInsets.only(right: 20, top: 10),
+                    child: GestureDetector(
+                      onTap: () {
+                        manager.onChangeFinancial(periodIndex: index);
+                      },
+                      child: Container(
+                        // width: 80,
 
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12.0),
-                        border: Border.all(
-                          color: manager.selectedPeriodIndex == index
-                              ? ThemeColors.white
-                              : ThemeColors.neutral10,
-                        ),
-                        color: manager.selectedPeriodIndex == index
-                            ? ThemeColors.black
-                            : Colors.transparent,
-                      ),
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 12, vertical: 7),
-                      child: Center(
-                        child: Text(
-                          index == 0 ? 'Yearly' : 'Quarterly',
-                          style: stylePTSansBold(
-                            fontSize: 14,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12.0),
+                          border: Border.all(
                             color: manager.selectedPeriodIndex == index
                                 ? ThemeColors.white
-                                : ThemeColors.black,
+                                : ThemeColors.neutral10,
+                          ),
+                          color: manager.selectedPeriodIndex == index
+                              ? ThemeColors.black
+                              : Colors.transparent,
+                        ),
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 12, vertical: 7),
+                        child: Center(
+                          child: Text(
+                            index == 0 ? 'Yearly' : 'Quarterly',
+                            style: stylePTSansBold(
+                              fontSize: 14,
+                              color: manager.selectedPeriodIndex == index
+                                  ? ThemeColors.white
+                                  : ThemeColors.black,
+                            ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                );
-              },
+                  );
+                },
+              ),
             ),
           ),
-        ),
 
-        // CustomSlidingSegmentedControl(
-        //   menus: manager.typeMenu,
-        //   onValueChanged: (index) {
-        //   },
-        //   selectedIndex: manager.selectedTypeIndex,
-        // ),
-        SpacerVertical(height: 10),
-        BaseUiContainer(
-          hasData: manager.financialsData != null,
-          isLoading: manager.isLoadingFinancials,
-          error: manager.errorFinancials,
-          showPreparingText: true,
-          onRefresh: () {
-            manager.onChangeFinancial(
-              typeIndex: manager.selectedTypeIndex,
-              periodIndex: manager.selectedPeriodIndex,
-            );
-          },
-          placeholder: SizedBox(
-            height: 250,
-            child: Loading(),
+          SpacerVertical(height: 10),
+          BaseBorderContainer(
+            innerPadding: EdgeInsets.all(5),
+            padding: EdgeInsets.symmetric(horizontal: Pad.pad16),
+            child: BaseUiContainer(
+              hasData: manager.financialsData != null,
+              isLoading: manager.isLoadingFinancials,
+              error: manager.errorFinancials,
+              showPreparingText: true,
+              onRefresh: () {
+                manager.onChangeFinancial(
+                  typeIndex: manager.selectedTypeIndex,
+                  periodIndex: manager.selectedPeriodIndex,
+                );
+              },
+              placeholder: SizedBox(
+                height: 300,
+                child: Loading(),
+              ),
+              child: AIFinancialCharts(
+                chart: manager.financialsData?.data?.reversed.toList() ?? [],
+              ),
+            ),
           ),
-          child: AIFinancialCharts(
-            chart: manager.financialsData?.data?.reversed.toList() ?? [],
-          ),
-        ),
-        // SpacerVertical(height: 15),
-        // Text(
-        //   'all values are in \$',
-        //   style: stylePTSansRegular(fontSize: 12.0, color: Colors.white),
-        // ),
-        SpacerVertical(height: 10),
+          // SpacerVertical(height: 15),
+          // Text(
+          //   'all values are in \$',
+          //   style: stylePTSansRegular(fontSize: 12.0, color: Colors.white),
+          // ),
+          SpacerVertical(height: 10),
 
-        SpacerVertical(height: 10),
-        Visibility(
-          visible: manager.data?.usdText != null && manager.data?.usdText != '',
-          child: Text(
-            manager.data?.usdText ?? 'All values are in USD',
-            style: stylePTSansRegular(color: ThemeColors.greyText),
+          SpacerVertical(height: 10),
+          Visibility(
+            visible:
+                manager.data?.usdText != null && manager.data?.usdText != '',
+            child: Text(
+              manager.data?.usdText ?? 'All values are in USD',
+              style: stylePTSansRegular(color: ThemeColors.neutral80),
+            ),
           ),
-        ),
-        SpacerVertical(height: 15),
-      ],
+          SpacerVertical(height: 15),
+        ],
+      ),
     );
   }
 }

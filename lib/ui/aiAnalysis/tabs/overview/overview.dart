@@ -32,7 +32,6 @@ class _AIOverviewState extends State<AIOverview> {
     return Column(
       children: [
         AIOverviewPerformance(performance: performance),
-        AIOverviewFundamentals(data: fundamentals),
         VisibilityDetector(
           key: Key('unique-key'),
           onVisibilityChanged: (info) {
@@ -41,8 +40,9 @@ class _AIOverviewState extends State<AIOverview> {
               _callApi();
             }
           },
-          child: AIFinancial(),
+          child: AIOverviewFundamentals(data: fundamentals),
         ),
+        AIFinancial(),
       ],
     );
   }
