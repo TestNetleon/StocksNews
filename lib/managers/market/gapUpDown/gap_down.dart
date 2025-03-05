@@ -1,17 +1,15 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:stocks_news_new/api/api_requester.dart';
 import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/api/apis.dart';
+import 'package:stocks_news_new/models/lock.dart';
 import 'package:stocks_news_new/models/market/most_bullish.dart';
-import 'package:stocks_news_new/providers/user_provider.dart';
-import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 
-class MostBullishManager extends ChangeNotifier {
+class GapDownManager extends ChangeNotifier {
   MarketDataRes? _data;
   MarketDataRes? get data => _data;
 
@@ -23,33 +21,40 @@ class MostBullishManager extends ChangeNotifier {
   String? _error;
   String? get error => _error ?? Const.errSomethingWrong;
 
-  bool get isLoadingBullish => _status == Status.loading;
-
-  Extra? _extra;
-  Extra? get extra => _extra;
+  int _page = 1;
+  bool get canLoadMore => (_data?.totalPages ?? 0) >= _page;
 
   void setStatus(status) {
     _status = status;
     notifyListeners();
   }
 
-  Future getData({showProgress = false}) async {
+  Future getData({loadMore = false}) async {
+    if (loadMore == false) {
+      _page = 1;
+    }
+
     try {
       _error = null;
-      setStatus(Status.loading);
-      Map request = {
-        "token":
-            navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
+      setStatus(loadMore ? Status.loadingMore : Status.loading);
+      final request = {
+        "page": "$_page",
       };
 
       ApiResponse response = await apiRequest(
-        url: Apis.mostBullish,
+        url: Apis.todaysGainers,
         request: request,
-        showProgress: showProgress,
       );
       if (response.status) {
-        _data = marketDataResFromJson(jsonEncode(response.data));
-        _extra = (response.extra is Extra ? response.extra as Extra : null);
+        if (_page == 1) {
+          _data = marketDataResFromJson(jsonEncode(response.data));
+          _lockInformation = _data?.lockInfo;
+        } else {
+          _data!.data!.addAll(
+            marketDataResFromJson(jsonEncode(response.data)).data!,
+          );
+        }
+        _page++;
       } else {
         _data = null;
         _error = response.message;
@@ -61,25 +66,29 @@ class MostBullishManager extends ChangeNotifier {
       _error = Const.errSomethingWrong;
       setStatus(Status.loaded);
     }
-    // finally {
-    //   setStatus(Status.loaded);
-    // }
   }
 
   void updateTickerInfo({required String symbol, alertAdded, watchListAdded}) {
-    if (_data?.mostBullish != null) {
+    if (_data?.data != null) {
       final index =
-          _data?.mostBullish?.indexWhere((element) => element.symbol == symbol);
-
+          _data?.data?.indexWhere((element) => element.symbol == symbol);
       if (index != null && index != -1) {
         if (alertAdded != null) {
-          _data?.mostBullish![index].isAlertAdded = alertAdded;
+          _data?.data![index].isAlertAdded = alertAdded;
         }
         if (watchListAdded != null) {
-          _data?.mostBullish![index].isWatchlistAdded = watchListAdded;
+          _data?.data![index].isWatchlistAdded = watchListAdded;
         }
         notifyListeners();
       }
     }
+  }
+
+  BaseLockInfoRes? _lockInformation;
+  BaseLockInfoRes? get lockInformation => _lockInformation;
+
+  BaseLockInfoRes? getLockINFO() {
+    BaseLockInfoRes? info = _lockInformation;
+    return info;
   }
 }

@@ -7,10 +7,14 @@ import 'package:stocks_news_new/managers/helpdesk.dart';
 import 'package:stocks_news_new/managers/home.dart';
 import 'package:stocks_news_new/managers/legal.dart';
 import 'package:stocks_news_new/managers/market/alerts_watchlist_action.dart';
+import 'package:stocks_news_new/managers/market/gapUpDown/gap_down.dart';
+import 'package:stocks_news_new/managers/market/gapUpDown/gap_up.dart';
 import 'package:stocks_news_new/managers/market/market.dart';
-import 'package:stocks_news_new/managers/market/most_bearish.dart';
-import 'package:stocks_news_new/managers/market/most_bullish.dart';
-import 'package:stocks_news_new/managers/market/todays_gainer.dart';
+import 'package:stocks_news_new/managers/market/trending/most_bearish.dart';
+import 'package:stocks_news_new/managers/market/trending/most_bullish.dart';
+import 'package:stocks_news_new/managers/market/gainer&losers/todays_breakout.dart';
+import 'package:stocks_news_new/managers/market/gainer&losers/todays_gainer.dart';
+import 'package:stocks_news_new/managers/market/gainer&losers/todays_losers.dart';
 import 'package:stocks_news_new/managers/notification/most_bullish.dart';
 import 'package:stocks_news_new/managers/watchlist.dart';
 
@@ -558,6 +562,10 @@ class Routes {
       ChangeNotifierProvider(create: (_) => MostBearishManager()),
       ChangeNotifierProvider(create: (_) => TodaysGainerManager()),
       ChangeNotifierProvider(create: (_) => AIManager()),
+      ChangeNotifierProvider(create: (_) => TodaysLosersManager()),
+      ChangeNotifierProvider(create: (_) => TodaysBreakoutManager()),
+      ChangeNotifierProvider(create: (_) => GapUpManager()),
+      ChangeNotifierProvider(create: (_) => GapDownManager()),
     ];
   }
 }

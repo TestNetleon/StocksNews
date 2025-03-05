@@ -13,6 +13,7 @@ class BaseTabs extends StatefulWidget {
     this.isScrollable = true,
     this.showDivider = true,
     this.rightChild,
+    this.leftChild,
     this.child,
     this.textStyle,
     this.labelPadding,
@@ -21,6 +22,7 @@ class BaseTabs extends StatefulWidget {
 
   final Widget? child;
   final Widget? rightChild;
+  final Widget? leftChild;
   final bool isScrollable;
   final List<dynamic> data;
   final Function(int index) onTap;
@@ -59,20 +61,19 @@ class _CommonTabsState extends State<BaseTabs>
       children: [
         Row(
           children: [
+            if (widget.leftChild != null) widget.leftChild!,
             Expanded(
               child: TabBar(
                 controller: _tabController,
                 isScrollable: widget.isScrollable,
                 labelPadding: widget.labelPadding,
-                tabs: (widget.data.map(
-                  (e) {
-                    return TabItem(
-                      label: e.title,
-                      textStyle: widget.textStyle ?? styleBaseSemiBold(),
-                      leadingIcon: e.icon,
-                    );
-                  },
-                )).toList(),
+                tabs: (widget.data.map((e) {
+                  return TabItem(
+                    label: e.title,
+                    textStyle: widget.textStyle ?? styleBaseSemiBold(),
+                    leadingIcon: e.icon,
+                  );
+                })).toList(),
                 // labelStyle: widget.textStyle ?? styleBaseBold(),
                 indicator: CustomTabIndicator(),
                 onTap: (int index) {
@@ -89,22 +90,8 @@ class _CommonTabsState extends State<BaseTabs>
             height: 1,
             thickness: 1,
           ),
-        if (widget.child != null)
-          Expanded(
-            child: TabBarView(
-              controller: _tabController,
-              children: [
-                Center(child: Text("1")),
-                Center(child: Text("2")),
-                Center(child: Text("3")),
-              ],
-            ),
-          ),
       ],
     );
-    // return BaseContainer(
-    //   body: Text("HERE"),
-    // );
   }
 }
 

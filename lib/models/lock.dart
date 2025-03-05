@@ -3,12 +3,14 @@ class BaseLockInfoRes {
   final List<String>? text;
   final String? btn;
   final String? viewBtn;
+  final String? image;
 
   BaseLockInfoRes({
     this.title,
     this.text,
     this.btn,
     this.viewBtn,
+    this.image,
   });
 
   factory BaseLockInfoRes.fromJson(Map<String, dynamic> json) =>
@@ -19,6 +21,7 @@ class BaseLockInfoRes {
             : List<String>.from(json["text"]!.map((x) => x)),
         btn: json["btn"],
         viewBtn: json["view_btn"],
+        image: json["image"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -26,5 +29,6 @@ class BaseLockInfoRes {
         "text": text == null ? [] : List<dynamic>.from(text!.map((x) => x)),
         "btn": btn,
         "view_btn": viewBtn,
+        "image": image,
       };
 }
