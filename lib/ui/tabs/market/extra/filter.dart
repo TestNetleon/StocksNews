@@ -11,12 +11,18 @@ import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 
 class MarketFilter extends StatelessWidget {
-  const MarketFilter({super.key});
+  const MarketFilter({
+    super.key,
+    required this.marketIndex,
+    required this.marketInnerIndex,
+  });
+
+  final int marketIndex;
+  final int marketInnerIndex;
 
   @override
   Widget build(BuildContext context) {
     MarketManager manager = context.watch<MarketManager>();
-
     return BaseScaffold(
       appBar: BaseAppBar(
         title: "Filter",
@@ -31,36 +37,50 @@ class MarketFilter extends StatelessWidget {
                   FilterType(
                     title: "Sort By",
                     data: manager.data?.filter?.sorting,
+                    onItemClick: manager.selectSortBy,
+                    filterParam: manager.filterParams?.sorting,
                   ),
                 if (manager.data?.filter?.exchange != null)
                   FilterType(
                     title: "Exchange",
                     data: manager.data?.filter?.exchange,
+                    onItemClick: manager.selectExchange,
+                    filterParam: manager.filterParams?.exchange,
                   ),
                 if (manager.data?.filter?.sectors != null)
                   FilterType(
                     title: "Sector",
                     data: manager.data?.filter?.sectors,
+                    onItemClick: manager.selectSectors,
+                    filterParam: manager.filterParams?.sectors,
                   ),
                 if (manager.data?.filter?.industries != null)
                   FilterType(
                     title: "Industry",
                     data: manager.data?.filter?.industries,
+                    onItemClick: manager.selectIndustries,
+                    filterParam: manager.filterParams?.industries,
                   ),
                 if (manager.data?.filter?.marketCap != null)
                   FilterType(
                     title: "Market Cap",
                     data: manager.data?.filter?.marketCap,
+                    onItemClick: manager.selectMarketCap,
+                    filterParam: manager.filterParams?.marketCap,
                   ),
                 if (manager.data?.filter?.marketRank != null)
                   FilterType(
                     title: "Market Rank",
                     data: manager.data?.filter?.marketRank,
+                    onItemClick: manager.selectMarketRank,
+                    filterParam: manager.filterParams?.marketRank,
                   ),
                 if (manager.data?.filter?.analystConsensus != null)
                   FilterType(
                     title: "Analyst Consensus",
                     data: manager.data?.filter?.analystConsensus,
+                    onItemClick: manager.selectAnalystConsensus,
+                    filterParam: manager.filterParams?.analystConsensus,
                   ),
               ],
             ),
@@ -72,7 +92,13 @@ class MarketFilter extends StatelessWidget {
                 Expanded(
                   child: BaseButton(
                     text: 'Reset',
-                    onPressed: () {},
+                    onPressed: () {
+                      manager.resetFilter(
+                        marketIndex: marketIndex,
+                        marketInnerIndex: marketInnerIndex,
+                      );
+                      Navigator.pop(context);
+                    },
                     color: ThemeColors.white,
                     side: BorderSide(color: ThemeColors.neutral20, width: 1),
                     textStyle: styleBaseSemiBold(
@@ -84,7 +110,13 @@ class MarketFilter extends StatelessWidget {
                 Expanded(
                   child: BaseButton(
                     text: "Apply",
-                    onPressed: () {},
+                    onPressed: () {
+                      manager.applyFilter(
+                        marketIndex: marketIndex,
+                        marketInnerIndex: marketInnerIndex,
+                      );
+                      Navigator.pop(context);
+                    },
                   ),
                 ),
               ],
@@ -99,11 +131,15 @@ class MarketFilter extends StatelessWidget {
 class FilterType extends StatefulWidget {
   final List<BaseKeyValueRes>? data;
   final String title;
+  final Function(int index) onItemClick;
+  final dynamic filterParam;
 
   const FilterType({
     super.key,
     required this.data,
     required this.title,
+    required this.onItemClick,
+    required this.filterParam,
   });
 
   @override
@@ -166,7 +202,27 @@ class _FilterTypeState extends State<FilterType> {
               scrollDirection: Axis.horizontal,
               padding: EdgeInsets.only(left: Dimen.padding),
               itemBuilder: (context, index) {
-                return MarketFilterItem(data: widget.data![index]);
+                // Utils().showLog(
+                //   "Filter Pa => \n\n${widget.filterParam}\n${widget.data![index].value}",
+                // );
+
+                bool selected = widget.filterParam == null
+                    ? false
+                    : (widget.filterParam is String)
+                        ? widget.filterParam == widget.data![index].value
+                        : (widget.filterParam is List<String>)
+                            ? (widget.filterParam as List<String>)
+                                .contains(widget.data![index].value)
+                            : false;
+
+                return GestureDetector(
+                  onTap: () => widget.onItemClick(index),
+                  child: MarketFilterItem(
+                    data: widget.data![index],
+                    // selected: widget.data![index].selected ?? false,
+                    selected: selected,
+                  ),
+                );
               },
               separatorBuilder: (context, index) {
                 return const SpacerHorizontal(width: Dimen.padding);
@@ -183,13 +239,18 @@ class _FilterTypeState extends State<FilterType> {
 
 class MarketFilterItem extends StatelessWidget {
   final BaseKeyValueRes data;
-  const MarketFilterItem({super.key, required this.data});
+  final bool selected;
+  const MarketFilterItem({
+    super.key,
+    required this.data,
+    required this.selected,
+  });
 
   @override
   Widget build(BuildContext context) {
-    // MarketManager manager = context.watch<MarketManager>();
     return Container(
       decoration: BoxDecoration(
+        color: selected ? ThemeColors.black : ThemeColors.white,
         border: Border.all(color: ThemeColors.neutral10, width: 1),
         borderRadius: BorderRadius.circular(8),
       ),
@@ -197,7 +258,10 @@ class MarketFilterItem extends StatelessWidget {
       alignment: Alignment.center,
       child: Text(
         data.title ?? "",
-        style: styleBaseRegular(fontSize: 14, color: ThemeColors.black),
+        style: styleBaseRegular(
+          fontSize: 14,
+          color: selected ? ThemeColors.white : ThemeColors.black,
+        ),
       ),
     );
   }

@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/managers/market/market.dart';
-import 'package:stocks_news_new/screens/marketData/gainersLosers/today_breakout_stocks.dart';
 import 'package:stocks_news_new/ui/base/common_tab.dart';
 import 'package:stocks_news_new/ui/tabs/market/extra/filter.dart';
 import 'package:stocks_news_new/ui/tabs/market/gainer&Losers/todays_gainers.dart';
+import 'package:stocks_news_new/ui/tabs/market/gainer&Losers/todays_breakout.dart';
 import 'package:stocks_news_new/ui/tabs/market/gainer&Losers/todays_losers.dart';
+import 'package:stocks_news_new/ui/tabs/market/gapUpDown/gap_down.dart';
+import 'package:stocks_news_new/ui/tabs/market/gapUpDown/gap_up.dart';
 import 'package:stocks_news_new/ui/tabs/market/market_tabs.dart';
 import 'package:stocks_news_new/ui/tabs/market/trending/most_bearish.dart';
 import 'package:stocks_news_new/ui/tabs/market/trending/most_bullish.dart';
@@ -37,8 +39,8 @@ class _MarketIndexState extends State<MarketIndex> {
   }
 
   void _callAPI() {
-    MarketManager provider = context.read<MarketManager>();
-    provider.getData();
+    MarketManager manager = context.read<MarketManager>();
+    manager.getData();
   }
 
   Widget _showSelectedScreen() {
@@ -68,12 +70,61 @@ class _MarketIndexState extends State<MarketIndex> {
         _marketIndex == 1 &&
         _marketInnerIndex == 2) {
       return TodaysBreakoutStocks();
+    } else if (_screenIndex == 0 &&
+        _marketIndex == 2 &&
+        _marketInnerIndex == 0) {
+      return GapUp();
+    } else if (_screenIndex == 0 &&
+        _marketIndex == 2 &&
+        _marketInnerIndex == 1) {
+      return GapDown();
     }
     return Container();
   }
 
   void _openFiler() {
-    Navigator.push(context, createRoute(MarketFilter()));
+    Navigator.push(
+      context,
+      createRoute(MarketFilter(
+        marketIndex: _marketIndex,
+        marketInnerIndex: _marketInnerIndex,
+      )),
+    );
+  }
+
+  void _changeScreenIndex(int index) {
+    MarketManager manager = context.read<MarketManager>();
+    manager.resetFilter(
+      marketIndex: _marketIndex,
+      marketInnerIndex: _marketInnerIndex,
+    );
+
+    setState(() {
+      _screenIndex = index;
+    });
+  }
+
+  void _changeMarketIndex(int index) {
+    MarketManager manager = context.read<MarketManager>();
+    manager.resetFilter(
+      marketIndex: _marketIndex,
+      marketInnerIndex: _marketInnerIndex,
+    );
+    setState(() {
+      _marketIndex = index;
+      _marketInnerIndex = 0;
+    });
+  }
+
+  void _changeMarketInnerIndex(int index) {
+    MarketManager manager = context.read<MarketManager>();
+    manager.resetFilter(
+      marketIndex: _marketIndex,
+      marketInnerIndex: _marketInnerIndex,
+    );
+    setState(() {
+      _marketInnerIndex = index;
+    });
   }
 
   @override
@@ -93,11 +144,7 @@ class _MarketIndexState extends State<MarketIndex> {
                   BaseTabs(
                     data: provider.data!.data!,
                     textStyle: styleBaseBold(fontSize: 16),
-                    onTap: (index) {
-                      setState(() {
-                        _screenIndex = index;
-                      });
-                    },
+                    onTap: _changeScreenIndex,
                     rightChild: Padding(
                       padding: const EdgeInsets.only(right: 16),
                       child: Icon(Icons.search, color: Colors.black),
@@ -107,12 +154,7 @@ class _MarketIndexState extends State<MarketIndex> {
                     MarketTabs(
                       key: ValueKey(provider.data!.data![_screenIndex].slug),
                       data: provider.data!.data![_screenIndex].data!,
-                      onTap: (index) {
-                        setState(() {
-                          _marketIndex = index;
-                          _marketInnerIndex = 0;
-                        });
-                      },
+                      onTap: _changeMarketIndex,
                     ),
                   if (_screenIndex == 0 &&
                       provider.data!.data![0].data![_marketIndex].data != null)
@@ -121,29 +163,29 @@ class _MarketIndexState extends State<MarketIndex> {
                           "$_screenIndex+$_marketIndex+$_marketInnerIndex"),
                       selectedIndex: _marketInnerIndex,
                       data: provider.data!.data![0].data![_marketIndex].data!,
-                      onTap: (index) {
-                        setState(() {
-                          _marketInnerIndex = index;
-                        });
-                      },
+                      onTap: _changeMarketInnerIndex,
                       textStyle: styleBaseSemiBold(fontSize: 14),
-                      leftChild: Container(
-                        margin: const EdgeInsets.only(left: 16),
-                        child: InkWell(
-                          onTap: _openFiler,
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 10.0,
-                              vertical: 8.0,
-                            ),
-                            child: Image.asset(
-                              Images.marketFilter,
-                              width: 24,
-                              height: 24,
-                            ),
-                          ),
-                        ),
-                      ),
+                      leftChild: (provider.data!.data![0].data![_marketIndex]
+                                  .applyFilter ??
+                              false)
+                          ? Container(
+                              margin: const EdgeInsets.only(left: 16),
+                              child: InkWell(
+                                onTap: _openFiler,
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 10.0,
+                                    vertical: 8.0,
+                                  ),
+                                  child: Image.asset(
+                                    Images.marketFilter,
+                                    width: 24,
+                                    height: 24,
+                                  ),
+                                ),
+                              ),
+                            )
+                          : null,
                     ),
                   Expanded(child: _showSelectedScreen()),
                 ],
