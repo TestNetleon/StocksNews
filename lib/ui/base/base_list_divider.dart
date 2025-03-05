@@ -6,6 +6,6 @@ class BaseListDivider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Divider(color: ThemeColors.divider, height: 1, thickness: 1);
+    return Divider(color: ThemeColors.neutral5, height: 1, thickness: 1);
   }
 }

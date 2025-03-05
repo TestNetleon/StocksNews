@@ -9,6 +9,9 @@ class HomeInsiderTradesIndex extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (insiderData == null) {
+      return SizedBox();
+    }
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

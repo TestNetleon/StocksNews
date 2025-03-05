@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/ui/base/heading.dart';
+import 'package:stocks_news_new/ui/stockDetail/index.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -60,16 +61,13 @@ class _AIPeerComparisonState extends State<AIPeerComparison> {
                       cells: [
                         DataCell(
                           GestureDetector(
-                            // onTap: () {
-                            //   Navigator.pushReplacement(
-                            //     context,
-                            //     MaterialPageRoute(
-                            //       builder: (context) => StockDetail(
-                            //         symbol: company.symbol ?? "",
-                            //       ),
-                            //     ),
-                            //   );
-                            // },
+                            onTap: () {
+                              Navigator.pushReplacementNamed(
+                                  context, SDIndex.path,
+                                  arguments: {
+                                    'symbol': company.symbol,
+                                  });
+                            },
                             child: Container(
                               padding: EdgeInsets.symmetric(horizontal: 10),
                               // width: 100,

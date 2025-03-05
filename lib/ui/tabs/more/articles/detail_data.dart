@@ -29,6 +29,7 @@ class BlogDetailData extends StatelessWidget {
     UserManager userManager = navigatorKey.currentContext!.read<UserManager>();
 
     await userManager.askLoginScreen();
+    if (userManager.user == null) return;
 
     BlogsManager manager = navigatorKey.currentContext!.read<BlogsManager>();
     await manager.sendFeedback(

@@ -88,7 +88,7 @@ class _AIindexState extends State<AIindex> {
                   borderRadius: BorderRadius.circular(8)),
               child: Text(
                 manager.data?.lastUpdateDate ?? '',
-                style: styleBaseRegular(),
+                style: styleBaseRegular(fontSize: 13),
               ),
             ),
           ],

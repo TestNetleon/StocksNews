@@ -68,7 +68,7 @@ class _CommonTabsState extends State<BaseTabs>
                   (e) {
                     return TabItem(
                       label: e.title,
-                      textStyle: widget.textStyle ?? styleBaseBold(),
+                      textStyle: widget.textStyle ?? styleBaseSemiBold(),
                       leadingIcon: e.icon,
                     );
                   },
@@ -109,7 +109,8 @@ class _CommonTabsState extends State<BaseTabs>
 }
 
 class TabItem extends StatelessWidget {
-  const TabItem({super.key, required this.label, this.textStyle,this.leadingIcon});
+  const TabItem(
+      {super.key, required this.label, this.textStyle, this.leadingIcon});
 
   final String label;
   final String? leadingIcon;
@@ -120,11 +121,11 @@ class TabItem extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 6.0, vertical: 12),
       child: OptionalParent(
-        addParent: leadingIcon!=null && leadingIcon!="",
+        addParent: leadingIcon != null && leadingIcon != "",
         parentBuilder: (Widget child) {
           return Row(
             children: [
-              Image.asset(leadingIcon??"",width: 20,height: 20),
+              Image.asset(leadingIcon ?? "", width: 20, height: 20),
               SpacerHorizontal(width: Pad.pad5),
               Flexible(child: child)
             ],

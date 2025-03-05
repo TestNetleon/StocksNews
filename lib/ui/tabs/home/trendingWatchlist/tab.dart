@@ -19,10 +19,10 @@ class HomeTopTabs extends StatelessWidget {
         Tab(
           child: Text(
             'Trending',
-            style: styleBaseBold(
+            style: styleBaseSemiBold(
               fontSize: 18,
               color: selectedIndex == 0
-                  ? ThemeColors.secondary100
+                  ? ThemeColors.black
                   : ThemeColors.neutral20,
             ),
           ),
@@ -30,10 +30,10 @@ class HomeTopTabs extends StatelessWidget {
         Tab(
           child: Text(
             'Watchlist',
-            style: styleBaseBold(
+            style: styleBaseSemiBold(
               fontSize: 18,
               color: selectedIndex == 1
-                  ? ThemeColors.secondary100
+                  ? ThemeColors.black
                   : ThemeColors.neutral20,
             ),
           ),

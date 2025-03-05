@@ -136,6 +136,7 @@ class _SDHistoricalChartState extends State<SDHistoricalChart> {
               ],
             ),
           ),
+          SpacerVertical(height: Pad.pad32),
           SingleChildScrollView(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,

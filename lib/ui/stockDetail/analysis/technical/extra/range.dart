@@ -65,7 +65,7 @@ class _TechnicalAnaRangeState extends State<TechnicalAnaRange> {
                 (index) {
                   return Padding(
                     padding: EdgeInsets.only(
-                        right: index == _ranges.length - 1 ? 0 : 32),
+                        right: index == _ranges.length - 1 ? 0 : 23),
                     child: GestureDetector(
                       onTap: () {
                         if (_selectedIndex != index) {

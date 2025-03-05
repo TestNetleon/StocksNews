@@ -1,30 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:stocks_news_new/modals/msAnalysis/radar_chart.dart';
-import 'package:stocks_news_new/providers/stockAnalysis/provider.dart';
+import 'package:stocks_news_new/managers/aiAnalysis/ai.dart';
+import 'package:stocks_news_new/ui/base/base_list_divider.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
+import '../../../../../../models/stockDetail/overview.dart';
+import '../../../../../../models/stockDetail/price_volume.dart';
 
 class AIPricePastReturns extends StatelessWidget {
   const AIPricePastReturns({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // List<Map<String, dynamic>> pastReturns = [
-    //   {
-    //     "title": "1 week",
-    //     "amount": "-5.0%",
-    //   },
-    //   {
-    //     "title": "1 month",
-    //     "amount": "3.7%",
-    //   },
-    //   {"title": "3 months", "amount": "13.9%"},
-    //   {"title": "1 year", "amount": "-8.4%"},
-    //   {"title": "4 years", "amount": "141.4%"},
-    // ];
-    MSAnalysisProvider provider = context.watch<MSAnalysisProvider>();
+    AIManager manager = context.watch<AIManager>();
+    AIPriceVolumeRes? dataPV = manager.dataPV;
 
     return ListView.separated(
       shrinkWrap: true,
@@ -32,19 +22,19 @@ class AIPricePastReturns extends StatelessWidget {
       itemBuilder: (context, index) {
         return AIPricePastReturnsItem(
           index: index,
-          pastReturns: provider.pvData?[index],
+          pastReturns: dataPV?.data?[index],
         );
       },
       separatorBuilder: (context, index) {
-        return const SpacerVertical(height: 0);
+        return BaseListDivider();
       },
-      itemCount: provider.pvData?.length ?? 0,
+      itemCount: dataPV?.data?.length ?? 0,
     );
   }
 }
 
 class AIPricePastReturnsItem extends StatelessWidget {
-  final MsRadarChartRes? pastReturns;
+  final BaseKeyValueRes? pastReturns;
   final int index;
   const AIPricePastReturnsItem({
     super.key,
@@ -55,27 +45,23 @@ class AIPricePastReturnsItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
-        color:
-            index % 2 == 0 ? const Color(0xFF2F2F2F) : const Color(0xFF161616),
-      ),
       padding: const EdgeInsets.all(10.0),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Flexible(
             child: Text(
-              "${pastReturns?.label}",
+              "${pastReturns?.title}",
               textAlign: TextAlign.center,
               style: styleGeorgiaRegular(
-                color: ThemeColors.greyText,
+                color: ThemeColors.neutral80,
                 fontSize: 14,
               ),
             ),
           ),
           const SpacerVertical(height: 10),
           Text(
-            textAlign: TextAlign.center,
+            textAlign: TextAlign.end,
             "${pastReturns?.value}%",
             style: styleGeorgiaBold(
               color: pastReturns?.value >= 0

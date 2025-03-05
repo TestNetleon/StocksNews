@@ -11,6 +11,9 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
+import 'package:svg_flutter/svg_flutter.dart';
+
+import '../../../widgets/cache_network_image.dart';
 
 class MoreIndex extends StatelessWidget {
   const MoreIndex({super.key});
@@ -32,11 +35,48 @@ class MoreIndex extends StatelessWidget {
               padding: EdgeInsets.all(Pad.pad16),
               child: Column(
                 children: [
-                  Image.asset(
-                    Images.userPlaceholderNew,
-                    width: 64,
-                    height: 64,
+                  // Image.asset(
+                  //   Images.userPlaceholderNew,
+                  //   width: 64,
+                  //   height: 64,
+                  // ),
+                  Container(
+                    margin: EdgeInsets.only(right: 10, bottom: 0),
+                    child: user?.image == null || user?.image == ''
+                        ? Image.asset(
+                            Images.userPlaceholderNew,
+                            height: 64,
+                            width: 64,
+                          )
+                        : user?.imageType == 'svg'
+                            ? ClipRRect(
+                                borderRadius: BorderRadius.circular(9),
+                                child: SvgPicture.network(
+                                  height: 64,
+                                  width: 64,
+                                  user?.image ?? '',
+                                  fit: BoxFit.cover,
+                                  placeholderBuilder: (BuildContext context) =>
+                                      Image.asset(
+                                    height: 64,
+                                    width: 64,
+                                    Images.userPlaceholderNew,
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              )
+                            : ClipRRect(
+                                borderRadius: BorderRadius.circular(9),
+                                child: CachedNetworkImagesWidget(
+                                  user?.image ?? '',
+                                  height: 64,
+                                  width: 64,
+                                  placeHolder: Images.userPlaceholderNew,
+                                  showLoading: true,
+                                ),
+                              ),
                   ),
+
                   SpacerVertical(height: Pad.pad8),
                   Text(
                     user?.name ?? 'User',
@@ -71,7 +111,7 @@ class MoreIndex extends StatelessWidget {
             MoreItem(
               icon: Images.watchlist,
               label: "Watchlist",
-              onTap:  manager.navigateToWatchList,
+              onTap: manager.navigateToWatchList,
             ),
             MoreItem(
               icon: Images.moreMySubscription,
@@ -119,7 +159,7 @@ class MoreIndex extends StatelessWidget {
             MoreItem(
               icon: Images.moreFaqs,
               label: "FAQ’s",
-              onTap:manager.navigateToFaq,
+              onTap: manager.navigateToFaq,
             ),
             MoreItem(
               icon: Images.moreContactUs,

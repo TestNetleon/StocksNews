@@ -65,7 +65,7 @@ class SDOverview extends StatelessWidget {
                   SpacerHorizontal(width: 10),
                   Expanded(
                     child: SDRange(
-                      title: '',
+                      title: '52W Range',
                       endString:
                           companyInfo?.yearHigh?.toFormattedPrice() ?? '',
                       endValue: companyInfo?.yearHigh ?? 0,
@@ -83,6 +83,7 @@ class SDOverview extends StatelessWidget {
           SDHistoricalChart(
             hasData: hasData,
             chart: chart,
+            error: manager.errorHistoricalC,
             onTap: (p0) {
               manager.getSDHistoricalC(range: p0);
             },

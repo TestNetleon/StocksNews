@@ -79,7 +79,7 @@ class _LegalInfoIndexState extends State<LegalInfoIndex> {
                     child: HtmlWidget(
                       manager.data?.description ?? '',
                       textStyle: TextStyle(
-                        fontFamily: Fonts.ptSans,
+                        fontFamily: Fonts.sdPRO,
                         color: ThemeColors.black,
                       ),
                     ),

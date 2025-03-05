@@ -139,8 +139,12 @@ class TechnicalAnaContainer extends StatelessWidget {
     return Column(
       children: [
         Container(
-          padding:
-              EdgeInsets.symmetric(horizontal: Pad.pad16, vertical: Pad.pad10),
+          padding: EdgeInsets.only(
+            left: Pad.pad16,
+            bottom: Pad.pad10,
+            right: Pad.pad16,
+            top: Pad.pad24,
+          ),
           child: Row(
             children: headers
                 .map(

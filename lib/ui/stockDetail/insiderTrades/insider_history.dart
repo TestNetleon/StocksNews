@@ -20,6 +20,7 @@ class InsiderHistory extends StatelessWidget {
       return SizedBox();
     }
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         BaseHeading(
           title: insiderData?.title,

@@ -10,9 +10,11 @@ class Apis {
   static const baseUrlLocal = "https://notification.stocks.news/api/v1";
 
   // With Debug condition
-  static const baseUrl = kDebugMode
-      ? "https://dev.stocks.news/api/v2"
-      : "https://app.stocks.news/api/v1";
+  // static const baseUrl = kDebugMode
+  //     ? "https://dev.stocks.news/api/v2"
+  //     : "https://app.stocks.news/api/v1";
+
+  static const baseUrl = 'https://dev.stocks.news/api/v2';
 
   // MARK: New UI APIs
   static const onBoarding = '/onboarding';
@@ -95,6 +97,8 @@ class Apis {
   //AI
   static const aiAnalysis = '/ai-analysis';
   static const aiFinancials = '/ai-analysis/financial';
+  static const aiPR = "/ai-analysis/past-returns";
+  static const aiPV = "/ai-analysis/post-volume";
 
 //----------------------------------------------
 

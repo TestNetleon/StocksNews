@@ -38,7 +38,10 @@ class BaseNewsItem extends StatelessWidget {
               padding: const EdgeInsets.only(top: Pad.pad10),
               child: Text(
                 data.title ?? '',
-                style: styleBaseBold(fontSize: 22),
+                style: styleBaseSemiBold(
+                  fontSize: 22,
+                  height: 1.3,
+                ),
               ),
             ),
             Padding(

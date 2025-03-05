@@ -26,7 +26,7 @@ class ChartHistoryItem extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Flexible(
+              Expanded(
                 child: Visibility(
                   visible: data.date != null && data.date != '',
                   child: Text(
@@ -37,14 +37,18 @@ class ChartHistoryItem extends StatelessWidget {
                   ),
                 ),
               ),
-              Flexible(
-                child: Visibility(
-                  visible: data.openingPrice != null && data.openingPrice != '',
-                  child: Text(
-                    data.openingPrice ?? '-',
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: styleBaseBold(fontSize: 14),
+              Expanded(
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Visibility(
+                    visible:
+                        data.openingPrice != null && data.openingPrice != '',
+                    child: Text(
+                      data.openingPrice ?? '-',
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: styleBaseBold(fontSize: 14),
+                    ),
                   ),
                 ),
               ),

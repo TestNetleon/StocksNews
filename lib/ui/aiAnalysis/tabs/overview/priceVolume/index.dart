@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:stocks_news_new/providers/stockAnalysis/provider.dart';
-import 'package:stocks_news_new/screens/MsAnalysis/overviewTabs/view/widgets/container.dart';
-import 'package:stocks_news_new/screens/MsAnalysis/overviewTabs/view/widgets/header.dart';
+import 'package:stocks_news_new/ui/base/common_tab.dart';
 import 'package:stocks_news_new/utils/theme.dart';
-import 'package:stocks_news_new/widgets/spacer_vertical.dart';
-import '../../../../../screens/MsAnalysis/overviewTabs/view/widgets/sliding_button.dart';
+import '../../../../../managers/aiAnalysis/ai.dart';
+import '../../../../../models/market/market_res.dart';
 import '../../../../../widgets/loading.dart';
 import 'widgets/past_return.dart';
 import 'widgets/post_volume.dart';
@@ -20,74 +18,83 @@ class AIPriceVolume extends StatefulWidget {
 class _AIPriceVolumeState extends State<AIPriceVolume>
     with SingleTickerProviderStateMixin {
   int selectedIndex = 0;
-  List<String> menus = [
-    'Past Returns',
-    'Past Volume',
+  // List<String> menus = [
+  //   'Past Returns',
+  //   'Past Volume',
+  // ];
+
+  List<MarketResData> menus = [
+    MarketResData(
+      title: 'Past Returns',
+      slug: '0',
+    ),
+    MarketResData(
+      title: 'Past Volume',
+      slug: '1',
+    ),
   ];
 
   @override
   Widget build(BuildContext context) {
-    MSAnalysisProvider provider = context.watch<MSAnalysisProvider>();
+    // MSAnalysisProvider provider = context.watch<MSAnalysisProvider>();
+    AIManager manager = context.watch<AIManager>();
+    manager.data;
 
-    return MsOverviewContainer(
-      open: provider.openPriceVolume,
-      baseChild: Padding(
-        padding: EdgeInsets.all(12),
-        child: MsOverviewHeader(
-          leadingIcon: Icons.pie_chart,
-          label: provider.completeData?.overviewText?.priceVolume?.title ??
-              "Price & Volume",
-          stateKey: MsProviderKeys.priceVolume,
-          showInfo: provider.completeData?.overviewText?.priceVolume?.info,
+    return Column(
+      children: [
+        BaseTabs(
+          isScrollable: false,
+          data: menus,
+          onTap: (index) {
+            setState(() {
+              selectedIndex = index;
+            });
+            manager.getAiPvData(selectedIndex: selectedIndex);
+          },
         ),
-      ),
-      animatedChild: Column(
-        children: [
-          CustomSlidingSegmentedControl(
-            menus: menus,
-            onValueChanged: (index) {
-              setState(() {
-                selectedIndex = index;
-              });
-              provider.getPriceVolumeData(
-                symbol: provider.topData?.symbol ?? "",
-                selectedIndex: selectedIndex,
-              );
-            },
-            selectedIndex: selectedIndex,
+
+        // CustomSlidingSegmentedControl(
+        //   menus: menus,
+        //   onValueChanged: (index) {
+        //     setState(() {
+        //       selectedIndex = index;
+        //     });
+        //     manager.getAiPvData(selectedIndex: selectedIndex);
+        //   },
+        //   selectedIndex: selectedIndex,
+        // ),
+        // SpacerVertical(height: 10),
+        if (selectedIndex == 0)
+          _getWidget(
+            manager: manager,
+            child: AIPricePastReturns(),
+            // child: Container(),
           ),
-          SpacerVertical(height: 10),
-          if (selectedIndex == 0)
-            _getWidget(
-              provider: provider,
-              child: AIPricePastReturns(),
-            ),
-          if (selectedIndex == 1)
-            _getWidget(
-              provider: provider,
-              child: AIPricePostVolume(),
-            ),
-        ],
-      ),
+        if (selectedIndex == 1)
+          _getWidget(
+            manager: manager,
+            child: AIPricePostVolume(),
+            // child: Container(),
+          ),
+      ],
     );
   }
 
   Widget _getWidget({
-    required MSAnalysisProvider provider,
+    required AIManager manager,
     required Widget child,
   }) {
-    if (provider.isLoadingPV) {
+    if (manager.isLoadingPV) {
       return Container(
         padding: EdgeInsets.only(bottom: 40),
         child: Loading(),
       );
     }
-    if (!provider.isLoadingPV &&
-        (provider.pvData == null || provider.pvData?.isEmpty == true)) {
+    if (!manager.isLoadingPV && manager.dataPV == null) {
       return Container(
         padding: EdgeInsets.only(bottom: 20),
         child: Text(
-          "${provider.errorPV}",
+          "${manager.errorPV}",
           style: stylePTSansRegular(),
         ),
       );

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/screens/notifications/index.dart';
+import 'package:stocks_news_new/ui/stockDetail/index.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -85,6 +86,15 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
                               context,
                               createRoute(
                                 BaseSearch(
+                                  stockClick: (p0) {
+                                    if (p0.symbol == null || p0.symbol == '') {
+                                      return;
+                                    }
+                                    Navigator.pushNamed(context, SDIndex.path,
+                                        arguments: {
+                                          'symbol': p0.symbol,
+                                        });
+                                  },
                                   newsClick: (data) {
                                     if (data.slug == null || data.slug == '') {
                                       return;

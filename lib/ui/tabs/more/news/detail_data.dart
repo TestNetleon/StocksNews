@@ -34,7 +34,7 @@ class NewsDetailData extends StatelessWidget {
     UserManager userManager = navigatorKey.currentContext!.read<UserManager>();
 
     await userManager.askLoginScreen();
-
+    if (userManager.user == null) return;
     NewsManager manager = navigatorKey.currentContext!.read<NewsManager>();
     await manager.sendFeedback(
       id: manager.newsDetail?.postDetail?.id ?? '',
