@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:stocks_news_new/managers/market/most_bullish.dart';
+import 'package:stocks_news_new/managers/market/trending/most_bullish.dart';
 import 'package:stocks_news_new/ui/base/base_list_divider.dart';
 import 'package:stocks_news_new/ui/base/load_more.dart';
 import 'package:stocks_news_new/ui/base/stock/add.dart';
@@ -32,7 +32,7 @@ class _MostBullishState extends State<MostBullish> {
   Widget build(BuildContext context) {
     MostBullishManager manager = context.watch<MostBullishManager>();
 
-    Utils().showLog("Length  => ${manager.data?.mostBullish?.length ?? 0}");
+    Utils().showLog("Length  => ${manager.data?.data?.length ?? 0}");
 
     return BaseLoaderContainer(
       isLoading: manager.isLoading,
@@ -44,13 +44,13 @@ class _MostBullishState extends State<MostBullish> {
         onLoadMore: () async {},
         onRefresh: _callAPI,
         canLoadMore: false,
-        child: (manager.data == null || manager.data?.mostBullish == null)
+        child: (manager.data == null || manager.data?.data == null)
             ? const SizedBox()
             : ListView.separated(
                 shrinkWrap: true,
                 itemBuilder: (context, index) {
                   return BaseStockAddItem(
-                    data: manager.data!.mostBullish![index],
+                    data: manager.data!.data![index],
                     index: index,
                     onRefresh: _callAPI,
                     manager: manager,
@@ -59,7 +59,7 @@ class _MostBullishState extends State<MostBullish> {
                 separatorBuilder: (context, index) {
                   return BaseListDivider();
                 },
-                itemCount: manager.data!.mostBullish?.length ?? 0,
+                itemCount: manager.data!.data?.length ?? 0,
               ),
       ),
     );

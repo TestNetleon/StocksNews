@@ -253,21 +253,21 @@ class _BaseLockItemState extends State<BaseLockItem> {
         children: [
           // Background Blur Effect
           Positioned.fill(
-            child: Container(
-              color: Colors.white.withValues(alpha: 0.95),
-            ),
+            child: info.image != null
+                ? Container(
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: NetworkImage(info.image!),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  )
+                : Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white.withValues(alpha: 0.95),
+                    ),
+                  ),
           ),
-
-          // Positioned.fill(
-          //   child: BackdropFilter(
-          //     enabled: isVisible,
-          //     filter: ImageFilter.blur(sigmaX: 6, sigmaY: 6),
-          //     child: Container(
-          //       color: Colors.transparent,
-          //     ),
-          //   ),
-          // ),
-
           Positioned(
             bottom: 0,
             right: 0,

@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:stocks_news_new/models/stockDetail/overview.dart';
+
 List<BaseTickerRes> baseTickerResFromJson(String str) =>
     List<BaseTickerRes>.from(
         json.decode(str).map((x) => BaseTickerRes.fromJson(x)));
@@ -52,6 +54,7 @@ class BaseTickerRes {
   final num? analystRankingPercent;
   final num? sentimentPercent;
   final List<AdditionalInfoRes>? additionalInfo;
+  final List<BaseKeyValueRes>? extra;
 
   BaseTickerRes({
     this.id,
@@ -99,6 +102,7 @@ class BaseTickerRes {
     this.analystRankingPercent,
     this.sentimentPercent,
     this.additionalInfo,
+    this.extra,
   });
 
   factory BaseTickerRes.fromJson(Map<String, dynamic> json) => BaseTickerRes(
@@ -150,6 +154,10 @@ class BaseTickerRes {
             ? []
             : List<AdditionalInfoRes>.from(json["additional_info"]!
                 .map((x) => AdditionalInfoRes.fromJson(x))),
+        extra: json["extra"] == null
+            ? null
+            : List<BaseKeyValueRes>.from(
+                json["extra"]!.map((x) => BaseKeyValueRes.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -200,6 +208,9 @@ class BaseTickerRes {
         "additional_info": additionalInfo == null
             ? []
             : List<dynamic>.from(additionalInfo!.map((x) => x.toJson())),
+        "extra": extra == null
+            ? null
+            : List<dynamic>.from(extra!.map((x) => x.toJson())),
       };
 }
 

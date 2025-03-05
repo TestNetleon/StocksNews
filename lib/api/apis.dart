@@ -91,6 +91,8 @@ class Apis {
   static const checkAlertLock = '/check-alert-lock';
   static const mostBearish = '/most-bearish';
   static const todaysGainers = '/todays-gainers';
+  static const todaysLosers = '/todays-losers';
+  static const todaysBreakout = '/todays-breakout-stocks';
 
   //AI
   static const aiAnalysis = '/ai-analysis';

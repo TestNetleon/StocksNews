@@ -9,7 +9,7 @@ class BaseButton extends StatelessWidget {
     this.text = "Submit",
     this.color = ThemeColors.primary100,
     this.disableTextColor = ThemeColors.primary100,
-    this.textColor = Colors.white,
+    this.textColor = ThemeColors.black,
     this.textSize = 18,
     this.fullWidth = false,
     this.radius = 8,
@@ -22,6 +22,7 @@ class BaseButton extends StatelessWidget {
     this.disabledBackgroundColor,
     super.key,
     this.side = BorderSide.none,
+    this.textStyle,
   });
 
   final String text;
@@ -39,6 +40,7 @@ class BaseButton extends StatelessWidget {
   final bool textUppercase;
   final Color? disabledBackgroundColor;
   final BorderSide side;
+  final TextStyle? textStyle;
 
   @override
   Widget build(BuildContext context) {
@@ -63,15 +65,16 @@ class BaseButton extends StatelessWidget {
         child: Text(
           textAlign: textAlign,
           textUppercase ? text.toUpperCase() : text,
-          style: fontBold
-              ? stylePTSansBold(
-                  fontSize: textSize,
-                  color: onPressed == null ? disableTextColor : textColor,
-                )
-              : stylePTSansRegular(
-                  fontSize: textSize,
-                  color: onPressed == null ? disableTextColor : textColor,
-                ),
+          style: textStyle ??
+              (fontBold
+                  ? stylePTSansBold(
+                      fontSize: textSize,
+                      color: onPressed == null ? disableTextColor : textColor,
+                    )
+                  : stylePTSansRegular(
+                      fontSize: textSize,
+                      color: onPressed == null ? disableTextColor : textColor,
+                    )),
         ),
       ),
     );

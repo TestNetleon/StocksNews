@@ -190,7 +190,6 @@ class Images {
   static const String warningCircle = '${base}warning-circle.png';
   static const String closeCircle = '${base}close-circle.png';
   static const String shareURL = '${base}share.png';
-
   static const String bottomHome = '${base}bottom_home.png';
   static const String bottomMarket = '${base}bottom_market.png';
   static const String bottomMore = '${base}bottom_more.png';
@@ -218,6 +217,7 @@ class Images {
   static const String menu = '${base}menu.png';
   static const String tick = '${base}tick.png';
   static const String check = '${base}check.png';
+  static const String marketFilter = '${base}market_filter.png';
 
   //-------------------------------------------------------------------------------
   static const String scannerStop = 'assets/images/scanner_stop.png';

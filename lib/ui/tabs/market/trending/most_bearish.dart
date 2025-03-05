@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:stocks_news_new/managers/market/most_bearish.dart';
+import 'package:stocks_news_new/managers/market/trending/most_bearish.dart';
 import 'package:stocks_news_new/ui/base/base_list_divider.dart';
 import 'package:stocks_news_new/ui/base/load_more.dart';
 import 'package:stocks_news_new/ui/base/stock/add.dart';
@@ -32,7 +32,7 @@ class _MostBearishState extends State<MostBearish> {
   Widget build(BuildContext context) {
     MostBearishManager manager = context.watch<MostBearishManager>();
 
-    Utils().showLog("Length  => ${manager.data?.mostBullish?.length ?? 0}");
+    Utils().showLog("Length  => ${manager.data?.data?.length ?? 0}");
 
     return BaseLoaderContainer(
       isLoading: manager.isLoading,
@@ -44,13 +44,13 @@ class _MostBearishState extends State<MostBearish> {
         onLoadMore: () async {},
         onRefresh: _callAPI,
         canLoadMore: false,
-        child: (manager.data == null || manager.data?.mostBullish == null)
+        child: (manager.data == null || manager.data?.data == null)
             ? const SizedBox()
             : ListView.separated(
                 shrinkWrap: true,
                 itemBuilder: (context, index) {
                   return BaseStockAddItem(
-                    data: manager.data!.mostBullish![index],
+                    data: manager.data!.data![index],
                     index: index,
                     onRefresh: _callAPI,
                     manager: manager,
@@ -59,7 +59,7 @@ class _MostBearishState extends State<MostBearish> {
                 separatorBuilder: (context, index) {
                   return BaseListDivider();
                 },
-                itemCount: manager.data!.mostBullish?.length ?? 0,
+                itemCount: manager.data!.data?.length ?? 0,
               ),
       ),
     );

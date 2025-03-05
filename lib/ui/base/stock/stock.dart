@@ -5,6 +5,7 @@ import 'package:stocks_news_new/models/ticker.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
+import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/cache_network_image.dart';
 import 'package:stocks_news_new/widgets/optional_parent.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
@@ -36,6 +37,8 @@ class _BaseStockItemState extends State<BaseStockItem> {
 
   @override
   Widget build(BuildContext context) {
+    Utils().showLog("Expandable => ${widget.expandable?.length}");
+
     bool isOpen = _openIndex == widget.index;
     return Container(
       padding: EdgeInsets.all(Pad.pad16),
@@ -264,6 +267,7 @@ class _BaseStockItemState extends State<BaseStockItem> {
             ),
           Visibility(
             // visible: widget.data.showMore == true,
+            visible: widget.expandable != null,
             child: AnimatedSize(
               duration: const Duration(milliseconds: 150),
               child: Container(
@@ -279,6 +283,7 @@ class _BaseStockItemState extends State<BaseStockItem> {
                       return _dropBox(
                         label: widget.expandable?[index].title ?? "",
                         value: widget.expandable?[index].value ?? 'N/A',
+                        color: widget.expandable?[index].color,
                       );
                     },
                     separatorBuilder: (context, index) {
@@ -315,7 +320,7 @@ class _BaseStockItemState extends State<BaseStockItem> {
     );
   }
 
-  Widget _dropBox({required String label, dynamic value, color = 0}) {
+  Widget _dropBox({required String label, dynamic value, color}) {
     return Container(
       margin: EdgeInsets.only(bottom: Pad.pad10),
       child: Row(
@@ -335,11 +340,11 @@ class _BaseStockItemState extends State<BaseStockItem> {
               "$value",
               style: styleBaseSemiBold(
                 fontSize: 13,
-                color: color == 1
-                    ? value < 0
+                color: color != null && color == 1
+                    ? ThemeColors.accent
+                    : color != null && color == -1
                         ? ThemeColors.darkRed
-                        : ThemeColors.accent
-                    : null,
+                        : null,
               ),
             ),
           ),
