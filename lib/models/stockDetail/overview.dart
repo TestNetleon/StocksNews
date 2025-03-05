@@ -87,6 +87,7 @@ class BaseKeyValueRes {
   final String? weightedStatus;
   final String? date;
   final String? action;
+  bool? selected;
 
   BaseKeyValueRes({
     this.title,
@@ -102,6 +103,7 @@ class BaseKeyValueRes {
     this.weightedStatus,
     this.date,
     this.action,
+    this.selected,
   });
 
   factory BaseKeyValueRes.fromJson(Map<String, dynamic> json) =>
@@ -119,6 +121,7 @@ class BaseKeyValueRes {
         weightedStatus: json["weighted_status"],
         date: json["date"],
         action: json["action"],
+        selected: json["selected"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -135,6 +138,7 @@ class BaseKeyValueRes {
         "weighted_status": weightedStatus,
         "date": date,
         "action": action,
+        "selected": selected,
       };
 }
 

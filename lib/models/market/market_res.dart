@@ -150,4 +150,28 @@ class MarketFilter {
             ? null
             : List<dynamic>.from(analystConsensus!.map((x) => x.toJson())),
       };
+
+  MarketFilter clone() {
+    return MarketFilter.fromJson(json.decode(json.encode(this)));
+  }
+}
+
+class MarketFilterParams {
+  String? sorting;
+  List<String>? exchange;
+  List<String>? sectors;
+  List<String>? industries;
+  String? marketCap;
+  List<String>? marketRank;
+  List<String>? analystConsensus;
+
+  MarketFilterParams({
+    this.sorting,
+    this.exchange,
+    this.sectors,
+    this.industries,
+    this.marketCap,
+    this.marketRank,
+    this.analystConsensus,
+  });
 }

@@ -1,11 +1,14 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:stocks_news_new/api/api_requester.dart';
 import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/api/apis.dart';
+import 'package:stocks_news_new/managers/market/market.dart';
 import 'package:stocks_news_new/models/lock.dart';
 import 'package:stocks_news_new/models/market/most_bullish.dart';
+import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 
@@ -29,17 +32,21 @@ class TodaysLosersManager extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future getData({loadMore = false}) async {
-    if (loadMore == false) {
+  Future getData({loadMore = false, filter = false}) async {
+    final filterRequest =
+        navigatorKey.currentContext!.read<MarketManager>().filterRequest;
+
+    if (loadMore == false || filter) {
       _page = 1;
     }
 
     try {
       _error = null;
       setStatus(loadMore ? Status.loadingMore : Status.loading);
-      final request = {
-        "page": "$_page",
-      };
+
+      final request = filterRequest != null
+          ? {"page": "$_page", ...filterRequest}
+          : {"page": "$_page"};
 
       ApiResponse response = await apiRequest(
         url: Apis.todaysLosers,
@@ -50,8 +57,9 @@ class TodaysLosersManager extends ChangeNotifier {
           _data = marketDataResFromJson(jsonEncode(response.data));
           _lockInformation = _data?.lockInfo;
         } else {
-          _data!.data!
-              .addAll(marketDataResFromJson(jsonEncode(response.data)).data!);
+          _data!.data!.addAll(
+            marketDataResFromJson(jsonEncode(response.data)).data!,
+          );
         }
         _page++;
       } else {

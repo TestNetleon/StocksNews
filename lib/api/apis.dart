@@ -92,7 +92,7 @@ class Apis {
   static const mostBearish = '/most-bearish';
   static const todaysGainers = '/todays-gainers';
   static const todaysLosers = '/todays-losers';
-  static const todaysBreakout = '/todays-breakout-stocks';
+  static const todaysBreakout = '/breakout-stocks';
 
   //AI
   static const aiAnalysis = '/ai-analysis';
