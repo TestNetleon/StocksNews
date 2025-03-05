@@ -5,6 +5,8 @@ import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 
+import '../../../stockDetail/index.dart';
+
 class BasePoliticianDetailItem extends StatelessWidget {
   // final int index;
   final void Function()? onTap;
@@ -27,7 +29,11 @@ class BasePoliticianDetailItem extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           GestureDetector(
-            onTap: () {},
+            onTap: () {
+              Navigator.pushNamed(context, SDIndex.path, arguments: {
+                'symbol': data.symbol,
+              });
+            },
             child: Row(
               children: [
                 Visibility(

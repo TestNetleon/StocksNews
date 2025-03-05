@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:stocks_news_new/models/my_home_premium.dart';
+import 'package:stocks_news_new/ui/stockDetail/index.dart';
 import 'package:stocks_news_new/ui/tabs/signals/politicians/detail.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
@@ -132,9 +133,11 @@ class BasePoliticianItem extends StatelessWidget {
             ],
           ),
           Visibility(
-            child: GestureDetector(
+            child: InkWell(
               onTap: () {
-                //Navigate to ticker detail
+                Navigator.pushNamed(context, SDIndex.path, arguments: {
+                  'symbol': data.symbol,
+                });
               },
               child: Container(
                 margin: EdgeInsets.only(top: Pad.pad8),

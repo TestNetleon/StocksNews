@@ -4,8 +4,9 @@ import 'package:stocks_news_new/ui/base/heading.dart';
 import '../../../managers/stockDetail/stock.detail.dart';
 import '../../../models/stockDetail/chart.dart';
 import '../../../utils/constants.dart';
+import '../../../utils/theme.dart';
+import '../../../widgets/spacer_vertical.dart';
 import '../../base/base_list_divider.dart';
-import '../extra/list_heading.dart';
 import 'item.dart';
 
 class SDChartHistory extends StatelessWidget {
@@ -30,9 +31,7 @@ class SDChartHistory extends StatelessWidget {
             right: Pad.pad16,
           ),
         ),
-        SDListHeading(
-          data: ['Date', 'Opening Price', 'Closing Price'],
-        ),
+        _buildHeaderRow(['Date', 'Opening Price', 'Closing Price']),
         ListView.separated(
           shrinkWrap: true,
           physics: NeverScrollableScrollPhysics(),
@@ -52,6 +51,41 @@ class SDChartHistory extends StatelessWidget {
             return BaseListDivider();
           },
         ),
+      ],
+    );
+  }
+
+  Widget _buildHeaderRow(List<String> headers) {
+    return Column(
+      children: [
+        Container(
+          padding: EdgeInsets.only(
+            bottom: Pad.pad10,
+            right: Pad.pad16,
+            top: Pad.pad24,
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: headers
+                .map(
+                  (title) => Flexible(
+                    child: Container(
+                      alignment: title == 'Opening Price'
+                          ? Alignment.centerRight
+                          : null,
+                      padding: EdgeInsets.symmetric(horizontal: 12),
+                      child: Text(
+                        title,
+                        style: styleBaseBold(fontSize: 14),
+                      ),
+                    ),
+                  ),
+                )
+                .toList(),
+          ),
+        ),
+        SpacerVertical(height: 1),
+        BaseListDivider(),
       ],
     );
   }

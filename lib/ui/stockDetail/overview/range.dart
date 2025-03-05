@@ -169,8 +169,7 @@ class SDRange extends StatelessWidget {
         children: [
           Text(
             title,
-            style:
-                styleBaseSemiBold(fontSize: 12, color: ThemeColors.neutral80),
+            style: styleBaseRegular(fontSize: 12, color: ThemeColors.neutral80),
           ),
           const SpacerVertical(height: 5),
           Row(

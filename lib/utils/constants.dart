@@ -218,6 +218,7 @@ class Images {
   static const String tick = '${base}tick.png';
   static const String check = '${base}check.png';
   static const String marketFilter = '${base}market_filter.png';
+  static const String progressGIF = "${base}progress.gif";
 
   //-------------------------------------------------------------------------------
   static const String scannerStop = 'assets/images/scanner_stop.png';
@@ -311,7 +312,7 @@ class Images {
   static const String newsGIT = "assets/images/news.gif";
   static const String bearBullGIF = "assets/images/animation_bull_bear.json";
   static const String alertBellGIF = "assets/images/alert_bell.gif";
-  static const String progressGIF = "assets/images/progress.gif";
+  // static const String progressGIF = "assets/images/progress.gif";
   static const String alertTickGIF = "assets/images/alert_tick.gif";
   static const String alertPopGIF = "assets/images/alerts_GIF.gif";
   static const String otpSuccessGIT = "assets/images/otp_success.gif";
@@ -436,9 +437,10 @@ class Pad {
 
 class Fonts {
   // static const String roboto = 'Roboto';
-  static const String georgia = 'Georgia';
-  static const String ptSans = "PTSans";
-  static const String merriWeather = "Merriweather";
+  // static const String georgia = 'Georgia';
+  // static const String ptSans = "PTSans";
+  // static const String merriWeather = "Merriweather";
+  static const String sdPRO = 'SFProDisplay';
 }
 
 class Const {

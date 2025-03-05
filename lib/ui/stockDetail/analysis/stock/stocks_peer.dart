@@ -3,6 +3,7 @@ import 'package:stocks_news_new/models/ticker.dart';
 import 'package:stocks_news_new/ui/base/base_list_divider.dart';
 import 'package:stocks_news_new/ui/base/heading.dart';
 import 'package:stocks_news_new/ui/base/stock/add.dart';
+import 'package:stocks_news_new/ui/stockDetail/index.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 
 import '../../../../models/stockDetail/stock_analysis.dart';
@@ -37,7 +38,16 @@ class SDStocksAnalysisPeer extends StatelessWidget {
             if (stockData == null) {
               SizedBox();
             }
-            return BaseStockAddItem(data: stockData!, index: index);
+            return BaseStockAddItem(
+              data: stockData!,
+              index: index,
+              onTap: (p0) {
+                Navigator.pushReplacementNamed(context, SDIndex.path,
+                    arguments: {
+                      'symbol': p0.symbol,
+                    });
+              },
+            );
           },
           separatorBuilder: (context, index) {
             return BaseListDivider();

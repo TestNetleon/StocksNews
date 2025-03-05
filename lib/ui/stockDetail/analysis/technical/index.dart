@@ -6,6 +6,8 @@ import 'package:stocks_news_new/ui/base/base_scroll.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/widgets/custom/base_loader_container.dart';
 import '../../../../models/stockDetail/technical_analysis.dart';
+import '../../../../utils/constants.dart';
+import '../../../../widgets/spacer_vertical.dart';
 import 'container.dart';
 import 'extra/range.dart';
 
@@ -33,6 +35,7 @@ class SDTechnicalAnalysis extends StatelessWidget {
       showPreparingText: true,
       child: Column(
         children: [
+          SpacerVertical(height: Pad.pad16),
           TechnicalAnaRange(
             onTap: (range) {
               manager.getSDTechnicalAnalysis(

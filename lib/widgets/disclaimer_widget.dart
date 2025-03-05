@@ -43,7 +43,7 @@ class DisclaimerWidget extends StatelessWidget {
         //   color: ThemeColors.greyText,
         // ),
         textStyle: const TextStyle(
-          fontFamily: Fonts.ptSans,
+          fontFamily: Fonts.sdPRO,
           // color: Colors.grey,
         ),
       ),

@@ -1,8 +1,8 @@
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:stocks_news_new/managers/user.dart';
 import 'package:stocks_news_new/modals/user_res.dart';
-import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import '../../utils/theme.dart';
@@ -34,7 +34,7 @@ class _BaseCountryCodeState extends State<BaseCountryCode> {
 
   @override
   Widget build(BuildContext context) {
-    UserProvider provider = context.watch<UserProvider>();
+    UserManager provider = context.watch<UserManager>();
     UserRes? user = provider.user;
     String? locale;
 

@@ -37,44 +37,18 @@ class _HomeIndexState extends State<HomeIndex> {
         child: BaseScroll(
           onRefresh: provider.getHomeData,
           children: [
-            // BaseButton(
-            //   onPressed: () async {
-            //     try {
-            //       // RevenueCatManager.instance.initialize();
-            //       Offerings offerings = await Purchases.getOfferings();
-            //       Offering? offering1 =
-            //           offerings.getOffering('Stocks.News Offerings');
-            //       Offering? offering2 =
-            //           offerings.getOffering('Stocks.News Offerings Annual');
-            //       Utils().showLog('1----${offering1?.availablePackages.first}');
-            //       Utils().showLog('2----${offering2?.availablePackages.first}');
-            //       await Purchases.purchasePackage(
-            //           offering1!.availablePackages.first);
-            //       // List<StoreProduct> prod =
-            //       //     await Purchases.getProducts(['monthly_basic']);
-            //       // print('Data=>length--${prod.length}');
-            //       // for (var i in prod) {
-            //       //   Utils().showLog('Data=> ${i.identifier}');
-            //       // }
-            //       // showGlobalProgressDialog();
-            //       // await Purchases.purchaseStoreProduct(prod.first);
-            //     } catch (e) {
-            //       if (e is PlatformException) {
-            //         PurchasesErrorCode errorCode =
-            //             PurchasesErrorHelper.getErrorCode(e);
-            //         if (errorCode ==
-            //             PurchasesErrorCode.purchaseCancelledError) {
-            //           print("User canceled the purchase.");
-            //         } else {
-            //           print("Purchase failed: ${e.message}");
-            //         }
-            //       } else {
-            //         print("Unknown error: $e");
-            //       }
-            //     }
-            //   },
+            // Text(
+            //   'AAPL',
+            //   style: TextStyle(
+            //     fontFamily: 'SFProDisplay',
+            //     // fontFamily: Fonts.georgia,
+            //     // fontFamily: Fonts.ptSans,
+            //     // fontFamily: Fonts.georgia,
+            //     color: ThemeColors.black,
+            //     fontSize: 600,
+            //     fontWeight: FontWeight.w800,
+            //   ),
             // ),
-
             HomeTrendingIndex(),
             HomeNewsIndex(newsData: provider.data?.recentNews),
             VisibilityDetector(

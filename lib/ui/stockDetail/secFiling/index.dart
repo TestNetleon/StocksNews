@@ -51,7 +51,7 @@ class SDSecFiling extends StatelessWidget {
                       child: Text(
                         data.fillingDate ?? '',
                         style: styleBaseRegular(
-                            color: ThemeColors.neutral40, fontSize: 14),
+                            color: ThemeColors.neutral80, fontSize: 14),
                       ),
                     ),
                     Flexible(
@@ -62,7 +62,7 @@ class SDSecFiling extends StatelessWidget {
                             child: Text(
                               data.acceptedDate ?? '',
                               style: styleBaseRegular(
-                                  color: ThemeColors.neutral40, fontSize: 14),
+                                  color: ThemeColors.neutral80, fontSize: 14),
                             ),
                           ),
                           Visibility(

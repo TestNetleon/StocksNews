@@ -70,7 +70,7 @@ class _CommonTabsState extends State<BaseTabs>
                 tabs: (widget.data.map((e) {
                   return TabItem(
                     label: e.title,
-                    textStyle: widget.textStyle ?? styleBaseBold(),
+                    textStyle: widget.textStyle ?? styleBaseSemiBold(),
                     leadingIcon: e.icon,
                   );
                 })).toList(),

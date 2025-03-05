@@ -9,6 +9,7 @@ import 'package:stocks_news_new/models/market/market_res.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import '../../models/stockDetail/financial.dart';
+import '../../models/stockDetail/price_volume.dart';
 import '../../utils/constants.dart';
 import '../user.dart';
 
@@ -19,6 +20,7 @@ class AIManager extends ChangeNotifier {
     selectedTypeIndex = 0;
     selectedPeriodIndex = 0;
     _selectedTicker = null;
+    _dataPV = null;
     notifyListeners();
   }
 
@@ -36,6 +38,14 @@ class AIManager extends ChangeNotifier {
 
   String? _selectedTicker;
   String? get selectedTicker => _selectedTicker;
+
+  bool _navigatedFromSD = false;
+  bool get navigatedFromSD => _navigatedFromSD;
+
+  setNavigatedFrom(value) {
+    _navigatedFromSD = value;
+    notifyListeners();
+  }
 
   setStatus(status) {
     _status = status;
@@ -73,6 +83,7 @@ class AIManager extends ChangeNotifier {
     }
   }
 
+//MARK: Financial
   Status _statusFinancials = Status.ideal;
   Status get statusFinancials => _statusFinancials;
 
@@ -156,6 +167,54 @@ class AIManager extends ChangeNotifier {
       _errorFinancials = null;
       setStatusFinancials(Status.loaded);
       Utils().showLog("ERROR in getFinancialsData =>$e");
+    }
+  }
+
+  //MARK: Price Volume
+  String? _errorPV;
+  String? get errorPV => _errorPV ?? Const.errSomethingWrong;
+
+  Status _statusPV = Status.ideal;
+  Status get statusPV => _statusPV;
+
+  bool get isLoadingPV =>
+      _statusPV == Status.loading || _status == Status.ideal;
+
+  AIPriceVolumeRes? _dataPV;
+  AIPriceVolumeRes? get dataPV => _dataPV;
+
+  setStatusPV(status) {
+    _statusPV = status;
+    notifyListeners();
+  }
+
+  Future getAiPvData({int selectedIndex = 0}) async {
+    _dataPV = null;
+    try {
+      setStatusPV(Status.loading);
+      UserManager provider = navigatorKey.currentContext!.read<UserManager>();
+      Map request = {
+        'token': provider.user?.token ?? '',
+        'symbol': _selectedTicker,
+      };
+
+      ApiResponse response = await apiRequest(
+        url: selectedIndex == 0 ? Apis.aiPR : Apis.aiPV,
+        request: request,
+      );
+      if (response.status) {
+        _dataPV = AIPriceVolumeResFromJson(jsonEncode(response.data));
+        _errorPV = null;
+      } else {
+        _dataPV = null;
+        _errorPV = response.message;
+      }
+    } catch (e) {
+      _dataPV = null;
+      _errorPV = Const.errSomethingWrong;
+      Utils().showLog('Error in ${Apis.aiAnalysis} $e');
+    } finally {
+      setStatusPV(Status.loaded);
     }
   }
 }
