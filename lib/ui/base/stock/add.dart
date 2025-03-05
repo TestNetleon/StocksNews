@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/managers/market/alerts_watchlist_action.dart';
 import 'package:stocks_news_new/managers/user.dart';
+import 'package:stocks_news_new/models/stockDetail/overview.dart';
 import 'package:stocks_news_new/models/ticker.dart';
 import 'package:stocks_news_new/ui/base/bottom_sheet.dart';
 import 'package:stocks_news_new/ui/base/stock/slidable.dart';
@@ -21,6 +22,7 @@ class BaseStockAddItem extends StatelessWidget {
   final Function(BaseTickerRes)? onTap;
   final Function()? onRefresh;
   final dynamic manager;
+  final List<BaseKeyValueRes>? expandable;
 
   const BaseStockAddItem({
     super.key,
@@ -30,6 +32,7 @@ class BaseStockAddItem extends StatelessWidget {
     this.onTap,
     this.onRefresh,
     this.manager,
+    this.expandable,
   });
 
   Future<void> _onAddToAlertClick(BuildContext context) async {
@@ -131,10 +134,7 @@ class BaseStockAddItem extends StatelessWidget {
                 onTap!(data);
               }
             : null,
-        child: BaseStockItem(
-          data: data,
-          index: index,
-        ),
+        child: BaseStockItem(data: data, index: index, expandable: expandable),
       ),
     );
   }

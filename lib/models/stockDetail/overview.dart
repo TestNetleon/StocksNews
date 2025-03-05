@@ -132,7 +132,7 @@ class BaseKeyValueRes {
   final String? subTitle;
   final dynamic value;
   final String? slug;
-  final String? color;
+  final dynamic color;
   final String? simple;
   final String? simpleStatus;
   final String? exponential;

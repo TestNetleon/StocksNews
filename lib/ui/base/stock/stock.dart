@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:stocks_news_new/models/stockDetail/overview.dart';
 import 'package:stocks_news_new/models/ticker.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
@@ -12,10 +13,12 @@ import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 class BaseStockItem extends StatefulWidget {
   final BaseTickerRes data;
   final int index;
+  final List<BaseKeyValueRes>? expandable;
   const BaseStockItem({
     super.key,
     required this.data,
     required this.index,
+    this.expandable,
   });
 
   @override
@@ -108,7 +111,8 @@ class _BaseStockItemState extends State<BaseStockItem> {
                 ),
               ),
               const SpacerHorizontal(width: 16),
-              widget.data.showMore == true
+              // widget.data.showMore == true
+              widget.expandable != null
                   ? Row(
                       children: [
                         Visibility(
@@ -263,33 +267,47 @@ class _BaseStockItemState extends State<BaseStockItem> {
             child: AnimatedSize(
               duration: const Duration(milliseconds: 150),
               child: Container(
-                height: isOpen ? null : 0,
-                margin: EdgeInsets.only(
-                  top: isOpen ? 10 : 0,
-                  bottom: isOpen ? 10 : 0,
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    _dropBox(
-                      label: 'Market Cap',
-                      value: widget.data.mktCap ?? 'N/A',
-                    ),
-                    _dropBox(
-                      label: 'PE Ratio',
-                      value: widget.data.pe ?? 'N/A',
-                    ),
-                    _dropBox(
-                      label: 'Employee Count',
-                      value: widget.data.employeeCount ?? 'N/A',
-                    ),
-                    _dropBox(
-                      label: 'Revenue',
-                      value: widget.data.revenue ?? 'N/A',
-                    ),
-                  ],
-                ),
-              ),
+                  height: isOpen ? null : 0,
+                  margin: EdgeInsets.only(
+                    top: isOpen ? 10 : 0,
+                    bottom: isOpen ? 10 : 0,
+                  ),
+                  child: ListView.separated(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemBuilder: (context, index) {
+                      return _dropBox(
+                        label: widget.expandable?[index].title ?? "",
+                        value: widget.expandable?[index].value ?? 'N/A',
+                      );
+                    },
+                    separatorBuilder: (context, index) {
+                      return SizedBox();
+                    },
+                    itemCount: widget.expandable?.length ?? 0,
+                  )
+                  // Column(
+                  //   crossAxisAlignment: CrossAxisAlignment.end,
+                  //   children: [
+                  //     _dropBox(
+                  //       label: 'Market Cap',
+                  //       value: widget.data.mktCap ?? 'N/A',
+                  //     ),
+                  //     _dropBox(
+                  //       label: 'PE Ratio',
+                  //       value: widget.data.pe ?? 'N/A',
+                  //     ),
+                  //     _dropBox(
+                  //       label: 'Employee Count',
+                  //       value: widget.data.employeeCount ?? 'N/A',
+                  //     ),
+                  //     _dropBox(
+                  //       label: 'Revenue',
+                  //       value: widget.data.revenue ?? 'N/A',
+                  //     ),
+                  //   ],
+                  // ),
+                  ),
             ),
           ),
         ],
@@ -297,7 +315,7 @@ class _BaseStockItemState extends State<BaseStockItem> {
     );
   }
 
-  Widget _dropBox({required String label, String? value}) {
+  Widget _dropBox({required String label, dynamic value, color = 0}) {
     return Container(
       margin: EdgeInsets.only(bottom: Pad.pad10),
       child: Row(
@@ -314,8 +332,15 @@ class _BaseStockItemState extends State<BaseStockItem> {
           ),
           Flexible(
             child: Text(
-              value ?? 'N/A',
-              style: styleBaseSemiBold(fontSize: 13),
+              "$value",
+              style: styleBaseSemiBold(
+                fontSize: 13,
+                color: color == 1
+                    ? value < 0
+                        ? ThemeColors.darkRed
+                        : ThemeColors.accent
+                    : null,
+              ),
             ),
           ),
         ],
