@@ -231,6 +231,7 @@ class Images {
   static const String marketFilter = '${base}market_filter.png';
   static const String progressGIF = "${base}progress.gif";
   static const String trades = '${base}trades.png';
+  static const String btc = '${base}btc.png';
 
   //-------------------------------------------------------------------------------
   static const String scannerStop = 'assets/images/scanner_stop.png';

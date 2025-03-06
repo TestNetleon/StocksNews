@@ -8,28 +8,69 @@ import 'package:stocks_news_new/models/billionaires_res.dart';
 import 'package:stocks_news_new/models/market/market_res.dart';
 import 'package:stocks_news_new/ui/base/toaster.dart';
 import 'package:stocks_news_new/utils/constants.dart';
+import 'package:stocks_news_new/utils/utils.dart';
 
 class BillionairesManager extends ChangeNotifier{
 
   BillionairesRes? _billionairesRes;
   BillionairesRes? get billionairesRes=> _billionairesRes;
+
+  MarketResData? _categoriesData;
+  MarketResData? get categoriesData => _categoriesData;
+
   String? _error;
   Status _status = Status.ideal;
   String? get error => _error ?? Const.errSomethingWrong;
   bool get isLoading => _status == Status.loading || _status == Status.ideal;
+
+  Status _statusCrypto = Status.ideal;
+  bool get isLoadingCrypto => _statusCrypto == Status.loading || _statusCrypto == Status.ideal;
+
 
   void setStatus(status) {
     _status = status;
     notifyListeners();
   }
 
+  void setStatusCrypto(status) {
+    _statusCrypto = status;
+    notifyListeners();
+  }
+
   Future onRefresh() async {
-    getBillionaires();
+    getCryptoCurrencies();
   }
 
 
-  Future getBillionaires() async {
-    setStatus(Status.loading);
+  Future<void> getTabs() async {
+    try {
+      setStatus(Status.loading);
+      Map request = {};
+      ApiResponse response = await apiRequest(
+        url: Apis.cryptoTabs,
+        request: request,
+      );
+
+      if (response.status) {
+        _categoriesData = marketResDataFromJson(jsonEncode(response.data));
+        _error = null;
+         onScreenChange(0);
+      } else {
+        _categoriesData = null;
+        _error = response.message;
+      }
+    } catch (e) {
+      _categoriesData = null;
+      _error = Const.errSomethingWrong;
+      Utils().showLog('Error on ${Apis.newsCategories}: $e');
+    } finally {
+      setStatus(Status.loaded);
+    }
+  }
+
+
+  Future getCryptoCurrencies() async {
+    setStatusCrypto(Status.loading);
     try {
       Map request = {};
       ApiResponse response = await apiRequest(
@@ -46,7 +87,7 @@ class BillionairesManager extends ChangeNotifier{
         _billionairesRes = null;
         _error = response.message;
       }
-      setStatus(Status.loaded);
+      setStatusCrypto(Status.loaded);
     } catch (e) {
       _billionairesRes = null;
       _error = Const.errSomethingWrong;
@@ -54,25 +95,34 @@ class BillionairesManager extends ChangeNotifier{
         message: Const.errSomethingWrong,
         type: ToasterEnum.error,
       );
-      setStatus(Status.loaded);
+      setStatusCrypto(Status.loaded);
     }
   }
 
-  int? selectedScreen;
+  int? selectedScreen=-1;
   onScreenChange(index) {
     if (selectedScreen != index) {
       selectedScreen = index;
       notifyListeners();
+      switch (selectedScreen) {
+        case 0:
+          getCryptoCurrencies();
+          break;
+
+        case 1:
+          //getSignalSentimentData();
+          break;
+
+        case 2:
+         // getInsidersData();
+          break;
+        default:
+      }
       }
     }
 
-  List<MarketResData> innerTabs = [
-    MarketResData(title: 'TOP BILLIONAIRES'),
-    MarketResData(title: 'TOP CEO’S'),
 
-  ];
-
-  int? selectedInnerScreen;
+  int? selectedInnerScreen=0;
   onScreenChangeInner(index) {
     if (selectedInnerScreen != index) {
       selectedInnerScreen = index;

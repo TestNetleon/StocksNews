@@ -48,6 +48,7 @@ class Apis {
   static const shareFeedback = "/share-feedback";
 
   //MARK: Crypto API
+  static const cryptoTabs = "/crypto/tab";
   static const cryptoHome = "/crypto/home";
   static const cryptoBillionaireDetails = "/crypto/billionaire-details";
   static const cryptoDetails = "/crypto/crypto-details";

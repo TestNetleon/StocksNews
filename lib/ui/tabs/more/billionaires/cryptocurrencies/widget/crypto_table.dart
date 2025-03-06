@@ -1,0 +1,153 @@
+import 'package:flutter/material.dart';
+import 'package:stocks_news_new/models/billionaires_res.dart';
+import 'package:stocks_news_new/utils/colors.dart';
+import 'package:stocks_news_new/utils/constants.dart';
+import 'package:stocks_news_new/utils/theme.dart';
+import 'package:stocks_news_new/widgets/cache_network_image.dart';
+import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
+
+class CryptoTable extends StatelessWidget {
+  final SymbolMentionList? symbolMentionRes;
+  const CryptoTable({super.key,this.symbolMentionRes});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        DataTable(
+          horizontalMargin: 10,
+          decoration: BoxDecoration(color: ThemeColors.neutral5),
+          border: TableBorder(
+            right: BorderSide(
+              color: ThemeColors.neutral10,
+            ),
+          ),
+          columns: [
+            DataColumn(
+              label: Text(
+                'Name',
+                style: styleBaseBold(fontSize: 12,color: ThemeColors.splashBG),
+              ),
+            ),
+          ],
+          rows: symbolMentionRes?.data?.map((company) {
+            return DataRow(
+              cells: [
+                DataCell(
+                    Container(
+                      padding: EdgeInsets.symmetric(horizontal: Pad.pad5,vertical: Pad.pad5),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(24),
+                            child: CachedNetworkImagesWidget(
+                              company.image ?? '',
+                              height: 24,
+                              width: 24,
+                              placeHolder: Images.userPlaceholderNew,
+                              showLoading: true,
+                              fit: BoxFit.contain,
+                            ),
+                          ),
+                          SpacerHorizontal(width: Pad.pad10),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  company.name ?? "",
+                                  style: stylePTSansBold(fontSize: 12,color: ThemeColors.neutral8),
+                                ),
+                                Text(
+                                  company.symbol ?? "",
+                                  style: styleBaseRegular(fontSize: 12,color: ThemeColors.neutral8),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    )
+                ),
+              ],
+            );
+          }).toList() ??
+              [],
+        ),
+        Expanded(
+          child: SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: DataTable(
+              horizontalMargin: 10,
+              columns: ["Price","1h %","24h %"].map((header) {
+                return DataColumn(
+                  label: Text(
+                    header,
+                    style: styleBaseBold(fontSize: 12,color: ThemeColors.splashBG),
+                  ),
+                );
+              }).toList(),
+              rows: symbolMentionRes?.data?.map((company) {
+                return DataRow(
+                  cells: [
+                    _dataCell(
+                      text: company.price ?? 0,
+                    ),
+                    _dataCellMentions(
+                      text: company.changesPercentage ?? 0,
+                      count: company.count ?? 0,
+                      userPercent: true
+                    ),
+                    _dataCellMentions(
+                        text: company.changesPercentage ?? 0,
+                        count: company.count ?? 0,
+                        userPercent: true
+                    ),
+
+                  ],
+                );
+              }).toList() ??
+                  [],
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+  DataCell _dataCell({required num text}) {
+    return DataCell(
+      Center(
+        child: Text(
+          text.toFormattedPriceForSim(),
+          style: styleGeorgiaBold(
+              fontSize: 12,
+              color: text >= 0 ? ThemeColors.success120 : ThemeColors.error120),
+        ),
+      ),
+    );
+  }
+
+  DataCell _dataCellMentions({required num text,required num count, bool userPercent = true}) {
+    return DataCell(
+      Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            userPercent ? "$text%" : "$text",
+            style: styleBaseBold(
+                fontSize: 12,
+                color: text >= 0 ? ThemeColors.success120 : ThemeColors.error120),
+          ),
+          Text(
+            "$count (Mentions)",
+            style: stylePTSansBold(
+                fontSize: 12,
+                color: ThemeColors.neutral8),
+          ),
+        ],
+      ),
+    );
+  }
+}

@@ -16,6 +16,7 @@ class CryptoItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BaseBorderContainer(
+      onTap: onTap,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

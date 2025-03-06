@@ -7,9 +7,10 @@ import 'package:stocks_news_new/ui/base/common_tab.dart';
 import 'package:stocks_news_new/ui/base/scaffold.dart';
 import 'package:stocks_news_new/ui/tabs/more/billionaires/cryptocurrencies/index.dart';
 import 'package:stocks_news_new/utils/colors.dart';
+import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/custom/base_loader_container.dart';
-import 'package:stocks_news_new/widgets/custom/refresh_indicator.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 class BillionairesIndex extends StatefulWidget {
   static const path = 'BillionairesIndex';
@@ -31,7 +32,7 @@ class _BillionairesIndexState extends State<BillionairesIndex> {
 
   void _callAPI() {
     BillionairesManager manager = context.read<BillionairesManager>();
-    manager.getBillionaires();
+    manager.getTabs();
   }
 
   @override
@@ -40,32 +41,41 @@ class _BillionairesIndexState extends State<BillionairesIndex> {
     return BaseScaffold(
       appBar: BaseAppBar(
         showBack: true,
-        title: manager.billionairesRes?.title ?? "Billionaires",
+        title: manager.categoriesData?.title ?? "Billionaires",
       ),
       body: BaseLoaderContainer(
           isLoading: manager.isLoading,
-          hasData: manager.billionairesRes != null && !manager.isLoading,
+          hasData: manager.categoriesData != null && !manager.isLoading,
           showPreparingText: true,
           error: manager.error,
           onRefresh: () {
             _callAPI();
           },
-          child: BaseScroll(children: [
-            BaseTabs(
-              data: manager.billionairesRes?.tabs ?? [],
-              textStyle:
-                  styleBaseBold(fontSize: 16, color: ThemeColors.splashBG),
-              onTap: manager.onScreenChange,
-              showDivider: false,
-              //labelPadding: EdgeInsets.zero,
-            ),
-            if (manager.selectedScreen == 0)
-              Cryptocurrencies(
-                billionairesRes: manager.billionairesRes,
+          child: Column(
+            children: [
+              BaseTabs(
+                data: manager.categoriesData?.data ?? [],
+                textStyle:
+                    styleBaseBold(fontSize: 16, color: ThemeColors.splashBG),
+                onTap: manager.onScreenChange,
+                isScrollable: manager.categoriesData?.data?.length == 2
+                    ? false
+                    : true,
+                showDivider: false,
               ),
-            if (manager.selectedScreen == 1) SizedBox(),
-            if (manager.selectedScreen == 2) SizedBox(),
-          ])),
+              SpacerVertical(height: Pad.pad10),
+              Expanded(
+                  child: BaseScroll(
+                    margin: EdgeInsets.zero,
+                      //onRefresh: manager.getCryptoCurrencies,
+                      children: [
+                if (manager.selectedScreen == 0)
+                  Cryptocurrencies(),
+                if (manager.selectedScreen == 1) SizedBox(),
+                if (manager.selectedScreen == 2) SizedBox(),
+              ]))
+            ],
+          )),
     );
   }
 }
