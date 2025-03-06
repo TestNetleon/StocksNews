@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:stocks_news_new/managers/alerts.dart';
 import 'package:stocks_news_new/managers/blogs.dart';
 import 'package:stocks_news_new/managers/faq.dart';
+import 'package:stocks_news_new/managers/feedback.dart';
 import 'package:stocks_news_new/managers/helpdesk.dart';
 import 'package:stocks_news_new/managers/home.dart';
 import 'package:stocks_news_new/managers/legal.dart';
@@ -113,10 +114,26 @@ import 'package:stocks_news_new/screens/trendingIndustries/index.dart';
 
 import 'package:stocks_news_new/ui/tabs/more/alerts/index.dart';
 import 'package:stocks_news_new/ui/tabs/more/faq/index.dart';
+import 'package:stocks_news_new/ui/tabs/more/feedback/index.dart';
+import 'package:stocks_news_new/ui/tabs/more/helpdesk/chats/index.dart';
 import 'package:stocks_news_new/ui/tabs/more/helpdesk/front/index.dart';
+import 'package:stocks_news_new/ui/tabs/more/helpdesk/listing/index.dart';
+import 'package:stocks_news_new/ui/tabs/more/helpdesk/tickets/index.dart';
 import 'package:stocks_news_new/ui/tabs/more/notificationSettings/index.dart';
 import 'package:stocks_news_new/ui/tabs/more/watchlist/index.dart';
 import 'package:stocks_news_new/ui/tabs/tools/compareStocks/compare.dart';
+import 'package:stocks_news_new/ui/tabs/tools/simulator/managers/portpolio.dart';
+import 'package:stocks_news_new/ui/tabs/tools/simulator/managers/s_open.dart';
+import 'package:stocks_news_new/ui/tabs/tools/simulator/managers/s_pending.dart';
+import 'package:stocks_news_new/ui/tabs/tools/simulator/managers/s_recurring.dart';
+import 'package:stocks_news_new/ui/tabs/tools/simulator/managers/s_transaction.dart';
+import 'package:stocks_news_new/ui/tabs/tools/simulator/managers/ticker_search.dart';
+import 'package:stocks_news_new/ui/tabs/tools/simulator/managers/trade.dart';
+import 'package:stocks_news_new/ui/tabs/tools/simulator/screens/conditionalOrder/ConditionalTrades.dart';
+import 'package:stocks_news_new/ui/tabs/tools/simulator/screens/conditionalOrder/RecurringOrder/recurring_index.dart';
+import 'package:stocks_news_new/ui/tabs/tools/simulator/screens/index.dart';
+import 'package:stocks_news_new/ui/tabs/tools/simulator/screens/tickerSearch/index.dart';
+import 'package:stocks_news_new/ui/tabs/tools/simulator/screens/tradeBuySell/index.dart';
 
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/utils.dart';
@@ -189,6 +206,9 @@ class Routes {
     FaqIndex.path: (_) => const FaqIndex(),
     HelpDeskIndex.path: (_) => const HelpDeskIndex(),
     DeletePersonalDetail.path: (_) => const DeletePersonalDetail(),
+    HelpDeskCreateIndex.path: (_) => const HelpDeskCreateIndex(),
+    RequestNewIndex.path: (_) => const RequestNewIndex(),
+    FeedbackIndex.path: (_) => const FeedbackIndex(),
 
     //--------------------------------------
 
@@ -315,6 +335,76 @@ class Routes {
             return NewsDetailIndex(slug: slug);
           },
         );
+
+
+      case HelpDeskAllChatsIndex.path:
+        return MaterialPageRoute(
+          builder: (context) {
+            final arguments = settings.arguments as Map<String, dynamic>?;
+            String ticketId = arguments?['ticketId'];
+
+            return HelpDeskAllChatsIndex(ticketId: ticketId);
+          },
+        );
+      case SimulatorIndex.path:
+        return MaterialPageRoute(
+          builder: (context) {
+            final arguments = settings.arguments as Map<String, dynamic>?;
+            int? initialIndex = arguments?['initialIndex'];
+
+            return SimulatorIndex(initialIndex: initialIndex??0);
+          },
+        );
+      case SearchTickerIndex.path:
+        return MaterialPageRoute(
+          builder: (context) {
+            final arguments = settings.arguments as Map<String, dynamic>?;
+            StockType? stockType = arguments?['stockType'];
+            return SearchTickerIndex(selectedStock: stockType);
+          },
+        );
+      case TradeBuySellIndex.path:
+        return MaterialPageRoute(
+          builder: (context) {
+            final arguments = settings.arguments as Map<String, dynamic>?;
+            StockType? stockType = arguments?['stockType'];
+            num? qty = arguments?['qty'];
+            num? editTradeID = arguments?['editTradeID'];
+            return TradeBuySellIndex(
+                qty: qty,
+                editTradeID:editTradeID,
+                selectedStock: stockType
+            );
+          },
+        );
+      case ConditionalTradesIndex.path:
+        return MaterialPageRoute(
+          builder: (context) {
+            final arguments = settings.arguments as Map<String, dynamic>?;
+            ConditionType? conditionType = arguments?['conditionType'];
+            num? qty = arguments?['qty'];
+            num? editTradeID = arguments?['editTradeID'];
+            String? tradeType = arguments?['tradeType'];
+            return ConditionalTradesIndex(
+              qty: qty,
+              editTradeID:editTradeID,
+              conditionalType: conditionType,
+              tradeType: tradeType,
+            );
+          },
+        );
+
+      case RecurringIndex.path:
+        return MaterialPageRoute(
+          builder: (context) {
+            final arguments = settings.arguments as Map<String, dynamic>?;
+            num? editTradeID = arguments?['editTradeID'];
+            return RecurringIndex(
+              editTradeID:editTradeID,
+            );
+          },
+        );
+
 
       case BlogsDetailIndex.path:
         return MaterialPageRoute(
@@ -561,6 +651,14 @@ class Routes {
       ChangeNotifierProvider(create: (_) => AlertsWatchlistManager()),
       ChangeNotifierProvider(create: (_) => FaqManager()),
       ChangeNotifierProvider(create: (_) => NewHelpDeskManager()),
+      ChangeNotifierProvider(create: (_) => PortfolioManager()),
+      ChangeNotifierProvider(create: (_) => SOpenManager()),
+      ChangeNotifierProvider(create: (_) => SPendingManager()),
+      ChangeNotifierProvider(create: (_) => SRecurringManager()),
+      ChangeNotifierProvider(create: (_) => STransactionManager()),
+      ChangeNotifierProvider(create: (_) => TradeManager()),
+      ChangeNotifierProvider(create: (_) => TickerSearchManager()),
+      ChangeNotifierProvider(create: (_) => FeedbackManager()),
       ChangeNotifierProvider(create: (_) => MostBearishManager()),
       ChangeNotifierProvider(create: (_) => TodaysGainerManager()),
       ChangeNotifierProvider(create: (_) => AIManager()),

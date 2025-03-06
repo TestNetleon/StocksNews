@@ -1,0 +1,273 @@
+
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:stocks_news_new/ui/base/bottom_sheet.dart';
+import 'package:stocks_news_new/ui/base/button.dart';
+import 'package:stocks_news_new/ui/tabs/tools/simulator/managers/trade.dart';
+import 'package:stocks_news_new/ui/tabs/tools/simulator/screens/index.dart';
+import 'package:stocks_news_new/utils/colors.dart';
+import 'package:stocks_news_new/utils/constants.dart';
+import 'package:stocks_news_new/utils/theme.dart';
+import 'package:stocks_news_new/widgets/cache_network_image.dart';
+import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
+
+Future showTsOrderSuccessSheet(
+    SummaryOrderNew? order, StockType? selectedStock) async {
+
+  await BaseBottomSheet().bottomSheet(
+      barrierColor: ThemeColors.neutral5.withValues(alpha: 0.7),
+      child:SuccessTradeSheet(
+        order: order,
+        selectedStock: selectedStock,
+        close: true,
+      )
+  );
+/*  await showModalBottomSheet(
+    useSafeArea: true,
+    shape: const RoundedRectangleBorder(
+      borderRadius: BorderRadius.only(
+        topLeft: Radius.circular(5),
+        topRight: Radius.circular(5),
+      ),
+    ),
+    backgroundColor: ThemeColors.transparent,
+    isScrollControlled: true,
+    context: navigatorKey.currentContext!,
+    builder: (context) {
+      return SuccessTradeSheet(
+        order: order,
+        selectedStock: selectedStock,
+        close: true,
+      );
+    },
+  );*/
+}
+
+class SuccessTradeSheet extends StatelessWidget {
+  final SummaryOrderNew? order;
+  final StockType? selectedStock;
+  final bool close;
+  const SuccessTradeSheet(
+      {super.key, this.order, required this.selectedStock, this.close = false});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      constraints: BoxConstraints(maxHeight: ScreenUtil().screenHeight - 30),
+      /*decoration: BoxDecoration(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(10.sp),
+          topRight: Radius.circular(10.sp),
+        ),
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [
+            selectedStock == StockType.buy
+                ? ThemeColors.bottomsheetGradient
+                : const Color.fromARGB(255, 35, 0, 0),
+            Colors.black,
+          ],
+        ),
+        color: ThemeColors.background,
+        border: const Border(top: BorderSide(color: ThemeColors.greyBorder),),
+      ),*/
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    width: 38,
+                    height: 38,
+                    child: CachedNetworkImagesWidget(order?.image),
+                  ),
+                  SpacerHorizontal(width: Pad.pad10),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        order?.symbol ?? 'N/A',
+                        style: stylePTSansBold(fontSize: 16,color: ThemeColors.splashBG),
+                      ),
+                      Text(
+                        order?.name ?? 'N/A',
+                        style: stylePTSansRegular(
+                          fontSize: 14,
+                          color: ThemeColors.neutral40,
+                        ),
+                      ),
+                    ],
+                  )
+                ],
+              ),
+              const SpacerVertical(height: Pad.pad24),
+              Text(
+                'Order Detail',
+                style: styleGeorgiaBold(fontSize: 20,color: ThemeColors.splashBG),
+              ),
+              const SpacerVertical(height: Pad.pad10),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "QTY",
+                    style: stylePTSansBold(fontSize: 16,color: ThemeColors.splashBG),
+
+                  ),
+                  Flexible(
+                    child: Text(
+                      "${order?.shares?.toCurrency()}",
+                      style: stylePTSansRegular(fontSize: 16,color: ThemeColors.splashBG),
+
+                    ),
+                  ),
+                ],
+              ),
+              Divider(
+                color: ThemeColors.neutral5,
+                thickness: 1,
+                height: 15,
+              ),
+              Visibility(
+                visible: order?.currentPrice != null,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "Executed at",
+                      style: stylePTSansBold(fontSize: 16,color: ThemeColors.splashBG),
+
+                    ),
+                    Flexible(
+                      child: Text(
+                        "${order?.currentPrice?.toFormattedPrice()}",
+                        style: stylePTSansRegular(fontSize: 16,color: ThemeColors.splashBG),
+
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Visibility(
+                visible: order?.currentPrice != null,
+                child: Divider(
+                  color: ThemeColors.neutral5,
+                  thickness: 1,
+                  height: 15,
+                ),
+              ),
+              Visibility(
+                visible: order?.currentPrice != null,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "Order Value",
+                      style: stylePTSansBold(fontSize: 16,color: ThemeColors.splashBG),
+
+                    ),
+                    Flexible(
+                      child: Text(
+                        ((order?.currentPrice ?? 0) * (order?.shares ?? 0))
+                            .toFormattedPrice(),
+                        style: stylePTSansRegular(fontSize: 16,color: ThemeColors.splashBG),
+
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Visibility(
+                visible: order?.currentPrice != null,
+                child: Divider(
+                  color: ThemeColors.neutral5,
+                  thickness: 1,
+                  height: 15,
+                ),
+              ),
+              Visibility(
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "Order Type",
+                          style: stylePTSansBold(fontSize: 16,color: ThemeColors.splashBG),
+
+                        ),
+                        Text(
+                          selectedStock == StockType.buy
+                              ? "Buy"
+                              : selectedStock == StockType.sell
+                                  ? 'Sell'
+                                  : selectedStock == StockType.short
+                                      ? 'Short'
+                                      : "Buy To Cover",
+                          style: stylePTSansRegular(fontSize: 16,color: ThemeColors.splashBG),
+
+                        ),
+                      ],
+                    ),
+                    Divider(
+                      color: ThemeColors.neutral5,
+                      thickness: 1,
+                      height: 15,
+                    ),
+                  ],
+                ),
+              ),
+              Visibility(
+                visible: order?.date != null && order?.date != '',
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "Order Date/Time",
+                          style: stylePTSansBold(fontSize: 16,color: ThemeColors.splashBG),
+
+                        ),
+                        Text(
+                          order?.date ?? '',
+                          style: stylePTSansRegular(fontSize: 16,color: ThemeColors.splashBG),
+
+                        ),
+                      ],
+                    ),
+                    Divider(
+                      color: ThemeColors.neutral5,
+                      thickness: 1,
+                      height: 15,
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          const SpacerVertical(),
+          BaseButton(
+            text: close ? "Go to Orders" : "My Orders",
+            textColor: ThemeColors.splashBG,
+            onPressed: () {
+              Navigator.pop(context);
+              if (!close) {
+                Navigator.pushNamed(context, SimulatorIndex.path);
+
+              }
+            },
+          ),
+          const SpacerVertical(height: 20),
+        ],
+      ),
+    );
+  }
+}

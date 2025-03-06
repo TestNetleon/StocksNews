@@ -21,6 +21,7 @@ import 'package:stocks_news_new/ui/subscription/manager.dart';
 import 'package:stocks_news_new/ui/tabs/more/alerts/index.dart';
 import 'package:stocks_news_new/ui/tabs/more/articles/index.dart';
 import 'package:stocks_news_new/ui/tabs/more/faq/index.dart';
+import 'package:stocks_news_new/ui/tabs/more/feedback/index.dart';
 import 'package:stocks_news_new/ui/tabs/more/helpdesk/front/index.dart';
 import 'package:stocks_news_new/ui/tabs/more/news/index.dart';
 import 'package:stocks_news_new/ui/tabs/more/notificationSettings/index.dart';
@@ -134,11 +135,19 @@ class UserManager extends ChangeNotifier {
     Navigator.pushNamed(navigatorKey.currentContext!, FaqIndex.path);
   }
 
-  Future navigateToContactUs() async {
-    await askLoginScreen();
+  Future navigateToHelpDesk() async{
+    askLoginScreen();
+    if (_user == null) return;
+    Navigator.pushNamed(navigatorKey.currentContext!, HelpDeskIndex.path);
+
+  }
+
+  Future navigateToFeedback() async{
+    askLoginScreen();
     if (_user == null) return;
 
-    Navigator.pushNamed(navigatorKey.currentContext!, HelpDeskIndex.path);
+    Navigator.pushNamed(navigatorKey.currentContext!, FeedbackIndex.path);
+
   }
 
 //MARK: Phone Login

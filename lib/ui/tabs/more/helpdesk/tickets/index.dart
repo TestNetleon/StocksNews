@@ -1,24 +1,26 @@
-/*
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
-import 'package:stocks_news_new/providers/help_desk.dart';
-import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
+import 'package:stocks_news_new/managers/helpdesk.dart';
+import 'package:stocks_news_new/ui/base/app_bar.dart';
+import 'package:stocks_news_new/ui/base/heading.dart';
+import 'package:stocks_news_new/ui/base/scaffold.dart';
+import 'package:stocks_news_new/ui/tabs/more/helpdesk/tickets/item.dart';
 import 'package:stocks_news_new/utils/colors.dart';
+import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
-import 'package:stocks_news_new/widgets/base_container.dart';
-import 'item.dart';
 
-class HelpDeskCreateTicket extends StatelessWidget {
-  const HelpDeskCreateTicket({super.key});
+class HelpDeskCreateIndex extends StatelessWidget {
+  static const String path = "HelpDeskCreate";
+
+  const HelpDeskCreateIndex({super.key});
 
   @override
   Widget build(BuildContext context) {
-    NewHelpDeskProvider provider = context.watch<NewHelpDeskProvider>();
-    return BaseContainer(
-      appBar: AppBarHome(
-        isPopBack: true,
-        title: provider.extraTickets?.title ?? "Help Desk",
+    NewHelpDeskManager manager = context.watch<NewHelpDeskManager>();
+    return BaseScaffold(
+      appBar: BaseAppBar(
+        showBack: true,
+        title: manager.data?.title,
       ),
       body: Column(
         children: [
@@ -27,26 +29,26 @@ class HelpDeskCreateTicket extends StatelessWidget {
           ),
           Container(
             constraints: const BoxConstraints(maxHeight: 400),
-            decoration: const BoxDecoration(
-              color: ThemeColors.primaryLight,
+            decoration: BoxDecoration(
+              color: ThemeColors.white,
               borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(20),
-                topRight: Radius.circular(20),
+                topLeft: Radius.circular(Pad.pad24),
+                topRight: Radius.circular(Pad.pad24),
               ),
+              border: Border.all(color: ThemeColors.neutral5)
             ),
-            padding: const EdgeInsets.all(20),
+            padding: const EdgeInsets.symmetric(horizontal: Pad.pad16,vertical: Pad.pad10),
             child: SingleChildScrollView(
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  ScreenTitle(
+                  BaseHeading(
                     title: 'Select Ticket Subject',
-                    divider: false,
-                    dividerPadding: EdgeInsets.only(bottom: 20),
                   ),
-                  provider.data?.subjects == null ||
-                          provider.data?.subjects?.isEmpty == true
+                  manager.data?.helpDesk?.subjects == null ||
+                      manager.data?.helpDesk?.subjects?.isEmpty == true
                       ? Text(
-                          provider.errorSubject ?? "N/A",
+                    manager.errorSubject ?? "N/A",
                           style: styleSansBold(color: ThemeColors.white),
                         )
                       : HelpDeskReasonsNew(),
@@ -59,4 +61,3 @@ class HelpDeskCreateTicket extends StatelessWidget {
     );
   }
 }
-*/
