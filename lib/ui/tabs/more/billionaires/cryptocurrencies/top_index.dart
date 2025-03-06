@@ -15,10 +15,7 @@ class TopBilIndex extends StatelessWidget {
         shrinkWrap: true,
         itemBuilder: (context, index) {
           RecentMentionsRes? item = topBils?.data?[index];
-          return CryptoItem(
-            item: item,
-            onTap: () {},
-          );
+          return SizedBox();
         },
         separatorBuilder: (context, index) {
           return SpacerVertical(height: Pad.pad3);
