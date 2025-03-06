@@ -28,49 +28,38 @@ class SDTabs extends StatelessWidget {
           height: 1,
           thickness: 1,
         ),
-        Row(
-          children: [
-            GestureDetector(
-              onTap: () {
-                if (manager.data?.tabs?.isEmpty ??
-                    false || manager.data?.tabs == null) {
-                  return;
-                }
-                Navigator.push(
-                  context,
-                  createRoute(
-                    SDMenuSheet(
-                      tabs: manager.data!.tabs!,
-                    ),
+        BaseTabs(
+          leftChild: GestureDetector(
+            onTap: () {
+              if (manager.data?.tabs?.isEmpty ??
+                  false || manager.data?.tabs == null) {
+                return;
+              }
+              Navigator.push(
+                context,
+                createRoute(
+                  SDMenuSheet(
+                    tabs: manager.data!.tabs!,
                   ),
-                );
-              },
-              child: Container(
-                color: Colors.white,
-                padding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-                child: Image.asset(
-                  Images.menu,
-                  height: 18,
-                  width: 18,
                 ),
+              );
+            },
+            child: Container(
+              color: Colors.white,
+              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+              child: Image.asset(
+                Images.menu,
+                height: 18,
+                width: 18,
               ),
             ),
-            Flexible(
-              child: BaseTabs(
-                key: ValueKey(manager.selectedIndex),
-                labelPadding: EdgeInsets.zero,
-                showDivider: false,
-                data: tabs!,
-                selectedIndex: manager.selectedIndex,
-                onTap: manager.onTabChange,
-              ),
-            ),
-          ],
-        ),
-        Divider(
-          color: ThemeColors.neutral5,
-          height: 1,
-          thickness: 1,
+          ),
+          key: ValueKey(manager.selectedIndex),
+          labelPadding: EdgeInsets.zero,
+          unselectedBold: false,
+          data: tabs!,
+          selectedIndex: manager.selectedIndex,
+          onTap: manager.onTabChange,
         ),
       ],
     );

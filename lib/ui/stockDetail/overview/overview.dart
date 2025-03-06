@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:stocks_news_new/managers/aiAnalysis/ai.dart';
 import 'package:stocks_news_new/managers/stockDetail/stock.detail.dart';
 import 'package:stocks_news_new/models/ai_analysis.dart';
 import 'package:stocks_news_new/ui/aiAnalysis/index.dart';
@@ -96,6 +97,8 @@ class SDOverview extends StatelessWidget {
                 title: aiAnalysis?.title,
                 margin: EdgeInsets.symmetric(horizontal: Pad.pad16),
                 viewMore: () {
+                  AIManager aiManager = context.read<AIManager>();
+                  aiManager.setFromSD(true);
                   if (manager.selectedStock == null ||
                       manager.selectedStock == '') {
                     return;

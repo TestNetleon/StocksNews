@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/managers/signals.dart';
 import 'package:stocks_news_new/ui/base/app_bar.dart';
 import 'package:stocks_news_new/ui/base/scaffold.dart';
-import '../../../utils/theme.dart';
 import '../../base/common_tab.dart';
 import 'insiders/insiders.dart';
 import 'politicians/politicians.dart';
@@ -38,7 +37,7 @@ class _SignalsIndexState extends State<SignalsIndex> {
         children: [
           BaseTabs(
             data: manager.tabs,
-            textStyle: styleBaseBold(fontSize: 16),
+            // textStyle: styleBaseBold(fontSize: 16),
             onTap: manager.onScreenChange,
           ),
           if (manager.selectedScreen == 0)

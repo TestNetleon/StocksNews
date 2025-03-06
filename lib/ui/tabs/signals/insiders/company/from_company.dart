@@ -5,6 +5,7 @@ import 'package:stocks_news_new/managers/signals.dart';
 import 'package:stocks_news_new/models/my_home_premium.dart';
 import 'package:stocks_news_new/ui/base/load_more.dart';
 import 'package:stocks_news_new/ui/base/scaffold.dart';
+import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import '../../../../../widgets/custom/base_loader_container.dart';
@@ -76,7 +77,10 @@ class _SignalInsidersCompanyIndexState
                   padding: const EdgeInsets.only(top: 3),
                   child: Text(
                     widget.data.name ?? '',
-                    style: styleBaseRegular(fontSize: 14),
+                    style: styleBaseRegular(
+                      fontSize: 14,
+                      color: ThemeColors.neutral40,
+                    ),
                   ),
                 ),
                 SignalInsiderInfo(

@@ -21,11 +21,6 @@ class SDStocksScore extends StatelessWidget {
         children: [
           SpacerVertical(height: Pad.pad24),
           BaseHeading(title: stockScore?.title),
-          SDColumnContainer(
-            label: stockScore?.altmanZScore?.title ?? '',
-            value: stockScore?.altmanZScore?.value,
-            padding: EdgeInsets.only(bottom: Pad.pad8),
-          ),
           IntrinsicHeight(
             child: Row(
               children: [

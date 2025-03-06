@@ -168,6 +168,7 @@ class ToolsManager extends ChangeNotifier {
     } catch (e) {
       _portfolioData = null;
       _errorPortfolio = Const.errSomethingWrong;
+      Utils().showLog("Error in ${Apis.getPortfolio}: $e");
     } finally {
       setStatusPortfolio(Status.loaded);
     }

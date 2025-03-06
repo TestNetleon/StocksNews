@@ -6,6 +6,7 @@ import 'package:stocks_news_new/ui/base/load_more.dart';
 import 'package:stocks_news_new/ui/base/scaffold.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
+import '../../../../../utils/colors.dart';
 import '../../../../../widgets/custom/base_loader_container.dart';
 import '../../../../base/app_bar.dart';
 import '../../../../base/base_list_divider.dart';
@@ -70,11 +71,15 @@ class _SignalInsidersReportingIndexState
                   padding: const EdgeInsets.only(top: 3),
                   child: Text(
                     widget.data.typeOfOwner ?? '',
-                    style: styleBaseRegular(fontSize: 14),
+                    style: styleBaseRegular(
+                      fontSize: 14,
+                      color: ThemeColors.neutral40,
+                    ),
                   ),
                 ),
                 SignalInsiderInfo(
-                    info: manager.signalInsidersReportingData?.additionalInfo),
+                  info: manager.signalInsidersReportingData?.additionalInfo,
+                ),
               ],
             ),
             Expanded(

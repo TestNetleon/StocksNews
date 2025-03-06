@@ -55,8 +55,6 @@ class Apis {
   static const cryptoChart = "/crypto/crypto-chart";
   static const cryptoViewAll = "//crypto/crypto-view-all";
 
-
-
   //MARK: Simulator API
   static const tsUserInfo = "/simulator/user-info";
   static const tsTopBar = "/simulator/trade/stock-detail-topbar";
@@ -152,12 +150,14 @@ class Apis {
   static const mostVolatile = "/most-volatile-stocks";
   static const unusualTrading = "/unusual-trading-volume";
   static const lowPricedStocksUnder = "/low-priced-stocks-under";
-
+  //
   static const mostActivePennyStocks = "/most-active-penny-stocks";
   static const mostPopularPennyStocks = "/most-popular-penny-stocks";
   static const topTodaysPennyStock = "/top-todays-penny-stock";
   static const dividendsAnnouncements = "/dividends-announcements";
   static const earningAnnouncements = "/earning-announcements";
+  static const sectors = "/sectors";
+  static const industries = "/industries";
 
   //AI
   static const aiAnalysis = '/ai-analysis';

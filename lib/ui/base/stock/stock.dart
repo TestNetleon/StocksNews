@@ -112,108 +112,130 @@ class _BaseStockItemState extends State<BaseStockItem> {
               ),
               const SpacerHorizontal(width: 16),
               // widget.data.showMore == true
-              widget.expandable != null
-                  ? Row(
-                      children: [
-                        Visibility(
-                          visible: widget.data.displayPrice != null &&
-                              widget.data.displayPrice != '',
-                          child: Container(
-                            margin: EdgeInsets.only(right: 8),
-                            child: Text(
-                              textAlign: TextAlign.center,
-                              widget.data.displayPrice ?? '',
-                              style: styleBaseBold(fontSize: 16),
-                            ),
-                          ),
-                        ),
-                        InkWell(
-                          borderRadius: BorderRadius.circular(4),
-                          onTap: () => _toggleOpen(widget.index),
-                          child: Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(4),
-                              border: Border.all(color: ThemeColors.neutral5),
-                            ),
-                            child: Image.asset(
-                              _openIndex == widget.index
-                                  ? Images.arrowDOWN
-                                  : Images.arrowUP,
-                              height: 24,
-                              width: 24,
-                            ),
-                          ),
-                        ),
-                      ],
-                    )
-                  : Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        Visibility(
-                          visible: widget.data.displayPrice != null &&
-                              widget.data.displayPrice != '',
-                          child: Text(
-                            widget.data.displayPrice ?? '',
-                            style: styleBaseBold(fontSize: 16),
-                          ),
-                        ),
-                        Visibility(
-                          visible: widget.data.mentionCount != null,
-                          child: Text(
-                            '${widget.data.mentionCount}',
-                            style: styleBaseBold(fontSize: 16),
-                          ),
-                        ),
-                        Visibility(
-                          visible: widget.data.mentionDate != null,
-                          child: Text(
-                            widget.data.mentionDate ?? '',
-                            style: styleBaseRegular(
-                              fontSize: 13,
-                              color: ThemeColors.neutral40,
-                            ),
-                          ),
-                        ),
-                        Visibility(
-                          visible: widget.data.displayChange != null &&
-                              widget.data.displayChange != '',
-                          child: Container(
-                            margin: EdgeInsets.only(top: 2),
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Text(
-                                  widget.data.displayChange ?? '',
-                                  style: styleBaseSemiBold(
-                                    fontSize: 13,
-                                    color:
-                                        (widget.data.changesPercentage ?? 0) < 0
-                                            ? ThemeColors.darkRed
-                                            : ThemeColors.darkGreen,
-                                  ),
-                                ),
-                                const SpacerHorizontal(width: 5),
-                                Visibility(
-                                  visible:
-                                      widget.data.changesPercentage != null,
-                                  child: Text(
-                                    "(${widget.data.changesPercentage ?? ''}%)",
-                                    style: styleBaseSemiBold(
-                                      fontSize: 13,
-                                      color: num.parse(
-                                                  "${widget.data.changesPercentage ?? 0}") <
-                                              0
-                                          ? ThemeColors.darkRed
-                                          : ThemeColors.darkGreen,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
+              // widget.expandable != null
+              //     ? Row(
+              //         children: [
+              //           Visibility(
+              //             visible: widget.data.displayPrice != null &&
+              //                 widget.data.displayPrice != '',
+              //             child: Container(
+              //               margin: EdgeInsets.only(right: 8),
+              //               child: Text(
+              //                 textAlign: TextAlign.center,
+              //                 widget.data.displayPrice ?? '',
+              //                 style: styleBaseBold(fontSize: 16),
+              //               ),
+              //             ),
+              //           ),
+              //           InkWell(
+              //             borderRadius: BorderRadius.circular(4),
+              //             onTap: () => _toggleOpen(widget.index),
+              //             child: Container(
+              //               decoration: BoxDecoration(
+              //                 borderRadius: BorderRadius.circular(4),
+              //                 border: Border.all(color: ThemeColors.neutral5),
+              //               ),
+              //               child: Image.asset(
+              //                 _openIndex == widget.index
+              //                     ? Images.arrowDOWN
+              //                     : Images.arrowUP,
+              //                 height: 24,
+              //                 width: 24,
+              //               ),
+              //             ),
+              //           ),
+              //         ],
+              //       )
+              //     :
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Visibility(
+                    visible: widget.data.displayPrice != null &&
+                        widget.data.displayPrice != '',
+                    child: Text(
+                      widget.data.displayPrice ?? '',
+                      style: styleBaseBold(fontSize: 16),
                     ),
+                  ),
+                  Visibility(
+                    visible: widget.data.mentionCount != null,
+                    child: Text(
+                      '${widget.data.mentionCount}',
+                      style: styleBaseBold(fontSize: 16),
+                    ),
+                  ),
+                  Visibility(
+                    visible: widget.data.mentionDate != null,
+                    child: Text(
+                      widget.data.mentionDate ?? '',
+                      style: styleBaseRegular(
+                        fontSize: 13,
+                        color: ThemeColors.neutral40,
+                      ),
+                    ),
+                  ),
+                  Visibility(
+                    visible: widget.data.displayChange != null &&
+                        widget.data.displayChange != '',
+                    child: Container(
+                      margin: EdgeInsets.only(top: 2),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            widget.data.displayChange ?? '',
+                            style: styleBaseSemiBold(
+                              fontSize: 13,
+                              color: (widget.data.changesPercentage ?? 0) < 0
+                                  ? ThemeColors.darkRed
+                                  : ThemeColors.darkGreen,
+                            ),
+                          ),
+                          const SpacerHorizontal(width: 5),
+                          Visibility(
+                            visible: widget.data.changesPercentage != null,
+                            child: Text(
+                              "(${widget.data.changesPercentage ?? ''}%)",
+                              style: styleBaseSemiBold(
+                                fontSize: 13,
+                                color: num.parse(
+                                            "${widget.data.changesPercentage ?? 0}") <
+                                        0
+                                    ? ThemeColors.darkRed
+                                    : ThemeColors.darkGreen,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              Visibility(
+                visible: widget.expandable != null,
+                child: Container(
+                  margin: EdgeInsets.only(left: 8),
+                  child: InkWell(
+                    borderRadius: BorderRadius.circular(4),
+                    onTap: () => _toggleOpen(widget.index),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(4),
+                        border: Border.all(color: ThemeColors.neutral5),
+                      ),
+                      child: Image.asset(
+                        _openIndex == widget.index
+                            ? Images.arrowDOWN
+                            : Images.arrowUP,
+                        height: 24,
+                        width: 24,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
             ],
           ),
           _bottomWidget(
@@ -263,7 +285,6 @@ class _BaseStockItemState extends State<BaseStockItem> {
               ),
             ),
           Visibility(
-            // visible: widget.data.showMore == true,
             visible: widget.expandable != null,
             child: AnimatedSize(
               duration: const Duration(milliseconds: 150),

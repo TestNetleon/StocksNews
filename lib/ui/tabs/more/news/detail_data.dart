@@ -12,6 +12,7 @@ import 'package:stocks_news_new/ui/base/news_item.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/cache_network_image.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:widget_zoom/widget_zoom.dart';
 import '../../../../models/market/market_res.dart';
 import '../../../../utils/colors.dart';
@@ -166,13 +167,10 @@ class NewsDetailData extends StatelessWidget {
             onTap: () {
               openUrl(postDetail?.uri);
             },
-            child: Padding(
-              padding: const EdgeInsets.only(bottom: Pad.pad24, top: 40),
-              child: Text(
-                'Read full news..',
-                style: styleBaseRegular(
-                  color: ThemeColors.accent,
-                ),
+            child: Text(
+              'Read full news..',
+              style: styleBaseRegular(
+                color: ThemeColors.accent,
               ),
             ),
           ),
@@ -186,9 +184,11 @@ class NewsDetailData extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              SpacerVertical(height: 20),
               BaseHeading(
                 title: manager.newsDetail?.moreNews?.title,
               ),
+              SpacerVertical(height: 10),
               Column(
                 children: List.generate(
                   manager.newsDetail?.moreNews?.data?.length ?? 0,

@@ -3,6 +3,7 @@ import 'package:stocks_news_new/models/ticker.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 class SignalInsiderInfo extends StatelessWidget {
   final List<AdditionalInfoRes>? info;
@@ -30,7 +31,7 @@ class SignalInsiderInfo extends StatelessWidget {
                   ),
                   margin: EdgeInsets.only(
                       right: index == ((info?.length ?? 0) - 1) ? 0 : Pad.pad8),
-                  padding: EdgeInsets.all(Pad.pad16),
+                  padding: EdgeInsets.all(12),
                   child: Column(
                     children: [
                       Text(
@@ -39,12 +40,13 @@ class SignalInsiderInfo extends StatelessWidget {
                           color: ThemeColors.neutral80,
                         ),
                       ),
+                      SpacerVertical(height: 8),
                       Text(
                         info?[index].value ?? '',
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
+                        // maxLines: 1,
+                        // overflow: TextOverflow.ellipsis,
                         style: styleBaseBold(
-                          fontSize: 22,
+                          fontSize: 20,
                         ),
                       ),
                     ],

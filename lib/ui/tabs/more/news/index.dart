@@ -4,7 +4,6 @@ import 'package:stocks_news_new/managers/news.dart';
 import 'package:stocks_news_new/ui/base/app_bar.dart';
 import 'package:stocks_news_new/ui/base/scaffold.dart';
 import 'package:stocks_news_new/widgets/custom/base_loader_container.dart';
-import '../../../../utils/theme.dart';
 import '../../../base/common_tab.dart';
 import 'news.dart';
 
@@ -48,7 +47,7 @@ class _CategoriesNewsIndexState extends State<CategoriesNewsIndex> {
                     children: [
                       BaseTabs(
                         data: manager.categoriesData!.data!,
-                        textStyle: styleBaseBold(fontSize: 16),
+                        // textStyle: styleBaseBold(fontSize: 16),
                         onTap: manager.onChangeTab,
                         isScrollable: manager.categoriesData?.data?.length == 2
                             ? false
