@@ -9,6 +9,10 @@ import 'package:stocks_news_new/managers/legal.dart';
 import 'package:stocks_news_new/managers/market/alerts_watchlist_action.dart';
 import 'package:stocks_news_new/managers/market/gapUpDown/gap_down.dart';
 import 'package:stocks_news_new/managers/market/gapUpDown/gap_up.dart';
+import 'package:stocks_news_new/managers/market/highLowPe/high_pe.dart';
+import 'package:stocks_news_new/managers/market/highLowPe/high_pe_growth.dart';
+import 'package:stocks_news_new/managers/market/highLowPe/low_pe.dart';
+import 'package:stocks_news_new/managers/market/highLowPe/low_pe_growth.dart';
 import 'package:stocks_news_new/managers/market/market.dart';
 import 'package:stocks_news_new/managers/market/trending/most_bearish.dart';
 import 'package:stocks_news_new/managers/market/trending/most_bullish.dart';
@@ -540,9 +544,7 @@ class Routes {
       //MARK: New UI providers
       ChangeNotifierProvider(create: (_) => OnboardingManager()),
       ChangeNotifierProvider(create: (_) => MyHomeManager()),
-      ChangeNotifierProvider(create: (_) => MarketManager()),
       // ChangeNotifierProvider(create: (_) => AlertsWatchlistAction()),
-      ChangeNotifierProvider(create: (_) => MostBullishManager()),
       ChangeNotifierProvider(create: (_) => NotificationSettingsManager()),
       ChangeNotifierProvider(create: (_) => UserManager()),
       ChangeNotifierProvider(create: (_) => ToolsManager()),
@@ -560,14 +562,23 @@ class Routes {
       ChangeNotifierProvider(create: (_) => WatchListManagers()),
       ChangeNotifierProvider(create: (_) => AlertsWatchlistManager()),
       ChangeNotifierProvider(create: (_) => FaqManager()),
+      ChangeNotifierProvider(create: (_) => AIManager()),
       ChangeNotifierProvider(create: (_) => NewHelpDeskManager()),
+
+      // MARKET DATA Start ---------------
+      ChangeNotifierProvider(create: (_) => MarketManager()),
+      ChangeNotifierProvider(create: (_) => MostBullishManager()),
       ChangeNotifierProvider(create: (_) => MostBearishManager()),
       ChangeNotifierProvider(create: (_) => TodaysGainerManager()),
-      ChangeNotifierProvider(create: (_) => AIManager()),
       ChangeNotifierProvider(create: (_) => TodaysLosersManager()),
       ChangeNotifierProvider(create: (_) => TodaysBreakoutManager()),
       ChangeNotifierProvider(create: (_) => GapUpManager()),
       ChangeNotifierProvider(create: (_) => GapDownManager()),
+      ChangeNotifierProvider(create: (_) => HighPeManager()),
+      ChangeNotifierProvider(create: (_) => LowPeManager()),
+      ChangeNotifierProvider(create: (_) => HighPeGrowthManager()),
+      ChangeNotifierProvider(create: (_) => LowPeGrowthManager()),
+      // MARKET DATA End ---------------
     ];
   }
 }

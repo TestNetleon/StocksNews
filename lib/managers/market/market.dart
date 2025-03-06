@@ -10,6 +10,10 @@ import 'package:stocks_news_new/managers/market/gainer&losers/todays_gainer.dart
 import 'package:stocks_news_new/managers/market/gainer&losers/todays_losers.dart';
 import 'package:stocks_news_new/managers/market/gapUpDown/gap_down.dart';
 import 'package:stocks_news_new/managers/market/gapUpDown/gap_up.dart';
+import 'package:stocks_news_new/managers/market/highLowPe/high_pe.dart';
+import 'package:stocks_news_new/managers/market/highLowPe/high_pe_growth.dart';
+import 'package:stocks_news_new/managers/market/highLowPe/low_pe.dart';
+import 'package:stocks_news_new/managers/market/highLowPe/low_pe_growth.dart';
 import 'package:stocks_news_new/models/market/market_res.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
@@ -232,6 +236,14 @@ class MarketManager extends ChangeNotifier {
       context.read<GapUpManager>().getData(filter: true);
     } else if (marketIndex == 2 && marketInnerIndex == 1) {
       context.read<GapDownManager>().getData(filter: true);
+    } else if (marketIndex == 3 && marketInnerIndex == 0) {
+      context.read<HighPeManager>().getData(filter: true);
+    } else if (marketIndex == 3 && marketInnerIndex == 1) {
+      context.read<LowPeManager>().getData(filter: true);
+    } else if (marketIndex == 3 && marketInnerIndex == 2) {
+      context.read<HighPeGrowthManager>().getData(filter: true);
+    } else if (marketIndex == 3 && marketInnerIndex == 3) {
+      context.read<LowPeGrowthManager>().getData(filter: true);
     } else {
       //
     }

@@ -8,6 +8,10 @@ import 'package:stocks_news_new/ui/tabs/market/gainer&Losers/todays_breakout.dar
 import 'package:stocks_news_new/ui/tabs/market/gainer&Losers/todays_losers.dart';
 import 'package:stocks_news_new/ui/tabs/market/gapUpDown/gap_down.dart';
 import 'package:stocks_news_new/ui/tabs/market/gapUpDown/gap_up.dart';
+import 'package:stocks_news_new/ui/tabs/market/highLowPe/high_pe.dart';
+import 'package:stocks_news_new/ui/tabs/market/highLowPe/high_pe_growth.dart';
+import 'package:stocks_news_new/ui/tabs/market/highLowPe/low_pe.dart';
+import 'package:stocks_news_new/ui/tabs/market/highLowPe/low_pe_growth.dart';
 import 'package:stocks_news_new/ui/tabs/market/market_tabs.dart';
 import 'package:stocks_news_new/ui/tabs/market/trending/most_bearish.dart';
 import 'package:stocks_news_new/ui/tabs/market/trending/most_bullish.dart';
@@ -50,34 +54,28 @@ class _MarketIndexState extends State<MarketIndex> {
     } else if (_screenIndex == 2) {
       // industries
       return Container();
-    } else if (_screenIndex == 0 &&
-        _marketIndex == 0 &&
-        _marketInnerIndex == 0) {
+    } else if (_marketIndex == 0 && _marketInnerIndex == 0) {
       return MostBullish();
-    } else if (_screenIndex == 0 &&
-        _marketIndex == 0 &&
-        _marketInnerIndex == 1) {
+    } else if (_marketIndex == 0 && _marketInnerIndex == 1) {
       return MostBearish();
-    } else if (_screenIndex == 0 &&
-        _marketIndex == 1 &&
-        _marketInnerIndex == 0) {
+    } else if (_marketIndex == 1 && _marketInnerIndex == 0) {
       return TodaysGainer();
-    } else if (_screenIndex == 0 &&
-        _marketIndex == 1 &&
-        _marketInnerIndex == 1) {
+    } else if (_marketIndex == 1 && _marketInnerIndex == 1) {
       return TodaysLosers();
-    } else if (_screenIndex == 0 &&
-        _marketIndex == 1 &&
-        _marketInnerIndex == 2) {
+    } else if (_marketIndex == 1 && _marketInnerIndex == 2) {
       return TodaysBreakoutStocks();
-    } else if (_screenIndex == 0 &&
-        _marketIndex == 2 &&
-        _marketInnerIndex == 0) {
+    } else if (_marketIndex == 2 && _marketInnerIndex == 0) {
       return GapUp();
-    } else if (_screenIndex == 0 &&
-        _marketIndex == 2 &&
-        _marketInnerIndex == 1) {
+    } else if (_marketIndex == 2 && _marketInnerIndex == 1) {
       return GapDown();
+    } else if (_marketIndex == 3 && _marketInnerIndex == 0) {
+      return HighPE();
+    } else if (_marketIndex == 3 && _marketInnerIndex == 1) {
+      return LowPe();
+    } else if (_marketIndex == 3 && _marketInnerIndex == 2) {
+      return HighPeGrowth();
+    } else if (_marketIndex == 3 && _marketInnerIndex == 3) {
+      return LowPeGrowth();
     }
     return Container();
   }

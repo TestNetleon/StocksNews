@@ -96,6 +96,12 @@ class Apis {
   static const todaysGainers = '/todays-gainers';
   static const todaysLosers = '/todays-losers';
   static const todaysBreakout = '/breakout-stocks';
+  static const gapUpStocks = "/gap-up-stocks";
+  static const gapDownStocks = "/gap-down-stocks";
+  static const highPE = "/high-pe-ratio-stocks";
+  static const lowPE = "/low-pe-ratio-stocks";
+  static const highPEGrowth = "/high-pe-growth-stocks";
+  static const lowPEGrowth = "/low-pe-growth-stocks";
 
   //AI
   static const aiAnalysis = '/ai-analysis';
@@ -145,8 +151,8 @@ class Apis {
   static const spFifty = "/sp-500-stocks";
   static const dowThirty = "/dow-30-stocks";
   static const saleOnStocks = "/stocks-on-sale";
-  static const highPE = "/high-pe-ratio-stocks";
-  static const lowPE = "/low-pe-ratio-stocks";
+  // static const highPE = "/high-pe-ratio-stocks";
+  // static const lowPE = "/low-pe-ratio-stocks";
   static const fiftyTwoWeekHigh = "/week-highs";
   static const fiftyTwoWeekLows = "/week-lows";
   static const homeSlider = "/home-slider";
@@ -214,10 +220,10 @@ class Apis {
   static const getOtherData = "/stock-other-details";
   static const newsTab = "/category-list";
   static const marketTickers = "/market-tickers";
-  static const gapUpStocks = "/gap-up-stocks";
-  static const gapDownStocks = "/gap-down-stocks";
-  static const highPEGrowth = "/high-pe-growth-stocks";
-  static const lowPEGrowth = "/low-pe-growth-stocks";
+  // static const gapUpStocks = "/gap-up-stocks";
+  // static const gapDownStocks = "/gap-down-stocks";
+  // static const highPEGrowth = "/high-pe-growth-stocks";
+  // static const lowPEGrowth = "/low-pe-growth-stocks";
   static const weekHighs = "/week-highs";
   static const weekLows = "/week-lows";
   static const lowBetaStocks = "/low-beta-stocks";
