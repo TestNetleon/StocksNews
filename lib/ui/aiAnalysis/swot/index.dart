@@ -43,7 +43,14 @@ class AISwot extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          BaseHeading(title: title),
+          BaseHeading(
+            title: title,
+            margin: EdgeInsets.only(
+              left: Pad.pad16,
+              right: Pad.pad16,
+              bottom: 24,
+            ),
+          ),
           BaseListDivider(),
           SpacerVertical(height: 10),
           Column(
@@ -105,7 +112,7 @@ class AISwot extends StatelessWidget {
           BaseHeading(
             title: swot?.title,
             margin: EdgeInsets.only(
-              bottom: Pad.pad10,
+              bottom: Pad.pad24,
             ),
           ),
           Column(

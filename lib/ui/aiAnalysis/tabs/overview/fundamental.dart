@@ -22,14 +22,17 @@ class AIOverviewFundamentals extends StatelessWidget {
       padding: EdgeInsets.only(
         left: Pad.pad16,
         right: Pad.pad16,
-        top: Pad.pad16,
+        top: Pad.pad32,
         bottom: Pad.pad10,
       ),
       width: double.infinity,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          BaseHeading(title: data?.title),
+          BaseHeading(
+            title: data?.title,
+            margin: EdgeInsets.only(bottom: Pad.pad24),
+          ),
           Wrap(
             runSpacing: 10,
             spacing: 10,

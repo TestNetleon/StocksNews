@@ -7,7 +7,7 @@ import '../../../../models/ai_analysis.dart';
 import '../../../../models/stockDetail/financial.dart';
 import '../../../../models/stockDetail/price_volume.dart';
 import 'financial/index.dart';
-import 'performance.dart';
+import 'performance/index.dart';
 import 'priceVolume/index.dart';
 
 class AIOverview extends StatefulWidget {
@@ -35,7 +35,6 @@ class _AIOverviewState extends State<AIOverview> {
   Widget build(BuildContext context) {
     AIManager manager = context.watch<AIManager>();
 
-    AIPerformanceRes? performance = manager.data?.performance;
     AIFundamentalsRes? fundamentals = manager.data?.fundamentals;
 
     AiFinancialRes? financialsData = manager.financialsData;
@@ -43,7 +42,7 @@ class _AIOverviewState extends State<AIOverview> {
 
     return Column(
       children: [
-        AIOverviewPerformance(performance: performance),
+        AIPerformance(),
         VisibilityDetector(
           key: Key('p-v'),
           onVisibilityChanged: (info) {

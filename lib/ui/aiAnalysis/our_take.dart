@@ -29,7 +29,8 @@ class AIOurTake extends StatelessWidget {
           BaseHeading(
             title: ourTake?.title,
             margin: EdgeInsets.only(
-              bottom: Pad.pad10,
+              bottom: Pad.pad24,
+              top: 20,
             ),
           ),
           ListView.separated(
