@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/managers/search.dart';
 import 'package:stocks_news_new/models/news.dart';
@@ -171,9 +172,12 @@ class _BaseSearchFieldState extends State<BaseSearchField> {
         ),
         suffixIcon: manager.isLoadingSearch
             ? Container(
-                margin: EdgeInsets.symmetric(horizontal: 15, vertical: 14),
+                height: 10.sp,
+                width: 10.sp,
+                margin:
+                    EdgeInsets.symmetric(horizontal: 10.sp, vertical: 11.sp),
                 child: CircularProgressIndicator(
-                  strokeWidth: 3,
+                  strokeWidth: 2,
                   color: ThemeColors.secondary100,
                 ),
               )

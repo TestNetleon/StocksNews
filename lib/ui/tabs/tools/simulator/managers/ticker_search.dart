@@ -5,7 +5,6 @@ import 'package:stocks_news_new/api/api_requester.dart';
 import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/api/apis.dart';
 import 'package:stocks_news_new/models/search.dart';
-import 'package:stocks_news_new/models/ticker.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/ui/tabs/tools/simulator/managers/trade.dart';
 import 'package:stocks_news_new/ui/tabs/tools/simulator/models/order_info_res.dart';
@@ -17,7 +16,6 @@ import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
 
 class TickerSearchManager extends ChangeNotifier {
-
   String? _error;
   String? get error => _error ?? Const.errSomethingWrong;
 
@@ -96,7 +94,7 @@ class TickerSearchManager extends ChangeNotifier {
       setStatusRecentSearch(Status.loading);
       Map request = {};
       ApiResponse response = await apiRequest(
-        url:Apis.tradingMostSearch,
+        url: Apis.tradingMostSearch,
         request: request,
       );
       if (response.status) {
@@ -113,7 +111,6 @@ class TickerSearchManager extends ChangeNotifier {
       setStatusRecentSearch(Status.loaded);
     }
   }
-
 
   Future stockHolding(String symbol, {StockType? selectedStock}) async {
     Utils().showLog('Checking holdings for ${selectedStock?.name}');
@@ -147,13 +144,12 @@ class TickerSearchManager extends ChangeNotifier {
           showProgress: true,
         );
         if (response.status) {
-          Navigator.pushReplacementNamed(navigatorKey.currentContext!, TradeBuySellIndex.path,
+          Navigator.pushReplacementNamed(
+              navigatorKey.currentContext!, TradeBuySellIndex.path,
               arguments: {
-                "stockType":selectedStock,
-                "qty":res.data['quantity'],
-              }
-          );
-
+                "stockType": selectedStock,
+                "qty": res.data['quantity'],
+              });
         }
       } else {
         //
@@ -167,21 +163,18 @@ class TickerSearchManager extends ChangeNotifier {
 
   Future shortRedirection(String symbol) async {
     try {
-      TradeManager manager =
-          navigatorKey.currentContext!.read<TradeManager>();
+      TradeManager manager = navigatorKey.currentContext!.read<TradeManager>();
       ApiResponse response = await manager.getDetailTopData(
         symbol: symbol,
         showProgress: true,
       );
       if (response.status) {
-
-        Navigator.pushReplacementNamed(navigatorKey.currentContext!, TradeBuySellIndex.path,
+        Navigator.pushReplacementNamed(
+            navigatorKey.currentContext!, TradeBuySellIndex.path,
             arguments: {
-              "stockType":StockType.short,
-              "qty":0,
-            }
-        );
-
+              "stockType": StockType.short,
+              "qty": 0,
+            });
       }
       return ApiResponse(status: response.status);
     } catch (e) {
@@ -190,10 +183,11 @@ class TickerSearchManager extends ChangeNotifier {
     }
   }
 
-  Future stockHoldingOfCondition(String symbol, {String? selectedStock, ConditionType? conditionalType}) async {
+  Future stockHoldingOfCondition(String symbol,
+      {String? selectedStock, ConditionType? conditionalType}) async {
     if (conditionalType == ConditionType.recurringOrder) {
-      return Navigator.pushReplacementNamed(navigatorKey.currentContext!, RecurringIndex.path);
-
+      return Navigator.pushReplacementNamed(
+          navigatorKey.currentContext!, RecurringIndex.path);
     }
     Utils().showLog('Checking holdings for ${conditionalType?.name}');
     try {
@@ -229,15 +223,16 @@ class TickerSearchManager extends ChangeNotifier {
         );
         if (response.status) {
           if (conditionalType == ConditionType.recurringOrder) {
-            Navigator.pushReplacementNamed(navigatorKey.currentContext!, RecurringIndex.path);
+            Navigator.pushReplacementNamed(
+                navigatorKey.currentContext!, RecurringIndex.path);
           } else {
-            Navigator.pushReplacementNamed(navigatorKey.currentContext!, ConditionalTradesIndex.path,
+            Navigator.pushReplacementNamed(
+                navigatorKey.currentContext!, ConditionalTradesIndex.path,
                 arguments: {
                   "conditionType": conditionalType,
-                  "qty":res.data['quantity'],
-                  "tradeType":selectedStock,
-                }
-            );
+                  "qty": res.data['quantity'],
+                  "tradeType": selectedStock,
+                });
           }
         }
       } else {
@@ -256,8 +251,7 @@ class TickerSearchManager extends ChangeNotifier {
       ConditionType? conditionalType,
       String? tradeType}) async {
     try {
-      TradeManager manager =
-      navigatorKey.currentContext!.read<TradeManager>();
+      TradeManager manager = navigatorKey.currentContext!.read<TradeManager>();
       ApiResponse response = await manager.getDetailTopData(
         symbol: symbol,
         showProgress: true,
@@ -296,7 +290,7 @@ class TickerSearchManager extends ChangeNotifier {
           return;
         } else {
           TradeManager manager =
-          navigatorKey.currentContext!.read<TradeManager>();
+              navigatorKey.currentContext!.read<TradeManager>();
           ApiResponse response = await manager.getDetailTopData(
             symbol: symbol,
             showProgress: true,
@@ -322,7 +316,8 @@ class TickerSearchManager extends ChangeNotifier {
 
   Status _infoStatus = Status.ideal;
   Status get infoStatus => _infoStatus;
-  bool get isInfoLoading => _infoStatus == Status.loading || _infoStatus == Status.ideal;
+  bool get isInfoLoading =>
+      _infoStatus == Status.loading || _infoStatus == Status.ideal;
 
   void setInfoStatus(Status status) {
     _infoStatus = status;
@@ -332,7 +327,8 @@ class TickerSearchManager extends ChangeNotifier {
   OrderInfoRes? _infoData;
   OrderInfoRes? get infoData => _infoData;
 
-  Future<void> orderInfo({ConditionType? conditionalType, StockType? selectedStock}) async {
+  Future<void> orderInfo(
+      {ConditionType? conditionalType, StockType? selectedStock}) async {
     setInfoStatus(Status.loading);
     try {
       Map request = {
@@ -340,11 +336,11 @@ class TickerSearchManager extends ChangeNotifier {
             ? "SELL"
             : selectedStock == StockType.buy
                 ? "BUY"
-                :
-        selectedStock == StockType.btc?
-        "BUY_TO_COVER":
-        selectedStock == StockType.short?
-        "SHORT":"",
+                : selectedStock == StockType.btc
+                    ? "BUY_TO_COVER"
+                    : selectedStock == StockType.short
+                        ? "SHORT"
+                        : "",
         'order_type': conditionalType == ConditionType.bracketOrder
             ? "BRACKET_ORDER"
             : conditionalType == ConditionType.limitOrder
@@ -353,9 +349,9 @@ class TickerSearchManager extends ChangeNotifier {
                     ? "STOP_ORDER"
                     : conditionalType == ConditionType.stopLimitOrder
                         ? "STOP_LIMIT_ORDER"
-                        :
-        conditionalType == ConditionType.trailingOrder?"TRAILING_ORDER":
-        "RECURRING_ORDER"
+                        : conditionalType == ConditionType.trailingOrder
+                            ? "TRAILING_ORDER"
+                            : "RECURRING_ORDER"
       };
       ApiResponse res = await apiRequest(
           url: Apis.orderTypeInfo, request: request, showProgress: false);

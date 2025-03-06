@@ -148,14 +148,13 @@ class BaseInsiderItem extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Visibility(
-                                visible: data.name != null && data.name != '',
+                                visible:
+                                    data.symbol != null && data.symbol != '',
                                 child: Flexible(
                                   child: Text(
-                                    data.name ?? '',
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: styleBaseBold(),
-                                  ),
+                                      // '${data.exchangeShortName ?? 'N/A'}: ${data.symbol ?? 'N/A'}',
+                                      data.symbol ?? 'N/A',
+                                      style: styleBaseBold()),
                                 ),
                               ),
                               Visibility(
@@ -181,11 +180,12 @@ class BaseInsiderItem extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Visibility(
-                                  visible:
-                                      data.symbol != null && data.symbol != '',
+                                  visible: data.name != null && data.name != '',
                                   child: Flexible(
                                     child: Text(
-                                      '${data.exchangeShortName ?? 'N/A'}: ${data.symbol ?? 'N/A'}',
+                                      data.name ?? '',
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
                                       style: styleBaseRegular(
                                         fontSize: 13,
                                         color: ThemeColors.neutral40,

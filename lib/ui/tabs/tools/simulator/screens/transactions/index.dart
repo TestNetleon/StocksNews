@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:stocks_news_new/ui/base/load_more.dart';
 import 'package:stocks_news_new/ui/tabs/tools/simulator/managers/s_transaction.dart';
 import 'package:stocks_news_new/ui/tabs/tools/simulator/models/ts_pending_list_res.dart';
 import 'package:stocks_news_new/ui/tabs/tools/simulator/screens/transactions/item.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/custom/base_loader_container.dart';
-import 'package:stocks_news_new/widgets/refresh_controll.dart';
-import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 class STransactionList extends StatefulWidget {
   const STransactionList({super.key});
@@ -26,8 +25,7 @@ class _STransactionListState extends State<STransactionList> {
   }
 
   Future _getData({loadMore = false}) async {
-    STransactionManager manager =
-        context.read<STransactionManager>();
+    STransactionManager manager = context.read<STransactionManager>();
     await manager.getData(loadMore: loadMore);
   }
 
@@ -39,8 +37,7 @@ class _STransactionListState extends State<STransactionList> {
 
   @override
   Widget build(BuildContext context) {
-    STransactionManager manager =
-        context.watch<STransactionManager>();
+    STransactionManager manager = context.watch<STransactionManager>();
 
     return BaseLoaderContainer(
       hasData: manager.data != null && !manager.isLoading,
@@ -48,8 +45,7 @@ class _STransactionListState extends State<STransactionList> {
       error: manager.error,
       onRefresh: _getData,
       showPreparingText: true,
-      child:
-          RefreshControl(
+      child: BaseLoadMore(
         onRefresh: () async {
           await _getData();
         },
@@ -63,13 +59,12 @@ class _STransactionListState extends State<STransactionList> {
             }
             return TsTransactionListItem(
               item: item,
-              onTap: () {
-
-              },
+              onTap: () {},
             );
           },
           separatorBuilder: (context, index) {
-            return Divider(height: 24,thickness:1,color: ThemeColors.neutral5);
+            return Divider(
+                height: 24, thickness: 1, color: ThemeColors.neutral5);
           },
           itemCount: manager.data?.length ?? 0,
         ),

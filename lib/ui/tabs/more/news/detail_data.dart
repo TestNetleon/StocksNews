@@ -166,10 +166,13 @@ class NewsDetailData extends StatelessWidget {
             onTap: () {
               openUrl(postDetail?.uri);
             },
-            child: Text(
-              'Read full news..',
-              style: styleBaseRegular(
-                color: ThemeColors.accent,
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: Pad.pad24, top: 40),
+              child: Text(
+                'Read full news..',
+                style: styleBaseRegular(
+                  color: ThemeColors.accent,
+                ),
               ),
             ),
           ),

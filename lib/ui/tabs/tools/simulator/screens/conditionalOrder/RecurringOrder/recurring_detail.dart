@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:stocks_news_new/ui/base/base_scroll.dart';
 import 'package:stocks_news_new/ui/tabs/tools/simulator/managers/s_recurring.dart';
 import 'package:stocks_news_new/ui/tabs/tools/simulator/models/ts_recurring_detail.dart';
 import 'package:stocks_news_new/ui/tabs/tools/simulator/models/ts_recurring_list_res.dart';
@@ -10,21 +9,18 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/cache_network_image.dart';
 import 'package:stocks_news_new/widgets/custom/base_loader_container.dart';
-import 'package:stocks_news_new/widgets/custom/refresh_indicator.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
-
 class RecurringDetail extends StatefulWidget {
   final TsRecurringListRes? item;
-  const RecurringDetail(this.item,{super.key});
+  const RecurringDetail(this.item, {super.key});
 
   @override
   State<RecurringDetail> createState() => _RecurringDetailState();
 }
 
 class _RecurringDetailState extends State<RecurringDetail> {
-
   @override
   void initState() {
     super.initState();
@@ -92,7 +88,8 @@ class _RecurringDetailState extends State<RecurringDetail> {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Visibility(
-                    visible: manager.detailData?.tradeInfo?.recurringAmount != null,
+                    visible:
+                        manager.detailData?.tradeInfo?.recurringAmount != null,
                     child: Text(
                       '${manager.detailData?.tradeInfo?.recurringAmount?.toFormattedPrice()}',
                       style: styleGeorgiaBold(
@@ -112,9 +109,10 @@ class _RecurringDetailState extends State<RecurringDetail> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Visibility(
-                      visible: manager.detailData?.settlement?.totalQuantity != null,
+                      visible:
+                          manager.detailData?.settlement?.totalQuantity != null,
                       child: Expanded(
-                        child:Column(
+                        child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
@@ -126,43 +124,48 @@ class _RecurringDetailState extends State<RecurringDetail> {
                             ),
                             const SpacerVertical(height: Pad.pad3),
                             Text(
-                              "${manager.detailData?.settlement?.totalQuantity ?? ""}",
-                              style: stylePTSansBold(
-                                  color: ThemeColors.neutral40, fontSize: 12)
-                            ),
+                                "${manager.detailData?.settlement?.totalQuantity ?? ""}",
+                                style: stylePTSansBold(
+                                    color: ThemeColors.neutral40,
+                                    fontSize: 12)),
                           ],
                         ),
                       ),
                     ),
                     Visibility(
-                      visible:manager.detailData?.settlement?.avgPurchasePrice != null,
+                      visible:
+                          manager.detailData?.settlement?.avgPurchasePrice !=
+                              null,
                       child: Expanded(
-                          child:Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Text(
-                                "Avg Purchase Price",
-                                style: stylePTSansRegular(
-                                  color: ThemeColors.splashBG,
-                                  fontSize: 12,
-                                ),
-                              ),
-                              const SpacerVertical(height: Pad.pad3),
-                              Text(
-                                manager.detailData?.settlement?.avgPurchasePrice?.toFormattedPrice() ?? "0",
-                                style: stylePTSansRegular(
-                                  color: ThemeColors.neutral40,
-                                  fontSize: 12,
-                                ),
-                              ),
-                            ],
-                          )
-                      ),
+                          child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            "Avg Purchase Price",
+                            style: stylePTSansRegular(
+                              color: ThemeColors.splashBG,
+                              fontSize: 12,
+                            ),
+                          ),
+                          const SpacerVertical(height: Pad.pad3),
+                          Text(
+                            manager.detailData?.settlement?.avgPurchasePrice
+                                    ?.toFormattedPrice() ??
+                                "0",
+                            style: stylePTSansRegular(
+                              color: ThemeColors.neutral40,
+                              fontSize: 12,
+                            ),
+                          ),
+                        ],
+                      )),
                     ),
                     Visibility(
-                      visible: manager.detailData?.settlement?.totalInvestedValue != null,
+                      visible:
+                          manager.detailData?.settlement?.totalInvestedValue !=
+                              null,
                       child: Expanded(
-                        child:Column(
+                        child: Column(
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
                             Text(
@@ -184,7 +187,6 @@ class _RecurringDetailState extends State<RecurringDetail> {
                         ),
                       ),
                     ),
-
                   ],
                 ),
                 SpacerVertical(height: 10),
@@ -192,7 +194,8 @@ class _RecurringDetailState extends State<RecurringDetail> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Visibility(
-                      visible:  manager.detailData?.settlement?.salePrice != null,
+                      visible:
+                          manager.detailData?.settlement?.salePrice != null,
                       child: Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -206,7 +209,9 @@ class _RecurringDetailState extends State<RecurringDetail> {
                             ),
                             const SpacerVertical(height: Pad.pad3),
                             Text(
-                              manager.detailData?.settlement?.salePrice?.toFormattedPrice() ?? "0",
+                              manager.detailData?.settlement?.salePrice
+                                      ?.toFormattedPrice() ??
+                                  "0",
                               style: stylePTSansRegular(
                                 color: ThemeColors.neutral40,
                                 fontSize: 12,
@@ -217,7 +222,9 @@ class _RecurringDetailState extends State<RecurringDetail> {
                       ),
                     ),
                     Visibility(
-                      visible:  manager.detailData?.settlement?.totalSettlementValue != null,
+                      visible: manager
+                              .detailData?.settlement?.totalSettlementValue !=
+                          null,
                       child: Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
@@ -231,7 +238,10 @@ class _RecurringDetailState extends State<RecurringDetail> {
                             ),
                             const SpacerVertical(height: Pad.pad3),
                             Text(
-                              manager.detailData?.settlement?.totalSettlementValue?.toFormattedPrice() ?? "0",
+                              manager.detailData?.settlement
+                                      ?.totalSettlementValue
+                                      ?.toFormattedPrice() ??
+                                  "0",
                               style: stylePTSansRegular(
                                 color: ThemeColors.neutral40,
                                 fontSize: 12,
@@ -242,7 +252,8 @@ class _RecurringDetailState extends State<RecurringDetail> {
                       ),
                     ),
                     Visibility(
-                      visible:  manager.detailData?.settlement?.settlementDate != null,
+                      visible: manager.detailData?.settlement?.settlementDate !=
+                          null,
                       child: Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.end,
@@ -256,7 +267,8 @@ class _RecurringDetailState extends State<RecurringDetail> {
                             ),
                             const SpacerVertical(height: Pad.pad3),
                             Text(
-                              manager.detailData?.settlement?.settlementDate?? "0",
+                              manager.detailData?.settlement?.settlementDate ??
+                                  "0",
                               style: stylePTSansRegular(
                                 color: ThemeColors.neutral40,
                                 fontSize: 12,
@@ -276,7 +288,7 @@ class _RecurringDetailState extends State<RecurringDetail> {
             thickness: 1,
             height: 20,
           ),
-          SpacerVertical(height:Pad.pad10),
+          SpacerVertical(height: Pad.pad10),
           ListView.separated(
             padding: EdgeInsets.symmetric(horizontal: 0),
             itemBuilder: (context, index) {
@@ -288,10 +300,9 @@ class _RecurringDetailState extends State<RecurringDetail> {
                 data: data,
               );
             },
-            itemCount:manager.detailData?.transactions?.length ?? 0,
+            itemCount: manager.detailData?.transactions?.length ?? 0,
             shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(
-            ),
+            physics: NeverScrollableScrollPhysics(),
             separatorBuilder: (context, index) {
               return SpacerVertical(height: 10);
             },
