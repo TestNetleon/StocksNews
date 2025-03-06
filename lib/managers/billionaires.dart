@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:stocks_news_new/api/api_requester.dart';
 import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/api/apis.dart';
+import 'package:stocks_news_new/models/billionaires_detail.dart';
 import 'package:stocks_news_new/models/billionaires_res.dart';
 import 'package:stocks_news_new/models/market/market_res.dart';
 import 'package:stocks_news_new/ui/base/toaster.dart';
@@ -14,6 +15,9 @@ class BillionairesManager extends ChangeNotifier{
 
   BillionairesRes? _billionairesRes;
   BillionairesRes? get billionairesRes=> _billionairesRes;
+
+  BillionairesDetailRes? _billionairesDetailRes;
+  BillionairesDetailRes? get billionairesDetailRes=> _billionairesDetailRes;
 
   MarketResData? _categoriesData;
   MarketResData? get categoriesData => _categoriesData;
@@ -96,6 +100,35 @@ class BillionairesManager extends ChangeNotifier{
         type: ToasterEnum.error,
       );
       setStatusCrypto(Status.loaded);
+    }
+  }
+
+  Future getBilDetail(String slug) async {
+    setStatus(Status.loading);
+    try {
+      Map request = {};
+      ApiResponse response = await apiRequest(
+        url: Apis.cryptoBillionaireDetails+slug,
+        showProgress: false,
+        request: request,
+      );
+
+      if (response.status) {
+        _billionairesDetailRes = billionairesDetailResFromJson(jsonEncode(response.data));
+      }
+      else {
+        _billionairesDetailRes = null;
+        _error = response.message;
+      }
+      setStatus(Status.loaded);
+    } catch (e) {
+      _billionairesDetailRes = null;
+      _error = Const.errSomethingWrong;
+      TopSnackbar.show(
+        message: Const.errSomethingWrong,
+        type: ToasterEnum.error,
+      );
+      setStatus(Status.loaded);
     }
   }
 

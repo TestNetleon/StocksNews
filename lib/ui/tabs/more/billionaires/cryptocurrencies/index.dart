@@ -5,6 +5,7 @@ import 'package:stocks_news_new/models/billionaires_res.dart';
 import 'package:stocks_news_new/ui/base/color_container.dart';
 import 'package:stocks_news_new/ui/base/common_tab.dart';
 import 'package:stocks_news_new/ui/base/heading.dart';
+import 'package:stocks_news_new/ui/tabs/more/billionaires/billionaires_index.dart';
 import 'package:stocks_news_new/ui/tabs/more/billionaires/cryptocurrencies/top_index.dart';
 import 'package:stocks_news_new/ui/tabs/more/billionaires/cryptocurrencies/widget/crypto_item.dart';
 import 'package:stocks_news_new/ui/tabs/more/billionaires/cryptocurrencies/widget/crypto_table.dart';
@@ -43,7 +44,9 @@ class Cryptocurrencies extends StatelessWidget {
                   CryptoTweetPost? item = manager.billionairesRes?.cryptoTweetPost?[index];
                   return CryptoItem(
                     item: item,
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.pushNamed(context, BillionairesDetailIndex.path,arguments: {'slug':item?.slug??""});
+                    },
                   );
                 },
                 separatorBuilder: (context, index) {
@@ -62,7 +65,6 @@ class Cryptocurrencies extends StatelessWidget {
                 children: [
                   BaseTabs(
                     data: manager.billionairesRes?.topTab?.data??[],
-                    textStyle: styleBaseBold(fontSize: 16, color: ThemeColors.splashBG),
                     onTap: manager.onScreenChangeInner,
                   ),
                   SpacerVertical(height: Pad.pad10),
@@ -96,7 +98,9 @@ class Cryptocurrencies extends StatelessWidget {
                   RecentMentionsRes? item = manager.billionairesRes?.recentMentions?.data?[index];
                   return MentionItem(
                     item: item,
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.pushNamed(context, BillionairesDetailIndex.path,arguments: {"slug",item?.slug??""});
+                    },
                   );
                 },
                 separatorBuilder: (context, index) {
@@ -113,7 +117,7 @@ class Cryptocurrencies extends StatelessWidget {
                 child: BaseHeading(
                   title: "Top 360 Mentions",
                   titleStyle: stylePTSansBold(fontSize: 24,color: ThemeColors.splashBG),
-                  margin: EdgeInsets.symmetric(horizontal: Pad.pad16),
+                  margin: EdgeInsets.symmetric(horizontal: Pad.pad16,vertical: Pad.pad5),
 
                 )
             ),
@@ -128,12 +132,12 @@ class Cryptocurrencies extends StatelessWidget {
                 child: BaseHeading(
                   title: manager.billionairesRes?.symbolMentionList?.title??"",
                   titleStyle: stylePTSansBold(fontSize: 24,color: ThemeColors.splashBG),
-                  margin: EdgeInsets.symmetric(horizontal: Pad.pad16),
+                  margin: EdgeInsets.symmetric(horizontal: Pad.pad16,vertical: Pad.pad5),
 
                 )
             ),
             SpacerVertical(height: Pad.pad16),
-           /* Padding(
+            Padding(
               padding: EdgeInsets.symmetric(horizontal: Pad.pad16),
               child: Row(
                 children: [
@@ -273,7 +277,8 @@ class Cryptocurrencies extends StatelessWidget {
                 ),
               ),
             ),
-            SpacerVertical(height: Pad.pad10),*/
+            SpacerVertical(height: Pad.pad10),
+
             CryptoTable(
                 symbolMentionRes:manager.billionairesRes?.symbolMentionList
             )

@@ -139,6 +139,7 @@ import 'package:stocks_news_new/screens/tabs/news/newsDetail/new_detail.dart';
 import 'package:stocks_news_new/screens/trendingIndustries/index.dart';
 
 import 'package:stocks_news_new/ui/tabs/more/alerts/index.dart';
+import 'package:stocks_news_new/ui/tabs/more/billionaires/billionaires_index.dart';
 import 'package:stocks_news_new/ui/tabs/more/billionaires/index.dart';
 import 'package:stocks_news_new/ui/tabs/more/faq/index.dart';
 import 'package:stocks_news_new/ui/tabs/more/feedback/index.dart';
@@ -426,6 +427,15 @@ class Routes {
             return RecurringIndex(
               editTradeID: editTradeID,
             );
+          },
+        );
+
+      case BillionairesDetailIndex.path:
+        return MaterialPageRoute(
+          builder: (context) {
+            final arguments = settings.arguments as Map<String, dynamic>?;
+            String slug = arguments?['slug'];
+            return BillionairesDetailIndex(slug: slug);
           },
         );
 

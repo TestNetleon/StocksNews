@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:stocks_news_new/models/billionaires_res.dart';
+import 'package:stocks_news_new/ui/base/app_bar.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -12,105 +13,139 @@ class CryptoTable extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
+    return Column(
       children: [
-        DataTable(
-          horizontalMargin: 10,
-          decoration: BoxDecoration(color: ThemeColors.neutral5),
-          border: TableBorder(
-            right: BorderSide(
-              color: ThemeColors.neutral10,
-            ),
-          ),
-          columns: [
-            DataColumn(
-              label: Text(
-                'Name',
-                style: styleBaseBold(fontSize: 12,color: ThemeColors.splashBG),
+        Container(
+          padding: EdgeInsets.symmetric(horizontal: Pad.pad16,vertical: 10),
+          color:ThemeColors.neutral5,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              ActionButton(
+                icon: Images.table_menu,
+                onTap: () {
+
+                },
+                size: 22,
               ),
-            ),
-          ],
-          rows: symbolMentionRes?.data?.map((company) {
-            return DataRow(
-              cells: [
-                DataCell(
-                    Container(
-                      padding: EdgeInsets.symmetric(horizontal: Pad.pad5,vertical: Pad.pad5),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(24),
-                            child: CachedNetworkImagesWidget(
-                              company.image ?? '',
-                              height: 24,
-                              width: 24,
-                              placeHolder: Images.userPlaceholderNew,
-                              showLoading: true,
-                              fit: BoxFit.contain,
-                            ),
-                          ),
-                          SpacerHorizontal(width: Pad.pad10),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  company.name ?? "",
-                                  style: stylePTSansBold(fontSize: 12,color: ThemeColors.neutral8),
-                                ),
-                                Text(
-                                  company.symbol ?? "",
-                                  style: styleBaseRegular(fontSize: 12,color: ThemeColors.neutral8),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    )
-                ),
-              ],
-            );
-          }).toList() ??
-              [],
+              ActionButton(
+                icon: Images.search,
+                onTap: () {
+
+                },
+              ),
+            ],
+          ),
         ),
-        Expanded(
-          child: SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: DataTable(
+        Row(
+          children: [
+            DataTable(
               horizontalMargin: 10,
-              columns: ["Price","1h %","24h %"].map((header) {
-                return DataColumn(
+              decoration: BoxDecoration(color: ThemeColors.neutral5),
+              border: TableBorder(
+                right: BorderSide(
+                  color: ThemeColors.neutral10,
+                ),
+                top: BorderSide(
+                  color: ThemeColors.neutral10,
+                ),
+              ),
+              columns: [
+                DataColumn(
                   label: Text(
-                    header,
+                    'Name',
                     style: styleBaseBold(fontSize: 12,color: ThemeColors.splashBG),
                   ),
-                );
-              }).toList(),
+                ),
+              ],
               rows: symbolMentionRes?.data?.map((company) {
                 return DataRow(
                   cells: [
-                    _dataCell(
-                      text: company.price ?? 0,
+                    DataCell(
+                        Container(
+                          padding: EdgeInsets.symmetric(horizontal: Pad.pad5,vertical: Pad.pad5),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(24),
+                                child: CachedNetworkImagesWidget(
+                                  company.image ?? '',
+                                  height: 24,
+                                  width: 24,
+                                  placeHolder: Images.userPlaceholderNew,
+                                  showLoading: true,
+                                  fit: BoxFit.contain,
+                                ),
+                              ),
+                              SpacerHorizontal(width: Pad.pad10),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      company.name ?? "",
+                                      style: stylePTSansBold(fontSize: 12,color: ThemeColors.neutral8),
+                                    ),
+                                    Text(
+                                      company.symbol ?? "",
+                                      style: styleBaseRegular(fontSize: 12,color: ThemeColors.neutral8),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        )
                     ),
-                    _dataCellMentions(
-                      text: company.changesPercentage ?? 0,
-                      count: company.count ?? 0,
-                      userPercent: true
-                    ),
-                    _dataCellMentions(
-                        text: company.changesPercentage ?? 0,
-                        count: company.count ?? 0,
-                        userPercent: true
-                    ),
-
                   ],
                 );
               }).toList() ??
                   [],
             ),
-          ),
+            Expanded(
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: DataTable(
+                  border: TableBorder(
+                    top: BorderSide(
+                      color: ThemeColors.neutral10,
+                    ),
+                  ),
+                  horizontalMargin: 10,
+                  columns: ["Price","1h %","24h %"].map((header) {
+                    return DataColumn(
+                      label: Text(
+                        header,
+                        style: styleBaseBold(fontSize: 12,color: ThemeColors.splashBG),
+                      ),
+                    );
+                  }).toList(),
+                  rows: symbolMentionRes?.data?.map((company) {
+                    return DataRow(
+                      cells: [
+                        _dataCell(
+                          text: company.price ?? 0,
+                        ),
+                        _dataCellMentions(
+                          text: company.changesPercentage ?? 0,
+                          count: company.count ?? 0,
+                          userPercent: true
+                        ),
+                        _dataCellMentions(
+                            text: company.changesPercentage ?? 0,
+                            count: company.count ?? 0,
+                            userPercent: true
+                        ),
+
+                      ],
+                    );
+                  }).toList() ??
+                      [],
+                ),
+              ),
+            ),
+          ],
         ),
       ],
     );

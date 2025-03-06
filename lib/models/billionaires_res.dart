@@ -8,12 +8,14 @@ BillionairesRes billionairesResFromJson(String str) => BillionairesRes.fromMap(j
 String billionairesResToJson(BillionairesRes data) => json.encode(data.toMap());
 
 class BillionairesRes {
+  final String? title;
   final List<CryptoTweetPost>? cryptoTweetPost;
   final TopTab? topTab;
   final RecentMentions? recentMentions;
   final SymbolMentionList? symbolMentionList;
 
   BillionairesRes({
+    this.title,
     this.topTab,
     this.cryptoTweetPost,
     this.recentMentions,
@@ -21,6 +23,7 @@ class BillionairesRes {
   });
 
   factory BillionairesRes.fromMap(Map<String, dynamic> json) => BillionairesRes(
+    title: json["title"],
     topTab: json["top_tab"] == null ? null : TopTab.fromMap(json["top_tab"]),
     cryptoTweetPost: json["crypto_tweet_post"] == null ? [] : List<CryptoTweetPost>.from(json["crypto_tweet_post"]!.map((x) => CryptoTweetPost.fromMap(x))),
     recentMentions: json["recent_mentions"] == null ? null : RecentMentions.fromMap(json["recent_mentions"]),
@@ -28,6 +31,7 @@ class BillionairesRes {
   );
 
   Map<String, dynamic> toMap() => {
+    "title": title,
     "top_tab": topTab?.toMap(),
     "crypto_tweet_post": cryptoTweetPost == null ? [] : List<dynamic>.from(cryptoTweetPost!.map((x) => x.toMap())),
     "recent_mentions": recentMentions?.toMap(),

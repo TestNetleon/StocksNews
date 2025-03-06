@@ -126,6 +126,7 @@ class ThemeColors {
   static const neutral6 = Color(0xFFCCCCCC);
   static const neutral7 = Color(0xFF243D4C);
   static const neutral8 = Color(0xFF34373C);
+  static const neutral9 = Color(0xFFF9FDFB);
 
   //OTHER
   static const black = Color(0xFF282B41);

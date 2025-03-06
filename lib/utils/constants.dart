@@ -194,6 +194,7 @@ class Images {
   static const String mainBlackLogo = '${base}mainBlackLogo.png';
   static const String notification = '${base}notification.png';
   static const String search = '${base}search.png';
+  static const String table_menu = '${base}table_menu.png';
   static const String appleSignUP = '${base}apple_signup.png';
   static const String googleSignUP = '${base}google_signup.png';
   static const String tickCircle = '${base}tick-circle.png';
