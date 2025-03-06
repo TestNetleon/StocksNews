@@ -5,7 +5,6 @@ import 'package:stocks_news_new/ui/tabs/tools/simulator/models/stream_data.dart'
 
 import 'package:stocks_news_new/utils/utils.dart';
 
-
 StreamRes? streamKeysRes;
 
 enum ToasterEnum {
@@ -232,6 +231,8 @@ class Images {
   static const String progressGIF = "${base}progress.gif";
   static const String trades = '${base}trades.png';
   static const String btc = '${base}btc.png';
+  static const String starSelected = '${base}star_selected.png';
+  static const String starUnselected = '${base}star_unselected.png';
 
   //-------------------------------------------------------------------------------
   static const String scannerStop = 'assets/images/scanner_stop.png';
@@ -665,6 +666,7 @@ extension CurrencyFormat on num {
       return '\$$formatted';
     }
   }
+
   String toFormattedPriceForSim({bool removeSign = false}) {
     String formatted = abs().toStringAsFixed(4);
 

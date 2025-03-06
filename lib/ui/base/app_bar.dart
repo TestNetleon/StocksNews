@@ -20,6 +20,7 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
   final Function()? shareURL;
   final double toolbarHeight;
   final bool showLogo;
+  final Function()? leadingFilterClick;
 
   const BaseAppBar({
     super.key,
@@ -34,6 +35,7 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.shareURL,
     this.showClose = false,
     this.showLogo = true,
+    this.leadingFilterClick,
   });
 
   @override
@@ -70,8 +72,13 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
                           },
                         ),
                       if (showNotification)
-                        LeadingNotification(
-                          showIndicator: true,
+                        LeadingNotification(showIndicator: true),
+                      if (leadingFilterClick != null)
+                        ActionButton(
+                          icon: Images.marketFilter,
+                          size: 22,
+                          padding: EdgeInsets.all(8),
+                          onTap: leadingFilterClick!,
                         ),
                     ],
                   ),
@@ -197,21 +204,26 @@ class ActionButton extends StatelessWidget {
     this.size = 32,
     required this.icon,
     required this.onTap,
+    this.padding,
   });
 
   final String icon;
   final double size;
+  final EdgeInsets? padding;
   final Function() onTap;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
-      child: Image.asset(
-        icon,
-        color: ThemeColors.black,
-        width: size,
-        height: size,
+      child: Padding(
+        padding: padding ?? EdgeInsets.zero,
+        child: Image.asset(
+          icon,
+          color: ThemeColors.black,
+          width: size,
+          height: size,
+        ),
       ),
     );
   }

@@ -19,7 +19,7 @@ class BaseButtonOutline extends StatelessWidget {
     this.margin,
     this.textAlign = TextAlign.center,
     this.textUppercase = false,
-    this.borderWidth=2,
+    this.borderWidth = 2,
     super.key,
   });
 

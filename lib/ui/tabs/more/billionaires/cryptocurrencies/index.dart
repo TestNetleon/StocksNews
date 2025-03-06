@@ -24,7 +24,7 @@ class Cryptocurrencies extends StatelessWidget {
   Widget build(BuildContext context) {
     BillionairesManager manager = context.watch<BillionairesManager>();
     return BaseLoaderContainer(
-      hasData: manager.billionairesRes!= null,
+      hasData: manager.billionairesRes != null,
       isLoading: manager.isLoadingCrypto,
       error: manager.error,
       showPreparingText: true,
@@ -40,7 +40,8 @@ class Cryptocurrencies extends StatelessWidget {
                 padding: EdgeInsets.symmetric(horizontal: Pad.pad10),
                 shrinkWrap: true,
                 itemBuilder: (context, index) {
-                  CryptoTweetPost? item = manager.billionairesRes?.cryptoTweetPost?[index];
+                  CryptoTweetPost? item =
+                      manager.billionairesRes?.cryptoTweetPost?[index];
                   return CryptoItem(
                     item: item,
                     onTap: () {},
@@ -49,20 +50,20 @@ class Cryptocurrencies extends StatelessWidget {
                 separatorBuilder: (context, index) {
                   return SpacerVertical(height: Pad.pad3);
                 },
-                itemCount: manager.billionairesRes?.cryptoTweetPost?.length ?? 0,
+                itemCount:
+                    manager.billionairesRes?.cryptoTweetPost?.length ?? 0,
               ),
             ),
             Visibility(
                 visible: manager.billionairesRes?.topTab != null,
-                child: SpacerVertical(height: Pad.pad5)
-            ),
+                child: SpacerVertical(height: Pad.pad5)),
             Visibility(
-              visible:manager.billionairesRes?.topTab != null,
+              visible: manager.billionairesRes?.topTab != null,
               child: Column(
                 children: [
                   BaseTabs(
-                    data: manager.billionairesRes?.topTab?.data??[],
-                    textStyle: styleBaseBold(fontSize: 16, color: ThemeColors.splashBG),
+                    data: manager.billionairesRes?.topTab?.data ?? [],
+                    // textStyle: styleBaseBold(fontSize: 16, color: ThemeColors.splashBG),
                     onTap: manager.onScreenChangeInner,
                   ),
                   SpacerVertical(height: Pad.pad10),
@@ -76,24 +77,27 @@ class Cryptocurrencies extends StatelessWidget {
             ),
             SpacerVertical(height: Pad.pad5),
             Visibility(
-                visible: manager.billionairesRes?.recentMentions?.title != null && manager.billionairesRes?.recentMentions?.title!= '',
+                visible:
+                    manager.billionairesRes?.recentMentions?.title != null &&
+                        manager.billionairesRes?.recentMentions?.title != '',
                 child: BaseHeading(
-                  title: manager.billionairesRes?.recentMentions?.title??"",
-                  titleStyle: stylePTSansBold(fontSize: 24,color: ThemeColors.splashBG),
+                  title: manager.billionairesRes?.recentMentions?.title ?? "",
+                  titleStyle: stylePTSansBold(
+                      fontSize: 24, color: ThemeColors.splashBG),
                   margin: EdgeInsets.symmetric(horizontal: Pad.pad16),
-
-                )
-            ),
+                )),
             SpacerVertical(height: Pad.pad10),
-
             Visibility(
-              visible: manager.billionairesRes?.recentMentions != null && (manager.billionairesRes?.recentMentions?.data?.isNotEmpty==true),
+              visible: manager.billionairesRes?.recentMentions != null &&
+                  (manager.billionairesRes?.recentMentions?.data?.isNotEmpty ==
+                      true),
               child: ListView.separated(
                 physics: NeverScrollableScrollPhysics(),
                 padding: EdgeInsets.symmetric(horizontal: Pad.pad16),
                 shrinkWrap: true,
                 itemBuilder: (context, index) {
-                  RecentMentionsRes? item = manager.billionairesRes?.recentMentions?.data?[index];
+                  RecentMentionsRes? item =
+                      manager.billionairesRes?.recentMentions?.data?[index];
                   return MentionItem(
                     item: item,
                     onTap: () {},
@@ -102,21 +106,20 @@ class Cryptocurrencies extends StatelessWidget {
                 separatorBuilder: (context, index) {
                   return SpacerVertical(height: Pad.pad16);
                 },
-                itemCount: manager.billionairesRes?.recentMentions?.data?.length ?? 0,
+                itemCount:
+                    manager.billionairesRes?.recentMentions?.data?.length ?? 0,
               ),
             ),
-
             SpacerVertical(height: Pad.pad10),
             Visibility(
-              visible: true,
+                visible: true,
                 //visible: manager.billionairesRes?.recentMentions?.title != null && manager.billionairesRes?.recentMentions?.title!= '',
                 child: BaseHeading(
                   title: "Top 360 Mentions",
-                  titleStyle: stylePTSansBold(fontSize: 24,color: ThemeColors.splashBG),
+                  titleStyle: stylePTSansBold(
+                      fontSize: 24, color: ThemeColors.splashBG),
                   margin: EdgeInsets.symmetric(horizontal: Pad.pad16),
-
-                )
-            ),
+                )),
             SpacerVertical(height: Pad.pad10),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: Pad.pad16),
@@ -124,16 +127,18 @@ class Cryptocurrencies extends StatelessWidget {
             ),
             SpacerVertical(height: Pad.pad10),
             Visibility(
-                visible: manager.billionairesRes?.symbolMentionList?.title != null && manager.billionairesRes?.symbolMentionList?.title!= '',
+                visible:
+                    manager.billionairesRes?.symbolMentionList?.title != null &&
+                        manager.billionairesRes?.symbolMentionList?.title != '',
                 child: BaseHeading(
-                  title: manager.billionairesRes?.symbolMentionList?.title??"",
-                  titleStyle: stylePTSansBold(fontSize: 24,color: ThemeColors.splashBG),
+                  title:
+                      manager.billionairesRes?.symbolMentionList?.title ?? "",
+                  titleStyle: stylePTSansBold(
+                      fontSize: 24, color: ThemeColors.splashBG),
                   margin: EdgeInsets.symmetric(horizontal: Pad.pad16),
-
-                )
-            ),
+                )),
             SpacerVertical(height: Pad.pad16),
-           /* Padding(
+            /* Padding(
               padding: EdgeInsets.symmetric(horizontal: Pad.pad16),
               child: Row(
                 children: [
@@ -275,11 +280,7 @@ class Cryptocurrencies extends StatelessWidget {
             ),
             SpacerVertical(height: Pad.pad10),*/
             CryptoTable(
-                symbolMentionRes:manager.billionairesRes?.symbolMentionList
-            )
-
-
-
+                symbolMentionRes: manager.billionairesRes?.symbolMentionList)
           ],
         ),
       ),
