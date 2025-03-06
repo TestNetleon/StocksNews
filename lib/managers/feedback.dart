@@ -5,7 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:stocks_news_new/api/api_requester.dart';
 import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/api/apis.dart';
-import 'package:stocks_news_new/models/feedback_res.dart';
+import 'package:stocks_news_new/models/feedback_send_res.dart';
+import 'package:stocks_news_new/models/news/detail.dart';
 import 'package:stocks_news_new/ui/base/toaster.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 

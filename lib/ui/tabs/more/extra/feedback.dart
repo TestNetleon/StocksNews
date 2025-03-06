@@ -8,10 +8,10 @@ import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 import '../../../../models/news/detail.dart';
 
-class FeedbackIndex extends StatelessWidget {
+class FeedbackIndexItem extends StatelessWidget {
   final FeedbackRes? feedback;
   final void Function(MarketResData) onTap;
-  const FeedbackIndex({
+  const FeedbackIndexItem({
     super.key,
     this.feedback,
     required this.onTap,
