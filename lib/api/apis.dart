@@ -41,6 +41,34 @@ class Apis {
   static const deleteWatchlist = "/delete-watchlist";
   static const faqs = "/faq";
   static const getTickets = "/get-tickets";
+  static const sendTicket = "/send-ticket";
+  static const ticketDetail = "/ticket-detail";
+  static const ticketReply = "/ticket-reply";
+  static const feedback = "/feedback";
+  static const shareFeedback = "/share-feedback";
+
+  //MARK: Simulator API
+  static const tsUserInfo = "/simulator/user-info";
+  static const tsTopBar = "/simulator/trade/stock-detail-topbar";
+  static const tsStreamData = '/simulator/trade/stream-init-variables';
+  static const tsOrderList = "/simulator/holding-list";
+  static const tsPendingList = "/simulator/pending-list";
+  static const tsTransaction = '/simulator/trade/history';
+  static const tradingMostSearch = "/simulator/most-search-symbol";
+  static const tsRequestTrade = "/simulator/trade/store";
+  static const tsAddConditional = "/simulator/trade/add-conditional-order/";
+  static const tsSearchSymbol = "/simulator/trade/search-symbol";
+  static const tsOpenList = "/simulator/list-purchased-shares";
+  static const stockHoldings = '/simulator/stock-holdings-new';
+  static const recurringHoldings = '/simulator/recurring-holdings';
+  static const recurringList = '/simulator/recurring-list';
+  static const recurringClose = '/simulator/recurring-close/';
+  static const recurringDetail = '/simulator/recurring-detail/';
+  static const holidaysList = '/simulator/market-holidays';
+  static const cancleOrder = '/simulator/trade/cancel/';
+  static const updateOrder = '/simulator/trade/update/';
+  static const orderTypeInfo = '/simulator/trade/order-type-definition';
+  static const squareOff = '/simulator/trade/close-conditional-trade';
 
   //Search---
   static const recentSearch = '/recent-search';
@@ -264,9 +292,9 @@ class Apis {
   static const stockDetailMergers = "/stock-detail-mergers";
   // Stock Detail New ended ----
   //static const getTickets = "/get-tickets";
-  static const sendTicket = "/send-ticket";
-  static const ticketDetail = "/ticket-detail";
-  static const ticketReply = "/ticket-reply";
+  // static const sendTicket = "/send-ticket";
+  // static const ticketDetail = "/ticket-detail";
+  // static const ticketReply = "/ticket-reply";
 
   static const updateReferral = "/update-referral-code";
   static const userPurchase = "/user-purchase";
@@ -281,7 +309,7 @@ class Apis {
   static const updateNotificationSettings = "/update-notification-setting";
 
   //MARK: Simulator API
-  static const tsUserInfo = "/simulator/user-info";
+  /*static const tsUserInfo = "/simulator/user-info";
   static const tsTopBar = "/simulator/trade/stock-detail-topbar";
   static const tsStreamData = '/simulator/trade/stream-init-variables';
   // static const tsPortfolio = "/simulator/portfolio";
@@ -297,7 +325,7 @@ class Apis {
   static const cancleOrder = '/simulator/trade/cancel/';
   static const updateOrder = '/simulator/trade/update/';
 
-  static const squareOff = '/simulator/trade/close-conditional-trade';
+  static const squareOff = '/simulator/trade/close-conditional-trade';*/
 
   // static const tsOrderList = "/simulator/order-list";
   // static const tsRequestSell = "/simulator/sell";

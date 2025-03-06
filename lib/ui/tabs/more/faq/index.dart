@@ -124,56 +124,61 @@ class _FaqIndexState extends State<FaqIndex> {
               ),
               SpacerVertical(height: Pad.pad20),
               Expanded(
-                child: BaseLoaderContainer(
-                  isLoading:manager.isLoading,
-                  hasData: manager.faqData != null && !manager.isLoading,
-                  showPreparingText: true,
-                  error: manager.error,
-                  child:
-                  manager.errorSearch!=""?
-                  Align(
-                    alignment: Alignment.center,
-                    child: Column(
-                      children: [
-                        Container(
-                          margin: EdgeInsets.only(top: Pad.pad16),
-                          decoration: BoxDecoration(
-                            color: ThemeColors.neutral5,
-                            borderRadius: BorderRadius.circular(Pad.pad16),
+                  child: BaseLoaderContainer(
+                    isLoading: manager.isLoading,
+                    hasData: manager.faqData != null && !manager.isLoading,
+                    showPreparingText: true,
+                    error: manager.error,
+                    child: manager.faqData?.faqs != null &&
+                        manager.faqData?.faqs?.isNotEmpty == true
+                        ? CommonRefreshIndicator(
+                      onRefresh: () => manager.getFaq(),
+                      child: ListView.separated(
+                        itemBuilder: (context, index) {
+                          BaseFaqDataRes? data =
+                          manager.faqData?.faqs?[index];
+                          if (data == null) {
+                            return SizedBox();
+                          }
+                          bool isOpen = manager.openIndex == index;
+                          return FAQItem(
+                            isOpen: isOpen,
+                            faq: data,
+                            onChange: () =>
+                                manager.change(isOpen ? -1 : index),
+                          );
+                        },
+                        separatorBuilder: (context, index) {
+                          return SpacerVertical();
+                        },
+                        itemCount: manager.faqData?.faqs?.length ?? 0,
+                      ),
+                    )
+                        : Align(
+                      alignment: Alignment.center,
+                      child: Column(
+                        children: [
+                          Container(
+                            margin: EdgeInsets.only(top: Pad.pad16),
+                            decoration: BoxDecoration(
+                              color: ThemeColors.neutral5,
+                              borderRadius: BorderRadius.circular(Pad.pad16),
+                            ),
+                            child: Image.asset(
+                              Images.search,
+                              height: 56,
+                              width: 56,
+                            ),
                           ),
-                          child: Image.asset(
-                            Images.search,
-                            height: 56,
-                            width: 56,
+                          BaseHeading(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            title: 'No Results Found',
+                            subtitle: manager.errorSearch,
                           ),
-                        ),
-                        BaseHeading(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          title: 'No Results Found',
-                          subtitle: manager.errorSearch,
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ):
-                  CommonRefreshIndicator(
-                    onRefresh: () => manager.getFaq(),
-                    child: ListView.separated(
-                      itemBuilder: (context, index) {
-                        BaseFaqDataRes? data = manager.faqData?.faqs?[index];
-                        if (data == null) {
-                          return SizedBox();
-                        }
-                        bool isOpen = manager.openIndex==index;
-                        return FAQItem(isOpen: isOpen,faq:data,onChange: () => manager.change(isOpen ? -1 : index),);
-                      },
-                      separatorBuilder: (context, index) {
-                        return SpacerVertical();
-                      },
-                      itemCount: manager.faqData?.faqs?.length ?? 0,
-                    ),
-                  )
-                ),
-              ),
+                  )),
 
 
             ],

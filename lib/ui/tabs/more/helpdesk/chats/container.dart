@@ -1,33 +1,38 @@
-/*
 import 'dart:async';
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
-import 'package:stocks_news_new/providers/help_desk.dart';
-import 'package:stocks_news_new/routes/my_app.dart';
+import 'package:stocks_news_new/api/api_response.dart';
+import 'package:stocks_news_new/managers/helpdesk.dart';
+import 'package:stocks_news_new/models/helpdesk_chat_res.dart';
+import 'package:stocks_news_new/screens/myAccount/widgets/select_type.dart';
+import 'package:stocks_news_new/ui/base/bottom_sheet.dart';
+import 'package:stocks_news_new/ui/tabs/more/helpdesk/chats/item.dart';
+import 'package:stocks_news_new/utils/colors.dart';
+import 'package:stocks_news_new/utils/theme.dart';
+import 'package:stocks_news_new/utils/utils.dart';
+import 'package:stocks_news_new/utils/validations.dart';
+import 'package:stocks_news_new/widgets/custom/base_loader_container.dart';
+import 'package:stocks_news_new/widgets/custom/refresh_indicator.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
+import 'package:stocks_news_new/widgets/theme_input_field.dart';
 
-import 'item.dart';
-
-class HelpDeskAllChatNewListing extends StatefulWidget {
+class AllChatNewListing extends StatefulWidget {
   final String ticketId;
-  const HelpDeskAllChatNewListing({super.key, required this.ticketId});
+  const AllChatNewListing({super.key, required this.ticketId});
 
   @override
-  State<HelpDeskAllChatNewListing> createState() =>
-      _HelpDeskAllChatNewListingState();
+  State<AllChatNewListing> createState() => _AllChatNewListingState();
 }
 
-class _HelpDeskAllChatNewListingState extends State<HelpDeskAllChatNewListing> {
+class _AllChatNewListingState extends State<AllChatNewListing> {
   bool show = true;
   final picker = ImagePicker();
   File? _image;
-
   TextEditingController controller = TextEditingController();
   _onTap() {
-    NewHelpDeskProvider provider =
-        navigatorKey.currentContext!.read<NewHelpDeskProvider>();
+    NewHelpDeskManager provider = context.read<NewHelpDeskManager>();
     provider.getAllChats(
       ticketId: widget.ticketId,
       showProgress: false,
@@ -46,7 +51,8 @@ class _HelpDeskAllChatNewListingState extends State<HelpDeskAllChatNewListing> {
   }
 
   void _selectOption() {
-    BaseBottomSheets().gradientBottomSheet(
+    BaseBottomSheet().bottomSheet(
+        barrierColor: ThemeColors.neutral5.withValues(alpha: 0.7),
         child: MyAccountImageType(
       onCamera: () => _pickImage(source: ImageSource.camera),
       onGallery: () => _pickImage(),
@@ -54,7 +60,7 @@ class _HelpDeskAllChatNewListingState extends State<HelpDeskAllChatNewListing> {
   }
 
   Future _pickImage({ImageSource? source}) async {
-    Navigator.pop(navigatorKey.currentContext!);
+    Navigator.pop(context);
     closeKeyboard();
     try {
       XFile? pickedFile =
@@ -72,8 +78,7 @@ class _HelpDeskAllChatNewListingState extends State<HelpDeskAllChatNewListing> {
   }
 
   Future _onReplyTicketClick() async {
-    NewHelpDeskProvider provider =
-        navigatorKey.currentContext!.read<NewHelpDeskProvider>();
+    NewHelpDeskManager manager = context.read<NewHelpDeskManager>();
 
     closeKeyboard();
 
@@ -82,11 +87,11 @@ class _HelpDeskAllChatNewListingState extends State<HelpDeskAllChatNewListing> {
     }
 
     try {
-      ApiResponse res = await provider.replyTicketNew(
+      ApiResponse res = await manager.replyTicketNew(
         image: _image,
         ticketId: widget.ticketId,
         message: controller.text,
-        ticketNo: '${provider.chatData?.ticketNo ?? ''}',
+        ticketNo: '${manager.chatData?.chatRes?.ticketNo ?? ''}',
       );
       if (res.status) {
         _image = null;
@@ -100,64 +105,64 @@ class _HelpDeskAllChatNewListingState extends State<HelpDeskAllChatNewListing> {
 
   @override
   Widget build(BuildContext context) {
-    NewHelpDeskProvider provider = context.watch<NewHelpDeskProvider>();
+    NewHelpDeskManager manager = context.watch<NewHelpDeskManager>();
     return Column(
       children: [
-        provider.chatData?.logs?.isEmpty == true && provider.chatData == null
+        manager.chatData?.chatRes?.logs?.isEmpty == true && manager.chatData == null
             ? const SizedBox()
             : Expanded(
-                child: BaseUiContainer(
-                  isFull: true,
-                  error: provider.error ?? "",
-                  hasData: provider.chatData != null &&
-                      provider.chatData?.logs?.isNotEmpty == true,
-                  isLoading: provider.isLoading && !provider.removeLoader,
-                  errorDispCommon: true,
+                child: BaseLoaderContainer(
+                  error: manager.error ?? "",
+                  hasData: manager.chatData != null &&
+                      manager.chatData?.chatRes?.logs?.isNotEmpty == true,
+                  isLoading: manager.isLoading && !manager.removeLoader,
                   showPreparingText: true,
                   onRefresh: _onTap,
                   child: CommonRefreshIndicator(
                     onRefresh: () async => _onTap(),
-                    child: SingleChildScrollView(
-                      physics: const AlwaysScrollableScrollPhysics(),
-                      reverse: true,
-                      child: Column(
-                        children: [
-                          Visibility(
-                            visible: provider.chatData?.subject != null &&
-                                provider.chatData?.subject != '',
-                            child: Container(
-                              margin: const EdgeInsets.only(top: 20),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(30),
-                                color: const Color.fromARGB(255, 61, 61, 61),
-                              ),
-                              padding: const EdgeInsets.symmetric(
-                                  vertical: 10, horizontal: 15),
-                              child: Text(
-                                provider.chatData?.subject ?? "",
-                                style: styleGeorgiaBold(
-                                    color: Colors.white, fontSize: 18),
-                              ),
+                    child: Column(
+                      children: [
+                        Visibility(
+                          visible: manager.chatData?.chatRes?.subject != null &&
+                              manager.chatData?.chatRes?.subject != '',
+                          child: Container(
+                            margin: const EdgeInsets.only(top: 20),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(30),
+                              color: ThemeColors.splashBG,
+                            ),
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 10, horizontal: 15),
+                            child: Text(
+                              manager.chatData?.chatRes?.subject ?? "",
+                              style: styleGeorgiaBold(
+                                  color: Colors.white, fontSize: 18),
                             ),
                           ),
-                          const SpacerVertical(),
-                          ListView.builder(
+                        ),
+                        const SpacerVertical(),
+                        Expanded(
+                          child: ListView.builder(
                             padding: EdgeInsets.zero,
                             shrinkWrap: true,
-                            physics: const NeverScrollableScrollPhysics(),
-                            itemCount: provider.chatData?.logs?.length,
+                            //physics: const NeverScrollableScrollPhysics(),
+                            itemCount: manager.chatData?.chatRes?.logs?.length,
                             itemBuilder: (context, index) {
-                              return HelpDeskAllChatsItemNew(index: index);
+                              Log? logs = manager.chatData?.chatRes?.logs?[index];
+                              if (logs == null) {
+                                return SizedBox();
+                              }
+                              return HelpDeskAllChatsItemNew(logs: logs);
                             },
                           ),
-                        ],
-                      ),
-                    ),
+                        ),
+                      ],
+                    )
                   ),
                 ),
               ),
-        if (provider.chatData?.logs != null &&
-            provider.chatData?.logs?.isNotEmpty == true)
+        if (manager.chatData?.chatRes?.logs != null &&
+            manager.chatData?.chatRes?.logs?.isNotEmpty == true)
           Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -171,14 +176,14 @@ class _HelpDeskAllChatNewListingState extends State<HelpDeskAllChatNewListing> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Visibility(
-                            visible: provider.chatData?.closeMsg != null &&
+                            visible: manager.chatData?.chatRes?.closeMsg != null &&
                                 show &&
-                                !provider.isLoading,
+                                !manager.isLoading,
                             child: Padding(
                               padding: const EdgeInsets.only(bottom: 10),
                               child: Text(
-                                provider.chatData?.closeMsg ?? "",
-                                style: stylePTSansBold(color: ThemeColors.sos),
+                                manager.chatData?.chatRes?.closeMsg ?? "",
+                                style: stylePTSansBold(color: ThemeColors.error120),
                               ),
                             ),
                           ),
@@ -207,7 +212,7 @@ class _HelpDeskAllChatNewListingState extends State<HelpDeskAllChatNewListing> {
                                   },
                                   child: const CircleAvatar(
                                     radius: 11,
-                                    backgroundColor: ThemeColors.sos,
+                                    backgroundColor: ThemeColors.error120,
                                     child: Icon(
                                       Icons.close,
                                       size: 15,
@@ -218,13 +223,12 @@ class _HelpDeskAllChatNewListingState extends State<HelpDeskAllChatNewListing> {
                               ],
                             ),
                           ),
-                          if (provider.chatData?.status != 3)
+                          if (manager.chatData?.chatRes?.status != 3)
                             Stack(
                               alignment: Alignment.centerRight,
                               children: [
                                 ThemeInputField(
-                                  contentPadding:
-                                      const EdgeInsets.fromLTRB(10, 10, 80, 10),
+                                  contentPadding: const EdgeInsets.fromLTRB(10, 10, 80, 10),
                                   controller: controller,
                                   placeholder: "Message",
                                   keyboardType: TextInputType.multiline,
@@ -234,6 +238,8 @@ class _HelpDeskAllChatNewListingState extends State<HelpDeskAllChatNewListing> {
                                   maxLines: 4,
                                   maxLength: 500,
                                   textCapitalization: TextCapitalization.none,
+                                  isUnderline: false,
+                                  fillColor: ThemeColors.neutral5,
                                 ),
                                 Positioned(
                                   right: 0,
@@ -254,7 +260,7 @@ class _HelpDeskAllChatNewListingState extends State<HelpDeskAllChatNewListing> {
                                           icon: const Icon(Icons.send),
                                           onPressed: () =>
                                               _onReplyTicketClick(),
-                                          color: ThemeColors.accent),
+                                          color: ThemeColors.splashBG),
                                     ],
                                   ),
                                 ),
@@ -272,4 +278,3 @@ class _HelpDeskAllChatNewListingState extends State<HelpDeskAllChatNewListing> {
     );
   }
 }
-*/

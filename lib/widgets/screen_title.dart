@@ -134,7 +134,7 @@ class ScreenTitle extends StatelessWidget {
                       curve: Curves.easeInOut,
                       child: CustomReadMoreText(
                         text: subTitle ?? "",
-                        textColor: Colors.white,
+                        textColor:ThemeColors.splashBG,
                       )),
                 ),
         Padding(

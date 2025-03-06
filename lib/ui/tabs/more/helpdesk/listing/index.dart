@@ -1,106 +1,94 @@
-/*
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:stocks_news_new/providers/help_desk.dart';
-import 'package:stocks_news_new/providers/help_desk_provider.dart';
-import 'package:stocks_news_new/screens/helpDesk/listing/item.dart';
-import 'package:stocks_news_new/screens/helpDesk/tickets/index.dart';
-import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
+import 'package:stocks_news_new/managers/helpdesk.dart';
+import 'package:stocks_news_new/ui/base/app_bar.dart';
+import 'package:stocks_news_new/ui/base/scaffold.dart';
+import 'package:stocks_news_new/ui/tabs/more/helpdesk/listing/item.dart';
+import 'package:stocks_news_new/ui/tabs/more/helpdesk/tickets/index.dart';
 import 'package:stocks_news_new/utils/constants.dart';
-import 'package:stocks_news_new/widgets/base_container.dart';
-import 'package:stocks_news_new/widgets/base_ui_container.dart';
+import 'package:stocks_news_new/widgets/custom/base_loader_container.dart';
 import 'package:stocks_news_new/widgets/custom/refresh_indicator.dart';
-import 'package:stocks_news_new/widgets/disclaimer_widget.dart';
 import 'package:stocks_news_new/widgets/helpdesk_error.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
-import '../../../utils/utils.dart';
 
-class HelpDeskAllRequestNew extends StatefulWidget {
-  const HelpDeskAllRequestNew({super.key});
+
+class RequestNewIndex extends StatefulWidget {
+  static const String path = "RequestNewIndex";
+  const RequestNewIndex({super.key});
 
   @override
-  State<HelpDeskAllRequestNew> createState() => _HelpDeskAllRequestNewState();
+  State<RequestNewIndex> createState() => _RequestNewIndexState();
 }
 
-class _HelpDeskAllRequestNewState extends State<HelpDeskAllRequestNew> {
+class _RequestNewIndexState extends State<RequestNewIndex> {
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      NewHelpDeskProvider provider = context.read<NewHelpDeskProvider>();
-      provider.getTickets();
+      NewHelpDeskManager manager = context.read<NewHelpDeskManager>();
+      manager.getTickets();
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    NewHelpDeskProvider provider = context.watch<NewHelpDeskProvider>();
+    NewHelpDeskManager manager = context.watch<NewHelpDeskManager>();
 
-    return BaseContainer(
-      appBar: AppBarHome(
-        isPopBack: true,
+    return BaseScaffold(
+      appBar: BaseAppBar(
+        showBack: true,
         title: "Help Desk",
       ),
       body: Padding(
-        padding: EdgeInsets.fromLTRB(Dimen.padding, 0, Dimen.padding, 0),
+        padding: const EdgeInsets.symmetric(horizontal: Pad.pad10),
         child: CommonEmptyError(
-          hasData: provider.data?.tickets != null &&
-              provider.data?.tickets?.isNotEmpty != true,
-          isLoading: provider.isLoadingTickets,
+          hasData: manager.data?.helpDesk?.ticketList != null &&
+              manager.data?.helpDesk?.ticketList?.isNotEmpty != true,
+          isLoading: manager.isLoadingTickets,
           title: "Helpdesk",
-          subTitle: provider.data?.noTicketMsg ?? provider.errorTickets,
+          subTitle: manager.data?.helpDesk?.noTicketsMessage ?? manager.errorTickets,
           buttonText: "CREATE NEW TICKETS",
           onClick: () async {
-            Utils().showLog("Create NEW");
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => HelpDeskCreateTicket(),
-              ),
-            );
+            Navigator.pushNamed(context, HelpDeskCreateIndex.path);
           },
-          child: BaseUiContainer(
-            error: provider.data?.noTicketMsg ?? provider.errorTickets,
-            hasData: provider.data?.tickets != null &&
-                provider.data?.tickets?.isNotEmpty == true,
-            isLoading: provider.isLoadingTickets,
-            errorDispCommon: true,
-            isFull: true,
+          child: BaseLoaderContainer(
+            error: manager.data?.helpDesk?.noTicketsMessage ?? manager.errorTickets,
+            hasData:  manager.data?.helpDesk?.ticketList != null &&
+                manager.data?.helpDesk?.ticketList?.isNotEmpty == true,
+            isLoading: manager.isLoadingTickets,
             showPreparingText: true,
-            onRefresh: () => provider.getTickets(),
+            onRefresh: () => manager.getTickets(),
             child: CommonRefreshIndicator(
               onRefresh: () async {
-                provider.getTickets();
+                manager.getTickets();
               },
-              child: SingleChildScrollView(
-                physics: AlwaysScrollableScrollPhysics(),
-                child: SingleChildScrollView(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      ListView.separated(
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemCount: provider.data?.tickets?.length ?? 0,
-                        itemBuilder: (context, index) {
-                          return HelpDeskItemNew(index: index);
-                        },
-                        separatorBuilder: (context, index) {
-                          return const Divider(color: Colors.white12);
-                        },
-                      ),
-                      const SpacerVertical(),
+              child:Column(
+               // mainAxisSize: MainAxisSize.min,
+                children: [
+                  Expanded(
+                    child: ListView.separated(
+                      shrinkWrap: true,
+                      //physics: const NeverScrollableScrollPhysics(),
+                      itemCount: manager.data?.helpDesk?.ticketList?.length ?? 0,
+                      itemBuilder: (context, index) {
+                        return HelpDeskItemNew(index: index);
+                      },
+                      separatorBuilder: (context, index) {
+                        return const Divider(color: Colors.white12);
+                      },
+                    ),
+                  ),
+                  const SpacerVertical(),
+                  /*
                       if (context.read<HelpDeskProvider>().extra?.disclaimer !=
                           null)
                         DisclaimerWidget(
                             data: context
                                 .read<HelpDeskProvider>()
                                 .extra!
-                                .disclaimer!)
-                    ],
-                  ),
-                ),
-              ),
+                                .disclaimer!)*/
+                ],
+              )
             ),
           ),
         ),
@@ -108,4 +96,3 @@ class _HelpDeskAllRequestNewState extends State<HelpDeskAllRequestNew> {
     );
   }
 }
-*/
