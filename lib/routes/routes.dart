@@ -7,6 +7,8 @@ import 'package:stocks_news_new/managers/feedback.dart';
 import 'package:stocks_news_new/managers/helpdesk.dart';
 import 'package:stocks_news_new/managers/home.dart';
 import 'package:stocks_news_new/managers/legal.dart';
+import 'package:stocks_news_new/managers/market/52Weeks/fifty_two_weeks_high.dart';
+import 'package:stocks_news_new/managers/market/52Weeks/fifty_two_weeks_low.dart';
 import 'package:stocks_news_new/managers/market/alerts_watchlist_action.dart';
 import 'package:stocks_news_new/managers/market/gapUpDown/gap_down.dart';
 import 'package:stocks_news_new/managers/market/gapUpDown/gap_up.dart';
@@ -649,10 +651,6 @@ class Routes {
       ChangeNotifierProvider(create: (_) => FaqManager()),
       ChangeNotifierProvider(create: (_) => AIManager()),
       ChangeNotifierProvider(create: (_) => NewHelpDeskManager()),
-
-      // MARKET DATA Start ---------------
-      ChangeNotifierProvider(create: (_) => MarketManager()),
-      ChangeNotifierProvider(create: (_) => MostBullishManager()),
       ChangeNotifierProvider(create: (_) => PortfolioManager()),
       ChangeNotifierProvider(create: (_) => SOpenManager()),
       ChangeNotifierProvider(create: (_) => SPendingManager()),
@@ -661,6 +659,10 @@ class Routes {
       ChangeNotifierProvider(create: (_) => TradeManager()),
       ChangeNotifierProvider(create: (_) => TickerSearchManager()),
       ChangeNotifierProvider(create: (_) => FeedbackManager()),
+
+      // MARKET DATA Start ---------------
+      ChangeNotifierProvider(create: (_) => MarketManager()),
+      ChangeNotifierProvider(create: (_) => MostBullishManager()),
       ChangeNotifierProvider(create: (_) => MostBearishManager()),
       ChangeNotifierProvider(create: (_) => TodaysGainerManager()),
       ChangeNotifierProvider(create: (_) => TodaysLosersManager()),
@@ -671,6 +673,8 @@ class Routes {
       ChangeNotifierProvider(create: (_) => LowPeManager()),
       ChangeNotifierProvider(create: (_) => HighPeGrowthManager()),
       ChangeNotifierProvider(create: (_) => LowPeGrowthManager()),
+      ChangeNotifierProvider(create: (_) => FiftyTwoWeeksHighManager()),
+      ChangeNotifierProvider(create: (_) => FiftyTwoWeeksLowManager()),
       // MARKET DATA End ---------------
     ];
   }
