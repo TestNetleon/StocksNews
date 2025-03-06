@@ -51,8 +51,7 @@ class _OpenOrderScreenState extends State<OpenOrderScreen> {
     disposeSheet = false;
     setState(() {});
     try {
-      TickerSearchManager manager =
-          context.read<TickerSearchManager>();
+      TickerSearchManager manager = context.read<TickerSearchManager>();
       if (symbol != null && symbol != '') {
         manager.stockHolding(symbol, selectedStock: selectedStock);
       }
@@ -68,8 +67,7 @@ class _OpenOrderScreenState extends State<OpenOrderScreen> {
     disposeSheet = false;
     setState(() {});
     try {
-      TickerSearchManager manager =
-      context.read<TickerSearchManager>();
+      TickerSearchManager manager = context.read<TickerSearchManager>();
       if (symbol != null && symbol != '') {
         manager.stockHoldingOfCondition(symbol,
             selectedStock: selectedStock, conditionalType: conditionalType);
@@ -192,18 +190,17 @@ class _OpenOrderScreenState extends State<OpenOrderScreen> {
                 child: BuyOrderItem(
                   title: "Buy More Shares",
                   subtitle: subtitleWithSymbol(
-                    portfolioManager.userData?.userDataRes?.ordersSubTitle?.buyOrder,
+                    portfolioManager
+                        .userData?.userDataRes?.ordersSubTitle?.buyOrder,
                     widget.symbol,
                   ),
                   onTap: () {
                     var selectedStock = StockType.buy;
                     if (widget.symbol != null) {
                       _onTap(
-                          symbol: widget.symbol,
-                          selectedStock: selectedStock);
+                          symbol: widget.symbol, selectedStock: selectedStock);
                     } else {
-                     // Navigator.pushNamed(context, SearchTickerIndex.path,arguments: {"stockType":selectedStock});
-
+                      // Navigator.pushNamed(context, SearchTickerIndex.path,arguments: {"stockType":selectedStock});
                     }
                   },
                 ),
@@ -213,18 +210,17 @@ class _OpenOrderScreenState extends State<OpenOrderScreen> {
                 child: BuyOrderItem(
                   title: "Sell Shares",
                   subtitle: subtitleWithSymbol(
-                    portfolioManager.userData?.userDataRes?.ordersSubTitle?.sellOrder,
+                    portfolioManager
+                        .userData?.userDataRes?.ordersSubTitle?.sellOrder,
                     widget.symbol,
                   ),
                   onTap: () {
                     var selectedStock = StockType.sell;
                     if (widget.symbol != null) {
                       _onTap(
-                          symbol: widget.symbol,
-                          selectedStock: selectedStock);
+                          symbol: widget.symbol, selectedStock: selectedStock);
                     } else {
                       //Navigator.pushNamed(context, SearchTickerIndex.path,arguments: {"stockType":selectedStock});
-
                     }
                   },
                 ),
@@ -234,17 +230,17 @@ class _OpenOrderScreenState extends State<OpenOrderScreen> {
                 child: BuyOrderItem(
                   title: "Increase Short Shares",
                   subtitle: subtitleWithSymbol(
-                    portfolioManager.userData?.userDataRes?.ordersSubTitle?.shortOrder,
+                    portfolioManager
+                        .userData?.userDataRes?.ordersSubTitle?.shortOrder,
                     widget.symbol,
                   ),
                   onTap: () {
-                    var selectedStock = StockType.short;
                     if (widget.symbol != null) {
                       context
-                          .read<TickerSearchManager>().shortRedirection(widget.symbol ?? "");
+                          .read<TickerSearchManager>()
+                          .shortRedirection(widget.symbol ?? "");
                     } else {
-                     // Navigator.pushNamed(context, SearchTickerIndex.path,arguments: {"stockType":selectedStock});
-
+                      // Navigator.pushNamed(context, SearchTickerIndex.path,arguments: {"stockType":selectedStock});
                     }
                   },
                 ),
@@ -254,18 +250,17 @@ class _OpenOrderScreenState extends State<OpenOrderScreen> {
                 child: BuyOrderItem(
                   title: "Buy to Cover Shares",
                   subtitle: subtitleWithSymbol(
-                    portfolioManager.userData?.userDataRes?.ordersSubTitle?.buyToCoverOrder,
+                    portfolioManager
+                        .userData?.userDataRes?.ordersSubTitle?.buyToCoverOrder,
                     widget.symbol,
                   ),
                   onTap: () {
                     var selectedStock = StockType.btc;
                     if (widget.symbol != null) {
                       _onTap(
-                          symbol: widget.symbol,
-                          selectedStock: selectedStock);
+                          symbol: widget.symbol, selectedStock: selectedStock);
                     } else {
-                     // Navigator.pushNamed(context, SearchTickerIndex.path,arguments: {"stockType":selectedStock});
-
+                      // Navigator.pushNamed(context, SearchTickerIndex.path,arguments: {"stockType":selectedStock});
                     }
                   },
                 ),
@@ -279,13 +274,14 @@ class _OpenOrderScreenState extends State<OpenOrderScreen> {
             if (widget.portfolioTradeType == 1 ||
                 widget.portfolioTradeType == 2)
               Visibility(
-                visible: portfolioManager.userData?.userDataRes?.userConditionalOrderPermission
-                            ?.bracketOrder ==
-                        true,
+                visible: portfolioManager.userData?.userDataRes
+                        ?.userConditionalOrderPermission?.bracketOrder ==
+                    true,
                 child: BuyOrderItem(
                   title: "Stop Loss and Target",
                   subtitle: subtitleWithSymbol(
-                    portfolioManager.userData?.userDataRes?.ordersSubTitle?.bracketOrder,
+                    portfolioManager
+                        .userData?.userDataRes?.ordersSubTitle?.bracketOrder,
                     widget.symbol,
                   ),
                   onTap: () {
@@ -298,8 +294,7 @@ class _OpenOrderScreenState extends State<OpenOrderScreen> {
                               qty: widget.qty,
                               conditionalType: conditionalType);
                     } else {
-                     // Navigator.pushNamed(context, SearchTickerIndex.path);
-
+                      // Navigator.pushNamed(context, SearchTickerIndex.path);
                     }
                   },
                 ),
@@ -313,23 +308,22 @@ class _OpenOrderScreenState extends State<OpenOrderScreen> {
                     child: BuyOrderItem(
                       title: "Buy More Shares",
                       subtitle: subtitleWithSymbol(
-                        portfolioManager.userData?.userDataRes?.ordersSubTitle?.buyOrder,
+                        portfolioManager
+                            .userData?.userDataRes?.ordersSubTitle?.buyOrder,
                         widget.symbol,
                       ),
                       onTap: () {
-                        var conditionalType =
-                            widget.allTradType?['order_type_original'] ==
-                                    "LIMIT_ORDER"
-                                ? ConditionType.limitOrder :
-                            widget.allTradType?['order_type_original'] ==
-                                "STOP_ORDER"
-                                ?
-                            ConditionType.stopOrder:
-                            widget.allTradType?['order_type_original'] ==
-                                "STOP_LIMIT_ORDER"
-                                ?
-                            ConditionType.stopLimitOrder:
-                            ConditionType.trailingOrder;
+                        var conditionalType = widget
+                                    .allTradType?['order_type_original'] ==
+                                "LIMIT_ORDER"
+                            ? ConditionType.limitOrder
+                            : widget.allTradType?['order_type_original'] ==
+                                    "STOP_ORDER"
+                                ? ConditionType.stopOrder
+                                : widget.allTradType?['order_type_original'] ==
+                                        "STOP_LIMIT_ORDER"
+                                    ? ConditionType.stopLimitOrder
+                                    : ConditionType.trailingOrder;
 
                         _onTapCondition(
                             symbol: widget.symbol ?? "",
@@ -343,23 +337,22 @@ class _OpenOrderScreenState extends State<OpenOrderScreen> {
                     child: BuyOrderItem(
                       title: "Sell Shares",
                       subtitle: subtitleWithSymbol(
-                        portfolioManager.userData?.userDataRes?.ordersSubTitle?.sellOrder,
+                        portfolioManager
+                            .userData?.userDataRes?.ordersSubTitle?.sellOrder,
                         widget.symbol,
                       ),
                       onTap: () {
-                        var conditionalType =
-                        widget.allTradType?['order_type_original'] ==
-                            "LIMIT_ORDER"
-                            ? ConditionType.limitOrder :
-                        widget.allTradType?['order_type_original'] ==
-                            "STOP_ORDER"
-                            ?
-                        ConditionType.stopOrder:
-                        widget.allTradType?['order_type_original'] ==
-                            "STOP_LIMIT_ORDER"
-                            ?
-                        ConditionType.stopLimitOrder:
-                        ConditionType.trailingOrder;
+                        var conditionalType = widget
+                                    .allTradType?['order_type_original'] ==
+                                "LIMIT_ORDER"
+                            ? ConditionType.limitOrder
+                            : widget.allTradType?['order_type_original'] ==
+                                    "STOP_ORDER"
+                                ? ConditionType.stopOrder
+                                : widget.allTradType?['order_type_original'] ==
+                                        "STOP_LIMIT_ORDER"
+                                    ? ConditionType.stopLimitOrder
+                                    : ConditionType.trailingOrder;
                         _onTapCondition(
                             symbol: widget.symbol ?? "",
                             selectedStock: "Sell",
@@ -372,23 +365,22 @@ class _OpenOrderScreenState extends State<OpenOrderScreen> {
                     child: BuyOrderItem(
                       title: "Short More Shares",
                       subtitle: subtitleWithSymbol(
-                        portfolioManager.userData?.userDataRes?.ordersSubTitle?.buyOrder,
+                        portfolioManager
+                            .userData?.userDataRes?.ordersSubTitle?.buyOrder,
                         widget.symbol,
                       ),
                       onTap: () {
-                        var conditionalType =
-                        widget.allTradType?['order_type_original'] ==
-                            "LIMIT_ORDER"
-                            ? ConditionType.limitOrder :
-                        widget.allTradType?['order_type_original'] ==
-                            "STOP_ORDER"
-                            ?
-                        ConditionType.stopOrder:
-                        widget.allTradType?['order_type_original'] ==
-                            "STOP_LIMIT_ORDER"
-                            ?
-                        ConditionType.stopLimitOrder:
-                        ConditionType.trailingOrder;
+                        var conditionalType = widget
+                                    .allTradType?['order_type_original'] ==
+                                "LIMIT_ORDER"
+                            ? ConditionType.limitOrder
+                            : widget.allTradType?['order_type_original'] ==
+                                    "STOP_ORDER"
+                                ? ConditionType.stopOrder
+                                : widget.allTradType?['order_type_original'] ==
+                                        "STOP_LIMIT_ORDER"
+                                    ? ConditionType.stopLimitOrder
+                                    : ConditionType.trailingOrder;
                         _onTapCondition(
                             symbol: widget.symbol ?? "",
                             selectedStock: "Short",
@@ -401,23 +393,22 @@ class _OpenOrderScreenState extends State<OpenOrderScreen> {
                     child: BuyOrderItem(
                       title: "Buy to Cover Shares",
                       subtitle: subtitleWithSymbol(
-                        portfolioManager.userData?.userDataRes?.ordersSubTitle?.sellOrder,
+                        portfolioManager
+                            .userData?.userDataRes?.ordersSubTitle?.sellOrder,
                         widget.symbol,
                       ),
                       onTap: () {
-                        var conditionalType =
-                        widget.allTradType?['order_type_original'] ==
-                            "LIMIT_ORDER"
-                            ? ConditionType.limitOrder :
-                        widget.allTradType?['order_type_original'] ==
-                            "STOP_ORDER"
-                            ?
-                        ConditionType.stopOrder:
-                        widget.allTradType?['order_type_original'] ==
-                            "STOP_LIMIT_ORDER"
-                            ?
-                        ConditionType.stopLimitOrder:
-                        ConditionType.trailingOrder;
+                        var conditionalType = widget
+                                    .allTradType?['order_type_original'] ==
+                                "LIMIT_ORDER"
+                            ? ConditionType.limitOrder
+                            : widget.allTradType?['order_type_original'] ==
+                                    "STOP_ORDER"
+                                ? ConditionType.stopOrder
+                                : widget.allTradType?['order_type_original'] ==
+                                        "STOP_LIMIT_ORDER"
+                                    ? ConditionType.stopLimitOrder
+                                    : ConditionType.trailingOrder;
                         _onTapCondition(
                             symbol: widget.symbol ?? "",
                             selectedStock: "BUY_TO_COVER",
@@ -432,14 +423,14 @@ class _OpenOrderScreenState extends State<OpenOrderScreen> {
               child: BuyOrderItem(
                 title: "Square Off Order",
                 subtitle: subtitleWithSymbol(
-                    portfolioManager.userData?.userDataRes?.ordersSubTitle?.sellOrder,
+                    portfolioManager
+                        .userData?.userDataRes?.ordersSubTitle?.sellOrder,
                     widget.symbol),
                 onTap: () {
                   popUpAlert(
                     cancel: true,
                     title: "Square Off Order",
-                    message:
-                        "Are you sure you want to square off this order?",
+                    message: "Are you sure you want to square off this order?",
                     okText: "Square Off",
                     icon: Images.alertPopGIF,
                     onTap: () async {
@@ -449,7 +440,8 @@ class _OpenOrderScreenState extends State<OpenOrderScreen> {
                           .read<SOpenManager>()
                           .squareOffRequest(widget.tickerID?.toString());
                       if (result == true) {
-                        Navigator.pushNamed(navigatorKey.currentContext!, SimulatorIndex.path);
+                        Navigator.pushNamed(
+                            navigatorKey.currentContext!, SimulatorIndex.path);
                       }
                     },
                   );

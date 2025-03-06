@@ -1,11 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
-
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
-import 'package:provider/provider.dart';
-import 'package:stocks_news_new/routes/my_app.dart';
-// import 'package:stocks_news_new/ui/tabs/tools/stockScanner/managers/market_scanner.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 
 class SSEManager {
@@ -38,12 +34,11 @@ class SSEManager {
     }
   }
 
-
   void connectStock({required String symbol, required SimulatorEnum screen}) {
     // MarketScannerM provider = navigatorKey.currentContext!.read<MarketScannerM>();
 
     // int? port = provider.port?.port?.otherPortRes?.simulator ?? 8052;
-    int? port =  8030;
+    int? port = 8030;
 
     final url = 'https://dev.stocks.news:$port/symbolData?symbol=$symbol';
 
@@ -105,7 +100,7 @@ class SSEManager {
       //     navigatorKey.currentContext!.read<MarketScannerM>();
 
       // int? port = provider.port?.port?.otherPortRes?.simulator ?? 8052;
-      int? port =8030;
+      int? port = 8030;
 
       final url =
           'https://dev.stocks.news:$port/symbolsData?symbol=${symbols.join(',')}';

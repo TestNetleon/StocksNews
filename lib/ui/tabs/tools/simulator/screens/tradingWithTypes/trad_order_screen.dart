@@ -45,8 +45,7 @@ class _TradOrderScreenState extends State<TradOrderScreen> {
     disposeSheet = false;
     setState(() {});
     try {
-      TickerSearchManager manager =
-          context.read<TickerSearchManager>();
+      TickerSearchManager manager = context.read<TickerSearchManager>();
       if (symbol != null && symbol != '') {
         manager.stockHolding(symbol, selectedStock: selectedStock);
       }
@@ -233,7 +232,7 @@ class _TradOrderScreenState extends State<TradOrderScreen> {
               if (widget.symbol != null) {
                 _onTap(symbol: widget.symbol, selectedStock: selectedStock);
               } else {
-               // Navigator.pushNamed(context, SearchTickerIndex.path,arguments: {"stockType":selectedStock});
+                // Navigator.pushNamed(context, SearchTickerIndex.path,arguments: {"stockType":selectedStock});
                 /*Navigator.push(
                   context,
                   createRoute(
@@ -253,31 +252,32 @@ class _TradOrderScreenState extends State<TradOrderScreen> {
               if (widget.symbol != null) {
                 _onTap(symbol: widget.symbol, selectedStock: selectedStock);
               } else {
-              //  Navigator.pushNamed(context, SearchTickerIndex.path,arguments: {"stockType":selectedStock});
+                //  Navigator.pushNamed(context, SearchTickerIndex.path,arguments: {"stockType":selectedStock});
               }
             },
           ),
           BuyOrderItem(
             title: "Short Order",
             subtitle: subtitleWithSymbol(
-              portfolioManager.userData?.userDataRes?.ordersSubTitle?.shortOrder,
+              portfolioManager
+                  .userData?.userDataRes?.ordersSubTitle?.shortOrder,
               widget.symbol,
             ),
             onTap: () {
-              var selectedStock = StockType.short;
               if (widget.symbol != null) {
                 navigatorKey.currentContext!
                     .read<TickerSearchManager>()
                     .shortRedirection(widget.symbol ?? "");
               } else {
-               // Navigator.pushNamed(context, SearchTickerIndex.path,arguments: {"stockType":selectedStock});
+                // Navigator.pushNamed(context, SearchTickerIndex.path,arguments: {"stockType":selectedStock});
               }
             },
           ),
           BuyOrderItem(
             title: "Buy to Cover Order",
             subtitle: subtitleWithSymbol(
-              portfolioManager.userData?.userDataRes?.ordersSubTitle?.buyToCoverOrder,
+              portfolioManager
+                  .userData?.userDataRes?.ordersSubTitle?.buyToCoverOrder,
               widget.symbol,
             ),
             onTap: () {
@@ -286,15 +286,14 @@ class _TradOrderScreenState extends State<TradOrderScreen> {
                 _onTap(symbol: widget.symbol, selectedStock: selectedStock);
               } else {
                 //Navigator.pushNamed(context, SearchTickerIndex.path,arguments: {"stockType":selectedStock});
-
               }
             },
           ),
           SpacerVertical(height: Pad.pad5),
           Visibility(
-            visible: portfolioManager.userData?.userDataRes?.userConditionalOrderPermission
-                        ?.bracketOrder ==
-                    true,
+            visible: portfolioManager.userData?.userDataRes
+                    ?.userConditionalOrderPermission?.bracketOrder ==
+                true,
             child: Text(
               "Conditional orders",
               style: stylePTSansBold(
@@ -304,48 +303,50 @@ class _TradOrderScreenState extends State<TradOrderScreen> {
             ),
           ),
           Visibility(
-            visible: portfolioManager.userData?.userDataRes?.userConditionalOrderPermission
-                        ?.bracketOrder ==
-                    true,
+            visible: portfolioManager.userData?.userDataRes
+                    ?.userConditionalOrderPermission?.bracketOrder ==
+                true,
             child: BuyOrderItem(
               title: "Bracket Order",
               subtitle: subtitleWithSymbol(
-                portfolioManager.userData?.userDataRes?.ordersSubTitle?.bracketOrder,
+                portfolioManager
+                    .userData?.userDataRes?.ordersSubTitle?.bracketOrder,
                 widget.symbol,
               ),
               onTap: () {
                 var conditionalType = ConditionType.bracketOrder;
                 if (widget.symbol != null) {
-                  context
-                      .read<TickerSearchManager>()
-                      .conditionalRedirection(widget.symbol ?? "",
+                  context.read<TickerSearchManager>().conditionalRedirection(
+                      widget.symbol ?? "",
                       tickerID: widget.tickerID,
                       qty: widget.qty,
-                      conditionalType: conditionalType
-                  );
+                      conditionalType: conditionalType);
                 } else {
-                 // Navigator.pushNamed(context, SearchTickerIndex.path);
+                  // Navigator.pushNamed(context, SearchTickerIndex.path);
                 }
                 //openInfoSheet(cType: ConditionType.bracketOrder);
               },
             ),
           ),
           Visibility(
-            visible: portfolioManager.userData?.userDataRes?.userConditionalOrderPermission?.limitOrder ==
-                    true,
+            visible: portfolioManager.userData?.userDataRes
+                    ?.userConditionalOrderPermission?.limitOrder ==
+                true,
             child: BuyOrderItem(
               title: "Limit Order",
               subtitle: subtitleWithSymbol(
-                portfolioManager.userData?.userDataRes?.ordersSubTitle?.limitOrder,
+                portfolioManager
+                    .userData?.userDataRes?.ordersSubTitle?.limitOrder,
                 widget.symbol,
               ),
               onTap: () {
                 var conditionalType = ConditionType.limitOrder;
                 if (widget.symbol != null) {
-                  context
-                      .read<TickerSearchManager>()
-                      .conditionalRedirection(widget.symbol ?? "",
-                      tickerID: widget.tickerID, qty: widget.qty,conditionalType: conditionalType);
+                  context.read<TickerSearchManager>().conditionalRedirection(
+                      widget.symbol ?? "",
+                      tickerID: widget.tickerID,
+                      qty: widget.qty,
+                      conditionalType: conditionalType);
                 } else {
                   //Navigator.pushNamed(context, SearchTickerIndex.path);
                 }
@@ -354,99 +355,103 @@ class _TradOrderScreenState extends State<TradOrderScreen> {
             ),
           ),
           Visibility(
-            visible: portfolioManager.userData?.userDataRes?.userConditionalOrderPermission?.stopOrder ==
-                    true,
+            visible: portfolioManager.userData?.userDataRes
+                    ?.userConditionalOrderPermission?.stopOrder ==
+                true,
             child: BuyOrderItem(
               title: "Stop Order",
               subtitle: subtitleWithSymbol(
-                portfolioManager.userData?.userDataRes?.ordersSubTitle?.stopOrder,
+                portfolioManager
+                    .userData?.userDataRes?.ordersSubTitle?.stopOrder,
                 widget.symbol,
               ),
               onTap: () {
                 var conditionalType = ConditionType.stopOrder;
                 if (widget.symbol != null) {
-                  context
-                      .read<TickerSearchManager>()
-                      .conditionalRedirection(widget.symbol ?? "",
-                      tickerID: widget.tickerID, qty: widget.qty,conditionalType: conditionalType);
+                  context.read<TickerSearchManager>().conditionalRedirection(
+                      widget.symbol ?? "",
+                      tickerID: widget.tickerID,
+                      qty: widget.qty,
+                      conditionalType: conditionalType);
                 } else {
-                 // Navigator.pushNamed(context, SearchTickerIndex.path);
-
+                  // Navigator.pushNamed(context, SearchTickerIndex.path);
                 }
                 //openInfoSheet(cType: ConditionType.stopOrder);
               },
             ),
           ),
           Visibility(
-            visible: portfolioManager.userData?.userDataRes?.userConditionalOrderPermission
-                        ?.stopLimitOrder ==
-                    true,
+            visible: portfolioManager.userData?.userDataRes
+                    ?.userConditionalOrderPermission?.stopLimitOrder ==
+                true,
             child: BuyOrderItem(
               title: "Stop Limit Order",
               subtitle: subtitleWithSymbol(
-                portfolioManager.userData?.userDataRes?.ordersSubTitle?.stopLimitOrder,
+                portfolioManager
+                    .userData?.userDataRes?.ordersSubTitle?.stopLimitOrder,
                 widget.symbol,
               ),
               onTap: () {
                 var conditionalType = ConditionType.stopLimitOrder;
                 if (widget.symbol != null) {
-                  context
-                      .read<TickerSearchManager>()
-                      .conditionalRedirection(widget.symbol ?? "",
-                      tickerID: widget.tickerID, qty: widget.qty,conditionalType: conditionalType);
+                  context.read<TickerSearchManager>().conditionalRedirection(
+                      widget.symbol ?? "",
+                      tickerID: widget.tickerID,
+                      qty: widget.qty,
+                      conditionalType: conditionalType);
                 } else {
-                 // Navigator.pushNamed(context, SearchTickerIndex.path);
+                  // Navigator.pushNamed(context, SearchTickerIndex.path);
                 }
-               // openInfoSheet(cType: ConditionType.stopLimitOrder);
+                // openInfoSheet(cType: ConditionType.stopLimitOrder);
               },
             ),
           ),
           Visibility(
-            visible: portfolioManager.userData?.userDataRes?.userConditionalOrderPermission
-                        ?.trailingOrder ==
-                    true,
+            visible: portfolioManager.userData?.userDataRes
+                    ?.userConditionalOrderPermission?.trailingOrder ==
+                true,
             child: BuyOrderItem(
               title: "Trailing Order",
               subtitle: subtitleWithSymbol(
-                portfolioManager.userData?.userDataRes?.ordersSubTitle?.trailingOrder,
+                portfolioManager
+                    .userData?.userDataRes?.ordersSubTitle?.trailingOrder,
                 widget.symbol,
               ),
               onTap: () {
                 var conditionalType = ConditionType.trailingOrder;
                 if (widget.symbol != null) {
-                  context
-                      .read<TickerSearchManager>()
-                      .conditionalRedirection(widget.symbol ?? "",
-                      tickerID: widget.tickerID, qty: widget.qty,conditionalType: conditionalType);
+                  context.read<TickerSearchManager>().conditionalRedirection(
+                      widget.symbol ?? "",
+                      tickerID: widget.tickerID,
+                      qty: widget.qty,
+                      conditionalType: conditionalType);
                 } else {
-                 // Navigator.pushNamed(context, SearchTickerIndex.path);
-
+                  // Navigator.pushNamed(context, SearchTickerIndex.path);
                 }
-               // openInfoSheet(cType: ConditionType.trailingOrder);
+                // openInfoSheet(cType: ConditionType.trailingOrder);
               },
             ),
           ),
           Visibility(
-            visible: portfolioManager.userData?.userDataRes?.userConditionalOrderPermission
-                        ?.recurringOrder ==
-                    true,
+            visible: portfolioManager.userData?.userDataRes
+                    ?.userConditionalOrderPermission?.recurringOrder ==
+                true,
             child: BuyOrderItem(
               title: "Recurring Order",
               subtitle: subtitleWithSymbol(
-                portfolioManager.userData?.userDataRes?.ordersSubTitle?.recurringOrder,
+                portfolioManager
+                    .userData?.userDataRes?.ordersSubTitle?.recurringOrder,
                 widget.symbol,
               ),
               onTap: () {
                 if (widget.symbol != null) {
                   openInfoSheet(cType: ConditionType.recurringOrder);
-                /*  context
+                  /*  context
                       .read<TickerSearchManager>()
                       .stockHoldingOfRecurringCondition(widget.symbol ?? "");*/
                 } else {
-                //  Navigator.pushNamed(context, SearchTickerIndex.path);
+                  //  Navigator.pushNamed(context, SearchTickerIndex.path);
                 }
-
-
               },
             ),
           ),

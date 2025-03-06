@@ -11,13 +11,30 @@ import 'package:stocks_news_new/managers/legal.dart';
 import 'package:stocks_news_new/managers/market/52Weeks/fifty_two_weeks_high.dart';
 import 'package:stocks_news_new/managers/market/52Weeks/fifty_two_weeks_low.dart';
 import 'package:stocks_news_new/managers/market/alerts_watchlist_action.dart';
+import 'package:stocks_news_new/managers/market/dividends/dividends.dart';
+import 'package:stocks_news_new/managers/market/earnings/earnings.dart';
 import 'package:stocks_news_new/managers/market/gapUpDown/gap_down.dart';
 import 'package:stocks_news_new/managers/market/gapUpDown/gap_up.dart';
+import 'package:stocks_news_new/managers/market/highLowBeta/high_beta.dart';
+import 'package:stocks_news_new/managers/market/highLowBeta/low_beta.dart';
+import 'package:stocks_news_new/managers/market/highLowBeta/negative_beta.dart';
 import 'package:stocks_news_new/managers/market/highLowPe/high_pe.dart';
 import 'package:stocks_news_new/managers/market/highLowPe/high_pe_growth.dart';
 import 'package:stocks_news_new/managers/market/highLowPe/low_pe.dart';
 import 'package:stocks_news_new/managers/market/highLowPe/low_pe_growth.dart';
+import 'package:stocks_news_new/managers/market/indices/amex/amex.dart';
+import 'package:stocks_news_new/managers/market/indices/dow30/dow_30.dart';
+import 'package:stocks_news_new/managers/market/indices/nasdaq/nasdaq.dart';
+import 'package:stocks_news_new/managers/market/indices/nyse/nyse.dart';
+import 'package:stocks_news_new/managers/market/indices/s&p500/snp_500.dart';
+import 'package:stocks_news_new/managers/market/lowPrice/stocks_under.dart';
 import 'package:stocks_news_new/managers/market/market.dart';
+import 'package:stocks_news_new/managers/market/mostActive/mostActive/most_active.dart';
+import 'package:stocks_news_new/managers/market/mostActive/mostVolatile/most_volatile.dart';
+import 'package:stocks_news_new/managers/market/mostActive/unusualTrading/unusual_trading.dart';
+import 'package:stocks_news_new/managers/market/pennyStocks/mostActive/most_active.dart';
+import 'package:stocks_news_new/managers/market/pennyStocks/mostPopular/most_popular.dart';
+import 'package:stocks_news_new/managers/market/pennyStocks/topTodays/top_tadays.dart';
 import 'package:stocks_news_new/managers/market/trending/most_bearish.dart';
 import 'package:stocks_news_new/managers/market/trending/most_bullish.dart';
 import 'package:stocks_news_new/managers/market/gainer&losers/todays_breakout.dart';
@@ -680,6 +697,23 @@ class Routes {
       ChangeNotifierProvider(create: (_) => LowPeGrowthManager()),
       ChangeNotifierProvider(create: (_) => FiftyTwoWeeksHighManager()),
       ChangeNotifierProvider(create: (_) => FiftyTwoWeeksLowManager()),
+      ChangeNotifierProvider(create: (_) => HighBetaManager()),
+      ChangeNotifierProvider(create: (_) => LowBetaManager()),
+      ChangeNotifierProvider(create: (_) => NegativeBetaManager()),
+      ChangeNotifierProvider(create: (_) => Dow30Manager()),
+      ChangeNotifierProvider(create: (_) => Snp500Manager()),
+      ChangeNotifierProvider(create: (_) => NyseManager()),
+      ChangeNotifierProvider(create: (_) => AmexManager()),
+      ChangeNotifierProvider(create: (_) => NasdaqManager()),
+      ChangeNotifierProvider(create: (_) => StocksUnderManager()),
+      ChangeNotifierProvider(create: (_) => MostActiveManager()),
+      ChangeNotifierProvider(create: (_) => MostVolatileManager()),
+      ChangeNotifierProvider(create: (_) => UnusualTradingManager()),
+      ChangeNotifierProvider(create: (_) => MostActivePennyStocksManager()),
+      ChangeNotifierProvider(create: (_) => MostPopularPennyStocksManager()),
+      ChangeNotifierProvider(create: (_) => TopTodaysPennyStocksManager()),
+      ChangeNotifierProvider(create: (_) => DividendsManager()),
+      ChangeNotifierProvider(create: (_) => EarningsManager()),
       // MARKET DATA End ---------------
     ];
   }

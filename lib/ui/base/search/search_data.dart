@@ -170,7 +170,7 @@ class BaseSearchData extends StatelessWidget {
                           Flexible(
                             child: Text(
                               data.title ?? '',
-                              style: styleBaseRegular(fontSize: 14),
+                              style: styleBaseSemiBold(fontSize: 14),
                             ),
                           ),
                           Container(

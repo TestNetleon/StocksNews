@@ -162,7 +162,7 @@ class BaseLockItem extends StatefulWidget {
 
 class _BaseLockItemState extends State<BaseLockItem> {
   bool isVisible = true;
-  bool showPoints = false;
+  bool showPoints = true;
 
   @override
   void dispose() {

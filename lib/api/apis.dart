@@ -139,6 +139,24 @@ class Apis {
   static const lowPE = "/low-pe-ratio-stocks";
   static const highPEGrowth = "/high-pe-growth-stocks";
   static const lowPEGrowth = "/low-pe-growth-stocks";
+  static const fiftyTwoWeekHigh = "/52-week-highs";
+  static const fiftyTwoWeekLow = "/52-week-lows";
+  static const highBeta = "/high-beta-stocks";
+  static const lowBeta = "/low-beta-stocks";
+  static const negativeBeta = "/negative-beta-stocks";
+  static const dow30 = "/dow-30-stocks";
+  static const snp500 = "/sp-500-stocks";
+  static const indices = "/indices";
+  static const mostActive = "/most-active-stocks";
+  static const mostVolatile = "/most-volatile-stocks";
+  static const unusualTrading = "/unusual-trading-volume";
+  static const lowPricedStocksUnder = "/low-priced-stocks-under";
+
+  static const mostActivePennyStocks = "/most-active-penny-stocks";
+  static const mostPopularPennyStocks = "/most-popular-penny-stocks";
+  static const topTodaysPennyStock = "/top-todays-penny-stock";
+  static const dividendsAnnouncements = "/dividends-announcements";
+  static const earningAnnouncements = "/earning-announcements";
 
   //AI
   static const aiAnalysis = '/ai-analysis';
@@ -146,6 +164,8 @@ class Apis {
   static const aiPR = "/ai-analysis/past-returns";
   static const aiPV = "/ai-analysis/post-volume";
 
+//----------------------------------------------
+//----------------------------------------------
 //----------------------------------------------
 
   static const stocksScreenerWebUrl =
@@ -184,13 +204,13 @@ class Apis {
   static const checkPhone = "/check-phone-otp";
   static const lowPricesStocks = "/low-priced-stocks-under";
   static const featuredWatchlist = "/home-watchlist-data";
-  static const indices = "/indices";
+  // static const indices = "/indices";
   static const spFifty = "/sp-500-stocks";
   static const dowThirty = "/dow-30-stocks";
   static const saleOnStocks = "/stocks-on-sale";
   // static const highPE = "/high-pe-ratio-stocks";
   // static const lowPE = "/low-pe-ratio-stocks";
-  static const fiftyTwoWeekHigh = "/week-highs";
+  // static const fiftyTwoWeekHigh = "/week-highs";
   static const fiftyTwoWeekLows = "/week-lows";
   static const homeSlider = "/home-slider";
   static const homeSentiment = "/home-sentiment";
@@ -324,6 +344,7 @@ class Apis {
   static const updateNotificationSettings = "/update-notification-setting";
 
   //MARK: Simulator API
+
   /*static const tsUserInfo = "/simulator/user-info";
   static const tsTopBar = "/simulator/trade/stock-detail-topbar";
   static const tsStreamData = '/simulator/trade/stream-init-variables';
@@ -339,9 +360,7 @@ class Apis {
   static const stockHoldings = '/simulator/stock-holdings-new';
   static const cancleOrder = '/simulator/trade/cancel/';
   static const updateOrder = '/simulator/trade/update/';
-
   static const squareOff = '/simulator/trade/close-conditional-trade';*/
-
   // static const tsOrderList = "/simulator/order-list";
   // static const tsRequestSell = "/simulator/sell";
   // static const tsRequestBuy = "/simulator/buy-share";
