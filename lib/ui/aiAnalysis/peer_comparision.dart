@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/ui/base/heading.dart';
 import 'package:stocks_news_new/ui/stockDetail/index.dart';
 import 'package:stocks_news_new/utils/colors.dart';
@@ -9,6 +10,7 @@ import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import '../../../widgets/cache_network_image.dart';
 import '../../managers/aiAnalysis/ai.dart';
 import '../../models/ai_analysis.dart';
+import '../tabs/tabs.dart';
 
 class AIPeerComparison extends StatefulWidget {
   const AIPeerComparison({super.key});
@@ -66,11 +68,26 @@ class _AIPeerComparisonState extends State<AIPeerComparison> {
                         DataCell(
                           GestureDetector(
                             onTap: () {
-                              Navigator.pushReplacementNamed(
-                                  context, SDIndex.path,
-                                  arguments: {
-                                    'symbol': company.symbol,
-                                  });
+                              if (manager.fromSD) {
+                                Navigator.popUntil(navigatorKey.currentContext!,
+                                    (route) => route.isFirst);
+                                Navigator.pushReplacement(
+                                  navigatorKey.currentContext!,
+                                  MaterialPageRoute(
+                                    builder: (_) => Tabs(index: 0),
+                                  ),
+                                );
+                                Navigator.pushNamed(
+                                    navigatorKey.currentContext!, SDIndex.path,
+                                    arguments: {
+                                      'symbol': company.symbol,
+                                    });
+                              } else {
+                                Navigator.pushNamed(context, SDIndex.path,
+                                    arguments: {
+                                      'symbol': company.symbol,
+                                    });
+                              }
                             },
                             child: Container(
                               padding: EdgeInsets.symmetric(horizontal: 10),

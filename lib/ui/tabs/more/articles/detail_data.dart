@@ -16,6 +16,7 @@ import '../../../../managers/blogs.dart';
 import '../../../../models/market/market_res.dart';
 import '../../../../utils/colors.dart';
 import '../../../../utils/utils.dart';
+import '../../../../widgets/spacer_vertical.dart';
 import '../extra/feedback.dart';
 import '../extra/tickers.dart';
 import 'detail.dart';
@@ -181,9 +182,11 @@ class BlogDetailData extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              SpacerVertical(height: 20),
               BaseHeading(
                 title: manager.blogsDetail?.moreNews?.title,
               ),
+              SpacerVertical(height: 10),
               Column(
                 children: List.generate(
                   manager.blogsDetail?.moreNews?.data?.length ?? 0,

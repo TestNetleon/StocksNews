@@ -5,9 +5,7 @@ import 'package:stocks_news_new/models/billionaires_res.dart';
 import 'package:stocks_news_new/ui/base/common_tab.dart';
 import 'package:stocks_news_new/ui/tabs/more/billionaires/cryptocurrencies/top_index.dart';
 import 'package:stocks_news_new/ui/tabs/more/billionaires/cryptocurrencies/widget/crypto_item.dart';
-import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
-import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/custom/refresh_indicator.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
@@ -48,15 +46,15 @@ class Cryptocurrencies extends StatelessWidget {
           visible: billionairesRes?.topBillionaires != null,
           child: BaseTabs(
             data: manager.innerTabs,
-            textStyle: styleBaseBold(fontSize: 16, color: ThemeColors.splashBG),
+            // textStyle: styleBaseBold(fontSize: 16, color: ThemeColors.splashBG),
             onTap: manager.onScreenChangeInner,
           ),
         ),
         if (manager.selectedInnerScreen == 0)
-          if(billionairesRes?.topBillionaires == null) SizedBox(),
-          TopBilIndex(
-            topBils: billionairesRes?.topBillionaires,
-          ),
+          if (billionairesRes?.topBillionaires == null) SizedBox(),
+        TopBilIndex(
+          topBils: billionairesRes?.topBillionaires,
+        ),
         if (manager.selectedInnerScreen == 1) SizedBox(),
       ],
     );

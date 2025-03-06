@@ -14,6 +14,7 @@ import '../../models/ai_analysis.dart';
 import '../../models/ticker.dart';
 import '../base/stock/stock_detail.dart';
 import '../base/ticker_app_bar.dart';
+import 'highlights/highlights.dart';
 import 'our_take.dart';
 import 'peer_comparision.dart';
 import 'tabs/index.dart';
@@ -73,6 +74,7 @@ class _AIindexState extends State<AIindex> {
             if (tickerDetail != null) BaseStockDetailHeader(data: tickerDetail),
             AIChart(aiAnalysis: aiAnalysis),
             AIOurTake(ourTake: ourTake),
+            AIHighlights(),
             AISwot(swot: swot),
             AITabs(),
             AIPeerComparison(),

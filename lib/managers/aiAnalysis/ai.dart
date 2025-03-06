@@ -101,6 +101,14 @@ class AIManager extends ChangeNotifier {
     notifyListeners();
   }
 
+  bool _fromSD = false;
+  bool get fromSD => _fromSD;
+
+  setFromSD(value) {
+    _fromSD = value;
+    notifyListeners();
+  }
+
   int selectedTypeIndex = 0;
   int selectedPeriodIndex = 0;
 

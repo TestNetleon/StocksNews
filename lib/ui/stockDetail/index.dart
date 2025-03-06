@@ -6,6 +6,7 @@ import 'package:stocks_news_new/ui/stockDetail/competitors/index.dart';
 import 'package:stocks_news_new/ui/stockDetail/ownership/index.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/custom/base_loader_container.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import '../../models/ticker.dart';
 import '../base/stock/stock_detail.dart';
 import '../base/ticker_app_bar.dart';
@@ -69,6 +70,7 @@ class _SDIndexState extends State<SDIndex> {
         },
         child: Column(
           children: [
+            SpacerVertical(height: 16),
             if (manager.data?.tickerDetail != null)
               BaseStockDetailHeader(data: manager.data!.tickerDetail!),
             SDTabs(tabs: manager.data?.tabs),

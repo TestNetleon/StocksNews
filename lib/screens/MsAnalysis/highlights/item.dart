@@ -43,17 +43,6 @@ class MsOurHighlightsItem extends StatelessWidget {
                   color: Colors.grey,
                 ),
               ),
-              // const SpacerHorizontal(width: 8.0),
-              // GestureDetector(
-              //   onTap: () {
-              //     msShowBottomSheet();
-              //   },
-              //   child: const Icon(
-              //     Icons.info,
-              //     size: 18,
-              //     color: ThemeColors.greyText,
-              //   ),
-              // )
             ],
           ),
           const SpacerVertical(height: 8.0),

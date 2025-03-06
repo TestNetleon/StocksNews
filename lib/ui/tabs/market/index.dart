@@ -35,7 +35,6 @@ import 'package:stocks_news_new/ui/tabs/market/pennyStocks/topTodays/top_todays.
 import 'package:stocks_news_new/ui/tabs/market/trending/most_bearish.dart';
 import 'package:stocks_news_new/ui/tabs/market/trending/most_bullish.dart';
 import 'package:stocks_news_new/utils/constants.dart';
-import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 
 import 'package:stocks_news_new/widgets/base_container.dart';
@@ -209,7 +208,7 @@ class _MarketIndexState extends State<MarketIndex> {
                 children: [
                   BaseTabs(
                     data: provider.data!.data!,
-                    textStyle: styleBaseBold(fontSize: 16),
+                    // textStyle: styleBaseBold(fontSize: 16),
                     onTap: _changeScreenIndex,
                     rightChild: Padding(
                       padding: const EdgeInsets.only(right: 16),
@@ -230,7 +229,8 @@ class _MarketIndexState extends State<MarketIndex> {
                       selectedIndex: _marketInnerIndex,
                       data: provider.data!.data![0].data![_marketIndex].data!,
                       onTap: _changeMarketInnerIndex,
-                      textStyle: styleBaseSemiBold(fontSize: 14),
+                      fontSize: 14,
+                      unselectedBold: false,
                       leftChild: (provider.data!.data![0].data![_marketIndex]
                                   .applyFilter ??
                               false)

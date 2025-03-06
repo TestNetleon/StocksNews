@@ -15,9 +15,10 @@ class BaseTabs extends StatefulWidget {
     this.rightChild,
     this.leftChild,
     this.child,
-    this.textStyle,
+    this.unselectedBold = true,
     this.labelPadding,
     this.selectedIndex = 0,
+    this.fontSize,
   });
 
   final Widget? child;
@@ -27,9 +28,10 @@ class BaseTabs extends StatefulWidget {
   final List<dynamic> data;
   final Function(int index) onTap;
   final bool showDivider;
-  final TextStyle? textStyle;
+  final bool unselectedBold;
   final EdgeInsetsGeometry? labelPadding;
   final int selectedIndex;
+  final double? fontSize;
 
   @override
   State<BaseTabs> createState() => _CommonTabsState();
@@ -67,10 +69,23 @@ class _CommonTabsState extends State<BaseTabs>
                 controller: _tabController,
                 isScrollable: widget.isScrollable,
                 labelPadding: widget.labelPadding,
+
                 tabs: (widget.data.map((e) {
+                  int index = widget.data.indexOf(e);
+                  bool isSelected = index == _tabController?.index;
                   return TabItem(
                     label: e.title,
-                    textStyle: widget.textStyle ?? styleBaseSemiBold(),
+                    textStyle: isSelected
+                        ? styleBaseSemiBold(fontSize: widget.fontSize ?? 16)
+                        : widget.unselectedBold
+                            ? styleBaseSemiBold(
+                                color: ThemeColors.neutral20,
+                                fontSize: widget.fontSize ?? 16,
+                              )
+                            : styleBaseRegular(
+                                color: ThemeColors.neutral20,
+                                fontSize: widget.fontSize ?? 16,
+                              ),
                     leadingIcon: e.icon,
                   );
                 })).toList(),

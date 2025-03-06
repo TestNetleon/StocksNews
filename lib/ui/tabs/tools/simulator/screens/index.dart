@@ -21,7 +21,6 @@ import 'package:stocks_news_new/widgets/custom/card.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
-
 class SimulatorIndex extends StatefulWidget {
   static const String path = "SimulatorIndex";
   final int initialIndex;
@@ -54,7 +53,8 @@ class _SimulatorIndexState extends State<SimulatorIndex> {
   @override
   Widget build(BuildContext context) {
     PortfolioManager manager = context.watch<PortfolioManager>();
-    num profitLoss = manager.userData?.userDataRes?.totalPortfolioStateAmount ?? 0;
+    num profitLoss =
+        manager.userData?.userDataRes?.totalPortfolioStateAmount ?? 0;
 
     return PopScope(
       onPopInvokedWithResult: (didPop, result) {
@@ -66,17 +66,18 @@ class _SimulatorIndexState extends State<SimulatorIndex> {
           title: "Trading Simulator",
         ),
         body: BaseLoaderContainer(
-          hasData: manager.userData!=null&&!manager.isLoading,
-          isLoading: manager.userData==null&& manager.isLoading,
+          hasData: manager.userData != null && !manager.isLoading,
+          isLoading: manager.userData == null && manager.isLoading,
           error: manager.error,
           showPreparingText: true,
-          onRefresh: (){
+          onRefresh: () {
             manager.getDashboardData(reset: true);
           },
           child: Column(
             children: [
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: Pad.pad16,vertical: Pad.pad10),
+                padding: const EdgeInsets.symmetric(
+                    horizontal: Pad.pad16, vertical: Pad.pad10),
                 child: Column(
                   children: [
                     Row(
@@ -85,8 +86,7 @@ class _SimulatorIndexState extends State<SimulatorIndex> {
                         Expanded(
                           child: CommonCard(
                             child: Column(
-                              mainAxisAlignment:
-                              MainAxisAlignment.spaceBetween,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Text(
@@ -96,15 +96,15 @@ class _SimulatorIndexState extends State<SimulatorIndex> {
                                     color: ThemeColors.neutral80,
                                   ),
                                 ),
-                                SpacerVertical(height:  Pad.pad10),
+                                SpacerVertical(height: Pad.pad10),
                                 Text(
-                                  manager.userData?.userDataRes?.tradeBalance != null
+                                  manager.userData?.userDataRes?.tradeBalance !=
+                                          null
                                       ? '${manager.userData?.userDataRes?.tradeBalance.toFormattedPrice()}'
                                       : '\$0',
                                   style: stylePTSansBold(
-                                    fontSize: 16,
-                                    color: ThemeColors.splashBG
-                                  ),
+                                      fontSize: 16,
+                                      color: ThemeColors.splashBG),
                                 ),
                               ],
                             ),
@@ -134,8 +134,6 @@ class _SimulatorIndexState extends State<SimulatorIndex> {
                                         : ThemeColors.success120,
                                   ),
                                 ),
-
-
                               ],
                             ),
                           ),
@@ -152,7 +150,7 @@ class _SimulatorIndexState extends State<SimulatorIndex> {
                   children: [
                     BaseTabs(
                       data: manager.tabs,
-                      textStyle: styleBaseBold(fontSize: 11),
+                      // textStyle: styleBaseBold(fontSize: 11),
                       onTap: manager.onScreenChange,
                       selectedIndex: widget.initialIndex,
                       isScrollable: false,
@@ -178,7 +176,7 @@ class _SimulatorIndexState extends State<SimulatorIndex> {
                   ],
                 ),
               ),
-             /* Expanded(
+              /* Expanded(
                 child:
                 CommonTabContainer(
                   initialIndex: widget.initialIndex,
@@ -211,7 +209,7 @@ class _SimulatorIndexState extends State<SimulatorIndex> {
                       SearchTickerIndex(),
                     ),
                   );
-                 // Navigator.pushNamed(context, SearchTickerIndex.path);
+                  // Navigator.pushNamed(context, SearchTickerIndex.path);
                 },
                 text: "Place New Order",
                 color: ThemeColors.primary100,
