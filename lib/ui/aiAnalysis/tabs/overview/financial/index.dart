@@ -27,17 +27,23 @@ class _AIFinancialState extends State<AIFinancial>
     AIManager manager = context.watch<AIManager>();
 
     return Container(
-      margin: EdgeInsets.only(top: Pad.pad10),
+      margin: EdgeInsets.only(
+        top: Pad.pad32,
+      ),
       child: Column(
         children: [
           Align(
             alignment: Alignment.centerLeft,
             child: BaseHeading(
               title: 'Financials',
-              margin: EdgeInsets.symmetric(horizontal: Pad.pad16),
+              margin: EdgeInsets.only(
+                bottom: 0,
+                left: Pad.pad16,
+                right: Pad.pad16,
+              ),
             ),
           ),
-          // SpacerVertical(height: 10),
+          SpacerVertical(height: 10),
           BaseTabs(
             isScrollable: false,
             data: manager.typeMenu,
@@ -47,6 +53,7 @@ class _AIFinancialState extends State<AIFinancial>
               }
             },
           ),
+          SpacerVertical(height: 10),
 
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 30),
@@ -96,7 +103,7 @@ class _AIFinancialState extends State<AIFinancial>
             ),
           ),
 
-          SpacerVertical(height: 10),
+          SpacerVertical(height: 20),
           BaseBorderContainer(
             innerPadding: EdgeInsets.all(5),
             padding: EdgeInsets.symmetric(horizontal: Pad.pad16),

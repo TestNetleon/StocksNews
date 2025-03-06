@@ -28,8 +28,12 @@ class _AIPeerComparisonState extends State<AIPeerComparison> {
       children: [
         BaseHeading(
           title: peerComparison?.title,
-          margin:
-              EdgeInsets.symmetric(horizontal: Pad.pad16, vertical: Pad.pad10),
+          margin: EdgeInsets.only(
+            left: Pad.pad16,
+            right: Pad.pad16,
+            bottom: Pad.pad24,
+            top: Pad.pad24,
+          ),
         ),
         Row(
           children: [

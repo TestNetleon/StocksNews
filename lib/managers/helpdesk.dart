@@ -1,6 +1,9 @@
 import 'dart:convert';
 import 'dart:io';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/api/api_requester.dart';
 import 'package:stocks_news_new/api/api_response.dart';
@@ -8,7 +11,9 @@ import 'package:stocks_news_new/api/apis.dart';
 import 'package:stocks_news_new/api/image_service.dart';
 import 'package:stocks_news_new/managers/user.dart';
 import 'package:stocks_news_new/models/help_desk_res.dart';
+import 'package:stocks_news_new/models/helpdesk_chat_res.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
+import 'package:stocks_news_new/ui/tabs/more/helpdesk/chats/index.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/utils/utils.dart';
@@ -16,7 +21,8 @@ import 'package:dio/dio.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
 
-class NewHelpDeskManager extends ChangeNotifier {
+class NewHelpDeskManager extends ChangeNotifier{
+
 // Get Chats
   Status _status = Status.ideal;
   bool get isLoading => _status == Status.loading || _status == Status.ideal;
@@ -27,8 +33,8 @@ class NewHelpDeskManager extends ChangeNotifier {
   String? _error;
   String? get error => _error ?? Const.errSomethingWrong;
 
-  //HelpDeskChatRes? _chatData;
-  //HelpDeskChatRes? get chatData => _chatData;
+  HelpDeskChatRes? _chatData;
+  HelpDeskChatRes? get chatData => _chatData;
 
   bool removeLoader = false;
   void setStatus(status) {
@@ -36,7 +42,7 @@ class NewHelpDeskManager extends ChangeNotifier {
     notifyListeners();
   }
 
-  /*Future getAllChats({
+  Future getAllChats({
     String? ticketId,
     showProgress = true,
     loadRemoval = false,
@@ -60,7 +66,7 @@ class NewHelpDeskManager extends ChangeNotifier {
         removeForceLogin: true,
       );
       if (response.status) {
-        _chatData = helpDeskChatResFromJson(jsonEncode(response.data));
+        _chatData = helpDeskChatResFromMap(jsonEncode(response.data));
         _error = null;
         _extra = response.extra is Extra ? response.extra : null;
       } else {
@@ -77,7 +83,7 @@ class NewHelpDeskManager extends ChangeNotifier {
       Utils().showLog("Error in get all chats, provider $e");
       setStatus(Status.loaded);
     }
-  }*/
+  }
 
 // Reply Ticket
   Status _statusR = Status.ideal;
@@ -124,7 +130,7 @@ class NewHelpDeskManager extends ChangeNotifier {
 
       final request = FormData.fromMap({
         "token":
-            navigatorKey.currentContext!.read<UserManager>().user?.token ?? "",
+        navigatorKey.currentContext!.read<UserManager>().user?.token ?? "",
         "ticket_id": ticketId,
         "message": mainFormattedMsg,
         "image": multipartFile,
@@ -136,19 +142,14 @@ class NewHelpDeskManager extends ChangeNotifier {
         if (response.data != null) {
           notifyListeners();
 
-          // Utils().showLog("RESPONSE => ${response.data}");
-          /* getAllChats(
+          getAllChats(
             ticketId: ticketId,
             showProgress: true,
             loadRemoval: true,
-          );*/
+          );
         } else {
           //
         }
-        // AmplitudeService.logUserInteractionEvent(
-        //   type: 'Support Ticket Created',
-        //   selfText: 'Support ticket #$ticketNo created by user for assistance.',
-        // );
         return ApiResponse(status: true);
       } else {
         return ApiResponse(status: false);
@@ -223,8 +224,7 @@ class NewHelpDeskManager extends ChangeNotifier {
   bool get isLoadingSubject =>
       _statusSubject == Status.loading || _statusSubject == Status.ideal;
 
-  Extra? _extraSubject;
-  Extra? get extraSubject => _extraSubject;
+
 
   String? _errorSubject;
   String? get errorSubject => _errorSubject ?? Const.errSomethingWrong;
@@ -237,7 +237,6 @@ class NewHelpDeskManager extends ChangeNotifier {
   Future sendSubjectID({required Subject subject}) async {
     setStatusSubject(Status.loading);
     Utils().showLog("Sending Subject ${subject.id}, ${subject.title}");
-    // return;
     try {
       UserManager provider = navigatorKey.currentContext!.read<UserManager>();
       Map request = {
@@ -253,11 +252,9 @@ class NewHelpDeskManager extends ChangeNotifier {
       );
       if (response.status) {
         _errorSubject = null;
-        _extraSubject = response.extra is Extra ? response.extra : null;
-
         if (response.data != null) {
-          /*Ticket ticket = Ticket.fromJson(response.data);
-          _data?.tickets?.insert(0, ticket);*/
+          TicketList ticket = TicketList.fromMap(response.data);
+          _data?.helpDesk?.ticketList?.insert(0, ticket);
         } else {
           popUpAlert(
             icon: Images.alertPopGIF,
@@ -265,17 +262,11 @@ class NewHelpDeskManager extends ChangeNotifier {
             title: "Alert",
           );
         }
-
-        /* Navigator.pushReplacement(
-          navigatorKey.currentContext!,
-          MaterialPageRoute(
-            builder: (context) =>
-                HelpDeskAllChatsNew(ticketId: response.data['ticket_id']),
-          ),
-        );*/
+        Navigator.pushReplacementNamed(navigatorKey.currentContext!, HelpDeskAllChatsIndex.path,arguments: {
+          "ticketId":response.data['ticket_id']
+        });
       } else {
         _errorSubject = null;
-        _extraSubject = null;
         popUpAlert(
           icon: Images.alertPopGIF,
           message: response.message,
@@ -286,7 +277,6 @@ class NewHelpDeskManager extends ChangeNotifier {
       setStatusSubject(Status.loaded);
     } catch (e) {
       _errorSubject = null;
-      _extraSubject = null;
       popUpAlert(
         icon: Images.alertPopGIF,
         message: Const.errSomethingWrong,
@@ -330,4 +320,5 @@ class NewHelpDeskManager extends ChangeNotifier {
 
     return "";
   }
+
 }

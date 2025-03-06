@@ -1,12 +1,12 @@
 // ignore_for_file: constant_identifier_names
 
 import 'package:intl/intl.dart';
+import 'package:stocks_news_new/ui/tabs/tools/simulator/models/stream_data.dart';
 
 import 'package:stocks_news_new/utils/utils.dart';
 
-// import '../tradingSimulator/modals/stream_data.dart';
 
-// StreamRes? streamKeysRes;
+StreamRes? streamKeysRes;
 
 enum ToasterEnum {
   success,
@@ -117,6 +117,17 @@ enum TsOrderTypes {
   MARKET_ORDER
 }
 
+enum StockType { buy, sell, hold, short, btc }
+
+enum ConditionType {
+  bracketOrder,
+  limitOrder,
+  stopOrder,
+  stopLimitOrder,
+  trailingOrder,
+  recurringOrder
+}
+
 // ------ These are global constants to access in complete app --------
 bool isPhone = true;
 bool isAppInForeground = false;
@@ -219,6 +230,7 @@ class Images {
   static const String check = '${base}check.png';
   static const String marketFilter = '${base}market_filter.png';
   static const String progressGIF = "${base}progress.gif";
+  static const String trades = '${base}trades.png';
 
   //-------------------------------------------------------------------------------
   static const String scannerStop = 'assets/images/scanner_stop.png';
@@ -652,6 +664,41 @@ extension CurrencyFormat on num {
       return '\$$formatted';
     }
   }
+  String toFormattedPriceForSim({bool removeSign = false}) {
+    String formatted = abs().toStringAsFixed(4);
+
+    formatted = formatted.replaceAll(RegExp(r'\.0+$'), '');
+    formatted = formatted.replaceAll(RegExp(r'(?<=\d)(?=(\d{5})+(?!\d))'), ',');
+    formatted = formatted.replaceAll(RegExp(r'(?<=\.\d*?)0+$'), '');
+    if (removeSign) {
+      return '\$$formatted';
+    }
+
+    if (this < 0) {
+      return '-\$$formatted';
+    } else {
+      return '\$$formatted';
+    }
+  }
+
+  String toCurrencyForSim() {
+    if (this == 0) return '0';
+
+    String result = abs().toStringAsFixed(4); // Format with 2 decimal places
+
+    // Remove trailing zeros and the decimal point if it's followed by only zeros
+    result = result.replaceAll(RegExp(r'\.0+$'), '');
+
+    // Reattach the negative sign if the original number was negative
+    if (this < 0) {
+      result = '-$result';
+    }
+
+    // Trim trailing zeros after the decimal point
+    result = result.replaceAll(RegExp(r'(?<=\.\d*?)0+$'), '');
+
+    return result;
+  }
 
   // String formatPrice() {
   //   if (this == 0) return '0';
@@ -719,6 +766,7 @@ enum SimulatorEnum {
   tradeSheet,
   tournament,
   tournamentTrade,
+  recurring
 }
 
 DeeplinkEnum containsSpecificPath(Uri uri) {

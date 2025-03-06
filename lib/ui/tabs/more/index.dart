@@ -163,13 +163,13 @@ class MoreIndex extends StatelessWidget {
             ),
             MoreItem(
               icon: Images.moreContactUs,
-              label: "Contact Us",
-              onTap: manager.navigateToContactUs,
+              label: "Helpdesk",
+              onTap: manager.navigateToHelpDesk,
             ),
             MoreItem(
               icon: Images.moreFeedback,
               label: "Feedback",
-              onTap: () {},
+              onTap: manager.navigateToFeedback,
             ),
             MoreItem(
               icon: Images.moreLegal,

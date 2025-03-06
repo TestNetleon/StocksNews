@@ -1,8 +1,7 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/managers/helpdesk.dart';
+import 'package:stocks_news_new/ui/tabs/more/helpdesk/chats/index.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -13,47 +12,24 @@ class HelpDeskItemNew extends StatelessWidget {
   const HelpDeskItemNew({
     required this.index,
     super.key,
-    this.showBg = true,
   });
   final int index;
-  final bool showBg;
 
   @override
   Widget build(BuildContext context) {
     NewHelpDeskManager manager = context.watch<NewHelpDeskManager>();
-
     int status = manager.data?.helpDesk?.ticketList?[index].status ?? 0;
-
     return GestureDetector(
       onTap: () {
-       /* Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => HelpDeskAllChatsNew(
-              ticketId: manager.data?.helpDesk?.ticketList?[index].ticketId ?? "N/A",
-            ),
-          ),
-        );*/
+        Navigator.pushNamed(context, HelpDeskAllChatsIndex.path, arguments: {
+          "ticketId":
+              manager.data?.helpDesk?.ticketList?[index].ticketId ?? "N/A"
+        });
       },
       child: Container(
-        decoration: showBg
-            ? BoxDecoration(
-                border:
-                    Border.all(color: ThemeColors.greyBorder.withOpacity(0.4)),
-                borderRadius: BorderRadius.circular(10),
-                gradient: const LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [
-                    Color.fromARGB(255, 23, 23, 23),
-                    Color.fromARGB(255, 48, 48, 48),
-                  ],
-                ),
-              )
-            : BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: Colors.transparent,
-              ),
+        decoration: BoxDecoration(
+            borderRadius: const BorderRadius.all(Radius.circular(8)),
+            border: Border.all(width: 1, color: ThemeColors.neutral5)),
         width: double.infinity,
         child: Column(
           children: [
@@ -64,12 +40,8 @@ class HelpDeskItemNew extends StatelessWidget {
                 children: [
                   Container(
                     decoration: const BoxDecoration(
-                        shape: BoxShape.circle, color: ThemeColors.accent),
+                        shape: BoxShape.circle, color: ThemeColors.splashBG),
                     padding: const EdgeInsets.all(6),
-                    // child: const Icon(
-                    //   Icons.edit,
-                    //   size: 28,
-                    // ),
                     child: Image.asset(
                       Images.ticket,
                       height: 26,
@@ -90,25 +62,27 @@ class HelpDeskItemNew extends StatelessWidget {
                         Text(
                           "${manager.data?.helpDesk?.ticketList?[index].message?.capitalize()}",
                           style: stylePTSansRegular(
-                              color: ThemeColors.greyText, fontSize: 14),
+                              color: ThemeColors.neutral80, fontSize: 14),
                         ),
-
-                        const SpacerVertical(height: 12),
+                        SpacerVertical(height: Pad.pad10),
                         Visibility(
-                          visible: manager.data?.helpDesk?.ticketList?[index].status == 0,
+                          visible: manager
+                                  .data?.helpDesk?.ticketList?[index].status ==
+                              0,
                           child: Text(
                             "Created on: ${manager.data?.helpDesk?.ticketList?[index].ticketDate}",
                             style: stylePTSansRegular(
-                                color: ThemeColors.greyText, fontSize: 14),
+                                color: ThemeColors.neutral80, fontSize: 14),
                           ),
                         ),
-
                         Visibility(
-                          visible: manager.data?.helpDesk?.ticketList?[index].status == 1,
+                          visible: manager
+                                  .data?.helpDesk?.ticketList?[index].status ==
+                              1,
                           child: Text(
                             "Resolved on: ${manager.data?.helpDesk?.ticketList?[index].resolveDate ?? ""}",
                             style: stylePTSansRegular(
-                                color: ThemeColors.greyText, fontSize: 14),
+                                color: ThemeColors.neutral80, fontSize: 14),
                           ),
                         ),
                         const SpacerVertical(height: 8),
@@ -125,7 +99,6 @@ class HelpDeskItemNew extends StatelessWidget {
                                           ? Colors.orange
                                           : ThemeColors.greyBorder,
                             ),
-
                             color: status == 0
                                 ? Color(0xffc6f6f4)
                                 : status == 1 || status == 3
@@ -138,7 +111,7 @@ class HelpDeskItemNew extends StatelessWidget {
                             ),
                           ),
                           child: Text(
-                            "${manager.data?.helpDesk?.ticketList?[index].statusLabel}",
+                            manager.data?.helpDesk?.ticketList?[index].statusLabel??"",
                             style: stylePTSansBold(
                                 color: Colors.black, fontSize: 14),
                           ),
