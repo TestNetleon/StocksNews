@@ -165,6 +165,9 @@ class Apis {
   static const aiPR = "/ai-analysis/past-returns";
   static const aiPV = "/ai-analysis/post-volume";
 
+  //Scanner
+  static const stockScannerPort = '/stockScannerPort';
+
 //----------------------------------------------
 //----------------------------------------------
 //----------------------------------------------
@@ -422,7 +425,6 @@ class Apis {
   static const appsflyerUsers = '/appsflyer-users';
   static const trendingSectors = '/trending-sectors';
   static const stockScannerChange = '/stockScannerChange';
-  static const stockScannerPort = '/stockScannerPort';
 }
 
 class ApiKeys {

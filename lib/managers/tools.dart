@@ -6,6 +6,7 @@ import 'package:stocks_news_new/managers/user.dart';
 import 'package:stocks_news_new/models/ticker.dart';
 import 'package:stocks_news_new/models/tools.dart';
 import 'package:stocks_news_new/ui/base/toaster.dart';
+import 'package:stocks_news_new/ui/tabs/tools/scanner/index.dart';
 import 'package:stocks_news_new/ui/tabs/tools/simulator/screens/index.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 
@@ -360,11 +361,7 @@ class ToolsManager extends ChangeNotifier {
 
   /// Scanner redirection
   Future scannerRedirection() async {
-    //  UserManager userManager = navigatorKey.currentContext!.read<UserManager>();
-    /*await manager.askLoginScreen();
-   if (manager.user == null) {
-     return;
-   }*/
+    Navigator.pushNamed(navigatorKey.currentContext!, ScannerIndex.path);
   }
 
   /// Simulator redirection
