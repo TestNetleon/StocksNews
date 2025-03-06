@@ -32,6 +32,7 @@ class _SignalsIndexState extends State<SignalsIndex> {
     return BaseScaffold(
       appBar: BaseAppBar(
         showSearch: true,
+        leadingFilterClick: () {},
       ),
       body: Column(
         children: [

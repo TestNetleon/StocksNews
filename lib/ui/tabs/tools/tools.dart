@@ -90,7 +90,7 @@ class ToolsIndex extends StatelessWidget {
             if (manager.data?.simulator != null)
               ToolsItem(
                 card: manager.data?.simulator,
-                onTap:  manager.simulatorRedirection,
+                onTap: manager.simulatorRedirection,
               ),
             SpacerVertical(height: 16),
             if (manager.data?.league != null)

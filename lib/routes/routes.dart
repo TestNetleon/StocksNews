@@ -212,6 +212,8 @@ import '../ui/tabs/signals/insiders/reporting/from_reporting.dart';
 import '../ui/tabs/signals/politicians/detail.dart';
 import '../ui/tabs/tabs.dart';
 import '../ui/tabs/tools/plaidConnect/portfolio.dart';
+import '../ui/tabs/tools/scanner/index.dart';
+import '../ui/tabs/tools/scanner/manager/scanner.dart';
 
 class Routes {
   static var routes = {
@@ -488,6 +490,16 @@ class Routes {
           },
         );
 
+      case ScannerIndex.path:
+        return MaterialPageRoute(
+          builder: (context) {
+            final arguments = settings.arguments as Map<String, dynamic>?;
+            int? index = arguments?['index'];
+
+            return ScannerIndex(index: index);
+          },
+        );
+
       default:
     }
 
@@ -692,6 +704,7 @@ class Routes {
       ChangeNotifierProvider(create: (_) => TickerSearchManager()),
       ChangeNotifierProvider(create: (_) => FeedbackManager()),
       ChangeNotifierProvider(create: (_) => BillionairesManager()),
+      ChangeNotifierProvider(create: (_) => ScannerManager()),
 
       // MARKET DATA Start ---------------
       ChangeNotifierProvider(create: (_) => MarketManager()),
@@ -727,6 +740,7 @@ class Routes {
       ChangeNotifierProvider(create: (_) => EarningsManager()),
       ChangeNotifierProvider(create: (_) => IndustriesManager()),
       ChangeNotifierProvider(create: (_) => SectorsManager()),
+
       // MARKET DATA End ---------------
     ];
   }

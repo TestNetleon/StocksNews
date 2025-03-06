@@ -11,8 +11,8 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 
-class MarketFilter extends StatelessWidget {
-  const MarketFilter({
+class InsiderFilter extends StatelessWidget {
+  const InsiderFilter({
     super.key,
     required this.marketIndex,
     required this.marketInnerIndex,
@@ -218,14 +218,9 @@ class _FilterTypeState extends State<FilterType> {
                 return GestureDetector(
                   onTap: () => widget.onItemClick(index),
                   child: BaseFilterItem(
-                      value: widget.data![index].title ?? "",
-                      selected: selected,
-                      child: widget.isRankFilter
-                          ? StarRating(
-                              rating:
-                                  int.parse(widget.data![index].value ?? '0'),
-                              selected: selected)
-                          : null),
+                    value: "value",
+                    selected: selected,
+                  ),
                 );
               },
               separatorBuilder: (context, index) {
@@ -237,86 +232,6 @@ class _FilterTypeState extends State<FilterType> {
         ),
         Divider(color: ThemeColors.neutral5, height: 1, thickness: 1)
       ],
-    );
-  }
-}
-
-class MarketFilterItem extends StatelessWidget {
-  final BaseKeyValueRes data;
-  final bool selected;
-  final bool isRankFilter;
-
-  const MarketFilterItem({
-    super.key,
-    required this.data,
-    required this.selected,
-    required this.isRankFilter,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: selected ? ThemeColors.black : ThemeColors.white,
-        border: Border.all(color: ThemeColors.neutral10, width: 1),
-        borderRadius: BorderRadius.circular(8),
-      ),
-      padding: EdgeInsets.symmetric(vertical: 0, horizontal: 16),
-      alignment: Alignment.center,
-      child: isRankFilter
-          ? StarRating(rating: int.parse(data.value ?? '0'), selected: selected)
-          : Text(
-              data.title ?? "",
-              style: styleBaseRegular(
-                fontSize: 14,
-                color: selected ? ThemeColors.white : ThemeColors.black,
-              ),
-            ),
-    );
-  }
-}
-
-class StarRating extends StatelessWidget {
-  final int rating;
-  final bool selected;
-
-  const StarRating({
-    super.key,
-    required this.rating,
-    required this.selected,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    List<Widget> stars = [];
-
-    for (int i = 1; i <= 5; i++) {
-      if (i <= rating) {
-        stars.add(
-          Image.asset(
-            Images.starSelected,
-            width: 15,
-            height: 15,
-            color: selected ? ThemeColors.white : null,
-          ),
-        );
-      } else {
-        stars.add(
-          Image.asset(
-            Images.starUnselected,
-            width: 15,
-            height: 15,
-          ),
-        );
-      }
-      if (i < 5) {
-        stars.add(SpacerHorizontal(width: 4));
-      }
-    }
-
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: stars,
     );
   }
 }
