@@ -41,6 +41,7 @@ class MarketResData {
   final List<MarketResData>? data;
   final List<dynamic>? filter;
   final dynamic applyFilter;
+  final String? value;
 
   MarketResData({
     this.icon,
@@ -49,6 +50,7 @@ class MarketResData {
     this.data,
     this.filter,
     this.applyFilter,
+    this.value,
   });
 
   factory MarketResData.fromJson(Map<String, dynamic> json) => MarketResData(
@@ -64,6 +66,7 @@ class MarketResData {
             ? null
             : List<dynamic>.from(json["filter"].map((x) => x)),
         applyFilter: json["apply_filter"],
+        value: json["value"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -76,6 +79,7 @@ class MarketResData {
         "filter":
             filter == null ? null : List<dynamic>.from(filter!.map((x) => x)),
         "apply_filter": applyFilter,
+        "value": value,
       };
 }
 

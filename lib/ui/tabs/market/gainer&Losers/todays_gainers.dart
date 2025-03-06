@@ -65,30 +65,6 @@ class _TodaysGainerState extends State<TodaysGainer> {
           BaseLockItem(manager: manager, callAPI: _callAPI),
         ],
       ),
-
-      //  BaseLoadMore(
-      //   onLoadMore: () => _callAPI(loadMore: true),
-      //   onRefresh: _callAPI,
-      //   canLoadMore: manager.canLoadMore,
-      //   child: (manager.data == null || manager.data?.data == null)
-      //       ? const SizedBox()
-      //       : ListView.separated(
-      //           shrinkWrap: true,
-      //           itemBuilder: (context, index) {
-      //             return BaseStockAddItem(
-      //               data: manager.data!.data![index],
-      //               index: index,
-      //               onRefresh: _callAPI,
-      //               manager: manager,
-      //               expandable: manager.data!.data![index].extra,
-      //             );
-      //           },
-      //           separatorBuilder: (context, index) {
-      //             return BaseListDivider();
-      //           },
-      //           itemCount: manager.data!.data?.length ?? 0,
-      //         ),
-      // ),
     );
   }
 }

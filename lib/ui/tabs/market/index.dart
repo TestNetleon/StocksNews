@@ -2,17 +2,36 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/managers/market/market.dart';
 import 'package:stocks_news_new/ui/base/common_tab.dart';
+import 'package:stocks_news_new/ui/tabs/market/52Weeks/fifty_two_weeks_high.dart';
+import 'package:stocks_news_new/ui/tabs/market/52Weeks/fifty_two_weeks_low.dart';
+import 'package:stocks_news_new/ui/tabs/market/dividends/dividends.dart';
+import 'package:stocks_news_new/ui/tabs/market/earnings/earnings.dart';
 import 'package:stocks_news_new/ui/tabs/market/extra/filter.dart';
 import 'package:stocks_news_new/ui/tabs/market/gainer&Losers/todays_gainers.dart';
 import 'package:stocks_news_new/ui/tabs/market/gainer&Losers/todays_breakout.dart';
 import 'package:stocks_news_new/ui/tabs/market/gainer&Losers/todays_losers.dart';
 import 'package:stocks_news_new/ui/tabs/market/gapUpDown/gap_down.dart';
 import 'package:stocks_news_new/ui/tabs/market/gapUpDown/gap_up.dart';
+import 'package:stocks_news_new/ui/tabs/market/highLowBeta/high_beta.dart';
+import 'package:stocks_news_new/ui/tabs/market/highLowBeta/low_beta.dart';
+import 'package:stocks_news_new/ui/tabs/market/highLowBeta/negative_beta.dart';
 import 'package:stocks_news_new/ui/tabs/market/highLowPe/high_pe.dart';
 import 'package:stocks_news_new/ui/tabs/market/highLowPe/high_pe_growth.dart';
 import 'package:stocks_news_new/ui/tabs/market/highLowPe/low_pe.dart';
 import 'package:stocks_news_new/ui/tabs/market/highLowPe/low_pe_growth.dart';
+import 'package:stocks_news_new/ui/tabs/market/indices/amex/amex.dart';
+import 'package:stocks_news_new/ui/tabs/market/indices/dow30/dow_30.dart';
+import 'package:stocks_news_new/ui/tabs/market/indices/nasdaq/nasdaq.dart';
+import 'package:stocks_news_new/ui/tabs/market/indices/nyse/nyse.dart';
+import 'package:stocks_news_new/ui/tabs/market/indices/s&p500/snp_500.dart';
+import 'package:stocks_news_new/ui/tabs/market/lowPrice/stocks_under.dart';
 import 'package:stocks_news_new/ui/tabs/market/market_tabs.dart';
+import 'package:stocks_news_new/ui/tabs/market/mostActive/mostActive/most_active.dart';
+import 'package:stocks_news_new/ui/tabs/market/mostActive/mostVolatile/most_volatile.dart';
+import 'package:stocks_news_new/ui/tabs/market/mostActive/unusualTrading/unusual_trading.dart';
+import 'package:stocks_news_new/ui/tabs/market/pennyStocks/mostActive/most_active.dart';
+import 'package:stocks_news_new/ui/tabs/market/pennyStocks/mostPopular/most_popular.dart';
+import 'package:stocks_news_new/ui/tabs/market/pennyStocks/topTodays/top_todays.dart';
 import 'package:stocks_news_new/ui/tabs/market/trending/most_bearish.dart';
 import 'package:stocks_news_new/ui/tabs/market/trending/most_bullish.dart';
 import 'package:stocks_news_new/utils/constants.dart';
@@ -76,6 +95,52 @@ class _MarketIndexState extends State<MarketIndex> {
       return HighPeGrowth();
     } else if (_marketIndex == 3 && _marketInnerIndex == 3) {
       return LowPeGrowth();
+    } else if (_marketIndex == 4 && _marketInnerIndex == 0) {
+      return FiftyTwoWeeksHigh();
+    } else if (_marketIndex == 4 && _marketInnerIndex == 1) {
+      return FiftyTwoWeeksLow();
+    } else if (_marketIndex == 5 && _marketInnerIndex == 0) {
+      return HighBeta();
+    } else if (_marketIndex == 5 && _marketInnerIndex == 1) {
+      return LowBeta();
+    } else if (_marketIndex == 5 && _marketInnerIndex == 2) {
+      return NegativeBeta();
+    } else if (_marketIndex == 6 && _marketInnerIndex == 0) {
+      return Dow30();
+    } else if (_marketIndex == 6 && _marketInnerIndex == 1) {
+      return Snp500();
+    } else if (_marketIndex == 6 && _marketInnerIndex == 2) {
+      return Nyse();
+    } else if (_marketIndex == 6 && _marketInnerIndex == 3) {
+      return Amex();
+    } else if (_marketIndex == 6 && _marketInnerIndex == 4) {
+      return Nasdaq();
+    } else if (_marketIndex == 7) {
+      MarketManager provider = context.read<MarketManager>();
+      return StocksUnder(
+        key: ValueKey(provider.data?.data?[0].data?[_marketIndex]
+                .data?[_marketInnerIndex].value ??
+            ""),
+        slug: provider.data?.data?[0].data?[_marketIndex]
+                .data?[_marketInnerIndex].value ??
+            "",
+      );
+    } else if (_marketIndex == 8 && _marketInnerIndex == 0) {
+      return MostActive();
+    } else if (_marketIndex == 8 && _marketInnerIndex == 1) {
+      return MostVolatile();
+    } else if (_marketIndex == 8 && _marketInnerIndex == 2) {
+      return UnusualTrading();
+    } else if (_marketIndex == 9 && _marketInnerIndex == 0) {
+      return MostActivePennyStocks();
+    } else if (_marketIndex == 9 && _marketInnerIndex == 1) {
+      return MostPopularPennyStocks();
+    } else if (_marketIndex == 9 && _marketInnerIndex == 2) {
+      return TopTodaysPennyStocks();
+    } else if (_marketIndex == 10) {
+      return Dividends();
+    } else if (_marketIndex == 11) {
+      return Earnings();
     }
     return Container();
   }
@@ -116,13 +181,16 @@ class _MarketIndexState extends State<MarketIndex> {
 
   void _changeMarketInnerIndex(int index) {
     MarketManager manager = context.read<MarketManager>();
-    manager.resetFilter(
-      marketIndex: _marketIndex,
-      marketInnerIndex: _marketInnerIndex,
-    );
+
     setState(() {
       _marketInnerIndex = index;
     });
+
+    manager.resetFilter(
+      marketIndex: _marketIndex,
+      marketInnerIndex: _marketInnerIndex,
+      apiCallNeeded: false,
+    );
   }
 
   @override
