@@ -1,0 +1,83 @@
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:stocks_news_new/managers/market/industries/industries.dart';
+import 'package:stocks_news_new/ui/base/base_list_divider.dart';
+import 'package:stocks_news_new/ui/base/load_more.dart';
+import 'package:stocks_news_new/ui/base/lock.dart';
+import 'package:stocks_news_new/widgets/custom/base_loader_container.dart';
+import 'package:stocks_news_new/ui/base/base_sector_header.dart';
+import 'package:stocks_news_new/ui/base/base_sector_item.dart';
+
+class Industries extends StatefulWidget {
+  const Industries({super.key});
+
+  @override
+  State<Industries> createState() => _IndustriesState();
+}
+
+class _IndustriesState extends State<Industries> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _callAPI();
+    });
+  }
+
+  Future _callAPI({loadMore = false}) async {
+    IndustriesManager manager = context.read<IndustriesManager>();
+    await manager.getData(loadMore: loadMore);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    IndustriesManager manager = context.watch<IndustriesManager>();
+    return BaseLoaderContainer(
+      isLoading: manager.isLoading,
+      hasData: manager.data != null && !manager.isLoading,
+      showPreparingText: true,
+      error: manager.error,
+      onRefresh: _callAPI,
+      child: Stack(
+        children: [
+          BaseLoadMore(
+            onLoadMore: () => _callAPI(loadMore: true),
+            onRefresh: _callAPI,
+            canLoadMore: manager.canLoadMore,
+            child: (manager.data == null || manager.data?.data == null)
+                ? const SizedBox()
+                : ListView.separated(
+                    shrinkWrap: true,
+                    itemBuilder: (context, index) {
+                      return Column(
+                        children: [
+                          if (index == 0)
+                            BaseSectorHeader(title: manager.data?.heading),
+                          if (index == 0) BaseListDivider(),
+                          BaseSectorItem(
+                            data: manager.data!.data![index],
+                            index: index,
+                          ),
+                        ],
+                      );
+                      // return BaseStockAddItem(
+                      //   data: manager.data!.data![index],
+                      //   index: index,
+                      //   onRefresh: _callAPI,
+                      //   manager: manager,
+                      //   expandable: manager.data!.data![index].extra,
+                      // );
+                    },
+                    separatorBuilder: (context, index) {
+                      return BaseListDivider();
+                    },
+                    itemCount: manager.data!.data?.length ?? 0,
+                    // itemCount: 4,
+                  ),
+          ),
+          BaseLockItem(manager: manager, callAPI: _callAPI),
+        ],
+      ),
+    );
+  }
+}

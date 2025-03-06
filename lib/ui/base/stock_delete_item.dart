@@ -13,12 +13,14 @@ class StockDeleteItem extends StatelessWidget {
   final DeleteBoxRes? deleteDataRes;
   final Function()? onTapKeep;
   final Function()? onTapRemove;
-  const StockDeleteItem({super.key,this.deleteDataRes,this.onTapKeep,this.onTapRemove});
+  const StockDeleteItem(
+      {super.key, this.deleteDataRes, this.onTapKeep, this.onTapRemove});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: Pad.pad8,vertical: Pad.pad16),
+      padding:
+          const EdgeInsets.symmetric(horizontal: Pad.pad8, vertical: Pad.pad16),
       child: Column(
         children: [
           ClipRRect(
@@ -43,21 +45,23 @@ class StockDeleteItem extends StatelessWidget {
             subtitle: deleteDataRes?.subTitle,
             crossAxisAlignment: CrossAxisAlignment.center,
             textAlign: TextAlign.center,
-            titleStyle: styleBaseBold(fontSize: 28,color: ThemeColors.splashBG),
-            subtitleStyle: styleBaseRegular(fontSize: 14,color: ThemeColors.neutral80),
+            titleStyle:
+                styleBaseBold(fontSize: 28, color: ThemeColors.splashBG),
+            subtitleStyle:
+                styleBaseRegular(fontSize: 14, color: ThemeColors.neutral80),
           ),
           SpacerVertical(height: 12),
           BaseButtonOutline(
             onPressed: onTapKeep,
-            text: deleteDataRes?.btnCancelText??"",
+            text: deleteDataRes?.btnCancelText ?? "",
             textColor: ThemeColors.neutral20,
             textSize: 16,
             borderColor: ThemeColors.neutral40,
           ),
-          SpacerVertical(height:16),
+          SpacerVertical(height: 16),
           BaseButton(
             onPressed: onTapRemove,
-            text: deleteDataRes?.btnConfirmText??"",
+            text: deleteDataRes?.btnConfirmText ?? "",
             textColor: ThemeColors.white,
             color: ThemeColors.error120,
             textSize: 16,
