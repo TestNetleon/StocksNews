@@ -1,4 +1,3 @@
-
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -10,9 +9,9 @@ import 'package:stocks_news_new/utils/constants.dart';
 
 import '../models/faq.dart';
 
-class FaqManager extends ChangeNotifier{
+class FaqManager extends ChangeNotifier {
   BaseFaqRes? _data;
-  BaseFaqRes? get faqData=> _data;
+  BaseFaqRes? get faqData => _data;
   String? _error;
   Status _status = Status.ideal;
   String? get error => _error ?? Const.errSomethingWrong;
@@ -28,6 +27,7 @@ class FaqManager extends ChangeNotifier{
     _openIndex = index;
     notifyListeners();
   }
+
   void setStatus(status) {
     _status = status;
     notifyListeners();
@@ -42,13 +42,11 @@ class FaqManager extends ChangeNotifier{
     notifyListeners();
   }
 
-  Future getFaq({String? search,bool? isRest=false}) async {
+  Future getFaq({String? search, bool? isRest = false}) async {
     clearSearch();
     setStatus(Status.loading);
     try {
-      Map request = {
-        "search": search??""
-      };
+      Map request = {"search": search ?? ""};
       ApiResponse response = await apiRequest(
         url: Apis.faqs,
         showProgress: false,
@@ -58,13 +56,11 @@ class FaqManager extends ChangeNotifier{
 
       if (response.status) {
         _data = baseFaqResFromJson(jsonEncode(response.data));
-        if(isRest==true){
+        if (isRest == true) {
           _errorSearch = response.message;
           print(_errorSearch);
         }
-
-      }
-      else {
+      } else {
         _data = null;
         _error = response.message;
       }
