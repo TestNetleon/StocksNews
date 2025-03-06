@@ -49,7 +49,7 @@ class FiftyTwoWeeksHighManager extends ChangeNotifier {
           : {"page": "$_page"};
 
       ApiResponse response = await apiRequest(
-        url: Apis.highPE,
+        url: Apis.fiftyTwoWeekHigh,
         request: request,
       );
       if (response.status) {

@@ -146,28 +146,25 @@ class _LowPriceStocksListState extends State<LowPriceStocksList> {
           ),
         ),
         Align(
-            alignment: Alignment.bottomCenter,
-            child: MdBottomSheet(
-              isFilter: provider.isFilterApplied(),
-              isSort: provider.isSortingApplied(),
-              onTapFilter: _onFilterClick,
-              onTapSorting: () => onSortingClick(
-                selected: context
-                    .read<LowPriceStocksProvider>()
-                    .filterParams
-                    ?.sorting,
-                onTap: (sortingKey) {
-                  Navigator.pop(navigatorKey.currentContext!);
-                  context
-                      .read<LowPriceStocksProvider>()
-                      .applySorting(sortingKey);
-                },
-                onResetClick: () {
-                  Navigator.pop(navigatorKey.currentContext!);
-                  context.read<LowPriceStocksProvider>().applySorting("");
-                },
-              ),
-            ))
+          alignment: Alignment.bottomCenter,
+          child: MdBottomSheet(
+            isFilter: provider.isFilterApplied(),
+            isSort: provider.isSortingApplied(),
+            onTapFilter: _onFilterClick,
+            onTapSorting: () => onSortingClick(
+              selected:
+                  context.read<LowPriceStocksProvider>().filterParams?.sorting,
+              onTap: (sortingKey) {
+                Navigator.pop(navigatorKey.currentContext!);
+                context.read<LowPriceStocksProvider>().applySorting(sortingKey);
+              },
+              onResetClick: () {
+                Navigator.pop(navigatorKey.currentContext!);
+                context.read<LowPriceStocksProvider>().applySorting("");
+              },
+            ),
+          ),
+        ),
       ],
     );
   }

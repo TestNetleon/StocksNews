@@ -5,18 +5,38 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/api/api_requester.dart';
 import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/api/apis.dart';
+import 'package:stocks_news_new/managers/market/52Weeks/fifty_two_weeks_high.dart';
+import 'package:stocks_news_new/managers/market/52Weeks/fifty_two_weeks_low.dart';
+import 'package:stocks_news_new/managers/market/dividends/dividends.dart';
+import 'package:stocks_news_new/managers/market/earnings/earnings.dart';
 import 'package:stocks_news_new/managers/market/gainer&losers/todays_breakout.dart';
 import 'package:stocks_news_new/managers/market/gainer&losers/todays_gainer.dart';
 import 'package:stocks_news_new/managers/market/gainer&losers/todays_losers.dart';
 import 'package:stocks_news_new/managers/market/gapUpDown/gap_down.dart';
 import 'package:stocks_news_new/managers/market/gapUpDown/gap_up.dart';
+import 'package:stocks_news_new/managers/market/highLowBeta/high_beta.dart';
+import 'package:stocks_news_new/managers/market/highLowBeta/low_beta.dart';
+import 'package:stocks_news_new/managers/market/highLowBeta/negative_beta.dart';
 import 'package:stocks_news_new/managers/market/highLowPe/high_pe.dart';
 import 'package:stocks_news_new/managers/market/highLowPe/high_pe_growth.dart';
 import 'package:stocks_news_new/managers/market/highLowPe/low_pe.dart';
 import 'package:stocks_news_new/managers/market/highLowPe/low_pe_growth.dart';
+import 'package:stocks_news_new/managers/market/indices/amex/amex.dart';
+import 'package:stocks_news_new/managers/market/indices/dow30/dow_30.dart';
+import 'package:stocks_news_new/managers/market/indices/nasdaq/nasdaq.dart';
+import 'package:stocks_news_new/managers/market/indices/nyse/nyse.dart';
+import 'package:stocks_news_new/managers/market/indices/s&p500/snp_500.dart';
+import 'package:stocks_news_new/managers/market/mostActive/mostActive/most_active.dart';
+import 'package:stocks_news_new/managers/market/mostActive/mostVolatile/most_volatile.dart';
+import 'package:stocks_news_new/managers/market/mostActive/unusualTrading/unusual_trading.dart';
+import 'package:stocks_news_new/managers/market/pennyStocks/mostActive/most_active.dart';
+import 'package:stocks_news_new/managers/market/pennyStocks/mostPopular/most_popular.dart';
+import 'package:stocks_news_new/managers/market/pennyStocks/topTodays/top_tadays.dart';
 import 'package:stocks_news_new/models/market/market_res.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
+import 'package:stocks_news_new/ui/tabs/market/mostActive/mostActive/most_active.dart';
+import 'package:stocks_news_new/ui/tabs/market/mostActive/mostVolatile/most_volatile.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 
@@ -184,11 +204,17 @@ class MarketManager extends ChangeNotifier {
     notifyListeners();
   }
 
-  void resetFilter({required marketIndex, required marketInnerIndex}) {
+  void resetFilter({
+    required marketIndex,
+    required marketInnerIndex,
+    apiCallNeeded = true,
+  }) {
     _filterRequest = null;
     _filterParams = null;
     notifyListeners();
-    callApi(marketIndex, marketInnerIndex);
+    if (apiCallNeeded) {
+      callApi(marketIndex, marketInnerIndex);
+    }
   }
 
   void applyFilter({required marketIndex, required marketInnerIndex}) {
@@ -244,6 +270,42 @@ class MarketManager extends ChangeNotifier {
       context.read<HighPeGrowthManager>().getData(filter: true);
     } else if (marketIndex == 3 && marketInnerIndex == 3) {
       context.read<LowPeGrowthManager>().getData(filter: true);
+    } else if (marketIndex == 4 && marketInnerIndex == 0) {
+      context.read<FiftyTwoWeeksHighManager>().getData(filter: true);
+    } else if (marketIndex == 4 && marketInnerIndex == 1) {
+      context.read<FiftyTwoWeeksLowManager>().getData(filter: true);
+    } else if (marketIndex == 5 && marketInnerIndex == 0) {
+      context.read<HighBetaManager>().getData(filter: true);
+    } else if (marketIndex == 5 && marketInnerIndex == 1) {
+      context.read<LowBetaManager>().getData(filter: true);
+    } else if (marketIndex == 5 && marketInnerIndex == 2) {
+      context.read<NegativeBetaManager>().getData(filter: true);
+    } else if (marketIndex == 6 && marketInnerIndex == 0) {
+      context.read<Dow30Manager>().getData(filter: true);
+    } else if (marketIndex == 6 && marketInnerIndex == 1) {
+      context.read<Snp500Manager>().getData(filter: true);
+    } else if (marketIndex == 6 && marketInnerIndex == 2) {
+      context.read<NyseManager>().getData(filter: true);
+    } else if (marketIndex == 6 && marketInnerIndex == 3) {
+      context.read<AmexManager>().getData(filter: true);
+    } else if (marketIndex == 6 && marketInnerIndex == 4) {
+      context.read<NasdaqManager>().getData(filter: true);
+    } else if (marketIndex == 8 && marketInnerIndex == 0) {
+      context.read<MostActiveManager>().getData(filter: true);
+    } else if (marketIndex == 8 && marketInnerIndex == 1) {
+      context.read<MostVolatileManager>().getData(filter: true);
+    } else if (marketIndex == 8 && marketInnerIndex == 2) {
+      context.read<UnusualTradingManager>().getData(filter: true);
+    } else if (marketIndex == 9 && marketInnerIndex == 0) {
+      context.read<MostActivePennyStocksManager>().getData(filter: true);
+    } else if (marketIndex == 9 && marketInnerIndex == 1) {
+      context.read<MostPopularPennyStocksManager>().getData(filter: true);
+    } else if (marketIndex == 9 && marketInnerIndex == 2) {
+      context.read<TopTodaysPennyStocksManager>().getData(filter: true);
+    } else if (marketIndex == 10) {
+      context.read<DividendsManager>().getData(filter: true);
+    } else if (marketIndex == 11) {
+      context.read<EarningsManager>().getData(filter: true);
     } else {
       //
     }
