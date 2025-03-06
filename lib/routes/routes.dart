@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:stocks_news_new/managers/alerts.dart';
+import 'package:stocks_news_new/managers/billionaires.dart';
 import 'package:stocks_news_new/managers/blogs.dart';
 import 'package:stocks_news_new/managers/faq.dart';
 import 'package:stocks_news_new/managers/feedback.dart';
@@ -119,6 +120,7 @@ import 'package:stocks_news_new/screens/tabs/news/newsDetail/new_detail.dart';
 import 'package:stocks_news_new/screens/trendingIndustries/index.dart';
 
 import 'package:stocks_news_new/ui/tabs/more/alerts/index.dart';
+import 'package:stocks_news_new/ui/tabs/more/billionaires/index.dart';
 import 'package:stocks_news_new/ui/tabs/more/faq/index.dart';
 import 'package:stocks_news_new/ui/tabs/more/feedback/index.dart';
 import 'package:stocks_news_new/ui/tabs/more/helpdesk/chats/index.dart';
@@ -215,6 +217,7 @@ class Routes {
     HelpDeskCreateIndex.path: (_) => const HelpDeskCreateIndex(),
     RequestNewIndex.path: (_) => const RequestNewIndex(),
     FeedbackIndex.path: (_) => const FeedbackIndex(),
+    BillionairesIndex.path: (_) => const BillionairesIndex(),
 
     //--------------------------------------
 
@@ -659,6 +662,8 @@ class Routes {
       ChangeNotifierProvider(create: (_) => TradeManager()),
       ChangeNotifierProvider(create: (_) => TickerSearchManager()),
       ChangeNotifierProvider(create: (_) => FeedbackManager()),
+      ChangeNotifierProvider(create: (_) => BillionairesManager()),
+
 
       // MARKET DATA Start ---------------
       ChangeNotifierProvider(create: (_) => MarketManager()),

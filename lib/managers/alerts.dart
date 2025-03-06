@@ -75,10 +75,6 @@ class AlertsM extends ChangeNotifier{
           _error = response.message;
         }
       }
-      TopSnackbar.show(
-        message: response.message ?? '',
-        type: response.status ? ToasterEnum.success : ToasterEnum.error,
-      );
       setStatus(Status.loaded);
     } catch (e) {
       _data = null;

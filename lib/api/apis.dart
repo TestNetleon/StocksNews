@@ -47,6 +47,15 @@ class Apis {
   static const feedback = "/feedback";
   static const shareFeedback = "/share-feedback";
 
+  //MARK: Crypto API
+  static const cryptoHome = "/crypto/home";
+  static const cryptoBillionaireDetails = "/crypto/billionaire-details";
+  static const cryptoDetails = "/crypto/crypto-details";
+  static const cryptoChart = "/crypto/crypto-chart";
+  static const cryptoViewAll = "//crypto/crypto-view-all";
+
+
+
   //MARK: Simulator API
   static const tsUserInfo = "/simulator/user-info";
   static const tsTopBar = "/simulator/trade/stock-detail-topbar";

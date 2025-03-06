@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/managers/feedback.dart';
@@ -13,6 +14,7 @@ import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/utils/utils.dart';
+import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
 import 'package:stocks_news_new/widgets/custom/base_loader_container.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
@@ -27,6 +29,8 @@ class FeedbackIndex extends StatefulWidget {
 
 class _FeedbackIndexState extends State<FeedbackIndex> {
   TextEditingController comment = TextEditingController();
+  String? selectType;
+  int? selectedIndex=0;
 
   @override
   void initState() {
@@ -44,6 +48,7 @@ class _FeedbackIndexState extends State<FeedbackIndex> {
     FeedbackManager manager = context.watch<FeedbackManager>();
 
     return BaseScaffold(
+      //resizeToAvoidBottomInset: false,
       appBar: BaseAppBar(
         showBack: true,
         title:"Feedback",
@@ -61,80 +66,118 @@ class _FeedbackIndexState extends State<FeedbackIndex> {
             child: Column(
               children: [
                 Expanded(
-                  child: Column(
-                    children: [
-                      Visibility(
-                        visible: manager.feedbackData?.subTitle != '',
-                        child:BaseHeading(
-                          textAlign: TextAlign.center,
-                          title: manager.feedbackData?.title ?? "",
-                          titleStyle: stylePTSansBold(fontSize: 32,color: ThemeColors.splashBG),
-                          subtitle: manager.feedbackData?.subTitle ?? "",
-                          subtitleStyle: stylePTSansRegular(fontSize: 16,color: ThemeColors.neutral80),
-                          crossAxisAlignment: CrossAxisAlignment.center,
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        Visibility(
+                          visible: manager.feedbackData?.title != '',
+                          child:BaseHeading(
+                            textAlign: TextAlign.center,
+                            title: manager.feedbackData?.title ?? "",
+                            titleStyle: stylePTSansBold(fontSize: 32,color: ThemeColors.splashBG),
+                            subtitle: manager.feedbackData?.existMessage ?? "",
+                            subtitleStyle: stylePTSansRegular(fontSize: 16,color: ThemeColors.neutral80),
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                          ),
                         ),
-                      ),
-                      SpacerVertical(height:10),
-                      BaseTextField(
-                        placeholder: manager.feedbackData?.placeholderText ?? "",
-                        controller: comment,
-                        textCapitalization: TextCapitalization.words,
-                        keyboardType: TextInputType.name,
-                        minLines: 10,
-                        contentPadding: EdgeInsets.symmetric(vertical: Pad.pad10,horizontal: Pad.pad10),
-                      ),
-                      /* ListView.separated(
-                    // shrinkWrap: true,
-                    // physics: NeverScrollableScrollPhysics(),
-                    padding: const EdgeInsets.symmetric(horizontal: Pad.pad3),
-                    itemBuilder: (context, index) {
-                      BaseTickerRes? data = manager.alertData?.alerts?[index];
-                      if (data == null) {
-                        return SizedBox();
-                      }
-                      return BaseStockEditItem(
-                        data: data,
-                        deleteDataRes: manager.alertData?.deleteBox,
-                        index: index,
-                        onTap: (p0) {
-                          Navigator.pushNamed(context, StockDetailIndex.path, arguments: {'symbol': p0.symbol});
-                        },
-                      );
-                    },
-                    separatorBuilder: (context, index) {
-                      return BaseListDivider();
-                    },
-                    itemCount: manager.alertData?.alerts?.length ?? 0,
-                  ),*/
-                    ],
+                        SpacerVertical(height: Pad.pad16),
+                        Visibility(
+                          visible: manager.feedbackData?.type!=null || manager.feedbackData?.type?.isNotEmpty == true,
+                          child: SingleChildScrollView(
+                            child: Row(
+                              children: List.generate(
+                                manager.feedbackData!.type!.length,
+                                    (index) {
+                                      bool isOpen = selectedIndex == index;
+                                  return Expanded(
+                                    child: Column(
+                                      children: [
+                                        InkWell(
+                                          borderRadius: BorderRadius.circular(Pad.pad16),
+                                          onTap: () {
+                                            setState(() {
+                                              selectedIndex = index;
+                                              selectType=manager.feedbackData!.type![index].title??"";
+
+                                            });
+                                          },
+                                          child: Container(
+                                            padding: EdgeInsets.symmetric(
+                                              horizontal: 35,
+                                              vertical: 27,
+                                            ),
+                                            decoration: BoxDecoration(
+                                              color: isOpen?ThemeColors.secondary10:ThemeColors.white,
+                                                border: Border.all(color: isOpen?ThemeColors.secondary100:ThemeColors.neutral10),
+                                                borderRadius: BorderRadius.circular(Pad.pad16)),
+                                            child: CachedNetworkImage(
+                                              imageUrl: manager.feedbackData!.type![index].icon ?? '',
+                                              height: 33,
+                                              width: 33,
+                                              color: isOpen?ThemeColors.secondary100:ThemeColors.neutral10,
+                                            ),
+                                          ),
+                                        )
+                                       /* Text(
+                                          manager.feedbackData!.type![index].title ?? '',
+                                          style: styleBaseRegular(),
+                                        ),*/
+                                      ],
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
+                          ),
+                        ),
+                        SpacerVertical(height: Pad.pad24),
+                        BaseTextField(
+                          placeholder: manager.feedbackData?.placeholderText ?? "",
+                          controller: comment,
+                          textCapitalization: TextCapitalization.words,
+                          keyboardType: TextInputType.name,
+                          minLines: 10,
+                          contentPadding: EdgeInsets.symmetric(vertical: Pad.pad10,horizontal: Pad.pad10),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-
 
                 BaseButton(
                   text: "Submit",
                   color: ThemeColors.primary10,
                   textColor: ThemeColors.primary100,
                   onPressed:(){
-                    manager.sendFeedback(
-                        type: "absolutely",
-                        comment: comment.text
-                    ).then((value) {
-                      closeKeyboard();
-                      BaseBottomSheet().bottomSheet(
-                        barrierColor: ThemeColors.neutral5.withValues(alpha: 0.7),
-                        child: FeedbackShowSheet(
-                          feedbackSendRes: manager.dataSend,
-                          onTapKeep: () {
-                            Navigator.pop(navigatorKey.currentContext!);
-                          },
-                          onTapSure: () {
-
-                          },
-                        ),
+                    if(comment.text.isEmpty){
+                      popUpAlert(
+                        message: "Enter Your Opinion",
+                        title: "Alert",
+                        icon: Images.alertPopGIF,
                       );
-                    });
+                      return;
+                    }
+                    else{
+                      manager.sendFeedback(
+                          type: selectType??"",
+                          comment: comment.text
+                      ).then((value) {
+                        closeKeyboard();
+                        BaseBottomSheet().bottomSheet(
+                          barrierColor: ThemeColors.neutral5.withValues(alpha: 0.7),
+                          child: FeedbackShowSheet(
+                            feedbackSendRes: manager.dataSend,
+                            onTapKeep: () {
+                              Navigator.pop(navigatorKey.currentContext!);
+                            },
+                            onTapSure: () {
+                              Navigator.pop(navigatorKey.currentContext!);
 
+                            },
+                          ),
+                        );
+                      });
+                    }
                   },
                 ),
               ],

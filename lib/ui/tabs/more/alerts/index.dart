@@ -83,8 +83,6 @@ class _AlertIndexState extends State<AlertIndex> {
                             manager.getAlerts(loadMore: true),
                         canLoadMore: manager.canLoadMore,
                         child: ListView.separated(
-                          // shrinkWrap: true,
-                          // physics: NeverScrollableScrollPhysics(),
                           padding:
                               const EdgeInsets.symmetric(horizontal: Pad.pad3),
                           itemBuilder: (context, index) {

@@ -120,6 +120,13 @@ class MoreIndex extends StatelessWidget {
                 manager.navigateToMySubscription();
               },
             ),
+            MoreItem(
+              icon: Images.moreMySubscription,
+              label: "Billionaires",
+              onTap: () {
+                manager.navigateToBillionaires();
+              },
+            ),
             BaseHeading(
               margin: EdgeInsets.only(left: Pad.pad16, top: Pad.pad20),
               title: "Resources",

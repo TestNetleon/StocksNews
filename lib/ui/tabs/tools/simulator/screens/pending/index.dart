@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/ui/base/bottom_sheet.dart';
+import 'package:stocks_news_new/ui/base/load_more.dart';
 import 'package:stocks_news_new/ui/tabs/tools/simulator/managers/s_pending.dart';
 import 'package:stocks_news_new/ui/tabs/tools/simulator/managers/trade.dart';
 import 'package:stocks_news_new/ui/tabs/tools/simulator/models/ts_pending_list_res.dart';
@@ -10,7 +11,6 @@ import 'package:stocks_news_new/ui/tabs/tools/simulator/services/sse.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/custom/base_loader_container.dart';
-import 'package:stocks_news_new/widgets/refresh_controll.dart';
 
 
 class SPendingList extends StatefulWidget {
@@ -44,7 +44,7 @@ class _SPendingListState extends State<SPendingList> {
       error: manager.error,
       onRefresh: _getData,
       showPreparingText: true,
-      child: RefreshControl(
+      child: BaseLoadMore(
         onRefresh: () async {
           await _getData();
         },

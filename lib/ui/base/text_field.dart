@@ -99,6 +99,7 @@ class BaseTextField extends StatelessWidget {
         border: outlineInputBorder,
         focusedBorder: outlineInputBorder,
         counterText: '',
+        alignLabelWithHint: true
       ),
     );
   }

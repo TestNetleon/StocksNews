@@ -174,7 +174,7 @@ class NewsDetailData extends StatelessWidget {
             ),
           ),
         ),
-        FeedbackIndex(
+        FeedbackIndexItem(
           feedback: manager.newsDetail?.feedback,
           onTap: _sendFeedBack,
         ),

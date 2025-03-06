@@ -172,7 +172,7 @@ class BlogDetailData extends StatelessWidget {
             ),
           ),
         ),
-        FeedbackIndex(
+        FeedbackIndexItem(
           feedback: manager.blogsDetail?.feedback,
           onTap: _sendFeedBack,
         ),

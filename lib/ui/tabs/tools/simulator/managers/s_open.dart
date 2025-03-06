@@ -160,10 +160,7 @@ class SOpenManager extends ChangeNotifier {
   Future<void> getData() async {
     setStatus(Status.loading);
     try {
-      Map request = {
-        //"token": navigatorKey.currentContext!.read<UserManager>().user?.token ?? "",
-      };
-
+      Map request = {};
       ApiResponse response = await apiRequest(
         url: Apis.tsOrderList,
         request: request,

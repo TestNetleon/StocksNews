@@ -76,14 +76,22 @@ class MoreNewsRes {
       };
 }
 
+FeedbackRes feedbackResFromMap(String str) => FeedbackRes.fromJson(json.decode(str));
+
+String feedbackResToMap(FeedbackRes data) => json.encode(data.toJson());
+
 class FeedbackRes {
   final String? title;
   String? existMessage;
   final List<MarketResData>? type;
+  final String? placeholderText;
+  final String? buttonText;
   FeedbackRes({
     this.title,
     this.type,
     this.existMessage,
+    this.placeholderText,
+    this.buttonText,
   });
 
   factory FeedbackRes.fromJson(Map<String, dynamic> json) => FeedbackRes(
@@ -93,6 +101,8 @@ class FeedbackRes {
             ? []
             : List<MarketResData>.from(
                 json["type"]!.map((x) => MarketResData.fromJson(x))),
+    placeholderText: json["placeholder_text"],
+    buttonText: json["button_text"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -101,6 +111,8 @@ class FeedbackRes {
         "type": type == null
             ? []
             : List<dynamic>.from(type!.map((x) => x.toJson())),
+    "placeholder_text": placeholderText,
+    "button_text": buttonText,
       };
 }
 

@@ -1,6 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:stocks_news_new/models/feedback_res.dart';
+import 'package:stocks_news_new/models/feedback_send_res.dart';
 import 'package:stocks_news_new/ui/base/button.dart';
 import 'package:stocks_news_new/ui/base/button_outline.dart';
 import 'package:stocks_news_new/ui/base/heading.dart';
@@ -48,7 +48,7 @@ class FeedbackShowSheet extends StatelessWidget {
           ),
           SpacerVertical(height: 12),
           Visibility(
-            visible: feedbackSendRes?.firstButtonText!=null,
+            visible: feedbackSendRes?.firstButtonText!="",
             child: BaseButtonOutline(
               onPressed: onTapKeep,
               text: feedbackSendRes?.firstButtonText??"",
@@ -57,7 +57,7 @@ class FeedbackShowSheet extends StatelessWidget {
               borderColor: ThemeColors.neutral20,
             ),
           ),
-          Visibility(visible: feedbackSendRes?.firstButtonText!=null,child: SpacerVertical(height:16)),
+          Visibility(visible: feedbackSendRes?.firstButtonText!="",child: SpacerVertical(height:16)),
           BaseButton(
             onPressed: onTapSure,
             text: feedbackSendRes?.secondButtonText??"",
