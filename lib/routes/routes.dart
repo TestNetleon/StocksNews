@@ -150,6 +150,8 @@ import 'package:stocks_news_new/ui/tabs/more/helpdesk/tickets/index.dart';
 import 'package:stocks_news_new/ui/tabs/more/notificationSettings/index.dart';
 import 'package:stocks_news_new/ui/tabs/more/watchlist/index.dart';
 import 'package:stocks_news_new/ui/tabs/tools/compareStocks/compare.dart';
+import 'package:stocks_news_new/ui/tabs/tools/scanner/manager/gainers.dart';
+import 'package:stocks_news_new/ui/tabs/tools/scanner/manager/losers.dart';
 import 'package:stocks_news_new/ui/tabs/tools/simulator/managers/portpolio.dart';
 import 'package:stocks_news_new/ui/tabs/tools/simulator/managers/s_open.dart';
 import 'package:stocks_news_new/ui/tabs/tools/simulator/managers/s_pending.dart';
@@ -490,13 +492,13 @@ class Routes {
           },
         );
 
-      case ScannerIndex.path:
+      case ToolsScannerIndex.path:
         return MaterialPageRoute(
           builder: (context) {
             final arguments = settings.arguments as Map<String, dynamic>?;
             int? index = arguments?['index'];
 
-            return ScannerIndex(index: index);
+            return ToolsScannerIndex(index: index);
           },
         );
 
@@ -704,7 +706,12 @@ class Routes {
       ChangeNotifierProvider(create: (_) => TickerSearchManager()),
       ChangeNotifierProvider(create: (_) => FeedbackManager()),
       ChangeNotifierProvider(create: (_) => BillionairesManager()),
+
+      //SCANNER Start---------------
       ChangeNotifierProvider(create: (_) => ScannerManager()),
+      ChangeNotifierProvider(create: (_) => ScannerGainersManager()),
+      ChangeNotifierProvider(create: (_) => ScannerLosersManager()),
+      //SCANNER End---------------
 
       // MARKET DATA Start ---------------
       ChangeNotifierProvider(create: (_) => MarketManager()),

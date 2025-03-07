@@ -361,7 +361,7 @@ class ToolsManager extends ChangeNotifier {
 
   /// Scanner redirection
   Future scannerRedirection() async {
-    Navigator.pushNamed(navigatorKey.currentContext!, ScannerIndex.path);
+    Navigator.pushNamed(navigatorKey.currentContext!, ToolsScannerIndex.path);
   }
 
   /// Simulator redirection

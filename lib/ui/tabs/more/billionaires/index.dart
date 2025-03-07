@@ -7,9 +7,7 @@ import 'package:stocks_news_new/ui/base/common_tab.dart';
 import 'package:stocks_news_new/ui/base/scaffold.dart';
 import 'package:stocks_news_new/ui/tabs/more/billionaires/cryptocurrencies/index.dart';
 import 'package:stocks_news_new/ui/tabs/more/billionaires/myWatchlist/index.dart';
-import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
-import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/custom/base_loader_container.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
@@ -57,22 +55,20 @@ class _BillionairesIndexState extends State<BillionairesIndex> {
               BaseTabs(
                 data: manager.categoriesData?.data ?? [],
                 onTap: manager.onScreenChange,
-                isScrollable: manager.categoriesData?.data?.length == 2
-                    ? false
-                    : true,
+                isScrollable:
+                    manager.categoriesData?.data?.length == 2 ? false : true,
                 showDivider: false,
               ),
               SpacerVertical(height: Pad.pad10),
               Expanded(
                   child: BaseScroll(
-                    margin: EdgeInsets.zero,
+                      margin: EdgeInsets.zero,
                       //onRefresh: manager.getCryptoCurrencies,
                       children: [
-                if (manager.selectedScreen == 0)
-                  Cryptocurrencies(),
-                if (manager.selectedScreen == 1) MyWatchListIndex(),
-                if (manager.selectedScreen == 2) SizedBox(),
-              ]))
+                    if (manager.selectedScreen == 0) Cryptocurrencies(),
+                    if (manager.selectedScreen == 1) MyWatchListIndex(),
+                    if (manager.selectedScreen == 2) SizedBox(),
+                  ]))
             ],
           )),
     );
