@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/managers/stockDetail/stock.detail.dart';
+import 'package:stocks_news_new/models/faq.dart';
+import 'package:stocks_news_new/ui/base/base_faq.dart';
 import 'package:stocks_news_new/widgets/custom/base_loader_container.dart';
 
 import '../../../models/my_home_premium.dart';
@@ -21,6 +23,7 @@ class SDInsiderTrades extends StatelessWidget {
     List<BaseKeyValueRes>? top = manager.dataInsiderTrade?.top;
 
     InsiderTradeListRes? insiderData = manager.dataInsiderTrade?.insiderData;
+    BaseFaqRes? faqs = manager.dataInsiderTrade?.faq;
 
     return BaseLoaderContainer(
       hasData: manager.dataInsiderTrade != null,
@@ -49,6 +52,7 @@ class SDInsiderTrades extends StatelessWidget {
             ),
           ),
           InsiderHistory(insiderData: insiderData),
+          BaseFaq(faqs:faqs),
           // SDDividendsHistory(dividendHistory: dividendHistory),
           // SDDividendsHistory(earningHistory: earningHistory),
           // SDDividendsEstimates(epsEstimates: epsEstimates),

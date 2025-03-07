@@ -157,7 +157,9 @@ class Apis {
   static const dividendsAnnouncements = "/dividends-announcements";
   static const earningAnnouncements = "/earning-announcements";
   static const sectors = "/sectors";
+  static const sectorsView = "/sector/view";
   static const industries = "/industries";
+  static const industriesView = "/industry/view";
 
   //AI
   static const aiAnalysis = '/ai-analysis';

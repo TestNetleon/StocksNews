@@ -234,6 +234,7 @@ class Images {
   static const String btc = '${base}btc.png';
   static const String starSelected = '${base}star_selected.png';
   static const String starUnselected = '${base}star_unselected.png';
+  static const String ic_fav = '${base}ic_fav.png';
 
   //-------------------------------------------------------------------------------
   static const String scannerStop = 'assets/images/scanner_stop.png';
@@ -439,6 +440,7 @@ class Dimen {
 }
 
 class Pad {
+  static const double pad2 = 2;
   static const double pad3 = 3;
   static const double pad5 = 5;
   static const double pad8 = 8;

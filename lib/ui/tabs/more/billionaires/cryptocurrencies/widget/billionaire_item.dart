@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:stocks_news_new/models/billionaires_res.dart';
 import 'package:stocks_news_new/ui/base/border_container.dart';
 import 'package:stocks_news_new/ui/base/heading.dart';
+import 'package:stocks_news_new/ui/tabs/more/billionaires/billionaires_index.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -57,7 +58,10 @@ class BillionaireItem extends StatelessWidget {
             ),
           ),
           TextButton.icon(
-              onPressed: (){},
+              onPressed: (){
+                Navigator.pushNamed(context, BillionairesDetailIndex.path,arguments: {'slug':item?.slug??""});
+
+              },
               label: Text(
                 "SEE ALL MENTIONS",
                 style: stylePTSansRegular(fontSize: 14,color: ThemeColors.secondary100),

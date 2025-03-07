@@ -130,7 +130,7 @@ class AnalystForecastItem extends StatelessWidget {
                       child: Text(
                         'View Details',
                         style: styleBaseSemiBold(
-                          color: ThemeColors.secondary100,
+                          color: ThemeColors.primary120,
                           fontSize: 13,
                         ),
                       ),

@@ -155,6 +155,7 @@ class _SimulatorIndexState extends State<SimulatorIndex> {
                       selectedIndex: widget.initialIndex,
                       isScrollable: false,
                       labelPadding: EdgeInsets.zero,
+                      fontSize: 11,
                     ),
                     SpacerVertical(height: Pad.pad8),
                     if (manager.selectedScreen == 0)

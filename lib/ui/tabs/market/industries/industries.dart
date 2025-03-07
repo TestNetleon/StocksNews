@@ -4,6 +4,8 @@ import 'package:stocks_news_new/managers/market/industries/industries.dart';
 import 'package:stocks_news_new/ui/base/base_list_divider.dart';
 import 'package:stocks_news_new/ui/base/load_more.dart';
 import 'package:stocks_news_new/ui/base/lock.dart';
+import 'package:stocks_news_new/ui/tabs/market/industries/industries_view.dart';
+import 'package:stocks_news_new/ui/tabs/market/industries/widget/mention_chart.dart';
 import 'package:stocks_news_new/widgets/custom/base_loader_container.dart';
 import 'package:stocks_news_new/ui/base/base_sector_header.dart';
 import 'package:stocks_news_new/ui/base/base_sector_item.dart';
@@ -51,12 +53,15 @@ class _IndustriesState extends State<Industries> {
                     itemBuilder: (context, index) {
                       return Column(
                         children: [
-                          if (index == 0)
-                            BaseSectorHeader(title: manager.data?.heading),
+                          if (index == 0)MentionChart(),
+                          if (index == 0)BaseSectorHeader(title: manager.data?.heading),
                           if (index == 0) BaseListDivider(),
                           BaseSectorItem(
                             data: manager.data!.data![index],
                             index: index,
+                            onTap: (value){
+                              Navigator.pushNamed(context, IndustriesViewIndex.path,arguments: {'slug':value?.industrySlug??""});
+                            },
                           ),
                         ],
                       );

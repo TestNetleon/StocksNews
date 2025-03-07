@@ -57,81 +57,86 @@ class _AddToAlertSheetState extends State<AddToAlertSheet> {
     AlertsWatchlistManager manager = context.read<AlertsWatchlistManager>();
     AlertData? alertData = manager.checkAlertLock?.alertData;
 
-    return Container(
-      padding: EdgeInsets.all(10),
-      decoration: const BoxDecoration(
-        color: Colors.white,
+    return Padding(
+      padding: EdgeInsets.only(
+        bottom: MediaQuery.of(context).viewInsets.bottom,
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Center(
-            child: Text(
-              alertData?.title ?? "Set Alert for ${widget.symbol}",
-              style: stylePTSansBold(color: ThemeColors.black, fontSize: 25),
+      child: Container(
+        padding: EdgeInsets.all(10),
+        decoration: const BoxDecoration(
+          color: Colors.white,
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Center(
+              child: Text(
+                alertData?.title ?? "Set Alert for ${widget.symbol}",
+                style: stylePTSansBold(color: ThemeColors.black, fontSize: 25),
+              ),
             ),
-          ),
-          SpacerVertical(height: 16),
-          Center(
-            child: Text(
-              alertData?.subTitle ??
-                  "Choose your preferred alert type to receive email alerts and app notifications for the selected stock",
-              style: styleBaseRegular(color: ThemeColors.black, fontSize: 14),
-              textAlign: TextAlign.center,
+            SpacerVertical(height: 16),
+            Center(
+              child: Text(
+                alertData?.subTitle ??
+                    "Choose your preferred alert type to receive email alerts and app notifications for the selected stock",
+                style: styleBaseRegular(color: ThemeColors.black, fontSize: 14),
+                textAlign: TextAlign.center,
+              ),
             ),
-          ),
-          SpacerVertical(height: 20),
-          BaseTextField(
-            controller: controller,
-            placeholder: "Alert Name (optional)",
-          ),
-          SpacerVertical(height: 24),
-          _typeSelect(
-            heading: alertData?.sentiment?.title ??
-                "${widget.symbol} Sentiment Spike",
-            description: alertData?.sentiment?.subTitle ??
-                "Alert if ${widget.symbol} news sentiment changes significantly.",
-            onTap: () => selectType(index: 0),
-            isSelected: selectedOne,
-          ),
-          SpacerVertical(height: 20),
-          _typeSelect(
-            heading:
-                alertData?.mention?.title ?? "${widget.symbol} Mentions Spike",
-            description: alertData?.mention?.subTitle ??
-                "Alert if ${widget.symbol} has a surge in mentions.",
-            onTap: () => selectType(index: 1),
-            isSelected: selectedTwo,
-          ),
-          SpacerVertical(height: 24),
-          ListView.separated(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            padding: EdgeInsets.zero,
-            itemBuilder: (context, index) {
-              return Text(
-                alertData?.notes?[index] ?? "",
-                style: stylePTSansRegular(fontSize: 14),
-              );
-            },
-            separatorBuilder: (context, index) {
-              return SpacerVertical(height: 8);
-            },
-            itemCount: alertData?.notes?.length ?? 0,
-          ),
-          SpacerVertical(height: 24),
-          BaseButton(
-            onPressed: selectedOne == false && selectedTwo == false
-                ? null
-                : _requestAddToAlert,
-            text: "Add to Alert",
-            textUppercase: true,
-            textColor: selectedOne == false && selectedTwo == false
-                ? ThemeColors.background
-                : ThemeColors.white,
-          ),
-          const SpacerVertical(height: 10),
-        ],
+            SpacerVertical(height: 20),
+            BaseTextField(
+              controller: controller,
+              placeholder: "Alert Name (optional)",
+            ),
+            SpacerVertical(height: 24),
+            _typeSelect(
+              heading: alertData?.sentiment?.title ??
+                  "${widget.symbol} Sentiment Spike",
+              description: alertData?.sentiment?.subTitle ??
+                  "Alert if ${widget.symbol} news sentiment changes significantly.",
+              onTap: () => selectType(index: 0),
+              isSelected: selectedOne,
+            ),
+            SpacerVertical(height: 20),
+            _typeSelect(
+              heading:
+                  alertData?.mention?.title ?? "${widget.symbol} Mentions Spike",
+              description: alertData?.mention?.subTitle ??
+                  "Alert if ${widget.symbol} has a surge in mentions.",
+              onTap: () => selectType(index: 1),
+              isSelected: selectedTwo,
+            ),
+            SpacerVertical(height: 24),
+            ListView.separated(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              padding: EdgeInsets.zero,
+              itemBuilder: (context, index) {
+                return Text(
+                  alertData?.notes?[index] ?? "",
+                  style: stylePTSansRegular(fontSize: 14),
+                );
+              },
+              separatorBuilder: (context, index) {
+                return SpacerVertical(height: 8);
+              },
+              itemCount: alertData?.notes?.length ?? 0,
+            ),
+            SpacerVertical(height: 24),
+            BaseButton(
+              onPressed: selectedOne == false && selectedTwo == false
+                  ? null
+                  : _requestAddToAlert,
+              text: "Add to Alert",
+              textUppercase: true,
+              textColor: selectedOne == false && selectedTwo == false
+                  ? ThemeColors.background
+                  : ThemeColors.white,
+            ),
+            const SpacerVertical(height: 10),
+          ],
+        ),
       ),
     );
   }

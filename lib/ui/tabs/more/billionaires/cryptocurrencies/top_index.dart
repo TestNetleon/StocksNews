@@ -21,9 +21,7 @@ class TopBilIndex extends StatelessWidget {
           RecentMentionsRes? item = topTabs?.topBillionaires?[index];
           return BillionaireItem(
               item:item,
-              onTap:(){
-                Navigator.pushNamed(context, BillionairesDetailIndex.path,arguments: {"slug",item?.slug??""});
-              }
+              onTap:(){}
           );
         },
         separatorBuilder: (context, index) {

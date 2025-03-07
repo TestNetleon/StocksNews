@@ -99,7 +99,7 @@ class Cryptocurrencies extends StatelessWidget {
                   return MentionItem(
                     item: item,
                     onTap: () {
-                      Navigator.pushNamed(context, BillionairesDetailIndex.path,arguments: {"slug",item?.slug??""});
+                      Navigator.pushNamed(context, BillionairesDetailIndex.path,arguments: {'slug':item?.slug??""});
                     },
                   );
                 },

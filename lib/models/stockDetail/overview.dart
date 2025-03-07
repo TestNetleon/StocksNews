@@ -76,6 +76,7 @@ class SDStockScoreRes {
 class BaseKeyValueRes {
   final String? title;
   final String? subTitle;
+  final String? other;
   final dynamic value;
   final String? slug;
   final dynamic color;
@@ -92,6 +93,7 @@ class BaseKeyValueRes {
   BaseKeyValueRes({
     this.title,
     this.subTitle,
+    this.other,
     this.value,
     this.slug,
     this.color,
@@ -110,6 +112,7 @@ class BaseKeyValueRes {
       BaseKeyValueRes(
         title: json["title"],
         subTitle: json['sub_title'],
+        other: json['other'],
         value: json["value"],
         slug: json['slug'],
         color: json['color'],
@@ -127,6 +130,7 @@ class BaseKeyValueRes {
   Map<String, dynamic> toJson() => {
         "title": title,
         'sub_title': subTitle,
+        'other': other,
         "value": value,
         "slug": slug,
         "color": color,

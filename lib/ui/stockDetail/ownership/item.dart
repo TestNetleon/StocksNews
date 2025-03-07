@@ -48,7 +48,7 @@ class OwnershipHistoryItem extends StatelessWidget {
                         data.reportingDate ?? '-',
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
-                        style: styleBaseRegular(fontSize: 14),
+                        style: styleBaseRegular(fontSize: 12,color: ThemeColors.neutral40),
                       ),
                     ),
                   ],

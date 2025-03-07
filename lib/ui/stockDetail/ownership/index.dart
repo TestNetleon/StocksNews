@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/managers/stockDetail/stock.detail.dart';
+import 'package:stocks_news_new/models/faq.dart';
 import 'package:stocks_news_new/models/stockDetail/overview.dart';
+import 'package:stocks_news_new/ui/base/base_faq.dart';
 import 'package:stocks_news_new/ui/base/base_scroll.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/widgets/custom/base_loader_container.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 import '../../../models/stockDetail/ownership.dart';
 import '../../../utils/constants.dart';
@@ -22,6 +25,7 @@ class SDOwnership extends StatelessWidget {
     List<BaseKeyValueRes>? top = manager.dataOwnership?.top;
 
     OwnershipListRes? ownershipList = manager.dataOwnership?.ownershipList;
+    BaseFaqRes? faqs = manager.dataOwnership?.faq;
 
     return BaseLoaderContainer(
       hasData: manager.dataOwnership != null,
@@ -57,6 +61,7 @@ class SDOwnership extends StatelessWidget {
             ),
           ),
           OwnershipHistory(ownershipList: ownershipList),
+          BaseFaq(faqs:faqs),
         ],
       ),
     );

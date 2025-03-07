@@ -11,6 +11,7 @@ import 'package:stocks_news_new/ui/tabs/tools/simulator/managers/trade.dart';
 import 'package:stocks_news_new/ui/tabs/tools/simulator/screens/ConditionalOrder/show_conditional_sheet.dart';
 import 'package:stocks_news_new/ui/tabs/tools/simulator/screens/index.dart';
 import 'package:stocks_news_new/ui/tabs/tools/simulator/screens/tradeBuySell/text_field.dart';
+import 'package:stocks_news_new/ui/tabs/tools/simulator/screens/tradingWithTypes/order_info_sheet.dart';
 import 'package:stocks_news_new/ui/tabs/tools/simulator/screens/widget/s_top.dart';
 import 'package:stocks_news_new/ui/tabs/tools/simulator/services/sse.dart';
 import 'package:stocks_news_new/utils/colors.dart';
@@ -630,7 +631,7 @@ class _ContainerConditioalBuySellState
   }
 
   Future onTap({ConditionType? cType, StockType? selectedStock}) async {
-    // openInfoSheet(cType,selectedStock);
+     openInfoSheet(cType,selectedStock);
   }
 
   @override
@@ -657,6 +658,29 @@ class _ContainerConditioalBuySellState
               child: Column(
                 children: [
                   const STopWidget(),
+                  GestureDetector(
+                    onTap: (){
+                      onTap(cType: widget.conditionalType,selectedStock: _selectedStock);
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          widget.conditionalType == ConditionType.bracketOrder
+                              ? 'BRACKET ORDER': widget.conditionalType == ConditionType.limitOrder ?'LIMIT ORDER':
+                          widget.conditionalType == ConditionType.stopOrder ? "STOP ORDER":
+                          widget.conditionalType == ConditionType.stopLimitOrder?"STOP LIMIT ORDER":"TRAILING ORDER",
+                          style: stylePTSansBold(
+                            color: ThemeColors.splashBG,
+                            fontSize: 12,
+                          ),
+                        ),
+                        SpacerHorizontal(width: 5),
+                        Icon(Icons.info_sharp,color: ThemeColors.splashBG,size: 18)
+                      ],
+                    ),
+                  ),
+                  const SpacerVertical(height: 5),
                   const SpacerVertical(height: 5),
                   Container(
                     width: 110,
@@ -687,7 +711,7 @@ class _ContainerConditioalBuySellState
                   Visibility(child: const SpacerVertical(height: Pad.pad10)),
                   Text(
                     'Enter number of shares',
-                    style: styleGeorgiaRegular(color: ThemeColors.greyText),
+                    style: styleGeorgiaRegular(color: ThemeColors.neutral80,fontSize: 18),
                   ),
                   TextfieldTrade(
                     controller: controller,

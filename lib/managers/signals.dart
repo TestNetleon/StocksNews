@@ -645,4 +645,33 @@ class SignalsManager extends ChangeNotifier {
       setStatusPoliticianDetail(Status.loaded);
     }
   }
+
+  void updateTickerInfo({required String symbol, alertAdded, watchListAdded}) {
+    if (_signalSocksData?.data != null) {
+      final index =
+      _signalSocksData?.data?.indexWhere((element) => element.symbol == symbol);
+      if (index != null && index != -1) {
+        if (alertAdded != null) {
+          _signalSocksData?.data![index].isAlertAdded = alertAdded;
+        }
+        if (watchListAdded != null) {
+          _signalSocksData?.data![index].isWatchlistAdded = watchListAdded;
+        }
+        notifyListeners();
+      }
+    }
+    if (_signalSentimentData?.recentMentions?.data != null) {
+      final index =
+      _signalSentimentData?.recentMentions?.data?.indexWhere((element) => element.symbol == symbol);
+      if (index != null && index != -1) {
+        if (alertAdded != null) {
+          _signalSentimentData?.recentMentions?.data![index].isAlertAdded = alertAdded;
+        }
+        if (watchListAdded != null) {
+          _signalSentimentData?.recentMentions?.data![index].isWatchlistAdded = watchListAdded;
+        }
+        notifyListeners();
+      }
+    }
+  }
 }

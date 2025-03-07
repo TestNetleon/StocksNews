@@ -8,6 +8,7 @@ import 'package:stocks_news_new/api/apis.dart';
 import 'package:stocks_news_new/managers/market/market.dart';
 import 'package:stocks_news_new/models/lock.dart';
 import 'package:stocks_news_new/models/market/industries_res.dart';
+import 'package:stocks_news_new/models/market/sector_view_res.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/utils.dart';
@@ -27,8 +28,21 @@ class SectorsManager extends ChangeNotifier {
   int _page = 1;
   bool get canLoadMore => (_data?.totalPages ?? 0) >= _page;
 
+  SectorViewRes? _dataView;
+  SectorViewRes? get dataView => _dataView;
+
+  bool get canLoadMoreView => (_dataView?.totalPages ?? 0) >= _page;
+  Status _statusView = Status.ideal;
+  Status get statusView => _statusView;
+  bool get isLoadingView => _statusView == Status.loading || _statusView == Status.ideal;
+
   void setStatus(status) {
     _status = status;
+    notifyListeners();
+  }
+
+  void setStatusView(status) {
+    _statusView = status;
     notifyListeners();
   }
 
@@ -71,6 +85,43 @@ class SectorsManager extends ChangeNotifier {
       _data = null;
       _error = Const.errSomethingWrong;
       setStatus(Status.loaded);
+    }
+  }
+
+  Future getViewData(String slug,{loadMore = false}) async {
+    if (loadMore == false) {
+      _page = 1;
+    }
+    try {
+      _error = null;
+      setStatusView(loadMore ? Status.loadingMore : Status.loading);
+
+      final request = {"page": "$_page","slug":slug};
+
+      ApiResponse response = await apiRequest(
+        url: Apis.sectorsView,
+        request: request,
+      );
+      if (response.status) {
+        if (_page == 1) {
+          _dataView = sectorViewResFromJson(jsonEncode(response.data));
+          // _lockInformation = _data?.lockInfo;
+        } else {
+          _dataView!.data!.addAll(
+            sectorViewResFromJson(jsonEncode(response.data)).data!,
+          );
+        }
+        _page++;
+      } else {
+        _dataView = null;
+        _error = response.message;
+      }
+      setStatusView(Status.loaded);
+    } catch (e) {
+      Utils().showLog("Error => $e");
+      _dataView = null;
+      _error = Const.errSomethingWrong;
+      setStatusView(Status.loaded);
     }
   }
 

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/managers/stockDetail/stock.detail.dart';
+import 'package:stocks_news_new/models/faq.dart';
+import 'package:stocks_news_new/ui/base/base_faq.dart';
 import 'package:stocks_news_new/ui/base/base_scroll.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/custom/base_loader_container.dart';
@@ -16,10 +18,9 @@ class SDDividends extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SDManager manager = context.watch<SDManager>();
-
     List<BaseKeyValueRes>? top = manager.dataDividends?.top;
-
     DividendsRes? dividendHistory = manager.dataDividends?.dividendHistory;
+    BaseFaqRes? faqs = manager.dataDividends?.faq;
     // SDEarningHistoryRes? earningHistory = manager.dataEarnings?.earningHistory;
 
     return BaseLoaderContainer(
@@ -49,6 +50,9 @@ class SDDividends extends StatelessWidget {
             ),
           ),
           SDDividendsHistory(dividendHistory: dividendHistory),
+          BaseFaq(faqs:faqs),
+
+
           // SDDividendsHistory(earningHistory: earningHistory),
           // SDDividendsEstimates(epsEstimates: epsEstimates),
         ],

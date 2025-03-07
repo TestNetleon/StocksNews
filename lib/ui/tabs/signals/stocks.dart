@@ -43,6 +43,7 @@ class SignalStocksIndex extends StatelessWidget {
                     Navigator.pushNamed(context, SDIndex.path,
                         arguments: {'symbol': p0.symbol});
                   },
+                  manager: manager,
                 );
               },
               separatorBuilder: (context, index) {

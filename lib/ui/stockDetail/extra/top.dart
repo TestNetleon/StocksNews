@@ -60,6 +60,16 @@ class SDTopCards extends StatelessWidget {
               ),
             ),
           ),
+          Visibility(
+            visible: top.other != null && top.other != '',
+            child: Text(
+              top.other ?? "N/A",
+              style: styleBaseRegular(
+                fontSize: 13,
+                color: subTitleColor ?? ThemeColors.neutral40,
+              ),
+            ),
+          ),
         ],
       ),
     );

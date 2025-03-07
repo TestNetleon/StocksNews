@@ -128,10 +128,19 @@ class ThemeColors {
   static const neutral8 = Color(0xFF34373C);
   static const neutral9 = Color(0xFFF9FDFB);
 
+
+  // Category
+
+  static const category100 = Color(0xFF2784E1);
+
+
+
   //OTHER
   static const black = Color(0xFF282B41);
   static const white = Color(0xFFFFFFFF);
   static const splashBG = Color(0xFF012054);
+  static const colour66 = Color(0xFF666666);
+  static const colourBA = Color(0xFFBABABA);
 
   //CATEGORY
   static const lightGrey = Color(0xFFF0F2F6);

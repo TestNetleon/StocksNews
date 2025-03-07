@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/managers/signals.dart';
 import 'package:stocks_news_new/ui/base/heading.dart';
+import 'package:stocks_news_new/ui/stockDetail/index.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import '../../../../models/signals/sentiment.dart';
 import '../../../../models/ticker.dart';
@@ -48,6 +49,11 @@ class SignalRecentMentions extends StatelessWidget {
             return BaseStockAddItem(
               data: data,
               index: index,
+              manager: manager,
+              onTap: (p0) {
+                Navigator.pushNamed(context, SDIndex.path,
+                    arguments: {'symbol': p0.symbol});
+              },
             );
           },
           separatorBuilder: (context, index) {

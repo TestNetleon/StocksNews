@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/managers/stockDetail/stock.detail.dart';
 import 'package:stocks_news_new/ui/base/base_list_divider.dart';
 import 'package:stocks_news_new/ui/base/stock/add.dart';
+import 'package:stocks_news_new/ui/stockDetail/index.dart';
 import 'package:stocks_news_new/widgets/custom/base_loader_container.dart';
 import 'package:stocks_news_new/widgets/custom/refresh_indicator.dart';
 import '../../../models/ticker.dart';
@@ -33,10 +34,11 @@ class SDCompetitors extends StatelessWidget {
             return BaseStockAddItem(
               data: data,
               index: index,
-              // onTap: (p0) {
-              //   Navigator.pushNamed(context, SDIndex.path,
-              //       arguments: {'symbol': p0.symbol});
-              // },
+              onTap: (p0) {
+                Navigator.popUntil(context, (route) => route.isFirst);
+                Navigator.pushNamed(context, SDIndex.path,
+                    arguments: {'symbol': p0.symbol});
+              },
               slidable: false,
             );
           },

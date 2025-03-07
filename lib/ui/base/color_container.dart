@@ -7,12 +7,15 @@ class BaseColorContainer extends StatelessWidget {
   final EdgeInsetsGeometry? padding;
   final void Function()? onTap;
   final Color? bgColor;
+  final double? radius;
+
   const BaseColorContainer({
     super.key,
     this.child,
     this.padding,
     this.onTap,
     this.bgColor,
+    this.radius,
   });
 
   @override
@@ -23,7 +26,7 @@ class BaseColorContainer extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           color: bgColor??ThemeColors.secondary100,
-          borderRadius: BorderRadius.circular(Pad.pad8),
+          borderRadius: BorderRadius.circular(radius??Pad.pad8),
         ),
         padding: padding??EdgeInsets.all(Pad.pad16),
         child: child,

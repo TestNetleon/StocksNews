@@ -79,7 +79,7 @@ class MoreIndex extends StatelessWidget {
 
                   SpacerVertical(height: Pad.pad8),
                   Text(
-                    user?.name ?? 'User',
+                    user?.name ?? 'Welcome Guest',
                     style: styleBaseBold(fontSize: 25, height: 1.5),
                   ),
                   // SpacerVertical(height: Pad.pad5),

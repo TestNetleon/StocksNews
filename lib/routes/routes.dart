@@ -5,6 +5,7 @@ import 'package:stocks_news_new/managers/billionaires.dart';
 import 'package:stocks_news_new/managers/blogs.dart';
 import 'package:stocks_news_new/managers/faq.dart';
 import 'package:stocks_news_new/managers/feedback.dart';
+import 'package:stocks_news_new/managers/global.dart';
 import 'package:stocks_news_new/managers/helpdesk.dart';
 import 'package:stocks_news_new/managers/home.dart';
 import 'package:stocks_news_new/managers/legal.dart';
@@ -137,6 +138,8 @@ import 'package:stocks_news_new/screens/tabs/compareStocks/compare_stocks.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/plaid/portfolio/index.dart';
 import 'package:stocks_news_new/screens/tabs/news/newsDetail/new_detail.dart';
 import 'package:stocks_news_new/screens/trendingIndustries/index.dart';
+import 'package:stocks_news_new/ui/tabs/market/industries/industries_view.dart';
+import 'package:stocks_news_new/ui/tabs/market/sectors/sector_view.dart';
 
 import 'package:stocks_news_new/ui/tabs/more/alerts/index.dart';
 import 'package:stocks_news_new/ui/tabs/more/billionaires/billionaires_index.dart';
@@ -441,6 +444,26 @@ class Routes {
           },
         );
 
+      case IndustriesViewIndex.path:
+        return MaterialPageRoute(
+          builder: (context) {
+            final arguments = settings.arguments as Map<String, dynamic>?;
+            String slug = arguments?['slug'];
+
+            return IndustriesViewIndex(slug: slug);
+          },
+        );
+      case SectorViewIndex.path:
+        return MaterialPageRoute(
+          builder: (context) {
+            final arguments = settings.arguments as Map<String, dynamic>?;
+            String slug = arguments?['slug'];
+
+            return SectorViewIndex(slug: slug);
+          },
+        );
+
+
       case BlogsDetailIndex.path:
         return MaterialPageRoute(
           builder: (context) {
@@ -489,7 +512,6 @@ class Routes {
             return AIindex(symbol: symbol);
           },
         );
-
       case ScannerIndex.path:
         return MaterialPageRoute(
           builder: (context) {
@@ -499,7 +521,6 @@ class Routes {
             return ScannerIndex(index: index);
           },
         );
-
       default:
     }
 
@@ -705,6 +726,7 @@ class Routes {
       ChangeNotifierProvider(create: (_) => FeedbackManager()),
       ChangeNotifierProvider(create: (_) => BillionairesManager()),
       ChangeNotifierProvider(create: (_) => ScannerManager()),
+      ChangeNotifierProvider(create: (_) => GlobalManager()),
 
       // MARKET DATA Start ---------------
       ChangeNotifierProvider(create: (_) => MarketManager()),
