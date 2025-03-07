@@ -127,6 +127,13 @@ class MoreIndex extends StatelessWidget {
                 manager.navigateToBillionaires();
               },
             ),
+            MoreItem(
+              icon: Images.moreMySubscription,
+              label: "Refer a Friend",
+              onTap: () {
+                manager.navigateToReferral();
+              },
+            ),
             BaseHeading(
               margin: EdgeInsets.only(left: Pad.pad16, top: Pad.pad20),
               title: "Resources",

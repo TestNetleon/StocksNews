@@ -40,7 +40,8 @@ dependencies:
   flutter_dash: ^1.0.0
   validators: ^3.0.0
   http: ^1.2.2
-  intl: ^0.18.1 
+  # intl: ^0.18.1 
+  intl: ^0.20.2 
   pull_to_refresh: ^2.0.0
   url_launcher: ^6.3.1
   provider: ^6.1.2
@@ -120,6 +121,7 @@ dependencies:
   infinite_scroll_pagination: ^4.1.0
   flutter_xlider: ^3.5.0
   syncfusion_flutter_sliders: ^28.2.9
+  table_calendar: ^3.2.0
 
 
 dev_dependencies:

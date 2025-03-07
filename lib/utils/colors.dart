@@ -135,6 +135,7 @@ class ThemeColors {
 
   //CATEGORY
   static const lightGrey = Color(0xFFF0F2F6);
+  static const gray2 = Color(0xFFAEAEB2);
 
   //FEEDBACK
   static const success120 = Color(0xFF0AA870);

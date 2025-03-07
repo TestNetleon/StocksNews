@@ -26,6 +26,7 @@ import 'package:stocks_news_new/ui/tabs/more/feedback/index.dart';
 import 'package:stocks_news_new/ui/tabs/more/helpdesk/front/index.dart';
 import 'package:stocks_news_new/ui/tabs/more/news/index.dart';
 import 'package:stocks_news_new/ui/tabs/more/notificationSettings/index.dart';
+import 'package:stocks_news_new/ui/tabs/more/referral/index.dart';
 import 'package:stocks_news_new/ui/tabs/more/watchlist/index.dart';
 import 'package:stocks_news_new/ui/tabs/tabs.dart';
 import 'package:stocks_news_new/utils/utils.dart';
@@ -119,6 +120,17 @@ class UserManager extends ChangeNotifier {
     manager.startProcess();
   }
 
+  void navigateToReferral() async {
+    await askLoginScreen();
+    if (_user == null) {
+      return;
+    }
+    await Navigator.pushNamed(
+      navigatorKey.currentContext!,
+      ReferralIndex.path,
+    );
+  }
+
   void navigateToBillionaires() async {
     await askLoginScreen();
     if (_user == null) {
@@ -144,19 +156,17 @@ class UserManager extends ChangeNotifier {
     Navigator.pushNamed(navigatorKey.currentContext!, FaqIndex.path);
   }
 
-  Future navigateToHelpDesk() async{
+  Future navigateToHelpDesk() async {
     askLoginScreen();
     if (_user == null) return;
     Navigator.pushNamed(navigatorKey.currentContext!, HelpDeskIndex.path);
-
   }
 
-  Future navigateToFeedback() async{
+  Future navigateToFeedback() async {
     askLoginScreen();
     if (_user == null) return;
 
     Navigator.pushNamed(navigatorKey.currentContext!, FeedbackIndex.path);
-
   }
 
 //MARK: Phone Login

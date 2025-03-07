@@ -86,7 +86,7 @@ class _CommonTabsState extends State<BaseTabs>
                                 color: ThemeColors.neutral20,
                                 fontSize: widget.fontSize ?? 16,
                               ),
-                    leadingIcon: e.icon,
+                    // leadingIcon: e?.icon,
                   );
                 })).toList(),
                 // labelStyle: widget.textStyle ?? styleBaseBold(),

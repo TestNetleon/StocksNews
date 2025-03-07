@@ -12,7 +12,11 @@ import '../tabs/more/news/detail.dart';
 import 'search/base_search.dart';
 
 class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
-  final bool isHome, showBack, showSearch, showNotification;
+  final bool isHome,
+      showBack,
+      showSearch,
+      showNotification,
+      showActionNotification;
   final Widget? searchFieldWidget;
   final bool showClose;
   final String? title;
@@ -31,6 +35,7 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.title,
     this.showSearch = false,
     this.showNotification = false,
+    this.showActionNotification = false,
     this.onSaveClick,
     this.shareURL,
     this.showClose = false,
@@ -85,6 +90,8 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
                   // Actions
                   Row(
                     children: [
+                      if (showActionNotification)
+                        LeadingNotification(showIndicator: true),
                       if (showSearch)
                         ActionButton(
                           icon: Images.search,
