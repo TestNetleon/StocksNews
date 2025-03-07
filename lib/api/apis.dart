@@ -171,7 +171,7 @@ class Apis {
   static const aiPV = "/ai-analysis/post-volume";
 
   //Scanner
-  static const stockScannerPort = '/stockScannerPort';
+  static const stockScannerPort = '/stock-scanner';
 
 //----------------------------------------------
 //----------------------------------------------

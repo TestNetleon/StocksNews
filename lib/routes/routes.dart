@@ -155,6 +155,8 @@ import 'package:stocks_news_new/ui/tabs/more/referral/index.dart';
 import 'package:stocks_news_new/ui/tabs/more/referral/pointsTransaction/index.dart';
 import 'package:stocks_news_new/ui/tabs/more/watchlist/index.dart';
 import 'package:stocks_news_new/ui/tabs/tools/compareStocks/compare.dart';
+import 'package:stocks_news_new/ui/tabs/tools/scanner/manager/gainers.dart';
+import 'package:stocks_news_new/ui/tabs/tools/scanner/manager/losers.dart';
 import 'package:stocks_news_new/ui/tabs/tools/simulator/managers/portpolio.dart';
 import 'package:stocks_news_new/ui/tabs/tools/simulator/managers/s_open.dart';
 import 'package:stocks_news_new/ui/tabs/tools/simulator/managers/s_pending.dart';
@@ -496,20 +498,19 @@ class Routes {
           },
         );
 
-      case ScannerIndex.path:
+      case ToolsScannerIndex.path:
         return MaterialPageRoute(
           builder: (context) {
             final arguments = settings.arguments as Map<String, dynamic>?;
             int? index = arguments?['index'];
 
-            return ScannerIndex(index: index);
+            return ToolsScannerIndex(index: index);
           },
         );
       case ReferPointsTransaction.path:
         return MaterialPageRoute(
           builder: (context) {
             final arguments = settings.arguments as Map<String, dynamic>?;
-
             return ReferPointsTransaction(
               type: arguments?['type'],
               title: arguments?['title'],
@@ -721,10 +722,15 @@ class Routes {
       ChangeNotifierProvider(create: (_) => TickerSearchManager()),
       ChangeNotifierProvider(create: (_) => FeedbackManager()),
       ChangeNotifierProvider(create: (_) => BillionairesManager()),
-      ChangeNotifierProvider(create: (_) => ScannerManager()),
       ChangeNotifierProvider(create: (_) => ReferralManager()),
       ChangeNotifierProvider(create: (_) => ReferralPointsManager()),
       ChangeNotifierProvider(create: (_) => LeaderBoardManager()),
+
+      //SCANNER Start---------------
+      ChangeNotifierProvider(create: (_) => ScannerManager()),
+      ChangeNotifierProvider(create: (_) => ScannerGainersManager()),
+      ChangeNotifierProvider(create: (_) => ScannerLosersManager()),
+      //SCANNER End---------------
 
       // MARKET DATA Start ---------------
       ChangeNotifierProvider(create: (_) => MarketManager()),
