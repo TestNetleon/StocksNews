@@ -47,6 +47,11 @@ class Apis {
   static const feedback = "/feedback";
   static const shareFeedback = "/share-feedback";
 
+  // Referral
+  static const referral = "/referrals/list";
+  static const referralTransaction = "/referrals/txn-report";
+  static const leaderboard = "/referrals/leaderboard";
+
   //MARK: Crypto API
   static const cryptoTabs = "/crypto/tab";
   static const cryptoHome = "/crypto/home";
@@ -168,7 +173,7 @@ class Apis {
   static const aiPV = "/ai-analysis/post-volume";
 
   //Scanner
-  static const stockScannerPort = '/stockScannerPort';
+  static const stockScannerPort = '/stock-scanner';
 
 //----------------------------------------------
 //----------------------------------------------

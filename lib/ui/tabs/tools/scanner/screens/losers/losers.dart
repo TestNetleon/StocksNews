@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:stocks_news_new/ui/tabs/tools/scanner/manager/gainers.dart';
-import 'package:stocks_news_new/ui/tabs/tools/scanner/models/offline.dart';
+import 'package:stocks_news_new/ui/tabs/tools/scanner/manager/losers.dart';
 import 'package:stocks_news_new/widgets/loading.dart';
 
 import '../../models/live.dart';
+import '../../models/offline.dart';
 import '../extra/container.dart';
 
-class ScannerGainersIndex extends StatelessWidget {
-  const ScannerGainersIndex({super.key});
+class ScannerLosersIndex extends StatelessWidget {
+  const ScannerLosersIndex({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<ScannerGainersManager>(
+    return Consumer<ScannerLosersManager>(
       builder: (context, manager, child) {
         if (manager.dataList != null) {
           List<LiveScannerRes>? list = manager.dataList;

@@ -3,24 +3,28 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/models/market/market_res.dart';
 import 'package:stocks_news_new/ui/base/app_bar.dart';
 import 'package:stocks_news_new/ui/base/scaffold.dart';
+import 'package:stocks_news_new/ui/tabs/tools/scanner/manager/gainers.dart';
+import 'package:stocks_news_new/ui/tabs/tools/scanner/manager/losers.dart';
 import 'package:stocks_news_new/ui/tabs/tools/scanner/manager/scanner.dart';
+import 'package:stocks_news_new/ui/tabs/tools/scanner/screens/losers/losers.dart';
 import 'package:stocks_news_new/widgets/custom/base_loader_container.dart';
 
 import '../../../base/common_tab.dart';
+import 'screens/extra/header.dart';
+import 'screens/extra/sub_tabs.dart';
 import 'screens/gainers/gainers.dart';
+import 'screens/scanner/scanner.dart';
 
-class ScannerIndex extends StatefulWidget {
+class ToolsScannerIndex extends StatefulWidget {
   final int? index;
-  static const path = 'ScannerIndex';
-  const ScannerIndex({super.key, this.index = 1});
+  static const path = 'ToolsScannerIndex';
+  const ToolsScannerIndex({super.key, this.index = 1});
 
   @override
-  State<ScannerIndex> createState() => _ScannerIndexState();
+  State<ToolsScannerIndex> createState() => _ToolsScannerIndexState();
 }
 
-class _ScannerIndexState extends State<ScannerIndex> {
-  int selectedIndex = 1;
-
+class _ToolsScannerIndexState extends State<ToolsScannerIndex> {
   List<MarketResData> tabs = [
     MarketResData(title: 'SCANNER', slug: 'slug'),
     MarketResData(title: 'GAINERS', slug: 'gainers'),
@@ -30,38 +34,55 @@ class _ScannerIndexState extends State<ScannerIndex> {
   @override
   void initState() {
     super.initState();
-    selectedIndex = widget.index ?? 1;
     setState(() {});
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      context.read<ScannerManager>().getScannerPorts();
+      context.read<ScannerManager>().getScannerPorts(reset: true);
     });
   }
 
   @override
   Widget build(BuildContext context) {
     ScannerManager manager = context.watch<ScannerManager>();
-    return BaseScaffold(
-      appBar: BaseAppBar(
-        showBack: true,
-      ),
-      body: BaseLoaderContainer(
-        hasData: manager.port != null,
-        isLoading: manager.isLoading,
-        error: manager.error,
-        showPreparingText: true,
-        child: Column(
-          children: [
-            BaseTabs(
-              selectedIndex: selectedIndex,
-              data: tabs,
-              isScrollable: false,
-              onTap: (index) {},
-            ),
-            if (selectedIndex == 0) Container(),
-            if (selectedIndex == 1) ScannerGainersIndex(),
-            if (selectedIndex == 2) Container(),
-          ],
+    bool startStream =
+        manager.portData?.port?.checkMarketOpenApi?.startStreaming == true;
+    return PopScope(
+      onPopInvokedWithResult: (didPop, result) {
+        ScannerGainersManager gainersManager =
+            context.read<ScannerGainersManager>();
+        ScannerLosersManager losersManager =
+            context.read<ScannerLosersManager>();
+
+        manager.stopListeningPorts();
+        gainersManager.stopListeningPorts();
+        losersManager.stopListeningPorts();
+      },
+      child: BaseScaffold(
+        appBar: BaseAppBar(
+          showBack: true,
+        ),
+        body: BaseLoaderContainer(
+          hasData: manager.portData?.port != null,
+          isLoading: manager.isLoadingPort && manager.portData == null,
+          error: manager.errorPort,
+          showPreparingText: true,
+          child: Column(
+            children: [
+              BaseTabs(
+                selectedIndex: 1,
+                data: tabs,
+                isScrollable: false,
+                onTap: manager.onTabChange,
+              ),
+              MarketScannerHeader(
+                  key: ValueKey(manager.selectedSubIndex),
+                  isOnline: startStream),
+              if (manager.selectedIndex != 0) ScannerSubHeaderTab(),
+              if (manager.selectedIndex == 0) ScannerIndex(),
+              if (manager.selectedIndex == 1) ScannerGainersIndex(),
+              if (manager.selectedIndex == 2) ScannerLosersIndex(),
+            ],
+          ),
         ),
       ),
     );

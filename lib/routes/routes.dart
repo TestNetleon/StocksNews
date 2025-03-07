@@ -44,6 +44,9 @@ import 'package:stocks_news_new/managers/market/stocks/gainer&losers/todays_brea
 import 'package:stocks_news_new/managers/market/stocks/gainer&losers/todays_gainer.dart';
 import 'package:stocks_news_new/managers/market/stocks/gainer&losers/todays_losers.dart';
 import 'package:stocks_news_new/managers/notification/most_bullish.dart';
+import 'package:stocks_news_new/managers/referral/leader_board_manager.dart';
+import 'package:stocks_news_new/managers/referral/referral_manager.dart';
+import 'package:stocks_news_new/managers/referral/referral_points_manager.dart';
 import 'package:stocks_news_new/managers/watchlist.dart';
 
 import 'package:stocks_news_new/providers/ad_provider.dart';
@@ -151,8 +154,12 @@ import 'package:stocks_news_new/ui/tabs/more/helpdesk/front/index.dart';
 import 'package:stocks_news_new/ui/tabs/more/helpdesk/listing/index.dart';
 import 'package:stocks_news_new/ui/tabs/more/helpdesk/tickets/index.dart';
 import 'package:stocks_news_new/ui/tabs/more/notificationSettings/index.dart';
+import 'package:stocks_news_new/ui/tabs/more/referral/index.dart';
+import 'package:stocks_news_new/ui/tabs/more/referral/pointsTransaction/index.dart';
 import 'package:stocks_news_new/ui/tabs/more/watchlist/index.dart';
 import 'package:stocks_news_new/ui/tabs/tools/compareStocks/compare.dart';
+import 'package:stocks_news_new/ui/tabs/tools/scanner/manager/gainers.dart';
+import 'package:stocks_news_new/ui/tabs/tools/scanner/manager/losers.dart';
 import 'package:stocks_news_new/ui/tabs/tools/simulator/managers/portpolio.dart';
 import 'package:stocks_news_new/ui/tabs/tools/simulator/managers/s_open.dart';
 import 'package:stocks_news_new/ui/tabs/tools/simulator/managers/s_pending.dart';
@@ -243,6 +250,7 @@ class Routes {
     RequestNewIndex.path: (_) => const RequestNewIndex(),
     FeedbackIndex.path: (_) => const FeedbackIndex(),
     BillionairesIndex.path: (_) => const BillionairesIndex(),
+    ReferralIndex.path: (_) => const ReferralIndex(),
 
     //--------------------------------------
 
@@ -512,13 +520,24 @@ class Routes {
             return AIindex(symbol: symbol);
           },
         );
-      case ScannerIndex.path:
+
+      case ToolsScannerIndex.path:
         return MaterialPageRoute(
           builder: (context) {
             final arguments = settings.arguments as Map<String, dynamic>?;
             int? index = arguments?['index'];
 
-            return ScannerIndex(index: index);
+            return ToolsScannerIndex(index: index);
+          },
+        );
+      case ReferPointsTransaction.path:
+        return MaterialPageRoute(
+          builder: (context) {
+            final arguments = settings.arguments as Map<String, dynamic>?;
+            return ReferPointsTransaction(
+              type: arguments?['type'],
+              title: arguments?['title'],
+            );
           },
         );
       default:
@@ -725,8 +744,16 @@ class Routes {
       ChangeNotifierProvider(create: (_) => TickerSearchManager()),
       ChangeNotifierProvider(create: (_) => FeedbackManager()),
       ChangeNotifierProvider(create: (_) => BillionairesManager()),
+      ChangeNotifierProvider(create: (_) => ReferralManager()),
+      ChangeNotifierProvider(create: (_) => ReferralPointsManager()),
+      ChangeNotifierProvider(create: (_) => LeaderBoardManager()),
+
+      //SCANNER Start---------------
       ChangeNotifierProvider(create: (_) => ScannerManager()),
       ChangeNotifierProvider(create: (_) => GlobalManager()),
+      ChangeNotifierProvider(create: (_) => ScannerGainersManager()),
+      ChangeNotifierProvider(create: (_) => ScannerLosersManager()),
+      //SCANNER End---------------
 
       // MARKET DATA Start ---------------
       ChangeNotifierProvider(create: (_) => MarketManager()),
@@ -762,7 +789,6 @@ class Routes {
       ChangeNotifierProvider(create: (_) => EarningsManager()),
       ChangeNotifierProvider(create: (_) => IndustriesManager()),
       ChangeNotifierProvider(create: (_) => SectorsManager()),
-
       // MARKET DATA End ---------------
     ];
   }

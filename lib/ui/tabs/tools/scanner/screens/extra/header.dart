@@ -1,12 +1,14 @@
 import 'dart:async';
-
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/ui/tabs/tools/scanner/manager/scanner.dart';
 import 'package:stocks_news_new/utils/colors.dart';
+import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:timezone/timezone.dart' as tz;
 import 'package:timezone/data/latest_all.dart' as tz;
 
@@ -33,10 +35,7 @@ class _MarketScannerHeaderState extends State<MarketScannerHeader> {
       if (widget.isOnline) {
         tz.initializeTimeZones();
         _timer = Timer.periodic(Duration(seconds: 1), (_) {
-          // Initialize timezone data
-          // Get New York timezone
           var newYork = tz.getLocation('America/New_York');
-          // Get current time in New York timezone
           var nowInNewYork = tz.TZDateTime.now(newYork);
           setState(() {
             _lastUpdated =
@@ -45,7 +44,9 @@ class _MarketScannerHeaderState extends State<MarketScannerHeader> {
         });
       } else {
         ScannerManager manager = context.read<ScannerManager>();
-        _lastUpdated = manager.port?.port?.checkMarketOpenApi?.dateTime ?? "";
+        String date = _formatForOfflineData(
+            manager.portData?.port?.checkMarketOpenApi?.dateTime);
+        _lastUpdated = date;
         setState(() {});
       }
     });
@@ -60,8 +61,8 @@ class _MarketScannerHeaderState extends State<MarketScannerHeader> {
   @override
   Widget build(BuildContext context) {
     ScannerManager manager = context.watch<ScannerManager>();
-    CheckMarketOpenApiRes? checkMarketOpenApi =
-        manager.port?.port?.checkMarketOpenApi;
+    CheckMarketOpenRes? checkMarketOpenApi =
+        manager.portData?.port?.checkMarketOpenApi;
 
     String marketStatus = "";
     if (checkMarketOpenApi?.isMarketOpen == true) {
@@ -72,39 +73,84 @@ class _MarketScannerHeaderState extends State<MarketScannerHeader> {
       marketStatus = "Post Market";
     }
 
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return Column(
       children: [
-        Flexible(
-          child: Column(
+        Container(
+          margin:
+              EdgeInsets.symmetric(horizontal: Pad.pad16, vertical: Pad.pad10),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                'Market Status',
-                style: styleBaseSemiBold(color: ThemeColors.neutral20),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Market Status',
+                    style: styleBaseRegular(
+                      color: ThemeColors.neutral20,
+                      fontSize: 13,
+                    ),
+                  ),
+                  SpacerVertical(height: 3),
+                  Text(
+                    marketStatus,
+                    style: styleBaseSemiBold(fontSize: 14),
+                  ),
+                ],
               ),
-              Text(
-                marketStatus,
-                style: styleBaseBold(),
+              SpacerHorizontal(width: 20),
+              Flexible(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Text(
+                      'Last Updated',
+                      style: styleBaseRegular(
+                        color: ThemeColors.neutral20,
+                        fontSize: 13,
+                      ),
+                    ),
+                    SpacerVertical(height: 3),
+                    Text(
+                      _lastUpdated,
+                      style: styleBaseSemiBold(fontSize: 14),
+                    ),
+                  ],
+                ),
               ),
             ],
           ),
         ),
-        SpacerHorizontal(width: 20),
-        Flexible(
-          child: Column(
-            children: [
-              Text(
-                'Last Updated',
-                style: styleBaseSemiBold(color: ThemeColors.neutral20),
-              ),
-              Text(
-                _lastUpdated,
-                style: styleBaseBold(),
-              ),
-            ],
-          ),
+        Divider(
+          color: ThemeColors.neutral5,
+          height: 0,
+          thickness: 1,
         ),
       ],
     );
+  }
+
+  String _formatForOfflineData(String? dateTime) {
+    if (dateTime == null || !dateTime.contains(" ")) {
+      return dateTime ?? '';
+    }
+    try {
+      List<String> parts = dateTime.split(" ");
+      String datePart = parts[0];
+      String timePart = parts[1];
+
+      final inputFormat = DateFormat("HH:mm:ss");
+      final parsedTime = inputFormat.parse(timePart);
+
+      final outputFormat = DateFormat("hh:mm:ss a");
+      String formattedTime = outputFormat.format(parsedTime);
+
+      return "$datePart $formattedTime";
+    } catch (e) {
+      if (kDebugMode) {
+        print("Error formatting time: $e");
+      }
+      return dateTime;
+    }
   }
 }

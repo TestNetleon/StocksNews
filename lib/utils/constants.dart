@@ -234,6 +234,7 @@ class Images {
   static const String btc = '${base}btc.png';
   static const String starSelected = '${base}star_selected.png';
   static const String starUnselected = '${base}star_unselected.png';
+  static const String copy = '${base}copy.png';
   static const String ic_fav = '${base}ic_fav.png';
 
   //-------------------------------------------------------------------------------
