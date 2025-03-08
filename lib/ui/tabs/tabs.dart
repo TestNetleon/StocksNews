@@ -34,13 +34,15 @@ class Tabs extends StatefulWidget {
   final int? index;
   final String? inAppMsgId;
 
-  final int trendingIndex;
+  final int childIndex;
+  // final int trendingIndex;
 
   const Tabs({
     super.key,
     this.index = 0,
     this.inAppMsgId,
-    this.trendingIndex = 0,
+    this.childIndex = 0,
+    // this.trendingIndex = 0,
   });
 
   @override
@@ -143,7 +145,8 @@ class _TabsState extends State<Tabs> {
       // ),
       // drawer: const BaseDrawer(),
       // body: Screens.screens(widget.trendingIndex).elementAt(_selectedIndex),
-      body: Screens.screens(_selectedIndex).elementAt(_selectedIndex),
+      body: Screens.screens(_selectedIndex, widget.childIndex)
+          .elementAt(_selectedIndex),
       bottomNavigationBar: BottomNavigationBar(
         unselectedItemColor: ThemeColors.neutral60,
         selectedItemColor: ThemeColors.black,
@@ -284,10 +287,13 @@ void _compareStocks(BuildContext context) {
 }
 
 class Screens {
-  static List<Widget> screens(int? trendingIndex) {
+  static List<Widget> screens(int? trendingIndex, int? childIndex) {
     return <Widget>[
       HomeIndex(),
-      MarketIndex(),
+      MarketIndex(
+        screenIndex: 0,
+        marketIndex: childIndex ?? 0,
+      ),
       SignalsIndex(),
       ToolsIndex(),
       MoreIndex(),
