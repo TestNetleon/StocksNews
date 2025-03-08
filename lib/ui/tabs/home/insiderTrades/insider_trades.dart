@@ -27,7 +27,7 @@ class HomeInsiderTradesIndex extends StatelessWidget {
         HomeLock(
           setNum: 1,
           lockInfo: insiderData?.lockInfo,
-          child: SingleChildScrollView(
+          childWidget: SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: IntrinsicWidth(
               child: Row(

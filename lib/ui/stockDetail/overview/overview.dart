@@ -108,7 +108,19 @@ class SDOverview extends StatelessWidget {
                   });
                 },
               ),
-              AIChart(aiAnalysis: aiAnalysis),
+              Stack(
+                children: [
+                  AIChart(aiAnalysis: aiAnalysis),
+                  Positioned(
+                    top: 0,
+                    right: 0,
+                    left: 0,
+                    bottom: 0,
+                    child:
+                        Container(color: Colors.white.withValues(alpha: 0.87)),
+                  ),
+                ],
+              ),
             ],
           ),
           SDStocksScore(stockScore: stockScore),

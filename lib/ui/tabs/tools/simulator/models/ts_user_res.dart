@@ -41,32 +41,40 @@
 
 import 'dart:convert';
 
+import '../../../../../models/lock.dart';
+
 TsUserRes tsUserResFromJson(String str) => TsUserRes.fromJson(json.decode(str));
 
 String tsUserResToJson(TsUserRes data) => json.encode(data.toMap());
 
-
 class TsUserRes {
   final TsUserDataRes? userDataRes;
   final DateTime? reponseTime;
-
+  final BaseLockInfoRes? lockInfo;
 
   TsUserRes({
     this.userDataRes,
     this.reponseTime,
+    this.lockInfo,
   });
 
   factory TsUserRes.fromJson(Map<String, dynamic> json) => TsUserRes(
-    userDataRes: json["data"] == null ? null : TsUserDataRes.fromJson(json["data"]),
-    reponseTime: json["reponse_time"] == null ? null : DateTime.parse(json["reponse_time"]),
-  );
+        lockInfo: json["lock_info"] == null
+            ? null
+            : BaseLockInfoRes.fromJson(json["lock_info"]),
+        userDataRes:
+            json["data"] == null ? null : TsUserDataRes.fromJson(json["data"]),
+        reponseTime: json["reponse_time"] == null
+            ? null
+            : DateTime.parse(json["reponse_time"]),
+      );
 
   Map<String, dynamic> toMap() => {
-    "data": userDataRes?.toJson(),
-    "reponse_time": reponseTime?.toIso8601String(),
-  };
+        "lock_info": lockInfo?.toJson(),
+        "data": userDataRes?.toJson(),
+        "reponse_time": reponseTime?.toIso8601String(),
+      };
 }
-
 
 class TsUserDataRes {
   final int? mssqlId;
@@ -99,7 +107,7 @@ class TsUserDataRes {
   });
 
   factory TsUserDataRes.fromJson(Map<String, dynamic> json) => TsUserDataRes(
-    mssqlId: json["mssql_id"],
+        mssqlId: json["mssql_id"],
         tradeBalance: json["trade_balance"],
         investedAmount: json['invested_amount'],
         marketValue: json['market_value'],
@@ -115,10 +123,11 @@ class TsUserDataRes {
         ordersSubTitle: json["orders_sub_title"] == null
             ? null
             : OrdersSubTitle.fromJson(json["orders_sub_title"]),
-    labelInfoStrings: json["label_info_strings"] == null ? null : LabelInfoStrings.fromMap(json["label_info_strings"]),
-    executable: json['is_trade_executable'],
-
-  );
+        labelInfoStrings: json["label_info_strings"] == null
+            ? null
+            : LabelInfoStrings.fromMap(json["label_info_strings"]),
+        executable: json['is_trade_executable'],
+      );
 
   Map<String, dynamic> toJson() => {
         "mssql_id": mssqlId,
@@ -131,10 +140,9 @@ class TsUserDataRes {
         "user_conditional_order_permission":
             userConditionalOrderPermission?.toMap(),
         "orders_sub_title": ordersSubTitle?.toJson(),
-    "label_info_strings": labelInfoStrings?.toMap(),
-    'is_trade_executable': executable,
-
-  };
+        "label_info_strings": labelInfoStrings?.toMap(),
+        'is_trade_executable': executable,
+      };
 }
 
 class UserConditionalOrderPermissionRes {
@@ -206,11 +214,11 @@ class OrdersSubTitle {
         shortOrder: json["short_order"],
         buyToCoverOrder: json["buy_to_cover_order"],
         bracketOrder: json["bracket_order"],
-    limitOrder: json["limit_order"],
-    stopOrder: json["stop_order"],
-    stopLimitOrder: json["stop_limit_order"],
-    trailingOrder: json["trailing_order"],
-    recurringOrder: json["recurring_order"],
+        limitOrder: json["limit_order"],
+        stopOrder: json["stop_order"],
+        stopLimitOrder: json["stop_limit_order"],
+        trailingOrder: json["trailing_order"],
+        recurringOrder: json["recurring_order"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -239,19 +247,22 @@ class LabelInfoStrings {
     this.buyToCover,
   });
 
-  factory LabelInfoStrings.fromMap(Map<String, dynamic> json) => LabelInfoStrings(
-    buy: json["buy"] == null ? null : Buy.fromMap(json["buy"]),
-    sell: json["sell"] == null ? null : Buy.fromMap(json["sell"]),
-    short: json["short"] == null ? null : Buy.fromMap(json["short"]),
-    buyToCover: json["buy_to_cover"] == null ? null : Buy.fromMap(json["buy_to_cover"]),
-  );
+  factory LabelInfoStrings.fromMap(Map<String, dynamic> json) =>
+      LabelInfoStrings(
+        buy: json["buy"] == null ? null : Buy.fromMap(json["buy"]),
+        sell: json["sell"] == null ? null : Buy.fromMap(json["sell"]),
+        short: json["short"] == null ? null : Buy.fromMap(json["short"]),
+        buyToCover: json["buy_to_cover"] == null
+            ? null
+            : Buy.fromMap(json["buy_to_cover"]),
+      );
 
   Map<String, dynamic> toMap() => {
-    "buy": buy?.toMap(),
-    "sell": sell?.toMap(),
-    "short": short?.toMap(),
-    "buy_to_cover": buyToCover?.toMap(),
-  };
+        "buy": buy?.toMap(),
+        "sell": sell?.toMap(),
+        "short": short?.toMap(),
+        "buy_to_cover": buyToCover?.toMap(),
+      };
 }
 
 class Buy {
@@ -270,20 +281,30 @@ class Buy {
   });
 
   factory Buy.fromMap(Map<String, dynamic> json) => Buy(
-    bracketOrder: json["bracket_order"] == null ? null : BracketOrder.fromMap(json["bracket_order"]),
-    limitOrder: json["limit_order"] == null ? null : LimitOrder.fromMap(json["limit_order"]),
-    stopOrder: json["stop_order"] == null ? null : Order.fromMap(json["stop_order"]),
-    stopLimitOrder: json["stop_limit_order"] == null ? null : StopLimitOrder.fromMap(json["stop_limit_order"]),
-    trailingOrder: json["trailing_order"] == null ? null : Order.fromMap(json["trailing_order"]),
-  );
+        bracketOrder: json["bracket_order"] == null
+            ? null
+            : BracketOrder.fromMap(json["bracket_order"]),
+        limitOrder: json["limit_order"] == null
+            ? null
+            : LimitOrder.fromMap(json["limit_order"]),
+        stopOrder: json["stop_order"] == null
+            ? null
+            : Order.fromMap(json["stop_order"]),
+        stopLimitOrder: json["stop_limit_order"] == null
+            ? null
+            : StopLimitOrder.fromMap(json["stop_limit_order"]),
+        trailingOrder: json["trailing_order"] == null
+            ? null
+            : Order.fromMap(json["trailing_order"]),
+      );
 
   Map<String, dynamic> toMap() => {
-    "bracket_order": bracketOrder?.toMap(),
-    "limit_order": limitOrder?.toMap(),
-    "stop_order": stopOrder?.toMap(),
-    "stop_limit_order": stopLimitOrder?.toMap(),
-    "trailing_order": trailingOrder?.toMap(),
-  };
+        "bracket_order": bracketOrder?.toMap(),
+        "limit_order": limitOrder?.toMap(),
+        "stop_order": stopOrder?.toMap(),
+        "stop_limit_order": stopLimitOrder?.toMap(),
+        "trailing_order": trailingOrder?.toMap(),
+      };
 }
 
 class BracketOrder {
@@ -296,14 +317,14 @@ class BracketOrder {
   });
 
   factory BracketOrder.fromMap(Map<String, dynamic> json) => BracketOrder(
-    stopPrice: json["stop-price"],
-    targetPrice: json["target-price"],
-  );
+        stopPrice: json["stop-price"],
+        targetPrice: json["target-price"],
+      );
 
   Map<String, dynamic> toMap() => {
-    "stop-price": stopPrice,
-    "target-price": targetPrice,
-  };
+        "stop-price": stopPrice,
+        "target-price": targetPrice,
+      };
 }
 
 class LimitOrder {
@@ -314,12 +335,12 @@ class LimitOrder {
   });
 
   factory LimitOrder.fromMap(Map<String, dynamic> json) => LimitOrder(
-    limitPrice: json["limit-price"],
-  );
+        limitPrice: json["limit-price"],
+      );
 
   Map<String, dynamic> toMap() => {
-    "limit-price": limitPrice,
-  };
+        "limit-price": limitPrice,
+      };
 }
 
 class StopLimitOrder {
@@ -332,14 +353,14 @@ class StopLimitOrder {
   });
 
   factory StopLimitOrder.fromMap(Map<String, dynamic> json) => StopLimitOrder(
-    stopPrice: json["stop-price"],
-    limitPrice: json["limit-price"],
-  );
+        stopPrice: json["stop-price"],
+        limitPrice: json["limit-price"],
+      );
 
   Map<String, dynamic> toMap() => {
-    "stop-price": stopPrice,
-    "limit-price": limitPrice,
-  };
+        "stop-price": stopPrice,
+        "limit-price": limitPrice,
+      };
 }
 
 class Order {
@@ -350,10 +371,10 @@ class Order {
   });
 
   factory Order.fromMap(Map<String, dynamic> json) => Order(
-    stopPrice: json["stop-price"],
-  );
+        stopPrice: json["stop-price"],
+      );
 
   Map<String, dynamic> toMap() => {
-    "stop-price": stopPrice,
-  };
+        "stop-price": stopPrice,
+      };
 }

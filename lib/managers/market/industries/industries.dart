@@ -25,15 +25,14 @@ class IndustriesManager extends ChangeNotifier {
   int _page = 1;
   bool get canLoadMore => (_data?.totalPages ?? 0) >= _page;
 
-
   IndustriesViewRes? _dataView;
   IndustriesViewRes? get dataView => _dataView;
 
   bool get canLoadMoreView => (_dataView?.totalPages ?? 0) >= _page;
   Status _statusView = Status.ideal;
   Status get statusView => _statusView;
-  bool get isLoadingView => _statusView == Status.loading || _statusView == Status.ideal;
-
+  bool get isLoadingView =>
+      _statusView == Status.loading || _statusView == Status.ideal;
 
   void setStatus(status) {
     _status = status;
@@ -83,7 +82,7 @@ class IndustriesManager extends ChangeNotifier {
     }
   }
 
-  Future getViewData(String slug,{loadMore = false}) async {
+  Future getViewData(String slug, {loadMore = false}) async {
     if (loadMore == false) {
       _page = 1;
     }
@@ -91,7 +90,7 @@ class IndustriesManager extends ChangeNotifier {
       _error = null;
       setStatusView(loadMore ? Status.loadingMore : Status.loading);
 
-      final request = {"page": "$_page","slug":slug};
+      final request = {"page": "$_page", "slug": slug};
 
       ApiResponse response = await apiRequest(
         url: Apis.industriesView,
@@ -100,7 +99,7 @@ class IndustriesManager extends ChangeNotifier {
       if (response.status) {
         if (_page == 1) {
           _dataView = industriesViewResFromJson(jsonEncode(response.data));
-         // _lockInformation = _data?.lockInfo;
+          // _lockInformation = _data?.lockInfo;
         } else {
           _dataView!.data!.addAll(
             industriesViewResFromJson(jsonEncode(response.data)).data!,

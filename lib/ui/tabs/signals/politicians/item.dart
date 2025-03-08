@@ -33,9 +33,9 @@ class BasePoliticianItem extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Visibility(
-                visible: namePresent || officePresent,
-                child: Flexible(
+              Flexible(
+                child: Visibility(
+                  visible: namePresent || officePresent,
                   child: InkWell(
                     onTap: () {
                       Navigator.pushNamed(
@@ -62,30 +62,32 @@ class BasePoliticianItem extends StatelessWidget {
                             ),
                           ),
                         ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Visibility(
-                              visible: namePresent,
-                              child: Text(
-                                data.name ?? "",
-                                style: styleBaseBold(fontSize: 14),
-                              ),
-                            ),
-                            Visibility(
-                              visible: officePresent,
-                              child: Padding(
-                                padding: const EdgeInsets.only(top: 2),
+                        Flexible(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Visibility(
+                                visible: namePresent,
                                 child: Text(
-                                  data.office ?? "",
-                                  style: styleBaseRegular(
-                                    fontSize: 12,
-                                    color: ThemeColors.neutral40,
+                                  data.name ?? "",
+                                  style: styleBaseBold(fontSize: 14),
+                                ),
+                              ),
+                              Visibility(
+                                visible: officePresent,
+                                child: Padding(
+                                  padding: const EdgeInsets.only(top: 2),
+                                  child: Text(
+                                    data.office ?? "",
+                                    style: styleBaseRegular(
+                                      fontSize: 12,
+                                      color: ThemeColors.neutral40,
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ],
                     ),

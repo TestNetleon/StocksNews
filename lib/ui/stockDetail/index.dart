@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/managers/stockDetail/stock.detail.dart';
+import 'package:stocks_news_new/ui/base/lock.dart';
 import 'package:stocks_news_new/ui/base/scaffold.dart';
 import 'package:stocks_news_new/ui/stockDetail/competitors/index.dart';
 import 'package:stocks_news_new/ui/stockDetail/ownership/index.dart';
@@ -60,7 +61,7 @@ class _SDIndexState extends State<SDIndex> {
         },
         addToAlert: () {},
         addToWatchlist: () {},
-        onRefresh: (){
+        onRefresh: () {
           manager.getSDTab(widget.symbol);
         },
       ),
@@ -137,6 +138,14 @@ class _SDIndexState extends State<SDIndex> {
             if (manager.selectedIndex == 14)
               Expanded(
                 child: SDMergers(),
+              ),
+            if (manager.selectedIndex == 0)
+              BaseLockItem(
+                manager: manager,
+                lockWithImage: false,
+                callAPI: () async {
+                  await manager.getSDOverview(reset: true);
+                },
               ),
           ],
         ),

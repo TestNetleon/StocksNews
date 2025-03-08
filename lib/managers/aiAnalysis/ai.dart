@@ -8,6 +8,7 @@ import 'package:stocks_news_new/models/ai_analysis.dart';
 import 'package:stocks_news_new/models/market/market_res.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/utils/utils.dart';
+import '../../models/lock.dart';
 import '../../models/stockDetail/financial.dart';
 import '../../models/stockDetail/price_volume.dart';
 import '../../utils/constants.dart';
@@ -41,6 +42,11 @@ class AIManager extends ChangeNotifier {
 
   bool _navigatedFromSD = false;
   bool get navigatedFromSD => _navigatedFromSD;
+
+  BaseLockInfoRes? getLockINFO() {
+    BaseLockInfoRes? info = _data?.lockInfo;
+    return info;
+  }
 
   setNavigatedFrom(value) {
     _navigatedFromSD = value;

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/models/market/market_res.dart';
 import 'package:stocks_news_new/ui/base/app_bar.dart';
+import 'package:stocks_news_new/ui/base/lock.dart';
 import 'package:stocks_news_new/ui/base/scaffold.dart';
 import 'package:stocks_news_new/ui/tabs/tools/scanner/manager/gainers.dart';
 import 'package:stocks_news_new/ui/tabs/tools/scanner/manager/losers.dart';
@@ -70,30 +71,41 @@ class _ToolsScannerIndexState extends State<ToolsScannerIndex> {
                     }
                   : null,
             ),
-            body: BaseLoaderContainer(
-              hasData: value.portData?.port != null,
-              isLoading: value.isLoadingPort && value.portData == null,
-              error: value.errorPort,
-              showPreparingText: true,
-              child: Column(
-                children: [
-                  BaseTabs(
-                    selectedIndex: 1,
-                    data: tabs,
-                    isScrollable: false,
-                    onTap: value.onTabChange,
+            body: Stack(
+              children: [
+                BaseLoaderContainer(
+                  hasData: value.portData?.port != null && !value.isLoadingPort,
+                  isLoading:
+                      value.isLoadingPort && value.portData?.port == null,
+                  error: value.errorPort,
+                  showPreparingText: true,
+                  child: Column(
+                    children: [
+                      BaseTabs(
+                        selectedIndex: 1,
+                        data: tabs,
+                        isScrollable: false,
+                        onTap: value.onTabChange,
+                      ),
+                      MarketScannerHeader(isOnline: startStream),
+                      if (value.selectedIndex != 0)
+                        ScannerSubHeaderTab(
+                          key: ValueKey(value.selectedSubIndex),
+                        ),
+                      MarketSortingHeader(),
+                      if (value.selectedIndex == 0) ScannerIndex(),
+                      if (value.selectedIndex == 1) ScannerGainersIndex(),
+                      if (value.selectedIndex == 2) ScannerLosersIndex(),
+                    ],
                   ),
-                  MarketScannerHeader(isOnline: startStream),
-                  if (value.selectedIndex != 0)
-                    ScannerSubHeaderTab(
-                      key: ValueKey(value.selectedSubIndex),
-                    ),
-                  MarketSortingHeader(),
-                  if (value.selectedIndex == 0) ScannerIndex(),
-                  if (value.selectedIndex == 1) ScannerGainersIndex(),
-                  if (value.selectedIndex == 2) ScannerLosersIndex(),
-                ],
-              ),
+                ),
+                BaseLockItem(
+                  manager: value,
+                  callAPI: () async {
+                    await value.getScannerPorts(reset: true);
+                  },
+                ),
+              ],
             ),
           ),
         );
