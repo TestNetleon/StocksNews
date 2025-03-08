@@ -52,8 +52,7 @@ class _SectorsState extends State<Sectors> {
                     itemBuilder: (context, index) {
                       return Column(
                         children: [
-                          if (index == 0)
-                            BaseSectorHeader(title: manager.data?.heading),
+                          if (index == 0)BaseSectorHeader(title: manager.data?.heading),
                           if (index == 0) BaseListDivider(),
                           BaseSectorItem(
                             data: manager.data!.data![index],

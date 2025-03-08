@@ -31,6 +31,7 @@ class _BaseFaqState extends State<BaseFaq> {
   Widget build(BuildContext context) {
     GlobalManager globalManager = context.watch<GlobalManager>();
 
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

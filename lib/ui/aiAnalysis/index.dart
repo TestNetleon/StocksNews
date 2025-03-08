@@ -4,6 +4,7 @@ import 'package:stocks_news_new/managers/aiAnalysis/ai.dart';
 import 'package:stocks_news_new/models/faq.dart';
 import 'package:stocks_news_new/ui/aiAnalysis/radar.dart';
 import 'package:stocks_news_new/ui/aiAnalysis/swot/index.dart';
+import 'package:stocks_news_new/ui/aiAnalysis/volatility/volatility.dart';
 import 'package:stocks_news_new/ui/base/base_faq.dart';
 import 'package:stocks_news_new/ui/base/base_scroll.dart';
 import 'package:stocks_news_new/ui/base/scaffold.dart';
@@ -78,6 +79,7 @@ class _AIindexState extends State<AIindex> {
             AIOurTake(ourTake: ourTake),
             AIHighlights(),
             AISwot(swot: swot),
+            PriceVolatility(),
             AITabs(),
             AIPeerComparison(),
             Container(

@@ -51,6 +51,7 @@ class BaseSectorItem extends StatelessWidget {
                           data.image,
                           height: 20,
                           width: 20,
+                            color: ThemeColors.splashBG
                         ),
                       ),
                     ),

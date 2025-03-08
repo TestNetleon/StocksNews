@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stocks_news_new/ui/tabs/tools/simulator/models/ts_recurring_list_res.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
+import 'package:stocks_news_new/widgets/cache_network_image.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
-import 'package:stocks_news_new/widgets/theme_image_view.dart';
 
 class TsRecurringListItem extends StatelessWidget {
   final TsRecurringListRes? item;
@@ -23,10 +24,17 @@ class TsRecurringListItem extends StatelessWidget {
           children: [
             Row(
               children: [
-                SizedBox(
-                  width: 34,
-                  height: 34,
-                  child: ThemeImageView(url: item?.image ?? ""),
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(Pad.pad5),
+                  child: Container(
+                    padding: EdgeInsets.all(3.sp),
+                    color: ThemeColors.neutral5,
+                    child: CachedNetworkImagesWidget(
+                      item?.image ?? "",
+                      height: 36,
+                      width: 36,
+                    ),
+                  ),
                 ),
                 const SpacerHorizontal(width: 12),
                 Expanded(

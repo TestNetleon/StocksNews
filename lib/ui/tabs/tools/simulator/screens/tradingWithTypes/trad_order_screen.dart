@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/models/ticker.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
@@ -147,16 +148,15 @@ class _TradOrderScreenState extends State<TradOrderScreen> {
           Row(
             children: [
               ClipRRect(
-                borderRadius: BorderRadius.circular(38),
+                borderRadius: BorderRadius.circular(Pad.pad5),
                 child: Container(
-                  padding: const EdgeInsets.all(5),
-                  decoration: BoxDecoration(
-                    color: ThemeColors.greyBorder,
-                    shape: BoxShape.circle,
+                  padding: EdgeInsets.all(3.sp),
+                  color: ThemeColors.neutral5,
+                  child: CachedNetworkImagesWidget(
+                    widget.data?.image ?? "",
+                    height: 41,
+                    width: 41,
                   ),
-                  width: 38,
-                  height: 38,
-                  child: CachedNetworkImagesWidget(widget.data?.image ?? ""),
                 ),
               ),
               const SpacerHorizontal(width: 12),

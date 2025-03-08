@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/managers/home.dart';
+import 'package:stocks_news_new/ui/legal/index.dart';
 import '../../../../utils/colors.dart';
 import '../../../../utils/theme.dart';
 import '../../../../utils/utils.dart';
@@ -64,14 +65,20 @@ class _AccountAgreeTextState extends State<AccountAgreeText> {
           },
           onTapUrl: (url) async {
             if (!(url.startsWith('https:') || url.startsWith('http:'))) {
-              //
+              Navigator.pushNamed(
+                context,
+                LegalInfoIndex.path,
+                arguments: {'slug': url == "terms-of-service" ? "terms-of-service" : "privacy-policy",}
+
+              );
+
             } else {
               openUrl(url);
             }
 
             return true;
           },
-          textStyle: styleGeorgiaRegular(fontSize: 14),
+          textStyle: styleGeorgiaRegular(fontSize: 14,height: 1.6),
         ),
         if (content.length > widget.defaultLength && !widget.showFull)
           GestureDetector(

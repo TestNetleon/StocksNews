@@ -66,10 +66,17 @@ class SuccessConditionalSheet extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  SizedBox(
-                    width: 38,
-                    height: 38,
-                    child: CachedNetworkImagesWidget(order?.image),
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(Pad.pad5),
+                    child: Container(
+                      padding: EdgeInsets.all(3.sp),
+                      color: ThemeColors.neutral5,
+                      child: CachedNetworkImagesWidget(
+                        order?.image?? "",
+                        height: 41,
+                        width: 41,
+                      ),
+                    ),
                   ),
                   SpacerHorizontal(width: Pad.pad10),
                   Expanded(

@@ -55,6 +55,8 @@ class SearchTicker extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   title: 'No Results Found',
                   subtitle: manager.errorSearch,
+                  textAlign: TextAlign.center,
+                  margin: EdgeInsets.symmetric(horizontal: Pad.pad16),
                 ),
               ],
             ),

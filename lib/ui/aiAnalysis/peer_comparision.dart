@@ -25,6 +25,7 @@ class _AIPeerComparisonState extends State<AIPeerComparison> {
     AIManager manager = context.watch<AIManager>();
     AIPeerComparisonRes? peerComparison = manager.data?.peerComparison;
 
+    if(peerComparison==null) return SizedBox();
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

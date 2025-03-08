@@ -4,6 +4,7 @@ import 'package:stocks_news_new/ui/base/app_bar.dart';
 import 'package:stocks_news_new/ui/base/button.dart';
 import 'package:stocks_news_new/ui/base/common_tab.dart';
 import 'package:stocks_news_new/ui/base/scaffold.dart';
+import 'package:stocks_news_new/ui/tabs/tools/scanner/manager/scanner.dart';
 import 'package:stocks_news_new/ui/tabs/tools/simulator/managers/portpolio.dart';
 import 'package:stocks_news_new/ui/tabs/tools/simulator/screens/open/index.dart';
 import 'package:stocks_news_new/ui/tabs/tools/simulator/screens/pending/index.dart';
@@ -39,7 +40,7 @@ class _SimulatorIndexState extends State<SimulatorIndex> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       isOnTsScreen = true;
-      // context.read<MarketScannerM>().getScannerPorts(start: false);
+      context.read<ScannerManager>().getScannerPorts();
       context.read<PortfolioManager>().getDashboardData(reset: true);
     });
   }

@@ -28,7 +28,7 @@ class MyWatchListIndex extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SpacerVertical(height: Pad.pad10),
-            CryptoTable(
+        /*    CryptoTable(
                 symbolMentionRes:manager.billionairesRes?.symbolMentionList
             ),
             SpacerVertical(height: Pad.pad10),
@@ -60,7 +60,7 @@ class MyWatchListIndex extends StatelessWidget {
                 },
                 itemCount: manager.billionairesRes?.cryptoTweetPost?.length ?? 0,
               ),
-            ),
+            ),*/
 
 
 

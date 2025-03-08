@@ -134,7 +134,7 @@ class TabItem extends StatelessWidget {
           const SpacerVertical(height: 8),
           Text(
             data.title ?? "",
-            style: styleBaseSemiBold(fontSize: 13),
+            style: selected? stylePTSansBold(fontSize: 12):stylePTSansRegular(fontSize: 12,color:ThemeColors.neutral40),
           ),
         ],
       ),
