@@ -25,12 +25,12 @@ class _AIPeerComparisonState extends State<AIPeerComparison> {
     AIManager manager = context.watch<AIManager>();
     AIPeerComparisonRes? peerComparison = manager.data?.peerComparison;
 
-    if(peerComparison==null) return SizedBox();
+    if (peerComparison == null) return SizedBox();
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         BaseHeading(
-          title: peerComparison?.title,
+          title: peerComparison.title,
           margin: EdgeInsets.only(
             left: Pad.pad16,
             right: Pad.pad16,
@@ -63,7 +63,7 @@ class _AIPeerComparisonState extends State<AIPeerComparison> {
                   ),
                 ),
               ],
-              rows: peerComparison?.peerComparison?.map((company) {
+              rows: peerComparison.peerComparison?.map((company) {
                     return DataRow(
                       cells: [
                         DataCell(
@@ -131,7 +131,7 @@ class _AIPeerComparisonState extends State<AIPeerComparison> {
                 scrollDirection: Axis.horizontal,
                 child: DataTable(
                   horizontalMargin: 10,
-                  columns: peerComparison?.headers?.map((header) {
+                  columns: peerComparison.headers?.map((header) {
                         return DataColumn(
                           label: Text(
                             header,
@@ -140,7 +140,7 @@ class _AIPeerComparisonState extends State<AIPeerComparison> {
                         );
                       }).toList() ??
                       [],
-                  rows: peerComparison?.peerComparison?.map((company) {
+                  rows: peerComparison.peerComparison?.map((company) {
                         return DataRow(
                           cells: [
                             _dataCell(

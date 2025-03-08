@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/managers/global.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/routes/navigation_observer.dart';
-import 'package:stocks_news_new/screens/notifications/index.dart';
 import 'package:stocks_news_new/ui/stockDetail/index.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
@@ -82,12 +81,11 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
                                   splashLoaded) {
                                 Navigator.pop(navigatorKey.currentContext!);
                               } else {
-                                Navigator.popUntil(
-                                    navigatorKey.currentContext!,
-                                        (route) => route.isFirst);
+                                Navigator.popUntil(navigatorKey.currentContext!,
+                                    (route) => route.isFirst);
                                 Navigator.pushReplacementNamed(
                                     navigatorKey.currentContext!, Tabs.path);
-                               /* Navigator.pushReplacement(
+                                /* Navigator.pushReplacement(
                                   navigatorKey.currentContext!,
                                   MaterialPageRoute(
                                       builder: (_) => const Tabs()),
@@ -100,12 +98,11 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
                                   splashLoaded) {
                                 Navigator.pop(navigatorKey.currentContext!);
                               } else {
-                                Navigator.popUntil(
-                                    navigatorKey.currentContext!,
-                                        (route) => route.isFirst);
+                                Navigator.popUntil(navigatorKey.currentContext!,
+                                    (route) => route.isFirst);
                                 Navigator.pushReplacementNamed(
                                     navigatorKey.currentContext!, Tabs.path);
-                               /* Navigator.pushReplacement(
+                                /* Navigator.pushReplacement(
                                   navigatorKey.currentContext!,
                                   MaterialPageRoute(
                                       builder: (_) => const Tabs()),
@@ -306,7 +303,6 @@ class LeadingNotification extends StatelessWidget {
             closeKeyboard();
             GlobalManager globalManager = context.read<GlobalManager>();
             globalManager.navigateToNotification();
-
           },
           child: Image.asset(
             Images.notification,

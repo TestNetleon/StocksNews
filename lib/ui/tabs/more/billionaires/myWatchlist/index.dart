@@ -1,16 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/managers/billionaires.dart';
-import 'package:stocks_news_new/models/billionaires_res.dart';
-import 'package:stocks_news_new/ui/base/heading.dart';
-import 'package:stocks_news_new/ui/tabs/more/billionaires/cryptocurrencies/widget/crypto_item.dart';
-import 'package:stocks_news_new/ui/tabs/more/billionaires/cryptocurrencies/widget/crypto_table.dart';
-import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
-import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/custom/base_loader_container.dart';
 import 'package:stocks_news_new/widgets/custom/refresh_indicator.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
+
 class MyWatchListIndex extends StatelessWidget {
   const MyWatchListIndex({super.key});
 
@@ -18,7 +13,7 @@ class MyWatchListIndex extends StatelessWidget {
   Widget build(BuildContext context) {
     BillionairesManager manager = context.watch<BillionairesManager>();
     return BaseLoaderContainer(
-      hasData: manager.billionairesRes!= null,
+      hasData: manager.billionairesRes != null,
       isLoading: manager.isLoadingCrypto,
       error: manager.error,
       showPreparingText: true,
@@ -28,7 +23,7 @@ class MyWatchListIndex extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SpacerVertical(height: Pad.pad10),
-        /*    CryptoTable(
+            /*    CryptoTable(
                 symbolMentionRes:manager.billionairesRes?.symbolMentionList
             ),
             SpacerVertical(height: Pad.pad10),
@@ -61,12 +56,6 @@ class MyWatchListIndex extends StatelessWidget {
                 itemCount: manager.billionairesRes?.cryptoTweetPost?.length ?? 0,
               ),
             ),*/
-
-
-
-
-
-
           ],
         ),
       ),
