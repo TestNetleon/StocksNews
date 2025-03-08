@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:stocks_news_new/models/referral/referral_response.dart';
 import 'package:stocks_news_new/ui/base/base_list_divider.dart';
+import 'package:stocks_news_new/ui/base/button.dart';
 import 'package:stocks_news_new/ui/tabs/more/referral/pointsTransaction/index.dart';
+import 'package:stocks_news_new/ui/tabs/more/referral/redeem/index.dart';
 import 'package:stocks_news_new/utils/colors.dart';
+import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 class PointsList extends StatelessWidget {
   final List<ReferralPointRes>? data;
@@ -14,33 +18,65 @@ class PointsList extends StatelessWidget {
     required this.data,
   });
 
+  void _navigateToTransactions(context) {
+    Navigator.pushNamed(
+      context,
+      ReferPointsTransaction.path,
+      arguments: {"type": "", "title": null},
+    );
+  }
+
+  void _navigateToRedeem(context) {
+    Navigator.pushNamed(
+      context,
+      RedeemPoints.path,
+      arguments: {"type": "", "title": null},
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Visibility(
       visible: data != null,
-      child: ListView.separated(
-        padding: EdgeInsets.zero,
-        physics: NeverScrollableScrollPhysics(),
-        shrinkWrap: true,
-        itemBuilder: (context, index) {
-          ReferralPointRes? item = data?[index];
-          return PointsListItem(
-            data: item!,
-            onTap: () {
-              if (item.txnType != null && item.txnType != "") {
-                Navigator.pushNamed(
-                  context,
-                  ReferPointsTransaction.path,
-                  arguments: {"type": item.txnType, "title": item.title},
-                );
-              }
+      child: Column(
+        children: [
+          ListView.separated(
+            padding: EdgeInsets.zero,
+            physics: NeverScrollableScrollPhysics(),
+            shrinkWrap: true,
+            itemBuilder: (context, index) {
+              ReferralPointRes? item = data?[index];
+              return PointsListItem(
+                data: item!,
+                onTap: () {
+                  if (item.txnType != null && item.txnType != "") {
+                    Navigator.pushNamed(
+                      context,
+                      ReferPointsTransaction.path,
+                      arguments: {"type": item.txnType, "title": item.title},
+                    );
+                  }
+                },
+              );
             },
-          );
-        },
-        separatorBuilder: (context, index) {
-          return SizedBox();
-        },
-        itemCount: data?.length ?? 0,
+            separatorBuilder: (context, index) {
+              return SizedBox();
+            },
+            itemCount: data?.length ?? 0,
+          ),
+          SpacerVertical(height: Dimen.padding),
+          BaseButton(
+            margin: EdgeInsets.all(16),
+            onPressed: () => _navigateToTransactions(context),
+            text: "View Points Transactions",
+          ),
+          BaseButton(
+            margin: EdgeInsets.symmetric(horizontal: 16),
+            onPressed: () => _navigateToRedeem(context),
+            text: "Claim Your Rewards",
+          ),
+          SpacerVertical(height: Dimen.padding),
+        ],
       ),
     );
   }

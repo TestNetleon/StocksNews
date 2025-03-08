@@ -91,9 +91,9 @@ class ThemeColors {
   static const transparentGreen = Color.fromARGB(92, 146, 247, 106);
   static const lightGreen = Color.fromARGB(255, 111, 252, 120);
   static const sos = Color(0xFFF44336);
-  static const gold = Color(0xfff8f0c0);
-  static const silver = Color(0xffedf1f4);
-  static const bronze = Color(0xffccb593);
+  // static const gold = Color(0xfff8f0c0);
+  // static const silver = Color(0xffedf1f4);
+  // static const bronze = Color(0xffccb593);
   static const blue = Color(0xFF21DEF3);
   static const bottomsheetGradient = Color.fromARGB(255, 0, 35, 5);
   static const buttonLightRed = Color.fromARGB(255, 252, 193, 189);
@@ -128,12 +128,9 @@ class ThemeColors {
   static const neutral8 = Color(0xFF34373C);
   static const neutral9 = Color(0xFFF9FDFB);
 
-
   // Category
 
   static const category100 = Color(0xFF2784E1);
-
-
 
   //OTHER
   static const black = Color(0xFF282B41);
@@ -162,4 +159,9 @@ class ThemeColors {
   static const orange120 = Color(0xFFFF7A00);
   static const orange = Color(0xFFFFA500);
   static const orange10 = Color(0xFFFFF4E5);
+
+// Ranking
+  static const gold = Color(0xffe5a000);
+  static const silver = Color(0xffe6eaf0);
+  static const bronze = Color(0xffdeae80);
 }
