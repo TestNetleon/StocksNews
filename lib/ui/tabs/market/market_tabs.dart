@@ -10,10 +10,13 @@ class MarketTabs extends StatefulWidget {
     super.key,
     required this.data,
     required this.onTap,
+    required this.selectedIndex,
   });
 
   final List<MarketResData> data;
   final Function(int index) onTap;
+  final int? selectedIndex;
+
   @override
   State<MarketTabs> createState() => _MarketTabsState();
 }
@@ -26,6 +29,9 @@ class _MarketTabsState extends State<MarketTabs>
   @override
   void initState() {
     super.initState();
+    if (widget.selectedIndex != null) {
+      _selectedIndex = widget.selectedIndex ?? 0;
+    }
     // _tabController = TabController(length: widget.data.length, vsync: this);
     _initializeTabController();
   }
@@ -134,7 +140,10 @@ class TabItem extends StatelessWidget {
           const SpacerVertical(height: 8),
           Text(
             data.title ?? "",
-            style: selected? stylePTSansBold(fontSize: 12):stylePTSansRegular(fontSize: 12,color:ThemeColors.neutral40),
+            style: selected
+                ? stylePTSansBold(fontSize: 12)
+                : stylePTSansRegular(
+                    fontSize: 12, color: ThemeColors.neutral40),
           ),
         ],
       ),

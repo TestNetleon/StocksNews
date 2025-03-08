@@ -14,7 +14,8 @@ class Apis {
   //     ? "https://dev.stocks.news/api/v2"
   //     : "https://app.stocks.news/api/v1";
 
-  static const baseUrl = 'https://dev.stocks.news/api/v2';
+  // static const baseUrl = 'https://dev.stocks.news/api/v2';
+  static const baseUrl = 'https://app.stocks.news/api/v2';
 
   // MARK: New UI APIs
   static const onBoarding = '/onboarding';
@@ -47,7 +48,6 @@ class Apis {
   static const feedback = "/feedback";
   static const shareFeedback = "/share-feedback";
   static const notifications = "/notifications";
-
 
   // Referral
   static const referral = "/referrals/list";
@@ -270,7 +270,7 @@ class Apis {
   static const compare = "/compare";
   static const deleteCompare = "/delete-compare";
   static const addCompare = "/add-compare";
- // static const notifications = "/notifications";
+  // static const notifications = "/notifications";
   // static const deleteUser = "/delete-user";
   static const qrCodeScan = "/token-login";
   static const stocks = "/stocks";

@@ -8,20 +8,8 @@ import 'package:share_plus/share_plus.dart';
 import 'package:stocks_news_new/managers/user.dart';
 import 'package:stocks_news_new/modals/stockDetailRes/earnings.dart';
 import 'package:stocks_news_new/modals/stockDetailRes/financial.dart';
-import 'package:stocks_news_new/screens/marketData/congressionalData/index.dart';
-import 'package:stocks_news_new/screens/marketData/dividends/dividends.dart';
-import 'package:stocks_news_new/screens/marketData/earnings/earnings.dart';
-import 'package:stocks_news_new/screens/marketData/fiftyTwoWeeks/index.dart';
-import 'package:stocks_news_new/screens/marketData/gainersLosers/index.dart';
-import 'package:stocks_news_new/screens/marketData/gapUpDown/index.dart';
-import 'package:stocks_news_new/screens/marketData/highLowPE/index.dart';
-import 'package:stocks_news_new/screens/marketData/highsLowsBetaStocks/index.dart';
-import 'package:stocks_news_new/screens/marketData/indices/index.dart';
-import 'package:stocks_news_new/screens/marketData/lowPriceStocks/index.dart';
-import 'package:stocks_news_new/screens/marketData/mostActive/index.dart';
-import 'package:stocks_news_new/screens/marketData/pennyStocks/index.dart';
-import 'package:stocks_news_new/screens/stocks/index.dart';
 import 'package:stocks_news_new/ui/stockDetail/index.dart';
+import 'package:stocks_news_new/ui/subscription/manager.dart';
 import 'package:stocks_news_new/ui/tabs/more/articles/detail.dart';
 import 'package:stocks_news_new/ui/tabs/more/news/detail.dart';
 import 'package:stocks_news_new/utils/constants.dart';
@@ -812,7 +800,9 @@ void handleDeepLinkNavigation({
         memCODE != '' &&
         uri.toString().contains('.page.link')) {
       Utils().showLog("Going to membership page-------");
-      //TODO: navigate to membership
+      SubscriptionManager manager =
+          navigatorKey.currentContext!.read<SubscriptionManager>();
+      manager.startProcess(viewPlans: true);
 
       return;
     }
@@ -928,17 +918,19 @@ void handleNavigation({
       navigatorKey.currentContext!,
       MaterialPageRoute(builder: (_) => const Tabs()),
     );
-  } else if (type == DeeplinkEnum.page) {
-    //TODO: navigation pending
-  } else if (type == DeeplinkEnum.insiderTrades) {
-    Navigator.popUntil(navigatorKey.currentContext!, (route) => route.isFirst);
-    Navigator.pushReplacement(
-      navigatorKey.currentContext!,
-      MaterialPageRoute(builder: (_) => const Tabs(index: 2)),
-    );
+    // } else if (type == DeeplinkEnum.page) {
+    // navigation pending
+    // } else if (type == DeeplinkEnum.insiderTrades) {
+    //   Navigator.popUntil(navigatorKey.currentContext!, (route) => route.isFirst);
+    //   Navigator.pushReplacement(
+    //     navigatorKey.currentContext!,
+    //     MaterialPageRoute(builder: (_) => const Tabs(index: 2)),
+    //   );
   } else if (type == DeeplinkEnum.membership) {
     if (manager.user == null || manager.user?.membership?.purchased != 1) {
-      //TODO: navigation pending
+      SubscriptionManager manager =
+          navigatorKey.currentContext!.read<SubscriptionManager>();
+      manager.startProcess(viewPlans: true);
     } else {
       Navigator.popUntil(
           navigatorKey.currentContext!, (route) => route.isFirst);
@@ -949,7 +941,7 @@ void handleNavigation({
         ),
       );
     }
-  } else if (type == DeeplinkEnum.trendingIndustries) {
+    // } else if (type == DeeplinkEnum.trendingIndustries) {
     // Navigator.popUntil(navigatorKey.currentContext!, (route) => route.isFirst);
     // Navigator.pushReplacement(
     //   navigatorKey.currentContext!,
@@ -970,98 +962,200 @@ void handleNavigation({
     Navigator.pushNamed(navigatorKey.currentContext!, HelpDeskIndex.path);
     // *********** Market data Pages from Here ********
   } else if (type == DeeplinkEnum.gainerLoser) {
-    Navigator.push(
+    Navigator.popUntil(navigatorKey.currentContext!, (route) => route.isFirst);
+    Navigator.pushReplacementNamed(
       navigatorKey.currentContext!,
-      MaterialPageRoute(
-        builder: (context) => const GainersLosersIndex(
-          type: StocksType.gainers,
-        ),
-      ),
+      Tabs.path,
+      arguments: {
+        "index": 1,
+        "childIndex": 1,
+      },
     );
+    // Navigator.push(
+    //   navigatorKey.currentContext!,
+    //   MaterialPageRoute(
+    //     builder: (context) => const GainersLosersIndex(
+    //       type: StocksType.gainers,
+    //     ),
+    //   ),
+    // );
   } else if (type == DeeplinkEnum.gapUpDown) {
-    Navigator.push(
+    Navigator.popUntil(navigatorKey.currentContext!, (route) => route.isFirst);
+    Navigator.pushReplacementNamed(
       navigatorKey.currentContext!,
-      MaterialPageRoute(
-        builder: (context) => const GapUpDownStocks(type: StocksType.gapUp),
-      ),
+      Tabs.path,
+      arguments: {
+        "index": 1,
+        "childIndex": 2,
+      },
     );
+    // Navigator.push(
+    //   navigatorKey.currentContext!,
+    //   MaterialPageRoute(
+    //     builder: (context) => const GapUpDownStocks(type: StocksType.gapUp),
+    //   ),
+    // );
   } else if (type == DeeplinkEnum.highLowPE) {
-    Navigator.push(
+    Navigator.popUntil(navigatorKey.currentContext!, (route) => route.isFirst);
+    Navigator.pushReplacementNamed(
       navigatorKey.currentContext!,
-      MaterialPageRoute(
-        builder: (context) => const HighLowPEIndex(),
-      ),
+      Tabs.path,
+      arguments: {
+        "index": 1,
+        "childIndex": 3,
+      },
     );
+    // Navigator.push(
+    //   navigatorKey.currentContext!,
+    //   MaterialPageRoute(
+    //     builder: (context) => const HighLowPEIndex(),
+    //   ),
+    // );
   } else if (type == DeeplinkEnum.fiftyTwoWeeks) {
-    Navigator.push(
+    Navigator.popUntil(navigatorKey.currentContext!, (route) => route.isFirst);
+    Navigator.pushReplacementNamed(
       navigatorKey.currentContext!,
-      MaterialPageRoute(
-        builder: (context) => const FiftyTwoWeeksIndex(),
-      ),
+      Tabs.path,
+      arguments: {
+        "index": 1,
+        "childIndex": 4,
+      },
     );
+    // Navigator.push(
+    //   navigatorKey.currentContext!,
+    //   MaterialPageRoute(
+    //     builder: (context) => const FiftyTwoWeeksIndex(),
+    //   ),
+    // );
   } else if (type == DeeplinkEnum.highLowBeta) {
-    Navigator.push(
+    Navigator.popUntil(navigatorKey.currentContext!, (route) => route.isFirst);
+    Navigator.pushReplacementNamed(
       navigatorKey.currentContext!,
-      MaterialPageRoute(
-        builder: (context) => const HighLowsBetaStocksIndex(),
-      ),
+      Tabs.path,
+      arguments: {
+        "index": 1,
+        "childIndex": 5,
+      },
     );
+    // Navigator.push(
+    //   navigatorKey.currentContext!,
+    //   MaterialPageRoute(
+    //     builder: (context) => const HighLowsBetaStocksIndex(),
+    //   ),
+    // );
   } else if (type == DeeplinkEnum.indices) {
-    Navigator.push(
+    Navigator.popUntil(navigatorKey.currentContext!, (route) => route.isFirst);
+    Navigator.pushReplacementNamed(
       navigatorKey.currentContext!,
-      MaterialPageRoute(
-        builder: (context) => const IndicesIndex(),
-      ),
+      Tabs.path,
+      arguments: {
+        "index": 1,
+        "childIndex": 6,
+      },
     );
+    // Navigator.push(
+    //   navigatorKey.currentContext!,
+    //   MaterialPageRoute(
+    //     builder: (context) => const IndicesIndex(),
+    //   ),
+    // );
   } else if (type == DeeplinkEnum.lowPriceStocks) {
-    Navigator.push(
+    Navigator.popUntil(navigatorKey.currentContext!, (route) => route.isFirst);
+    Navigator.pushReplacementNamed(
       navigatorKey.currentContext!,
-      MaterialPageRoute(
-        builder: (context) => const LowPriceStocksIndex(),
-      ),
+      Tabs.path,
+      arguments: {
+        "index": 1,
+        "childIndex": 7,
+      },
     );
+    // Navigator.push(
+    //   navigatorKey.currentContext!,
+    //   MaterialPageRoute(
+    //     builder: (context) => const LowPriceStocksIndex(),
+    //   ),
+    // );
   } else if (type == DeeplinkEnum.mostActive) {
-    Navigator.push(
+    Navigator.popUntil(navigatorKey.currentContext!, (route) => route.isFirst);
+    Navigator.pushReplacementNamed(
       navigatorKey.currentContext!,
-      MaterialPageRoute(
-        builder: (context) => const MostActiveIndex(),
-      ),
+      Tabs.path,
+      arguments: {
+        "index": 1,
+        "childIndex": 8,
+      },
     );
+
+    // Navigator.push(
+    //   navigatorKey.currentContext!,
+    //   MaterialPageRoute(
+    //     builder: (context) => const MostActiveIndex(),
+    //   ),
+    // );
   } else if (type == DeeplinkEnum.pennyStocks) {
-    Navigator.push(
+    Navigator.popUntil(navigatorKey.currentContext!, (route) => route.isFirst);
+    Navigator.pushReplacementNamed(
       navigatorKey.currentContext!,
-      MaterialPageRoute(
-        builder: (context) => const PennyStocks(),
-      ),
+      Tabs.path,
+      arguments: {
+        "index": 1,
+        "childIndex": 9,
+      },
     );
-  } else if (type == DeeplinkEnum.congressional) {
-    Navigator.push(
-      navigatorKey.currentContext!,
-      MaterialPageRoute(
-        builder: (context) => const CongressionalIndex(),
-      ),
-    );
+
+    // Navigator.push(
+    //   navigatorKey.currentContext!,
+    //   MaterialPageRoute(
+    //     builder: (context) => const PennyStocks(),
+    //   ),
+    // );
+    // } else if (type == DeeplinkEnum.congressional) {
+    //   Navigator.push(
+    //     navigatorKey.currentContext!,
+    //     MaterialPageRoute(
+    //       builder: (context) => const CongressionalIndex(),
+    //     ),
+    //   );
   } else if (type == DeeplinkEnum.dividents) {
-    Navigator.push(
+    Navigator.pushReplacementNamed(
       navigatorKey.currentContext!,
-      MaterialPageRoute(
-        builder: (context) => const DividendsScreen(),
-      ),
+      Tabs.path,
+      arguments: {
+        "index": 1,
+        "childIndex": 10,
+      },
     );
+    // Navigator.push(
+    //   navigatorKey.currentContext!,
+    //   MaterialPageRoute(
+    //     builder: (context) => const DividendsScreen(),
+    //   ),
+    // );
   } else if (type == DeeplinkEnum.earnings) {
-    Navigator.push(
+    Navigator.popUntil(navigatorKey.currentContext!, (route) => route.isFirst);
+    Navigator.pushReplacementNamed(
       navigatorKey.currentContext!,
-      MaterialPageRoute(
-        builder: (context) => const EarningsScreen(),
-      ),
+      Tabs.path,
+      arguments: {
+        "index": 1,
+        "childIndex": 11,
+      },
     );
+    // Navigator.push(
+    //   navigatorKey.currentContext!,
+    //   MaterialPageRoute(
+    //     builder: (context) => const EarningsScreen(),
+    //   ),
+    // );
   } else if (type == DeeplinkEnum.stocks) {
-    Navigator.push(
-      navigatorKey.currentContext!,
-      MaterialPageRoute(
-        builder: (context) => const StocksIndex(),
-      ),
-    );
+    Navigator.popUntil(navigatorKey.currentContext!, (route) => route.isFirst);
+    Navigator.pushReplacementNamed(navigatorKey.currentContext!, Tabs.path);
+    // Navigator.push(
+    //   navigatorKey.currentContext!,
+    //   MaterialPageRoute(
+    //     builder: (context) => const StocksIndex(),
+    //   ),
+    // );
   } else {
     Navigator.popUntil(navigatorKey.currentContext!, (route) => route.isFirst);
     Navigator.pushReplacement(
