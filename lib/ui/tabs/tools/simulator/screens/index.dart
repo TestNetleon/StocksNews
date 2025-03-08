@@ -21,7 +21,6 @@ import 'package:stocks_news_new/widgets/custom/base_loader_container.dart';
 import 'package:stocks_news_new/widgets/custom/card.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
-
 import '../../../../base/lock.dart';
 
 class SimulatorIndex extends StatefulWidget {
@@ -157,7 +156,15 @@ class _SimulatorIndexState extends State<SimulatorIndex> {
                     child: Column(
                       children: [
                         BaseTabs(
-                          data: manager.tabs,
+                          data: manager
+                                      .userData
+                                      ?.userDataRes
+                                      ?.userConditionalOrderPermission
+                                      ?.recurringOrder ==
+                                  true
+                              ? manager.tabs
+                              : manager.tabs
+                                  .sublist(0, manager.tabs.length - 1),
                           // textStyle: styleBaseBold(fontSize: 11),
                           onTap: manager.onScreenChange,
                           selectedIndex: widget.initialIndex,
@@ -178,37 +185,43 @@ class _SimulatorIndexState extends State<SimulatorIndex> {
                           Expanded(
                             child: STransactionList(),
                           ),
-                        if (manager.selectedScreen == 3)
+                        if (manager.selectedScreen == 3 &&
+                            manager
+                                    .userData
+                                    ?.userDataRes
+                                    ?.userConditionalOrderPermission
+                                    ?.recurringOrder ==
+                                true)
                           Expanded(
                             child: SRecurringList(),
                           ),
                       ],
                     ),
                   ),
-                  /* Expanded(
-                    child:
-                    CommonTabContainer(
-                      initialIndex: widget.initialIndex,
-                      scrollable: false,
-                      tabPaddingNew: false,
-                      //tabLabelPadding: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      tabs: manager.userData?.userDataRes?.userConditionalOrderPermission?.recurringOrder == true? ["Open","Pending","Transactions","Recurring"]:["Open","Pending","Transactions"],
-                      widgets:
-                      manager.userData?.userDataRes?.userConditionalOrderPermission?.recurringOrder == true?
-                      [
-                        SOpenList(),
-                        SPendingList(),
-                        STransactionList(),
-                        SRecurringList(),
-                      ]:
-                      [
-                        SOpenList(),
-                        SPendingList(),
-                        STransactionList(),
-                      ],
-                    ),
-                  ),*/
+                  //  Expanded(
+                  //   child:
+                  //   CommonTabContainer(
+                  //     initialIndex: widget.initialIndex,
+                  //     scrollable: false,
+                  //     tabPaddingNew: false,
+                  //     //tabLabelPadding: true,
+                  //     physics: const NeverScrollableScrollPhysics(),
+                  //     tabs: manager.userData?.userDataRes?.userConditionalOrderPermission?.recurringOrder == true? ["Open","Pending","Transactions","Recurring"]:["Open","Pending","Transactions"],
+                  //     widgets:
+                  //     manager.userData?.userDataRes?.userConditionalOrderPermission?.recurringOrder == true?
+                  //     [
+                  //       SOpenList(),
+                  //       SPendingList(),
+                  //       STransactionList(),
+                  //       SRecurringList(),
+                  //     ]:
+                  //     [
+                  //       SOpenList(),
+                  //       SPendingList(),
+                  //       STransactionList(),
+                  //     ],
+                  //   ),
+                  // ),
                   BaseButton(
                     textSize: 16,
                     onPressed: () {
