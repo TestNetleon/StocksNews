@@ -16,7 +16,7 @@ class AiVolatility extends StatelessWidget {
     AIManager manager = context.watch<AIManager>();
     AIPriceVolatilityRes? priceVolatilityRes = manager.data?.priceVolatility;
     num avg = priceVolatilityRes?.data?.stockVolatility ?? 0;
-    num avg1 = priceVolatilityRes?.data?.avg ?? 0;
+    // num avg1 = priceVolatilityRes?.data?.avg ?? 0;
     double normalizedPosition = (avg / 100) * ScreenUtil().screenWidth;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -34,11 +34,11 @@ class AiVolatility extends StatelessWidget {
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                   //   _chip(),
+                      //   _chip(),
                       Expanded(
                         child: Container(
                           height: 20,
-                          decoration:  BoxDecoration(
+                          decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(5),
                             gradient: LinearGradient(
                               colors: [
@@ -58,24 +58,20 @@ class AiVolatility extends StatelessWidget {
               Positioned(
                 top: 60,
                 left: 0,
-                child: Text(
-                  "Low",
-                  style: styleBaseRegular(
-                    fontSize: 13,
-                    color: ThemeColors.neutral80,
-                  )
-                ),
+                child: Text("Low",
+                    style: styleBaseRegular(
+                      fontSize: 13,
+                      color: ThemeColors.neutral80,
+                    )),
               ),
               Positioned(
                 top: 60,
                 right: 0,
-                child: Text(
-                  "High",
-                  style:styleBaseRegular(
-                    fontSize: 13,
-                    color: ThemeColors.neutral80,
-                  )
-                ),
+                child: Text("High",
+                    style: styleBaseRegular(
+                      fontSize: 13,
+                      color: ThemeColors.neutral80,
+                    )),
               ),
               Positioned(
                 left: (ScreenUtil().screenWidth - 30) / 2,
@@ -91,15 +87,13 @@ class AiVolatility extends StatelessWidget {
                 left: normalizedPosition - 40,
                 child: AIPointerContainer(
                   isDownwards: true,
-                  title: manager.data?.tickerDetail?.symbol??"",
+                  title: manager.data?.tickerDetail?.symbol ?? "",
                   style: stylePTSansRegular(fontSize: 12),
                 ),
               ),
-
             ],
           ),
         ),
-
       ],
     );
   }
