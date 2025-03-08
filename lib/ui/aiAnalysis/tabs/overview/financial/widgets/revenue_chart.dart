@@ -59,6 +59,7 @@ class AIFinancialCharts extends StatelessWidget {
                 color: ThemeColors.black,
                 fontSize: 12,
               ),
+              textAlign: TextAlign.center,
             );
           },
         ),

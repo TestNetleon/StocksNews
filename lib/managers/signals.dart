@@ -673,5 +673,18 @@ class SignalsManager extends ChangeNotifier {
         notifyListeners();
       }
     }
+    if (_signalSentimentData?.mostMentions?.data != null) {
+      final index =
+      _signalSentimentData?.mostMentions?.data?.indexWhere((element) => element.symbol == symbol);
+      if (index != null && index != -1) {
+        if (alertAdded != null) {
+          _signalSentimentData?.mostMentions?.data![index].isAlertAdded = alertAdded;
+        }
+        if (watchListAdded != null) {
+          _signalSentimentData?.mostMentions?.data![index].isWatchlistAdded = watchListAdded;
+        }
+        notifyListeners();
+      }
+    }
   }
 }

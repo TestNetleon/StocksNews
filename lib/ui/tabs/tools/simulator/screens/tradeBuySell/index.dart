@@ -26,6 +26,8 @@ class TradeBuySellIndex extends StatelessWidget {
   Widget build(BuildContext context) {
     TradeManager manager = context.watch<TradeManager>();
     BaseTickerRes? detailRes = manager.detailRes;
+    print(detailRes?.isWatchlistAdded);
+    print(detailRes?.isAlertAdded);
     return PopScope(
       onPopInvokedWithResult: (didPop, result) {
         SSEManager.instance.disconnectScreen(SimulatorEnum.detail);
@@ -35,6 +37,10 @@ class TradeBuySellIndex extends StatelessWidget {
           data: detailRes,
           addToWatchlist: (){},
           addToAlert: (){},
+          manager: manager,
+          onRefresh: (){
+            manager.getDetailTopData(symbol:  detailRes?.symbol??"");
+          },
 
         ),
         body: BuySellContainer(

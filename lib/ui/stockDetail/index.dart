@@ -54,11 +54,15 @@ class _SDIndexState extends State<SDIndex> {
     return BaseScaffold(
       appBar: BaseTickerAppBar(
         data: tickerDetail,
+        manager: manager,
         shareURL: () {
           openUrl(tickerDetail?.shareUrl);
         },
         addToAlert: () {},
         addToWatchlist: () {},
+        onRefresh: (){
+          manager.getSDTab(widget.symbol);
+        },
       ),
       body: BaseLoaderContainer(
         hasData: manager.data != null,

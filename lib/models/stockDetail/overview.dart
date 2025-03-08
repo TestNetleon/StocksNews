@@ -79,6 +79,7 @@ class BaseKeyValueRes {
   final String? other;
   final dynamic value;
   final String? slug;
+  final String? icon;
   final dynamic color;
   final String? simple;
   final String? simpleStatus;
@@ -96,6 +97,7 @@ class BaseKeyValueRes {
     this.other,
     this.value,
     this.slug,
+    this.icon,
     this.color,
     this.simple,
     this.simpleStatus,
@@ -115,6 +117,7 @@ class BaseKeyValueRes {
         other: json['other'],
         value: json["value"],
         slug: json['slug'],
+        icon: json['icon'],
         color: json['color'],
         simple: json["simple"],
         simpleStatus: json["simple_status"],
@@ -133,6 +136,7 @@ class BaseKeyValueRes {
         'other': other,
         "value": value,
         "slug": slug,
+        "icon": icon,
         "color": color,
         "simple": simple,
         "simple_status": simpleStatus,

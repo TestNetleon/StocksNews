@@ -7,7 +7,6 @@ import 'package:stocks_news_new/ui/base/base_faq.dart';
 import 'package:stocks_news_new/ui/base/base_scroll.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/widgets/custom/base_loader_container.dart';
-import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 import '../../../models/stockDetail/ownership.dart';
 import '../../../utils/constants.dart';
