@@ -70,6 +70,16 @@ class UserManager extends ChangeNotifier {
     shareUri ??= await DynamicLinkService.instance.getDynamicLink();
   }
 
+  Future<bool> checkForUser() async {
+    _user = null;
+    final UserRes? tempUser = await Preference.getUser();
+    if (tempUser != null) {
+      _user = tempUser;
+      notifyListeners();
+    }
+    return _user != null;
+  }
+
   askLoginScreen() async {
     if (_user != null) {
       return;
@@ -123,14 +133,14 @@ class UserManager extends ChangeNotifier {
     );
   }
 
-  void navigateToMySubscription() async {
+  void navigateToMySubscription({bool viewPlans = false}) async {
     await askLoginScreen();
     if (_user == null) {
       return;
     }
     SubscriptionManager manager =
         navigatorKey.currentContext!.read<SubscriptionManager>();
-    manager.startProcess();
+    manager.startProcess(viewPlans: viewPlans);
   }
 
   void navigateToReferral() async {

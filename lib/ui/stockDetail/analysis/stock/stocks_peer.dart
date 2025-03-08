@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:stocks_news_new/managers/stockDetail/stock.detail.dart';
 import 'package:stocks_news_new/models/ticker.dart';
 import 'package:stocks_news_new/ui/base/base_list_divider.dart';
 import 'package:stocks_news_new/ui/base/heading.dart';
@@ -14,6 +16,8 @@ class SDStocksAnalysisPeer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SDManager manager = context.watch<SDManager>();
+
     if (peersData == null) {
       return SizedBox();
     }
@@ -47,6 +51,7 @@ class SDStocksAnalysisPeer extends StatelessWidget {
                       'symbol': p0.symbol,
                     });
               },
+              manager: manager,
             );
           },
           separatorBuilder: (context, index) {

@@ -18,7 +18,7 @@ import '../../managers/onboarding.dart';
 
 //MARK: Splash
 class Splash extends StatefulWidget {
-  static const String path = "splash";
+  static const String path = "Splash";
 
   const Splash({super.key});
 

@@ -42,6 +42,10 @@ class ScannerLosersManager extends ChangeNotifier {
 
   // int? get page => _page;
 
+  setTotalResult(num total) {
+    navigatorKey.currentContext!.read<ScannerManager>().setTotalResults(total);
+  }
+
   void setStatus(status) {
     _status = status;
     notifyListeners();
@@ -120,8 +124,9 @@ class ScannerLosersManager extends ChangeNotifier {
     // _offlineDataList = data.take(50).toList();
     _offlineDataList = List.empty(growable: true);
     _offlineDataList?.addAll(data);
-    // Notify listeners to update UI
     notifyListeners();
+    setTotalResult(_offlineDataList?.length ?? 0);
+    // Notify listeners to update UI
   }
 
   Future updateData(List<LiveScannerRes>? data) async {
@@ -169,8 +174,8 @@ class ScannerLosersManager extends ChangeNotifier {
 
     // _dataList = prChangeAr.take(50).toList();
     _dataList = prChangeAr;
-
     notifyListeners();
+    setTotalResult(_dataList?.length ?? 0);
   }
 
   void applyFilter(sortBy) {

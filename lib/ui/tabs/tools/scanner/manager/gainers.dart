@@ -47,6 +47,10 @@ class ScannerGainersManager extends ChangeNotifier {
     MarketGainersStream().initializePorts();
   }
 
+  setTotalResult(num total) {
+    navigatorKey.currentContext!.read<ScannerManager>().setTotalResults(total);
+  }
+
   void stopListeningPorts() {
     _offlineDataList = null;
     _dataList = null;
@@ -112,8 +116,10 @@ class ScannerGainersManager extends ChangeNotifier {
     // _offlineDataList = data.take(50).toList();
     _offlineDataList = List.empty(growable: true);
     _offlineDataList?.addAll(data);
-    // Notify listeners to update UI
     notifyListeners();
+    setTotalResult(_offlineDataList?.length ?? 0);
+
+    // Notify listeners to update UI
   }
 
   Future updateData(List<LiveScannerRes>? data) async {
@@ -162,10 +168,12 @@ class ScannerGainersManager extends ChangeNotifier {
     }
     // _dataList = prChangeAr.take(50).toList();
     _dataList = prChangeAr;
+    notifyListeners();
+
+    setTotalResult(_dataList?.length ?? 0);
+
     // _dataList = List.empty(growable: true);
     // _dataList?.addAll(prChangeAr);
-
-    notifyListeners();
   }
 
   void applyFilter(int sortBy) {
@@ -219,7 +227,6 @@ class ScannerGainersManager extends ChangeNotifier {
           ? SortByEnums.perChange.name
           : SortByEnums.postMarketPerChange.name,
     );
-
     notifyListeners();
   }
 

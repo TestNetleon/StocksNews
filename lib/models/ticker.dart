@@ -49,7 +49,7 @@ class BaseTickerRes {
   // end simulator
 
   //extra
-
+  final String? notAvailable;
   final String? revenue;
   final String? employeeCount;
   final bool? showMore;
@@ -82,6 +82,7 @@ class BaseTickerRes {
   final List<BaseKeyValueRes>? extra;
 
   BaseTickerRes({
+    this.notAvailable,
     this.id,
     this.symbol,
     this.displayPrice,
@@ -164,6 +165,7 @@ class BaseTickerRes {
         mentionDate: json["mention_date"],
 
         //extra
+        notAvailable: json['not_available'],
         marketCap: json['marketCap'],
         marketTime: json['market_time'],
         marketType: json['marketType'],
@@ -236,7 +238,7 @@ class BaseTickerRes {
         "mention_date": mentionDate,
 
         //extra
-
+        'not_available': notAvailable,
         'marketCap': marketCap,
         'market_time': marketTime,
         'marketType': marketType,

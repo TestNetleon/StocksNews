@@ -1,63 +1,50 @@
-// To parse this JSON data, do
-//
-//     final toolsRes = toolsResFromJson(jsonString);
-
 import 'dart:convert';
 
-ToolsRes toolsResFromJson(String str) => ToolsRes.fromJson(json.decode(str));
+enum ToolsEnum { scanner, simulator, portfolio, compare, league }
 
+ToolsEnum? toolsEnumFromString(String? value) {
+  if (value == null) return null;
+  return ToolsEnum.values.firstWhere(
+    (e) => e.toString().split('.').last == value,
+    orElse: () => ToolsEnum.scanner,
+  );
+}
+
+String? toolsEnumToString(ToolsEnum? value) {
+  return value?.toString().split('.').last;
+}
+
+ToolsRes toolsResFromJson(String str) => ToolsRes.fromJson(json.decode(str));
 String toolsResToJson(ToolsRes data) => json.encode(data.toJson());
 
 class ToolsRes {
-  final ToolsCardsRes? compare;
-  final ToolsCardsRes? plaid;
   final PlaidConfigRes? plaidConfig;
-  final ToolsCardsRes? scanner;
-  final ToolsCardsRes? simulator;
-  final ToolsCardsRes? league;
-  ToolsRes({
-    this.compare,
-    this.plaid,
-    this.plaidConfig,
-    this.scanner,
-    this.simulator,
-    this.league,
-  });
+  final List<ToolsCardsRes>? tools;
+
+  ToolsRes({this.plaidConfig, this.tools});
 
   factory ToolsRes.fromJson(Map<String, dynamic> json) => ToolsRes(
-        compare: json["compare"] == null
-            ? null
-            : ToolsCardsRes.fromJson(json["compare"]),
-        plaid: json["plaid"] == null
-            ? null
-            : ToolsCardsRes.fromJson(json["plaid"]),
         plaidConfig: json["plaid_config"] == null
             ? null
             : PlaidConfigRes.fromJson(json["plaid_config"]),
-    scanner: json["scanner"] == null
-        ? null
-        : ToolsCardsRes.fromJson(json["scanner"]),
-    simulator: json["simulator"] == null
-        ? null
-        : ToolsCardsRes.fromJson(json["simulator"]),
-    league: json["league"] == null
-        ? null
-        : ToolsCardsRes.fromJson(json["league"]),
+        tools: json["tools"] == null
+            ? []
+            : List<ToolsCardsRes>.from(
+                json["tools"]!.map((x) => ToolsCardsRes.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
-        "compare": compare?.toJson(),
-        "plaid": plaid?.toJson(),
         "plaid_config": plaidConfig?.toJson(),
-    "scanner": scanner?.toJson(),
-    "simulator":simulator?.toJson(),
-    "league": league?.toJson(),
+        "tools": tools == null
+            ? []
+            : List<dynamic>.from(tools!.map((x) => x.toJson())),
       };
 }
 
 class ToolsCardsRes {
   final String? image;
   final String? title;
+  final ToolsEnum? slug;
   final String? subTitle;
   final String? buttonText;
   final bool? connected;
@@ -65,6 +52,7 @@ class ToolsCardsRes {
   ToolsCardsRes({
     this.image,
     this.title,
+    this.slug,
     this.subTitle,
     this.buttonText,
     this.connected,
@@ -73,6 +61,7 @@ class ToolsCardsRes {
   factory ToolsCardsRes.fromJson(Map<String, dynamic> json) => ToolsCardsRes(
         image: json["image"],
         title: json["title"],
+        slug: toolsEnumFromString(json['slug']),
         subTitle: json["sub_title"],
         buttonText: json["button_text"],
         connected: json['is_connected'],
@@ -81,6 +70,7 @@ class ToolsCardsRes {
   Map<String, dynamic> toJson() => {
         "image": image,
         "title": title,
+        "slug": toolsEnumToString(slug),
         "sub_title": subTitle,
         "button_text": buttonText,
         "is_connected": connected,

@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:stocks_news_new/managers/alerts.dart';
 import 'package:stocks_news_new/managers/billionaires.dart';
@@ -114,15 +113,12 @@ import 'package:stocks_news_new/providers/trending_provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 
 import 'package:provider/provider.dart';
-
 import 'package:provider/single_child_widget.dart';
 import 'package:stocks_news_new/providers/watchlist_provider.dart';
 import 'package:stocks_news_new/providers/what_we_do_provider.dart';
-import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/screens/affiliate/index.dart';
 import 'package:stocks_news_new/screens/auth/qrScan/index.dart';
 import 'package:stocks_news_new/screens/auth/signup/signup_success.dart';
-import 'package:stocks_news_new/screens/blogDetail/index.dart';
 import 'package:stocks_news_new/screens/marketData/dividends/dividends.dart';
 import 'package:stocks_news_new/screens/marketData/earnings/earnings.dart';
 import 'package:stocks_news_new/screens/marketData/fiftyTwoWeeks/index.dart';
@@ -136,11 +132,9 @@ import 'package:stocks_news_new/screens/myAccount/my_account.dart';
 import 'package:stocks_news_new/screens/notifications/index.dart';
 import 'package:stocks_news_new/screens/search/search.dart';
 import 'package:stocks_news_new/screens/start/index.dart';
-import 'package:stocks_news_new/screens/stockDetail/index.dart';
 import 'package:stocks_news_new/screens/tabs/compareNew/index.dart';
 import 'package:stocks_news_new/screens/tabs/compareStocks/compare_stocks.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/plaid/portfolio/index.dart';
-import 'package:stocks_news_new/screens/tabs/news/newsDetail/new_detail.dart';
 import 'package:stocks_news_new/screens/trendingIndustries/index.dart';
 import 'package:stocks_news_new/ui/tabs/market/industries/industries_view.dart';
 import 'package:stocks_news_new/ui/tabs/market/sectors/sector_view.dart';
@@ -178,7 +172,6 @@ import 'package:stocks_news_new/ui/tabs/tools/simulator/screens/tickerSearch/ind
 import 'package:stocks_news_new/ui/tabs/tools/simulator/screens/tradeBuySell/index.dart';
 
 import 'package:stocks_news_new/utils/constants.dart';
-import 'package:stocks_news_new/utils/utils.dart';
 import '../managers/aiAnalysis/ai.dart';
 import '../managers/news.dart';
 import '../managers/onboarding.dart';
@@ -197,7 +190,6 @@ import '../providers/notification_settings.dart';
 import '../providers/offerMembership/christmas.dart';
 import '../providers/scroll_controller.dart';
 import '../providers/stockAnalysis/provider.dart';
-import '../screens/auth/base/base_auth.dart';
 import '../providers/trending_industries.dart';
 import '../screens/marketData/congressionalData/index.dart';
 import '../screens/marketData/lowPriceStocks/index.dart';
@@ -571,67 +563,67 @@ class Routes {
     );
   }
 
-  static Route<dynamic> handleDeepLink(Uri uri) {
-    DeeplinkEnum type = containsSpecificPath(uri);
-    String slug = extractLastPathComponent(uri);
+  // static Route<dynamic> handleDeepLink(Uri uri) {
+  //   DeeplinkEnum type = containsSpecificPath(uri);
+  //   String slug = extractLastPathComponent(uri);
 
-    Utils().showLog("GENERATED ROUT DeepLinking ***=> $type  $slug");
-    popHome = false;
+  //   Utils().showLog("GENERATED ROUT DeepLinking ***=> $type  $slug");
+  //   popHome = false;
 
-    Timer(const Duration(seconds: 5), () {
-      onDeepLinking = false;
-    });
+  //   Timer(const Duration(seconds: 5), () {
+  //     onDeepLinking = false;
+  //   });
 
-    switch (type) {
-      // case "blog":
-      case DeeplinkEnum.blogDetail:
-        return MaterialPageRoute(
-          builder: (context) => BlogDetail(slug: slug),
-        );
-      // case "news":
-      case DeeplinkEnum.newsDetail:
-        return MaterialPageRoute(
-          builder: (context) => NewsDetails(slug: slug),
-        );
-      // case "stock_detail":
-      case DeeplinkEnum.stocksDetail:
-        return MaterialPageRoute(
-          builder: (context) => StockDetail(symbol: slug),
-        );
-      // case "dashboard":
-      case DeeplinkEnum.dashboard:
-        return MaterialPageRoute(builder: (context) => const Tabs());
-      // case "login":
-      case DeeplinkEnum.login:
-        Timer(const Duration(seconds: 1), () async {
-          bool userPresent = false;
-          UserProvider provider =
-              navigatorKey.currentContext!.read<UserProvider>();
-          if (await provider.checkForUser()) {
-            userPresent = true;
-          }
-          // if (!userPresent) loginSheet();
-          if (!userPresent) loginFirstSheet();
-        });
-        return MaterialPageRoute(builder: (context) => const Tabs());
-      // case "signUp":
-      case DeeplinkEnum.signup:
-        Timer(const Duration(seconds: 1), () async {
-          bool userPresent = false;
-          UserProvider provider =
-              navigatorKey.currentContext!.read<UserProvider>();
-          if (await provider.checkForUser()) {
-            userPresent = true;
-          }
-          // if (!userPresent) signupSheet();
-          if (!userPresent) loginFirstSheet();
-        });
-        return MaterialPageRoute(builder: (context) => const Tabs());
-      default:
-        // log("HERE ");
-        return MaterialPageRoute(builder: (context) => const Tabs());
-    }
-  }
+  //   switch (type) {
+  //     // case "blog":
+  //     case DeeplinkEnum.blogDetail:
+  //       return MaterialPageRoute(
+  //         builder: (context) => BlogDetail(slug: slug),
+  //       );
+  //     // case "news":
+  //     case DeeplinkEnum.newsDetail:
+  //       return MaterialPageRoute(
+  //         builder: (context) => NewsDetails(slug: slug),
+  //       );
+  //     // case "stock_detail":
+  //     case DeeplinkEnum.stocksDetail:
+  //       return MaterialPageRoute(
+  //         builder: (context) => StockDetail(symbol: slug),
+  //       );
+  //     // case "dashboard":
+  //     case DeeplinkEnum.dashboard:
+  //       return MaterialPageRoute(builder: (context) => const Tabs());
+  //     // case "login":
+  //     case DeeplinkEnum.login:
+  //       Timer(const Duration(seconds: 1), () async {
+  //         bool userPresent = false;
+  //         UserProvider provider =
+  //             navigatorKey.currentContext!.read<UserProvider>();
+  //         if (await provider.checkForUser()) {
+  //           userPresent = true;
+  //         }
+  //         // if (!userPresent) loginSheet();
+  //         if (!userPresent) loginFirstSheet();
+  //       });
+  //       return MaterialPageRoute(builder: (context) => const Tabs());
+  //     // case "signUp":
+  //     case DeeplinkEnum.signup:
+  //       Timer(const Duration(seconds: 1), () async {
+  //         bool userPresent = false;
+  //         UserProvider provider =
+  //             navigatorKey.currentContext!.read<UserProvider>();
+  //         if (await provider.checkForUser()) {
+  //           userPresent = true;
+  //         }
+  //         // if (!userPresent) signupSheet();
+  //         if (!userPresent) loginFirstSheet();
+  //       });
+  //       return MaterialPageRoute(builder: (context) => const Tabs());
+  //     default:
+  //       // log("HERE ");
+  //       return MaterialPageRoute(builder: (context) => const Tabs());
+  //   }
+  // }
 
   // static Route _errorRoute() {
 // }

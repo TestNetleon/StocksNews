@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:stocks_news_new/ui/base/news_item.dart';
+import 'package:stocks_news_new/utils/constants.dart';
 import '../../../../models/my_home.dart';
 import '../../../../models/news.dart';
 import '../../../base/heading.dart';
@@ -14,7 +15,13 @@ class HomeNewsIndex extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        BaseHeading(title: newsData?.title),
+        BaseHeading(
+          title: newsData?.title,
+          margin: EdgeInsets.only(
+            top: Pad.pad32,
+            bottom: Pad.pad16,
+          ),
+        ),
         Column(
           children: List.generate(
             newsData?.data?.length ?? 0,

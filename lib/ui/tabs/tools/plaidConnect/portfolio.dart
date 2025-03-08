@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:stocks_news_new/managers/aiAnalysis/ai.dart';
 import 'package:stocks_news_new/managers/tools.dart';
+import 'package:stocks_news_new/ui/aiAnalysis/index.dart';
 import 'package:stocks_news_new/ui/base/app_bar.dart';
 import 'package:stocks_news_new/ui/base/base_scroll.dart';
 import 'package:stocks_news_new/ui/base/button.dart';
+import 'package:stocks_news_new/ui/base/toaster.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -115,6 +118,19 @@ class _ToolsPortfolioIndexState extends State<ToolsPortfolioIndex> {
                     slidable: false,
                     data: data,
                     index: index,
+                    onTap: (p0) {
+                      if (p0.notAvailable != null && p0.notAvailable != '') {
+                        TopSnackbar.show(
+                          message: p0.notAvailable ?? '',
+                        );
+                      } else {
+                        AIManager manager = context.read<AIManager>();
+                        manager.setFromSD(false);
+                        Navigator.pushNamed(context, AIindex.path, arguments: {
+                          'symbol': p0.symbol,
+                        });
+                      }
+                    },
                   );
                 },
                 separatorBuilder: (context, index) {

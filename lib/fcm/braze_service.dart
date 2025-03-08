@@ -11,6 +11,9 @@ import 'package:stocks_news_new/screens/affiliate/pointsTransaction/trasnsaction
 import 'package:stocks_news_new/screens/offerMembership/christmas/index.dart';
 import 'package:stocks_news_new/service/braze/service.dart';
 import 'package:stocks_news_new/service/revenue_cat.dart';
+import 'package:stocks_news_new/ui/stockDetail/index.dart';
+import 'package:stocks_news_new/ui/tabs/more/articles/detail.dart';
+import 'package:stocks_news_new/ui/tabs/more/news/detail.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/database/preference.dart';
 import '../api/api_requester.dart';
@@ -20,17 +23,13 @@ import '../providers/home_provider.dart';
 import '../providers/user_provider.dart';
 import '../screens/auth/base/base_auth.dart';
 import '../screens/offerMembership/blackFriday/index.dart';
-
 import '../ui/tabs/tabs.dart';
 import '../utils/utils.dart';
 import 'package:stocks_news_new/screens/affiliate/index.dart';
 import 'package:stocks_news_new/screens/auth/refer/refer_code.dart';
-import 'package:stocks_news_new/screens/blogDetail/index.dart';
 import 'package:stocks_news_new/screens/deepLinkScreen/webscreen.dart';
 import '../screens/drawer/widgets/review_app_pop_up.dart';
 import '../screens/helpDesk/chats/index.dart';
-import '../screens/stockDetail/index.dart';
-import '../screens/tabs/news/newsDetail/new_detail.dart';
 
 class BrazeNotificationService {
   BrazeNotificationService._internal();
@@ -149,15 +148,20 @@ class BrazeNotificationService {
       } else if (slug != '' &&
           slug != null &&
           type == NotificationType.newsDetail.name) {
-        Navigator.push(
-          navigatorKey.currentContext!,
-          MaterialPageRoute(
-            builder: (_) => NewsDetails(
-              slug: slug,
-              // notificationId: notificationId,
-            ),
-          ),
-        );
+        // Navigator.push(
+        //   navigatorKey.currentContext!,
+        //   MaterialPageRoute(
+        //     builder: (_) => NewsDetails(
+        //       slug: slug,
+        //       // notificationId: notificationId,
+        //     ),
+        //   ),
+        // );
+
+        Navigator.pushNamed(navigatorKey.currentContext!, NewsDetailIndex.path,
+            arguments: {
+              'slug': slug,
+            });
       } else if (slug != '' &&
           slug != null &&
           type == NotificationType.lpPage.name) {
@@ -173,15 +177,19 @@ class BrazeNotificationService {
       } else if (slug != '' &&
           slug != null &&
           type == NotificationType.blogDetail.name) {
-        Navigator.push(
-          navigatorKey.currentContext!,
-          MaterialPageRoute(
-            builder: (context) => BlogDetail(
-              slug: slug,
-              // notificationId: notificationId,
-            ),
-          ),
-        );
+        // Navigator.push(
+        //   navigatorKey.currentContext!,
+        //   MaterialPageRoute(
+        //     builder: (context) => BlogDetail(
+        //       slug: slug,
+        //       // notificationId: notificationId,
+        //     ),
+        //   ),
+        // );
+        Navigator.pushNamed(navigatorKey.currentContext!, BlogsDetailIndex.path,
+            arguments: {
+              'slug': slug,
+            });
       } else if (slug != '' &&
           slug != null &&
           type == NotificationType.register.name) {
@@ -215,15 +223,19 @@ class BrazeNotificationService {
               slug != null &&
               type == NotificationType.stockDetail.name ||
           isValidTickerSymbol(type ?? "")) {
-        Navigator.push(
-          navigatorKey.currentContext!,
-          MaterialPageRoute(
-            builder: (_) => StockDetail(
-              symbol: "$slug",
-              // notificationId: notificationId,
-            ),
-          ),
-        );
+        // Navigator.push(
+        //   navigatorKey.currentContext!,
+        //   MaterialPageRoute(
+        //     builder: (_) => StockDetail(
+        //       symbol: "$slug",
+        //       // notificationId: notificationId,
+        //     ),
+        //   ),
+        // );
+        Navigator.pushNamed(navigatorKey.currentContext!, SDIndex.path,
+            arguments: {
+              'symbol': slug,
+            });
       } else if (slug != '' &&
           slug != null &&
           type == NotificationType.nudgeFriend.name) {

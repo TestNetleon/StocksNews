@@ -89,6 +89,9 @@ class SDManager extends ChangeNotifier {
   String? _selectedStock;
   String? get selectedStock => _selectedStock;
 
+
+
+
 //MARK: Common TabChange
   onTabChange(int index) {
     Utils().showLog('--Index--$index');
@@ -1427,4 +1430,32 @@ class SDManager extends ChangeNotifier {
       setStatusMergers(Status.loaded);
     }
   }
+
+  void updateTickerInfo({required String symbol, alertAdded, watchListAdded}) {
+
+    if (_dataStocksAnalysis?.peersData?.data != null) {
+      final index =
+      _dataStocksAnalysis?.peersData?.data?.indexWhere((element) => element.symbol == symbol);
+      if (index != null && index != -1) {
+        if (alertAdded != null) {
+          _dataStocksAnalysis?.peersData?.data![index].isAlertAdded = alertAdded;
+        }
+        if (watchListAdded != null) {
+          _dataStocksAnalysis?.peersData?.data![index].isWatchlistAdded = watchListAdded;
+        }
+        notifyListeners();
+      }
+    }
+
+    if (_data?.tickerDetail != null) {
+      if (alertAdded != null) {
+        _data?.tickerDetail?.isAlertAdded = alertAdded;
+      }
+      if (watchListAdded != null) {
+        _data?.tickerDetail?.isWatchlistAdded = watchListAdded;
+      }
+      notifyListeners();
+    }
+  }
+
 }

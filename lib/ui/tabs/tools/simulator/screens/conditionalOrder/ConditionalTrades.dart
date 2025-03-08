@@ -37,8 +37,12 @@ class ConditionalTradesIndex extends StatelessWidget {
       child: BaseScaffold(
         appBar: BaseTickerAppBar(
           data: detailRes,
+          manager: manager,
           addToWatchlist: (){},
           addToAlert: (){},
+          onRefresh: (){
+            manager.getDetailTopData(symbol:  detailRes?.symbol??"");
+          },
         ),
         body:
         tradeType!=null?

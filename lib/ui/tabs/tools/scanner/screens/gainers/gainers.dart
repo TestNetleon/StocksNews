@@ -3,8 +3,6 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/ui/tabs/tools/scanner/manager/gainers.dart';
 import 'package:stocks_news_new/ui/tabs/tools/scanner/models/offline.dart';
 import 'package:stocks_news_new/widgets/loading.dart';
-
-import '../../manager/scanner.dart';
 import '../../models/live.dart';
 import '../extra/container.dart';
 
@@ -20,9 +18,9 @@ class ScannerGainersIndex extends StatelessWidget {
           if (list == null || list.isEmpty) {
             return SizedBox();
           }
-          WidgetsBinding.instance.addPostFrameCallback((_) {
-            context.read<ScannerManager>().setTotalResults(list.length);
-          });
+          // WidgetsBinding.instance.addPostFrameCallback((_) {
+          //   context.read<ScannerManager>().setTotalResults(list.length);
+          // });
 
           return Expanded(
             child: ScannerBaseContainer(dataList: list),
@@ -32,9 +30,9 @@ class ScannerGainersIndex extends StatelessWidget {
           if (list == null || list.isEmpty) {
             return SizedBox();
           }
-          WidgetsBinding.instance.addPostFrameCallback((_) {
-            context.read<ScannerManager>().setTotalResults(list.length);
-          });
+          // WidgetsBinding.instance.addPostFrameCallback((_) {
+          //   context.read<ScannerManager>().setTotalResults(list.length);
+          // });
 
           return Expanded(
             child: ScannerBaseContainerOffline(dataList: list),
