@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:stocks_news_new/managers/market/industries/industries.dart';
 import 'package:stocks_news_new/managers/market/sectors/sectors.dart';
 import 'package:stocks_news_new/ui/base/app_bar.dart';
 import 'package:stocks_news_new/ui/base/base_list_divider.dart';
 import 'package:stocks_news_new/ui/base/load_more.dart';
 import 'package:stocks_news_new/ui/base/scaffold.dart';
 import 'package:stocks_news_new/ui/base/stock/add.dart';
-import 'package:stocks_news_new/ui/tabs/market/industries/widget/header_item.dart';
 import 'package:stocks_news_new/ui/tabs/market/sectors/widget/header_chart.dart';
 import 'package:stocks_news_new/widgets/custom/base_loader_container.dart';
 

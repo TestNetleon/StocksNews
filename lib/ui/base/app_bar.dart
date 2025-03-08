@@ -212,11 +212,13 @@ class ActionButton extends StatelessWidget {
     required this.icon,
     required this.onTap,
     this.padding,
+    this.color,
   });
 
   final String icon;
   final double size;
   final EdgeInsets? padding;
+  final Color? color;
   final Function() onTap;
 
   @override
@@ -227,7 +229,7 @@ class ActionButton extends StatelessWidget {
         padding: padding ?? EdgeInsets.zero,
         child: Image.asset(
           icon,
-          color: ThemeColors.black,
+          color: color ?? ThemeColors.black,
           width: size,
           height: size,
         ),

@@ -1,7 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
+import 'package:stocks_news_new/managers/market/alerts_watchlist_action.dart';
+import 'package:stocks_news_new/managers/user.dart';
 import 'package:stocks_news_new/models/ticker.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
+import 'package:stocks_news_new/ui/base/bottom_sheet.dart';
+import 'package:stocks_news_new/ui/base/toaster.dart';
+import 'package:stocks_news_new/ui/subscription/manager.dart';
+import 'package:stocks_news_new/ui/tabs/market/stocks/extra/add_to_alert_sheet.dart';
+import 'package:stocks_news_new/ui/tabs/more/alerts/index.dart';
+import 'package:stocks_news_new/ui/tabs/more/watchlist/index.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/cache_network_image.dart';
 import '../../utils/colors.dart';
@@ -12,8 +21,9 @@ import 'app_bar.dart';
 class BaseTickerAppBar extends StatelessWidget implements PreferredSizeWidget {
   final Widget? searchFieldWidget;
   final BaseTickerRes? data;
-  final Function()? shareURL, addToAlert, addToWatchlist;
+  final Function()? shareURL, addToAlert, addToWatchlist, onRefresh;
   final double toolbarHeight;
+  final dynamic manager;
 
   const BaseTickerAppBar({
     super.key,
@@ -23,7 +33,89 @@ class BaseTickerAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.shareURL,
     this.addToAlert,
     this.addToWatchlist,
+    this.manager,
+    this.onRefresh,
   });
+
+
+  Future<void> onAddToAlertClick() async {
+    AlertsWatchlistManager manager = navigatorKey.currentContext!.read<AlertsWatchlistManager>();
+    UserManager userManager = navigatorKey.currentContext!.read<UserManager>();
+    if (data?.isAlertAdded == 1) {
+      await Navigator.pushNamed(navigatorKey.currentContext!, AlertIndex.path);
+      if (onRefresh != null) onRefresh!();
+    } else {
+      if (userManager.user != null) {
+        await manager.requestAlertLock(symbol: data?.symbol ?? "");
+        if (manager.checkAlertLock?.lockInfo != null) {
+          SubscriptionManager().startProcess(viewPlans: true);
+        } else if (manager.checkAlertLock?.alertData != null) {
+          _showAlertBottomSheet();
+        } else {
+          TopSnackbar.show(
+            message: Const.errSomethingWrong,
+            type: ToasterEnum.error,
+          );
+        }
+      } else {
+        await userManager.askLoginScreen();
+        if (userManager.user != null && onRefresh != null) {
+          onRefresh!();
+        }
+      }
+    }
+  }
+
+  Future _showAlertBottomSheet() async {
+    BaseBottomSheet().bottomSheet(
+      child: AddToAlertSheet(symbol: data?.symbol ?? "", manager: manager),
+    );
+  }
+
+  Future<void> onAddToWatchlistClick() async {
+    AlertsWatchlistManager manager = navigatorKey.currentContext!.read<AlertsWatchlistManager>();
+    UserManager userManager = navigatorKey.currentContext!.read<UserManager>();
+    if (data?.isWatchlistAdded == 1) {
+      await Navigator.pushNamed(navigatorKey.currentContext!, WatchListIndex.path);
+      if (onRefresh != null) onRefresh!();
+    } else {
+      if (userManager.user != null) {
+        await manager.requestAlertLock(symbol: data?.symbol ?? "");
+        if (manager.checkAlertLock?.lockInfo != null) {
+          SubscriptionManager().startProcess(viewPlans: true);
+        } else if (manager.checkAlertLock?.alertData != null) {
+          requestAddToWatchlist(navigatorKey.currentContext!);
+        } else {
+          TopSnackbar.show(
+            message: Const.errSomethingWrong,
+            type: ToasterEnum.error,
+          );
+        }
+      } else {
+        await userManager.askLoginScreen();
+        if (userManager.user != null && onRefresh != null) {
+          onRefresh!();
+        }
+      }
+    }
+  }
+
+  void requestAddToWatchlist(BuildContext context) async {
+    AlertsWatchlistManager alertManager =
+    context.read<AlertsWatchlistManager>();
+
+    final Map request = {"symbol": data?.symbol};
+
+    final result = await alertManager.requestAddToWishList(
+      symbol: data?.symbol ?? "",
+      request: request,
+    );
+
+    if (result == true) {
+      manager.updateTickerInfo(symbol: data?.symbol, watchListAdded: 1);
+      // Navigator.pop(context);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -132,7 +224,9 @@ class BaseTickerAppBar extends StatelessWidget implements PreferredSizeWidget {
                     child: ActionButton(
                       size: 35,
                       icon: Images.moreStockAlerts,
-                      onTap: addToAlert!,
+                      onTap: onAddToAlertClick,
+                      color: data?.isAlertAdded==1?ThemeColors.primary120:ThemeColors.splashBG,
+
                     ),
                   ),
                 if (addToWatchlist != null)
@@ -141,7 +235,9 @@ class BaseTickerAppBar extends StatelessWidget implements PreferredSizeWidget {
                     child: ActionButton(
                       size: 35,
                       icon: Images.watchlist,
-                      onTap: addToWatchlist!,
+                     // icon: Images.watchlist,
+                      onTap: onAddToWatchlistClick,
+                      color: data?.isWatchlistAdded==1?ThemeColors.primary120:ThemeColors.splashBG,
                     ),
                   ),
                 if (shareURL != null)

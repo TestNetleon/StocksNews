@@ -3,6 +3,7 @@ import 'package:stocks_news_new/ui/base/border_container.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
+import 'package:stocks_news_new/widgets/cache_network_image.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import '../../../models/stockDetail/overview.dart';
@@ -34,8 +35,20 @@ class AIHighlightsItem extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                BaseBorderContainer(
-                  padding: EdgeInsets.zero,
+                Visibility(
+                  visible: data.icon!=null,
+                  child: BaseBorderContainer(
+                    padding: EdgeInsets.zero,
+                    innerPadding: EdgeInsets.all(Pad.pad5),
+                    child:CachedNetworkImagesWidget(
+                      data.icon?? '',
+                      height: 24,
+                      width: 24,
+                      placeHolder: Images.userPlaceholderNew,
+                      showLoading: true,
+                      fit: BoxFit.contain,
+                    ),
+                  ),
                 ),
                 SpacerHorizontal(width: 8),
                 Flexible(

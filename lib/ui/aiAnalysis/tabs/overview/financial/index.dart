@@ -56,23 +56,21 @@ class _AIFinancialState extends State<AIFinancial>
           SpacerVertical(height: 10),
 
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 30),
+            padding: const EdgeInsets.symmetric(horizontal:Pad.pad16),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: List.generate(
                 manager.periodMenu.length,
                 (index) {
                   return Padding(
-                    padding: const EdgeInsets.only(right: 20, top: 10),
+                    padding: const EdgeInsets.only(right: Pad.pad16, top: Pad.pad10),
                     child: GestureDetector(
                       onTap: () {
                         manager.onChangeFinancial(periodIndex: index);
                       },
                       child: Container(
-                        // width: 80,
-
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(12.0),
+                          borderRadius: BorderRadius.circular(8.0),
                           border: Border.all(
                             color: manager.selectedPeriodIndex == index
                                 ? ThemeColors.white

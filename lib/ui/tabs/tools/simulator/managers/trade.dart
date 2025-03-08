@@ -235,6 +235,18 @@ class TradeManager extends ChangeNotifier {
     }
   }
 
+  void updateTickerInfo({required String symbol, alertAdded, watchListAdded}) {
+    if (_detailRes != null) {
+      if (alertAdded != null) {
+        _detailRes?.isAlertAdded = alertAdded;
+      }
+      if (watchListAdded != null) {
+        _detailRes?.isWatchlistAdded = watchListAdded;
+      }
+      notifyListeners();
+    }
+  }
+
 
 }
 

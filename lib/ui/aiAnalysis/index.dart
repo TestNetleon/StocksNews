@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/managers/aiAnalysis/ai.dart';
+import 'package:stocks_news_new/models/faq.dart';
 import 'package:stocks_news_new/ui/aiAnalysis/radar.dart';
 import 'package:stocks_news_new/ui/aiAnalysis/swot/index.dart';
+import 'package:stocks_news_new/ui/base/base_faq.dart';
 import 'package:stocks_news_new/ui/base/base_scroll.dart';
 import 'package:stocks_news_new/ui/base/scaffold.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
-import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/custom/base_loader_container.dart';
 import '../../models/ai_analysis.dart';
 import '../../models/ticker.dart';
@@ -53,13 +54,14 @@ class _AIindexState extends State<AIindex> {
     AIourTakeRes? ourTake = manager.data?.ourTake;
 
     AIswotRes? swot = manager.data?.swot;
+    BaseFaqRes? faqs = manager.data?.faqs;
 
     return BaseScaffold(
       appBar: BaseTickerAppBar(
         data: tickerDetail,
-        shareURL: () {
+       /* shareURL: () {
           openUrl(tickerDetail?.shareUrl);
-        },
+        },*/
       ),
       body: BaseLoaderContainer(
         hasData: manager.data != null,
@@ -81,18 +83,19 @@ class _AIindexState extends State<AIindex> {
             Container(
               margin: EdgeInsets.symmetric(
                 horizontal: Pad.pad16,
-                vertical: Pad.pad10,
+                vertical: Pad.pad20,
               ),
               width: double.infinity,
-              padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+              padding: EdgeInsets.symmetric(horizontal: 8, vertical: 5),
               decoration: BoxDecoration(
                   color: ThemeColors.neutral5,
                   borderRadius: BorderRadius.circular(8)),
               child: Text(
                 manager.data?.lastUpdateDate ?? '',
-                style: styleBaseRegular(fontSize: 13),
+                style: styleBaseRegular(fontSize: 12),
               ),
             ),
+            BaseFaq(faqs: faqs),
           ],
         ),
       ),

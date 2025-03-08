@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:stocks_news_new/models/billionaires_res.dart';
-import 'package:stocks_news_new/ui/tabs/more/billionaires/billionaires_index.dart';
 import 'package:stocks_news_new/ui/tabs/more/billionaires/cryptocurrencies/widget/billionaire_item.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
