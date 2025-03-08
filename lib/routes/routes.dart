@@ -313,11 +313,13 @@ class Routes {
           builder: (context) {
             final arguments = settings.arguments as Map<String, dynamic>?;
             int? index = arguments?['index'];
-            int? trendingIndex = arguments?['trendingIndex'];
+            // int? trendingIndex = arguments?['trendingIndex'];
+            int? childIndex = arguments?['childIndex'];
             String? inAppMsgId = arguments?['inAppMsgId'];
             return Tabs(
               index: index ?? 0,
-              trendingIndex: trendingIndex ?? 0,
+              childIndex: childIndex ?? 0,
+              // trendingIndex: trendingIndex ?? 0,
               inAppMsgId: inAppMsgId,
             );
           },

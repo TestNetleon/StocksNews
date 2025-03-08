@@ -14,7 +14,8 @@ class Apis {
   //     ? "https://dev.stocks.news/api/v2"
   //     : "https://app.stocks.news/api/v1";
 
-  static const baseUrl = 'https://dev.stocks.news/api/v2';
+  // static const baseUrl = 'https://dev.stocks.news/api/v2';
+  static const baseUrl = 'https://app.stocks.news/api/v2';
 
   // MARK: New UI APIs
   static const onBoarding = '/onboarding';

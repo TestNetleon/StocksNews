@@ -864,7 +864,8 @@ DeeplinkEnum containsSpecificPath(Uri uri) {
       uri.path.contains('/market-data/low-priced-stocks/stocks-under-10') ||
       uri.path.contains('/market-data/low-priced-stocks/stocks-under-20') ||
       uri.path.contains('/market-data/low-priced-stocks/stocks-under-30') ||
-      uri.path.contains('/market-data/low-priced-stocks/stocks-under-50')) {
+      uri.path.contains('/market-data/low-priced-stocks/stocks-under-50') ||
+      uri.path.contains('/market-data/stocks-on-sale')) {
     // return "low_prices";
     return DeeplinkEnum.lowPriceStocks;
   } else if (uri.path.contains('/market-data/most-active-stocks') ||

@@ -190,7 +190,7 @@ class AlertPopupCustom extends StatelessWidget {
                   borderRadius: BorderRadius.only(
                       bottomLeft: Radius.circular(10.sp),
                       bottomRight: Radius.circular(10.sp)),
-                  color: ThemeColors.accent,
+                  color: ThemeColors.primary100,
                 ),
               ),
             ],

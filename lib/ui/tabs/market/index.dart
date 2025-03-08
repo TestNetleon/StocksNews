@@ -48,7 +48,14 @@ import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/custom/base_loader_container.dart';
 
 class MarketIndex extends StatefulWidget {
-  const MarketIndex({super.key});
+  const MarketIndex({
+    super.key,
+    this.screenIndex,
+    this.marketIndex,
+  });
+
+  final int? screenIndex;
+  final int? marketIndex;
 
   @override
   State<MarketIndex> createState() => _MarketIndexState();
@@ -62,6 +69,15 @@ class _MarketIndexState extends State<MarketIndex> {
   @override
   void initState() {
     super.initState();
+
+    if (widget.marketIndex != null) {
+      _marketIndex = widget.marketIndex ?? 0;
+      // _changeMarketIndex(widget.marketIndex ?? 0);
+    } else if (widget.screenIndex != null) {
+      _screenIndex = widget.screenIndex ?? 0;
+      // _changeScreenIndex(widget.screenIndex ?? 0);
+    }
+
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _callAPI();
     });
@@ -284,6 +300,7 @@ class _MarketIndexState extends State<MarketIndex> {
                       key: ValueKey(provider.data!.data![_screenIndex].slug),
                       data: provider.data!.data![_screenIndex].data!,
                       onTap: _changeMarketIndex,
+                      selectedIndex: _marketIndex,
                     ),
                   if (_screenIndex == 0 &&
                       provider.data!.data![0].data![_marketIndex].data != null)
