@@ -14,6 +14,7 @@ import 'package:stocks_news_new/managers/stockDetail/stock.detail.dart';
 import 'package:stocks_news_new/managers/tools.dart';
 import 'package:stocks_news_new/modals/user_res.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
+import 'package:stocks_news_new/screens/auth/refer/refer_code.dart';
 import 'package:stocks_news_new/ui/account/auth/login.dart';
 import 'package:stocks_news_new/ui/account/update/index.dart';
 import 'package:stocks_news_new/ui/base/toaster.dart';
@@ -27,6 +28,7 @@ import 'package:stocks_news_new/ui/tabs/more/helpdesk/front/index.dart';
 import 'package:stocks_news_new/ui/tabs/more/news/index.dart';
 import 'package:stocks_news_new/ui/tabs/more/notificationSettings/index.dart';
 import 'package:stocks_news_new/ui/tabs/more/referral/index.dart';
+import 'package:stocks_news_new/ui/tabs/more/referral/joinRefer/index.dart';
 import 'package:stocks_news_new/ui/tabs/more/watchlist/index.dart';
 import 'package:stocks_news_new/ui/tabs/tabs.dart';
 import 'package:stocks_news_new/utils/utils.dart';
@@ -74,11 +76,17 @@ class UserManager extends ChangeNotifier {
     } else {
       await Navigator.push(
         navigatorKey.currentContext!,
-        createRoute(
-          AccountLoginIndex(),
-        ),
+        createRoute(AccountLoginIndex()),
       );
     }
+  }
+
+  referJoinScreen() async {
+    // referLogin();
+    await Navigator.push(
+      navigatorKey.currentContext!,
+      createRoute(JoinReferralIndex()),
+    );
   }
 
   setStatus(status) {
@@ -378,6 +386,7 @@ class UserManager extends ChangeNotifier {
     String? phoneCode,
     String? email,
     String? OTP,
+    String? affiliateStatus,
   }) async {
     MultipartFile? multipartFile;
     if (image != null) {
@@ -405,9 +414,11 @@ class UserManager extends ChangeNotifier {
     if (displayName != null && displayName.isNotEmpty) {
       request.fields.add(MapEntry('display_name', displayName));
     }
-
     if (phone != null && phone.isNotEmpty) {
       request.fields.add(MapEntry('phone', phone));
+    }
+    if (affiliateStatus != null && affiliateStatus.isNotEmpty) {
+      request.fields.add(MapEntry('affiliate_status', affiliateStatus));
     }
     if (phoneCode != null && phoneCode.isNotEmpty) {
       request.fields.add(MapEntry('phone_code', phoneCode));
@@ -439,6 +450,7 @@ class UserManager extends ChangeNotifier {
             countryCode: phoneCode,
             phone: phone,
             email: email,
+            affiliateStatus: int.tryParse(affiliateStatus ?? "0") ?? 0,
           );
         }
       }

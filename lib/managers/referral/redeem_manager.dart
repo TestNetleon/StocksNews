@@ -4,13 +4,17 @@ import 'package:flutter/material.dart';
 import 'package:stocks_news_new/api/api_requester.dart';
 import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/api/apis.dart';
-import 'package:stocks_news_new/models/referral/leader_board.dart';
+import 'package:stocks_news_new/models/referral/redeem_list_res.dart';
+import 'package:stocks_news_new/routes/my_app.dart';
+import 'package:stocks_news_new/ui/animation/coin_animation.dart';
+import 'package:stocks_news_new/ui/base/toaster.dart';
+import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 
 class RedeemManager extends ChangeNotifier {
-  LeaderBoardRes? _data;
-  LeaderBoardRes? get data => _data;
+  RedeemListRes? _data;
+  RedeemListRes? get data => _data;
 
   Status _status = Status.ideal;
   Status get status => _status;
@@ -25,16 +29,16 @@ class RedeemManager extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future getData({loadMore = false}) async {
+  Future getData() async {
     try {
       _error = null;
-      setStatus(loadMore ? Status.loadingMore : Status.loading);
+      setStatus(Status.loading);
       ApiResponse response = await apiRequest(
         url: Apis.redeemList,
         request: {},
       );
       if (response.status) {
-        _data = leaderBoardResFromJson(jsonEncode(response.data));
+        _data = redeemListResFromJson(jsonEncode(response.data));
       } else {
         _data = null;
         _error = response.message;
@@ -48,23 +52,44 @@ class RedeemManager extends ChangeNotifier {
     }
   }
 
-  Future requestClaimReward({loadMore = false, type = ""}) async {
+  Future requestClaimReward({type = ""}) async {
     try {
-      _error = null;
-      setStatus(loadMore ? Status.loadingMore : Status.loading);
-      ApiResponse response = await apiRequest(
-        url: Apis.pointClaim,
-        request: {"type": type},
+      // setStatus(Status.loading);
+
+      // ApiResponse response = await apiRequest(
+      //   url: Apis.pointClaim,
+      //   request: {"type": type},
+      // );
+
+      // if (response.status) {
+      showDialog(
+        barrierDismissible: false,
+        barrierColor: ThemeColors.background.withValues(alpha: 0.6),
+        useSafeArea: true,
+        context: navigatorKey.currentContext!,
+        builder: (context) {
+          return CoinAnimationWidget(
+            data: CongoClaimRes(
+              points: 0,
+              subtitle: "response.message",
+            ),
+          );
+        },
       );
-      if (response.status) {
-        // _data = leaderBoardResFromJson(jsonEncode(response.data));
-      } else {
-        //
-      }
-      setStatus(Status.loaded);
+      getData();
+      // } else {
+      //   TopSnackbar.show(
+      //     message: response.message ?? '',
+      //     type: response.status ? ToasterEnum.success : ToasterEnum.error,
+      //   );
+      // }
+      // setStatus(Status.loaded);
     } catch (e) {
       Utils().showLog("Error => $e");
-      //
+      TopSnackbar.show(
+        message: Const.errSomethingWrong,
+        type: ToasterEnum.error,
+      );
       setStatus(Status.loaded);
     }
   }

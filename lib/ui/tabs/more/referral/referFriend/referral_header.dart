@@ -15,14 +15,13 @@ class ReferralHeader extends StatelessWidget {
   const ReferralHeader({super.key});
 
   void _shareApp(BuildContext context) async {
-    ReferralManager manager = context.read<ReferralManager>();
+    // ReferralManager manager = context.read<ReferralManager>();
     UserManager userManager = context.read<UserManager>();
 
-    //  UserProvider userProvider = context.read<UserProvider>();
-    // if (userProvider.user?.phone == null || userProvider.user?.phone == '') {
-    if (manager.data?.referralStatus != 1 && userManager.user == null) {
+    // if (manager.data?.referralStatus != 1 && userManager.user == null) {
+    if (userManager.user?.affiliateStatus != 1) {
       // await referLogin();
-      await userManager.askLoginScreen();
+      await userManager.referJoinScreen();
     } else {
       await Share.share(
         "${"shareText"}${"\n\n"}${shareUri.toString()}",
@@ -92,7 +91,9 @@ class ReferralHeader extends StatelessWidget {
                 ),
                 SpacerVertical(height: 14),
                 BaseButton(
-                  onPressed: () => _shareApp(context),
+                  onPressed: () {
+                    _shareApp(context);
+                  },
                   text: "Share with Friends",
                   color: ThemeColors.white,
                   textStyle: styleBaseBold(

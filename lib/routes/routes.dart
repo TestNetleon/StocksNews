@@ -156,6 +156,8 @@ import 'package:stocks_news_new/ui/tabs/more/helpdesk/listing/index.dart';
 import 'package:stocks_news_new/ui/tabs/more/helpdesk/tickets/index.dart';
 import 'package:stocks_news_new/ui/tabs/more/notificationSettings/index.dart';
 import 'package:stocks_news_new/ui/tabs/more/referral/index.dart';
+import 'package:stocks_news_new/ui/tabs/more/referral/joinRefer/index.dart';
+import 'package:stocks_news_new/ui/tabs/more/referral/joinRefer/verify.dart';
 import 'package:stocks_news_new/ui/tabs/more/referral/pointsTransaction/index.dart';
 import 'package:stocks_news_new/ui/tabs/more/referral/redeem/index.dart';
 import 'package:stocks_news_new/ui/tabs/more/watchlist/index.dart';
@@ -254,6 +256,8 @@ class Routes {
     BillionairesIndex.path: (_) => const BillionairesIndex(),
     ReferralIndex.path: (_) => const ReferralIndex(),
     RedeemPoints.path: (_) => const RedeemPoints(),
+    JoinReferralIndex.path: (_) => const JoinReferralIndex(),
+    // JoinReferVerificationIndex.path: (_) => const JoinReferVerificationIndex(),
 
     //--------------------------------------
 
@@ -542,6 +546,21 @@ class Routes {
             );
           },
         );
+
+      case JoinReferVerificationIndex.path:
+        return MaterialPageRoute(
+          builder: (context) {
+            final arguments = settings.arguments as Map<String, dynamic>?;
+            return JoinReferVerificationIndex(
+              name: arguments?['name'],
+              displayName: arguments?['displayName'],
+              countryCode: arguments?['countryCode'],
+              phone: arguments?['phone'],
+              verificationId: arguments?['verificationId'],
+            );
+          },
+        );
+
       default:
     }
 

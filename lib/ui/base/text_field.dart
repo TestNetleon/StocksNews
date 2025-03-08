@@ -17,7 +17,7 @@ class BaseTextField extends StatelessWidget {
     this.maxLines,
     this.editable = true,
     this.shadow = true,
-    this.filled = false,
+    this.filled = true,
     this.placeholder,
     this.inputFormatters,
     this.textCapitalization = TextCapitalization.sentences,
@@ -29,6 +29,7 @@ class BaseTextField extends StatelessWidget {
     this.suffixIcon,
     super.key,
     this.hintText,
+    this.fillColor,
   });
 
   final TextEditingController? controller;
@@ -53,6 +54,7 @@ class BaseTextField extends StatelessWidget {
   final TextInputAction? textInputAction;
   final Function(String)? onChanged;
   final FocusNode? focusNode;
+  final Color? fillColor;
 
   @override
   Widget build(BuildContext context) {
@@ -93,8 +95,8 @@ class BaseTextField extends StatelessWidget {
           labelStyle: stylePTSansRegular(color: ThemeColors.neutral60),
           contentPadding:
               contentPadding ?? EdgeInsets.symmetric(horizontal: Pad.pad16),
-          filled: true,
-          fillColor: ThemeColors.white,
+          filled: filled,
+          fillColor: fillColor ?? ThemeColors.white,
           enabledBorder: enabledBorder,
           border: outlineInputBorder,
           focusedBorder: outlineInputBorder,

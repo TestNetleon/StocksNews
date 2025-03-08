@@ -59,13 +59,13 @@ class Box {
 }
 
 class RedeemData {
-  final String title;
-  final String type;
-  final int points;
-  final int targetPoints;
-  final int claimPoints;
-  final bool status;
-  final String text;
+  final String? title;
+  final String? type;
+  final dynamic points;
+  final dynamic targetPoints;
+  final dynamic claimPoints;
+  final bool? status;
+  final String? text;
 
   RedeemData({
     required this.title,
