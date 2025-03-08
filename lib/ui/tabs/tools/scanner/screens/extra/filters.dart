@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/ui/base/app_bar.dart';
 import 'package:stocks_news_new/ui/base/bottom_sheet.dart';
+import 'package:stocks_news_new/ui/base/button.dart';
 import 'package:stocks_news_new/ui/base/heading.dart';
 import 'package:stocks_news_new/ui/base/scaffold.dart';
 import 'package:stocks_news_new/ui/base/text_field.dart';
@@ -12,7 +13,6 @@ import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/widgets/custom/filter_list.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
-import 'package:stocks_news_new/widgets/theme_button.dart';
 import '../../manager/filters.dart';
 
 class ScannerFilters extends StatefulWidget {
@@ -327,14 +327,20 @@ class _ScannerFiltersState extends State<ScannerFilters> {
             Row(
               children: [
                 Flexible(
-                  child: ThemeButton(
+                  child: BaseButton(
+                    color: ThemeColors.white,
+                    side: BorderSide(color: ThemeColors.neutral20, width: 2),
+                    textColor: ThemeColors.neutral40,
                     onPressed: _resetFilter,
-                    text: "Reset All",
+                    text: "Reset",
                   ),
                 ),
                 const SpacerHorizontal(width: 16),
                 Flexible(
-                  child: ThemeButton(onPressed: _applyFilter, text: "Apply"),
+                  child: BaseButton(
+                    onPressed: _applyFilter,
+                    text: "Apply",
+                  ),
                 )
               ],
             ),
