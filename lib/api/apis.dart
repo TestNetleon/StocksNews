@@ -48,7 +48,6 @@ class Apis {
   static const shareFeedback = "/share-feedback";
   static const notifications = "/notifications";
 
-
   // Referral
   static const referral = "/referrals/list";
   static const referralTransaction = "/referrals/txn-report";
@@ -270,7 +269,7 @@ class Apis {
   static const compare = "/compare";
   static const deleteCompare = "/delete-compare";
   static const addCompare = "/add-compare";
- // static const notifications = "/notifications";
+  // static const notifications = "/notifications";
   // static const deleteUser = "/delete-user";
   static const qrCodeScan = "/token-login";
   static const stocks = "/stocks";

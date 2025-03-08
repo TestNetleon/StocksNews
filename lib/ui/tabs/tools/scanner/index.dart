@@ -1,17 +1,23 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/models/market/market_res.dart';
 import 'package:stocks_news_new/ui/base/app_bar.dart';
+import 'package:stocks_news_new/ui/base/button.dart';
 import 'package:stocks_news_new/ui/base/lock.dart';
 import 'package:stocks_news_new/ui/base/scaffold.dart';
 import 'package:stocks_news_new/ui/tabs/tools/scanner/manager/gainers.dart';
 import 'package:stocks_news_new/ui/tabs/tools/scanner/manager/losers.dart';
 import 'package:stocks_news_new/ui/tabs/tools/scanner/manager/scanner.dart';
 import 'package:stocks_news_new/ui/tabs/tools/scanner/screens/losers/losers.dart';
+import 'package:stocks_news_new/utils/colors.dart';
+import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/custom/base_loader_container.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 import '../../../base/common_tab.dart';
+import 'models/scanner_port.dart';
 import 'screens/extra/filters.dart';
 import 'screens/extra/header.dart';
 import 'screens/extra/sorting.dart';
@@ -51,6 +57,10 @@ class _ToolsScannerIndexState extends State<ToolsScannerIndex> {
       builder: (context, value, child) {
         bool startStream =
             value.portData?.port?.checkMarketOpenApi?.startStreaming == true;
+
+        CheckMarketOpenRes? checkMarketOpenApi =
+            value.portData?.port?.checkMarketOpenApi;
+
         return PopScope(
           onPopInvokedWithResult: (didPop, result) {
             ScannerGainersManager gainersManager =
@@ -65,16 +75,16 @@ class _ToolsScannerIndexState extends State<ToolsScannerIndex> {
           child: BaseScaffold(
             appBar: BaseAppBar(
               showBack: true,
-              showFilter: value.selectedIndex == 0
-                  ? () {
+              showFilter: value.selectedIndex != 0
+                  ? null
+                  : () {
                       Navigator.push(context, createRoute(ScannerFilters()));
-                    }
-                  : null,
+                    },
             ),
             body: Stack(
               children: [
                 BaseLoaderContainer(
-                  hasData: value.portData?.port != null && !value.isLoadingPort,
+                  hasData: value.portData != null,
                   isLoading:
                       value.isLoadingPort && value.portData?.port == null,
                   error: value.errorPort,
@@ -87,15 +97,37 @@ class _ToolsScannerIndexState extends State<ToolsScannerIndex> {
                         isScrollable: false,
                         onTap: value.onTabChange,
                       ),
-                      MarketScannerHeader(isOnline: startStream),
-                      if (value.selectedIndex != 0)
-                        ScannerSubHeaderTab(
-                          key: ValueKey(value.selectedSubIndex),
+                      Expanded(
+                        child: Stack(
+                          fit: StackFit.expand,
+                          children: [
+                            Column(
+                              children: [
+                                MarketScannerHeader(isOnline: startStream),
+                                if (value.selectedIndex != 0)
+                                  ScannerSubHeaderTab(
+                                    key: ValueKey(value.selectedSubIndex),
+                                  ),
+                                MarketSortingHeader(),
+                                if (value.selectedIndex == 0) ScannerIndex(),
+                                if (value.selectedIndex == 1)
+                                  ScannerGainersIndex(),
+                                if (value.selectedIndex == 2)
+                                  ScannerLosersIndex(),
+                              ],
+                            ),
+                            if (value.selectedIndex == 0 &&
+                                checkMarketOpenApi?.scannerStatus == 1)
+                              _showBanner(),
+                            if (value.selectedIndex == 1 &&
+                                checkMarketOpenApi?.gainerStatus == 1)
+                              _showBanner(),
+                            if (value.selectedIndex == 2 &&
+                                checkMarketOpenApi?.loserStatus == 1)
+                              _showBanner(),
+                          ],
                         ),
-                      MarketSortingHeader(),
-                      if (value.selectedIndex == 0) ScannerIndex(),
-                      if (value.selectedIndex == 1) ScannerGainersIndex(),
-                      if (value.selectedIndex == 2) ScannerLosersIndex(),
+                      )
                     ],
                   ),
                 ),
@@ -107,6 +139,38 @@ class _ToolsScannerIndexState extends State<ToolsScannerIndex> {
                 ),
               ],
             ),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _showBanner() {
+    return Consumer<ScannerManager>(
+      builder: (context, value, child) {
+        return Container(
+          margin: EdgeInsets.symmetric(horizontal: Pad.pad16),
+          color: Colors.white,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              CachedNetworkImage(
+                imageUrl:
+                    value.portData?.port?.checkMarketOpenApi?.bannerImage ?? '',
+                errorWidget: (context, url, error) {
+                  return Container(color: ThemeColors.neutral5);
+                },
+              ),
+              SpacerVertical(height: 10),
+              IntrinsicWidth(
+                child: BaseButton(
+                  text: 'Refresh',
+                  onPressed: () {
+                    value.onRefresh(withPortRefresh: true);
+                  },
+                ),
+              ),
+            ],
           ),
         );
       },

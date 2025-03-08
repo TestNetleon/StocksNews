@@ -49,11 +49,11 @@ class ScannerManager extends ChangeNotifier {
     }
   }
 
-  onRefresh({bool withPortRefresh = true}) {
-    if (_portData?.lockInfo != null) return;
+  onRefresh({bool withPortRefresh = true}) async {
     if (withPortRefresh) {
-      getScannerPorts();
+      await getScannerPorts(showProgress: true);
     }
+    if (_portData?.lockInfo != null) return;
 
     ScannerGainersManager gainersManager =
         navigatorKey.currentContext!.read<ScannerGainersManager>();
@@ -67,6 +67,10 @@ class ScannerManager extends ChangeNotifier {
       case 0:
         setSortingApplied(false);
 
+        if (_portData?.port?.checkMarketOpenApi?.scannerStatus == 1) {
+          return;
+        }
+
         Future.delayed(
           Duration(milliseconds: 100),
           () {
@@ -76,6 +80,9 @@ class ScannerManager extends ChangeNotifier {
         break;
 
       case 1:
+        if (_portData?.port?.checkMarketOpenApi?.gainerStatus == 1) {
+          return;
+        }
         setSortingApplied(true);
 
         gainersManager.resetLiveFilter();
@@ -89,6 +96,10 @@ class ScannerManager extends ChangeNotifier {
         break;
 
       case 2:
+        if (_portData?.port?.checkMarketOpenApi?.loserStatus == 1) {
+          return;
+        }
+
         setSortingApplied(true);
 
         losersManager.resetLiveFilter();

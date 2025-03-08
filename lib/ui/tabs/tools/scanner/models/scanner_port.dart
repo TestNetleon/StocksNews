@@ -77,8 +77,15 @@ class CheckMarketOpenRes {
   final bool? postMarketStream;
   final String? dateTime;
   final bool? startStreaming;
+  final num? scannerStatus;
+  final num? gainerStatus;
+  final num? loserStatus;
+  final String? bannerImage;
 
   CheckMarketOpenRes({
+    this.scannerStatus,
+    this.gainerStatus,
+    this.loserStatus,
     this.isHoliday,
     this.startStreaming,
     this.isMarketOpen,
@@ -90,10 +97,15 @@ class CheckMarketOpenRes {
     this.checkPostMarket,
     this.checkPreMarket,
     this.dateTime,
+    this.bannerImage,
   });
 
   factory CheckMarketOpenRes.fromJson(Map<String, dynamic> json) =>
       CheckMarketOpenRes(
+        bannerImage: json['banner_image'],
+        scannerStatus: json['scannerStatus'],
+        gainerStatus: json['gainerStatus'],
+        loserStatus: json['loserStatus'],
         isHoliday: json["isHoliday"],
         startStreaming: json['startStreaming'],
         isMarketOpen: json["isMarketOpen"],
@@ -108,6 +120,7 @@ class CheckMarketOpenRes {
       );
 
   Map<String, dynamic> toJson() => {
+        'banner_image': bannerImage,
         "isHoliday": isHoliday,
         'startStreaming': startStreaming,
         "isMarketOpen": isMarketOpen,

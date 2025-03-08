@@ -121,13 +121,13 @@ class MoreIndex extends StatelessWidget {
                 manager.navigateToMySubscription();
               },
             ),
-            MoreItem(
-              icon: Images.moreMySubscription,
-              label: "Billionaires",
-              onTap: () {
-                manager.navigateToBillionaires();
-              },
-            ),
+            // MoreItem(
+            //   icon: Images.moreMySubscription,
+            //   label: "Billionaires",
+            //   onTap: () {
+            //     manager.navigateToBillionaires();
+            //   },
+            // ),
             MoreItem(
               icon: Images.moreMySubscription,
               label: "Refer a Friend",
@@ -154,18 +154,18 @@ class MoreIndex extends StatelessWidget {
                 manager.navigateToBlogs();
               },
             ),
-            BaseHeading(
-              margin: EdgeInsets.only(left: Pad.pad16, top: Pad.pad20),
-              title: "Settings",
-              titleStyle: styleBaseBold(fontSize: 20),
-            ),
-            MoreItem(
-              icon: Images.alerts,
-              label: "Notifications",
-              onTap: () {
-                manager.navigateToNotificationSettings();
-              },
-            ),
+            // BaseHeading(
+            //   margin: EdgeInsets.only(left: Pad.pad16, top: Pad.pad20),
+            //   title: "Settings",
+            //   titleStyle: styleBaseBold(fontSize: 20),
+            // ),
+            // MoreItem(
+            //   icon: Images.alerts,
+            //   label: "Notifications",
+            //   onTap: () {
+            //     manager.navigateToNotificationSettings();
+            //   },
+            // ),
             BaseHeading(
               margin: EdgeInsets.only(left: Pad.pad16, top: Pad.pad20),
               title: "Help",
