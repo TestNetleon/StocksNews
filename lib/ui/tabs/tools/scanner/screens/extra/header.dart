@@ -60,73 +60,76 @@ class _MarketScannerHeaderState extends State<MarketScannerHeader> {
 
   @override
   Widget build(BuildContext context) {
-    ScannerManager manager = context.watch<ScannerManager>();
-    CheckMarketOpenRes? checkMarketOpenApi =
-        manager.portData?.port?.checkMarketOpenApi;
+    return Consumer<ScannerManager>(
+      builder: (context, value, child) {
+        CheckMarketOpenRes? checkMarketOpenApi =
+            value.portData?.port?.checkMarketOpenApi;
 
-    String marketStatus = "";
-    if (checkMarketOpenApi?.isMarketOpen == true) {
-      marketStatus = "Live";
-    } else if (checkMarketOpenApi?.checkPreMarket == true) {
-      marketStatus = "Pre Market";
-    } else {
-      marketStatus = "Post Market";
-    }
+        String marketStatus = "";
+        if (checkMarketOpenApi?.isMarketOpen == true) {
+          marketStatus = "Live";
+        } else if (checkMarketOpenApi?.checkPreMarket == true) {
+          marketStatus = "Pre Market";
+        } else {
+          marketStatus = "Post Market";
+        }
 
-    return Column(
-      children: [
-        Container(
-          margin:
-              EdgeInsets.symmetric(horizontal: Pad.pad16, vertical: Pad.pad10),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+        return Column(
+          children: [
+            Container(
+              margin: EdgeInsets.symmetric(
+                  horizontal: Pad.pad16, vertical: Pad.pad10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    'Market Status',
-                    style: styleBaseRegular(
-                      color: ThemeColors.neutral20,
-                      fontSize: 13,
-                    ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Market Status',
+                        style: styleBaseRegular(
+                          color: ThemeColors.neutral20,
+                          fontSize: 13,
+                        ),
+                      ),
+                      SpacerVertical(height: 3),
+                      Text(
+                        marketStatus,
+                        style: styleBaseSemiBold(fontSize: 14),
+                      ),
+                    ],
                   ),
-                  SpacerVertical(height: 3),
-                  Text(
-                    marketStatus,
-                    style: styleBaseSemiBold(fontSize: 14),
+                  SpacerHorizontal(width: 20),
+                  Flexible(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Text(
+                          'Last Updated',
+                          style: styleBaseRegular(
+                            color: ThemeColors.neutral20,
+                            fontSize: 13,
+                          ),
+                        ),
+                        SpacerVertical(height: 3),
+                        Text(
+                          _lastUpdated,
+                          style: styleBaseSemiBold(fontSize: 14),
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),
-              SpacerHorizontal(width: 20),
-              Flexible(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Text(
-                      'Last Updated',
-                      style: styleBaseRegular(
-                        color: ThemeColors.neutral20,
-                        fontSize: 13,
-                      ),
-                    ),
-                    SpacerVertical(height: 3),
-                    Text(
-                      _lastUpdated,
-                      style: styleBaseSemiBold(fontSize: 14),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
-        Divider(
-          color: ThemeColors.neutral5,
-          height: 0,
-          thickness: 1,
-        ),
-      ],
+            ),
+            Divider(
+              color: ThemeColors.neutral5,
+              height: 0,
+              thickness: 1,
+            ),
+          ],
+        );
+      },
     );
   }
 

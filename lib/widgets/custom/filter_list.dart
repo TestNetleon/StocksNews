@@ -91,33 +91,29 @@ class FilterListing extends StatelessWidget {
                 Navigator.pop(context);
               },
               child: Center(
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 20),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    // mainAxisAlignment: MainAxisAlignment.center,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  // mainAxisAlignment: MainAxisAlignment.center,
 
-                    children: [
-                      Visibility(
-                        visible: items[index].image != null &&
-                            items[index].image != "",
-                        child: Container(
-                            height: 20,
-                            width: 20,
-                            margin: EdgeInsets.only(right: 10.sp),
-                            child:
-                                CachedNetworkImagesWidget(items[index].image)),
+                  children: [
+                    Visibility(
+                      visible: items[index].image != null &&
+                          items[index].image != "",
+                      child: Container(
+                          height: 20,
+                          width: 20,
+                          margin: EdgeInsets.only(right: 10.sp),
+                          child: CachedNetworkImagesWidget(items[index].image)),
+                    ),
+                    Flexible(
+                      child: Text(
+                        items[index].value ?? "",
+                        style: (index == 0 && titleBold)
+                            ? stylePTSansBold(fontSize: 16)
+                            : stylePTSansRegular(fontSize: 15),
                       ),
-                      Flexible(
-                        child: Text(
-                          items[index].value ?? "",
-                          style: (index == 0 && titleBold)
-                              ? stylePTSansBold(fontSize: 16)
-                              : stylePTSansRegular(fontSize: 15),
-                        ),
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
             );

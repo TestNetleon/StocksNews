@@ -7,10 +7,13 @@ import 'package:stocks_news_new/ui/tabs/tools/scanner/manager/gainers.dart';
 import 'package:stocks_news_new/ui/tabs/tools/scanner/manager/losers.dart';
 import 'package:stocks_news_new/ui/tabs/tools/scanner/manager/scanner.dart';
 import 'package:stocks_news_new/ui/tabs/tools/scanner/screens/losers/losers.dart';
+import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/custom/base_loader_container.dart';
 
 import '../../../base/common_tab.dart';
+import 'screens/extra/filters.dart';
 import 'screens/extra/header.dart';
+import 'screens/extra/sorting.dart';
 import 'screens/extra/sub_tabs.dart';
 import 'screens/gainers/gainers.dart';
 import 'screens/scanner/scanner.dart';
@@ -43,48 +46,58 @@ class _ToolsScannerIndexState extends State<ToolsScannerIndex> {
 
   @override
   Widget build(BuildContext context) {
-    ScannerManager manager = context.watch<ScannerManager>();
-    bool startStream =
-        manager.portData?.port?.checkMarketOpenApi?.startStreaming == true;
-    return PopScope(
-      onPopInvokedWithResult: (didPop, result) {
-        ScannerGainersManager gainersManager =
-            context.read<ScannerGainersManager>();
-        ScannerLosersManager losersManager =
-            context.read<ScannerLosersManager>();
+    return Consumer<ScannerManager>(
+      builder: (context, value, child) {
+        bool startStream =
+            value.portData?.port?.checkMarketOpenApi?.startStreaming == true;
+        return PopScope(
+          onPopInvokedWithResult: (didPop, result) {
+            ScannerGainersManager gainersManager =
+                context.read<ScannerGainersManager>();
+            ScannerLosersManager losersManager =
+                context.read<ScannerLosersManager>();
 
-        manager.stopListeningPorts();
-        gainersManager.stopListeningPorts();
-        losersManager.stopListeningPorts();
-      },
-      child: BaseScaffold(
-        appBar: BaseAppBar(
-          showBack: true,
-        ),
-        body: BaseLoaderContainer(
-          hasData: manager.portData?.port != null,
-          isLoading: manager.isLoadingPort && manager.portData == null,
-          error: manager.errorPort,
-          showPreparingText: true,
-          child: Column(
-            children: [
-              BaseTabs(
-                selectedIndex: 1,
-                data: tabs,
-                isScrollable: false,
-                onTap: manager.onTabChange,
+            value.stopListeningPorts();
+            gainersManager.stopListeningPorts();
+            losersManager.stopListeningPorts();
+          },
+          child: BaseScaffold(
+            appBar: BaseAppBar(
+              showBack: true,
+              showFilter: value.selectedIndex == 0
+                  ? () {
+                      Navigator.push(context, createRoute(ScannerFilters()));
+                    }
+                  : null,
+            ),
+            body: BaseLoaderContainer(
+              hasData: value.portData?.port != null,
+              isLoading: value.isLoadingPort && value.portData == null,
+              error: value.errorPort,
+              showPreparingText: true,
+              child: Column(
+                children: [
+                  BaseTabs(
+                    selectedIndex: 1,
+                    data: tabs,
+                    isScrollable: false,
+                    onTap: value.onTabChange,
+                  ),
+                  MarketScannerHeader(isOnline: startStream),
+                  if (value.selectedIndex != 0)
+                    ScannerSubHeaderTab(
+                      key: ValueKey(value.selectedSubIndex),
+                    ),
+                  MarketSortingHeader(),
+                  if (value.selectedIndex == 0) ScannerIndex(),
+                  if (value.selectedIndex == 1) ScannerGainersIndex(),
+                  if (value.selectedIndex == 2) ScannerLosersIndex(),
+                ],
               ),
-              MarketScannerHeader(
-                  key: ValueKey(manager.selectedSubIndex),
-                  isOnline: startStream),
-              if (manager.selectedIndex != 0) ScannerSubHeaderTab(),
-              if (manager.selectedIndex == 0) ScannerIndex(),
-              if (manager.selectedIndex == 1) ScannerGainersIndex(),
-              if (manager.selectedIndex == 2) ScannerLosersIndex(),
-            ],
+            ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 }

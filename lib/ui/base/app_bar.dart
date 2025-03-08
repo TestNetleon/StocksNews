@@ -24,7 +24,7 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
   final Function()? shareURL;
   final double toolbarHeight;
   final bool showLogo;
-  final Function()? leadingFilterClick;
+  final Function()? leadingFilterClick, showFilter;
 
   const BaseAppBar({
     super.key,
@@ -32,6 +32,7 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.searchFieldWidget,
     this.isHome = false,
     this.showBack = false,
+    this.showFilter,
     this.title,
     this.showSearch = false,
     this.showNotification = false,
@@ -133,6 +134,15 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
                             onTap: shareURL!,
                           ),
                         ),
+                      if (showFilter != null)
+                        Padding(
+                          padding: const EdgeInsets.only(right: 8),
+                          child: ActionButton(
+                            size: 19,
+                            icon: Images.filter,
+                            onTap: showFilter!,
+                          ),
+                        ),
                       if (onSaveClick != null)
                         SaveAction(onSaveClick: onSaveClick!),
                     ],
@@ -221,9 +231,10 @@ class ActionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return InkWell(
+      borderRadius: BorderRadius.circular(Pad.pad999),
       onTap: onTap,
-      child: Padding(
+      child: Container(
         padding: padding ?? EdgeInsets.zero,
         child: Image.asset(
           icon,

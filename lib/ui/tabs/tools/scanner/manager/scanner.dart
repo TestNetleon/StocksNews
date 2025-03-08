@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/api/api_requester.dart';
 import 'package:stocks_news_new/api/api_response.dart';
+import 'package:stocks_news_new/ui/base/bottom_sheet.dart';
 import 'package:stocks_news_new/ui/tabs/tools/scanner/manager/gainers.dart';
 import 'package:stocks_news_new/ui/tabs/tools/scanner/manager/losers.dart';
 import 'package:stocks_news_new/ui/tabs/tools/scanner/models/live.dart';
 import 'package:stocks_news_new/ui/tabs/tools/scanner/models/offline.dart';
+import 'package:stocks_news_new/ui/tabs/tools/scanner/screens/extra/sorting_list.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import '../../../../../api/apis.dart';
 import '../../../../../managers/user.dart';
@@ -58,6 +60,7 @@ class ScannerManager extends ChangeNotifier {
     gainersManager.stopListeningPorts();
     losersManager.stopListeningPorts();
 
+    setTotalResults(0);
     switch (selectedIndex) {
       case 0:
         Future.delayed(
@@ -94,8 +97,9 @@ class ScannerManager extends ChangeNotifier {
     }
   }
 
-  int selectedSubIndex = -0;
+//MARK: Sub Tab
 
+  int selectedSubIndex = -0;
   onSubTabChange(index) {
     if (selectedIndex == 0) return;
 
@@ -109,14 +113,11 @@ class ScannerManager extends ChangeNotifier {
 
     ScannerLosersManager losersManager =
         navigatorKey.currentContext!.read<ScannerLosersManager>();
-    print('Changing sub index to $index');
     switch (index) {
       case 0:
         if (selectedIndex == 1) {
-          print('HI0A');
           gainersManager.applyFilter(2);
         } else {
-          print('HI0B');
           losersManager.applyFilter(2);
         }
 
@@ -124,16 +125,102 @@ class ScannerManager extends ChangeNotifier {
 
       case 1:
         if (selectedIndex == 1) {
-          print('HI1A');
           gainersManager.applyFilter(3);
         } else {
-          print('HI1B');
-
           losersManager.applyFilter(3);
         }
         break;
       default:
     }
+  }
+
+//MARK: Sorting
+  String? totalResult;
+
+  setTotalResults(num total) {
+    totalResult = '$total';
+    notifyListeners();
+  }
+
+  sorting() {
+    bool preMarket = false;
+    bool postMarket = false;
+    bool showSector = true;
+    String? text;
+
+    ScannerGainersManager gainersManager =
+        navigatorKey.currentContext!.read<ScannerGainersManager>();
+    ScannerLosersManager losersManager =
+        navigatorKey.currentContext!.read<ScannerLosersManager>();
+
+    FilterParamsGainerLoser? filter;
+
+    preMarket = _portData?.port?.checkMarketOpenApi?.checkPreMarket ?? false;
+    postMarket = _portData?.port?.checkMarketOpenApi?.checkPostMarket ?? false;
+
+    text = preMarket
+        ? 'Pre-Market'
+        : postMarket
+            ? 'Post-Market'
+            : null;
+    switch (selectedIndex) {
+      case 0:
+        filter = FilterParamsGainerLoser(
+          sortByAsc: _filterParams?.sortByAsc,
+          sortByHeader: _filterParams?.sortBy,
+        );
+        showSector = false;
+        break;
+
+      case 1:
+        filter = gainersManager.filterParams;
+        break;
+
+      case 2:
+        filter = losersManager.filterParams;
+        break;
+
+      default:
+    }
+
+    BaseBottomSheet().bottomSheet(
+      padding: EdgeInsets.zero,
+      child: ScannerSortingList(
+        showPreMarket: !(preMarket || postMarket),
+        showSector: showSector,
+        sortBy: filter?.sortByAsc,
+        header: filter?.sortByHeader,
+        sortByCallBack: (received) {
+          switch (selectedIndex) {
+            case 0:
+              applySorting(
+                received.type.name,
+                received.ascending,
+              );
+              break;
+
+            case 1:
+              gainersManager.applySorting(
+                received.type.name,
+                received.ascending,
+              );
+
+              break;
+
+            case 2:
+              losersManager.applySorting(
+                received.type.name,
+                received.ascending,
+              );
+              break;
+
+            default:
+          }
+          Navigator.pop(navigatorKey.currentContext!);
+        },
+        text: text,
+      ),
+    );
   }
 
   //MARK: Scanner Ports
@@ -157,6 +244,7 @@ class ScannerManager extends ChangeNotifier {
     if (reset) {
       _portData = null;
       selectedIndex = -1;
+      totalResult = null;
     }
     setStatusPort(Status.loading);
 
@@ -193,6 +281,39 @@ class ScannerManager extends ChangeNotifier {
       return ApiResponse(status: false);
     } finally {
       setStatusPort(Status.loaded);
+    }
+  }
+
+//MARK: Sector Filters
+
+  void setStatusFilter(status) {
+    _status = status;
+    notifyListeners();
+  }
+
+  Future getFilterSectors({showProgress = false}) async {
+    setStatusFilter(Status.loading);
+    try {
+      Map request = {
+        "token":
+            navigatorKey.currentContext!.read<UserManager>().user?.token ?? "",
+      };
+
+      ApiResponse response = await apiRequest(
+        url: Apis.scannerFilters,
+        request: request,
+        showProgress: showProgress,
+      );
+
+      if (response.status) {
+        _sectors = filterSectorsResFromJson(jsonEncode(response.data));
+      } else {
+        _sectors = null;
+      }
+    } catch (e) {
+      Utils().showLog('Error in ${Apis.trendingSectors}: $e');
+    } finally {
+      setStatusFilter(Status.loaded);
     }
   }
 
@@ -1085,40 +1206,6 @@ class ScannerManager extends ChangeNotifier {
     return 0;
   }
 
-  void setStatusFilter(status) {
-    _status = status;
-    notifyListeners();
-  }
-
-  Future getFilterSectors({showProgress = false}) async {
-    setStatusFilter(Status.loading);
-    try {
-      Map request = {
-        "token":
-            navigatorKey.currentContext!.read<UserManager>().user?.token ?? "",
-      };
-
-      ApiResponse response = await apiRequest(
-        url: Apis.trendingSectors,
-        request: request,
-        showProgress: showProgress,
-      );
-
-      if (response.status) {
-        _error = null;
-        _sectors = filterSectorsResFromJson(jsonEncode(response.data));
-      } else {
-        _sectors = null;
-        _error = response.message;
-      }
-    } catch (e) {
-      // _data = null;
-      Utils().showLog(e.toString());
-    } finally {
-      setStatusFilter(Status.loaded);
-    }
-  }
-
   void applySorting(String sortBy, bool isAscending) {
     if (sortBy == _filterParams?.sortBy) {
       // _filterParams?.sortByAsc = !(_filterParams?.sortByAsc ?? true);
@@ -1170,9 +1257,10 @@ class ScannerManager extends ChangeNotifier {
     _filterParams = FilterParams(sector: "Consumer Cyclical");
     if (_offlineDataList != null && _fullOfflineDataList != null) {
       _offlineDataList = _fullOfflineDataList;
-      // _offlineDataList = _offlineDataList?.take(50).toList();
     }
-    MarketScannerStream.instance.getOfflineData();
+    // if (_dataList != null && _fullDataList != null) {
+    //   _dataList = _fullDataList;
+    // }
     notifyListeners();
   }
 

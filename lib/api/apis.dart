@@ -176,6 +176,7 @@ class Apis {
 
   //Scanner
   static const stockScannerPort = '/stock-scanner';
+  static const scannerFilters = '/scanner-sectors';
 
 //----------------------------------------------
 //----------------------------------------------

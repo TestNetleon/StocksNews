@@ -9,6 +9,7 @@ class BaseBottomSheet {
   bottomSheet({
     required Widget child,
     Color? barrierColor,
+    EdgeInsets? padding,
   }) {
     showModalBottomSheet(
       isScrollControlled: true,
@@ -29,7 +30,7 @@ class BaseBottomSheet {
           children: [
             Container(
               margin: EdgeInsets.only(top: 14),
-              padding: EdgeInsets.all(Pad.pad16),
+              padding: padding ?? EdgeInsets.all(Pad.pad16),
               decoration: BoxDecoration(
                 color: ThemeColors.white,
                 borderRadius: BorderRadius.only(
