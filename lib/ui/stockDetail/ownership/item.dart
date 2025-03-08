@@ -95,7 +95,7 @@ class OwnershipHistoryItem extends StatelessWidget {
                           border: Border.all(color: ThemeColors.neutral5),
                         ),
                         child: Image.asset(
-                          isOpen ? Images.arrowDOWN : Images.arrowUP,
+                          isOpen ? Images.arrowUP : Images.arrowDOWN,
                           height: 24,
                           width: 24,
                         ),

@@ -227,8 +227,8 @@ class _BaseStockItemState extends State<BaseStockItem> {
                       ),
                       child: Image.asset(
                         _openIndex == widget.index
-                            ? Images.arrowDOWN
-                            : Images.arrowUP,
+                            ? Images.arrowUP
+                            : Images.arrowDOWN,
                         height: 24,
                         width: 24,
                       ),

@@ -44,14 +44,12 @@ class _BaseScaffoldState extends State<BaseScaffold> {
 //
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        closeKeyboard();
-      },
-      child: Container(
-        // decoration: BoxDecoration(
-        //   color: widget.bgColor,
-        // ),
+    return PopScope(
+      canPop: false,
+      child: GestureDetector(
+        onTap: () {
+          closeKeyboard();
+        },
         child: Scaffold(
           extendBodyBehindAppBar: widget.showBehind,
           backgroundColor: widget.bgColor,
