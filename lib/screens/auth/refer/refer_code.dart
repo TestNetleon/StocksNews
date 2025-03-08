@@ -157,11 +157,11 @@ class _ReferLoginState extends State<ReferLogin> {
     } else {
       if (!numberVerified) {
         UserProvider provider = context.read<UserProvider>();
-
         ApiResponse response = await provider.checkPhoneExist(
           countryCode: countryCode ?? '+1',
           phone: mobile.text,
         );
+
         if (!response.status) {
           return;
         }
@@ -175,7 +175,6 @@ class _ReferLoginState extends State<ReferLogin> {
           },
           verificationFailed: (FirebaseAuthException e) {
             closeGlobalProgressDialog();
-
             // log("Error message => ${e.code} ${e.message} ${e.stackTrace}");
             popUpAlert(
               message: e.code == "invalid-phone-number"

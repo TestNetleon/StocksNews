@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:stocks_news_new/database/preference.dart';
+import 'package:stocks_news_new/managers/user.dart';
 import 'package:stocks_news_new/models/onboarding.dart';
 import 'package:stocks_news_new/managers/onboarding.dart';
 import 'package:stocks_news_new/utils/colors.dart';
@@ -41,7 +42,7 @@ class _OnboardingSlidesState extends State<OnboardingSlides> {
 
   @override
   Widget build(BuildContext context) {
-    OnboardingManager provider = context.watch<OnboardingManager>();
+    OnboardingManager manager = context.watch<OnboardingManager>();
     return BaseScaffold(
       body: Container(
         padding: const EdgeInsets.symmetric(
@@ -67,9 +68,9 @@ class _OnboardingSlidesState extends State<OnboardingSlides> {
               child: PageView(
                 controller: _pageController,
                 children: List.generate(
-                  provider.data?.onboarding?.length ?? 0,
+                  manager.data?.onboarding?.length ?? 0,
                   (index) {
-                    OnboardingListRes? data = provider.data?.onboarding?[index];
+                    OnboardingListRes? data = manager.data?.onboarding?[index];
                     if (data == null) {
                       return SizedBox();
                     }
@@ -79,26 +80,33 @@ class _OnboardingSlidesState extends State<OnboardingSlides> {
               ),
             ),
             const SpacerVertical(height: 20),
-            SmoothPageIndicator(
-              controller: _pageController,
-              count: 4,
-              effect: WormEffect(
-                activeDotColor: ThemeColors.secondary120,
-                dotColor: ThemeColors.neutral10,
-                dotWidth: 10,
-                dotHeight: 10,
+            Visibility(
+              visible: manager.data?.onboarding != null &&
+                  manager.data?.onboarding?.isNotEmpty == true,
+              child: SmoothPageIndicator(
+                controller: _pageController,
+                count: manager.data?.onboarding?.length ?? 0,
+                effect: WormEffect(
+                  activeDotColor: ThemeColors.secondary120,
+                  dotColor: ThemeColors.neutral10,
+                  dotWidth: 10,
+                  dotHeight: 10,
+                ),
               ),
             ),
             const SpacerVertical(height: 20),
             Visibility(
-              visible: provider.data?.btnName != null &&
-                  provider.data?.btnName != '',
+              visible:
+                  manager.data?.btnName != null && manager.data?.btnName != '',
               child: BaseButton(
                 radius: 8,
-                onPressed: () {},
+                onPressed: () {
+                  UserManager manager = context.read<UserManager>();
+                  manager.navigateToMySubscription(viewPlans: true);
+                },
                 color: ThemeColors.primary100,
                 textColor: ThemeColors.black,
-                text: provider.data?.btnName ?? '',
+                text: manager.data?.btnName ?? '',
               ),
             ),
           ],

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'lock.dart';
 import 'my_home.dart';
 
 MyHomePremiumRes myHomePremiumResFromJson(String str) =>
@@ -48,15 +49,20 @@ class PoliticianTradeListRes {
   final String? title;
   final String? subTitle;
   final List<PoliticianTradeRes>? data;
+  final BaseLockInfoRes? lockInfo;
 
   PoliticianTradeListRes({
     this.title,
     this.subTitle,
     this.data,
+    this.lockInfo,
   });
 
   factory PoliticianTradeListRes.fromJson(Map<String, dynamic> json) =>
       PoliticianTradeListRes(
+        lockInfo: json["lock_info"] == null
+            ? null
+            : BaseLockInfoRes.fromJson(json["lock_info"]),
         title: json["title"],
         subTitle: json["sub_title"],
         data: json["data"] == null
@@ -66,6 +72,7 @@ class PoliticianTradeListRes {
       );
 
   Map<String, dynamic> toJson() => {
+        "lock_info": lockInfo?.toJson(),
         "title": title,
         "sub_title": subTitle,
         "data": data == null
@@ -138,15 +145,20 @@ class InsiderTradeListRes {
   final String? title;
   final String? subTitle;
   final List<InsiderTradeRes>? data;
+  final BaseLockInfoRes? lockInfo;
 
   InsiderTradeListRes({
     this.title,
     this.subTitle,
     this.data,
+    this.lockInfo,
   });
 
   factory InsiderTradeListRes.fromJson(Map<String, dynamic> json) =>
       InsiderTradeListRes(
+        lockInfo: json["lock_info"] == null
+            ? null
+            : BaseLockInfoRes.fromJson(json["lock_info"]),
         title: json["title"],
         subTitle: json["sub_title"],
         data: json["data"] == null
@@ -156,6 +168,7 @@ class InsiderTradeListRes {
       );
 
   Map<String, dynamic> toJson() => {
+        "lock_info": lockInfo?.toJson(),
         "title": title,
         "sub_title": subTitle,
         "data": data == null

@@ -138,6 +138,7 @@ class ThemeColors {
   static const splashBG = Color(0xFF012054);
   static const colour66 = Color(0xFF666666);
   static const colourBA = Color(0xFFBABABA);
+  static const disabledBtn = Color(0xFF3C3C43);
 
   //CATEGORY
   static const lightGrey = Color(0xFFF0F2F6);
@@ -145,6 +146,7 @@ class ThemeColors {
 
   //FEEDBACK
   static const success120 = Color(0xFF0AA870);
+  static const success100 = Color(0xFF47C189);
   static const success = Color(0xFF47C189);
   static const success10 = Color(0xFFEFFBF5);
 

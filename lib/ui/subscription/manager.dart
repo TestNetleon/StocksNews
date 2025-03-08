@@ -121,8 +121,12 @@ class SubscriptionManager extends ChangeNotifier {
 
       if (response.status) {
         _subscriptionData = subscriptionResFromJson(jsonEncode(response.data));
+        SubscriptionService instance = SubscriptionService.instance;
+        UserManager manager = navigatorKey.currentContext!.read<UserManager>();
 
-        if (_subscriptionData != null) {
+        bool initialized = await instance.initialize(user: manager.user);
+
+        if (_subscriptionData != null && initialized) {
           // Fetch RevenueCat store products
           SubscriptionService instance = SubscriptionService.instance;
           Map<String, List<Package>> getPlans = await instance.fetchPlans();

@@ -10,12 +10,14 @@ class ReferralRes {
   final String? title;
   final String? subTitle;
   final PointsSummary? pointsSummary;
+  final ReferLogin? referLogin;
 
   ReferralRes({
     required this.referralStatus,
     required this.title,
     required this.subTitle,
     required this.pointsSummary,
+    required this.referLogin,
   });
 
   factory ReferralRes.fromJson(Map<String, dynamic> json) => ReferralRes(
@@ -25,6 +27,9 @@ class ReferralRes {
         pointsSummary: json["points_summary"] == null
             ? null
             : PointsSummary.fromJson(json["points_summary"]),
+        referLogin: json["refer_login"] == null
+            ? null
+            : ReferLogin.fromJson(json["refer_login"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -32,6 +37,7 @@ class ReferralRes {
         "title": title,
         "sub_title": subTitle,
         "points_summary": pointsSummary?.toJson(),
+        "refer_login": referLogin?.toJson(),
       };
 }
 
@@ -91,5 +97,33 @@ class ReferralPointRes {
         "value": value,
         "txn_type": txnType,
         "text": text,
+      };
+}
+
+class ReferLogin {
+  final String title;
+  final String subTitle;
+  final String btnText;
+  final String verifyBtnText;
+
+  ReferLogin({
+    required this.title,
+    required this.subTitle,
+    required this.btnText,
+    required this.verifyBtnText,
+  });
+
+  factory ReferLogin.fromJson(Map<String, dynamic> json) => ReferLogin(
+        title: json["title"],
+        subTitle: json["sub_title"],
+        btnText: json["btn_text"],
+        verifyBtnText: json["verify_btn_text"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "title": title,
+        "sub_title": subTitle,
+        "btn_text": btnText,
+        "verify_btn_text": verifyBtnText,
       };
 }

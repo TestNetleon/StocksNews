@@ -38,19 +38,6 @@ class _MarketSortingHeaderState extends State<MarketSortingHeader> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  InkWell(
-                    onTap: () {
-                      ScannerManager manager = context.read<ScannerManager>();
-                      manager.sorting();
-                    },
-                    child: Image.asset(
-                      Images.marketFilter,
-                      height: 19,
-                      width: 19,
-                      color: ThemeColors.neutral40,
-                    ),
-                  ),
-                  SpacerHorizontal(width: 20),
                   Flexible(
                     child: RichText(
                       text: TextSpan(
@@ -69,6 +56,21 @@ class _MarketSortingHeaderState extends State<MarketSortingHeader> {
                           ),
                         ],
                       ),
+                    ),
+                  ),
+                  SpacerHorizontal(width: 20),
+                  InkWell(
+                    onTap: () {
+                      ScannerManager manager = context.read<ScannerManager>();
+                      manager.sorting();
+                    },
+                    child: Image.asset(
+                      Images.marketFilter,
+                      height: 19,
+                      width: 19,
+                      color: value.sortingApplied
+                          ? ThemeColors.accent
+                          : ThemeColors.neutral40,
                     ),
                   ),
                 ],

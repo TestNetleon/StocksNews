@@ -27,6 +27,7 @@ import 'package:stocks_news_new/ui/tabs/more/helpdesk/front/index.dart';
 import 'package:stocks_news_new/ui/tabs/more/news/index.dart';
 import 'package:stocks_news_new/ui/tabs/more/notificationSettings/index.dart';
 import 'package:stocks_news_new/ui/tabs/more/referral/index.dart';
+import 'package:stocks_news_new/ui/tabs/more/referral/joinRefer/index.dart';
 import 'package:stocks_news_new/ui/tabs/more/watchlist/index.dart';
 import 'package:stocks_news_new/ui/tabs/tabs.dart';
 import 'package:stocks_news_new/utils/utils.dart';
@@ -68,17 +69,33 @@ class UserManager extends ChangeNotifier {
     shareUri ??= await DynamicLinkService.instance.getDynamicLink();
   }
 
+  Future<bool> checkForUser() async {
+    _user = null;
+    final UserRes? tempUser = await Preference.getUser();
+    if (tempUser != null) {
+      _user = tempUser;
+      notifyListeners();
+    }
+    return _user != null;
+  }
+
   askLoginScreen() async {
     if (_user != null) {
       return;
     } else {
       await Navigator.push(
         navigatorKey.currentContext!,
-        createRoute(
-          AccountLoginIndex(),
-        ),
+        createRoute(AccountLoginIndex()),
       );
     }
+  }
+
+  referJoinScreen() async {
+    // referLogin();
+    await Navigator.push(
+      navigatorKey.currentContext!,
+      createRoute(JoinReferralIndex()),
+    );
   }
 
   setStatus(status) {
@@ -115,14 +132,14 @@ class UserManager extends ChangeNotifier {
     );
   }
 
-  void navigateToMySubscription() async {
+  void navigateToMySubscription({bool viewPlans = false}) async {
     await askLoginScreen();
     if (_user == null) {
       return;
     }
     SubscriptionManager manager =
         navigatorKey.currentContext!.read<SubscriptionManager>();
-    manager.startProcess();
+    manager.startProcess(viewPlans: viewPlans);
   }
 
   void navigateToReferral() async {
@@ -378,6 +395,7 @@ class UserManager extends ChangeNotifier {
     String? phoneCode,
     String? email,
     String? OTP,
+    String? affiliateStatus,
   }) async {
     MultipartFile? multipartFile;
     if (image != null) {
@@ -405,9 +423,11 @@ class UserManager extends ChangeNotifier {
     if (displayName != null && displayName.isNotEmpty) {
       request.fields.add(MapEntry('display_name', displayName));
     }
-
     if (phone != null && phone.isNotEmpty) {
       request.fields.add(MapEntry('phone', phone));
+    }
+    if (affiliateStatus != null && affiliateStatus.isNotEmpty) {
+      request.fields.add(MapEntry('affiliate_status', affiliateStatus));
     }
     if (phoneCode != null && phoneCode.isNotEmpty) {
       request.fields.add(MapEntry('phone_code', phoneCode));
@@ -439,6 +459,7 @@ class UserManager extends ChangeNotifier {
             countryCode: phoneCode,
             phone: phone,
             email: email,
+            affiliateStatus: int.tryParse(affiliateStatus ?? "0") ?? 0,
           );
         }
       }

@@ -1,10 +1,10 @@
+// import 'package:provider/provider.dart';
+// import 'package:stocks_news_new/database/preference.dart';
+// import 'package:stocks_news_new/modals/user_res.dart';
+// import 'package:stocks_news_new/providers/user_provider.dart';
+// import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:flutter/foundation.dart';
-import 'package:provider/provider.dart';
 import 'package:socket_io_client/socket_io_client.dart' as socket;
-import 'package:stocks_news_new/database/preference.dart';
-import 'package:stocks_news_new/modals/user_res.dart';
-import 'package:stocks_news_new/providers/user_provider.dart';
-import 'package:stocks_news_new/routes/my_app.dart';
 
 enum SocketEnum { home, newDetail, blogDetail, tickerDetail, tools }
 
@@ -25,42 +25,42 @@ class SocketService {
 
   /// Connect to the Socket.IO server
   void connect() {
-    try {
-      if (_socket != null && _socket!.connected) return;
+    // try {
+    //   if (_socket != null && _socket!.connected) return;
 
-      _socket = socket.io('https://dev.stocks.news:8098', <String, dynamic>{
-        'transports': ['websocket'],
-        'autoConnect': false,
-      });
+    //   _socket = socket.io('https://dev.stocks.news:8098', <String, dynamic>{
+    //     'transports': ['websocket'],
+    //     'autoConnect': false,
+    //   });
 
-      _socket?.onConnect((_) {
-        if (kDebugMode) {
-          print('Connected to----SOCKET');
-        }
-        emitUser();
-        if (socketPage != null) {
-          emitUpdateUser(socketPage ?? SocketEnum.home);
-        }
-      });
-      _socket?.onDisconnect((_) {
-        if (kDebugMode) {
-          print('Disconnected from----SOCKET');
-        }
-        disconnect();
-      });
-      _socket?.onError((data) {
-        _socket?.disconnect();
-        if (kDebugMode) {
-          print('Error----SOCKET : $data');
-        }
-      });
+    //   _socket?.onConnect((_) {
+    //     if (kDebugMode) {
+    //       print('Connected to----SOCKET');
+    //     }
+    //     emitUser();
+    //     if (socketPage != null) {
+    //       emitUpdateUser(socketPage ?? SocketEnum.home);
+    //     }
+    //   });
+    //   _socket?.onDisconnect((_) {
+    //     if (kDebugMode) {
+    //       print('Disconnected from----SOCKET');
+    //     }
+    //     disconnect();
+    //   });
+    //   _socket?.onError((data) {
+    //     _socket?.disconnect();
+    //     if (kDebugMode) {
+    //       print('Error----SOCKET : $data');
+    //     }
+    //   });
 
-      _socket?.connect();
-    } catch (e) {
-      if (kDebugMode) {
-        print('Catch----SOCKET : $e');
-      }
-    }
+    //   _socket?.connect();
+    // } catch (e) {
+    //   if (kDebugMode) {
+    //     print('Catch----SOCKET : $e');
+    //   }
+    // }
   }
 
   /// Emit an event to the server
@@ -82,47 +82,47 @@ class SocketService {
   }
 
   void emitUser() async {
-    String? fcmToken = await Preference.getFcmToken();
-    try {
-      UserRes? user = navigatorKey.currentContext!.read<UserProvider>().user;
+    // String? fcmToken = await Preference.getFcmToken();
+    // try {
+    //   UserRes? user = navigatorKey.currentContext!.read<UserProvider>().user;
 
-      Map data = {'userToken': user?.token ?? ''};
-      if (fcmToken != null && fcmToken != '') {
-        data['fcmToken'] = fcmToken;
-      }
+    //   Map data = {'userToken': user?.token ?? ''};
+    //   if (fcmToken != null && fcmToken != '') {
+    //     data['fcmToken'] = fcmToken;
+    //   }
 
-      emit('isOnline', data);
-    } catch (e) {
-      if (kDebugMode) {
-        print('Catch Emit----SOCKET : $e');
-      }
-      Map data = {'userToken': ''};
-      if (fcmToken != null && fcmToken != '') {
-        data['fcmToken'] = fcmToken;
-      }
-      emit('isOnline', data);
-    }
+    //   emit('isOnline', data);
+    // } catch (e) {
+    //   if (kDebugMode) {
+    //     print('Catch Emit----SOCKET : $e');
+    //   }
+    //   Map data = {'userToken': ''};
+    //   if (fcmToken != null && fcmToken != '') {
+    //     data['fcmToken'] = fcmToken;
+    //   }
+    //   emit('isOnline', data);
+    // }
   }
 
   void emitUpdateUser(SocketEnum type) async {
-    socketPage = type;
-    String? fcmToken = await Preference.getFcmToken();
-    try {
-      Map data = {'page': type.name};
-      if (fcmToken != null && fcmToken != '') {
-        data['fcmToken'] = fcmToken;
-      }
+    // socketPage = type;
+    // String? fcmToken = await Preference.getFcmToken();
+    // try {
+    //   Map data = {'page': type.name};
+    //   if (fcmToken != null && fcmToken != '') {
+    //     data['fcmToken'] = fcmToken;
+    //   }
 
-      emit('updatePageCount', data);
-    } catch (e) {
-      if (kDebugMode) {
-        print('Catch Emit----SOCKET : $e');
-      }
-      Map data = {'page': type.name};
-      if (fcmToken != null && fcmToken != '') {
-        data['fcmToken'] = fcmToken;
-      }
-      emit('updatePageCount', data);
-    }
+    //   emit('updatePageCount', data);
+    // } catch (e) {
+    //   if (kDebugMode) {
+    //     print('Catch Emit----SOCKET : $e');
+    //   }
+    //   Map data = {'page': type.name};
+    //   if (fcmToken != null && fcmToken != '') {
+    //     data['fcmToken'] = fcmToken;
+    //   }
+    //   emit('updatePageCount', data);
+    // }
   }
 }

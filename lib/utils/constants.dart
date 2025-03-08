@@ -788,7 +788,7 @@ DeeplinkEnum containsSpecificPath(Uri uri) {
     return DeeplinkEnum.outsider;
   }
 
-  if (uri.path.contains('/blog/')) {
+  if (uri.path.contains('/blog/') || uri.path.contains('/blog-detail/')) {
     // return "blog";
     return DeeplinkEnum.blogDetail;
   } else if (uri.path.contains('/stock-detail')) {

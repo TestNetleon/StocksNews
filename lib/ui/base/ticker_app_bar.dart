@@ -37,9 +37,9 @@ class BaseTickerAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.onRefresh,
   });
 
-
   Future<void> onAddToAlertClick() async {
-    AlertsWatchlistManager manager = navigatorKey.currentContext!.read<AlertsWatchlistManager>();
+    AlertsWatchlistManager manager =
+        navigatorKey.currentContext!.read<AlertsWatchlistManager>();
     UserManager userManager = navigatorKey.currentContext!.read<UserManager>();
     if (data?.isAlertAdded == 1) {
       await Navigator.pushNamed(navigatorKey.currentContext!, AlertIndex.path);
@@ -73,10 +73,12 @@ class BaseTickerAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   Future<void> onAddToWatchlistClick() async {
-    AlertsWatchlistManager manager = navigatorKey.currentContext!.read<AlertsWatchlistManager>();
+    AlertsWatchlistManager manager =
+        navigatorKey.currentContext!.read<AlertsWatchlistManager>();
     UserManager userManager = navigatorKey.currentContext!.read<UserManager>();
     if (data?.isWatchlistAdded == 1) {
-      await Navigator.pushNamed(navigatorKey.currentContext!, WatchListIndex.path);
+      await Navigator.pushNamed(
+          navigatorKey.currentContext!, WatchListIndex.path);
       if (onRefresh != null) onRefresh!();
     } else {
       if (userManager.user != null) {
@@ -102,7 +104,7 @@ class BaseTickerAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   void requestAddToWatchlist(BuildContext context) async {
     AlertsWatchlistManager alertManager =
-    context.read<AlertsWatchlistManager>();
+        context.read<AlertsWatchlistManager>();
 
     final Map request = {"symbol": data?.symbol};
 
@@ -225,8 +227,9 @@ class BaseTickerAppBar extends StatelessWidget implements PreferredSizeWidget {
                       size: 35,
                       icon: Images.moreStockAlerts,
                       onTap: onAddToAlertClick,
-                      color: data?.isAlertAdded==1?ThemeColors.primary120:ThemeColors.splashBG,
-
+                      color: data?.isAlertAdded == 1
+                          ? ThemeColors.primary120
+                          : ThemeColors.splashBG,
                     ),
                   ),
                 if (addToWatchlist != null)
@@ -235,9 +238,11 @@ class BaseTickerAppBar extends StatelessWidget implements PreferredSizeWidget {
                     child: ActionButton(
                       size: 35,
                       icon: Images.watchlist,
-                     // icon: Images.watchlist,
+                      // icon: Images.watchlist,
                       onTap: onAddToWatchlistClick,
-                      color: data?.isWatchlistAdded==1?ThemeColors.primary120:ThemeColors.splashBG,
+                      color: data?.isWatchlistAdded == 1
+                          ? ThemeColors.primary120
+                          : ThemeColors.splashBG,
                     ),
                   ),
                 if (shareURL != null)
