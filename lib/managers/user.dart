@@ -14,7 +14,6 @@ import 'package:stocks_news_new/managers/stockDetail/stock.detail.dart';
 import 'package:stocks_news_new/managers/tools.dart';
 import 'package:stocks_news_new/modals/user_res.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
-import 'package:stocks_news_new/screens/auth/refer/refer_code.dart';
 import 'package:stocks_news_new/ui/account/auth/login.dart';
 import 'package:stocks_news_new/ui/account/update/index.dart';
 import 'package:stocks_news_new/ui/base/toaster.dart';
