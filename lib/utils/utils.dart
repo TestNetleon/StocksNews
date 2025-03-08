@@ -9,6 +9,7 @@ import 'package:stocks_news_new/managers/user.dart';
 import 'package:stocks_news_new/modals/stockDetailRes/earnings.dart';
 import 'package:stocks_news_new/modals/stockDetailRes/financial.dart';
 import 'package:stocks_news_new/ui/stockDetail/index.dart';
+import 'package:stocks_news_new/ui/subscription/manager.dart';
 import 'package:stocks_news_new/ui/tabs/more/articles/detail.dart';
 import 'package:stocks_news_new/ui/tabs/more/news/detail.dart';
 import 'package:stocks_news_new/utils/constants.dart';
@@ -799,7 +800,9 @@ void handleDeepLinkNavigation({
         memCODE != '' &&
         uri.toString().contains('.page.link')) {
       Utils().showLog("Going to membership page-------");
-      //TODO: navigate to membership
+      SubscriptionManager manager =
+          navigatorKey.currentContext!.read<SubscriptionManager>();
+      manager.startProcess(viewPlans: true);
 
       return;
     }
@@ -925,7 +928,9 @@ void handleNavigation({
     //   );
   } else if (type == DeeplinkEnum.membership) {
     if (manager.user == null || manager.user?.membership?.purchased != 1) {
-      //TODO: navigation pending
+      SubscriptionManager manager =
+          navigatorKey.currentContext!.read<SubscriptionManager>();
+      manager.startProcess(viewPlans: true);
     } else {
       Navigator.popUntil(
           navigatorKey.currentContext!, (route) => route.isFirst);
