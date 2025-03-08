@@ -236,6 +236,28 @@ class ScannerLosersManager extends ChangeNotifier {
     notifyListeners();
   }
 
+  void applySorting(String sortBy, bool isAscending) {
+    _filterParams = FilterParamsGainerLoser(
+      sortByHeader: sortBy,
+      sortBy: _filterParams?.sortBy,
+      sortByAsc: isAscending,
+    );
+
+    if (_dataList != null) {
+      _dataList!.sort((a, b) {
+        return sortByCompare(
+          a,
+          b,
+          _filterParams?.sortByHeader ?? "",
+          _filterParams?.sortByAsc ?? true,
+        );
+      });
+      notifyListeners();
+    } else if (_offlineDataList != null) {
+      updateOfflineData(_offlineDataList, applyFilter: true);
+    }
+  }
+
   int sortByCompare(
     LiveScannerRes a,
     LiveScannerRes b,

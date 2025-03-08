@@ -51,6 +51,8 @@ class Apis {
   static const referral = "/referrals/list";
   static const referralTransaction = "/referrals/txn-report";
   static const leaderboard = "/referrals/leaderboard";
+  static const redeemList = "/point-claim-list";
+  static const pointClaim = "/point-claim";
 
   //MARK: Crypto API
   static const cryptoTabs = "/crypto/tab";
@@ -174,6 +176,7 @@ class Apis {
 
   //Scanner
   static const stockScannerPort = '/stock-scanner';
+  static const scannerFilters = '/scanner-sectors';
 
 //----------------------------------------------
 //----------------------------------------------

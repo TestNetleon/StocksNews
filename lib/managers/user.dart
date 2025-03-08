@@ -60,7 +60,12 @@ class UserManager extends ChangeNotifier {
     if (user == null) return;
     _user = user;
     Preference.saveUser(_user);
+    updateShareUrl();
     notifyListeners();
+  }
+
+  Future updateShareUrl() async {
+    shareUri ??= await DynamicLinkService.instance.getDynamicLink();
   }
 
   askLoginScreen() async {

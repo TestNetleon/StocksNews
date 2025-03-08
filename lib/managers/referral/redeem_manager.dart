@@ -8,7 +8,7 @@ import 'package:stocks_news_new/models/referral/leader_board.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 
-class LeaderBoardManager extends ChangeNotifier {
+class RedeemManager extends ChangeNotifier {
   LeaderBoardRes? _data;
   LeaderBoardRes? get data => _data;
 
@@ -30,7 +30,7 @@ class LeaderBoardManager extends ChangeNotifier {
       _error = null;
       setStatus(loadMore ? Status.loadingMore : Status.loading);
       ApiResponse response = await apiRequest(
-        url: Apis.leaderboard,
+        url: Apis.redeemList,
         request: {},
       );
       if (response.status) {
@@ -44,6 +44,27 @@ class LeaderBoardManager extends ChangeNotifier {
       Utils().showLog("Error => $e");
       _data = null;
       _error = Const.errSomethingWrong;
+      setStatus(Status.loaded);
+    }
+  }
+
+  Future requestClaimReward({loadMore = false, type = ""}) async {
+    try {
+      _error = null;
+      setStatus(loadMore ? Status.loadingMore : Status.loading);
+      ApiResponse response = await apiRequest(
+        url: Apis.pointClaim,
+        request: {"type": type},
+      );
+      if (response.status) {
+        // _data = leaderBoardResFromJson(jsonEncode(response.data));
+      } else {
+        //
+      }
+      setStatus(Status.loaded);
+    } catch (e) {
+      Utils().showLog("Error => $e");
+      //
       setStatus(Status.loaded);
     }
   }

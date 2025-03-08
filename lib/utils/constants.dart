@@ -236,6 +236,7 @@ class Images {
   static const String starUnselected = '${base}star_unselected.png';
   static const String copy = '${base}copy.png';
   static const String ic_fav = '${base}ic_fav.png';
+  static const String filter = '${base}filter.png';
 
   //-------------------------------------------------------------------------------
   static const String scannerStop = 'assets/images/scanner_stop.png';

@@ -45,6 +45,7 @@ import 'package:stocks_news_new/managers/market/stocks/gainer&losers/todays_gain
 import 'package:stocks_news_new/managers/market/stocks/gainer&losers/todays_losers.dart';
 import 'package:stocks_news_new/managers/notification/most_bullish.dart';
 import 'package:stocks_news_new/managers/referral/leader_board_manager.dart';
+import 'package:stocks_news_new/managers/referral/redeem_manager.dart';
 import 'package:stocks_news_new/managers/referral/referral_manager.dart';
 import 'package:stocks_news_new/managers/referral/referral_points_manager.dart';
 import 'package:stocks_news_new/managers/watchlist.dart';
@@ -156,6 +157,7 @@ import 'package:stocks_news_new/ui/tabs/more/helpdesk/tickets/index.dart';
 import 'package:stocks_news_new/ui/tabs/more/notificationSettings/index.dart';
 import 'package:stocks_news_new/ui/tabs/more/referral/index.dart';
 import 'package:stocks_news_new/ui/tabs/more/referral/pointsTransaction/index.dart';
+import 'package:stocks_news_new/ui/tabs/more/referral/redeem/index.dart';
 import 'package:stocks_news_new/ui/tabs/more/watchlist/index.dart';
 import 'package:stocks_news_new/ui/tabs/tools/compareStocks/compare.dart';
 import 'package:stocks_news_new/ui/tabs/tools/scanner/manager/gainers.dart';
@@ -251,6 +253,7 @@ class Routes {
     FeedbackIndex.path: (_) => const FeedbackIndex(),
     BillionairesIndex.path: (_) => const BillionairesIndex(),
     ReferralIndex.path: (_) => const ReferralIndex(),
+    RedeemPoints.path: (_) => const RedeemPoints(),
 
     //--------------------------------------
 
@@ -470,7 +473,6 @@ class Routes {
             return SectorViewIndex(slug: slug);
           },
         );
-
 
       case BlogsDetailIndex.path:
         return MaterialPageRoute(
@@ -747,6 +749,7 @@ class Routes {
       ChangeNotifierProvider(create: (_) => ReferralManager()),
       ChangeNotifierProvider(create: (_) => ReferralPointsManager()),
       ChangeNotifierProvider(create: (_) => LeaderBoardManager()),
+      ChangeNotifierProvider(create: (_) => RedeemManager()),
 
       //SCANNER Start---------------
       ChangeNotifierProvider(create: (_) => ScannerManager()),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/ui/tabs/tools/scanner/manager/losers.dart';
+import 'package:stocks_news_new/ui/tabs/tools/scanner/manager/scanner.dart';
 import 'package:stocks_news_new/widgets/loading.dart';
 
 import '../../models/live.dart';
@@ -19,6 +20,10 @@ class ScannerLosersIndex extends StatelessWidget {
           if (list == null || list.isEmpty) {
             return SizedBox();
           }
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            context.read<ScannerManager>().setTotalResults(list.length);
+          });
+
           return Expanded(
             child: ScannerBaseContainer(dataList: list),
           );
@@ -27,6 +32,10 @@ class ScannerLosersIndex extends StatelessWidget {
           if (list == null || list.isEmpty) {
             return SizedBox();
           }
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            context.read<ScannerManager>().setTotalResults(list.length);
+          });
+
           return Expanded(
             child: ScannerBaseContainerOffline(dataList: list),
           );
