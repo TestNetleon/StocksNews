@@ -6,8 +6,7 @@ import 'package:stocks_news_new/ui/tabs/tools/scanner/models/live.dart';
 import 'package:stocks_news_new/ui/tabs/tools/scanner/models/offline.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
-
-import '../../../../../../widgets/spacer_vertical.dart';
+import 'package:stocks_news_new/utils/utils.dart';
 import 'item.dart';
 
 //MARK: Online Data
@@ -20,6 +19,12 @@ class ScannerBaseContainer extends StatefulWidget {
 }
 
 class _ScannerBaseContainerState extends State<ScannerBaseContainer> {
+  @override
+  void initState() {
+    super.initState();
+    Utils().showLog('INIT LIVE');
+  }
+
   @override
   Widget build(BuildContext context) {
     if (widget.dataList?.isEmpty == true || widget.dataList == null) {
@@ -85,22 +90,37 @@ class ScannerBaseContainerOffline extends StatefulWidget {
 class _ScannerBaseContainerOfflineState
     extends State<ScannerBaseContainerOffline> {
   @override
+  void initState() {
+    super.initState();
+    Utils().showLog('INIT OFFLINE');
+  }
+
+  @override
   Widget build(BuildContext context) {
     if (widget.dataList?.isEmpty == true || widget.dataList == null) {
       return SizedBox();
     }
-    return ListView.separated(
-      shrinkWrap: true,
-      physics: NeverScrollableScrollPhysics(),
-      padding: EdgeInsets.symmetric(horizontal: 10),
-      itemBuilder: (context, index) {
-        OfflineScannerRes? data = widget.dataList?[index];
-        return ScannerBaseItem(data: data);
+    return BaseScroll(
+      margin: EdgeInsets.only(top: Pad.pad16),
+      onRefresh: () async {
+        context.read<ScannerManager>().onRefresh();
       },
-      separatorBuilder: (context, index) {
-        return SpacerVertical(height: 15);
-      },
-      itemCount: widget.dataList?.length ?? 0,
+      children: List.generate(
+        widget.dataList?.length ?? 0,
+        (index) {
+          OfflineScannerRes? data = widget.dataList?[index];
+          return Column(
+            children: [
+              ScannerBaseItem(data: data),
+              Divider(
+                color: ThemeColors.neutral5,
+                height: 32,
+                thickness: 1,
+              ),
+            ],
+          );
+        },
+      ),
     );
   }
 }

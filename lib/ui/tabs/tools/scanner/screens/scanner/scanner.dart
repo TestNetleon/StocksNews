@@ -19,6 +19,9 @@ class ScannerIndex extends StatelessWidget {
           if (list == null || list.isEmpty) {
             return SizedBox();
           }
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            manager.setTotalResults(list.length);
+          });
           return Expanded(
             child: ScannerBaseContainer(dataList: list),
           );
@@ -27,6 +30,10 @@ class ScannerIndex extends StatelessWidget {
           if (list == null || list.isEmpty) {
             return SizedBox();
           }
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            manager.setTotalResults(list.length);
+          });
+
           return Expanded(
             child: ScannerBaseContainerOffline(dataList: list),
           );
