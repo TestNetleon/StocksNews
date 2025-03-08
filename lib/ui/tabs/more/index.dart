@@ -14,6 +14,7 @@ import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:svg_flutter/svg_flutter.dart';
 
 import '../../../widgets/cache_network_image.dart';
+import '../../base/logout.dart';
 
 class MoreIndex extends StatelessWidget {
   const MoreIndex({super.key});
@@ -199,8 +200,9 @@ class MoreIndex extends StatelessWidget {
               visible: user != null,
               child: GestureDetector(
                 onTap: () {
-                  UserManager manager = context.read<UserManager>();
-                  manager.logoutUser();
+                  // UserManager manager = context.read<UserManager>();
+                  // manager.logoutUser();
+                  baseLogout();
                 },
                 behavior: HitTestBehavior.translucent,
                 child: Container(

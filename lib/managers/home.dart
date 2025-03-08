@@ -8,6 +8,7 @@ import 'package:stocks_news_new/api/apis.dart';
 import 'package:stocks_news_new/database/preference.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/utils/utils.dart';
+import '../models/lock.dart';
 import '../models/my_home.dart';
 import '../models/my_home_premium.dart';
 import '../utils/constants.dart';
@@ -23,7 +24,7 @@ class MyHomeManager extends ChangeNotifier {
     _homePremiumData = null;
     //clear watchlist data
     _watchlist = null;
-
+    _setNUm = -1;
     notifyListeners();
   }
 
@@ -42,6 +43,37 @@ class MyHomeManager extends ChangeNotifier {
   setStatus(status) {
     _status = status;
     notifyListeners();
+  }
+
+//MARK: setting up lock
+  BaseLockInfoRes? _lockStocksInsider;
+  BaseLockInfoRes? get lockStocksInsider => _lockStocksInsider;
+
+  BaseLockInfoRes? _lockStocksPoliticians;
+  BaseLockInfoRes? get lockStocksPoliticians => _lockStocksPoliticians;
+
+  num _setNUm = -1;
+  setNumValue(value) {
+    _setNUm = value;
+    notifyListeners();
+  }
+
+  BaseLockInfoRes? getLockINFO() {
+    BaseLockInfoRes? info;
+
+    switch (_setNUm) {
+      case 1:
+        info = _lockStocksInsider;
+        break;
+
+      case 2:
+        info = _lockStocksPoliticians;
+        break;
+
+      default:
+    }
+
+    return info;
   }
 
   Future getHomeData() async {
@@ -132,6 +164,14 @@ class MyHomeManager extends ChangeNotifier {
       if (response.status) {
         _homePremiumData = myHomePremiumResFromJson(jsonEncode(response.data));
         _errorHomePremium = null;
+
+        if (_homePremiumData?.insiderTrading != null) {
+          _lockStocksInsider = _homePremiumData?.insiderTrading?.lockInfo;
+        }
+        if (_homePremiumData?.congressionalStocks != null) {
+          _lockStocksPoliticians =
+              _homePremiumData?.congressionalStocks?.lockInfo;
+        }
       } else {
         _homePremiumData = null;
         _errorHomePremium = response.message;

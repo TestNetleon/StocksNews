@@ -29,7 +29,7 @@ class SubscriptionService {
       await Purchases.configure(configuration);
 
       try {
-        Purchases.syncPurchases();
+        // Purchases.syncPurchases();
         Utils().showLog('SYNC');
       } catch (e) {
         Utils().showLog('error in sync purchase $e');
@@ -108,7 +108,7 @@ class SubscriptionService {
         return info.activeSubscriptions;
       } else {
         List<String>? subscriptions;
-        Purchases.syncPurchases();
+        // Purchases.syncPurchases();
         Purchases.addCustomerInfoUpdateListener((CustomerInfo info) {
           Map<String, EntitlementInfo> entitlements = info.entitlements.all;
           // Utils().showLog('Entitlements $entitlements');

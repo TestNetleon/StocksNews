@@ -1,56 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/managers/tools.dart';
-import 'package:stocks_news_new/managers/user.dart';
-import 'package:stocks_news_new/routes/my_app.dart';
+import 'package:stocks_news_new/models/tools.dart';
 import 'package:stocks_news_new/ui/base/base_scroll.dart';
-import 'package:stocks_news_new/ui/tabs/tools/compareStocks/compare.dart';
 import 'package:stocks_news_new/ui/tabs/tools/item.dart';
-import 'package:stocks_news_new/ui/tabs/tools/plaidConnect/plaid_service.dart';
+import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/custom/base_loader_container.dart';
-import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import '../../base/scaffold.dart';
-import 'plaidConnect/portfolio.dart';
 
 class ToolsIndex extends StatelessWidget {
   const ToolsIndex({super.key});
-  Future _onCompareStock() async {
-    UserManager manager = navigatorKey.currentContext!.read<UserManager>();
-
-    await manager.askLoginScreen();
-    if (manager.user == null) {
-      return;
-    }
-
-    Navigator.pushNamed(navigatorKey.currentContext!, ToolsCompareIndex.path);
-  }
-
-  _onSyncPortfolio(bool connected) async {
-    if (connected) {
-      Navigator.pushNamed(
-          navigatorKey.currentContext!, ToolsPortfolioIndex.path);
-    } else {
-      UserManager manager = navigatorKey.currentContext!.read<UserManager>();
-      ToolsManager toolsManager =
-          navigatorKey.currentContext!.read<ToolsManager>();
-
-      await manager.askLoginScreen();
-
-      if (manager.user != null) {
-        if (manager.user?.signupStatus != true) {
-          await toolsManager.getToolsData();
-          bool isConnected = toolsManager.data?.plaid?.connected ?? false;
-          if (isConnected == true) {
-            Navigator.pushNamed(
-                navigatorKey.currentContext!, ToolsPortfolioIndex.path);
-          } else {
-            PlaidService.instance.init();
-            PlaidService.instance.initiatePlaid();
-          }
-        }
-      }
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -65,40 +24,26 @@ class ToolsIndex extends StatelessWidget {
         onRefresh: manager.getToolsData,
         child: BaseScroll(
           onRefresh: manager.getToolsData,
-          children: [
-            SpacerVertical(height: 16),
-            if (manager.data?.compare != null)
-              ToolsItem(
-                card: manager.data?.compare,
-                onTap: _onCompareStock,
-              ),
-            SpacerVertical(height: 16),
-            if (manager.data?.plaid != null)
-              ToolsItem(
-                card: manager.data?.plaid,
-                onTap: () {
-                  _onSyncPortfolio(manager.data?.plaid?.connected == true);
-                },
-              ),
-            SpacerVertical(height: 16),
-            if (manager.data?.scanner != null)
-              ToolsItem(
-                card: manager.data?.scanner,
-                onTap: manager.scannerRedirection,
-              ),
-            SpacerVertical(height: 16),
-            if (manager.data?.simulator != null)
-              ToolsItem(
-                card: manager.data?.simulator,
-                onTap: manager.simulatorRedirection,
-              ),
-            SpacerVertical(height: 16),
-            if (manager.data?.league != null)
-              ToolsItem(
-                card: manager.data?.league,
-                onTap: manager.leagueRedirection,
-              ),
-          ],
+          children: List.generate(
+            manager.data?.tools?.length ?? 0,
+            (index) {
+              ToolsCardsRes? data = manager.data?.tools?[index];
+              if (data == null) {
+                return SizedBox();
+              }
+
+              return Container(
+                margin: EdgeInsets.only(bottom: Pad.pad16),
+                child: ToolsItem(
+                  card: data,
+                  onTap: () {
+                    if (data.slug == null || data.slug == null) return;
+                    manager.startNavigation(data.slug ?? ToolsEnum.scanner);
+                  },
+                ),
+              );
+            },
+          ),
         ),
       ),
     );

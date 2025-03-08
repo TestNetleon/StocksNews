@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/managers/user.dart';
@@ -9,13 +8,15 @@ import 'package:stocks_news_new/ui/base/toaster.dart';
 import 'package:stocks_news_new/ui/tabs/tools/scanner/index.dart';
 import 'package:stocks_news_new/ui/tabs/tools/simulator/screens/index.dart';
 import 'package:stocks_news_new/utils/utils.dart';
-
 import '../api/api_requester.dart';
 import '../api/api_response.dart';
 import '../api/apis.dart';
 import '../models/compare.dart';
 import '../models/plaid_portfolio.dart';
 import '../routes/my_app.dart';
+import '../ui/tabs/tools/compareStocks/compare.dart';
+import '../ui/tabs/tools/plaidConnect/plaid_service.dart';
+import '../ui/tabs/tools/plaidConnect/portfolio.dart';
 import '../utils/constants.dart';
 
 class ToolsManager extends ChangeNotifier {
@@ -28,6 +29,70 @@ class ToolsManager extends ChangeNotifier {
     //clear compare data
     _compareData = null;
     notifyListeners();
+  }
+
+//MARK: Navigate
+  Future startNavigation(ToolsEnum type) async {
+    UserManager manager = navigatorKey.currentContext!.read<UserManager>();
+    await manager.askLoginScreen();
+    if (manager.user == null) {
+      return;
+    }
+
+    switch (type) {
+      case ToolsEnum.scanner:
+        Navigator.pushNamed(
+          navigatorKey.currentContext!,
+          ToolsScannerIndex.path,
+        );
+        break;
+
+      case ToolsEnum.simulator:
+        Navigator.pushNamed(
+          navigatorKey.currentContext!,
+          SimulatorIndex.path,
+        );
+        break;
+
+      case ToolsEnum.portfolio:
+        ToolsCardsRes? data = _data?.tools
+            ?.firstWhere((element) => element.slug == ToolsEnum.portfolio);
+
+        if (data?.connected == true) {
+          Navigator.pushNamed(
+              navigatorKey.currentContext!, ToolsPortfolioIndex.path);
+        } else {
+          if (manager.user?.signupStatus != true) {
+            await getToolsData();
+
+            if (data?.connected == true) {
+              Navigator.pushNamed(
+                  navigatorKey.currentContext!, ToolsPortfolioIndex.path);
+            } else {
+              try {
+                PlaidService.instance.init();
+                PlaidService.instance.initiatePlaid();
+              } catch (e) {
+                TopSnackbar.show(
+                  message: Const.errSomethingWrong,
+                  type: ToasterEnum.error,
+                );
+              }
+            }
+          }
+        }
+
+        break;
+      case ToolsEnum.compare:
+        Navigator.pushNamed(
+          navigatorKey.currentContext!,
+          ToolsCompareIndex.path,
+        );
+        break;
+
+      case ToolsEnum.league:
+        break;
+    }
   }
 
   //MARK: Tools
@@ -69,7 +134,11 @@ class ToolsManager extends ChangeNotifier {
       );
       if (response.status) {
         _data = toolsResFromJson(jsonEncode(response.data));
-        setSubmission(_data?.plaid?.connected == true);
+
+        ToolsCardsRes? element = _data?.tools
+            ?.firstWhere((element) => element.slug == ToolsEnum.portfolio);
+
+        setSubmission(element?.connected == true);
         _error = null;
       } else {
         _data = null;
@@ -107,9 +176,10 @@ class ToolsManager extends ChangeNotifier {
             type: ToasterEnum.success,
           );
         }
-
-        await getToolsData();
         _error = null;
+        await getToolsData();
+        Navigator.pushNamed(
+            navigatorKey.currentContext!, ToolsPortfolioIndex.path);
       } else {
         setSubmission(false);
 
@@ -357,32 +427,5 @@ class ToolsManager extends ChangeNotifier {
     } finally {
       notifyListeners();
     }
-  }
-
-  /// Scanner redirection
-  Future scannerRedirection() async {
-    Navigator.pushNamed(navigatorKey.currentContext!, ToolsScannerIndex.path);
-  }
-
-  /// Simulator redirection
-  Future simulatorRedirection() async {
-    UserManager manager = navigatorKey.currentContext!.read<UserManager>();
-    await manager.askLoginScreen();
-    if (manager.user == null) {
-      return;
-    }
-    Navigator.pushNamed(navigatorKey.currentContext!, SimulatorIndex.path);
-    Utils().showLog('--calling Simulator');
-  }
-
-  /// league redirection
-  Future leagueRedirection() async {
-    UserManager manager = navigatorKey.currentContext!.read<UserManager>();
-    await manager.askLoginScreen();
-    if (manager.user == null) {
-      return;
-    }
-    // Navigator.pushNamed(navigatorKey.currentContext!, ToolsCompareIndex.path);
-    Utils().showLog('--calling league');
   }
 }

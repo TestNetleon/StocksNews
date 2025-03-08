@@ -113,8 +113,9 @@ class PlaidService {
         if (data.containsKey('access_token') &&
             data['access_token'] != null &&
             data['access_token'].toString().isNotEmpty) {
-          context.read<ToolsManager>().savePlaidPortfolio(data['access_token']);
-          // _getHoldings(accessToken: data['access_token']);
+          await context
+              .read<ToolsManager>()
+              .savePlaidPortfolio(data['access_token']);
         }
       } else {
         Utils().showLog("Plaid Token Exchange Failed: ${response.body}");

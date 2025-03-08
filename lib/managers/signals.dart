@@ -100,7 +100,7 @@ class SignalsManager extends ChangeNotifier {
     notifyListeners();
   }
 
-//setting up lock for common lock
+//MARK: setting up lock
   BaseLockInfoRes? _lockStocks;
   BaseLockInfoRes? get lockStocks => _lockStocks;
 
@@ -648,8 +648,8 @@ class SignalsManager extends ChangeNotifier {
 
   void updateTickerInfo({required String symbol, alertAdded, watchListAdded}) {
     if (_signalSocksData?.data != null) {
-      final index =
-      _signalSocksData?.data?.indexWhere((element) => element.symbol == symbol);
+      final index = _signalSocksData?.data
+          ?.indexWhere((element) => element.symbol == symbol);
       if (index != null && index != -1) {
         if (alertAdded != null) {
           _signalSocksData?.data![index].isAlertAdded = alertAdded;
@@ -661,27 +661,31 @@ class SignalsManager extends ChangeNotifier {
       }
     }
     if (_signalSentimentData?.recentMentions?.data != null) {
-      final index =
-      _signalSentimentData?.recentMentions?.data?.indexWhere((element) => element.symbol == symbol);
+      final index = _signalSentimentData?.recentMentions?.data
+          ?.indexWhere((element) => element.symbol == symbol);
       if (index != null && index != -1) {
         if (alertAdded != null) {
-          _signalSentimentData?.recentMentions?.data![index].isAlertAdded = alertAdded;
+          _signalSentimentData?.recentMentions?.data![index].isAlertAdded =
+              alertAdded;
         }
         if (watchListAdded != null) {
-          _signalSentimentData?.recentMentions?.data![index].isWatchlistAdded = watchListAdded;
+          _signalSentimentData?.recentMentions?.data![index].isWatchlistAdded =
+              watchListAdded;
         }
         notifyListeners();
       }
     }
     if (_signalSentimentData?.mostMentions?.data != null) {
-      final index =
-      _signalSentimentData?.mostMentions?.data?.indexWhere((element) => element.symbol == symbol);
+      final index = _signalSentimentData?.mostMentions?.data
+          ?.indexWhere((element) => element.symbol == symbol);
       if (index != null && index != -1) {
         if (alertAdded != null) {
-          _signalSentimentData?.mostMentions?.data![index].isAlertAdded = alertAdded;
+          _signalSentimentData?.mostMentions?.data![index].isAlertAdded =
+              alertAdded;
         }
         if (watchListAdded != null) {
-          _signalSentimentData?.mostMentions?.data![index].isWatchlistAdded = watchListAdded;
+          _signalSentimentData?.mostMentions?.data![index].isWatchlistAdded =
+              watchListAdded;
         }
         notifyListeners();
       }

@@ -6,28 +6,24 @@ import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 class TopBilIndex extends StatelessWidget {
   final TopTab? topTabs;
-  const TopBilIndex({super.key,this.topTabs});
+  const TopBilIndex({super.key, this.topTabs});
 
   @override
   Widget build(BuildContext context) {
     return Visibility(
-      visible: topTabs?.topBillionaires != null,
-      child: ListView.separated(
-        physics: NeverScrollableScrollPhysics(),
-        padding: EdgeInsets.symmetric(horizontal: Pad.pad10),
-        shrinkWrap: true,
-        itemBuilder: (context, index) {
-          RecentMentionsRes? item = topTabs?.topBillionaires?[index];
-          return BillionaireItem(
-              item:item,
-              onTap:(){}
-          );
-        },
-        separatorBuilder: (context, index) {
-          return SpacerVertical(height: Pad.pad5);
-        },
-        itemCount: topTabs?.topBillionaires?.length ?? 0,
-      )
-    );
+        visible: topTabs?.topBillionaires != null,
+        child: ListView.separated(
+          physics: NeverScrollableScrollPhysics(),
+          padding: EdgeInsets.symmetric(horizontal: Pad.pad10),
+          shrinkWrap: true,
+          itemBuilder: (context, index) {
+            RecentMentionsRes? item = topTabs?.topBillionaires?[index];
+            return BillionaireItem(item: item, onTap: () {});
+          },
+          separatorBuilder: (context, index) {
+            return SpacerVertical(height: Pad.pad5);
+          },
+          itemCount: topTabs?.topBillionaires?.length ?? 0,
+        ));
   }
 }

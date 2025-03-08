@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:stocks_news_new/managers/user.dart';
 import 'package:stocks_news_new/modals/stockDetailRes/earnings.dart';
 import 'package:stocks_news_new/modals/stockDetailRes/financial.dart';
-import 'package:stocks_news_new/screens/helpDesk/front/index.dart';
 import 'package:stocks_news_new/screens/marketData/congressionalData/index.dart';
 import 'package:stocks_news_new/screens/marketData/dividends/dividends.dart';
 import 'package:stocks_news_new/screens/marketData/earnings/earnings.dart';
@@ -21,22 +21,15 @@ import 'package:stocks_news_new/screens/marketData/lowPriceStocks/index.dart';
 import 'package:stocks_news_new/screens/marketData/mostActive/index.dart';
 import 'package:stocks_news_new/screens/marketData/pennyStocks/index.dart';
 import 'package:stocks_news_new/screens/stocks/index.dart';
-import 'package:stocks_news_new/screens/t&cAndPolicy/tc_policy.dart';
-import 'package:stocks_news_new/service/revenue_cat.dart';
+import 'package:stocks_news_new/ui/stockDetail/index.dart';
+import 'package:stocks_news_new/ui/tabs/more/articles/detail.dart';
+import 'package:stocks_news_new/ui/tabs/more/news/detail.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:intl/intl.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:url_launcher/url_launcher.dart';
-import '../api/api_response.dart';
-import '../providers/home_provider.dart';
-import '../providers/user_provider.dart';
 import '../routes/my_app.dart';
-import '../screens/auth/base/base_auth.dart';
-import '../screens/offerMembership/blackFriday/index.dart';
-import '../screens/blogDetail/index.dart';
-import '../screens/offerMembership/christmas/index.dart';
-import '../screens/stockDetail/index.dart';
-import '../screens/tabs/news/newsDetail/new_detail.dart';
+import '../ui/tabs/more/helpdesk/front/index.dart';
 import '../ui/tabs/tabs.dart';
 
 // import 'package:whatsapp_share/whatsapp_share.dart';
@@ -364,126 +357,236 @@ commonShare({String? url, String? title}) {
   }
 }
 
-// void navigateDeepLinks({required Uri uri, bool fromBackground = false}) {
-//   String type = containsSpecificPath(uri);
-//   String slug = extractLastPathComponent(uri);
-
-//   log("SLUG == > $slug");
-
-//   if (slug == 'install') {
-//     String? referralCode = uri.queryParameters['code'];
-//     if (referralCode == null || referralCode == '') {
-//       referralCode = uri.queryParameters['referrer'];
-//     }
-//     if (referralCode == null || referralCode == '') {
-//       referralCode = uri.queryParameters['ref'];
-//     }
-//     if (referralCode == null || referralCode == '') {
-//       referralCode = uri.queryParameters['referral_code'];
-//     }
-//     if (referralCode != null && referralCode != "") {
-//       Preference.saveReferral(referralCode);
-//     }
-//     // log("SLUG FOUND ==> RETURNING NOW");
-//     Timer(const Duration(seconds: 4), () {
-//       if (navigatorKey.currentContext!.read<UserProvider>().user == null) {
-//         signupSheet();
-//         // onDeepLinking = false;
-//         Timer(const Duration(seconds: 3), () {
-//           onDeepLinking = false;
-//         });
-//       }
-//     });
+// void handleDeepLinkNavigation({
+//   Uri? uri,
+//   bool conditionalCheck = false,
+//   int? duration,
+// }) {
+//   Utils().showLog('url $uri');
+//   if (uri == null) {
+//     onDeepLinking = false;
 //     return;
 //   }
 
-//   if (fromBackground) {
-//     Timer(const Duration(seconds: 4), () {
-//       navigation(
-//         uri: uri,
-//         slug: slug,
-//         type: type,
-//         fromBackground: false,
-//         from: "Firebase Deeplinks BACKGROUND condition",
-//       );
-//       // onDeepLinking = false;
-//       Timer(const Duration(seconds: 3), () {
-//         onDeepLinking = false;
+//   try {
+//     extractCodeFromMEM(uri, "4");
+//     Utils().showLog("Calling from handle deep link MEM CODE => $memCODE");
+
+//     if (memCODE != null &&
+//         memCODE != '' &&
+//         uri.toString().contains('.page.link')) {
+//       Utils().showLog("Going to membership page-------");
+//       Timer(Duration(seconds: duration ?? 0), () {
+//         // Navigator.push(navigatorKey.currentContext!,
+//         //     MaterialPageRoute(builder: (context) {
+//         //   return NewMembership();
+//         // }));
+//         closeKeyboard();
+//         // UserRes? user = navigatorKey.currentContext!.read<UserProvider>().user;
+//         Extra? extra = navigatorKey.currentContext!.read<HomeProvider>().extra;
+
+//         if (extra?.showBlackFriday == true) {
+//           Navigator.push(
+//             navigatorKey.currentContext!,
+//             MaterialPageRoute(
+//               builder: (context) => const BlackFridayMembershipIndex(),
+//             ),
+//           );
+//         } else if (extra?.christmasMembership == true ||
+//             extra?.newYearMembership == true) {
+//           Navigator.push(
+//             navigatorKey.currentContext!,
+//             createRoute(
+//               const ChristmasMembershipIndex(),
+//             ),
+//           );
+//         } else {
+//           subscribe();
+//           // Navigator.push(
+//           //   navigatorKey.currentContext!,
+//           //   MaterialPageRoute(
+//           //     builder: (context) => const NewMembership(),
+//           //   ),
+//           // );
+//         }
 //       });
-//     });
-//   } else {
-//     Timer(const Duration(seconds: 1), () {
-//       navigation(
-//         uri: uri,
-//         slug: slug,
-//         type: type,
-//         from: "Firebase Deeplinks Foreground condition",
-//       );
-//       // onDeepLinking = false;
-//       Timer(const Duration(seconds: 3), () {
-//         onDeepLinking = false;
-//       });
-//     });
+
+//       return;
+//     }
+//   } catch (e) {
+//     //
 //   }
-// }
 
-// void navigation(
-//     {String? type,
-//     required Uri uri,
-//     String? slug,
-//     fromBackground = false,
-//     String from = ""}) async {
-//   Utils().showLog("---Type $type, -----Uri $uri,-----Slug $slug");
+//   bool isRef = uri.toString().contains("/install") ||
+//       uri.toString().contains(".page.link") ||
+//       uri.toString().contains("app.stocks.news://");
 
-//   Preference.saveDataList(
-//     DeeplinkData(
+//   if (isRef) {
+//     onDeepLinking = false;
+//     return;
+//   }
+
+//   // onDeepLinking = true;
+//   DeeplinkEnum type = containsSpecificPath(uri);
+//   String slug = extractLastPathComponent(uri);
+
+// //EXTRA Condition for News, Blog, AI navigation started-------------
+//   if (conditionalCheck && type == DeeplinkEnum.outsider) {
+//     openUrl("$uri");
+//     return;
+//   }
+// //-------------------------------
+
+//   // here will be some conditions to handle in background
+//   // like if from background then add 4 sec else 1 sec
+//   Timer(const Duration(milliseconds: 300), () {
+//     handleNavigation(
 //       uri: uri,
-//       from: from,
-//       path: "Navigation",
 //       slug: slug,
 //       type: type,
-//       onDeepLink: onDeepLinking,
-//     ),
-//   );
+//       fromBackground: false,
+//       from: "Handle Navigation Common",
+//     );
+//   });
+// }
 
-//   // String slugForTicker = extractSymbolValue(uri);
-//   // Utils().showLog("slug for ticker $slugForTicker");
+// void handleNavigation({
+//   DeeplinkEnum? type,
+//   required Uri uri,
+//   String? slug,
+//   fromBackground = false,
+//   String from = "",
+//   bool setPopHome = true,
+// }) async {
+//   if (type != DeeplinkEnum.login && type != DeeplinkEnum.signup) {
+//     isAppUpdating = false;
+//   }
+//   // Utils().showLog("---Type $type, -----Uri $uri,-----Slug $slug");
+//   // String slugForTicker = extractLastPathComponent(uri);
 //   bool userPresent = false;
 
 //   UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
 //   if (await provider.checkForUser()) {
 //     userPresent = true;
 //   }
+
 //   if (slug == null && type == null) {
 //     return;
 //   }
-//   popHome = true;
+
+//   if (setPopHome && type != DeeplinkEnum.login && type != DeeplinkEnum.signup) {
+//     popHome = true;
+//   }
+
 //   Utils().showLog("----$userPresent---");
-//   if (type == "blog") {
-//     if (fromBackground) {
-//       Navigator.pushReplacement(
-//           navigatorKey.currentContext!,
-//           MaterialPageRoute(
-//               builder: (context) => BlogDetail(
-//                     // id: "",
-//                     slug: slug,
-//                   )));
-//     } else {
-//       Navigator.push(
-//           navigatorKey.currentContext!,
-//           MaterialPageRoute(
-//               builder: (context) => BlogDetail(
-//                     // id: "",
-//                     slug: slug,
-//                   )));
-//     }
-//   } else if (type == "news") {
+
+//   // if (type == "blog") {
+//   if (type == DeeplinkEnum.blogDetail) {
 //     if (fromBackground) {
 //       Navigator.pushReplacement(
 //         navigatorKey.currentContext!,
 //         MaterialPageRoute(
-//           builder: (context) => NewsDetails(
-//             slug: slug,
+//           builder: (context) => BlogDetail(slug: slug),
+//         ),
+//       );
+//     } else {
+//       Navigator.push(
+//         navigatorKey.currentContext!,
+//         MaterialPageRoute(
+//           builder: (context) => BlogDetail(slug: slug),
+//         ),
+//       );
+//     }
+//     // } else if (type == "news") {
+//   } else if (type == DeeplinkEnum.newsDetail) {
+//     if (fromBackground) {
+//       Navigator.pushReplacement(
+//         navigatorKey.currentContext!,
+//         MaterialPageRoute(
+//           builder: (context) => NewsDetails(slug: slug),
+//         ),
+//       );
+//     } else {
+//       Navigator.push(
+//         navigatorKey.currentContext!,
+//         MaterialPageRoute(
+//           builder: (context) => NewsDetails(slug: slug),
+//         ),
+//       );
+//     }
+//     // } else if (type == "stock_detail") {
+//   } else if (type == DeeplinkEnum.stocksDetail) {
+//     if (fromBackground) {
+//       Navigator.pushReplacement(
+//         navigatorKey.currentContext!,
+//         MaterialPageRoute(
+//           builder: (context) => StockDetail(symbol: slug!),
+//         ),
+//       );
+//     } else {
+//       Navigator.push(
+//         navigatorKey.currentContext!,
+//         MaterialPageRoute(
+//           builder: (context) => StockDetail(symbol: slug!),
+//         ),
+//       );
+//     }
+//     // } else if (type == "login") {
+//   } else if (type == DeeplinkEnum.login) {
+//     if (userPresent) {
+//       if (fromBackground) {
+//         Navigator.popUntil(
+//           navigatorKey.currentContext!,
+//           (route) => route.isFirst,
+//         );
+//         Navigator.pushReplacement(
+//           navigatorKey.currentContext!,
+//           MaterialPageRoute(builder: (_) => const Tabs()),
+//         );
+//       }
+//     } else {
+//       Timer(Duration(milliseconds: splashLoaded ? 0 : 3500), () {
+//         // loginSheet();
+//         loginFirstSheet();
+//       });
+//     }
+//     // } else if (type == "signUp") {
+//   } else if (type == DeeplinkEnum.signup) {
+//     if (userPresent) {
+//       if (fromBackground) {
+//         Navigator.popUntil(
+//           navigatorKey.currentContext!,
+//           (route) => route.isFirst,
+//         );
+//         Navigator.pushReplacement(
+//           navigatorKey.currentContext!,
+//           MaterialPageRoute(builder: (_) => const Tabs()),
+//         );
+//       }
+//     } else {
+//       Timer(Duration(milliseconds: splashLoaded ? 0 : 3500), () {
+//         // signupSheet();
+//         loginFirstSheet();
+//       });
+//     }
+//     // } else if (type == "dashboard") {
+//   } else if (type == DeeplinkEnum.dashboard) {
+//     // if (fromBackground) {
+//     Navigator.popUntil(navigatorKey.currentContext!, (route) => route.isFirst);
+//     Navigator.pushReplacement(
+//       navigatorKey.currentContext!,
+//       MaterialPageRoute(builder: (_) => const Tabs()),
+//     );
+//     // }
+//     // } else if (type == "page") {
+//   } else if (type == DeeplinkEnum.page) {
+//     if (fromBackground) {
+//       Navigator.pushReplacement(
+//         navigatorKey.currentContext!,
+//         MaterialPageRoute(
+//           builder: (context) => TCandPolicy(
+//             policyType: PolicyType.aboutUs,
+//             slug: "$slug",
 //           ),
 //         ),
 //       );
@@ -491,193 +594,205 @@ commonShare({String? url, String? title}) {
 //       Navigator.push(
 //         navigatorKey.currentContext!,
 //         MaterialPageRoute(
-//           builder: (context) => NewsDetails(
-//             slug: slug,
+//           builder: (context) => TCandPolicy(
+//             policyType: PolicyType.aboutUs,
+//             slug: "$slug",
 //           ),
 //         ),
 //       );
 //     }
-//   } else if (type == "stock_detail") {
-//     if (fromBackground) {
-//       Navigator.pushReplacement(
-//           navigatorKey.currentContext!,
-//           MaterialPageRoute(
-//               builder: (context) => StockDetail(symbol: slug ?? "")));
+//   } else if (type == DeeplinkEnum.insiderTrades) {
+//     Navigator.popUntil(navigatorKey.currentContext!, (route) => route.isFirst);
+//     Navigator.pushReplacement(
+//       navigatorKey.currentContext!,
+//       MaterialPageRoute(builder: (_) => const Tabs(index: 2)),
+//     );
+//   } else if (type == DeeplinkEnum.membership) {
+//     // UserProvider userProvider =
+//     //     navigatorKey.currentContext!.read<UserProvider>();
+//     // if (userProvider.user == null) {
+//     //   UserRes? user = await Preference.getUser();
+//     //   if (user != null) {
+//     //     provider.setUser(user);
+//     //   }
+//     //   await navigatorKey.currentContext!.read<HomeProvider>().getHomeSlider(
+//     //         showProgress: true,
+//     //       );
+//     // }
+
+//     // UserProvider userProvider =
+//     //     navigatorKey.currentContext!.read<UserProvider>();
+
+//     if (provider.user == null || provider.user?.membership?.purchased != 1) {
+//       subscribe();
+//       // Navigator.push(
+//       //   navigatorKey.currentContext!,
+//       //   MaterialPageRoute(
+//       //     builder: (_) => const NewMembership(),
+//       //   ),
+//       // );
 //     } else {
-//       Navigator.push(
-//           navigatorKey.currentContext!,
-//           MaterialPageRoute(
-//               builder: (context) => StockDetail(symbol: slug ?? "")));
-//     }
-//   } else if (type == "login") {
-//     if (userPresent) {
-//       if (fromBackground) {
-//         Navigator.popUntil(
-//             navigatorKey.currentContext!, (route) => route.isFirst);
-//         Navigator.pushReplacement(
-//           navigatorKey.currentContext!,
-//           MaterialPageRoute(builder: (_) => const Tabs()),
-//         );
-//       }
-//     } else {
-//       loginSheet();
-//     }
-//   } else if (type == "signUp") {
-//     if (userPresent) {
-//       if (fromBackground) {
-//         Navigator.popUntil(
-//             navigatorKey.currentContext!, (route) => route.isFirst);
-//         Navigator.pushReplacement(
-//           navigatorKey.currentContext!,
-//           MaterialPageRoute(builder: (_) => const Tabs()),
-//         );
-//       }
-//     } else {
-//       signupSheet();
-//     }
-//   } else if (type == "dashboard") {
-//     if (fromBackground) {
 //       Navigator.popUntil(
 //           navigatorKey.currentContext!, (route) => route.isFirst);
 //       Navigator.pushReplacement(
 //         navigatorKey.currentContext!,
-//         MaterialPageRoute(builder: (_) => const Tabs()),
+//         MaterialPageRoute(
+//           builder: (_) => const Tabs(),
+//         ),
 //       );
 //     }
-//     Utils().showLog("--goto dashboard---");
+//   } else if (type == DeeplinkEnum.trendingIndustries) {
+//     Navigator.popUntil(navigatorKey.currentContext!, (route) => route.isFirst);
+//     Navigator.pushReplacement(
+//       navigatorKey.currentContext!,
+//       MaterialPageRoute(
+//         builder: (_) => const Tabs(
+//           index: 1,
+//           trendingIndex: 4,
+//         ),
+//       ),
+//     );
+//   } else if (type == DeeplinkEnum.sentiments) {
+//     Navigator.popUntil(navigatorKey.currentContext!, (route) => route.isFirst);
+//     Navigator.pushReplacement(
+//       navigatorKey.currentContext!,
+//       MaterialPageRoute(builder: (_) => const Tabs(index: 3)),
+//     );
+//   } else if (type == DeeplinkEnum.helpdesk) {
+//     Navigator.push(
+//       navigatorKey.currentContext!,
+//       // MaterialPageRoute(builder: (_) => const HelpDesk()),
+//       MaterialPageRoute(builder: (_) => const HelpDeskNew()),
+//     );
+//     // *********** Market data Pages from Here ********
+//   } else if (type == DeeplinkEnum.gainerLoser) {
+//     Navigator.push(
+//       navigatorKey.currentContext!,
+//       MaterialPageRoute(
+//         builder: (context) => const GainersLosersIndex(
+//           type: StocksType.gainers,
+//         ),
+//       ),
+//     );
+//   } else if (type == DeeplinkEnum.gapUpDown) {
+//     Navigator.push(
+//       navigatorKey.currentContext!,
+//       MaterialPageRoute(
+//         builder: (context) => const GapUpDownStocks(type: StocksType.gapUp),
+//       ),
+//     );
+//   } else if (type == DeeplinkEnum.highLowPE) {
+//     Navigator.push(
+//       navigatorKey.currentContext!,
+//       MaterialPageRoute(
+//         builder: (context) => const HighLowPEIndex(),
+//       ),
+//     );
+//   } else if (type == DeeplinkEnum.fiftyTwoWeeks) {
+//     Navigator.push(
+//       navigatorKey.currentContext!,
+//       MaterialPageRoute(
+//         builder: (context) => const FiftyTwoWeeksIndex(),
+//       ),
+//     );
+//   } else if (type == DeeplinkEnum.highLowBeta) {
+//     Navigator.push(
+//       navigatorKey.currentContext!,
+//       MaterialPageRoute(
+//         builder: (context) => const HighLowsBetaStocksIndex(),
+//       ),
+//     );
+//   } else if (type == DeeplinkEnum.indices) {
+//     Navigator.push(
+//       navigatorKey.currentContext!,
+//       MaterialPageRoute(
+//         builder: (context) => const IndicesIndex(),
+//       ),
+//     );
+//   } else if (type == DeeplinkEnum.lowPriceStocks) {
+//     Navigator.push(
+//       navigatorKey.currentContext!,
+//       MaterialPageRoute(
+//         builder: (context) => const LowPriceStocksIndex(),
+//       ),
+//     );
+//   } else if (type == DeeplinkEnum.mostActive) {
+//     Navigator.push(
+//       navigatorKey.currentContext!,
+//       MaterialPageRoute(
+//         builder: (context) => const MostActiveIndex(),
+//       ),
+//     );
+//   } else if (type == DeeplinkEnum.pennyStocks) {
+//     Navigator.push(
+//       navigatorKey.currentContext!,
+//       MaterialPageRoute(
+//         builder: (context) => const PennyStocks(),
+//       ),
+//     );
+//   } else if (type == DeeplinkEnum.congressional) {
+//     Navigator.push(
+//       navigatorKey.currentContext!,
+//       MaterialPageRoute(
+//         builder: (context) => const CongressionalIndex(),
+//       ),
+//     );
+//   } else if (type == DeeplinkEnum.dividents) {
+//     Navigator.push(
+//       navigatorKey.currentContext!,
+//       MaterialPageRoute(
+//         builder: (context) => const DividendsScreen(),
+//       ),
+//     );
+//   } else if (type == DeeplinkEnum.earnings) {
+//     Navigator.push(
+//       navigatorKey.currentContext!,
+//       MaterialPageRoute(
+//         builder: (context) => const EarningsScreen(),
+//       ),
+//     );
+//   } else if (type == DeeplinkEnum.stocks) {
+//     Navigator.push(
+//       navigatorKey.currentContext!,
+//       MaterialPageRoute(
+//         builder: (context) => const StocksIndex(),
+//       ),
+//     );
 //   } else {
-//     // Navigator.push(
-//     //   navigatorKey.currentContext!,
-//     //   MaterialPageRoute(
-//     //     // builder: (context) => WebviewLink(url: uri), // Changes by Lokendra Sir
-//     //     builder: (context) => const Tabs(),
-//     //   ),
-//     // );
-
 //     Navigator.popUntil(navigatorKey.currentContext!, (route) => route.isFirst);
 //     Navigator.pushReplacement(
 //       navigatorKey.currentContext!,
 //       MaterialPageRoute(builder: (_) => const Tabs()),
 //     );
 //   }
+//   Timer(const Duration(seconds: 4), () {
+//     onDeepLinking = false;
+//   });
 // }
 
-bool isValidUrl(String? url) {
-  if (url == null) return false;
-
-  Uri? uri = Uri.tryParse(url);
-  return uri != null && uri.hasScheme && uri.hasAuthority;
-  // return uri != null;
+bool isSvgFromUrl(String? url) {
+  try {
+    if (url == null || url == '') {
+      return false;
+    } else {
+      if (url.contains("stock-news-images")) {
+        return false;
+      } else {
+        return true;
+      }
+    }
+  } catch (e) {
+    //
+    return false;
+  }
 }
 
-// Widget findInitialWidget({required Uri uri}) {
-//   String type = containsSpecificPath(uri);
-//   String slug = extractLastPathComponent(uri);
+String formatBalance(num balance) {
+  final formatter = NumberFormat('#,##0.00');
+  return formatter.format(balance);
+}
 
-//   Preference.saveDataList(
-//     DeeplinkData(
-//       uri: uri,
-//       from: "TYPE  - $type",
-//       path: "CHECKING INITIAL ROUTE ",
-//       slug: slug,
-//       type: type,
-//       onDeepLink: onDeepLinking,
-//     ),
-//   );
-
-//   String slugForTicker = extractLastPathComponent(uri);
-//   // Utils().showLog("slug for ticker $slugForTicker");
-//   bool userPresent = false;
-
-//   // UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
-//   // if (await provider.checkForUser()) {
-//   //   userPresent = true;
-//   // }
-
-//   popHome = true;
-//   Utils().showLog("----$userPresent---");
-//   if (type == "blog") {
-//     return BlogDetail(slug: slug);
-//   } else if (type == "news") {
-//     return NewsDetails(slug: slug);
-//   } else if (type == "stock_detail") {
-//     return StockDetail(symbol: slugForTicker);
-//   } else if (type == "login") {
-//     Preference.saveDataList(
-//       DeeplinkData(
-//         uri: null,
-//         from: "Splash called ** FOR INITIAL ROUTE FIND login",
-//         onDeepLink: onDeepLinking,
-//       ),
-//     );
-//     return const Splash();
-//     // if (userPresent) {
-//     //   if (fromBackground) {
-//     //     Navigator.pushAndRemoveUntil(
-//     //         navigatorKey.currentContext!, Tabs.path, (route) => false);
-//     //   }
-//     // } else {
-//     //   loginSheet();
-//     // }
-//   } else if (type == "signUp") {
-//     Preference.saveDataList(
-//       DeeplinkData(
-//         uri: null,
-//         from: "Splash called ** FOR INITIAL ROUTE FIND singup",
-//         onDeepLink: onDeepLinking,
-//       ),
-//     );
-//     return const Splash();
-//     // if (userPresent) {
-//     //   if (fromBackground) {
-//     //     Navigator.pushAndRemoveUntil(
-//     //         navigatorKey.currentContext!, Tabs.path, (route) => false);
-//     //   }
-//     // } else {
-//     //   signupSheet();
-//     // }
-//   } else if (type == "dashboard") {
-//     Preference.saveDataList(
-//       DeeplinkData(
-//         uri: null,
-//         from: "Splash called ** FOR INITIAL ROUTE dasboard",
-//         onDeepLink: onDeepLinking,
-//       ),
-//     );
-//     return const Splash();
-//     // if (fromBackground) {
-//     //   Navigator.pushAndRemoveUntil(
-//     //     navigatorKey.currentContext!,
-//     //     Tabs.path,
-//     //     (route) => false,
-//     //   );
-//     // }
-//     // Utils().showLog("--goto dashboard---");
-//   } else {
-//     Preference.saveDataList(
-//       DeeplinkData(
-//         uri: null,
-//         from: "Splash called ** FOR INITIAL ROUTE FIND Else PArt",
-//         onDeepLink: onDeepLinking,
-//       ),
-//     );
-//     return const Splash();
-//     // Navigator.push(
-//     //   navigatorKey.currentContext!,
-//     //   MaterialPageRoute(
-//     //     // builder: (context) => WebviewLink(url: uri), // Changes by Lokendra Sir
-//     //     builder: (context) => const Tabs(),
-//     //   ),
-//     // );
-
-//     // Navigator.pushAndRemoveUntil(
-//     //   navigatorKey.currentContext!,
-//     //   Tabs.path,
-//     //   (route) => false,
-//     // );
-//   }
-// }
-
+//MARK: Deep Linking
 void handleDeepLinkNavigation({
   Uri? uri,
   bool conditionalCheck = false,
@@ -697,40 +812,8 @@ void handleDeepLinkNavigation({
         memCODE != '' &&
         uri.toString().contains('.page.link')) {
       Utils().showLog("Going to membership page-------");
-      Timer(Duration(seconds: duration ?? 0), () {
-        // Navigator.push(navigatorKey.currentContext!,
-        //     MaterialPageRoute(builder: (context) {
-        //   return NewMembership();
-        // }));
-        closeKeyboard();
-        // UserRes? user = navigatorKey.currentContext!.read<UserProvider>().user;
-        Extra? extra = navigatorKey.currentContext!.read<HomeProvider>().extra;
+      //TODO: navigate to membership
 
-        if (extra?.showBlackFriday == true) {
-          Navigator.push(
-            navigatorKey.currentContext!,
-            MaterialPageRoute(
-              builder: (context) => const BlackFridayMembershipIndex(),
-            ),
-          );
-        } else if (extra?.christmasMembership == true ||
-            extra?.newYearMembership == true) {
-          Navigator.push(
-            navigatorKey.currentContext!,
-            createRoute(
-              const ChristmasMembershipIndex(),
-            ),
-          );
-        } else {
-          subscribe();
-          // Navigator.push(
-          //   navigatorKey.currentContext!,
-          //   MaterialPageRoute(
-          //     builder: (context) => const NewMembership(),
-          //   ),
-          // );
-        }
-      });
       return;
     }
   } catch (e) {
@@ -781,12 +864,12 @@ void handleNavigation({
   if (type != DeeplinkEnum.login && type != DeeplinkEnum.signup) {
     isAppUpdating = false;
   }
-  // Utils().showLog("---Type $type, -----Uri $uri,-----Slug $slug");
-  // String slugForTicker = extractLastPathComponent(uri);
+
   bool userPresent = false;
 
-  UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
-  if (await provider.checkForUser()) {
+  UserManager manager = navigatorKey.currentContext!.read<UserManager>();
+
+  if (await manager.checkForUser()) {
     userPresent = true;
   }
 
@@ -800,58 +883,20 @@ void handleNavigation({
 
   Utils().showLog("----$userPresent---");
 
-  // if (type == "blog") {
   if (type == DeeplinkEnum.blogDetail) {
-    if (fromBackground) {
-      Navigator.pushReplacement(
-        navigatorKey.currentContext!,
-        MaterialPageRoute(
-          builder: (context) => BlogDetail(slug: slug),
-        ),
-      );
-    } else {
-      Navigator.push(
-        navigatorKey.currentContext!,
-        MaterialPageRoute(
-          builder: (context) => BlogDetail(slug: slug),
-        ),
-      );
-    }
-    // } else if (type == "news") {
+    Navigator.pushNamed(navigatorKey.currentContext!, BlogsDetailIndex.path,
+        arguments: {
+          'slug': slug,
+        });
   } else if (type == DeeplinkEnum.newsDetail) {
-    if (fromBackground) {
-      Navigator.pushReplacement(
-        navigatorKey.currentContext!,
-        MaterialPageRoute(
-          builder: (context) => NewsDetails(slug: slug),
-        ),
-      );
-    } else {
-      Navigator.push(
-        navigatorKey.currentContext!,
-        MaterialPageRoute(
-          builder: (context) => NewsDetails(slug: slug),
-        ),
-      );
-    }
-    // } else if (type == "stock_detail") {
+    Navigator.pushNamed(navigatorKey.currentContext!, NewsDetailIndex.path,
+        arguments: {
+          'slug': slug,
+        });
   } else if (type == DeeplinkEnum.stocksDetail) {
-    if (fromBackground) {
-      Navigator.pushReplacement(
-        navigatorKey.currentContext!,
-        MaterialPageRoute(
-          builder: (context) => StockDetail(symbol: slug!),
-        ),
-      );
-    } else {
-      Navigator.push(
-        navigatorKey.currentContext!,
-        MaterialPageRoute(
-          builder: (context) => StockDetail(symbol: slug!),
-        ),
-      );
-    }
-    // } else if (type == "login") {
+    Navigator.pushNamed(navigatorKey.currentContext!, SDIndex.path, arguments: {
+      'slug': slug,
+    });
   } else if (type == DeeplinkEnum.login) {
     if (userPresent) {
       if (fromBackground) {
@@ -866,61 +911,25 @@ void handleNavigation({
       }
     } else {
       Timer(Duration(milliseconds: splashLoaded ? 0 : 3500), () {
-        // loginSheet();
-        loginFirstSheet();
+        manager.askLoginScreen();
       });
     }
-    // } else if (type == "signUp") {
   } else if (type == DeeplinkEnum.signup) {
     if (userPresent) {
-      if (fromBackground) {
-        Navigator.popUntil(
-          navigatorKey.currentContext!,
-          (route) => route.isFirst,
-        );
-        Navigator.pushReplacement(
-          navigatorKey.currentContext!,
-          MaterialPageRoute(builder: (_) => const Tabs()),
-        );
-      }
+      //
     } else {
       Timer(Duration(milliseconds: splashLoaded ? 0 : 3500), () {
-        // signupSheet();
-        loginFirstSheet();
+        manager.askLoginScreen();
       });
     }
-    // } else if (type == "dashboard") {
   } else if (type == DeeplinkEnum.dashboard) {
-    // if (fromBackground) {
     Navigator.popUntil(navigatorKey.currentContext!, (route) => route.isFirst);
     Navigator.pushReplacement(
       navigatorKey.currentContext!,
       MaterialPageRoute(builder: (_) => const Tabs()),
     );
-    // }
-    // } else if (type == "page") {
   } else if (type == DeeplinkEnum.page) {
-    if (fromBackground) {
-      Navigator.pushReplacement(
-        navigatorKey.currentContext!,
-        MaterialPageRoute(
-          builder: (context) => TCandPolicy(
-            policyType: PolicyType.aboutUs,
-            slug: "$slug",
-          ),
-        ),
-      );
-    } else {
-      Navigator.push(
-        navigatorKey.currentContext!,
-        MaterialPageRoute(
-          builder: (context) => TCandPolicy(
-            policyType: PolicyType.aboutUs,
-            slug: "$slug",
-          ),
-        ),
-      );
-    }
+    //TODO: navigation pending
   } else if (type == DeeplinkEnum.insiderTrades) {
     Navigator.popUntil(navigatorKey.currentContext!, (route) => route.isFirst);
     Navigator.pushReplacement(
@@ -928,29 +937,8 @@ void handleNavigation({
       MaterialPageRoute(builder: (_) => const Tabs(index: 2)),
     );
   } else if (type == DeeplinkEnum.membership) {
-    // UserProvider userProvider =
-    //     navigatorKey.currentContext!.read<UserProvider>();
-    // if (userProvider.user == null) {
-    //   UserRes? user = await Preference.getUser();
-    //   if (user != null) {
-    //     provider.setUser(user);
-    //   }
-    //   await navigatorKey.currentContext!.read<HomeProvider>().getHomeSlider(
-    //         showProgress: true,
-    //       );
-    // }
-
-    // UserProvider userProvider =
-    //     navigatorKey.currentContext!.read<UserProvider>();
-
-    if (provider.user == null || provider.user?.membership?.purchased != 1) {
-      subscribe();
-      // Navigator.push(
-      //   navigatorKey.currentContext!,
-      //   MaterialPageRoute(
-      //     builder: (_) => const NewMembership(),
-      //   ),
-      // );
+    if (manager.user == null || manager.user?.membership?.purchased != 1) {
+      //TODO: navigation pending
     } else {
       Navigator.popUntil(
           navigatorKey.currentContext!, (route) => route.isFirst);
@@ -962,28 +950,24 @@ void handleNavigation({
       );
     }
   } else if (type == DeeplinkEnum.trendingIndustries) {
-    Navigator.popUntil(navigatorKey.currentContext!, (route) => route.isFirst);
-    Navigator.pushReplacement(
-      navigatorKey.currentContext!,
-      MaterialPageRoute(
-        builder: (_) => const Tabs(
-          index: 1,
-          trendingIndex: 4,
-        ),
-      ),
-    );
+    // Navigator.popUntil(navigatorKey.currentContext!, (route) => route.isFirst);
+    // Navigator.pushReplacement(
+    //   navigatorKey.currentContext!,
+    //   MaterialPageRoute(
+    //     builder: (_) => const Tabs(
+    //       index: 1,
+    //       trendingIndex: 4,
+    //     ),
+    //   ),
+    // );
   } else if (type == DeeplinkEnum.sentiments) {
     Navigator.popUntil(navigatorKey.currentContext!, (route) => route.isFirst);
     Navigator.pushReplacement(
       navigatorKey.currentContext!,
-      MaterialPageRoute(builder: (_) => const Tabs(index: 3)),
+      MaterialPageRoute(builder: (_) => const Tabs(index: 2)),
     );
   } else if (type == DeeplinkEnum.helpdesk) {
-    Navigator.push(
-      navigatorKey.currentContext!,
-      // MaterialPageRoute(builder: (_) => const HelpDesk()),
-      MaterialPageRoute(builder: (_) => const HelpDeskNew()),
-    );
+    Navigator.pushNamed(navigatorKey.currentContext!, HelpDeskIndex.path);
     // *********** Market data Pages from Here ********
   } else if (type == DeeplinkEnum.gainerLoser) {
     Navigator.push(
@@ -1088,46 +1072,4 @@ void handleNavigation({
   Timer(const Duration(seconds: 4), () {
     onDeepLinking = false;
   });
-}
-
-// Future<bool> isSvgFromUrl(String? url) async {
-//   try {
-//     if (url == null || url == '') {
-//       return false;
-//     } else {
-//       final response = await http.get(Uri.parse(url));
-//       if (response.statusCode == 200) {
-//         Uint8List bytes = response.bodyBytes;
-//         String content = String.fromCharCodes(bytes);
-//         if (content.startsWith('<svg')) {
-//           return true;
-//         }
-//       }
-//     }
-//   } catch (e) {
-//     //
-//     return false;
-//   }
-//   return false;
-// }
-bool isSvgFromUrl(String? url) {
-  try {
-    if (url == null || url == '') {
-      return false;
-    } else {
-      if (url.contains("stock-news-images")) {
-        return false;
-      } else {
-        return true;
-      }
-    }
-  } catch (e) {
-    //
-    return false;
-  }
-}
-
-String formatBalance(num balance) {
-  final formatter = NumberFormat('#,##0.00');
-  return formatter.format(balance);
 }

@@ -59,10 +59,11 @@ class ScannerManager extends ChangeNotifier {
     stopListeningPorts();
     gainersManager.stopListeningPorts();
     losersManager.stopListeningPorts();
-
     setTotalResults(0);
     switch (selectedIndex) {
       case 0:
+        setSortingApplied(false);
+
         Future.delayed(
           Duration(milliseconds: 100),
           () {
@@ -72,6 +73,8 @@ class ScannerManager extends ChangeNotifier {
         break;
 
       case 1:
+        setSortingApplied(true);
+
         gainersManager.resetLiveFilter();
         Future.delayed(
           Duration(milliseconds: 100),
@@ -83,6 +86,8 @@ class ScannerManager extends ChangeNotifier {
         break;
 
       case 2:
+        setSortingApplied(true);
+
         losersManager.resetLiveFilter();
 
         Future.delayed(
@@ -136,6 +141,13 @@ class ScannerManager extends ChangeNotifier {
 
 //MARK: Sorting
   String? totalResult;
+  bool _sortingApplied = false;
+  bool get sortingApplied => _sortingApplied;
+
+  setSortingApplied(bool applied) {
+    _sortingApplied = applied;
+    notifyListeners();
+  }
 
   setTotalResults(num total) {
     totalResult = '$total';
@@ -193,6 +205,7 @@ class ScannerManager extends ChangeNotifier {
         sortByCallBack: (received) {
           switch (selectedIndex) {
             case 0:
+              setSortingApplied(true);
               applySorting(
                 received.type.name,
                 received.ascending,
@@ -382,6 +395,7 @@ class ScannerManager extends ChangeNotifier {
       }
       // _offlineDataList = data?.take(50).toList();
       _offlineDataList = data;
+      setTotalResults(_offlineDataList?.length ?? 0);
     } else {
       if (_fullOfflineDataList == null && data != null) {
         _fullOfflineDataList = List.empty(growable: true);
@@ -429,6 +443,7 @@ class ScannerManager extends ChangeNotifier {
 
     // _offlineDataList = data.take(50).toList();
     _offlineDataList = data;
+    setTotalResults(_offlineDataList?.length ?? 0);
 
     if (_filterParams?.sortBy != null) {
       Utils().showLog('----${_filterParams?.sortByAsc}');
@@ -836,6 +851,7 @@ class ScannerManager extends ChangeNotifier {
     if (_dataList == null || _dataList?.isEmpty == true) {
       _dataList = List.empty(growable: true);
       _dataList!.addAll(data);
+
       notifyListeners();
     } else {
       for (var newItem in data) {
@@ -867,6 +883,7 @@ class ScannerManager extends ChangeNotifier {
         );
       });
     }
+    setTotalResults(_dataList?.length ?? 0);
 
     // _dataList = _dataList!.take(50).toList();
 
@@ -877,6 +894,7 @@ class ScannerManager extends ChangeNotifier {
   void storeFullLiveData(List<LiveScannerRes>? data) async {
     if (_fullDataList == null) {
       _fullDataList = data;
+
       return;
     } else {
       if (data != null && data.isNotEmpty) {
@@ -1257,10 +1275,13 @@ class ScannerManager extends ChangeNotifier {
     _filterParams = FilterParams(sector: "Consumer Cyclical");
     if (_offlineDataList != null && _fullOfflineDataList != null) {
       _offlineDataList = _fullOfflineDataList;
+      setTotalResults(_offlineDataList?.length ?? 0);
     }
-    // if (_dataList != null && _fullDataList != null) {
-    //   _dataList = _fullDataList;
-    // }
+    if (_dataList != null && _fullDataList != null) {
+      _dataList = _fullDataList;
+      setTotalResults(_dataList?.length ?? 0);
+    }
+
     notifyListeners();
   }
 
