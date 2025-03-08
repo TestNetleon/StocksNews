@@ -11,9 +11,15 @@ import 'package:stocks_news_new/screens/affiliate/pointsTransaction/trasnsaction
 import 'package:stocks_news_new/screens/offerMembership/christmas/index.dart';
 import 'package:stocks_news_new/service/braze/service.dart';
 import 'package:stocks_news_new/service/revenue_cat.dart';
+import 'package:stocks_news_new/ui/account/auth/login.dart';
 import 'package:stocks_news_new/ui/stockDetail/index.dart';
+import 'package:stocks_news_new/ui/subscription/screens/start/subscription.dart';
 import 'package:stocks_news_new/ui/tabs/more/articles/detail.dart';
+import 'package:stocks_news_new/ui/tabs/more/helpdesk/chats/index.dart';
 import 'package:stocks_news_new/ui/tabs/more/news/detail.dart';
+import 'package:stocks_news_new/ui/tabs/more/referral/index.dart';
+import 'package:stocks_news_new/ui/tabs/tools/simulator/managers/s_pending.dart';
+import 'package:stocks_news_new/ui/tabs/tools/simulator/screens/index.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/database/preference.dart';
 import '../api/api_requester.dart';
@@ -123,16 +129,23 @@ class BrazeNotificationService {
     await Future.delayed(Duration(milliseconds: 400));
     try {
       if (type == NotificationType.dashboard.name) {
+        /// done
         // if (!whenAppKilled) return null;
         Navigator.popUntil(
             navigatorKey.currentContext!, (route) => route.isFirst);
-        Navigator.push(
+        Navigator.pushNamed(
+            navigatorKey.currentContext!, Tabs.path);
+
+        /*Navigator.push(
           navigatorKey.currentContext!,
           MaterialPageRoute(builder: (_) => const Tabs()),
-        );
+        );*/
+
       } else if (slug != '' &&
           slug != null &&
           type == NotificationType.ticketDetail.name) {
+        /// done
+/*
         Navigator.push(
           navigatorKey.currentContext!,
           MaterialPageRoute(
@@ -144,7 +157,11 @@ class BrazeNotificationService {
               ticketId: slug,
             ),
           ),
-        );
+        );*/
+
+        Navigator.pushNamed(
+            navigatorKey.currentContext!, HelpDeskAllChatsIndex.path,arguments: {'ticketId':slug});
+
       } else if (slug != '' &&
           slug != null &&
           type == NotificationType.newsDetail.name) {
@@ -165,6 +182,7 @@ class BrazeNotificationService {
       } else if (slug != '' &&
           slug != null &&
           type == NotificationType.lpPage.name) {
+        /// done
         Navigator.push(
           navigatorKey.currentContext!,
           MaterialPageRoute(
@@ -203,9 +221,15 @@ class BrazeNotificationService {
           // );
           return;
         }
-
+        /// done
         // isPhone ? signupSheet() : signupSheetTablet();
-        loginFirstSheet();
+        //loginFirstSheet();
+        Navigator.push(
+          navigatorKey.currentContext!,
+          createRoute(AccountLoginIndex()),
+        );
+
+
       } else if (slug != '' &&
           slug != null &&
           type == NotificationType.review.name) {
@@ -241,12 +265,14 @@ class BrazeNotificationService {
           type == NotificationType.nudgeFriend.name) {
         popHome = false;
         if (whenAppKilled) await Future.delayed(const Duration(seconds: 3));
-        referLogin();
+      //  referLogin();
       } else if (type == NotificationType.referRegistration.name) {
-        Navigator.push(
+        /// done
+        Navigator.pushNamed(navigatorKey.currentContext!, ReferralIndex.path);
+       /* Navigator.push(
           navigatorKey.currentContext!,
           MaterialPageRoute(builder: (_) => const ReferAFriend()),
-        );
+        );*/
       } else if (type == NotificationType.membership.name) {
         // Navigator.push(
         //   navigatorKey.currentContext!,
@@ -263,19 +289,23 @@ class BrazeNotificationService {
         if (slug != null &&
             slug != '' &&
             (slug == 'christmas' || slug == 'new-year')) {
-          Navigator.push(
+          Navigator.pushNamed(navigatorKey.currentContext!, SubscriptionIndex.path);
+          /// done
+          /*Navigator.push(
             navigatorKey.currentContext!,
             MaterialPageRoute(
               builder: (context) => const ChristmasMembershipIndex(),
             ),
-          );
+          );*/
         } else if (slug != null && slug != '' && slug == 'black-friday') {
-          Navigator.push(
+          Navigator.pushNamed(navigatorKey.currentContext!, SubscriptionIndex.path);
+          /// done
+         /* Navigator.push(
             navigatorKey.currentContext!,
             MaterialPageRoute(
               builder: (context) => const BlackFridayMembershipIndex(),
             ),
-          );
+          );*/
         } else {
           popHome = false;
           if (whenAppKilled) await Future.delayed(const Duration(seconds: 3));
@@ -286,7 +316,10 @@ class BrazeNotificationService {
           //     builder: (context) => const NewMembership(),
           //   ),
           // );
-          subscribe();
+          /// done
+          Navigator.pushNamed(navigatorKey.currentContext!, SubscriptionIndex.path);
+
+         // subscribe();
         }
       } else if (type == NotificationType.pointTransaction.name) {
         Navigator.push(
@@ -300,16 +333,21 @@ class BrazeNotificationService {
           ),
         );
       } else if (type == NotificationType.appUpdate.name) {
+        /// done
         Navigator.popUntil(
             navigatorKey.currentContext!, (route) => route.isFirst);
-        Navigator.pushReplacement(
+        Navigator.pushReplacementNamed(
+            navigatorKey.currentContext!, Tabs.path);
+
+        /*Navigator.pushReplacement(
           navigatorKey.currentContext!,
           MaterialPageRoute(
             builder: (_) => Tabs(
                 // inAppMsgId: notificationId,
                 ),
           ),
-        );
+        );*/
+
         Timer(const Duration(milliseconds: 300), () {
           if (Platform.isAndroid) {
             openUrl(
@@ -322,34 +360,42 @@ class BrazeNotificationService {
           slug != null &&
           type == NotificationType.simulator.name) {
         if (whenAppKilled || !isOnTsScreen) {
+          /// done
+          Navigator.pushNamed(navigatorKey.currentContext!, SimulatorIndex.path);
           // Navigator.push(
           //   navigatorKey.currentContext!,
           //   MaterialPageRoute(builder: (_) => TsDashboard()),
           // );
         } else {
-          // popHome = true;
-          // navigatorKey.currentContext!.read<TsPendingListProvider>().getData();
+          /// done
+           popHome = true;
+           navigatorKey.currentContext!.read<SPendingManager>().getData();
         }
       } else {
+        /// done
         Navigator.popUntil(
             navigatorKey.currentContext!, (route) => route.isFirst);
-        Navigator.pushReplacement(
+        Navigator.pushReplacementNamed(
+            navigatorKey.currentContext!, Tabs.path);
+       /* Navigator.pushReplacement(
           navigatorKey.currentContext!,
           MaterialPageRoute(
             builder: (_) => Tabs(
                 // inAppMsgId: notificationId,
                 ),
           ),
-        );
+        );*/
       }
     } catch (e) {
       Utils().showLog("Exception ===>> $e");
       Navigator.popUntil(
           navigatorKey.currentContext!, (route) => route.isFirst);
-      Navigator.pushReplacement(
+      Navigator.pushReplacementNamed(
+          navigatorKey.currentContext!, Tabs.path);
+     /* Navigator.pushReplacement(
         navigatorKey.currentContext!,
         MaterialPageRoute(builder: (_) => const Tabs()),
-      );
+      );*/
       // arguments: {"notificationId": notificationId},
     }
   }

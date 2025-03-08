@@ -43,6 +43,7 @@ import 'package:stocks_news_new/managers/market/stocks/gainer&losers/todays_brea
 import 'package:stocks_news_new/managers/market/stocks/gainer&losers/todays_gainer.dart';
 import 'package:stocks_news_new/managers/market/stocks/gainer&losers/todays_losers.dart';
 import 'package:stocks_news_new/managers/notification/most_bullish.dart';
+import 'package:stocks_news_new/managers/notification/notifications.dart';
 import 'package:stocks_news_new/managers/referral/leader_board_manager.dart';
 import 'package:stocks_news_new/managers/referral/redeem_manager.dart';
 import 'package:stocks_news_new/managers/referral/referral_manager.dart';
@@ -155,6 +156,7 @@ import 'package:stocks_news_new/ui/tabs/more/referral/joinRefer/verify.dart';
 import 'package:stocks_news_new/ui/tabs/more/referral/pointsTransaction/index.dart';
 import 'package:stocks_news_new/ui/tabs/more/referral/redeem/index.dart';
 import 'package:stocks_news_new/ui/tabs/more/watchlist/index.dart';
+import 'package:stocks_news_new/ui/tabs/notifications/index.dart';
 import 'package:stocks_news_new/ui/tabs/tools/compareStocks/compare.dart';
 import 'package:stocks_news_new/ui/tabs/tools/scanner/manager/gainers.dart';
 import 'package:stocks_news_new/ui/tabs/tools/scanner/manager/losers.dart';
@@ -249,6 +251,7 @@ class Routes {
     ReferralIndex.path: (_) => const ReferralIndex(),
     RedeemPoints.path: (_) => const RedeemPoints(),
     JoinReferralIndex.path: (_) => const JoinReferralIndex(),
+    NotificationIndex.path: (_) => const NotificationIndex(),
     // JoinReferVerificationIndex.path: (_) => const JoinReferVerificationIndex(),
 
     //--------------------------------------
@@ -761,6 +764,7 @@ class Routes {
       ChangeNotifierProvider(create: (_) => ReferralPointsManager()),
       ChangeNotifierProvider(create: (_) => LeaderBoardManager()),
       ChangeNotifierProvider(create: (_) => RedeemManager()),
+      ChangeNotifierProvider(create: (_) => NotificationsManager()),
 
       //SCANNER Start---------------
       ChangeNotifierProvider(create: (_) => ScannerManager()),

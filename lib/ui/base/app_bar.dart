@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
+import 'package:stocks_news_new/managers/global.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
+import 'package:stocks_news_new/routes/navigation_observer.dart';
 import 'package:stocks_news_new/screens/notifications/index.dart';
 import 'package:stocks_news_new/ui/stockDetail/index.dart';
 import 'package:stocks_news_new/utils/colors.dart';
@@ -74,7 +77,42 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
                         ActionButton(
                           icon: Images.back,
                           onTap: () {
-                            Navigator.pop(navigatorKey.currentContext!);
+                            if (popHome) {
+                              if (CustomNavigatorObserver().stackCount >= 2 &&
+                                  splashLoaded) {
+                                Navigator.pop(navigatorKey.currentContext!);
+                              } else {
+                                Navigator.popUntil(
+                                    navigatorKey.currentContext!,
+                                        (route) => route.isFirst);
+                                Navigator.pushReplacementNamed(
+                                    navigatorKey.currentContext!, Tabs.path);
+                               /* Navigator.pushReplacement(
+                                  navigatorKey.currentContext!,
+                                  MaterialPageRoute(
+                                      builder: (_) => const Tabs()),
+                                );*/
+                                popHome = false;
+                              }
+                            } else {
+                              // Navigator.pop(navigatorKey.currentContext!);
+                              if (CustomNavigatorObserver().stackCount >= 2 &&
+                                  splashLoaded) {
+                                Navigator.pop(navigatorKey.currentContext!);
+                              } else {
+                                Navigator.popUntil(
+                                    navigatorKey.currentContext!,
+                                        (route) => route.isFirst);
+                                Navigator.pushReplacementNamed(
+                                    navigatorKey.currentContext!, Tabs.path);
+                               /* Navigator.pushReplacement(
+                                  navigatorKey.currentContext!,
+                                  MaterialPageRoute(
+                                      builder: (_) => const Tabs()),
+                                );*/
+                                popHome = false;
+                              }
+                            }
                           },
                         ),
                       if (showNotification)
@@ -266,12 +304,9 @@ class LeadingNotification extends StatelessWidget {
           borderRadius: BorderRadius.circular(Pad.pad999),
           onTap: () {
             closeKeyboard();
-            Navigator.push(
-              navigatorKey.currentContext!,
-              MaterialPageRoute(
-                builder: (_) => const Notifications(),
-              ),
-            );
+            GlobalManager globalManager = context.read<GlobalManager>();
+            globalManager.navigateToNotification();
+
           },
           child: Image.asset(
             Images.notification,

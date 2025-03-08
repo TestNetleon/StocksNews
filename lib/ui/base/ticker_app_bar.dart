@@ -5,12 +5,14 @@ import 'package:stocks_news_new/managers/market/alerts_watchlist_action.dart';
 import 'package:stocks_news_new/managers/user.dart';
 import 'package:stocks_news_new/models/ticker.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
+import 'package:stocks_news_new/routes/navigation_observer.dart';
 import 'package:stocks_news_new/ui/base/bottom_sheet.dart';
 import 'package:stocks_news_new/ui/base/toaster.dart';
 import 'package:stocks_news_new/ui/subscription/manager.dart';
 import 'package:stocks_news_new/ui/tabs/market/stocks/extra/add_to_alert_sheet.dart';
 import 'package:stocks_news_new/ui/tabs/more/alerts/index.dart';
 import 'package:stocks_news_new/ui/tabs/more/watchlist/index.dart';
+import 'package:stocks_news_new/ui/tabs/tabs.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/cache_network_image.dart';
 import '../../utils/colors.dart';
@@ -135,7 +137,32 @@ class BaseTickerAppBar extends StatelessWidget implements PreferredSizeWidget {
                   ActionButton(
                     icon: Images.back,
                     onTap: () {
-                      Navigator.pop(navigatorKey.currentContext!);
+                      if (popHome) {
+                        if (CustomNavigatorObserver().stackCount >= 2 &&
+                            splashLoaded) {
+                          Navigator.pop(navigatorKey.currentContext!);
+                        } else {
+                          Navigator.popUntil(
+                              navigatorKey.currentContext!,
+                                  (route) => route.isFirst);
+                          Navigator.pushReplacementNamed(
+                              navigatorKey.currentContext!, Tabs.path);
+                          popHome = false;
+                        }
+                      } else {
+                        // Navigator.pop(navigatorKey.currentContext!);
+                        if (CustomNavigatorObserver().stackCount >= 2 &&
+                            splashLoaded) {
+                          Navigator.pop(navigatorKey.currentContext!);
+                        } else {
+                          Navigator.popUntil(
+                              navigatorKey.currentContext!,
+                                  (route) => route.isFirst);
+                          Navigator.pushReplacementNamed(
+                              navigatorKey.currentContext!, Tabs.path);
+                          popHome = false;
+                        }
+                      }
                     },
                   ),
                   Flexible(

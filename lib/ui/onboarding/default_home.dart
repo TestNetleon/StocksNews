@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/managers/onboarding.dart';
 import 'package:stocks_news_new/ui/onboarding/slides.dart';
 import 'package:stocks_news_new/ui/tabs/tabs.dart';
+import 'package:stocks_news_new/utils/constants.dart';
 import '../../database/preference.dart';
 import '../base/scaffold.dart';
 
@@ -25,9 +26,14 @@ class _DefaultHomeState extends State<DefaultHome> {
   }
 
   void _navigate() async {
+    if (onDeepLinking) {
+      popHome = true;
+      return;
+    }
     OnboardingManager provider = context.read<OnboardingManager>();
     bool firstTime = await Preference.getShowIntro();
     if (provider.data == null && !firstTime) {
+
       Navigator.pushNamedAndRemoveUntil(
         context,
         Tabs.path,

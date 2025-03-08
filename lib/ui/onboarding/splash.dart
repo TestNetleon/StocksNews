@@ -88,15 +88,11 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
       //
     }
     Timer(const Duration(seconds: 3), () {
-      // if (popHome) return;
-      // if (onDeepLinking) {
-      //   popHome = true;
-      //   return;
-      // }
-      // Navigator.pushReplacement(
-      //   navigatorKey.currentContext!,
-      //   MaterialPageRoute(builder: (_) => const HomeSplash()),
-      // );
+      if (popHome) return;
+      if (onDeepLinking) {
+        popHome = true;
+        return;
+      }
 
       Navigator.pushReplacementNamed(
           navigatorKey.currentContext!, DefaultHome.path);
