@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/ui/base/app_bar.dart';
 import 'package:stocks_news_new/ui/base/scaffold.dart';
 import 'package:stocks_news_new/utils/utils.dart';
-
-import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/progress_dialog.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
