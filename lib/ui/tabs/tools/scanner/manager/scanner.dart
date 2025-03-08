@@ -12,6 +12,7 @@ import 'package:stocks_news_new/ui/tabs/tools/scanner/screens/extra/sorting_list
 import 'package:stocks_news_new/utils/utils.dart';
 import '../../../../../api/apis.dart';
 import '../../../../../managers/user.dart';
+import '../../../../../models/lock.dart';
 import '../../../../../routes/my_app.dart';
 import '../../../../../utils/constants.dart';
 import '../data/scanner.dart';
@@ -49,9 +50,11 @@ class ScannerManager extends ChangeNotifier {
   }
 
   onRefresh({bool withPortRefresh = true}) {
+    if (_portData?.lockInfo != null) return;
     if (withPortRefresh) {
       getScannerPorts();
     }
+
     ScannerGainersManager gainersManager =
         navigatorKey.currentContext!.read<ScannerGainersManager>();
     ScannerLosersManager losersManager =
@@ -247,6 +250,13 @@ class ScannerManager extends ChangeNotifier {
 
   bool get isLoadingPort =>
       _statusPort == Status.loading || _statusPort == Status.ideal;
+
+//MARK: setting up lock
+
+  BaseLockInfoRes? getLockINFO() {
+    BaseLockInfoRes? info = _portData?.lockInfo;
+    return info;
+  }
 
   setStatusPort(status) {
     _statusPort = status;

@@ -11,6 +11,7 @@ import 'package:stocks_news_new/utils/utils.dart';
 import '../../api/api_requester.dart';
 import '../../api/api_response.dart';
 import '../../api/apis.dart';
+import '../../models/lock.dart';
 import '../../models/stockDetail/analyst_forecast.dart';
 import '../../models/stockDetail/chart.dart';
 import '../../models/stockDetail/competitors.dart';
@@ -89,8 +90,10 @@ class SDManager extends ChangeNotifier {
   String? _selectedStock;
   String? get selectedStock => _selectedStock;
 
-
-
+  BaseLockInfoRes? getLockINFO() {
+    BaseLockInfoRes? info = _dataOverview?.aiAnalysis?.lockInfo;
+    return info;
+  }
 
 //MARK: Common TabChange
   onTabChange(int index) {
@@ -1432,16 +1435,17 @@ class SDManager extends ChangeNotifier {
   }
 
   void updateTickerInfo({required String symbol, alertAdded, watchListAdded}) {
-
     if (_dataStocksAnalysis?.peersData?.data != null) {
-      final index =
-      _dataStocksAnalysis?.peersData?.data?.indexWhere((element) => element.symbol == symbol);
+      final index = _dataStocksAnalysis?.peersData?.data
+          ?.indexWhere((element) => element.symbol == symbol);
       if (index != null && index != -1) {
         if (alertAdded != null) {
-          _dataStocksAnalysis?.peersData?.data![index].isAlertAdded = alertAdded;
+          _dataStocksAnalysis?.peersData?.data![index].isAlertAdded =
+              alertAdded;
         }
         if (watchListAdded != null) {
-          _dataStocksAnalysis?.peersData?.data![index].isWatchlistAdded = watchListAdded;
+          _dataStocksAnalysis?.peersData?.data![index].isWatchlistAdded =
+              watchListAdded;
         }
         notifyListeners();
       }
@@ -1457,5 +1461,4 @@ class SDManager extends ChangeNotifier {
       notifyListeners();
     }
   }
-
 }

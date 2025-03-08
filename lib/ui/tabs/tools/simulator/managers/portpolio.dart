@@ -8,6 +8,7 @@ import 'package:stocks_news_new/ui/tabs/tools/simulator/models/stream_data.dart'
 import 'package:stocks_news_new/ui/tabs/tools/simulator/models/ts_holidays_list_res.dart';
 import 'package:stocks_news_new/ui/tabs/tools/simulator/models/ts_user_res.dart';
 import 'package:stocks_news_new/utils/constants.dart';
+import '../../../../../models/lock.dart';
 import '../../../../../utils/utils.dart';
 
 class PortfolioManager extends ChangeNotifier {
@@ -15,26 +16,22 @@ class PortfolioManager extends ChangeNotifier {
   Status get status => _status;
   bool get isLoading => _status == Status.loading;
 
-
   TsUserRes? _userData;
   TsUserRes? get userData => _userData;
 
   String? _error;
   String? get error => _error ?? Const.errSomethingWrong;
 
-
   void setStatus(status) {
     _status = status;
     notifyListeners();
   }
-
 
   void updateBalance({
     num? totalReturn,
     num? marketValue,
     num? todayReturn,
   }) {
-
     if (todayReturn != null) {
       _userData?.userDataRes?.todayReturn = todayReturn;
       notifyListeners();
@@ -56,7 +53,7 @@ class PortfolioManager extends ChangeNotifier {
     MarketResData(title: 'RECURRING'),
   ];
 
-  int? selectedScreen=0;
+  int? selectedScreen = 0;
   onScreenChange(index) {
     if (selectedScreen != index) {
       selectedScreen = index;
@@ -64,10 +61,15 @@ class PortfolioManager extends ChangeNotifier {
     }
   }
 
+  BaseLockInfoRes? getLockINFO() {
+    BaseLockInfoRes? info = _userData?.lockInfo;
+    return info;
+  }
+
   Future getDashboardData({bool reset = false}) async {
-    if(reset){
-      _userData=null;
-      _error=null;
+    if (reset) {
+      _userData = null;
+      _error = null;
     }
     setStatus(Status.loading);
     try {
@@ -98,7 +100,6 @@ class PortfolioManager extends ChangeNotifier {
   HolidayRes? _holidaysRes;
   HolidayRes? get holidaysRes => _holidaysRes;
 
-
   Future<void> getHolidays() async {
     try {
       ApiResponse response = await apiRequest(
@@ -114,7 +115,6 @@ class PortfolioManager extends ChangeNotifier {
         _holidaysRes = null;
         _error = response.message ?? Const.errSomethingWrong;
       }
-
     } catch (e) {
       _holidaysRes = null;
       _error = Const.errSomethingWrong;

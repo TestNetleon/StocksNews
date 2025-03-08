@@ -27,7 +27,7 @@ class ToolsCompareTable extends StatelessWidget {
             top: BorderSide(color: ThemeColors.neutral10, width: 0.5),
             bottom: BorderSide(color: ThemeColors.neutral10, width: 0.5),
           ),
-          horizontalMargin: 10,
+          horizontalMargin: 16,
           columns: [
             DataColumn(
               label: Text(
@@ -56,7 +56,7 @@ class ToolsCompareTable extends StatelessWidget {
           child: SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: DataTable(
-              horizontalMargin: 10,
+              horizontalMargin: 16,
               border: TableBorder(
                 top: BorderSide(color: ThemeColors.neutral10, width: 0.5),
                 bottom: BorderSide(color: ThemeColors.neutral10, width: 0.5),

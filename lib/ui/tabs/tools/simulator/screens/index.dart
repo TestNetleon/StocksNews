@@ -22,6 +22,8 @@ import 'package:stocks_news_new/widgets/custom/card.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
+import '../../../../base/lock.dart';
+
 class SimulatorIndex extends StatefulWidget {
   static const String path = "SimulatorIndex";
   final int initialIndex;
@@ -66,160 +68,173 @@ class _SimulatorIndexState extends State<SimulatorIndex> {
           showBack: true,
           title: "Trading Simulator",
         ),
-        body: BaseLoaderContainer(
-          hasData: manager.userData != null && !manager.isLoading,
-          isLoading: manager.userData == null && manager.isLoading,
-          error: manager.error,
-          showPreparingText: true,
-          onRefresh: () {
-            manager.getDashboardData(reset: true);
-          },
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: Pad.pad16, vertical: Pad.pad10),
-                child: Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        body: Stack(
+          children: [
+            BaseLoaderContainer(
+              hasData: manager.userData != null && !manager.isLoading,
+              isLoading: manager.userData == null && manager.isLoading,
+              error: manager.error,
+              showPreparingText: true,
+              onRefresh: () {
+                manager.getDashboardData(reset: true);
+              },
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: Pad.pad16, vertical: Pad.pad10),
+                    child: Column(
                       children: [
-                        Expanded(
-                          child: CommonCard(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Text(
-                                  'Portfolio Balance',
-                                  style: stylePTSansRegular(
-                                    fontSize: 12,
-                                    color: ThemeColors.neutral80,
-                                  ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Expanded(
+                              child: CommonCard(
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      'Portfolio Balance',
+                                      style: stylePTSansRegular(
+                                        fontSize: 12,
+                                        color: ThemeColors.neutral80,
+                                      ),
+                                    ),
+                                    SpacerVertical(height: Pad.pad10),
+                                    Text(
+                                      manager.userData?.userDataRes
+                                                  ?.tradeBalance !=
+                                              null
+                                          ? '${manager.userData?.userDataRes?.tradeBalance.toFormattedPrice()}'
+                                          : '\$0',
+                                      style: stylePTSansBold(
+                                          fontSize: 16,
+                                          color: ThemeColors.splashBG),
+                                    ),
+                                  ],
                                 ),
-                                SpacerVertical(height: Pad.pad10),
-                                Text(
-                                  manager.userData?.userDataRes?.tradeBalance !=
-                                          null
-                                      ? '${manager.userData?.userDataRes?.tradeBalance.toFormattedPrice()}'
-                                      : '\$0',
-                                  style: stylePTSansBold(
-                                      fontSize: 16,
-                                      color: ThemeColors.splashBG),
-                                ),
-                              ],
+                              ),
                             ),
-                          ),
-                        ),
-                        const SpacerHorizontal(width: 12),
-                        Expanded(
-                          child: CommonCard(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Text(
-                                  'Gain & Loss',
-                                  style: stylePTSansRegular(
-                                    fontSize: 12,
-                                    color: ThemeColors.neutral80,
-                                  ),
+                            const SpacerHorizontal(width: 12),
+                            Expanded(
+                              child: CommonCard(
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      'Gain & Loss',
+                                      style: stylePTSansRegular(
+                                        fontSize: 12,
+                                        color: ThemeColors.neutral80,
+                                      ),
+                                    ),
+                                    SpacerVertical(height: Pad.pad10),
+                                    Text(
+                                      profitLoss.toFormattedPrice(),
+                                      style: stylePTSansBold(
+                                        fontSize: 16,
+                                        color: profitLoss < 0
+                                            ? ThemeColors.error120
+                                            : ThemeColors.success120,
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                                SpacerVertical(height: Pad.pad10),
-                                Text(
-                                  profitLoss.toFormattedPrice(),
-                                  style: stylePTSansBold(
-                                    fontSize: 16,
-                                    color: profitLoss < 0
-                                        ? ThemeColors.error120
-                                        : ThemeColors.success120,
-                                  ),
-                                ),
-                              ],
+                              ),
                             ),
-                          ),
+                          ],
                         ),
+                        SpacerVertical(height: Pad.pad16),
+                        SHeader(),
                       ],
                     ),
-                    SpacerVertical(height: Pad.pad16),
-                    SHeader(),
-                  ],
-                ),
-              ),
-              Expanded(
-                child: Column(
-                  children: [
-                    BaseTabs(
-                      data: manager.tabs,
-                      // textStyle: styleBaseBold(fontSize: 11),
-                      onTap: manager.onScreenChange,
-                      selectedIndex: widget.initialIndex,
-                      isScrollable: false,
-                      labelPadding: EdgeInsets.zero,
-                      fontSize: 11,
+                  ),
+                  Expanded(
+                    child: Column(
+                      children: [
+                        BaseTabs(
+                          data: manager.tabs,
+                          // textStyle: styleBaseBold(fontSize: 11),
+                          onTap: manager.onScreenChange,
+                          selectedIndex: widget.initialIndex,
+                          isScrollable: false,
+                          labelPadding: EdgeInsets.zero,
+                          fontSize: 11,
+                        ),
+                        SpacerVertical(height: Pad.pad8),
+                        if (manager.selectedScreen == 0)
+                          Expanded(
+                            child: SOpenList(),
+                          ),
+                        if (manager.selectedScreen == 1)
+                          Expanded(
+                            child: SPendingList(),
+                          ),
+                        if (manager.selectedScreen == 2)
+                          Expanded(
+                            child: STransactionList(),
+                          ),
+                        if (manager.selectedScreen == 3)
+                          Expanded(
+                            child: SRecurringList(),
+                          ),
+                      ],
                     ),
-                    SpacerVertical(height: Pad.pad8),
-                    if (manager.selectedScreen == 0)
-                      Expanded(
-                        child: SOpenList(),
-                      ),
-                    if (manager.selectedScreen == 1)
-                      Expanded(
-                        child: SPendingList(),
-                      ),
-                    if (manager.selectedScreen == 2)
-                      Expanded(
-                        child: STransactionList(),
-                      ),
-                    if (manager.selectedScreen == 3)
-                      Expanded(
-                        child: SRecurringList(),
-                      ),
-                  ],
-                ),
-              ),
-              /* Expanded(
-                child:
-                CommonTabContainer(
-                  initialIndex: widget.initialIndex,
-                  scrollable: false,
-                  tabPaddingNew: false,
-                  //tabLabelPadding: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  tabs: manager.userData?.userDataRes?.userConditionalOrderPermission?.recurringOrder == true? ["Open","Pending","Transactions","Recurring"]:["Open","Pending","Transactions"],
-                  widgets:
-                  manager.userData?.userDataRes?.userConditionalOrderPermission?.recurringOrder == true?
-                  [
-                    SOpenList(),
-                    SPendingList(),
-                    STransactionList(),
-                    SRecurringList(),
-                  ]:
-                  [
-                    SOpenList(),
-                    SPendingList(),
-                    STransactionList(),
-                  ],
-                ),
-              ),*/
-              BaseButton(
-                textSize: 16,
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    createRoute(
-                      SearchTickerIndex(),
+                  ),
+                  /* Expanded(
+                    child:
+                    CommonTabContainer(
+                      initialIndex: widget.initialIndex,
+                      scrollable: false,
+                      tabPaddingNew: false,
+                      //tabLabelPadding: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      tabs: manager.userData?.userDataRes?.userConditionalOrderPermission?.recurringOrder == true? ["Open","Pending","Transactions","Recurring"]:["Open","Pending","Transactions"],
+                      widgets:
+                      manager.userData?.userDataRes?.userConditionalOrderPermission?.recurringOrder == true?
+                      [
+                        SOpenList(),
+                        SPendingList(),
+                        STransactionList(),
+                        SRecurringList(),
+                      ]:
+                      [
+                        SOpenList(),
+                        SPendingList(),
+                        STransactionList(),
+                      ],
                     ),
-                  );
-                  // Navigator.pushNamed(context, SearchTickerIndex.path);
-                },
-                text: "Place New Order",
-                color: ThemeColors.primary100,
-                textColor: ThemeColors.splashBG,
-                margin: EdgeInsets.symmetric(horizontal: Pad.pad16),
+                  ),*/
+                  BaseButton(
+                    textSize: 16,
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        createRoute(
+                          SearchTickerIndex(),
+                        ),
+                      );
+                      // Navigator.pushNamed(context, SearchTickerIndex.path);
+                    },
+                    text: "Place New Order",
+                    color: ThemeColors.primary100,
+                    textColor: ThemeColors.splashBG,
+                    margin: EdgeInsets.symmetric(horizontal: Pad.pad16),
+                  ),
+                ],
               ),
-            ],
-          ),
+            ),
+            BaseLockItem(
+              manager: manager,
+              callAPI: () async {
+                await manager.getDashboardData(reset: true);
+              },
+            ),
+          ],
         ),
       ),
     );

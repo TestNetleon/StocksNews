@@ -14,6 +14,7 @@ import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/custom/base_loader_container.dart';
 import '../../models/ai_analysis.dart';
 import '../../models/ticker.dart';
+import '../base/lock.dart';
 import '../base/stock/stock_detail.dart';
 import '../base/ticker_app_bar.dart';
 import 'highlights/highlights.dart';
@@ -43,7 +44,7 @@ class _AIindexState extends State<AIindex> {
   }
 
   Future _callAPI() async {
-    context.read<AIManager>().getAIData(widget.symbol);
+    await context.read<AIManager>().getAIData(widget.symbol);
   }
 
   @override
@@ -60,46 +61,52 @@ class _AIindexState extends State<AIindex> {
     return BaseScaffold(
       appBar: BaseTickerAppBar(
         data: tickerDetail,
-       /* shareURL: () {
+        /* shareURL: () {
           openUrl(tickerDetail?.shareUrl);
         },*/
       ),
-      body: BaseLoaderContainer(
-        hasData: manager.data != null,
-        isLoading: manager.isLoading,
-        error: manager.error,
-        showPreparingText: true,
-        onRefresh: _callAPI,
-        child: BaseScroll(
-          onRefresh: _callAPI,
-          margin: EdgeInsets.zero,
-          children: [
-            if (tickerDetail != null) BaseStockDetailHeader(data: tickerDetail),
-            AIChart(aiAnalysis: aiAnalysis),
-            AIOurTake(ourTake: ourTake),
-            AIHighlights(),
-            AISwot(swot: swot),
-            PriceVolatility(),
-            AITabs(),
-            AIPeerComparison(),
-            Container(
-              margin: EdgeInsets.symmetric(
-                horizontal: Pad.pad16,
-                vertical: Pad.pad20,
-              ),
-              width: double.infinity,
-              padding: EdgeInsets.symmetric(horizontal: 8, vertical: 5),
-              decoration: BoxDecoration(
-                  color: ThemeColors.neutral5,
-                  borderRadius: BorderRadius.circular(8)),
-              child: Text(
-                manager.data?.lastUpdateDate ?? '',
-                style: styleBaseRegular(fontSize: 12),
-              ),
+      body: Stack(
+        children: [
+          BaseLoaderContainer(
+            hasData: manager.data != null,
+            isLoading: manager.isLoading,
+            error: manager.error,
+            showPreparingText: true,
+            onRefresh: _callAPI,
+            child: BaseScroll(
+              onRefresh: _callAPI,
+              margin: EdgeInsets.zero,
+              children: [
+                if (tickerDetail != null)
+                  BaseStockDetailHeader(data: tickerDetail),
+                AIChart(aiAnalysis: aiAnalysis),
+                AIOurTake(ourTake: ourTake),
+                AIHighlights(),
+                AISwot(swot: swot),
+                PriceVolatility(),
+                AITabs(),
+                AIPeerComparison(),
+                Container(
+                  margin: EdgeInsets.symmetric(
+                    horizontal: Pad.pad16,
+                    vertical: Pad.pad20,
+                  ),
+                  width: double.infinity,
+                  padding: EdgeInsets.symmetric(horizontal: 8, vertical: 5),
+                  decoration: BoxDecoration(
+                      color: ThemeColors.neutral5,
+                      borderRadius: BorderRadius.circular(8)),
+                  child: Text(
+                    manager.data?.lastUpdateDate ?? '',
+                    style: styleBaseRegular(fontSize: 12),
+                  ),
+                ),
+                BaseFaq(faqs: faqs),
+              ],
             ),
-            BaseFaq(faqs: faqs),
-          ],
-        ),
+          ),
+          BaseLockItem(manager: manager, callAPI: _callAPI),
+        ],
       ),
     );
   }

@@ -129,6 +129,7 @@
 //   }
 // }
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
@@ -139,6 +140,7 @@ import 'package:stocks_news_new/ui/subscription/manager.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
+import 'package:stocks_news_new/widgets/optional_parent.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import '../../managers/user.dart';
 import '../../models/lock.dart';
@@ -146,12 +148,14 @@ import '../../routes/my_app.dart';
 
 class BaseLockItem extends StatefulWidget {
   final dynamic manager;
+  final bool lockWithImage;
 
   final Future Function()? callAPI;
 
   const BaseLockItem({
     super.key,
     this.callAPI,
+    this.lockWithImage = true,
     required this.manager,
   });
 
@@ -185,134 +189,137 @@ class _BaseLockItemState extends State<BaseLockItem> {
         isVisible = false;
         setState(() {});
       },
-      child: Stack(
-        children: [
-          // Background Blur Effect
-          Positioned.fill(
-            child: info.image != null
-                ? Container(
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: NetworkImage(info.image!),
+      child: OptionalParent(
+        addParent: widget.lockWithImage,
+        parentBuilder: (child) {
+          return Stack(
+            children: [
+              // Background Blur Effect
+              Positioned.fill(
+                child: info.image != null && info.image != ''
+                    ? CachedNetworkImage(
+                        imageUrl: info.image ?? '',
                         fit: BoxFit.cover,
-                      ),
-                    ),
-                  )
-                : Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white.withValues(alpha: 0.95),
-                    ),
-                  ),
-          ),
-          Positioned(
-            bottom: 0,
-            right: 0,
-            left: 0,
-            child: GestureDetector(
-              onVerticalDragUpdate: (details) {
-                if (details.primaryDelta! < -10) {
-                  _toggleSheet(true); // Swipe Up to Expand
-                } else if (details.primaryDelta! > 10) {
-                  _toggleSheet(false); // Swipe Down to Collapse
-                }
-              },
-              child: Container(
-                padding: EdgeInsets.symmetric(
-                  horizontal: Pad.pad16,
-                  vertical: Pad.pad10,
-                ),
-                alignment: Alignment.bottomCenter,
-                decoration: const BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Color.fromRGBO(202, 209, 223, 0.6),
-                      offset: Offset(0, 4),
-                      blurRadius: 24,
-                    ),
-                  ],
-                ),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Align(
-                      alignment: Alignment.center,
-                      child: Container(
-                        margin: EdgeInsets.only(top: 5),
-                        decoration: BoxDecoration(
-                            color: ThemeColors.neutral10,
-                            borderRadius: BorderRadius.circular(30)),
-                        height: 6,
-                        width: 48,
-                      ),
-                    ),
-                    SpacerVertical(height: 24),
-                    Text(
-                      info.title ??
-                          'Upgrade to Premium to Unlock Exclusive Features',
-                      style: styleBaseBold(fontSize: 26),
-                    ),
-                    SpacerVertical(height: 24),
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: AnimatedSize(
-                        duration: Duration(milliseconds: 500),
-                        curve: Curves.easeIn,
-                        child: Visibility(
-                          visible: showPoints,
-                          child: Container(
-                            margin: EdgeInsets.only(bottom: 10),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: List.generate(
-                                info.text?.length ?? 0,
-                                (index) {
-                                  return Container(
-                                    margin: EdgeInsets.only(bottom: 15),
-                                    child: Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Image.asset(
-                                          Images.tickCircle,
-                                          height: 32,
-                                          width: 32,
-                                          color: ThemeColors.secondary100,
-                                        ),
-                                        Flexible(
-                                          child: HtmlWidget(
-                                            info.text?[index] ?? '',
-                                            textStyle: styleBaseRegular(),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  );
-                                },
-                              ),
+                        placeholder: (context, url) {
+                          return Container(
+                            decoration: BoxDecoration(
+                              color: Colors.white,
                             ),
+                          );
+                        },
+                      )
+                    : Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white.withValues(alpha: 0.95),
+                        ),
+                      ),
+              ),
+              Positioned(bottom: 0, right: 0, left: 0, child: child),
+            ],
+          );
+        },
+        child: GestureDetector(
+          onVerticalDragUpdate: (details) {
+            if (details.primaryDelta! < -10) {
+              _toggleSheet(true); // Swipe Up to Expand
+            } else if (details.primaryDelta! > 10) {
+              _toggleSheet(false); // Swipe Down to Collapse
+            }
+          },
+          child: Container(
+            padding: EdgeInsets.symmetric(
+              horizontal: Pad.pad16,
+              vertical: Pad.pad10,
+            ),
+            alignment: Alignment.bottomCenter,
+            decoration: const BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+              boxShadow: [
+                BoxShadow(
+                  color: Color.fromRGBO(202, 209, 223, 0.6),
+                  offset: Offset(0, 4),
+                  blurRadius: 24,
+                ),
+              ],
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Align(
+                  alignment: Alignment.center,
+                  child: Container(
+                    margin: EdgeInsets.only(top: 5),
+                    decoration: BoxDecoration(
+                        color: ThemeColors.neutral10,
+                        borderRadius: BorderRadius.circular(30)),
+                    height: 6,
+                    width: 48,
+                  ),
+                ),
+                SpacerVertical(height: 24),
+                Text(
+                  info.title ??
+                      'Upgrade to Premium to Unlock Exclusive Features',
+                  style: styleBaseBold(fontSize: 26),
+                ),
+                SpacerVertical(height: 24),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: AnimatedSize(
+                    duration: Duration(milliseconds: 500),
+                    curve: Curves.easeIn,
+                    child: Visibility(
+                      visible: showPoints,
+                      child: Container(
+                        margin: EdgeInsets.only(bottom: 10),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: List.generate(
+                            info.text?.length ?? 0,
+                            (index) {
+                              return Container(
+                                margin: EdgeInsets.only(bottom: 15),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Image.asset(
+                                      Images.tickCircle,
+                                      height: 32,
+                                      width: 32,
+                                      color: ThemeColors.secondary100,
+                                    ),
+                                    Flexible(
+                                      child: HtmlWidget(
+                                        info.text?[index] ?? '',
+                                        textStyle: styleBaseRegular(),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            },
                           ),
                         ),
                       ),
                     ),
-                    BaseButton(
-                      text: info.btn ?? 'Purchase Membership',
-                      onPressed: () {
-                        baseSUBSCRIBE(
-                          info,
-                          callAPI: widget.callAPI,
-                          manager: widget.manager,
-                        );
-                      },
-                    ),
-                  ],
+                  ),
                 ),
-              ),
+                BaseButton(
+                  text: info.btn ?? 'Purchase Membership',
+                  onPressed: () {
+                    baseSUBSCRIBE(
+                      info,
+                      callAPI: widget.callAPI,
+                      manager: widget.manager,
+                    );
+                  },
+                ),
+              ],
             ),
           ),
-        ],
+        ),
       ),
     );
   }

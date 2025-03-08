@@ -5,6 +5,8 @@ import 'package:stocks_news_new/models/news.dart';
 import 'package:stocks_news_new/models/stockDetail/overview.dart';
 import 'package:stocks_news_new/models/ticker.dart';
 
+import 'lock.dart';
+
 AIRes AIResFromJson(String str) => AIRes.fromJson(json.decode(str));
 
 String AIResToJson(AIRes data) => json.encode(data.toJson());
@@ -25,8 +27,10 @@ class AIRes {
   final AIPeerComparisonRes? peerComparison;
   final String? lastUpdateDate;
   final String? usdText;
+  final BaseLockInfoRes? lockInfo;
 
   AIRes({
+    this.lockInfo,
     this.tickerDetail,
     this.radarChart,
     this.ourTake,
@@ -45,6 +49,9 @@ class AIRes {
   });
 
   factory AIRes.fromJson(Map<String, dynamic> json) => AIRes(
+        lockInfo: json["lock_info"] == null
+            ? null
+            : BaseLockInfoRes.fromJson(json["lock_info"]),
         tickerDetail: json["ticker_data"] == null
             ? null
             : BaseTickerRes.fromJson(json["ticker_data"]),
@@ -86,6 +93,7 @@ class AIRes {
       );
 
   Map<String, dynamic> toJson() => {
+        "lock_info": lockInfo?.toJson(),
         "ticker_data": tickerDetail?.toJson(),
         "radar_chart": radarChart?.toJson(),
         "our_take": ourTake?.toJson(),
@@ -183,15 +191,20 @@ class AIradarChartRes {
   final String? title;
   final BaseKeyValueRes? recommendation;
   final List<AIradarChartDataRes>? radarChart;
+  final BaseLockInfoRes? lockInfo;
 
   AIradarChartRes({
     this.title,
     this.recommendation,
     this.radarChart,
+    this.lockInfo,
   });
 
   factory AIradarChartRes.fromJson(Map<String, dynamic> json) =>
       AIradarChartRes(
+        lockInfo: json["lock_info"] == null
+            ? null
+            : BaseLockInfoRes.fromJson(json["lock_info"]),
         title: json["title"],
         recommendation: json["recommendation"] == null
             ? null
@@ -203,6 +216,7 @@ class AIradarChartRes {
       );
 
   Map<String, dynamic> toJson() => {
+        "lock_info": lockInfo?.toJson(),
         "title": title,
         "recommendation": recommendation?.toJson(),
         "radar_chart": radarChart == null
