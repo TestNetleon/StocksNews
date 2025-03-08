@@ -73,6 +73,7 @@ class _BillionairesDetailIndexState extends State<BillionairesDetailIndex> {
               bgColor: ThemeColors.neutral9,
               radius: 0,
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
                     children: [
@@ -118,14 +119,16 @@ class _BillionairesDetailIndexState extends State<BillionairesDetailIndex> {
                     subtitle: manager.billionairesDetailRes?.billionaireInfo?.description??"",
                     subtitleStyle: stylePTSansRegular(fontSize: 16,color: ThemeColors.black,fontWeight: FontWeight.w400,height: 1.5),
                   ),
-                  BaseButton(
-                    fullWidth: false,
-                    color: ThemeColors.white,
-                    onPressed: (){},
-                    text: "ADD TO LIST",
-                    textStyle:stylePTSansRegular(fontSize: 12,color: ThemeColors.primaryLight,fontWeight: FontWeight.w600),
-                    icon: Images.ic_fav,
-
+                  IntrinsicWidth(
+                    child: BaseButton(
+                      fullWidth: false,
+                      color: ThemeColors.white,
+                      onPressed: (){},
+                      text: "ADD TO LIST",
+                      textStyle:stylePTSansRegular(fontSize: 12,color: ThemeColors.primaryLight,fontWeight: FontWeight.w600),
+                      icon: Images.ic_fav,
+                    
+                    ),
                   ),
 
 

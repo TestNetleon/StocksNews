@@ -40,6 +40,7 @@ class SDCompetitors extends StatelessWidget {
                     arguments: {'symbol': p0.symbol});
               },
               slidable: false,
+              expandable: data.extra,
             );
           },
           separatorBuilder: (context, index) {

@@ -27,16 +27,16 @@ class CryptoItem extends StatelessWidget {
               Visibility(
                 visible: item?.qouteLeft != null && item?.qouteLeft != '',
                 child: SizedBox(
-                  width: 24,
-                  height: 24,
+                  width: 20,
+                  height: 20,
                   child: ThemeImageView(url: item?.qouteLeft ?? "",fit: BoxFit.fill,),
                 ),
               ),
               Visibility(
                 visible: item?.twitterX != null && item?.twitterX != '',
                 child: SizedBox(
-                  width: 24,
-                  height: 24,
+                  width: 20,
+                  height: 20,
                   child: ThemeImageView(url: item?.twitterX ?? ""),
                 ),
               ),

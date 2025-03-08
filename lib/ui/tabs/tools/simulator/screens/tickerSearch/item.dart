@@ -44,12 +44,16 @@ class SdTradeDefaultItem extends StatelessWidget {
         padding: EdgeInsets.all(Pad.pad16),
         child: Row(
           children: [
-            Container(
-              padding: EdgeInsets.all(3.sp),
-              child: CachedNetworkImagesWidget(
-                data.image ?? "",
-                height: 41,
-                width: 41,
+            ClipRRect(
+              borderRadius: BorderRadius.circular(Pad.pad5),
+              child: Container(
+                padding: EdgeInsets.all(3.sp),
+                color: ThemeColors.neutral5,
+                child: CachedNetworkImagesWidget(
+                  data.image ?? "",
+                  height: 41,
+                  width: 41,
+                ),
               ),
             ),
             const SpacerHorizontal(width: 16),

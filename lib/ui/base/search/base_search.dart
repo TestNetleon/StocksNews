@@ -172,16 +172,33 @@ class _BaseSearchFieldState extends State<BaseSearchField> {
         ),
         suffixIcon: manager.isLoadingSearch
             ? Container(
-                height: 10.sp,
-                width: 10.sp,
-                margin:
-                    EdgeInsets.symmetric(horizontal: 10.sp, vertical: 11.sp),
-                child: CircularProgressIndicator(
-                  strokeWidth: 2,
-                  color: ThemeColors.secondary100,
-                ),
-              )
-            : null,
+          width: 20.sp,
+          height: 20.sp,
+          margin: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+          child: CircularProgressIndicator(
+            strokeWidth: 3,
+            color: ThemeColors.secondary100,
+          ),
+        )
+            :
+        _controller.text.isNotEmpty?
+        InkWell(
+          onTap: (){
+            setState(() {
+              _controller.clear();
+              _controller.text="";
+              widget.onSearchChanged("");
+            });
+          },
+          child: Container(
+            margin: EdgeInsets.all(Pad.pad10),
+            decoration: BoxDecoration(
+              color: ThemeColors.neutral5,
+              borderRadius: BorderRadius.circular(Pad.pad8),
+            ),
+            child:Icon(Icons.clear,color: ThemeColors.neutral60,size: 18),
+          ),
+        ):null,
       ),
     );
   }

@@ -38,7 +38,7 @@ class _IndustriesViewIndexState extends State<IndustriesViewIndex> {
     return BaseScaffold(
         appBar: BaseAppBar(
           showBack: true,
-          title: manager.dataView?.title ?? "",
+          title: manager.isLoadingView?"":manager.dataView?.title ?? "",
           showSearch: true,
         ),
         body: BaseLoaderContainer(

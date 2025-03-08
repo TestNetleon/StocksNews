@@ -75,7 +75,26 @@ class _BaseSearchFieldState extends State<BaseSearchSimulator> {
             color: ThemeColors.secondary100,
           ),
         )
-            : null,
+            :
+        _controller.text.isNotEmpty?
+        InkWell(
+          onTap: (){
+            setState(() {
+              _controller.clear();
+              _controller.text="";
+              widget.onSearchChanged("");
+            });
+          },
+          child: Container(
+            margin: EdgeInsets.all(Pad.pad10),
+            decoration: BoxDecoration(
+              color: ThemeColors.neutral5,
+              borderRadius: BorderRadius.circular(Pad.pad8),
+            ),
+            child:Icon(Icons.clear,color: ThemeColors.neutral60,size: 18),
+          ),
+        ):
+        null,
       ),
     );
   }
