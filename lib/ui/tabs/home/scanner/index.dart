@@ -118,7 +118,7 @@ class _HomeScannerIndexState extends State<HomeScannerIndex> {
                           lock,
                           manager: value,
                           callAPI: () async {
-                            value.getHomeData();
+                            await value.getHomeData();
                           },
                         );
                       },
