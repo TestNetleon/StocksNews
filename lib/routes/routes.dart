@@ -49,6 +49,7 @@ import 'package:stocks_news_new/managers/referral/redeem_manager.dart';
 import 'package:stocks_news_new/managers/referral/referral_manager.dart';
 import 'package:stocks_news_new/managers/referral/referral_points_manager.dart';
 import 'package:stocks_news_new/managers/watchlist.dart';
+import 'package:stocks_news_new/models/my_home.dart';
 
 import 'package:stocks_news_new/providers/ad_provider.dart';
 import 'package:stocks_news_new/providers/ai_provider.dart';

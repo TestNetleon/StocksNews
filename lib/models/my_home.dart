@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:stocks_news_new/modals/user_res.dart';
+import 'package:stocks_news_new/models/lock.dart';
 
 import 'news.dart';
 import 'ticker.dart';
@@ -16,6 +17,7 @@ class MyHomeRes {
   final UserRes? user;
   final BaseNewsRes? bannerBlog;
   final bool? showCrypto;
+  final InsiderTradeListRes? insiderTrading;
 
   MyHomeRes({
     this.recentNews,
@@ -24,6 +26,7 @@ class MyHomeRes {
     this.user,
     this.bannerBlog,
     this.showCrypto,
+    this.insiderTrading,
   });
 
   factory MyHomeRes.fromJson(Map<String, dynamic> json) => MyHomeRes(
@@ -41,7 +44,10 @@ class MyHomeRes {
     bannerBlog: json["banner_blog"] == null
         ? null
         : BaseNewsRes.fromJson(json["banner_blog"]),
-    showCrypto: json['show_crypto']
+    showCrypto: json['show_crypto'],
+        insiderTrading: json["insider_trading"] == null
+            ? null
+            : InsiderTradeListRes.fromJson(json["insider_trading"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -52,7 +58,8 @@ class MyHomeRes {
         "trending": tickers == null
             ? null
             : List<dynamic>.from(tickers!.map((x) => x.toJson())),
-        "show_crypto":showCrypto
+        "show_crypto":showCrypto,
+        "insider_trading": insiderTrading?.toJson(),
       };
 }
 
@@ -111,5 +118,122 @@ class HomeNewsRes {
         "data": data == null
             ? []
             : List<dynamic>.from(data!.map((x) => x.toJson())),
+      };
+}
+
+class InsiderTradeListRes {
+  final String? title;
+  final String? subTitle;
+  final List<InsiderTradeRes>? data;
+  final BaseLockInfoRes? lockInfo;
+
+  InsiderTradeListRes({
+    this.title,
+    this.subTitle,
+    this.data,
+    this.lockInfo,
+  });
+
+  factory InsiderTradeListRes.fromJson(Map<String, dynamic> json) =>
+      InsiderTradeListRes(
+        lockInfo: json["lock_info"] == null
+            ? null
+            : BaseLockInfoRes.fromJson(json["lock_info"]),
+        title: json["title"],
+        subTitle: json["sub_title"],
+        data: json["data"] == null
+            ? []
+            : List<InsiderTradeRes>.from(
+                json["data"]!.map((x) => InsiderTradeRes.fromJson(x))),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "lock_info": lockInfo?.toJson(),
+        "title": title,
+        "sub_title": subTitle,
+        "data": data == null
+            ? []
+            : List<dynamic>.from(data!.map((x) => x.toJson())),
+      };
+}
+
+class InsiderTradeRes {
+  final String? id;
+  final String? reportingName;
+  // final String? reportingSlug;
+  final String? typeOfOwner;
+  final String? symbol;
+  final String? price;
+  final String? exchangeShortName;
+  final String? name;
+  final String? companyCik;
+  final String? image;
+  final String? transactionType;
+  final String? totalTransaction;
+  final String? securityTransacted;
+  final String? securitiesOwned;
+  final String? transactionDate;
+  final String? link;
+  final String? reportingCik;
+
+  InsiderTradeRes({
+    this.id,
+    this.reportingName,
+    this.reportingCik,
+    // this.reportingSlug,
+    this.typeOfOwner,
+    this.symbol,
+    this.price,
+    this.exchangeShortName,
+    this.name,
+    this.companyCik,
+    this.image,
+    this.totalTransaction,
+    this.transactionType,
+    this.securityTransacted,
+    this.securitiesOwned,
+    this.transactionDate,
+    this.link,
+  });
+
+  factory InsiderTradeRes.fromJson(Map<String, dynamic> json) =>
+      InsiderTradeRes(
+        id: json["_id"],
+        price: json['price'],
+        link: json['link'],
+        reportingCik: json['reportingCik'],
+        totalTransaction: json['totalTransaction'],
+        reportingName: json["reportingName"],
+        securityTransacted: json['securitiesTransacted'],
+        // reportingSlug: json["reportingSlug"],
+        typeOfOwner: json["typeOfOwner"],
+        symbol: json["symbol"],
+        exchangeShortName: json["exchange_short_name"],
+        name: json["name"],
+        companyCik: json["companyCik"],
+        image: json["image"],
+        transactionDate: json['transactionDate'],
+        transactionType: json["transactionType"],
+        securitiesOwned: json['securitiesOwned'],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "_id": id,
+        'price': price,
+        'link': link,
+        'reportingCik': reportingCik,
+        "reportingName": reportingName,
+        'totalTransaction': totalTransaction,
+        // "reportingSlug": reportingSlug,
+        'securitiesTransacted': securityTransacted,
+        "typeOfOwner": typeOfOwner,
+        "symbol": symbol,
+        "exchange_short_name": exchangeShortName,
+        "name": name,
+        "companyCik": companyCik,
+        "image": image,
+        "transactionType": transactionType,
+        'securitiesOwned': securitiesOwned,
+        'transactionDate': transactionDate,
       };
 }

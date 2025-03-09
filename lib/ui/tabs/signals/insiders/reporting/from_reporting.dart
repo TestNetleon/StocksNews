@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/managers/signals.dart';
-import 'package:stocks_news_new/models/my_home_premium.dart';
+import 'package:stocks_news_new/models/my_home.dart';
 import 'package:stocks_news_new/ui/base/load_more.dart';
 import 'package:stocks_news_new/ui/base/scaffold.dart';
 import 'package:stocks_news_new/utils/constants.dart';

@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:stocks_news_new/models/faq.dart';
+import 'package:stocks_news_new/models/my_home.dart';
 import 'package:stocks_news_new/models/stockDetail/overview.dart';
 
 import '../my_home_premium.dart';
