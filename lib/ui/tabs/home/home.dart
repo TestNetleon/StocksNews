@@ -37,19 +37,8 @@ class _HomeIndexState extends State<HomeIndex> {
         child: BaseScroll(
           onRefresh: provider.getHomeData,
           children: [
-            // Text(
-            //   'AAPL',
-            //   style: TextStyle(
-            //     fontFamily: 'Roboto',
-            //     // fontFamily: Fonts.georgia,
-            //     // fontFamily: Fonts.ptSans,
-            //     // fontFamily: Fonts.georgia,
-            //     color: ThemeColors.black,
-            //     fontSize: 600,
-            //     fontWeight: FontWeight.w800,
-            //   ),
-            // ),
             HomeTrendingIndex(),
+            // HomeScannerIndex(),
             HomeNewsIndex(newsData: provider.data?.recentNews),
             VisibilityDetector(
               key: const Key('home_premium_visibility'),

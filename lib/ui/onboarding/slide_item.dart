@@ -24,6 +24,7 @@ class OnboardingSlideItem extends StatelessWidget {
               visible: data.title != null && data.title != '',
               child: Text(
                 data.title ?? '',
+                textAlign: TextAlign.center,
                 style: styleBaseBold(
                   color: ThemeColors.black,
                   fontSize: 28,
