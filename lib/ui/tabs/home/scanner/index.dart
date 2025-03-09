@@ -55,6 +55,7 @@ class _HomeScannerIndexState extends State<HomeScannerIndex> {
               ],
             ),
             if (lock != null) _lock(lock),
+            if (lock != null) SpacerVertical(height: 300)
           ],
         );
       },
@@ -82,40 +83,48 @@ class _HomeScannerIndexState extends State<HomeScannerIndex> {
                   );
                 },
               ),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    lock.title ?? '-',
-                    style: styleBaseBold(
-                      color: ThemeColors.primary120,
-                      fontSize: 40,
+              Container(
+                decoration: BoxDecoration(
+                    color: ThemeColors.neutral5.withValues(alpha: 0.44),
+                    borderRadius: BorderRadius.circular(8)),
+              ),
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 10),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      lock.title ?? '-',
+                      style: styleBaseBold(
+                        color: ThemeColors.primary120,
+                        fontSize: 40,
+                      ),
                     ),
-                  ),
-                  SpacerVertical(height: 10),
-                  Text(
-                    lock.subTitle ?? '-',
-                    textAlign: TextAlign.center,
-                    style: styleBaseSemiBold(
-                      color: ThemeColors.black,
-                      fontSize: 18,
+                    SpacerVertical(height: 10),
+                    Text(
+                      lock.subTitle ?? '-',
+                      textAlign: TextAlign.center,
+                      style: styleBaseSemiBold(
+                        color: ThemeColors.black,
+                        fontSize: 18,
+                      ),
                     ),
-                  ),
-                  SpacerVertical(height: 15),
-                  BaseButton(
-                    text: lock.btn ?? '',
-                    onPressed: () {
-                      value.setNumValue(3);
-                      baseSUBSCRIBE(
-                        lock,
-                        manager: value,
-                        callAPI: () async {
-                          value.getHomeData();
-                        },
-                      );
-                    },
-                  ),
-                ],
+                    SpacerVertical(height: 15),
+                    BaseButton(
+                      text: lock.btn ?? '',
+                      onPressed: () {
+                        value.setNumValue(3);
+                        baseSUBSCRIBE(
+                          lock,
+                          manager: value,
+                          callAPI: () async {
+                            value.getHomeData();
+                          },
+                        );
+                      },
+                    ),
+                  ],
+                ),
               )
             ],
           ),
