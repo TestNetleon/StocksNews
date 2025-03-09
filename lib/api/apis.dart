@@ -10,7 +10,7 @@ class Apis {
   static const baseUrlLocal = "https://notification.stocks.news/api/v1";
 
   // With Debug condition
-  static const baseUrl = !kDebugMode
+  static const baseUrl = kDebugMode
       ? "https://dev.stocks.news/api/v2"
       : "https://app.stocks.news/api/v2";
 

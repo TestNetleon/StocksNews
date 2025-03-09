@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/managers/home.dart';
+import 'package:stocks_news_new/managers/onboarding.dart';
+import 'package:stocks_news_new/models/my_home.dart';
 import 'package:stocks_news_new/ui/legal/index.dart';
 import '../../../../utils/colors.dart';
 import '../../../../utils/theme.dart';
@@ -27,7 +29,14 @@ class _AccountAgreeTextState extends State<AccountAgreeText> {
   String get _truncatedContent {
     MyHomeManager provider = context.read<MyHomeManager>();
 
-    String content = provider.data?.loginBox?.agreeUrl ?? _agreeUrl;
+    HomeLoginBoxRes? loginBox = provider.data?.loginBox;
+    Utils().showLog("data => ${loginBox == null} ...");
+    if (loginBox == null) {
+      OnboardingManager onBoardingManager = context.watch<OnboardingManager>();
+      loginBox = onBoardingManager.data?.loginBox;
+    }
+
+    String content = loginBox?.agreeUrl ?? _agreeUrl;
 
     return content.length > widget.defaultLength
         ? '${content.substring(0, widget.defaultLength)}...'
@@ -41,14 +50,19 @@ class _AccountAgreeTextState extends State<AccountAgreeText> {
   Widget build(BuildContext context) {
     MyHomeManager provider = context.watch<MyHomeManager>();
 
-    if (provider.data?.loginBox == null ||
-        provider.data?.loginBox?.id == null ||
-        provider.data?.loginBox?.id == '') {
+    HomeLoginBoxRes? loginBox = provider.data?.loginBox;
+    Utils().showLog("data => ${loginBox == null} ...");
+    if (loginBox == null) {
+      OnboardingManager onBoardingManager = context.watch<OnboardingManager>();
+      loginBox = onBoardingManager.data?.loginBox;
+    }
+
+    if (loginBox == null || loginBox.id == null || loginBox.id == '') {
       return SizedBox();
     }
 
     String content = widget.showFull || _isExpanded
-        ? provider.data?.loginBox?.agreeUrl ?? _agreeUrl
+        ? loginBox.agreeUrl ?? _agreeUrl
         : _truncatedContent;
 
     return Column(
@@ -65,20 +79,18 @@ class _AccountAgreeTextState extends State<AccountAgreeText> {
           },
           onTapUrl: (url) async {
             if (!(url.startsWith('https:') || url.startsWith('http:'))) {
-              Navigator.pushNamed(
-                context,
-                LegalInfoIndex.path,
-                arguments: {'slug': url == "terms-of-service" ? "terms-of-service" : "privacy-policy",}
-
-              );
-
+              Navigator.pushNamed(context, LegalInfoIndex.path, arguments: {
+                'slug': url == "terms-of-service"
+                    ? "terms-of-service"
+                    : "privacy-policy",
+              });
             } else {
               openUrl(url);
             }
 
             return true;
           },
-          textStyle: styleGeorgiaRegular(fontSize: 14,height: 1.6),
+          textStyle: styleGeorgiaRegular(fontSize: 14, height: 1.6),
         ),
         if (content.length > widget.defaultLength && !widget.showFull)
           GestureDetector(
