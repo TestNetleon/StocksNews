@@ -121,13 +121,13 @@ class MoreIndex extends StatelessWidget {
                 manager.navigateToMySubscription();
               },
             ),
-            // MoreItem(
-            //   icon: Images.moreMySubscription,
-            //   label: "Billionaires",
-            //   onTap: () {
-            //     manager.navigateToBillionaires();
-            //   },
-            // ),
+            MoreItem(
+              icon: Images.crypto,
+              label: "Billionaires",
+              onTap: () {
+                manager.navigateToBillionaires();
+              },
+            ),
             MoreItem(
               icon: Images.moreMySubscription,
               label: "Refer a Friend",

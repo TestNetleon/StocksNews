@@ -14,12 +14,14 @@ class MyHomeRes {
   final List<BaseTickerRes>? tickers;
   final HomeLoginBoxRes? loginBox;
   final UserRes? user;
+  final BaseNewsRes? bannerBlog;
 
   MyHomeRes({
     this.recentNews,
     this.tickers,
     this.loginBox,
     this.user,
+    this.bannerBlog,
   });
 
   factory MyHomeRes.fromJson(Map<String, dynamic> json) => MyHomeRes(
@@ -34,10 +36,14 @@ class MyHomeRes {
             ? null
             : List<BaseTickerRes>.from(
                 json["trending"].map((x) => BaseTickerRes.fromJson(x))),
+    bannerBlog: json["banner_blog"] == null
+        ? null
+        : BaseNewsRes.fromJson(json["banner_blog"]),
       );
 
   Map<String, dynamic> toJson() => {
         "login_box": loginBox?.toJson(),
+        "banner_blog": bannerBlog?.toJson(),
         "user": user?.toJson(),
         "recent_news": recentNews?.toJson(),
         "trending": tickers == null

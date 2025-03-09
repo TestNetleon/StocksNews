@@ -215,6 +215,7 @@ class Images {
   static const String morePersonalDetails = '${base}more_personal_details.png';
   static const String moreStockAlerts = '${base}more_stock_alerts.png';
   static const String moreMySubscription = '${base}more_my_subscription.png';
+  static const String crypto = '${base}crypto.png';
   static const String moreFaqs = '${base}more_faqs.png';
   static const String moreContactUs = '${base}more_contact_us.png';
   static const String moreFeedback = '${base}more_feedback.png';

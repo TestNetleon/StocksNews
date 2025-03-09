@@ -14,6 +14,7 @@ class BaseNewsRes {
   final List<NewsAuthorRes>? authors;
   final String? publishedDate;
   final String? site;
+  final String? headingText;
 
   BaseNewsRes({
     this.id,
@@ -23,6 +24,7 @@ class BaseNewsRes {
     this.authors,
     this.publishedDate,
     this.site,
+    this.headingText,
   });
 
   factory BaseNewsRes.fromJson(Map<String, dynamic> json) => BaseNewsRes(
@@ -36,6 +38,7 @@ class BaseNewsRes {
                 json["authors"]!.map((x) => NewsAuthorRes.fromJson(x))),
         publishedDate: json["date"],
         site: json["site"],
+    headingText: json["heading_text"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -48,6 +51,7 @@ class BaseNewsRes {
             : List<dynamic>.from(authors!.map((x) => x.toJson())),
         "date": publishedDate,
         "site": site,
+        "heading_text": headingText,
       };
 }
 

@@ -315,16 +315,14 @@ class _TradOrderScreenState extends State<TradOrderScreen> {
               ),
               onTap: () {
                 var conditionalType = ConditionType.bracketOrder;
-                if (widget.symbol != null) {
+                /*if (widget.symbol != null) {
                   context.read<TickerSearchManager>().conditionalRedirection(
                       widget.symbol ?? "",
                       tickerID: widget.tickerID,
                       qty: widget.qty,
                       conditionalType: conditionalType);
-                } else {
-                  // Navigator.pushNamed(context, SearchTickerIndex.path);
-                }
-                //openInfoSheet(cType: ConditionType.bracketOrder);
+                }*/
+                openInfoSheet(cType: ConditionType.bracketOrder);
               },
             ),
           ),
@@ -341,16 +339,14 @@ class _TradOrderScreenState extends State<TradOrderScreen> {
               ),
               onTap: () {
                 var conditionalType = ConditionType.limitOrder;
-                if (widget.symbol != null) {
+                /*if (widget.symbol != null) {
                   context.read<TickerSearchManager>().conditionalRedirection(
                       widget.symbol ?? "",
                       tickerID: widget.tickerID,
                       qty: widget.qty,
                       conditionalType: conditionalType);
-                } else {
-                  //Navigator.pushNamed(context, SearchTickerIndex.path);
-                }
-                //openInfoSheet(cType: ConditionType.limitOrder);
+                }*/
+                openInfoSheet(cType: ConditionType.limitOrder);
               },
             ),
           ),
@@ -367,16 +363,14 @@ class _TradOrderScreenState extends State<TradOrderScreen> {
               ),
               onTap: () {
                 var conditionalType = ConditionType.stopOrder;
-                if (widget.symbol != null) {
+               /* if (widget.symbol != null) {
                   context.read<TickerSearchManager>().conditionalRedirection(
                       widget.symbol ?? "",
                       tickerID: widget.tickerID,
                       qty: widget.qty,
                       conditionalType: conditionalType);
-                } else {
-                  // Navigator.pushNamed(context, SearchTickerIndex.path);
-                }
-                //openInfoSheet(cType: ConditionType.stopOrder);
+                }*/
+                openInfoSheet(cType: ConditionType.stopOrder);
               },
             ),
           ),
@@ -393,16 +387,14 @@ class _TradOrderScreenState extends State<TradOrderScreen> {
               ),
               onTap: () {
                 var conditionalType = ConditionType.stopLimitOrder;
-                if (widget.symbol != null) {
+                /*if (widget.symbol != null) {
                   context.read<TickerSearchManager>().conditionalRedirection(
                       widget.symbol ?? "",
                       tickerID: widget.tickerID,
                       qty: widget.qty,
                       conditionalType: conditionalType);
-                } else {
-                  // Navigator.pushNamed(context, SearchTickerIndex.path);
-                }
-                // openInfoSheet(cType: ConditionType.stopLimitOrder);
+                }*/
+                 openInfoSheet(cType: ConditionType.stopLimitOrder);
               },
             ),
           ),
@@ -419,16 +411,14 @@ class _TradOrderScreenState extends State<TradOrderScreen> {
               ),
               onTap: () {
                 var conditionalType = ConditionType.trailingOrder;
-                if (widget.symbol != null) {
+                /*if (widget.symbol != null) {
                   context.read<TickerSearchManager>().conditionalRedirection(
                       widget.symbol ?? "",
                       tickerID: widget.tickerID,
                       qty: widget.qty,
                       conditionalType: conditionalType);
-                } else {
-                  // Navigator.pushNamed(context, SearchTickerIndex.path);
-                }
-                // openInfoSheet(cType: ConditionType.trailingOrder);
+                }*/
+                 openInfoSheet(cType: ConditionType.trailingOrder);
               },
             ),
           ),
