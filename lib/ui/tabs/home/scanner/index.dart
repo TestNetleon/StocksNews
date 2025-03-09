@@ -3,8 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/managers/home.dart';
 import 'package:stocks_news_new/models/lock.dart';
+import 'package:stocks_news_new/ui/base/button.dart';
+import 'package:stocks_news_new/ui/base/lock.dart';
 import 'package:stocks_news_new/ui/tabs/home/scanner/manager/gainers.dart';
 import 'package:stocks_news_new/ui/tabs/tools/scanner/models/scanner_port.dart';
+import 'package:stocks_news_new/utils/colors.dart';
+import 'package:stocks_news_new/utils/theme.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'extra/header.dart';
 import 'gainers.dart';
 
@@ -20,11 +25,16 @@ class _HomeScannerIndexState extends State<HomeScannerIndex> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      print('HI');
-      context.read<HomeGainersManager>().stopListeningPorts();
-      Future.delayed(Duration(milliseconds: 100), () {
-        context.read<HomeGainersManager>().startListeningPorts();
-      });
+      HomeGainersManager manager = context.read<HomeGainersManager>();
+      MyHomeManager homeManager = context.read<MyHomeManager>();
+
+      BaseLockInfoRes? lock = homeManager.data?.scannerPort?.lockInfo;
+      if (lock == null) {
+        manager.stopListeningPorts();
+        Future.delayed(Duration(milliseconds: 100), () {
+          manager.startListeningPorts();
+        });
+      }
     });
   }
 
@@ -52,22 +62,64 @@ class _HomeScannerIndexState extends State<HomeScannerIndex> {
   }
 
   Widget _lock(BaseLockInfoRes lock) {
-    return Positioned(
-      top: 0,
-      right: 0,
-      left: 0,
-      bottom: 0,
-      child: Padding(
-        padding: EdgeInsets.all(2),
-        child: CachedNetworkImage(
-          imageUrl: lock.image ?? '',
-          errorWidget: (context, url, error) {
-            return Container(
-              color: Colors.white.withValues(alpha: 0.6),
-            );
-          },
-        ),
-      ),
+    return Consumer<MyHomeManager>(
+      builder: (context, value, child) {
+        return Positioned(
+          top: 0,
+          right: 0,
+          left: 0,
+          bottom: 0,
+          child: Stack(
+            fit: StackFit.expand,
+            alignment: Alignment.center,
+            children: [
+              CachedNetworkImage(
+                fit: BoxFit.cover,
+                imageUrl: lock.image ?? '',
+                errorWidget: (context, url, error) {
+                  return Container(
+                    color: Colors.white.withValues(alpha: 0.6),
+                  );
+                },
+              ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    lock.title ?? '-',
+                    style: styleBaseBold(
+                      color: ThemeColors.primary120,
+                      fontSize: 40,
+                    ),
+                  ),
+                  SpacerVertical(height: 10),
+                  Text(
+                    lock.subTitle ?? '-',
+                    textAlign: TextAlign.center,
+                    style: styleBaseSemiBold(
+                      color: ThemeColors.black,
+                      fontSize: 18,
+                    ),
+                  ),
+                  SpacerVertical(height: 15),
+                  BaseButton(
+                    text: lock.btn ?? '',
+                    onPressed: () {
+                      baseSUBSCRIBE(
+                        lock,
+                        manager: value,
+                        callAPI: () async {
+                          value.getHomeData();
+                        },
+                      );
+                    },
+                  ),
+                ],
+              )
+            ],
+          ),
+        );
+      },
     );
   }
 }

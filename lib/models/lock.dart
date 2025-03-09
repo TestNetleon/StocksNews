@@ -17,7 +17,7 @@ class BaseLockInfoRes {
 
   factory BaseLockInfoRes.fromJson(Map<String, dynamic> json) =>
       BaseLockInfoRes(
-        subTitle: json['sub_title'],
+        subTitle: json['subtitle'],
         title: json["title"],
         text: json["text"] == null
             ? []
@@ -28,7 +28,7 @@ class BaseLockInfoRes {
       );
 
   Map<String, dynamic> toJson() => {
-        'sub_title': subTitle,
+        'subtitle': subTitle,
         "title": title,
         "text": text == null ? [] : List<dynamic>.from(text!.map((x) => x)),
         "btn": btn,

@@ -78,7 +78,9 @@ class _HomeIndexState extends State<HomeIndex> {
                 hasData: provider.homePremiumData != null,
                 showPreparingText: true,
                 removeErrorWidget: true,
-                placeholder: Center(
+                placeholder: Container(
+                  alignment: Alignment.center,
+                  padding: EdgeInsets.only(top: 20),
                   child: CircularProgressIndicator(
                     color: ThemeColors.black,
                   ),

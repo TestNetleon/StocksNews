@@ -25,7 +25,6 @@ class HomeScannerItem extends StatelessWidget {
     num postMarketPrice = data.ext?.extendedHoursPrice ?? 0;
     num postMarketChange = data.ext?.extendedHoursChange ?? 0;
     num postMarketChangePer = data.ext?.extendedHoursPercentChange ?? 0;
-
     return Container(
       margin: EdgeInsets.only(bottom: 10),
       decoration: BoxDecoration(
@@ -118,7 +117,7 @@ class HomeScannerItem extends StatelessWidget {
                   //   ),
                   // ),
                   TextSpan(
-                    text: prePost ? '$netChange' : '$postMarketChange',
+                    text: prePost ? '$postMarketChange' : '$netChange',
                     style: styleBaseSemiBold(
                       fontSize: 13,
                       color: prePost
