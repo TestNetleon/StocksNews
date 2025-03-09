@@ -9,15 +9,17 @@ String scannerPortResToJson(ScannerPortRes data) => json.encode(data.toJson());
 
 class ScannerPortRes {
   final BaseLockInfoRes? lockInfo;
-
+  final bool? showOnHome;
   final PortRes? port;
 
   ScannerPortRes({
     this.lockInfo,
     this.port,
+    this.showOnHome,
   });
 
   factory ScannerPortRes.fromJson(Map<String, dynamic> json) => ScannerPortRes(
+        showOnHome: json["show_on_home"],
         lockInfo: json["lock_info"] == null
             ? null
             : BaseLockInfoRes.fromJson(json["lock_info"]),
@@ -25,6 +27,7 @@ class ScannerPortRes {
       );
 
   Map<String, dynamic> toJson() => {
+        "show_on_home": showOnHome,
         "lock_info": lockInfo?.toJson(),
         "port": port?.toJson(),
       };

@@ -1,5 +1,6 @@
 class BaseLockInfoRes {
   final String? title;
+  final String? subTitle;
   final List<String>? text;
   final String? btn;
   final String? viewBtn;
@@ -8,6 +9,7 @@ class BaseLockInfoRes {
   BaseLockInfoRes({
     this.title,
     this.text,
+    this.subTitle,
     this.btn,
     this.viewBtn,
     this.image,
@@ -15,6 +17,7 @@ class BaseLockInfoRes {
 
   factory BaseLockInfoRes.fromJson(Map<String, dynamic> json) =>
       BaseLockInfoRes(
+        subTitle: json['sub_title'],
         title: json["title"],
         text: json["text"] == null
             ? []
@@ -25,6 +28,7 @@ class BaseLockInfoRes {
       );
 
   Map<String, dynamic> toJson() => {
+        'sub_title': subTitle,
         "title": title,
         "text": text == null ? [] : List<dynamic>.from(text!.map((x) => x)),
         "btn": btn,

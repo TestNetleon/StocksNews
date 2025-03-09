@@ -137,6 +137,7 @@ import 'package:stocks_news_new/screens/tabs/compareNew/index.dart';
 import 'package:stocks_news_new/screens/tabs/compareStocks/compare_stocks.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/plaid/portfolio/index.dart';
 import 'package:stocks_news_new/screens/trendingIndustries/index.dart';
+import 'package:stocks_news_new/ui/tabs/home/scanner/manager/gainers.dart';
 import 'package:stocks_news_new/ui/tabs/market/industries/industries_view.dart';
 import 'package:stocks_news_new/ui/tabs/market/sectors/sector_view.dart';
 
@@ -773,6 +774,8 @@ class Routes {
       ChangeNotifierProvider(create: (_) => GlobalManager()),
       ChangeNotifierProvider(create: (_) => ScannerGainersManager()),
       ChangeNotifierProvider(create: (_) => ScannerLosersManager()),
+      ChangeNotifierProvider(create: (_) => HomeGainersManager()),
+
       //SCANNER End---------------
 
       // MARKET DATA Start ---------------

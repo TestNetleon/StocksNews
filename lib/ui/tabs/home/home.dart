@@ -5,12 +5,14 @@ import 'package:stocks_news_new/ui/base/app_bar.dart';
 import 'package:stocks_news_new/ui/base/base_scroll.dart';
 import 'package:stocks_news_new/ui/tabs/home/blogItem/blog_item_home.dart';
 import 'package:stocks_news_new/utils/colors.dart';
+import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/custom/base_loader_container.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 import '../../base/scaffold.dart';
 import 'home_premium.dart';
 import 'home_trending.dart';
 import 'news/news.dart';
+import 'scanner/index.dart';
 
 class HomeIndex extends StatefulWidget {
   const HomeIndex({super.key});
@@ -52,7 +54,13 @@ class _HomeIndexState extends State<HomeIndex> {
             // ),
             const BlogHomeIndex(),
             HomeTrendingIndex(),
-            // HomeScannerIndex(),
+            Visibility(
+              visible: provider.data?.scannerPort?.showOnHome == true,
+              child: Padding(
+                padding: const EdgeInsets.only(top: Pad.pad24),
+                child: HomeScannerIndex(),
+              ),
+            ),
             HomeNewsIndex(newsData: provider.data?.recentNews),
             VisibilityDetector(
               key: const Key('home_premium_visibility'),

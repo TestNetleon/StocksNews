@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:stocks_news_new/modals/user_res.dart';
 
+import '../ui/tabs/tools/scanner/models/scanner_port.dart';
 import 'news.dart';
 import 'ticker.dart';
 
@@ -15,6 +16,7 @@ class MyHomeRes {
   final HomeLoginBoxRes? loginBox;
   final UserRes? user;
   final BaseNewsRes? bannerBlog;
+  final ScannerPortRes? scannerPort;
 
   MyHomeRes({
     this.recentNews,
@@ -22,6 +24,7 @@ class MyHomeRes {
     this.loginBox,
     this.user,
     this.bannerBlog,
+    this.scannerPort,
   });
 
   factory MyHomeRes.fromJson(Map<String, dynamic> json) => MyHomeRes(
@@ -36,9 +39,12 @@ class MyHomeRes {
             ? null
             : List<BaseTickerRes>.from(
                 json["trending"].map((x) => BaseTickerRes.fromJson(x))),
-    bannerBlog: json["banner_blog"] == null
-        ? null
-        : BaseNewsRes.fromJson(json["banner_blog"]),
+        bannerBlog: json["banner_blog"] == null
+            ? null
+            : BaseNewsRes.fromJson(json["banner_blog"]),
+        scannerPort: json["home_scanner"] == null
+            ? null
+            : ScannerPortRes.fromJson(json["home_scanner"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -49,6 +55,7 @@ class MyHomeRes {
         "trending": tickers == null
             ? null
             : List<dynamic>.from(tickers!.map((x) => x.toJson())),
+        "home_scanner": scannerPort?.toJson(),
       };
 }
 
