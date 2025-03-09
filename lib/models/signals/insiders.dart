@@ -1,7 +1,8 @@
 import 'dart:convert';
 
+import 'package:stocks_news_new/models/my_home.dart';
+
 import '../lock.dart';
-import '../my_home_premium.dart';
 import '../ticker.dart';
 
 SignalInsidersRes signalInsidersResFromJson(String str) =>

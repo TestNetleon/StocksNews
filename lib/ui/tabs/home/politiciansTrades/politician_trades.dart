@@ -17,6 +17,7 @@ class HomePoliticianTradesIndex extends StatelessWidget {
         HomeLock(
           setNum: 2,
           lockInfo: politicianData?.lockInfo,
+          blur: 5,
           childWidget: SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: IntrinsicWidth(

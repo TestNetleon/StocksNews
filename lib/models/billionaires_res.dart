@@ -153,11 +153,11 @@ class SymbolMentionListRes {
   final String? symbol;
   final int? count;
   final String? name;
-  final double? price;
+  final num? price;
   final String? displayPrice;
   final String? exchange;
   final String? change;
-  final double? changesPercentage;
+  final num? changesPercentage;
   final String? yearLow;
   final String? yearHigh;
   final String? open;
@@ -241,6 +241,7 @@ class RecentMentionsRes {
   final String? designation;
   final String? twitterName;
   final String? image;
+  final String? deleteIcon;
   final int? totalMentions;
   final List<Symbols>? symbols;
 
@@ -251,6 +252,7 @@ class RecentMentionsRes {
     this.twitterName,
     this.image,
     this.totalMentions,
+    this.deleteIcon,
     this.symbols,
   });
 
@@ -261,6 +263,7 @@ class RecentMentionsRes {
     twitterName: json["twitter_name"],
     image: json["image"],
     totalMentions: json["total_mentions"],
+    deleteIcon: json["delete_icon"],
     symbols: json["symbols"] == null ? [] : List<Symbols>.from(json["symbols"]!.map((x) => Symbols.fromMap(x))),
   );
 
@@ -271,6 +274,7 @@ class RecentMentionsRes {
     "twitter_name": twitterName,
     "image": image,
     "total_mentions": totalMentions,
+    "delete_icon": deleteIcon,
     "symbols": symbols == null ? [] : List<dynamic>.from(symbols!.map((x) => x.toMap())),
   };
 }

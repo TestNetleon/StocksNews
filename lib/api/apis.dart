@@ -62,7 +62,8 @@ class Apis {
   static const cryptoBillionaireDetails = "/crypto/billionaire-details?slug=";
   static const cryptoDetails = "/crypto/crypto-details";
   static const cryptoChart = "/crypto/crypto-chart";
-  static const cryptoViewAll = "//crypto/crypto-view-all";
+  static const cryptoViewAll = "/crypto/crypto-view-all";
+  static const cryptoWatchList = "/crypto/my-watchlist";
 
   //MARK: Simulator API
   static const tsUserInfo = "/simulator/user-info";

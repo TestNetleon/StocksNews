@@ -167,7 +167,7 @@ class _BillionairesDetailIndexState extends State<BillionairesDetailIndex> {
               ),
             ),
             SpacerVertical(height: Pad.pad20),
-            Visibility(
+           /* Visibility(
                 visible: true,
                 //visible: manager.billionairesRes?.recentMentions?.title != null && manager.billionairesRes?.recentMentions?.title!= '',
                 child: BaseHeading(
@@ -182,7 +182,7 @@ class _BillionairesDetailIndexState extends State<BillionairesDetailIndex> {
               padding: EdgeInsets.symmetric(horizontal: Pad.pad16),
               child: Image.asset(Images.btc),
             ),
-            SpacerVertical(height: Pad.pad16),
+            SpacerVertical(height: Pad.pad16),*/
             CryptoTable(
                 symbolMentionRes:manager.billionairesDetailRes?.symbolMentionList
             )

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:stocks_news_new/models/my_home_premium.dart';
+import 'package:stocks_news_new/models/my_home.dart';
 import 'package:stocks_news_new/ui/tabs/home/extra/lock.dart';
 import '../../../../utils/constants.dart';
 import '../../../base/heading.dart';

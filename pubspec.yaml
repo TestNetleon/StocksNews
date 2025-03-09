@@ -122,6 +122,7 @@ dependencies:
   flutter_xlider: ^3.5.0
   syncfusion_flutter_sliders: ^28.2.9
   table_calendar: ^3.2.0
+  blur: ^4.0.0
 
 
 dev_dependencies:

@@ -1,10 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:stocks_news_new/models/my_home.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
-import '../../../../models/my_home_premium.dart';
 import '../../../../widgets/spacer_vertical.dart';
 import '../../signals/insiders/company/from_company.dart';
 import '../../signals/insiders/reporting/from_reporting.dart';

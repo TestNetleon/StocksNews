@@ -6,6 +6,7 @@ import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/api/apis.dart';
 import 'package:stocks_news_new/models/billionaires_detail.dart';
 import 'package:stocks_news_new/models/billionaires_res.dart';
+import 'package:stocks_news_new/models/crypto_watchlist_res.dart';
 import 'package:stocks_news_new/models/market/market_res.dart';
 import 'package:stocks_news_new/ui/base/toaster.dart';
 import 'package:stocks_news_new/utils/constants.dart';
@@ -30,6 +31,9 @@ class BillionairesManager extends ChangeNotifier{
   Status _statusCrypto = Status.ideal;
   bool get isLoadingCrypto => _statusCrypto == Status.loading || _statusCrypto == Status.ideal;
 
+
+  CryptoWatchRes? _cryptoWatchRes;
+  CryptoWatchRes? get cryptoWatchRes=> _cryptoWatchRes;
 
   void setStatus(status) {
     _status = status;
@@ -132,6 +136,35 @@ class BillionairesManager extends ChangeNotifier{
     }
   }
 
+  Future getWatchList() async {
+    setStatusCrypto(Status.loading);
+    try {
+      Map request = {};
+      ApiResponse response = await apiRequest(
+        url: Apis.cryptoWatchList,
+        showProgress: false,
+        request: request,
+        onRefresh: onRefresh,
+      );
+
+      if (response.status) {
+        _cryptoWatchRes = cryptoWatchlistResFromJson(jsonEncode(response.data));
+      }
+      else {
+        _cryptoWatchRes = null;
+        _error = response.message;
+      }
+      setStatusCrypto(Status.loaded);
+    } catch (e) {
+      _cryptoWatchRes = null;
+      _error = Const.errSomethingWrong;
+      TopSnackbar.show(
+        message: Const.errSomethingWrong,
+        type: ToasterEnum.error,
+      );
+      setStatusCrypto(Status.loaded);
+    }
+  }
   int? selectedScreen=-1;
   onScreenChange(index) {
     if (selectedScreen != index) {
@@ -143,7 +176,7 @@ class BillionairesManager extends ChangeNotifier{
           break;
 
         case 1:
-          //getSignalSentimentData();
+          getWatchList();
           break;
 
         case 2:
