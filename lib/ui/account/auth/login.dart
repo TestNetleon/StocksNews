@@ -7,6 +7,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:provider/provider.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import 'package:stocks_news_new/managers/home.dart';
+import 'package:stocks_news_new/managers/onboarding.dart';
 import 'package:stocks_news_new/managers/user.dart';
 import 'package:stocks_news_new/modals/user_res.dart';
 import 'package:stocks_news_new/ui/base/scaffold.dart';
@@ -207,6 +208,11 @@ class _AccountLoginIndexState extends State<AccountLoginIndex> {
     UserManager userManager = context.watch<UserManager>();
 
     HomeLoginBoxRes? loginBox = manager.data?.loginBox;
+    Utils().showLog("data => ${loginBox == null} ...");
+    if (loginBox == null) {
+      OnboardingManager onBoardingManager = context.watch<OnboardingManager>();
+      loginBox = onBoardingManager.data?.loginBox;
+    }
 
     if (!changingCountryCode) {
       if (userManager.user?.phoneCode != null &&
