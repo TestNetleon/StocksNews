@@ -52,6 +52,7 @@ class _HomeIndexState extends State<HomeIndex> {
             // ),
             const BlogHomeIndex(),
             HomeTrendingIndex(),
+            // HomeScannerIndex(),
             HomeNewsIndex(newsData: provider.data?.recentNews),
             VisibilityDetector(
               key: const Key('home_premium_visibility'),

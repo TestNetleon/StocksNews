@@ -49,28 +49,29 @@ class _BlogsIndexState extends State<BlogsIndex> {
           onRefresh: _callAPI,
           canLoadMore: manager.canLoadMoreStocks,
           child: ListView.separated(
-              padding: EdgeInsets.symmetric(horizontal: Pad.pad16),
-              itemBuilder: (context, index) {
-                BaseNewsRes? data = manager.blogs?.data?[index];
-                if (data == null) {
-                  return SizedBox();
-                }
-                return BaseNewsItem(
-                  data: data,
-                  onTap: (data) {
-                    if (data.slug == null || data.slug == '') return;
-                    Navigator.pushNamed(
-                      context,
-                      BlogsDetailIndex.path,
-                      arguments: {'slug': data.slug},
-                    );
-                  },
-                );
-              },
-              separatorBuilder: (context, index) {
-                return SpacerVertical(height: 10);
-              },
-              itemCount: manager.blogs?.data?.length ?? 0),
+            padding: EdgeInsets.symmetric(horizontal: Pad.pad16),
+            itemBuilder: (context, index) {
+              BaseNewsRes? data = manager.blogs?.data?[index];
+              if (data == null) {
+                return SizedBox();
+              }
+              return BaseNewsItem(
+                data: data,
+                onTap: (data) {
+                  if (data.slug == null || data.slug == '') return;
+                  Navigator.pushNamed(
+                    context,
+                    BlogsDetailIndex.path,
+                    arguments: {'slug': data.slug},
+                  );
+                },
+              );
+            },
+            separatorBuilder: (context, index) {
+              return SpacerVertical(height: 10);
+            },
+            itemCount: manager.blogs?.data?.length ?? 0,
+          ),
         ),
       ),
     );

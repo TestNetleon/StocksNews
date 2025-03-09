@@ -936,9 +936,7 @@ void handleNavigation({
           navigatorKey.currentContext!, (route) => route.isFirst);
       Navigator.pushReplacement(
         navigatorKey.currentContext!,
-        MaterialPageRoute(
-          builder: (_) => const Tabs(),
-        ),
+        MaterialPageRoute(builder: (_) => const Tabs()),
       );
     }
     // } else if (type == DeeplinkEnum.trendingIndustries) {
