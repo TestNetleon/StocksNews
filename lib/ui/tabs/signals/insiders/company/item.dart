@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:stocks_news_new/models/my_home_premium.dart';
+import 'package:stocks_news_new/models/my_home.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';

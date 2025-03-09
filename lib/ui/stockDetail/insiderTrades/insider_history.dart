@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:stocks_news_new/models/my_home.dart';
 import 'package:stocks_news_new/ui/base/heading.dart';
 
 import '../../../managers/stockDetail/stock.detail.dart';
-import '../../../models/my_home_premium.dart';
 import '../../../utils/constants.dart';
 import '../../base/base_list_divider.dart';
 import '../../tabs/signals/insiders/item.dart';

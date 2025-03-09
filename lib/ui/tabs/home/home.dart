@@ -4,6 +4,7 @@ import 'package:stocks_news_new/managers/home.dart';
 import 'package:stocks_news_new/ui/base/app_bar.dart';
 import 'package:stocks_news_new/ui/base/base_scroll.dart';
 import 'package:stocks_news_new/ui/tabs/home/blogItem/blog_item_home.dart';
+import 'package:stocks_news_new/ui/tabs/home/insiderTrades/insider_trades.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/widgets/custom/base_loader_container.dart';
 import 'package:visibility_detector/visibility_detector.dart';
@@ -53,7 +54,9 @@ class _HomeIndexState extends State<HomeIndex> {
             const BlogHomeIndex(),
             HomeTrendingIndex(),
             // HomeScannerIndex(),
-            HomeNewsIndex(newsData: provider.data?.recentNews),
+            HomeInsiderTradesIndex(
+              insiderData: provider.data?.insiderTrading,
+            ),
             VisibilityDetector(
               key: const Key('home_premium_visibility'),
               onVisibilityChanged: (VisibilityInfo info) {
@@ -68,13 +71,15 @@ class _HomeIndexState extends State<HomeIndex> {
                 showPreparingText: true,
                 removeErrorWidget: true,
                 placeholder: Center(
-                    child: CircularProgressIndicator(
-                  color: ThemeColors.black,
-                )),
+                  child: CircularProgressIndicator(
+                    color: ThemeColors.black,
+                  ),
+                ),
                 onRefresh: () {},
                 child: HomePremiumIndex(),
               ),
             ),
+            HomeNewsIndex(newsData: provider.data?.recentNews),
           ],
         ),
       ),

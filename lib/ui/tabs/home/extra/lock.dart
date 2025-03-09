@@ -1,4 +1,4 @@
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:blur/blur.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/managers/home.dart';
@@ -12,11 +12,13 @@ class HomeLock extends StatelessWidget {
   final BaseLockInfoRes? lockInfo;
   final Widget? childWidget;
   final num setNum;
+  final double blur;
 
   const HomeLock({
     super.key,
     this.lockInfo,
     this.childWidget,
+    this.blur = 2,
     required this.setNum,
   });
 
@@ -27,17 +29,20 @@ class HomeLock extends StatelessWidget {
       parentBuilder: (child) {
         return Stack(
           children: [
-            child,
-            Positioned(
-              top: 0,
-              bottom: 0,
-              left: 0,
-              right: 0,
-              child: CachedNetworkImage(
-                imageUrl: lockInfo?.image ?? '',
-                fit: BoxFit.cover,
-              ),
+            Blur(
+              blur: blur,
+              child: child,
             ),
+            // Positioned(
+            //   top: 0,
+            //   bottom: 0,
+            //   left: 0,
+            //   right: 0,
+            //   child: CachedNetworkImage(
+            //     imageUrl: lockInfo?.image ?? '',
+            //     fit: BoxFit.cover,
+            //   ),
+            // ),
             Positioned(
               bottom: 0,
               left: 0,
