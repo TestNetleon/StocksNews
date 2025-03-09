@@ -70,6 +70,10 @@ class MyHomeManager extends ChangeNotifier {
         info = _lockStocksPoliticians;
         break;
 
+      case 3:
+        info = _data?.scannerPort?.lockInfo;
+        break;
+
       default:
     }
 

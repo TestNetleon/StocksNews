@@ -105,6 +105,7 @@ class _HomeScannerIndexState extends State<HomeScannerIndex> {
                   BaseButton(
                     text: lock.btn ?? '',
                     onPressed: () {
+                      value.setNumValue(3);
                       baseSUBSCRIBE(
                         lock,
                         manager: value,
