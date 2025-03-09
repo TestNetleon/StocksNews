@@ -15,6 +15,7 @@ class MyHomeRes {
   final HomeLoginBoxRes? loginBox;
   final UserRes? user;
   final BaseNewsRes? bannerBlog;
+  final bool? showCrypto;
 
   MyHomeRes({
     this.recentNews,
@@ -22,6 +23,7 @@ class MyHomeRes {
     this.loginBox,
     this.user,
     this.bannerBlog,
+    this.showCrypto,
   });
 
   factory MyHomeRes.fromJson(Map<String, dynamic> json) => MyHomeRes(
@@ -39,6 +41,7 @@ class MyHomeRes {
     bannerBlog: json["banner_blog"] == null
         ? null
         : BaseNewsRes.fromJson(json["banner_blog"]),
+    showCrypto: json['show_crypto']
       );
 
   Map<String, dynamic> toJson() => {
@@ -49,6 +52,7 @@ class MyHomeRes {
         "trending": tickers == null
             ? null
             : List<dynamic>.from(tickers!.map((x) => x.toJson())),
+        "show_crypto":showCrypto
       };
 }
 

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/managers/billionaires.dart';
 import 'package:stocks_news_new/models/billionaires_res.dart';
-import 'package:stocks_news_new/ui/base/color_container.dart';
 import 'package:stocks_news_new/ui/base/common_tab.dart';
 import 'package:stocks_news_new/ui/base/heading.dart';
 import 'package:stocks_news_new/ui/tabs/more/billionaires/billionaires_index.dart';
@@ -15,7 +14,6 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/custom/base_loader_container.dart';
 import 'package:stocks_news_new/widgets/custom/refresh_indicator.dart';
-import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 class Cryptocurrencies extends StatelessWidget {
@@ -110,10 +108,9 @@ class Cryptocurrencies extends StatelessWidget {
               ),
             ),
 
-            SpacerVertical(height: Pad.pad10),
+            /*SpacerVertical(height: Pad.pad10),
             Visibility(
               visible: true,
-                //visible: manager.billionairesRes?.recentMentions?.title != null && manager.billionairesRes?.recentMentions?.title!= '',
                 child: BaseHeading(
                   title: "Top 360 Mentions",
                   titleStyle: stylePTSansBold(fontSize: 24,color: ThemeColors.splashBG),
@@ -276,7 +273,8 @@ class Cryptocurrencies extends StatelessWidget {
                   ],
                 ),
               ),
-            ),
+            ),*/
+
             SpacerVertical(height: Pad.pad10),
 
             CryptoTable(

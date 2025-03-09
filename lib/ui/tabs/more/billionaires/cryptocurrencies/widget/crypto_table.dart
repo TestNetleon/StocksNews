@@ -62,39 +62,44 @@ class CryptoTable extends StatelessWidget {
                 return DataRow(
                   cells: [
                     DataCell(
-                        Container(
-                          padding: EdgeInsets.symmetric(horizontal: Pad.pad5,vertical: Pad.pad5),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              ClipRRect(
-                                borderRadius: BorderRadius.circular(24),
-                                child: CachedNetworkImagesWidget(
-                                  company.image ?? '',
-                                  height: 24,
-                                  width: 24,
-                                  placeHolder: Images.userPlaceholderNew,
-                                  showLoading: true,
-                                  fit: BoxFit.contain,
+                        GestureDetector(
+                          onTap:(){
+                            print("ddffgfg");
+                          },
+                          child: Container(
+                            padding: EdgeInsets.symmetric(horizontal: Pad.pad5,vertical: Pad.pad5),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                ClipRRect(
+                                  borderRadius: BorderRadius.circular(24),
+                                  child: CachedNetworkImagesWidget(
+                                    company.image ?? '',
+                                    height: 24,
+                                    width: 24,
+                                    placeHolder: Images.userPlaceholderNew,
+                                    showLoading: true,
+                                    fit: BoxFit.contain,
+                                  ),
                                 ),
-                              ),
-                              SpacerHorizontal(width: Pad.pad10),
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      company.name ?? "",
-                                      style: stylePTSansBold(fontSize: 12,color: ThemeColors.neutral8),
-                                    ),
-                                    Text(
-                                      company.symbol ?? "",
-                                      style: styleBaseRegular(fontSize: 12,color: ThemeColors.neutral8),
-                                    ),
-                                  ],
+                                SpacerHorizontal(width: Pad.pad10),
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        company.name ?? "",
+                                        style: stylePTSansBold(fontSize: 12,color: ThemeColors.neutral8),
+                                      ),
+                                      Text(
+                                        company.symbol ?? "",
+                                        style: styleBaseRegular(fontSize: 12,color: ThemeColors.neutral8),
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         )
                     ),
