@@ -69,7 +69,7 @@ class BasePoliticianItem extends StatelessWidget {
                               Visibility(
                                 visible: namePresent,
                                 child: Text(
-                                  data.name ?? "",
+                                  data.userName ?? "",
                                   style: styleBaseBold(fontSize: 14),
                                 ),
                               ),
