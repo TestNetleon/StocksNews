@@ -205,6 +205,14 @@ class NewsManager extends ChangeNotifier {
   NewsDetailRes? _newsDetail;
   NewsDetailRes? get newsDetail => _newsDetail;
 
+  int _limitCall = 0;
+  int get limitCall => _limitCall;
+
+  void clearLimitCall() {
+    _limitCall = 0;
+    notifyListeners();
+  }
+
   void setStatusDetail(status) {
     _statusDetail = status;
     notifyListeners();
@@ -219,11 +227,14 @@ class NewsManager extends ChangeNotifier {
   }
 
   Future<void> getNewsDetailData(String slug, {reset = true}) async {
+    setStatusDetail(Status.loading);
+
     if (reset) {
       _newsDetail = null;
+      clearLimitCall();
     }
+
     try {
-      setStatusDetail(Status.loading);
       UserManager provider = navigatorKey.currentContext!.read<UserManager>();
       Map request = {
         'token': provider.user?.token ?? '',
@@ -239,16 +250,34 @@ class NewsManager extends ChangeNotifier {
         _newsDetail = newsDetailResFromJson(jsonEncode(response.data));
         _errorDetail = null;
         _lockInformation = _newsDetail?.lockInfo;
+        setStatusDetail(Status.loaded);
       } else {
-        _newsDetail = null;
-        _errorDetail = response.message;
+        _limitCall++;
+        setStatusDetail(Status.loading);
+
+        if (_limitCall < 4) {
+          await Future.delayed(Duration(milliseconds: 100));
+          getNewsDetailData(slug, reset: false);
+        } else {
+          _newsDetail = null;
+          _errorDetail = response.message;
+          setStatusDetail(Status.loaded);
+        }
       }
     } catch (e) {
-      _newsDetail = null;
-      _errorDetail = Const.errSomethingWrong;
+      _limitCall++;
+      setStatusDetail(Status.loading);
+
+      if (_limitCall < 4) {
+        await Future.delayed(Duration(milliseconds: 100));
+        getNewsDetailData(slug, reset: false);
+      } else {
+        _newsDetail = null;
+        _errorDetail = Const.errSomethingWrong;
+        setStatusDetail(Status.loaded);
+      }
+
       Utils().showLog('Error in ${Apis.newsDetail}: $e');
-    } finally {
-      setStatusDetail(Status.loaded);
     }
   }
 
@@ -285,8 +314,6 @@ class NewsManager extends ChangeNotifier {
         message: Const.errSomethingWrong,
         type: ToasterEnum.error,
       );
-    } finally {
-      notifyListeners();
     }
   }
 }

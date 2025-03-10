@@ -8,8 +8,10 @@ import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 
+import '../../../../routes/my_app.dart';
 import '../../../../utils/colors.dart';
 import '../../../../utils/theme.dart';
+import '../../../tabs/more/morningstarReport/index.dart';
 import 'economic.dart';
 import 'fair.dart';
 import 'lock.dart';
@@ -524,11 +526,11 @@ class SDMorningStarView extends StatelessWidget {
               const SpacerVertical(height: 15),
               GestureDetector(
                 onTap: () {
-                  // Navigator.push(
-                  //   navigatorKey.currentContext!,
-                  //   MaterialPageRoute(
-                  //       builder: (_) => const MorningStarTransaction()),
-                  // );
+                  Navigator.push(
+                    navigatorKey.currentContext!,
+                    MaterialPageRoute(
+                        builder: (_) => const MorningStarReportsIndex()),
+                  );
                 },
                 child: Center(
                   child: Text(

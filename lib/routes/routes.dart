@@ -42,6 +42,7 @@ import 'package:stocks_news_new/managers/market/stocks/trending/most_bullish.dar
 import 'package:stocks_news_new/managers/market/stocks/gainer&losers/todays_breakout.dart';
 import 'package:stocks_news_new/managers/market/stocks/gainer&losers/todays_gainer.dart';
 import 'package:stocks_news_new/managers/market/stocks/gainer&losers/todays_losers.dart';
+import 'package:stocks_news_new/managers/morningstar_report.dart';
 import 'package:stocks_news_new/managers/notification/most_bullish.dart';
 import 'package:stocks_news_new/managers/notification/notifications.dart';
 import 'package:stocks_news_new/managers/referral/leader_board_manager.dart';
@@ -152,6 +153,7 @@ import 'package:stocks_news_new/ui/tabs/more/helpdesk/chats/index.dart';
 import 'package:stocks_news_new/ui/tabs/more/helpdesk/front/index.dart';
 import 'package:stocks_news_new/ui/tabs/more/helpdesk/listing/index.dart';
 import 'package:stocks_news_new/ui/tabs/more/helpdesk/tickets/index.dart';
+import 'package:stocks_news_new/ui/tabs/more/morningstarReport/index.dart';
 import 'package:stocks_news_new/ui/tabs/more/notificationSettings/index.dart';
 import 'package:stocks_news_new/ui/tabs/more/referral/index.dart';
 import 'package:stocks_news_new/ui/tabs/more/referral/joinRefer/index.dart';
@@ -255,7 +257,7 @@ class Routes {
     RedeemPoints.path: (_) => const RedeemPoints(),
     JoinReferralIndex.path: (_) => const JoinReferralIndex(),
     NotificationIndex.path: (_) => const NotificationIndex(),
-    // JoinReferVerificationIndex.path: (_) => const JoinReferVerificationIndex(),
+    MorningStarReportsIndex.path: (_) => const MorningStarReportsIndex(),
 
     //--------------------------------------
 
@@ -778,6 +780,7 @@ class Routes {
       ChangeNotifierProvider(create: (_) => LeaderBoardManager()),
       ChangeNotifierProvider(create: (_) => RedeemManager()),
       ChangeNotifierProvider(create: (_) => NotificationsManager()),
+      ChangeNotifierProvider(create: (_) => MorningStarReportsManager()),
 
       //SCANNER Start---------------
       ChangeNotifierProvider(create: (_) => ScannerManager()),

@@ -8,6 +8,7 @@ import 'package:stocks_news_new/ui/base/heading.dart';
 import 'package:stocks_news_new/ui/base/scaffold.dart';
 import 'package:stocks_news_new/ui/legal/index.dart';
 import 'package:stocks_news_new/ui/tabs/more/more_item.dart';
+import 'package:stocks_news_new/ui/tabs/more/morningstarReport/index.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -125,14 +126,22 @@ class MoreIndex extends StatelessWidget {
                 manager.navigateToMySubscription();
               },
             ),
-            if(homeRes?.showCrypto==true)
+            if (homeRes?.showCrypto == true)
+              MoreItem(
+                icon: Images.crypto,
+                label: "Cryptocurrencies",
+                onTap: () {
+                  manager.navigateToBillionaires();
+                },
+              ),
             MoreItem(
-              icon: Images.crypto,
-              label: "Cryptocurrencies",
+              icon: Images.msReport,
+              label: "MORNINGSTAR Reports",
               onTap: () {
-                manager.navigateToBillionaires();
+                Navigator.pushNamed(context, MorningStarReportsIndex.path);
               },
             ),
+
             MoreItem(
               icon: Images.moreMySubscription,
               label: "Refer a Friend",

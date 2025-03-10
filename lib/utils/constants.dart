@@ -239,7 +239,9 @@ class Images {
   static const String ic_fav = '${base}ic_fav.png';
   static const String ic_link = '${base}ic_link.png';
   static const String filter = '${base}filter.png';
+  static const String msReport = '${base}ms_report.png';
 
+  //MARK: New UI END
   //-------------------------------------------------------------------------------
   static const String scannerStop = 'assets/images/scanner_stop.png';
   static const String logo = "assets/images/logo.png";

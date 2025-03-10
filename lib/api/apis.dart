@@ -184,6 +184,8 @@ class Apis {
   static const stockScannerPort = '/stock-scanner';
   static const scannerFilters = '/scanner-sectors';
 
+  static const morningStarReports = '/morning-star-transaction';
+
 //----------------------------------------------
 //----------------------------------------------
 //----------------------------------------------

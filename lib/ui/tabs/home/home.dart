@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/managers/home.dart';
-import 'package:stocks_news_new/managers/tools.dart';
-import 'package:stocks_news_new/models/tools.dart';
 import 'package:stocks_news_new/ui/base/app_bar.dart';
 import 'package:stocks_news_new/ui/base/base_scroll.dart';
 import 'package:stocks_news_new/ui/base/heading.dart';
@@ -51,14 +49,10 @@ class _HomeIndexState extends State<HomeIndex> {
               child: Padding(
                 padding: const EdgeInsets.only(top: Pad.pad24),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     BaseHeading(
                       title: 'Market Scanner',
-                      viewMoreText: 'Go to Scanner',
-                      viewMore: () {
-                        ToolsManager manager = context.read<ToolsManager>();
-                        manager.startNavigation(ToolsEnum.scanner);
-                      },
                     ),
                     HomeScannerIndex(),
                   ],
