@@ -34,6 +34,8 @@ class BaseTickerRes {
   int? isAlertAdded;
   int? isWatchlistAdded;
 
+  // extra
+
   // simulator
   String? marketType;
   String? marketTime;
@@ -49,6 +51,8 @@ class BaseTickerRes {
   // end simulator
 
   //extra
+  int? isCryptoAdded;
+  final String? brief;
   final String? notAvailable;
   final String? revenue;
   final String? employeeCount;
@@ -97,6 +101,7 @@ class BaseTickerRes {
     this.name,
     this.isAlertAdded,
     this.isWatchlistAdded,
+
     this.mentionCount,
     this.mentionDate,
 
@@ -115,6 +120,8 @@ class BaseTickerRes {
 
     //extra
     this.revenue,
+    this.brief,
+    this.isCryptoAdded,
     this.employeeCount,
     this.showMore,
     this.closeDate,
@@ -165,6 +172,8 @@ class BaseTickerRes {
         mentionDate: json["mention_date"],
 
         //extra
+    isCryptoAdded: json['is_crypto_added'],
+    brief: json['brief'],
         notAvailable: json['not_available'],
         marketCap: json['marketCap'],
         marketTime: json['market_time'],
@@ -238,6 +247,8 @@ class BaseTickerRes {
         "mention_date": mentionDate,
 
         //extra
+        'is_crypto_added': isCryptoAdded,
+        'brief': brief,
         'not_available': notAvailable,
         'marketCap': marketCap,
         'market_time': marketTime,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/managers/billionaires.dart';
+import 'package:stocks_news_new/models/billionaires_detail.dart';
 import 'package:stocks_news_new/models/billionaires_res.dart';
 import 'package:stocks_news_new/ui/base/app_bar.dart';
 import 'package:stocks_news_new/ui/base/base_scroll.dart';
@@ -48,11 +49,12 @@ class _BillionairesDetailIndexState extends State<BillionairesDetailIndex> {
   @override
   Widget build(BuildContext context) {
     BillionairesManager manager = context.watch<BillionairesManager>();
+    BillionaireInfo? billionaireInfo= manager.billionairesDetailRes?.billionaireInfo;
 
     return BaseScaffold(
       appBar: BaseAppBar(
         showBack: true,
-        title: manager.billionairesDetailRes?.billionaireInfo?.name ?? "Billionaires",
+        title: billionaireInfo?.name ?? "Billionaires",
         showSearch: true,
       ),
       body: BaseLoaderContainer(
@@ -78,7 +80,7 @@ class _BillionairesDetailIndexState extends State<BillionairesDetailIndex> {
                   Row(
                     children: [
                       Visibility(
-                        visible: manager.billionairesDetailRes?.billionaireInfo?.image!=null,
+                        visible: billionaireInfo?.image!=null,
                         child: Container(
                           padding: EdgeInsets.all(Pad.pad5),
                           decoration: BoxDecoration(
@@ -88,7 +90,7 @@ class _BillionairesDetailIndexState extends State<BillionairesDetailIndex> {
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(60),
                             child: CachedNetworkImagesWidget(
-                              manager.billionairesDetailRes?.billionaireInfo?.image ?? '',
+                              billionaireInfo?.image ?? '',
                               height: 55,
                               width: 55,
                               placeHolder: Images.userPlaceholderNew,
@@ -101,12 +103,12 @@ class _BillionairesDetailIndexState extends State<BillionairesDetailIndex> {
                       SpacerHorizontal(width: Pad.pad16),
                       Expanded(
                         child: Visibility(
-                          visible: manager.billionairesDetailRes?.billionaireInfo?.name != null && manager.billionairesDetailRes?.billionaireInfo?.name != '',
+                          visible: billionaireInfo?.name != null && billionaireInfo?.name != '',
                           child: BaseHeading(
-                            title: "${manager.billionairesDetailRes?.billionaireInfo?.name}",
+                            title: "${billionaireInfo?.name}",
                             titleStyle: stylePTSansBold(fontSize: 20,color: ThemeColors.splashBG),
                             subtitleStyle: stylePTSansRegular(fontSize: 14,color: ThemeColors.colour66,fontWeight: FontWeight.w400),
-                            subtitle: manager.billionairesDetailRes?.billionaireInfo?.designation??"",
+                            subtitle: billionaireInfo?.designation??"",
                             crossAxisAlignment: CrossAxisAlignment.start,
                           ),
                         ),
@@ -116,17 +118,26 @@ class _BillionairesDetailIndexState extends State<BillionairesDetailIndex> {
                   BaseHeading(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     textAlign: TextAlign.start,
-                    subtitle: manager.billionairesDetailRes?.billionaireInfo?.description??"",
+                    subtitle: billionaireInfo?.description??"",
                     subtitleStyle: stylePTSansRegular(fontSize: 16,color: ThemeColors.black,fontWeight: FontWeight.w400,height: 1.5),
                   ),
                   IntrinsicWidth(
                     child: BaseButton(
                       fullWidth: false,
-                      color: ThemeColors.white,
-                      onPressed: (){},
-                      text: "ADD TO LIST",
-                      textStyle:stylePTSansRegular(fontSize: 12,color: ThemeColors.primaryLight,fontWeight: FontWeight.w600),
+                      color: billionaireInfo?.isFavoritePersonAdded==0?ThemeColors.white:ThemeColors.splashBG,
+                      onPressed: (){
+                        if(billionaireInfo?.isFavoritePersonAdded==0){
+                          manager.requestAddToFav(billionaireInfo?.twitterName??"");
+                        }
+                        else{
+                          manager.requestRemoveToFav(billionaireInfo?.twitterName??"");
+                        }
+
+                      },
+                      text: billionaireInfo?.isFavoritePersonAdded==0?"FOLLOW":"UN-FOLLOW",
+                      textStyle:stylePTSansRegular(fontSize: 12,color: billionaireInfo?.isFavoritePersonAdded==0?ThemeColors.primaryLight:ThemeColors.white,fontWeight: FontWeight.w600),
                       icon: Images.ic_fav,
+                      iconColor:  billionaireInfo?.isFavoritePersonAdded==0?ThemeColors.primaryLight:ThemeColors.white,
                     
                     ),
                   ),

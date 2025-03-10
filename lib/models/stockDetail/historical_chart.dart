@@ -6,6 +6,14 @@ SDHistoricalChartRes stocksDetailHistoricalChartResFromJson(String str) =>
 String stocksDetailHistoricalChartResToJson(SDHistoricalChartRes data) =>
     json.encode(data.toJson());
 
+List<HistoricalChartRes> baseChartResFromJson(String str) =>
+    List<HistoricalChartRes>.from(
+        json.decode(str).map((x) => HistoricalChartRes.fromJson(x)));
+
+String baseChartResToJson(List<HistoricalChartRes> data) =>
+    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+
+
 class SDHistoricalChartRes {
   final num? totalChange;
   final String? label;

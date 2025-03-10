@@ -12,6 +12,7 @@ class BaseButton extends StatelessWidget {
     this.color = ThemeColors.primary100,
     this.disableTextColor = ThemeColors.primary100,
     this.textColor = ThemeColors.black,
+    this.iconColor,
     this.textSize = 18,
     this.fullWidth = false,
     this.radius = 8,
@@ -31,6 +32,7 @@ class BaseButton extends StatelessWidget {
   final String text;
   final Color? color;
   final Color textColor;
+  final Color? iconColor;
   final Color disableTextColor;
 
   final Function()? onPressed;
@@ -74,7 +76,7 @@ class BaseButton extends StatelessWidget {
               children: [
                 Image.asset(
                   icon ?? '',
-                  color: ThemeColors.neutral60,
+                  color: iconColor??ThemeColors.neutral60,
                   height: 17,
                   width: 17,
                 ),

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:stocks_news_new/ui/base/base_list_divider.dart';
+import 'package:stocks_news_new/utils/constants.dart';
 
 class CustomGridView extends StatelessWidget {
   const CustomGridView({
@@ -8,6 +10,7 @@ class CustomGridView extends StatelessWidget {
     this.paddingVertical = 16,
     this.paddingHorizontal = 8,
     this.itemSpace,
+    this.divider=false,
     super.key,
   });
 
@@ -15,17 +18,18 @@ class CustomGridView extends StatelessWidget {
   final int length;
   final double? itemSpace;
   final Widget Function(int index) getChild;
+  final bool divider;
 //
   @override
   Widget build(BuildContext context) {
     return ListView.separated(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      padding: EdgeInsets.symmetric(vertical: paddingVertical),
+      padding: EdgeInsets.symmetric(vertical: paddingVertical,horizontal: divider?Pad.pad16:0),
       itemBuilder: (context, index) {
         return IntrinsicHeight(
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: paddingHorizontal),
+            padding: EdgeInsets.symmetric(horizontal: divider?0:paddingHorizontal),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -43,7 +47,12 @@ class CustomGridView extends StatelessWidget {
         );
       },
       separatorBuilder: (context, index) {
-        return SizedBox(height: (paddingVertical * 1.2));
+        return
+          divider?
+          Padding(
+          padding: EdgeInsets.symmetric(vertical:(paddingVertical * 0.8)),
+          child: BaseListDivider(),
+        ):SizedBox(height: (paddingVertical * 1.2));
       },
       itemCount: ((length / 2) + (length % 2)).toInt(),
     );

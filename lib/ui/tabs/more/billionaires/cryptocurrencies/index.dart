@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/managers/billionaires.dart';
 import 'package:stocks_news_new/models/billionaires_res.dart';
+import 'package:stocks_news_new/ui/base/base_scroll.dart';
 import 'package:stocks_news_new/ui/base/common_tab.dart';
 import 'package:stocks_news_new/ui/base/heading.dart';
 import 'package:stocks_news_new/ui/tabs/more/billionaires/billionaires_index.dart';
@@ -13,7 +14,6 @@ import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/custom/base_loader_container.dart';
-import 'package:stocks_news_new/widgets/custom/refresh_indicator.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 class Cryptocurrencies extends StatelessWidget {
@@ -27,88 +27,87 @@ class Cryptocurrencies extends StatelessWidget {
       isLoading: manager.isLoadingCrypto,
       error: manager.error,
       showPreparingText: true,
-      child: CommonRefreshIndicator(
+      child: BaseScroll(
         onRefresh: manager.getCryptoCurrencies,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Visibility(
-              visible: manager.billionairesRes?.cryptoTweetPost != null,
-              child: ListView.separated(
-                physics: NeverScrollableScrollPhysics(),
-                padding: EdgeInsets.symmetric(horizontal: Pad.pad10),
-                shrinkWrap: true,
-                itemBuilder: (context, index) {
-                  CryptoTweetPost? item = manager.billionairesRes?.cryptoTweetPost?[index];
-                  return CryptoItem(
-                    item: item,
-                    onTap: () {
-                      Navigator.pushNamed(context, BillionairesDetailIndex.path,arguments: {'slug':item?.slug??""});
-                    },
-                  );
-                },
-                separatorBuilder: (context, index) {
-                  return SpacerVertical(height: Pad.pad3);
-                },
-                itemCount: manager.billionairesRes?.cryptoTweetPost?.length ?? 0,
-              ),
+        margin: EdgeInsets.zero,
+        children: [
+          Visibility(
+            visible: manager.billionairesRes?.cryptoTweetPost != null,
+            child: ListView.separated(
+              physics: NeverScrollableScrollPhysics(),
+              padding: EdgeInsets.symmetric(horizontal: Pad.pad10),
+              shrinkWrap: true,
+              itemBuilder: (context, index) {
+                CryptoTweetPost? item = manager.billionairesRes?.cryptoTweetPost?[index];
+                return CryptoItem(
+                  item: item,
+                  onTap: () {
+                    Navigator.pushNamed(context, BillionairesDetailIndex.path,arguments: {'slug':item?.slug??""});
+                  },
+                );
+              },
+              separatorBuilder: (context, index) {
+                return SpacerVertical(height: Pad.pad3);
+              },
+              itemCount: manager.billionairesRes?.cryptoTweetPost?.length ?? 0,
             ),
-            Visibility(
-                visible: manager.billionairesRes?.topTab != null,
-                child: SpacerVertical(height: Pad.pad5)
-            ),
-            Visibility(
-              visible:manager.billionairesRes?.topTab != null,
-              child: Column(
-                children: [
-                  BaseTabs(
-                    data: manager.billionairesRes?.topTab?.data??[],
-                    onTap: manager.onScreenChangeInner,
+          ),
+          Visibility(
+              visible: manager.billionairesRes?.topTab != null,
+              child: SpacerVertical(height: Pad.pad5)
+          ),
+          Visibility(
+            visible:manager.billionairesRes?.topTab != null,
+            child: Column(
+              children: [
+                BaseTabs(
+                  data: manager.billionairesRes?.topTab?.data??[],
+                  onTap: manager.onScreenChangeInner,
+                ),
+                SpacerVertical(height: Pad.pad10),
+                if (manager.selectedInnerScreen == 0)
+                  TopBilIndex(
+                    topTabs: manager.billionairesRes?.topTab,
                   ),
-                  SpacerVertical(height: Pad.pad10),
-                  if (manager.selectedInnerScreen == 0)
-                    TopBilIndex(
-                      topTabs: manager.billionairesRes?.topTab,
-                    ),
-                  if (manager.selectedInnerScreen == 1) SizedBox(),
-                ],
-              ),
+                if (manager.selectedInnerScreen == 1) SizedBox(),
+              ],
             ),
-            SpacerVertical(height: Pad.pad5),
-            Visibility(
-                visible: manager.billionairesRes?.recentMentions?.title != null && manager.billionairesRes?.recentMentions?.title!= '',
-                child: BaseHeading(
-                  title: manager.billionairesRes?.recentMentions?.title??"",
-                  titleStyle: stylePTSansBold(fontSize: 24,color: ThemeColors.splashBG),
-                  margin: EdgeInsets.symmetric(horizontal: Pad.pad16),
+          ),
+          SpacerVertical(height: Pad.pad5),
+          Visibility(
+              visible: manager.billionairesRes?.recentMentions?.title != null && manager.billionairesRes?.recentMentions?.title!= '',
+              child: BaseHeading(
+                title: manager.billionairesRes?.recentMentions?.title??"",
+                titleStyle: stylePTSansBold(fontSize: 24,color: ThemeColors.splashBG),
+                margin: EdgeInsets.symmetric(horizontal: Pad.pad16),
 
-                )
+              )
+          ),
+          SpacerVertical(height: Pad.pad10),
+
+          Visibility(
+            visible: manager.billionairesRes?.recentMentions != null && (manager.billionairesRes?.recentMentions?.data?.isNotEmpty==true),
+            child: ListView.separated(
+              physics: NeverScrollableScrollPhysics(),
+              padding: EdgeInsets.symmetric(horizontal: Pad.pad16),
+              shrinkWrap: true,
+              itemBuilder: (context, index) {
+                CryptoTweetPost? item = manager.billionairesRes?.recentMentions?.data?[index];
+                return MentionItem(
+                  item: item,
+                  onTap: () {
+                    Navigator.pushNamed(context, BillionairesDetailIndex.path,arguments: {'slug':item?.slug??""});
+                  },
+                );
+              },
+              separatorBuilder: (context, index) {
+                return SpacerVertical(height: Pad.pad16);
+              },
+              itemCount: manager.billionairesRes?.recentMentions?.data?.length ?? 0,
             ),
-            SpacerVertical(height: Pad.pad10),
+          ),
 
-            Visibility(
-              visible: manager.billionairesRes?.recentMentions != null && (manager.billionairesRes?.recentMentions?.data?.isNotEmpty==true),
-              child: ListView.separated(
-                physics: NeverScrollableScrollPhysics(),
-                padding: EdgeInsets.symmetric(horizontal: Pad.pad16),
-                shrinkWrap: true,
-                itemBuilder: (context, index) {
-                  RecentMentionsRes? item = manager.billionairesRes?.recentMentions?.data?[index];
-                  return MentionItem(
-                    item: item,
-                    onTap: () {
-                      Navigator.pushNamed(context, BillionairesDetailIndex.path,arguments: {'slug':item?.slug??""});
-                    },
-                  );
-                },
-                separatorBuilder: (context, index) {
-                  return SpacerVertical(height: Pad.pad16);
-                },
-                itemCount: manager.billionairesRes?.recentMentions?.data?.length ?? 0,
-              ),
-            ),
-
-            /*SpacerVertical(height: Pad.pad10),
+          /*SpacerVertical(height: Pad.pad10),
             Visibility(
               visible: true,
                 child: BaseHeading(
@@ -275,16 +274,15 @@ class Cryptocurrencies extends StatelessWidget {
               ),
             ),*/
 
-            SpacerVertical(height: Pad.pad10),
+          SpacerVertical(height: Pad.pad10),
 
-            CryptoTable(
-                symbolMentionRes:manager.billionairesRes?.symbolMentionList
-            )
+          CryptoTable(
+              symbolMentionRes:manager.billionairesRes?.symbolMentionList
+          )
 
 
 
-          ],
-        ),
+        ]
       ),
     );
   }

@@ -39,12 +39,16 @@ class BillionaireInfo {
   final String? designation;
   final String? image;
   final String? description;
+  final String? twitterName;
+  int? isFavoritePersonAdded;
 
   BillionaireInfo({
     this.name,
     this.designation,
     this.image,
     this.description,
+    this.twitterName,
+    this.isFavoritePersonAdded,
   });
 
   factory BillionaireInfo.fromMap(Map<String, dynamic> json) => BillionaireInfo(
@@ -52,6 +56,8 @@ class BillionaireInfo {
     designation: json["designation"],
     image: json["image"],
     description: json["description"],
+    twitterName: json["twitter_name"],
+    isFavoritePersonAdded: json["is_favorite_person_added"],
   );
 
   Map<String, dynamic> toMap() => {
@@ -59,6 +65,8 @@ class BillionaireInfo {
     "designation": designation,
     "image": image,
     "description": description,
+    "twitter_name": twitterName,
+    "is_favorite_person_added": isFavoritePersonAdded,
   };
 }
 

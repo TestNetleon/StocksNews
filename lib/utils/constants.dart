@@ -237,6 +237,7 @@ class Images {
   static const String starUnselected = '${base}star_unselected.png';
   static const String copy = '${base}copy.png';
   static const String ic_fav = '${base}ic_fav.png';
+  static const String ic_link = '${base}ic_link.png';
   static const String filter = '${base}filter.png';
 
   //-------------------------------------------------------------------------------
@@ -448,6 +449,7 @@ class Pad {
   static const double pad5 = 5;
   static const double pad8 = 8;
   static const double pad10 = 10;
+  static const double pad14 = 14;
   static const double pad16 = 16;
   static const double pad20 = 20;
   static const double pad24 = 24;

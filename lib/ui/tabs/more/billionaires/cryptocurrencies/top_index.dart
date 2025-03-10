@@ -17,7 +17,7 @@ class TopBilIndex extends StatelessWidget {
           padding: EdgeInsets.symmetric(horizontal: Pad.pad10),
           shrinkWrap: true,
           itemBuilder: (context, index) {
-            RecentMentionsRes? item = topTabs?.topBillionaires?[index];
+            CryptoTweetPost? item = topTabs?.topBillionaires?[index];
             return BillionaireItem(item: item, onTap: () {});
           },
           separatorBuilder: (context, index) {

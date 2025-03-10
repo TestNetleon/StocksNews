@@ -139,6 +139,7 @@ class ThemeColors {
   static const colour66 = Color(0xFF666666);
   static const colourBA = Color(0xFFBABABA);
   static const disabledBtn = Color(0xFF3C3C43);
+  static const colour8d = Color(0xFF34928d);
 
   //CATEGORY
   static const lightGrey = Color(0xFFF0F2F6);

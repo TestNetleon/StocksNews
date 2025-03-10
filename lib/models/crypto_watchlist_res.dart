@@ -38,7 +38,7 @@ class CryptoWatchRes {
 class FavoritePerson {
   final String? title;
   final String? subTitle;
-  final List<RecentMentionsRes>? data;
+  final List<CryptoTweetPost>? data;
 
   FavoritePerson({
     this.title,
@@ -49,7 +49,7 @@ class FavoritePerson {
   factory FavoritePerson.fromMap(Map<String, dynamic> json) => FavoritePerson(
     title: json["title"],
     subTitle: json["sub_title"],
-    data: json["data"] == null ? [] : List<RecentMentionsRes>.from(json["data"]!.map((x) => RecentMentionsRes.fromMap(x))),
+    data: json["data"] == null ? [] : List<CryptoTweetPost>.from(json["data"]!.map((x) => CryptoTweetPost.fromMap(x))),
   );
 
   Map<String, dynamic> toMap() => {

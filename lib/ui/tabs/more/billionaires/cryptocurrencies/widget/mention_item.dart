@@ -10,7 +10,7 @@ import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 class MentionItem extends StatelessWidget {
-  final RecentMentionsRes? item;
+  final CryptoTweetPost? item;
   final Function()? onTap;
   const MentionItem({super.key,this.item,this.onTap});
 

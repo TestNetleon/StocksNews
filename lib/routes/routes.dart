@@ -144,6 +144,7 @@ import 'package:stocks_news_new/ui/tabs/market/sectors/sector_view.dart';
 
 import 'package:stocks_news_new/ui/tabs/more/alerts/index.dart';
 import 'package:stocks_news_new/ui/tabs/more/billionaires/billionaires_index.dart';
+import 'package:stocks_news_new/ui/tabs/more/billionaires/crypto_index.dart';
 import 'package:stocks_news_new/ui/tabs/more/billionaires/index.dart';
 import 'package:stocks_news_new/ui/tabs/more/faq/index.dart';
 import 'package:stocks_news_new/ui/tabs/more/feedback/index.dart';
@@ -455,6 +456,14 @@ class Routes {
             final arguments = settings.arguments as Map<String, dynamic>?;
             String slug = arguments?['slug'];
             return BillionairesDetailIndex(slug: slug);
+          },
+        );
+      case CryptoIndex.path:
+        return MaterialPageRoute(
+          builder: (context) {
+            final arguments = settings.arguments as Map<String, dynamic>?;
+            String symbol = arguments?['symbol'];
+            return CryptoIndex(symbol: symbol);
           },
         );
 

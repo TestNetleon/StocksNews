@@ -10,7 +10,7 @@ import 'package:stocks_news_new/widgets/cache_network_image.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 class BillionaireItem extends StatelessWidget {
-  final RecentMentionsRes? item;
+  final CryptoTweetPost? item;
   final Function()? onTap;
   const BillionaireItem({super.key,this.item,this.onTap});
 

@@ -58,11 +58,15 @@ class Apis {
   //MARK: Crypto API
   static const cryptoTabs = "/crypto/tab";
   static const cryptoHome = "/crypto/home";
-  static const cryptoBillionaireDetails = "/crypto/billionaire-details?slug=";
+  static const cryptoBillionaireDetails = "/crypto/billionaire-details";
   static const cryptoDetails = "/crypto/crypto-details";
   static const cryptoChart = "/crypto/crypto-chart";
   static const cryptoViewAll = "/crypto/crypto-view-all";
   static const cryptoWatchList = "/crypto/my-watchlist";
+  static const addWatch = "/crypto/add-to-crypto-watchlist";
+  static const removeWatch = "/crypto/remove-crypto-watchlist";
+  static const addFav = "/crypto/add-to-favorite-person";
+  static const removeFav = "/crypto/remove-favorite-person";
 
   //MARK: Simulator API
   static const tsUserInfo = "/simulator/user-info";
