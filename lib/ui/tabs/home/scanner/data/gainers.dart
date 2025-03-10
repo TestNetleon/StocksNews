@@ -6,7 +6,6 @@ import 'package:stocks_news_new/managers/home.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/ui/tabs/home/scanner/manager/gainers.dart';
 import 'package:stocks_news_new/ui/tabs/tools/scanner/data/client.dart';
-import 'package:stocks_news_new/ui/tabs/tools/scanner/manager/scanner.dart';
 import 'package:stocks_news_new/ui/tabs/tools/scanner/models/live.dart';
 import 'package:stocks_news_new/ui/tabs/tools/scanner/models/offline.dart';
 import 'package:stocks_news_new/ui/tabs/tools/scanner/models/scanner_port.dart';
@@ -71,11 +70,7 @@ class HomeGainersStream {
         isOfflineCalled = true;
         try {
           // TO STOP MIXING streaming because streaming not closing at all
-          if (manager.filterParams?.sortBy == 2 &&
-              sseClient.url !=
-                  "https://dev.stocks.news:$port/topGainersLosersLimit?type=gainers") {
-            return;
-          }
+
           Utils().showLog("--- ${sseClient.url}");
 
           final List<dynamic> decodedResponse = jsonDecode(eventData);
@@ -94,20 +89,11 @@ class HomeGainersStream {
   Future<void> getOfflineData() async {
     MyHomeManager homeManager =
         navigatorKey.currentContext!.read<MyHomeManager>();
-    final HomeGainersManager gainersManager =
-        navigatorKey.currentContext!.read<HomeGainersManager>();
+
     int? port = homeManager.data?.scannerPort?.port?.other?.offline ?? 8080;
 
     String offlineUrl = '';
-
-    if ((gainersManager.filterParams?.sortByHeader ==
-            SortByEnums.perChange.name) ||
-        gainersManager.filterParams?.sortByHeader ==
-            SortByEnums.postMarketPerChange.name) {
-      offlineUrl = 'https://dev.stocks.news:$port/topGainerLimit?shortBy=1';
-    } else {
-      offlineUrl = 'https://dev.stocks.news:$port/topGainerLimit?shortBy=1';
-    }
+    offlineUrl = 'https://dev.stocks.news:$port/topGainerLimit?shortBy=1';
 
     final url = Uri.parse(offlineUrl);
 

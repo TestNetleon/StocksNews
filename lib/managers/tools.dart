@@ -34,10 +34,10 @@ class ToolsManager extends ChangeNotifier {
 //MARK: Navigate
   Future startNavigation(ToolsEnum type) async {
     UserManager manager = navigatorKey.currentContext!.read<UserManager>();
-    await manager.askLoginScreen();
-    if (manager.user == null) {
-      return;
-    }
+    // await manager.askLoginScreen();
+    // if (manager.user == null) {
+    //   return;
+    // }
 
     switch (type) {
       case ToolsEnum.scanner:
@@ -62,6 +62,10 @@ class ToolsManager extends ChangeNotifier {
           Navigator.pushNamed(
               navigatorKey.currentContext!, ToolsPortfolioIndex.path);
         } else {
+          await manager.askLoginScreen();
+          if (manager.user == null) {
+            return;
+          }
           if (manager.user?.signupStatus != true) {
             await getToolsData();
 

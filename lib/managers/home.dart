@@ -89,6 +89,13 @@ class MyHomeManager extends ChangeNotifier {
         'token': provider.user?.token ?? '',
       };
 
+      if (appsFlyerUID != null && appsFlyerUID != '') {
+        request['appsflyer_id'] = appsFlyerUID;
+      }
+      if (memCODE != null && memCODE != '') {
+        request['distributor_code'] = memCODE;
+      }
+
       setStatus(Status.loading);
       ApiResponse response = await apiRequest(
         url: Apis.myHome,

@@ -314,7 +314,7 @@ class _TradOrderScreenState extends State<TradOrderScreen> {
                 widget.symbol,
               ),
               onTap: () {
-                var conditionalType = ConditionType.bracketOrder;
+                // var conditionalType = ConditionType.bracketOrder;
                 /*if (widget.symbol != null) {
                   context.read<TickerSearchManager>().conditionalRedirection(
                       widget.symbol ?? "",
@@ -338,7 +338,7 @@ class _TradOrderScreenState extends State<TradOrderScreen> {
                 widget.symbol,
               ),
               onTap: () {
-                var conditionalType = ConditionType.limitOrder;
+                // var conditionalType = ConditionType.limitOrder;
                 /*if (widget.symbol != null) {
                   context.read<TickerSearchManager>().conditionalRedirection(
                       widget.symbol ?? "",
@@ -362,8 +362,8 @@ class _TradOrderScreenState extends State<TradOrderScreen> {
                 widget.symbol,
               ),
               onTap: () {
-                var conditionalType = ConditionType.stopOrder;
-               /* if (widget.symbol != null) {
+                // var conditionalType = ConditionType.stopOrder;
+                /* if (widget.symbol != null) {
                   context.read<TickerSearchManager>().conditionalRedirection(
                       widget.symbol ?? "",
                       tickerID: widget.tickerID,
@@ -386,7 +386,7 @@ class _TradOrderScreenState extends State<TradOrderScreen> {
                 widget.symbol,
               ),
               onTap: () {
-                var conditionalType = ConditionType.stopLimitOrder;
+                // var conditionalType = ConditionType.stopLimitOrder;
                 /*if (widget.symbol != null) {
                   context.read<TickerSearchManager>().conditionalRedirection(
                       widget.symbol ?? "",
@@ -394,7 +394,7 @@ class _TradOrderScreenState extends State<TradOrderScreen> {
                       qty: widget.qty,
                       conditionalType: conditionalType);
                 }*/
-                 openInfoSheet(cType: ConditionType.stopLimitOrder);
+                openInfoSheet(cType: ConditionType.stopLimitOrder);
               },
             ),
           ),
@@ -410,7 +410,7 @@ class _TradOrderScreenState extends State<TradOrderScreen> {
                 widget.symbol,
               ),
               onTap: () {
-                var conditionalType = ConditionType.trailingOrder;
+                // var conditionalType = ConditionType.trailingOrder;
                 /*if (widget.symbol != null) {
                   context.read<TickerSearchManager>().conditionalRedirection(
                       widget.symbol ?? "",
@@ -418,7 +418,7 @@ class _TradOrderScreenState extends State<TradOrderScreen> {
                       qty: widget.qty,
                       conditionalType: conditionalType);
                 }*/
-                 openInfoSheet(cType: ConditionType.trailingOrder);
+                openInfoSheet(cType: ConditionType.trailingOrder);
               },
             ),
           ),

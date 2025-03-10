@@ -73,7 +73,7 @@ class TickerBoxItem extends StatelessWidget {
               Visibility(
                 visible: data.displayPrice != null && data.displayPrice != '',
                 child: Padding(
-                  padding: const EdgeInsets.only(top: 12),
+                  padding: const EdgeInsets.only(top: 12, bottom: 3),
                   child: Text(
                     data.displayPrice ?? "",
                     style: styleBaseBold(fontSize: 19),

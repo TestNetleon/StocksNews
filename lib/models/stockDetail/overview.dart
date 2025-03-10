@@ -12,11 +12,13 @@ class SDOverviewRes {
   final SDCompanyRes? companyInfo;
   final SDStockScoreRes? stockScore;
   final AIradarChartRes? aiAnalysis;
+  final MorningStarRes? morningStar;
 
   SDOverviewRes({
     this.companyInfo,
     this.stockScore,
     this.aiAnalysis,
+    this.morningStar,
   });
 
   factory SDOverviewRes.fromJson(Map<String, dynamic> json) => SDOverviewRes(
@@ -29,12 +31,16 @@ class SDOverviewRes {
         aiAnalysis: json["ai_analysis"] == null
             ? null
             : AIradarChartRes.fromJson(json["ai_analysis"]),
+        morningStar: json["morning_star"] == null
+            ? null
+            : MorningStarRes.fromJson(json["morning_star"]),
       );
 
   Map<String, dynamic> toJson() => {
         "company_info": companyInfo?.toJson(),
         "stock_score": stockScore?.toJson(),
         "ai_analysis": aiAnalysis?.toJson(),
+        "morning_star": morningStar?.toJson(),
       };
 }
 
@@ -233,5 +239,207 @@ class SDCompanyRes {
         "yearLow": yearLow,
         "yearHigh": yearHigh,
         "currentPrice": currentPrice,
+      };
+}
+
+//MARK: Morning Star
+
+class MorningStarRes {
+  final String? id;
+  final String? morningStarId;
+  final String? symbol;
+  final String? shareClassId;
+  final num? quantStarRating;
+  final String? quantStarRatingDate;
+  final String? quantEconomicMoatLabel;
+  final String? quantEconomicMoatDate;
+  final String? priceOverQuantFairValue;
+  final String? priceOverQuantFairValueDate;
+  final String? quantValuation;
+  final String? quantFairValue;
+  final String? quantFairValueDate;
+  final String? quantFairValueUncertaintyLabel;
+  final String? quantFairValueUncertaintyDate;
+  final String? oneStarPrice;
+  final String? oneStarPriceDate;
+  final String? fiveStarPrice;
+  final String? fiveStarPriceDate;
+  final String? quantFinancialHealthLabel;
+  final String? quantFinancialHealthDate;
+  final num? pdfStatus;
+  final DateTime? updatedAt;
+  final DateTime? createdAt;
+  final String? pdfUrl;
+  final MorningStarLockInfo? lockInformation;
+  final String? updated;
+  final String? description;
+  final String? viewAllText;
+
+  MorningStarRes({
+    this.id,
+    this.morningStarId,
+    this.symbol,
+    this.shareClassId,
+    this.quantStarRating,
+    this.quantStarRatingDate,
+    this.quantEconomicMoatLabel,
+    this.quantEconomicMoatDate,
+    this.priceOverQuantFairValue,
+    this.priceOverQuantFairValueDate,
+    this.quantValuation,
+    this.quantFairValue,
+    this.quantFairValueDate,
+    this.quantFairValueUncertaintyLabel,
+    this.quantFairValueUncertaintyDate,
+    this.oneStarPrice,
+    this.oneStarPriceDate,
+    this.fiveStarPrice,
+    this.fiveStarPriceDate,
+    this.quantFinancialHealthLabel,
+    this.quantFinancialHealthDate,
+    this.pdfStatus,
+    this.updatedAt,
+    this.createdAt,
+    this.pdfUrl,
+    this.lockInformation,
+    this.updated,
+    this.description,
+    this.viewAllText,
+  });
+
+  factory MorningStarRes.fromJson(Map<String, dynamic> json) => MorningStarRes(
+        id: json["_id"],
+        morningStarId: json["morning_star_id"],
+        symbol: json["symbol"],
+        shareClassId: json["share_class_id"],
+        quantStarRating: json["QuantStarRating"],
+        quantStarRatingDate: json["QuantStarRatingDate"],
+        quantEconomicMoatLabel: json["QuantEconomicMoatLabel"],
+        quantEconomicMoatDate: json["QuantEconomicMoatDate"],
+        priceOverQuantFairValue: json["PriceOverQuantFairValue"],
+        priceOverQuantFairValueDate: json["PriceOverQuantFairValueDate"],
+        quantValuation: json["QuantValuation"],
+        quantFairValue: json["QuantFairValue"],
+        quantFairValueDate: json["QuantFairValueDate"],
+        quantFairValueUncertaintyLabel: json["QuantFairValueUncertaintyLabel"],
+        quantFairValueUncertaintyDate: json["QuantFairValueUncertaintyDate"],
+        oneStarPrice: json["OneStarPrice"],
+        oneStarPriceDate: json["OneStarPriceDate"],
+        fiveStarPrice: json["FiveStarPrice"],
+        fiveStarPriceDate: json["FiveStarPriceDate"],
+        quantFinancialHealthLabel: json["QuantFinancialHealthLabel"],
+        quantFinancialHealthDate: json["QuantFinancialHealthDate"],
+        pdfStatus: json["pdf_status"],
+        updatedAt: json["updated_at"] == null
+            ? null
+            : DateTime.parse(json["updated_at"]),
+        createdAt: json["created_at"] == null
+            ? null
+            : DateTime.parse(json["created_at"]),
+        pdfUrl: json["pdf_url"],
+        lockInformation: json["lock_information"] == null
+            ? null
+            : MorningStarLockInfo.fromJson(json["lock_information"]),
+        updated: json["updated"],
+        description: json["description"],
+        viewAllText: json["view_all_text"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "_id": id,
+        "morning_star_id": morningStarId,
+        "symbol": symbol,
+        "share_class_id": shareClassId,
+        "QuantStarRating": quantStarRating,
+        "QuantStarRatingDate": quantStarRatingDate,
+        "QuantEconomicMoatLabel": quantEconomicMoatLabel,
+        "QuantEconomicMoatDate": quantEconomicMoatDate,
+        "PriceOverQuantFairValue": priceOverQuantFairValue,
+        "PriceOverQuantFairValueDate": priceOverQuantFairValueDate,
+        "QuantValuation": quantValuation,
+        "QuantFairValue": quantFairValue,
+        "QuantFairValueDate": quantFairValueDate,
+        "QuantFairValueUncertaintyLabel": quantFairValueUncertaintyLabel,
+        "QuantFairValueUncertaintyDate": quantFairValueUncertaintyDate,
+        "OneStarPrice": oneStarPrice,
+        "OneStarPriceDate": oneStarPriceDate,
+        "FiveStarPrice": fiveStarPrice,
+        "FiveStarPriceDate": fiveStarPriceDate,
+        "QuantFinancialHealthLabel": quantFinancialHealthLabel,
+        "QuantFinancialHealthDate": quantFinancialHealthDate,
+        "pdf_status": pdfStatus,
+        "updated_at": updatedAt?.toIso8601String(),
+        "created_at": createdAt?.toIso8601String(),
+        "pdf_url": pdfUrl,
+        "lock_information": lockInformation?.toJson(),
+        "updated": updated,
+        "description": description,
+        "view_all_text": viewAllText,
+      };
+}
+
+class MorningStarLockInfo {
+  final bool? readingStatus;
+  final String? title;
+  final String? readingSubtitle;
+  final String? readingTitle;
+  final String? readingHeading;
+
+  final bool? balanceStatus;
+  final int? totalPoints;
+  final int? pointRequired;
+  final String? popUpMessage;
+  final String? popUpButton;
+  final dynamic showSubscribeBtn;
+  final dynamic showUpgradeBtn;
+  final dynamic showViewBtn;
+
+  MorningStarLockInfo({
+    this.readingStatus,
+    this.title,
+    this.readingSubtitle,
+    this.readingTitle,
+    this.readingHeading,
+    this.balanceStatus,
+    this.totalPoints,
+    this.pointRequired,
+    this.popUpMessage,
+    this.popUpButton,
+    this.showSubscribeBtn,
+    this.showUpgradeBtn,
+    this.showViewBtn,
+  });
+
+  factory MorningStarLockInfo.fromJson(Map<String, dynamic> json) =>
+      MorningStarLockInfo(
+        readingStatus: json["reading_status"],
+        title: json["title"],
+        readingHeading: json['reading_heading'],
+        readingSubtitle: json["reading_subtitle"],
+        readingTitle: json["reading_title"],
+        balanceStatus: json["balance_status"],
+        totalPoints: json["total_points"],
+        pointRequired: json["point_required"],
+        popUpMessage: json["popup_message"],
+        popUpButton: json["popup_button"],
+        showSubscribeBtn: json["show_subscribe_btn"],
+        showUpgradeBtn: json["show_upgrade_btn"],
+        showViewBtn: json["show_view_btn"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "reading_status": readingStatus,
+        "title": title,
+        'reading_heading': readingHeading,
+        "reading_subtitle": readingSubtitle,
+        "reading_title": readingTitle,
+        "balance_status": balanceStatus,
+        "total_points": totalPoints,
+        "point_required": pointRequired,
+        "popup_message": popUpMessage,
+        "popup_button": popUpButton,
+        "show_subscribe_btn": showSubscribeBtn,
+        "show_upgrade_btn": showUpgradeBtn,
+        "show_view_btn": showViewBtn,
       };
 }

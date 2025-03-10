@@ -3,7 +3,8 @@ import 'package:flutter_pdfview/flutter_pdfview.dart';
 import 'package:path_provider/path_provider.dart';
 import 'dart:io';
 import 'package:http/http.dart' as http;
-import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
+import 'package:stocks_news_new/ui/base/app_bar.dart';
+import 'package:stocks_news_new/ui/base/scaffold.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/loading.dart';
 
@@ -95,8 +96,8 @@ class _PdfViewerWidgetState extends State<PdfViewerWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: const AppBarHome(isPopBack: true),
+    return BaseScaffold(
+      appBar: const BaseAppBar(showBack: true),
       body: isLoading
           ? const Center(child: Loading())
           : SizedBox(
@@ -111,12 +112,8 @@ class _PdfViewerWidgetState extends State<PdfViewerWidget> {
                 onRender: (pages) {
                   setState(() {});
                 },
-                onError: (error) {
-                  print(error.toString());
-                },
-                onPageError: (page, error) {
-                  print('$page: ${error.toString()}');
-                },
+                onError: (error) {},
+                onPageError: (page, error) {},
               ),
             ),
     );

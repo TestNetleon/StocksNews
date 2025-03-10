@@ -15,6 +15,7 @@ import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/service/amplitude/service.dart';
 import 'package:stocks_news_new/service/revenue_cat.dart';
 import 'package:stocks_news_new/socket/socket.dart';
+import 'package:stocks_news_new/ui/tabs/home/scanner/manager/gainers.dart';
 import 'package:stocks_news_new/ui/tabs/market/index.dart';
 import 'package:stocks_news_new/ui/tabs/more/index.dart';
 import 'package:stocks_news_new/utils/colors.dart';
@@ -204,6 +205,9 @@ class _TabsState extends State<Tabs> {
     MyHomeManager manager = context.read<MyHomeManager>();
     ToolsManager toolsManager = context.read<ToolsManager>();
     SignalsManager signalsManager = context.read<SignalsManager>();
+    HomeGainersManager homeGainers = context.read<HomeGainersManager>();
+
+    if (currentIndex != 0) homeGainers.stopListeningPorts();
 
     try {
       if (Platform.isAndroid) {
@@ -224,54 +228,27 @@ class _TabsState extends State<Tabs> {
         if (manager.data == null) {
           manager.getHomeData();
         }
-
-        // final HomeProvider homeProvider = context.read<HomeProvider>();
-        // if (homeProvider.homeSliderRes == null &&
-        //     homeProvider.homeAlertData == null &&
-        //     homeProvider.homeTrendingRes == null) {
-        //   homeProvider.refreshData(widget.inAppMsgId);
-        // }
-
-        // AmplitudeService.logUserInteractionEvent(type: "Stocks.News Home Page");
-
         break;
+
       case 1:
-        // if (trendingProvider.mostBullish == null) {
-        //   trendingProvider.getMostBullish();
-        // }
-        // AmplitudeService.logUserInteractionEvent(type: "Trending");
-
         break;
+
       case 2:
-        // if (insiderProvider.data == null) {
-        //   insiderProvider.getData(showProgress: false);
-        // }
-        // AmplitudeService.logUserInteractionEvent(type: "Insider Trades");
-
         signalsManager.onScreenChange(-1);
-
         break;
+
       case 3:
         SocketService.instance.emitUpdateUser(SocketEnum.tools);
 
         if (toolsManager.data == null) {
           toolsManager.getToolsData();
         }
-        // AmplitudeService.logUserInteractionEvent(type: "Market Sentiment");
-
         break;
+
       case 4:
-        // if (newsCatProvider.tabs == null) {
-        //   newsCatProvider.getTabsData(showProgress: true);
-        // } else {
-        //   newsCatProvider.tabChange(0, newsCatProvider.tabs![0].id);
-        // }
-        // AmplitudeService.logUserInteractionEvent(type: "News");
-
         break;
+
       case 5:
-        // log("---Compare");
-        // _compareStocks(context);
         break;
     }
   }
