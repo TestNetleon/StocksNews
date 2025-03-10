@@ -15,6 +15,7 @@ import '../../aiAnalysis/radar.dart';
 import '../../base/heading.dart';
 import 'chart.dart';
 import 'company.dart';
+import 'morningStar/data.dart';
 import 'range.dart';
 import 'stock_score.dart';
 
@@ -27,7 +28,7 @@ class SDOverview extends StatelessWidget {
     SDCompanyRes? companyInfo = manager.dataOverview?.companyInfo;
     SDStockScoreRes? stockScore = manager.dataOverview?.stockScore;
     AIradarChartRes? aiAnalysis = manager.dataOverview?.aiAnalysis;
-
+    MorningStarRes? morningStar = manager.dataOverview?.morningStar;
     SDHistoricalChartRes? chart = manager.dataHistoricalC;
     bool hasData = manager.dataHistoricalC != null;
 
@@ -80,6 +81,7 @@ class SDOverview extends StatelessWidget {
               ),
             ),
           ),
+          SDMorningStarView(data: morningStar),
           //Historical Chart
           SDHistoricalChart(
             hasData: hasData,

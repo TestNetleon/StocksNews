@@ -324,7 +324,7 @@ class SDManager extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future getSDOverview({bool reset = false}) async {
+  Future getSDOverview({bool reset = false, bool requestAccess = false}) async {
     if (_selectedStock == '') return;
     if (reset) _dataOverview = null;
 
@@ -335,6 +335,10 @@ class SDManager extends ChangeNotifier {
         'token': provider.user?.token ?? '',
         'symbol': _selectedStock,
       };
+
+      if (requestAccess) {
+        request['request_access'] = '$requestAccess';
+      }
 
       ApiResponse response = await apiRequest(
         url: Apis.sdOverview,

@@ -77,8 +77,7 @@ class _HomeScannerHeaderState extends State<HomeScannerHeader> {
         return Column(
           children: [
             Container(
-              margin: EdgeInsets.symmetric(
-                  horizontal: Pad.pad16, vertical: Pad.pad10),
+              margin: EdgeInsets.symmetric(vertical: Pad.pad10),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [

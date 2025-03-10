@@ -79,9 +79,9 @@ class HomeScannerItem extends StatelessWidget {
             ),
             Visibility(
               child: Padding(
-                padding: const EdgeInsets.only(top: 12),
+                padding: const EdgeInsets.only(top: 12, bottom: 4),
                 child: Text(
-                  prePost ? '$postMarketPrice' : '$lastTrade',
+                  prePost ? '\$$postMarketPrice' : '\$$lastTrade',
                   style: styleBaseBold(fontSize: 19),
                 ),
               ),
@@ -117,7 +117,7 @@ class HomeScannerItem extends StatelessWidget {
                   //   ),
                   // ),
                   TextSpan(
-                    text: prePost ? '$postMarketChange' : '$netChange',
+                    text: prePost ? '\$$postMarketChange' : '\$$netChange',
                     style: styleBaseSemiBold(
                       fontSize: 13,
                       color: prePost

@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/managers/home.dart';
+import 'package:stocks_news_new/managers/tools.dart';
+import 'package:stocks_news_new/models/tools.dart';
 import 'package:stocks_news_new/ui/base/app_bar.dart';
 import 'package:stocks_news_new/ui/base/base_scroll.dart';
+import 'package:stocks_news_new/ui/base/heading.dart';
 import 'package:stocks_news_new/ui/tabs/home/blogItem/blog_item_home.dart';
 import 'package:stocks_news_new/ui/tabs/home/insiderTrades/insider_trades.dart';
 import 'package:stocks_news_new/utils/colors.dart';
@@ -25,7 +28,7 @@ class HomeIndex extends StatefulWidget {
 class _HomeIndexState extends State<HomeIndex> {
   @override
   Widget build(BuildContext context) {
-    MyHomeManager provider = context.watch<MyHomeManager>();
+    MyHomeManager manager = context.watch<MyHomeManager>();
 
     return BaseScaffold(
       appBar: BaseAppBar(
@@ -33,49 +36,49 @@ class _HomeIndexState extends State<HomeIndex> {
         showSearch: true,
       ),
       body: BaseLoaderContainer(
-        isLoading: provider.isLoading,
-        hasData: provider.data != null && !provider.isLoading,
+        isLoading: manager.isLoading,
+        hasData: manager.data != null && !manager.isLoading,
         showPreparingText: true,
-        error: provider.error,
-        onRefresh: provider.getHomeData,
+        error: manager.error,
+        onRefresh: manager.getHomeData,
         child: BaseScroll(
-          onRefresh: provider.getHomeData,
+          onRefresh: manager.getHomeData,
           children: [
-            // Text(
-            //   'AAPL',
-            //   style: TextStyle(
-            //     fontFamily: 'Roboto',
-            //     // fontFamily: Fonts.georgia,
-            //     // fontFamily: Fonts.ptSans,
-            //     // fontFamily: Fonts.georgia,
-            //     color: ThemeColors.black,
-            //     fontSize: 600,
-            //     fontWeight: FontWeight.w800,
-            //   ),
-            // ),
             const BlogHomeIndex(),
             HomeTrendingIndex(),
             Visibility(
-              visible: provider.data?.scannerPort?.showOnHome == true,
+              visible: manager.data?.scannerPort?.showOnHome == true,
               child: Padding(
                 padding: const EdgeInsets.only(top: Pad.pad24),
-                child: HomeScannerIndex(),
+                child: Column(
+                  children: [
+                    BaseHeading(
+                      title: 'Market Scanner',
+                      viewMoreText: 'Go to Scanner',
+                      viewMore: () {
+                        ToolsManager manager = context.read<ToolsManager>();
+                        manager.startNavigation(ToolsEnum.scanner);
+                      },
+                    ),
+                    HomeScannerIndex(),
+                  ],
+                ),
               ),
             ),
             HomeInsiderTradesIndex(
-              insiderData: provider.data?.insiderTrading,
+              insiderData: manager.data?.insiderTrading,
             ),
             VisibilityDetector(
               key: const Key('home_premium_visibility'),
               onVisibilityChanged: (VisibilityInfo info) {
-                if (info.visibleFraction > 0.1 && !provider.homePremiumLoaded) {
-                  provider.setPremiumLoaded(true);
-                  provider.getHomePremiumData();
+                if (info.visibleFraction > 0.1 && !manager.homePremiumLoaded) {
+                  manager.setPremiumLoaded(true);
+                  manager.getHomePremiumData();
                 }
               },
               child: BaseLoaderContainer(
-                isLoading: provider.isLoadingHomePremium,
-                hasData: provider.homePremiumData != null,
+                isLoading: manager.isLoadingHomePremium,
+                hasData: manager.homePremiumData != null,
                 showPreparingText: true,
                 removeErrorWidget: true,
                 placeholder: Container(
@@ -89,7 +92,7 @@ class _HomeIndexState extends State<HomeIndex> {
                 child: HomePremiumIndex(),
               ),
             ),
-            HomeNewsIndex(newsData: provider.data?.recentNews),
+            HomeNewsIndex(newsData: manager.data?.recentNews),
           ],
         ),
       ),

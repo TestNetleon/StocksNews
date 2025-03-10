@@ -8,8 +8,9 @@ import 'package:stocks_news_new/widgets/custom/base_loader_container.dart';
 import 'no_subscription.dart';
 
 class SubscriptionIndex extends StatefulWidget {
+  final SubscriptionDefault? defaultSelected;
   static const path = 'SubscriptionIndex';
-  const SubscriptionIndex({super.key});
+  const SubscriptionIndex({super.key, this.defaultSelected});
 
   @override
   State<SubscriptionIndex> createState() => _SubscriptionIndexState();

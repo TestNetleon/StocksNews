@@ -126,55 +126,59 @@ class PlaidService {
   }
 
   Future<void> initiatePlaid() async {
-    showGlobalProgressDialog();
-    final context = navigatorKey.currentContext;
-    if (context == null) return;
-    PlaidConfigRes? config = context.read<ToolsManager>().data?.plaidConfig;
-    UserManager manager = context.read<UserManager>();
-    final clientID = config?.clientId ?? "";
-    final secret = config?.secret ?? "";
-    final userToken = manager.user?.token ?? "N/A";
-
-    final url = config?.createUrl;
-    if (url == null || url == '') return;
-
-    final headers = {
-      "Content-Type": "application/json",
-      "Accept": "application/json"
-    };
-    final body = jsonEncode({
-      "client_id": clientID,
-      "secret": secret,
-      "user": {"client_user_id": userToken, "phone_number": "9950393329"},
-      "client_name": config?.clientName ?? "Stocks.News",
-      "products": config?.products ?? ["investments"],
-      "country_codes": config?.countryCodes ?? ["US"],
-      "language": config?.language ?? "en",
-      "android_package_name": config?.androidPackageName ?? "com.stocks.news"
-    });
-
     try {
-      final response =
-          await http.post(Uri.parse(url), headers: headers, body: body);
-      if (response.statusCode == 200) {
-        final data = jsonDecode(response.body);
-        Utils().showLog("Plaid Link Token: ${data['link_token']}");
-        PlaidLink.create(
-          configuration: LinkTokenConfiguration(
-            token: data['link_token'],
-          ),
-        );
-        PlaidLink.open();
-      } else {
-        Utils().showLog("Plaid Link Token Creation Failed: ${response.body}");
+      showGlobalProgressDialog();
+      final context = navigatorKey.currentContext;
+      if (context == null) return;
+      PlaidConfigRes? config = context.read<ToolsManager>().data?.plaidConfig;
+      UserManager manager = context.read<UserManager>();
+      final clientID = config?.clientId ?? "";
+      final secret = config?.secret ?? "";
+      final userToken = manager.user?.token ?? "N/A";
+
+      final url = config?.createUrl;
+      if (url == null || url == '') return;
+
+      final headers = {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      };
+      final body = jsonEncode({
+        "client_id": clientID,
+        "secret": secret,
+        "user": {"client_user_id": userToken, "phone_number": "9950393329"},
+        "client_name": config?.clientName ?? "Stocks.News",
+        "products": config?.products ?? ["investments"],
+        "country_codes": config?.countryCodes ?? ["US"],
+        "language": config?.language ?? "en",
+        "android_package_name": config?.androidPackageName ?? "com.stocks.news"
+      });
+
+      try {
+        final response =
+            await http.post(Uri.parse(url), headers: headers, body: body);
+        if (response.statusCode == 200) {
+          final data = jsonDecode(response.body);
+          Utils().showLog("Plaid Link Token: ${data['link_token']}");
+          PlaidLink.create(
+            configuration: LinkTokenConfiguration(
+              token: data['link_token'],
+            ),
+          );
+          PlaidLink.open();
+        } else {
+          Utils().showLog("Plaid Link Token Creation Failed: ${response.body}");
+        }
+      } catch (e) {
+        popUpAlert(
+            message: Const.errSomethingWrong,
+            title: "Alert",
+            icon: Images.alertPopGIF);
+        Utils().showLog("Plaid API Error: $e");
+      } finally {
+        closeGlobalProgressDialog();
       }
     } catch (e) {
-      popUpAlert(
-          message: Const.errSomethingWrong,
-          title: "Alert",
-          icon: Images.alertPopGIF);
-      Utils().showLog("Plaid API Error: $e");
-    } finally {
       closeGlobalProgressDialog();
     }
   }

@@ -6,7 +6,7 @@ import 'package:stocks_news_new/widgets/optional_parent.dart';
 import '../../utils/colors.dart';
 
 class BaseHeading extends StatelessWidget {
-  final String? title;
+  final String? title, viewMoreText;
   final String? subtitle;
   final TextStyle? titleStyle;
   final TextStyle? subtitleStyle;
@@ -17,6 +17,7 @@ class BaseHeading extends StatelessWidget {
   const BaseHeading({
     super.key,
     this.title,
+    this.viewMoreText,
     this.viewMore,
     this.subtitle,
     this.titleStyle,
@@ -39,11 +40,11 @@ class BaseHeading extends StatelessWidget {
               return Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  child,
+                  Flexible(child: child),
                   InkWell(
                     onTap: viewMore,
                     child: Text(
-                      'View More',
+                      viewMoreText ?? 'View More',
                       textAlign: textAlign,
                       style: titleStyle ??
                           styleBaseBold(

@@ -342,6 +342,10 @@ class UserManager extends ChangeNotifier {
         type: response.status ? ToasterEnum.success : ToasterEnum.error,
       );
 
+      if (_user?.signupStatus != true) {
+        navigatorKey.currentContext!.read<MyHomeManager>().getHomeData();
+      }
+
       return ApiResponse(status: response.status, data: response.data);
     } catch (e) {
       Utils().showLog('Error in $url');

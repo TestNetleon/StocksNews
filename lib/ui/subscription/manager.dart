@@ -21,6 +21,15 @@ import 'model/my_subscription.dart';
 import 'model/subscription.dart';
 import 'screens/view/plans.dart';
 
+enum SubscriptionDefault {
+  monthlyBasic,
+  monthlyPro,
+  monthlyElite,
+  annualBasic,
+  annualPro,
+  annualElite
+}
+
 class SubscriptionManager extends ChangeNotifier {
   //MARK: SubscriptionManager
   String? _error;
@@ -37,7 +46,10 @@ class SubscriptionManager extends ChangeNotifier {
   }
 
 //MARK: Start Process
-  Future startProcess({viewPlans = false}) async {
+  Future startProcess({
+    viewPlans = false,
+    SubscriptionDefault? defaultSelected,
+  }) async {
     SubscriptionService instance = SubscriptionService.instance;
     try {
       setStatus(Status.loading);
