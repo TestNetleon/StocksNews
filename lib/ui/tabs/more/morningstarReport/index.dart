@@ -6,6 +6,7 @@ import 'package:stocks_news_new/ui/base/app_bar.dart';
 import 'package:stocks_news_new/ui/base/scaffold.dart';
 import 'package:stocks_news_new/ui/base/stock/add.dart';
 import 'package:stocks_news_new/widgets/custom/base_loader_container.dart';
+import 'package:stocks_news_new/widgets/custom/refresh_indicator.dart';
 
 import '../../../../models/lock.dart';
 import '../../../../screens/stockDetail/stockDetailTabs/pdfViewer/pdf_viewer_widget.dart';
@@ -53,31 +54,36 @@ class _MorningStarReportsIndexState extends State<MorningStarReportsIndex> {
                   isLoading: value.isLoading,
                   error: value.error,
                   showPreparingText: true,
-                  child: ListView.separated(
-                    itemBuilder: (context, index) {
-                      BaseTickerRes? data = value.data?.data?[index];
-                      if (data == null) {
-                        return SizedBox();
-                      }
-                      return BaseStockAddItem(
-                        data: data,
-                        index: index,
-                        slidable: false,
-                        onTap: (p0) {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (_) =>
-                                  PdfViewerWidget(url: p0.pdfUrl ?? ''),
-                            ),
-                          );
-                        },
-                      );
+                  child: CommonRefreshIndicator(
+                    onRefresh: () async {
+                      value.getMorningStarReports();
                     },
-                    separatorBuilder: (context, index) {
-                      return BaseListDivider();
-                    },
-                    itemCount: value.data?.data?.length ?? 0,
+                    child: ListView.separated(
+                      itemBuilder: (context, index) {
+                        BaseTickerRes? data = value.data?.data?[index];
+                        if (data == null) {
+                          return SizedBox();
+                        }
+                        return BaseStockAddItem(
+                          data: data,
+                          index: index,
+                          slidable: false,
+                          onTap: (p0) {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) =>
+                                    PdfViewerWidget(url: p0.pdfUrl ?? ''),
+                              ),
+                            );
+                          },
+                        );
+                      },
+                      separatorBuilder: (context, index) {
+                        return BaseListDivider();
+                      },
+                      itemCount: value.data?.data?.length ?? 0,
+                    ),
                   ),
                 ),
         );

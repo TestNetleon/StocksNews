@@ -6,6 +6,7 @@ import 'package:stocks_news_new/managers/stockDetail/stock.detail.dart';
 import 'package:stocks_news_new/managers/user.dart';
 import 'package:stocks_news_new/models/stockDetail/overview.dart';
 import 'package:stocks_news_new/ui/base/button.dart';
+import 'package:stocks_news_new/ui/subscription/manager.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -160,7 +161,11 @@ class _SDMorningStarLockState extends State<SDMorningStarLock> {
                         textSize: 15,
                         fontBold: true,
                         radius: 30,
-                        onPressed: () {},
+                        onPressed: () {
+                          context
+                              .read<SubscriptionManager>()
+                              .startProcess(viewPlans: true);
+                        },
                         textAlign: TextAlign.start,
                         text: "Become an Elite Member",
                         margin: const EdgeInsets.only(top: 10),
@@ -175,7 +180,11 @@ class _SDMorningStarLockState extends State<SDMorningStarLock> {
                         textSize: 15,
                         fontBold: true,
                         radius: 30,
-                        onPressed: () {},
+                        onPressed: () {
+                          context
+                              .read<SubscriptionManager>()
+                              .startProcess(viewPlans: true);
+                        },
                         textAlign: TextAlign.start,
                         text: "Upgrade Membership",
                         margin: const EdgeInsets.only(top: 10),

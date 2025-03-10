@@ -96,6 +96,8 @@ class _PdfViewerWidgetState extends State<PdfViewerWidget> {
 
   @override
   Widget build(BuildContext context) {
+    // print('${widget.url}');
+
     return BaseScaffold(
       appBar: const BaseAppBar(showBack: true),
       body: isLoading
@@ -104,7 +106,7 @@ class _PdfViewerWidgetState extends State<PdfViewerWidget> {
               height: double.infinity,
               width: double.infinity,
               child: PDFView(
-                filePath: localPath!,
+                filePath: localPath ?? '',
                 enableSwipe: true,
                 swipeHorizontal: false,
                 autoSpacing: true,
