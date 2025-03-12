@@ -4,7 +4,10 @@ import 'package:stocks_news_new/ui/tabs/tools/scanner/manager/scanner.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
+import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
+
+import 'filters.dart';
 
 class MarketSortingHeader extends StatefulWidget {
   const MarketSortingHeader({
@@ -59,19 +62,38 @@ class _MarketSortingHeaderState extends State<MarketSortingHeader> {
                     ),
                   ),
                   SpacerHorizontal(width: 20),
-                  InkWell(
-                    onTap: () {
-                      ScannerManager manager = context.read<ScannerManager>();
-                      manager.sorting();
-                    },
-                    child: Image.asset(
-                      Images.marketFilter,
-                      height: 19,
-                      width: 19,
-                      color: value.sortingApplied
-                          ? ThemeColors.accent
-                          : ThemeColors.neutral40,
-                    ),
+                  Row(
+                    children: [
+                      Visibility(
+                        visible: value.selectedIndex == 0,
+                        child: InkWell(
+                          onTap: () {
+                            Navigator.push(
+                                context, createRoute(ScannerFilters()));
+                          },
+                          child: Image.asset(
+                            Images.filter,
+                            height: 19,
+                            width: 19,
+                            color: ThemeColors.neutral40,
+                          ),
+                        ),
+                      ),
+                      SpacerHorizontal(width: 20),
+                      InkWell(
+                        onTap: () {
+                          value.sorting();
+                        },
+                        child: Image.asset(
+                          Images.marketFilter,
+                          height: 19,
+                          width: 19,
+                          color: value.sortingApplied
+                              ? ThemeColors.accent
+                              : ThemeColors.neutral40,
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),

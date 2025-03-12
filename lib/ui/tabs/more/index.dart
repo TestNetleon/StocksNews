@@ -41,11 +41,6 @@ class MoreIndex extends StatelessWidget {
               padding: EdgeInsets.all(Pad.pad16),
               child: Column(
                 children: [
-                  // Image.asset(
-                  //   Images.userPlaceholderNew,
-                  //   width: 64,
-                  //   height: 64,
-                  // ),
                   Container(
                     margin: EdgeInsets.only(right: 10, bottom: 0),
                     child: user?.image == null || user?.image == ''

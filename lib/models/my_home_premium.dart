@@ -13,9 +13,10 @@ class MyHomePremiumRes {
   final PoliticianTradeListRes? congressionalStocks;
   final HomeNewsRes? featuredNews;
   final HomeNewsRes? financialNews;
+  final HomeNewsRes? recentNews;
 
   MyHomePremiumRes({
-    // this.insiderTrading,
+    this.recentNews,
     this.congressionalStocks,
     this.featuredNews,
     this.financialNews,
@@ -23,6 +24,9 @@ class MyHomePremiumRes {
 
   factory MyHomePremiumRes.fromJson(Map<String, dynamic> json) =>
       MyHomePremiumRes(
+        recentNews: json["recent_news"] == null
+            ? null
+            : HomeNewsRes.fromJson(json["recent_news"]),
         featuredNews: json["featured_news"] == null
             ? null
             : HomeNewsRes.fromJson(json["featured_news"]),
@@ -41,6 +45,8 @@ class MyHomePremiumRes {
         "featured_news": featuredNews?.toJson(),
         "financial_news": financialNews?.toJson(),
         // "insider_trading": insiderTrading?.toJson(),
+        "recent_news": recentNews?.toJson(),
+
         "congressional_stocks": congressionalStocks?.toJson(),
       };
 }

@@ -31,7 +31,7 @@ class _ReferralIndexState extends State<ReferralIndex> {
         showBack: true,
         title: tabs[_selectedScreen].title,
         showSearch: true,
-        showActionNotification: true,
+        showNotification: true,
       ),
       body: Column(
         children: [

@@ -12,7 +12,6 @@ MyHomeRes myHomeResFromJson(String str) => MyHomeRes.fromJson(json.decode(str));
 String myHomeResToJson(MyHomeRes data) => json.encode(data.toJson());
 
 class MyHomeRes {
-  final HomeNewsRes? recentNews;
   final List<BaseTickerRes>? tickers;
   final HomeLoginBoxRes? loginBox;
   final UserRes? user;
@@ -22,7 +21,6 @@ class MyHomeRes {
   final ScannerPortRes? scannerPort;
 
   MyHomeRes({
-    this.recentNews,
     this.tickers,
     this.loginBox,
     this.user,
@@ -37,9 +35,6 @@ class MyHomeRes {
         loginBox: json["login_box"] == null
             ? null
             : HomeLoginBoxRes.fromJson(json["login_box"]),
-        recentNews: json["recent_news"] == null
-            ? null
-            : HomeNewsRes.fromJson(json["recent_news"]),
         tickers: json["trending"] == null
             ? null
             : List<BaseTickerRes>.from(
@@ -60,7 +55,6 @@ class MyHomeRes {
         "login_box": loginBox?.toJson(),
         "banner_blog": bannerBlog?.toJson(),
         "user": user?.toJson(),
-        "recent_news": recentNews?.toJson(),
         "trending": tickers == null
             ? null
             : List<dynamic>.from(tickers!.map((x) => x.toJson())),

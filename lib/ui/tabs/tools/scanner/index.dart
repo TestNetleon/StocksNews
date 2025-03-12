@@ -2,7 +2,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/models/market/market_res.dart';
-import 'package:stocks_news_new/ui/base/app_bar.dart';
 import 'package:stocks_news_new/ui/base/button.dart';
 import 'package:stocks_news_new/ui/base/lock.dart';
 import 'package:stocks_news_new/ui/base/scaffold.dart';
@@ -15,10 +14,8 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/custom/base_loader_container.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
-
 import '../../../base/common_tab.dart';
 import 'models/scanner_port.dart';
-import 'screens/extra/filters.dart';
 import 'screens/extra/header.dart';
 import 'screens/extra/sorting.dart';
 import 'screens/extra/sub_tabs.dart';
@@ -34,7 +31,8 @@ class ToolsScannerIndex extends StatefulWidget {
   State<ToolsScannerIndex> createState() => _ToolsScannerIndexState();
 }
 
-class _ToolsScannerIndexState extends State<ToolsScannerIndex> {
+class _ToolsScannerIndexState extends State<ToolsScannerIndex>
+    with WidgetsBindingObserver {
   List<MarketResData> tabs = [
     MarketResData(title: 'SCANNER', slug: 'slug'),
     MarketResData(title: 'GAINERS', slug: 'gainers'),
@@ -47,8 +45,27 @@ class _ToolsScannerIndexState extends State<ToolsScannerIndex> {
     setState(() {});
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      WidgetsBinding.instance.addObserver(this);
       context.read<ScannerManager>().getScannerPorts(reset: true);
     });
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    Utils().showLog('State!! $state');
+
+    if (state == AppLifecycleState.inactive ||
+        state == AppLifecycleState.paused) {
+      //
+    } else if (state == AppLifecycleState.resumed) {
+      //
+    }
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
   }
 
   @override
@@ -57,7 +74,6 @@ class _ToolsScannerIndexState extends State<ToolsScannerIndex> {
       builder: (context, value, child) {
         bool startStream =
             value.portData?.port?.checkMarketOpenApi?.startStreaming == true;
-
         CheckMarketOpenRes? checkMarketOpenApi =
             value.portData?.port?.checkMarketOpenApi;
 
@@ -73,14 +89,6 @@ class _ToolsScannerIndexState extends State<ToolsScannerIndex> {
             losersManager.stopListeningPorts();
           },
           child: BaseScaffold(
-            appBar: BaseAppBar(
-              showBack: true,
-              showFilter: value.selectedIndex != 0
-                  ? null
-                  : () {
-                      Navigator.push(context, createRoute(ScannerFilters()));
-                    },
-            ),
             body: Stack(
               children: [
                 BaseLoaderContainer(

@@ -17,7 +17,9 @@ import 'package:stocks_news_new/service/revenue_cat.dart';
 import 'package:stocks_news_new/socket/socket.dart';
 import 'package:stocks_news_new/ui/tabs/home/scanner/manager/gainers.dart';
 import 'package:stocks_news_new/ui/tabs/market/index.dart';
-import 'package:stocks_news_new/ui/tabs/more/index.dart';
+import 'package:stocks_news_new/ui/tabs/tools/scanner/manager/gainers.dart';
+import 'package:stocks_news_new/ui/tabs/tools/scanner/manager/losers.dart';
+import 'package:stocks_news_new/ui/tabs/tools/scanner/manager/scanner.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -28,6 +30,7 @@ import '../../screens/offerMembership/christmas/index.dart';
 import '../../utils/utils.dart';
 import 'home/home.dart';
 import 'signals/signals.dart';
+import 'tools/scanner/index.dart';
 import 'tools/tools.dart';
 
 class Tabs extends StatefulWidget {
@@ -139,25 +142,16 @@ class _TabsState extends State<Tabs> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBarHome(
-      //   canSearch: true,
-      //   showTrailing: true,
-      //   isHome: _selectedIndex == 0,
-      // ),
-      // drawer: const BaseDrawer(),
-      // body: Screens.screens(widget.trendingIndex).elementAt(_selectedIndex),
       body: Screens.screens(_selectedIndex, widget.childIndex)
           .elementAt(_selectedIndex),
       bottomNavigationBar: BottomNavigationBar(
         unselectedItemColor: ThemeColors.neutral60,
         selectedItemColor: ThemeColors.black,
-        // backgroundColor: ThemeColors.tabBack,
         backgroundColor: ThemeColors.white,
         showUnselectedLabels: true,
         showSelectedLabels: true,
         currentIndex: _selectedIndex,
         type: BottomNavigationBarType.fixed,
-
         unselectedLabelStyle:
             styleBaseRegular(color: ThemeColors.white, fontSize: 14),
         selectedLabelStyle: styleBaseBold(fontSize: 14),
@@ -177,25 +171,30 @@ class _TabsState extends State<Tabs> {
             selected: _selectedIndex == 0,
           ),
           bottomTab(
+            icon: Images.bottomHome,
+            label: "Scanner",
+            selected: _selectedIndex == 1,
+          ),
+          bottomTab(
             icon: Images.bottomMarket,
             label: "Market",
-            selected: _selectedIndex == 1,
+            selected: _selectedIndex == 2,
           ),
           bottomTab(
             icon: Images.bottomSignals,
             label: "Signals",
-            selected: _selectedIndex == 2,
+            selected: _selectedIndex == 3,
           ),
           bottomTab(
             icon: Images.bottomTools,
             label: "Tools",
-            selected: _selectedIndex == 3,
-          ),
-          bottomTab(
-            icon: Images.bottomMore,
-            label: "More",
             selected: _selectedIndex == 4,
           ),
+          // bottomTab(
+          //   icon: Images.bottomMore,
+          //   label: "More",
+          //   selected: _selectedIndex == 5,
+          // ),
         ],
       ),
     );
@@ -206,8 +205,18 @@ class _TabsState extends State<Tabs> {
     ToolsManager toolsManager = context.read<ToolsManager>();
     SignalsManager signalsManager = context.read<SignalsManager>();
     HomeGainersManager homeGainers = context.read<HomeGainersManager>();
+    ScannerManager scannerManager = context.read<ScannerManager>();
+    ScannerGainersManager gainersManager =
+        context.read<ScannerGainersManager>();
+    ScannerLosersManager losersManager = context.read<ScannerLosersManager>();
 
     if (currentIndex != 0) homeGainers.stopListeningPorts();
+
+    if (currentIndex != 1) {
+      scannerManager.stopListeningPorts();
+      gainersManager.stopListeningPorts();
+      losersManager.stopListeningPorts();
+    }
 
     try {
       if (Platform.isAndroid) {
@@ -234,21 +243,23 @@ class _TabsState extends State<Tabs> {
         break;
 
       case 2:
-        signalsManager.onScreenChange(-1);
         break;
 
       case 3:
-        SocketService.instance.emitUpdateUser(SocketEnum.tools);
+        signalsManager.onScreenChange(-1);
+        break;
 
+      case 4:
+        SocketService.instance.emitUpdateUser(SocketEnum.tools);
         if (toolsManager.data == null) {
           toolsManager.getToolsData();
         }
         break;
 
-      case 4:
+      case 5:
         break;
 
-      case 5:
+      case 6:
         break;
     }
   }
@@ -260,20 +271,20 @@ void _compareStocks(BuildContext context) {
   if (provider.user != null && compareProvider.company.isEmpty) {
     compareProvider.getCompareStock();
   }
-  // AmplitudeService.logUserInteractionEvent(type: 'Compare Stocks');
 }
 
 class Screens {
   static List<Widget> screens(int? trendingIndex, int? childIndex) {
     return <Widget>[
       HomeIndex(),
+      ToolsScannerIndex(),
       MarketIndex(
         screenIndex: 0,
         marketIndex: childIndex ?? 0,
       ),
       SignalsIndex(),
       ToolsIndex(),
-      MoreIndex(),
+      // MoreIndex(),
     ];
   }
 }

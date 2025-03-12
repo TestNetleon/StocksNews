@@ -14,34 +14,27 @@ import '../tabs/more/news/detail.dart';
 import 'search/base_search.dart';
 
 class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
-  final bool isHome,
-      showBack,
-      showSearch,
-      showNotification,
-      showActionNotification;
+  final bool isHome, showBack, showSearch, showNotification, showDrawer;
   final Widget? searchFieldWidget;
-  final bool showClose;
   final String? title;
   final Function()? onSaveClick;
   final Function()? shareURL;
   final double toolbarHeight;
   final bool showLogo;
-  final Function()? leadingFilterClick, showFilter;
+  final Function()? leadingFilterClick;
 
   const BaseAppBar({
     super.key,
+    this.showDrawer = true,
     this.toolbarHeight = 56,
     this.searchFieldWidget,
     this.isHome = false,
     this.showBack = false,
-    this.showFilter,
     this.title,
     this.showSearch = false,
     this.showNotification = false,
-    this.showActionNotification = false,
     this.onSaveClick,
     this.shareURL,
-    this.showClose = false,
     this.showLogo = true,
     this.leadingFilterClick,
   });
@@ -112,8 +105,6 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
                             }
                           },
                         ),
-                      if (showNotification)
-                        LeadingNotification(showIndicator: true),
                       if (leadingFilterClick != null)
                         ActionButton(
                           icon: Images.marketFilter,
@@ -121,12 +112,32 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
                           padding: EdgeInsets.all(8),
                           onTap: leadingFilterClick!,
                         ),
+                      if (showDrawer && !showBack)
+                        Padding(
+                          padding: const EdgeInsets.only(left: 5),
+                          child: GestureDetector(
+                            onTap: () {
+                              closeKeyboard();
+                              Scaffold.of(context).openDrawer();
+                            },
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(Pad.pad999),
+                              child: Container(
+                                height: 30,
+                                width: 30,
+                                decoration:
+                                    BoxDecoration(shape: BoxShape.circle),
+                                child: Image.asset(Images.userPlaceholderNew),
+                              ),
+                            ),
+                          ),
+                        ),
                     ],
                   ),
                   // Actions
                   Row(
                     children: [
-                      if (showActionNotification)
+                      if (showNotification)
                         LeadingNotification(showIndicator: true),
                       if (showSearch)
                         ActionButton(
@@ -167,15 +178,6 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
                             size: 38,
                             icon: Images.shareURL,
                             onTap: shareURL!,
-                          ),
-                        ),
-                      if (showFilter != null)
-                        Padding(
-                          padding: const EdgeInsets.only(right: 8),
-                          child: ActionButton(
-                            size: 19,
-                            icon: Images.filter,
-                            onTap: showFilter!,
                           ),
                         ),
                       if (onSaveClick != null)

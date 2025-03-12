@@ -71,7 +71,7 @@ class HomeGainersStream {
         try {
           // TO STOP MIXING streaming because streaming not closing at all
 
-          Utils().showLog("--- ${sseClient.url}");
+          // Utils().showLog("--- ${sseClient.url}");
 
           final List<dynamic> decodedResponse = jsonDecode(eventData);
           await manager.updateData(liveScannerResFromJson(decodedResponse));

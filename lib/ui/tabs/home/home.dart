@@ -6,6 +6,7 @@ import 'package:stocks_news_new/ui/base/base_scroll.dart';
 import 'package:stocks_news_new/ui/base/heading.dart';
 import 'package:stocks_news_new/ui/tabs/home/blogItem/blog_item_home.dart';
 import 'package:stocks_news_new/ui/tabs/home/insiderTrades/insider_trades.dart';
+import 'package:stocks_news_new/ui/tabs/more/index.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/custom/base_loader_container.dart';
@@ -13,7 +14,6 @@ import 'package:visibility_detector/visibility_detector.dart';
 import '../../base/scaffold.dart';
 import 'home_premium.dart';
 import 'home_trending.dart';
-import 'news/news.dart';
 import 'scanner/index.dart';
 
 class HomeIndex extends StatefulWidget {
@@ -29,6 +29,7 @@ class _HomeIndexState extends State<HomeIndex> {
     MyHomeManager manager = context.watch<MyHomeManager>();
 
     return BaseScaffold(
+      drawer: MoreIndex(),
       appBar: BaseAppBar(
         showNotification: true,
         showSearch: true,
@@ -86,7 +87,6 @@ class _HomeIndexState extends State<HomeIndex> {
                 child: HomePremiumIndex(),
               ),
             ),
-            HomeNewsIndex(newsData: manager.data?.recentNews),
           ],
         ),
       ),
