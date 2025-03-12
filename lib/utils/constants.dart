@@ -240,6 +240,7 @@ class Images {
   static const String ic_link = '${base}ic_link.png';
   static const String filter = '${base}filter.png';
   static const String msReport = '${base}ms_report.png';
+  static const String theme = '${base}theme.png';
 
   //MARK: New UI END
   //-------------------------------------------------------------------------------

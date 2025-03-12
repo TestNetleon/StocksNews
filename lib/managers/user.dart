@@ -107,6 +107,7 @@ class UserManager extends ChangeNotifier {
     UserManager manager = navigatorKey.currentContext!.read<UserManager>();
     await manager.askLoginScreen();
     if (manager.user == null) return;
+    Navigator.pop(navigatorKey.currentContext!);
     await Navigator.pushNamed(
       navigatorKey.currentContext!,
       UpdatePersonalDetailIndex.path,
@@ -116,6 +117,7 @@ class UserManager extends ChangeNotifier {
   Future navigateToAlerts() async {
     await askLoginScreen();
     if (_user == null) return;
+    Navigator.pop(navigatorKey.currentContext!);
     await Navigator.pushNamed(
       navigatorKey.currentContext!,
       AlertIndex.path,
@@ -125,7 +127,7 @@ class UserManager extends ChangeNotifier {
   Future navigateToWatchList() async {
     await askLoginScreen();
     if (_user == null) return;
-
+    Navigator.pop(navigatorKey.currentContext!);
     await Navigator.pushNamed(
       navigatorKey.currentContext!,
       WatchListIndex.path,
@@ -134,9 +136,8 @@ class UserManager extends ChangeNotifier {
 
   void navigateToMySubscription({bool viewPlans = true}) async {
     await askLoginScreen();
-    if (_user == null) {
-      return;
-    }
+    if (_user == null) return;
+    Navigator.pop(navigatorKey.currentContext!);
     SubscriptionManager manager =
         navigatorKey.currentContext!.read<SubscriptionManager>();
     manager.startProcess(viewPlans: viewPlans);
@@ -144,9 +145,8 @@ class UserManager extends ChangeNotifier {
 
   void navigateToReferral() async {
     await askLoginScreen();
-    if (_user == null) {
-      return;
-    }
+    if (_user == null) return;
+    Navigator.pop(navigatorKey.currentContext!);
     await Navigator.pushNamed(
       navigatorKey.currentContext!,
       ReferralIndex.path,
@@ -155,39 +155,43 @@ class UserManager extends ChangeNotifier {
 
   void navigateToBillionaires() async {
     await askLoginScreen();
-    if (_user == null) {
-      return;
-    }
+    if (_user == null) return;
+    Navigator.pop(navigatorKey.currentContext!);
     Navigator.pushNamed(navigatorKey.currentContext!, BillionairesIndex.path);
   }
 
   void navigateToNotificationSettings() {
+    Navigator.pop(navigatorKey.currentContext!);
     Navigator.pushNamed(
         navigatorKey.currentContext!, NotificationSettings.path);
   }
 
   void navigateToNews() {
+    Navigator.pop(navigatorKey.currentContext!);
     Navigator.pushNamed(navigatorKey.currentContext!, CategoriesNewsIndex.path);
   }
 
   void navigateToBlogs() {
+    Navigator.pop(navigatorKey.currentContext!);
     Navigator.pushNamed(navigatorKey.currentContext!, BlogsIndex.path);
   }
 
   void navigateToFaq() {
+    Navigator.pop(navigatorKey.currentContext!);
     Navigator.pushNamed(navigatorKey.currentContext!, FaqIndex.path);
   }
 
   Future navigateToHelpDesk() async {
     askLoginScreen();
     if (_user == null) return;
+    Navigator.pop(navigatorKey.currentContext!);
     Navigator.pushNamed(navigatorKey.currentContext!, HelpDeskIndex.path);
   }
 
   Future navigateToFeedback() async {
     askLoginScreen();
     if (_user == null) return;
-
+    Navigator.pop(navigatorKey.currentContext!);
     Navigator.pushNamed(navigatorKey.currentContext!, FeedbackIndex.path);
   }
 

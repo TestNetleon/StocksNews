@@ -163,6 +163,16 @@ class MoreIndex extends StatelessWidget {
                 manager.navigateToBlogs();
               },
             ),
+            BaseHeading(
+              margin: EdgeInsets.only(left: Pad.pad16, top: Pad.pad8),
+              title: "Theme",
+              titleStyle: styleBaseBold(fontSize: 20),
+            ),
+            MoreItem(
+              icon: Images.theme,
+              label: "Change Theme",
+              onTap: () {},
+            ),
             // BaseHeading(
             //   margin: EdgeInsets.only(left: Pad.pad16, top: Pad.pad20),
             //   title: "Settings",
