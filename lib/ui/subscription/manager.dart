@@ -47,7 +47,7 @@ class SubscriptionManager extends ChangeNotifier {
 
 //MARK: Start Process
   Future startProcess({
-    viewPlans = false,
+    viewPlans = true,
     SubscriptionDefault? defaultSelected,
   }) async {
     SubscriptionService instance = SubscriptionService.instance;

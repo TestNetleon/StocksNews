@@ -42,7 +42,11 @@ class OnboardingSlideItem extends StatelessWidget {
               ),
             ),
             SpacerVertical(height: 20),
-            CachedNetworkImagesWidget(data.image),
+            CachedNetworkImagesWidget(
+              data.image,
+              showLoading: true,
+              loadingColor: Colors.transparent,
+            ),
           ],
         ),
       ),

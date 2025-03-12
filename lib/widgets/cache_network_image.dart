@@ -14,6 +14,7 @@ class CachedNetworkImagesWidget extends StatelessWidget {
     this.extraSpacing = false,
     this.showLoading = false,
     this.placeHolder,
+    this.loadingColor,
     this.color,
   });
 
@@ -22,6 +23,7 @@ class CachedNetworkImagesWidget extends StatelessWidget {
   final BoxFit fit;
   final bool extraSpacing;
   final bool showLoading;
+  final Color? loadingColor;
   final String? placeHolder;
   final Color? color;
 
@@ -42,7 +44,7 @@ class CachedNetworkImagesWidget extends StatelessWidget {
                 )
               : Center(
                   child: CircularProgressIndicator(
-                    color: ThemeColors.blackShade.shade600,
+                    color: loadingColor ?? ThemeColors.black,
                   ),
                 )
           : Padding(

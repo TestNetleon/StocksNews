@@ -11,6 +11,8 @@ String subscriptionResToJson(SubscriptionRes data) =>
 class SubscriptionRes {
   final String? title;
   final String? btn;
+  final bool? showRestore;
+
   final NoSubscriptionRes? noSubscription;
   final List<ProductPlanRes>? monthlyPlan;
   final List<ProductPlanRes>? annualPlan;
@@ -18,6 +20,7 @@ class SubscriptionRes {
   SubscriptionRes({
     this.title,
     this.btn,
+    this.showRestore,
     this.noSubscription,
     this.monthlyPlan,
     this.annualPlan,
@@ -26,6 +29,7 @@ class SubscriptionRes {
   factory SubscriptionRes.fromJson(Map<String, dynamic> json) =>
       SubscriptionRes(
         title: json["title"],
+        showRestore: json['show_restore'],
         btn: json["btn"],
         noSubscription: json["no_subscription"] == null
             ? null
@@ -43,6 +47,7 @@ class SubscriptionRes {
   Map<String, dynamic> toJson() => {
         "title": title,
         "btn": btn,
+        'show_restore': showRestore,
         "no_subscription": noSubscription?.toJson(),
         "monthly": monthlyPlan == null
             ? []

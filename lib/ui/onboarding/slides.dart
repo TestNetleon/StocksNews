@@ -102,7 +102,7 @@ class _OnboardingSlidesState extends State<OnboardingSlides> {
                 radius: 8,
                 onPressed: () {
                   UserManager manager = context.read<UserManager>();
-                  manager.navigateToMySubscription(viewPlans: true);
+                  manager.navigateToMySubscription();
                 },
                 color: ThemeColors.primary100,
                 textColor: ThemeColors.black,

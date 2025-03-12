@@ -50,7 +50,7 @@ class BaseTickerAppBar extends StatelessWidget implements PreferredSizeWidget {
       if (userManager.user != null) {
         await manager.requestAlertLock(symbol: data?.symbol ?? "");
         if (manager.checkAlertLock?.lockInfo != null) {
-          SubscriptionManager().startProcess(viewPlans: true);
+          SubscriptionManager().startProcess();
         } else if (manager.checkAlertLock?.alertData != null) {
           _showAlertBottomSheet();
         } else {
@@ -86,7 +86,7 @@ class BaseTickerAppBar extends StatelessWidget implements PreferredSizeWidget {
       if (userManager.user != null) {
         await manager.requestAlertLock(symbol: data?.symbol ?? "");
         if (manager.checkAlertLock?.lockInfo != null) {
-          SubscriptionManager().startProcess(viewPlans: true);
+          SubscriptionManager().startProcess();
         } else if (manager.checkAlertLock?.alertData != null) {
           requestAddToWatchlist(navigatorKey.currentContext!);
         } else {
@@ -142,9 +142,8 @@ class BaseTickerAppBar extends StatelessWidget implements PreferredSizeWidget {
                             splashLoaded) {
                           Navigator.pop(navigatorKey.currentContext!);
                         } else {
-                          Navigator.popUntil(
-                              navigatorKey.currentContext!,
-                                  (route) => route.isFirst);
+                          Navigator.popUntil(navigatorKey.currentContext!,
+                              (route) => route.isFirst);
                           Navigator.pushReplacementNamed(
                               navigatorKey.currentContext!, Tabs.path);
                           popHome = false;
@@ -155,9 +154,8 @@ class BaseTickerAppBar extends StatelessWidget implements PreferredSizeWidget {
                             splashLoaded) {
                           Navigator.pop(navigatorKey.currentContext!);
                         } else {
-                          Navigator.popUntil(
-                              navigatorKey.currentContext!,
-                                  (route) => route.isFirst);
+                          Navigator.popUntil(navigatorKey.currentContext!,
+                              (route) => route.isFirst);
                           Navigator.pushReplacementNamed(
                               navigatorKey.currentContext!, Tabs.path);
                           popHome = false;

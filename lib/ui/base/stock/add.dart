@@ -45,7 +45,7 @@ class BaseStockAddItem extends StatelessWidget {
       if (userManager.user != null) {
         await manager.requestAlertLock(symbol: data.symbol ?? "");
         if (manager.checkAlertLock?.lockInfo != null) {
-          SubscriptionManager().startProcess(viewPlans: true);
+          SubscriptionManager().startProcess();
         } else if (manager.checkAlertLock?.alertData != null) {
           _showAlertBottomSheet(context);
         } else {
@@ -79,7 +79,7 @@ class BaseStockAddItem extends StatelessWidget {
       if (userManager.user != null) {
         await manager.requestAlertLock(symbol: data.symbol ?? "");
         if (manager.checkAlertLock?.lockInfo != null) {
-          SubscriptionManager().startProcess(viewPlans: true);
+          SubscriptionManager().startProcess();
         } else if (manager.checkAlertLock?.alertData != null) {
           _requestAddToWatchlist(context);
         } else {

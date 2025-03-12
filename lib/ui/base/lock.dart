@@ -388,5 +388,5 @@ Future baseSUBSCRIBE(
 
   SubscriptionManager subscriptionManager =
       navigatorKey.currentContext!.read<SubscriptionManager>();
-  subscriptionManager.startProcess(viewPlans: true);
+  subscriptionManager.startProcess();
 }

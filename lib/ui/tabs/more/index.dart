@@ -123,7 +123,7 @@ class MoreIndex extends StatelessWidget {
               icon: Images.moreMySubscription,
               label: "My Subscription",
               onTap: () {
-                manager.navigateToMySubscription();
+                manager.navigateToMySubscription(viewPlans: false);
               },
             ),
             if (homeRes?.showCrypto == true)

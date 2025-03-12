@@ -802,7 +802,7 @@ void handleDeepLinkNavigation({
       Utils().showLog("Going to membership page-------");
       SubscriptionManager manager =
           navigatorKey.currentContext!.read<SubscriptionManager>();
-      manager.startProcess(viewPlans: true);
+      manager.startProcess();
 
       return;
     }
@@ -930,7 +930,7 @@ void handleNavigation({
     if (manager.user == null || manager.user?.membership?.purchased != 1) {
       SubscriptionManager manager =
           navigatorKey.currentContext!.read<SubscriptionManager>();
-      manager.startProcess(viewPlans: true);
+      manager.startProcess();
     } else {
       Navigator.popUntil(
           navigatorKey.currentContext!, (route) => route.isFirst);

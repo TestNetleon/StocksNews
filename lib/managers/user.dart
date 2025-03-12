@@ -132,7 +132,7 @@ class UserManager extends ChangeNotifier {
     );
   }
 
-  void navigateToMySubscription({bool viewPlans = false}) async {
+  void navigateToMySubscription({bool viewPlans = true}) async {
     await askLoginScreen();
     if (_user == null) {
       return;

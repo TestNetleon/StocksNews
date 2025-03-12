@@ -162,9 +162,7 @@ class _SDMorningStarLockState extends State<SDMorningStarLock> {
                         fontBold: true,
                         radius: 30,
                         onPressed: () {
-                          context
-                              .read<SubscriptionManager>()
-                              .startProcess(viewPlans: true);
+                          context.read<SubscriptionManager>().startProcess();
                         },
                         textAlign: TextAlign.start,
                         text: "Become an Elite Member",
@@ -181,9 +179,7 @@ class _SDMorningStarLockState extends State<SDMorningStarLock> {
                         fontBold: true,
                         radius: 30,
                         onPressed: () {
-                          context
-                              .read<SubscriptionManager>()
-                              .startProcess(viewPlans: true);
+                          context.read<SubscriptionManager>().startProcess();
                         },
                         textAlign: TextAlign.start,
                         text: "Upgrade Membership",
