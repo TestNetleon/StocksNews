@@ -29,23 +29,17 @@ import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/theme_input_field.dart';
 
-
 class RecurringContainer extends StatefulWidget {
   final num? editTradeID;
   final int? tickerID;
 
-  const RecurringContainer({
-    super.key,
-    this.editTradeID,
-    this.tickerID
-  });
+  const RecurringContainer({super.key, this.editTradeID, this.tickerID});
 
   @override
   State<RecurringContainer> createState() => _RecurringContainerState();
 }
 
 class _RecurringContainerState extends State<RecurringContainer> {
-
   TextEditingController controller = TextEditingController();
   TextEditingController selectedDateController = TextEditingController();
 
@@ -59,7 +53,6 @@ class _RecurringContainerState extends State<RecurringContainer> {
   DateTime? selectedDate;
   int? selectedOption;
 
-
   final List<DateTime> holidays = [
     DateTime(DateTime.now().year, 1, 1),
     DateTime(DateTime.now().year, 12, 25),
@@ -71,7 +64,8 @@ class _RecurringContainerState extends State<RecurringContainer> {
     PortfolioManager portfolioManager = context.read<PortfolioManager>();
     return date.weekday != DateTime.saturday &&
         date.weekday != DateTime.sunday &&
-        !portfolioManager.holidaysRes!.holidays!.any((holiday) => isSameDate(holiday, date));
+        !portfolioManager.holidaysRes!.holidays!
+            .any((holiday) => isSameDate(holiday, date));
   }
 
   DateTime getNextValidDate(DateTime date) {
@@ -98,7 +92,6 @@ class _RecurringContainerState extends State<RecurringContainer> {
         selectedDate = picked;
         selectedOption = null;
       });
-
     }
   }
 
@@ -114,7 +107,12 @@ class _RecurringContainerState extends State<RecurringContainer> {
     Utils().showLog("ORDER DATA => ${widget.tickerID}");
     selectedDate = getNextValidDate(DateTime.now());
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      _availableBalance = context.read<PortfolioManager>().userData?.userDataRes?.tradeBalance ?? 0;
+      _availableBalance = context
+              .read<PortfolioManager>()
+              .userData
+              ?.userDataRes
+              ?.tradeBalance ??
+          0;
       if (widget.editTradeID != null) {
         TsRecurringListRes? data = context
             .read<SRecurringManager>()
@@ -124,11 +122,16 @@ class _RecurringContainerState extends State<RecurringContainer> {
           setState(() {
             _currentText = (data.recurringAmount ?? 0).toString();
             controller.text = _currentText;
-            selectedOption = data.frequency=="market-day"?1:data.frequency=="weekly"?2:data.frequency=="bi-weekly"?3:4;
+            selectedOption = data.frequency == "market-day"
+                ? 1
+                : data.frequency == "weekly"
+                    ? 2
+                    : data.frequency == "bi-weekly"
+                        ? 3
+                        : 4;
           });
         }
       }
-
     });
   }
 
@@ -171,9 +174,15 @@ class _RecurringContainerState extends State<RecurringContainer> {
       final Map<String, dynamic> request = {
         //"token": navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
         "recurring_amount": controller.text,
-        "order_type":"RECURRING_ORDER",
-        "recurring_date":selectedDateController.text,
-        "recurring_frequency": selectedOption==1?"market-day":selectedOption==2?"weekly":selectedOption==3?"bi-weekly":"monthly",
+        "order_type": "RECURRING_ORDER",
+        "recurring_date": selectedDateController.text,
+        "recurring_frequency": selectedOption == 1
+            ? "market-day"
+            : selectedOption == 2
+                ? "weekly"
+                : selectedOption == 3
+                    ? "bi-weekly"
+                    : "monthly",
       };
       ApiResponse response = await manager.requestUpdateShare(
         id: widget.editTradeID ?? 0,
@@ -189,15 +198,17 @@ class _RecurringContainerState extends State<RecurringContainer> {
           invested: invested,
           date: response.data['result']['created_date'],
           selectedOption: selectedOption,
-          investedPrice:  controller.text.isNotEmpty?num.parse(controller.text):0,
+          investedPrice:
+              controller.text.isNotEmpty ? num.parse(controller.text) : 0,
           targetPrice: 0,
-          stopPrice:0,
-          limitPrice:0,
+          stopPrice: 0,
+          limitPrice: 0,
         );
 
-        Navigator.popUntil(navigatorKey.currentContext!, (route) => route.isFirst);
-        Navigator.pushNamed(navigatorKey.currentContext!, SimulatorIndex.path,arguments: {"initialIndex":3});
-
+        Navigator.popUntil(
+            navigatorKey.currentContext!, (route) => route.isFirst);
+        Navigator.pushNamed(navigatorKey.currentContext!, SimulatorIndex.path,
+            arguments: {"initialIndex": 3});
 
         _clear();
         await showCOrderSuccessSheet(order, ConditionType.recurringOrder);
@@ -210,27 +221,33 @@ class _RecurringContainerState extends State<RecurringContainer> {
       }
       return;
     }
-    if (invested > (portfolioManager.userData?.userDataRes?.tradeBalance ?? 0)) {
+    if (invested >
+        (portfolioManager.userData?.userDataRes?.tradeBalance ?? 0)) {
       popUpAlert(
         message: "Insufficient available balance to place this order.",
         title: "Alert",
         icon: Images.alertPopGIF,
       );
       return;
-    }
-    else {
+    } else {
       final Map<String, dynamic> request = {
         // "token":
         // navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
         "symbol": detailRes?.symbol,
         "recurring_amount": controller.text,
-        "order_type":"RECURRING_ORDER",
-        "recurring_date":selectedDateController.text,
-        "recurring_frequency": selectedOption==1?"market-day":selectedOption==2?"weekly":selectedOption==3?"bi-weekly":"monthly",
+        "order_type": "RECURRING_ORDER",
+        "recurring_date": selectedDateController.text,
+        "recurring_frequency": selectedOption == 1
+            ? "market-day"
+            : selectedOption == 2
+                ? "weekly"
+                : selectedOption == 3
+                    ? "bi-weekly"
+                    : "monthly",
       };
 
       ApiResponse response =
-      await manager.requestBuyShare(request, showProgress: true);
+          await manager.requestBuyShare(request, showProgress: true);
       Utils().showLog('~~~~~${response.status}~~~~');
       if (response.status) {
         context.read<SOpenManager>().getData();
@@ -243,14 +260,17 @@ class _RecurringContainerState extends State<RecurringContainer> {
           invested: invested,
           date: response.data['result']['created_date'],
           selectedOption: selectedOption,
-          investedPrice:  controller.text.isNotEmpty?num.parse(controller.text):0,
+          investedPrice:
+              controller.text.isNotEmpty ? num.parse(controller.text) : 0,
           targetPrice: 0,
-          stopPrice:0,
-          limitPrice:0,
+          stopPrice: 0,
+          limitPrice: 0,
         );
 
-        Navigator.popUntil(navigatorKey.currentContext!, (route) => route.isFirst);
-        Navigator.pushNamed(navigatorKey.currentContext!, SimulatorIndex.path,arguments: {"initialIndex":3});
+        Navigator.popUntil(
+            navigatorKey.currentContext!, (route) => route.isFirst);
+        Navigator.pushNamed(navigatorKey.currentContext!, SimulatorIndex.path,
+            arguments: {"initialIndex": 3});
 
         _clear();
 
@@ -319,26 +339,24 @@ class _RecurringContainerState extends State<RecurringContainer> {
             children: [
               Expanded(
                 child: CommonCard(
-                  child:
-                  Column(
+                  child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text(
                         'Balance',
-                        style: stylePTSansRegular(
+                        style: styleBaseRegular(
                           fontSize: 12,
                           color: ThemeColors.neutral80,
                         ),
                       ),
-                      SpacerVertical(height:  Pad.pad10),
+                      SpacerVertical(height: Pad.pad10),
                       Text(
-                        portfolioManager.userData?.userDataRes?.tradeBalance != null
+                        portfolioManager.userData?.userDataRes?.tradeBalance !=
+                                null
                             ? "\$${formatBalance(num.parse(portfolioManager.userData!.userDataRes!.tradeBalance.toCurrency()))}"
                             : '\$0',
-                        style: stylePTSansBold(
-                            fontSize: 16,
-                            color: ThemeColors.splashBG
-                        ),
+                        style: styleBaseBold(
+                            fontSize: 16, color: ThemeColors.splashBG),
                       ),
                     ],
                   ),
@@ -346,26 +364,22 @@ class _RecurringContainerState extends State<RecurringContainer> {
               ),
               SpacerHorizontal(width: Pad.pad10),
               Expanded(
-                child:
-                CommonCard(
-                  child:
-                  Column(
+                child: CommonCard(
+                  child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text(
                         'Order Value',
-                        style: stylePTSansRegular(
+                        style: styleBaseRegular(
                           fontSize: 12,
                           color: ThemeColors.neutral80,
                         ),
                       ),
-                      SpacerVertical(height:  Pad.pad10),
+                      SpacerVertical(height: Pad.pad10),
                       Text(
                         "\$${invested.toCurrency()}",
-                        style: stylePTSansBold(
-                            fontSize: 16,
-                            color: ThemeColors.splashBG
-                        ),
+                        style: styleBaseBold(
+                            fontSize: 16, color: ThemeColors.splashBG),
                       ),
                     ],
                   ),
@@ -384,47 +398,46 @@ class _RecurringContainerState extends State<RecurringContainer> {
             color: (invested > _availableBalance || invested == 0)
                 ? ThemeColors.neutral5
                 : ThemeColors.primary100,
-            onPressed:
-                (invested > _availableBalance || invested == 0) ? null : (){
-                  if (controller.text.isEmpty || num.parse(controller.text) == 0.0) {
-                    popUpAlert(
-                      message: "Recurring Investment Amount can't be empty",
-                      title: "Alert",
-                      icon: Images.alertPopGIF,
-                    );
-                    return;
-                  }
-                  else if (selectedOption==null) {
-                    popUpAlert(
-                      message: "Choose frequency",
-                      title: "Alert",
-                      icon: Images.alertPopGIF,
-                    );
-                    return;
-                  }
-                  else{
-                    _onTap();
-                  }
-                },
+            onPressed: (invested > _availableBalance || invested == 0)
+                ? null
+                : () {
+                    if (controller.text.isEmpty ||
+                        num.parse(controller.text) == 0.0) {
+                      popUpAlert(
+                        message: "Recurring Investment Amount can't be empty",
+                        title: "Alert",
+                        icon: Images.alertPopGIF,
+                      );
+                      return;
+                    } else if (selectedOption == null) {
+                      popUpAlert(
+                        message: "Choose frequency",
+                        title: "Alert",
+                        icon: Images.alertPopGIF,
+                      );
+                      return;
+                    } else {
+                      _onTap();
+                    }
+                  },
           ),
-
           Visibility(
-            visible: controller.text.isNotEmpty && (invested > _availableBalance),
+            visible:
+                controller.text.isNotEmpty && (invested > _availableBalance),
             child: Container(
               padding: EdgeInsets.only(top: 10),
               child: RichText(
                 text: TextSpan(
                   text: 'Your current balance is ',
-                  style: stylePTSansRegular(color: ThemeColors.neutral40),
+                  style: styleBaseRegular(color: ThemeColors.neutral40),
                   children: [
                     TextSpan(
                       text: _availableBalance.toFormattedPrice(),
-                      style: stylePTSansBold(
+                      style: styleBaseBold(
                           color: ThemeColors.splashBG, fontSize: 14),
                     ),
                     TextSpan(
-                        style: stylePTSansRegular(color: ThemeColors.neutral40),
-
+                        style: styleBaseRegular(color: ThemeColors.neutral40),
                         text:
                             '. You cannot purchase shares with an order value that exceeds your available balance.')
                   ],
@@ -432,16 +445,14 @@ class _RecurringContainerState extends State<RecurringContainer> {
               ),
             ),
           ),
-
         ],
       ),
     );
   }
 
   Future onTap({ConditionType? cType, StockType? selectedStock}) async {
-    openInfoSheet(cType,selectedStock);
+    openInfoSheet(cType, selectedStock);
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -449,7 +460,7 @@ class _RecurringContainerState extends State<RecurringContainer> {
     String formattedDate = DateFormat('yyyy-MM-dd').format(selectedDate!);
     String weekday = DateFormat('EEEE').format(selectedDate!);
     int dayOfMonth = selectedDate!.day;
-    selectedDateController.text=formattedDate;
+    selectedDateController.text = formattedDate;
 
     return Padding(
       padding: const EdgeInsets.fromLTRB(Dimen.padding, 0, Dimen.padding, 0),
@@ -462,53 +473,53 @@ class _RecurringContainerState extends State<RecurringContainer> {
                   const STopWidget(),
                   const SpacerVertical(height: 5),
                   GestureDetector(
-                    onTap: (){
-                      onTap(cType: ConditionType.recurringOrder,selectedStock: StockType.buy);
+                    onTap: () {
+                      onTap(
+                          cType: ConditionType.recurringOrder,
+                          selectedStock: StockType.buy);
                     },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
                           "RECURRING ORDER",
-                          style: stylePTSansBold(
+                          style: styleBaseBold(
                             color: ThemeColors.splashBG,
                             fontSize: 12,
                           ),
                         ),
                         SpacerHorizontal(width: 5),
-                        Icon(Icons.info_sharp,color: ThemeColors.splashBG,size: 18)
+                        Icon(Icons.info_sharp,
+                            color: ThemeColors.splashBG, size: 18)
                       ],
                     ),
                   ),
                   const SpacerVertical(height: 10),
                   Container(
                     width: 110,
-                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
-                        gradient:  LinearGradient(
+                        gradient: LinearGradient(
                           colors: [
                             ThemeColors.neutral40,
                             ThemeColors.splashBG,
                           ],
-
-                        )
-                    ),
+                        )),
                     child: Center(
                       child: Text(
                         "Buy",
-                        style:styleGeorgiaBold(
-                            fontSize: 15,
-                            color: ThemeColors.white
-                        ),
+                        style: styleBaseBold(
+                            fontSize: 15, color: ThemeColors.white),
                       ),
                     ),
                   ),
-
                   Visibility(child: const SpacerVertical(height: Pad.pad10)),
                   Text(
                     'Enter Recurring Investment Amount',
-                    style: styleGeorgiaRegular(color: ThemeColors.neutral80,fontSize: 18),
+                    style: styleBaseRegular(
+                        color: ThemeColors.neutral80, fontSize: 18),
                   ),
                   TextfieldTrade(
                     controller: controller,
@@ -525,25 +536,27 @@ class _RecurringContainerState extends State<RecurringContainer> {
                   SpacerVertical(),
                   ScreenTitle(
                     title: "Choose Recurring Investment Date",
-                    style: stylePTSansBold(color: ThemeColors.splashBG),
+                    style: styleBaseBold(color: ThemeColors.splashBG),
                     dividerPadding: EdgeInsets.symmetric(vertical: 5),
                   ),
                   GestureDetector(
                     onTap: selectDate,
                     child: ThemeInputField(
-                      cursorColor:ThemeColors.neutral6,
+                      cursorColor: ThemeColors.neutral6,
                       fillColor: ThemeColors.neutral5,
                       borderColor: ThemeColors.neutral5,
                       controller: selectedDateController,
                       placeholder: "mm-dd-yyyy",
                       keyboardType:
-                      TextInputType.numberWithOptions(decimal: true),
-                      style: stylePTSansRegular(color: ThemeColors.splashBG),
+                          TextInputType.numberWithOptions(decimal: true),
+                      style: styleBaseRegular(color: ThemeColors.splashBG),
                       editable: false,
                     ),
                   ),
                   RadioListTile<int>(
-                    title: Text("Every Market Day (Monday to Friday)",style:stylePTSansRegular(color:ThemeColors.splashBG,fontSize: 14)),
+                    title: Text("Every Market Day (Monday to Friday)",
+                        style: styleBaseRegular(
+                            color: ThemeColors.splashBG, fontSize: 14)),
                     value: 1,
                     groupValue: selectedOption,
                     onChanged: (int? value) {
@@ -555,19 +568,23 @@ class _RecurringContainerState extends State<RecurringContainer> {
                     contentPadding: EdgeInsets.zero,
                   ),
                   RadioListTile<int>(
-                    title: Text("Every Week (on $weekday)",style:stylePTSansRegular(color: ThemeColors.splashBG,fontSize: 14)),
+                    title: Text("Every Week (on $weekday)",
+                        style: styleBaseRegular(
+                            color: ThemeColors.splashBG, fontSize: 14)),
                     value: 2,
-                    groupValue:selectedOption,
+                    groupValue: selectedOption,
                     onChanged: (int? value) {
                       setState(() {
                         selectedOption = value;
                       });
                     },
-                    activeColor:ThemeColors.splashBG,
+                    activeColor: ThemeColors.splashBG,
                     contentPadding: EdgeInsets.zero,
                   ),
                   RadioListTile<int>(
-                    title: Text("Every Two Weeks (on $weekday)",style:stylePTSansRegular(color: ThemeColors.splashBG,fontSize: 14)),
+                    title: Text("Every Two Weeks (on $weekday)",
+                        style: styleBaseRegular(
+                            color: ThemeColors.splashBG, fontSize: 14)),
                     value: 3,
                     groupValue: selectedOption,
                     onChanged: (int? value) {
@@ -579,7 +596,9 @@ class _RecurringContainerState extends State<RecurringContainer> {
                     contentPadding: EdgeInsets.zero,
                   ),
                   RadioListTile<int>(
-                    title: Text("Every Month (on the $dayOfMonth)",style:stylePTSansRegular(color: ThemeColors.splashBG,fontSize: 14)),
+                    title: Text("Every Month (on the $dayOfMonth)",
+                        style: styleBaseRegular(
+                            color: ThemeColors.splashBG, fontSize: 14)),
                     value: 4,
                     groupValue: selectedOption,
                     onChanged: (int? value) {
@@ -588,11 +607,9 @@ class _RecurringContainerState extends State<RecurringContainer> {
                         selectedOption = value;
                       });
                     },
-                    activeColor:ThemeColors.splashBG,
+                    activeColor: ThemeColors.splashBG,
                     contentPadding: EdgeInsets.zero,
                   ),
-
-
                 ],
               ),
             ),

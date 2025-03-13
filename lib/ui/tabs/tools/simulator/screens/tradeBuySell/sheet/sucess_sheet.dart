@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stocks_news_new/ui/base/bottom_sheet.dart';
@@ -14,15 +13,13 @@ import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 Future showTsOrderSuccessSheet(
     SummaryOrderNew? order, StockType? selectedStock) async {
-
   await BaseBottomSheet().bottomSheet(
       barrierColor: ThemeColors.neutral5.withValues(alpha: 0.7),
-      child:SuccessTradeSheet(
+      child: SuccessTradeSheet(
         order: order,
         selectedStock: selectedStock,
         close: true,
-      )
-  );
+      ));
 /*  await showModalBottomSheet(
     useSafeArea: true,
     shape: const RoundedRectangleBorder(
@@ -89,24 +86,24 @@ class SuccessTradeSheet extends StatelessWidget {
                       padding: EdgeInsets.all(3.sp),
                       color: ThemeColors.neutral5,
                       child: CachedNetworkImagesWidget(
-                        order?.image?? "",
+                        order?.image ?? "",
                         height: 41,
                         width: 41,
                       ),
                     ),
                   ),
-
                   SpacerHorizontal(width: Pad.pad10),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                         order?.symbol ?? 'N/A',
-                        style: stylePTSansBold(fontSize: 16,color: ThemeColors.splashBG),
+                        style: styleBaseBold(
+                            fontSize: 16, color: ThemeColors.splashBG),
                       ),
                       Text(
                         order?.name ?? 'N/A',
-                        style: stylePTSansRegular(
+                        style: styleBaseRegular(
                           fontSize: 14,
                           color: ThemeColors.neutral40,
                         ),
@@ -118,7 +115,7 @@ class SuccessTradeSheet extends StatelessWidget {
               const SpacerVertical(height: Pad.pad24),
               Text(
                 'Order Detail',
-                style: styleGeorgiaBold(fontSize: 20,color: ThemeColors.splashBG),
+                style: styleBaseBold(fontSize: 20, color: ThemeColors.splashBG),
               ),
               const SpacerVertical(height: Pad.pad10),
               Row(
@@ -126,14 +123,14 @@ class SuccessTradeSheet extends StatelessWidget {
                 children: [
                   Text(
                     "QTY",
-                    style: stylePTSansBold(fontSize: 16,color: ThemeColors.splashBG),
-
+                    style: styleBaseBold(
+                        fontSize: 16, color: ThemeColors.splashBG),
                   ),
                   Flexible(
                     child: Text(
                       "${order?.shares?.toCurrency()}",
-                      style: stylePTSansRegular(fontSize: 16,color: ThemeColors.splashBG),
-
+                      style: styleBaseRegular(
+                          fontSize: 16, color: ThemeColors.splashBG),
                     ),
                   ),
                 ],
@@ -150,14 +147,14 @@ class SuccessTradeSheet extends StatelessWidget {
                   children: [
                     Text(
                       "Executed at",
-                      style: stylePTSansBold(fontSize: 16,color: ThemeColors.splashBG),
-
+                      style: styleBaseBold(
+                          fontSize: 16, color: ThemeColors.splashBG),
                     ),
                     Flexible(
                       child: Text(
                         "${order?.currentPrice?.toFormattedPrice()}",
-                        style: stylePTSansRegular(fontSize: 16,color: ThemeColors.splashBG),
-
+                        style: styleBaseRegular(
+                            fontSize: 16, color: ThemeColors.splashBG),
                       ),
                     ),
                   ],
@@ -178,15 +175,15 @@ class SuccessTradeSheet extends StatelessWidget {
                   children: [
                     Text(
                       "Order Value",
-                      style: stylePTSansBold(fontSize: 16,color: ThemeColors.splashBG),
-
+                      style: styleBaseBold(
+                          fontSize: 16, color: ThemeColors.splashBG),
                     ),
                     Flexible(
                       child: Text(
                         ((order?.currentPrice ?? 0) * (order?.shares ?? 0))
                             .toFormattedPrice(),
-                        style: stylePTSansRegular(fontSize: 16,color: ThemeColors.splashBG),
-
+                        style: styleBaseRegular(
+                            fontSize: 16, color: ThemeColors.splashBG),
                       ),
                     ),
                   ],
@@ -208,8 +205,8 @@ class SuccessTradeSheet extends StatelessWidget {
                       children: [
                         Text(
                           "Order Type",
-                          style: stylePTSansBold(fontSize: 16,color: ThemeColors.splashBG),
-
+                          style: styleBaseBold(
+                              fontSize: 16, color: ThemeColors.splashBG),
                         ),
                         Text(
                           selectedStock == StockType.buy
@@ -219,8 +216,8 @@ class SuccessTradeSheet extends StatelessWidget {
                                   : selectedStock == StockType.short
                                       ? 'Short'
                                       : "Buy To Cover",
-                          style: stylePTSansRegular(fontSize: 16,color: ThemeColors.splashBG),
-
+                          style: styleBaseRegular(
+                              fontSize: 16, color: ThemeColors.splashBG),
                         ),
                       ],
                     ),
@@ -241,13 +238,13 @@ class SuccessTradeSheet extends StatelessWidget {
                       children: [
                         Text(
                           "Order Date/Time",
-                          style: stylePTSansBold(fontSize: 16,color: ThemeColors.splashBG),
-
+                          style: styleBaseBold(
+                              fontSize: 16, color: ThemeColors.splashBG),
                         ),
                         Text(
                           order?.date ?? '',
-                          style: stylePTSansRegular(fontSize: 16,color: ThemeColors.splashBG),
-
+                          style: styleBaseRegular(
+                              fontSize: 16, color: ThemeColors.splashBG),
                         ),
                       ],
                     ),
@@ -269,7 +266,6 @@ class SuccessTradeSheet extends StatelessWidget {
               Navigator.pop(context);
               if (!close) {
                 Navigator.pushNamed(context, SimulatorIndex.path);
-
               }
             },
           ),

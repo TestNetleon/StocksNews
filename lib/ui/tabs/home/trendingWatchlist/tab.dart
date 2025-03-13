@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-
-import '../../../../utils/colors.dart';
-import '../../../../utils/constants.dart';
-import '../../../../utils/theme.dart';
+import 'package:stocks_news_new/utils/colors.dart';
+import 'package:stocks_news_new/utils/constants.dart';
 
 class HomeTopTabs extends StatelessWidget {
   final void Function(int)? onTap;
@@ -19,23 +17,29 @@ class HomeTopTabs extends StatelessWidget {
         Tab(
           child: Text(
             'Trending',
-            style: styleBaseSemiBold(
-              fontSize: 18,
-              color: selectedIndex == 0
-                  ? ThemeColors.black
-                  : ThemeColors.neutral20,
-            ),
+            // style: styleBaseSemiBold(
+            //   fontSize: 18,
+            //   color: selectedIndex == 0
+            //       ? ThemeColors.black
+            //       : ThemeColors.neutral20,
+            // ),
+            style: Theme.of(context).textTheme.headlineLarge?.copyWith(
+                  color: selectedIndex == 1 ? ThemeColors.neutral20 : null,
+                ),
           ),
         ),
         Tab(
           child: Text(
             'Watchlist',
-            style: styleBaseSemiBold(
-              fontSize: 18,
-              color: selectedIndex == 1
-                  ? ThemeColors.black
-                  : ThemeColors.neutral20,
-            ),
+            // style: styleBaseSemiBold(
+            //   fontSize: 18,
+            //   color: selectedIndex == 1
+            //       ? ThemeColors.black
+            //       : ThemeColors.neutral20,
+            // ),
+            style: Theme.of(context).textTheme.headlineLarge?.copyWith(
+                  color: selectedIndex == 0 ? ThemeColors.neutral20 : null,
+                ),
           ),
         ),
       ],

@@ -124,12 +124,12 @@ class _OpenOrderScreenState extends State<OpenOrderScreen> {
                   children: [
                     Text(
                       '${widget.data?.symbol}',
-                      style: styleGeorgiaBold(
+                      style: styleBaseBold(
                           color: ThemeColors.splashBG, fontSize: 16),
                     ),
                     Text(
                       '${widget.data?.name}',
-                      style: styleGeorgiaRegular(
+                      style: styleBaseRegular(
                           color: ThemeColors.neutral40, fontSize: 14),
                     ),
                   ],
@@ -143,7 +143,7 @@ class _OpenOrderScreenState extends State<OpenOrderScreen> {
                     visible: stock?.price != null,
                     child: Text(
                       '${stock?.price?.toFormattedPrice()}',
-                      style: styleGeorgiaBold(
+                      style: styleBaseBold(
                           color: ThemeColors.splashBG, fontSize: 16),
                     ),
                   ),
@@ -152,7 +152,7 @@ class _OpenOrderScreenState extends State<OpenOrderScreen> {
                         stock?.changePercentage != null,
                     child: Text(
                       '${stock?.change?.toFormattedPrice()} (${stock?.changePercentage?.toCurrency()}%)',
-                      style: styleGeorgiaRegular(
+                      style: styleBaseRegular(
                         color: (stock?.change ?? 0) >= 0
                             ? ThemeColors.success120
                             : ThemeColors.error120,
@@ -179,7 +179,7 @@ class _OpenOrderScreenState extends State<OpenOrderScreen> {
               SpacerVertical(height: Pad.pad5),
               Text(
                 "Actions",
-                style: stylePTSansBold(
+                style: styleBaseBold(
                   fontSize: 18,
                   color: ThemeColors.black,
                 ),

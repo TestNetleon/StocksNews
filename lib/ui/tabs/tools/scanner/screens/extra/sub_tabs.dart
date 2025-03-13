@@ -86,7 +86,7 @@ class _ScannerSubHeaderTabState extends State<ScannerSubHeaderTab> {
     //                         ),
     //                         Text(
     //                           "Percent Change",
-    //                           style: styleGeorgiaBold(fontSize: 14),
+    //                           style: styleBaseBold(fontSize: 14),
     //                         ),
     //                       ],
     //                     ),
@@ -123,7 +123,7 @@ class _ScannerSubHeaderTabState extends State<ScannerSubHeaderTab> {
     //                         ),
     //                         Text(
     //                           "Volume",
-    //                           style: styleGeorgiaBold(fontSize: 14),
+    //                           style: styleBaseBold(fontSize: 14),
     //                         ),
     //                       ],
     //                     ),

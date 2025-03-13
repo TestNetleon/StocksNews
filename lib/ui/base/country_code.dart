@@ -68,9 +68,9 @@ class _BaseCountryCodeState extends State<BaseCountryCode> {
             color: ThemeColors.white,
             borderRadius: BorderRadius.circular(8),
           ),
-          dialogTextStyle: styleGeorgiaBold(color: Colors.black),
-          textStyle: styleGeorgiaRegular(color: widget.textColor),
-          searchStyle: styleGeorgiaRegular(color: Colors.black),
+          dialogTextStyle: styleBaseBold(color: Colors.black),
+          textStyle: styleBaseRegular(color: widget.textColor),
+          searchStyle: styleBaseRegular(color: Colors.black),
           barrierColor: Colors.black26,
           searchDecoration: InputDecoration(
             iconColor: Colors.black,
@@ -82,7 +82,7 @@ class _BaseCountryCodeState extends State<BaseCountryCode> {
               color: Colors.black,
             ),
             filled: true,
-            hintStyle: stylePTSansRegular(color: Colors.grey),
+            hintStyle: styleBaseRegular(color: Colors.grey),
             hintText: "Search country",
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(4.0),

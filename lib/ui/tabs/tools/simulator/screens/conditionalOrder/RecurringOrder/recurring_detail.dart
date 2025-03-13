@@ -67,17 +67,17 @@ class _RecurringDetailState extends State<RecurringDetail> {
                   children: [
                     Text(
                       '${manager.detailData?.tradeInfo?.symbol}',
-                      style: styleGeorgiaBold(
+                      style: styleBaseBold(
                           color: ThemeColors.splashBG, fontSize: 16),
                     ),
                     Text(
                       '${manager.detailData?.tradeInfo?.company}',
-                      style: styleGeorgiaRegular(
+                      style: styleBaseRegular(
                           color: ThemeColors.neutral40, fontSize: 14),
                     ),
                     Text(
                       '${manager.detailData?.tradeInfo?.frequencyString}',
-                      style: styleGeorgiaRegular(
+                      style: styleBaseRegular(
                           color: ThemeColors.neutral40, fontSize: 14),
                     ),
                   ],
@@ -92,7 +92,7 @@ class _RecurringDetailState extends State<RecurringDetail> {
                         manager.detailData?.tradeInfo?.recurringAmount != null,
                     child: Text(
                       '${manager.detailData?.tradeInfo?.recurringAmount?.toFormattedPrice()}',
-                      style: styleGeorgiaBold(
+                      style: styleBaseBold(
                           color: ThemeColors.splashBG, fontSize: 16),
                     ),
                   ),
@@ -117,7 +117,7 @@ class _RecurringDetailState extends State<RecurringDetail> {
                           children: [
                             Text(
                               "Total Quantity",
-                              style: stylePTSansRegular(
+                              style: styleBaseRegular(
                                 color: ThemeColors.splashBG,
                                 fontSize: 12,
                               ),
@@ -125,7 +125,7 @@ class _RecurringDetailState extends State<RecurringDetail> {
                             const SpacerVertical(height: Pad.pad3),
                             Text(
                                 "${manager.detailData?.settlement?.totalQuantity ?? ""}",
-                                style: stylePTSansBold(
+                                style: styleBaseBold(
                                     color: ThemeColors.neutral40,
                                     fontSize: 12)),
                           ],
@@ -142,7 +142,7 @@ class _RecurringDetailState extends State<RecurringDetail> {
                         children: [
                           Text(
                             "Avg Purchase Price",
-                            style: stylePTSansRegular(
+                            style: styleBaseRegular(
                               color: ThemeColors.splashBG,
                               fontSize: 12,
                             ),
@@ -152,7 +152,7 @@ class _RecurringDetailState extends State<RecurringDetail> {
                             manager.detailData?.settlement?.avgPurchasePrice
                                     ?.toFormattedPrice() ??
                                 "0",
-                            style: stylePTSansRegular(
+                            style: styleBaseRegular(
                               color: ThemeColors.neutral40,
                               fontSize: 12,
                             ),
@@ -170,7 +170,7 @@ class _RecurringDetailState extends State<RecurringDetail> {
                           children: [
                             Text(
                               "Total Invested Value",
-                              style: stylePTSansRegular(
+                              style: styleBaseRegular(
                                 color: ThemeColors.splashBG,
                                 fontSize: 12,
                               ),
@@ -178,7 +178,7 @@ class _RecurringDetailState extends State<RecurringDetail> {
                             const SpacerVertical(height: Pad.pad3),
                             Text(
                               "${manager.detailData?.settlement?.totalInvestedValue ?? ""}",
-                              style: stylePTSansRegular(
+                              style: styleBaseRegular(
                                 color: ThemeColors.neutral40,
                                 fontSize: 12,
                               ),
@@ -202,7 +202,7 @@ class _RecurringDetailState extends State<RecurringDetail> {
                           children: [
                             Text(
                               "Sale Price",
-                              style: stylePTSansRegular(
+                              style: styleBaseRegular(
                                 color: ThemeColors.splashBG,
                                 fontSize: 12,
                               ),
@@ -212,7 +212,7 @@ class _RecurringDetailState extends State<RecurringDetail> {
                               manager.detailData?.settlement?.salePrice
                                       ?.toFormattedPrice() ??
                                   "0",
-                              style: stylePTSansRegular(
+                              style: styleBaseRegular(
                                 color: ThemeColors.neutral40,
                                 fontSize: 12,
                               ),
@@ -231,7 +231,7 @@ class _RecurringDetailState extends State<RecurringDetail> {
                           children: [
                             Text(
                               "Settlement Amount",
-                              style: stylePTSansRegular(
+                              style: styleBaseRegular(
                                 color: ThemeColors.splashBG,
                                 fontSize: 12,
                               ),
@@ -242,7 +242,7 @@ class _RecurringDetailState extends State<RecurringDetail> {
                                       ?.totalSettlementValue
                                       ?.toFormattedPrice() ??
                                   "0",
-                              style: stylePTSansRegular(
+                              style: styleBaseRegular(
                                 color: ThemeColors.neutral40,
                                 fontSize: 12,
                               ),
@@ -260,7 +260,7 @@ class _RecurringDetailState extends State<RecurringDetail> {
                           children: [
                             Text(
                               "Settlement Date",
-                              style: stylePTSansRegular(
+                              style: styleBaseRegular(
                                 color: ThemeColors.splashBG,
                                 fontSize: 12,
                               ),
@@ -269,7 +269,7 @@ class _RecurringDetailState extends State<RecurringDetail> {
                             Text(
                               manager.detailData?.settlement?.settlementDate ??
                                   "0",
-                              style: stylePTSansRegular(
+                              style: styleBaseRegular(
                                 color: ThemeColors.neutral40,
                                 fontSize: 12,
                               ),

@@ -71,7 +71,7 @@ class _WatchListIndexState extends State<WatchListIndex> {
                         child: Text(
                           textAlign: TextAlign.start,
                           manager.watchData?.subTitle ?? "",
-                          style: stylePTSansRegular(
+                          style: styleBaseRegular(
                               fontSize: 16, color: ThemeColors.neutral80),
                         ),
                       ),

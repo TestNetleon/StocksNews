@@ -94,7 +94,8 @@ class _HomeScannerHeaderState extends State<HomeScannerHeader> {
                       SpacerVertical(height: 3),
                       Text(
                         marketStatus,
-                        style: styleBaseSemiBold(fontSize: 14),
+                        // style: styleBaseSemiBold(fontSize: 14),
+                        style: Theme.of(context).textTheme.bodyMedium,
                       ),
                     ],
                   ),
@@ -113,7 +114,8 @@ class _HomeScannerHeaderState extends State<HomeScannerHeader> {
                         SpacerVertical(height: 3),
                         Text(
                           _lastUpdated,
-                          style: styleBaseSemiBold(fontSize: 14),
+                          // style: styleBaseSemiBold(fontSize: 14),
+                          style: Theme.of(context).textTheme.bodyMedium,
                         ),
                       ],
                     ),

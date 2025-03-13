@@ -56,12 +56,12 @@ class HelpDeskItemNew extends StatelessWidget {
                       children: [
                         Text(
                           "#${manager.data?.helpDesk?.ticketList?[index].ticketNo} ${manager.data?.helpDesk?.ticketList?[index].subject}",
-                          style: stylePTSansBold(fontSize: 16),
+                          style: styleBaseBold(fontSize: 16),
                         ),
                         const SpacerVertical(height: 4),
                         Text(
                           "${manager.data?.helpDesk?.ticketList?[index].message?.capitalize()}",
-                          style: stylePTSansRegular(
+                          style: styleBaseRegular(
                               color: ThemeColors.neutral80, fontSize: 14),
                         ),
                         SpacerVertical(height: Pad.pad10),
@@ -71,7 +71,7 @@ class HelpDeskItemNew extends StatelessWidget {
                               0,
                           child: Text(
                             "Created on: ${manager.data?.helpDesk?.ticketList?[index].ticketDate}",
-                            style: stylePTSansRegular(
+                            style: styleBaseRegular(
                                 color: ThemeColors.neutral80, fontSize: 14),
                           ),
                         ),
@@ -81,7 +81,7 @@ class HelpDeskItemNew extends StatelessWidget {
                               1,
                           child: Text(
                             "Resolved on: ${manager.data?.helpDesk?.ticketList?[index].resolveDate ?? ""}",
-                            style: stylePTSansRegular(
+                            style: styleBaseRegular(
                                 color: ThemeColors.neutral80, fontSize: 14),
                           ),
                         ),
@@ -111,8 +111,10 @@ class HelpDeskItemNew extends StatelessWidget {
                             ),
                           ),
                           child: Text(
-                            manager.data?.helpDesk?.ticketList?[index].statusLabel??"",
-                            style: stylePTSansBold(
+                            manager.data?.helpDesk?.ticketList?[index]
+                                    .statusLabel ??
+                                "",
+                            style: styleBaseBold(
                                 color: Colors.black, fontSize: 14),
                           ),
                         ),

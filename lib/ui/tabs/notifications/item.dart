@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:stocks_news_new/database/preference.dart';
 import 'package:stocks_news_new/models/notification_res.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
-import 'package:stocks_news_new/screens/deepLinkScreen/webscreen.dart';
-import 'package:stocks_news_new/screens/drawer/widgets/review_app_pop_up.dart';
+import 'package:stocks_news_new/screens/landing/page.dart';
 import 'package:stocks_news_new/ui/account/auth/login.dart';
 import 'package:stocks_news_new/ui/stockDetail/index.dart';
 import 'package:stocks_news_new/ui/tabs/more/articles/detail.dart';
@@ -25,8 +24,8 @@ class NotificationItem extends StatelessWidget {
   const NotificationItem({super.key, this.data});
 
   void _onTap(
-      BuildContext context,
-      ) async {
+    BuildContext context,
+  ) async {
     try {
       String? type = data?.type;
       String? slug = data?.slug;
@@ -38,24 +37,21 @@ class NotificationItem extends StatelessWidget {
       if (type == NotificationType.dashboard.name) {
         Navigator.popUntil(
             navigatorKey.currentContext!, (route) => route.isFirst);
-        Navigator.pushReplacementNamed(
-            navigatorKey.currentContext!, Tabs.path);
-
+        Navigator.pushReplacementNamed(navigatorKey.currentContext!, Tabs.path);
       } else if (slug != '' && type == NotificationType.ticketDetail.name) {
         Navigator.pushReplacementNamed(
-            navigatorKey.currentContext!, HelpDeskAllChatsIndex.path,arguments: {'ticketId':slug ?? "N/A"});
-
+            navigatorKey.currentContext!, HelpDeskAllChatsIndex.path,
+            arguments: {'ticketId': slug ?? "N/A"});
       } else if (slug != '' && type == NotificationType.newsDetail.name) {
         Navigator.pushNamed(navigatorKey.currentContext!, NewsDetailIndex.path,
             arguments: {
               'slug': slug,
             });
-
       } else if (slug != '' && type == NotificationType.lpPage.name) {
         Navigator.push(
           navigatorKey.currentContext!,
           MaterialPageRoute(
-            builder: (context) => WebviewLink(
+            builder: (context) => LandingPageIndex(
               stringURL: slug,
             ),
           ),
@@ -63,19 +59,10 @@ class NotificationItem extends StatelessWidget {
       } else if (slug != '' && type == NotificationType.blogDetail.name) {
         Navigator.pushNamed(navigatorKey.currentContext!, BlogsDetailIndex.path,
             arguments: {
-              'slug': slug?? "",
+              'slug': slug ?? "",
             });
-
       } else if (slug != '' && type == NotificationType.review.name) {
         Utils().showLog("--navigate to blog detail---");
-
-        showDialog(
-          context: navigatorKey.currentContext!,
-          barrierColor: Colors.black.withOpacity(0.5),
-          builder: (context) {
-            return const ReviewAppPopUp();
-          },
-        );
       } else if (slug != '' && type == NotificationType.register.name) {
         if (await Preference.isLoggedIn()) {
           Navigator.popUntil(
@@ -101,34 +88,30 @@ class NotificationItem extends StatelessWidget {
             arguments: {
               'symbol': slug,
             });
-
       } else if (type == NotificationType.referRegistration.name) {
         Navigator.pushNamed(navigatorKey.currentContext!, ReferralIndex.path);
-
       } else if (slug != '' && type == NotificationType.nudgeFriend.name) {
         //referLogin();
       } else {
         Navigator.popUntil(
             navigatorKey.currentContext!, (route) => route.isFirst);
-        Navigator.pushReplacementNamed(
-            navigatorKey.currentContext!, Tabs.path);
+        Navigator.pushReplacementNamed(navigatorKey.currentContext!, Tabs.path);
       }
     } catch (e) {
       Utils().showLog("Exception ===>> $e");
       Navigator.popUntil(
           navigatorKey.currentContext!, (route) => route.isFirst);
-      Navigator.pushReplacementNamed(
-          navigatorKey.currentContext!, Tabs.path);
+      Navigator.pushReplacementNamed(navigatorKey.currentContext!, Tabs.path);
     }
   }
-
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap:() => _onTap(context),
+      onTap: () => _onTap(context),
       child: Container(
-        margin: EdgeInsets.symmetric(vertical: Pad.pad16,horizontal: Pad.pad10),
+        margin:
+            EdgeInsets.symmetric(vertical: Pad.pad16, horizontal: Pad.pad10),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -146,19 +129,19 @@ class NotificationItem extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    data?.title??"",
-                    style: stylePTSansRegular(fontSize: 14,color: ThemeColors.splashBG),
+                    data?.title ?? "",
+                    style: styleBaseRegular(
+                        fontSize: 14, color: ThemeColors.splashBG),
                   ),
                   const SpacerVertical(height: Pad.pad5),
                   Text(
-                    data?.message??"",
-                    style: stylePTSansRegular(
+                    data?.message ?? "",
+                    style: styleBaseRegular(
                         fontSize: 12, color: ThemeColors.neutral40),
                   ),
                 ],
               ),
             ),
-
           ],
         ),
       ),

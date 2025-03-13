@@ -46,15 +46,14 @@ void showInAppCard({required title, description, image, onClick}) {
                           children: [
                             Text(
                               title,
-                              style: stylePTSansBold(color: Colors.black),
+                              style: styleBaseBold(color: Colors.black),
                             ),
                             if (description != null)
                               Container(
                                 margin: EdgeInsets.only(top: 5.sp),
                                 child: Text(
                                   description ?? '',
-                                  style:
-                                      stylePTSansRegular(color: Colors.black),
+                                  style: styleBaseRegular(color: Colors.black),
                                 ),
                               ),
                             // if (onClick != null)
@@ -67,7 +66,7 @@ void showInAppCard({required title, description, image, onClick}) {
                             //         },
                             //         child: Text(
                             //           'Okay',
-                            //           style: stylePTSansRegular(
+                            //           style: styleBaseRegular(
                             //             color: ThemeColors.buttonBlue,
                             //           ),
                             //         ),
@@ -124,7 +123,7 @@ void showInAppModal({required title, description, image, onClick}) {
                           children: [
                             Text(
                               title,
-                              style: stylePTSansBold(color: Colors.black),
+                              style: styleBaseBold(color: Colors.black),
                             ),
                             if (image != null)
                               Container(
@@ -136,8 +135,7 @@ void showInAppModal({required title, description, image, onClick}) {
                                 margin: EdgeInsets.only(top: 5.sp),
                                 child: Text(
                                   description,
-                                  style:
-                                      stylePTSansRegular(color: Colors.black),
+                                  style: styleBaseRegular(color: Colors.black),
                                   textAlign: TextAlign.center,
                                 ),
                               ),
@@ -151,7 +149,7 @@ void showInAppModal({required title, description, image, onClick}) {
                             //         },
                             //         child: Text(
                             //           'Okay',
-                            //           style: stylePTSansRegular(
+                            //           style: styleBaseRegular(
                             //             color: ThemeColors.buttonBlue,
                             //           ),
                             //         ),
@@ -258,15 +256,14 @@ void showInAppTopBanner({required title, description, image, onClick}) {
                           children: [
                             Text(
                               title,
-                              style: stylePTSansBold(color: Colors.black),
+                              style: styleBaseBold(color: Colors.black),
                             ),
                             if (description != null)
                               Container(
                                 margin: EdgeInsets.only(top: 5.sp),
                                 child: Text(
                                   description,
-                                  style:
-                                      stylePTSansRegular(color: Colors.black),
+                                  style: styleBaseRegular(color: Colors.black),
                                 ),
                               ),
                           ],

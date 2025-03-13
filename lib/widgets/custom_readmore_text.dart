@@ -31,7 +31,7 @@ class _CustomReadMoreTextState extends State<CustomReadMoreText> {
     final textPainter = TextPainter(
       text: TextSpan(
         text: widget.text,
-        style: stylePTSansRegular(
+        style: styleBaseRegular(
           height: 1.3,
           fontSize: 13,
           color: widget.textColor,
@@ -56,7 +56,7 @@ class _CustomReadMoreTextState extends State<CustomReadMoreText> {
             child: RichText(
           text: TextSpan(
             text: widget.text,
-            style: stylePTSansRegular(
+            style: styleBaseRegular(
               height: 1.3,
               fontSize: 13,
               color: widget.textColor,
@@ -71,7 +71,7 @@ class _CustomReadMoreTextState extends State<CustomReadMoreText> {
             onTap: () => _showFullTextDialog(context),
             child: Text(
               'Read more',
-              style: stylePTSansRegular(
+              style: styleBaseRegular(
                 color: ThemeColors.accent,
                 fontSize: 12,
                 height: 1.3,

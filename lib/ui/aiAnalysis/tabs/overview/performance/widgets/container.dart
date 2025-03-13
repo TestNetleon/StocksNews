@@ -43,7 +43,7 @@ class AIPointerContainer extends StatelessWidget {
             textAlign: TextAlign.center,
             maxLines: 1,
             title,
-            style: style ?? styleGeorgiaRegular(color: ThemeColors.background),
+            style: style ?? styleBaseRegular(color: ThemeColors.background),
           ),
         ),
         Visibility(
@@ -135,7 +135,7 @@ class AIPointerContainerNew extends StatelessWidget {
             textAlign: TextAlign.center,
             maxLines: 1,
             title,
-            style: styleGeorgiaBold(
+            style: styleBaseBold(
               color: ThemeColors.background,
               fontSize: 12,
             ),

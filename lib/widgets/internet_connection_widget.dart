@@ -78,7 +78,7 @@ class _InternetConnectionWidgetState extends State<InternetConnectionWidget> {
                 SpacerVertical(height: 14.sp),
                 Text(
                   'No internet connection. Please check your connection and try again.',
-                  style: stylePTSansBold(),
+                  style: styleBaseBold(),
                   textAlign: TextAlign.center,
                 ),
               ],

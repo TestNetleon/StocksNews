@@ -54,12 +54,12 @@ class ErrorDisplayWidget extends StatelessWidget {
                   Align(
                     child: HtmlWidget(
                       error ?? Const.errSomethingWrong,
-                      textStyle: stylePTSansRegular(fontSize: fontSize),
+                      textStyle: styleBaseRegular(fontSize: fontSize),
                     ),
                   ),
                   /* Text(
                     error ?? Const.errSomethingWrong,
-                    style: stylePTSansRegular(fontSize: fontSize),
+                    style: styleBaseRegular(fontSize: fontSize),
                     textAlign: TextAlign.center,
                   ),*/
                   const SpacerVertical(),
@@ -122,7 +122,7 @@ class ErrorDisplayWidget extends StatelessWidget {
     //           Text(
     //             error ?? Const.errSomethingWrong,
     //             textAlign: TextAlign.center,
-    //             style: stylePTSansRegular(color: ThemeColors.white),
+    //             style: styleBaseRegular(color: ThemeColors.white),
     //           ),
     //           const SpacerVertical(height: 40),
     //           Image.asset(

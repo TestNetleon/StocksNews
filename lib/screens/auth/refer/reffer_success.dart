@@ -50,7 +50,7 @@
 //                     "Your account has been\nverified successfully",
 //                 // textAlign: TextAlign.center,
 
-//                 textStyle: stylePTSansBold(fontSize: 30),
+//                 textStyle: styleBaseBold(fontSize: 30),
 //               ),
 //               const SpacerVertical(height: 10),
 //               HtmlWidget(
@@ -58,7 +58,7 @@
 //                     "Thank you for your trust now \nyou can refer and earn reward points.",
 //                 // textAlign: TextAlign.center,
 //                 textStyle:
-//                     stylePTSansBold(fontSize: 17, color: ThemeColors.greyText),
+//                     styleBaseBold(fontSize: 17, color: ThemeColors.greyText),
 //               ),
 //               const SpacerVertical(height: 20),
 //               Container(
@@ -74,12 +74,12 @@
 //                       children: [
 //                         Text(
 //                           "Invite your friends",
-//                           style: stylePTSansBold(fontSize: 24),
+//                           style: styleBaseBold(fontSize: 24),
 //                         ),
 //                         const SpacerVertical(height: 3),
 //                         Text(
 //                           "Share your link with your friends and earn reward points",
-//                           style: stylePTSansRegular(
+//                           style: styleBaseRegular(
 //                               fontSize: 14, color: ThemeColors.greyText),
 //                         ),
 //                         const SpacerVertical(height: 15),
@@ -108,7 +108,7 @@
 //                                       "${shareUri ?? ""}",
 //                                       maxLines: 1,
 //                                       overflow: TextOverflow.ellipsis,
-//                                       style: stylePTSansRegular(),
+//                                       style: styleBaseRegular(),
 //                                     ),
 //                                   ),
 //                                 ),
@@ -143,7 +143,7 @@
 //                                 //     //   "Copy",
 //                                 //     //   maxLines: 1,
 //                                 //     //   overflow: TextOverflow.ellipsis,
-//                                 //     //   style: stylePTSansBold(),
+//                                 //     //   style: styleBaseBold(),
 //                                 //     // ),
 //                                 //     child: const Icon(
 //                                 //       Icons.copy,

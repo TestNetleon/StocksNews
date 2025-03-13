@@ -9,6 +9,8 @@ import 'package:stocks_news_new/ui/base/scaffold.dart';
 import 'package:stocks_news_new/ui/legal/index.dart';
 import 'package:stocks_news_new/ui/tabs/more/more_item.dart';
 import 'package:stocks_news_new/ui/tabs/more/morningstarReport/index.dart';
+import 'package:stocks_news_new/ui/theme/manager.dart';
+import 'package:stocks_news_new/ui/theme/toggle.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -164,14 +166,16 @@ class MoreIndex extends StatelessWidget {
               },
             ),
             BaseHeading(
-              margin: EdgeInsets.only(left: Pad.pad16, top: Pad.pad8),
+              margin: EdgeInsets.only(left: Pad.pad16, top: Pad.pad20),
               title: "Theme",
               titleStyle: styleBaseBold(fontSize: 20),
             ),
-            MoreItem(
-              icon: Images.theme,
-              label: "Change Theme",
-              onTap: () {},
+            Consumer<ThemeManager>(
+              builder: (context, value, child) {
+                return ThemeToggleSwitch(
+                  onToggle: value.toggleTheme,
+                );
+              },
             ),
             // BaseHeading(
             //   margin: EdgeInsets.only(left: Pad.pad16, top: Pad.pad20),

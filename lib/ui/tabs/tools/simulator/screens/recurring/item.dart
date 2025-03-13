@@ -18,7 +18,8 @@ class TsRecurringListItem extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: Container(
-        margin: const EdgeInsets.symmetric(horizontal: Pad.pad16, vertical: Pad.pad5),
+        margin: const EdgeInsets.symmetric(
+            horizontal: Pad.pad16, vertical: Pad.pad5),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -45,17 +46,17 @@ class TsRecurringListItem extends StatelessWidget {
                         visible: item?.symbol != null && item?.symbol != '',
                         child: Text(
                           "${item?.symbol}",
-                          style: stylePTSansBold(fontSize: 16,color: ThemeColors.splashBG),
+                          style: styleBaseBold(
+                              fontSize: 16, color: ThemeColors.splashBG),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                         ),
                       ),
                       Visibility(
-                        visible:
-                        item?.company != null && item?.company != '',
+                        visible: item?.company != null && item?.company != '',
                         child: Text(
                           "${item?.company}",
-                          style: stylePTSansRegular(
+                          style: styleBaseRegular(
                             fontSize: 14,
                             color: ThemeColors.neutral40,
                           ),
@@ -71,7 +72,7 @@ class TsRecurringListItem extends StatelessWidget {
                             child: Flexible(
                               child: Text(
                                 "${item?.currentPrice?.toFormattedPriceForSim()}",
-                                style: styleGeorgiaRegular(
+                                style: styleBaseRegular(
                                   fontSize: 14,
                                 ),
                                 // maxLines: 2,
@@ -84,7 +85,7 @@ class TsRecurringListItem extends StatelessWidget {
                             child: Flexible(
                               child: Text(
                                 "  ${item?.change?.toFormattedPriceForSim()}",
-                                style: styleGeorgiaRegular(
+                                style: styleBaseRegular(
                                   color: (item?.change ?? 0) < 0
                                       ? ThemeColors.error120
                                       : ThemeColors.success120,
@@ -108,22 +109,24 @@ class TsRecurringListItem extends StatelessWidget {
                       visible: item?.quantity != null,
                       child: Text(
                         "${item?.quantity} QTY",
-                        style: stylePTSansBold(fontSize: 16,color: ThemeColors.splashBG),
+                        style: styleBaseBold(
+                            fontSize: 16, color: ThemeColors.splashBG),
                       ),
                     ),
                     Visibility(
-                      visible:
-                      item?.averagePrice != null,
+                      visible: item?.averagePrice != null,
                       child: Text(
                         "Avg. ${item?.averagePrice?.toFormattedPriceForSim()}",
-                        style: stylePTSansRegular(fontSize: 14,color: ThemeColors.neutral40),
+                        style: styleBaseRegular(
+                            fontSize: 14, color: ThemeColors.neutral40),
                       ),
                     ),
                   ],
                 )
               ],
             ),
-            const Divider(color: ThemeColors.neutral5,thickness: 1, height: 10),
+            const Divider(
+                color: ThemeColors.neutral5, thickness: 1, height: 10),
             const SpacerVertical(height: Pad.pad5),
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -131,12 +134,12 @@ class TsRecurringListItem extends StatelessWidget {
                 Visibility(
                   visible: item?.totalInvested != null,
                   child: Expanded(
-                    child:Column(
+                    child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
                           "Invested",
-                          style: stylePTSansRegular(
+                          style: styleBaseRegular(
                             color: ThemeColors.splashBG,
                             fontSize: 12,
                           ),
@@ -145,7 +148,7 @@ class TsRecurringListItem extends StatelessWidget {
                         Text(
                           textAlign: TextAlign.start,
                           "${item?.totalInvested?.toFormattedPriceForSim()}",
-                          style:stylePTSansBold(
+                          style: styleBaseBold(
                               color: ThemeColors.neutral40, fontSize: 12),
                         ),
                       ],
@@ -160,7 +163,7 @@ class TsRecurringListItem extends StatelessWidget {
                       children: [
                         Text(
                           "Current",
-                          style: stylePTSansRegular(
+                          style: styleBaseRegular(
                             color: ThemeColors.splashBG,
                             fontSize: 12,
                           ),
@@ -169,7 +172,7 @@ class TsRecurringListItem extends StatelessWidget {
                         Text(
                           textAlign: TextAlign.center,
                           "${item?.currentValuation?.toFormattedPriceForSim() ?? 0}",
-                          style: stylePTSansBold(
+                          style: styleBaseBold(
                               color: ThemeColors.neutral40, fontSize: 12),
                         ),
                       ],
@@ -185,7 +188,7 @@ class TsRecurringListItem extends StatelessWidget {
                         Text(
                           textAlign: TextAlign.center,
                           "Change",
-                          style: stylePTSansRegular(
+                          style: styleBaseRegular(
                             color: ThemeColors.splashBG,
                             fontSize: 12,
                           ),
@@ -196,7 +199,7 @@ class TsRecurringListItem extends StatelessWidget {
                           item?.investedChange == 0
                               ? '0'
                               : "${item?.investedChange?.toFormattedPriceForSim() ?? 0} (${item?.investedChangePercentage?.toCurrencyForSim() ?? 0}%)",
-                          style: stylePTSansBold(
+                          style: styleBaseBold(
                             color: (item?.investedChange ?? 0) < 0
                                 ? ThemeColors.error120
                                 : ThemeColors.success120,
@@ -216,35 +219,35 @@ class TsRecurringListItem extends StatelessWidget {
                 Visibility(
                   visible: item?.recurringAmount != null,
                   child: Expanded(
-                      child:Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Recurring Amt.",
-                            style: stylePTSansRegular(
-                              color: ThemeColors.splashBG,
-                              fontSize: 12,
-                            ),
-                          ),
-                          const SpacerVertical(height: Pad.pad3),
-                          Text(
-                            "${item?.recurringAmount?.toFormattedPriceForSim()}",
-                            style: stylePTSansRegular(
-                                color: ThemeColors.splashBG, fontSize: 12),
-                          ),
-                        ],
-                      )
-                  ),
+                      child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Recurring Amt.",
+                        style: styleBaseRegular(
+                          color: ThemeColors.splashBG,
+                          fontSize: 12,
+                        ),
+                      ),
+                      const SpacerVertical(height: Pad.pad3),
+                      Text(
+                        "${item?.recurringAmount?.toFormattedPriceForSim()}",
+                        style: styleBaseRegular(
+                            color: ThemeColors.splashBG, fontSize: 12),
+                      ),
+                    ],
+                  )),
                 ),
                 Visibility(
-                  visible: item?.frequencyString != null && item?.frequencyString != '',
+                  visible: item?.frequencyString != null &&
+                      item?.frequencyString != '',
                   child: Expanded(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Text(
                           "Frequency",
-                          style: stylePTSansRegular(
+                          style: styleBaseRegular(
                             color: ThemeColors.splashBG,
                             fontSize: 12,
                           ),
@@ -252,7 +255,7 @@ class TsRecurringListItem extends StatelessWidget {
                         const SpacerVertical(height: Pad.pad3),
                         Text(
                           item?.frequencyString ?? "",
-                          style: stylePTSansRegular(
+                          style: styleBaseRegular(
                             color: ThemeColors.splashBG,
                             fontSize: 12,
                           ),
@@ -262,14 +265,15 @@ class TsRecurringListItem extends StatelessWidget {
                   ),
                 ),
                 Visibility(
-                  visible: item?.recurringDate != null && item?.recurringDate != '',
+                  visible:
+                      item?.recurringDate != null && item?.recurringDate != '',
                   child: Expanded(
-                    child:Column(
+                    child: Column(
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                         Text(
                           "Recurring Date",
-                          style: stylePTSansRegular(
+                          style: styleBaseRegular(
                             color: ThemeColors.splashBG,
                             fontSize: 12,
                           ),
@@ -277,7 +281,7 @@ class TsRecurringListItem extends StatelessWidget {
                         const SpacerVertical(height: Pad.pad3),
                         Text(
                           item?.recurringStringDate ?? "",
-                          style: stylePTSansRegular(
+                          style: styleBaseRegular(
                             color: ThemeColors.splashBG,
                             fontSize: 12,
                           ),
@@ -288,14 +292,20 @@ class TsRecurringListItem extends StatelessWidget {
                 ),
               ],
             ),
-            Visibility(visible: item?.statusType != null && item?.statusType != '',child: const SpacerVertical(height: Pad.pad10)),
+            Visibility(
+                visible: item?.statusType != null && item?.statusType != '',
+                child: const SpacerVertical(height: Pad.pad10)),
             Visibility(
               visible: item?.statusType != null && item?.statusType != '',
               child: Column(
                 children: [
-                  item?.statusType=="RUNNING"?
-                  const Divider(color: ThemeColors.success120, height:5,thickness:1):
-                  const Divider(color: ThemeColors.error120, height:5,thickness:1),
+                  item?.statusType == "RUNNING"
+                      ? const Divider(
+                          color: ThemeColors.success120,
+                          height: 5,
+                          thickness: 1)
+                      : const Divider(
+                          color: ThemeColors.error120, height: 5, thickness: 1),
                 ],
               ),
             ),

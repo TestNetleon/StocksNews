@@ -44,7 +44,7 @@ class _SHeaderState extends State<SHeader> {
                   children: [
                     Text(
                       "Invested Amount",
-                      style: stylePTSansBold(
+                      style: styleBaseBold(
                         fontSize: 14,
                         color: ThemeColors.splashBG,
                       ),
@@ -52,9 +52,9 @@ class _SHeaderState extends State<SHeader> {
                     const SpacerVertical(height: Pad.pad8),
                     Text(
                       "\$${formatBalance(manager.userData?.userDataRes?.investedAmount ?? 0)}",
-                      style: stylePTSansBold(fontSize:18,color: ThemeColors.splashBG),
+                      style: styleBaseBold(
+                          fontSize: 18, color: ThemeColors.splashBG),
                     ),
-
                   ],
                 ),
               ),
@@ -67,7 +67,7 @@ class _SHeaderState extends State<SHeader> {
                   children: [
                     Text(
                       "Market Value",
-                      style: stylePTSansBold(
+                      style: styleBaseBold(
                         fontSize: 14,
                         color: ThemeColors.splashBG,
                       ),
@@ -75,13 +75,13 @@ class _SHeaderState extends State<SHeader> {
                     const SpacerVertical(height: Pad.pad8),
                     Text(
                       "\$${formatBalance(manager.userData?.userDataRes?.marketValue ?? 0)}",
-                      style: stylePTSansBold(fontSize:18,color: ThemeColors.splashBG),
+                      style: styleBaseBold(
+                          fontSize: 18, color: ThemeColors.splashBG),
                     ),
                   ],
                 ),
               ),
             ),
-
           ],
         ),
         const SpacerVertical(height: Pad.pad10),
@@ -96,7 +96,7 @@ class _SHeaderState extends State<SHeader> {
                   children: [
                     Text(
                       "Total Return",
-                      style: stylePTSansBold(
+                      style: styleBaseBold(
                         fontSize: 14,
                         color: ThemeColors.splashBG,
                       ),
@@ -104,13 +104,14 @@ class _SHeaderState extends State<SHeader> {
                     const SpacerVertical(height: Pad.pad8),
                     Text(
                       '${manager.userData?.userDataRes?.totalReturn?.toFormattedPrice() ?? 0}',
-                      style: stylePTSansBold(
+                      style: styleBaseBold(
                           fontSize: 18,
-                          color: (manager.userData?.userDataRes?.totalReturn ?? 0) >= 0
+                          color: (manager.userData?.userDataRes?.totalReturn ??
+                                      0) >=
+                                  0
                               ? ThemeColors.error120
                               : ThemeColors.success120),
                     ),
-
                   ],
                 ),
               ),
@@ -123,7 +124,7 @@ class _SHeaderState extends State<SHeader> {
                   children: [
                     Text(
                       "1D Return",
-                      style:stylePTSansBold(
+                      style: styleBaseBold(
                         fontSize: 14,
                         color: ThemeColors.splashBG,
                       ),
@@ -131,9 +132,11 @@ class _SHeaderState extends State<SHeader> {
                     const SpacerVertical(height: Pad.pad8),
                     Text(
                       '${manager.userData?.userDataRes?.todayReturn?.toFormattedPrice() ?? 0}',
-                      style: stylePTSansBold(
+                      style: styleBaseBold(
                           fontSize: 18,
-                          color: (manager.userData?.userDataRes?.todayReturn ?? 0) >= 0
+                          color: (manager.userData?.userDataRes?.todayReturn ??
+                                      0) >=
+                                  0
                               ? ThemeColors.error120
                               : ThemeColors.success120),
                     ),

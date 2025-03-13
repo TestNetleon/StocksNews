@@ -11,8 +11,8 @@ import 'package:stocks_news_new/widgets/cache_network_image.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
-
-Future showCOrderSuccessSheet(SummaryOrderNew? order, ConditionType? conditionalType) async {
+Future showCOrderSuccessSheet(
+    SummaryOrderNew? order, ConditionType? conditionalType) async {
   /*await showModalBottomSheet(
     useSafeArea: true,
     shape: const RoundedRectangleBorder(
@@ -34,12 +34,11 @@ Future showCOrderSuccessSheet(SummaryOrderNew? order, ConditionType? conditional
   );*/
   await BaseBottomSheet().bottomSheet(
       barrierColor: ThemeColors.neutral5.withValues(alpha: 0.7),
-      child:SuccessConditionalSheet(
-      order: order,
-      conditionalType: conditionalType,
-      close: true,
-    )
-  );
+      child: SuccessConditionalSheet(
+        order: order,
+        conditionalType: conditionalType,
+        close: true,
+      ));
 }
 
 class SuccessConditionalSheet extends StatelessWidget {
@@ -72,7 +71,7 @@ class SuccessConditionalSheet extends StatelessWidget {
                       padding: EdgeInsets.all(3.sp),
                       color: ThemeColors.neutral5,
                       child: CachedNetworkImagesWidget(
-                        order?.image?? "",
+                        order?.image ?? "",
                         height: 41,
                         width: 41,
                       ),
@@ -85,11 +84,12 @@ class SuccessConditionalSheet extends StatelessWidget {
                       children: [
                         Text(
                           order?.symbol ?? 'N/A',
-                          style: stylePTSansBold(fontSize: 16,color: ThemeColors.splashBG),
+                          style: styleBaseBold(
+                              fontSize: 16, color: ThemeColors.splashBG),
                         ),
                         Text(
                           order?.name ?? 'N/A',
-                          style: stylePTSansRegular(
+                          style: styleBaseRegular(
                             fontSize: 14,
                             color: ThemeColors.neutral40,
                           ),
@@ -102,24 +102,24 @@ class SuccessConditionalSheet extends StatelessWidget {
               const SpacerVertical(height: Pad.pad24),
               Text(
                 'Order Detail',
-                style: styleGeorgiaBold(fontSize: 20,color: ThemeColors.splashBG),
+                style: styleBaseBold(fontSize: 20, color: ThemeColors.splashBG),
               ),
               const SpacerVertical(height: Pad.pad10),
               Visibility(
-                visible: order?.shares!=null,
+                visible: order?.shares != null,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
                       "QTY",
-                      style: stylePTSansBold(fontSize: 16,color: ThemeColors.splashBG),
-
+                      style: styleBaseBold(
+                          fontSize: 16, color: ThemeColors.splashBG),
                     ),
                     Flexible(
                       child: Text(
                         "${order?.shares?.toCurrency()}",
-                        style: stylePTSansRegular(fontSize: 16,color: ThemeColors.splashBG),
-
+                        style: styleBaseRegular(
+                            fontSize: 16, color: ThemeColors.splashBG),
                       ),
                     ),
                   ],
@@ -140,14 +140,14 @@ class SuccessConditionalSheet extends StatelessWidget {
                   children: [
                     Text(
                       "Executed at",
-                      style: stylePTSansBold(fontSize: 16,color: ThemeColors.splashBG),
-
+                      style: styleBaseBold(
+                          fontSize: 16, color: ThemeColors.splashBG),
                     ),
                     Flexible(
                       child: Text(
                         "${order?.currentPrice?.toFormattedPrice()}",
-                        style: stylePTSansRegular(fontSize: 16,color: ThemeColors.splashBG),
-
+                        style: styleBaseRegular(
+                            fontSize: 16, color: ThemeColors.splashBG),
                       ),
                     ),
                   ],
@@ -168,15 +168,15 @@ class SuccessConditionalSheet extends StatelessWidget {
                   children: [
                     Text(
                       "Order Value",
-                      style: stylePTSansBold(fontSize: 16,color: ThemeColors.splashBG),
-
+                      style: styleBaseBold(
+                          fontSize: 16, color: ThemeColors.splashBG),
                     ),
                     Flexible(
                       child: Text(
                         ((order?.currentPrice ?? 0) * (order?.shares ?? 0))
                             .toFormattedPrice(),
-                        style: stylePTSansRegular(fontSize: 16,color: ThemeColors.splashBG),
-
+                        style: styleBaseRegular(
+                            fontSize: 16, color: ThemeColors.splashBG),
                       ),
                     ),
                   ],
@@ -197,14 +197,14 @@ class SuccessConditionalSheet extends StatelessWidget {
                   children: [
                     Text(
                       "Target Price",
-                      style: stylePTSansBold(fontSize: 16,color: ThemeColors.splashBG),
-
+                      style: styleBaseBold(
+                          fontSize: 16, color: ThemeColors.splashBG),
                     ),
                     Flexible(
                       child: Text(
                         ((order?.targetPrice ?? 0)).toFormattedPrice(),
-                        style: stylePTSansRegular(fontSize: 16,color: ThemeColors.splashBG),
-
+                        style: styleBaseRegular(
+                            fontSize: 16, color: ThemeColors.splashBG),
                       ),
                     ),
                   ],
@@ -212,7 +212,7 @@ class SuccessConditionalSheet extends StatelessWidget {
               ),
               Visibility(
                 visible: order?.targetPrice != null && order?.targetPrice != 0,
-                child:Divider(
+                child: Divider(
                   color: ThemeColors.neutral5,
                   thickness: 1,
                   height: 15,
@@ -224,17 +224,17 @@ class SuccessConditionalSheet extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      conditionalType == ConditionType.trailingOrder?
-                      "Trail Price":
-                      "Stop Price",
-                      style: stylePTSansBold(fontSize: 16,color: ThemeColors.splashBG),
-
+                      conditionalType == ConditionType.trailingOrder
+                          ? "Trail Price"
+                          : "Stop Price",
+                      style: styleBaseBold(
+                          fontSize: 16, color: ThemeColors.splashBG),
                     ),
                     Flexible(
                       child: Text(
                         (order?.stopPrice ?? 0).toFormattedPrice(),
-                        style: stylePTSansRegular(fontSize: 16,color: ThemeColors.splashBG),
-
+                        style: styleBaseRegular(
+                            fontSize: 16, color: ThemeColors.splashBG),
                       ),
                     ),
                   ],
@@ -255,14 +255,14 @@ class SuccessConditionalSheet extends StatelessWidget {
                   children: [
                     Text(
                       "Limit Price",
-                      style: stylePTSansBold(fontSize: 16,color: ThemeColors.splashBG),
-
+                      style: styleBaseBold(
+                          fontSize: 16, color: ThemeColors.splashBG),
                     ),
                     Flexible(
                       child: Text(
                         (order?.limitPrice ?? 0).toFormattedPrice(),
-                        style: stylePTSansRegular(fontSize: 16,color: ThemeColors.splashBG),
-
+                        style: styleBaseRegular(
+                            fontSize: 16, color: ThemeColors.splashBG),
                       ),
                     ),
                   ],
@@ -277,27 +277,29 @@ class SuccessConditionalSheet extends StatelessWidget {
                 ),
               ),
               Visibility(
-                visible: order?.investedPrice != null && order?.investedPrice != 0,
+                visible:
+                    order?.investedPrice != null && order?.investedPrice != 0,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
                       "Recurring Amt.",
-                      style: stylePTSansBold(fontSize: 16,color: ThemeColors.splashBG),
-
+                      style: styleBaseBold(
+                          fontSize: 16, color: ThemeColors.splashBG),
                     ),
                     Flexible(
                       child: Text(
                         (order?.investedPrice ?? 0).toFormattedPrice(),
-                        style: stylePTSansRegular(fontSize: 16,color: ThemeColors.splashBG),
-
+                        style: styleBaseRegular(
+                            fontSize: 16, color: ThemeColors.splashBG),
                       ),
                     ),
                   ],
                 ),
               ),
               Visibility(
-                visible: order?.investedPrice != null && order?.investedPrice != 0,
+                visible:
+                    order?.investedPrice != null && order?.investedPrice != 0,
                 child: Divider(
                   color: ThemeColors.neutral5,
                   thickness: 1,
@@ -311,21 +313,28 @@ class SuccessConditionalSheet extends StatelessWidget {
                   children: [
                     Text(
                       "Frequency",
-                      style: stylePTSansBold(fontSize: 16,color: ThemeColors.splashBG),
-
+                      style: styleBaseBold(
+                          fontSize: 16, color: ThemeColors.splashBG),
                     ),
                     Flexible(
                       child: Text(
-                        order?.selectedOption==1?"Every Market Day":order?.selectedOption==2?"Every week":order?.selectedOption==3?"Every two weeks":"Every month",
-                        style: stylePTSansRegular(fontSize: 16,color: ThemeColors.splashBG),
-
+                        order?.selectedOption == 1
+                            ? "Every Market Day"
+                            : order?.selectedOption == 2
+                                ? "Every week"
+                                : order?.selectedOption == 3
+                                    ? "Every two weeks"
+                                    : "Every month",
+                        style: styleBaseRegular(
+                            fontSize: 16, color: ThemeColors.splashBG),
                       ),
                     ),
                   ],
                 ),
               ),
               Visibility(
-                visible: order?.selectedOption != null && order?.selectedOption != 0,
+                visible:
+                    order?.selectedOption != null && order?.selectedOption != 0,
                 child: Divider(
                   color: ThemeColors.neutral5,
                   thickness: 1,
@@ -340,23 +349,25 @@ class SuccessConditionalSheet extends StatelessWidget {
                       children: [
                         Text(
                           "Order Type",
-                          style: stylePTSansBold(fontSize: 16,color: ThemeColors.splashBG),
-
+                          style: styleBaseBold(
+                              fontSize: 16, color: ThemeColors.splashBG),
                         ),
                         Text(
                           conditionalType == ConditionType.bracketOrder
                               ? "Bracket Order"
-                              :
-                          conditionalType == ConditionType.limitOrder?
-                          "Limit Order":
-                          conditionalType == ConditionType.stopOrder?
-                          "Stop Order":
-                          conditionalType == ConditionType.stopLimitOrder?
-                          "Stop Limit Order":
-                          conditionalType == ConditionType.trailingOrder?
-                          "Trailing Order":"Recurring Order",
-                          style: stylePTSansRegular(fontSize: 16,color: ThemeColors.splashBG),
-
+                              : conditionalType == ConditionType.limitOrder
+                                  ? "Limit Order"
+                                  : conditionalType == ConditionType.stopOrder
+                                      ? "Stop Order"
+                                      : conditionalType ==
+                                              ConditionType.stopLimitOrder
+                                          ? "Stop Limit Order"
+                                          : conditionalType ==
+                                                  ConditionType.trailingOrder
+                                              ? "Trailing Order"
+                                              : "Recurring Order",
+                          style: styleBaseRegular(
+                              fontSize: 16, color: ThemeColors.splashBG),
                         ),
                       ],
                     ),
@@ -377,13 +388,13 @@ class SuccessConditionalSheet extends StatelessWidget {
                       children: [
                         Text(
                           "Order Date/Time",
-                          style: stylePTSansBold(fontSize: 16,color: ThemeColors.splashBG),
-
+                          style: styleBaseBold(
+                              fontSize: 16, color: ThemeColors.splashBG),
                         ),
                         Text(
                           order?.date ?? '',
-                          style: stylePTSansRegular(fontSize: 16,color: ThemeColors.splashBG),
-
+                          style: styleBaseRegular(
+                              fontSize: 16, color: ThemeColors.splashBG),
                         ),
                       ],
                     ),

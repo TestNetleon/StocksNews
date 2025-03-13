@@ -9,7 +9,6 @@ import 'package:stocks_news_new/widgets/cache_network_image.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
-
 class TsOpenListItem extends StatelessWidget {
   final TsOpenListRes? item;
   final Function()? onTap;
@@ -22,7 +21,8 @@ class TsOpenListItem extends StatelessWidget {
       child: Column(
         children: [
           Container(
-            margin: const EdgeInsets.symmetric(horizontal: Pad.pad16, vertical: Pad.pad5),
+            margin: const EdgeInsets.symmetric(
+                horizontal: Pad.pad16, vertical: Pad.pad5),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -47,9 +47,10 @@ class TsOpenListItem extends StatelessWidget {
                         children: [
                           Visibility(
                             visible: item?.symbol != null && item?.symbol != '',
-                            child:  Text(
+                            child: Text(
                               "${item?.symbol}",
-                              style: stylePTSansBold(fontSize: 16,color: ThemeColors.splashBG),
+                              style: styleBaseBold(
+                                  fontSize: 16, color: ThemeColors.splashBG),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                             ),
@@ -59,7 +60,7 @@ class TsOpenListItem extends StatelessWidget {
                                 item?.company != null && item?.company != '',
                             child: Text(
                               "${item?.company}",
-                              style: stylePTSansRegular(
+                              style: styleBaseRegular(
                                 fontSize: 14,
                                 color: ThemeColors.neutral40,
                               ),
@@ -75,7 +76,7 @@ class TsOpenListItem extends StatelessWidget {
                                 child: Flexible(
                                   child: Text(
                                     "${item?.currentPrice?.toFormattedPriceForSim()}",
-                                    style: styleGeorgiaRegular(
+                                    style: styleBaseRegular(
                                       fontSize: 14,
                                     ),
                                     // maxLines: 2,
@@ -88,7 +89,7 @@ class TsOpenListItem extends StatelessWidget {
                                 child: Flexible(
                                   child: Text(
                                     "  ${item?.change?.toFormattedPriceForSim()}",
-                                    style: styleGeorgiaRegular(
+                                    style: styleBaseRegular(
                                       color: (item?.change ?? 0) < 0
                                           ? ThemeColors.error120
                                           : ThemeColors.success120,
@@ -112,23 +113,25 @@ class TsOpenListItem extends StatelessWidget {
                           visible: item?.quantity != null,
                           child: Text(
                             "${item?.quantity} QTY",
-                            style: stylePTSansBold(fontSize: 16,color: ThemeColors.splashBG),
+                            style: styleBaseBold(
+                                fontSize: 16, color: ThemeColors.splashBG),
                           ),
                         ),
-                        SpacerVertical(height:Pad.pad3),
+                        SpacerVertical(height: Pad.pad3),
                         Visibility(
-                          visible:
-                              item?.avgPrice != null,
+                          visible: item?.avgPrice != null,
                           child: Text(
                             "Avg. ${item?.avgPrice?.toFormattedPriceForSim()}",
-                            style: stylePTSansRegular(fontSize: 14,color: ThemeColors.neutral40),
+                            style: styleBaseRegular(
+                                fontSize: 14, color: ThemeColors.neutral40),
                           ),
                         ),
                       ],
                     )
                   ],
                 ),
-                const Divider(color: ThemeColors.neutral5,thickness: 1, height: 10),
+                const Divider(
+                    color: ThemeColors.neutral5, thickness: 1, height: 10),
                 const SpacerVertical(height: 5),
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -136,12 +139,12 @@ class TsOpenListItem extends StatelessWidget {
                     Visibility(
                       visible: item?.invested != null,
                       child: Expanded(
-                        child:  Column(
+                        child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
                               "Invested",
-                              style: stylePTSansRegular(
+                              style: styleBaseRegular(
                                 color: ThemeColors.splashBG,
                                 fontSize: 12,
                               ),
@@ -150,7 +153,7 @@ class TsOpenListItem extends StatelessWidget {
                             Text(
                               textAlign: TextAlign.start,
                               "${item?.invested?.toFormattedPriceForSim()}",
-                              style: stylePTSansBold(
+                              style: styleBaseBold(
                                   color: ThemeColors.neutral40, fontSize: 12),
                             ),
                           ],
@@ -165,7 +168,7 @@ class TsOpenListItem extends StatelessWidget {
                           children: [
                             Text(
                               "Current",
-                              style:stylePTSansRegular(
+                              style: styleBaseRegular(
                                 color: ThemeColors.splashBG,
                                 fontSize: 12,
                               ),
@@ -174,7 +177,7 @@ class TsOpenListItem extends StatelessWidget {
                             Text(
                               textAlign: TextAlign.center,
                               "${item?.currentInvested?.toFormattedPriceForSim() ?? 0}",
-                              style: stylePTSansBold(
+                              style: styleBaseBold(
                                   color: ThemeColors.neutral40, fontSize: 12),
                             ),
                           ],
@@ -184,33 +187,32 @@ class TsOpenListItem extends StatelessWidget {
                     Visibility(
                       visible: item?.investedChange != null,
                       child: Expanded(
-                        child:Column(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            Text(
-                              textAlign: TextAlign.center,
-                              "Change",
-                              style: stylePTSansRegular(
-                                color: ThemeColors.splashBG,
-                                fontSize: 12,
-                              ),
+                          child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Text(
+                            textAlign: TextAlign.center,
+                            "Change",
+                            style: styleBaseRegular(
+                              color: ThemeColors.splashBG,
+                              fontSize: 12,
                             ),
-                            const SpacerVertical(height: Pad.pad3),
-                            Text(
-                              textAlign: TextAlign.end,
-                              item?.investedChange == 0
-                                  ? '0'
-                                  : "${item?.investedChange?.toFormattedPriceForSim() ?? 0} (${item?.investedChangePercentage?.toCurrencyForSim() ?? 0}%)",
-                              style: stylePTSansBold(
-                                color: (item?.investedChange ?? 0) < 0
-                                    ? ThemeColors.error120
-                                    : ThemeColors.success120,
-                                fontSize: 12,
-                              ),
+                          ),
+                          const SpacerVertical(height: Pad.pad3),
+                          Text(
+                            textAlign: TextAlign.end,
+                            item?.investedChange == 0
+                                ? '0'
+                                : "${item?.investedChange?.toFormattedPriceForSim() ?? 0} (${item?.investedChangePercentage?.toCurrencyForSim() ?? 0}%)",
+                            style: styleBaseBold(
+                              color: (item?.investedChange ?? 0) < 0
+                                  ? ThemeColors.error120
+                                  : ThemeColors.success120,
+                              fontSize: 12,
                             ),
-                          ],
-                        )
-                      ),
+                          ),
+                        ],
+                      )),
                     ),
                   ],
                 ),
@@ -218,7 +220,10 @@ class TsOpenListItem extends StatelessWidget {
                   visible: item?.orderType != null && item?.orderType != '',
                   child: Column(
                     children: [
-                      const Divider(color: ThemeColors.neutral5,thickness: 1, height: 10),
+                      const Divider(
+                          color: ThemeColors.neutral5,
+                          thickness: 1,
+                          height: 10),
                       const SpacerVertical(height: Pad.pad5),
                     ],
                   ),
@@ -260,7 +265,7 @@ class TsOpenListItem extends StatelessWidget {
                             Text(
                               textAlign: TextAlign.center,
                               "Order Type",
-                              style: stylePTSansRegular(
+                              style: styleBaseRegular(
                                 color: ThemeColors.splashBG,
                                 fontSize: 12,
                               ),
@@ -269,7 +274,7 @@ class TsOpenListItem extends StatelessWidget {
                             Text(
                               textAlign: TextAlign.end,
                               item?.orderType ?? "",
-                              style: stylePTSansBold(
+                              style: styleBaseBold(
                                 color: ThemeColors.splashBG,
                                 fontSize: 12,
                               ),
@@ -300,7 +305,7 @@ class TsOpenListItem extends StatelessWidget {
           children: [
             Text(
               label ?? "",
-              style:stylePTSansRegular(
+              style: styleBaseRegular(
                 color: ThemeColors.splashBG,
                 fontSize: 12,
               ),
@@ -309,7 +314,8 @@ class TsOpenListItem extends StatelessWidget {
             Text(
               textAlign: TextAlign.start,
               prices?.toFormattedPrice() ?? "",
-              style: stylePTSansRegular(color: ThemeColors.splashBG, fontSize: 12),
+              style:
+                  styleBaseRegular(color: ThemeColors.splashBG, fontSize: 12),
             ),
           ],
         ),
@@ -317,4 +323,3 @@ class TsOpenListItem extends StatelessWidget {
     );
   }
 }
-

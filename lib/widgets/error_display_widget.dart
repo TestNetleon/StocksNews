@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
-import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/theme_button_small.dart';
 
@@ -30,7 +28,8 @@ class ErrorDisplayNewWidget extends StatelessWidget {
           Text(
             textAlign: TextAlign.center,
             error ?? Const.errSomethingWrong,
-            style: styleBaseBold(color: ThemeColors.black),
+            // style: styleBaseBold(color: ThemeColors.black),
+            style: Theme.of(context).textTheme.displayLarge,
           ),
           const SpacerVertical(),
           Visibility(

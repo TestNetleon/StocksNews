@@ -31,6 +31,7 @@ class _HelpDeskIndexState extends State<HelpDeskIndex> {
       _callAPI();
     });
   }
+
   void _callAPI() {
     NewHelpDeskManager manager = context.read<NewHelpDeskManager>();
     manager.getTickets();
@@ -46,7 +47,7 @@ class _HelpDeskIndexState extends State<HelpDeskIndex> {
     return BaseScaffold(
       appBar: BaseAppBar(
         showBack: true,
-        title: manager.data?.title??"",
+        title: manager.data?.title ?? "",
       ),
       body: BaseLoaderContainer(
           isLoading: manager.isLoadingTickets,
@@ -57,19 +58,21 @@ class _HelpDeskIndexState extends State<HelpDeskIndex> {
             _callAPI();
           },
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: Pad.pad16,vertical: Pad.pad8),
+            padding: const EdgeInsets.symmetric(
+                horizontal: Pad.pad16, vertical: Pad.pad8),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Visibility(
                   visible: manager.data?.subTitle != '',
-                  child:Text(
+                  child: Text(
                     textAlign: TextAlign.start,
                     manager.data?.subTitle ?? "",
-                    style: stylePTSansRegular(fontSize: 16,color: ThemeColors.neutral80),
+                    style: styleBaseRegular(
+                        fontSize: 16, color: ThemeColors.neutral80),
                   ),
                 ),
-                SpacerVertical(height:10),
+                SpacerVertical(height: 10),
                 Column(
                   children: [
                     Container(
@@ -95,42 +98,48 @@ class _HelpDeskIndexState extends State<HelpDeskIndex> {
                               children: [
                                 Text(
                                   "Tickets",
-                                  style: stylePTSansBold(color: ThemeColors.splashBG),
+                                  style: styleBaseBold(
+                                      color: ThemeColors.splashBG),
                                 ),
                                 Text(
                                   "${manager.data?.helpDesk?.header?.activeTicketsCount ?? 0} Active",
-                                  style: stylePTSansBold(
-                                      color:ThemeColors.neutral80, fontSize: 13),
+                                  style: styleBaseBold(
+                                      color: ThemeColors.neutral80,
+                                      fontSize: 13),
                                 ),
                               ],
                             ),
                           ),
                           Visibility(
-                            visible: (manager.data?.helpDesk?.subjects?.isNotEmpty == true &&
-                                manager.data?.helpDesk?.subjects != null),
+                            visible:
+                                (manager.data?.helpDesk?.subjects?.isNotEmpty ==
+                                        true &&
+                                    manager.data?.helpDesk?.subjects != null),
                             child: InkWell(
                               onTap: () {
-                                Navigator.pushNamed(context, HelpDeskCreateIndex.path);
+                                Navigator.pushNamed(
+                                    context, HelpDeskCreateIndex.path);
                               },
                               child: Container(
-                                padding: EdgeInsets.symmetric(horizontal: Pad.pad8,vertical: Pad.pad8),
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: Pad.pad8, vertical: Pad.pad8),
                                 decoration: BoxDecoration(
-                                  borderRadius: const BorderRadius.all(Radius.circular(8)),
-                                  border: Border.all(width:1,color: ThemeColors.neutral5)
-                                ),
+                                    borderRadius: const BorderRadius.all(
+                                        Radius.circular(8)),
+                                    border: Border.all(
+                                        width: 1, color: ThemeColors.neutral5)),
                                 child: Row(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
                                       "CREATE NEW",
-                                      style: stylePTSansBold(fontSize: 13,color: ThemeColors.splashBG),
+                                      style: styleBaseBold(
+                                          fontSize: 13,
+                                          color: ThemeColors.splashBG),
                                     ),
                                     const SpacerHorizontal(width: 5),
-                                    const Icon(
-                                      Icons.add_circle_outline_rounded,
-                                      size: 16,
-                                        color: ThemeColors.splashBG
-                                    ),
+                                    const Icon(Icons.add_circle_outline_rounded,
+                                        size: 16, color: ThemeColors.splashBG),
                                   ],
                                 ),
                               ),
@@ -142,17 +151,15 @@ class _HelpDeskIndexState extends State<HelpDeskIndex> {
                     if (manager.data?.helpDesk?.ticketList == null ||
                         manager.data?.helpDesk?.ticketList?.isEmpty == true)
                       Padding(
-                        padding:
-                        const EdgeInsets.symmetric(vertical: Pad.pad10, horizontal: Pad.pad10),
+                        padding: const EdgeInsets.symmetric(
+                            vertical: Pad.pad10, horizontal: Pad.pad10),
                         child: Text(
                           manager.isLoading
                               ? "Loading your complaint box"
                               : "Great, the complaint box is empty",
                           textAlign: TextAlign.start,
-                          style: stylePTSansRegular(
-                              color: ThemeColors.neutral80,
-                              fontSize: 20
-                          ),
+                          style: styleBaseRegular(
+                              color: ThemeColors.neutral80, fontSize: 20),
                         ),
                       ),
                     if (manager.data?.helpDesk?.ticketList != null &&
@@ -162,7 +169,7 @@ class _HelpDeskIndexState extends State<HelpDeskIndex> {
                       ),
                     BaseButtonOutline(
                       margin: EdgeInsets.only(top: Pad.pad16),
-                      onPressed:(){
+                      onPressed: () {
                         _onViewAllRequestClick();
                       },
                       text: "View all Requests",
@@ -174,32 +181,30 @@ class _HelpDeskIndexState extends State<HelpDeskIndex> {
                 ),
                 Expanded(
                     child: CommonRefreshIndicator(
-                      onRefresh: () => manager.getTickets(),
-                      child: Visibility(
-                        visible:manager.data?.helpDesk?.ticketList!= null &&
-                            manager.data?.helpDesk?.ticketList?.isNotEmpty == true,
-                        child: ListView.separated(
-                          itemCount: (manager.data?.helpDesk?.ticketList?.length ?? 0) < 5
+                  onRefresh: () => manager.getTickets(),
+                  child: Visibility(
+                    visible: manager.data?.helpDesk?.ticketList != null &&
+                        manager.data?.helpDesk?.ticketList?.isNotEmpty == true,
+                    child: ListView.separated(
+                      itemCount:
+                          (manager.data?.helpDesk?.ticketList?.length ?? 0) < 5
                               ? manager.data?.helpDesk?.ticketList?.length ?? 0
                               : 5,
-                          itemBuilder: (context, index) {
-                            if (index == 0) {
-                              return const SizedBox();
-                            }
-                            return HelpDeskItemNew(index: index);
-                          },
-                          separatorBuilder: (context, index) {
-                            return const SpacerVertical(height: Pad.pad16);
-                          },
-                        ),
-                      ),
-                    )
-                ),
+                      itemBuilder: (context, index) {
+                        if (index == 0) {
+                          return const SizedBox();
+                        }
+                        return HelpDeskItemNew(index: index);
+                      },
+                      separatorBuilder: (context, index) {
+                        return const SpacerVertical(height: Pad.pad16);
+                      },
+                    ),
+                  ),
+                )),
               ],
             ),
-          )
-      ),
-
+          )),
     );
   }
 }

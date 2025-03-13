@@ -8,8 +8,6 @@ import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
-
-
 class HelpDeskAllChatsItemNew extends StatelessWidget {
   final Log logs;
   const HelpDeskAllChatsItemNew({required this.logs, super.key});
@@ -19,9 +17,8 @@ class HelpDeskAllChatsItemNew extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
       child: Align(
-        alignment: logs.replyFrom == 1
-            ? Alignment.centerLeft
-            : Alignment.centerRight,
+        alignment:
+            logs.replyFrom == 1 ? Alignment.centerLeft : Alignment.centerRight,
         child: Container(
           margin: logs.replyFrom == 1
               ? const EdgeInsets.only(right: 40)
@@ -69,7 +66,7 @@ class HelpDeskAllChatsItemNew extends StatelessWidget {
                   }
                   return null;
                 },
-                textStyle: stylePTSansRegular(
+                textStyle: styleBaseRegular(
                   height: 1.3,
                   color: ThemeColors.splashBG,
                 ),
@@ -77,9 +74,8 @@ class HelpDeskAllChatsItemNew extends StatelessWidget {
               const SpacerVertical(height: 8),
               Text(
                 "${logs.replyDate}",
-                style: stylePTSansRegular(
-                   color: ThemeColors.neutral80,
-                    fontSize: 13),
+                style: styleBaseRegular(
+                    color: ThemeColors.neutral80, fontSize: 13),
               ),
             ],
           ),

@@ -7,13 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/managers/home.dart';
 import 'package:stocks_news_new/managers/signals.dart';
 import 'package:stocks_news_new/managers/tools.dart';
-import 'package:stocks_news_new/providers/compare_stocks_provider.dart';
-import 'package:stocks_news_new/providers/home_provider.dart';
-import 'package:stocks_news_new/providers/search_provider.dart';
-import 'package:stocks_news_new/providers/user_provider.dart';
-import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/service/amplitude/service.dart';
-import 'package:stocks_news_new/service/revenue_cat.dart';
 import 'package:stocks_news_new/socket/socket.dart';
 import 'package:stocks_news_new/ui/tabs/home/scanner/manager/gainers.dart';
 import 'package:stocks_news_new/ui/tabs/market/index.dart';
@@ -24,10 +18,6 @@ import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:vibration/vibration.dart';
-import '../../api/api_response.dart';
-import '../../screens/offerMembership/blackFriday/index.dart';
-import '../../screens/offerMembership/christmas/index.dart';
-import '../../utils/utils.dart';
 import 'home/home.dart';
 import 'signals/signals.dart';
 import 'tools/scanner/index.dart';
@@ -73,49 +63,6 @@ class _TabsState extends State<Tabs> {
     });
   }
 
-  // Future _request() async {
-  //   await Future.delayed(Duration(seconds: 8));
-  //   await requestATT();
-  // }
-
-  _showMembership() {
-    // Navigator.push(
-    //   context,
-    //   createRoute(
-    //     NewMembership(cancel: true),
-    //   ),
-    // );
-
-    // UserRes? user = navigatorKey.currentContext!.read<UserProvider>().user;
-    Extra? extra = navigatorKey.currentContext!.read<HomeProvider>().extra;
-
-    closeKeyboard();
-    if (extra?.showBlackFriday == true) {
-      Navigator.push(
-        navigatorKey.currentContext!,
-        createRoute(
-          const BlackFridayMembershipIndex(cancel: true),
-        ),
-      );
-    } else if (extra?.christmasMembership == true ||
-        extra?.newYearMembership == true) {
-      Navigator.push(
-        navigatorKey.currentContext!,
-        createRoute(
-          const ChristmasMembershipIndex(),
-        ),
-      );
-    } else {
-      subscribe();
-      // Navigator.push(
-      //   navigatorKey.currentContext!,
-      //   createRoute(
-      //     const NewMembership(cancel: true),
-      //   ),
-      // );
-    }
-  }
-
   BottomNavigationBarItem bottomTab({
     icon,
     label,
@@ -156,7 +103,6 @@ class _TabsState extends State<Tabs> {
             styleBaseRegular(color: ThemeColors.white, fontSize: 14),
         selectedLabelStyle: styleBaseBold(fontSize: 14),
         onTap: (index) {
-          context.read<SearchProvider>().clearSearch();
           if (_selectedIndex != index) {
             setState(() {
               _selectedIndex = index;
@@ -262,14 +208,6 @@ class _TabsState extends State<Tabs> {
       case 6:
         break;
     }
-  }
-}
-
-void _compareStocks(BuildContext context) {
-  UserProvider provider = context.read<UserProvider>();
-  final compareProvider = context.read<CompareStocksProvider>();
-  if (provider.user != null && compareProvider.company.isEmpty) {
-    compareProvider.getCompareStock();
   }
 }
 

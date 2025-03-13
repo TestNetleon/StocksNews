@@ -4,7 +4,6 @@ import 'package:stocks_news_new/managers/helpdesk.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 
-
 class HelpDeskReasonsNew extends StatelessWidget {
   const HelpDeskReasonsNew({super.key});
 
@@ -32,7 +31,7 @@ class HelpDeskReasonsNew extends StatelessWidget {
                     padding: const EdgeInsets.only(left: 10.0, right: 10),
                     child: Text(
                       subject.title ?? "",
-                      style: stylePTSansBold(color: Colors.white, fontSize: 14),
+                      style: styleBaseBold(color: Colors.white, fontSize: 14),
                     ),
                   ),
                 ),

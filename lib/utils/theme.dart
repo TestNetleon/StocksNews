@@ -4,6 +4,10 @@ import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 
 final lightTheme = ThemeData(
+  progressIndicatorTheme: ProgressIndicatorThemeData(
+    color: ThemeColors.black,
+  ),
+  brightness: Brightness.light,
   useMaterial3: false,
   primarySwatch: ThemeColors.primaryPalette,
   scaffoldBackgroundColor: ThemeColors.white,
@@ -14,136 +18,44 @@ final lightTheme = ThemeData(
   appBarTheme: AppBarTheme(
     backgroundColor: Colors.transparent,
     elevation: 0,
-    titleTextStyle: const TextStyle(
-      color: Colors.white,
-      fontSize: 18,
-      fontWeight: FontWeight.w700,
-      fontFamily: Fonts.roboto,
-    ),
+    titleTextStyle: styleBaseBold(color: ThemeColors.black, fontSize: 18),
     systemOverlayStyle: SystemUiOverlayStyle(
-      // statusBarColor: Colors.black,
-      // statusBarIconBrightness: Brightness.light,
-      // statusBarBrightness:
-      //     Platform.isAndroid ? Brightness.light : Brightness.dark,
       statusBarColor: Colors.transparent,
       statusBarIconBrightness: Brightness.dark,
       statusBarBrightness: Brightness.light,
     ),
   ),
   fontFamily: Fonts.roboto,
-  iconTheme: const IconThemeData(color: Colors.white),
-  textTheme: ThemeData.light().textTheme.apply(
-        displayColor: Colors.white,
-        bodyColor: Colors.black,
-        fontFamily: Fonts.roboto,
-      ),
+  iconTheme: const IconThemeData(color: ThemeColors.black),
+  textTheme: getTextTheme(ThemeColors.black),
 );
 
-TextStyle styleGeorgiaRegular({
-  color = ThemeColors.black,
-  double fontSize = 15,
-  FontStyle? fontStyle,
-  height = 1.2,
-  letterSpacing = 0.70,
-  TextDecoration? decoration,
-  bool showSpacing = false,
-}) {
-  return TextStyle(
-    fontStyle: fontStyle,
-    fontSize: fontSize,
-    color: color,
-    fontFamily: Fonts.roboto,
-    fontWeight: FontWeight.normal,
-    height: height,
-    decoration: decoration,
-    decorationColor: color,
-    letterSpacing: showSpacing ? letterSpacing : 0.0,
-  );
-}
-
-TextStyle styleGeorgiaBold({
-  color = ThemeColors.black,
-  double fontSize = 16,
-  letterSpacing = 0.70,
-  FontStyle? fontStyle,
-  decoration,
-}) {
-  return TextStyle(
-    fontSize: fontSize,
-    color: color,
-    fontFamily: Fonts.roboto,
-    fontWeight: FontWeight.bold,
-    fontStyle: fontStyle,
-    decoration: decoration,
-    decorationColor: color,
-    // letterSpacing: letterSpacing,
-  );
-}
-
-TextStyle stylePTSansRegular({
-  color = ThemeColors.black,
-  double fontSize = 15,
-  height = 1.2,
-  letterSpacing = 0.70,
-  decoration,
-  FontWeight? fontWeight,
-  FontStyle? fontStyle,
-  String? fontFamily,
-}) {
-  return TextStyle(
-    fontSize: fontSize,
-    color: color,
-    fontFamily: fontFamily ?? Fonts.roboto,
-    fontWeight: fontWeight ?? FontWeight.normal,
-    height: height,
-    decoration: decoration,
-    fontStyle: fontStyle,
-    decorationColor: color,
-    // letterSpacing: letterSpacing,
-  );
-}
-
-TextStyle stylePTSansBold({
-  color = ThemeColors.black,
-  double fontSize = 16,
-  letterSpacing = 0.70,
-  String? fontFamily,
-  height = 1.2,
-  decoration,
-}) {
-  return TextStyle(
-    fontSize: fontSize,
-    color: color,
-    fontFamily: fontFamily ?? Fonts.roboto,
-    fontWeight: FontWeight.bold,
-    decoration: decoration,
-    decorationColor: color,
-    height: height,
-
-    // letterSpacing: letterSpacing,
-  );
-}
-
-TextStyle styleSansBold({
-  color = ThemeColors.black,
-  double fontSize = 16,
-  letterSpacing = 0.70,
-  height = 1.2,
-  String? fontFamily,
-  decoration,
-}) {
-  return TextStyle(
-    fontSize: fontSize,
-    color: color,
-    fontFamily: fontFamily ?? Fonts.roboto,
-    fontWeight: FontWeight.bold,
-    decoration: decoration,
-    decorationColor: color,
-    height: height,
-
-    // letterSpacing: letterSpacing,
-  );
-}
+final darkTheme = ThemeData(
+  progressIndicatorTheme: ProgressIndicatorThemeData(
+    color: ThemeColors.white,
+  ),
+  brightness: Brightness.dark,
+  useMaterial3: false,
+  primarySwatch: ThemeColors.primaryPalette,
+  scaffoldBackgroundColor: Colors.black,
+  drawerTheme: const DrawerThemeData(
+    backgroundColor: ThemeColors.black,
+    width: double.infinity,
+  ),
+  appBarTheme: AppBarTheme(
+    backgroundColor: Colors.transparent,
+    elevation: 0,
+    titleTextStyle: styleBaseBold(color: Colors.white, fontSize: 18),
+    systemOverlayStyle: SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent,
+      statusBarIconBrightness: Brightness.light,
+      statusBarBrightness: Brightness.dark,
+    ),
+  ),
+  fontFamily: Fonts.roboto,
+  iconTheme: const IconThemeData(color: Colors.white),
+  textTheme: getTextTheme(ThemeColors.white),
+);
 
 //MARK:only below in use for new design
 TextStyle styleBaseBold({
@@ -200,5 +112,31 @@ TextStyle styleBaseSemiBold({
     decoration: decoration,
     decorationColor: color,
     height: height,
+  );
+}
+
+TextTheme getTextTheme(Color color) {
+  return TextTheme(
+    // Heading
+    headlineLarge: styleBaseBold(color: color, fontSize: 18), //18 fonts App Bar
+
+    // Page Titles
+    titleLarge:
+        styleBaseBold(color: color, fontSize: 28), //28 Screen Main Style
+
+    // Display
+    displayLarge: styleBaseBold(color: color, fontSize: 16), //16 Widget Styles
+    displayMedium: styleBaseSemiBold(color: color, fontSize: 16),
+    displaySmall: styleBaseRegular(color: color, fontSize: 16),
+
+    // Small Fonts
+    bodyLarge: styleBaseRegular(color: color, fontSize: 14),
+    bodyMedium: styleBaseSemiBold(color: color, fontSize: 14),
+    bodySmall: styleBaseRegular(color: color, fontSize: 14),
+
+    // Sub Small Fonts
+    labelLarge: styleBaseBold(color: color, fontSize: 13),
+    labelMedium: styleBaseSemiBold(color: color, fontSize: 13),
+    labelSmall: styleBaseRegular(color: color, fontSize: 13),
   );
 }

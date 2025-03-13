@@ -169,7 +169,7 @@ class _AIPeerComparisonState extends State<AIPeerComparison> {
       Center(
         child: Text(
           userPercent ? "$text%" : "$text",
-          style: styleGeorgiaBold(
+          style: styleBaseBold(
               fontSize: 13,
               color: text >= 0 ? ThemeColors.accent : ThemeColors.sos),
         ),

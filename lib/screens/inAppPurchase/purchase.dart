@@ -152,7 +152,7 @@
 //             Text(
 //               "Payment successfully completed",
 //               textAlign: TextAlign.center,
-//               style: stylePTSansBold(fontSize: 35),
+//               style: styleBaseBold(fontSize: 35),
 //             ),
 //             const SpacerVertical(height: 20),
 //             Padding(
@@ -160,7 +160,7 @@
 //               child: Text(
 //                 "Congratulations, Explore Stocks.News without limits.",
 //                 textAlign: TextAlign.center,
-//                 style: stylePTSansRegular(
+//                 style: styleBaseRegular(
 //                     fontSize: 20, color: ThemeColors.greyText),
 //               ),
 //             ),

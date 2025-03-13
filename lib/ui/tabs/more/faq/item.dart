@@ -9,7 +9,8 @@ class FAQItem extends StatelessWidget {
   final bool isOpen;
   final BaseFaqDataRes faq;
   final Function()? onChange;
-  const FAQItem({super.key, required this.isOpen,required this.faq,this.onChange});
+  const FAQItem(
+      {super.key, required this.isOpen, required this.faq, this.onChange});
 
   @override
   Widget build(BuildContext context) {
@@ -28,8 +29,9 @@ class FAQItem extends StatelessWidget {
               children: [
                 Expanded(
                   child: Text(
-                    faq.question??"",
-                    style: stylePTSansBold(fontSize: 16,color: ThemeColors.splashBG),
+                    faq.question ?? "",
+                    style: styleBaseBold(
+                        fontSize: 16, color: ThemeColors.splashBG),
                   ),
                 ),
                 const SpacerHorizontal(width: 5),
@@ -55,9 +57,9 @@ class FAQItem extends StatelessWidget {
               height: isOpen ? null : 0,
               padding: EdgeInsets.only(top: Dimen.itemSpacing),
               child: Text(
-                faq.answer??"",
-                style: stylePTSansRegular(
-                    fontSize: 16, color: ThemeColors.neutral80,height:1.3),
+                faq.answer ?? "",
+                style: styleBaseRegular(
+                    fontSize: 16, color: ThemeColors.neutral80, height: 1.3),
               ),
             ),
           ),

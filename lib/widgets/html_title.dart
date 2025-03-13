@@ -43,7 +43,7 @@ class HtmlTitle extends StatelessWidget {
                     margin: EdgeInsets.only(bottom: 5.sp),
                     child: Text(
                       title ?? "",
-                      style: style ?? stylePTSansRegular(fontSize: 13),
+                      style: style ?? styleBaseRegular(fontSize: 13),
                     ),
                   ),
                 ),
@@ -63,12 +63,12 @@ class HtmlTitle extends StatelessWidget {
                         //   trimMode: TrimMode.Line,
                         //   trimCollapsedText: ' Read more',
                         //   trimExpandedText: ' Read less',
-                        // moreStyle: stylePTSansRegular(
+                        // moreStyle: styleBaseRegular(
                         //   color: ThemeColors.accent,
                         //   fontSize: 12,
                         //   height: 1.3,
                         // ),
-                        // style: stylePTSansRegular(
+                        // style: styleBaseRegular(
                         //   height: 1.3,
                         //   fontSize: 13,
                         //   color: ThemeColors.greyText,
@@ -83,12 +83,12 @@ class HtmlTitle extends StatelessWidget {
                         // trimMode: TrimMode.Line,
                         //   trimCollapsedText: ' Read more',
                         //   trimExpandedText: ' Read less',
-                        //   moreStyle: stylePTSansRegular(
+                        //   moreStyle: styleBaseRegular(
                         //     color: ThemeColors.accent,
                         //     fontSize: 12,
                         //     height: 1.0,
                         //   ),
-                        // style: stylePTSansRegular(
+                        // style: styleBaseRegular(
                         //   height: 1.1,
                         //   fontSize: 13,
                         //   color: ThemeColors.greyText,

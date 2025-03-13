@@ -224,7 +224,7 @@ void showSnackbar({
     backgroundColor: type == SnackbarType.error ? Colors.red : Colors.green,
     content: Text(
       message ?? '',
-      style: stylePTSansRegular().copyWith(color: Colors.white),
+      style: styleBaseRegular().copyWith(color: Colors.white),
     ),
   );
   ScaffoldMessenger.of(context).showSnackBar(snackBar);

@@ -39,7 +39,7 @@
 //               child: Center(
 //                 child: Text(
 //                   items[index].value ?? "",
-//                   style: stylePTSansRegular(fontSize: 16),
+//                   style: styleBaseRegular(fontSize: 16),
 //                 ),
 //               ),
 //             );
@@ -109,8 +109,8 @@ class FilterListing extends StatelessWidget {
                       child: Text(
                         items[index].value ?? "",
                         style: (index == 0 && titleBold)
-                            ? stylePTSansBold(fontSize: 16)
-                            : stylePTSansRegular(fontSize: 15),
+                            ? styleBaseBold(fontSize: 16)
+                            : styleBaseRegular(fontSize: 15),
                       ),
                     ),
                   ],

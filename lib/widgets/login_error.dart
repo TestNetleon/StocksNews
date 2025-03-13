@@ -44,7 +44,7 @@ class LoginError extends StatelessWidget {
                     padding: const EdgeInsets.only(bottom: 5),
                     child: Text(
                       title ?? "",
-                      style: stylePTSansBold(fontSize: 25),
+                      style: styleBaseBold(fontSize: 25),
                       textAlign: TextAlign.center,
                     ),
                   ),
@@ -53,7 +53,7 @@ class LoginError extends StatelessWidget {
                   // visible: title != null && title != '',
                   child: Text(
                     "This page is for registered users. Please log in or sign up to access.",
-                    style: stylePTSansRegular(fontSize: 16),
+                    style: styleBaseRegular(fontSize: 16),
                     textAlign: TextAlign.center,
                   ),
                 ),
@@ -84,7 +84,7 @@ class LoginError extends StatelessWidget {
                 //         },
                 //         child: Text(
                 //           "Don't have an account? Sign up ",
-                //           style: stylePTSansRegular(
+                //           style: styleBaseRegular(
                 //             fontSize: 18,
                 //             color: ThemeColors.accent,
                 //           ),

@@ -55,7 +55,7 @@ class AIFinancialCharts extends StatelessWidget {
           ) {
             return BarTooltipItem(
               "${chart?[groupIndex].displayValue}",
-              styleGeorgiaBold(
+              styleBaseBold(
                 color: ThemeColors.black,
                 fontSize: 12,
               ),

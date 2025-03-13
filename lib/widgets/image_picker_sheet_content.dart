@@ -27,7 +27,7 @@ class ImagePickerSheetContent extends StatelessWidget {
             alignment: Alignment.center,
             child: Text(
               "Choose Option",
-              style: stylePTSansBold(fontSize: 18),
+              style: styleBaseBold(fontSize: 18),
             ),
           ),
           const SpacerVertical(height: 10),
@@ -48,7 +48,7 @@ class ImagePickerSheetContent extends StatelessWidget {
                   Expanded(
                     child: Text(
                       "Camera",
-                      style: stylePTSansRegular(fontSize: 18),
+                      style: styleBaseRegular(fontSize: 18),
                     ),
                   ),
                 ],
@@ -72,7 +72,7 @@ class ImagePickerSheetContent extends StatelessWidget {
                   Expanded(
                     child: Text(
                       "Gallery",
-                      style: stylePTSansRegular(fontSize: 18),
+                      style: styleBaseRegular(fontSize: 18),
                     ),
                   ),
                 ],

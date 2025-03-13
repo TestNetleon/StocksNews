@@ -21,13 +21,19 @@ class TickerBoxItem extends StatelessWidget {
       child: Container(
         margin: EdgeInsets.only(bottom: 10),
         decoration: BoxDecoration(
-          color: Colors.white,
+          // color: Colors.white,
+          color: Theme.of(context).scaffoldBackgroundColor,
           borderRadius: BorderRadius.circular(8),
           boxShadow: [
             BoxShadow(
-              color: Color.fromARGB(28, 150, 171, 209),
+              color: Color(0x1C96ABD1),
               blurRadius: 10,
               offset: Offset(0, 10),
+            ),
+            BoxShadow(
+              color: Color(0x1C96ABD1),
+              blurRadius: 10,
+              offset: Offset(10, 10),
             ),
           ],
         ),
@@ -53,7 +59,8 @@ class TickerBoxItem extends StatelessWidget {
                         Visibility(
                           child: Text(
                             data.symbol ?? '',
-                            style: styleBaseBold(),
+                            // style: styleBaseBold(),
+                            style: Theme.of(context).textTheme.displayLarge,
                           ),
                         ),
                         Text(
@@ -76,7 +83,8 @@ class TickerBoxItem extends StatelessWidget {
                   padding: const EdgeInsets.only(top: 12, bottom: 3),
                   child: Text(
                     data.displayPrice ?? "",
-                    style: styleBaseBold(fontSize: 19),
+                    // style: styleBaseBold(fontSize: 19),
+                    style: Theme.of(context).textTheme.displayLarge,
                   ),
                 ),
               ),

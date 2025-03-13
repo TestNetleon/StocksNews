@@ -141,9 +141,8 @@ class TabItem extends StatelessWidget {
           Text(
             data.title ?? "",
             style: selected
-                ? stylePTSansBold(fontSize: 12)
-                : stylePTSansRegular(
-                    fontSize: 12, color: ThemeColors.neutral40),
+                ? styleBaseBold(fontSize: 12)
+                : styleBaseRegular(fontSize: 12, color: ThemeColors.neutral40),
           ),
         ],
       ),

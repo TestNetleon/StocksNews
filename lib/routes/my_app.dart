@@ -10,21 +10,17 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stocks_news_new/fcm/braze_notification_handler.dart';
 import 'package:stocks_news_new/fcm/braze_service.dart';
+import 'package:stocks_news_new/managers/user.dart';
 import 'package:stocks_news_new/modals/user_res.dart';
-import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/routes/navigation_observer.dart';
 import 'package:stocks_news_new/routes/routes.dart';
 import 'package:stocks_news_new/service/braze/service.dart';
-import 'package:stocks_news_new/service/revenueCat/service.dart';
+import 'package:stocks_news_new/ui/theme/manager.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/database/preference.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/utils/utils.dart';
-import 'package:superwallkit_flutter/superwallkit_flutter.dart';
-import '../api/apis.dart';
-import '../screens/auth/base/base_auth.dart';
-import '../service/superwall/controller.dart';
 import '../ui/onboarding/splash.dart';
 
 final _appLinks = AppLinks();
@@ -57,7 +53,6 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       // oneSignalInitialized = true;
       listenForPushToken();
       NotificationHandler.instance.setupNotificationListeners();
-      configureRevenueCatAttribute();
       // brazeDeepLink();
     });
     WidgetsBinding.instance.addObserver(this);
@@ -230,10 +225,11 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
           isFirstOpen) {
         Preference.saveReferral(referralCode);
         Timer(const Duration(seconds: 4), () {
-          if (navigatorKey.currentContext!.read<UserProvider>().user == null &&
-              !signUpVisible) {
-            // signupSheet();
-            loginFirstSheet();
+          UserManager manager =
+              navigatorKey.currentContext!.read<UserManager>();
+
+          if (manager.user == null && !signUpVisible) {
+            manager.askLoginScreen();
           }
         });
         FirebaseAnalytics.instance.logEvent(
@@ -347,43 +343,28 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       builder: (_, child) {
         return MultiProvider(
           providers: Routes.providers,
-          child: MaterialApp(
-            supportedLocales: const [Locale("en")],
-            localizationsDelegates: const [CountryLocalizations.delegate],
-            navigatorObservers: [CustomNavigatorObserver()],
-            navigatorKey: navigatorKey,
-            debugShowCheckedModeBanner: false,
-            title: Const.appName,
-            theme: lightTheme,
-            home: child,
-            routes: Routes.routes,
-            onGenerateRoute: Routes.getRouteGenerate,
+          child: Consumer<ThemeManager>(
+            builder: (context, value, child) {
+              return MaterialApp(
+                supportedLocales: const [Locale("en")],
+                localizationsDelegates: const [CountryLocalizations.delegate],
+                navigatorObservers: [CustomNavigatorObserver()],
+                navigatorKey: navigatorKey,
+                debugShowCheckedModeBanner: false,
+                title: Const.appName,
+                theme: lightTheme,
+                darkTheme: darkTheme,
+                themeMode: value.themeMode,
+                home: child,
+                routes: Routes.routes,
+                onGenerateRoute: Routes.getRouteGenerate,
+              );
+            },
           ),
         );
       },
       child: const Splash(),
       // child: Scaffold(),
     );
-  }
-}
-
-Future<void> configureRevenueCatAttribute() async {
-  try {
-    UserRes? user = await Preference.getUser();
-    RevenueCatManager.instance.initialize(user: user);
-    try {
-      RCPurchaseController purchaseController = RCPurchaseController();
-
-      String apiKey =
-          Platform.isAndroid ? ApiKeys.superWallAndroid : ApiKeys.superWallIOS;
-      Superwall.configure(
-        apiKey,
-        purchaseController: purchaseController,
-      );
-    } catch (e) {
-      //
-    }
-  } catch (e) {
-    Utils().showLog("Error in configure RevenueCat: $e");
   }
 }

@@ -369,7 +369,7 @@ class _ContainerConditioalBuySellState
                     children: [
                       Text(
                         'Balance',
-                        style: stylePTSansRegular(
+                        style: styleBaseRegular(
                           fontSize: 12,
                           color: ThemeColors.neutral80,
                         ),
@@ -380,7 +380,7 @@ class _ContainerConditioalBuySellState
                                 null
                             ? "\$${formatBalance(num.parse(portfolioManager.userData!.userDataRes!.tradeBalance.toCurrency()))}"
                             : '\$0',
-                        style: stylePTSansBold(
+                        style: styleBaseBold(
                             fontSize: 16, color: ThemeColors.splashBG),
                       ),
                     ],
@@ -395,7 +395,7 @@ class _ContainerConditioalBuySellState
                     children: [
                       Text(
                         'Order Value',
-                        style: stylePTSansRegular(
+                        style: styleBaseRegular(
                           fontSize: 12,
                           color: ThemeColors.neutral80,
                         ),
@@ -403,7 +403,7 @@ class _ContainerConditioalBuySellState
                       SpacerVertical(height: Pad.pad10),
                       Text(
                         "\$${invested.toCurrency()}",
-                        style: stylePTSansBold(
+                        style: styleBaseBold(
                             fontSize: 16, color: ThemeColors.splashBG),
                       ),
                     ],
@@ -583,15 +583,15 @@ class _ContainerConditioalBuySellState
               child: RichText(
                 text: TextSpan(
                   text: 'Your current balance is ',
-                  style: stylePTSansRegular(color: ThemeColors.neutral40),
+                  style: styleBaseRegular(color: ThemeColors.neutral40),
                   children: [
                     TextSpan(
                       text: _availableBalance.toFormattedPrice(),
-                      style: stylePTSansBold(
+                      style: styleBaseBold(
                           color: ThemeColors.splashBG, fontSize: 14),
                     ),
                     TextSpan(
-                        style: stylePTSansRegular(color: ThemeColors.neutral40),
+                        style: styleBaseRegular(color: ThemeColors.neutral40),
                         text:
                             '. You cannot purchase shares with an order value that exceeds your available balance.')
                   ],
@@ -609,15 +609,15 @@ class _ContainerConditioalBuySellState
               child: RichText(
                 text: TextSpan(
                   text: 'Your current share holding is ',
-                  style: stylePTSansRegular(color: ThemeColors.neutral40),
+                  style: styleBaseRegular(color: ThemeColors.neutral40),
                   children: [
                     TextSpan(
                       text: '${widget.qty}',
-                      style: stylePTSansBold(
+                      style: styleBaseBold(
                           color: ThemeColors.splashBG, fontSize: 14),
                     ),
                     TextSpan(
-                        style: stylePTSansRegular(color: ThemeColors.neutral40),
+                        style: styleBaseRegular(color: ThemeColors.neutral40),
                         text:
                             '. You cannot sell more shares than you currently own.')
                   ],
@@ -631,7 +631,7 @@ class _ContainerConditioalBuySellState
   }
 
   Future onTap({ConditionType? cType, StockType? selectedStock}) async {
-     openInfoSheet(cType,selectedStock);
+    openInfoSheet(cType, selectedStock);
   }
 
   @override
@@ -659,24 +659,35 @@ class _ContainerConditioalBuySellState
                 children: [
                   const STopWidget(),
                   GestureDetector(
-                    onTap: (){
-                      onTap(cType: widget.conditionalType,selectedStock: _selectedStock);
+                    onTap: () {
+                      onTap(
+                          cType: widget.conditionalType,
+                          selectedStock: _selectedStock);
                     },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
                           widget.conditionalType == ConditionType.bracketOrder
-                              ? 'BRACKET ORDER': widget.conditionalType == ConditionType.limitOrder ?'LIMIT ORDER':
-                          widget.conditionalType == ConditionType.stopOrder ? "STOP ORDER":
-                          widget.conditionalType == ConditionType.stopLimitOrder?"STOP LIMIT ORDER":"TRAILING ORDER",
-                          style: stylePTSansBold(
+                              ? 'BRACKET ORDER'
+                              : widget.conditionalType ==
+                                      ConditionType.limitOrder
+                                  ? 'LIMIT ORDER'
+                                  : widget.conditionalType ==
+                                          ConditionType.stopOrder
+                                      ? "STOP ORDER"
+                                      : widget.conditionalType ==
+                                              ConditionType.stopLimitOrder
+                                          ? "STOP LIMIT ORDER"
+                                          : "TRAILING ORDER",
+                          style: styleBaseBold(
                             color: ThemeColors.splashBG,
                             fontSize: 12,
                           ),
                         ),
                         SpacerHorizontal(width: 5),
-                        Icon(Icons.info_sharp,color: ThemeColors.splashBG,size: 18)
+                        Icon(Icons.info_sharp,
+                            color: ThemeColors.splashBG, size: 18)
                       ],
                     ),
                   ),
@@ -703,7 +714,7 @@ class _ContainerConditioalBuySellState
                                 : selectedIndex == 2
                                     ? "Sell"
                                     : "Buy to Cover",
-                        style: styleGeorgiaBold(
+                        style: styleBaseBold(
                             fontSize: 15, color: ThemeColors.white),
                       ),
                     ),
@@ -711,7 +722,8 @@ class _ContainerConditioalBuySellState
                   Visibility(child: const SpacerVertical(height: Pad.pad10)),
                   Text(
                     'Enter number of shares',
-                    style: styleGeorgiaRegular(color: ThemeColors.neutral80,fontSize: 18),
+                    style: styleBaseRegular(
+                        color: ThemeColors.neutral80, fontSize: 18),
                   ),
                   TextfieldTrade(
                     controller: controller,
@@ -729,7 +741,7 @@ class _ContainerConditioalBuySellState
                       margin: EdgeInsets.only(top: 10),
                       child: Text(
                         'Available quantity - ${widget.qty ?? 0}',
-                        style: styleGeorgiaBold(),
+                        style: styleBaseBold(),
                       ),
                     ),
                   SpacerVertical(),
@@ -739,7 +751,7 @@ class _ContainerConditioalBuySellState
                       children: [
                         ScreenTitle(
                           title: "Limit Price",
-                          style: stylePTSansBold(color: ThemeColors.splashBG),
+                          style: styleBaseBold(color: ThemeColors.splashBG),
                           subTitle: selectedIndex == 0
                               ? portfolioManager
                                       .userData
@@ -781,10 +793,9 @@ class _ContainerConditioalBuySellState
                           cursorColor: ThemeColors.neutral6,
                           fillColor: ThemeColors.neutral5,
                           borderColor: ThemeColors.neutral5,
-                          style:
-                              stylePTSansRegular(color: ThemeColors.splashBG),
+                          style: styleBaseRegular(color: ThemeColors.splashBG),
                           hintStyle:
-                              stylePTSansRegular(color: ThemeColors.splashBG),
+                              styleBaseRegular(color: ThemeColors.splashBG),
                           controller: limitPriceController,
                           placeholder: "Limit Price",
                           keyboardType:
@@ -799,7 +810,7 @@ class _ContainerConditioalBuySellState
                       children: [
                         ScreenTitle(
                           title: "Stop Price",
-                          style: stylePTSansBold(color: ThemeColors.splashBG),
+                          style: styleBaseBold(color: ThemeColors.splashBG),
                           subTitle: selectedIndex == 0
                               ? portfolioManager
                                       .userData
@@ -841,10 +852,9 @@ class _ContainerConditioalBuySellState
                           cursorColor: ThemeColors.neutral6,
                           fillColor: ThemeColors.neutral5,
                           borderColor: ThemeColors.neutral5,
-                          style:
-                              stylePTSansRegular(color: ThemeColors.splashBG),
+                          style: styleBaseRegular(color: ThemeColors.splashBG),
                           hintStyle:
-                              stylePTSansRegular(color: ThemeColors.splashBG),
+                              styleBaseRegular(color: ThemeColors.splashBG),
                           controller: stopPriceController,
                           placeholder: "Stop Price",
                           keyboardType:
@@ -860,7 +870,7 @@ class _ContainerConditioalBuySellState
                       children: [
                         ScreenTitle(
                           title: "Stop Price",
-                          style: stylePTSansBold(color: ThemeColors.splashBG),
+                          style: styleBaseBold(color: ThemeColors.splashBG),
                           subTitle: selectedIndex == 0
                               ? portfolioManager
                                       .userData
@@ -902,10 +912,9 @@ class _ContainerConditioalBuySellState
                           cursorColor: ThemeColors.neutral6,
                           fillColor: ThemeColors.neutral5,
                           borderColor: ThemeColors.neutral5,
-                          style:
-                              stylePTSansRegular(color: ThemeColors.splashBG),
+                          style: styleBaseRegular(color: ThemeColors.splashBG),
                           hintStyle:
-                              stylePTSansRegular(color: ThemeColors.splashBG),
+                              styleBaseRegular(color: ThemeColors.splashBG),
                           controller: stopPriceController,
                           placeholder: "Stop Price",
                           keyboardType:
@@ -914,7 +923,7 @@ class _ContainerConditioalBuySellState
                         const SpacerVertical(),
                         ScreenTitle(
                           title: "Limit Price",
-                          style: stylePTSansBold(color: ThemeColors.splashBG),
+                          style: styleBaseBold(color: ThemeColors.splashBG),
                           subTitle: selectedIndex == 0
                               ? portfolioManager
                                       .userData
@@ -956,10 +965,9 @@ class _ContainerConditioalBuySellState
                           cursorColor: ThemeColors.neutral6,
                           fillColor: ThemeColors.neutral5,
                           borderColor: ThemeColors.neutral5,
-                          style:
-                              stylePTSansRegular(color: ThemeColors.splashBG),
+                          style: styleBaseRegular(color: ThemeColors.splashBG),
                           hintStyle:
-                              stylePTSansRegular(color: ThemeColors.splashBG),
+                              styleBaseRegular(color: ThemeColors.splashBG),
                           controller: limitPriceController,
                           placeholder: "Limit Price",
                           keyboardType:
@@ -975,7 +983,7 @@ class _ContainerConditioalBuySellState
                       children: [
                         ScreenTitle(
                           title: "Trail Price",
-                          style: stylePTSansBold(color: ThemeColors.splashBG),
+                          style: styleBaseBold(color: ThemeColors.splashBG),
                           subTitle: selectedIndex == 0
                               ? portfolioManager
                                       .userData
@@ -1017,10 +1025,9 @@ class _ContainerConditioalBuySellState
                           cursorColor: ThemeColors.neutral6,
                           fillColor: ThemeColors.neutral5,
                           borderColor: ThemeColors.neutral5,
-                          style:
-                              stylePTSansRegular(color: ThemeColors.splashBG),
+                          style: styleBaseRegular(color: ThemeColors.splashBG),
                           hintStyle:
-                              stylePTSansRegular(color: ThemeColors.splashBG),
+                              styleBaseRegular(color: ThemeColors.splashBG),
                           controller: stopPriceController,
                           placeholder: "Trail Price",
                           keyboardType:

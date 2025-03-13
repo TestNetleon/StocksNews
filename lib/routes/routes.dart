@@ -51,98 +51,11 @@ import 'package:stocks_news_new/managers/referral/referral_manager.dart';
 import 'package:stocks_news_new/managers/referral/referral_points_manager.dart';
 import 'package:stocks_news_new/managers/watchlist.dart';
 import 'package:stocks_news_new/models/my_home.dart';
-
-import 'package:stocks_news_new/providers/ad_provider.dart';
-import 'package:stocks_news_new/providers/ai_provider.dart';
-import 'package:stocks_news_new/providers/alert_provider.dart';
-import 'package:stocks_news_new/providers/all_stocks_provider.dart';
-import 'package:stocks_news_new/providers/blog_provider.dart';
-import 'package:stocks_news_new/providers/blog_provider_new.dart';
-import 'package:stocks_news_new/providers/compare_stocks_provider.dart';
-import 'package:stocks_news_new/providers/congressional_detail_provider.dart';
-import 'package:stocks_news_new/providers/congressional_provider.dart';
-import 'package:stocks_news_new/providers/contact_us_provider.dart';
-import 'package:stocks_news_new/providers/dividends_provider.dart';
-import 'package:stocks_news_new/providers/dow_30_provider.dart';
-import 'package:stocks_news_new/providers/earnings_provider.dart';
-import 'package:stocks_news_new/providers/faq_provider.dart';
-import 'package:stocks_news_new/providers/fifty_two_weeks_high_provider.dart';
-import 'package:stocks_news_new/providers/fifty_two_weeks_provider.dart';
-import 'package:stocks_news_new/providers/filter_provider.dart';
-import 'package:stocks_news_new/providers/gap_down_provider.dart';
-import 'package:stocks_news_new/providers/gap_up_provider.dart';
-import 'package:stocks_news_new/providers/help_desk.dart';
-import 'package:stocks_news_new/providers/help_desk_provider.dart';
-import 'package:stocks_news_new/providers/high_beta_stocks_providers.dart';
-import 'package:stocks_news_new/providers/high_pe_growth_provider.dart';
-import 'package:stocks_news_new/providers/high_pe_provider.dart';
-import 'package:stocks_news_new/providers/home_provider.dart';
-import 'package:stocks_news_new/providers/insider_trading_company_provider.dart';
-import 'package:stocks_news_new/providers/insider_trading_provider.dart';
-import 'package:stocks_news_new/providers/indices_provider.dart';
-import 'package:stocks_news_new/providers/leaderboard.dart';
-import 'package:stocks_news_new/providers/low_pe_growth_provider.dart';
-import 'package:stocks_news_new/providers/low_pe_provider.dart';
-import 'package:stocks_news_new/providers/low_beta_stocks_providers.dart';
-import 'package:stocks_news_new/providers/membership.dart';
-import 'package:stocks_news_new/providers/more_stocks_provider.dart';
-import 'package:stocks_news_new/providers/morningstar_txn_provider.dart';
-import 'package:stocks_news_new/providers/most_active_provider.dart';
-import 'package:stocks_news_new/providers/most_popular_penny_provider.dart';
-import 'package:stocks_news_new/providers/snp_500_provider.dart';
-import 'package:stocks_news_new/providers/stock_detail_new.dart';
-import 'package:stocks_news_new/providers/store_provider.dart';
-import 'package:stocks_news_new/providers/today_breackout_stocks_provider.dart';
-import 'package:stocks_news_new/providers/today_top_loser_provider.dart';
-import 'package:stocks_news_new/screens/auth/newFlow/login.dart';
-import 'package:stocks_news_new/providers/unusual_trading_volume_provider.dart';
-import 'package:stocks_news_new/providers/most_volatile_stocks.dart';
-import 'package:stocks_news_new/providers/negative_beta_stocks_providers.dart';
-import 'package:stocks_news_new/providers/news_detail.provider.dart';
-import 'package:stocks_news_new/providers/news_provider.dart';
-import 'package:stocks_news_new/providers/notification_provider.dart';
-import 'package:stocks_news_new/providers/most_active_penny_stocks_provider.dart';
-import 'package:stocks_news_new/providers/plaid.dart';
-import 'package:stocks_news_new/providers/reddit_twitter_provider.dart';
-import 'package:stocks_news_new/providers/search_provider.dart';
-import 'package:stocks_news_new/providers/sector_industry_provider.dart';
-import 'package:stocks_news_new/providers/stock_screener_provider.dart';
-import 'package:stocks_news_new/providers/terms_policy_provider.dart';
-import 'package:stocks_news_new/providers/today_top_gainer_provider.dart';
-import 'package:stocks_news_new/providers/top_today_penny_stocks_provider.dart';
-import 'package:stocks_news_new/providers/top_trending_provider.dart';
-import 'package:stocks_news_new/providers/trending_provider.dart';
-//
-import 'package:stocks_news_new/providers/user_provider.dart';
-
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
-import 'package:stocks_news_new/providers/watchlist_provider.dart';
-import 'package:stocks_news_new/providers/what_we_do_provider.dart';
-import 'package:stocks_news_new/screens/affiliate/index.dart';
-import 'package:stocks_news_new/screens/auth/qrScan/index.dart';
-import 'package:stocks_news_new/screens/auth/signup/signup_success.dart';
-import 'package:stocks_news_new/screens/marketData/dividends/dividends.dart';
-import 'package:stocks_news_new/screens/marketData/earnings/earnings.dart';
-import 'package:stocks_news_new/screens/marketData/fiftyTwoWeeks/index.dart';
-import 'package:stocks_news_new/screens/marketData/highLowPE/index.dart';
-import 'package:stocks_news_new/screens/marketData/highsLowsBetaStocks/index.dart';
-import 'package:stocks_news_new/screens/marketData/indices/index.dart';
-import 'package:stocks_news_new/screens/marketData/mostActive/index.dart';
-import 'package:stocks_news_new/screens/faq/index.dart';
-import 'package:stocks_news_new/screens/homeSpash/index.dart';
-import 'package:stocks_news_new/screens/myAccount/my_account.dart';
-import 'package:stocks_news_new/screens/notifications/index.dart';
-import 'package:stocks_news_new/screens/search/search.dart';
-import 'package:stocks_news_new/screens/start/index.dart';
-import 'package:stocks_news_new/screens/tabs/compareNew/index.dart';
-import 'package:stocks_news_new/screens/tabs/compareStocks/compare_stocks.dart';
-import 'package:stocks_news_new/screens/tabs/home/widgets/plaid/portfolio/index.dart';
-import 'package:stocks_news_new/screens/trendingIndustries/index.dart';
 import 'package:stocks_news_new/ui/tabs/home/scanner/manager/gainers.dart';
 import 'package:stocks_news_new/ui/tabs/market/industries/industries_view.dart';
 import 'package:stocks_news_new/ui/tabs/market/sectors/sector_view.dart';
-
 import 'package:stocks_news_new/ui/tabs/more/alerts/index.dart';
 import 'package:stocks_news_new/ui/tabs/more/billionaires/billionaires_index.dart';
 import 'package:stocks_news_new/ui/tabs/more/billionaires/crypto_index.dart';
@@ -177,6 +90,7 @@ import 'package:stocks_news_new/ui/tabs/tools/simulator/screens/conditionalOrder
 import 'package:stocks_news_new/ui/tabs/tools/simulator/screens/index.dart';
 import 'package:stocks_news_new/ui/tabs/tools/simulator/screens/tickerSearch/index.dart';
 import 'package:stocks_news_new/ui/tabs/tools/simulator/screens/tradeBuySell/index.dart';
+import 'package:stocks_news_new/ui/theme/manager.dart';
 
 import 'package:stocks_news_new/utils/constants.dart';
 import '../managers/aiAnalysis/ai.dart';
@@ -188,19 +102,8 @@ import '../managers/stockDetail/stock.detail.dart';
 import '../managers/tools.dart';
 import '../managers/user.dart';
 import '../models/my_home_premium.dart';
-import '../providers/offerMembership/black_friday.dart';
-import '../providers/featured_ticker.dart';
-import '../providers/high_low_pe.dart';
-import '../providers/low_prices_stocks.dart';
-import '../providers/missions/provider.dart';
-import '../providers/notification_settings.dart';
-import '../providers/offerMembership/christmas.dart';
-import '../providers/scroll_controller.dart';
-import '../providers/stockAnalysis/provider.dart';
-import '../providers/trending_industries.dart';
-import '../screens/marketData/congressionalData/index.dart';
-import '../screens/marketData/lowPriceStocks/index.dart';
-import '../screens/whatWeDo/index.dart';
+
+import '../screens/AdManager/manager.dart';
 import '../ui/account/auth/login.dart';
 import '../ui/account/auth/verify.dart';
 import '../ui/account/update/delete.dart';
@@ -260,36 +163,6 @@ class Routes {
     MorningStarReportsIndex.path: (_) => const MorningStarReportsIndex(),
 
     //--------------------------------------
-
-    Login.path: (_) => const Login(),
-    SignUpSuccess.path: (_) => const SignUpSuccess(),
-    Search.path: (_) => const Search(),
-    FAQ.path: (_) => const FAQ(),
-    Notifications.path: (_) => const Notifications(),
-    //Alerts.path: (_) => const Alerts(),
-    //WatchList.path: (_) => const WatchList(),
-    LowPriceStocksIndex.path: (_) => const LowPriceStocksIndex(),
-    CongressionalIndex.path: (_) => const CongressionalIndex(),
-    StartIndex.path: (_) => const StartIndex(),
-    MyAccount.path: (_) => const MyAccount(),
-    //ContactUs.path: (_) => const ContactUs(),
-    CompareStocks.path: (_) => const CompareStocks(),
-    QrScan.path: (_) => const QrScan(),
-    TrendingIndustries.path: (_) => const TrendingIndustries(),
-    HighLowPEIndex.path: (_) => const HighLowPEIndex(),
-    FiftyTwoWeeksIndex.path: (_) => const FiftyTwoWeeksIndex(),
-    HighLowsBetaStocksIndex.path: (_) => const HighLowsBetaStocksIndex(),
-    IndicesIndex.path: (_) => const IndicesIndex(),
-    MostActiveIndex.path: (_) => const MostActiveIndex(),
-    WhatWeDoIndex.path: (_) => const WhatWeDoIndex(),
-    HomeSplash.path: (_) => const HomeSplash(),
-    // ServerErrorWidget.path: (_) => const ServerErrorWidget(),
-    // InternetErrorWidget.path: (_) => const InternetErrorWidget(),
-    DividendsScreen.path: (_) => const DividendsScreen(),
-    CompareNew.path: (_) => const CompareNew(),
-    EarningsScreen.path: (_) => const EarningsScreen(),
-    HomePlaidAdded.path: (_) => const HomePlaidAdded(),
-    ReferAFriend.path: (_) => const ReferAFriend(),
   };
 
   static Route bottomToTopScreenRoute(widget) {
@@ -581,172 +454,11 @@ class Routes {
     );
   }
 
-  // static Route<dynamic> handleDeepLink(Uri uri) {
-  //   DeeplinkEnum type = containsSpecificPath(uri);
-  //   String slug = extractLastPathComponent(uri);
-
-  //   Utils().showLog("GENERATED ROUT DeepLinking ***=> $type  $slug");
-  //   popHome = false;
-
-  //   Timer(const Duration(seconds: 5), () {
-  //     onDeepLinking = false;
-  //   });
-
-  //   switch (type) {
-  //     // case "blog":
-  //     case DeeplinkEnum.blogDetail:
-  //       return MaterialPageRoute(
-  //         builder: (context) => BlogDetail(slug: slug),
-  //       );
-  //     // case "news":
-  //     case DeeplinkEnum.newsDetail:
-  //       return MaterialPageRoute(
-  //         builder: (context) => NewsDetails(slug: slug),
-  //       );
-  //     // case "stock_detail":
-  //     case DeeplinkEnum.stocksDetail:
-  //       return MaterialPageRoute(
-  //         builder: (context) => StockDetail(symbol: slug),
-  //       );
-  //     // case "dashboard":
-  //     case DeeplinkEnum.dashboard:
-  //       return MaterialPageRoute(builder: (context) => const Tabs());
-  //     // case "login":
-  //     case DeeplinkEnum.login:
-  //       Timer(const Duration(seconds: 1), () async {
-  //         bool userPresent = false;
-  //         UserProvider provider =
-  //             navigatorKey.currentContext!.read<UserProvider>();
-  //         if (await provider.checkForUser()) {
-  //           userPresent = true;
-  //         }
-  //         // if (!userPresent) loginSheet();
-  //         if (!userPresent) loginFirstSheet();
-  //       });
-  //       return MaterialPageRoute(builder: (context) => const Tabs());
-  //     // case "signUp":
-  //     case DeeplinkEnum.signup:
-  //       Timer(const Duration(seconds: 1), () async {
-  //         bool userPresent = false;
-  //         UserProvider provider =
-  //             navigatorKey.currentContext!.read<UserProvider>();
-  //         if (await provider.checkForUser()) {
-  //           userPresent = true;
-  //         }
-  //         // if (!userPresent) signupSheet();
-  //         if (!userPresent) loginFirstSheet();
-  //       });
-  //       return MaterialPageRoute(builder: (context) => const Tabs());
-  //     default:
-  //       // log("HERE ");
-  //       return MaterialPageRoute(builder: (context) => const Tabs());
-  //   }
-  // }
-
-  // static Route _errorRoute() {
-// }
-
-// class AllProvider {
   static List<SingleChildWidget> get providers {
     return [
-      ChangeNotifierProvider(create: (_) => UserProvider()),
-      ChangeNotifierProvider(create: (_) => HomeProvider()),
-      ChangeNotifierProvider(create: (_) => SearchProvider()),
-      ChangeNotifierProvider(create: (_) => NewsProvider()),
-      ChangeNotifierProvider(create: (_) => TrendingProvider()),
-      ChangeNotifierProvider(create: (_) => InsiderTradingProvider()),
-      ChangeNotifierProvider(create: (_) => WatchlistProvider()),
-      // ChangeNotifierProvider(create: (_) => StockDetailProvider()),
-      ChangeNotifierProvider(create: (_) => InsiderTradingDetailsProvider()),
-      ChangeNotifierProvider(create: (_) => RedditTwitterProvider()),
-      ChangeNotifierProvider(create: (_) => CompareStocksProvider()),
-      ChangeNotifierProvider(create: (_) => AllStocksProvider()),
-      ChangeNotifierProvider(create: (_) => SectorIndustryProvider()),
-      ChangeNotifierProvider(create: (_) => MoreStocksProvider()),
-      ChangeNotifierProvider(create: (_) => BlogProvider()),
-      ChangeNotifierProvider(create: (_) => TopTrendingProvider()),
-      ChangeNotifierProvider(create: (_) => FeaturedNewsProvider()),
-      ChangeNotifierProvider(create: (_) => HeaderNewsProvider()),
-      ChangeNotifierProvider(create: (_) => AlertProvider()),
-      ChangeNotifierProvider(create: (_) => NewsDetailProvider()),
-      ChangeNotifierProvider(create: (_) => NewsTypeProvider()),
-      ChangeNotifierProvider(create: (_) => NotificationProvider()),
-      ChangeNotifierProvider(create: (_) => FeaturedTickerProvider()),
-      ChangeNotifierProvider(create: (_) => TrendingIndustriesProvider()),
-      ChangeNotifierProvider(create: (_) => NewsCategoryProvider()),
-      ChangeNotifierProvider(create: (_) => LowPriceStocksProvider()),
-      ChangeNotifierProvider(create: (_) => HighLowPeProvider()),
-      // ChangeNotifierProvider(create: (_) => PennyStocksProvider()),
-      ChangeNotifierProvider(create: (_) => FiftyTwoWeeksProvider()),
-      // ChangeNotifierProvider(create: (_) => HighLowBetaStocksProvider()),
-      ChangeNotifierProvider(create: (_) => IndicesProvider()),
-      ChangeNotifierProvider(create: (_) => MostActiveProvider()),
-      ChangeNotifierProvider(create: (_) => WhatWeDoProvider()),
-      ChangeNotifierProvider(create: (_) => TermsAndPolicyProvider()),
-      ChangeNotifierProvider(create: (_) => ContactUsProvider()),
-      ChangeNotifierProvider(create: (_) => FaqProvide()),
-      ChangeNotifierProvider(create: (_) => DividendsProvider()),
-      ChangeNotifierProvider(create: (_) => EarningsProvider()),
-      ChangeNotifierProvider(create: (_) => StockScreenerProvider()),
-      ChangeNotifierProvider(create: (_) => PlaidProvider()),
-      ChangeNotifierProvider(create: (_) => CongressionalProvider()),
-      // ChangeNotifierProvider(create: (_) => PennyStocksProvider()),
-      // ChangeNotifierProvider(create: (_) => FiftyTwoWeeksProvider()),
-      ChangeNotifierProvider(create: (_) => ScrollControllerProvider()),
-      ChangeNotifierProvider(create: (_) => FilterProvider()),
-      ChangeNotifierProvider(create: (_) => GapUpProvider()),
-      ChangeNotifierProvider(create: (_) => GapDownProvider()),
-      ChangeNotifierProvider(create: (_) => BlogProviderNew()),
-      ChangeNotifierProvider(create: (_) => HighPeProvider()),
-      ChangeNotifierProvider(create: (_) => LowPeProvider()),
-      ChangeNotifierProvider(create: (_) => HighPeGrowthProvider()),
-      ChangeNotifierProvider(create: (_) => LowPeGrowthProvider()),
-      ChangeNotifierProvider(create: (_) => TodayTopGainerProvider()),
-      ChangeNotifierProvider(create: (_) => HighBetaStocksProvider()),
-      ChangeNotifierProvider(create: (_) => LowsBetaStocksProvider()),
-      ChangeNotifierProvider(create: (_) => NegativeBetaStocksProvider()),
-      ChangeNotifierProvider(create: (_) => MostActivePennyStocksProviders()),
-      ChangeNotifierProvider(create: (_) => TopTodayPennyStocksProviders()),
-      ChangeNotifierProvider(create: (_) => UnusualTradingVolumeProvider()),
-      ChangeNotifierProvider(create: (_) => MostVolatileStocksProvider()),
-      ChangeNotifierProvider(create: (_) => TodayTopLoserProvider()),
-      ChangeNotifierProvider(create: (_) => TodayBreakoutStockProvider()),
-      ChangeNotifierProvider(create: (_) => Dow30Provider()),
-      ChangeNotifierProvider(create: (_) => SnP500Provider()),
-      ChangeNotifierProvider(create: (_) => StockDetailProviderNew()),
-      ChangeNotifierProvider(create: (_) => MostPopularPennyStocksProviders()),
-      ChangeNotifierProvider(create: (_) => CongressionalDetailProvider()),
-      ChangeNotifierProvider(create: (_) => LeaderBoardProvider()),
-      ChangeNotifierProvider(create: (_) => FiftyTwoWeeksHighProvider()),
-      ChangeNotifierProvider(create: (_) => HelpDeskProvider()),
-      ChangeNotifierProvider(create: (_) => MembershipProvider()),
-      ChangeNotifierProvider(create: (_) => MorningstarTxnProvider()),
-      ChangeNotifierProvider(create: (_) => AIProvider()),
-      ChangeNotifierProvider(create: (_) => StoreProvider()),
-      // ChangeNotifierProvider(create: (_) => TradeProviderNew()),
-      ChangeNotifierProvider(create: (_) => NotificationsSettingProvider()),
-      // ChangeNotifierProvider(create: (_) => TradingSimulatorProvider()),
-      // ChangeNotifierProvider(create: (_) => TradingSearchProvider()),
-      // ChangeNotifierProvider(create: (_) => TsOpenListProvider()),
-      // ChangeNotifierProvider(create: (_) => TsPendingListProvider()),
-      // ChangeNotifierProvider(create: (_) => TsPortfolioProvider()),
-      ChangeNotifierProvider(create: (_) => AdProvider()),
-      ChangeNotifierProvider(create: (_) => NewHelpDeskProvider()),
-      ChangeNotifierProvider(create: (_) => MSAnalysisProvider()),
-      ChangeNotifierProvider(create: (_) => MissionProvider()),
-      // ChangeNotifierProvider(create: (_) => TournamentProvider()),
-      // ChangeNotifierProvider(create: (_) => TournamentTradesProvider()),
-      ChangeNotifierProvider(create: (_) => BlackFridayProvider()),
-      ChangeNotifierProvider(create: (_) => ChristmasProvider()),
-      // ChangeNotifierProvider(create: (_) => TsTransactionListProvider()),
-      // ChangeNotifierProvider(create: (_) => TournamentSearchProvider()),
-      // ChangeNotifierProvider(create: (_) => TournamentLeaderboardProvider()),
-      // ChangeNotifierProvider(create: (_) => ScannerProvider()),
-
       //MARK: New UI providers
       ChangeNotifierProvider(create: (_) => OnboardingManager()),
       ChangeNotifierProvider(create: (_) => MyHomeManager()),
-      // ChangeNotifierProvider(create: (_) => AlertsWatchlistAction()),
       ChangeNotifierProvider(create: (_) => NotificationSettingsManager()),
       ChangeNotifierProvider(create: (_) => UserManager()),
       ChangeNotifierProvider(create: (_) => ToolsManager()),
@@ -757,9 +469,7 @@ class Routes {
       ChangeNotifierProvider(create: (_) => SubscriptionManager()),
       ChangeNotifierProvider(create: (_) => LegalInfoManager()),
       ChangeNotifierProvider(create: (_) => SDManager()),
-      // ChangeNotifierProvider(create: (_) => MarketScannerM()),
-      // ChangeNotifierProvider(create: (_) => TopGainerScannerM()),
-      // ChangeNotifierProvider(create: (_) => TopLoserScannerM()),
+
       ChangeNotifierProvider(create: (_) => AlertsM()),
       ChangeNotifierProvider(create: (_) => WatchListManagers()),
       ChangeNotifierProvider(create: (_) => AlertsWatchlistManager()),
@@ -790,6 +500,7 @@ class Routes {
       ChangeNotifierProvider(create: (_) => HomeGainersManager()),
 
       //SCANNER End---------------
+      ChangeNotifierProvider(create: (_) => AdManager()),
 
       // MARKET DATA Start ---------------
       ChangeNotifierProvider(create: (_) => MarketManager()),
@@ -825,6 +536,8 @@ class Routes {
       ChangeNotifierProvider(create: (_) => EarningsManager()),
       ChangeNotifierProvider(create: (_) => IndustriesManager()),
       ChangeNotifierProvider(create: (_) => SectorsManager()),
+      ChangeNotifierProvider(create: (_) => ThemeManager()),
+
       // MARKET DATA End ---------------
     ];
   }

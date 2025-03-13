@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:stocks_news_new/screens/MsAnalysis/overviewTabs/view/performance/index.dart';
+import 'package:stocks_news_new/ui/aiAnalysis/tabs/overview/performance/index.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 
 class AIRangeProgressBar extends StatelessWidget {

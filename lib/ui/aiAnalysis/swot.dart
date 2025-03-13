@@ -42,7 +42,7 @@ class AISwotItem extends StatelessWidget {
                 children: [
                   Text(
                     label,
-                    style: stylePTSansBold(
+                    style: styleBaseBold(
                       fontSize: 17,
                       color: const Color.fromARGB(255, 195, 195, 195),
                     ),
@@ -50,7 +50,7 @@ class AISwotItem extends StatelessWidget {
                   const SpacerVertical(height: 5),
                   Text(
                     value,
-                    style: stylePTSansBold(
+                    style: styleBaseBold(
                       fontSize: 17,
                       color: color ?? ThemeColors.themeGreen,
                     ),
@@ -79,7 +79,7 @@ class AISwotItem extends StatelessWidget {
                 ),
                 child: Text(
                   keyword,
-                  style: stylePTSansBold(fontSize: 14.0, color: Colors.white),
+                  style: styleBaseBold(fontSize: 14.0, color: Colors.white),
                 ),
               ),
             )

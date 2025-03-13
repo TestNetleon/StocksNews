@@ -59,7 +59,7 @@ class AIPerformanceToday extends StatelessWidget {
                 left: (pricePosition * (msWidthPadding - 60) / 100) + 10,
                 child: AIPointerContainer(
                   isDownwards: true,
-                  style: styleGeorgiaBold(
+                  style: styleBaseBold(
                       color: ThemeColors.background, fontSize: 12),
                   title: price,
                 ),

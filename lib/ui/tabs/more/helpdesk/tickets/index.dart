@@ -30,14 +30,14 @@ class HelpDeskCreateIndex extends StatelessWidget {
           Container(
             constraints: const BoxConstraints(maxHeight: 400),
             decoration: BoxDecoration(
-              color: ThemeColors.white,
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(Pad.pad24),
-                topRight: Radius.circular(Pad.pad24),
-              ),
-              border: Border.all(color: ThemeColors.neutral5)
-            ),
-            padding: const EdgeInsets.symmetric(horizontal: Pad.pad16,vertical: Pad.pad10),
+                color: ThemeColors.white,
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(Pad.pad24),
+                  topRight: Radius.circular(Pad.pad24),
+                ),
+                border: Border.all(color: ThemeColors.neutral5)),
+            padding: const EdgeInsets.symmetric(
+                horizontal: Pad.pad16, vertical: Pad.pad10),
             child: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -46,10 +46,10 @@ class HelpDeskCreateIndex extends StatelessWidget {
                     title: 'Select Ticket Subject',
                   ),
                   manager.data?.helpDesk?.subjects == null ||
-                      manager.data?.helpDesk?.subjects?.isEmpty == true
+                          manager.data?.helpDesk?.subjects?.isEmpty == true
                       ? Text(
-                    manager.errorSubject ?? "N/A",
-                          style: styleSansBold(color: ThemeColors.white),
+                          manager.errorSubject ?? "N/A",
+                          style: styleBaseBold(color: ThemeColors.white),
                         )
                       : HelpDeskReasonsNew(),
                 ],

@@ -241,8 +241,7 @@ class _ViewAllPlansState extends State<ViewAllPlans> {
                       },
                       child: Text(
                         'Terms of Service',
-                        style:
-                            styleGeorgiaRegular(color: ThemeColors.neutral40),
+                        style: styleBaseRegular(color: ThemeColors.neutral40),
                       ),
                     ),
                   ),
@@ -253,8 +252,7 @@ class _ViewAllPlansState extends State<ViewAllPlans> {
                         onTap: _onRestorePurchase,
                         child: Text(
                           'Restore Purchase',
-                          style:
-                              styleGeorgiaRegular(color: ThemeColors.neutral40),
+                          style: styleBaseRegular(color: ThemeColors.neutral40),
                         ),
                       ),
                     ),

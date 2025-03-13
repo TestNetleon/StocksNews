@@ -84,15 +84,15 @@ class BaseTextField extends StatelessWidget {
       enabled: editable,
       textCapitalization: textCapitalization,
       inputFormatters: inputFormatters ?? [allSpecialSymbolsRemove],
-      style: stylePTSansRegular(fontSize: 16),
+      style: styleBaseRegular(fontSize: 16),
       decoration: InputDecoration(
           prefixIcon: prefixIcon,
           suffixIcon: suffixIcon,
           labelText: placeholder,
           hintText: hintText,
-          hintStyle: stylePTSansRegular(color: ThemeColors.neutral40),
+          hintStyle: styleBaseRegular(color: ThemeColors.neutral40),
           // floatingLabelBehavior: FloatingLabelBehavior.auto,
-          labelStyle: stylePTSansRegular(color: ThemeColors.neutral60),
+          labelStyle: styleBaseRegular(color: ThemeColors.neutral60),
           contentPadding:
               contentPadding ?? EdgeInsets.symmetric(horizontal: Pad.pad16),
           filled: filled,

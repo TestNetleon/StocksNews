@@ -44,7 +44,7 @@
 //               Text(
 //                 error,
 //                 textAlign: TextAlign.center,
-//                 style: stylePTSansRegular(color: ThemeColors.white),
+//                 style: styleBaseRegular(color: ThemeColors.white),
 //               ),
 //               const SpacerVertical(height: 40),
 //               Image.asset(

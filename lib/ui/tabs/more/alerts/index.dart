@@ -70,8 +70,10 @@ class _AlertIndexState extends State<AlertIndex> {
                         child: Text(
                           textAlign: TextAlign.start,
                           manager.alertData?.subTitle ?? "",
-                          style: stylePTSansRegular(
-                              fontSize: 16, color: ThemeColors.neutral80,height: 1.6),
+                          style: styleBaseRegular(
+                              fontSize: 16,
+                              color: ThemeColors.neutral80,
+                              height: 1.6),
                         ),
                       ),
                     ),

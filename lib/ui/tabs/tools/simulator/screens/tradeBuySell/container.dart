@@ -55,8 +55,12 @@ class _BuySellContainerState extends State<BuySellContainer> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       focusNode.requestFocus();
-      _availableBalance =
-          context.read<PortfolioManager>().userData?.userDataRes?.tradeBalance ?? 0;
+      _availableBalance = context
+              .read<PortfolioManager>()
+              .userData
+              ?.userDataRes
+              ?.tradeBalance ??
+          0;
     });
   }
 
@@ -128,8 +132,10 @@ class _BuySellContainerState extends State<BuySellContainer> {
           selectedStock: widget.selectedStock,
           date: response.data['result']['created_date'],
         );
-        Navigator.popUntil(navigatorKey.currentContext!, (route) => route.isFirst);
-        Navigator.pushNamed(navigatorKey.currentContext!, SimulatorIndex.path,arguments: {"initialIndex":1});
+        Navigator.popUntil(
+            navigatorKey.currentContext!, (route) => route.isFirst);
+        Navigator.pushNamed(navigatorKey.currentContext!, SimulatorIndex.path,
+            arguments: {"initialIndex": 1});
 
         _clear();
         await showTsOrderSuccessSheet(order, widget.selectedStock);
@@ -154,7 +160,8 @@ class _BuySellContainerState extends State<BuySellContainer> {
     }
 
     if (widget.selectedStock == StockType.buy) {
-      if (invested > (portfolioManager.userData?.userDataRes?.tradeBalance ?? 0)) {
+      if (invested >
+          (portfolioManager.userData?.userDataRes?.tradeBalance ?? 0)) {
         popUpAlert(
           message: "Insufficient available balance to place this order.",
           title: "Alert",
@@ -168,10 +175,10 @@ class _BuySellContainerState extends State<BuySellContainer> {
           "quantity": controller.text,
           "order_type": 'MARKET_ORDER',
           "duration": "GOOD_UNTIL_CANCELLED"
-
         };
 
-        ApiResponse response = await manager.requestBuyShare(request, showProgress: true);
+        ApiResponse response =
+            await manager.requestBuyShare(request, showProgress: true);
         Utils().showLog('~~~~~${response.status}~~~~');
         if (response.status) {
           num? numPrice = response.data['result']['executed_at'];
@@ -194,8 +201,10 @@ class _BuySellContainerState extends State<BuySellContainer> {
             selectedStock: widget.selectedStock,
             date: response.data['result']['created_date'],
           );
-          Navigator.popUntil(navigatorKey.currentContext!, (route) => route.isFirst);
-          Navigator.pushNamed(navigatorKey.currentContext!, SimulatorIndex.path,arguments: {"initialIndex":isPending ?1:0});
+          Navigator.popUntil(
+              navigatorKey.currentContext!, (route) => route.isFirst);
+          Navigator.pushNamed(navigatorKey.currentContext!, SimulatorIndex.path,
+              arguments: {"initialIndex": isPending ? 1 : 0});
 
           _clear();
           await showTsOrderSuccessSheet(order, widget.selectedStock);
@@ -212,15 +221,14 @@ class _BuySellContainerState extends State<BuySellContainer> {
         "action": widget.selectedStock == StockType.sell
             ? "SELL"
             : widget.selectedStock == StockType.short
-            ? "SHORT"
-            : "BUY_TO_COVER",
+                ? "SHORT"
+                : "BUY_TO_COVER",
         "symbol": detailRes?.symbol,
         "order_type": 'MARKET_ORDER',
         "duration": "GOOD_UNTIL_CANCELLED",
         "quantity": controller.text,
-
       };
-     /* FormData request = FormData.fromMap({
+      /* FormData request = FormData.fromMap({
         // "token":
         //     navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
         "action": widget.selectedStock == StockType.sell
@@ -234,7 +242,8 @@ class _BuySellContainerState extends State<BuySellContainer> {
         "quantity": controller.text, //entered value
       });*/
 
-      ApiResponse response = await manager.requestSellShare(request, showProgress: true);
+      ApiResponse response =
+          await manager.requestSellShare(request, showProgress: true);
       Utils().showLog('~~~~~${response.status}~~~~');
 
       if (response.status) {
@@ -262,8 +271,10 @@ class _BuySellContainerState extends State<BuySellContainer> {
         Navigator.pop(context);
         Navigator.pop(context);
 
-        Navigator.popUntil(navigatorKey.currentContext!, (route) => route.isFirst);
-        Navigator.pushNamed(navigatorKey.currentContext!, SimulatorIndex.path,arguments: {"initialIndex":isPending ?1:0});
+        Navigator.popUntil(
+            navigatorKey.currentContext!, (route) => route.isFirst);
+        Navigator.pushNamed(navigatorKey.currentContext!, SimulatorIndex.path,
+            arguments: {"initialIndex": isPending ? 1 : 0});
 
         await showTsOrderSuccessSheet(order, widget.selectedStock);
       } else {
@@ -344,26 +355,24 @@ class _BuySellContainerState extends State<BuySellContainer> {
             children: [
               Expanded(
                 child: CommonCard(
-                  child:
-                  Column(
+                  child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text(
                         'Balance',
-                        style: stylePTSansRegular(
+                        style: styleBaseRegular(
                           fontSize: 12,
                           color: ThemeColors.neutral80,
                         ),
                       ),
-                      SpacerVertical(height:  Pad.pad10),
+                      SpacerVertical(height: Pad.pad10),
                       Text(
-                        portfolioManager.userData?.userDataRes?.tradeBalance != null
+                        portfolioManager.userData?.userDataRes?.tradeBalance !=
+                                null
                             ? "\$${formatBalance(num.parse(portfolioManager.userData!.userDataRes!.tradeBalance.toCurrency()))}"
                             : '\$0',
-                        style: stylePTSansBold(
-                            fontSize: 16,
-                            color: ThemeColors.splashBG
-                        ),
+                        style: styleBaseBold(
+                            fontSize: 16, color: ThemeColors.splashBG),
                       ),
                     ],
                   ),
@@ -371,26 +380,22 @@ class _BuySellContainerState extends State<BuySellContainer> {
               ),
               SpacerHorizontal(width: Pad.pad10),
               Expanded(
-                child:
-                CommonCard(
-                  child:
-                  Column(
+                child: CommonCard(
+                  child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text(
                         'Order Value',
-                        style: stylePTSansRegular(
+                        style: styleBaseRegular(
                           fontSize: 12,
                           color: ThemeColors.neutral80,
                         ),
                       ),
-                      SpacerVertical(height:  Pad.pad10),
+                      SpacerVertical(height: Pad.pad10),
                       Text(
                         "\$${invested.toCurrency()}",
-                        style: stylePTSansBold(
-                            fontSize: 16,
-                            color: ThemeColors.splashBG
-                        ),
+                        style: styleBaseBold(
+                            fontSize: 16, color: ThemeColors.splashBG),
                       ),
                     ],
                   ),
@@ -446,7 +451,7 @@ class _BuySellContainerState extends State<BuySellContainer> {
                   ? ThemeColors.neutral5
                   : (controller.text.isEmpty)
                       ? ThemeColors.neutral5
-                  : ThemeColors.primary100,
+                      : ThemeColors.primary100,
               onPressed: (invested > _availableBalance || invested == 0)
                   ? null
                   : (controller.text.isEmpty)
@@ -464,15 +469,15 @@ class _BuySellContainerState extends State<BuySellContainer> {
               child: RichText(
                 text: TextSpan(
                   text: 'Your current balance is ',
-                  style: stylePTSansRegular(color: ThemeColors.neutral40),
+                  style: styleBaseRegular(color: ThemeColors.neutral40),
                   children: [
                     TextSpan(
                       text: _availableBalance.toFormattedPrice(),
-                      style: stylePTSansBold(
+                      style: styleBaseBold(
                           color: ThemeColors.splashBG, fontSize: 14),
                     ),
                     TextSpan(
-                        style: stylePTSansRegular(color: ThemeColors.neutral40),
+                        style: styleBaseRegular(color: ThemeColors.neutral40),
                         text:
                             '. You cannot purchase shares with an order value that exceeds your available balance.')
                   ],
@@ -490,16 +495,15 @@ class _BuySellContainerState extends State<BuySellContainer> {
               child: RichText(
                 text: TextSpan(
                   text: 'Your current share holding is ',
-                  style: stylePTSansRegular(color:ThemeColors.neutral40),
+                  style: styleBaseRegular(color: ThemeColors.neutral40),
                   children: [
                     TextSpan(
                       text: '${widget.qty}',
-                      style: stylePTSansBold(
+                      style: styleBaseBold(
                           color: ThemeColors.splashBG, fontSize: 14),
                     ),
                     TextSpan(
-                        style:
-                        stylePTSansRegular(color: ThemeColors.neutral40),
+                        style: styleBaseRegular(color: ThemeColors.neutral40),
                         text:
                             '. You cannot sell more shares than you currently own.')
                   ],
@@ -526,7 +530,8 @@ class _BuySellContainerState extends State<BuySellContainer> {
                   SpacerVertical(),
                   Text(
                     'Enter number of shares',
-                    style: styleGeorgiaRegular(color: ThemeColors.neutral80,fontSize: 18),
+                    style: styleBaseRegular(
+                        color: ThemeColors.neutral80, fontSize: 18),
                   ),
                   TextfieldTrade(
                     controller: controller,
@@ -539,14 +544,13 @@ class _BuySellContainerState extends State<BuySellContainer> {
                     counter: _keyCounter,
                     lastEntered: _lastEntered,
                   ),
-
                   if (widget.qty != null &&
                       widget.selectedStock != StockType.short)
                     Container(
                       margin: EdgeInsets.only(top: 10),
                       child: Text(
                         'Available quantity - ${widget.qty ?? 0}',
-                        style: styleGeorgiaBold(),
+                        style: styleBaseBold(),
                       ),
                     ),
                 ],

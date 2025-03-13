@@ -4,7 +4,7 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/api/apis.dart';
 import 'package:stocks_news_new/database/preference.dart';
-import 'package:stocks_news_new/providers/user_provider.dart';
+import 'package:stocks_news_new/managers/user.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/service/appsFlyer/service.dart';
 import 'package:stocks_news_new/utils/constants.dart';
@@ -101,7 +101,7 @@ class AmplitudeService {
     // if (kDebugMode) return;
 
     try {
-      UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
+      UserManager provider = navigatorKey.currentContext!.read<UserManager>();
       String? fcmToken = await Preference.getFcmToken();
       String? address = await Preference.getLocation();
       PackageInfo packageInfo = await PackageInfo.fromPlatform();
@@ -206,7 +206,7 @@ class AmplitudeService {
     required String companyName,
   }) async {
     try {
-      UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
+      UserManager provider = navigatorKey.currentContext!.read<UserManager>();
       PackageInfo packageInfo = await PackageInfo.fromPlatform();
       String versionName = packageInfo.version;
       String buildNumber = packageInfo.buildNumber;
@@ -257,7 +257,7 @@ class AmplitudeService {
     required String companyName,
   }) async {
     try {
-      UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
+      UserManager provider = navigatorKey.currentContext!.read<UserManager>();
       PackageInfo packageInfo = await PackageInfo.fromPlatform();
       String versionName = packageInfo.version;
       String buildNumber = packageInfo.buildNumber;
@@ -307,7 +307,7 @@ class AmplitudeService {
     String? selfText,
   }) async {
     try {
-      UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
+      UserManager provider = navigatorKey.currentContext!.read<UserManager>();
       PackageInfo packageInfo = await PackageInfo.fromPlatform();
       String versionName = packageInfo.version;
       String buildNumber = packageInfo.buildNumber;

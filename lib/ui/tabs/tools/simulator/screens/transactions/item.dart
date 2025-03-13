@@ -9,7 +9,6 @@ import 'package:stocks_news_new/widgets/cache_network_image.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
-
 class TsTransactionListItem extends StatelessWidget {
   final TsPendingListRes? item;
   final Function()? onTap;
@@ -22,7 +21,8 @@ class TsTransactionListItem extends StatelessWidget {
       child: Column(
         children: [
           Container(
-            margin: const EdgeInsets.symmetric(horizontal: Pad.pad16, vertical: Pad.pad5),
+            margin: const EdgeInsets.symmetric(
+                horizontal: Pad.pad16, vertical: Pad.pad5),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -49,7 +49,8 @@ class TsTransactionListItem extends StatelessWidget {
                             visible: item?.symbol != null && item?.symbol != '',
                             child: Text(
                               "${item?.symbol}",
-                              style: stylePTSansBold(fontSize: 16,color: ThemeColors.splashBG),
+                              style: styleBaseBold(
+                                  fontSize: 16, color: ThemeColors.splashBG),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                             ),
@@ -59,7 +60,7 @@ class TsTransactionListItem extends StatelessWidget {
                                 item?.company != null && item?.company != '',
                             child: Text(
                               "${item?.company}",
-                              style: stylePTSansRegular(
+                              style: styleBaseRegular(
                                 fontSize: 14,
                                 color: ThemeColors.neutral40,
                               ),
@@ -78,7 +79,8 @@ class TsTransactionListItem extends StatelessWidget {
                           visible: item?.quantity != null,
                           child: Text(
                             "${item?.quantity} Qty",
-                            style: stylePTSansBold(fontSize: 16,color: ThemeColors.splashBG),
+                            style: styleBaseBold(
+                                fontSize: 16, color: ThemeColors.splashBG),
                           ),
                         ),
                       ],
@@ -96,7 +98,8 @@ class TsTransactionListItem extends StatelessWidget {
                               item?.tradeStatus == 'PENDING'
                                   ? "Will Execute on"
                                   : 'Executed at',
-                              style: stylePTSansRegular(fontSize: 14,color: ThemeColors.neutral40),
+                              style: styleBaseRegular(
+                                  fontSize: 14, color: ThemeColors.neutral40),
                             ),
                             Padding(
                               padding: const EdgeInsets.only(top: 5),
@@ -104,7 +107,8 @@ class TsTransactionListItem extends StatelessWidget {
                                 item?.tradeStatus == 'PENDING'
                                     ? "Price at Market"
                                     : item?.price ?? '0',
-                                style: styleGeorgiaBold(fontSize: 16,color: ThemeColors.splashBG),
+                                style: styleBaseBold(
+                                    fontSize: 16, color: ThemeColors.splashBG),
                               ),
                             ),
                           ],
@@ -127,13 +131,16 @@ class TsTransactionListItem extends StatelessWidget {
                             children: [
                               Text(
                                 'Order value',
-                                style: stylePTSansRegular(fontSize: 14,color: ThemeColors.neutral40),
+                                style: styleBaseRegular(
+                                    fontSize: 14, color: ThemeColors.neutral40),
                               ),
                               Padding(
                                 padding: const EdgeInsets.only(top: 5),
                                 child: Text(
                                   item?.investedValue ?? 'N/A',
-                                  style: styleGeorgiaBold(fontSize: 16,color: ThemeColors.splashBG),
+                                  style: styleBaseBold(
+                                      fontSize: 16,
+                                      color: ThemeColors.splashBG),
                                 ),
                               ),
                             ],
@@ -146,7 +153,8 @@ class TsTransactionListItem extends StatelessWidget {
                 Align(
                   alignment: Alignment.center,
                   child: Visibility(
-                    visible: item?.closePriceLabel != null && item?.closePriceLabel != '',
+                    visible: item?.closePriceLabel != null &&
+                        item?.closePriceLabel != '',
                     child: Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(8),
@@ -157,7 +165,7 @@ class TsTransactionListItem extends StatelessWidget {
                           horizontal: 10, vertical: 2),
                       child: Text(
                         "${item?.closePriceLabel} ${item?.closePrice}",
-                        style: styleGeorgiaBold(
+                        style: styleBaseBold(
                           fontSize: 14,
                           color: ThemeColors.splashBG,
                         ),
@@ -172,7 +180,7 @@ class TsTransactionListItem extends StatelessWidget {
                   alignment: Alignment.center,
                   child: Text(
                     '${item?.date}',
-                    style: styleGeorgiaRegular(
+                    style: styleBaseRegular(
                       color: ThemeColors.neutral40,
                       fontSize: 14,
                     ),

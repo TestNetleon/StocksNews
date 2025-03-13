@@ -383,13 +383,13 @@
 //                           // Text(
 //                           //   provider.homeTrendingRes?.loginTitle ??
 //                           //       "Get Started With Your Stocks Journey",
-//                           //   style: stylePTSansBold(fontSize: 28),
+//                           //   style: styleBaseBold(fontSize: 28),
 //                           //   textAlign: TextAlign.center,
 //                           // ),
 //                           HtmlWidget(
 //                             provider.homeTrendingRes?.loginTitle ??
 //                                 "Get Started With Your Stocks Journey",
-//                             textStyle: stylePTSansBold(fontSize: 28),
+//                             textStyle: styleBaseBold(fontSize: 28),
 
 //                             // textAlign: TextAlign.center,
 //                           ),
@@ -397,7 +397,7 @@
 //                           Text(
 //                             provider.homeTrendingRes?.loginText ??
 //                                 "Log in or Sign up",
-//                             style: stylePTSansRegular(
+//                             style: styleBaseRegular(
 //                               fontSize: 16,
 //                               color: ThemeColors.greyText,
 //                             ),
@@ -440,7 +440,7 @@
 //                               ),
 //                               Flexible(
 //                                 child: ThemeInputField(
-//                                   style: stylePTSansRegular(
+//                                   style: styleBaseRegular(
 //                                     color: Colors.black,
 //                                     fontSize: 18,
 //                                   ),
@@ -485,7 +485,7 @@
 //                             padding: EdgeInsets.symmetric(horizontal: 8.sp),
 //                             child: Text(
 //                               "or continue with",
-//                               style: stylePTSansRegular(
+//                               style: styleBaseRegular(
 //                                 fontSize: 12,
 //                                 color: ThemeColors.greyText,
 //                               ),
@@ -515,7 +515,7 @@
 //                               ),
 //                               Text(
 //                                 "Continue with Google",
-//                                 style: stylePTSansRegular(fontSize: 15),
+//                                 style: styleBaseRegular(fontSize: 15),
 //                                 textAlign: TextAlign.center,
 //                               ),
 //                             ],
@@ -574,7 +574,7 @@
 //                                   ),
 //                                   Text(
 //                                     "Continue with Apple",
-//                                     style: stylePTSansRegular(
+//                                     style: styleBaseRegular(
 //                                         fontSize: 15,
 //                                         color: ThemeColors.background),
 //                                     textAlign: TextAlign.center,

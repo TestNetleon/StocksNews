@@ -33,8 +33,8 @@ import 'package:stocks_news_new/managers/market/stocks/mostActive/unusualTrading
 import 'package:stocks_news_new/managers/market/stocks/pennyStocks/mostActive/most_active.dart';
 import 'package:stocks_news_new/managers/market/stocks/pennyStocks/mostPopular/most_popular.dart';
 import 'package:stocks_news_new/managers/market/stocks/pennyStocks/topTodays/top_tadays.dart';
+import 'package:stocks_news_new/managers/user.dart';
 import 'package:stocks_news_new/models/market/market_res.dart';
-import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/utils.dart';
@@ -62,7 +62,7 @@ class MarketManager extends ChangeNotifier {
   Future getData() async {
     try {
       setStatus(Status.loading);
-      UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
+      UserManager provider = navigatorKey.currentContext!.read<UserManager>();
       Map request = {'token': provider.user?.token ?? ''};
 
       ApiResponse response = await apiRequest(

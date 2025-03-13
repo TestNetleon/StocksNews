@@ -68,8 +68,10 @@ class SearchTicker extends StatelessWidget {
             children: [
               BaseHeading(
                 title: symbolRes?.title,
-                margin: EdgeInsets.symmetric(horizontal: Pad.pad16,vertical: Pad.pad5),
-                titleStyle: stylePTSansBold(color: ThemeColors.splashBG,fontSize:24),
+                margin: EdgeInsets.symmetric(
+                    horizontal: Pad.pad16, vertical: Pad.pad5),
+                titleStyle:
+                    styleBaseBold(color: ThemeColors.splashBG, fontSize: 24),
               ),
               ListView.separated(
                 shrinkWrap: true,

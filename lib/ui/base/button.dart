@@ -76,7 +76,7 @@ class BaseButton extends StatelessWidget {
               children: [
                 Image.asset(
                   icon ?? '',
-                  color: iconColor??ThemeColors.neutral60,
+                  color: iconColor ?? ThemeColors.neutral60,
                   height: 17,
                   width: 17,
                 ),
@@ -90,7 +90,7 @@ class BaseButton extends StatelessWidget {
             textUppercase ? text.toUpperCase() : text,
             style: textStyle ??
                 (fontBold
-                    ? stylePTSansBold(
+                    ? styleBaseBold(
                         fontSize: textSize,
                         color: onPressed == null ? disableTextColor : textColor,
                       )

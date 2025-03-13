@@ -29,7 +29,10 @@ class CryptoItem extends StatelessWidget {
                 child: SizedBox(
                   width: 20,
                   height: 20,
-                  child: ThemeImageView(url: item?.qouteLeft ?? "",fit: BoxFit.fill,),
+                  child: ThemeImageView(
+                    url: item?.qouteLeft ?? "",
+                    fit: BoxFit.fill,
+                  ),
                 ),
               ),
               Visibility(
@@ -42,21 +45,17 @@ class CryptoItem extends StatelessWidget {
               ),
             ],
           ),
-          SpacerVertical(
-            height: Pad.pad16
-          ),
+          SpacerVertical(height: Pad.pad16),
           Visibility(
             visible: item?.tweet != null && item?.tweet != '',
-            child:  Text(
+            child: Text(
               "${item?.tweet}",
-              style: stylePTSansBold(fontSize: 16,color: ThemeColors.splashBG),
+              style: styleBaseBold(fontSize: 16, color: ThemeColors.splashBG),
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
             ),
           ),
-          SpacerVertical(
-              height: Pad.pad10
-          ),
+          SpacerVertical(height: Pad.pad10),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -64,9 +63,10 @@ class CryptoItem extends StatelessWidget {
               Expanded(
                 child: Visibility(
                   visible: item?.twitterName != null && item?.twitterName != '',
-                  child:  Text(
+                  child: Text(
                     "- ${item?.twitterName}",
-                    style: stylePTSansRegular(fontSize: 16,color: ThemeColors.splashBG),
+                    style: styleBaseRegular(
+                        fontSize: 16, color: ThemeColors.splashBG),
                   ),
                 ),
               ),
@@ -85,7 +85,6 @@ class CryptoItem extends StatelessWidget {
               ),
             ],
           ),
-
         ],
       ),
     );

@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:appsflyer_sdk/appsflyer_sdk.dart';
 import 'package:flutter/foundation.dart';
 import 'package:provider/provider.dart';
-import 'package:stocks_news_new/providers/user_provider.dart';
+import 'package:stocks_news_new/managers/user.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import '../../api/apis.dart';
@@ -130,7 +130,7 @@ class AppsFlyerService {
   }
 
   Future createUserInvitationLink() async {
-    UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
+    UserManager provider = navigatorKey.currentContext!.read<UserManager>();
 
     AppsFlyerInviteLinkParams params = AppsFlyerInviteLinkParams(
       brandDomain: 'pagelink.stocks.news',

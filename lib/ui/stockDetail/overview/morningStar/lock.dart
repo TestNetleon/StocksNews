@@ -95,7 +95,7 @@ class _SDMorningStarLockState extends State<SDMorningStarLock> {
                 const SpacerVertical(),
                 Text(
                   lockInformation?.readingTitle ?? '',
-                  style: stylePTSansBold(
+                  style: styleBaseBold(
                     fontSize: 18,
                   ),
                   textAlign: TextAlign.center,
@@ -103,7 +103,7 @@ class _SDMorningStarLockState extends State<SDMorningStarLock> {
                 const SpacerVertical(height: 10),
                 Text(
                   lockInformation?.readingHeading ?? '',
-                  style: stylePTSansRegular(
+                  style: styleBaseRegular(
                     fontSize: 14,
                     height: 1.3,
                   ),
@@ -112,7 +112,7 @@ class _SDMorningStarLockState extends State<SDMorningStarLock> {
                 const SpacerVertical(height: 10),
                 Text(
                   lockInformation?.readingSubtitle ?? '',
-                  style: stylePTSansRegular(
+                  style: styleBaseRegular(
                     fontSize: 14,
                     height: 1.3,
                   ),

@@ -9,15 +9,15 @@ import 'package:sms_autofill/sms_autofill.dart';
 import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/managers/user.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
-import 'package:stocks_news_new/screens/auth/otp/pinput_phone.dart';
 import 'package:stocks_news_new/ui/account/auth/sent_code_text.dart';
+import 'package:stocks_news_new/ui/account/extra/pinput.dart';
 import 'package:stocks_news_new/ui/base/app_bar.dart';
+import 'package:stocks_news_new/ui/base/scaffold.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/utils/utils.dart';
-import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
@@ -212,7 +212,7 @@ class _JoinReferVerificationIndexState extends State<JoinReferVerificationIndex>
 
   @override
   Widget build(BuildContext context) {
-    return BaseContainer(
+    return BaseScaffold(
       appBar: BaseAppBar(showBack: true),
       body: SingleChildScrollView(
         child: Padding(
@@ -224,7 +224,7 @@ class _JoinReferVerificationIndexState extends State<JoinReferVerificationIndex>
                 alignment: Alignment.center,
                 child: Text(
                   "Enter Validation Code",
-                  style: stylePTSansBold(fontSize: 32),
+                  style: styleBaseBold(fontSize: 32),
                 ),
               ),
               const SpacerVertical(height: 8),
@@ -232,7 +232,7 @@ class _JoinReferVerificationIndexState extends State<JoinReferVerificationIndex>
                 text: "${widget.countryCode} ${widget.phone}",
               ),
               const SpacerVertical(),
-              CommonPinputPhone(
+              AccountPinput(
                 focusNode: myFocusNode,
                 controller: _controller,
                 onCompleted: (p0) {
@@ -252,7 +252,7 @@ class _JoinReferVerificationIndexState extends State<JoinReferVerificationIndex>
                           textAlign: TextAlign.center,
                           text: TextSpan(
                             text: "Re-send Code",
-                            style: stylePTSansBold(
+                            style: styleBaseBold(
                               fontSize: 18,
                               color: ThemeColors.secondary100,
                             ),
@@ -271,14 +271,14 @@ class _JoinReferVerificationIndexState extends State<JoinReferVerificationIndex>
                           children: [
                             TextSpan(
                               text: "${startTiming}Sec",
-                              style: stylePTSansBold(
+                              style: styleBaseBold(
                                 fontSize: 18,
                                 color: ThemeColors.secondary100,
                               ),
                             ),
                           ],
                           text: "Resend OTP in ",
-                          style: stylePTSansRegular(fontSize: 18),
+                          style: styleBaseRegular(fontSize: 18),
                         ),
                       ),
                     ),

@@ -23,96 +23,103 @@ class Cryptocurrencies extends StatelessWidget {
   Widget build(BuildContext context) {
     BillionairesManager manager = context.watch<BillionairesManager>();
     return BaseLoaderContainer(
-      hasData: manager.billionairesRes!= null,
+      hasData: manager.billionairesRes != null,
       isLoading: manager.isLoadingCrypto,
       error: manager.error,
       showPreparingText: true,
       child: BaseScroll(
-        onRefresh: manager.getCryptoCurrencies,
-        margin: EdgeInsets.zero,
-        children: [
-          Visibility(
-            visible: manager.billionairesRes?.cryptoTweetPost != null,
-            child: ListView.separated(
-              physics: NeverScrollableScrollPhysics(),
-              padding: EdgeInsets.symmetric(horizontal: Pad.pad10),
-              shrinkWrap: true,
-              itemBuilder: (context, index) {
-                CryptoTweetPost? item = manager.billionairesRes?.cryptoTweetPost?[index];
-                return CryptoItem(
-                  item: item,
-                  onTap: () {
-                    Navigator.pushNamed(context, BillionairesDetailIndex.path,arguments: {'slug':item?.slug??""});
-                  },
-                );
-              },
-              separatorBuilder: (context, index) {
-                return SpacerVertical(height: Pad.pad3);
-              },
-              itemCount: manager.billionairesRes?.cryptoTweetPost?.length ?? 0,
+          onRefresh: manager.getCryptoCurrencies,
+          margin: EdgeInsets.zero,
+          children: [
+            Visibility(
+              visible: manager.billionairesRes?.cryptoTweetPost != null,
+              child: ListView.separated(
+                physics: NeverScrollableScrollPhysics(),
+                padding: EdgeInsets.symmetric(horizontal: Pad.pad10),
+                shrinkWrap: true,
+                itemBuilder: (context, index) {
+                  CryptoTweetPost? item =
+                      manager.billionairesRes?.cryptoTweetPost?[index];
+                  return CryptoItem(
+                    item: item,
+                    onTap: () {
+                      Navigator.pushNamed(context, BillionairesDetailIndex.path,
+                          arguments: {'slug': item?.slug ?? ""});
+                    },
+                  );
+                },
+                separatorBuilder: (context, index) {
+                  return SpacerVertical(height: Pad.pad3);
+                },
+                itemCount:
+                    manager.billionairesRes?.cryptoTweetPost?.length ?? 0,
+              ),
             ),
-          ),
-          Visibility(
+            Visibility(
+                visible: manager.billionairesRes?.topTab != null,
+                child: SpacerVertical(height: Pad.pad5)),
+            Visibility(
               visible: manager.billionairesRes?.topTab != null,
-              child: SpacerVertical(height: Pad.pad5)
-          ),
-          Visibility(
-            visible:manager.billionairesRes?.topTab != null,
-            child: Column(
-              children: [
-                BaseTabs(
-                  data: manager.billionairesRes?.topTab?.data??[],
-                  onTap: manager.onScreenChangeInner,
-                ),
-                SpacerVertical(height: Pad.pad10),
-                if (manager.selectedInnerScreen == 0)
-                  TopBilIndex(
-                    topTabs: manager.billionairesRes?.topTab,
+              child: Column(
+                children: [
+                  BaseTabs(
+                    data: manager.billionairesRes?.topTab?.data ?? [],
+                    onTap: manager.onScreenChangeInner,
                   ),
-                if (manager.selectedInnerScreen == 1) SizedBox(),
-              ],
+                  SpacerVertical(height: Pad.pad10),
+                  if (manager.selectedInnerScreen == 0)
+                    TopBilIndex(
+                      topTabs: manager.billionairesRes?.topTab,
+                    ),
+                  if (manager.selectedInnerScreen == 1) SizedBox(),
+                ],
+              ),
             ),
-          ),
-          SpacerVertical(height: Pad.pad5),
-          Visibility(
-              visible: manager.billionairesRes?.recentMentions?.title != null && manager.billionairesRes?.recentMentions?.title!= '',
-              child: BaseHeading(
-                title: manager.billionairesRes?.recentMentions?.title??"",
-                titleStyle: stylePTSansBold(fontSize: 24,color: ThemeColors.splashBG),
-                margin: EdgeInsets.symmetric(horizontal: Pad.pad16),
-
-              )
-          ),
-          SpacerVertical(height: Pad.pad10),
-
-          Visibility(
-            visible: manager.billionairesRes?.recentMentions != null && (manager.billionairesRes?.recentMentions?.data?.isNotEmpty==true),
-            child: ListView.separated(
-              physics: NeverScrollableScrollPhysics(),
-              padding: EdgeInsets.symmetric(horizontal: Pad.pad16),
-              shrinkWrap: true,
-              itemBuilder: (context, index) {
-                CryptoTweetPost? item = manager.billionairesRes?.recentMentions?.data?[index];
-                return MentionItem(
-                  item: item,
-                  onTap: () {
-                    Navigator.pushNamed(context, BillionairesDetailIndex.path,arguments: {'slug':item?.slug??""});
-                  },
-                );
-              },
-              separatorBuilder: (context, index) {
-                return SpacerVertical(height: Pad.pad16);
-              },
-              itemCount: manager.billionairesRes?.recentMentions?.data?.length ?? 0,
+            SpacerVertical(height: Pad.pad5),
+            Visibility(
+                visible:
+                    manager.billionairesRes?.recentMentions?.title != null &&
+                        manager.billionairesRes?.recentMentions?.title != '',
+                child: BaseHeading(
+                  title: manager.billionairesRes?.recentMentions?.title ?? "",
+                  titleStyle:
+                      styleBaseBold(fontSize: 24, color: ThemeColors.splashBG),
+                  margin: EdgeInsets.symmetric(horizontal: Pad.pad16),
+                )),
+            SpacerVertical(height: Pad.pad10),
+            Visibility(
+              visible: manager.billionairesRes?.recentMentions != null &&
+                  (manager.billionairesRes?.recentMentions?.data?.isNotEmpty ==
+                      true),
+              child: ListView.separated(
+                physics: NeverScrollableScrollPhysics(),
+                padding: EdgeInsets.symmetric(horizontal: Pad.pad16),
+                shrinkWrap: true,
+                itemBuilder: (context, index) {
+                  CryptoTweetPost? item =
+                      manager.billionairesRes?.recentMentions?.data?[index];
+                  return MentionItem(
+                    item: item,
+                    onTap: () {
+                      Navigator.pushNamed(context, BillionairesDetailIndex.path,
+                          arguments: {'slug': item?.slug ?? ""});
+                    },
+                  );
+                },
+                separatorBuilder: (context, index) {
+                  return SpacerVertical(height: Pad.pad16);
+                },
+                itemCount:
+                    manager.billionairesRes?.recentMentions?.data?.length ?? 0,
+              ),
             ),
-          ),
 
-          /*SpacerVertical(height: Pad.pad10),
+            /*SpacerVertical(height: Pad.pad10),
             Visibility(
               visible: true,
                 child: BaseHeading(
                   title: "Top 360 Mentions",
-                  titleStyle: stylePTSansBold(fontSize: 24,color: ThemeColors.splashBG),
+                  titleStyle: styleBaseBold(fontSize: 24,color: ThemeColors.splashBG),
                   margin: EdgeInsets.symmetric(horizontal: Pad.pad16,vertical: Pad.pad5),
 
                 )
@@ -127,7 +134,7 @@ class Cryptocurrencies extends StatelessWidget {
                 visible: manager.billionairesRes?.symbolMentionList?.title != null && manager.billionairesRes?.symbolMentionList?.title!= '',
                 child: BaseHeading(
                   title: manager.billionairesRes?.symbolMentionList?.title??"",
-                  titleStyle: stylePTSansBold(fontSize: 24,color: ThemeColors.splashBG),
+                  titleStyle: styleBaseBold(fontSize: 24,color: ThemeColors.splashBG),
                   margin: EdgeInsets.symmetric(horizontal: Pad.pad16,vertical: Pad.pad5),
 
                 )
@@ -143,12 +150,12 @@ class Cryptocurrencies extends StatelessWidget {
                       children: [
                         Text(
                           "Market Cap",
-                          style: stylePTSansRegular(fontSize: 18,color: ThemeColors.neutral7),
+                          style: styleBaseRegular(fontSize: 18,color: ThemeColors.neutral7),
                         ),
                         SpacerVertical(height: Pad.pad5),
                         Text(
                           "\$3.37 T",
-                          style: stylePTSansBold(fontSize: 30,color: ThemeColors.splashBG),
+                          style: styleBaseBold(fontSize: 30,color: ThemeColors.splashBG),
                         ),
                         SpacerVertical(height: Pad.pad5),
                         Visibility(
@@ -166,7 +173,7 @@ class Cryptocurrencies extends StatelessWidget {
                               ),
                               Text(
                                 "\$3.37 (0.02%)",
-                                style: stylePTSansBold(
+                                style: styleBaseBold(
                                   fontSize: 12,
                                   color: 2 >= 0
                                       ? ThemeColors.success120
@@ -186,12 +193,12 @@ class Cryptocurrencies extends StatelessWidget {
                       children: [
                         Text(
                           "Total Volume",
-                          style: stylePTSansRegular(fontSize: 18,color: ThemeColors.neutral7),
+                          style: styleBaseRegular(fontSize: 18,color: ThemeColors.neutral7),
                         ),
                         SpacerVertical(height: Pad.pad5),
                         Text(
                           "\$152.1B",
-                          style: stylePTSansBold(fontSize: 30,color: ThemeColors.splashBG),
+                          style: styleBaseBold(fontSize: 30,color: ThemeColors.splashBG),
                         ),
                         SpacerVertical(height: Pad.pad5),
                         Visibility(
@@ -210,7 +217,7 @@ class Cryptocurrencies extends StatelessWidget {
                               ),
                               Text(
                                 "\$3.37 (0.02%)",
-                                style: stylePTSansBold(
+                                style: styleBaseBold(
                                   fontSize: 12,
                                   color: 2 >= 0
                                       ? ThemeColors.success120
@@ -238,7 +245,7 @@ class Cryptocurrencies extends StatelessWidget {
                   children: [
                     Text(
                       "Dominance",
-                      style: stylePTSansRegular(fontSize: 18,color: ThemeColors.neutral7),
+                      style: styleBaseRegular(fontSize: 18,color: ThemeColors.neutral7),
                     ),
                     SpacerVertical(height: Pad.pad5),
                     Row(
@@ -255,13 +262,13 @@ class Cryptocurrencies extends StatelessWidget {
                                     SpacerHorizontal(width: Pad.pad3),
                                     BaseHeading(
                                       title: "Bitcoin",
-                                      titleStyle: stylePTSansBold(fontSize: 12,color: ThemeColors.black),
+                                      titleStyle: styleBaseBold(fontSize: 12,color: ThemeColors.black),
                                     )
                                   ],
                                 ),
                                 Text(
                                   "58.3%",
-                                  style: stylePTSansBold(fontSize: 26,color: ThemeColors.splashBG),
+                                  style: styleBaseBold(fontSize: 26,color: ThemeColors.splashBG),
                                 ),
                               ],
                             ),
@@ -274,16 +281,10 @@ class Cryptocurrencies extends StatelessWidget {
               ),
             ),*/
 
-          SpacerVertical(height: Pad.pad10),
-
-          CryptoTable(
-              symbolMentionRes:manager.billionairesRes?.symbolMentionList
-          )
-
-
-
-        ]
-      ),
+            SpacerVertical(height: Pad.pad10),
+            CryptoTable(
+                symbolMentionRes: manager.billionairesRes?.symbolMentionList)
+          ]),
     );
   }
 }

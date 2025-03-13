@@ -5,7 +5,7 @@ import 'package:stocks_news_new/models/my_home.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
-import '../../../../widgets/spacer_vertical.dart';
+import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import '../../signals/insiders/company/from_company.dart';
 import '../../signals/insiders/reporting/from_reporting.dart';
 
@@ -41,7 +41,8 @@ class HomeInsiderTradeItem extends StatelessWidget {
                     visible: namePresent,
                     child: Text(
                       data.reportingName ?? "",
-                      style: styleBaseBold(fontSize: 14),
+                      // style: styleBaseBold(fontSize: 14),
+                      style: Theme.of(context).textTheme.bodyLarge,
                     ),
                   ),
                   Visibility(
@@ -61,24 +62,6 @@ class HomeInsiderTradeItem extends StatelessWidget {
               ),
             ),
           ),
-
-          // Visibility(
-          //   visible: data.reportingName != null && data.reportingName != '',
-          //   child: Text(
-          //     data.reportingName ?? '',
-          //     style: styleBaseBold(fontSize: 16),
-          //   ),
-          // ),
-          // Visibility(
-          //   visible: data.typeOfOwner != null && data.typeOfOwner != '',
-          //   child: Text(
-          //     '${data.typeOfOwner}',
-          //     style: styleBaseRegular(
-          //       fontSize: 14,
-          //       color: ThemeColors.neutral40,
-          //     ),
-          //   ),
-          // ),
           Padding(
             padding: const EdgeInsets.only(top: Pad.pad5),
             child: Row(
@@ -111,7 +94,8 @@ class HomeInsiderTradeItem extends StatelessWidget {
                             children: [
                               Text(
                                 data.symbol ?? '',
-                                style: styleBaseBold(),
+                                // style: styleBaseBold(),
+                                style: Theme.of(context).textTheme.displayLarge,
                               ),
                               Text(
                                 data.name ?? '',
@@ -129,7 +113,7 @@ class HomeInsiderTradeItem extends StatelessWidget {
                     ),
                   ),
                 ),
-                SpacerVertical(height: 12),
+                SpacerHorizontal(width: 5),
                 Container(
                   padding: EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                   decoration: BoxDecoration(

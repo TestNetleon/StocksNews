@@ -51,7 +51,7 @@ class BaseLogoutPopUp extends StatelessWidget {
                     // const SpacerVertical(height: 5),
                     Text(
                       "Sign Out",
-                      style: stylePTSansBold(
+                      style: styleBaseBold(
                         color: ThemeColors.background,
                         fontSize: 20,
                       ),
@@ -60,7 +60,7 @@ class BaseLogoutPopUp extends StatelessWidget {
                     Text(
                       "Are you sure you want to sign out?",
                       textAlign: TextAlign.center,
-                      style: stylePTSansRegular(color: ThemeColors.background),
+                      style: styleBaseRegular(color: ThemeColors.background),
                     ),
                     const SpacerVertical(height: 5),
                     Row(
@@ -72,8 +72,7 @@ class BaseLogoutPopUp extends StatelessWidget {
                           },
                           child: Text(
                             "CANCEL",
-                            style:
-                                stylePTSansBold(color: ThemeColors.background),
+                            style: styleBaseBold(color: ThemeColors.background),
                           ),
                         ),
                         TextButton(
@@ -83,8 +82,7 @@ class BaseLogoutPopUp extends StatelessWidget {
                           },
                           child: Text(
                             "LOGOUT",
-                            style:
-                                stylePTSansBold(color: ThemeColors.background),
+                            style: styleBaseBold(color: ThemeColors.background),
                           ),
                         ),
                       ],

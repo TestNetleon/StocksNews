@@ -2,8 +2,8 @@ import 'dart:io';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/fcm/braze_notification_handler.dart';
+import 'package:stocks_news_new/managers/user.dart';
 import 'package:stocks_news_new/modals/user_res.dart';
-import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 
@@ -11,19 +11,12 @@ import '../../database/preference.dart';
 import '../../utils/constants.dart';
 
 class BrazeService {
-  // static final BrazePlugin  NotificationHandler.instance.braze = BrazePlugin(
-  //   customConfigs: {replayCallbacksConfigKey: true},
-  //   brazeSdkAuthenticationErrorHandler: (e) {
-  //     Utils().showLog('authentication error : $e ');
-  //   },
-  // );
-
   Future<void> registerFCM(pushToken) async {
     NotificationHandler.instance.braze.registerPushToken(pushToken);
   }
 
   static Future<void> brazeUserEvent({String? randomID}) async {
-    UserRes? user = navigatorKey.currentContext!.read<UserProvider>().user;
+    UserRes? user = navigatorKey.currentContext!.read<UserManager>().user;
     if (user != null) {
       String? firstName;
       String? lastName;
@@ -96,7 +89,7 @@ class BrazeService {
   }
 
   static Future<void> membershipVisit() async {
-    UserRes? user = navigatorKey.currentContext!.read<UserProvider>().user;
+    UserRes? user = navigatorKey.currentContext!.read<UserManager>().user;
     if (user?.membership?.purchased == 1) return;
     String? fcmToken = await Preference.getFcmToken();
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
@@ -133,7 +126,7 @@ class BrazeService {
     String? source,
     List<String>? featuredStocks,
   }) async {
-    UserRes? user = navigatorKey.currentContext!.read<UserProvider>().user;
+    UserRes? user = navigatorKey.currentContext!.read<UserManager>().user;
 
     Map<String, dynamic> request = {};
 

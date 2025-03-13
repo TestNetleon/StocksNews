@@ -107,7 +107,7 @@ class _AppUpdateContentState extends State<AppUpdateContent> {
                         Expanded(
                           child: Text(
                             widget.extra.appUpdateTitle ?? "",
-                            style: stylePTSansBold(
+                            style: styleBaseBold(
                               color: Colors.black,
                               fontSize: 18,
                             ),
@@ -115,7 +115,7 @@ class _AppUpdateContentState extends State<AppUpdateContent> {
                         ),
                         Text(
                           "V${Platform.isAndroid ? widget.extra.androidBuildVersion : widget.extra.iOSBuildVersion}",
-                          style: stylePTSansBold(
+                          style: styleBaseBold(
                             color: const Color.fromARGB(255, 2, 80, 12),
                             fontSize: 18,
                           ),
@@ -126,7 +126,7 @@ class _AppUpdateContentState extends State<AppUpdateContent> {
                       margin: EdgeInsets.only(top: 5.sp),
                       child: HtmlWidget(
                         widget.extra.appUpdateMsg ?? "",
-                        textStyle: styleGeorgiaRegular(
+                        textStyle: styleBaseRegular(
                           fontSize: 14,
                           height: 1.5,
                           color: Colors.black,

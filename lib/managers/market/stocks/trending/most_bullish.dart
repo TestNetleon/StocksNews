@@ -5,8 +5,8 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/api/api_requester.dart';
 import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/api/apis.dart';
+import 'package:stocks_news_new/managers/user.dart';
 import 'package:stocks_news_new/models/market/most_bullish.dart';
-import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/utils.dart';
@@ -39,7 +39,7 @@ class MostBullishManager extends ChangeNotifier {
       setStatus(Status.loading);
       Map request = {
         "token":
-            navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
+            navigatorKey.currentContext!.read<UserManager>().user?.token ?? "",
       };
 
       ApiResponse response = await apiRequest(

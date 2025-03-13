@@ -5,6 +5,7 @@ import 'package:stocks_news_new/managers/global.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/routes/navigation_observer.dart';
 import 'package:stocks_news_new/ui/stockDetail/index.dart';
+import 'package:stocks_news_new/ui/theme/manager.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -41,155 +42,179 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Padding(
-        // padding: const EdgeInsets.symmetric(vertical: 8.0),
-        padding: const EdgeInsets.all(Pad.pad8),
-        child: Stack(
-          children: [
-            if (searchFieldWidget != null) searchFieldWidget ?? SizedBox(),
-            if ((title == null || title == '') &&
-                searchFieldWidget == null &&
-                showLogo)
-              CenterLogo(isHome: isHome),
-            if (title != null && title != '') CenterTitle(title: title!),
-            Positioned(
-              left: 0,
-              right: 0,
-              top: 0,
-              bottom: 0,
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  // Leading
-                  Row(
+    return Consumer<ThemeManager>(
+      builder: (context, value, child) {
+        bool darkTheme = value.isDarkMode;
+
+        return SafeArea(
+          child: Padding(
+            // padding: const EdgeInsets.symmetric(vertical: 8.0),
+            padding: const EdgeInsets.all(Pad.pad8),
+            child: Stack(
+              children: [
+                if (searchFieldWidget != null) searchFieldWidget ?? SizedBox(),
+                if ((title == null || title == '') &&
+                    searchFieldWidget == null &&
+                    showLogo)
+                  CenterLogo(isHome: isHome),
+                if (title != null && title != '') CenterTitle(title: title!),
+                Positioned(
+                  left: 0,
+                  right: 0,
+                  top: 0,
+                  bottom: 0,
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      if (showBack)
-                        ActionButton(
-                          icon: Images.back,
-                          onTap: () {
-                            if (popHome) {
-                              if (CustomNavigatorObserver().stackCount >= 2 &&
-                                  splashLoaded) {
-                                Navigator.pop(navigatorKey.currentContext!);
-                              } else {
-                                Navigator.popUntil(navigatorKey.currentContext!,
-                                    (route) => route.isFirst);
-                                Navigator.pushReplacementNamed(
-                                    navigatorKey.currentContext!, Tabs.path);
-                                /* Navigator.pushReplacement(
-                                  navigatorKey.currentContext!,
-                                  MaterialPageRoute(
-                                      builder: (_) => const Tabs()),
-                                );*/
-                                popHome = false;
-                              }
-                            } else {
-                              // Navigator.pop(navigatorKey.currentContext!);
-                              if (CustomNavigatorObserver().stackCount >= 2 &&
-                                  splashLoaded) {
-                                Navigator.pop(navigatorKey.currentContext!);
-                              } else {
-                                Navigator.popUntil(navigatorKey.currentContext!,
-                                    (route) => route.isFirst);
-                                Navigator.pushReplacementNamed(
-                                    navigatorKey.currentContext!, Tabs.path);
-                                /* Navigator.pushReplacement(
-                                  navigatorKey.currentContext!,
-                                  MaterialPageRoute(
-                                      builder: (_) => const Tabs()),
-                                );*/
-                                popHome = false;
-                              }
-                            }
-                          },
-                        ),
-                      if (leadingFilterClick != null)
-                        ActionButton(
-                          icon: Images.marketFilter,
-                          size: 22,
-                          padding: EdgeInsets.all(8),
-                          onTap: leadingFilterClick!,
-                        ),
-                      if (showDrawer && !showBack)
-                        Padding(
-                          padding: const EdgeInsets.only(left: 5),
-                          child: GestureDetector(
-                            onTap: () {
-                              closeKeyboard();
-                              Scaffold.of(context).openDrawer();
-                            },
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(Pad.pad999),
-                              child: Container(
-                                height: 30,
-                                width: 30,
-                                decoration:
-                                    BoxDecoration(shape: BoxShape.circle),
-                                child: Image.asset(Images.userPlaceholderNew),
-                              ),
+                      // Leading
+                      Row(
+                        children: [
+                          if (showBack)
+                            ActionButton(
+                              icon: Images.back,
+                              color: darkTheme ? ThemeColors.white : null,
+                              onTap: () {
+                                if (popHome) {
+                                  if (CustomNavigatorObserver().stackCount >=
+                                          2 &&
+                                      splashLoaded) {
+                                    Navigator.pop(navigatorKey.currentContext!);
+                                  } else {
+                                    Navigator.popUntil(
+                                        navigatorKey.currentContext!,
+                                        (route) => route.isFirst);
+                                    Navigator.pushReplacementNamed(
+                                        navigatorKey.currentContext!,
+                                        Tabs.path);
+                                    /* Navigator.pushReplacement(
+                                    navigatorKey.currentContext!,
+                                    MaterialPageRoute(
+                                        builder: (_) => const Tabs()),
+                                  );*/
+                                    popHome = false;
+                                  }
+                                } else {
+                                  // Navigator.pop(navigatorKey.currentContext!);
+                                  if (CustomNavigatorObserver().stackCount >=
+                                          2 &&
+                                      splashLoaded) {
+                                    Navigator.pop(navigatorKey.currentContext!);
+                                  } else {
+                                    Navigator.popUntil(
+                                        navigatorKey.currentContext!,
+                                        (route) => route.isFirst);
+                                    Navigator.pushReplacementNamed(
+                                        navigatorKey.currentContext!,
+                                        Tabs.path);
+                                    /* Navigator.pushReplacement(
+                                    navigatorKey.currentContext!,
+                                    MaterialPageRoute(
+                                        builder: (_) => const Tabs()),
+                                  );*/
+                                    popHome = false;
+                                  }
+                                }
+                              },
                             ),
-                          ),
-                        ),
-                    ],
-                  ),
-                  // Actions
-                  Row(
-                    children: [
-                      if (showNotification)
-                        LeadingNotification(showIndicator: true),
-                      if (showSearch)
-                        ActionButton(
-                          icon: Images.search,
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              createRoute(
-                                BaseSearch(
-                                  stockClick: (p0) {
-                                    if (p0.symbol == null || p0.symbol == '') {
-                                      return;
-                                    }
-                                    Navigator.pushNamed(context, SDIndex.path,
-                                        arguments: {
-                                          'symbol': p0.symbol,
-                                        });
-                                  },
-                                  newsClick: (data) {
-                                    if (data.slug == null || data.slug == '') {
-                                      return;
-                                    }
-                                    Navigator.pushNamed(
-                                        context, NewsDetailIndex.path,
-                                        arguments: {
-                                          'slug': data.slug,
-                                        });
-                                  },
+                          if (leadingFilterClick != null)
+                            ActionButton(
+                              color: darkTheme ? ThemeColors.white : null,
+                              icon: Images.marketFilter,
+                              size: 22,
+                              padding: EdgeInsets.all(8),
+                              onTap: leadingFilterClick!,
+                            ),
+                          if (showDrawer && !showBack)
+                            Padding(
+                              padding: const EdgeInsets.only(left: 5),
+                              child: GestureDetector(
+                                onTap: () {
+                                  closeKeyboard();
+                                  Scaffold.of(context).openDrawer();
+                                },
+                                child: ClipRRect(
+                                  borderRadius:
+                                      BorderRadius.circular(Pad.pad999),
+                                  child: Container(
+                                    height: 30,
+                                    width: 30,
+                                    decoration:
+                                        BoxDecoration(shape: BoxShape.circle),
+                                    child:
+                                        Image.asset(Images.userPlaceholderNew),
+                                  ),
                                 ),
                               ),
-                            );
-                          },
-                        ),
-                      if (shareURL != null)
-                        Padding(
-                          padding: const EdgeInsets.only(left: 8),
-                          child: ActionButton(
-                            size: 38,
-                            icon: Images.shareURL,
-                            onTap: shareURL!,
-                          ),
-                        ),
-                      if (onSaveClick != null)
-                        SaveAction(onSaveClick: onSaveClick!),
+                            ),
+                        ],
+                      ),
+                      // Actions
+                      Row(
+                        children: [
+                          if (showNotification)
+                            LeadingNotification(
+                              showIndicator: true,
+                              color: darkTheme ? ThemeColors.white : null,
+                            ),
+                          if (showSearch)
+                            ActionButton(
+                              color: darkTheme ? ThemeColors.white : null,
+                              icon: Images.search,
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  createRoute(
+                                    BaseSearch(
+                                      stockClick: (p0) {
+                                        if (p0.symbol == null ||
+                                            p0.symbol == '') {
+                                          return;
+                                        }
+                                        Navigator.pushNamed(
+                                            context, SDIndex.path,
+                                            arguments: {
+                                              'symbol': p0.symbol,
+                                            });
+                                      },
+                                      newsClick: (data) {
+                                        if (data.slug == null ||
+                                            data.slug == '') {
+                                          return;
+                                        }
+                                        Navigator.pushNamed(
+                                            context, NewsDetailIndex.path,
+                                            arguments: {
+                                              'slug': data.slug,
+                                            });
+                                      },
+                                    ),
+                                  ),
+                                );
+                              },
+                            ),
+                          if (shareURL != null)
+                            Padding(
+                              padding: const EdgeInsets.only(left: 8),
+                              child: ActionButton(
+                                color: darkTheme ? ThemeColors.white : null,
+                                size: 38,
+                                icon: Images.shareURL,
+                                onTap: shareURL!,
+                              ),
+                            ),
+                          if (onSaveClick != null)
+                            SaveAction(onSaveClick: onSaveClick!),
+                        ],
+                      ),
                     ],
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
-          ],
-        ),
-      ),
+          ),
+        );
+      },
     );
   }
 
@@ -287,9 +312,11 @@ class ActionButton extends StatelessWidget {
 }
 
 class LeadingNotification extends StatelessWidget {
+  final Color? color;
   const LeadingNotification({
     super.key,
     this.showIndicator = false,
+    this.color = ThemeColors.black,
   });
 
   final bool showIndicator;
@@ -308,7 +335,7 @@ class LeadingNotification extends StatelessWidget {
           },
           child: Image.asset(
             Images.notification,
-            color: ThemeColors.black,
+            color: color,
             height: 35,
             width: 35,
           ),

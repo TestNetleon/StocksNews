@@ -10,8 +10,6 @@ import 'package:stocks_news_new/ui/tabs/tools/scanner/models/scanner_port.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
-import '../../../../managers/tools.dart';
-import '../../../../models/tools.dart';
 import 'extra/header.dart';
 import 'gainers.dart';
 
@@ -54,13 +52,13 @@ class _HomeScannerIndexState extends State<HomeScannerIndex> {
                 HomeScannerHeader(
                     isOnline: marketOpenRes?.startStreaming ?? false),
                 HomeScannerGainersIndex(),
-                BaseButton(
-                  text: 'Go to Scanner',
-                  onPressed: () {
-                    ToolsManager manager = context.read<ToolsManager>();
-                    manager.startNavigation(ToolsEnum.scanner);
-                  },
-                ),
+                // BaseButton(
+                //   text: 'Go to Scanner',
+                //   onPressed: () {
+                //     ToolsManager manager = context.read<ToolsManager>();
+                //     manager.startNavigation(ToolsEnum.scanner);
+                //   },
+                // ),
               ],
             ),
             if (lock != null) _lock(lock),

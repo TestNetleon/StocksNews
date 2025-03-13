@@ -6,8 +6,9 @@ import 'package:geolocator/geolocator.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
+import 'package:stocks_news_new/database/preference.dart';
+import 'package:stocks_news_new/managers/user.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
-import 'package:stocks_news_new/screens/affiliate/pointsTransaction/trasnsaction.dart';
 import 'package:stocks_news_new/service/braze/service.dart';
 import 'package:stocks_news_new/ui/account/auth/login.dart';
 import 'package:stocks_news_new/ui/stockDetail/index.dart';
@@ -19,16 +20,13 @@ import 'package:stocks_news_new/ui/tabs/more/referral/index.dart';
 import 'package:stocks_news_new/ui/tabs/tools/simulator/managers/s_pending.dart';
 import 'package:stocks_news_new/ui/tabs/tools/simulator/screens/index.dart';
 import 'package:stocks_news_new/utils/constants.dart';
-import 'package:stocks_news_new/database/preference.dart';
 import '../api/api_requester.dart';
 import '../api/api_response.dart';
 import '../api/apis.dart';
-import '../providers/home_provider.dart';
-import '../providers/user_provider.dart';
+
 import '../ui/tabs/tabs.dart';
 import '../utils/utils.dart';
-import 'package:stocks_news_new/screens/deepLinkScreen/webscreen.dart';
-import '../screens/drawer/widgets/review_app_pop_up.dart';
+import 'package:stocks_news_new/screens/landing/page.dart';
 
 class BrazeNotificationService {
   BrazeNotificationService._internal();
@@ -72,7 +70,7 @@ class BrazeNotificationService {
     try {
       Map request = {
         "token":
-            navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
+            navigatorKey.currentContext!.read<UserManager>().user?.token ?? "",
         "fcm_token": value ?? "",
         "platform": Platform.operatingSystem,
         "address": address ?? "",
@@ -93,10 +91,7 @@ class BrazeNotificationService {
       Extra? extra = response.extra is Extra ? response.extra : null;
 
       if (response.status) {
-        navigatorKey.currentContext!.read<HomeProvider>().setSheetText(
-              loginText: extra?.loginText,
-              signupText: extra?.signUpText,
-            );
+        //
         if (extra?.tempUser != null) {
           BrazeService.brazeUserEvent(randomID: extra?.tempUser?.userId);
         }
@@ -177,7 +172,7 @@ class BrazeNotificationService {
         Navigator.push(
           navigatorKey.currentContext!,
           MaterialPageRoute(
-            builder: (context) => WebviewLink(
+            builder: (context) => LandingPageIndex(
               stringURL: slug,
               // notificationId: notificationId,
             ),
@@ -226,13 +221,6 @@ class BrazeNotificationService {
         popHome = false;
         if (whenAppKilled) await Future.delayed(const Duration(seconds: 3));
         //review pop up
-        showDialog(
-          context: navigatorKey.currentContext!,
-          barrierColor: Colors.black.withOpacity(0.5),
-          builder: (context) {
-            return const ReviewAppPopUp();
-          },
-        );
       } else if (slug != '' &&
               slug != null &&
               type == NotificationType.stockDetail.name ||
@@ -317,16 +305,7 @@ class BrazeNotificationService {
           // subscribe();
         }
       } else if (type == NotificationType.pointTransaction.name) {
-        Navigator.push(
-          navigatorKey.currentContext!,
-          MaterialPageRoute(
-            builder: (_) => AffiliateTransaction(
-              fromDrawer: true,
-              // notificationId: notificationId,
-              // withClickCondition: true,
-            ),
-          ),
-        );
+        ///
       } else if (type == NotificationType.appUpdate.name) {
         /// done
         Navigator.popUntil(

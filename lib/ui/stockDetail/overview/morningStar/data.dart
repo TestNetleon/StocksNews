@@ -2,7 +2,6 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:stocks_news_new/models/stockDetail/overview.dart';
-import 'package:stocks_news_new/screens/stockDetail/stockDetailTabs/pdfViewer/pdf_viewer_widget.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
@@ -15,6 +14,7 @@ import '../../../tabs/more/morningstarReport/index.dart';
 import 'economic.dart';
 import 'fair.dart';
 import 'lock.dart';
+import 'pdf.dart';
 import 'valuable.dart';
 
 class SDMorningStarView extends StatelessWidget {

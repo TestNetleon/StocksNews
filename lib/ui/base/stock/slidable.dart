@@ -167,7 +167,7 @@ class BaseSlidableActionItem extends StatelessWidget {
               Text(
                 label,
                 textAlign: TextAlign.center,
-                style: stylePTSansBold(fontSize: 14, color: Colors.white),
+                style: styleBaseBold(fontSize: 14, color: Colors.white),
               ),
             ],
           ),

@@ -109,7 +109,7 @@
 //         Navigator.push(
 //           navigatorKey.currentContext!,
 //           MaterialPageRoute(
-//             builder: (context) => WebviewLink(
+//             builder: (context) => LandingPageIndex(
 //               stringURL: slug,
 //               notificationId: notificationId,
 //             ),

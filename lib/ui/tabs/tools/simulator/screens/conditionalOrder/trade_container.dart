@@ -35,13 +35,12 @@ class ConditionalContainer extends StatefulWidget {
   final ConditionType? conditionalType;
   final int? tickerID;
 
-  const ConditionalContainer({
-    super.key,
-    this.conditionalType,
-    this.qty,
-    this.editTradeID,
-    this.tickerID
-  });
+  const ConditionalContainer(
+      {super.key,
+      this.conditionalType,
+      this.qty,
+      this.editTradeID,
+      this.tickerID});
 
   @override
   State<ConditionalContainer> createState() => _ConditionalContainerState();
@@ -78,10 +77,16 @@ class _ConditionalContainerState extends State<ConditionalContainer> {
   @override
   void initState() {
     super.initState();
-    Utils().showLog("ORDER DATA => ${widget.tickerID}, ${widget.qty}, ${widget.conditionalType}");
+    Utils().showLog(
+        "ORDER DATA => ${widget.tickerID}, ${widget.qty}, ${widget.conditionalType}");
     WidgetsBinding.instance.addPostFrameCallback((_) {
       focusNode.requestFocus();
-      _availableBalance = context.read<PortfolioManager>().userData?.userDataRes?.tradeBalance ?? 0;
+      _availableBalance = context
+              .read<PortfolioManager>()
+              .userData
+              ?.userDataRes
+              ?.tradeBalance ??
+          0;
       if (widget.tickerID != null) {
         TsOpenListRes? data = context
             .read<SOpenManager>()
@@ -92,13 +97,13 @@ class _ConditionalContainerState extends State<ConditionalContainer> {
           setState(() {
             _currentText = widget.qty.toString();
             controller.text = widget.qty.toString();
-            selectedIndex = menus.indexWhere((element) => element == data.tradeType,
+            selectedIndex = menus.indexWhere(
+              (element) => element == data.tradeType,
             );
             Utils().showLog("selectedIndex => $selectedIndex");
           });
         }
-      }
-      else if (widget.editTradeID != null) {
+      } else if (widget.editTradeID != null) {
         TsPendingListRes? data = context
             .read<SPendingManager>()
             .data
@@ -116,16 +121,15 @@ class _ConditionalContainerState extends State<ConditionalContainer> {
             );
             _selectedTock = selectedIndex == 0
                 ? StockType.buy
-                : selectedIndex == 1?
-            StockType.short:
-            selectedIndex == 2?
-            StockType.sell:
-            StockType.btc;
+                : selectedIndex == 1
+                    ? StockType.short
+                    : selectedIndex == 2
+                        ? StockType.sell
+                        : StockType.btc;
             Utils().showLog("selectedIndex => $selectedIndex");
           });
         }
       }
-
     });
   }
 
@@ -186,11 +190,14 @@ class _ConditionalContainerState extends State<ConditionalContainer> {
         //     navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
         "quantity": controller.text,
         "order_type": widget.conditionalType == ConditionType.bracketOrder
-            ? 'BRACKET_ORDER':
-        widget.conditionalType == ConditionType.limitOrder
-            ?'LIMIT_ORDER' :
-        widget.conditionalType == ConditionType.stopOrder ? "STOP_ORDER":
-        widget.conditionalType == ConditionType.stopLimitOrder?"STOP_LIMIT_ORDER":"TRAILING_ORDER",
+            ? 'BRACKET_ORDER'
+            : widget.conditionalType == ConditionType.limitOrder
+                ? 'LIMIT_ORDER'
+                : widget.conditionalType == ConditionType.stopOrder
+                    ? "STOP_ORDER"
+                    : widget.conditionalType == ConditionType.stopLimitOrder
+                        ? "STOP_LIMIT_ORDER"
+                        : "TRAILING_ORDER",
         "duration": "GOOD_UNTIL_CANCELLED",
         "target_price": targetPriceController.text,
         "stop_price": stopPriceController.text,
@@ -218,12 +225,20 @@ class _ConditionalContainerState extends State<ConditionalContainer> {
           symbol: detailRes?.symbol,
           invested: invested,
           date: response.data['result']['created_date'],
-          targetPrice: targetPriceController.text.isNotEmpty?num.parse(targetPriceController.text):0,
-          stopPrice:  stopPriceController.text.isNotEmpty?num.parse(stopPriceController.text):0,
-          limitPrice:  limitPriceController.text.isNotEmpty?num.parse(limitPriceController.text):0,
+          targetPrice: targetPriceController.text.isNotEmpty
+              ? num.parse(targetPriceController.text)
+              : 0,
+          stopPrice: stopPriceController.text.isNotEmpty
+              ? num.parse(stopPriceController.text)
+              : 0,
+          limitPrice: limitPriceController.text.isNotEmpty
+              ? num.parse(limitPriceController.text)
+              : 0,
         );
-        Navigator.popUntil(navigatorKey.currentContext!, (route) => route.isFirst);
-        Navigator.pushNamed(navigatorKey.currentContext!, SimulatorIndex.path,arguments: {"initialIndex":1});
+        Navigator.popUntil(
+            navigatorKey.currentContext!, (route) => route.isFirst);
+        Navigator.pushNamed(navigatorKey.currentContext!, SimulatorIndex.path,
+            arguments: {"initialIndex": 1});
         _clear();
         await showCOrderSuccessSheet(order, widget.conditionalType);
       } else {
@@ -267,11 +282,17 @@ class _ConditionalContainerState extends State<ConditionalContainer> {
           symbol: detailRes?.symbol,
           invested: invested,
           date: response.data['result']['created_date'],
-          targetPrice: targetPriceController.text.isNotEmpty?num.parse(targetPriceController.text):0,
-          stopPrice:  stopPriceController.text.isNotEmpty?num.parse(stopPriceController.text):0,
+          targetPrice: targetPriceController.text.isNotEmpty
+              ? num.parse(targetPriceController.text)
+              : 0,
+          stopPrice: stopPriceController.text.isNotEmpty
+              ? num.parse(stopPriceController.text)
+              : 0,
         );
-        Navigator.popUntil(navigatorKey.currentContext!, (route) => route.isFirst);
-        Navigator.pushNamed(navigatorKey.currentContext!, SimulatorIndex.path,arguments: {"initialIndex":isPending ? 1 : 0});
+        Navigator.popUntil(
+            navigatorKey.currentContext!, (route) => route.isFirst);
+        Navigator.pushNamed(navigatorKey.currentContext!, SimulatorIndex.path,
+            arguments: {"initialIndex": isPending ? 1 : 0});
         _clear();
 
         await showCOrderSuccessSheet(order, widget.conditionalType);
@@ -282,10 +303,10 @@ class _ConditionalContainerState extends State<ConditionalContainer> {
           icon: Images.alertPopGIF,
         );
       }
-    }
-    else {
+    } else {
       if (_selectedTock == StockType.buy) {
-        if (invested > (portfolioManager.userData?.userDataRes?.tradeBalance ?? 0)) {
+        if (invested >
+            (portfolioManager.userData?.userDataRes?.tradeBalance ?? 0)) {
           popUpAlert(
             message: "Insufficient available balance to place this order.",
             title: "Alert",
@@ -300,10 +321,15 @@ class _ConditionalContainerState extends State<ConditionalContainer> {
             "action": "BUY",
             "symbol": detailRes?.symbol,
             "quantity": controller.text,
-            "order_type":  widget.conditionalType == ConditionType.bracketOrder
-          ? 'BRACKET_ORDER': widget.conditionalType == ConditionType.limitOrder ?'LIMIT_ORDER':
-            widget.conditionalType == ConditionType.stopOrder ? "STOP_ORDER":
-          widget.conditionalType == ConditionType.stopLimitOrder?"STOP_LIMIT_ORDER":"TRAILING_ORDER",
+            "order_type": widget.conditionalType == ConditionType.bracketOrder
+                ? 'BRACKET_ORDER'
+                : widget.conditionalType == ConditionType.limitOrder
+                    ? 'LIMIT_ORDER'
+                    : widget.conditionalType == ConditionType.stopOrder
+                        ? "STOP_ORDER"
+                        : widget.conditionalType == ConditionType.stopLimitOrder
+                            ? "STOP_LIMIT_ORDER"
+                            : "TRAILING_ORDER",
             "duration": "GOOD_UNTIL_CANCELLED",
             "target_price": targetPriceController.text,
             "stop_price": stopPriceController.text,
@@ -331,13 +357,22 @@ class _ConditionalContainerState extends State<ConditionalContainer> {
               symbol: detailRes?.symbol,
               invested: invested,
               date: response.data['result']['created_date'],
-              targetPrice: targetPriceController.text.isNotEmpty?num.parse(targetPriceController.text):0,
-              stopPrice:  stopPriceController.text.isNotEmpty?num.parse(stopPriceController.text):0,
-              limitPrice:  limitPriceController.text.isNotEmpty?num.parse(limitPriceController.text):0,
+              targetPrice: targetPriceController.text.isNotEmpty
+                  ? num.parse(targetPriceController.text)
+                  : 0,
+              stopPrice: stopPriceController.text.isNotEmpty
+                  ? num.parse(stopPriceController.text)
+                  : 0,
+              limitPrice: limitPriceController.text.isNotEmpty
+                  ? num.parse(limitPriceController.text)
+                  : 0,
             );
 
-            Navigator.popUntil(navigatorKey.currentContext!, (route) => route.isFirst);
-            Navigator.pushNamed(navigatorKey.currentContext!, SimulatorIndex.path,arguments: {"initialIndex":isPending ? 1 : 0});
+            Navigator.popUntil(
+                navigatorKey.currentContext!, (route) => route.isFirst);
+            Navigator.pushNamed(
+                navigatorKey.currentContext!, SimulatorIndex.path,
+                arguments: {"initialIndex": isPending ? 1 : 0});
 
             _clear();
 
@@ -350,28 +385,30 @@ class _ConditionalContainerState extends State<ConditionalContainer> {
             );
           }
         }
-      }
-      else {
-
+      } else {
         final Map<String, dynamic> request = {
           "action": _selectedTock == StockType.short
               ? "SHORT"
               : _selectedTock == StockType.sell
-              ? "SELL"
-              : "BUY_TO_COVER",
+                  ? "SELL"
+                  : "BUY_TO_COVER",
           "symbol": detailRes?.symbol,
-          "order_type":  widget.conditionalType == ConditionType.bracketOrder
-              ? 'BRACKET_ORDER': widget.conditionalType == ConditionType.limitOrder
-              ?'LIMIT_ORDER':
-          widget.conditionalType == ConditionType.stopOrder ? "STOP_ORDER":
-          widget.conditionalType == ConditionType.stopLimitOrder?"STOP_LIMIT_ORDER":"TRAILING_ORDER",
+          "order_type": widget.conditionalType == ConditionType.bracketOrder
+              ? 'BRACKET_ORDER'
+              : widget.conditionalType == ConditionType.limitOrder
+                  ? 'LIMIT_ORDER'
+                  : widget.conditionalType == ConditionType.stopOrder
+                      ? "STOP_ORDER"
+                      : widget.conditionalType == ConditionType.stopLimitOrder
+                          ? "STOP_LIMIT_ORDER"
+                          : "TRAILING_ORDER",
           "duration": "GOOD_UNTIL_CANCELLED",
           "quantity": controller.text,
           "target_price": targetPriceController.text,
           "stop_price": stopPriceController.text,
           "limit_price": limitPriceController.text,
         };
-       /* FormData request = FormData.fromMap({
+        /* FormData request = FormData.fromMap({
           // "token":
           //     navigatorKey.currentContext!.read<UserProvider>().user?.token ??
           //         "",
@@ -415,13 +452,21 @@ class _ConditionalContainerState extends State<ConditionalContainer> {
             symbol: detailRes?.symbol,
             invested: invested,
             date: response.data['result']['created_date'],
-            targetPrice: targetPriceController.text.isNotEmpty?num.parse(targetPriceController.text):0,
-            stopPrice:  stopPriceController.text.isNotEmpty?num.parse(stopPriceController.text):0,
-            limitPrice:  limitPriceController.text.isNotEmpty?num.parse(limitPriceController.text):0,
+            targetPrice: targetPriceController.text.isNotEmpty
+                ? num.parse(targetPriceController.text)
+                : 0,
+            stopPrice: stopPriceController.text.isNotEmpty
+                ? num.parse(stopPriceController.text)
+                : 0,
+            limitPrice: limitPriceController.text.isNotEmpty
+                ? num.parse(limitPriceController.text)
+                : 0,
           );
           _clear();
-          Navigator.popUntil(navigatorKey.currentContext!, (route) => route.isFirst);
-          Navigator.pushNamed(navigatorKey.currentContext!, SimulatorIndex.path,arguments: {"initialIndex":isPending ? 1 : 0});
+          Navigator.popUntil(
+              navigatorKey.currentContext!, (route) => route.isFirst);
+          Navigator.pushNamed(navigatorKey.currentContext!, SimulatorIndex.path,
+              arguments: {"initialIndex": isPending ? 1 : 0});
 
           await showCOrderSuccessSheet(order, widget.conditionalType);
         } else {
@@ -484,7 +529,7 @@ class _ConditionalContainerState extends State<ConditionalContainer> {
   }
 
   Future onTap({ConditionType? cType, StockType? selectedStock}) async {
-    openInfoSheet(cType,selectedStock);
+    openInfoSheet(cType, selectedStock);
   }
 
   Widget _newMethod() {
@@ -506,26 +551,24 @@ class _ConditionalContainerState extends State<ConditionalContainer> {
             children: [
               Expanded(
                 child: CommonCard(
-                  child:
-                  Column(
+                  child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text(
                         'Balance',
-                        style: stylePTSansRegular(
+                        style: styleBaseRegular(
                           fontSize: 12,
                           color: ThemeColors.neutral80,
                         ),
                       ),
-                      SpacerVertical(height:  Pad.pad10),
+                      SpacerVertical(height: Pad.pad10),
                       Text(
-                        portfolioManager.userData?.userDataRes?.tradeBalance != null
+                        portfolioManager.userData?.userDataRes?.tradeBalance !=
+                                null
                             ? "\$${formatBalance(num.parse(portfolioManager.userData!.userDataRes!.tradeBalance.toCurrency()))}"
                             : '\$0',
-                        style: stylePTSansBold(
-                            fontSize: 16,
-                            color: ThemeColors.splashBG
-                        ),
+                        style: styleBaseBold(
+                            fontSize: 16, color: ThemeColors.splashBG),
                       ),
                     ],
                   ),
@@ -533,26 +576,22 @@ class _ConditionalContainerState extends State<ConditionalContainer> {
               ),
               SpacerHorizontal(width: Pad.pad10),
               Expanded(
-                child:
-                CommonCard(
-                  child:
-                  Column(
+                child: CommonCard(
+                  child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text(
                         'Order Value',
-                        style: stylePTSansRegular(
+                        style: styleBaseRegular(
                           fontSize: 12,
                           color: ThemeColors.neutral80,
                         ),
                       ),
-                      SpacerVertical(height:  Pad.pad10),
+                      SpacerVertical(height: Pad.pad10),
                       Text(
                         "\$${invested.toCurrency()}",
-                        style: stylePTSansBold(
-                            fontSize: 16,
-                            color: ThemeColors.splashBG
-                        ),
+                        style: styleBaseBold(
+                            fontSize: 16, color: ThemeColors.splashBG),
                       ),
                     ],
                   ),
@@ -562,7 +601,7 @@ class _ConditionalContainerState extends State<ConditionalContainer> {
           ),
           const SpacerVertical(height: Pad.pad10),
           Visibility(
-            visible:widget.conditionalType == ConditionType.bracketOrder,
+            visible: widget.conditionalType == ConditionType.bracketOrder,
             child: BaseButton(
               disabledBackgroundColor: ThemeColors.neutral5,
               disableTextColor: ThemeColors.black,
@@ -573,36 +612,33 @@ class _ConditionalContainerState extends State<ConditionalContainer> {
               color: (invested > _availableBalance || invested == 0)
                   ? ThemeColors.neutral5
                   : ThemeColors.primary100,
-              onPressed:
-                  (invested > _availableBalance || invested == 0) ? null : (){
-                    if (targetPriceController.text.isEmpty ||
-                        num.parse(targetPriceController.text) == 0.0) {
-                      popUpAlert(
-                        message: "Target price can't be empty",
-                        title: "Alert",
-                        icon: Images.alertPopGIF,
-                      );
-                      return;
-                    }
-                    else if (stopPriceController.text.isEmpty ||
-                        num.parse(stopPriceController.text) == 0.0) {
-                      popUpAlert(
-                        message: "Stop price can't be empty",
-                        title: "Alert",
-                        icon: Images.alertPopGIF,
-                      );
-                      return;
-                    }
-
-                    else{
-                      _onTap();
-                    }
-                  },
+              onPressed: (invested > _availableBalance || invested == 0)
+                  ? null
+                  : () {
+                      if (targetPriceController.text.isEmpty ||
+                          num.parse(targetPriceController.text) == 0.0) {
+                        popUpAlert(
+                          message: "Target price can't be empty",
+                          title: "Alert",
+                          icon: Images.alertPopGIF,
+                        );
+                        return;
+                      } else if (stopPriceController.text.isEmpty ||
+                          num.parse(stopPriceController.text) == 0.0) {
+                        popUpAlert(
+                          message: "Stop price can't be empty",
+                          title: "Alert",
+                          icon: Images.alertPopGIF,
+                        );
+                        return;
+                      } else {
+                        _onTap();
+                      }
+                    },
             ),
           ),
-
           Visibility(
-            visible:widget.conditionalType == ConditionType.limitOrder,
+            visible: widget.conditionalType == ConditionType.limitOrder,
             child: BaseButton(
               disabledBackgroundColor: ThemeColors.neutral5,
               disableTextColor: ThemeColors.black,
@@ -610,38 +646,39 @@ class _ConditionalContainerState extends State<ConditionalContainer> {
               text: widget.editTradeID != null
                   ? 'Update Limit Order'
                   : "Proceed Limit Order",
-              color:(_selectedTock == StockType.buy||_selectedTock == StockType.short)
+              color: (_selectedTock == StockType.buy ||
+                      _selectedTock == StockType.short)
                   ? (invested > _availableBalance || invested == 0)
-                  ?  ThemeColors.neutral5:
-                   ThemeColors.primary100
+                      ? ThemeColors.neutral5
+                      : ThemeColors.primary100
                   : (controller.text.isEmpty ||
-                  num.parse(controller.text) > (widget.qty ?? 0) ||
-                  invested == 0)
-                  ? ThemeColors.neutral5:
-              ThemeColors.primary100,
-              onPressed:
-              ((_selectedTock == StockType.buy||_selectedTock == StockType.short)
-                  ? (invested > _availableBalance || invested == 0)
-                  : (controller.text.isEmpty ||
-                  num.parse(controller.text) > (widget.qty ?? 0))
-              ) ? null :
-                  (){
-                if (limitPriceController.text.isEmpty || num.parse(limitPriceController.text) == 0.0) {
-                  popUpAlert(
-                    message: "Limit price can't be empty",
-                    title: "Alert",
-                    icon: Images.alertPopGIF,
-                  );
-                  return;
-                }
-                else{
-                  _onTap();
-                }
-              },
+                          num.parse(controller.text) > (widget.qty ?? 0) ||
+                          invested == 0)
+                      ? ThemeColors.neutral5
+                      : ThemeColors.primary100,
+              onPressed: ((_selectedTock == StockType.buy ||
+                          _selectedTock == StockType.short)
+                      ? (invested > _availableBalance || invested == 0)
+                      : (controller.text.isEmpty ||
+                          num.parse(controller.text) > (widget.qty ?? 0)))
+                  ? null
+                  : () {
+                      if (limitPriceController.text.isEmpty ||
+                          num.parse(limitPriceController.text) == 0.0) {
+                        popUpAlert(
+                          message: "Limit price can't be empty",
+                          title: "Alert",
+                          icon: Images.alertPopGIF,
+                        );
+                        return;
+                      } else {
+                        _onTap();
+                      }
+                    },
             ),
           ),
           Visibility(
-            visible:widget.conditionalType == ConditionType.stopOrder,
+            visible: widget.conditionalType == ConditionType.stopOrder,
             child: BaseButton(
               disabledBackgroundColor: ThemeColors.neutral5,
               disableTextColor: ThemeColors.black,
@@ -649,39 +686,39 @@ class _ConditionalContainerState extends State<ConditionalContainer> {
               text: widget.editTradeID != null
                   ? 'Update Stop Order'
                   : "Proceed Stop Order",
-              color:(_selectedTock == StockType.buy||_selectedTock == StockType.short)
+              color: (_selectedTock == StockType.buy ||
+                      _selectedTock == StockType.short)
                   ? (invested > _availableBalance || invested == 0)
-                  ? ThemeColors.neutral5:
-              ThemeColors.primary100
+                      ? ThemeColors.neutral5
+                      : ThemeColors.primary100
                   : (controller.text.isEmpty ||
-                  num.parse(controller.text) > (widget.qty ?? 0) ||
-                  invested == 0)
-                  ? ThemeColors.neutral5:
-              ThemeColors.primary100,
-              onPressed:
-              ((_selectedTock == StockType.buy||_selectedTock == StockType.short)
-                  ? (invested > _availableBalance || invested == 0)
-                  : (controller.text.isEmpty ||
-                  num.parse(controller.text) > (widget.qty ?? 0))
-              ) ? null :
-                  (){
-                if (stopPriceController.text.isEmpty || num.parse(stopPriceController.text) == 0.0) {
-                  popUpAlert(
-                    message: "Stop price can't be empty",
-                    title: "Alert",
-                    icon: Images.alertPopGIF,
-                  );
-                  return;
-                }
-                else{
-                  _onTap();
-                }
-              },
+                          num.parse(controller.text) > (widget.qty ?? 0) ||
+                          invested == 0)
+                      ? ThemeColors.neutral5
+                      : ThemeColors.primary100,
+              onPressed: ((_selectedTock == StockType.buy ||
+                          _selectedTock == StockType.short)
+                      ? (invested > _availableBalance || invested == 0)
+                      : (controller.text.isEmpty ||
+                          num.parse(controller.text) > (widget.qty ?? 0)))
+                  ? null
+                  : () {
+                      if (stopPriceController.text.isEmpty ||
+                          num.parse(stopPriceController.text) == 0.0) {
+                        popUpAlert(
+                          message: "Stop price can't be empty",
+                          title: "Alert",
+                          icon: Images.alertPopGIF,
+                        );
+                        return;
+                      } else {
+                        _onTap();
+                      }
+                    },
             ),
           ),
-
           Visibility(
-            visible:widget.conditionalType == ConditionType.stopLimitOrder,
+            visible: widget.conditionalType == ConditionType.stopLimitOrder,
             child: BaseButton(
               disabledBackgroundColor: ThemeColors.neutral5,
               disableTextColor: ThemeColors.black,
@@ -689,48 +726,47 @@ class _ConditionalContainerState extends State<ConditionalContainer> {
               text: widget.editTradeID != null
                   ? 'Update Stop Limit Order'
                   : "Proceed Stop Limit Order",
-              color:(_selectedTock == StockType.buy||_selectedTock == StockType.short)
+              color: (_selectedTock == StockType.buy ||
+                      _selectedTock == StockType.short)
                   ? (invested > _availableBalance || invested == 0)
-                  ? ThemeColors.neutral5:
-              ThemeColors.primary100
+                      ? ThemeColors.neutral5
+                      : ThemeColors.primary100
                   : (controller.text.isEmpty ||
-                  num.parse(controller.text) > (widget.qty ?? 0) ||
-                  invested == 0)
-                  ? ThemeColors.neutral5:
-              ThemeColors.primary100,
-              onPressed:
-              ((_selectedTock == StockType.buy||_selectedTock == StockType.short)
-                  ? (invested > _availableBalance || invested == 0)
-                  : (controller.text.isEmpty ||
-                  num.parse(controller.text) > (widget.qty ?? 0))
-              ) ? null :
-                  (){
-                if (stopPriceController.text.isEmpty || num.parse(stopPriceController.text) == 0.0) {
-                  popUpAlert(
-                    message: "Stop price can't be empty",
-                    title: "Alert",
-                    icon: Images.alertPopGIF,
-                  );
-                  return;
-                }
-
-                else if (limitPriceController.text.isEmpty ||
-                    num.parse(limitPriceController.text) == 0.0) {
-                  popUpAlert(
-                    message: "Limit price can't be empty",
-                    title: "Alert",
-                    icon: Images.alertPopGIF,
-                  );
-                  return;
-                }
-                else{
-                  _onTap();
-                }
-              },
+                          num.parse(controller.text) > (widget.qty ?? 0) ||
+                          invested == 0)
+                      ? ThemeColors.neutral5
+                      : ThemeColors.primary100,
+              onPressed: ((_selectedTock == StockType.buy ||
+                          _selectedTock == StockType.short)
+                      ? (invested > _availableBalance || invested == 0)
+                      : (controller.text.isEmpty ||
+                          num.parse(controller.text) > (widget.qty ?? 0)))
+                  ? null
+                  : () {
+                      if (stopPriceController.text.isEmpty ||
+                          num.parse(stopPriceController.text) == 0.0) {
+                        popUpAlert(
+                          message: "Stop price can't be empty",
+                          title: "Alert",
+                          icon: Images.alertPopGIF,
+                        );
+                        return;
+                      } else if (limitPriceController.text.isEmpty ||
+                          num.parse(limitPriceController.text) == 0.0) {
+                        popUpAlert(
+                          message: "Limit price can't be empty",
+                          title: "Alert",
+                          icon: Images.alertPopGIF,
+                        );
+                        return;
+                      } else {
+                        _onTap();
+                      }
+                    },
             ),
           ),
           Visibility(
-            visible:widget.conditionalType == ConditionType.trailingOrder,
+            visible: widget.conditionalType == ConditionType.trailingOrder,
             child: BaseButton(
               disabledBackgroundColor: ThemeColors.neutral5,
               disableTextColor: ThemeColors.black,
@@ -738,37 +774,37 @@ class _ConditionalContainerState extends State<ConditionalContainer> {
               text: widget.editTradeID != null
                   ? 'Update Trailing Order'
                   : "Proceed Trailing Order",
-              color:(_selectedTock == StockType.buy||_selectedTock == StockType.short)
+              color: (_selectedTock == StockType.buy ||
+                      _selectedTock == StockType.short)
                   ? (invested > _availableBalance || invested == 0)
-                  ? ThemeColors.neutral5:
-              ThemeColors.primary100
+                      ? ThemeColors.neutral5
+                      : ThemeColors.primary100
                   : (controller.text.isEmpty ||
-                  num.parse(controller.text) > (widget.qty ?? 0) ||
-                  invested == 0)
-                  ? ThemeColors.neutral5:
-              ThemeColors.primary100,
-              onPressed:
-              ((_selectedTock == StockType.buy||_selectedTock == StockType.short)
-                  ? (invested > _availableBalance || invested == 0)
-                  : (controller.text.isEmpty ||
-                  num.parse(controller.text) > (widget.qty ?? 0))
-              ) ? null :
-                  (){
-                if (stopPriceController.text.isEmpty || num.parse(stopPriceController.text) == 0.0) {
-                  popUpAlert(
-                    message: "Trail price can't be empty",
-                    title: "Alert",
-                    icon: Images.alertPopGIF,
-                  );
-                  return;
-                }
-                else{
-                  _onTap();
-                }
-              },
+                          num.parse(controller.text) > (widget.qty ?? 0) ||
+                          invested == 0)
+                      ? ThemeColors.neutral5
+                      : ThemeColors.primary100,
+              onPressed: ((_selectedTock == StockType.buy ||
+                          _selectedTock == StockType.short)
+                      ? (invested > _availableBalance || invested == 0)
+                      : (controller.text.isEmpty ||
+                          num.parse(controller.text) > (widget.qty ?? 0)))
+                  ? null
+                  : () {
+                      if (stopPriceController.text.isEmpty ||
+                          num.parse(stopPriceController.text) == 0.0) {
+                        popUpAlert(
+                          message: "Trail price can't be empty",
+                          title: "Alert",
+                          icon: Images.alertPopGIF,
+                        );
+                        return;
+                      } else {
+                        _onTap();
+                      }
+                    },
             ),
           ),
-
           Visibility(
             visible: controller.text.isNotEmpty &&
                 (_selectedTock == StockType.buy ||
@@ -779,16 +815,15 @@ class _ConditionalContainerState extends State<ConditionalContainer> {
               child: RichText(
                 text: TextSpan(
                   text: 'Your current balance is ',
-                  style: stylePTSansRegular(color: ThemeColors.neutral40),
+                  style: styleBaseRegular(color: ThemeColors.neutral40),
                   children: [
                     TextSpan(
                       text: _availableBalance.toFormattedPrice(),
-                      style: stylePTSansBold(
+                      style: styleBaseBold(
                           color: ThemeColors.splashBG, fontSize: 14),
                     ),
                     TextSpan(
-                        style: stylePTSansRegular(color: ThemeColors.neutral40),
-
+                        style: styleBaseRegular(color: ThemeColors.neutral40),
                         text:
                             '. You cannot purchase shares with an order value that exceeds your available balance.')
                   ],
@@ -796,28 +831,27 @@ class _ConditionalContainerState extends State<ConditionalContainer> {
               ),
             ),
           ),
-
           Visibility(
             visible: controller.text.isNotEmpty &&
                 (_selectedTock == StockType.sell ||
                     _selectedTock == StockType.btc) &&
-                num.parse(controller.text)>(widget.qty??0),
+                num.parse(controller.text) > (widget.qty ?? 0),
             child: Container(
               padding: EdgeInsets.only(top: 10),
               child: RichText(
                 text: TextSpan(
                   text: 'Your current share holding is ',
-                  style: stylePTSansRegular(color: ThemeColors.neutral40),
+                  style: styleBaseRegular(color: ThemeColors.neutral40),
                   children: [
                     TextSpan(
                       text: '${widget.qty}',
-                      style: stylePTSansBold(
+                      style: styleBaseBold(
                           color: ThemeColors.splashBG, fontSize: 14),
                     ),
                     TextSpan(
-                        style: stylePTSansRegular(color: ThemeColors.neutral40),
+                        style: styleBaseRegular(color: ThemeColors.neutral40),
                         text:
-                        '. You cannot sell more shares than you currently own.')
+                            '. You cannot sell more shares than you currently own.')
                   ],
                 ),
               ),
@@ -827,7 +861,6 @@ class _ConditionalContainerState extends State<ConditionalContainer> {
       ),
     );
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -841,25 +874,36 @@ class _ConditionalContainerState extends State<ConditionalContainer> {
               child: Column(
                 children: [
                   const STopWidget(),
-                   GestureDetector(
-                    onTap: (){
-                      onTap(cType: widget.conditionalType,selectedStock: _selectedTock);
+                  GestureDetector(
+                    onTap: () {
+                      onTap(
+                          cType: widget.conditionalType,
+                          selectedStock: _selectedTock);
                     },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
                           widget.conditionalType == ConditionType.bracketOrder
-                                  ? 'BRACKET ORDER': widget.conditionalType == ConditionType.limitOrder ?'LIMIT ORDER':
-                              widget.conditionalType == ConditionType.stopOrder ? "STOP ORDER":
-                              widget.conditionalType == ConditionType.stopLimitOrder?"STOP LIMIT ORDER":"TRAILING ORDER",
-                          style: stylePTSansBold(
+                              ? 'BRACKET ORDER'
+                              : widget.conditionalType ==
+                                      ConditionType.limitOrder
+                                  ? 'LIMIT ORDER'
+                                  : widget.conditionalType ==
+                                          ConditionType.stopOrder
+                                      ? "STOP ORDER"
+                                      : widget.conditionalType ==
+                                              ConditionType.stopLimitOrder
+                                          ? "STOP LIMIT ORDER"
+                                          : "TRAILING ORDER",
+                          style: styleBaseBold(
                             color: ThemeColors.splashBG,
                             fontSize: 12,
                           ),
                         ),
                         SpacerHorizontal(width: 5),
-                        Icon(Icons.info_sharp,color: ThemeColors.splashBG,size: 18)
+                        Icon(Icons.info_sharp,
+                            color: ThemeColors.splashBG, size: 18)
                       ],
                     ),
                   ),
@@ -882,11 +926,11 @@ class _ConditionalContainerState extends State<ConditionalContainer> {
                   ),
                   Visibility(
                       visible: widget.tickerID == null,
-                      child: const SpacerVertical(height: 15)
-                  ),
+                      child: const SpacerVertical(height: 15)),
                   Text(
                     'Enter number of shares',
-                    style: styleGeorgiaRegular(color: ThemeColors.neutral80,fontSize: 18),
+                    style: styleBaseRegular(
+                        color: ThemeColors.neutral80, fontSize: 18),
                   ),
                   TextfieldTrade(
                     controller: controller,
@@ -900,231 +944,418 @@ class _ConditionalContainerState extends State<ConditionalContainer> {
                     lastEntered: _lastEntered,
                     readOnly: (widget.tickerID == null ? false : true),
                   ),
-
                   if (widget.qty != null)
                     Container(
                       margin: EdgeInsets.only(top: 10),
                       child: Text(
                         'Available quantity - ${widget.qty ?? 0}',
-                        style: styleGeorgiaBold(),
+                        style: styleBaseBold(),
                       ),
                     ),
-
                   Visibility(
-                    visible:widget.conditionalType == ConditionType.bracketOrder,
+                    visible:
+                        widget.conditionalType == ConditionType.bracketOrder,
                     child: Column(
                       children: [
                         ScreenTitle(
                           title: "Target Price",
-                          style: stylePTSansBold(color: ThemeColors.splashBG),
-                          subTitle:
-                          selectedIndex==0?
-                          portfolioManager.userData?.userDataRes?.labelInfoStrings?.buy?.bracketOrder?.targetPrice??"":
-                          selectedIndex==1?
-                          portfolioManager.userData?.userDataRes?.labelInfoStrings?.short?.bracketOrder?.targetPrice??"":
-                          selectedIndex==2?
-                          portfolioManager.userData?.userDataRes?.labelInfoStrings?.sell?.bracketOrder?.targetPrice??"":
-                          portfolioManager.userData?.userDataRes?.labelInfoStrings?.buyToCover?.bracketOrder?.targetPrice??"",
+                          style: styleBaseBold(color: ThemeColors.splashBG),
+                          subTitle: selectedIndex == 0
+                              ? portfolioManager
+                                      .userData
+                                      ?.userDataRes
+                                      ?.labelInfoStrings
+                                      ?.buy
+                                      ?.bracketOrder
+                                      ?.targetPrice ??
+                                  ""
+                              : selectedIndex == 1
+                                  ? portfolioManager
+                                          .userData
+                                          ?.userDataRes
+                                          ?.labelInfoStrings
+                                          ?.short
+                                          ?.bracketOrder
+                                          ?.targetPrice ??
+                                      ""
+                                  : selectedIndex == 2
+                                      ? portfolioManager
+                                              .userData
+                                              ?.userDataRes
+                                              ?.labelInfoStrings
+                                              ?.sell
+                                              ?.bracketOrder
+                                              ?.targetPrice ??
+                                          ""
+                                      : portfolioManager
+                                              .userData
+                                              ?.userDataRes
+                                              ?.labelInfoStrings
+                                              ?.buyToCover
+                                              ?.bracketOrder
+                                              ?.targetPrice ??
+                                          "",
                           dividerPadding: EdgeInsets.symmetric(vertical: 5),
                         ),
                         ThemeInputField(
-                          cursorColor:ThemeColors.neutral6,
+                          cursorColor: ThemeColors.neutral6,
                           fillColor: ThemeColors.neutral5,
                           borderColor: ThemeColors.neutral5,
-                          style: stylePTSansRegular(color: ThemeColors.splashBG),
-                          hintStyle: stylePTSansRegular(color: ThemeColors.splashBG),
+                          style: styleBaseRegular(color: ThemeColors.splashBG),
+                          hintStyle:
+                              styleBaseRegular(color: ThemeColors.splashBG),
                           controller: targetPriceController,
                           placeholder: "Target Price",
-                          keyboardType: TextInputType.numberWithOptions(decimal: true),
-
+                          keyboardType:
+                              TextInputType.numberWithOptions(decimal: true),
                         ),
                         const SpacerVertical(),
                         ScreenTitle(
                           title: "Stop Price",
-                          style: stylePTSansBold(color: ThemeColors.splashBG),
-                          subTitle:
-                          selectedIndex==0?
-                          portfolioManager.userData?.userDataRes?.labelInfoStrings?.buy?.bracketOrder?.stopPrice??"":
-                          selectedIndex==1?
-                          portfolioManager.userData?.userDataRes?.labelInfoStrings?.short?.bracketOrder?.stopPrice??"":
-                          selectedIndex==2?
-                          portfolioManager.userData?.userDataRes?.labelInfoStrings?.sell?.bracketOrder?.stopPrice??"":
-                          portfolioManager.userData?.userDataRes?.labelInfoStrings?.buyToCover?.bracketOrder?.stopPrice??"",
+                          style: styleBaseBold(color: ThemeColors.splashBG),
+                          subTitle: selectedIndex == 0
+                              ? portfolioManager
+                                      .userData
+                                      ?.userDataRes
+                                      ?.labelInfoStrings
+                                      ?.buy
+                                      ?.bracketOrder
+                                      ?.stopPrice ??
+                                  ""
+                              : selectedIndex == 1
+                                  ? portfolioManager
+                                          .userData
+                                          ?.userDataRes
+                                          ?.labelInfoStrings
+                                          ?.short
+                                          ?.bracketOrder
+                                          ?.stopPrice ??
+                                      ""
+                                  : selectedIndex == 2
+                                      ? portfolioManager
+                                              .userData
+                                              ?.userDataRes
+                                              ?.labelInfoStrings
+                                              ?.sell
+                                              ?.bracketOrder
+                                              ?.stopPrice ??
+                                          ""
+                                      : portfolioManager
+                                              .userData
+                                              ?.userDataRes
+                                              ?.labelInfoStrings
+                                              ?.buyToCover
+                                              ?.bracketOrder
+                                              ?.stopPrice ??
+                                          "",
                           dividerPadding: EdgeInsets.symmetric(vertical: 5),
                         ),
                         ThemeInputField(
-                          cursorColor:ThemeColors.neutral6,
+                          cursorColor: ThemeColors.neutral6,
                           fillColor: ThemeColors.neutral5,
                           borderColor: ThemeColors.neutral5,
-                          style: stylePTSansRegular(color: ThemeColors.splashBG),
-                          hintStyle: stylePTSansRegular(color: ThemeColors.splashBG),
+                          style: styleBaseRegular(color: ThemeColors.splashBG),
+                          hintStyle:
+                              styleBaseRegular(color: ThemeColors.splashBG),
                           controller: stopPriceController,
                           placeholder: "Stop Price",
                           keyboardType:
-                          TextInputType.numberWithOptions(decimal: true),
+                              TextInputType.numberWithOptions(decimal: true),
                         ),
-
                       ],
                     ),
                   ),
-
                   Visibility(
                     visible: widget.conditionalType == ConditionType.limitOrder,
                     child: Column(
                       children: [
                         ScreenTitle(
                           title: "Limit Price",
-                          style: stylePTSansBold(color: ThemeColors.splashBG),
-                          subTitle:
-                          selectedIndex==0?
-                          portfolioManager.userData?.userDataRes?.labelInfoStrings?.buy?.limitOrder?.limitPrice??"":
-                          selectedIndex==1?
-                          portfolioManager.userData?.userDataRes?.labelInfoStrings?.short?.limitOrder?.limitPrice??"":
-                          selectedIndex==2?
-                          portfolioManager.userData?.userDataRes?.labelInfoStrings?.sell?.limitOrder?.limitPrice??"":
-                          portfolioManager.userData?.userDataRes?.labelInfoStrings?.buyToCover?.limitOrder?.limitPrice??"",
+                          style: styleBaseBold(color: ThemeColors.splashBG),
+                          subTitle: selectedIndex == 0
+                              ? portfolioManager
+                                      .userData
+                                      ?.userDataRes
+                                      ?.labelInfoStrings
+                                      ?.buy
+                                      ?.limitOrder
+                                      ?.limitPrice ??
+                                  ""
+                              : selectedIndex == 1
+                                  ? portfolioManager
+                                          .userData
+                                          ?.userDataRes
+                                          ?.labelInfoStrings
+                                          ?.short
+                                          ?.limitOrder
+                                          ?.limitPrice ??
+                                      ""
+                                  : selectedIndex == 2
+                                      ? portfolioManager
+                                              .userData
+                                              ?.userDataRes
+                                              ?.labelInfoStrings
+                                              ?.sell
+                                              ?.limitOrder
+                                              ?.limitPrice ??
+                                          ""
+                                      : portfolioManager
+                                              .userData
+                                              ?.userDataRes
+                                              ?.labelInfoStrings
+                                              ?.buyToCover
+                                              ?.limitOrder
+                                              ?.limitPrice ??
+                                          "",
                           dividerPadding: EdgeInsets.symmetric(vertical: 5),
                         ),
                         ThemeInputField(
-                          cursorColor:ThemeColors.neutral6,
+                          cursorColor: ThemeColors.neutral6,
                           fillColor: ThemeColors.neutral5,
                           borderColor: ThemeColors.neutral5,
-                          style: stylePTSansRegular(color: ThemeColors.splashBG),
-                          hintStyle: stylePTSansRegular(color: ThemeColors.splashBG),
+                          style: styleBaseRegular(color: ThemeColors.splashBG),
+                          hintStyle:
+                              styleBaseRegular(color: ThemeColors.splashBG),
                           controller: limitPriceController,
                           placeholder: "Limit Price",
                           keyboardType:
-                          TextInputType.numberWithOptions(decimal: true),
+                              TextInputType.numberWithOptions(decimal: true),
                         ),
-
                       ],
                     ),
                   ),
-
                   Visibility(
-                    visible:widget.conditionalType == ConditionType.stopOrder,
+                    visible: widget.conditionalType == ConditionType.stopOrder,
                     child: Column(
                       children: [
                         ScreenTitle(
                           title: "Stop Price",
-                          style: stylePTSansBold(color:ThemeColors.splashBG),
-                          subTitle:
-                          selectedIndex==0?
-                          portfolioManager.userData?.userDataRes?.labelInfoStrings?.buy?.stopOrder?.stopPrice??"":
-                          selectedIndex==1?
-                          portfolioManager.userData?.userDataRes?.labelInfoStrings?.short?.stopOrder?.stopPrice??"":
-                          selectedIndex==2?
-                          portfolioManager.userData?.userDataRes?.labelInfoStrings?.sell?.stopOrder?.stopPrice??"":
-                          portfolioManager.userData?.userDataRes?.labelInfoStrings?.buyToCover?.stopOrder?.stopPrice??"",
+                          style: styleBaseBold(color: ThemeColors.splashBG),
+                          subTitle: selectedIndex == 0
+                              ? portfolioManager
+                                      .userData
+                                      ?.userDataRes
+                                      ?.labelInfoStrings
+                                      ?.buy
+                                      ?.stopOrder
+                                      ?.stopPrice ??
+                                  ""
+                              : selectedIndex == 1
+                                  ? portfolioManager
+                                          .userData
+                                          ?.userDataRes
+                                          ?.labelInfoStrings
+                                          ?.short
+                                          ?.stopOrder
+                                          ?.stopPrice ??
+                                      ""
+                                  : selectedIndex == 2
+                                      ? portfolioManager
+                                              .userData
+                                              ?.userDataRes
+                                              ?.labelInfoStrings
+                                              ?.sell
+                                              ?.stopOrder
+                                              ?.stopPrice ??
+                                          ""
+                                      : portfolioManager
+                                              .userData
+                                              ?.userDataRes
+                                              ?.labelInfoStrings
+                                              ?.buyToCover
+                                              ?.stopOrder
+                                              ?.stopPrice ??
+                                          "",
                           dividerPadding: EdgeInsets.symmetric(vertical: 5),
                         ),
                         ThemeInputField(
-                          cursorColor:ThemeColors.neutral6,
+                          cursorColor: ThemeColors.neutral6,
                           fillColor: ThemeColors.neutral5,
                           borderColor: ThemeColors.neutral5,
-                          style: stylePTSansRegular(color: ThemeColors.splashBG),
-                          hintStyle: stylePTSansRegular(color: ThemeColors.splashBG),
+                          style: styleBaseRegular(color: ThemeColors.splashBG),
+                          hintStyle:
+                              styleBaseRegular(color: ThemeColors.splashBG),
                           controller: stopPriceController,
                           placeholder: "Stop Price",
                           keyboardType:
-                          TextInputType.numberWithOptions(decimal: true),
+                              TextInputType.numberWithOptions(decimal: true),
                         ),
-
                       ],
                     ),
                   ),
-
                   Visibility(
-                    visible:widget.conditionalType == ConditionType.stopLimitOrder,
+                    visible:
+                        widget.conditionalType == ConditionType.stopLimitOrder,
                     child: Column(
                       children: [
                         ScreenTitle(
                           title: "Stop Price",
-                          style: stylePTSansBold(color: ThemeColors.splashBG),
-                          subTitle:
-                          selectedIndex==0?
-                          portfolioManager.userData?.userDataRes?.labelInfoStrings?.buy?.stopLimitOrder?.stopPrice??"":
-                          selectedIndex==1?
-                          portfolioManager.userData?.userDataRes?.labelInfoStrings?.short?.stopLimitOrder?.stopPrice??"":
-                          selectedIndex==2?
-                          portfolioManager.userData?.userDataRes?.labelInfoStrings?.sell?.stopLimitOrder?.stopPrice??"":
-                          portfolioManager.userData?.userDataRes?.labelInfoStrings?.buyToCover?.stopLimitOrder?.stopPrice??"",
+                          style: styleBaseBold(color: ThemeColors.splashBG),
+                          subTitle: selectedIndex == 0
+                              ? portfolioManager
+                                      .userData
+                                      ?.userDataRes
+                                      ?.labelInfoStrings
+                                      ?.buy
+                                      ?.stopLimitOrder
+                                      ?.stopPrice ??
+                                  ""
+                              : selectedIndex == 1
+                                  ? portfolioManager
+                                          .userData
+                                          ?.userDataRes
+                                          ?.labelInfoStrings
+                                          ?.short
+                                          ?.stopLimitOrder
+                                          ?.stopPrice ??
+                                      ""
+                                  : selectedIndex == 2
+                                      ? portfolioManager
+                                              .userData
+                                              ?.userDataRes
+                                              ?.labelInfoStrings
+                                              ?.sell
+                                              ?.stopLimitOrder
+                                              ?.stopPrice ??
+                                          ""
+                                      : portfolioManager
+                                              .userData
+                                              ?.userDataRes
+                                              ?.labelInfoStrings
+                                              ?.buyToCover
+                                              ?.stopLimitOrder
+                                              ?.stopPrice ??
+                                          "",
                           dividerPadding: EdgeInsets.symmetric(vertical: 5),
                         ),
                         ThemeInputField(
-                          cursorColor:ThemeColors.neutral6,
+                          cursorColor: ThemeColors.neutral6,
                           fillColor: ThemeColors.neutral5,
                           borderColor: ThemeColors.neutral5,
-                          style: stylePTSansRegular(color: ThemeColors.splashBG),
-                          hintStyle: stylePTSansRegular(color: ThemeColors.splashBG),
+                          style: styleBaseRegular(color: ThemeColors.splashBG),
+                          hintStyle:
+                              styleBaseRegular(color: ThemeColors.splashBG),
                           controller: stopPriceController,
                           placeholder: "Stop Price",
                           keyboardType:
-                          TextInputType.numberWithOptions(decimal: true),
+                              TextInputType.numberWithOptions(decimal: true),
                         ),
                         const SpacerVertical(),
-
                         ScreenTitle(
                           title: "Limit Price",
-                          style: stylePTSansBold(color: ThemeColors.splashBG),
-                          subTitle:
-                          selectedIndex==0?
-                          portfolioManager.userData?.userDataRes?.labelInfoStrings?.buy?.stopLimitOrder?.limitPrice??"":
-                          selectedIndex==1?
-                          portfolioManager.userData?.userDataRes?.labelInfoStrings?.short?.stopLimitOrder?.limitPrice??"":
-                          selectedIndex==2?
-                          portfolioManager.userData?.userDataRes?.labelInfoStrings?.sell?.stopLimitOrder?.limitPrice??"":
-                          portfolioManager.userData?.userDataRes?.labelInfoStrings?.buyToCover?.stopLimitOrder?.limitPrice??"",
+                          style: styleBaseBold(color: ThemeColors.splashBG),
+                          subTitle: selectedIndex == 0
+                              ? portfolioManager
+                                      .userData
+                                      ?.userDataRes
+                                      ?.labelInfoStrings
+                                      ?.buy
+                                      ?.stopLimitOrder
+                                      ?.limitPrice ??
+                                  ""
+                              : selectedIndex == 1
+                                  ? portfolioManager
+                                          .userData
+                                          ?.userDataRes
+                                          ?.labelInfoStrings
+                                          ?.short
+                                          ?.stopLimitOrder
+                                          ?.limitPrice ??
+                                      ""
+                                  : selectedIndex == 2
+                                      ? portfolioManager
+                                              .userData
+                                              ?.userDataRes
+                                              ?.labelInfoStrings
+                                              ?.sell
+                                              ?.stopLimitOrder
+                                              ?.limitPrice ??
+                                          ""
+                                      : portfolioManager
+                                              .userData
+                                              ?.userDataRes
+                                              ?.labelInfoStrings
+                                              ?.buyToCover
+                                              ?.stopLimitOrder
+                                              ?.limitPrice ??
+                                          "",
                           dividerPadding: EdgeInsets.symmetric(vertical: 5),
                         ),
                         ThemeInputField(
-                          cursorColor:ThemeColors.neutral6,
+                          cursorColor: ThemeColors.neutral6,
                           fillColor: ThemeColors.neutral5,
                           borderColor: ThemeColors.neutral5,
-                          style: stylePTSansRegular(color: ThemeColors.splashBG),
-                          hintStyle: stylePTSansRegular(color: ThemeColors.splashBG),
+                          style: styleBaseRegular(color: ThemeColors.splashBG),
+                          hintStyle:
+                              styleBaseRegular(color: ThemeColors.splashBG),
                           controller: limitPriceController,
                           placeholder: "Limit Price",
                           keyboardType:
-                          TextInputType.numberWithOptions(decimal: true),
+                              TextInputType.numberWithOptions(decimal: true),
                         ),
                       ],
                     ),
                   ),
-
                   Visibility(
-                    visible:widget.conditionalType == ConditionType.trailingOrder,
+                    visible:
+                        widget.conditionalType == ConditionType.trailingOrder,
                     child: Column(
                       children: [
                         ScreenTitle(
                           title: "Trail Price",
-                          style: stylePTSansBold(color:ThemeColors.splashBG),
-                          subTitle:
-                          selectedIndex==0?
-                          portfolioManager.userData?.userDataRes?.labelInfoStrings?.buy?.trailingOrder?.stopPrice??"":
-                          selectedIndex==1?
-                          portfolioManager.userData?.userDataRes?.labelInfoStrings?.short?.trailingOrder?.stopPrice??"":
-                          selectedIndex==2?
-                          portfolioManager.userData?.userDataRes?.labelInfoStrings?.sell?.trailingOrder?.stopPrice??"":
-                          portfolioManager.userData?.userDataRes?.labelInfoStrings?.buyToCover?.trailingOrder?.stopPrice??"",
+                          style: styleBaseBold(color: ThemeColors.splashBG),
+                          subTitle: selectedIndex == 0
+                              ? portfolioManager
+                                      .userData
+                                      ?.userDataRes
+                                      ?.labelInfoStrings
+                                      ?.buy
+                                      ?.trailingOrder
+                                      ?.stopPrice ??
+                                  ""
+                              : selectedIndex == 1
+                                  ? portfolioManager
+                                          .userData
+                                          ?.userDataRes
+                                          ?.labelInfoStrings
+                                          ?.short
+                                          ?.trailingOrder
+                                          ?.stopPrice ??
+                                      ""
+                                  : selectedIndex == 2
+                                      ? portfolioManager
+                                              .userData
+                                              ?.userDataRes
+                                              ?.labelInfoStrings
+                                              ?.sell
+                                              ?.trailingOrder
+                                              ?.stopPrice ??
+                                          ""
+                                      : portfolioManager
+                                              .userData
+                                              ?.userDataRes
+                                              ?.labelInfoStrings
+                                              ?.buyToCover
+                                              ?.trailingOrder
+                                              ?.stopPrice ??
+                                          "",
                           dividerPadding: EdgeInsets.symmetric(vertical: 5),
                         ),
                         ThemeInputField(
-                          cursorColor:ThemeColors.neutral6,
+                          cursorColor: ThemeColors.neutral6,
                           fillColor: ThemeColors.neutral5,
                           borderColor: ThemeColors.neutral5,
-                          style: stylePTSansRegular(color: ThemeColors.splashBG),
-                          hintStyle: stylePTSansRegular(color: ThemeColors.splashBG),
+                          style: styleBaseRegular(color: ThemeColors.splashBG),
+                          hintStyle:
+                              styleBaseRegular(color: ThemeColors.splashBG),
                           controller: stopPriceController,
                           placeholder: "Trail Price",
                           keyboardType:
-                          TextInputType.numberWithOptions(decimal: true),
+                              TextInputType.numberWithOptions(decimal: true),
                         ),
-
                       ],
                     ),
                   ),
-
                 ],
               ),
             ),
