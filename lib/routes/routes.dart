@@ -161,7 +161,6 @@ class Routes {
     JoinReferralIndex.path: (_) => const JoinReferralIndex(),
     NotificationIndex.path: (_) => const NotificationIndex(),
     MorningStarReportsIndex.path: (_) => const MorningStarReportsIndex(),
-
     //--------------------------------------
   };
 

@@ -965,7 +965,7 @@ void handleNavigation({
       navigatorKey.currentContext!,
       Tabs.path,
       arguments: {
-        "index": 1,
+        "index": 2,
         "childIndex": 1,
       },
     );
@@ -983,7 +983,7 @@ void handleNavigation({
       navigatorKey.currentContext!,
       Tabs.path,
       arguments: {
-        "index": 1,
+        "index": 2,
         "childIndex": 2,
       },
     );
@@ -999,7 +999,7 @@ void handleNavigation({
       navigatorKey.currentContext!,
       Tabs.path,
       arguments: {
-        "index": 1,
+        "index": 2,
         "childIndex": 3,
       },
     );
@@ -1015,7 +1015,7 @@ void handleNavigation({
       navigatorKey.currentContext!,
       Tabs.path,
       arguments: {
-        "index": 1,
+        "index": 2,
         "childIndex": 4,
       },
     );
@@ -1031,7 +1031,7 @@ void handleNavigation({
       navigatorKey.currentContext!,
       Tabs.path,
       arguments: {
-        "index": 1,
+        "index": 2,
         "childIndex": 5,
       },
     );
@@ -1047,7 +1047,7 @@ void handleNavigation({
       navigatorKey.currentContext!,
       Tabs.path,
       arguments: {
-        "index": 1,
+        "index": 2,
         "childIndex": 6,
       },
     );
@@ -1063,7 +1063,7 @@ void handleNavigation({
       navigatorKey.currentContext!,
       Tabs.path,
       arguments: {
-        "index": 1,
+        "index": 2,
         "childIndex": 7,
       },
     );
@@ -1079,7 +1079,7 @@ void handleNavigation({
       navigatorKey.currentContext!,
       Tabs.path,
       arguments: {
-        "index": 1,
+        "index": 2,
         "childIndex": 8,
       },
     );
@@ -1096,7 +1096,7 @@ void handleNavigation({
       navigatorKey.currentContext!,
       Tabs.path,
       arguments: {
-        "index": 1,
+        "index": 2,
         "childIndex": 9,
       },
     );
@@ -1119,7 +1119,7 @@ void handleNavigation({
       navigatorKey.currentContext!,
       Tabs.path,
       arguments: {
-        "index": 1,
+        "index": 2,
         "childIndex": 10,
       },
     );
@@ -1135,7 +1135,7 @@ void handleNavigation({
       navigatorKey.currentContext!,
       Tabs.path,
       arguments: {
-        "index": 1,
+        "index": 2,
         "childIndex": 11,
       },
     );

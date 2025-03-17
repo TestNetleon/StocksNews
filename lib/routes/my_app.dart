@@ -46,9 +46,9 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       // AppsFlyerService.instance.handleDeepLinking();
 
-      getInitialReferralsIfAny();
-      getInitialDeeplinkWhenAppOpen();
-      startListeningForDeepLinks();
+      // getInitialReferralsIfAny();
+      // getInitialDeeplinkWhenAppOpen();
+      // startListeningForDeepLinks();
 
       // oneSignalInitialized = true;
       listenForPushToken();

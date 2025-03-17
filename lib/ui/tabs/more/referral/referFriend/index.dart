@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/managers/referral/referral_manager.dart';
+import 'package:stocks_news_new/service/appsFlyer/service.dart';
 import 'package:stocks_news_new/ui/base/base_scroll.dart';
 import 'package:stocks_news_new/ui/tabs/more/referral/referFriend/points_list.dart';
 import 'package:stocks_news_new/ui/tabs/more/referral/referFriend/referral_header.dart';
+import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/custom/base_loader_container.dart';
 
 class ReferAFriend extends StatefulWidget {
@@ -25,6 +27,10 @@ class _ReferAFriendState extends State<ReferAFriend> {
   Future _callAPI() async {
     ReferralManager manager = context.read<ReferralManager>();
     manager.getData();
+
+    if (shareUrl == null) {
+      AppsFlyerService.instance.createUserInvitationLink();
+    }
   }
 
   @override

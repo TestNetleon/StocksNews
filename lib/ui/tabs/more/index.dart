@@ -138,7 +138,6 @@ class MoreIndex extends StatelessWidget {
                 Navigator.pushNamed(context, MorningStarReportsIndex.path);
               },
             ),
-
             MoreItem(
               icon: Images.moreMySubscription,
               label: "Refer a Friend",
