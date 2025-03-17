@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 
 class BaseScaffold extends StatefulWidget {
@@ -18,7 +17,7 @@ class BaseScaffold extends StatefulWidget {
     this.floatingActionButton,
     this.isHome = false,
     this.baseColor,
-    this.bgColor = ThemeColors.white,
+    this.bgColor,
   });
 
   final Widget? drawer;

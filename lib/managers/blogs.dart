@@ -6,6 +6,7 @@ import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/api/apis.dart';
 import 'package:stocks_news_new/models/lock.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
+import 'package:stocks_news_new/service/braze/service.dart';
 import 'package:stocks_news_new/ui/base/toaster.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 
@@ -151,6 +152,8 @@ class BlogsManager extends ChangeNotifier {
         _blogsDetail = newsDetailResFromJson(jsonEncode(response.data));
         _errorDetail = null;
         _lockInformation = _blogsDetail?.lockInfo;
+        BrazeService.eventContentView(screenType: 'article', source: slug);
+
         setStatusDetail(Status.loaded);
       } else {
         _limitCall++;

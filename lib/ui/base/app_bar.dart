@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/managers/global.dart';
+import 'package:stocks_news_new/managers/user.dart';
+import 'package:stocks_news_new/modals/user_res.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/routes/navigation_observer.dart';
 import 'package:stocks_news_new/ui/stockDetail/index.dart';
@@ -10,6 +12,8 @@ import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/utils/utils.dart';
+import 'package:stocks_news_new/widgets/cache_network_image.dart';
+import 'package:svg_flutter/svg.dart';
 import '../../../../ui/tabs/tabs.dart';
 import '../tabs/more/news/detail.dart';
 import 'search/base_search.dart';
@@ -126,26 +130,43 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
                               onTap: leadingFilterClick!,
                             ),
                           if (showDrawer && !showBack)
-                            Padding(
-                              padding: const EdgeInsets.only(left: 5),
-                              child: GestureDetector(
-                                onTap: () {
-                                  closeKeyboard();
-                                  Scaffold.of(context).openDrawer();
-                                },
-                                child: ClipRRect(
-                                  borderRadius:
-                                      BorderRadius.circular(Pad.pad999),
-                                  child: Container(
-                                    height: 30,
-                                    width: 30,
-                                    decoration:
-                                        BoxDecoration(shape: BoxShape.circle),
-                                    child:
-                                        Image.asset(Images.userPlaceholderNew),
+                            Consumer<UserManager>(
+                              builder: (context, value, child) {
+                                UserRes? user = value.user;
+                                return Padding(
+                                  padding: const EdgeInsets.only(left: 5),
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      closeKeyboard();
+                                      Scaffold.of(context).openDrawer();
+                                    },
+                                    child: ClipRRect(
+                                      borderRadius:
+                                          BorderRadius.circular(Pad.pad999),
+                                      child: Container(
+                                        height: 30,
+                                        width: 30,
+                                        decoration: BoxDecoration(
+                                            shape: BoxShape.circle),
+                                        child: user?.image == null ||
+                                                user?.image == ''
+                                            ? Image.asset(
+                                                Images.userPlaceholderNew)
+                                            : user?.image == 'svg'
+                                                ? SvgPicture.network(
+                                                    user?.image ?? '',
+                                                    placeholderBuilder: (context) =>
+                                                        CircularProgressIndicator(),
+                                                  )
+                                                : CachedNetworkImagesWidget(
+                                                    user?.image ?? '',
+                                                    showLoading: true,
+                                                  ),
+                                      ),
+                                    ),
                                   ),
-                                ),
-                              ),
+                                );
+                              },
                             ),
                         ],
                       ),
@@ -241,16 +262,20 @@ class CenterLogo extends StatelessWidget {
             Tabs.path,
           );
         },
-        child: Container(
-          width: MediaQuery.of(context).size.width * .40,
-          constraints: BoxConstraints(maxHeight: kTextTabBarHeight - 2.sp),
-          child: Container(
-            margin: isPhone ? EdgeInsets.all(8.sp) : null,
-            child: Image.asset(
-              Images.mainBlackLogo,
-              fit: BoxFit.contain,
-            ),
-          ),
+        child: Consumer<ThemeManager>(
+          builder: (context, value, child) {
+            return Container(
+              width: MediaQuery.of(context).size.width * .40,
+              constraints: BoxConstraints(maxHeight: kTextTabBarHeight - 2.sp),
+              child: Container(
+                margin: isPhone ? EdgeInsets.all(8.sp) : null,
+                child: Image.asset(
+                  value.isDarkMode ? Images.mainLogo : Images.mainBlackLogo,
+                  fit: BoxFit.contain,
+                ),
+              ),
+            );
+          },
         ),
       ),
     );

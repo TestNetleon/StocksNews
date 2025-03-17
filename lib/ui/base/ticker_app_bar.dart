@@ -13,6 +13,7 @@ import 'package:stocks_news_new/ui/tabs/market/stocks/extra/add_to_alert_sheet.d
 import 'package:stocks_news_new/ui/tabs/more/alerts/index.dart';
 import 'package:stocks_news_new/ui/tabs/more/watchlist/index.dart';
 import 'package:stocks_news_new/ui/tabs/tabs.dart';
+import 'package:stocks_news_new/ui/theme/manager.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/cache_network_image.dart';
 import '../../utils/colors.dart';
@@ -126,162 +127,180 @@ class BaseTickerAppBar extends StatelessWidget implements PreferredSizeWidget {
     return SafeArea(
       child: Container(
         padding: const EdgeInsets.all(Pad.pad8),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            // Leading
-            Expanded(
-              child: Row(
-                children: [
-                  ActionButton(
-                    icon: Images.back,
-                    onTap: () {
-                      if (popHome) {
-                        if (CustomNavigatorObserver().stackCount >= 2 &&
-                            splashLoaded) {
-                          Navigator.pop(navigatorKey.currentContext!);
-                        } else {
-                          Navigator.popUntil(navigatorKey.currentContext!,
-                              (route) => route.isFirst);
-                          Navigator.pushReplacementNamed(
-                              navigatorKey.currentContext!, Tabs.path);
-                          popHome = false;
-                        }
-                      } else {
-                        // Navigator.pop(navigatorKey.currentContext!);
-                        if (CustomNavigatorObserver().stackCount >= 2 &&
-                            splashLoaded) {
-                          Navigator.pop(navigatorKey.currentContext!);
-                        } else {
-                          Navigator.popUntil(navigatorKey.currentContext!,
-                              (route) => route.isFirst);
-                          Navigator.pushReplacementNamed(
-                              navigatorKey.currentContext!, Tabs.path);
-                          popHome = false;
-                        }
-                      }
-                    },
-                  ),
-                  Flexible(
-                    child: Row(
-                      children: [
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(Pad.pad5),
-                          child: Container(
-                            padding: EdgeInsets.all(3.sp),
-                            color: ThemeColors.neutral5,
-                            child: data?.image == null || data?.image == ''
-                                ? SizedBox(
-                                    height: 32,
-                                    width: 32,
-                                  )
-                                : CachedNetworkImagesWidget(
-                                    data?.image,
-                                    height: 32,
-                                    width: 32,
+        child: Consumer<ThemeManager>(
+          builder: (context, value, child) {
+            return Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                // Leading
+                Expanded(
+                  child: Row(
+                    children: [
+                      ActionButton(
+                        icon: Images.back,
+                        color: value.isDarkMode
+                            ? ThemeColors.white
+                            : ThemeColors.black,
+                        onTap: () {
+                          if (popHome) {
+                            if (CustomNavigatorObserver().stackCount >= 2 &&
+                                splashLoaded) {
+                              Navigator.pop(navigatorKey.currentContext!);
+                            } else {
+                              Navigator.popUntil(navigatorKey.currentContext!,
+                                  (route) => route.isFirst);
+                              Navigator.pushReplacementNamed(
+                                  navigatorKey.currentContext!, Tabs.path);
+                              popHome = false;
+                            }
+                          } else {
+                            // Navigator.pop(navigatorKey.currentContext!);
+                            if (CustomNavigatorObserver().stackCount >= 2 &&
+                                splashLoaded) {
+                              Navigator.pop(navigatorKey.currentContext!);
+                            } else {
+                              Navigator.popUntil(navigatorKey.currentContext!,
+                                  (route) => route.isFirst);
+                              Navigator.pushReplacementNamed(
+                                  navigatorKey.currentContext!, Tabs.path);
+                              popHome = false;
+                            }
+                          }
+                        },
+                      ),
+                      Flexible(
+                        child: Row(
+                          children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(Pad.pad5),
+                              child: Container(
+                                padding: EdgeInsets.all(3.sp),
+                                color: ThemeColors.neutral5,
+                                child: data?.image == null || data?.image == ''
+                                    ? SizedBox(
+                                        height: 32,
+                                        width: 32,
+                                      )
+                                    : CachedNetworkImagesWidget(
+                                        data?.image,
+                                        height: 32,
+                                        width: 32,
+                                      ),
+                              ),
+                            ),
+                            const SpacerHorizontal(width: 10),
+                            Flexible(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Visibility(
+                                    child: Row(
+                                      children: [
+                                        Text(
+                                          data?.symbol ?? '',
+                                          // style: styleBaseBold(fontSize: 16),
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .displayLarge,
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                        Visibility(
+                                          visible: data?.exchange != null &&
+                                              data?.exchange != '',
+                                          child: Container(
+                                            margin: EdgeInsets.only(left: 10),
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(8),
+                                              color: ThemeColors.neutral5,
+                                            ),
+                                            padding: EdgeInsets.symmetric(
+                                                horizontal: 8, vertical: 4),
+                                            child: Text(
+                                              '${data?.exchange}',
+                                              style: styleBaseSemiBold(
+                                                  color: ThemeColors.neutral80,
+                                                  fontSize: 11),
+                                            ),
+                                          ),
+                                        )
+                                      ],
+                                    ),
                                   ),
-                          ),
-                        ),
-                        const SpacerHorizontal(width: 10),
-                        Flexible(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Visibility(
-                                child: Row(
-                                  children: [
-                                    Text(
-                                      data?.symbol ?? '',
-                                      style: styleBaseBold(fontSize: 16),
+                                  // const SpacerVertical(height: 2),
+                                  Visibility(
+                                    visible:
+                                        data?.name != null && data?.name != '',
+                                    child: Text(
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
-                                    ),
-                                    Visibility(
-                                      visible: data?.exchange != null &&
-                                          data?.exchange != '',
-                                      child: Container(
-                                        margin: EdgeInsets.only(left: 10),
-                                        decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(8),
-                                          color: ThemeColors.neutral5,
-                                        ),
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: 8, vertical: 4),
-                                        child: Text(
-                                          '${data?.exchange}',
-                                          style: styleBaseSemiBold(
-                                              color: ThemeColors.neutral80,
-                                              fontSize: 11),
-                                        ),
+                                      data?.name ?? '',
+                                      style: styleBaseRegular(
+                                        fontSize: 14,
+                                        color: ThemeColors.neutral40,
                                       ),
-                                    )
-                                  ],
-                                ),
-                              ),
-                              // const SpacerVertical(height: 2),
-                              Visibility(
-                                visible: data?.name != null && data?.name != '',
-                                child: Text(
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                  data?.name ?? '',
-                                  style: styleBaseRegular(
-                                    fontSize: 14,
-                                    color: ThemeColors.neutral40,
+                                    ),
                                   ),
-                                ),
+                                ],
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
-                  )
-                ],
-              ),
-            ),
-            // Actions
-            Row(
-              children: [
-                if (addToAlert != null)
-                  Padding(
-                    padding: const EdgeInsets.only(left: 8),
-                    child: ActionButton(
-                      size: 35,
-                      icon: Images.moreStockAlerts,
-                      onTap: onAddToAlertClick,
-                      color: data?.isAlertAdded == 1
-                          ? ThemeColors.primary120
-                          : ThemeColors.splashBG,
-                    ),
+                      )
+                    ],
                   ),
-                if (addToWatchlist != null)
-                  Padding(
-                    padding: const EdgeInsets.only(left: 8),
-                    child: ActionButton(
-                      size: 35,
-                      icon: Images.watchlist,
-                      // icon: Images.watchlist,
-                      onTap: onAddToWatchlistClick,
-                      color: data?.isWatchlistAdded == 1
-                          ? ThemeColors.primary120
-                          : ThemeColors.splashBG,
-                    ),
-                  ),
-                if (shareURL != null)
-                  Padding(
-                    padding: const EdgeInsets.only(left: 8),
-                    child: ActionButton(
-                      size: 35,
-                      icon: Images.shareURL,
-                      onTap: shareURL!,
-                    ),
-                  ),
+                ),
+                // Actions
+                Row(
+                  children: [
+                    if (addToAlert != null)
+                      Padding(
+                        padding: const EdgeInsets.only(left: 8),
+                        child: ActionButton(
+                          size: 35,
+                          icon: Images.moreStockAlerts,
+                          onTap: onAddToAlertClick,
+                          color: data?.isAlertAdded == 1
+                              ? ThemeColors.primary120
+                              : value.isDarkMode
+                                  ? ThemeColors.white
+                                  : ThemeColors.black,
+                        ),
+                      ),
+                    if (addToWatchlist != null)
+                      Padding(
+                        padding: const EdgeInsets.only(left: 8),
+                        child: ActionButton(
+                          size: 35,
+                          icon: Images.watchlist,
+                          // icon: Images.watchlist,
+                          onTap: onAddToWatchlistClick,
+                          color: data?.isWatchlistAdded == 1
+                              ? ThemeColors.primary120
+                              : value.isDarkMode
+                                  ? ThemeColors.white
+                                  : ThemeColors.black,
+                        ),
+                      ),
+                    if (shareURL != null)
+                      Padding(
+                        padding: const EdgeInsets.only(left: 8),
+                        child: ActionButton(
+                          size: 35,
+                          icon: Images.shareURL,
+                          onTap: shareURL!,
+                          color: value.isDarkMode
+                              ? ThemeColors.white
+                              : ThemeColors.black,
+                        ),
+                      ),
+                  ],
+                ),
               ],
-            ),
-          ],
+            );
+          },
         ),
       ),
     );

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:stocks_news_new/ui/base/base_list_divider.dart';
 import 'package:stocks_news_new/ui/tabs/tools/simulator/models/ts_pending_list_res.dart';
 import 'package:stocks_news_new/ui/tabs/tools/simulator/screens/widget/order_type.dart';
 import 'package:stocks_news_new/utils/colors.dart';
@@ -102,10 +103,7 @@ class TsPendingListItem extends StatelessWidget {
                       item?.orderTypeOriginal != 'MARKET_ORDER',
                   child: Column(
                     children: [
-                      const Divider(
-                          color: ThemeColors.neutral5,
-                          thickness: 1,
-                          height: 10),
+                      const BaseListDivider(height: 10),
                       const SpacerVertical(height: 5),
                     ],
                   ),

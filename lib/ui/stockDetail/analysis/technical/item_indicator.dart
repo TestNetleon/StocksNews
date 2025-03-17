@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:stocks_news_new/ui/theme/manager.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -22,7 +24,8 @@ class TechnicalAnaItemIndicator extends StatelessWidget {
             child: Expanded(
               child: Text(
                 '${data.title}',
-                style: styleBaseRegular(fontSize: 14),
+                // style: styleBaseRegular(fontSize: 14),
+                style: Theme.of(context).textTheme.bodySmall,
               ),
             ),
           ),
@@ -34,7 +37,8 @@ class TechnicalAnaItemIndicator extends StatelessWidget {
                 child: Text(
                   textAlign: TextAlign.start,
                   '${data.value}',
-                  style: styleBaseBold(fontSize: 14),
+                  // style: styleBaseBold(fontSize: 14),
+                  style: Theme.of(context).textTheme.bodySmall,
                 ),
               ),
             ),
@@ -42,20 +46,26 @@ class TechnicalAnaItemIndicator extends StatelessWidget {
           Visibility(
             visible: action != '',
             child: Expanded(
-              child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 12),
-                child: Text(
-                  textAlign: TextAlign.start,
-                  data.action ?? '-',
-                  style: styleBaseBold(
-                    fontSize: 14,
-                    color: action.contains('Sell')
-                        ? ThemeColors.error120
-                        : action.contains('Buy')
-                            ? ThemeColors.success120
-                            : ThemeColors.black,
-                  ),
-                ),
+              child: Consumer<ThemeManager>(
+                builder: (context, value, child) {
+                  return Container(
+                    padding: EdgeInsets.symmetric(horizontal: 12),
+                    child: Text(
+                      textAlign: TextAlign.start,
+                      data.action ?? '-',
+                      style: styleBaseBold(
+                        fontSize: 14,
+                        color: action.contains('Sell')
+                            ? ThemeColors.error120
+                            : action.contains('Buy')
+                                ? ThemeColors.success120
+                                : value.isDarkMode
+                                    ? ThemeColors.white
+                                    : ThemeColors.black,
+                      ),
+                    ),
+                  );
+                },
               ),
             ),
           ),

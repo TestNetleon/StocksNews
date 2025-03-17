@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/managers/aiAnalysis/ai.dart';
+import 'package:stocks_news_new/ui/base/base_list_divider.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import '../../../../models/stockDetail/overview.dart';
@@ -63,7 +64,7 @@ class AIEvents extends StatelessWidget {
         );
       },
       separatorBuilder: (BuildContext context, int index) {
-        return Divider(color: ThemeColors.greyText, height: 25);
+        return BaseListDivider(height: 25);
       },
     );
   }

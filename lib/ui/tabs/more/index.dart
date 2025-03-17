@@ -83,23 +83,35 @@ class MoreIndex extends StatelessWidget {
                   SpacerVertical(height: Pad.pad8),
                   Text(
                     user?.name ?? 'Welcome Guest',
-                    style: styleBaseBold(fontSize: 25, height: 1.5),
+                    // style: styleBaseBold(fontSize: 25, height: 1.5),
+                    style: Theme.of(context)
+                        .textTheme
+                        .displayLarge
+                        ?.copyWith(fontSize: 25, height: 1.5),
                   ),
                   // SpacerVertical(height: Pad.pad5),
                   Visibility(
                     visible: user?.email != null && user?.email != '',
                     child: Text(
                       user?.email ?? '',
-                      style: styleBaseRegular(fontSize: 16, height: 1.5),
+                      // style: styleBaseRegular(fontSize: 16, height: 1.5),
+                      style: Theme.of(context)
+                          .textTheme
+                          .displaySmall
+                          ?.copyWith(height: 1.5),
                     ),
-                  )
+                  ),
                 ],
               ),
             ),
             BaseHeading(
               margin: EdgeInsets.only(left: Pad.pad16, top: Pad.pad8),
               title: "My Account",
-              titleStyle: styleBaseBold(fontSize: 20),
+              // titleStyle: styleBaseBold(fontSize: 20),
+              titleStyle: Theme.of(context)
+                  .textTheme
+                  .displayLarge
+                  ?.copyWith(fontSize: 20),
             ),
             MoreItem(
               icon: Images.morePersonalDetails,
@@ -149,7 +161,11 @@ class MoreIndex extends StatelessWidget {
             BaseHeading(
               margin: EdgeInsets.only(left: Pad.pad16, top: Pad.pad20),
               title: "Resources",
-              titleStyle: styleBaseBold(fontSize: 20),
+              // titleStyle: styleBaseBold(fontSize: 20),
+              titleStyle: Theme.of(context)
+                  .textTheme
+                  .displayLarge
+                  ?.copyWith(fontSize: 20),
             ),
             MoreItem(
               icon: Images.watchlist,
@@ -168,7 +184,11 @@ class MoreIndex extends StatelessWidget {
             BaseHeading(
               margin: EdgeInsets.only(left: Pad.pad16, top: Pad.pad20),
               title: "Theme",
-              titleStyle: styleBaseBold(fontSize: 20),
+              // titleStyle: styleBaseBold(fontSize: 20),
+              titleStyle: Theme.of(context)
+                  .textTheme
+                  .displayLarge
+                  ?.copyWith(fontSize: 20),
             ),
             Consumer<ThemeManager>(
               builder: (context, value, child) {
@@ -192,7 +212,11 @@ class MoreIndex extends StatelessWidget {
             BaseHeading(
               margin: EdgeInsets.only(left: Pad.pad16, top: Pad.pad20),
               title: "Help",
-              titleStyle: styleBaseBold(fontSize: 20),
+              // titleStyle: styleBaseBold(fontSize: 20),
+              titleStyle: Theme.of(context)
+                  .textTheme
+                  .displayLarge
+                  ?.copyWith(fontSize: 20),
             ),
             MoreItem(
               icon: Images.moreFaqs,

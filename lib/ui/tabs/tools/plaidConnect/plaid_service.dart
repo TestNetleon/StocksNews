@@ -153,7 +153,7 @@ class PlaidService {
         "language": config?.language ?? "en",
         "android_package_name": config?.androidPackageName ?? "com.stocks.news"
       });
-
+      Utils().showLog('BODY=> $body');
       try {
         final response =
             await http.post(Uri.parse(url), headers: headers, body: body);

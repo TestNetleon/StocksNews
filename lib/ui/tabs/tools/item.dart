@@ -44,7 +44,11 @@ class ToolsItem extends StatelessWidget {
               child: Text(
                 textAlign: TextAlign.center,
                 card?.title ?? '',
-                style: styleBaseBold(fontSize: 22),
+                // style: styleBaseBold(fontSize: 22),
+                style: Theme.of(context)
+                    .textTheme
+                    .displayLarge
+                    ?.copyWith(fontSize: 22),
               ),
             ),
           ),

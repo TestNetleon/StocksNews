@@ -2,7 +2,6 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:stocks_news_new/models/market/industries_res.dart';
 import 'package:stocks_news_new/utils/constants.dart';
-import 'package:stocks_news_new/utils/theme.dart';
 
 class BaseSectorHeader extends StatelessWidget {
   final HeadingLabel? title;
@@ -25,21 +24,24 @@ class BaseSectorHeader extends StatelessWidget {
               width: titleSpace,
               child: Text(
                 title?.title ?? "",
-                style: styleBaseBold(fontSize: 12),
+                // style: styleBaseBold(fontSize: 12),
+                style: Theme.of(context).textTheme.labelLarge,
               ),
             ),
             SizedBox(
               width: type,
               child: AutoSizeText(
                 title?.sentiment ?? "",
-                style: styleBaseBold(fontSize: 12),
+                // style: styleBaseBold(fontSize: 12),
+                style: Theme.of(context).textTheme.labelLarge,
               ),
             ),
             SizedBox(
               width: value,
               child: AutoSizeText(
                 title?.mentions ?? "",
-                style: styleBaseBold(fontSize: 12),
+                // style: styleBaseBold(fontSize: 12),
+                style: Theme.of(context).textTheme.labelLarge,
               ),
             ),
           ],

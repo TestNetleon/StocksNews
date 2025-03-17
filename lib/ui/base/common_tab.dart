@@ -5,6 +5,8 @@ import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/optional_parent.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 
+import 'base_list_divider.dart';
+
 class BaseTabs extends StatefulWidget {
   const BaseTabs({
     super.key,
@@ -76,7 +78,8 @@ class _CommonTabsState extends State<BaseTabs>
                   return TabItem(
                     label: e.title,
                     textStyle: isSelected
-                        ? styleBaseSemiBold(fontSize: widget.fontSize ?? 16)
+                        // ? styleBaseSemiBold(fontSize: widget.fontSize ?? 16)
+                        ? Theme.of(context).textTheme.displayLarge
                         : widget.unselectedBold
                             ? styleBaseSemiBold(
                                 color: ThemeColors.neutral20,
@@ -99,12 +102,7 @@ class _CommonTabsState extends State<BaseTabs>
             if (widget.rightChild != null) widget.rightChild!,
           ],
         ),
-        if (widget.showDivider)
-          Divider(
-            color: ThemeColors.neutral5,
-            height: 1,
-            thickness: 1,
-          ),
+        if (widget.showDivider) BaseListDivider(),
       ],
     );
   }

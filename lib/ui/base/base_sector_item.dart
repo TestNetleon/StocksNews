@@ -1,7 +1,9 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 import 'package:stocks_news_new/models/market/industries_res.dart';
+import 'package:stocks_news_new/ui/theme/manager.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -25,7 +27,7 @@ class BaseSectorItem extends StatelessWidget {
   Widget build(BuildContext context) {
     // bool isOpen = _openIndex == widget.index;
     return InkWell(
-      onTap: (){
+      onTap: () {
         onTap(data);
       },
       child: Container(
@@ -42,28 +44,38 @@ class BaseSectorItem extends StatelessWidget {
                 width: titleSpace,
                 child: Row(
                   children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(Pad.pad5),
-                      child: Container(
-                        padding: EdgeInsets.all(3.sp),
-                        // color: ThemeColors.neutral5,
-                        child: CachedNetworkImagesWidget(
-                          data.image,
-                          height: 20,
-                          width: 20,
-                            color: ThemeColors.splashBG
-                        ),
-                      ),
+                    Consumer<ThemeManager>(
+                      builder: (context, value, child) {
+                        return ClipRRect(
+                          borderRadius: BorderRadius.circular(Pad.pad5),
+                          child: Container(
+                            padding: EdgeInsets.all(3.sp),
+                            // color: ThemeColors.neutral5,
+                            child: CachedNetworkImagesWidget(
+                              data.image,
+                              height: 20,
+                              width: 20,
+                              color: value.isDarkMode
+                                  ? ThemeColors.white
+                                  : ThemeColors.black,
+                            ),
+                          ),
+                        );
+                      },
                     ),
                     const SpacerHorizontal(width: 16),
                     Flexible(
                       child: Text(
                         data.industry ?? "",
-                        style: styleBaseRegular(
-                          fontSize: 14,
-                          color: ThemeColors.splashBG,
-                          height: 1.4,
-                        ),
+                        // style: styleBaseRegular(
+                        //   fontSize: 14,
+                        //   color: ThemeColors.splashBG,
+                        //   height: 1.4,
+                        // ),
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyLarge
+                            ?.copyWith(height: 1.4),
                       ),
                     ),
                     const SpacerHorizontal(width: 16),
@@ -84,40 +96,40 @@ class BaseSectorItem extends StatelessWidget {
                 ),
               ),
               Column(
-                 children: [
-                   SizedBox(
-                     // color: Colors.red[100],
-                     width: value,
-                     child: AutoSizeText(
-                       "${data.totalMentions}",
-                       style: styleBaseBold(
-                         fontSize: 14,
-                         color: ThemeColors.splashBG,
-                       ),
-                       // textAlign: TextAlign.end,
-                     ),
-                   ),
-                   SpacerVertical(height: Pad.pad2),
-                   Visibility(
-                     visible: data.percentageChange!=null,
-                     child: SizedBox(
-                       // color: Colors.red[100],
-                       width: value,
-                       child: AutoSizeText(
-                         "${data.percentageChange}%",
-                         style: styleBaseBold(
-                           fontSize: 12,
-                           color: data.percentageColor == 1
-                               ? ThemeColors.success
-                               : ThemeColors.error120,
-                         ),
-                         // textAlign: TextAlign.end,
-                       ),
-                     ),
-                   ),
-                 ],
+                children: [
+                  SizedBox(
+                    // color: Colors.red[100],
+                    width: value,
+                    child: AutoSizeText(
+                      "${data.totalMentions}",
+                      // style: styleBaseBold(
+                      //   fontSize: 14,
+                      //   color: ThemeColors.splashBG,
+                      // ),
+                      style: Theme.of(context).textTheme.bodyLarge,
+                      // textAlign: TextAlign.end,
+                    ),
+                  ),
+                  SpacerVertical(height: Pad.pad2),
+                  Visibility(
+                    visible: data.percentageChange != null,
+                    child: SizedBox(
+                      // color: Colors.red[100],
+                      width: value,
+                      child: AutoSizeText(
+                        "${data.percentageChange}%",
+                        style: styleBaseBold(
+                          fontSize: 12,
+                          color: data.percentageColor == 1
+                              ? ThemeColors.success
+                              : ThemeColors.error120,
+                        ),
+                        // textAlign: TextAlign.end,
+                      ),
+                    ),
+                  ),
+                ],
               )
-
             ],
           );
         }),

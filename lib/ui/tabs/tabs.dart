@@ -14,6 +14,7 @@ import 'package:stocks_news_new/ui/tabs/market/index.dart';
 import 'package:stocks_news_new/ui/tabs/tools/scanner/manager/gainers.dart';
 import 'package:stocks_news_new/ui/tabs/tools/scanner/manager/losers.dart';
 import 'package:stocks_news_new/ui/tabs/tools/scanner/manager/scanner.dart';
+import 'package:stocks_news_new/ui/theme/manager.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -27,16 +28,13 @@ class Tabs extends StatefulWidget {
   static const String path = "Tabs";
   final int? index;
   final String? inAppMsgId;
-
   final int childIndex;
-  // final int trendingIndex;
 
   const Tabs({
     super.key,
     this.index = 0,
     this.inAppMsgId,
     this.childIndex = 0,
-    // this.trendingIndex = 0,
   });
 
   @override
@@ -69,18 +67,24 @@ class _TabsState extends State<Tabs> {
     bool selected = false,
   }) {
     return BottomNavigationBarItem(
-      icon: Padding(
-        padding: EdgeInsets.only(bottom: 3.sp),
-        // child: Icon(
-        //   icon,
-        //   size: 23,
-        // ),
-        child: Image.asset(
-          icon,
-          height: 27,
-          width: 27,
-          color: selected ? ThemeColors.black : ThemeColors.neutral60,
-        ),
+      icon: Consumer<ThemeManager>(
+        builder: (context, value, child) {
+          return Padding(
+            padding: EdgeInsets.only(bottom: 3.sp),
+            child: Image.asset(
+              icon,
+              height: 27,
+              width: 27,
+              color: selected
+                  ? value.isDarkMode
+                      ? ThemeColors.white
+                      : ThemeColors.black
+                  : selected
+                      ? ThemeColors.black
+                      : ThemeColors.neutral60,
+            ),
+          );
+        },
       ),
       label: label,
     );
@@ -93,8 +97,8 @@ class _TabsState extends State<Tabs> {
           .elementAt(_selectedIndex),
       bottomNavigationBar: BottomNavigationBar(
         unselectedItemColor: ThemeColors.neutral60,
-        selectedItemColor: ThemeColors.black,
-        backgroundColor: ThemeColors.white,
+        // selectedItemColor: ThemeColors.black,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         showUnselectedLabels: true,
         showSelectedLabels: true,
         currentIndex: _selectedIndex,

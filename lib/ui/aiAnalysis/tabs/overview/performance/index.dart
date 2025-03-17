@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:stocks_news_new/ui/base/base_list_divider.dart';
 import 'package:stocks_news_new/ui/base/border_container.dart';
 import 'package:stocks_news_new/ui/base/heading.dart';
-import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import '../../../../../managers/aiAnalysis/ai.dart';
@@ -40,10 +40,8 @@ class AIPerformance extends StatelessWidget {
               SpacerVertical(height: 20),
               AIPerformanceYear(),
               AIPerformanceToday(),
-              Divider(
-                color: ThemeColors.neutral5,
+              BaseListDivider(
                 height: Pad.pad32,
-                thickness: 1,
               ),
               AIPerformanceFooter(),
             ],

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/managers/home.dart';
+import 'package:stocks_news_new/ui/base/base_list_divider.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -123,11 +124,7 @@ class _HomeScannerHeaderState extends State<HomeScannerHeader> {
                 ],
               ),
             ),
-            Divider(
-              color: ThemeColors.neutral5,
-              height: 0,
-              thickness: 1,
-            ),
+            BaseListDivider(),
           ],
         );
       },

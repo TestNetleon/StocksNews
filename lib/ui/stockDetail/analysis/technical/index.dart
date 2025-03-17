@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/managers/stockDetail/stock.detail.dart';
 import 'package:stocks_news_new/models/stockDetail/overview.dart';
+import 'package:stocks_news_new/ui/base/base_list_divider.dart';
 import 'package:stocks_news_new/ui/base/base_scroll.dart';
-import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/widgets/custom/base_loader_container.dart';
 import '../../../../models/stockDetail/technical_analysis.dart';
 import '../../../../utils/constants.dart';
@@ -44,10 +44,7 @@ class SDTechnicalAnalysis extends StatelessWidget {
               );
             },
           ),
-          Divider(
-            color: ThemeColors.neutral5,
-            height: 10,
-          ),
+          BaseListDivider(height: 10),
           Expanded(
             child: BaseScroll(
               onRefresh: manager.onSelectedTabRefresh,
@@ -63,7 +60,7 @@ class SDTechnicalAnalysis extends StatelessWidget {
                     title: technicalIndicator?.title,
                     overview: technicalIndicator!.overview!,
                     data: indicatorsData,
-                    listTitles: ['Name', 'Value', 'Action'],
+                    // listTitles: ['Name', 'Value', 'Action'],
                   ),
                 if (movingAverage?.overview != null)
                   TechnicalAnaContainer(
@@ -71,7 +68,7 @@ class SDTechnicalAnalysis extends StatelessWidget {
                     overview: movingAverage!.overview!,
                     data: averageData,
                     onAverage: true,
-                    listTitles: ['Name', 'Value', 'Action', 'Weighted'],
+                    // listTitles: ['Name', 'Value', 'Action', 'Weighted'],
                   ),
               ],
             ),

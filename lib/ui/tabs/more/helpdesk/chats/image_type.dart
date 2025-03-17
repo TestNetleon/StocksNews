@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:stocks_news_new/ui/base/base_list_divider.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
@@ -34,10 +35,7 @@ class MyAccountImageType extends StatelessWidget {
             ),
           ),
         ),
-        Divider(
-          color: ThemeColors.greyBorder.withOpacity(0.4),
-          thickness: 0.5,
-        ),
+        BaseListDivider(),
         InkWell(
           onTap: onGallery,
           child: Container(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:stocks_news_new/ui/base/base_list_divider.dart';
 import 'package:stocks_news_new/ui/tabs/tools/simulator/models/ts_open_list_res.dart';
 import 'package:stocks_news_new/ui/tabs/tools/simulator/screens/widget/order_type.dart';
 import 'package:stocks_news_new/utils/colors.dart';
@@ -130,8 +131,7 @@ class TsOpenListItem extends StatelessWidget {
                     )
                   ],
                 ),
-                const Divider(
-                    color: ThemeColors.neutral5, thickness: 1, height: 10),
+                const BaseListDivider(height: 10),
                 const SpacerVertical(height: 5),
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -220,10 +220,7 @@ class TsOpenListItem extends StatelessWidget {
                   visible: item?.orderType != null && item?.orderType != '',
                   child: Column(
                     children: [
-                      const Divider(
-                          color: ThemeColors.neutral5,
-                          thickness: 1,
-                          height: 10),
+                      const BaseListDivider(height: 10),
                       const SpacerVertical(height: Pad.pad5),
                     ],
                   ),
@@ -248,14 +245,15 @@ class TsOpenListItem extends StatelessWidget {
                                 : "Stop Price",
                             prices: item?.stopPrice)),
                     Visibility(
-                        visible:
-                            item?.limitPrice != null && item?.limitPrice != 0,
-                        child: orderWithType(
-                            item?.orderTypeOriginal == "STOP_LIMIT_ORDER"
-                                ? Alignment.center
-                                : Alignment.centerLeft,
-                            label: "Limit Price",
-                            prices: item?.limitPrice)),
+                      visible:
+                          item?.limitPrice != null && item?.limitPrice != 0,
+                      child: orderWithType(
+                          item?.orderTypeOriginal == "STOP_LIMIT_ORDER"
+                              ? Alignment.center
+                              : Alignment.centerLeft,
+                          label: "Limit Price",
+                          prices: item?.limitPrice),
+                    ),
                     Visibility(
                       visible: item?.orderType != null && item?.orderType != '',
                       child: Expanded(

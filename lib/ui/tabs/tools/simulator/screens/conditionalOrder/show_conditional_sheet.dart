@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:stocks_news_new/ui/base/base_list_divider.dart';
 import 'package:stocks_news_new/ui/base/bottom_sheet.dart';
 import 'package:stocks_news_new/ui/base/button.dart';
 import 'package:stocks_news_new/ui/tabs/tools/simulator/managers/trade.dart';
@@ -127,11 +128,7 @@ class SuccessConditionalSheet extends StatelessWidget {
               ),
               Visibility(
                 visible: order?.shares != null,
-                child: Divider(
-                  color: ThemeColors.neutral5,
-                  thickness: 1,
-                  height: 15,
-                ),
+                child: BaseListDivider(height: 15),
               ),
               Visibility(
                 visible: order?.currentPrice != null,
@@ -155,11 +152,7 @@ class SuccessConditionalSheet extends StatelessWidget {
               ),
               Visibility(
                 visible: order?.currentPrice != null,
-                child: Divider(
-                  color: ThemeColors.neutral5,
-                  thickness: 1,
-                  height: 15,
-                ),
+                child: BaseListDivider(height: 15),
               ),
               Visibility(
                 visible: order?.currentPrice != null,
@@ -184,11 +177,7 @@ class SuccessConditionalSheet extends StatelessWidget {
               ),
               Visibility(
                 visible: order?.currentPrice != null,
-                child: Divider(
-                  color: ThemeColors.neutral5,
-                  thickness: 1,
-                  height: 15,
-                ),
+                child: BaseListDivider(height: 15),
               ),
               Visibility(
                 visible: order?.targetPrice != null && order?.targetPrice != 0,
@@ -212,11 +201,7 @@ class SuccessConditionalSheet extends StatelessWidget {
               ),
               Visibility(
                 visible: order?.targetPrice != null && order?.targetPrice != 0,
-                child: Divider(
-                  color: ThemeColors.neutral5,
-                  thickness: 1,
-                  height: 15,
-                ),
+                child: BaseListDivider(height: 15),
               ),
               Visibility(
                 visible: order?.stopPrice != null && order?.stopPrice != 0,
@@ -242,11 +227,7 @@ class SuccessConditionalSheet extends StatelessWidget {
               ),
               Visibility(
                 visible: order?.stopPrice != null && order?.stopPrice != 0,
-                child: Divider(
-                  color: ThemeColors.neutral5,
-                  thickness: 1,
-                  height: 15,
-                ),
+                child: BaseListDivider(height: 15),
               ),
               Visibility(
                 visible: order?.limitPrice != null && order?.limitPrice != 0,
@@ -270,11 +251,7 @@ class SuccessConditionalSheet extends StatelessWidget {
               ),
               Visibility(
                 visible: order?.limitPrice != null && order?.limitPrice != 0,
-                child: Divider(
-                  color: ThemeColors.neutral5,
-                  thickness: 1,
-                  height: 15,
-                ),
+                child: BaseListDivider(height: 15),
               ),
               Visibility(
                 visible:
@@ -300,11 +277,7 @@ class SuccessConditionalSheet extends StatelessWidget {
               Visibility(
                 visible:
                     order?.investedPrice != null && order?.investedPrice != 0,
-                child: Divider(
-                  color: ThemeColors.neutral5,
-                  thickness: 1,
-                  height: 15,
-                ),
+                child: BaseListDivider(height: 15),
               ),
               Visibility(
                 visible: order?.selectedOption != null,
@@ -335,11 +308,7 @@ class SuccessConditionalSheet extends StatelessWidget {
               Visibility(
                 visible:
                     order?.selectedOption != null && order?.selectedOption != 0,
-                child: Divider(
-                  color: ThemeColors.neutral5,
-                  thickness: 1,
-                  height: 15,
-                ),
+                child: BaseListDivider(height: 15),
               ),
               Visibility(
                 child: Column(
@@ -371,11 +340,7 @@ class SuccessConditionalSheet extends StatelessWidget {
                         ),
                       ],
                     ),
-                    Divider(
-                      color: ThemeColors.neutral5,
-                      thickness: 1,
-                      height: 15,
-                    ),
+                    BaseListDivider(height: 15),
                   ],
                 ),
               ),
@@ -398,11 +363,7 @@ class SuccessConditionalSheet extends StatelessWidget {
                         ),
                       ],
                     ),
-                    Divider(
-                      color: ThemeColors.neutral5,
-                      thickness: 1,
-                      height: 15,
-                    ),
+                    BaseListDivider(height: 15),
                   ],
                 ),
               ),
