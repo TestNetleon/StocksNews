@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
+import 'package:stocks_news_new/ui/base/base_list_divider.dart';
 import 'package:stocks_news_new/ui/base/bottom_sheet.dart';
 import 'package:stocks_news_new/ui/base/button.dart';
 import 'package:stocks_news_new/ui/tabs/tools/simulator/managers/portpolio.dart';
@@ -161,8 +162,7 @@ class _RecurringActionsState extends State<RecurringActions> {
             ),
           ],
         ),
-        Divider(
-          color: ThemeColors.greyBorder,
+        BaseListDivider(
           height: 20,
         ),
         Row(

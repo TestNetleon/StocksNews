@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:stocks_news_new/managers/stockDetail/stock.detail.dart';
 import 'package:stocks_news_new/ui/base/lock.dart';
 import 'package:stocks_news_new/ui/base/scaffold.dart';
 import 'package:stocks_news_new/ui/stockDetail/competitors/index.dart';
 import 'package:stocks_news_new/ui/stockDetail/ownership/index.dart';
-import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/custom/base_loader_container.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import '../../models/ticker.dart';
@@ -57,7 +57,8 @@ class _SDIndexState extends State<SDIndex> {
         data: tickerDetail,
         manager: manager,
         shareURL: () {
-          openUrl(tickerDetail?.shareUrl);
+          // openUrl(tickerDetail?.shareUrl);
+          Share.share(tickerDetail?.shareUrl ?? '');
         },
         addToAlert: () {},
         addToWatchlist: () {},
@@ -91,13 +92,13 @@ class _SDIndexState extends State<SDIndex> {
               Expanded(
                 child: SDStocksAnalysis(),
               ),
-            if (manager.selectedIndex == 4)
-              Expanded(
-                child: SDAnalystForecast(),
-              ),
             if (manager.selectedIndex == 3)
               Expanded(
                 child: SDTechnicalAnalysis(),
+              ),
+            if (manager.selectedIndex == 4)
+              Expanded(
+                child: SDAnalystForecast(),
               ),
             if (manager.selectedIndex == 5)
               Expanded(

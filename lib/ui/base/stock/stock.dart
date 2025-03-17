@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 import 'package:stocks_news_new/models/stockDetail/overview.dart';
 import 'package:stocks_news_new/models/ticker.dart';
+import 'package:stocks_news_new/ui/theme/manager.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -94,7 +96,9 @@ class _BaseStockItemState extends State<BaseStockItem> {
                       },
                       child: Text(
                         widget.data.symbol ?? '',
-                        style: styleBaseBold(fontSize: 16),
+                        // style: styleBaseBold(fontSize: 16),
+                        style: Theme.of(context).textTheme.displayLarge,
+
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
@@ -119,7 +123,8 @@ class _BaseStockItemState extends State<BaseStockItem> {
                         widget.data.displayPrice != '',
                     child: Text(
                       widget.data.displayPrice ?? '',
-                      style: styleBaseBold(fontSize: 16),
+                      // style: styleBaseBold(fontSize: 16),
+                      style: Theme.of(context).textTheme.displayLarge,
                     ),
                   ),
                   Visibility(
@@ -179,25 +184,32 @@ class _BaseStockItemState extends State<BaseStockItem> {
               ),
               Visibility(
                 visible: widget.expandable != null,
-                child: Container(
-                  margin: EdgeInsets.only(left: 8),
-                  child: InkWell(
-                    borderRadius: BorderRadius.circular(4),
-                    onTap: () => _toggleOpen(widget.index),
-                    child: Container(
-                      decoration: BoxDecoration(
+                child: Consumer<ThemeManager>(
+                  builder: (context, value, child) {
+                    return Container(
+                      margin: EdgeInsets.only(left: 8),
+                      child: InkWell(
                         borderRadius: BorderRadius.circular(4),
-                        border: Border.all(color: ThemeColors.neutral5),
+                        onTap: () => _toggleOpen(widget.index),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(4),
+                            border: Border.all(color: ThemeColors.neutral5),
+                          ),
+                          child: Image.asset(
+                            _openIndex == widget.index
+                                ? Images.arrowUP
+                                : Images.arrowDOWN,
+                            height: 24,
+                            width: 24,
+                            color: value.isDarkMode
+                                ? ThemeColors.white
+                                : ThemeColors.black,
+                          ),
+                        ),
                       ),
-                      child: Image.asset(
-                        _openIndex == widget.index
-                            ? Images.arrowUP
-                            : Images.arrowDOWN,
-                        height: 24,
-                        width: 24,
-                      ),
-                    ),
-                  ),
+                    );
+                  },
                 ),
               ),
             ],

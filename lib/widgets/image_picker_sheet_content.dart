@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:stocks_news_new/ui/base/base_list_divider.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
@@ -55,7 +56,7 @@ class ImagePickerSheetContent extends StatelessWidget {
               ),
             ),
           ),
-          Divider(color: Colors.grey, height: 1, thickness: 1),
+          BaseListDivider(),
           GestureDetector(
             onTap: onGalleryClick,
             child: Container(

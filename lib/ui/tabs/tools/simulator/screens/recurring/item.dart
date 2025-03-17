@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:stocks_news_new/ui/base/base_list_divider.dart';
 import 'package:stocks_news_new/ui/tabs/tools/simulator/models/ts_recurring_list_res.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
@@ -125,8 +126,7 @@ class TsRecurringListItem extends StatelessWidget {
                 )
               ],
             ),
-            const Divider(
-                color: ThemeColors.neutral5, thickness: 1, height: 10),
+            const BaseListDivider(height: 10),
             const SpacerVertical(height: Pad.pad5),
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -300,12 +300,10 @@ class TsRecurringListItem extends StatelessWidget {
               child: Column(
                 children: [
                   item?.statusType == "RUNNING"
-                      ? const Divider(
-                          color: ThemeColors.success120,
-                          height: 5,
-                          thickness: 1)
-                      : const Divider(
-                          color: ThemeColors.error120, height: 5, thickness: 1),
+                      ? const BaseListDivider(
+                          color: ThemeColors.success120, height: 5)
+                      : const BaseListDivider(
+                          color: ThemeColors.error120, height: 5),
                 ],
               ),
             ),

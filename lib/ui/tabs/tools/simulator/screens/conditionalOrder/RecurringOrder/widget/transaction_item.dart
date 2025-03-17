@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:stocks_news_new/ui/base/base_list_divider.dart';
 import 'package:stocks_news_new/ui/tabs/tools/simulator/models/ts_recurring_detail.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
@@ -160,10 +161,14 @@ class TransactionItem extends StatelessWidget {
           child: Column(
             children: [
               data?.statusString == "Completed"
-                  ? const Divider(
-                      color: ThemeColors.accent, height: 10, thickness: 1)
-                  : const Divider(
-                      color: ThemeColors.darkRed, height: 10, thickness: 1),
+                  ? const BaseListDivider(
+                      color: ThemeColors.accent,
+                      height: 10,
+                    )
+                  : const BaseListDivider(
+                      color: ThemeColors.darkRed,
+                      height: 10,
+                    ),
             ],
           ),
         ),

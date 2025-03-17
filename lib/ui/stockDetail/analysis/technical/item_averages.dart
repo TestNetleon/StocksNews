@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -24,7 +25,8 @@ class TechnicalAnaItemAverages extends StatelessWidget {
             child: Expanded(
               child: Text(
                 '${data.title}',
-                style: styleBaseRegular(fontSize: 14),
+                // style: styleBaseRegular(fontSize: 14),
+                style: Theme.of(context).textTheme.bodySmall,
               ),
             ),
           ),
@@ -93,7 +95,8 @@ class TechnicalAnaItemAverages extends StatelessWidget {
           Text(
             textAlign: textAlign,
             top,
-            style: styleBaseBold(fontSize: 14),
+            // style: styleBaseBold(fontSize: 14),
+            style: Theme.of(navigatorKey.currentContext!).textTheme.bodySmall,
           ),
           Text(
             textAlign: textAlign,

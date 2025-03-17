@@ -15,6 +15,9 @@ final lightTheme = ThemeData(
     backgroundColor: ThemeColors.background,
     width: double.infinity,
   ),
+  bottomNavigationBarTheme: BottomNavigationBarThemeData(
+    selectedItemColor: ThemeColors.black,
+  ),
   appBarTheme: AppBarTheme(
     backgroundColor: Colors.transparent,
     elevation: 0,
@@ -38,6 +41,9 @@ final darkTheme = ThemeData(
   useMaterial3: false,
   primarySwatch: ThemeColors.primaryPalette,
   scaffoldBackgroundColor: Colors.black,
+  bottomNavigationBarTheme: BottomNavigationBarThemeData(
+    selectedItemColor: ThemeColors.white,
+  ),
   drawerTheme: const DrawerThemeData(
     backgroundColor: ThemeColors.black,
     width: double.infinity,

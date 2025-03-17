@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:stocks_news_new/ui/base/base_list_divider.dart';
 import 'package:stocks_news_new/ui/base/heading.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
@@ -108,11 +109,7 @@ class _ScannerSortingListState extends State<ScannerSortingList> {
             ],
           ),
         ),
-        Divider(
-          color: ThemeColors.neutral5,
-          thickness: 1,
-          height: 10,
-        ),
+        BaseListDivider(height: 10),
       ],
     );
   }
@@ -147,10 +144,7 @@ class _ScannerSortingListState extends State<ScannerSortingList> {
               ],
             ),
           ),
-          Divider(
-            color: ThemeColors.neutral80,
-            thickness: 1,
-          ),
+          BaseListDivider(color: ThemeColors.neutral80),
           // Sort by Symbol
           _buildSortOption(
             'Symbol Name',

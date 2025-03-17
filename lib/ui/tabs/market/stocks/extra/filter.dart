@@ -4,6 +4,7 @@ import 'package:stocks_news_new/managers/market/market.dart';
 import 'package:stocks_news_new/models/stockDetail/overview.dart';
 import 'package:stocks_news_new/ui/base/app_bar.dart';
 import 'package:stocks_news_new/ui/base/base_filter_item.dart';
+import 'package:stocks_news_new/ui/base/base_list_divider.dart';
 import 'package:stocks_news_new/ui/base/button.dart';
 import 'package:stocks_news_new/ui/base/scaffold.dart';
 import 'package:stocks_news_new/utils/colors.dart';
@@ -235,7 +236,7 @@ class _FilterTypeState extends State<FilterType> {
             ),
           ),
         ),
-        Divider(color: ThemeColors.neutral5, height: 1, thickness: 1)
+        BaseListDivider()
       ],
     );
   }

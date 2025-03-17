@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:stocks_news_new/ui/theme/manager.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 
@@ -30,67 +32,75 @@ class BaseGaugeItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SfRadialGauge(
-      axes: <RadialAxis>[
-        RadialAxis(
-          startAngle: startAngle,
-          endAngle: endAngle,
-          minimum: minimum,
-          maximum: maximum,
-          interval: interval,
-          tickOffset: tickOffset,
-          canScaleToFit: canScaleToFit,
-          majorTickStyle: const MajorTickStyle(color: ThemeColors.divider),
-          minorTickStyle: const MinorTickStyle(color: ThemeColors.divider),
-          showLabels: false,
-          ticksPosition: ElementsPosition.inside,
-          ranges: ranges.isNotEmpty
-              ? ranges
-              : [
-                  GaugeRange(
-                    startValue: -100,
-                    endValue: -50,
-                    color: ThemeColors.error120,
-                    startWidth: width,
-                    endWidth: width,
+    return Consumer<ThemeManager>(
+      builder: (context, manager, child) {
+        return SfRadialGauge(
+          axes: <RadialAxis>[
+            RadialAxis(
+              startAngle: startAngle,
+              endAngle: endAngle,
+              minimum: minimum,
+              maximum: maximum,
+              interval: interval,
+              tickOffset: tickOffset,
+              canScaleToFit: canScaleToFit,
+              majorTickStyle: const MajorTickStyle(color: ThemeColors.divider),
+              minorTickStyle: const MinorTickStyle(color: ThemeColors.divider),
+              showLabels: false,
+              ticksPosition: ElementsPosition.inside,
+              ranges: ranges.isNotEmpty
+                  ? ranges
+                  : [
+                      GaugeRange(
+                        startValue: -100,
+                        endValue: -50,
+                        color: ThemeColors.error120,
+                        startWidth: width,
+                        endWidth: width,
+                      ),
+                      GaugeRange(
+                        startValue: -50,
+                        endValue: 0,
+                        color: ThemeColors.orange120,
+                        startWidth: width,
+                        endWidth: width,
+                      ),
+                      GaugeRange(
+                        startValue: 0,
+                        endValue: 50,
+                        color: ThemeColors.warning120,
+                        startWidth: width,
+                        endWidth: width,
+                      ),
+                      GaugeRange(
+                        startValue: 50,
+                        endValue: 100,
+                        color: ThemeColors.success120,
+                        startWidth: width,
+                        endWidth: width,
+                      ),
+                    ],
+              pointers: [
+                NeedlePointer(
+                  value: value.toDouble(),
+                  needleColor: manager.isDarkMode
+                      ? ThemeColors.white
+                      : ThemeColors.black,
+                  needleStartWidth: 0,
+                  needleEndWidth: 9,
+                  needleLength: .7,
+                  knobStyle: KnobStyle(
+                    knobRadius: .06,
+                    color: manager.isDarkMode
+                        ? ThemeColors.white
+                        : ThemeColors.black,
                   ),
-                  GaugeRange(
-                    startValue: -50,
-                    endValue: 0,
-                    color: ThemeColors.orange120,
-                    startWidth: width,
-                    endWidth: width,
-                  ),
-                  GaugeRange(
-                    startValue: 0,
-                    endValue: 50,
-                    color: ThemeColors.warning120,
-                    startWidth: width,
-                    endWidth: width,
-                  ),
-                  GaugeRange(
-                    startValue: 50,
-                    endValue: 100,
-                    color: ThemeColors.success120,
-                    startWidth: width,
-                    endWidth: width,
-                  ),
-                ],
-          pointers: [
-            NeedlePointer(
-              value: value.toDouble(),
-              needleColor: ThemeColors.black,
-              needleStartWidth: 0,
-              needleEndWidth: 9,
-              needleLength: .7,
-              knobStyle: const KnobStyle(
-                knobRadius: .06,
-                color: ThemeColors.black,
-              ),
+                )
+              ],
             )
           ],
-        )
-      ],
+        );
+      },
     );
   }
 }

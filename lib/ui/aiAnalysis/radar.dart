@@ -157,7 +157,9 @@ class _AIChartState extends State<AIChart> {
                 child: Text(
                   recommendation?.title ?? '',
                   style: styleBaseRegular(
-                      fontSize: 16, color: ThemeColors.neutral80),
+                    fontSize: 16,
+                    color: ThemeColors.neutral80,
+                  ),
                 ),
               ),
             ),
@@ -193,7 +195,8 @@ class _AIChartState extends State<AIChart> {
                           Flexible(
                             child: Text(
                               '${widget.aiAnalysis?.radarChart?[index].label}',
-                              style: styleBaseRegular(),
+                              // style: styleBaseRegular(),
+                              style: Theme.of(context).textTheme.displaySmall,
                             ),
                           ),
                         ],

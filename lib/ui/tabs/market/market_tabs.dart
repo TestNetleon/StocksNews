@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:stocks_news_new/models/market/market_res.dart';
+import 'package:stocks_news_new/ui/base/base_list_divider.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/cache_network_image.dart';
@@ -82,11 +83,7 @@ class _MarketTabsState extends State<MarketTabs>
             widget.onTap(index);
           },
         ),
-        Divider(
-          color: ThemeColors.neutral5,
-          height: 1,
-          thickness: 1,
-        ),
+        BaseListDivider(),
       ],
     );
   }
@@ -141,7 +138,8 @@ class TabItem extends StatelessWidget {
           Text(
             data.title ?? "",
             style: selected
-                ? styleBaseBold(fontSize: 12)
+                // ? styleBaseBold(fontSize: 12)
+                ? Theme.of(context).textTheme.labelLarge
                 : styleBaseRegular(fontSize: 12, color: ThemeColors.neutral40),
           ),
         ],

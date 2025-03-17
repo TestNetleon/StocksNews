@@ -51,9 +51,9 @@ class _ThemeToggleSwitchState extends State<ThemeToggleSwitch> {
             //   ThemeColors.black,
             // ],
             borderColor: [
-              ThemeColors.black,
-              ThemeColors.black,
-              ThemeColors.black,
+              ThemeColors.neutral5,
+              ThemeColors.neutral5,
+              ThemeColors.neutral5,
             ],
             cornerRadius: 20.0,
             minWidth: constraints.maxWidth / 3,

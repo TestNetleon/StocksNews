@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:stocks_news_new/ui/base/base_list_divider.dart';
 import 'package:stocks_news_new/ui/tabs/tools/scanner/manager/scanner.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
@@ -98,10 +99,8 @@ class _MarketSortingHeaderState extends State<MarketSortingHeader> {
                 ],
               ),
             ),
-            Divider(
-              color: ThemeColors.neutral5,
+            BaseListDivider(
               height: 0,
-              thickness: 1,
             ),
           ],
         );

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:stocks_news_new/ui/base/base_list_divider.dart';
 import 'package:stocks_news_new/ui/base/load_more.dart';
 import 'package:stocks_news_new/ui/tabs/tools/simulator/managers/s_transaction.dart';
 import 'package:stocks_news_new/ui/tabs/tools/simulator/models/ts_pending_list_res.dart';
 import 'package:stocks_news_new/ui/tabs/tools/simulator/screens/transactions/item.dart';
-import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/custom/base_loader_container.dart';
 
@@ -63,8 +63,7 @@ class _STransactionListState extends State<STransactionList> {
             );
           },
           separatorBuilder: (context, index) {
-            return Divider(
-                height: 24, thickness: 1, color: ThemeColors.neutral5);
+            return BaseListDivider(height: 24);
           },
           itemCount: manager.data?.length ?? 0,
         ),

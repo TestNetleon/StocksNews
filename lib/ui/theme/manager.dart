@@ -23,6 +23,8 @@ class ThemeManager extends ChangeNotifier {
         : _themeMode == ThemeMode.dark;
   }
 
+  // bool get isDarkMode => _themeMode == ThemeMode.dark;
+
   void _loadTheme() async {
     _themeMode = ThemeMode.system;
     notifyListeners();

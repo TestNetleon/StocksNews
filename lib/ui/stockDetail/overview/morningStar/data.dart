@@ -81,7 +81,8 @@ class SDMorningStarView extends StatelessWidget {
               AutoSizeText(
                 "Quantitative Equity Research Report",
                 textAlign: TextAlign.center,
-                style: styleBaseBold(fontSize: 18),
+                // style: styleBaseBold(fontSize: 18),
+                style: Theme.of(context).textTheme.headlineLarge,
                 maxLines: 1,
               ),
               const SpacerVertical(height: 5),
@@ -90,7 +91,7 @@ class SDMorningStarView extends StatelessWidget {
                 textAlign: TextAlign.center,
                 style: styleBaseRegular(
                   fontSize: 12,
-                  color: ThemeColors.greyText,
+                  color: ThemeColors.neutral40,
                 ),
               ),
               const SpacerVertical(height: 15),
@@ -265,7 +266,9 @@ class SDMorningStarView extends StatelessWidget {
                 children: [
                   Text(
                     "Quantitative Uncertainty",
-                    style: styleBaseBold(),
+                    // style: styleBaseBold(),
+                    style: Theme.of(context).textTheme.displayLarge,
+
                     textAlign: TextAlign.center,
                   ),
                   const SpacerVertical(height: 5),
@@ -273,7 +276,7 @@ class SDMorningStarView extends StatelessWidget {
                     "As on - ${data?.quantFairValueUncertaintyDate}",
                     style: styleBaseRegular(
                       fontSize: 12,
-                      color: ThemeColors.neutral80,
+                      color: ThemeColors.neutral20,
                     ),
                   ),
                 ],
@@ -387,9 +390,8 @@ class SDMorningStarView extends StatelessWidget {
                   children: [
                     Text(
                       "Financial Health",
-                      style: styleBaseBold(
-                        fontSize: 18,
-                      ),
+                      // style: styleBaseBold(fontSize: 18),
+                      style: Theme.of(context).textTheme.headlineLarge,
                     ),
                     SpacerVertical(height: 3),
                     Text(

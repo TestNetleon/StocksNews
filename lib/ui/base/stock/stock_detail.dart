@@ -21,7 +21,8 @@ class BaseStockDetailHeader extends StatelessWidget {
               children: [
                 Text(
                   data.displayPrice ?? '',
-                  style: styleBaseBold(fontSize: 28),
+                  // style: styleBaseBold(fontSize: 28),
+                  style: Theme.of(context).textTheme.titleLarge,
                 ),
                 Visibility(
                   visible: data.displayChange != null,
@@ -83,12 +84,15 @@ class BaseStockDetailHeader extends StatelessWidget {
               children: [
                 Text(
                   data.mktCap ?? '',
-                  style: styleBaseBold(fontSize: 28),
+                  // style: styleBaseBold(fontSize: 28),
+                  style: Theme.of(context).textTheme.titleLarge,
                 ),
                 Text(
                   'MKT Cap',
                   style: styleBaseRegular(
-                      fontSize: 14, color: ThemeColors.neutral40),
+                    fontSize: 14,
+                    color: ThemeColors.neutral40,
+                  ),
                 ),
               ],
             ),

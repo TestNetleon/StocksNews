@@ -8,7 +8,6 @@ import 'package:stocks_news_new/ui/tabs/tools/simulator/screens/tradeBuySell/con
 import 'package:stocks_news_new/ui/tabs/tools/simulator/services/sse.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 
-
 class TradeBuySellIndex extends StatelessWidget {
   static const String path = "TradeBuySellIndex";
   final num? qty;
@@ -35,13 +34,12 @@ class TradeBuySellIndex extends StatelessWidget {
       child: BaseScaffold(
         appBar: BaseTickerAppBar(
           data: detailRes,
-          addToWatchlist: (){},
-          addToAlert: (){},
+          addToWatchlist: () {},
+          addToAlert: () {},
           manager: manager,
-          onRefresh: (){
-            manager.getDetailTopData(symbol:  detailRes?.symbol??"");
+          onRefresh: () {
+            manager.getDetailTopData(symbol: detailRes?.symbol ?? "");
           },
-
         ),
         body: BuySellContainer(
           selectedStock: selectedStock,

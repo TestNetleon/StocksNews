@@ -1,10 +1,10 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stocks_news_new/models/my_home.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
+import 'package:stocks_news_new/widgets/cache_network_image.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import '../../signals/insiders/company/from_company.dart';
 import '../../signals/insiders/reporting/from_reporting.dart';
@@ -82,8 +82,8 @@ class HomeInsiderTradeItem extends StatelessWidget {
                       children: [
                         Container(
                           margin: EdgeInsets.only(right: Pad.pad8),
-                          child: CachedNetworkImage(
-                            imageUrl: data.image ?? '',
+                          child: CachedNetworkImagesWidget(
+                            data.image ?? '',
                             height: 30,
                             width: 44,
                           ),

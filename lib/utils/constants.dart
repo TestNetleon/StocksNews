@@ -247,7 +247,7 @@ class Images {
   //-------------------------------------------------------------------------------
   static const String scannerStop = 'assets/images/scanner_stop.png';
   static const String logo = "assets/images/logo.png";
-  static const String logoP = "assets/images/logo_holder.png";
+  static const String logoP = "assets/image/logo_holder.png";
   static const String login = "assets/images/log-in.png";
   static const String stockIcon = "assets/images/stock_icon.png";
   static const String signupSuccess = "assets/images/signup_success.png";

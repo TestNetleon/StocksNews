@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/managers/helpdesk.dart';
 import 'package:stocks_news_new/ui/base/app_bar.dart';
+import 'package:stocks_news_new/ui/base/base_list_divider.dart';
 import 'package:stocks_news_new/ui/base/scaffold.dart';
 import 'package:stocks_news_new/ui/tabs/more/helpdesk/listing/item.dart';
 import 'package:stocks_news_new/ui/tabs/more/helpdesk/tickets/index.dart';
@@ -10,7 +11,6 @@ import 'package:stocks_news_new/widgets/custom/base_loader_container.dart';
 import 'package:stocks_news_new/widgets/custom/refresh_indicator.dart';
 import 'package:stocks_news_new/widgets/helpdesk_error.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
-
 
 class RequestNewIndex extends StatefulWidget {
   static const String path = "RequestNewIndex";
@@ -46,40 +46,43 @@ class _RequestNewIndexState extends State<RequestNewIndex> {
               manager.data?.helpDesk?.ticketList?.isNotEmpty != true,
           isLoading: manager.isLoadingTickets,
           title: "Helpdesk",
-          subTitle: manager.data?.helpDesk?.noTicketsMessage ?? manager.errorTickets,
+          subTitle:
+              manager.data?.helpDesk?.noTicketsMessage ?? manager.errorTickets,
           buttonText: "CREATE NEW TICKETS",
           onClick: () async {
             Navigator.pushNamed(context, HelpDeskCreateIndex.path);
           },
           child: BaseLoaderContainer(
-            error: manager.data?.helpDesk?.noTicketsMessage ?? manager.errorTickets,
-            hasData:  manager.data?.helpDesk?.ticketList != null &&
+            error: manager.data?.helpDesk?.noTicketsMessage ??
+                manager.errorTickets,
+            hasData: manager.data?.helpDesk?.ticketList != null &&
                 manager.data?.helpDesk?.ticketList?.isNotEmpty == true,
             isLoading: manager.isLoadingTickets,
             showPreparingText: true,
             onRefresh: () => manager.getTickets(),
             child: CommonRefreshIndicator(
-              onRefresh: () async {
-                manager.getTickets();
-              },
-              child:Column(
-               // mainAxisSize: MainAxisSize.min,
-                children: [
-                  Expanded(
-                    child: ListView.separated(
-                      shrinkWrap: true,
-                      //physics: const NeverScrollableScrollPhysics(),
-                      itemCount: manager.data?.helpDesk?.ticketList?.length ?? 0,
-                      itemBuilder: (context, index) {
-                        return HelpDeskItemNew(index: index);
-                      },
-                      separatorBuilder: (context, index) {
-                        return const Divider(color: Colors.white12);
-                      },
+                onRefresh: () async {
+                  manager.getTickets();
+                },
+                child: Column(
+                  // mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Expanded(
+                      child: ListView.separated(
+                        shrinkWrap: true,
+                        //physics: const NeverScrollableScrollPhysics(),
+                        itemCount:
+                            manager.data?.helpDesk?.ticketList?.length ?? 0,
+                        itemBuilder: (context, index) {
+                          return HelpDeskItemNew(index: index);
+                        },
+                        separatorBuilder: (context, index) {
+                          return const BaseListDivider();
+                        },
+                      ),
                     ),
-                  ),
-                  const SpacerVertical(),
-                  /*
+                    const SpacerVertical(),
+                    /*
                       if (context.read<HelpDeskProvider>().extra?.disclaimer !=
                           null)
                         DisclaimerWidget(
@@ -87,9 +90,8 @@ class _RequestNewIndexState extends State<RequestNewIndex> {
                                 .read<HelpDeskProvider>()
                                 .extra!
                                 .disclaimer!)*/
-                ],
-              )
-            ),
+                  ],
+                )),
           ),
         ),
       ),

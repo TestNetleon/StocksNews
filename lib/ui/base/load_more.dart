@@ -1,7 +1,9 @@
 import 'dart:async';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:stocks_news_new/ui/theme/manager.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 
@@ -70,7 +72,14 @@ class _RefreshControlState extends State<BaseLoadMore> {
                     //   strokeWidth: 4,
                     //   color: ThemeColors.black,
                     // ),
-                    child: CupertinoActivityIndicator(color: ThemeColors.black),
+                    child: Consumer<ThemeManager>(
+                      builder: (context, value, child) {
+                        return CupertinoActivityIndicator(
+                            color: value.isDarkMode
+                                ? ThemeColors.white
+                                : ThemeColors.black);
+                      },
+                    ),
                   );
                 }
                 return const SizedBox();

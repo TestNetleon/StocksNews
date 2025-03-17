@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/ui/base/base_list_divider.dart';
 import 'package:stocks_news_new/ui/base/heading.dart';
 import 'package:stocks_news_new/ui/stockDetail/analysis/technical/item_averages.dart';
@@ -15,7 +16,6 @@ class TechnicalAnaContainer extends StatelessWidget {
   final String? title;
   final String? subTitle;
   final TechnicalAnalysisOverviewRes overview;
-  final List<String>? listTitles;
   final List<BaseKeyValueRes>? data;
   final bool onAverage;
 
@@ -24,7 +24,6 @@ class TechnicalAnaContainer extends StatelessWidget {
     this.title,
     this.subTitle,
     required this.overview,
-    this.listTitles,
     this.data,
     this.onAverage = false,
   });
@@ -97,8 +96,22 @@ class TechnicalAnaContainer extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('Neutral Low', style: styleBaseRegular(fontSize: 15)),
-              Text('Neutral High', style: styleBaseRegular(fontSize: 15)),
+              Text(
+                'Neutral Low',
+                // style: styleBaseRegular(fontSize: 15),
+                style: Theme.of(navigatorKey.currentContext!)
+                    .textTheme
+                    .displaySmall
+                    ?.copyWith(fontSize: 15),
+              ),
+              Text(
+                'Neutral High',
+                // style: styleBaseRegular(fontSize: 15),
+                style: Theme.of(navigatorKey.currentContext!)
+                    .textTheme
+                    .displaySmall
+                    ?.copyWith(fontSize: 15),
+              ),
             ],
           ),
         ),
@@ -128,7 +141,14 @@ class TechnicalAnaContainer extends StatelessWidget {
       crossAxisAlignment:
           alignEnd ? CrossAxisAlignment.end : CrossAxisAlignment.start,
       children: [
-        Text(title, style: styleBaseRegular(fontSize: 15)),
+        Text(
+          title,
+          // style: styleBaseRegular(fontSize: 15),
+          style: Theme.of(navigatorKey.currentContext!)
+              .textTheme
+              .displaySmall
+              ?.copyWith(fontSize: 15),
+        ),
         SpacerVertical(height: 4),
         Text(value, style: styleBaseBold(fontSize: 15, color: color)),
       ],
@@ -154,7 +174,10 @@ class TechnicalAnaContainer extends StatelessWidget {
                           horizontal: title == 'Name' ? 0 : 12),
                       child: Text(
                         title,
-                        style: styleBaseBold(fontSize: 14),
+                        // style: styleBaseBold(fontSize: 14),
+                        style: Theme.of(navigatorKey.currentContext!)
+                            .textTheme
+                            .bodyLarge,
                       ),
                     ),
                   ),

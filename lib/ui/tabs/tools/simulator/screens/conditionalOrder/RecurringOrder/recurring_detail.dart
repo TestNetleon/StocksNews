@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:stocks_news_new/ui/base/base_list_divider.dart';
 import 'package:stocks_news_new/ui/tabs/tools/simulator/managers/s_recurring.dart';
 import 'package:stocks_news_new/ui/tabs/tools/simulator/models/ts_recurring_detail.dart';
 import 'package:stocks_news_new/ui/tabs/tools/simulator/models/ts_recurring_list_res.dart';
@@ -283,9 +284,7 @@ class _RecurringDetailState extends State<RecurringDetail> {
               ],
             ),
           ),
-          Divider(
-            color: ThemeColors.neutral5,
-            thickness: 1,
+          BaseListDivider(
             height: 20,
           ),
           SpacerVertical(height: Pad.pad10),

@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/models/ticker.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
+import 'package:stocks_news_new/ui/base/base_list_divider.dart';
 import 'package:stocks_news_new/ui/tabs/tools/simulator/managers/portpolio.dart';
 import 'package:stocks_news_new/ui/tabs/tools/simulator/managers/ticker_search.dart';
 import 'package:stocks_news_new/ui/tabs/tools/simulator/managers/trade.dart';
@@ -207,11 +208,7 @@ class _TradOrderScreenState extends State<TradOrderScreen> {
             ],
           ),
           SpacerVertical(height: 10),
-          Divider(
-            color: ThemeColors.neutral5,
-            thickness: 1,
-            height: 20,
-          ),
+          BaseListDivider(height: 20),
           SpacerVertical(height: Pad.pad5),
           Text(
             "Regular orders",

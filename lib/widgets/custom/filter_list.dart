@@ -58,7 +58,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stocks_news_new/api/api_response.dart';
-import 'package:stocks_news_new/utils/colors.dart';
+import 'package:stocks_news_new/ui/base/base_list_divider.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/cache_network_image.dart';
 
@@ -83,7 +83,6 @@ class FilterListing extends StatelessWidget {
       child: ListView.separated(
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
-          // padding: EdgeInsets.symmetric(horizontal: 10.sp, vertical: 10.sp),
           itemBuilder: (context, index) {
             return InkWell(
               onTap: () {
@@ -119,10 +118,7 @@ class FilterListing extends StatelessWidget {
             );
           },
           separatorBuilder: (context, index) {
-            return Divider(
-              height: 20,
-              color: ThemeColors.greyBorder.withOpacity(0.4),
-            );
+            return BaseListDivider(height: 20);
           },
           itemCount: items.length),
     );

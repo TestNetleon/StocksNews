@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:stocks_news_new/ui/base/base_list_divider.dart';
 import 'package:stocks_news_new/ui/tabs/tools/scanner/manager/scanner.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
@@ -95,7 +96,8 @@ class _MarketScannerHeaderState extends State<MarketScannerHeader> {
                       SpacerVertical(height: 3),
                       Text(
                         marketStatus,
-                        style: styleBaseSemiBold(fontSize: 14),
+                        // style: styleBaseSemiBold(fontSize: 14),
+                        style: Theme.of(context).textTheme.bodyMedium,
                       ),
                     ],
                   ),
@@ -114,7 +116,8 @@ class _MarketScannerHeaderState extends State<MarketScannerHeader> {
                         SpacerVertical(height: 3),
                         Text(
                           _lastUpdated,
-                          style: styleBaseSemiBold(fontSize: 14),
+                          // style: styleBaseSemiBold(fontSize: 14),
+                          style: Theme.of(context).textTheme.bodyMedium,
                         ),
                       ],
                     ),
@@ -122,11 +125,7 @@ class _MarketScannerHeaderState extends State<MarketScannerHeader> {
                 ],
               ),
             ),
-            Divider(
-              color: ThemeColors.neutral5,
-              height: 0,
-              thickness: 1,
-            ),
+            BaseListDivider(height: 0),
           ],
         );
       },

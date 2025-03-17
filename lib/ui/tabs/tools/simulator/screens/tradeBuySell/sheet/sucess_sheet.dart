@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:stocks_news_new/ui/base/base_list_divider.dart';
 import 'package:stocks_news_new/ui/base/bottom_sheet.dart';
 import 'package:stocks_news_new/ui/base/button.dart';
 import 'package:stocks_news_new/ui/tabs/tools/simulator/managers/trade.dart';
@@ -135,11 +136,7 @@ class SuccessTradeSheet extends StatelessWidget {
                   ),
                 ],
               ),
-              Divider(
-                color: ThemeColors.neutral5,
-                thickness: 1,
-                height: 15,
-              ),
+              BaseListDivider(height: 15),
               Visibility(
                 visible: order?.currentPrice != null,
                 child: Row(
@@ -162,11 +159,7 @@ class SuccessTradeSheet extends StatelessWidget {
               ),
               Visibility(
                 visible: order?.currentPrice != null,
-                child: Divider(
-                  color: ThemeColors.neutral5,
-                  thickness: 1,
-                  height: 15,
-                ),
+                child: BaseListDivider(height: 15),
               ),
               Visibility(
                 visible: order?.currentPrice != null,
@@ -191,11 +184,7 @@ class SuccessTradeSheet extends StatelessWidget {
               ),
               Visibility(
                 visible: order?.currentPrice != null,
-                child: Divider(
-                  color: ThemeColors.neutral5,
-                  thickness: 1,
-                  height: 15,
-                ),
+                child: BaseListDivider(height: 15),
               ),
               Visibility(
                 child: Column(
@@ -221,11 +210,7 @@ class SuccessTradeSheet extends StatelessWidget {
                         ),
                       ],
                     ),
-                    Divider(
-                      color: ThemeColors.neutral5,
-                      thickness: 1,
-                      height: 15,
-                    ),
+                    BaseListDivider(height: 15),
                   ],
                 ),
               ),
@@ -248,11 +233,7 @@ class SuccessTradeSheet extends StatelessWidget {
                         ),
                       ],
                     ),
-                    Divider(
-                      color: ThemeColors.neutral5,
-                      thickness: 1,
-                      height: 15,
-                    ),
+                    BaseListDivider(height: 15),
                   ],
                 ),
               ),
