@@ -1,8 +1,5 @@
-import 'dart:io';
-
 import 'package:flutter/foundation.dart';
 import 'package:provider/provider.dart';
-import 'package:stocks_news_new/api/apis.dart';
 import 'package:stocks_news_new/managers/user.dart';
 import 'package:stocks_news_new/modals/user_res.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
@@ -20,15 +17,6 @@ class SuperwallService {
 
   initializeSuperWall({required String value}) async {
     try {
-      RCPurchaseController purchaseController = RCPurchaseController();
-
-      String apiKey =
-          Platform.isAndroid ? ApiKeys.superWallAndroid : ApiKeys.superWallIOS;
-      superwall.Superwall.configure(
-        apiKey,
-        purchaseController: purchaseController,
-      );
-
       UserRes? userRes = navigatorKey.currentContext?.read<UserManager>().user;
       if (userRes?.userId != null && userRes?.userId != '') {
         superwall.Superwall.shared.identify(userRes?.userId ?? "");
@@ -80,6 +68,7 @@ class SWDelegate extends superwall.SuperwallDelegate {
       case superwall.EventType.transactionComplete:
         superwall.Superwall.shared
             .setSubscriptionStatus(superwall.SubscriptionStatus.active);
+
         break;
 
       case superwall.EventType.transactionRestore:

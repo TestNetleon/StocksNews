@@ -29,11 +29,13 @@ class LayoutOnePlans extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 15),
                     margin: EdgeInsets.only(bottom: 10),
                     child: GestureDetector(
-                        onTap: () {
-                          context
-                              .read<SubscriptionManager>()
-                              .onChangePlan(planData);
-                        },
+                        onTap: planData.currentPlan == true
+                            ? null
+                            : () {
+                                context
+                                    .read<SubscriptionManager>()
+                                    .onChangePlan(planData);
+                              },
                         child: LayoutOneItem(planData: planData)),
                   );
                 },

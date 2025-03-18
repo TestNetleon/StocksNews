@@ -101,20 +101,26 @@ class ReferralPointRes {
 }
 
 class ReferLogin {
-  final String title;
-  final String subTitle;
-  final String btnText;
-  final String verifyBtnText;
+  final String? title;
+  final String? note;
+  final String? subTitle;
+  final String? btnText;
+  final String? verifyBtnText;
+  final String? text;
 
   ReferLogin({
-    required this.title,
-    required this.subTitle,
-    required this.btnText,
-    required this.verifyBtnText,
+    this.note,
+    this.text,
+    this.title,
+    this.subTitle,
+    this.btnText,
+    this.verifyBtnText,
   });
 
   factory ReferLogin.fromJson(Map<String, dynamic> json) => ReferLogin(
         title: json["title"],
+        note: json['note'],
+        text: json['text'],
         subTitle: json["sub_title"],
         btnText: json["btn_text"],
         verifyBtnText: json["verify_btn_text"],
@@ -122,6 +128,8 @@ class ReferLogin {
 
   Map<String, dynamic> toJson() => {
         "title": title,
+        'note': note,
+        'text': text,
         "sub_title": subTitle,
         "btn_text": btnText,
         "verify_btn_text": verifyBtnText,

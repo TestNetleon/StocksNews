@@ -5,6 +5,8 @@ import '../../api/apis.dart';
 import '../../modals/user_res.dart';
 import '../../utils/constants.dart';
 import '../../utils/utils.dart';
+import 'screens/rc_controller.dart';
+import 'package:superwallkit_flutter/superwallkit_flutter.dart' as superwall;
 
 class SubscriptionService {
   SubscriptionService._internal();
@@ -27,6 +29,20 @@ class SubscriptionService {
       }
 
       await Purchases.configure(configuration);
+
+      try {
+        RCPurchaseController purchaseController = RCPurchaseController();
+
+        String apiKey = Platform.isAndroid
+            ? ApiKeys.superWallAndroid
+            : ApiKeys.superWallIOS;
+        superwall.Superwall.configure(
+          apiKey,
+          purchaseController: purchaseController,
+        );
+      } catch (e) {
+        //
+      }
 
       try {
         // Purchases.syncPurchases();

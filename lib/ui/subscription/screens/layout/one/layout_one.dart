@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:stocks_news_new/ui/legal/index.dart';
 import 'package:stocks_news_new/ui/subscription/manager.dart';
 import 'package:stocks_news_new/ui/subscription/model/layout_one.dart';
 import 'package:stocks_news_new/utils/colors.dart';
@@ -24,6 +25,8 @@ class _SubscriptionLayoutOneState extends State<SubscriptionLayoutOne>
   onChange(index) {
     _selectedIndex = index;
     setState(() {});
+    SubscriptionManager manager = context.read<SubscriptionManager>();
+    manager.onChangePlan(null);
   }
 
   @override
@@ -63,43 +66,56 @@ class _SubscriptionLayoutOneState extends State<SubscriptionLayoutOne>
                   ],
                 ),
                 SpacerVertical(height: constraints.maxWidth / 5),
-                Text(
-                  textAlign: TextAlign.center,
-                  value.subscriptionData?.layout1?.title?.toUpperCase() ?? '',
-                  style: styleBaseBold(fontSize: 30),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Text(
+                    textAlign: TextAlign.center,
+                    value.subscriptionData?.layout1?.title?.toUpperCase() ?? '',
+                    style: styleBaseBold(
+                        fontSize: 30, color: ThemeColors.primary120),
+                  ),
                 ),
                 SpacerVertical(height: 20),
                 Container(
-                  decoration: BoxDecoration(
-                    border: Border(
-                      bottom: BorderSide(
-                        color: ThemeColors.white.withValues(alpha: 0.55),
-                      ),
-                    ),
-                  ),
+                  // decoration: BoxDecoration(
+                  //   border: Border(
+                  //     bottom: BorderSide(
+                  //       color: Colors.secondary120,
+                  //     ),
+                  //   ),
+                  // ),
                   child: TabBar(
                     onTap: onChange,
                     controller: _tabController,
-                    labelColor: Colors.white,
-                    unselectedLabelColor: Colors.white,
                     labelPadding: EdgeInsets.only(bottom: 5),
                     indicator: BoxDecoration(
                       border: Border(
-                        bottom: BorderSide(color: Colors.white),
+                        bottom: BorderSide(
+                          color: ThemeColors.primary120,
+                        ),
                       ),
                     ),
                     tabs: [
                       Text(
                         'BASIC',
-                        style: styleBaseBold(fontSize: 14),
+                        style: styleBaseBold(
+                          fontSize: 14,
+                          color: ThemeColors.primary120,
+                        ),
                       ),
                       Text(
                         'PRO',
-                        style: styleBaseBold(fontSize: 14),
+                        style: styleBaseBold(
+                          fontSize: 14,
+                          color: ThemeColors.primary120,
+                        ),
                       ),
                       Text(
                         'ELITE',
-                        style: styleBaseBold(fontSize: 14),
+                        style: styleBaseBold(
+                          fontSize: 14,
+                          color: ThemeColors.primary120,
+                        ),
                       ),
                     ],
                   ),
@@ -143,15 +159,10 @@ class _SubscriptionLayoutOneState extends State<SubscriptionLayoutOne>
                         style: styleBaseRegular(color: ThemeColors.greyText),
                         recognizer: TapGestureRecognizer()
                           ..onTap = () {
-                            // Navigator.push(
-                            //   context,
-                            //   createRoute(
-                            //     TCandPolicy(
-                            //       policyType: PolicyType.privacy,
-                            //       slug: "privacy-policy",
-                            //     ),
-                            //   ),
-                            // );
+                            Navigator.pushNamed(context, LegalInfoIndex.path,
+                                arguments: {
+                                  'slug': "privacy-policy",
+                                });
                           },
                       ),
                       if (value.subscriptionData?.showRestore == true)

@@ -15,6 +15,7 @@ import 'package:stocks_news_new/modals/user_res.dart';
 import 'package:stocks_news_new/routes/navigation_observer.dart';
 import 'package:stocks_news_new/routes/routes.dart';
 import 'package:stocks_news_new/service/braze/service.dart';
+import 'package:stocks_news_new/ui/subscription/service.dart';
 import 'package:stocks_news_new/ui/theme/manager.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/database/preference.dart';
@@ -54,8 +55,14 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       listenForPushToken();
       NotificationHandler.instance.setupNotificationListeners();
       // brazeDeepLink();
+      _configureSubscriptionService();
     });
     WidgetsBinding.instance.addObserver(this);
+  }
+
+  Future _configureSubscriptionService() async {
+    UserRes? userRes = await Preference.getUser();
+    SubscriptionService.instance.initialize(user: userRes);
   }
 
   brazeDeepLink() {

@@ -24,7 +24,7 @@ Future popUpAlert({
   if (navigatorKey.currentContext != null) {
     await showDialog(
       context: navigatorKey.currentContext!,
-      barrierColor: ThemeColors.transparentDark,
+      barrierColor: const Color.fromARGB(72, 0, 0, 0),
       builder: (context) {
         return AlertPopupCustom(
           message: message,
@@ -84,7 +84,7 @@ class AlertPopupCustom extends StatelessWidget {
     return PopScope(
       canPop: canPop,
       child: Dialog(
-        backgroundColor: ThemeColors.transparent,
+        backgroundColor: Colors.transparent,
         shape:
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.sp)),
         child: SingleChildScrollView(
@@ -95,7 +95,7 @@ class AlertPopupCustom extends StatelessWidget {
                 padding: EdgeInsets.only(bottom: 5.sp),
                 child: Container(
                   decoration: BoxDecoration(
-                    color: ThemeColors.white,
+                    color: Colors.white,
                     borderRadius: BorderRadius.circular(10.sp),
                   ),
                   child: Padding(
@@ -125,7 +125,9 @@ class AlertPopupCustom extends StatelessWidget {
                                     child: Text(
                                       title ?? "",
                                       style: styleBaseBold(
-                                        color: ThemeColors.background,
+                                        // color: ThemeColors.background,
+                                        color: Colors.black,
+
                                         fontSize: 20,
                                       ),
                                     ),
@@ -137,7 +139,8 @@ class AlertPopupCustom extends StatelessWidget {
                                     textAlign:
                                         messageTextAlign ?? TextAlign.center,
                                     style: styleBaseRegular(
-                                        color: ThemeColors.background,
+                                        // color: ThemeColors.background,
+                                        color: Colors.black,
                                         height: 1.4),
                                   ),
                               ],
@@ -157,7 +160,8 @@ class AlertPopupCustom extends StatelessWidget {
                                   child: Text(
                                     "$cancelText",
                                     style: styleBaseBold(
-                                        color: ThemeColors.background),
+                                      color: Colors.black,
+                                    ),
                                   ),
                                 ),
                               ),
@@ -171,7 +175,9 @@ class AlertPopupCustom extends StatelessWidget {
                                   child: Text(
                                     okText ?? "OK",
                                     style: styleBaseBold(
-                                        color: ThemeColors.background),
+                                      color: Colors.black,
+                                      // color: ThemeColors.background,
+                                    ),
                                   ),
                                 ),
                               ),

@@ -25,6 +25,8 @@ class AccountVerificationIndex extends StatefulWidget {
   static const path = 'AccountVerificationIndex';
   final String phone, countryCode, verificationId;
   final bool? update;
+  final void Function()? callBack;
+  final String? name;
 
   const AccountVerificationIndex({
     required this.phone,
@@ -32,6 +34,8 @@ class AccountVerificationIndex extends StatefulWidget {
     required this.verificationId,
     super.key,
     this.update,
+    this.name,
+    this.callBack,
   });
 
   @override
@@ -106,10 +110,14 @@ class _AccountVerificationIndexState extends State<AccountVerificationIndex>
     if (widget.update == true) {
       ApiResponse response = await manager.updatePersonalDetails(
         phone: widget.phone,
+        name: widget.name,
         phoneCode: widget.countryCode,
       );
       if (response.status) {
         Navigator.pop(navigatorKey.currentContext!);
+        if (widget.callBack != null) {
+          widget.callBack!();
+        }
       }
     } else {
       manager.verifyAccount(extraRequest: request);

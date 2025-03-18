@@ -6,6 +6,7 @@ import 'package:stocks_news_new/ui/base/base_scroll.dart';
 import 'package:stocks_news_new/ui/base/button.dart';
 import 'package:stocks_news_new/ui/base/heading.dart';
 import 'package:stocks_news_new/ui/subscription/screens/view/plans.dart';
+import 'package:stocks_news_new/ui/subscription/superwall_service.dart';
 import '../../../../utils/colors.dart';
 import '../../../../utils/constants.dart';
 import '../../../../utils/theme.dart';
@@ -90,6 +91,12 @@ class NoSubscription extends StatelessWidget {
           margin: EdgeInsets.symmetric(horizontal: Pad.pad16, vertical: 10),
           child: BaseButton(
             onPressed: () {
+              if (manager.layoutData?.superWallLayout != null &&
+                  manager.layoutData?.superWallLayout != '') {
+                SuperwallService.instance.initializeSuperWall(
+                    value: manager.layoutData?.superWallLayout ?? '');
+                return;
+              }
               Navigator.pushNamed(context, SubscriptionPlansIndex.path);
             },
             text: 'View Plans',

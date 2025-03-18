@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:io';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -9,7 +8,6 @@ import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:stocks_news_new/api/api_requester.dart';
 import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/api/apis.dart';
-import 'package:stocks_news_new/ui/base/app_bar.dart';
 import 'package:stocks_news_new/ui/base/toaster.dart';
 import 'package:stocks_news_new/ui/subscription/model/layout.dart';
 import 'package:stocks_news_new/ui/subscription/screens/purchased/purchased.dart';
@@ -22,9 +20,11 @@ import 'package:stocks_news_new/utils/utils.dart';
 import '../../managers/user.dart';
 import '../../routes/my_app.dart';
 import '../../utils/constants.dart';
+import 'action_required.dart';
 import 'model/layout_one.dart';
 import 'model/my_subscription.dart';
 import 'model/subscription.dart';
+import 'screens/purchased/success.dart';
 import 'screens/view/plans.dart';
 
 enum SubscriptionDefault {
@@ -56,6 +56,22 @@ class SubscriptionManager extends ChangeNotifier {
     viewPlans = true,
     SubscriptionDefault? defaultSelected,
   }) async {
+    UserManager manager = navigatorKey.currentContext!.read<UserManager>();
+    if (manager.user == null) {
+      await manager.askLoginScreen();
+    }
+    if (manager.user == null) return;
+    if (manager.user?.phone == null || manager.user?.phone == '') {
+      Utils().showLog("Ask phone for membership-----");
+      await Navigator.push(
+        navigatorKey.currentContext!,
+        createRoute(
+          MembershipActionRequired(),
+        ),
+      );
+    }
+    if (manager.user?.phone == null || manager.user?.phone == '') return;
+
     SubscriptionService instance = SubscriptionService.instance;
     try {
       setStatus(Status.loading);
@@ -258,6 +274,7 @@ class SubscriptionManager extends ChangeNotifier {
     } catch (e) {
       _layoutData = null;
       notifyListeners();
+      Utils().showLog('Error in ${Apis.subscriptionLayout}: $e');
       return ApiResponse(status: false);
     }
   }
@@ -459,13 +476,7 @@ class SubscriptionManager extends ChangeNotifier {
 
         Navigator.push(
           navigatorKey.currentContext!,
-          MaterialPageRoute(
-            builder: (context) => Scaffold(
-              appBar: BaseAppBar(
-                showBack: true,
-              ),
-            ),
-          ),
+          createRoute(SubscriptionSuccessIndex()),
         );
       });
     } on PlatformException catch (e) {
@@ -510,13 +521,7 @@ class SubscriptionManager extends ChangeNotifier {
       Future.delayed(Duration(milliseconds: 200), () {
         Navigator.push(
           navigatorKey.currentContext!,
-          MaterialPageRoute(
-            builder: (context) => Scaffold(
-              appBar: BaseAppBar(
-                showBack: true,
-              ),
-            ),
-          ),
+          createRoute(SubscriptionSuccessIndex()),
         );
       });
     } on PlatformException catch (e) {

@@ -122,7 +122,6 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
                         Consumer<UserManager>(
                           builder: (context, value, child) {
                             UserRes? user = value.user;
-                            // Utils().showLog(" ==> ${user?.image}");
                             return Padding(
                               padding: const EdgeInsets.only(left: 5),
                               child: GestureDetector(
@@ -130,34 +129,45 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
                                   closeKeyboard();
                                   Scaffold.of(context).openDrawer();
                                 },
-                                child: ClipRRect(
-                                  borderRadius:
-                                      BorderRadius.circular(Pad.pad999),
-                                  child: Container(
-                                    height: 30,
-                                    width: 30,
-                                    decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      border: Border.all(
-                                        color: ThemeColors.black,
-                                      ),
+                                child: Container(
+                                  height: 30,
+                                  width: 30,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    border: Border.all(
+                                      color: ThemeColors.black,
                                     ),
-                                    child:
-                                        user?.image == null || user?.image == ''
-                                            ? Image.asset(
-                                                Images.userPlaceholderNew,
-                                              )
-                                            : user?.image == 'svg'
-                                                ? SvgPicture.network(
-                                                    user?.image ?? '',
-                                                    placeholderBuilder: (context) =>
-                                                        CircularProgressIndicator(),
-                                                  )
-                                                : CachedNetworkImagesWidget(
-                                                    user?.image ?? '',
-                                                    showLoading: true,
-                                                  ),
                                   ),
+                                  child: user?.image == null ||
+                                          user?.image == ''
+                                      ? ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(Pad.pad999),
+                                          child: Image.asset(
+                                            Images.userPlaceholderNew,
+                                            fit: BoxFit.cover,
+                                          ),
+                                        )
+                                      : user?.imageType == 'svg'
+                                          ? ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(
+                                                      Pad.pad999),
+                                              child: SvgPicture.network(
+                                                user?.image ?? '',
+                                                placeholderBuilder: (context) =>
+                                                    CircularProgressIndicator(),
+                                              ),
+                                            )
+                                          : ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(
+                                                      Pad.pad999),
+                                              child: CachedNetworkImagesWidget(
+                                                user?.image ?? '',
+                                                showLoading: true,
+                                              ),
+                                            ),
                                 ),
                               ),
                             );

@@ -83,11 +83,10 @@ class MoreIndex extends StatelessWidget {
                   SpacerVertical(height: Pad.pad8),
                   Text(
                     user?.name ?? 'Welcome Guest',
-                    // style: styleBaseBold(fontSize: 25, height: 1.5),
-                    style: Theme.of(context)
-                        .textTheme
-                        .displayLarge
-                        ?.copyWith(fontSize: 25, height: 1.5),
+                    style: styleBaseBold(
+                      fontSize: 25,
+                      height: 1.5,
+                    ),
                   ),
                   // SpacerVertical(height: Pad.pad5),
                   Visibility(
@@ -135,12 +134,12 @@ class MoreIndex extends StatelessWidget {
                 manager.navigateToMySubscription(viewPlans: false);
               },
             ),
-            if(homeRes?.showCrypto==true)
-            MoreItem(
-              icon: Images.bitcoin,
-              label: "Cryptocurrencies",
-              onTap: () {
-                manager.navigateToBillionaires();
+            if (homeRes?.showCrypto == true)
+              MoreItem(
+                icon: Images.bitcoin,
+                label: "Cryptocurrencies",
+                onTap: () {
+                  manager.navigateToBillionaires();
                 },
               ),
             MoreItem(
