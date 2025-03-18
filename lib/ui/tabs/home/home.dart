@@ -51,7 +51,6 @@ class _HomeIndexState extends State<HomeIndex> {
               margin: EdgeInsets.zero,
               children: [
                 const BlogHomeIndex(),
-                TrendingGainerLoser(),
                 HomeTopNewsSlider(),
                 // HomeTrendingIndex(),
                 Visibility(
