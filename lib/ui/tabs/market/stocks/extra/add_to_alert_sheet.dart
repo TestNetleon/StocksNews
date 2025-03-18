@@ -63,9 +63,7 @@ class _AddToAlertSheetState extends State<AddToAlertSheet> {
       ),
       child: Container(
         padding: EdgeInsets.all(10),
-        decoration: const BoxDecoration(
-          color: Colors.white,
-        ),
+        decoration: BoxDecoration(color: ThemeColors.white),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

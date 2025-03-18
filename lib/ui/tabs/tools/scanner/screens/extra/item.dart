@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stocks_news_new/models/ticker.dart';
 import 'package:stocks_news_new/ui/base/bottom_sheet.dart';
 import 'package:stocks_news_new/ui/tabs/home/scanner/extra/action_in_nbs.dart';
-import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/ui/base/base_list_divider.dart';
 import 'package:stocks_news_new/ui/tabs/tools/scanner/models/offline.dart';
 import 'package:stocks_news_new/utils/colors.dart';
@@ -181,23 +180,22 @@ class ScannerBaseItem extends StatelessWidget {
                         Visibility(
                           visible: preMarket || postMarket,
                           child: Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(30),
-                              color: ThemeColors.neutral5,
-                            ),
-                            margin: const EdgeInsets.only(top: 5),
-                            padding: EdgeInsets.symmetric(
-                              horizontal: 10,
-                              vertical: 2,
-                            ),
-                            child: Text(
-                              'Last Trade',
-                              style: styleBaseSemiBold(
-                                fontSize: 13,
-                                // color: ThemeColors.neutral40,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(30),
+                                color: ThemeColors.neutral5,
                               ),
-                            ),
-                          ),
+                              margin: const EdgeInsets.only(top: 5),
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 10,
+                                vertical: 2,
+                              ),
+                              child: Text(
+                                'Last Trade',
+                                style: styleBaseSemiBold(
+                                  fontSize: 13,
+                                  // color: ThemeColors.neutral40,
+                                ),
+                              )),
                         ),
                       ],
                     )
@@ -327,6 +325,7 @@ class ScannerBaseItem extends StatelessWidget {
     double fontSize = 13,
     TextAlign textAlign = TextAlign.start,
     Color? color,
+    Color? valueColor,
   }) {
     if (value == null || value == '') {
       return SizedBox();
@@ -346,25 +345,25 @@ class ScannerBaseItem extends StatelessWidget {
               ),
         children: [
           TextSpan(
-            text: value,
-            style: isBOLD
-                ?
-                // styleBaseBold(
-                //     fontSize: fontSize,
-                //   )
-                Theme.of(navigatorKey.currentContext!)
-                    .textTheme
-                    .displayLarge
-                    ?.copyWith(fontSize: fontSize)
-                :
-                //  styleBaseSemiBold(
-                //     fontSize: fontSize,
-                //   )
-                Theme.of(navigatorKey.currentContext!)
-                    .textTheme
-                    .displayMedium
-                    ?.copyWith(fontSize: fontSize),
-          )
+              text: value,
+              style: isBOLD
+                  ? styleBaseBold(
+                      fontSize: fontSize,
+                      color: valueColor ?? ThemeColors.neutral80,
+                    )
+                  // Theme.of(navigatorKey.currentContext!)
+                  //     .textTheme
+                  //     .displayLarge
+                  //     ?.copyWith(fontSize: fontSize)
+                  : styleBaseSemiBold(
+                      fontSize: fontSize,
+                      color: valueColor ?? ThemeColors.neutral80,
+                    )
+              // Theme.of(navigatorKey.currentContext!)
+              //     .textTheme
+              //     .displayMedium
+              //     ?.copyWith(fontSize: fontSize),
+              )
         ],
       ),
     );
