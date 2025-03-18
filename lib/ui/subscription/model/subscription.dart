@@ -2,6 +2,8 @@ import 'dart:convert';
 
 import 'package:purchases_flutter/purchases_flutter.dart';
 
+import 'layout_one.dart';
+
 SubscriptionRes subscriptionResFromJson(String str) =>
     SubscriptionRes.fromJson(json.decode(str));
 
@@ -12,14 +14,17 @@ class SubscriptionRes {
   final String? title;
   final String? btn;
   final bool? showRestore;
-
   final NoSubscriptionRes? noSubscription;
   final List<ProductPlanRes>? monthlyPlan;
   final List<ProductPlanRes>? annualPlan;
+  // final num? layout;
+  final Layout1Res? layout1;
 
   SubscriptionRes({
     this.title,
     this.btn,
+    // this.layout,
+    this.layout1,
     this.showRestore,
     this.noSubscription,
     this.monthlyPlan,
@@ -28,6 +33,10 @@ class SubscriptionRes {
 
   factory SubscriptionRes.fromJson(Map<String, dynamic> json) =>
       SubscriptionRes(
+        // layout: json['layout'],
+        layout1: json["layout1"] == null
+            ? null
+            : Layout1Res.fromJson(json["layout1"]),
         title: json["title"],
         showRestore: json['show_restore'],
         btn: json["btn"],
@@ -47,6 +56,8 @@ class SubscriptionRes {
   Map<String, dynamic> toJson() => {
         "title": title,
         "btn": btn,
+        // 'layout': layout,
+        "layout1": layout1?.toJson(),
         'show_restore': showRestore,
         "no_subscription": noSubscription?.toJson(),
         "monthly": monthlyPlan == null

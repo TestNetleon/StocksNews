@@ -77,7 +77,6 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
                           if (showBack)
                             ActionButton(
                               icon: Images.back,
-                              color: darkTheme ? ThemeColors.white : null,
                               onTap: () {
                                 if (popHome) {
                                   if (CustomNavigatorObserver().stackCount >=
@@ -123,7 +122,6 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
                             ),
                           if (leadingFilterClick != null)
                             ActionButton(
-                              color: darkTheme ? ThemeColors.white : null,
                               icon: Images.marketFilter,
                               size: 22,
                               padding: EdgeInsets.all(8),
@@ -180,7 +178,6 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
                             ),
                           if (showSearch)
                             ActionButton(
-                              color: darkTheme ? ThemeColors.white : null,
                               icon: Images.search,
                               onTap: () {
                                 Navigator.push(
@@ -218,7 +215,6 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
                             Padding(
                               padding: const EdgeInsets.only(left: 8),
                               child: ActionButton(
-                                color: darkTheme ? ThemeColors.white : null,
                                 size: 38,
                                 icon: Images.shareURL,
                                 onTap: shareURL!,
@@ -307,7 +303,7 @@ class ActionButton extends StatelessWidget {
     super.key,
     this.size = 32,
     required this.icon,
-    required this.onTap,
+    this.onTap,
     this.padding,
     this.color,
   });
@@ -316,21 +312,26 @@ class ActionButton extends StatelessWidget {
   final double size;
   final EdgeInsets? padding;
   final Color? color;
-  final Function() onTap;
+  final Function()? onTap;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       borderRadius: BorderRadius.circular(Pad.pad999),
       onTap: onTap,
-      child: Container(
-        padding: padding ?? EdgeInsets.zero,
-        child: Image.asset(
-          icon,
-          color: color ?? ThemeColors.black,
-          width: size,
-          height: size,
-        ),
+      child: Consumer<ThemeManager>(
+        builder: (context, value, child) {
+          return Container(
+            padding: padding ?? EdgeInsets.zero,
+            child: Image.asset(
+              icon,
+              color: color ??
+                  (value.isDarkMode ? ThemeColors.white : ThemeColors.black),
+              width: size,
+              height: size,
+            ),
+          );
+        },
       ),
     );
   }

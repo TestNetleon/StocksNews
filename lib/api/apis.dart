@@ -112,6 +112,7 @@ class Apis {
   //Subscription
   static const subscription = '/subscription';
   static const mySubscription = "/my-subscription";
+  static const subscriptionLayout = '/check-membership-layout';
 
   static const infoPage = '/info-page';
   static const updateProfile = "/update-profile";
