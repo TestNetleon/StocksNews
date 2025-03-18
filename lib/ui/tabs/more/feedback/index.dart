@@ -160,7 +160,9 @@ class _FeedbackIndexState extends State<FeedbackIndex> {
                           keyboardType: TextInputType.name,
                           minLines: 10,
                           contentPadding: EdgeInsets.symmetric(
-                              vertical: Pad.pad10, horizontal: Pad.pad10),
+                            vertical: Pad.pad10,
+                            horizontal: Pad.pad10,
+                          ),
                         ),
                       ],
                     ),

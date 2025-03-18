@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:photo_view/photo_view.dart';
+import 'package:provider/provider.dart';
 import 'package:stocks_news_new/models/helpdesk_chat_res.dart';
 import 'package:stocks_news_new/ui/base/app_bar.dart';
 import 'package:stocks_news_new/ui/base/scaffold.dart';
+import 'package:stocks_news_new/ui/theme/manager.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
@@ -14,6 +16,8 @@ class HelpDeskAllChatsItemNew extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isDark = context.watch<ThemeManager>().isDarkMode;
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
       child: Align(
@@ -28,6 +32,9 @@ class HelpDeskAllChatsItemNew extends StatelessWidget {
             color: logs.replyFrom == 1
                 ? ThemeColors.neutral5
                 : ThemeColors.secondary10,
+            // logs.replyFrom == 1
+            //     ? ThemeColors.neutral5
+            //     : ThemeColors.secondary10,
           ),
           padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
           child: Column(
@@ -68,14 +75,17 @@ class HelpDeskAllChatsItemNew extends StatelessWidget {
                 },
                 textStyle: styleBaseRegular(
                   height: 1.3,
-                  color: ThemeColors.splashBG,
+                  // color: ThemeColors.splashBG,
+                  color: ThemeColors.black,
                 ),
               ),
               const SpacerVertical(height: 8),
               Text(
                 "${logs.replyDate}",
                 style: styleBaseRegular(
-                    color: ThemeColors.neutral80, fontSize: 13),
+                  color: ThemeColors.neutral80,
+                  fontSize: 13,
+                ),
               ),
             ],
           ),

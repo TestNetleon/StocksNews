@@ -121,48 +121,52 @@ class _AllChatNewListingState extends State<AllChatNewListing> {
                   showPreparingText: true,
                   onRefresh: _onTap,
                   child: CommonRefreshIndicator(
-                      onRefresh: () async => _onTap(),
-                      child: Column(
-                        children: [
-                          Visibility(
-                            visible:
-                                manager.chatData?.chatRes?.subject != null &&
-                                    manager.chatData?.chatRes?.subject != '',
-                            child: Container(
-                              margin: const EdgeInsets.only(top: 20),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(30),
-                                color: ThemeColors.splashBG,
-                              ),
-                              padding: const EdgeInsets.symmetric(
-                                  vertical: 10, horizontal: 15),
-                              child: Text(
-                                manager.chatData?.chatRes?.subject ?? "",
-                                style: styleBaseBold(
-                                    color: Colors.white, fontSize: 18),
+                    onRefresh: () async => _onTap(),
+                    child: Column(
+                      children: [
+                        Visibility(
+                          visible: manager.chatData?.chatRes?.subject != null &&
+                              manager.chatData?.chatRes?.subject != '',
+                          child: Container(
+                            margin: const EdgeInsets.only(top: 20),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(30),
+                              // color: ThemeColors.splashBG,
+                              color: ThemeColors.splashBG,
+                            ),
+                            padding: const EdgeInsets.symmetric(
+                              vertical: 10,
+                              horizontal: 15,
+                            ),
+                            child: Text(
+                              manager.chatData?.chatRes?.subject ?? "",
+                              style: styleBaseBold(
+                                color: ThemeColors.white,
+                                fontSize: 18,
                               ),
                             ),
                           ),
-                          const SpacerVertical(),
-                          Expanded(
-                            child: ListView.builder(
-                              padding: EdgeInsets.zero,
-                              shrinkWrap: true,
-                              //physics: const NeverScrollableScrollPhysics(),
-                              itemCount:
-                                  manager.chatData?.chatRes?.logs?.length,
-                              itemBuilder: (context, index) {
-                                Log? logs =
-                                    manager.chatData?.chatRes?.logs?[index];
-                                if (logs == null) {
-                                  return SizedBox();
-                                }
-                                return HelpDeskAllChatsItemNew(logs: logs);
-                              },
-                            ),
+                        ),
+                        const SpacerVertical(),
+                        Expanded(
+                          child: ListView.builder(
+                            padding: EdgeInsets.zero,
+                            shrinkWrap: true,
+                            //physics: const NeverScrollableScrollPhysics(),
+                            itemCount: manager.chatData?.chatRes?.logs?.length,
+                            itemBuilder: (context, index) {
+                              Log? logs =
+                                  manager.chatData?.chatRes?.logs?[index];
+                              if (logs == null) {
+                                return SizedBox();
+                              }
+                              return HelpDeskAllChatsItemNew(logs: logs);
+                            },
                           ),
-                        ],
-                      )),
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
               ),
         if (manager.chatData?.chatRes?.logs != null &&

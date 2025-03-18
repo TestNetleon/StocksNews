@@ -15,28 +15,34 @@ class HelpDeskReasonsNew extends StatelessWidget {
       child: Wrap(
         spacing: 10,
         runSpacing: 10,
-        children: manager.data?.helpDesk?.subjects?.map((subject) {
-              return GestureDetector(
-                onTap: () {
-                  manager.sendSubjectID(subject: subject);
-                },
-                child: Container(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
-                  decoration: const BoxDecoration(
-                    color: ThemeColors.background,
-                    borderRadius: BorderRadius.all(Radius.circular(10)),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 10.0, right: 10),
-                    child: Text(
-                      subject.title ?? "",
-                      style: styleBaseBold(color: Colors.white, fontSize: 14),
+        children: manager.data?.helpDesk?.subjects?.map(
+              (subject) {
+                return GestureDetector(
+                  onTap: () {
+                    manager.sendSubjectID(subject: subject);
+                  },
+                  child: Container(
+                    padding:
+                        const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
+                    decoration: BoxDecoration(
+                      // color: ThemeColors.background,
+                      color: ThemeColors.black,
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 10.0, right: 10),
+                      child: Text(
+                        subject.title ?? "",
+                        style: styleBaseBold(
+                          color: ThemeColors.white,
+                          fontSize: 14,
+                        ),
+                      ),
                     ),
                   ),
-                ),
-              );
-            }).toList() ??
+                );
+              },
+            ).toList() ??
             [],
       ),
     );

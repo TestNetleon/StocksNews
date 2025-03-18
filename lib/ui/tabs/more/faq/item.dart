@@ -47,9 +47,10 @@ class FAQItem extends StatelessWidget {
                         isOpen
                             ? Icons.keyboard_arrow_up
                             : Icons.keyboard_arrow_down,
-                        color: value.isDarkMode
-                            ? ThemeColors.white
-                            : ThemeColors.splashBG,
+                        color: ThemeColors.black,
+                        // value.isDarkMode
+                        //     ? ThemeColors.white
+                        //     : ThemeColors.splashBG,
                       ),
                     );
                   },
@@ -66,7 +67,10 @@ class FAQItem extends StatelessWidget {
               child: Text(
                 faq.answer ?? "",
                 style: styleBaseRegular(
-                    fontSize: 16, color: ThemeColors.neutral20, height: 1.3),
+                  fontSize: 16,
+                  color: ThemeColors.neutral20,
+                  height: 1.3,
+                ),
               ),
             ),
           ),

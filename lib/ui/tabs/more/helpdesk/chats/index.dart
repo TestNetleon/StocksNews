@@ -5,7 +5,6 @@ import 'package:stocks_news_new/ui/base/app_bar.dart';
 import 'package:stocks_news_new/ui/base/scaffold.dart';
 import 'package:stocks_news_new/ui/tabs/more/helpdesk/chats/container.dart';
 
-
 class HelpDeskAllChatsIndex extends StatefulWidget {
   static const String path = "HelpDeskAllChatsIndex";
   final String ticketId;

@@ -6,6 +6,7 @@ import 'package:stocks_news_new/managers/referral/referral_manager.dart';
 import 'package:stocks_news_new/managers/user.dart';
 import 'package:stocks_news_new/ui/base/border_container.dart';
 import 'package:stocks_news_new/ui/base/button.dart';
+import 'package:stocks_news_new/ui/theme/manager.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -52,59 +53,63 @@ class ReferralHeader extends StatelessWidget {
             ),
           ),
           SpacerVertical(height: 24),
-          BaseBorderContainer(
-            padding: EdgeInsets.zero,
-            color: ThemeColors.secondary100,
-            child: Column(
-              children: [
-                Text(
-                  "Your Referral Code",
-                  style: styleBaseRegular(
-                    fontSize: 14,
-                    color: ThemeColors.gray2,
-                  ),
-                ),
-                SpacerVertical(height: 8),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      "${userManager.user?.referralCode}",
-                      style: styleBaseBold(
-                        fontSize: 20,
-                        color: ThemeColors.white,
-                      ),
+          Consumer<ThemeManager>(builder: (context, value, child) {
+            bool isDark = value.isDarkMode;
+            return BaseBorderContainer(
+              padding: EdgeInsets.zero,
+              color: ThemeColors.secondary100,
+              child: Column(
+                children: [
+                  Text(
+                    "Your Referral Code",
+                    style: styleBaseRegular(
+                      fontSize: 14,
+                      color: ThemeColors.gray2,
                     ),
-                    Image.asset(
-                      Images.copy,
-                      width: 17,
-                    )
-                  ],
-                ),
-                SpacerVertical(height: 8),
-                Text(
-                  "$shareUrl",
-                  style: styleBaseRegular(
-                    fontSize: 14,
+                  ),
+                  SpacerVertical(height: 8),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        "${userManager.user?.referralCode}",
+                        style: styleBaseBold(
+                          fontSize: 20,
+                          color: isDark ? ThemeColors.black : ThemeColors.white,
+                        ),
+                      ),
+                      Image.asset(
+                        Images.copy,
+                        width: 17,
+                      )
+                    ],
+                  ),
+                  SpacerVertical(height: 8),
+                  Text(
+                    "$shareUrl",
+                    style: styleBaseRegular(
+                      fontSize: 14,
+                      color: isDark ? ThemeColors.black : ThemeColors.white,
+                    ),
+                  ),
+                  SpacerVertical(height: 14),
+                  BaseButton(
+                    onPressed: () {
+                      _shareApp(context);
+                    },
+                    text: "Share with Friends",
                     color: ThemeColors.white,
-                  ),
-                ),
-                SpacerVertical(height: 14),
-                BaseButton(
-                  onPressed: () {
-                    _shareApp(context);
-                  },
-                  text: "Share with Friends",
-                  color: ThemeColors.white,
-                  textStyle: styleBaseBold(
-                    fontSize: 16,
-                    color: ThemeColors.secondary100,
-                  ),
-                  padding: EdgeInsets.all(12),
-                )
-              ],
-            ),
-          ),
+                    textStyle: styleBaseBold(
+                      fontSize: 16,
+                      color:
+                          isDark ? ThemeColors.black : ThemeColors.secondary100,
+                    ),
+                    padding: EdgeInsets.all(12),
+                  )
+                ],
+              ),
+            );
+          }),
           SpacerVertical(height: Dimen.padding),
           Text(
             manager.data?.pointsSummary?.title ?? "",

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:stocks_news_new/models/referral/referral_response.dart';
 import 'package:stocks_news_new/ui/base/base_list_divider.dart';
 import 'package:stocks_news_new/ui/base/button.dart';
 import 'package:stocks_news_new/ui/tabs/more/referral/pointsTransaction/index.dart';
 import 'package:stocks_news_new/ui/tabs/more/referral/redeem/index.dart';
+import 'package:stocks_news_new/ui/theme/manager.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -100,7 +102,10 @@ class PointsListItem extends StatelessWidget {
                 SizedBox(
                   width: 40,
                   height: 40,
-                  child: Image.network(data.icon ?? ""),
+                  child: Image.network(
+                    data.icon ?? "",
+                    color: ThemeColors.black,
+                  ),
                 ),
                 SpacerHorizontal(width: 12),
                 Expanded(
@@ -110,13 +115,17 @@ class PointsListItem extends StatelessWidget {
                   ),
                 ),
                 SpacerHorizontal(width: 16),
-                Text(
-                  "${data.value}",
-                  style: styleBaseBold(
-                    fontSize: 14,
-                    color: ThemeColors.secondary100,
-                  ),
-                )
+                Consumer<ThemeManager>(builder: (context, value, child) {
+                  bool isDark = value.isDarkMode;
+                  return Text(
+                    "${data.value}",
+                    style: styleBaseBold(
+                      fontSize: 14,
+                      color:
+                          isDark ? ThemeColors.black : ThemeColors.secondary100,
+                    ),
+                  );
+                })
               ],
             ),
           ),
