@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:stocks_news_new/ui/stockDetail/index.dart';
 import '../../../../managers/home.dart';
 import '../../../../models/ticker.dart';
 import 'item.dart';
@@ -35,7 +36,11 @@ class _HomeWatchlistContainerState extends State<HomeWatchlistContainer> {
               return Container(
                 width: 180.sp,
                 margin: const EdgeInsets.only(right: 16),
-                child: TickerBoxItem(data: data),
+                child: TickerBoxItem(data: data,onTap: (){
+                  Navigator.pushNamed(context, SDIndex.path, arguments: {
+                    'symbol': data.symbol,
+                  });
+                }),
               );
             },
           ),

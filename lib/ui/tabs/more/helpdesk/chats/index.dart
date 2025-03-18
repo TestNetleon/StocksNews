@@ -33,7 +33,7 @@ class _HelpDeskAllChatsIndexState extends State<HelpDeskAllChatsIndex> {
     return BaseScaffold(
       appBar: BaseAppBar(
         showBack: true,
-        title: "Ticker Number: ${manager.chatData?.chatRes?.ticketNo ?? ""}",
+        title: "Ticket Number: ${manager.chatData?.chatRes?.ticketNo ?? ""}",
       ),
       body: AllChatNewListing(
         ticketId: widget.ticketId,
