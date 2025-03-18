@@ -87,7 +87,7 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
     } catch (e) {
       //
     }
-    Timer(const Duration(seconds: 3), () {
+    Timer(const Duration(seconds: 30), () {
       if (popHome) return;
       if (onDeepLinking) {
         popHome = true;
@@ -110,7 +110,7 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return BaseScaffold(
-      bgColor: ThemeColors.splashBG,
+      bgColor: ThemeColors.splashBackground,
       body: Container(
         alignment: Alignment.topCenter,
         margin: EdgeInsets.only(top: ScreenUtil().screenHeight / 5),

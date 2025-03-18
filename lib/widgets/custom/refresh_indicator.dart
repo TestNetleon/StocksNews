@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:audioplayers/audioplayers.dart';
+import 'package:stocks_news_new/utils/colors.dart';
 
 import '../../utils/constants.dart';
 
@@ -27,6 +28,8 @@ class CommonRefreshIndicator extends StatelessWidget {
   Widget build(BuildContext context) {
     return RefreshIndicator(
       onRefresh: _handleRefresh,
+      backgroundColor: ThemeColors.black,
+      color: ThemeColors.white,
       child: child,
     );
   }

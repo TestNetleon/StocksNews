@@ -77,6 +77,7 @@ class FeedbackManager extends ChangeNotifier {
         message: response.message ?? '',
         type: response.status ? ToasterEnum.success : ToasterEnum.error,
       );
+      return response.status;
       // setStatus(Status.loaded);
     } catch (e) {
       _data = null;
@@ -84,6 +85,7 @@ class FeedbackManager extends ChangeNotifier {
         message: Const.errSomethingWrong,
         type: ToasterEnum.error,
       );
+      return false;
       // setStatus(Status.loaded);
     }
   }

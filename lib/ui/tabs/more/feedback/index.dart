@@ -40,172 +40,175 @@ class _FeedbackIndexState extends State<FeedbackIndex> {
     });
   }
 
-  void _callAPI() {
+  void _callAPI() async {
     FeedbackManager manager = context.read<FeedbackManager>();
-    manager.getFeedback();
+    await manager.getFeedback();
+    selectType = manager.feedbackData?.type?[0].title ?? "";
+  }
+
+  void _onSubmitClick() async {
+    FeedbackManager manager = context.read<FeedbackManager>();
+    if (comment.text.isEmpty) {
+      popUpAlert(
+        message: "Enter Your Opinion",
+        title: "Alert",
+        icon: Images.alertPopGIF,
+      );
+      return;
+    } else {
+      final result = await manager.sendFeedback(
+        type: selectType ?? "",
+        comment: comment.text,
+      );
+
+      closeKeyboard();
+      if (result == true) {
+        BaseBottomSheet().bottomSheet(
+          barrierColor: ThemeColors.neutral5.withValues(alpha: 0.7),
+          child: FeedbackShowSheet(
+            feedbackSendRes: manager.dataSend,
+            onTapKeep: () {
+              Navigator.pop(navigatorKey.currentContext!);
+            },
+            onTapSure: () {
+              Navigator.pop(navigatorKey.currentContext!);
+            },
+          ),
+        );
+      }
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     FeedbackManager manager = context.watch<FeedbackManager>();
 
+    Utils().showLog("SELECTED ==> $selectType");
+
     return BaseScaffold(
       //resizeToAvoidBottomInset: false,
-      appBar: BaseAppBar(
-        showBack: true,
-        title: "Feedback",
-      ),
+      appBar: BaseAppBar(showBack: true, title: "Feedback"),
       body: BaseLoaderContainer(
-          isLoading: manager.isLoading,
-          hasData: manager.feedbackData != null && !manager.isLoading,
-          showPreparingText: true,
-          error: manager.error,
-          onRefresh: () {
-            _callAPI();
-          },
-          child: Padding(
-            padding: const EdgeInsets.symmetric(
-                horizontal: Pad.pad16, vertical: Pad.pad8),
-            child: Column(
-              children: [
-                Expanded(
-                  child: SingleChildScrollView(
-                    child: Column(
-                      children: [
-                        Visibility(
-                          visible: manager.feedbackData?.title != '',
-                          child: BaseHeading(
-                            textAlign: TextAlign.center,
-                            title: manager.feedbackData?.title ?? "",
-                            titleStyle: styleBaseBold(
-                                fontSize: 32, color: ThemeColors.splashBG),
-                            subtitle: manager.feedbackData?.existMessage ?? "",
-                            subtitleStyle: styleBaseRegular(
-                                fontSize: 16, color: ThemeColors.neutral80),
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                          ),
+        isLoading: manager.isLoading,
+        hasData: manager.feedbackData != null && !manager.isLoading,
+        showPreparingText: true,
+        error: manager.error,
+        onRefresh: () {
+          _callAPI();
+        },
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
+              horizontal: Pad.pad16, vertical: Pad.pad8),
+          child: Column(
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      Visibility(
+                        visible: manager.feedbackData?.title != '',
+                        child: BaseHeading(
+                          textAlign: TextAlign.center,
+                          title: manager.feedbackData?.title ?? "",
+                          titleStyle: styleBaseBold(
+                              fontSize: 32, color: ThemeColors.splashBG),
+                          subtitle: manager.feedbackData?.existMessage ?? "",
+                          subtitleStyle: styleBaseRegular(
+                              fontSize: 16, color: ThemeColors.neutral80),
+                          crossAxisAlignment: CrossAxisAlignment.center,
                         ),
-                        SpacerVertical(height: Pad.pad16),
-                        Visibility(
-                          visible: manager.feedbackData?.type != null ||
-                              manager.feedbackData?.type?.isNotEmpty == true,
-                          child: SingleChildScrollView(
-                            child: Row(
-                              children: List.generate(
-                                manager.feedbackData!.type!.length,
-                                (index) {
-                                  bool isOpen = selectedIndex == index;
-                                  return Expanded(
-                                    child: Column(
-                                      children: [
-                                        InkWell(
-                                          borderRadius:
-                                              BorderRadius.circular(Pad.pad16),
-                                          onTap: () {
-                                            setState(() {
-                                              selectedIndex = index;
-                                              selectType = manager.feedbackData!
-                                                      .type![index].title ??
-                                                  "";
-                                            });
-                                          },
-                                          child: Container(
-                                            padding: EdgeInsets.symmetric(
-                                              horizontal: 35,
-                                              vertical: 27,
-                                            ),
-                                            decoration: BoxDecoration(
-                                                color: isOpen
-                                                    ? ThemeColors.secondary10
-                                                    : ThemeColors.white,
-                                                border: Border.all(
-                                                    color: isOpen
-                                                        ? ThemeColors
-                                                            .secondary100
-                                                        : ThemeColors
-                                                            .neutral10),
-                                                borderRadius:
-                                                    BorderRadius.circular(
-                                                        Pad.pad16)),
-                                            child: CachedNetworkImage(
-                                              imageUrl: manager.feedbackData!
-                                                      .type![index].icon ??
-                                                  '',
-                                              height: 33,
-                                              width: 33,
-                                              color: isOpen
-                                                  ? ThemeColors.secondary100
-                                                  : ThemeColors.neutral10,
-                                            ),
+                      ),
+                      SpacerVertical(height: Pad.pad16),
+                      Visibility(
+                        visible: manager.feedbackData?.type != null ||
+                            manager.feedbackData?.type?.isNotEmpty == true,
+                        child: SingleChildScrollView(
+                          child: Row(
+                            children: List.generate(
+                              manager.feedbackData?.type?.length ?? 0,
+                              (index) {
+                                bool isOpen = selectedIndex == index;
+                                return Expanded(
+                                  child: Column(
+                                    children: [
+                                      InkWell(
+                                        borderRadius:
+                                            BorderRadius.circular(Pad.pad16),
+                                        onTap: () {
+                                          setState(() {
+                                            selectedIndex = index;
+                                            selectType = manager.feedbackData!
+                                                    .type![index].title ??
+                                                "";
+                                          });
+                                        },
+                                        child: Container(
+                                          padding: EdgeInsets.symmetric(
+                                            horizontal: 35,
+                                            vertical: 27,
                                           ),
-                                        )
-                                        /* Text(
+                                          decoration: BoxDecoration(
+                                              color: isOpen
+                                                  ? ThemeColors.secondary10
+                                                  : ThemeColors.white,
+                                              border: Border.all(
+                                                  color: isOpen
+                                                      ? ThemeColors.secondary100
+                                                      : ThemeColors.neutral10),
+                                              borderRadius:
+                                                  BorderRadius.circular(
+                                                      Pad.pad16)),
+                                          child: CachedNetworkImage(
+                                            imageUrl: manager.feedbackData!
+                                                    .type![index].icon ??
+                                                '',
+                                            height: 33,
+                                            width: 33,
+                                            color: isOpen
+                                                ? ThemeColors.secondary100
+                                                : ThemeColors.neutral10,
+                                          ),
+                                        ),
+                                      )
+                                      /* Text(
                                           manager.feedbackData!.type![index].title ?? '',
                                           style: styleBaseRegular(),
                                         ),*/
-                                      ],
-                                    ),
-                                  );
-                                },
-                              ),
+                                    ],
+                                  ),
+                                );
+                              },
                             ),
                           ),
                         ),
-                        SpacerVertical(height: Pad.pad24),
-                        BaseTextField(
-                          placeholder:
-                              manager.feedbackData?.placeholderText ?? "",
-                          controller: comment,
-                          textCapitalization: TextCapitalization.words,
-                          keyboardType: TextInputType.name,
-                          minLines: 10,
-                          contentPadding: EdgeInsets.symmetric(
-                            vertical: Pad.pad10,
-                            horizontal: Pad.pad10,
-                          ),
+                      ),
+                      SpacerVertical(height: Pad.pad24),
+                      BaseTextField(
+                        placeholder:
+                            manager.feedbackData?.placeholderText ?? "",
+                        controller: comment,
+                        textCapitalization: TextCapitalization.words,
+                        keyboardType: TextInputType.name,
+                        minLines: 10,
+                        contentPadding: EdgeInsets.symmetric(
+                          vertical: Pad.pad10,
+                          horizontal: Pad.pad10,
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
-                BaseButton(
-                  text: "Submit",
-                  color: ThemeColors.primary10,
-                  textColor: ThemeColors.primary100,
-                  onPressed: () {
-                    if (comment.text.isEmpty) {
-                      popUpAlert(
-                        message: "Enter Your Opinion",
-                        title: "Alert",
-                        icon: Images.alertPopGIF,
-                      );
-                      return;
-                    } else {
-                      manager
-                          .sendFeedback(
-                              type: selectType ?? "", comment: comment.text)
-                          .then((value) {
-                        closeKeyboard();
-                        BaseBottomSheet().bottomSheet(
-                          barrierColor:
-                              ThemeColors.neutral5.withValues(alpha: 0.7),
-                          child: FeedbackShowSheet(
-                            feedbackSendRes: manager.dataSend,
-                            onTapKeep: () {
-                              Navigator.pop(navigatorKey.currentContext!);
-                            },
-                            onTapSure: () {
-                              Navigator.pop(navigatorKey.currentContext!);
-                            },
-                          ),
-                        );
-                      });
-                    }
-                  },
-                ),
-              ],
-            ),
-          )),
+              ),
+              BaseButton(
+                text: "Submit",
+                color: ThemeColors.primary10,
+                textColor: ThemeColors.primary100,
+                onPressed: _onSubmitClick,
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

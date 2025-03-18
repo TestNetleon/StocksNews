@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/material.dart';
 import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/modals/user_res.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -146,5 +147,21 @@ class Preference {
   static Future<bool?> isTrackingAllowed() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     return preferences.getBool(_trackingKey);
+  }
+
+  static Future<bool> setTheme(ThemeMode theme) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    return preferences.setInt("@theme", theme.index);
+  }
+
+  static Future<ThemeMode> getTheme() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    int? savedTheme = preferences.getInt('@theme');
+
+    if (savedTheme != null) {
+      return ThemeMode.values[savedTheme];
+    } else {
+      return ThemeMode.system; // Default to system theme
+    }
   }
 }

@@ -6,6 +6,7 @@ import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stocks_news_new/fcm/braze_notification_handler.dart';
@@ -45,8 +46,6 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      // AppsFlyerService.instance.handleDeepLinking();
-
       // getInitialReferralsIfAny();
       // getInitialDeeplinkWhenAppOpen();
       // startListeningForDeepLinks();
@@ -56,9 +55,15 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       NotificationHandler.instance.setupNotificationListeners();
       // brazeDeepLink();
       _configureSubscriptionService();
+      // _checkAndUpdateTheme();
     });
     WidgetsBinding.instance.addObserver(this);
   }
+
+  // void _checkAndUpdateTheme() async {
+  //   ThemeManager manager = context.read<ThemeManager>();
+  //   manager.toggleTheme(await Preference.getTheme());
+  // }
 
   Future _configureSubscriptionService() async {
     UserRes? userRes = await Preference.getUser();
@@ -121,6 +126,25 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     isAppInForeground = state == AppLifecycleState.resumed;
+  }
+
+  @override
+  void didChangePlatformBrightness() {
+    Utils().showLog("***** THEME CHANGED *****");
+    final brightness =
+        SchedulerBinding.instance.platformDispatcher.platformBrightness;
+
+    ThemeManager manager = navigatorKey.currentContext!.read<ThemeManager>();
+
+    bool isDark = brightness == Brightness.dark;
+
+    if (manager.themeMode == ThemeMode.system) {
+      manager.toggleTheme(isDark ? ThemeMode.dark : ThemeMode.light);
+      manager.toggleTheme(ThemeMode.system);
+    }
+    // else {
+    //   manager.toggleTheme(isDark ? ThemeMode.dark : ThemeMode.light);
+    // }
   }
 
   // -------- Initial Deeplinks For Referral STARTED ---------------

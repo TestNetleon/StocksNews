@@ -13,12 +13,14 @@ class FeedbackShowSheet extends StatelessWidget {
   final FeedbackSendRes? feedbackSendRes;
   final Function()? onTapKeep;
   final Function()? onTapSure;
-  const FeedbackShowSheet({super.key,this.feedbackSendRes,this.onTapKeep,this.onTapSure});
+  const FeedbackShowSheet(
+      {super.key, this.feedbackSendRes, this.onTapKeep, this.onTapSure});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: Pad.pad8,vertical: Pad.pad16),
+      padding:
+          const EdgeInsets.symmetric(horizontal: Pad.pad8, vertical: Pad.pad16),
       child: Column(
         children: [
           ClipRRect(
@@ -43,24 +45,28 @@ class FeedbackShowSheet extends StatelessWidget {
             subtitle: feedbackSendRes?.subTitle,
             crossAxisAlignment: CrossAxisAlignment.center,
             textAlign: TextAlign.center,
-            titleStyle: styleBaseBold(fontSize: 28,color: ThemeColors.splashBG),
-            subtitleStyle: styleBaseRegular(fontSize: 14,color: ThemeColors.neutral80),
+            titleStyle:
+                styleBaseBold(fontSize: 28, color: ThemeColors.splashBG),
+            subtitleStyle:
+                styleBaseRegular(fontSize: 14, color: ThemeColors.neutral80),
           ),
           SpacerVertical(height: 12),
           Visibility(
-            visible: feedbackSendRes?.firstButtonText!="",
+            visible: feedbackSendRes?.firstButtonText != "",
             child: BaseButtonOutline(
               onPressed: onTapKeep,
-              text: feedbackSendRes?.firstButtonText??"",
+              text: feedbackSendRes?.firstButtonText ?? "",
               textColor: ThemeColors.neutral80,
               textSize: 16,
               borderColor: ThemeColors.neutral20,
             ),
           ),
-          Visibility(visible: feedbackSendRes?.firstButtonText!="",child: SpacerVertical(height:16)),
+          Visibility(
+              visible: feedbackSendRes?.firstButtonText != "",
+              child: SpacerVertical(height: 16)),
           BaseButton(
             onPressed: onTapSure,
-            text: feedbackSendRes?.secondButtonText??"",
+            text: feedbackSendRes?.secondButtonText ?? "",
             textColor: ThemeColors.splashBG,
             color: ThemeColors.primary100,
             textSize: 16,

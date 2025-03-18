@@ -135,6 +135,7 @@ class ThemeColors {
   //OTHER
   static Color black = Color(0xFF282B41);
   static Color white = Color(0xFFFFFFFF);
+  static const splashBackground = Color(0xFF012054);
   static Color splashBG = Color(0xFF012054);
   static Color colour66 = Color(0xFF666666);
   static Color colourBA = Color(0xFFBABABA);

@@ -76,14 +76,15 @@ class HelpDeskAllChatsItemNew extends StatelessWidget {
                 textStyle: styleBaseRegular(
                   height: 1.3,
                   // color: ThemeColors.splashBG,
-                  color: ThemeColors.black,
+                  color: isDark ? ThemeColors.white : ThemeColors.black,
                 ),
               ),
               const SpacerVertical(height: 8),
               Text(
                 "${logs.replyDate}",
                 style: styleBaseRegular(
-                  color: ThemeColors.neutral80,
+                  color:
+                      isDark ? ThemeColors.disabledBtn : ThemeColors.neutral80,
                   fontSize: 13,
                 ),
               ),

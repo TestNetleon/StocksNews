@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:stocks_news_new/database/preference.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 
@@ -15,6 +16,7 @@ class ThemeManager extends ChangeNotifier {
     _themeMode = mode;
     notifyListeners();
     ThemeColors.updateTheme(!isDarkMode);
+    Preference.setTheme(mode);
   }
 
   bool get isDarkMode {
@@ -28,11 +30,9 @@ class ThemeManager extends ChangeNotifier {
   // bool get isDarkMode => _themeMode == ThemeMode.dark;
 
   void _loadTheme() async {
-    _themeMode = ThemeMode.system;
+    _themeMode = await Preference.getTheme();
+    Utils().showLog("*** INITIAL THEME LOAD *** ==>  $_themeMode");
     notifyListeners();
-    Utils().showLog('!!----THEME $_themeMode');
-    Utils().showLog('!!----THEME DARK? $isDarkMode');
-
     ThemeColors.updateTheme(!isDarkMode);
   }
 }
