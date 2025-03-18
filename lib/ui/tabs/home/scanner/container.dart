@@ -27,34 +27,40 @@ class _HomeScannerBaseContainerState extends State<HomeScannerBaseContainer> {
     if (widget.dataList?.isEmpty == true || widget.dataList == null) {
       return SizedBox();
     }
-    return CustomGridView(
-      length: widget.dataList?.length ?? 0,
-      getChild: (index) {
-        LiveScannerRes? data = widget.dataList?[index];
+    return Padding(
+      padding: const EdgeInsets.only(top: 10),
+      child: CustomGridView(
+        length: widget.dataList?.length ?? 0,
+        paddingVertical: 0,
+        paddingHorizontal: 0,
+        itemSpace: 10,
+        getChild: (index) {
+          LiveScannerRes? data = widget.dataList?[index];
 
-        return HomeScannerItem(
-          data: OfflineScannerRes(
-            identifier: data?.identifier,
-            name: data?.security?.name,
-            bid: data?.bid,
-            ask: data?.ask,
-            volume: data?.volume,
-            price: data?.last,
-            sector: data?.sector,
-            change: data?.change,
-            changesPercentage: data?.percentChange,
-            image: data?.image,
-            ext: Ext(
-              extendedHoursDate: data?.extendedHoursDate,
-              extendedHoursTime: data?.extendedHoursTime,
-              extendedHoursType: data?.extendedHoursType,
-              extendedHoursPrice: data?.extendedHoursPrice,
-              extendedHoursChange: data?.extendedHoursChange,
-              extendedHoursPercentChange: data?.extendedHoursPercentChange,
+          return HomeScannerItem(
+            data: OfflineScannerRes(
+              identifier: data?.identifier,
+              name: data?.security?.name,
+              bid: data?.bid,
+              ask: data?.ask,
+              volume: data?.volume,
+              price: data?.last,
+              sector: data?.sector,
+              change: data?.change,
+              changesPercentage: data?.percentChange,
+              image: data?.image,
+              ext: Ext(
+                extendedHoursDate: data?.extendedHoursDate,
+                extendedHoursTime: data?.extendedHoursTime,
+                extendedHoursType: data?.extendedHoursType,
+                extendedHoursPrice: data?.extendedHoursPrice,
+                extendedHoursChange: data?.extendedHoursChange,
+                extendedHoursPercentChange: data?.extendedHoursPercentChange,
+              ),
             ),
-          ),
-        );
-      },
+          );
+        },
+      ),
     );
   }
 }
@@ -82,18 +88,21 @@ class _HomeScannerBaseContainerOfflineState
     if (widget.dataList?.isEmpty == true || widget.dataList == null) {
       return SizedBox();
     }
-    return CustomGridView(
-      length: widget.dataList?.length ?? 0,
-      paddingHorizontal: 0,
-      itemSpace: 10,
-      paddingVertical: 10,
-      getChild: (index) {
-        OfflineScannerRes? data = widget.dataList?[index];
-        if (data == null) {
-          return SizedBox();
-        }
-        return HomeScannerItem(data: data);
-      },
+    return Padding(
+      padding: const EdgeInsets.only(top: 10),
+      child: CustomGridView(
+        length: widget.dataList?.length ?? 0,
+        paddingHorizontal: 0,
+        itemSpace: 10,
+        paddingVertical: 0,
+        getChild: (index) {
+          OfflineScannerRes? data = widget.dataList?[index];
+          if (data == null) {
+            return SizedBox();
+          }
+          return HomeScannerItem(data: data);
+        },
+      ),
     );
   }
 }
