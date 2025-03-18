@@ -135,12 +135,12 @@ class MoreIndex extends StatelessWidget {
                 manager.navigateToMySubscription(viewPlans: false);
               },
             ),
-            if (homeRes?.showCrypto == true)
-              MoreItem(
-                icon: Images.crypto,
-                label: "Cryptocurrencies",
-                onTap: () {
-                  manager.navigateToBillionaires();
+            if(homeRes?.showCrypto==true)
+            MoreItem(
+              icon: Images.bitcoin,
+              label: "Cryptocurrencies",
+              onTap: () {
+                manager.navigateToBillionaires();
                 },
               ),
             MoreItem(
@@ -151,7 +151,7 @@ class MoreIndex extends StatelessWidget {
               },
             ),
             MoreItem(
-              icon: Images.moreMySubscription,
+              icon: Images.icShare,
               label: "Refer a Friend",
               onTap: () {
                 manager.navigateToReferral();

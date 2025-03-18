@@ -1,6 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:stocks_news_new/ui/base/bottom_sheet.dart';
 import 'package:stocks_news_new/ui/stockDetail/index.dart';
+import 'package:stocks_news_new/ui/tabs/home/scanner/extra/action_in_nbs.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -8,16 +10,13 @@ import '../../../../models/ticker.dart';
 
 class TickerBoxItem extends StatelessWidget {
   final BaseTickerRes data;
-  const TickerBoxItem({super.key, required this.data});
+  final Function()? onTap;
+  const TickerBoxItem({super.key, required this.data,this.onTap});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        Navigator.pushNamed(context, SDIndex.path, arguments: {
-          'symbol': data.symbol,
-        });
-      },
+      onTap:onTap,
       child: Container(
         margin: EdgeInsets.only(bottom: 10),
         decoration: BoxDecoration(
