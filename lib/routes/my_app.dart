@@ -55,15 +55,9 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       NotificationHandler.instance.setupNotificationListeners();
       // brazeDeepLink();
       _configureSubscriptionService();
-      // _checkAndUpdateTheme();
     });
     WidgetsBinding.instance.addObserver(this);
   }
-
-  // void _checkAndUpdateTheme() async {
-  //   ThemeManager manager = context.read<ThemeManager>();
-  //   manager.toggleTheme(await Preference.getTheme());
-  // }
 
   Future _configureSubscriptionService() async {
     UserRes? userRes = await Preference.getUser();
@@ -130,21 +124,14 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
 
   @override
   void didChangePlatformBrightness() {
-    Utils().showLog("***** THEME CHANGED *****");
     final brightness =
         SchedulerBinding.instance.platformDispatcher.platformBrightness;
-
     ThemeManager manager = navigatorKey.currentContext!.read<ThemeManager>();
-
     bool isDark = brightness == Brightness.dark;
-
     if (manager.themeMode == ThemeMode.system) {
       manager.toggleTheme(isDark ? ThemeMode.dark : ThemeMode.light);
       manager.toggleTheme(ThemeMode.system);
     }
-    // else {
-    //   manager.toggleTheme(isDark ? ThemeMode.dark : ThemeMode.light);
-    // }
   }
 
   // -------- Initial Deeplinks For Referral STARTED ---------------
