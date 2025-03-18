@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/managers/stockDetail/stock.detail.dart';
 import 'package:stocks_news_new/models/stockDetail/overview.dart';
 import 'package:stocks_news_new/ui/base/base_list_divider.dart';
+import 'package:stocks_news_new/ui/theme/manager.dart';
 import 'package:stocks_news_new/widgets/custom/base_loader_container.dart';
 import 'package:stocks_news_new/widgets/custom/refresh_indicator.dart';
 import '../../../utils/colors.dart';
@@ -44,17 +45,23 @@ class SDKeyStats extends StatelessWidget {
                       style: styleBaseRegular(color: ThemeColors.neutral40),
                     ),
                   ),
-                  Text(
-                    '${data.value ?? ''}',
-                    style: styleBaseBold(
-                      color:
-                          (data.title == 'Day Low' || data.title == 'Year Low')
+                  Consumer<ThemeManager>(
+                    builder: (context, value, child) {
+                      return Text(
+                        '${data.value ?? ''}',
+                        style: styleBaseBold(
+                          color: (data.title == 'Day Low' ||
+                                  data.title == 'Year Low')
                               ? ThemeColors.error120
                               : (data.title == 'Day High' ||
                                       data.title == 'Year High')
                                   ? ThemeColors.success120
-                                  : ThemeColors.black,
-                    ),
+                                  : value.isDarkMode
+                                      ? ThemeColors.white
+                                      : ThemeColors.black,
+                        ),
+                      );
+                    },
                   ),
                 ],
               ),

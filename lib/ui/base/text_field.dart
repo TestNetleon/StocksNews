@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
+import 'package:stocks_news_new/ui/theme/manager.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -58,12 +60,12 @@ class BaseTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ThemeManager themeManager = context.watch<ThemeManager>();
+    bool isDark = themeManager.isDarkMode;
+
     var outlineInputBorder = OutlineInputBorder(
       borderRadius: borderRadiusOnly ?? BorderRadius.circular(borderRadius),
-      borderSide: BorderSide(
-        color: ThemeColors.neutral80,
-        width: 1,
-      ),
+      borderSide: BorderSide(color: ThemeColors.neutral80, width: 1),
     );
     var enabledBorder = OutlineInputBorder(
       borderRadius: borderRadiusOnly ?? BorderRadius.circular(borderRadius),
@@ -72,6 +74,7 @@ class BaseTextField extends StatelessWidget {
         width: 1,
       ),
     );
+
     return TextField(
       focusNode: focusNode,
       onChanged: onChanged,
@@ -84,24 +87,25 @@ class BaseTextField extends StatelessWidget {
       enabled: editable,
       textCapitalization: textCapitalization,
       inputFormatters: inputFormatters ?? [allSpecialSymbolsRemove],
-      style: stylePTSansRegular(fontSize: 16),
+      style: styleBaseRegular(fontSize: 16),
       decoration: InputDecoration(
-          prefixIcon: prefixIcon,
-          suffixIcon: suffixIcon,
-          labelText: placeholder,
-          hintText: hintText,
-          hintStyle: stylePTSansRegular(color: ThemeColors.neutral40),
-          // floatingLabelBehavior: FloatingLabelBehavior.auto,
-          labelStyle: stylePTSansRegular(color: ThemeColors.neutral60),
-          contentPadding:
-              contentPadding ?? EdgeInsets.symmetric(horizontal: Pad.pad16),
-          filled: filled,
-          fillColor: fillColor ?? ThemeColors.white,
-          enabledBorder: enabledBorder,
-          border: outlineInputBorder,
-          focusedBorder: outlineInputBorder,
-          counterText: '',
-          alignLabelWithHint: true),
+        prefixIcon: prefixIcon,
+        suffixIcon: suffixIcon,
+        labelText: placeholder,
+        hintText: hintText,
+        hintStyle: styleBaseRegular(color: ThemeColors.neutral40),
+        // floatingLabelBehavior: FloatingLabelBehavior.auto,
+        labelStyle: styleBaseRegular(color: ThemeColors.neutral60),
+        contentPadding:
+            contentPadding ?? EdgeInsets.symmetric(horizontal: Pad.pad16),
+        filled: filled,
+        fillColor: fillColor ?? (isDark ? Colors.black : ThemeColors.white),
+        enabledBorder: enabledBorder,
+        border: outlineInputBorder,
+        focusedBorder: outlineInputBorder,
+        counterText: '',
+        alignLabelWithHint: true,
+      ),
     );
   }
 }

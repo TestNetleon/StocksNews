@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:stocks_news_new/ui/base/base_list_divider.dart';
 import 'package:stocks_news_new/ui/base/bottom_sheet.dart';
 import 'package:stocks_news_new/ui/base/load_more.dart';
 import 'package:stocks_news_new/ui/tabs/tools/simulator/managers/s_pending.dart';
@@ -11,7 +12,6 @@ import 'package:stocks_news_new/ui/tabs/tools/simulator/services/sse.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/custom/base_loader_container.dart';
-
 
 class SPendingList extends StatefulWidget {
   const SPendingList({super.key});
@@ -65,14 +65,13 @@ class _SPendingListState extends State<SPendingList> {
                 ));
 
                 BaseBottomSheet().bottomSheet(
-                  barrierColor: ThemeColors.neutral5.withValues(alpha: 0.7),
-                  child: ActionInOrders(
-                    symbol:  item.symbol,
-                    item: item,
-                    index: index,
-                  )
-                );
-               /* showModalBottomSheet(
+                    barrierColor: ThemeColors.neutral5.withValues(alpha: 0.7),
+                    child: ActionInOrders(
+                      symbol: item.symbol,
+                      item: item,
+                      index: index,
+                    ));
+                /* showModalBottomSheet(
                   enableDrag: true,
                   isDismissible: true,
                   context: context,
@@ -95,7 +94,7 @@ class _SPendingListState extends State<SPendingList> {
             );
           },
           separatorBuilder: (context, index) {
-            return Divider(height: 24,thickness:1,color: ThemeColors.neutral5);
+            return BaseListDivider(height: 24);
           },
           itemCount: manager.data?.length ?? 0,
         ),

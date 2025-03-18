@@ -68,7 +68,7 @@ class AIPerformanceYear extends StatelessWidget {
                 top: 0,
                 child: AIPointerContainer(
                   isDownwards: true,
-                  style: styleGeorgiaBold(
+                  style: styleBaseBold(
                       color: ThemeColors.background, fontSize: 12),
                   title: price,
                 ),

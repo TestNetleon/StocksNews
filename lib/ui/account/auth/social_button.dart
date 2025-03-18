@@ -43,7 +43,7 @@ class AccountSocialButton extends StatelessWidget {
           Flexible(
             child: Text(
               text,
-              style: stylePTSansBold(fontSize: 16),
+              style: styleBaseBold(fontSize: 16),
             ),
           ),
         ],

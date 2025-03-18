@@ -75,7 +75,7 @@ class AIPricePostVolumeItem extends StatelessWidget {
               percent: percentage,
               center: Text(
                 "${rawValue < 0 ? '-' : ''}${rawValue.abs().toStringAsFixed(1)}%",
-                style: stylePTSansBold(
+                style: styleBaseBold(
                   color: Colors.black,
                   fontSize: 12,
                 ),

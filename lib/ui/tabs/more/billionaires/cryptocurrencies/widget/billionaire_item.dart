@@ -12,7 +12,7 @@ import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 class BillionaireItem extends StatelessWidget {
   final CryptoTweetPost? item;
   final Function()? onTap;
-  const BillionaireItem({super.key,this.item,this.onTap});
+  const BillionaireItem({super.key, this.item, this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -25,30 +25,31 @@ class BillionaireItem extends StatelessWidget {
             visible: item?.name != null && item?.name != '',
             child: BaseHeading(
               title: "${item?.name}",
-              titleStyle: stylePTSansBold(fontSize: 16,color: ThemeColors.splashBG),
-              subtitleStyle: stylePTSansRegular(fontSize: 14,color: ThemeColors.splashBG),
-              subtitle: item?.designation??"",
+              titleStyle:
+                  styleBaseBold(fontSize: 16, color: ThemeColors.splashBG),
+              subtitleStyle:
+                  styleBaseRegular(fontSize: 14, color: ThemeColors.splashBG),
+              subtitle: item?.designation ?? "",
               crossAxisAlignment: CrossAxisAlignment.center,
             ),
           ),
-          SpacerVertical(
-              height: Pad.pad10
-          ),
-
+          SpacerVertical(height: Pad.pad10),
           Visibility(
-            visible: item?.symbols!=null || item?.symbols?.isNotEmpty == true,
+            visible: item?.symbols != null || item?.symbols?.isNotEmpty == true,
             child: SingleChildScrollView(
               child: Row(
                 children: List.generate(
                   item!.symbols!.length,
-                      (index) {
-                        Symbols items= item!.symbols![index];
+                  (index) {
+                    Symbols items = item!.symbols![index];
                     return Expanded(
                       child: BaseHeading(
-                        title: "${items.count??""}",
-                        titleStyle: stylePTSansBold(fontSize: 20,color: ThemeColors.splashBG),
-                        subtitleStyle: stylePTSansRegular(fontSize: 14,color: ThemeColors.splashBG),
-                        subtitle: items.symbol ??"",
+                        title: "${items.count ?? ""}",
+                        titleStyle: styleBaseBold(
+                            fontSize: 20, color: ThemeColors.splashBG),
+                        subtitleStyle: styleBaseRegular(
+                            fontSize: 14, color: ThemeColors.splashBG),
+                        subtitle: items.symbol ?? "",
                         crossAxisAlignment: CrossAxisAlignment.center,
                       ),
                     );
@@ -58,25 +59,26 @@ class BillionaireItem extends StatelessWidget {
             ),
           ),
           TextButton.icon(
-              onPressed: (){
-                Navigator.pushNamed(context, BillionairesDetailIndex.path,arguments: {'slug':item?.slug??""});
-
-              },
-              label: Text(
-                "SEE ALL MENTIONS",
-                style: stylePTSansRegular(fontSize: 14,color: ThemeColors.secondary100),
-              ),
-            icon: Icon(Icons.arrow_right_alt_outlined,color: ThemeColors.secondary100),
+            onPressed: () {
+              Navigator.pushNamed(context, BillionairesDetailIndex.path,
+                  arguments: {'slug': item?.slug ?? ""});
+            },
+            label: Text(
+              "SEE ALL MENTIONS",
+              style: styleBaseRegular(
+                  fontSize: 14, color: ThemeColors.secondary100),
+            ),
+            icon: Icon(Icons.arrow_right_alt_outlined,
+                color: ThemeColors.secondary100),
             iconAlignment: IconAlignment.end,
           ),
           Visibility(
-            visible: item?.image!=null,
+            visible: item?.image != null,
             child: Container(
               padding: EdgeInsets.all(Pad.pad8),
               decoration: BoxDecoration(
-                border: Border.all(color: ThemeColors.neutral10,width: 1),
-                shape: BoxShape.circle
-              ),
+                  border: Border.all(color: ThemeColors.neutral10, width: 1),
+                  shape: BoxShape.circle),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(140),
                 child: CachedNetworkImagesWidget(
@@ -90,8 +92,6 @@ class BillionaireItem extends StatelessWidget {
               ),
             ),
           ),
-
-
         ],
       ),
     );

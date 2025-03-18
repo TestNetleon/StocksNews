@@ -141,6 +141,7 @@ class NewsDetailData extends StatelessWidget {
             textStyle: styleBaseRegular(
               color: ThemeColors.black,
               fontSize: 18,
+              height: 1.6,
             ),
             customWidgetBuilder: (element) {
               if (element.localName == 'img' &&

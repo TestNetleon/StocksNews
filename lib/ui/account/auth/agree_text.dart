@@ -90,7 +90,7 @@ class _AccountAgreeTextState extends State<AccountAgreeText> {
 
             return true;
           },
-          textStyle: styleGeorgiaRegular(fontSize: 14, height: 1.6),
+          textStyle: styleBaseRegular(fontSize: 14, height: 1.6),
         ),
         if (content.length > widget.defaultLength && !widget.showFull)
           GestureDetector(
@@ -101,7 +101,7 @@ class _AccountAgreeTextState extends State<AccountAgreeText> {
             },
             child: Text(
               _isExpanded ? 'Read Less' : 'Read More',
-              style: stylePTSansRegular(
+              style: styleBaseRegular(
                 color: ThemeColors.primary120,
               ),
             ),

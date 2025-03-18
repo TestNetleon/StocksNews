@@ -29,7 +29,7 @@ class LinearBarCommon extends StatelessWidget {
         visible: showText,
         child: Text(
           "$value%",
-          style: stylePTSansBold(fontSize: 11, color: ThemeColors.white),
+          style: styleBaseBold(fontSize: 11, color: ThemeColors.white),
         ),
       ),
       progressColor: value >= 0 && value < 25

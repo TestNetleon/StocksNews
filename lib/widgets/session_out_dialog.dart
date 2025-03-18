@@ -22,7 +22,7 @@
 //                 onPressed: onpress,
 //                 child: Text(
 //                   'ok',
-//                   style: stylePTSansBold(fontSize: 16.sp),
+//                   style: styleBaseBold(fontSize: 16.sp),
 //                 ),
 //               ),
 //             ],

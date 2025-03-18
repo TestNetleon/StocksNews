@@ -139,6 +139,7 @@ class BlogDetailData extends StatelessWidget {
             textStyle: styleBaseRegular(
               color: ThemeColors.black,
               fontSize: 18,
+              height: 1.6,
             ),
             customWidgetBuilder: (element) {
               if (element.localName == 'img' &&
@@ -184,7 +185,7 @@ class BlogDetailData extends StatelessWidget {
             children: [
               SpacerVertical(height: 20),
               BaseHeading(
-                title: manager.blogsDetail?.moreNews?.title,
+                title: '${manager.blogsDetail?.moreNews?.title}',
               ),
               SpacerVertical(height: 10),
               Column(

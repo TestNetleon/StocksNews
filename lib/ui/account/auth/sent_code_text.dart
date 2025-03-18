@@ -20,7 +20,7 @@ class AccountSentCodeText extends StatelessWidget {
         children: [
           Text(
             'Please enter the $digit-digit code sent to',
-            style: stylePTSansRegular(fontSize: 18),
+            style: styleBaseRegular(fontSize: 18),
           ),
           SpacerVertical(height: 8),
           Text(

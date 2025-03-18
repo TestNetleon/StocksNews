@@ -1,10 +1,15 @@
+import 'dart:async';
+import 'dart:convert';
 import 'dart:io';
 import 'package:appsflyer_sdk/appsflyer_sdk.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/foundation.dart';
 import 'package:provider/provider.dart';
-import 'package:stocks_news_new/providers/user_provider.dart';
+import 'package:stocks_news_new/database/preference.dart';
+import 'package:stocks_news_new/managers/user.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/utils/utils.dart';
+import 'package:validators/validators.dart';
 import '../../api/apis.dart';
 import '../../utils/constants.dart';
 
@@ -19,7 +24,6 @@ class AppsFlyerService {
 
   // Future<void> getDeviceID() async {
   //   DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
-
   //   if (Platform.isAndroid) {
   //     AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
   //     String deviceId = androidInfo.id;
@@ -52,7 +56,11 @@ class AppsFlyerService {
       );
 
       final appsFlyerId = await _appsFlyerSdk?.getAppsFlyerUID();
+
+      Utils().showLog("UID => $appsFlyerId");
+
       appsFlyerUID = appsFlyerId;
+
       try {
         _appsFlyerSdk?.setOneLinkCustomDomain(['pagelink.stocks.news']);
       } catch (e) {
@@ -69,9 +77,16 @@ class AppsFlyerService {
         // await Purchases.setAppsflyerID(appsFlyerId);
         appsFlyerUID = appsFlyerId;
       }
+
+      handleDeepLinking();
       Utils().showLog("AppsFlyer ID: $appsFlyerId");
+
+      Timer(const Duration(seconds: 5), () {
+        // createUserInvitationLink();
+      });
     } catch (e) {
       Utils().showLog("failed: $e");
+      handleDeepLinking();
     }
   }
 
@@ -120,29 +135,104 @@ class AppsFlyerService {
           'matchType': '${result.deepLink?.matchType}',
           'mediaSource': '${result.deepLink?.mediaSource}',
         };
+        Utils().showLog('AppsFlyer Deep Link Data ${jsonEncode(data)}');
 
-        Utils().showLog('AppsFlyer Deep Link Data $data');
-        if (deepLinkUrl != null && deepLinkUrl != '') {
+        debugPrint(
+          "C = ${result.deepLink?.campaign}\nMT = ${result.deepLink?.matchType}\nCode = ${result.deepLink?.deepLinkValue}\nLink = $deepLinkUrl",
+        );
+
+        if (result.deepLink?.campaign == "Referral" ||
+            result.deepLink?.matchType == "referrer") {
+          getReferralCodeIfAny(result.deepLink?.deepLinkValue);
+        } else if (deepLinkUrl != null && deepLinkUrl != '') {
+          if (result.deepLink?.campaign == "Referral" ||
+              result.deepLink?.matchType == "referrer") {
+            getReferralCodeIfAny(result.deepLink?.deepLinkValue);
+            return;
+          }
+          getDistributorCodeIfAny(deepLinkUrl);
           handleDeepLinkNavigation(uri: Uri.tryParse(deepLinkUrl));
         }
       },
     );
   }
 
+  getDistributorCodeIfAny(url) {
+    Uri? uri = Uri.tryParse(url);
+    if (uri != null && uri.queryParameters.containsKey('distributor_code')) {
+      String fullQuery = uri.query;
+      int index = fullQuery.indexOf('distributor_code=');
+      if (index != -1) {
+        String result = fullQuery.substring(index + 'distributor_code='.length);
+        memCODE = result;
+        Utils().showLog(memCODE);
+      }
+    }
+  }
+
+  getReferralCodeIfAny(referralCode) async {
+    bool isFirstOpen = await Preference.isFirstOpen();
+    String? code = await Preference.getReferral();
+    if (referralCode != null &&
+        referralCode != "" &&
+        code == null &&
+        isFirstOpen) {
+      Preference.saveReferral(referralCode);
+      Timer(const Duration(seconds: 4), () {
+        UserManager manager = navigatorKey.currentContext!.read<UserManager>();
+        if (manager.user == null && !signUpVisible) {
+          manager.askLoginScreen();
+        }
+      });
+      FirebaseAnalytics.instance.logEvent(
+        name: 'referrals',
+        parameters: {'referral_code': referralCode},
+      );
+    }
+    onDeepLinking = false;
+  }
+
   Future createUserInvitationLink() async {
-    UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
+    UserManager manager = navigatorKey.currentContext!.read<UserManager>();
+
+    if (manager.user == null || shareUrl == null) {
+      return;
+    }
 
     AppsFlyerInviteLinkParams params = AppsFlyerInviteLinkParams(
       brandDomain: 'pagelink.stocks.news',
       referrerName: 'User Invitation',
-      baseDeepLink: 'Zsdh',
-      campaign: 'TestOne',
-      customerID: provider.user?.userId ?? 'UserA',
+      campaign: 'Referral',
+      customerID: manager.user?.userId ?? '',
+      channel: "referral",
+      customParams: {
+        "deep_link_value": manager.user?.referralCode,
+        "type": 'referral',
+      },
     );
+
+    await _appsFlyerSdk?.setAppInviteOneLinkID("Zsdh", (dynamic) {
+      if (kDebugMode) {
+        print('generateInviteLink SUCCESS $dynamic');
+      }
+    });
 
     _appsFlyerSdk?.generateInviteLink(params, (data) {
       if (kDebugMode) {
         print('generateInviteLink SUCCESS $data');
+        try {
+          final inviteLink = data["payload"]["userInviteURL"];
+          if (isURL(inviteLink)) {
+            print(' *** THIS IS A VALID URL *** ');
+            manager.updatePersonalDetails(
+              referralUrl: inviteLink,
+              showProgress: false,
+              showSuccess: false,
+            );
+          }
+        } catch (e) {
+          Utils().showLog(data);
+        }
       }
     }, (data) {
       if (kDebugMode) {

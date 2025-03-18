@@ -11,7 +11,7 @@ class BaseButton extends StatelessWidget {
     this.text = "Submit",
     this.color = ThemeColors.primary100,
     this.disableTextColor = ThemeColors.primary100,
-    this.textColor = ThemeColors.black,
+    this.textColor,
     this.iconColor,
     this.textSize = 18,
     this.fullWidth = false,
@@ -31,7 +31,7 @@ class BaseButton extends StatelessWidget {
 
   final String text;
   final Color? color;
-  final Color textColor;
+  final Color? textColor;
   final Color? iconColor;
   final Color disableTextColor;
 
@@ -76,7 +76,7 @@ class BaseButton extends StatelessWidget {
               children: [
                 Image.asset(
                   icon ?? '',
-                  color: iconColor??ThemeColors.neutral60,
+                  color: iconColor ?? ThemeColors.neutral60,
                   height: 17,
                   width: 17,
                 ),
@@ -90,13 +90,17 @@ class BaseButton extends StatelessWidget {
             textUppercase ? text.toUpperCase() : text,
             style: textStyle ??
                 (fontBold
-                    ? stylePTSansBold(
+                    ? styleBaseBold(
                         fontSize: textSize,
-                        color: onPressed == null ? disableTextColor : textColor,
+                        color: onPressed == null
+                            ? disableTextColor
+                            : textColor ?? ThemeColors.black,
                       )
                     : styleBaseSemiBold(
                         fontSize: textSize,
-                        color: onPressed == null ? disableTextColor : textColor,
+                        color: onPressed == null
+                            ? disableTextColor
+                            : textColor ?? ThemeColors.black,
                       )),
           ),
         ),

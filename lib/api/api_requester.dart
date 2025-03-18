@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
-
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
@@ -9,17 +8,14 @@ import 'package:flutter/material.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/api/apis.dart';
-import 'package:stocks_news_new/database/database_helper.dart';
 import 'package:stocks_news_new/managers/user.dart';
 import 'package:stocks_news_new/modals/in_app_msg_res.dart';
-import 'package:stocks_news_new/providers/home_provider.dart';
-import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
-import 'package:stocks_news_new/screens/blogDetail/index.dart';
-import 'package:stocks_news_new/screens/blogNew/blogsNew/index.dart';
-import 'package:stocks_news_new/screens/stocks/index.dart';
-import 'package:stocks_news_new/screens/tabs/news/newsDetail/new_detail.dart';
-import 'package:stocks_news_new/service/revenue_cat.dart';
+import 'package:stocks_news_new/ui/stockDetail/index.dart';
+import 'package:stocks_news_new/ui/tabs/more/articles/detail.dart';
+import 'package:stocks_news_new/ui/tabs/more/articles/index.dart';
+import 'package:stocks_news_new/ui/tabs/more/news/detail.dart';
+
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/utils/in_app_messages.dart';
@@ -28,11 +24,7 @@ import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
-import 'package:stocks_news_new/widgets/custom/required_login.dart';
-// import '../screens/Adds/adds.dart';
 import '../screens/AdManager/item.dart';
-import '../screens/auth/base/base_auth.dart';
-import '../screens/stockDetail/index.dart';
 import '../ui/tabs/tabs.dart';
 
 String? validAuthToken;
@@ -221,25 +213,10 @@ Future<ApiResponse> apiRequest({
             showErrorOnFull) {
           isShowingError = true;
           if (!kDebugMode) {
-            showMaintenanceDialog(
-              title: maintenanceDialog?.title ?? maintenanceDialogNew?.title,
-              description: maintenanceDialog?.description ??
-                  maintenanceDialogNew?.description,
-            );
+            //show maintenance
           }
         } else if (inAppMsg != null) {
           checkForInAppMessage(inAppMsg);
-        }
-
-        if (updateDatabase) {
-          Extra? extra = res.extra is Extra ? (res.extra as Extra) : null;
-          if (extra?.loginDialogRes != null) {
-            DatabaseHelper helper = DatabaseHelper();
-            helper.checkAndInsertInitialData(
-              count: extra!.loginDialogRes!.count,
-              status: extra.loginDialogRes!.status,
-            );
-          }
         }
       }
 
@@ -250,9 +227,7 @@ Future<ApiResponse> apiRequest({
       bool isUnderMaintenance = false;
       if (!callCheckServer) {
         callCheckServer = true;
-        isUnderMaintenance = await navigatorKey.currentContext!
-            .read<HomeProvider>()
-            .checkMaintenanceMode();
+        isUnderMaintenance = false;
       }
       Utils().showLog("is UnderMaintenance $isUnderMaintenance");
       if (isUnderMaintenance) {
@@ -267,10 +242,7 @@ Future<ApiResponse> apiRequest({
         }
         if (maintenanceDialog != null && !isShowingError && showErrorOnFull) {
           isShowingError = true;
-          showMaintenanceDialog(
-            title: maintenanceDialog.title,
-            description: maintenanceDialog.description,
-          );
+          //show maintenance
         }
       }
 
@@ -285,7 +257,7 @@ Future<ApiResponse> apiRequest({
 
     if (!callCheckServer) {
       callCheckServer = true;
-      navigatorKey.currentContext!.read<HomeProvider>().checkMaintenanceMode();
+      //
     }
 
     Utils().showLog('Catch error =>> ${e.toString()}  \n ERROR ON => $url');
@@ -301,30 +273,12 @@ void _checkForNewVersion(Extra extra, {removeForceLogin = false}) async {
           (extra.androidBuildCode ?? 0) > int.parse(buildCode)) &&
       !isAppUpdating) {
     isAppUpdating = true;
-    showAppUpdateDialog(extra);
+    //app update
   } else if ((Platform.isIOS &&
           (extra.iOSBuildCode ?? 0) > int.parse(buildCode)) &&
       !isAppUpdating) {
     isAppUpdating = true;
-    showAppUpdateDialog(extra);
-  }
-  // else if (!removeForceLogin) {
-  //   _checkLogin();
-  // }
-}
-
-Future _checkLogin() async {
-  UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
-
-  if (provider.user == null) {
-    // isPhone ? await loginSheet() : await loginSheetTablet();
-    loginFirstSheet();
-  } else {
-    if (provider.user?.phone == null || provider.user?.phone == '') {
-      requiredLogin();
-    } else {
-      //
-    }
+    //app update
   }
 }
 
@@ -384,21 +338,13 @@ void navigateToRequiredScreen(InAppNotification? inAppMsg) {
     );
   } else if (inAppMsg?.redirectOn == 'stock') {
     Utils().showLog("Navigating to Stocks");
-    Navigator.pop(navigatorKey.currentContext!);
-    Navigator.push(
-      navigatorKey.currentContext!,
-      MaterialPageRoute(
-        builder: (_) => StocksIndex(inAppMsgId: inAppMsg?.id),
-      ),
-    );
   } else if (inAppMsg?.redirectOn == 'stock_detail') {
     Navigator.pop(navigatorKey.currentContext!);
     Navigator.push(
       navigatorKey.currentContext!,
       MaterialPageRoute(
-        builder: (_) => StockDetail(
-          symbol: inAppMsg!.slug!,
-          inAppMsgId: inAppMsg.id,
+        builder: (_) => SDIndex(
+          symbol: inAppMsg?.slug ?? '',
         ),
       ),
     );
@@ -417,14 +363,11 @@ void navigateToRequiredScreen(InAppNotification? inAppMsg) {
     Navigator.pop(navigatorKey.currentContext!);
     Navigator.push(
       navigatorKey.currentContext!,
-      // NewsDetails.path,
       MaterialPageRoute(
-        builder: (_) => NewsDetails(
-          inAppMsgId: inAppMsg?.id,
-          slug: inAppMsg!.slug,
+        builder: (_) => NewsDetailIndex(
+          slug: inAppMsg?.slug ?? '',
         ),
       ),
-      // arguments: {"slug": inAppMsg?.slug, "inAppMsgId": inAppMsg?.id},
     );
   } else if (inAppMsg?.redirectOn == 'blog') {
     Utils().showLog("message");
@@ -435,7 +378,7 @@ void navigateToRequiredScreen(InAppNotification? inAppMsg) {
       navigatorKey.currentContext!,
       // BlogIndexNew.path,
       MaterialPageRoute(
-        builder: (_) => BlogIndexNew(inAppMsgId: inAppMsg?.id),
+        builder: (_) => BlogsIndex(),
       ),
       // arguments: {"inAppMsgId": inAppMsg?.id},
     );
@@ -445,26 +388,15 @@ void navigateToRequiredScreen(InAppNotification? inAppMsg) {
       navigatorKey.currentContext!,
       // BlogDetail.path,
       MaterialPageRoute(
-        builder: (_) => BlogDetail(
-          slug: inAppMsg!.slug!,
-          inAppMsgId: inAppMsg.id,
+        builder: (_) => BlogsDetailIndex(
+          slug: inAppMsg?.slug ?? '',
         ),
       ),
       // arguments: {"slug": inAppMsg?.slug, "inAppMsgId": inAppMsg?.id},
     );
   } else if (inAppMsg?.redirectOn == 'membership') {
     Navigator.pop(navigatorKey.currentContext!);
-    subscribe();
-    // Navigator.push(
-    //   navigatorKey.currentContext!,
-    //   // BlogDetail.path,
-    //   MaterialPageRoute(
-    //     builder: (_) => NewMembership(
-    //       inAppMsgId: inAppMsg?.id,
-    //     ),
-    //   ),
-    //   // arguments: {"slug": inAppMsg?.slug, "inAppMsgId": inAppMsg?.id},
-    // );
+    //
   }
 }
 

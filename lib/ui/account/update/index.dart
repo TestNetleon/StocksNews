@@ -289,11 +289,9 @@ class _UpdatePersonalDetailIndexState extends State<UpdatePersonalDetailIndex> {
                     Row(
                       children: [
                         Container(
-                          decoration: const BoxDecoration(
+                          decoration: BoxDecoration(
                             border: Border(
-                              bottom: BorderSide(
-                                color: ThemeColors.white,
-                              ),
+                              bottom: BorderSide(color: ThemeColors.white),
                             ),
                             color: ThemeColors.white,
                             borderRadius: BorderRadius.only(

@@ -6,7 +6,7 @@ import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/api/apis.dart';
 import 'package:stocks_news_new/models/referral/redeem_list_res.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
-import 'package:stocks_news_new/ui/animation/coin_animation.dart';
+import 'package:stocks_news_new/ui/animation/coin.dart';
 import 'package:stocks_news_new/ui/base/toaster.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';

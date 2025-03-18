@@ -47,19 +47,19 @@ class TradeCustomeSliding extends StatelessWidget {
                 borderRadius: BorderRadius.circular(10),
                 gradient: selectedIndex == i
                     ? LinearGradient(
-                  colors: colors ??
-                      [
-                        ThemeColors.neutral40,
-                        ThemeColors.splashBG,
-                      ],
-                )
+                        colors: colors ??
+                            [
+                              ThemeColors.neutral40,
+                              ThemeColors.splashBG,
+                            ],
+                      )
                     : null,
               ),
               child: Center(
                 child: Text(
                   menus[i],
                   style: style ??
-                      styleGeorgiaBold(
+                      styleBaseBold(
                         fontSize: 15,
                         color: selectedIndex == i
                             ? ThemeColors.white

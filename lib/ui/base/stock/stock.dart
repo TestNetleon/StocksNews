@@ -94,7 +94,9 @@ class _BaseStockItemState extends State<BaseStockItem> {
                       },
                       child: Text(
                         widget.data.symbol ?? '',
-                        style: styleBaseBold(fontSize: 16),
+                        // style: styleBaseBold(fontSize: 16),
+                        style: Theme.of(context).textTheme.displayLarge,
+
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
@@ -111,42 +113,6 @@ class _BaseStockItemState extends State<BaseStockItem> {
                 ),
               ),
               const SpacerHorizontal(width: 16),
-              // widget.data.showMore == true
-              // widget.expandable != null
-              //     ? Row(
-              //         children: [
-              //           Visibility(
-              //             visible: widget.data.displayPrice != null &&
-              //                 widget.data.displayPrice != '',
-              //             child: Container(
-              //               margin: EdgeInsets.only(right: 8),
-              //               child: Text(
-              //                 textAlign: TextAlign.center,
-              //                 widget.data.displayPrice ?? '',
-              //                 style: styleBaseBold(fontSize: 16),
-              //               ),
-              //             ),
-              //           ),
-              //           InkWell(
-              //             borderRadius: BorderRadius.circular(4),
-              //             onTap: () => _toggleOpen(widget.index),
-              //             child: Container(
-              //               decoration: BoxDecoration(
-              //                 borderRadius: BorderRadius.circular(4),
-              //                 border: Border.all(color: ThemeColors.neutral5),
-              //               ),
-              //               child: Image.asset(
-              //                 _openIndex == widget.index
-              //                     ? Images.arrowDOWN
-              //                     : Images.arrowUP,
-              //                 height: 24,
-              //                 width: 24,
-              //               ),
-              //             ),
-              //           ),
-              //         ],
-              //       )
-              //     :
               Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
@@ -155,7 +121,8 @@ class _BaseStockItemState extends State<BaseStockItem> {
                         widget.data.displayPrice != '',
                     child: Text(
                       widget.data.displayPrice ?? '',
-                      style: styleBaseBold(fontSize: 16),
+                      // style: styleBaseBold(fontSize: 16),
+                      style: Theme.of(context).textTheme.displayLarge,
                     ),
                   ),
                   Visibility(
@@ -231,6 +198,11 @@ class _BaseStockItemState extends State<BaseStockItem> {
                             : Images.arrowDOWN,
                         height: 24,
                         width: 24,
+                        color:
+                            // value.isDarkMode
+                            //     ? ThemeColors.white
+                            //     :
+                            ThemeColors.black,
                       ),
                     ),
                   ),
@@ -331,6 +303,20 @@ class _BaseStockItemState extends State<BaseStockItem> {
                   //   ],
                   // ),
                   ),
+            ),
+          ),
+          Visibility(
+            visible: widget.data.purchaseDate != null &&
+                widget.data.purchaseDate != '',
+            child: Align(
+              alignment: Alignment.centerRight,
+              child: Text(
+                widget.data.purchaseDate ?? '',
+                style: styleBaseRegular(
+                  color: ThemeColors.neutral80,
+                  fontSize: 13,
+                ),
+              ),
             ),
           ),
         ],

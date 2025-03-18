@@ -1,4 +1,3 @@
-
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -10,25 +9,22 @@ import 'package:stocks_news_new/models/news/detail.dart';
 import 'package:stocks_news_new/ui/base/toaster.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 
-class FeedbackManager extends ChangeNotifier{
-
+class FeedbackManager extends ChangeNotifier {
   FeedbackRes? _data;
-  FeedbackRes? get feedbackData=> _data;
+  FeedbackRes? get feedbackData => _data;
 
   FeedbackSendRes? _dataSend;
-  FeedbackSendRes? get dataSend=> _dataSend;
+  FeedbackSendRes? get dataSend => _dataSend;
 
   Status _status = Status.ideal;
   String? _error;
   String? get error => _error ?? Const.errSomethingWrong;
-
 
   bool get isLoading => _status == Status.loading || _status == Status.ideal;
   void setStatus(status) {
     _status = status;
     notifyListeners();
   }
-
 
   Future getFeedback() async {
     setStatus(Status.loading);
@@ -57,7 +53,7 @@ class FeedbackManager extends ChangeNotifier{
     }
   }
 
-  Future sendFeedback({String? type,String? comment}) async {
+  Future sendFeedback({String? type, String? comment}) async {
     //setStatus(Status.loading);
     try {
       Map request = {
@@ -81,14 +77,14 @@ class FeedbackManager extends ChangeNotifier{
         message: response.message ?? '',
         type: response.status ? ToasterEnum.success : ToasterEnum.error,
       );
-     // setStatus(Status.loaded);
+      // setStatus(Status.loaded);
     } catch (e) {
       _data = null;
       TopSnackbar.show(
         message: Const.errSomethingWrong,
         type: ToasterEnum.error,
       );
-     // setStatus(Status.loaded);
+      // setStatus(Status.loaded);
     }
   }
 }

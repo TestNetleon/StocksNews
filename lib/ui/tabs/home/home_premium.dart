@@ -10,15 +10,16 @@ class HomePremiumIndex extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    MyHomeManager provider = context.watch<MyHomeManager>();
+    MyHomeManager manager = context.watch<MyHomeManager>();
 
     return Column(
       children: [
-        HomeNewsIndex(newsData: provider.homePremiumData?.featuredNews),
+        HomeNewsIndex(newsData: manager.homePremiumData?.featuredNews),
         HomePoliticianTradesIndex(
-          politicianData: provider.homePremiumData?.congressionalStocks,
+          politicianData: manager.homePremiumData?.congressionalStocks,
         ),
-        HomeNewsIndex(newsData: provider.homePremiumData?.financialNews),
+        HomeNewsIndex(newsData: manager.homePremiumData?.financialNews),
+        HomeNewsIndex(newsData: manager.homePremiumData?.recentNews),
       ],
     );
   }

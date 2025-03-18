@@ -25,11 +25,11 @@ class AIPerformanceTitleSubtitle extends StatelessWidget {
           Text(
             leading,
             style: bold
-                ? styleGeorgiaBold(
+                ? styleBaseBold(
                     fontSize: 16.0,
                     color: color,
                   )
-                : stylePTSansRegular(
+                : styleBaseRegular(
                     fontSize: 16.0,
                     color: color,
                   ),
@@ -37,11 +37,11 @@ class AIPerformanceTitleSubtitle extends StatelessWidget {
           Text(
             trailing,
             style: bold
-                ? styleGeorgiaBold(
+                ? styleBaseBold(
                     fontSize: 16.0,
                     color: color,
                   )
-                : stylePTSansRegular(
+                : styleBaseRegular(
                     fontSize: 16.0,
                     color: color,
                   ),

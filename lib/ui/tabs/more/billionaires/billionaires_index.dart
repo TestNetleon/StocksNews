@@ -27,11 +27,11 @@ class BillionairesDetailIndex extends StatefulWidget {
   const BillionairesDetailIndex({super.key, required this.slug});
 
   @override
-  State<BillionairesDetailIndex> createState() => _BillionairesDetailIndexState();
+  State<BillionairesDetailIndex> createState() =>
+      _BillionairesDetailIndexState();
 }
 
 class _BillionairesDetailIndexState extends State<BillionairesDetailIndex> {
-
   @override
   void initState() {
     super.initState();
@@ -45,11 +45,11 @@ class _BillionairesDetailIndexState extends State<BillionairesDetailIndex> {
     manager.getBilDetail(widget.slug);
   }
 
-
   @override
   Widget build(BuildContext context) {
     BillionairesManager manager = context.watch<BillionairesManager>();
-    BillionaireInfo? billionaireInfo= manager.billionairesDetailRes?.billionaireInfo;
+    BillionaireInfo? billionaireInfo =
+        manager.billionairesDetailRes?.billionaireInfo;
 
     return BaseScaffold(
       appBar: BaseAppBar(
@@ -80,13 +80,13 @@ class _BillionairesDetailIndexState extends State<BillionairesDetailIndex> {
                   Row(
                     children: [
                       Visibility(
-                        visible: billionaireInfo?.image!=null,
+                        visible: billionaireInfo?.image != null,
                         child: Container(
                           padding: EdgeInsets.all(Pad.pad5),
                           decoration: BoxDecoration(
-                              border: Border.all(color: ThemeColors.neutral20,width: 1),
-                              shape: BoxShape.circle
-                          ),
+                              border: Border.all(
+                                  color: ThemeColors.neutral20, width: 1),
+                              shape: BoxShape.circle),
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(60),
                             child: CachedNetworkImagesWidget(
@@ -103,12 +103,15 @@ class _BillionairesDetailIndexState extends State<BillionairesDetailIndex> {
                       SpacerHorizontal(width: Pad.pad16),
                       Expanded(
                         child: Visibility(
-                          visible: billionaireInfo?.name != null && billionaireInfo?.name != '',
+                          visible: billionaireInfo?.name != null &&
+                              billionaireInfo?.name != '',
                           child: BaseHeading(
                             title: "${billionaireInfo?.name}",
-                            titleStyle: stylePTSansBold(fontSize: 20,color: ThemeColors.splashBG),
-                            subtitleStyle: stylePTSansRegular(fontSize: 14,color: ThemeColors.colour66,fontWeight: FontWeight.w400),
-                            subtitle: billionaireInfo?.designation??"",
+                            titleStyle: styleBaseBold(
+                                fontSize: 20, color: ThemeColors.splashBG),
+                            subtitleStyle: styleBaseRegular(
+                                fontSize: 14, color: ThemeColors.colour66),
+                            subtitle: billionaireInfo?.designation ?? "",
                             crossAxisAlignment: CrossAxisAlignment.start,
                           ),
                         ),
@@ -118,45 +121,56 @@ class _BillionairesDetailIndexState extends State<BillionairesDetailIndex> {
                   BaseHeading(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     textAlign: TextAlign.start,
-                    subtitle: billionaireInfo?.description??"",
-                    subtitleStyle: stylePTSansRegular(fontSize: 16,color: ThemeColors.black,fontWeight: FontWeight.w400,height: 1.5),
+                    subtitle: billionaireInfo?.description ?? "",
+                    subtitleStyle: styleBaseRegular(
+                        fontSize: 16, color: ThemeColors.black, height: 1.5),
                   ),
                   IntrinsicWidth(
                     child: BaseButton(
                       fullWidth: false,
-                      color: billionaireInfo?.isFavoritePersonAdded==0?ThemeColors.white:ThemeColors.splashBG,
-                      onPressed: (){
-                        if(billionaireInfo?.isFavoritePersonAdded==0){
-                          manager.requestAddToFav(billionaireInfo?.twitterName??"");
+                      color: billionaireInfo?.isFavoritePersonAdded == 0
+                          ? ThemeColors.white
+                          : ThemeColors.splashBG,
+                      onPressed: () {
+                        if (billionaireInfo?.isFavoritePersonAdded == 0) {
+                          manager.requestAddToFav(
+                              billionaireInfo?.twitterName ?? "");
+                        } else {
+                          manager.requestRemoveToFav(
+                              billionaireInfo?.twitterName ?? "");
                         }
-                        else{
-                          manager.requestRemoveToFav(billionaireInfo?.twitterName??"");
-                        }
-
                       },
-                      text: billionaireInfo?.isFavoritePersonAdded==0?"FOLLOW":"UN-FOLLOW",
-                      textStyle:stylePTSansRegular(fontSize: 12,color: billionaireInfo?.isFavoritePersonAdded==0?ThemeColors.primaryLight:ThemeColors.white,fontWeight: FontWeight.w600),
+                      text: billionaireInfo?.isFavoritePersonAdded == 0
+                          ? "FOLLOW"
+                          : "UN-FOLLOW",
+                      textStyle: styleBaseRegular(
+                        fontSize: 12,
+                        color: billionaireInfo?.isFavoritePersonAdded == 0
+                            ? ThemeColors.primaryLight
+                            : ThemeColors.white,
+                      ),
                       icon: Images.ic_fav,
-                      iconColor:  billionaireInfo?.isFavoritePersonAdded==0?ThemeColors.primaryLight:ThemeColors.white,
-                    
+                      iconColor: billionaireInfo?.isFavoritePersonAdded == 0
+                          ? ThemeColors.primaryLight
+                          : ThemeColors.white,
                     ),
                   ),
-
-
                 ],
               ),
-
             ),
             SpacerVertical(height: Pad.pad10),
             Visibility(
-                visible: manager.billionairesDetailRes?.recentTweet?.title != null && manager.billionairesDetailRes?.recentTweet?.title!= '',
+                visible:
+                    manager.billionairesDetailRes?.recentTweet?.title != null &&
+                        manager.billionairesDetailRes?.recentTweet?.title != '',
                 child: BaseHeading(
-                  title: manager.billionairesDetailRes?.recentTweet?.title??"",
-                  titleStyle: stylePTSansBold(fontSize: 24,color: ThemeColors.splashBG),
-                  margin: EdgeInsets.symmetric(horizontal: Pad.pad16,vertical: Pad.pad5),
-
-                )
-            ),
+                  title:
+                      manager.billionairesDetailRes?.recentTweet?.title ?? "",
+                  titleStyle:
+                      styleBaseBold(fontSize: 24, color: ThemeColors.splashBG),
+                  margin: EdgeInsets.symmetric(
+                      horizontal: Pad.pad16, vertical: Pad.pad5),
+                )),
             SpacerVertical(height: Pad.pad5),
             Visibility(
               visible: manager.billionairesDetailRes?.recentTweet?.data != null,
@@ -165,7 +179,8 @@ class _BillionairesDetailIndexState extends State<BillionairesDetailIndex> {
                 padding: EdgeInsets.symmetric(horizontal: Pad.pad8),
                 shrinkWrap: true,
                 itemBuilder: (context, index) {
-                  CryptoTweetPost? item = manager.billionairesDetailRes?.recentTweet?.data?[index];
+                  CryptoTweetPost? item =
+                      manager.billionairesDetailRes?.recentTweet?.data?[index];
                   return CryptoItem(
                     item: item,
                     onTap: () {},
@@ -174,16 +189,18 @@ class _BillionairesDetailIndexState extends State<BillionairesDetailIndex> {
                 separatorBuilder: (context, index) {
                   return SpacerVertical(height: Pad.pad3);
                 },
-                itemCount: manager.billionairesDetailRes?.recentTweet?.data?.length ?? 0,
+                itemCount:
+                    manager.billionairesDetailRes?.recentTweet?.data?.length ??
+                        0,
               ),
             ),
             SpacerVertical(height: Pad.pad20),
-           /* Visibility(
+            /* Visibility(
                 visible: true,
                 //visible: manager.billionairesRes?.recentMentions?.title != null && manager.billionairesRes?.recentMentions?.title!= '',
                 child: BaseHeading(
                   title: "Top 360 Mentions",
-                  titleStyle: stylePTSansBold(fontSize: 24,color: ThemeColors.splashBG),
+                  titleStyle: styleBaseBold(fontSize: 24,color: ThemeColors.splashBG),
                   margin: EdgeInsets.symmetric(horizontal: Pad.pad16,vertical: Pad.pad5),
 
                 )
@@ -195,8 +212,8 @@ class _BillionairesDetailIndexState extends State<BillionairesDetailIndex> {
             ),
             SpacerVertical(height: Pad.pad16),*/
             CryptoTable(
-                symbolMentionRes:manager.billionairesDetailRes?.symbolMentionList
-            )
+                symbolMentionRes:
+                    manager.billionairesDetailRes?.symbolMentionList)
           ],
         ),
       ),

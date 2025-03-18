@@ -44,7 +44,7 @@ class _ReferPointsTransactionState extends State<ReferPointsTransaction> {
       appBar: BaseAppBar(
         showBack: true,
         title: widget.title ?? "Points Transactions",
-        showActionNotification: true,
+        showNotification: true,
         showSearch: true,
       ),
       body: BaseLoaderContainer(

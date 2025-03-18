@@ -207,12 +207,12 @@
 //                   const SpacerVertical(),
 //                   Text(
 //                     "${provider.blogsDetail?.readingTitle}",
-//                     style: stylePTSansBold(fontSize: 18),
+//                     style: styleBaseBold(fontSize: 18),
 //                   ),
 //                   const SpacerVertical(height: 10),
 //                   Text(
 //                     "${provider.blogsDetail?.readingSubtitle}",
-//                     style: stylePTSansRegular(
+//                     style: styleBaseRegular(
 //                       fontSize: 14,
 //                       height: 1.3,
 //                     ),

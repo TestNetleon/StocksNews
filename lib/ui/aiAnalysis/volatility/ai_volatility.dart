@@ -88,7 +88,7 @@ class AiVolatility extends StatelessWidget {
                 child: AIPointerContainer(
                   isDownwards: true,
                   title: manager.data?.tickerDetail?.symbol ?? "",
-                  style: stylePTSansRegular(fontSize: 12),
+                  style: styleBaseRegular(fontSize: 12),
                 ),
               ),
             ],

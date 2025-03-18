@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:stocks_news_new/models/my_home.dart';
 import 'package:stocks_news_new/ui/tabs/home/extra/lock.dart';
+import '../../../../managers/home.dart';
 import '../../../../utils/constants.dart';
+import '../../../base/button.dart';
 import '../../../base/heading.dart';
+import '../../../base/lock.dart';
 import 'item.dart';
 
 class HomeInsiderTradesIndex extends StatelessWidget {
@@ -25,6 +29,7 @@ class HomeInsiderTradesIndex extends StatelessWidget {
           ),
         ),
         HomeLock(
+          showButton: false,
           setNum: 1,
           lockInfo: insiderData?.lockInfo,
           childWidget: SingleChildScrollView(
@@ -43,6 +48,26 @@ class HomeInsiderTradesIndex extends StatelessWidget {
                 ),
               ),
             ),
+          ),
+        ),
+        Visibility(
+          visible: insiderData?.lockInfo != null,
+          child: Consumer<MyHomeManager>(
+            builder: (context, manager, child) {
+              return BaseButton(
+                text: insiderData?.lockInfo?.btn ?? '',
+                onPressed: () {
+                  manager.setNumValue(1);
+                  baseSUBSCRIBE(
+                    insiderData!.lockInfo!,
+                    manager: manager,
+                    callAPI: () async {
+                      await manager.getHomePremiumData();
+                    },
+                  );
+                },
+              );
+            },
           ),
         ),
       ],

@@ -61,8 +61,7 @@ class _ViewPlanItemState extends State<ViewPlanItem> {
           Padding(
             padding:
                 isPopular ? const EdgeInsets.only(top: 30) : EdgeInsets.zero,
-            child: InkWell(
-              borderRadius: BorderRadius.circular(Pad.pad8),
+            child: GestureDetector(
               onTap: widget.data.currentPlan == true
                   ? null
                   : () {
@@ -123,39 +122,69 @@ class _ViewPlanItemState extends State<ViewPlanItem> {
                       ),
                     ),
                     SpacerVertical(height: Pad.pad16),
-                    InkWell(
-                      borderRadius: BorderRadius.circular(8),
-                      onTap: () {
-                        openBenefit(widget.index);
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.only(right: 3),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Image.asset(
-                              _openIndex == widget.index
-                                  ? Images.arrowUP
-                                  : Images.arrowDOWN,
-                              height: 24,
-                              width: 24,
-                              color: ThemeColors.secondary100,
-                            ),
-                            Flexible(
-                              child: Padding(
-                                padding: const EdgeInsets.only(left: 8),
-                                child: Text(
-                                  widget.data.cardBtn ?? '',
-                                  style: styleBaseSemiBold(
-                                    fontSize: 14,
-                                    color: ThemeColors.secondary100,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        InkWell(
+                          borderRadius: BorderRadius.circular(8),
+                          onTap: () {
+                            openBenefit(widget.index);
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.only(right: 3),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Image.asset(
+                                  _openIndex == widget.index
+                                      ? Images.arrowUP
+                                      : Images.arrowDOWN,
+                                  height: 24,
+                                  width: 24,
+                                  color: ThemeColors.secondary100,
+                                ),
+                                Flexible(
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(left: 8),
+                                    child: Text(
+                                      widget.data.cardBtn ?? 'See Benefits',
+                                      style: styleBaseSemiBold(
+                                        fontSize: 14,
+                                        color: ThemeColors.secondary100,
+                                      ),
+                                    ),
                                   ),
                                 ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        Visibility(
+                          visible: widget.data.currentPlan != true,
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: manager.selectedPlan == widget.data
+                                  ? ThemeColors.secondary120
+                                  : Colors.transparent,
+                              shape: BoxShape.circle,
+                              border: Border.all(
+                                color: manager.selectedPlan == widget.data
+                                    ? Colors.transparent
+                                    : ThemeColors.neutral10,
+                                width: 2,
                               ),
                             ),
-                          ],
+                            padding: EdgeInsets.all(3),
+                            child: Icon(
+                              Icons.check,
+                              color: manager.selectedPlan == widget.data
+                                  ? Colors.white
+                                  : Colors.transparent,
+                              size: 24,
+                            ),
+                          ),
                         ),
-                      ),
+                      ],
                     ),
                     AnimatedSize(
                       duration: const Duration(milliseconds: 200),

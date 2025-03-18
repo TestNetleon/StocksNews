@@ -48,13 +48,19 @@ class HomeScannerItem extends StatelessWidget {
       child: Container(
         margin: EdgeInsets.only(bottom: 10),
         decoration: BoxDecoration(
-          color: Colors.white,
+          // color: Colors.white,
+          color: Theme.of(context).scaffoldBackgroundColor,
           borderRadius: BorderRadius.circular(8),
           boxShadow: [
             BoxShadow(
-              color: Color.fromARGB(28, 150, 171, 209),
+              color: Color(0x1C96ABD1),
               blurRadius: 10,
               offset: Offset(0, 10),
+            ),
+            BoxShadow(
+              color: Color(0x1C96ABD1),
+              blurRadius: 10,
+              offset: Offset(10, 10),
             ),
           ],
         ),
@@ -80,7 +86,8 @@ class HomeScannerItem extends StatelessWidget {
                         Visibility(
                           child: Text(
                             data.identifier ?? '',
-                            style: styleBaseBold(),
+                            // style: styleBaseBold(),
+                            style: Theme.of(context).textTheme.displayLarge,
                           ),
                         ),
                         Text(
@@ -102,40 +109,14 @@ class HomeScannerItem extends StatelessWidget {
                   padding: const EdgeInsets.only(top: 12, bottom: 4),
                   child: Text(
                     prePost ? '\$$postMarketPrice' : '\$$lastTrade',
-                    style: styleBaseBold(fontSize: 19),
+                    // style: styleBaseBold(fontSize: 19),
+                    style: Theme.of(context).textTheme.displayLarge,
                   ),
                 ),
               ),
               RichText(
                 text: TextSpan(
                   children: [
-                    // WidgetSpan(
-                    //   alignment: PlaceholderAlignment.middle,
-                    //   child: Padding(
-                    //     padding: const EdgeInsets.symmetric(horizontal: 4),
-                    //     child: prePost
-                    //         ? Image.asset(
-                    //             postMarketChangePer > 0
-                    //                 ? Images.trendingUP
-                    //                 : Images.trendingDOWN,
-                    //             height: 18,
-                    //             width: 18,
-                    //             color: postMarketChangePer >= 0
-                    //                 ? ThemeColors.accent
-                    //                 : ThemeColors.sos,
-                    //           )
-                    //         : Image.asset(
-                    //             perChange > 0
-                    //                 ? Images.trendingUP
-                    //                 : Images.trendingDOWN,
-                    //             height: 18,
-                    //             width: 18,
-                    //             color: perChange >= 0
-                    //                 ? ThemeColors.accent
-                    //                 : ThemeColors.sos,
-                    //           ),
-                    //   ),
-                    // ),
                     TextSpan(
                       text: prePost ? '\$$postMarketChange' : '\$$netChange',
                       style: styleBaseSemiBold(

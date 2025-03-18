@@ -14,6 +14,7 @@ import 'package:stocks_news_new/managers/stockDetail/stock.detail.dart';
 import 'package:stocks_news_new/managers/tools.dart';
 import 'package:stocks_news_new/modals/user_res.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
+import 'package:stocks_news_new/service/appsFlyer/service.dart';
 import 'package:stocks_news_new/ui/account/auth/login.dart';
 import 'package:stocks_news_new/ui/account/update/index.dart';
 import 'package:stocks_news_new/ui/base/toaster.dart';
@@ -36,7 +37,6 @@ import '../api/api_response.dart';
 import '../api/apis.dart';
 import '../api/image_service.dart';
 import '../database/preference.dart';
-import '../fcm/dynamic_links.service.dart';
 import '../models/delete.dart';
 import '../service/amplitude/service.dart';
 import '../service/braze/service.dart';
@@ -60,13 +60,17 @@ class UserManager extends ChangeNotifier {
   Future setUser(UserRes? user) async {
     if (user == null) return;
     _user = user;
+    shareUrl = user.referralUrl;
     Preference.saveUser(_user);
     updateShareUrl();
     notifyListeners();
   }
 
   Future updateShareUrl() async {
-    shareUri ??= await DynamicLinkService.instance.getDynamicLink();
+    if (shareUrl == null) {
+      AppsFlyerService.instance.createUserInvitationLink();
+    }
+    // shareUri ??= await DynamicLinkService.instance.getDynamicLink();
   }
 
   Future<bool> checkForUser() async {
@@ -74,6 +78,7 @@ class UserManager extends ChangeNotifier {
     final UserRes? tempUser = await Preference.getUser();
     if (tempUser != null) {
       _user = tempUser;
+      shareUrl = _user?.referralUrl;
       notifyListeners();
     }
     return _user != null;
@@ -107,6 +112,7 @@ class UserManager extends ChangeNotifier {
     UserManager manager = navigatorKey.currentContext!.read<UserManager>();
     await manager.askLoginScreen();
     if (manager.user == null) return;
+    Navigator.pop(navigatorKey.currentContext!);
     await Navigator.pushNamed(
       navigatorKey.currentContext!,
       UpdatePersonalDetailIndex.path,
@@ -116,6 +122,7 @@ class UserManager extends ChangeNotifier {
   Future navigateToAlerts() async {
     await askLoginScreen();
     if (_user == null) return;
+    Navigator.pop(navigatorKey.currentContext!);
     await Navigator.pushNamed(
       navigatorKey.currentContext!,
       AlertIndex.path,
@@ -125,18 +132,17 @@ class UserManager extends ChangeNotifier {
   Future navigateToWatchList() async {
     await askLoginScreen();
     if (_user == null) return;
-
+    Navigator.pop(navigatorKey.currentContext!);
     await Navigator.pushNamed(
       navigatorKey.currentContext!,
       WatchListIndex.path,
     );
   }
 
-  void navigateToMySubscription({bool viewPlans = false}) async {
+  void navigateToMySubscription({bool viewPlans = true}) async {
     await askLoginScreen();
-    if (_user == null) {
-      return;
-    }
+    if (_user == null) return;
+    Navigator.pop(navigatorKey.currentContext!);
     SubscriptionManager manager =
         navigatorKey.currentContext!.read<SubscriptionManager>();
     manager.startProcess(viewPlans: viewPlans);
@@ -144,9 +150,8 @@ class UserManager extends ChangeNotifier {
 
   void navigateToReferral() async {
     await askLoginScreen();
-    if (_user == null) {
-      return;
-    }
+    if (_user == null) return;
+    Navigator.pop(navigatorKey.currentContext!);
     await Navigator.pushNamed(
       navigatorKey.currentContext!,
       ReferralIndex.path,
@@ -155,39 +160,43 @@ class UserManager extends ChangeNotifier {
 
   void navigateToBillionaires() async {
     await askLoginScreen();
-    if (_user == null) {
-      return;
-    }
+    if (_user == null) return;
+    Navigator.pop(navigatorKey.currentContext!);
     Navigator.pushNamed(navigatorKey.currentContext!, BillionairesIndex.path);
   }
 
   void navigateToNotificationSettings() {
+    Navigator.pop(navigatorKey.currentContext!);
     Navigator.pushNamed(
         navigatorKey.currentContext!, NotificationSettings.path);
   }
 
   void navigateToNews() {
+    Navigator.pop(navigatorKey.currentContext!);
     Navigator.pushNamed(navigatorKey.currentContext!, CategoriesNewsIndex.path);
   }
 
   void navigateToBlogs() {
+    Navigator.pop(navigatorKey.currentContext!);
     Navigator.pushNamed(navigatorKey.currentContext!, BlogsIndex.path);
   }
 
   void navigateToFaq() {
+    Navigator.pop(navigatorKey.currentContext!);
     Navigator.pushNamed(navigatorKey.currentContext!, FaqIndex.path);
   }
 
   Future navigateToHelpDesk() async {
     askLoginScreen();
     if (_user == null) return;
+    Navigator.pop(navigatorKey.currentContext!);
     Navigator.pushNamed(navigatorKey.currentContext!, HelpDeskIndex.path);
   }
 
   Future navigateToFeedback() async {
     askLoginScreen();
     if (_user == null) return;
-
+    Navigator.pop(navigatorKey.currentContext!);
     Navigator.pushNamed(navigatorKey.currentContext!, FeedbackIndex.path);
   }
 
@@ -319,10 +328,12 @@ class UserManager extends ChangeNotifier {
         //set user
         _user = UserRes.fromJson(response.data);
         Preference.saveUser(response.data);
+        Preference.clearReferral();
         BrazeService.brazeUserEvent();
 
         //creating share link
-        shareUri = await DynamicLinkService.instance.getDynamicLink();
+        // shareUri = await DynamicLinkService.instance.getDynamicLink();
+        shareUrl = _user?.referralUrl;
 
         if (_user?.membership?.purchased != 1) {
           if (kDebugMode) {
@@ -400,6 +411,9 @@ class UserManager extends ChangeNotifier {
     String? email,
     String? OTP,
     String? affiliateStatus,
+    String? referralUrl,
+    showProgress = true,
+    showSuccess = true,
   }) async {
     MultipartFile? multipartFile;
     if (image != null) {
@@ -436,6 +450,9 @@ class UserManager extends ChangeNotifier {
     if (phoneCode != null && phoneCode.isNotEmpty) {
       request.fields.add(MapEntry('phone_code', phoneCode));
     }
+    if (referralUrl != null && referralUrl.isNotEmpty) {
+      request.fields.add(MapEntry('referral_url', referralUrl));
+    }
     if (email != null && email.isNotEmpty && OTP != null && OTP.isNotEmpty) {
       request.fields.add(MapEntry('email', email));
       request.fields.add(MapEntry('otp', OTP));
@@ -450,7 +467,7 @@ class UserManager extends ChangeNotifier {
           : await apiRequest(
               url: Apis.updateProfile,
               formData: request,
-              showProgress: true,
+              showProgress: showProgress,
             );
       if (response.status) {
         if (image != null) {
@@ -464,13 +481,16 @@ class UserManager extends ChangeNotifier {
             phone: phone,
             email: email,
             affiliateStatus: int.tryParse(affiliateStatus ?? "0") ?? 0,
+            referralUrl: referralUrl,
           );
         }
       }
-      TopSnackbar.show(
-        message: response.message ?? '',
-        type: response.status ? ToasterEnum.success : ToasterEnum.error,
-      );
+      if (showSuccess) {
+        TopSnackbar.show(
+          message: response.message ?? '',
+          type: response.status ? ToasterEnum.success : ToasterEnum.error,
+        );
+      }
 
       return ApiResponse(status: response.status);
     } catch (e) {
@@ -603,6 +623,7 @@ class UserManager extends ChangeNotifier {
     }
     if (referralUrl != null && referralUrl != '') {
       _user?.referralUrl = referralUrl;
+      shareUrl = referralUrl;
     }
     if (affiliateStatus != null) {
       _user?.affiliateStatus = affiliateStatus;

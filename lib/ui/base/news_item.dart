@@ -23,7 +23,6 @@ class BaseNewsItem extends StatelessWidget {
             }
           : null,
       child: Container(
-        color: Colors.white,
         margin: EdgeInsets.only(bottom: Pad.pad24),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -38,10 +37,14 @@ class BaseNewsItem extends StatelessWidget {
               padding: const EdgeInsets.only(top: Pad.pad10),
               child: Text(
                 data.title ?? '',
-                style: styleBaseSemiBold(
-                  fontSize: 22,
-                  height: 1.3,
-                ),
+                // style: styleBaseSemiBold(
+                //   fontSize: 22,
+                //   height: 1.3,
+                // ),
+                style: Theme.of(context).textTheme.displayLarge?.copyWith(
+                      fontSize: 22,
+                      height: 1.3,
+                    ),
               ),
             ),
             Padding(

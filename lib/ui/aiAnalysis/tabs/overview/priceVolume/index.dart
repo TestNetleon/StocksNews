@@ -105,7 +105,7 @@ class _AIPriceVolumeState extends State<AIPriceVolume>
         padding: EdgeInsets.only(bottom: 20),
         child: Text(
           "${manager.errorPV}",
-          style: stylePTSansRegular(),
+          style: styleBaseRegular(),
         ),
       );
     }

@@ -37,14 +37,18 @@ class SDRange extends StatelessWidget {
         children: [
           Text(
             title,
-            style: styleBaseRegular(fontSize: 12, color: ThemeColors.neutral80),
+            style: styleBaseRegular(fontSize: 12, color: ThemeColors.neutral20),
           ),
           const SpacerVertical(height: 16),
           Row(
             children: [
               Text(
                 startString,
-                style: styleBaseSemiBold(fontSize: 12),
+                // style: styleBaseSemiBold(fontSize: 12),
+                style: Theme.of(context)
+                    .textTheme
+                    .labelMedium
+                    ?.copyWith(fontSize: 12),
               ),
               const SpacerHorizontal(width: 8),
               Expanded(
@@ -83,7 +87,11 @@ class SDRange extends StatelessWidget {
               const SpacerHorizontal(width: 8),
               Text(
                 endString,
-                style: styleBaseSemiBold(fontSize: 12),
+                // style: styleBaseSemiBold(fontSize: 12),
+                style: Theme.of(context)
+                    .textTheme
+                    .labelMedium
+                    ?.copyWith(fontSize: 12),
               ),
             ],
           ),

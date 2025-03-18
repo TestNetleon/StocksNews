@@ -21,14 +21,13 @@ Future confirmationPopUp({
             visible: points != null,
             child: Text(
               "$points",
-              style:
-                  stylePTSansBold(color: ThemeColors.background, fontSize: 60),
+              style: styleBaseBold(color: ThemeColors.background, fontSize: 60),
             ),
           ),
           SpacerVertical(height: 2),
           Text(
             points != null && points > 1 ? "Points" : "Point",
-            style: stylePTSansRegular(
+            style: styleBaseRegular(
               color: ThemeColors.background,
               fontSize: 25,
               height: 0.8,
@@ -42,7 +41,7 @@ Future confirmationPopUp({
                   ? message.toLowerCase()
                   : "required to unlock this.",
               textAlign: TextAlign.center,
-              style: stylePTSansRegular(
+              style: styleBaseRegular(
                 fontSize: 16,
                 color: ThemeColors.background,
               ),

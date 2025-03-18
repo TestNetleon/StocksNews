@@ -237,7 +237,7 @@ class _ScannerFiltersState extends State<ScannerFilters> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // Text("Symbol Name", style: styleGeorgiaBold()),
+                    // Text("Symbol Name", style: styleBaseBold()),
                     const SpacerVertical(height: 5),
                     BaseTextField(
                       controller: _symbolCompany,
@@ -308,7 +308,7 @@ class _ScannerFiltersState extends State<ScannerFilters> {
                           size: 23,
                           color: ThemeColors.background,
                         ),
-                        // style: styleGeorgiaBold(
+                        // style: styleBaseBold(
                         //   fontSize: 15,
                         //   color: ThemeColors.background,
                         // ),

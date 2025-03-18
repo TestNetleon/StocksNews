@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/models/market/market_res.dart';
 import 'package:stocks_news_new/models/stockDetail/key_stats.dart';
+import 'package:stocks_news_new/service/braze/service.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import '../../api/api_requester.dart';
 import '../../api/api_response.dart';
@@ -293,6 +293,11 @@ class SDManager extends ChangeNotifier {
       if (response.status) {
         _data = stocksDetailResFromJson(jsonEncode(response.data));
         onTabChange(0);
+        BrazeService.eventContentView(
+          screenType: 'stock_analysis',
+          source: _data?.tickerDetail?.shareUrl ?? '',
+        );
+
         _error = null;
       } else {
         _data = null;
@@ -385,7 +390,6 @@ class SDManager extends ChangeNotifier {
   }) {
     // List<HistoricalChartRes> reversedData =
     //     historicalChartData.reversed.toList();
-
     List<FlSpot> spots = [];
 
     for (int i = 0; i < reversedData.length; i++) {
@@ -485,16 +489,10 @@ class SDManager extends ChangeNotifier {
       gridData: FlGridData(
         show: true,
         getDrawingHorizontalLine: (value) {
-          return FlLine(
-            color: ThemeColors.white,
-            strokeWidth: 1,
-          );
+          return FlLine(color: Colors.transparent);
         },
         getDrawingVerticalLine: (value) {
-          return FlLine(
-            color: ThemeColors.white,
-            strokeWidth: 1,
-          );
+          return FlLine(color: Colors.transparent);
         },
       ),
       minX: 0,

@@ -7,7 +7,7 @@ import 'package:stocks_news_new/ui/base/heading.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
-import 'package:stocks_news_new/widgets/base_ui_container.dart';
+import 'package:stocks_news_new/widgets/custom/base_loader_container.dart';
 import 'package:stocks_news_new/widgets/loading.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'widgets/revenue_chart.dart';
@@ -56,14 +56,15 @@ class _AIFinancialState extends State<AIFinancial>
           SpacerVertical(height: 10),
 
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal:Pad.pad16),
+            padding: const EdgeInsets.symmetric(horizontal: Pad.pad16),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: List.generate(
                 manager.periodMenu.length,
                 (index) {
                   return Padding(
-                    padding: const EdgeInsets.only(right: Pad.pad16, top: Pad.pad10),
+                    padding:
+                        const EdgeInsets.only(right: Pad.pad16, top: Pad.pad10),
                     child: GestureDetector(
                       onTap: () {
                         manager.onChangeFinancial(periodIndex: index);
@@ -85,7 +86,7 @@ class _AIFinancialState extends State<AIFinancial>
                         child: Center(
                           child: Text(
                             index == 0 ? 'Yearly' : 'Quarterly',
-                            style: stylePTSansBold(
+                            style: styleBaseBold(
                               fontSize: 14,
                               color: manager.selectedPeriodIndex == index
                                   ? ThemeColors.white
@@ -105,7 +106,7 @@ class _AIFinancialState extends State<AIFinancial>
           BaseBorderContainer(
             innerPadding: EdgeInsets.all(5),
             padding: EdgeInsets.symmetric(horizontal: Pad.pad16),
-            child: BaseUiContainer(
+            child: BaseLoaderContainer(
               hasData: manager.financialsData != null,
               isLoading: manager.isLoadingFinancials,
               error: manager.errorFinancials,
@@ -128,7 +129,7 @@ class _AIFinancialState extends State<AIFinancial>
           // SpacerVertical(height: 15),
           // Text(
           //   'all values are in \$',
-          //   style: stylePTSansRegular(fontSize: 12.0, color: Colors.white),
+          //   style: styleBaseRegular(fontSize: 12.0, color: Colors.white),
           // ),
           SpacerVertical(height: 10),
 
@@ -138,7 +139,7 @@ class _AIFinancialState extends State<AIFinancial>
                 manager.data?.usdText != null && manager.data?.usdText != '',
             child: Text(
               manager.data?.usdText ?? 'All values are in USD',
-              style: stylePTSansRegular(color: ThemeColors.neutral80),
+              style: styleBaseRegular(color: ThemeColors.neutral80),
             ),
           ),
           SpacerVertical(height: 15),

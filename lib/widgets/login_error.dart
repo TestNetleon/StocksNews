@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/theme_button_small.dart';
@@ -44,7 +45,10 @@ class LoginError extends StatelessWidget {
                     padding: const EdgeInsets.only(bottom: 5),
                     child: Text(
                       title ?? "",
-                      style: stylePTSansBold(fontSize: 25),
+                      style: styleBaseBold(
+                        fontSize: 25,
+                        color: ThemeColors.black,
+                      ),
                       textAlign: TextAlign.center,
                     ),
                   ),
@@ -53,7 +57,7 @@ class LoginError extends StatelessWidget {
                   // visible: title != null && title != '',
                   child: Text(
                     "This page is for registered users. Please log in or sign up to access.",
-                    style: stylePTSansRegular(fontSize: 16),
+                    style: styleBaseRegular(fontSize: 16),
                     textAlign: TextAlign.center,
                   ),
                 ),
@@ -84,7 +88,7 @@ class LoginError extends StatelessWidget {
                 //         },
                 //         child: Text(
                 //           "Don't have an account? Sign up ",
-                //           style: stylePTSansRegular(
+                //           style: styleBaseRegular(
                 //             fontSize: 18,
                 //             color: ThemeColors.accent,
                 //           ),

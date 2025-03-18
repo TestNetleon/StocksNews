@@ -323,18 +323,18 @@
 //                     children: [
 //                       // Text(
 //                       //   provider.extra?.referLogin?.title ?? "Verify Identity",
-//                       //   style: stylePTSansBold(fontSize: 24),
+//                       //   style: styleBaseBold(fontSize: 24),
 //                       // ),
 //                       Text(
 //                         // provider.extra?.referLogin?.title ??
 //                         "Complete Profile",
-//                         style: stylePTSansBold(fontSize: 24),
+//                         style: styleBaseBold(fontSize: 24),
 //                       ),
 //                       const SpacerVertical(height: 4),
 //                       Text(
 //                         // provider.extra?.referLogin?.subTitle ??
 //                         'You must complete your profile to continue and get benefits of login, affiliate and other activities.',
-//                         style: stylePTSansRegular(color: Colors.grey),
+//                         style: styleBaseRegular(color: Colors.grey),
 //                       ),
 //                       const SpacerVertical(height: 30),
 //                       Padding(
@@ -344,7 +344,7 @@
 //                       Padding(
 //                         padding: const EdgeInsets.only(bottom: 15),
 //                         child: ThemeInputField(
-//                           style: stylePTSansBold(
+//                           style: styleBaseBold(
 //                               color: Colors.black, fontSize: 18),
 //                           controller: name,
 //                           fillColor: user?.name == '' || user?.name == null
@@ -366,7 +366,7 @@
 //                       Padding(
 //                         padding: const EdgeInsets.only(bottom: 15),
 //                         child: ThemeInputField(
-//                           style: stylePTSansBold(
+//                           style: styleBaseBold(
 //                             color: Colors.black,
 //                             fontSize: 18,
 //                           ),
@@ -456,7 +456,7 @@
 //                       //                 //   },
 //                       //                 //   initialSelection: locale,
 //                       //                 //   showCountryOnly: false,
-//                       //                 //   textStyle: stylePTSansBold(
+//                       //                 //   textStyle: styleBaseBold(
 //                       //                 //     color: Colors.black,
 //                       //                 //     fontSize: 18,
 //                       //                 //   ),
@@ -469,7 +469,7 @@
 //                       //                 //   // builder: (CountryCode? country) {
 //                       //                 //   //   log("Selected Log => ${country?.code}");
 //                       //                 //   // },
-//                       //                 //   dialogTextStyle: styleGeorgiaBold(),
+//                       //                 //   dialogTextStyle: styleBaseBold(),
 //                       //                 //   barrierColor: Colors.black26,
 //                       //                 //   searchDecoration: InputDecoration(
 //                       //                 //     iconColor: Colors.white,
@@ -479,7 +479,7 @@
 //                       //                 //       size: 22,
 //                       //                 //     ),
 //                       //                 //     filled: true,
-//                       //                 //     hintStyle: stylePTSansRegular(
+//                       //                 //     hintStyle: styleBaseRegular(
 //                       //                 //       color: Colors.grey,
 //                       //                 //     ),
 //                       //                 //     hintText: "Search country",
@@ -502,7 +502,7 @@
 //                       //                 // )
 //                       //                 // Text(
 //                       //                 //   "+1",
-//                       //                 //   style: stylePTSansBold(
+//                       //                 //   style: styleBaseBold(
 //                       //                 //     color: user?.phone == '' ||
 //                       //                 //             user?.phone == null
 //                       //                 //         ? ThemeColors.greyText
@@ -513,7 +513,7 @@
 //                       //                 ),
 //                       //             // Text(
 //                       //             //   "+1",
-//                       //             //   style: stylePTSansBold(
+//                       //             //   style: styleBaseBold(
 //                       //             //     color: user?.phone == '' ||
 //                       //             //             user?.phone == null
 //                       //             //         ? ThemeColors.greyText
@@ -533,7 +533,7 @@
 //                       //                         255, 188, 188, 188),
 //                       //             editable:
 //                       //                 user?.phone == '' || user?.phone == null,
-//                       //             style: stylePTSansBold(
+//                       //             style: styleBaseBold(
 //                       //               color: Colors.black,
 //                       //               fontSize: 18,
 //                       //             ),
@@ -562,7 +562,7 @@
 //                           HtmlWidget(
 //                             // provider.extra?.referLogin?.note ??
 //                             'Note: A verification link will be send to your email address. You will start receiving email about your stock alerts and much more once you verify you email address.',
-//                             textStyle: stylePTSansRegular(color: Colors.grey),
+//                             textStyle: styleBaseRegular(color: Colors.grey),
 //                           ),
 //                           const SpacerVertical(height: Dimen.itemSpacing),
 //                         ],
@@ -608,7 +608,7 @@
 //                                 // provider.extra?.verifyIdentity ??
 //                                 "By joining you do agree with our affiliate and membership's terms and conditions ",
 //                                 textStyle:
-//                                     stylePTSansRegular(color: Colors.white),
+//                                     styleBaseRegular(color: Colors.white),
 //                               ),
 //                             ),
 //                           ],

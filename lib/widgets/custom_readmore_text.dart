@@ -5,12 +5,12 @@ import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
 
 class CustomReadMoreText extends StatefulWidget {
   final String? text;
-  final Color textColor;
+  final Color? textColor;
 
   const CustomReadMoreText({
     super.key,
     required this.text,
-    this.textColor = ThemeColors.white,
+    this.textColor,
   });
 
   @override
@@ -31,10 +31,10 @@ class _CustomReadMoreTextState extends State<CustomReadMoreText> {
     final textPainter = TextPainter(
       text: TextSpan(
         text: widget.text,
-        style: stylePTSansRegular(
+        style: styleBaseRegular(
           height: 1.3,
           fontSize: 13,
-          color: widget.textColor,
+          color: widget.textColor ?? ThemeColors.white,
         ),
       ),
       maxLines: 2,
@@ -56,10 +56,10 @@ class _CustomReadMoreTextState extends State<CustomReadMoreText> {
             child: RichText(
           text: TextSpan(
             text: widget.text,
-            style: stylePTSansRegular(
+            style: styleBaseRegular(
               height: 1.3,
               fontSize: 13,
-              color: widget.textColor,
+              color: widget.textColor ?? ThemeColors.white,
             ),
           ),
           maxLines: 2,
@@ -71,7 +71,7 @@ class _CustomReadMoreTextState extends State<CustomReadMoreText> {
             onTap: () => _showFullTextDialog(context),
             child: Text(
               'Read more',
-              style: stylePTSansRegular(
+              style: styleBaseRegular(
                 color: ThemeColors.accent,
                 fontSize: 12,
                 height: 1.3,

@@ -26,31 +26,32 @@ class FavItem extends StatelessWidget {
           Visibility(
             visible: item?.deleteIcon != null && item?.deleteIcon != '',
             child: GestureDetector(
-              onTap: (){
-                manager.requestRemoveToFav(item?.twitterName??"",from: 1);
+              onTap: () {
+                manager.requestRemoveToFav(item?.twitterName ?? "", from: 1);
               },
               child: Align(
                 alignment: Alignment.centerRight,
                 child: SizedBox(
                   width: 20,
                   height: 20,
-                  child: ThemeImageView(url: item?.deleteIcon ?? "",fit: BoxFit.contain,),
+                  child: ThemeImageView(
+                    url: item?.deleteIcon ?? "",
+                    fit: BoxFit.contain,
+                  ),
                 ),
               ),
             ),
           ),
           Visibility(
             visible: item?.designation != null && item?.designation != '',
-            child:  Text(
+            child: Text(
               "${item?.designation}",
-              style: stylePTSansBold(fontSize: 16,color: ThemeColors.splashBG),
+              style: styleBaseBold(fontSize: 16, color: ThemeColors.splashBG),
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
             ),
           ),
-          SpacerVertical(
-              height: Pad.pad10
-          ),
+          SpacerVertical(height: Pad.pad10),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -58,9 +59,10 @@ class FavItem extends StatelessWidget {
               Expanded(
                 child: Visibility(
                   visible: item?.twitterName != null && item?.twitterName != '',
-                  child:  Text(
+                  child: Text(
                     "- ${item?.twitterName}",
-                    style: stylePTSansRegular(fontSize: 16,color: ThemeColors.splashBG),
+                    style: styleBaseRegular(
+                        fontSize: 16, color: ThemeColors.splashBG),
                   ),
                 ),
               ),
@@ -79,7 +81,6 @@ class FavItem extends StatelessWidget {
               ),
             ],
           ),
-
         ],
       ),
     );

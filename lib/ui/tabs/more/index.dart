@@ -8,6 +8,9 @@ import 'package:stocks_news_new/ui/base/heading.dart';
 import 'package:stocks_news_new/ui/base/scaffold.dart';
 import 'package:stocks_news_new/ui/legal/index.dart';
 import 'package:stocks_news_new/ui/tabs/more/more_item.dart';
+import 'package:stocks_news_new/ui/tabs/more/morningstarReport/index.dart';
+import 'package:stocks_news_new/ui/theme/manager.dart';
+import 'package:stocks_news_new/ui/theme/toggle.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -40,11 +43,6 @@ class MoreIndex extends StatelessWidget {
               padding: EdgeInsets.all(Pad.pad16),
               child: Column(
                 children: [
-                  // Image.asset(
-                  //   Images.userPlaceholderNew,
-                  //   width: 64,
-                  //   height: 64,
-                  // ),
                   Container(
                     margin: EdgeInsets.only(right: 10, bottom: 0),
                     child: user?.image == null || user?.image == ''
@@ -85,23 +83,35 @@ class MoreIndex extends StatelessWidget {
                   SpacerVertical(height: Pad.pad8),
                   Text(
                     user?.name ?? 'Welcome Guest',
-                    style: styleBaseBold(fontSize: 25, height: 1.5),
+                    // style: styleBaseBold(fontSize: 25, height: 1.5),
+                    style: Theme.of(context)
+                        .textTheme
+                        .displayLarge
+                        ?.copyWith(fontSize: 25, height: 1.5),
                   ),
                   // SpacerVertical(height: Pad.pad5),
                   Visibility(
                     visible: user?.email != null && user?.email != '',
                     child: Text(
                       user?.email ?? '',
-                      style: styleBaseRegular(fontSize: 16, height: 1.5),
+                      // style: styleBaseRegular(fontSize: 16, height: 1.5),
+                      style: Theme.of(context)
+                          .textTheme
+                          .displaySmall
+                          ?.copyWith(height: 1.5),
                     ),
-                  )
+                  ),
                 ],
               ),
             ),
             BaseHeading(
               margin: EdgeInsets.only(left: Pad.pad16, top: Pad.pad8),
               title: "My Account",
-              titleStyle: styleBaseBold(fontSize: 20),
+              // titleStyle: styleBaseBold(fontSize: 20),
+              titleStyle: Theme.of(context)
+                  .textTheme
+                  .displayLarge
+                  ?.copyWith(fontSize: 20),
             ),
             MoreItem(
               icon: Images.morePersonalDetails,
@@ -122,7 +132,7 @@ class MoreIndex extends StatelessWidget {
               icon: Images.moreMySubscription,
               label: "My Subscription",
               onTap: () {
-                manager.navigateToMySubscription();
+                manager.navigateToMySubscription(viewPlans: false);
               },
             ),
             if(homeRes?.showCrypto==true)
@@ -131,6 +141,13 @@ class MoreIndex extends StatelessWidget {
               label: "Cryptocurrencies",
               onTap: () {
                 manager.navigateToBillionaires();
+                },
+              ),
+            MoreItem(
+              icon: Images.msReport,
+              label: "MORNINGSTAR Reports",
+              onTap: () {
+                Navigator.pushNamed(context, MorningStarReportsIndex.path);
               },
             ),
             MoreItem(
@@ -143,7 +160,11 @@ class MoreIndex extends StatelessWidget {
             BaseHeading(
               margin: EdgeInsets.only(left: Pad.pad16, top: Pad.pad20),
               title: "Resources",
-              titleStyle: styleBaseBold(fontSize: 20),
+              // titleStyle: styleBaseBold(fontSize: 20),
+              titleStyle: Theme.of(context)
+                  .textTheme
+                  .displayLarge
+                  ?.copyWith(fontSize: 20),
             ),
             MoreItem(
               icon: Images.watchlist,
@@ -157,6 +178,22 @@ class MoreIndex extends StatelessWidget {
               label: "Blogs",
               onTap: () {
                 manager.navigateToBlogs();
+              },
+            ),
+            BaseHeading(
+              margin: EdgeInsets.only(left: Pad.pad16, top: Pad.pad20),
+              title: "Theme",
+              // titleStyle: styleBaseBold(fontSize: 20),
+              titleStyle: Theme.of(context)
+                  .textTheme
+                  .displayLarge
+                  ?.copyWith(fontSize: 20),
+            ),
+            Consumer<ThemeManager>(
+              builder: (context, value, child) {
+                return ThemeToggleSwitch(
+                  onToggle: value.toggleTheme,
+                );
               },
             ),
             // BaseHeading(
@@ -174,7 +211,11 @@ class MoreIndex extends StatelessWidget {
             BaseHeading(
               margin: EdgeInsets.only(left: Pad.pad16, top: Pad.pad20),
               title: "Help",
-              titleStyle: styleBaseBold(fontSize: 20),
+              // titleStyle: styleBaseBold(fontSize: 20),
+              titleStyle: Theme.of(context)
+                  .textTheme
+                  .displayLarge
+                  ?.copyWith(fontSize: 20),
             ),
             MoreItem(
               icon: Images.moreFaqs,

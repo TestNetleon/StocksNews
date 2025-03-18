@@ -13,10 +13,10 @@ import 'package:stocks_news_new/ui/tabs/tools/simulator/screens/tradingWithTypes
 import 'package:stocks_news_new/ui/tabs/tools/simulator/screens/tradingWithTypes/widgets/buy_order_item.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
-import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/cache_network_image.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
+import 'package:stocks_news_new/utils/theme.dart';
 
 
 class ActionInNbs extends StatefulWidget {
@@ -137,12 +137,12 @@ class _ActionInNbsState extends State<ActionInNbs> {
                     children: [
                       Text(
                         '${widget.item?.symbol}',
-                        style: styleGeorgiaBold(
+                        style: styleBaseBold(
                             color: ThemeColors.splashBG, fontSize: 16),
                       ),
                       Text(
                         '${widget.item?.name}',
-                        style: styleGeorgiaRegular(
+                        style: styleBaseRegular(
                             color: ThemeColors.neutral40, fontSize: 14),
                       ),
                     ],
@@ -167,7 +167,7 @@ class _ActionInNbsState extends State<ActionInNbs> {
                     child: Text(
                     "Stock Overview",
                     textAlign: TextAlign.center,
-                    style:stylePTSansBold(fontSize: 14,color: ThemeColors.white),
+                    style:styleBaseBold(fontSize: 14,color: ThemeColors.white),
                     )),
                 )
               ],
@@ -180,7 +180,7 @@ class _ActionInNbsState extends State<ActionInNbs> {
             SpacerVertical(height: Pad.pad5),
             Text(
               "Regular orders",
-              style: stylePTSansBold(
+              style: styleBaseBold(
                 fontSize: 18,
                 color: ThemeColors.black,
               ),
@@ -259,7 +259,7 @@ class _ActionInNbsState extends State<ActionInNbs> {
                   true,
               child: Text(
                 "Conditional orders",
-                style: stylePTSansBold(
+                style: styleBaseBold(
                   fontSize: 18,
                   color: ThemeColors.black,
                 ),

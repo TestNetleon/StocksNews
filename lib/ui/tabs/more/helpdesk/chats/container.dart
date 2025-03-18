@@ -6,7 +6,6 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/managers/helpdesk.dart';
 import 'package:stocks_news_new/models/helpdesk_chat_res.dart';
-import 'package:stocks_news_new/screens/myAccount/widgets/select_type.dart';
 import 'package:stocks_news_new/ui/base/bottom_sheet.dart';
 import 'package:stocks_news_new/ui/tabs/more/helpdesk/chats/item.dart';
 import 'package:stocks_news_new/utils/colors.dart';
@@ -17,6 +16,8 @@ import 'package:stocks_news_new/widgets/custom/base_loader_container.dart';
 import 'package:stocks_news_new/widgets/custom/refresh_indicator.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/theme_input_field.dart';
+
+import 'image_type.dart';
 
 class AllChatNewListing extends StatefulWidget {
   final String ticketId;
@@ -54,9 +55,9 @@ class _AllChatNewListingState extends State<AllChatNewListing> {
     BaseBottomSheet().bottomSheet(
         barrierColor: ThemeColors.neutral5.withValues(alpha: 0.7),
         child: MyAccountImageType(
-      onCamera: () => _pickImage(source: ImageSource.camera),
-      onGallery: () => _pickImage(),
-    ));
+          onCamera: () => _pickImage(source: ImageSource.camera),
+          onGallery: () => _pickImage(),
+        ));
   }
 
   Future _pickImage({ImageSource? source}) async {
@@ -108,7 +109,8 @@ class _AllChatNewListingState extends State<AllChatNewListing> {
     NewHelpDeskManager manager = context.watch<NewHelpDeskManager>();
     return Column(
       children: [
-        manager.chatData?.chatRes?.logs?.isEmpty == true && manager.chatData == null
+        manager.chatData?.chatRes?.logs?.isEmpty == true &&
+                manager.chatData == null
             ? const SizedBox()
             : Expanded(
                 child: BaseLoaderContainer(
@@ -119,46 +121,48 @@ class _AllChatNewListingState extends State<AllChatNewListing> {
                   showPreparingText: true,
                   onRefresh: _onTap,
                   child: CommonRefreshIndicator(
-                    onRefresh: () async => _onTap(),
-                    child: Column(
-                      children: [
-                        Visibility(
-                          visible: manager.chatData?.chatRes?.subject != null &&
-                              manager.chatData?.chatRes?.subject != '',
-                          child: Container(
-                            margin: const EdgeInsets.only(top: 20),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(30),
-                              color: ThemeColors.splashBG,
-                            ),
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 10, horizontal: 15),
-                            child: Text(
-                              manager.chatData?.chatRes?.subject ?? "",
-                              style: styleGeorgiaBold(
-                                  color: Colors.white, fontSize: 18),
+                      onRefresh: () async => _onTap(),
+                      child: Column(
+                        children: [
+                          Visibility(
+                            visible:
+                                manager.chatData?.chatRes?.subject != null &&
+                                    manager.chatData?.chatRes?.subject != '',
+                            child: Container(
+                              margin: const EdgeInsets.only(top: 20),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(30),
+                                color: ThemeColors.splashBG,
+                              ),
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 10, horizontal: 15),
+                              child: Text(
+                                manager.chatData?.chatRes?.subject ?? "",
+                                style: styleBaseBold(
+                                    color: Colors.white, fontSize: 18),
+                              ),
                             ),
                           ),
-                        ),
-                        const SpacerVertical(),
-                        Expanded(
-                          child: ListView.builder(
-                            padding: EdgeInsets.zero,
-                            shrinkWrap: true,
-                            //physics: const NeverScrollableScrollPhysics(),
-                            itemCount: manager.chatData?.chatRes?.logs?.length,
-                            itemBuilder: (context, index) {
-                              Log? logs = manager.chatData?.chatRes?.logs?[index];
-                              if (logs == null) {
-                                return SizedBox();
-                              }
-                              return HelpDeskAllChatsItemNew(logs: logs);
-                            },
+                          const SpacerVertical(),
+                          Expanded(
+                            child: ListView.builder(
+                              padding: EdgeInsets.zero,
+                              shrinkWrap: true,
+                              //physics: const NeverScrollableScrollPhysics(),
+                              itemCount:
+                                  manager.chatData?.chatRes?.logs?.length,
+                              itemBuilder: (context, index) {
+                                Log? logs =
+                                    manager.chatData?.chatRes?.logs?[index];
+                                if (logs == null) {
+                                  return SizedBox();
+                                }
+                                return HelpDeskAllChatsItemNew(logs: logs);
+                              },
+                            ),
                           ),
-                        ),
-                      ],
-                    )
-                  ),
+                        ],
+                      )),
                 ),
               ),
         if (manager.chatData?.chatRes?.logs != null &&
@@ -176,14 +180,16 @@ class _AllChatNewListingState extends State<AllChatNewListing> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Visibility(
-                            visible: manager.chatData?.chatRes?.closeMsg != null &&
-                                show &&
-                                !manager.isLoading,
+                            visible:
+                                manager.chatData?.chatRes?.closeMsg != null &&
+                                    show &&
+                                    !manager.isLoading,
                             child: Padding(
                               padding: const EdgeInsets.only(bottom: 10),
                               child: Text(
                                 manager.chatData?.chatRes?.closeMsg ?? "",
-                                style: stylePTSansBold(color: ThemeColors.error120),
+                                style:
+                                    styleBaseBold(color: ThemeColors.error120),
                               ),
                             ),
                           ),
@@ -210,7 +216,7 @@ class _AllChatNewListingState extends State<AllChatNewListing> {
                                     _image = null;
                                     setState(() {});
                                   },
-                                  child: const CircleAvatar(
+                                  child: CircleAvatar(
                                     radius: 11,
                                     backgroundColor: ThemeColors.error120,
                                     child: Icon(
@@ -228,7 +234,8 @@ class _AllChatNewListingState extends State<AllChatNewListing> {
                               alignment: Alignment.centerRight,
                               children: [
                                 ThemeInputField(
-                                  contentPadding: const EdgeInsets.fromLTRB(10, 10, 80, 10),
+                                  contentPadding:
+                                      const EdgeInsets.fromLTRB(10, 10, 80, 10),
                                   controller: controller,
                                   placeholder: "Message",
                                   keyboardType: TextInputType.multiline,

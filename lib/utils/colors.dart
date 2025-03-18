@@ -117,54 +117,112 @@ class ThemeColors {
   static const secondary10 = Color(0xFFE8E8FA);
 
   //Neutral
-  static const neutral80 = Color(0xFF465F8C);
-  static const neutral60 = Color(0xFF59719B);
-  static const neutral40 = Color(0xFF6E85AE);
-  static const neutral20 = Color(0xFF98A7C2);
-  static const neutral10 = Color(0xFFC0C9DB);
-  static const neutral5 = Color(0xFFF0F2F6);
-  static const neutral6 = Color(0xFFCCCCCC);
-  static const neutral7 = Color(0xFF243D4C);
-  static const neutral8 = Color(0xFF34373C);
-  static const neutral9 = Color(0xFFF9FDFB);
+  static Color neutral80 = Color(0xFF465F8C);
+  static Color neutral60 = Color(0xFF59719B);
+  static Color neutral40 = Color(0xFF6E85AE);
+  static Color neutral20 = Color(0xFF98A7C2);
+  static Color neutral10 = Color(0xFFC0C9DB);
+  static Color neutral5 = Color(0xFFF0F2F6);
+  static Color neutral6 = Color(0xFFCCCCCC);
+  // static Color neutral7 = Color(0xFF243D4C);
+  static Color neutral8 = Color(0xFF34373C);
+  static Color neutral9 = Color(0xFFF9FDFB);
 
   // Category
 
-  static const category100 = Color(0xFF2784E1);
+  static Color category100 = Color(0xFF2784E1);
 
   //OTHER
-  static const black = Color(0xFF282B41);
-  static const white = Color(0xFFFFFFFF);
-  static const splashBG = Color(0xFF012054);
-  static const colour66 = Color(0xFF666666);
-  static const colourBA = Color(0xFFBABABA);
-  static const disabledBtn = Color(0xFF3C3C43);
-  static const colour8d = Color(0xFF34928d);
+  static Color black = Color(0xFF282B41);
+  static Color white = Color(0xFFFFFFFF);
+  static Color splashBG = Color(0xFF012054);
+  static Color colour66 = Color(0xFF666666);
+  static Color colourBA = Color(0xFFBABABA);
+  static Color disabledBtn = Color(0xFF3C3C43);
+  static Color colour8d = Color(0xFF34928d);
 
   //CATEGORY
-  static const lightGrey = Color(0xFFF0F2F6);
-  static const gray2 = Color(0xFFAEAEB2);
+  static Color lightGrey = Color(0xFFF0F2F6);
+  static Color gray2 = Color(0xFFAEAEB2);
 
   //FEEDBACK
-  static const success120 = Color(0xFF0AA870);
-  static const success100 = Color(0xFF47C189);
-  static const success = Color(0xFF47C189);
-  static const success10 = Color(0xFFEFFBF5);
+  static Color success120 = Color(0xFF0AA870);
+  static Color success100 = Color(0xFF47C189);
+  static Color success = Color(0xFF47C189);
+  static Color success10 = Color(0xFFEFFBF5);
 
-  static const warning120 = Color(0xFFEABF3B);
-  static const warning = Color(0xFFF6C941);
-  static const warning10 = Color(0xFFFDF4D9);
+  static Color warning120 = Color(0xFFEABF3B);
+  static Color warning = Color(0xFFF6C941);
+  static Color warning10 = Color(0xFFFDF4D9);
 
-  static const error120 = Color(0xFFFF4D4C);
-  static const error = Color(0xFFFC7272);
-  static const error10 = Color(0xFFFFF1F1);
+  static Color error120 = Color(0xFFFF4D4C);
+  static Color error = Color(0xFFFC7272);
+  static Color error10 = Color(0xFFFFF1F1);
 
-  static const orange120 = Color(0xFFFF7A00);
-  static const orange = Color(0xFFFFA500);
-  static const orange10 = Color(0xFFFFF4E5);
+  static Color orange120 = Color(0xFFFF7A00);
+  static Color orange = Color(0xFFFFA500);
+  static Color orange10 = Color(0xFFFFF4E5);
 
 // Ranking
-  static const gold = Color(0xffe5a000);
-  static const silver = Color(0xffe6eaf0);
-  static const bronze = Color(0xffdeae80);
+  static Color gold = Color(0xffe5a000);
+  static Color silver = Color(0xffe6eaf0);
+  static Color bronze = Color(0xffdeae80);
+
+  static void updateTheme(bool isLightTheme) {
+    // No changes in PRIMARY and SECONDARY
+
+    // Neutral
+    // neutral80 = isLightTheme ? Color(0xFF465F8C) : Color(0xFF98A7C2);
+    neutral80 = isLightTheme ? Color(0xFF465F8C) : Color(0xFFFFFFFF);
+    neutral60 = isLightTheme ? Color(0xFF59719B) : Color(0xFFC0C9DB);
+    neutral40 = isLightTheme ? Color(0xFF6E85AE) : Color(0xFFC0C9DB);
+    neutral20 = Color(0xFF98A7C2);
+    neutral10 = Color(0xFFC0C9DB);
+    neutral5 = isLightTheme ? Color(0xFFF0F2F6) : Color(0xFFC0C9DB);
+    neutral6 = Color(0xFFCCCCCC);
+    // neutral7 = Color(0xFF243D4C);
+    neutral8 = Color(0xFF34373C);
+    neutral9 = Color(0xFFF9FDFB);
+
+    // Category
+
+    category100 = Color(0xFF2784E1);
+
+    //OTHER
+    black = isLightTheme ? Color(0xFF282B41) : Color(0xFFFFFFFF);
+    white = isLightTheme ? Color(0xFFFFFFFF) : Color(0xFF000000);
+    // white = Color(0xFFFFFFFF);
+    splashBG = isLightTheme ? Color(0xFF012054) : Color(0xFFFFFFFF);
+    colour66 = Color(0xFF666666);
+    colourBA = Color(0xFFBABABA);
+    disabledBtn = Color(0xFF3C3C43);
+    colour8d = Color(0xFF34928d);
+
+    //CATEGORY
+    lightGrey = Color(0xFFF0F2F6);
+    gray2 = Color(0xFFAEAEB2);
+
+    //FEEDBACK
+    success120 = Color(0xFF0AA870);
+    success100 = Color(0xFF47C189);
+    success = Color(0xFF47C189);
+    success10 = Color(0xFFEFFBF5);
+
+    warning120 = Color(0xFFEABF3B);
+    warning = Color(0xFFF6C941);
+    warning10 = Color(0xFFFDF4D9);
+
+    error120 = Color(0xFFFF4D4C);
+    error = Color(0xFFFC7272);
+    error10 = Color(0xFFFFF1F1);
+
+    orange120 = Color(0xFFFF7A00);
+    orange = Color(0xFFFFA500);
+    orange10 = Color(0xFFFFF4E5);
+
+    // Ranking
+    gold = Color(0xffe5a000);
+    silver = Color(0xffe6eaf0);
+    bronze = Color(0xffdeae80);
+  }
 }

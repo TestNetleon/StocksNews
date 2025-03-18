@@ -47,6 +47,7 @@ class BaseLoginRequired extends StatelessWidget {
                   onPressed: () async {
                     UserManager manager = context.read<UserManager>();
                     await manager.askLoginScreen();
+                    if (manager.user == null) return;
                     await onPressed();
                   },
                 ),

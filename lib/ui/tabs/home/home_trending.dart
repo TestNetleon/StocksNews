@@ -39,10 +39,7 @@ class _HomeTrendingIndexState extends State<HomeTrendingIndex> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          HomeTopTabs(
-            selectedIndex: _selectedIndex,
-            onTap: onChange,
-          ),
+          HomeTopTabs(selectedIndex: _selectedIndex, onTap: onChange),
           if (_selectedIndex == 0)
             Visibility(
               visible: trending != null && trending.isNotEmpty,

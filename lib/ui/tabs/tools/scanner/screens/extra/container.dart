@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:stocks_news_new/ui/base/base_list_divider.dart';
 import 'package:stocks_news_new/ui/base/base_scroll.dart';
 import 'package:stocks_news_new/ui/tabs/tools/scanner/manager/scanner.dart';
 import 'package:stocks_news_new/ui/tabs/tools/scanner/models/live.dart';
 import 'package:stocks_news_new/ui/tabs/tools/scanner/models/offline.dart';
-import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'item.dart';
@@ -64,11 +64,7 @@ class _ScannerBaseContainerState extends State<ScannerBaseContainer> {
                   ),
                 ),
               ),
-              Divider(
-                color: ThemeColors.neutral5,
-                height: 32,
-                thickness: 1,
-              ),
+              BaseListDivider(height: 32),
             ],
           );
         },
@@ -112,11 +108,7 @@ class _ScannerBaseContainerOfflineState
           return Column(
             children: [
               ScannerBaseItem(data: data),
-              Divider(
-                color: ThemeColors.neutral5,
-                height: 32,
-                thickness: 1,
-              ),
+              BaseListDivider(height: 32),
             ],
           );
         },

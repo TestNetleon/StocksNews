@@ -80,7 +80,7 @@ class HomeGainersManager extends ChangeNotifier {
       num valueB = b.percentChange ?? 0;
       if ((a.extendedHoursType == "PostMarket" ||
           a.extendedHoursType == "PreMarket")) {
-        Utils().showLog("++++++++++++++++++++++++++++++++");
+        // Utils().showLog("++++++++++++++++++++++++++++++++");
         valueA = a.extendedHoursPercentChange ?? 0;
         valueB = b.extendedHoursPercentChange ?? 0;
       }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/ui/base/heading.dart';
+import 'package:stocks_news_new/ui/stockDetail/extra/list_heading.dart';
 
 import '../../../managers/stockDetail/stock.detail.dart';
 import '../../../models/stockDetail/earning.dart';
@@ -27,6 +28,9 @@ class SDEarningsEstimates extends StatelessWidget {
             left: Pad.pad16,
             right: Pad.pad16,
           ),
+        ),
+        SDListHeading(
+          data: ['Quarter', 'No. of Estimates'],
         ),
         ListView.separated(
           shrinkWrap: true,

@@ -41,7 +41,7 @@ class _RedeemPointsState extends State<RedeemPoints> {
       appBar: BaseAppBar(
         showBack: true,
         title: manager.data?.title ?? "",
-        showActionNotification: true,
+        showNotification: true,
         showSearch: true,
       ),
       body: BaseLoaderContainer(

@@ -27,7 +27,6 @@ class _PurchasedIndexState extends State<PurchasedIndex> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      print('Hi4');
       context.read<SubscriptionManager>().getMyPurchasedData();
     });
   }

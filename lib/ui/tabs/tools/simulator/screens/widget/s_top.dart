@@ -9,7 +9,6 @@ import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
-
 //MARK: Simulator Top
 class STopWidget extends StatelessWidget {
   const STopWidget({this.showRating = false, super.key});
@@ -56,19 +55,19 @@ class STopWidgetDetail extends StatelessWidget {
                   margin: EdgeInsets.only(right: 5),
                   child: Text(
                     "Stock Price",
-                    style: stylePTSansRegular(fontSize: 12),
+                    style: styleBaseRegular(fontSize: 12),
                   ),
                 ),
                 Text(
                   "\$ USD",
-                  style: stylePTSansRegular(fontSize: 12),
+                  style: styleBaseRegular(fontSize: 12),
                 ),
               ],
             ),
             SpacerVertical(height: 10),*/
             Text(
               data?.price?.toFormattedPrice() ?? '\$0',
-              style: stylePTSansBold(fontSize: 28,color: ThemeColors.splashBG),
+              style: styleBaseBold(fontSize: 28, color: ThemeColors.splashBG),
             ),
             Visibility(
               child: Row(
@@ -85,7 +84,7 @@ class STopWidgetDetail extends StatelessWidget {
                   ),
                   Text(
                     "${data?.change?.toFormattedPrice() ?? '\$0'} (${data?.changesPercentage?.toCurrency() ?? 0}%)",
-                    style: stylePTSansBold(
+                    style: styleBaseBold(
                       fontSize: 12,
                       color: (data?.change ?? 0) >= 0
                           ? ThemeColors.success120
@@ -108,15 +107,15 @@ class STopWidgetDetail extends StatelessWidget {
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   data?.marketCap ?? "",
-                  style: stylePTSansBold(fontSize: 28,color: ThemeColors.splashBG),
+                  style:
+                      styleBaseBold(fontSize: 28, color: ThemeColors.splashBG),
                 ),
                 SpacerVertical(height: Pad.pad5),
                 Text(
                   "MKT Cap",
-                  style: stylePTSansRegular(fontSize: 12,color: ThemeColors.neutral40),
+                  style: styleBaseRegular(
+                      fontSize: 12, color: ThemeColors.neutral40),
                 ),
-
-
               ],
             ),
           ),
@@ -142,7 +141,7 @@ class STopDisclaimer extends StatelessWidget {
           data?.marketType == 'PreMarket'
               ? 'Pre-Market: ${data?.marketTime ?? ''}'
               : 'Post-Market: ${data?.marketTime ?? ''}',
-          style: styleGeorgiaRegular(
+          style: styleBaseRegular(
             color: ThemeColors.neutral40,
             fontSize: 12,
           ),

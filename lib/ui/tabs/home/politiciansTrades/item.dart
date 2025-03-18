@@ -45,7 +45,7 @@ class HomePoliticianTradeItem extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(top: Pad.pad10),
               child: Text(
-                data.name ?? '',
+                data.userName ?? '',
                 style: styleBaseBold(fontSize: 16),
               ),
             ),

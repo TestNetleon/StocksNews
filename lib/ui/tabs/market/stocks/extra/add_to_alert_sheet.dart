@@ -72,7 +72,7 @@ class _AddToAlertSheetState extends State<AddToAlertSheet> {
             Center(
               child: Text(
                 alertData?.title ?? "Set Alert for ${widget.symbol}",
-                style: stylePTSansBold(color: ThemeColors.black, fontSize: 25),
+                style: styleBaseBold(color: ThemeColors.black, fontSize: 25),
               ),
             ),
             SpacerVertical(height: 16),
@@ -100,8 +100,8 @@ class _AddToAlertSheetState extends State<AddToAlertSheet> {
             ),
             SpacerVertical(height: 20),
             _typeSelect(
-              heading:
-                  alertData?.mention?.title ?? "${widget.symbol} Mentions Spike",
+              heading: alertData?.mention?.title ??
+                  "${widget.symbol} Mentions Spike",
               description: alertData?.mention?.subTitle ??
                   "Alert if ${widget.symbol} has a surge in mentions.",
               onTap: () => selectType(index: 1),
@@ -115,7 +115,7 @@ class _AddToAlertSheetState extends State<AddToAlertSheet> {
               itemBuilder: (context, index) {
                 return Text(
                   alertData?.notes?[index] ?? "",
-                  style: stylePTSansRegular(fontSize: 14),
+                  style: styleBaseRegular(fontSize: 14),
                 );
               },
               separatorBuilder: (context, index) {
@@ -194,10 +194,10 @@ class _AddToAlertSheetState extends State<AddToAlertSheet> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(heading, style: stylePTSansBold(fontSize: 16)),
+                Text(heading, style: styleBaseBold(fontSize: 16)),
                 Text(
                   description,
-                  style: stylePTSansRegular(
+                  style: styleBaseRegular(
                     fontSize: 14,
                     color: ThemeColors.black,
                   ),

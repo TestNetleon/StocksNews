@@ -13,12 +13,14 @@ class HomeLock extends StatelessWidget {
   final Widget? childWidget;
   final num setNum;
   final double blur;
+  final showButton;
 
   const HomeLock({
     super.key,
     this.lockInfo,
     this.childWidget,
     this.blur = 2,
+    this.showButton = true,
     required this.setNum,
   });
 
@@ -43,26 +45,29 @@ class HomeLock extends StatelessWidget {
             //     fit: BoxFit.cover,
             //   ),
             // ),
-            Positioned(
-              bottom: 0,
-              left: 0,
-              right: 0,
-              child: Consumer<MyHomeManager>(
-                builder: (context, manager, child) {
-                  return BaseButton(
-                    text: lockInfo?.btn ?? '',
-                    onPressed: () {
-                      manager.setNumValue(setNum);
-                      baseSUBSCRIBE(
-                        lockInfo!,
-                        manager: manager,
-                        callAPI: () async {
-                          await manager.getHomePremiumData();
-                        },
-                      );
-                    },
-                  );
-                },
+            Visibility(
+              visible: showButton,
+              child: Positioned(
+                bottom: 0,
+                left: 0,
+                right: 0,
+                child: Consumer<MyHomeManager>(
+                  builder: (context, manager, child) {
+                    return BaseButton(
+                      text: lockInfo?.btn ?? '',
+                      onPressed: () {
+                        manager.setNumValue(setNum);
+                        baseSUBSCRIBE(
+                          lockInfo!,
+                          manager: manager,
+                          callAPI: () async {
+                            await manager.getHomePremiumData();
+                          },
+                        );
+                      },
+                    );
+                  },
+                ),
               ),
             ),
           ],

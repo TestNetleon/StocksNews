@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:readmore/readmore.dart';
+import 'package:stocks_news_new/ui/theme/manager.dart';
 
 import '../../utils/colors.dart';
 import '../../utils/theme.dart';
@@ -22,16 +24,23 @@ class BaseReadMore extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ReadMoreText(
-      textAlign: TextAlign.start,
-      text,
-      trimLines: trimLines,
-      colorClickableText: ThemeColors.primary120,
-      trimMode: TrimMode.Line,
-      trimCollapsedText: readMoreText,
-      trimExpandedText: readLessText,
-      moreStyle: styleBaseRegular(color: ThemeColors.primary120),
-      style: styleBaseRegular(height: 1.4),
+    return Consumer<ThemeManager>(
+      builder: (context, value, child) {
+        return ReadMoreText(
+          textAlign: TextAlign.start,
+          text,
+          trimLines: trimLines,
+          colorClickableText: ThemeColors.primary120,
+          trimMode: TrimMode.Line,
+          trimCollapsedText: readMoreText,
+          trimExpandedText: readLessText,
+          moreStyle: styleBaseRegular(color: ThemeColors.primary120),
+          style: styleBaseRegular(
+            height: 1.4,
+            color: value.isDarkMode ? ThemeColors.white : ThemeColors.black,
+          ),
+        );
+      },
     );
   }
 }

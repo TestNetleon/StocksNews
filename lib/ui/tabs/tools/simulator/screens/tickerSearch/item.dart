@@ -63,7 +63,8 @@ class SdTradeDefaultItem extends StatelessWidget {
                 children: [
                   Text(
                     data.symbol ?? "",
-                    style: styleGeorgiaBold(fontSize: 16,color: ThemeColors.splashBG),
+                    style: styleBaseBold(
+                        fontSize: 16, color: ThemeColors.splashBG),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -87,7 +88,8 @@ class SdTradeDefaultItem extends StatelessWidget {
               children: [
                 Text(
                   '${data.price?.toFormattedPrice()}',
-                  style: stylePTSansBold(fontSize: 16,color: ThemeColors.splashBG),
+                  style:
+                      styleBaseBold(fontSize: 16, color: ThemeColors.splashBG),
                 ),
                 const SpacerVertical(height: Pad.pad5),
                 RichText(
@@ -96,7 +98,7 @@ class SdTradeDefaultItem extends StatelessWidget {
                       TextSpan(
                         text:
                             "${data.change?.toFormattedPrice()} (${data.changesPercentage}%)",
-                        style: stylePTSansRegular(
+                        style: styleBaseRegular(
                           fontSize: 12,
                           color: (data.changesPercentage ?? 0) >= 0
                               ? ThemeColors.success120

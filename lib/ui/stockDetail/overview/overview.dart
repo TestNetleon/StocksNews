@@ -1,3 +1,4 @@
+import 'package:blur/blur.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/managers/aiAnalysis/ai.dart';
@@ -7,6 +8,7 @@ import 'package:stocks_news_new/ui/aiAnalysis/index.dart';
 import 'package:stocks_news_new/ui/base/base_scroll.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/custom/base_loader_container.dart';
+import 'package:stocks_news_new/widgets/optional_parent.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import '../../../models/stockDetail/historical_chart.dart';
 import '../../../models/stockDetail/overview.dart';
@@ -110,19 +112,33 @@ class SDOverview extends StatelessWidget {
                   });
                 },
               ),
-              Stack(
-                children: [
-                  AIChart(aiAnalysis: aiAnalysis),
-                  Positioned(
-                    top: 0,
-                    right: 0,
-                    left: 0,
-                    bottom: 0,
-                    child:
-                        Container(color: Colors.white.withValues(alpha: 0.87)),
-                  ),
-                ],
+              OptionalParent(
+                addParent: aiAnalysis?.lockInfo != null,
+                parentBuilder: (child) {
+                  return Stack(
+                    children: [
+                      child,
+                      Blur(child: child),
+                    ],
+                  );
+                },
+                child: AIChart(aiAnalysis: aiAnalysis),
               ),
+              // Stack(
+              //   children: [
+              //     AIChart(aiAnalysis: aiAnalysis),
+              //     if (aiAnalysis?.lockInfo != null)
+              //       Positioned(
+              //         top: 0,
+              //         right: 0,
+              //         left: 0,
+              //         bottom: 0,
+              //         child: Container(
+              //           color: Colors.white.withValues(alpha: 0.87),
+              //         ),
+              //       ),
+              //   ],
+              // ),
             ],
           ),
           SDStocksScore(stockScore: stockScore),

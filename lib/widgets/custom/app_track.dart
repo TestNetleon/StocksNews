@@ -55,7 +55,7 @@ class LogoutPopUpCustom extends StatelessWidget {
                     Text(
                       "Help Us Improve Your Experience",
                       textAlign: TextAlign.center,
-                      style: stylePTSansBold(
+                      style: styleBaseBold(
                         color: ThemeColors.background,
                         fontSize: 20,
                       ),
@@ -64,7 +64,7 @@ class LogoutPopUpCustom extends StatelessWidget {
                     Text(
                       "We value your privacy! Please confirm if you'd like to allow the app to track your activity for personalized experiences.",
                       textAlign: TextAlign.center,
-                      style: stylePTSansRegular(color: ThemeColors.background),
+                      style: styleBaseRegular(color: ThemeColors.background),
                     ),
                     const SpacerVertical(height: 5),
                     Row(
@@ -76,7 +76,7 @@ class LogoutPopUpCustom extends StatelessWidget {
                           },
                           child: Text(
                             "No, Thanks",
-                            style: stylePTSansBold(
+                            style: styleBaseBold(
                               color: ThemeColors.background,
                               fontSize: 17,
                             ),
@@ -87,7 +87,7 @@ class LogoutPopUpCustom extends StatelessWidget {
                           onPressed: () async {},
                           child: Text(
                             "Yes, Allow",
-                            style: stylePTSansBold(
+                            style: styleBaseBold(
                               color: ThemeColors.background,
                               fontSize: 17,
                             ),

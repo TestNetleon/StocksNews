@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:stocks_news_new/ui/base/base_list_divider.dart';
 import 'package:stocks_news_new/ui/base/bottom_sheet.dart';
 import 'package:stocks_news_new/ui/tabs/tools/simulator/managers/s_recurring.dart';
 import 'package:stocks_news_new/ui/tabs/tools/simulator/models/ts_recurring_list_res.dart';
@@ -10,7 +11,6 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/custom/base_loader_container.dart';
 import 'package:stocks_news_new/widgets/custom/refresh_indicator.dart';
 
-
 class SRecurringList extends StatefulWidget {
   const SRecurringList({super.key});
 
@@ -19,7 +19,6 @@ class SRecurringList extends StatefulWidget {
 }
 
 class _SRecurringListState extends State<SRecurringList> {
-
   @override
   void initState() {
     super.initState();
@@ -38,7 +37,6 @@ class _SRecurringListState extends State<SRecurringList> {
     super.dispose();
   }
 
-
   @override
   Widget build(BuildContext context) {
     SRecurringManager manager = context.watch<SRecurringManager>();
@@ -55,11 +53,11 @@ class _SRecurringListState extends State<SRecurringList> {
             TsRecurringListRes item = manager.data![index];
             return TsRecurringListItem(
               item: item,
-              onTap:() {
+              onTap: () {
                 BaseBottomSheet().bottomSheet(
                   barrierColor: ThemeColors.neutral5.withValues(alpha: 0.7),
-                  child:  RecurringActions(
-                    symbol:  item.symbol,
+                  child: RecurringActions(
+                    symbol: item.symbol,
                     item: item,
                     index: index,
                   ),
@@ -68,7 +66,7 @@ class _SRecurringListState extends State<SRecurringList> {
             );
           },
           separatorBuilder: (context, index) {
-            return Divider(height: 24,thickness:1,color: ThemeColors.neutral5);
+            return BaseListDivider(height: 24);
           },
           itemCount: manager.data?.length ?? 0,
         ),

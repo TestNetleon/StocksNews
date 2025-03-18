@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:stocks_news_new/ui/theme/manager.dart';
 
 import '../../../utils/colors.dart';
 import '../../../utils/constants.dart';
@@ -29,12 +31,13 @@ class SDColumnContainer extends StatelessWidget {
         children: [
           Text(
             label,
-            style: styleBaseRegular(color: ThemeColors.neutral80),
+            style: styleBaseRegular(color: ThemeColors.neutral40),
           ),
           SpacerVertical(height: 6),
           Text(
             value ?? '',
-            style: styleBaseSemiBold(),
+            // style: styleBaseSemiBold(),
+            style: Theme.of(context).textTheme.displayMedium,
           ),
         ],
       ),
@@ -69,7 +72,7 @@ class SDRowContainer extends StatelessWidget {
         children: [
           Text(
             label,
-            style: styleBaseRegular(color: ThemeColors.neutral80),
+            style: styleBaseRegular(color: ThemeColors.neutral40),
           ),
           SpacerHorizontal(width: 8),
           Flexible(
@@ -80,19 +83,27 @@ class SDRowContainer extends StatelessWidget {
                   child: Text(
                     value ?? '',
                     textAlign: TextAlign.end,
-                    style: styleBaseSemiBold(),
+                    // style: styleBaseSemiBold(),
+                    style: Theme.of(context).textTheme.displayMedium,
                   ),
                 ),
-                Visibility(
-                  visible: showArrow,
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 8),
-                    child: Image.asset(
-                      Images.moreItem,
-                      height: 24,
-                      width: 24,
-                    ),
-                  ),
+                Consumer<ThemeManager>(
+                  builder: (context, value, child) {
+                    return Visibility(
+                      visible: showArrow,
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 8),
+                        child: Image.asset(
+                          color: value.isDarkMode
+                              ? ThemeColors.white
+                              : ThemeColors.black,
+                          Images.moreItem,
+                          height: 24,
+                          width: 24,
+                        ),
+                      ),
+                    );
+                  },
                 ),
               ],
             ),

@@ -10,6 +10,7 @@ import 'package:stocks_news_new/managers/home.dart';
 import 'package:stocks_news_new/managers/onboarding.dart';
 import 'package:stocks_news_new/managers/user.dart';
 import 'package:stocks_news_new/modals/user_res.dart';
+import 'package:stocks_news_new/ui/base/base_list_divider.dart';
 import 'package:stocks_news_new/ui/base/scaffold.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
@@ -250,13 +251,11 @@ class _AccountLoginIndexState extends State<AccountLoginIndex> {
               Row(
                 children: [
                   Container(
-                    decoration: const BoxDecoration(
-                      border: Border(
-                        bottom: BorderSide(
-                          color: ThemeColors.white,
-                        ),
-                      ),
-                      color: ThemeColors.white,
+                    decoration: BoxDecoration(
+                      // border: Border(
+                      //   bottom: BorderSide(color: ThemeColors.white),
+                      // ),
+                      // color: ThemeColors.white,
                       borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(4),
                         bottomLeft: Radius.circular(4),
@@ -341,12 +340,12 @@ class _AccountLoginIndexState extends State<AccountLoginIndex> {
               SpacerVertical(height: 24),
               Row(
                 children: [
-                  Expanded(child: Divider(color: ThemeColors.black)),
+                  Expanded(child: BaseListDivider(color: ThemeColors.black)),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: Pad.pad10),
                     child: Text('OR'),
                   ),
-                  Expanded(child: Divider(color: ThemeColors.black)),
+                  Expanded(child: BaseListDivider(color: ThemeColors.black)),
                 ],
               ),
               SpacerVertical(height: 24),

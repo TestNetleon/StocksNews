@@ -25,7 +25,7 @@ class BaseSectorItem extends StatelessWidget {
   Widget build(BuildContext context) {
     // bool isOpen = _openIndex == widget.index;
     return InkWell(
-      onTap: (){
+      onTap: () {
         onTap(data);
       },
       child: Container(
@@ -51,7 +51,7 @@ class BaseSectorItem extends StatelessWidget {
                           data.image,
                           height: 20,
                           width: 20,
-                            color: ThemeColors.splashBG
+                          color: ThemeColors.black,
                         ),
                       ),
                     ),
@@ -59,11 +59,15 @@ class BaseSectorItem extends StatelessWidget {
                     Flexible(
                       child: Text(
                         data.industry ?? "",
-                        style: styleBaseRegular(
-                          fontSize: 14,
-                          color: ThemeColors.splashBG,
-                          height: 1.4,
-                        ),
+                        // style: styleBaseRegular(
+                        //   fontSize: 14,
+                        //   color: ThemeColors.splashBG,
+                        //   height: 1.4,
+                        // ),
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyLarge
+                            ?.copyWith(height: 1.4),
                       ),
                     ),
                     const SpacerHorizontal(width: 16),
@@ -84,40 +88,40 @@ class BaseSectorItem extends StatelessWidget {
                 ),
               ),
               Column(
-                 children: [
-                   SizedBox(
-                     // color: Colors.red[100],
-                     width: value,
-                     child: AutoSizeText(
-                       "${data.totalMentions}",
-                       style: styleBaseBold(
-                         fontSize: 14,
-                         color: ThemeColors.splashBG,
-                       ),
-                       // textAlign: TextAlign.end,
-                     ),
-                   ),
-                   SpacerVertical(height: Pad.pad2),
-                   Visibility(
-                     visible: data.percentageChange!=null,
-                     child: SizedBox(
-                       // color: Colors.red[100],
-                       width: value,
-                       child: AutoSizeText(
-                         "${data.percentageChange}%",
-                         style: styleBaseBold(
-                           fontSize: 12,
-                           color: data.percentageColor == 1
-                               ? ThemeColors.success
-                               : ThemeColors.error120,
-                         ),
-                         // textAlign: TextAlign.end,
-                       ),
-                     ),
-                   ),
-                 ],
+                children: [
+                  SizedBox(
+                    // color: Colors.red[100],
+                    width: value,
+                    child: AutoSizeText(
+                      "${data.totalMentions}",
+                      // style: styleBaseBold(
+                      //   fontSize: 14,
+                      //   color: ThemeColors.splashBG,
+                      // ),
+                      style: Theme.of(context).textTheme.bodyLarge,
+                      // textAlign: TextAlign.end,
+                    ),
+                  ),
+                  SpacerVertical(height: Pad.pad2),
+                  Visibility(
+                    visible: data.percentageChange != null,
+                    child: SizedBox(
+                      // color: Colors.red[100],
+                      width: value,
+                      child: AutoSizeText(
+                        "${data.percentageChange}%",
+                        style: styleBaseBold(
+                          fontSize: 12,
+                          color: data.percentageColor == 1
+                              ? ThemeColors.success
+                              : ThemeColors.error120,
+                        ),
+                        // textAlign: TextAlign.end,
+                      ),
+                    ),
+                  ),
+                ],
               )
-
             ],
           );
         }),

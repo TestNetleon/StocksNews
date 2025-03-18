@@ -7,6 +7,7 @@ import 'package:stocks_news_new/api/apis.dart';
 import 'package:stocks_news_new/models/ai_analysis.dart';
 import 'package:stocks_news_new/models/market/market_res.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
+import 'package:stocks_news_new/service/braze/service.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import '../../models/lock.dart';
 import '../../models/stockDetail/financial.dart';
@@ -76,6 +77,10 @@ class AIManager extends ChangeNotifier {
       if (response.status) {
         _data = AIResFromJson(jsonEncode(response.data));
         _error = null;
+        BrazeService.eventContentView(
+          screenType: 'stock_analysis',
+          source: _data?.tickerDetail?.shareUrl ?? '',
+        );
       } else {
         _data = null;
         _error = response.message;

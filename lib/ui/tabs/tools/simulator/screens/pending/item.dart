@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:stocks_news_new/ui/base/base_list_divider.dart';
 import 'package:stocks_news_new/ui/tabs/tools/simulator/models/ts_pending_list_res.dart';
 import 'package:stocks_news_new/ui/tabs/tools/simulator/screens/widget/order_type.dart';
 import 'package:stocks_news_new/utils/colors.dart';
@@ -8,7 +9,6 @@ import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/cache_network_image.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
-
 
 class TsPendingListItem extends StatelessWidget {
   final TsPendingListRes? item;
@@ -22,7 +22,8 @@ class TsPendingListItem extends StatelessWidget {
       child: Column(
         children: [
           Container(
-            margin: const EdgeInsets.symmetric(horizontal: Pad.pad16, vertical: Pad.pad5),
+            margin: const EdgeInsets.symmetric(
+                horizontal: Pad.pad16, vertical: Pad.pad5),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -49,7 +50,8 @@ class TsPendingListItem extends StatelessWidget {
                             visible: item?.symbol != null && item?.symbol != '',
                             child: Text(
                               "${item?.symbol}",
-                              style: stylePTSansBold(fontSize: 16,color: ThemeColors.splashBG),
+                              style: styleBaseBold(
+                                  fontSize: 16, color: ThemeColors.splashBG),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                             ),
@@ -59,7 +61,7 @@ class TsPendingListItem extends StatelessWidget {
                                 item?.company != null && item?.company != '',
                             child: Text(
                               "${item?.company}",
-                              style: stylePTSansRegular(
+                              style: styleBaseRegular(
                                 fontSize: 14,
                                 color: ThemeColors.neutral40,
                               ),
@@ -70,7 +72,7 @@ class TsPendingListItem extends StatelessWidget {
                           Visibility(
                             child: Text(
                               "Price at Market",
-                              style: stylePTSansRegular(
+                              style: styleBaseRegular(
                                 fontSize: 14,
                                 color: ThemeColors.neutral40,
                               ),
@@ -85,11 +87,11 @@ class TsPendingListItem extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                         Visibility(
-                          visible:
-                              item?.quantity != null,
+                          visible: item?.quantity != null,
                           child: Text(
                             "${item?.quantity} QTY",
-                            style: stylePTSansBold(fontSize: 16,color: ThemeColors.splashBG),
+                            style: styleBaseBold(
+                                fontSize: 16, color: ThemeColors.splashBG),
                           ),
                         ),
                       ],
@@ -101,7 +103,7 @@ class TsPendingListItem extends StatelessWidget {
                       item?.orderTypeOriginal != 'MARKET_ORDER',
                   child: Column(
                     children: [
-                      const Divider(color: ThemeColors.neutral5,thickness: 1, height: 10),
+                      const BaseListDivider(height: 10),
                       const SpacerVertical(height: 5),
                     ],
                   ),
@@ -128,10 +130,12 @@ class TsPendingListItem extends StatelessWidget {
                     Visibility(
                         visible:
                             item?.limitPrice != null && item?.limitPrice != 0,
-                        child: orderWithType( item?.orderTypeOriginal == "STOP_LIMIT_ORDER"
-                            ? Alignment.center
-                            : Alignment.centerLeft,
-                            label: "Limit Price", prices: item?.limitPrice)),
+                        child: orderWithType(
+                            item?.orderTypeOriginal == "STOP_LIMIT_ORDER"
+                                ? Alignment.center
+                                : Alignment.centerLeft,
+                            label: "Limit Price",
+                            prices: item?.limitPrice)),
                     Visibility(
                       visible: item?.orderTypeOriginal != null &&
                           item?.orderTypeOriginal != 'MARKET_ORDER',
@@ -142,7 +146,7 @@ class TsPendingListItem extends StatelessWidget {
                             Text(
                               textAlign: TextAlign.center,
                               "Order Type",
-                              style: stylePTSansRegular(
+                              style: styleBaseRegular(
                                 color: ThemeColors.splashBG,
                                 fontSize: 12,
                               ),
@@ -151,7 +155,7 @@ class TsPendingListItem extends StatelessWidget {
                             Text(
                               textAlign: TextAlign.end,
                               item?.orderType ?? "",
-                              style: stylePTSansBold(
+                              style: styleBaseBold(
                                 color: ThemeColors.splashBG,
                                 fontSize: 12,
                               ),
@@ -199,7 +203,7 @@ class TsPendingListItem extends StatelessWidget {
         children: [
           Text(
             label ?? "",
-            style:stylePTSansRegular(
+            style: styleBaseRegular(
               color: ThemeColors.splashBG,
               fontSize: 12,
             ),
@@ -208,7 +212,7 @@ class TsPendingListItem extends StatelessWidget {
           Text(
             textAlign: TextAlign.start,
             prices?.toFormattedPrice() ?? "",
-            style: stylePTSansRegular(color: ThemeColors.splashBG, fontSize: 12),
+            style: styleBaseRegular(color: ThemeColors.splashBG, fontSize: 12),
           ),
         ],
       ),

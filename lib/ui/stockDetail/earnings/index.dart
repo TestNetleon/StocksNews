@@ -55,7 +55,7 @@ class SDEarnings extends StatelessWidget {
           ),
           SDEarningsHistory(earningHistory: earningHistory),
           SDEarningsEstimates(epsEstimates: epsEstimates),
-          BaseFaq(faqs:faqs),
+          BaseFaq(faqs: faqs),
         ],
       ),
     );

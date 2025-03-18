@@ -2,17 +2,19 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:stocks_news_new/models/stockDetail/overview.dart';
-import 'package:stocks_news_new/screens/stockDetail/stockDetailTabs/pdfViewer/pdf_viewer_widget.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 
+import '../../../../routes/my_app.dart';
 import '../../../../utils/colors.dart';
 import '../../../../utils/theme.dart';
+import '../../../tabs/more/morningstarReport/index.dart';
 import 'economic.dart';
 import 'fair.dart';
 import 'lock.dart';
+import 'pdf.dart';
 import 'valuable.dart';
 
 class SDMorningStarView extends StatelessWidget {
@@ -79,7 +81,8 @@ class SDMorningStarView extends StatelessWidget {
               AutoSizeText(
                 "Quantitative Equity Research Report",
                 textAlign: TextAlign.center,
-                style: styleBaseBold(fontSize: 18),
+                // style: styleBaseBold(fontSize: 18),
+                style: Theme.of(context).textTheme.headlineLarge,
                 maxLines: 1,
               ),
               const SpacerVertical(height: 5),
@@ -88,7 +91,7 @@ class SDMorningStarView extends StatelessWidget {
                 textAlign: TextAlign.center,
                 style: styleBaseRegular(
                   fontSize: 12,
-                  color: ThemeColors.greyText,
+                  color: ThemeColors.neutral40,
                 ),
               ),
               const SpacerVertical(height: 15),
@@ -175,7 +178,7 @@ class SDMorningStarView extends StatelessWidget {
                                       color: ThemeColors.error120,
                                       label: 'Low',
                                       sizeUnit: GaugeSizeUnit.factor,
-                                      labelStyle: const GaugeTextStyle(
+                                      labelStyle: GaugeTextStyle(
                                         fontFamily: Fonts.roboto,
                                         fontSize: 13,
                                         fontWeight: FontWeight.bold,
@@ -263,7 +266,9 @@ class SDMorningStarView extends StatelessWidget {
                 children: [
                   Text(
                     "Quantitative Uncertainty",
-                    style: styleBaseBold(),
+                    // style: styleBaseBold(),
+                    style: Theme.of(context).textTheme.displayLarge,
+
                     textAlign: TextAlign.center,
                   ),
                   const SpacerVertical(height: 5),
@@ -271,7 +276,7 @@ class SDMorningStarView extends StatelessWidget {
                     "As on - ${data?.quantFairValueUncertaintyDate}",
                     style: styleBaseRegular(
                       fontSize: 12,
-                      color: ThemeColors.neutral80,
+                      color: ThemeColors.neutral20,
                     ),
                   ),
                 ],
@@ -385,9 +390,8 @@ class SDMorningStarView extends StatelessWidget {
                   children: [
                     Text(
                       "Financial Health",
-                      style: styleBaseBold(
-                        fontSize: 18,
-                      ),
+                      // style: styleBaseBold(fontSize: 18),
+                      style: Theme.of(context).textTheme.headlineLarge,
                     ),
                     SpacerVertical(height: 3),
                     Text(
@@ -524,11 +528,11 @@ class SDMorningStarView extends StatelessWidget {
               const SpacerVertical(height: 15),
               GestureDetector(
                 onTap: () {
-                  // Navigator.push(
-                  //   navigatorKey.currentContext!,
-                  //   MaterialPageRoute(
-                  //       builder: (_) => const MorningStarTransaction()),
-                  // );
+                  Navigator.push(
+                    navigatorKey.currentContext!,
+                    MaterialPageRoute(
+                        builder: (_) => const MorningStarReportsIndex()),
+                  );
                 },
                 child: Center(
                   child: Text(

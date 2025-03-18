@@ -10,11 +10,11 @@ class Apis {
   static const baseUrlLocal = "https://notification.stocks.news/api/v1";
 
   // With Debug condition
-  static const baseUrl = kDebugMode
-      ? "https://dev.stocks.news/api/v2"
-      : "https://app.stocks.news/api/v2";
+  // static const baseUrl = kDebugMode
+  //     ? "https://dev.stocks.news/api/v2"
+  //     : "https://app.stocks.news/api/v2";
 
-  // static const baseUrl = "https://app.stocks.news/api/v2";
+  static const baseUrl = "https://app.stocks.news/api/v2";
 
   // MARK: New UI APIs
   static const onBoarding = '/onboarding';
@@ -112,6 +112,7 @@ class Apis {
   //Subscription
   static const subscription = '/subscription';
   static const mySubscription = "/my-subscription";
+  static const subscriptionLayout = '/check-membership-layout';
 
   static const infoPage = '/info-page';
   static const updateProfile = "/update-profile";
@@ -183,6 +184,8 @@ class Apis {
   //Scanner
   static const stockScannerPort = '/stock-scanner';
   static const scannerFilters = '/scanner-sectors';
+
+  static const morningStarReports = '/morning-star-transaction';
 
 //----------------------------------------------
 //----------------------------------------------

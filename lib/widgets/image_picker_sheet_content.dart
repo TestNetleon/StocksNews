@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:stocks_news_new/ui/base/base_list_divider.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
@@ -27,7 +28,7 @@ class ImagePickerSheetContent extends StatelessWidget {
             alignment: Alignment.center,
             child: Text(
               "Choose Option",
-              style: stylePTSansBold(fontSize: 18),
+              style: styleBaseBold(fontSize: 18),
             ),
           ),
           const SpacerVertical(height: 10),
@@ -48,14 +49,14 @@ class ImagePickerSheetContent extends StatelessWidget {
                   Expanded(
                     child: Text(
                       "Camera",
-                      style: stylePTSansRegular(fontSize: 18),
+                      style: styleBaseRegular(fontSize: 18),
                     ),
                   ),
                 ],
               ),
             ),
           ),
-          Divider(color: Colors.grey, height: 1, thickness: 1),
+          BaseListDivider(),
           GestureDetector(
             onTap: onGalleryClick,
             child: Container(
@@ -72,7 +73,7 @@ class ImagePickerSheetContent extends StatelessWidget {
                   Expanded(
                     child: Text(
                       "Gallery",
-                      style: stylePTSansRegular(fontSize: 18),
+                      style: styleBaseRegular(fontSize: 18),
                     ),
                   ),
                 ],

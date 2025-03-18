@@ -2,8 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:stocks_news_new/providers/ad_provider.dart';
-import 'package:stocks_news_new/screens/tabs/news/newsDetail/news_details_body.dart';
+
 import 'package:stocks_news_new/widgets/cache_network_image.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 import '../../api/api_response.dart';
@@ -12,6 +11,7 @@ import '../../utils/colors.dart';
 import '../../utils/constants.dart';
 import '../../utils/theme.dart';
 import '../../utils/utils.dart';
+import 'manager.dart';
 
 class AdManagerItem extends StatelessWidget {
   final EdgeInsetsGeometry? margin;
@@ -25,13 +25,12 @@ class AdManagerItem extends StatelessWidget {
     closeKeyboard();
 
     if (Platform.isIOS) {
-      // adIOSNavigate(Uri.parse(data?.url ?? "https://app.stocks.news"));
       iOSNavigate(Uri.parse(data?.url ?? "https://app.stocks.news"));
     } else {
       openUrl(data?.url ?? "https://app.stocks.news");
     }
 
-    AdProvider provider = navigatorKey.currentContext!.read<AdProvider>();
+    AdManager provider = navigatorKey.currentContext!.read<AdManager>();
     provider.callAPI(view: false, id: data?.id);
   }
 
@@ -57,7 +56,7 @@ class AdManagerItem extends StatelessWidget {
                   padding: const EdgeInsets.only(top: 5),
                   child: Text(
                     "Ad",
-                    style: stylePTSansRegular(color: ThemeColors.greyText),
+                    style: styleBaseRegular(color: ThemeColors.greyText),
                   ),
                 ),
               ),
@@ -95,15 +94,12 @@ addOnSheetManagers({
             onTap: () {
               Navigator.pop(context);
               if (Platform.isIOS) {
-                // adIOSNavigate(
-                //     Uri.parse(popUp?.url ?? "https://app.stocks.news"));
-
-                iOSNavigate(Uri.parse(popUp?.url ?? "https://app.stocks.news"));
+                // iOSNavigate(Uri.parse(popUp?.url ?? "https://app.stocks.news"));
               } else {
                 openUrl(popUp?.url ?? "https://app.stocks.news");
               }
-              AdProvider provider = context.read<AdProvider>();
-              provider.callAPI(view: false, id: popUp?.id);
+              // AdProvider provider = context.read<AdProvider>();
+              // provider.callAPI(view: false, id: popUp?.id);
             },
             child: Container(
               margin: EdgeInsets.only(top: 15),
@@ -127,7 +123,7 @@ addOnSheetManagers({
                 padding: EdgeInsets.symmetric(horizontal: 10, vertical: 1),
                 child: Text(
                   "Ad",
-                  style: stylePTSansRegular(
+                  style: styleBaseRegular(
                       color: ThemeColors.greyText, fontSize: 14),
                 ),
               ),
@@ -157,4 +153,8 @@ addOnSheetManagers({
       );
     },
   );
+}
+
+iOSNavigate(event) {
+  handleDeepLinkNavigation(uri: event, conditionalCheck: true);
 }

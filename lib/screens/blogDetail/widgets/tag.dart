@@ -34,7 +34,7 @@
 //           },
 //           child: Text(
 //             item.name.capitalizeWords(),
-//             style: stylePTSansRegular(
+//             style: styleBaseRegular(
 //               color: ThemeColors.accent,
 //               fontSize: 12,
 //             ),

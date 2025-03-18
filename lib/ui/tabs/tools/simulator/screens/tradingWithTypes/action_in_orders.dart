@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:stocks_news_new/ui/base/base_list_divider.dart';
 import 'package:stocks_news_new/ui/base/button.dart';
 import 'package:stocks_news_new/ui/base/button_outline.dart';
 import 'package:stocks_news_new/ui/tabs/tools/simulator/managers/s_pending.dart';
@@ -16,18 +17,13 @@ import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
-
 class ActionInOrders extends StatefulWidget {
   final String? symbol;
   final TsPendingListRes? item;
   final int index;
 
-  const ActionInOrders({
-    super.key,
-    this.symbol,
-    this.item,
-    required this.index
-  });
+  const ActionInOrders(
+      {super.key, this.symbol, this.item, required this.index});
 
   @override
   State<ActionInOrders> createState() => _ActionInOrdersState();
@@ -41,7 +37,6 @@ class _ActionInOrdersState extends State<ActionInOrders> {
     super.initState();
   }
 
-
   void _onEditClick() {
     disposeSheet = false;
     setState(() {});
@@ -54,15 +49,14 @@ class _ActionInOrdersState extends State<ActionInOrders> {
       onTap: () {
         Navigator.pop(context);
         SPendingManager manager = context.read<SPendingManager>();
-        if(widget.item?.orderTypeOriginal == "MARKET_ORDER"){
+        if (widget.item?.orderTypeOriginal == "MARKET_ORDER") {
           if (widget.item?.tradeType == "Short") {
             manager.shortRedirection(index: widget.index);
           } else {
-            manager.editStock(index:  widget.index);
+            manager.editStock(index: widget.index);
           }
-        }
-        else{
-          manager.stockHoldingOfCondition(index:  widget.index);
+        } else {
+          manager.stockHoldingOfCondition(index: widget.index);
         }
       },
     );
@@ -95,8 +89,6 @@ class _ActionInOrdersState extends State<ActionInOrders> {
     super.dispose();
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     TradeManager manager = context.watch<TradeManager>();
@@ -121,7 +113,6 @@ class _ActionInOrdersState extends State<ActionInOrders> {
                   ),
                 ),
               ),
-
               const SpacerHorizontal(width: 12),
               Expanded(
                 child: Column(
@@ -129,12 +120,12 @@ class _ActionInOrdersState extends State<ActionInOrders> {
                   children: [
                     Text(
                       '${widget.item?.symbol}',
-                      style: styleGeorgiaBold(
+                      style: styleBaseBold(
                           color: ThemeColors.splashBG, fontSize: 16),
                     ),
                     Text(
                       '${widget.item?.company}',
-                      style: styleGeorgiaRegular(
+                      style: styleBaseRegular(
                           color: ThemeColors.neutral40, fontSize: 14),
                     ),
                   ],
@@ -148,7 +139,7 @@ class _ActionInOrdersState extends State<ActionInOrders> {
                     visible: stock?.price != null,
                     child: Text(
                       '${stock?.price?.toFormattedPrice()}',
-                      style: styleGeorgiaBold(
+                      style: styleBaseBold(
                           color: ThemeColors.splashBG, fontSize: 16),
                     ),
                   ),
@@ -157,9 +148,9 @@ class _ActionInOrdersState extends State<ActionInOrders> {
                         stock?.changePercentage != null,
                     child: Text(
                       '${stock?.change?.toFormattedPrice()} (${stock?.changePercentage?.toCurrency()}%)',
-                      style: styleGeorgiaRegular(
+                      style: styleBaseRegular(
                         color: (stock?.change ?? 0) >= 0
-                            ?  ThemeColors.success120
+                            ? ThemeColors.success120
                             : ThemeColors.error120,
                         fontSize: 12,
                       ),
@@ -170,13 +161,9 @@ class _ActionInOrdersState extends State<ActionInOrders> {
             ],
           ),
           SpacerVertical(height: 10),
-          Divider(
-            color: ThemeColors.neutral5,
-            thickness: 1,
-            height: 20,
-          ),
+          BaseListDivider(height: 20),
           BaseButtonOutline(
-            onPressed:_onEditClick,
+            onPressed: _onEditClick,
             text: "Edit Order",
             textColor: ThemeColors.neutral40,
             borderColor: ThemeColors.neutral20,
@@ -187,10 +174,9 @@ class _ActionInOrdersState extends State<ActionInOrders> {
           BaseButton(
             text: "Cancel Order",
             color: ThemeColors.error120,
-            onPressed:_onCancelClick,
+            onPressed: _onCancelClick,
             textColor: ThemeColors.white,
           ),
-
         ],
       ),
     );

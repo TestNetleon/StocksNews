@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
+import 'package:stocks_news_new/ui/base/base_list_divider.dart';
 import 'package:stocks_news_new/ui/base/bottom_sheet.dart';
 import 'package:stocks_news_new/ui/base/button.dart';
 import 'package:stocks_news_new/ui/tabs/tools/simulator/managers/portpolio.dart';
@@ -15,19 +16,18 @@ import 'package:stocks_news_new/widgets/cache_network_image.dart';
 import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 
-
 class RecurringActions extends StatefulWidget {
   final String? symbol;
   final TsRecurringListRes? item;
   final int index;
-  const RecurringActions({super.key,this.symbol,required this.index,this.item});
+  const RecurringActions(
+      {super.key, this.symbol, required this.index, this.item});
 
   @override
   State<RecurringActions> createState() => _RecurringActionsState();
 }
 
 class _RecurringActionsState extends State<RecurringActions> {
-
   void _onEditClick() {
     popUpAlert(
       icon: Images.alertPopGIF,
@@ -39,7 +39,7 @@ class _RecurringActionsState extends State<RecurringActions> {
         Navigator.pop(context);
         context.read<PortfolioManager>().getHolidays();
         SRecurringManager manager = context.read<SRecurringManager>();
-        manager.recurringCondition(widget.symbol??"",index:  widget.index);
+        manager.recurringCondition(widget.symbol ?? "", index: widget.index);
       },
     );
   }
@@ -64,8 +64,7 @@ class _RecurringActionsState extends State<RecurringActions> {
     Navigator.pop(navigatorKey.currentContext!);
     BaseBottomSheet().bottomSheet(
         barrierColor: ThemeColors.neutral5.withValues(alpha: 0.7),
-    child:RecurringDetail(widget.item)
-   );
+        child: RecurringDetail(widget.item));
     /*showModalBottomSheet(
       enableDrag: true,
       isDismissible: true,
@@ -131,17 +130,17 @@ class _RecurringActionsState extends State<RecurringActions> {
                 children: [
                   Text(
                     '${widget.item?.symbol}',
-                    style: styleGeorgiaBold(
+                    style: styleBaseBold(
                         color: ThemeColors.splashBG, fontSize: 16),
                   ),
                   Text(
                     '${widget.item?.company}',
-                    style: styleGeorgiaRegular(
+                    style: styleBaseRegular(
                         color: ThemeColors.neutral40, fontSize: 14),
                   ),
                   Text(
                     '${widget.item?.frequencyString}',
-                    style:styleGeorgiaRegular(
+                    style: styleBaseRegular(
                         color: ThemeColors.neutral40, fontSize: 14),
                   ),
                 ],
@@ -155,7 +154,7 @@ class _RecurringActionsState extends State<RecurringActions> {
                   visible: widget.item?.recurringAmount != null,
                   child: Text(
                     '${widget.item?.recurringAmount?.toFormattedPrice()}',
-                    style: styleGeorgiaBold(
+                    style: styleBaseBold(
                         color: ThemeColors.splashBG, fontSize: 18),
                   ),
                 ),
@@ -163,56 +162,57 @@ class _RecurringActionsState extends State<RecurringActions> {
             ),
           ],
         ),
-        Divider(
-          color: ThemeColors.greyBorder,
+        BaseListDivider(
           height: 20,
         ),
         Row(
           children: [
             Visibility(
-              visible: (widget.item?.transactionCount??0)>=1,
+              visible: (widget.item?.transactionCount ?? 0) >= 1,
               child: Expanded(
                 child: BaseButton(
                   text: "View",
                   color: ThemeColors.splashBG,
                   textColor: ThemeColors.white,
-                  onPressed:viewRedirection,
+                  onPressed: viewRedirection,
                 ),
               ),
             ),
-            Visibility(visible: widget.item?.statusType=="RUNNING",child: const SpacerHorizontal(width: 10)),
             Visibility(
-              visible: widget.item?.statusType=="RUNNING",
+                visible: widget.item?.statusType == "RUNNING",
+                child: const SpacerHorizontal(width: 10)),
+            Visibility(
+              visible: widget.item?.statusType == "RUNNING",
               child: Expanded(
                 child: BaseButton(
                   text: "Edit",
                   color: ThemeColors.success120,
                   textColor: ThemeColors.white,
-                  onPressed:_onEditClick,
+                  onPressed: _onEditClick,
                 ),
               ),
             ),
-            Visibility(visible: widget.item?.statusType=="RUNNING",child: const SpacerHorizontal(width: 10)),
             Visibility(
-              visible: widget.item?.statusType=="RUNNING",
+                visible: widget.item?.statusType == "RUNNING",
+                child: const SpacerHorizontal(width: 10)),
+            Visibility(
+              visible: widget.item?.statusType == "RUNNING",
               child: Expanded(
                 child: BaseButton(
                   text: "Close",
                   color: ThemeColors.error120,
                   textColor: ThemeColors.white,
-                  onPressed:_onCancelClick,
+                  onPressed: _onCancelClick,
                 ),
               ),
             ),
-
           ],
         ),
         Visibility(
-          visible: (widget.item?.statusTypeString=="Closed"),
+          visible: (widget.item?.statusTypeString == "Closed"),
           child: Text(
             '${widget.item?.statusTypeString}',
-            style: styleGeorgiaBold(
-                color: ThemeColors.error120, fontSize:18),
+            style: styleBaseBold(color: ThemeColors.error120, fontSize: 18),
             textAlign: TextAlign.center,
           ),
         ),

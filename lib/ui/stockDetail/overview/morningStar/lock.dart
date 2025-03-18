@@ -6,6 +6,7 @@ import 'package:stocks_news_new/managers/stockDetail/stock.detail.dart';
 import 'package:stocks_news_new/managers/user.dart';
 import 'package:stocks_news_new/models/stockDetail/overview.dart';
 import 'package:stocks_news_new/ui/base/button.dart';
+import 'package:stocks_news_new/ui/subscription/manager.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -94,7 +95,7 @@ class _SDMorningStarLockState extends State<SDMorningStarLock> {
                 const SpacerVertical(),
                 Text(
                   lockInformation?.readingTitle ?? '',
-                  style: stylePTSansBold(
+                  style: styleBaseBold(
                     fontSize: 18,
                   ),
                   textAlign: TextAlign.center,
@@ -102,7 +103,7 @@ class _SDMorningStarLockState extends State<SDMorningStarLock> {
                 const SpacerVertical(height: 10),
                 Text(
                   lockInformation?.readingHeading ?? '',
-                  style: stylePTSansRegular(
+                  style: styleBaseRegular(
                     fontSize: 14,
                     height: 1.3,
                   ),
@@ -111,7 +112,7 @@ class _SDMorningStarLockState extends State<SDMorningStarLock> {
                 const SpacerVertical(height: 10),
                 Text(
                   lockInformation?.readingSubtitle ?? '',
-                  style: stylePTSansRegular(
+                  style: styleBaseRegular(
                     fontSize: 14,
                     height: 1.3,
                   ),
@@ -160,7 +161,9 @@ class _SDMorningStarLockState extends State<SDMorningStarLock> {
                         textSize: 15,
                         fontBold: true,
                         radius: 30,
-                        onPressed: () {},
+                        onPressed: () {
+                          context.read<SubscriptionManager>().startProcess();
+                        },
                         textAlign: TextAlign.start,
                         text: "Become an Elite Member",
                         margin: const EdgeInsets.only(top: 10),
@@ -175,7 +178,9 @@ class _SDMorningStarLockState extends State<SDMorningStarLock> {
                         textSize: 15,
                         fontBold: true,
                         radius: 30,
-                        onPressed: () {},
+                        onPressed: () {
+                          context.read<SubscriptionManager>().startProcess();
+                        },
                         textAlign: TextAlign.start,
                         text: "Upgrade Membership",
                         margin: const EdgeInsets.only(top: 10),

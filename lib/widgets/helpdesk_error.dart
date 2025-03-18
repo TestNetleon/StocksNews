@@ -58,7 +58,7 @@ class CommonEmptyError extends StatelessWidget {
                             padding: const EdgeInsets.only(bottom: 5),
                             child: Text(
                               title ?? "",
-                              style: stylePTSansBold(fontSize: 25),
+                              style: styleBaseBold(fontSize: 25),
                               textAlign: TextAlign.center,
                             ),
                           ),
@@ -67,7 +67,7 @@ class CommonEmptyError extends StatelessWidget {
                           // visible: title != null && title != '',
                           child: Text(
                             subTitle ?? "",
-                            style: stylePTSansRegular(fontSize: 16),
+                            style: styleBaseRegular(fontSize: 16),
                             textAlign: TextAlign.center,
                           ),
                         ),

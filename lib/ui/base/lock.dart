@@ -203,14 +203,14 @@ class _BaseLockItemState extends State<BaseLockItem> {
                         placeholder: (context, url) {
                           return Container(
                             decoration: BoxDecoration(
-                              color: Colors.white,
+                              color: ThemeColors.white,
                             ),
                           );
                         },
                       )
                     : Container(
                         decoration: BoxDecoration(
-                          color: Colors.white.withValues(alpha: 0.95),
+                          color: ThemeColors.white.withValues(alpha: 0.95),
                         ),
                       ),
               ),
@@ -232,8 +232,8 @@ class _BaseLockItemState extends State<BaseLockItem> {
               vertical: Pad.pad10,
             ),
             alignment: Alignment.bottomCenter,
-            decoration: const BoxDecoration(
-              color: Colors.white,
+            decoration: BoxDecoration(
+              color: ThemeColors.white,
               borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
               boxShadow: [
                 BoxShadow(
@@ -388,5 +388,5 @@ Future baseSUBSCRIBE(
 
   SubscriptionManager subscriptionManager =
       navigatorKey.currentContext!.read<SubscriptionManager>();
-  subscriptionManager.startProcess(viewPlans: true);
+  subscriptionManager.startProcess();
 }

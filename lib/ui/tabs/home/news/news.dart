@@ -18,7 +18,7 @@ class HomeNewsIndex extends StatelessWidget {
         BaseHeading(
           title: newsData?.title,
           margin: EdgeInsets.only(
-            top: Pad.pad32,
+            top: Pad.pad16,
             bottom: Pad.pad16,
           ),
         ),

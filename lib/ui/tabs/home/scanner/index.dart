@@ -52,10 +52,17 @@ class _HomeScannerIndexState extends State<HomeScannerIndex> {
                 HomeScannerHeader(
                     isOnline: marketOpenRes?.startStreaming ?? false),
                 HomeScannerGainersIndex(),
+                // BaseButton(
+                //   text: 'Go to Scanner',
+                //   onPressed: () {
+                //     ToolsManager manager = context.read<ToolsManager>();
+                //     manager.startNavigation(ToolsEnum.scanner);
+                //   },
+                // ),
               ],
             ),
             if (lock != null) _lock(lock),
-            if (lock != null) SpacerVertical(height: 300)
+            if (lock != null) SpacerVertical(height: 300),
           ],
         );
       },

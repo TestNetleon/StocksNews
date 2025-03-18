@@ -32,7 +32,6 @@ class CryptoIndex extends StatefulWidget {
 }
 
 class _CryptoIndexState extends State<CryptoIndex> {
-
   @override
   void initState() {
     super.initState();
@@ -46,7 +45,6 @@ class _CryptoIndexState extends State<CryptoIndex> {
     manager.getCryptoDetail(widget.symbol);
     manager.getCrHistoricalC(symbol: widget.symbol);
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -84,7 +82,6 @@ class _CryptoIndexState extends State<CryptoIndex> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Row(
-
                         children: [
                           Text(
                             tickerDetail?.price?.toFormattedPriceForSim() ?? '',
@@ -100,15 +97,20 @@ class _CryptoIndexState extends State<CryptoIndex> {
                                     WidgetSpan(
                                       alignment: PlaceholderAlignment.middle,
                                       child: Padding(
-                                        padding:
-                                        const EdgeInsets.symmetric(horizontal: 4),
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 4),
                                         child: Image.asset(
-                                          (tickerDetail?.changesPercentage ?? 0) >= 0
+                                          (tickerDetail?.changesPercentage ??
+                                                      0) >=
+                                                  0
                                               ? Images.trendingUP
                                               : Images.trendingDOWN,
                                           height: 18,
                                           width: 18,
-                                          color: (tickerDetail?.changesPercentage ?? 0) >= 0
+                                          color: (tickerDetail
+                                                          ?.changesPercentage ??
+                                                      0) >=
+                                                  0
                                               ? ThemeColors.accent
                                               : ThemeColors.sos,
                                         ),
@@ -118,19 +120,25 @@ class _CryptoIndexState extends State<CryptoIndex> {
                                     text: tickerDetail?.displayChange,
                                     style: styleBaseSemiBold(
                                       fontSize: 13,
-                                      color: (tickerDetail?.changesPercentage ?? 0) >= 0
+                                      color: (tickerDetail?.changesPercentage ??
+                                                  0) >=
+                                              0
                                           ? ThemeColors.accent
                                           : ThemeColors.sos,
                                     ),
                                   ),
                                   if (tickerDetail?.changesPercentage != null)
                                     TextSpan(
-                                      text: ' (${tickerDetail?.changesPercentage}%)',
+                                      text:
+                                          ' (${tickerDetail?.changesPercentage}%)',
                                       style: styleBaseSemiBold(
                                         fontSize: 13,
-                                        color: (tickerDetail?.changesPercentage ?? 0) >= 0
-                                            ? ThemeColors.accent
-                                            : ThemeColors.sos,
+                                        color:
+                                            (tickerDetail?.changesPercentage ??
+                                                        0) >=
+                                                    0
+                                                ? ThemeColors.accent
+                                                : ThemeColors.sos,
                                       ),
                                     ),
                                 ],
@@ -142,7 +150,7 @@ class _CryptoIndexState extends State<CryptoIndex> {
                       SpacerVertical(height: Pad.pad16),
                       HtmlWidget(
                         tickerDetail?.brief ?? '',
-                        textStyle: styleBaseRegular(height: 1.6,fontSize: 14),
+                        textStyle: styleBaseRegular(height: 1.6, fontSize: 14),
                       ),
                       SpacerVertical(height: Pad.pad16),
                       Row(
@@ -150,22 +158,27 @@ class _CryptoIndexState extends State<CryptoIndex> {
                           IntrinsicWidth(
                             child: BaseButton(
                               fullWidth: false,
-                              color: tickerDetail?.isCryptoAdded==0?ThemeColors.white:ThemeColors.splashBG,
-                              onPressed: (){
-                                if(tickerDetail?.isCryptoAdded==0){
+                              color: tickerDetail?.isCryptoAdded == 0
+                                  ? ThemeColors.white
+                                  : ThemeColors.splashBG,
+                              onPressed: () {
+                                if (tickerDetail?.isCryptoAdded == 0) {
                                   manager.requestAddToWatch(widget.symbol);
-                                }
-                                else{
+                                } else {
                                   manager.requestRemoveToWatch(widget.symbol);
                                 }
-
                               },
                               text: "ADD TO LIST",
-                              textStyle:stylePTSansRegular(fontSize: 12,color: tickerDetail?.isCryptoAdded==0?ThemeColors.primaryLight:ThemeColors.white,fontWeight: FontWeight.w600),
+                              textStyle: styleBaseRegular(
+                                fontSize: 12,
+                                color: tickerDetail?.isCryptoAdded == 0
+                                    ? ThemeColors.primaryLight
+                                    : ThemeColors.white,
+                              ),
                               icon: Images.ic_fav,
-                              iconColor:  tickerDetail?.isCryptoAdded==0?ThemeColors.primaryLight:ThemeColors.white,
-
-
+                              iconColor: tickerDetail?.isCryptoAdded == 0
+                                  ? ThemeColors.primaryLight
+                                  : ThemeColors.white,
                             ),
                           ),
                           SpacerHorizontal(width: Pad.pad24),
@@ -173,21 +186,20 @@ class _CryptoIndexState extends State<CryptoIndex> {
                             child: BaseButton(
                               fullWidth: false,
                               color: ThemeColors.white,
-                              onPressed: (){
-                              },
+                              onPressed: () {},
                               text: "WEBSITE",
-                              textStyle:stylePTSansRegular(fontSize: 12,color: ThemeColors.primaryLight,fontWeight: FontWeight.w600),
+                              textStyle: styleBaseRegular(
+                                fontSize: 12,
+                                color: ThemeColors.primaryLight,
+                              ),
                               icon: Images.ic_link,
-
                             ),
                           ),
                         ],
                       ),
                       SpacerVertical(height: Pad.pad16),
-
                     ],
                   ),
-
                 ),
                 SpacerVertical(height: Pad.pad16),
                 CryptoChart(
@@ -195,48 +207,37 @@ class _CryptoIndexState extends State<CryptoIndex> {
                   chart: manager.dataHistoricalC,
                   error: manager.errorHistoricalC,
                   onTap: (p0) {
-                    manager.getCrHistoricalC(range: p0,symbol: widget.symbol);
+                    manager.getCrHistoricalC(range: p0, symbol: widget.symbol);
                   },
                 ),
                 SpacerVertical(height: Pad.pad10),
-
                 Visibility(
-                  visible: pricePerformance!=null,
-                  child: CryptoInfoItem(
-                      dataRes:pricePerformance
-                  ),
-                ),
-
-                Visibility(
-                  visible: marketCap!=null,
-                  child: CryptoInfoItem(
-                      dataRes:marketCap
-                  ),
+                  visible: pricePerformance != null,
+                  child: CryptoInfoItem(dataRes: pricePerformance),
                 ),
                 Visibility(
-                  visible: tradingVolume!=null,
-                  child: CryptoInfoItem(
-                      dataRes:tradingVolume
-                  ),
+                  visible: marketCap != null,
+                  child: CryptoInfoItem(dataRes: marketCap),
                 ),
-
                 Visibility(
-                  visible: supply!=null,
-                  child: CryptoInfoItem(
-                      dataRes:supply
-                  ),
+                  visible: tradingVolume != null,
+                  child: CryptoInfoItem(dataRes: tradingVolume),
                 ),
-
+                Visibility(
+                  visible: supply != null,
+                  child: CryptoInfoItem(dataRes: supply),
+                ),
                 SpacerVertical(height: Pad.pad10),
                 Visibility(
-                    visible: recentTweetPost?.title != null && recentTweetPost?.title!= '',
+                    visible: recentTweetPost?.title != null &&
+                        recentTweetPost?.title != '',
                     child: BaseHeading(
-                      title: recentTweetPost?.title??"",
-                      titleStyle: stylePTSansBold(fontSize: 24,color: ThemeColors.splashBG),
-                      margin: EdgeInsets.symmetric(horizontal: Pad.pad16,vertical: Pad.pad5),
-
-                    )
-                ),
+                      title: recentTweetPost?.title ?? "",
+                      titleStyle: styleBaseBold(
+                          fontSize: 24, color: ThemeColors.splashBG),
+                      margin: EdgeInsets.symmetric(
+                          horizontal: Pad.pad16, vertical: Pad.pad5),
+                    )),
                 SpacerVertical(height: Pad.pad5),
                 Visibility(
                   visible: recentTweetPost?.data != null,
@@ -259,12 +260,10 @@ class _CryptoIndexState extends State<CryptoIndex> {
                 ),
                 SpacerVertical(height: Pad.pad10),
                 CryptoTable(
-                    symbolMentionRes:bitcoinRes,
+                  symbolMentionRes: bitcoinRes,
                   fromTo: 1,
                 )
-              ]
-          ),
-        )
-    );
+              ]),
+        ));
   }
 }

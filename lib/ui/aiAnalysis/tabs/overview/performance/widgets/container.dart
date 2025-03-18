@@ -15,7 +15,7 @@ class AIPointerContainer extends StatelessWidget {
     required this.title,
     this.style,
     this.width = 65,
-    this.color = ThemeColors.neutral5,
+    this.color,
   });
 
   @override
@@ -28,7 +28,7 @@ class AIPointerContainer extends StatelessWidget {
             size: Size(10, 6),
             painter: TrianglePointer(
               isDownwards: isDownwards,
-              color: color ?? ThemeColors.greyText,
+              color: color ?? ThemeColors.neutral5,
             ),
           ),
         ),
@@ -43,7 +43,7 @@ class AIPointerContainer extends StatelessWidget {
             textAlign: TextAlign.center,
             maxLines: 1,
             title,
-            style: style ?? styleGeorgiaRegular(color: ThemeColors.background),
+            style: style ?? styleBaseRegular(color: ThemeColors.background),
           ),
         ),
         Visibility(
@@ -135,7 +135,7 @@ class AIPointerContainerNew extends StatelessWidget {
             textAlign: TextAlign.center,
             maxLines: 1,
             title,
-            style: styleGeorgiaBold(
+            style: styleBaseBold(
               color: ThemeColors.background,
               fontSize: 12,
             ),

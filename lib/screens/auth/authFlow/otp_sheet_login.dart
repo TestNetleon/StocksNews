@@ -277,12 +277,12 @@
 //                   // const SpacerVertical(height: 50),
 //                   Text(
 //                     "VERIFICATION OTP SENT",
-//                     style: stylePTSansBold(fontSize: 22),
+//                     style: styleBaseBold(fontSize: 22),
 //                   ),
 //                   const SpacerVertical(height: 8),
 //                   // Text(
 //                   //   "Please enter the 4-digit verification code that was sent to ${provider.user?.username}. The code is valid for 10 minutes.",
-//                   //   style: stylePTSansRegular(
+//                   //   style: styleBaseRegular(
 //                   //     fontSize: 14,
 //                   //     color: Colors.white,
 //                   //   ),
@@ -313,7 +313,7 @@
 //                               textAlign: TextAlign.center,
 //                               text: TextSpan(
 //                                 text: "Resend OTP",
-//                                 style: stylePTSansBold(
+//                                 style: styleBaseBold(
 //                                     fontSize: 15, color: ThemeColors.accent),
 //                               ),
 //                             ),
@@ -330,14 +330,14 @@
 //                               children: [
 //                                 TextSpan(
 //                                   text: "${startTiming}Sec",
-//                                   style: stylePTSansBold(
+//                                   style: styleBaseBold(
 //                                     fontSize: 15,
 //                                     color: ThemeColors.accent,
 //                                   ),
 //                                 ),
 //                               ],
 //                               text: "Resend OTP in ",
-//                               style: stylePTSansRegular(
+//                               style: styleBaseRegular(
 //                                 fontSize: 15,
 //                               ),
 //                             ),

@@ -89,11 +89,11 @@ class ThemeButtonSmall extends StatelessWidget {
                 textAlign: textAlign,
                 text,
                 style: fontBold
-                    ? stylePTSansBold(
+                    ? styleBaseBold(
                         fontSize: textSize,
                         color: textColor,
                       )
-                    : stylePTSansRegular(
+                    : styleBaseRegular(
                         fontSize: textSize,
                         color: textColor,
                       ),

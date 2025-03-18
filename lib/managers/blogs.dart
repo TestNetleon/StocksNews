@@ -6,6 +6,7 @@ import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/api/apis.dart';
 import 'package:stocks_news_new/models/lock.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
+import 'package:stocks_news_new/service/braze/service.dart';
 import 'package:stocks_news_new/ui/base/toaster.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 
@@ -121,9 +122,18 @@ class BlogsManager extends ChangeNotifier {
     return info;
   }
 
+  int _limitCall = 0;
+  int get limitCall => _limitCall;
+
+  void clearLimitCall() {
+    _limitCall = 0;
+    notifyListeners();
+  }
+
   Future<void> getBlogsDetailData(String slug, {reset = true}) async {
     if (reset) {
       _blogsDetail = null;
+      clearLimitCall();
     }
     try {
       setStatusDetail(Status.loading);
@@ -141,18 +151,37 @@ class BlogsManager extends ChangeNotifier {
       if (response.status) {
         _blogsDetail = newsDetailResFromJson(jsonEncode(response.data));
         _errorDetail = null;
-
         _lockInformation = _blogsDetail?.lockInfo;
+        BrazeService.eventContentView(screenType: 'article', source: slug);
+
+        setStatusDetail(Status.loaded);
       } else {
-        _blogsDetail = null;
-        _errorDetail = response.message;
+        _limitCall++;
+        setStatusDetail(Status.loading);
+
+        if (_limitCall < 4) {
+          await Future.delayed(Duration(milliseconds: 100));
+          getBlogsDetailData(slug, reset: false);
+        } else {
+          _blogsDetail = null;
+          _errorDetail = response.message;
+          setStatusDetail(Status.loaded);
+        }
       }
     } catch (e) {
-      _blogsDetail = null;
-      _errorDetail = Const.errSomethingWrong;
+      _limitCall++;
+      setStatusDetail(Status.loading);
+
+      if (_limitCall < 4) {
+        await Future.delayed(Duration(milliseconds: 100));
+        getBlogsDetailData(slug, reset: false);
+      } else {
+        _blogsDetail = null;
+        _errorDetail = Const.errSomethingWrong;
+        setStatusDetail(Status.loaded);
+      }
+
       Utils().showLog('Error in ${Apis.newsDetail}: $e');
-    } finally {
-      setStatusDetail(Status.loaded);
     }
   }
 

@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:stocks_news_new/utils/theme.dart';
-
 import '../../base/base_list_divider.dart';
 
 class SDListHeading extends StatelessWidget {
@@ -34,7 +32,8 @@ class SDListHeading extends StatelessWidget {
                       data[index],
                       textAlign:
                           index == data.length - 1 ? TextAlign.end : null,
-                      style: styleBaseBold(fontSize: 13),
+                      // style: styleBaseBold(fontSize: 13),
+                      style: Theme.of(context).textTheme.labelLarge,
                     ),
                   ),
                 ),

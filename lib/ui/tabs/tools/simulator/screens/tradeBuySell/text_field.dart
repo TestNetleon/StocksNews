@@ -17,7 +17,7 @@ class TextfieldTrade extends StatelessWidget {
     required this.focusNode,
     required this.change,
     this.text,
-    this.readOnly=false,
+    this.readOnly = false,
     required this.lastEntered,
     required this.counter,
   });
@@ -53,7 +53,6 @@ class TextfieldTrade extends StatelessWidget {
           cursorHeight: 50,
           cursorWidth: 1,
           readOnly: readOnly,
-
         ),
         Positioned.fill(
           child: Align(
@@ -70,7 +69,8 @@ class TextfieldTrade extends StatelessWidget {
                   children: [
                     Text(
                       text ?? "0",
-                      style: TextStyle(fontSize:86, color: ThemeColors.splashBG),
+                      style:
+                          TextStyle(fontSize: 86, color: ThemeColors.splashBG),
                     ),
                     ClipRect(
                       child: AnimatedSwitcher(
@@ -109,7 +109,10 @@ class TextfieldTrade extends StatelessWidget {
                         child: Text(
                           lastEntered,
                           key: ValueKey<String>('$lastEntered$counter'),
-                          style: const TextStyle(fontSize:86, color: ThemeColors.splashBG),
+                          style: TextStyle(
+                            fontSize: 86,
+                            color: ThemeColors.splashBG,
+                          ),
                         ),
                       ),
                     ),

@@ -124,7 +124,7 @@ class AlertPopupCustom extends StatelessWidget {
                                         top: icon == null ? 12 : 0),
                                     child: Text(
                                       title ?? "",
-                                      style: stylePTSansBold(
+                                      style: styleBaseBold(
                                         color: ThemeColors.background,
                                         fontSize: 20,
                                       ),
@@ -136,7 +136,7 @@ class AlertPopupCustom extends StatelessWidget {
                                     message ?? "",
                                     textAlign:
                                         messageTextAlign ?? TextAlign.center,
-                                    style: stylePTSansRegular(
+                                    style: styleBaseRegular(
                                         color: ThemeColors.background,
                                         height: 1.4),
                                   ),
@@ -156,7 +156,7 @@ class AlertPopupCustom extends StatelessWidget {
                                   },
                                   child: Text(
                                     "$cancelText",
-                                    style: stylePTSansBold(
+                                    style: styleBaseBold(
                                         color: ThemeColors.background),
                                   ),
                                 ),
@@ -170,7 +170,7 @@ class AlertPopupCustom extends StatelessWidget {
                                       },
                                   child: Text(
                                     okText ?? "OK",
-                                    style: stylePTSansBold(
+                                    style: styleBaseBold(
                                         color: ThemeColors.background),
                                   ),
                                 ),

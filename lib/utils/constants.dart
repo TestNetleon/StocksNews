@@ -138,7 +138,8 @@ String apiKeyFMP = "";
 bool popHome = false;
 Uri? deepLinkData;
 bool fromDrawer = false;
-Uri? shareUri;
+// Uri? shareUri;
+String? shareUrl;
 bool onDeepLinking = false;
 bool splashLoaded = false;
 String? fcmTokenGlobal;
@@ -155,6 +156,7 @@ bool withLoginMembership = true;
 String? memCODE;
 String? appsFlyerUID;
 bool isOnTsScreen = false;
+bool isThemeLight = false;
 
 // bool memTrack = false;
 
@@ -188,6 +190,7 @@ Map<AdScreen, Map<AdPlaces, bool>> adVisibilityMap = {
 
 class Images {
   //MARK: New UI
+  static const String layout1 = 'assets/image/layout1.png';
   static const String base = 'assets/image/';
   static const String mainLogo = '${base}splashLogo.png';
   static const String mainBlackLogo = '${base}mainBlackLogo.png';
@@ -241,11 +244,14 @@ class Images {
   static const String ic_fav = '${base}ic_fav.png';
   static const String ic_link = '${base}ic_link.png';
   static const String filter = '${base}filter.png';
+  static const String msReport = '${base}ms_report.png';
+  static const String theme = '${base}theme.png';
 
+  //MARK: New UI END
   //-------------------------------------------------------------------------------
   static const String scannerStop = 'assets/images/scanner_stop.png';
   static const String logo = "assets/images/logo.png";
-  static const String logoP = "assets/images/logo_holder.png";
+  static const String logoP = "assets/image/logo_holder.png";
   static const String login = "assets/images/log-in.png";
   static const String stockIcon = "assets/images/stock_icon.png";
   static const String signupSuccess = "assets/images/signup_success.png";

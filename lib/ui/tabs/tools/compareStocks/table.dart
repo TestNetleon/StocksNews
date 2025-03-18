@@ -32,7 +32,7 @@ class ToolsCompareTable extends StatelessWidget {
             DataColumn(
               label: Text(
                 'Stock',
-                style: styleGeorgiaBold(
+                style: styleBaseBold(
                   fontSize: 13,
                   color: ThemeColors.neutral40,
                 ),
@@ -65,7 +65,7 @@ class ToolsCompareTable extends StatelessWidget {
                 return DataColumn(
                   label: Text(
                     '${data[index].symbol}',
-                    style: styleGeorgiaBold(
+                    style: styleBaseBold(
                       fontSize: 13,
                       color: ThemeColors.black,
                     ),

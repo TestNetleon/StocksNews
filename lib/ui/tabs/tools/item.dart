@@ -1,7 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:stocks_news_new/models/tools.dart';
 import 'package:stocks_news_new/ui/base/button.dart';
+import 'package:stocks_news_new/ui/theme/manager.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -44,7 +46,11 @@ class ToolsItem extends StatelessWidget {
               child: Text(
                 textAlign: TextAlign.center,
                 card?.title ?? '',
-                style: styleBaseBold(fontSize: 22),
+                // style: styleBaseBold(fontSize: 22),
+                style: Theme.of(context)
+                    .textTheme
+                    .displayLarge
+                    ?.copyWith(fontSize: 22),
               ),
             ),
           ),
@@ -63,13 +69,21 @@ class ToolsItem extends StatelessWidget {
             ),
           ),
           SpacerVertical(height: 40),
-          BaseButton(
-            text: card?.buttonText ?? '',
-            onPressed: onTap,
-            color: ThemeColors.white,
-            textColor: ThemeColors.secondary100,
-            side: BorderSide(color: ThemeColors.secondary120),
-          ),
+          Consumer<ThemeManager>(builder: (context, value, child) {
+            return BaseButton(
+              text: card?.buttonText ?? '',
+              onPressed: onTap,
+              color: ThemeColors.white,
+              textColor: value.isDarkMode
+                  ? ThemeColors.black
+                  : ThemeColors.secondary100,
+              side: BorderSide(
+                color: value.isDarkMode
+                    ? ThemeColors.black
+                    : ThemeColors.secondary120,
+              ),
+            );
+          }),
         ],
       ),
     );

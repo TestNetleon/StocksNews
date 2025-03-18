@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:stocks_news_new/ui/base/base_list_divider.dart';
 import 'package:stocks_news_new/ui/tabs/tools/simulator/models/ts_recurring_detail.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
@@ -6,11 +7,9 @@ import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
-
 class TransactionItem extends StatelessWidget {
   final Transaction? data;
-  const TransactionItem({super.key,this.data});
-
+  const TransactionItem({super.key, this.data});
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +34,8 @@ class TransactionItem extends StatelessWidget {
                             margin: EdgeInsets.only(bottom: 2),
                             child: Text(
                               "${data?.symbol}",
-                              style: styleGeorgiaBold(fontSize: 18,color: ThemeColors.primary),
+                              style: styleBaseBold(
+                                  fontSize: 18, color: ThemeColors.primary),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                             ),
@@ -49,8 +49,8 @@ class TransactionItem extends StatelessWidget {
                               child: Flexible(
                                 child: Text(
                                   "${data?.recurringAmount?.toFormattedPriceForSim()}",
-                                  style: styleGeorgiaRegular(
-                                     color:ThemeColors.primary,
+                                  style: styleBaseRegular(
+                                    color: ThemeColors.primary,
                                     fontSize: 14,
                                   ),
                                   // maxLines: 2,
@@ -58,7 +58,6 @@ class TransactionItem extends StatelessWidget {
                                 ),
                               ),
                             ),
-
                           ],
                         ),
                       ],
@@ -72,17 +71,18 @@ class TransactionItem extends StatelessWidget {
                         visible: data?.quantity != null,
                         child: Text(
                           "${data?.quantity} QTY",
-                          style: stylePTSansBold(fontSize: 18,color: ThemeColors.primary),
+                          style: styleBaseBold(
+                              fontSize: 18, color: ThemeColors.primary),
                         ),
                       ),
                       Visibility(
-                        visible:
-                        data?.stockPrice != null,
+                        visible: data?.stockPrice != null,
                         child: Padding(
                           padding: const EdgeInsets.only(top: 5),
                           child: Text(
                             "Stock Price ${data?.stockPrice?.toFormattedPriceForSim()}",
-                            style: stylePTSansRegular(fontSize: 14,color: ThemeColors.primary),
+                            style: styleBaseRegular(
+                                fontSize: 14, color: ThemeColors.primary),
                           ),
                         ),
                       ),
@@ -97,13 +97,13 @@ class TransactionItem extends StatelessWidget {
                   Visibility(
                     visible: data?.createdAt != null && data?.createdAt != '',
                     child: Expanded(
-                      child:Column(
+                      child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
                             textAlign: TextAlign.center,
                             "Executed Date",
-                            style: stylePTSansRegular(
+                            style: styleBaseRegular(
                               color: ThemeColors.greyText,
                               fontSize: 12,
                             ),
@@ -112,7 +112,7 @@ class TransactionItem extends StatelessWidget {
                           Text(
                             textAlign: TextAlign.end,
                             data?.createdAt ?? "",
-                            style: stylePTSansRegular(
+                            style: styleBaseRegular(
                               color: ThemeColors.primary,
                               fontSize: 12,
                             ),
@@ -132,7 +132,7 @@ class TransactionItem extends StatelessWidget {
                             Text(
                               textAlign: TextAlign.center,
                               "Investment Amount",
-                              style: stylePTSansRegular(
+                              style: styleBaseRegular(
                                 color: ThemeColors.greyText,
                                 fontSize: 12,
                               ),
@@ -141,7 +141,7 @@ class TransactionItem extends StatelessWidget {
                             Text(
                               textAlign: TextAlign.end,
                               data?.usedAmount?.toFormattedPrice() ?? "0",
-                              style: stylePTSansRegular(
+                              style: styleBaseRegular(
                                 color: ThemeColors.primary,
                                 fontSize: 12,
                               ),
@@ -157,12 +157,18 @@ class TransactionItem extends StatelessWidget {
           ),
         ),
         Visibility(
-          visible: data?.statusString != null &&  data?.statusString  != '',
+          visible: data?.statusString != null && data?.statusString != '',
           child: Column(
             children: [
-              data?.statusString=="Completed"?
-              const Divider(color: ThemeColors.accent, height: 10,thickness:1):
-              const Divider(color: ThemeColors.darkRed, height: 10,thickness:1),
+              data?.statusString == "Completed"
+                  ? const BaseListDivider(
+                      color: ThemeColors.accent,
+                      height: 10,
+                    )
+                  : const BaseListDivider(
+                      color: ThemeColors.darkRed,
+                      height: 10,
+                    ),
             ],
           ),
         ),

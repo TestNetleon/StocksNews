@@ -24,7 +24,7 @@ class ReferralHeader extends StatelessWidget {
       await userManager.referJoinScreen();
     } else {
       await Share.share(
-        "${"shareText"}${"\n\n"}${shareUri.toString()}",
+        "${"shareText"}${"\n\n"}${shareUrl.toString()}",
       );
     }
   }
@@ -83,7 +83,7 @@ class ReferralHeader extends StatelessWidget {
                 ),
                 SpacerVertical(height: 8),
                 Text(
-                  "$shareUri",
+                  "$shareUrl",
                   style: styleBaseRegular(
                     fontSize: 14,
                     color: ThemeColors.white,

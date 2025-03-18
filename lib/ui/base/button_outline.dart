@@ -61,11 +61,11 @@ class BaseButtonOutline extends StatelessWidget {
           textAlign: textAlign,
           textUppercase ? text.toUpperCase() : text,
           style: fontBold
-              ? stylePTSansBold(
+              ? styleBaseBold(
                   fontSize: textSize,
                   color: onPressed == null ? disableTextColor : textColor,
                 )
-              : stylePTSansRegular(
+              : styleBaseRegular(
                   fontSize: textSize,
                   color: onPressed == null ? disableTextColor : textColor,
                 ),

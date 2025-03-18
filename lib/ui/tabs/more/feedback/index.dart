@@ -30,7 +30,7 @@ class FeedbackIndex extends StatefulWidget {
 class _FeedbackIndexState extends State<FeedbackIndex> {
   TextEditingController comment = TextEditingController();
   String? selectType;
-  int? selectedIndex=0;
+  int? selectedIndex = 0;
 
   @override
   void initState() {
@@ -39,10 +39,12 @@ class _FeedbackIndexState extends State<FeedbackIndex> {
       _callAPI();
     });
   }
+
   void _callAPI() {
     FeedbackManager manager = context.read<FeedbackManager>();
     manager.getFeedback();
   }
+
   @override
   Widget build(BuildContext context) {
     FeedbackManager manager = context.watch<FeedbackManager>();
@@ -51,7 +53,7 @@ class _FeedbackIndexState extends State<FeedbackIndex> {
       //resizeToAvoidBottomInset: false,
       appBar: BaseAppBar(
         showBack: true,
-        title:"Feedback",
+        title: "Feedback",
       ),
       body: BaseLoaderContainer(
           isLoading: manager.isLoading,
@@ -62,7 +64,8 @@ class _FeedbackIndexState extends State<FeedbackIndex> {
             _callAPI();
           },
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: Pad.pad16,vertical: Pad.pad8),
+            padding: const EdgeInsets.symmetric(
+                horizontal: Pad.pad16, vertical: Pad.pad8),
             child: Column(
               children: [
                 Expanded(
@@ -71,34 +74,39 @@ class _FeedbackIndexState extends State<FeedbackIndex> {
                       children: [
                         Visibility(
                           visible: manager.feedbackData?.title != '',
-                          child:BaseHeading(
+                          child: BaseHeading(
                             textAlign: TextAlign.center,
                             title: manager.feedbackData?.title ?? "",
-                            titleStyle: stylePTSansBold(fontSize: 32,color: ThemeColors.splashBG),
+                            titleStyle: styleBaseBold(
+                                fontSize: 32, color: ThemeColors.splashBG),
                             subtitle: manager.feedbackData?.existMessage ?? "",
-                            subtitleStyle: stylePTSansRegular(fontSize: 16,color: ThemeColors.neutral80),
+                            subtitleStyle: styleBaseRegular(
+                                fontSize: 16, color: ThemeColors.neutral80),
                             crossAxisAlignment: CrossAxisAlignment.center,
                           ),
                         ),
                         SpacerVertical(height: Pad.pad16),
                         Visibility(
-                          visible: manager.feedbackData?.type!=null || manager.feedbackData?.type?.isNotEmpty == true,
+                          visible: manager.feedbackData?.type != null ||
+                              manager.feedbackData?.type?.isNotEmpty == true,
                           child: SingleChildScrollView(
                             child: Row(
                               children: List.generate(
                                 manager.feedbackData!.type!.length,
-                                    (index) {
-                                      bool isOpen = selectedIndex == index;
+                                (index) {
+                                  bool isOpen = selectedIndex == index;
                                   return Expanded(
                                     child: Column(
                                       children: [
                                         InkWell(
-                                          borderRadius: BorderRadius.circular(Pad.pad16),
+                                          borderRadius:
+                                              BorderRadius.circular(Pad.pad16),
                                           onTap: () {
                                             setState(() {
                                               selectedIndex = index;
-                                              selectType=manager.feedbackData!.type![index].title??"";
-
+                                              selectType = manager.feedbackData!
+                                                      .type![index].title ??
+                                                  "";
                                             });
                                           },
                                           child: Container(
@@ -107,18 +115,31 @@ class _FeedbackIndexState extends State<FeedbackIndex> {
                                               vertical: 27,
                                             ),
                                             decoration: BoxDecoration(
-                                              color: isOpen?ThemeColors.secondary10:ThemeColors.white,
-                                                border: Border.all(color: isOpen?ThemeColors.secondary100:ThemeColors.neutral10),
-                                                borderRadius: BorderRadius.circular(Pad.pad16)),
+                                                color: isOpen
+                                                    ? ThemeColors.secondary10
+                                                    : ThemeColors.white,
+                                                border: Border.all(
+                                                    color: isOpen
+                                                        ? ThemeColors
+                                                            .secondary100
+                                                        : ThemeColors
+                                                            .neutral10),
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        Pad.pad16)),
                                             child: CachedNetworkImage(
-                                              imageUrl: manager.feedbackData!.type![index].icon ?? '',
+                                              imageUrl: manager.feedbackData!
+                                                      .type![index].icon ??
+                                                  '',
                                               height: 33,
                                               width: 33,
-                                              color: isOpen?ThemeColors.secondary100:ThemeColors.neutral10,
+                                              color: isOpen
+                                                  ? ThemeColors.secondary100
+                                                  : ThemeColors.neutral10,
                                             ),
                                           ),
                                         )
-                                       /* Text(
+                                        /* Text(
                                           manager.feedbackData!.type![index].title ?? '',
                                           style: styleBaseRegular(),
                                         ),*/
@@ -132,39 +153,40 @@ class _FeedbackIndexState extends State<FeedbackIndex> {
                         ),
                         SpacerVertical(height: Pad.pad24),
                         BaseTextField(
-                          placeholder: manager.feedbackData?.placeholderText ?? "",
+                          placeholder:
+                              manager.feedbackData?.placeholderText ?? "",
                           controller: comment,
                           textCapitalization: TextCapitalization.words,
                           keyboardType: TextInputType.name,
                           minLines: 10,
-                          contentPadding: EdgeInsets.symmetric(vertical: Pad.pad10,horizontal: Pad.pad10),
+                          contentPadding: EdgeInsets.symmetric(
+                              vertical: Pad.pad10, horizontal: Pad.pad10),
                         ),
                       ],
                     ),
                   ),
                 ),
-
                 BaseButton(
                   text: "Submit",
                   color: ThemeColors.primary10,
                   textColor: ThemeColors.primary100,
-                  onPressed:(){
-                    if(comment.text.isEmpty){
+                  onPressed: () {
+                    if (comment.text.isEmpty) {
                       popUpAlert(
                         message: "Enter Your Opinion",
                         title: "Alert",
                         icon: Images.alertPopGIF,
                       );
                       return;
-                    }
-                    else{
-                      manager.sendFeedback(
-                          type: selectType??"",
-                          comment: comment.text
-                      ).then((value) {
+                    } else {
+                      manager
+                          .sendFeedback(
+                              type: selectType ?? "", comment: comment.text)
+                          .then((value) {
                         closeKeyboard();
                         BaseBottomSheet().bottomSheet(
-                          barrierColor: ThemeColors.neutral5.withValues(alpha: 0.7),
+                          barrierColor:
+                              ThemeColors.neutral5.withValues(alpha: 0.7),
                           child: FeedbackShowSheet(
                             feedbackSendRes: manager.dataSend,
                             onTapKeep: () {
@@ -172,7 +194,6 @@ class _FeedbackIndexState extends State<FeedbackIndex> {
                             },
                             onTapSure: () {
                               Navigator.pop(navigatorKey.currentContext!);
-
                             },
                           ),
                         );
@@ -182,9 +203,7 @@ class _FeedbackIndexState extends State<FeedbackIndex> {
                 ),
               ],
             ),
-          )
-
-      ),
+          )),
     );
   }
 }

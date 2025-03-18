@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/managers/signals.dart';
 import 'package:stocks_news_new/ui/base/app_bar.dart';
 import 'package:stocks_news_new/ui/base/scaffold.dart';
+import 'package:stocks_news_new/ui/tabs/more/index.dart';
 import 'package:stocks_news_new/ui/tabs/signals/insiders/filter/filter.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import '../../base/common_tab.dart';
@@ -43,13 +44,14 @@ class _SignalsIndexState extends State<SignalsIndex> {
     return BaseScaffold(
       appBar: BaseAppBar(
         showSearch: true,
+        showDrawer: true,
         leadingFilterClick: manager.selectedScreen == 2 ? _onFilterClick : null,
       ),
+      drawer: MoreIndex(),
       body: Column(
         children: [
           BaseTabs(
             data: manager.tabs,
-            // textStyle: styleBaseBold(fontSize: 16),
             onTap: manager.onScreenChange,
           ),
           if (manager.selectedScreen == 0)

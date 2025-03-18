@@ -10,7 +10,7 @@ import '../../utils/theme.dart';
 class BaseCountryCode extends StatefulWidget {
   final Function(CountryCode value) onChanged;
   final bool enabled;
-  final Color textColor;
+  final Color? textColor;
   final bool showBox;
 
   const BaseCountryCode({
@@ -18,7 +18,7 @@ class BaseCountryCode extends StatefulWidget {
     required this.onChanged,
     this.enabled = true,
     this.showBox = true,
-    this.textColor = Colors.black,
+    this.textColor,
   });
 
   @override
@@ -57,20 +57,22 @@ class _BaseCountryCodeState extends State<BaseCountryCode> {
           initialSelection: locale,
           showCountryOnly: false,
           enabled: widget.enabled,
-          closeIcon: const Icon(
-            Icons.close_sharp,
-            color: Colors.black,
-          ),
+          closeIcon: const Icon(Icons.close_sharp, color: Colors.black),
           flagWidth: 24,
           showOnlyCountryWhenClosed: false,
           alignLeft: false,
           boxDecoration: BoxDecoration(
             color: ThemeColors.white,
             borderRadius: BorderRadius.circular(8),
+            border: Border.all(
+              color: ThemeColors.black,
+            ),
           ),
-          dialogTextStyle: styleGeorgiaBold(color: Colors.black),
-          textStyle: styleGeorgiaRegular(color: widget.textColor),
-          searchStyle: styleGeorgiaRegular(color: Colors.black),
+          dialogTextStyle: styleBaseBold(color: ThemeColors.black),
+          textStyle: styleBaseRegular(
+            color: widget.textColor ?? ThemeColors.black,
+          ),
+          searchStyle: styleBaseRegular(color: Colors.black),
           barrierColor: Colors.black26,
           searchDecoration: InputDecoration(
             iconColor: Colors.black,
@@ -82,7 +84,7 @@ class _BaseCountryCodeState extends State<BaseCountryCode> {
               color: Colors.black,
             ),
             filled: true,
-            hintStyle: stylePTSansRegular(color: Colors.grey),
+            hintStyle: styleBaseRegular(color: Colors.grey),
             hintText: "Search country",
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(4.0),

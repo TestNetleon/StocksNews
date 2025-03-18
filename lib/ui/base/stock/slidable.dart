@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:provider/provider.dart';
+import 'package:stocks_news_new/ui/theme/manager.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -69,6 +71,10 @@ class _BaseSlidableStockItemState extends State<BaseSlidableStockItem>
 
   @override
   Widget build(BuildContext context) {
+    ThemeManager manager = context.watch<ThemeManager>();
+
+    bool isDark = manager.isDarkMode;
+
     return Slidable(
       controller: controller,
       key: const ValueKey(0),
@@ -89,6 +95,7 @@ class _BaseSlidableStockItemState extends State<BaseSlidableStockItem>
                       controller?.close();
                       widget.addToAlert!();
                     },
+                    bgColor: isDark ? ThemeColors.warning : null,
                   ),
                 if (widget.addToWatchlist != null) ...[
                   const SpacerHorizontal(width: 1),
@@ -101,6 +108,7 @@ class _BaseSlidableStockItemState extends State<BaseSlidableStockItem>
                       controller?.close();
                       widget.addToWatchlist!();
                     },
+                    bgColor: isDark ? ThemeColors.accent : null,
                   ),
                 ],
                 if (widget.edit != null) ...[
@@ -167,7 +175,7 @@ class BaseSlidableActionItem extends StatelessWidget {
               Text(
                 label,
                 textAlign: TextAlign.center,
-                style: stylePTSansBold(fontSize: 14, color: Colors.white),
+                style: styleBaseBold(fontSize: 14, color: ThemeColors.white),
               ),
             ],
           ),

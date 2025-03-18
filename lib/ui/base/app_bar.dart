@@ -2,46 +2,44 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/managers/global.dart';
+import 'package:stocks_news_new/managers/user.dart';
+import 'package:stocks_news_new/modals/user_res.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/routes/navigation_observer.dart';
 import 'package:stocks_news_new/ui/stockDetail/index.dart';
+import 'package:stocks_news_new/ui/theme/manager.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/utils/utils.dart';
+import 'package:stocks_news_new/widgets/cache_network_image.dart';
+import 'package:svg_flutter/svg.dart';
 import '../../../../ui/tabs/tabs.dart';
 import '../tabs/more/news/detail.dart';
 import 'search/base_search.dart';
 
 class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
-  final bool isHome,
-      showBack,
-      showSearch,
-      showNotification,
-      showActionNotification;
+  final bool isHome, showBack, showSearch, showNotification, showDrawer;
   final Widget? searchFieldWidget;
-  final bool showClose;
   final String? title;
   final Function()? onSaveClick;
   final Function()? shareURL;
   final double toolbarHeight;
   final bool showLogo;
-  final Function()? leadingFilterClick, showFilter;
+  final Function()? leadingFilterClick;
 
   const BaseAppBar({
     super.key,
+    this.showDrawer = true,
     this.toolbarHeight = 56,
     this.searchFieldWidget,
     this.isHome = false,
     this.showBack = false,
-    this.showFilter,
     this.title,
     this.showSearch = false,
     this.showNotification = false,
-    this.showActionNotification = false,
     this.onSaveClick,
     this.shareURL,
-    this.showClose = false,
     this.showLogo = true,
     this.leadingFilterClick,
   });
@@ -75,6 +73,7 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
                       if (showBack)
                         ActionButton(
                           icon: Images.back,
+                          // color: darkTheme ? ThemeColors.white : null,
                           onTap: () {
                             if (popHome) {
                               if (CustomNavigatorObserver().stackCount >= 2 &&
@@ -86,10 +85,10 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
                                 Navigator.pushReplacementNamed(
                                     navigatorKey.currentContext!, Tabs.path);
                                 /* Navigator.pushReplacement(
-                                  navigatorKey.currentContext!,
-                                  MaterialPageRoute(
-                                      builder: (_) => const Tabs()),
-                                );*/
+                                    navigatorKey.currentContext!,
+                                    MaterialPageRoute(
+                                        builder: (_) => const Tabs()),
+                                  );*/
                                 popHome = false;
                               }
                             } else {
@@ -103,17 +102,15 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
                                 Navigator.pushReplacementNamed(
                                     navigatorKey.currentContext!, Tabs.path);
                                 /* Navigator.pushReplacement(
-                                  navigatorKey.currentContext!,
-                                  MaterialPageRoute(
-                                      builder: (_) => const Tabs()),
-                                );*/
+                                    navigatorKey.currentContext!,
+                                    MaterialPageRoute(
+                                        builder: (_) => const Tabs()),
+                                  );*/
                                 popHome = false;
                               }
                             }
                           },
                         ),
-                      if (showNotification)
-                        LeadingNotification(showIndicator: true),
                       if (leadingFilterClick != null)
                         ActionButton(
                           icon: Images.marketFilter,
@@ -121,15 +118,64 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
                           padding: EdgeInsets.all(8),
                           onTap: leadingFilterClick!,
                         ),
+                      if (showDrawer && !showBack)
+                        Consumer<UserManager>(
+                          builder: (context, value, child) {
+                            UserRes? user = value.user;
+                            // Utils().showLog(" ==> ${user?.image}");
+                            return Padding(
+                              padding: const EdgeInsets.only(left: 5),
+                              child: GestureDetector(
+                                onTap: () {
+                                  closeKeyboard();
+                                  Scaffold.of(context).openDrawer();
+                                },
+                                child: ClipRRect(
+                                  borderRadius:
+                                      BorderRadius.circular(Pad.pad999),
+                                  child: Container(
+                                    height: 30,
+                                    width: 30,
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      border: Border.all(
+                                        color: ThemeColors.black,
+                                      ),
+                                    ),
+                                    child:
+                                        user?.image == null || user?.image == ''
+                                            ? Image.asset(
+                                                Images.userPlaceholderNew,
+                                              )
+                                            : user?.image == 'svg'
+                                                ? SvgPicture.network(
+                                                    user?.image ?? '',
+                                                    placeholderBuilder: (context) =>
+                                                        CircularProgressIndicator(),
+                                                  )
+                                                : CachedNetworkImagesWidget(
+                                                    user?.image ?? '',
+                                                    showLoading: true,
+                                                  ),
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
+                        ),
                     ],
                   ),
                   // Actions
                   Row(
                     children: [
-                      if (showActionNotification)
-                        LeadingNotification(showIndicator: true),
+                      if (showNotification)
+                        LeadingNotification(
+                          showIndicator: true,
+                          // color: darkTheme ? ThemeColors.white : null,
+                        ),
                       if (showSearch)
                         ActionButton(
+                          // color: darkTheme ? ThemeColors.white : null,
                           icon: Images.search,
                           onTap: () {
                             Navigator.push(
@@ -169,15 +215,6 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
                             onTap: shareURL!,
                           ),
                         ),
-                      if (showFilter != null)
-                        Padding(
-                          padding: const EdgeInsets.only(right: 8),
-                          child: ActionButton(
-                            size: 19,
-                            icon: Images.filter,
-                            onTap: showFilter!,
-                          ),
-                        ),
                       if (onSaveClick != null)
                         SaveAction(onSaveClick: onSaveClick!),
                     ],
@@ -214,16 +251,20 @@ class CenterLogo extends StatelessWidget {
             Tabs.path,
           );
         },
-        child: Container(
-          width: MediaQuery.of(context).size.width * .40,
-          constraints: BoxConstraints(maxHeight: kTextTabBarHeight - 2.sp),
-          child: Container(
-            margin: isPhone ? EdgeInsets.all(8.sp) : null,
-            child: Image.asset(
-              Images.mainBlackLogo,
-              fit: BoxFit.contain,
-            ),
-          ),
+        child: Consumer<ThemeManager>(
+          builder: (context, value, child) {
+            return Container(
+              width: MediaQuery.of(context).size.width * .40,
+              constraints: BoxConstraints(maxHeight: kTextTabBarHeight - 2.sp),
+              child: Container(
+                margin: isPhone ? EdgeInsets.all(8.sp) : null,
+                child: Image.asset(
+                  value.isDarkMode ? Images.mainLogo : Images.mainBlackLogo,
+                  fit: BoxFit.contain,
+                ),
+              ),
+            );
+          },
         ),
       ),
     );
@@ -255,7 +296,7 @@ class ActionButton extends StatelessWidget {
     super.key,
     this.size = 32,
     required this.icon,
-    required this.onTap,
+    this.onTap,
     this.padding,
     this.color,
   });
@@ -264,7 +305,7 @@ class ActionButton extends StatelessWidget {
   final double size;
   final EdgeInsets? padding;
   final Color? color;
-  final Function() onTap;
+  final Function()? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -285,9 +326,11 @@ class ActionButton extends StatelessWidget {
 }
 
 class LeadingNotification extends StatelessWidget {
+  final Color? color;
   const LeadingNotification({
     super.key,
     this.showIndicator = false,
+    this.color,
   });
 
   final bool showIndicator;
@@ -306,7 +349,7 @@ class LeadingNotification extends StatelessWidget {
           },
           child: Image.asset(
             Images.notification,
-            color: ThemeColors.black,
+            color: color ?? ThemeColors.black,
             height: 35,
             width: 35,
           ),

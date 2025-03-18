@@ -91,7 +91,7 @@ class ThemeInputField extends StatelessWidget {
             visible: label != null,
             child: Text(
               label ?? '',
-              style: stylePTSansBold(),
+              style: styleBaseBold(),
             ),
           ),
           child ??
@@ -108,14 +108,14 @@ class ThemeInputField extends StatelessWidget {
                 enabled: editable,
                 textCapitalization: textCapitalization,
                 inputFormatters: inputFormatters ?? [allSpecialSymbolsRemove],
-                style: style ?? stylePTSansRegular(color: Colors.black),
+                style: style ?? styleBaseRegular(color: Colors.black),
                 decoration: InputDecoration(
                   prefix: prefix,
                   suffix: suffix,
                   suffixIcon: suffixIcon,
                   hintText: placeholder ?? '',
                   hintStyle: hintStyle ??
-                      stylePTSansRegular(color: ThemeColors.dividerDark),
+                      styleBaseRegular(color: ThemeColors.dividerDark),
                   // constraints: BoxConstraints(
                   //   minHeight: 0,
                   //   maxHeight: minLines > 1 ? 150.sp : 50.sp,

@@ -66,7 +66,7 @@ class _HelpDeskIndexState extends State<HelpDeskIndex> {
                   child:Text(
                     textAlign: TextAlign.start,
                     manager.data?.subTitle ?? "",
-                    style: stylePTSansRegular(fontSize: 16,color: ThemeColors.neutral80),
+                    style: styleBaseRegular(fontSize: 16,color: ThemeColors.neutral80),
                   ),
                 ),
                 SpacerVertical(height:10),
@@ -78,7 +78,7 @@ class _HelpDeskIndexState extends State<HelpDeskIndex> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Container(
-                            decoration: const BoxDecoration(
+                            decoration: BoxDecoration(
                               shape: BoxShape.circle,
                               color: ThemeColors.splashBG,
                             ),
@@ -95,11 +95,11 @@ class _HelpDeskIndexState extends State<HelpDeskIndex> {
                               children: [
                                 Text(
                                   "Tickets",
-                                  style: stylePTSansBold(color: ThemeColors.splashBG),
+                                  style: styleBaseBold(color: ThemeColors.splashBG),
                                 ),
                                 Text(
                                   "${manager.data?.helpDesk?.header?.activeTicketsCount ?? 0} Active",
-                                  style: stylePTSansBold(
+                                  style: styleBaseSemiBold(
                                       color:ThemeColors.neutral80, fontSize: 13),
                                 ),
                               ],
@@ -123,10 +123,10 @@ class _HelpDeskIndexState extends State<HelpDeskIndex> {
                                   children: [
                                     Text(
                                       "CREATE NEW",
-                                      style: stylePTSansBold(fontSize: 13,color: ThemeColors.splashBG),
+                                      style: styleBaseBold(fontSize: 13,color: ThemeColors.splashBG),
                                     ),
                                     const SpacerHorizontal(width: 5),
-                                    const Icon(
+                                    Icon(
                                       Icons.add_circle_outline_rounded,
                                       size: 16,
                                         color: ThemeColors.splashBG
@@ -149,7 +149,7 @@ class _HelpDeskIndexState extends State<HelpDeskIndex> {
                               ? "Loading your complaint box"
                               : "Great, the complaint box is empty",
                           textAlign: TextAlign.start,
-                          style: stylePTSansRegular(
+                          style: styleBaseRegular(
                               color: ThemeColors.neutral80,
                               fontSize: 20
                           ),

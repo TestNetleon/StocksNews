@@ -37,7 +37,7 @@ class ProgressDialog extends StatelessWidget {
                     Flexible(
                       child: Text(
                         "Please wait...",
-                        style: styleGeorgiaBold(
+                        style: styleBaseBold(
                           fontSize: 13,
                           color: ThemeColors.background,
                           decoration: TextDecoration.none,

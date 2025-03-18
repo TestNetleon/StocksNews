@@ -96,7 +96,7 @@ class _SimulatorIndexState extends State<SimulatorIndex> {
                                   children: [
                                     Text(
                                       'Portfolio Balance',
-                                      style: stylePTSansRegular(
+                                      style: styleBaseRegular(
                                         fontSize: 12,
                                         color: ThemeColors.neutral80,
                                       ),
@@ -108,7 +108,7 @@ class _SimulatorIndexState extends State<SimulatorIndex> {
                                               null
                                           ? '${manager.userData?.userDataRes?.tradeBalance.toFormattedPrice()}'
                                           : '\$0',
-                                      style: stylePTSansBold(
+                                      style: styleBaseBold(
                                           fontSize: 16,
                                           color: ThemeColors.splashBG),
                                     ),
@@ -126,7 +126,7 @@ class _SimulatorIndexState extends State<SimulatorIndex> {
                                   children: [
                                     Text(
                                       'Gain & Loss',
-                                      style: stylePTSansRegular(
+                                      style: styleBaseRegular(
                                         fontSize: 12,
                                         color: ThemeColors.neutral80,
                                       ),
@@ -134,7 +134,7 @@ class _SimulatorIndexState extends State<SimulatorIndex> {
                                     SpacerVertical(height: Pad.pad10),
                                     Text(
                                       profitLoss.toFormattedPrice(),
-                                      style: stylePTSansBold(
+                                      style: styleBaseBold(
                                         fontSize: 16,
                                         color: profitLoss < 0
                                             ? ThemeColors.error120

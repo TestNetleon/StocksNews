@@ -21,7 +21,7 @@ class Loading extends StatelessWidget {
           Text(
             textAlign: TextAlign.center,
             text ?? Const.loadingMessage,
-            style: styleGeorgiaRegular(color: ThemeColors.primary100),
+            style: styleBaseRegular(color: ThemeColors.primary100),
           ),
         ],
       ),

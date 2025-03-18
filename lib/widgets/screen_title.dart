@@ -52,18 +52,18 @@ class ScreenTitle extends StatelessWidget {
                     child: htmlTitle
                         ? HtmlWidget(
                             title ?? "",
-                            textStyle: style ?? styleGeorgiaBold(fontSize: 25),
+                            textStyle: style ?? styleBaseBold(fontSize: 25),
                           )
                         : Text(
                             title ?? "",
-                            style: style ?? styleGeorgiaBold(fontSize: 25),
+                            style: style ?? styleBaseBold(fontSize: 25),
                           ),
                   ),
                   Visibility(
                     visible: optionalText != null,
                     child: Text(
                       optionalText ?? "",
-                      style: style ?? stylePTSansRegular(fontSize: 12),
+                      style: style ?? styleBaseRegular(fontSize: 12),
                     ),
                   ),
                   Visibility(
@@ -93,7 +93,7 @@ class ScreenTitle extends StatelessWidget {
                     Expanded(
                       child: Text(
                         title ?? "",
-                        style: style ?? styleGeorgiaBold(fontSize: 25),
+                        style: style ?? styleBaseBold(fontSize: 25),
                         textAlign: TextAlign.center,
                       ),
                     ),
@@ -104,11 +104,11 @@ class ScreenTitle extends StatelessWidget {
               child: htmlTitle
                   ? HtmlWidget(
                       title ?? "",
-                      textStyle: style ?? styleGeorgiaBold(fontSize: 25),
+                      textStyle: style ?? styleBaseBold(fontSize: 25),
                     )
                   : Text(
                       title ?? "",
-                      style: style ?? styleGeorgiaBold(fontSize: 25),
+                      style: style ?? styleBaseBold(fontSize: 25),
                     ),
             ),
           ),
@@ -116,7 +116,7 @@ class ScreenTitle extends StatelessWidget {
           subTitleHtml
               ? HtmlWidget(
                   subTitle ?? "",
-                  textStyle: stylePTSansRegular(
+                  textStyle: styleBaseRegular(
                     fontSize: 14,
                     color: ThemeColors.white,
                   ),
@@ -134,7 +134,7 @@ class ScreenTitle extends StatelessWidget {
                       curve: Curves.easeInOut,
                       child: CustomReadMoreText(
                         text: subTitle ?? "",
-                        textColor:ThemeColors.splashBG,
+                        textColor: ThemeColors.splashBG,
                       )),
                 ),
         Padding(

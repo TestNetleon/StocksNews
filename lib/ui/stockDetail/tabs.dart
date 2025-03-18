@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/models/market/market_res.dart';
+import 'package:stocks_news_new/ui/base/base_list_divider.dart';
 import 'package:stocks_news_new/ui/base/common_tab.dart';
+import 'package:stocks_news_new/ui/theme/manager.dart';
+import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/utils.dart';
-
 import '../../managers/stockDetail/stock.detail.dart';
-import '../../utils/colors.dart';
 import 'menu_sheet.dart';
 
 class SDTabs extends StatelessWidget {
@@ -23,11 +24,7 @@ class SDTabs extends StatelessWidget {
 
     return Column(
       children: [
-        Divider(
-          color: ThemeColors.neutral5,
-          height: 1,
-          thickness: 1,
-        ),
+        BaseListDivider(),
         BaseTabs(
           leftChild: GestureDetector(
             onTap: () {
@@ -44,14 +41,21 @@ class SDTabs extends StatelessWidget {
                 ),
               );
             },
-            child: Container(
-              color: Colors.white,
-              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-              child: Image.asset(
-                Images.menu,
-                height: 18,
-                width: 18,
-              ),
+            child: Consumer<ThemeManager>(
+              builder: (context, value, child) {
+                return Container(
+                  color: Theme.of(context).scaffoldBackgroundColor,
+                  padding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                  child: Image.asset(
+                    Images.menu,
+                    height: 18,
+                    width: 18,
+                    color: value.isDarkMode
+                        ? ThemeColors.white
+                        : ThemeColors.black,
+                  ),
+                );
+              },
             ),
           ),
           key: ValueKey(manager.selectedIndex),

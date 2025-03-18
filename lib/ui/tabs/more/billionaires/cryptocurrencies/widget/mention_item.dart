@@ -12,7 +12,7 @@ import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 class MentionItem extends StatelessWidget {
   final CryptoTweetPost? item;
   final Function()? onTap;
-  const MentionItem({super.key,this.item,this.onTap});
+  const MentionItem({super.key, this.item, this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -22,13 +22,12 @@ class MentionItem extends StatelessWidget {
       child: Row(
         children: [
           Visibility(
-            visible: item?.image!=null,
+            visible: item?.image != null,
             child: Container(
               padding: EdgeInsets.all(Pad.pad5),
               decoration: BoxDecoration(
-                  border: Border.all(color: ThemeColors.secondary100,width: 1),
-                  shape: BoxShape.circle
-              ),
+                  border: Border.all(color: ThemeColors.secondary100, width: 1),
+                  shape: BoxShape.circle),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(60),
                 child: CachedNetworkImagesWidget(
@@ -43,35 +42,38 @@ class MentionItem extends StatelessWidget {
             ),
           ),
           SpacerHorizontal(width: Pad.pad16),
-          Expanded(child: Column(
+          Expanded(
+              child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Visibility(
-                visible:item?.name!=null,
+                visible: item?.name != null,
                 child: Text(
-                  item?.name??"",
-                  style: stylePTSansBold(fontSize: 20,color: ThemeColors.splashBG),
+                  item?.name ?? "",
+                  style:
+                      styleBaseBold(fontSize: 20, color: ThemeColors.splashBG),
                 ),
               ),
               SpacerVertical(height: Pad.pad8),
               BaseColorContainer(
-                padding: EdgeInsets.symmetric(horizontal: Pad.pad8,vertical: Pad.pad5),
-                bgColor:ThemeColors.neutral5,
-                child: Text(
-                  "Mentions - ${item?.totalMentions??""}",
-                  style: stylePTSansBold(fontSize: 14,color: ThemeColors.black),
-                ))
-
+                  padding: EdgeInsets.symmetric(
+                      horizontal: Pad.pad8, vertical: Pad.pad5),
+                  bgColor: ThemeColors.neutral5,
+                  child: Text(
+                    "Mentions - ${item?.totalMentions ?? ""}",
+                    style:
+                        styleBaseBold(fontSize: 14, color: ThemeColors.black),
+                  ))
             ],
           )),
           Visibility(
-            visible: item?.symbols!=null || item?.symbols?.isNotEmpty == true,
+            visible: item?.symbols != null || item?.symbols?.isNotEmpty == true,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: List.generate(
                 item!.symbols!.length,
-                    (index) {
-                  Symbols items= item!.symbols![index];
+                (index) {
+                  Symbols items = item!.symbols![index];
                   return Row(
                     children: [
                       ClipRRect(
@@ -87,8 +89,9 @@ class MentionItem extends StatelessWidget {
                       ),
                       SpacerHorizontal(width: Pad.pad3),
                       BaseHeading(
-                        title: "${items.count??""}",
-                        titleStyle: stylePTSansBold(fontSize: 12,color: ThemeColors.neutral40),
+                        title: "${items.count ?? ""}",
+                        titleStyle: styleBaseBold(
+                            fontSize: 12, color: ThemeColors.neutral40),
                       )
                     ],
                   );
@@ -96,7 +99,6 @@ class MentionItem extends StatelessWidget {
               ),
             ),
           ),
-
         ],
       ),
     );

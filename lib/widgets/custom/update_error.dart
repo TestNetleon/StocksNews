@@ -44,7 +44,7 @@ class UpdateError extends StatelessWidget {
                     padding: const EdgeInsets.only(bottom: 5),
                     child: Text(
                       "Update App!",
-                      style: stylePTSansBold(fontSize: 25),
+                      style: styleBaseBold(fontSize: 25),
                       textAlign: TextAlign.center,
                     ),
                   ),
@@ -53,7 +53,7 @@ class UpdateError extends StatelessWidget {
                   // visible: title != null && title != '',
                   child: Text(
                     error ?? "",
-                    style: stylePTSansRegular(fontSize: 19),
+                    style: styleBaseRegular(fontSize: 19),
                     textAlign: TextAlign.center,
                   ),
                 ),
@@ -94,7 +94,7 @@ class UpdateError extends StatelessWidget {
                 //         },
                 //         child: Text(
                 //           "Don't have an account? Sign up ",
-                //           style: stylePTSansRegular(
+                //           style: styleBaseRegular(
                 //             fontSize: 18,
                 //             color: ThemeColors.accent,
                 //           ),

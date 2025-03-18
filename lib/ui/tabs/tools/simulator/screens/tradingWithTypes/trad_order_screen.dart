@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/models/ticker.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
+import 'package:stocks_news_new/ui/base/base_list_divider.dart';
 import 'package:stocks_news_new/ui/tabs/tools/simulator/managers/portpolio.dart';
 import 'package:stocks_news_new/ui/tabs/tools/simulator/managers/ticker_search.dart';
 import 'package:stocks_news_new/ui/tabs/tools/simulator/managers/trade.dart';
@@ -166,12 +167,12 @@ class _TradOrderScreenState extends State<TradOrderScreen> {
                   children: [
                     Text(
                       '${widget.data?.symbol}',
-                      style: styleGeorgiaBold(
+                      style: styleBaseBold(
                           color: ThemeColors.splashBG, fontSize: 16),
                     ),
                     Text(
                       '${widget.data?.name}',
-                      style: styleGeorgiaRegular(
+                      style: styleBaseRegular(
                           color: ThemeColors.neutral40, fontSize: 14),
                     ),
                   ],
@@ -185,7 +186,7 @@ class _TradOrderScreenState extends State<TradOrderScreen> {
                     visible: stock?.price != null,
                     child: Text(
                       '${stock?.price?.toFormattedPrice()}',
-                      style: styleGeorgiaBold(
+                      style: styleBaseBold(
                           color: ThemeColors.splashBG, fontSize: 16),
                     ),
                   ),
@@ -194,7 +195,7 @@ class _TradOrderScreenState extends State<TradOrderScreen> {
                         stock?.changePercentage != null,
                     child: Text(
                       '${stock?.change?.toFormattedPrice()} (${stock?.changePercentage?.toCurrency()}%)',
-                      style: styleGeorgiaRegular(
+                      style: styleBaseRegular(
                         color: (stock?.change ?? 0) >= 0
                             ? ThemeColors.success120
                             : ThemeColors.error120,
@@ -207,15 +208,11 @@ class _TradOrderScreenState extends State<TradOrderScreen> {
             ],
           ),
           SpacerVertical(height: 10),
-          Divider(
-            color: ThemeColors.neutral5,
-            thickness: 1,
-            height: 20,
-          ),
+          BaseListDivider(height: 20),
           SpacerVertical(height: Pad.pad5),
           Text(
             "Regular orders",
-            style: stylePTSansBold(
+            style: styleBaseBold(
               fontSize: 18,
               color: ThemeColors.black,
             ),
@@ -296,7 +293,7 @@ class _TradOrderScreenState extends State<TradOrderScreen> {
                 true,
             child: Text(
               "Conditional orders",
-              style: stylePTSansBold(
+              style: styleBaseBold(
                 fontSize: 18,
                 color: ThemeColors.black,
               ),

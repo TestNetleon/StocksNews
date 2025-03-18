@@ -84,6 +84,8 @@ class BaseTickerRes {
   final num? sentimentPercent;
   final List<AdditionalInfoRes>? additionalInfo;
   final List<BaseKeyValueRes>? extra;
+  final String? pdfUrl;
+  final String? purchaseDate;
 
   BaseTickerRes({
     this.notAvailable,
@@ -101,7 +103,6 @@ class BaseTickerRes {
     this.name,
     this.isAlertAdded,
     this.isWatchlistAdded,
-
     this.mentionCount,
     this.mentionDate,
 
@@ -151,6 +152,8 @@ class BaseTickerRes {
     this.sentimentPercent,
     this.additionalInfo,
     this.extra,
+    this.pdfUrl,
+    this.purchaseDate,
   });
 
   factory BaseTickerRes.fromJson(Map<String, dynamic> json) => BaseTickerRes(
@@ -172,8 +175,8 @@ class BaseTickerRes {
         mentionDate: json["mention_date"],
 
         //extra
-    isCryptoAdded: json['is_crypto_added'],
-    brief: json['brief'],
+        isCryptoAdded: json['is_crypto_added'],
+        brief: json['brief'],
         notAvailable: json['not_available'],
         marketCap: json['marketCap'],
         marketTime: json['market_time'],
@@ -226,6 +229,8 @@ class BaseTickerRes {
             ? null
             : List<BaseKeyValueRes>.from(
                 json["extra"]!.map((x) => BaseKeyValueRes.fromJson(x))),
+        pdfUrl: json['pdf_url'],
+        purchaseDate: json['purchase_date'],
       );
 
   Map<String, dynamic> toJson() => {
@@ -294,6 +299,8 @@ class BaseTickerRes {
         "extra": extra == null
             ? null
             : List<dynamic>.from(extra!.map((x) => x.toJson())),
+        'pdf_url': pdfUrl,
+        'purchase_date': purchaseDate,
       };
 }
 

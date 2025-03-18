@@ -46,7 +46,8 @@ class AIPricePastReturnsItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: Pad.pad10,vertical: Pad.pad10),
+      padding: const EdgeInsets.symmetric(
+          horizontal: Pad.pad10, vertical: Pad.pad10),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -54,7 +55,7 @@ class AIPricePastReturnsItem extends StatelessWidget {
             child: Text(
               "${pastReturns?.title}",
               textAlign: TextAlign.center,
-              style: styleGeorgiaRegular(
+              style: styleBaseRegular(
                 color: ThemeColors.neutral80,
                 fontSize: 14,
               ),
@@ -64,7 +65,7 @@ class AIPricePastReturnsItem extends StatelessWidget {
           Text(
             textAlign: TextAlign.end,
             "${pastReturns?.value}%",
-            style: styleGeorgiaBold(
+            style: styleBaseBold(
               color: pastReturns?.value >= 0
                   ? ThemeColors.accent
                   : ThemeColors.sos,

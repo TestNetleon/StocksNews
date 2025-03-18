@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:stocks_news_new/ui/base/base_list_divider.dart';
+import 'package:stocks_news_new/ui/base/heading.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
-import 'package:stocks_news_new/widgets/screen_title.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import '../../manager/scanner.dart';
@@ -108,11 +109,7 @@ class _ScannerSortingListState extends State<ScannerSortingList> {
             ],
           ),
         ),
-        Divider(
-          color: ThemeColors.neutral5,
-          thickness: 1,
-          height: 10,
-        ),
+        BaseListDivider(height: 10),
       ],
     );
   }
@@ -123,19 +120,17 @@ class _ScannerSortingListState extends State<ScannerSortingList> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
+          SpacerVertical(height: 5),
           Container(
             padding: EdgeInsets.symmetric(
               horizontal: Pad.pad16,
-              vertical: Pad.pad10,
             ),
             child: Row(
               children: [
                 Expanded(
-                  child: ScreenTitle(
+                  child: BaseHeading(
                     title: 'Sort stocks by',
-                    style: styleGeorgiaBold(
-                        color: ThemeColors.background, fontSize: 23),
-                    dividerPadding: EdgeInsets.zero,
+                    titleStyle: styleBaseBold(fontSize: 25),
                   ),
                 ),
                 IconButton(
@@ -149,10 +144,7 @@ class _ScannerSortingListState extends State<ScannerSortingList> {
               ],
             ),
           ),
-          Divider(
-            color: ThemeColors.neutral80,
-            thickness: 1,
-          ),
+          BaseListDivider(color: ThemeColors.neutral80),
           // Sort by Symbol
           _buildSortOption(
             'Symbol Name',
