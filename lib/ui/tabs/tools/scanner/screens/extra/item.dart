@@ -180,22 +180,23 @@ class ScannerBaseItem extends StatelessWidget {
                         Visibility(
                           visible: preMarket || postMarket,
                           child: Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(30),
-                                color: ThemeColors.neutral5,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(30),
+                              color: ThemeColors.neutral5,
+                            ),
+                            margin: const EdgeInsets.only(top: 5),
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 10,
+                              vertical: 2,
+                            ),
+                            child: Text(
+                              'Last Trade',
+                              style: styleBaseSemiBold(
+                                fontSize: 13,
+                                // color: ThemeColors.neutral40,
                               ),
-                              margin: const EdgeInsets.only(top: 5),
-                              padding: EdgeInsets.symmetric(
-                                horizontal: 10,
-                                vertical: 2,
-                              ),
-                              child: Text(
-                                'Last Trade',
-                                style: styleBaseSemiBold(
-                                  fontSize: 13,
-                                  // color: ThemeColors.neutral40,
-                                ),
-                              )),
+                            ),
+                          ),
                         ),
                       ],
                     )

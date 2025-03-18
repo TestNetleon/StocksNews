@@ -6,6 +6,7 @@ import 'package:stocks_news_new/ui/base/base_scroll.dart';
 import 'package:stocks_news_new/ui/base/heading.dart';
 import 'package:stocks_news_new/ui/tabs/home/blogItem/blog_item_home.dart';
 import 'package:stocks_news_new/ui/tabs/home/insiderTrades/insider_trades.dart';
+import 'package:stocks_news_new/ui/tabs/home/slider/index.dart';
 import 'package:stocks_news_new/ui/tabs/more/index.dart';
 import 'package:stocks_news_new/ui/theme/manager.dart';
 import 'package:stocks_news_new/utils/constants.dart';
@@ -13,7 +14,6 @@ import 'package:stocks_news_new/widgets/custom/base_loader_container.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 import '../../base/scaffold.dart';
 import 'home_premium.dart';
-import 'home_trending.dart';
 import 'scanner/index.dart';
 
 class HomeIndex extends StatefulWidget {
@@ -47,19 +47,20 @@ class _HomeIndexState extends State<HomeIndex> {
             onRefresh: manager.getHomeData,
             child: BaseScroll(
               onRefresh: manager.getHomeData,
+              margin: EdgeInsets.zero,
               children: [
                 const BlogHomeIndex(),
-                HomeTrendingIndex(),
+                HomeTopNewsSlider(),
+                // HomeTrendingIndex(),
                 Visibility(
                   visible: manager.data?.scannerPort?.showOnHome == true,
-                  child: Padding(
+                  child: Container(
                     padding: const EdgeInsets.only(top: Pad.pad24),
+                    margin: EdgeInsets.symmetric(horizontal: Pad.pad16),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        BaseHeading(
-                          title: 'Market Scanner',
-                        ),
+                        BaseHeading(title: 'Market Scanner'),
                         HomeScannerIndex(),
                       ],
                     ),
