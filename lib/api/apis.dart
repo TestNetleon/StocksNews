@@ -18,8 +18,8 @@ class Apis {
 
   // MARK: New UI APIs
   static const onBoarding = '/onboarding';
-  // static const myHome = '/home-new';
-  static const myHome = '/home';
+  static const myHome = '/home-new';
+  // static const myHome = '/home';
 
   static const compareStocks = '/compare';
   static const addCompareStock = '/add-compare';
