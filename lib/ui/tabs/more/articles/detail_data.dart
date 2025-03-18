@@ -131,7 +131,7 @@ class BlogDetailData extends StatelessWidget {
             ],
           ),
         ),
-        TickersBoxIndex(tickers: manager.blogsDetail?.postDetail?.tickers),
+        TickersBoxIndex(tickers: manager.blogsDetail?.postDetail?.tickers,simulatorLockInfoRes: manager.blogsDetail?.simulatorLockInfo),
         Padding(
           padding: const EdgeInsets.only(top: Pad.pad10),
           child: HtmlWidget(

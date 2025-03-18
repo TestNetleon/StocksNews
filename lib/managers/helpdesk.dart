@@ -149,9 +149,12 @@ class NewHelpDeskManager extends ChangeNotifier{
           );
         } else {
           //
+          Utils().showLog("dio e2 ${response.statusMessage}");
+
         }
         return ApiResponse(status: true);
       } else {
+        Utils().showLog("dio e ${response.statusMessage}");
         return ApiResponse(status: false);
       }
     } on DioException catch (e) {

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:stocks_news_new/models/ticker.dart';
+import 'package:stocks_news_new/ui/base/bottom_sheet.dart';
+import 'package:stocks_news_new/ui/tabs/home/scanner/extra/action_in_nbs.dart';
 import 'package:stocks_news_new/ui/tabs/tools/scanner/models/offline.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
@@ -49,33 +52,22 @@ class ScannerBaseItem extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: Pad.pad16),
       child: InkWell(
-        // onTap: () {
-        //   if (data?.identifier == null || data?.identifier == '') {
-        //     return;
-        //   }
-        //   showModalBottomSheet(
-        //     enableDrag: true,
-        //     isDismissible: true,
-        //     context: context,
-        //     shape: RoundedRectangleBorder(
-        //       borderRadius: BorderRadius.only(
-        //         topLeft: Radius.circular(10),
-        //         topRight: Radius.circular(10),
-        //       ),
-        //     ),
-        //     isScrollControlled: true,
-        //     builder: (context) {
-        //       return ActionInNewsBlog(
-        //           symbol: data?.identifier ?? '',
-        //           item: NewsTicker(
-        //             id: data?.bid.toString(),
-        //             symbol: data?.identifier ?? '',
-        //             name: data?.name ?? '',
-        //             image: data?.image ?? '',
-        //           ));
-        //     },
-        //   );
-        // },
+        onTap: (){
+          if (data?.identifier == null || data?.identifier == '') {
+            return;
+          }
+          BaseBottomSheet().bottomSheet(
+              barrierColor: ThemeColors.neutral5.withValues(alpha: 0.7),
+              child: ActionInNbs(
+                  symbol: data?.identifier ?? '',
+                  item: BaseTickerRes(
+                    id: data?.bid.toString(),
+                    symbol: data?.identifier ?? '',
+                    name: data?.name ?? '',
+                    image: data?.image ?? '',
+                  ))
+          );
+        },
         child: Column(
           children: [
             Column(

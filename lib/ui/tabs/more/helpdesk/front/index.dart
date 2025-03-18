@@ -156,7 +156,7 @@ class _HelpDeskIndexState extends State<HelpDeskIndex> {
                         ),
                       ),
                     if (manager.data?.helpDesk?.ticketList != null &&
-                        manager.data?.helpDesk?.ticketList?.isNotEmpty == true)
+                        manager.data?.helpDesk?.ticketList?.isNotEmpty == true && manager.data?.helpDesk?.ticketList?[0].status==0)
                       HelpDeskItemNew(
                         index: 0,
                       ),
@@ -183,7 +183,7 @@ class _HelpDeskIndexState extends State<HelpDeskIndex> {
                               ? manager.data?.helpDesk?.ticketList?.length ?? 0
                               : 5,
                           itemBuilder: (context, index) {
-                            if (index == 0) {
+                            if (index == 0 && manager.data?.helpDesk?.ticketList?[index].status==0) {
                               return const SizedBox();
                             }
                             return HelpDeskItemNew(index: index);

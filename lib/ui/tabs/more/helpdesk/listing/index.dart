@@ -37,7 +37,7 @@ class _RequestNewIndexState extends State<RequestNewIndex> {
     return BaseScaffold(
       appBar: BaseAppBar(
         showBack: true,
-        title: "Help Desk",
+        title: manager.data?.title??"Helpdesk",
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: Pad.pad10),

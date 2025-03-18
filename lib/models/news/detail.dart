@@ -20,12 +20,14 @@ class NewsDetailRes {
   final MoreNewsRes? moreNews;
   final FeedbackRes? feedback;
   final BaseLockInfoRes? lockInfo;
+  final BaseLockInfoRes? simulatorLockInfo;
 
   NewsDetailRes({
     this.postDetail,
     this.moreNews,
     this.feedback,
     this.lockInfo,
+    this.simulatorLockInfo,
   });
 
   factory NewsDetailRes.fromJson(Map<String, dynamic> json) => NewsDetailRes(
@@ -41,6 +43,10 @@ class NewsDetailRes {
         moreNews: json["more_news"] == null
             ? null
             : MoreNewsRes.fromJson(json["more_news"]),
+      simulatorLockInfo: json["simulator_lock_info"] == null
+          ? null
+          : BaseLockInfoRes.fromJson(json["simulator_lock_info"]),
+
       );
 
   Map<String, dynamic> toJson() => {
@@ -48,6 +54,7 @@ class NewsDetailRes {
         "feedback": feedback?.toJson(),
         "post_detail": postDetail?.toJson(),
         "more_news": moreNews?.toJson(),
+        "simulator_lock_info": simulatorLockInfo?.toJson(),
       };
 }
 

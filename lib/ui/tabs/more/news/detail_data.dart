@@ -133,7 +133,7 @@ class NewsDetailData extends StatelessWidget {
             ],
           ),
         ),
-        TickersBoxIndex(tickers: manager.newsDetail?.postDetail?.tickers),
+        TickersBoxIndex(tickers: manager.newsDetail?.postDetail?.tickers,simulatorLockInfoRes: manager.newsDetail?.simulatorLockInfo),
         Padding(
           padding: const EdgeInsets.only(top: Pad.pad10),
           child: HtmlWidget(

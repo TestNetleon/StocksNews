@@ -127,14 +127,14 @@ class MoreIndex extends StatelessWidget {
             ),
             if(homeRes?.showCrypto==true)
             MoreItem(
-              icon: Images.crypto,
+              icon: Images.bitcoin,
               label: "Cryptocurrencies",
               onTap: () {
                 manager.navigateToBillionaires();
               },
             ),
             MoreItem(
-              icon: Images.moreMySubscription,
+              icon: Images.icShare,
               label: "Refer a Friend",
               onTap: () {
                 manager.navigateToReferral();
