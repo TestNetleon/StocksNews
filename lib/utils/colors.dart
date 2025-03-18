@@ -169,7 +169,15 @@ class ThemeColors {
   static Color silver = Color(0xffe6eaf0);
   static Color bronze = Color(0xffdeae80);
 
+//Gradient
+  static Color gradientGreen = Color(0xFF0E2900);
+  static Color sliderDots = Color(0xFF181818);
+  static Color boxShadow = Color(0x1C98A7C3);
+
   static void updateTheme(bool isLightTheme) {
+    //
+    sliderDots = isLightTheme ? Colors.white : Color(0xFF181818);
+
     // No changes in PRIMARY and SECONDARY
 
     // Neutral
@@ -179,7 +187,7 @@ class ThemeColors {
     neutral40 = isLightTheme ? Color(0xFF6E85AE) : Color(0xFFC0C9DB);
     neutral20 = Color(0xFF98A7C2);
     neutral10 = Color(0xFFC0C9DB);
-    neutral5 = isLightTheme ? Color(0xFFF0F2F6) : Color(0xFFC0C9DB);
+    neutral5 = isLightTheme ? Color(0xFFF0F2F6) : Color(0x66626262);
     neutral6 = Color(0xFFCCCCCC);
     // neutral7 = Color(0xFF243D4C);
     neutral8 = Color(0xFF34373C);

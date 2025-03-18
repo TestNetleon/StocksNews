@@ -19,7 +19,7 @@ class HomePremiumIndex extends StatelessWidget {
           politicianData: manager.homePremiumData?.congressionalStocks,
         ),
         HomeNewsIndex(newsData: manager.homePremiumData?.financialNews),
-        HomeNewsIndex(newsData: manager.homePremiumData?.recentNews),
+        // HomeNewsIndex(newsData: manager.homePremiumData?.recentNews),
       ],
     );
   }

@@ -28,72 +28,52 @@ class BlogHomeIndex extends StatelessWidget {
 
     return Consumer<ThemeManager>(
       builder: (context, value, child) {
-        bool darkTheme = value.isDarkMode;
-
-        return InkWell(
-          onTap: () async {
-            closeKeyboard();
-            Navigator.pushNamed(
-              context,
-              BlogsDetailIndex.path,
-              arguments: {'slug': blogItem.slug},
-            );
-            manager.getHomeData();
-          },
-          child: Container(
-            margin: EdgeInsets.symmetric(vertical: Pad.pad10),
-            decoration: BoxDecoration(
-              color: darkTheme ? Colors.black : ThemeColors.white,
-              borderRadius: BorderRadius.circular(8),
-              boxShadow: [
-                BoxShadow(
-                  color: Color.fromARGB(28, 239, 239, 239),
-                  blurRadius: 10,
-                  offset: Offset(0, 10),
-                ),
-              ],
-            ),
-            child: Column(
-              children: [
-                Container(
+        bool isDark = value.isDarkMode;
+        return Container(
+          margin: EdgeInsets.symmetric(
+            vertical: Pad.pad10,
+            horizontal: Pad.pad16,
+          ),
+          child: Stack(
+            children: [
+              GestureDetector(
+                onTap: () async {
+                  closeKeyboard();
+                  Navigator.pushNamed(
+                    context,
+                    BlogsDetailIndex.path,
+                    arguments: {'slug': blogItem.slug},
+                  );
+                },
+                child: Container(
+                  margin: EdgeInsets.only(top: 20),
+                  padding: EdgeInsets.all(Pad.pad16),
                   decoration: BoxDecoration(
-                    color: ThemeColors.neutral5,
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(8),
-                      topRight: Radius.circular(8),
-                    ),
-                  ),
-                  padding: EdgeInsets.symmetric(vertical: 8, horizontal: 8),
-                  alignment: Alignment.center,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.notifications_active_outlined,
-                        size: 22,
-                        color: ThemeColors.black,
-                      ),
-                      const SpacerHorizontal(width: 8),
-                      Text(
-                        blogItem.headingText ?? "Alert of the day",
-                        // style: styleBaseBold(
-                        //   fontSize: 18,
-                        //   color: darkTheme
-                        //       ? ThemeColors.white
-                        //       : ThemeColors.splashBG,
-                        // ),
-                        style: Theme.of(context).textTheme.headlineLarge,
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
+                    border: Border.all(color: ThemeColors.neutral5),
+                    borderRadius: BorderRadius.circular(8),
+                    color: isDark ? null : ThemeColors.white,
+                    gradient: isDark
+                        ? LinearGradient(
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
+                            colors: [
+                              ThemeColors.gradientGreen,
+                              ThemeColors.blackShade,
+                            ],
+                            stops: [0.0025, 0.5518],
+                          )
+                        : null,
+                    boxShadow: [
+                      BoxShadow(
+                        color: ThemeColors.boxShadow,
+                        blurRadius: 60,
+                        offset: Offset(0, 20),
                       ),
                     ],
                   ),
-                ),
-                Container(
-                  padding: EdgeInsets.symmetric(vertical: 8, horizontal: 10),
                   alignment: Alignment.center,
                   child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Expanded(
                         child: Column(
@@ -101,14 +81,7 @@ class BlogHomeIndex extends StatelessWidget {
                           children: [
                             Text(
                               blogItem.title ?? "",
-                              // style: styleBaseBold(
-                              //   fontSize: 16,
-                              //   color: darkTheme
-                              //       ? ThemeColors.white
-                              //       : ThemeColors.black,
-                              // ),
                               style: Theme.of(context).textTheme.displayLarge,
-
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
                             ),
@@ -141,8 +114,37 @@ class BlogHomeIndex extends StatelessWidget {
                     ],
                   ),
                 ),
-              ],
-            ),
+              ),
+              Positioned(
+                top: 0,
+                left: Pad.pad16,
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: isDark ? null : ThemeColors.white,
+                    gradient: isDark
+                        ? LinearGradient(
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
+                            colors: [
+                              ThemeColors.blackShade,
+                              ThemeColors.gradientGreen,
+                            ],
+                            stops: [0.0025, 0.5518],
+                          )
+                        : null,
+                    border: Border.all(color: ThemeColors.neutral5),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  padding: EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+                  alignment: Alignment.center,
+                  child: Icon(
+                    Icons.notifications_active_outlined,
+                    size: 22,
+                    color: isDark ? Colors.yellow : ThemeColors.primary120,
+                  ),
+                ),
+              ),
+            ],
           ),
         );
       },
