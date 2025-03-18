@@ -8,7 +8,7 @@ class BaseButtonSmall extends StatelessWidget {
     this.text = "Submit",
     this.color = ThemeColors.primary100,
     this.disableTextColor = ThemeColors.primary100,
-    this.textColor = ThemeColors.black,
+    this.textColor,
     this.textSize = 14,
     this.fullWidth = false,
     this.radius = 8,
@@ -27,7 +27,7 @@ class BaseButtonSmall extends StatelessWidget {
 
   final String text;
   final Color? color;
-  final Color textColor;
+  final Color? textColor;
   final Color disableTextColor;
 
   final Function()? onPressed;
@@ -67,7 +67,9 @@ class BaseButtonSmall extends StatelessWidget {
           style: textStyle ??
               styleBaseSemiBold(
                 fontSize: textSize,
-                color: onPressed == null ? disableTextColor : textColor,
+                color: onPressed == null
+                    ? disableTextColor
+                    : textColor ?? ThemeColors.black,
               ),
         ),
       ),

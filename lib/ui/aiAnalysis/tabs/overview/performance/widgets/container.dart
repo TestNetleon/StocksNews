@@ -15,7 +15,7 @@ class AIPointerContainer extends StatelessWidget {
     required this.title,
     this.style,
     this.width = 65,
-    this.color = ThemeColors.neutral5,
+    this.color,
   });
 
   @override
@@ -28,7 +28,7 @@ class AIPointerContainer extends StatelessWidget {
             size: Size(10, 6),
             painter: TrianglePointer(
               isDownwards: isDownwards,
-              color: color ?? ThemeColors.greyText,
+              color: color ?? ThemeColors.neutral5,
             ),
           ),
         ),

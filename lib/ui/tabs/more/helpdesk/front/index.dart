@@ -81,7 +81,7 @@ class _HelpDeskIndexState extends State<HelpDeskIndex> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Container(
-                            decoration: const BoxDecoration(
+                            decoration: BoxDecoration(
                               shape: BoxShape.circle,
                               color: ThemeColors.splashBG,
                             ),
@@ -138,8 +138,11 @@ class _HelpDeskIndexState extends State<HelpDeskIndex> {
                                           color: ThemeColors.splashBG),
                                     ),
                                     const SpacerHorizontal(width: 5),
-                                    const Icon(Icons.add_circle_outline_rounded,
-                                        size: 16, color: ThemeColors.splashBG),
+                                    Icon(
+                                      Icons.add_circle_outline_rounded,
+                                      size: 16,
+                                      color: ThemeColors.splashBG,
+                                    ),
                                   ],
                                 ),
                               ),

@@ -156,6 +156,7 @@ bool withLoginMembership = true;
 String? memCODE;
 String? appsFlyerUID;
 bool isOnTsScreen = false;
+bool isThemeLight = false;
 
 // bool memTrack = false;
 

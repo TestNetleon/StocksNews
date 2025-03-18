@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:stocks_news_new/utils/colors.dart';
 
 class ThemeManager extends ChangeNotifier {
   ThemeMode _themeMode = ThemeMode.system;
@@ -12,6 +13,7 @@ class ThemeManager extends ChangeNotifier {
 
   void toggleTheme(ThemeMode mode) async {
     _themeMode = mode;
+    ThemeColors.updateTheme(!isDarkMode);
     notifyListeners();
   }
 
@@ -27,6 +29,7 @@ class ThemeManager extends ChangeNotifier {
 
   void _loadTheme() async {
     _themeMode = ThemeMode.system;
+    ThemeColors.updateTheme(!isDarkMode);
     notifyListeners();
   }
 }

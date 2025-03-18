@@ -51,7 +51,7 @@ class _BaseSearchFieldState extends State<BaseSearchSimulator> {
           }
           _timer = Timer(
             const Duration(milliseconds: 1000),
-                () {
+            () {
               widget.onSearchChanged(text);
             },
           );
@@ -63,38 +63,41 @@ class _BaseSearchFieldState extends State<BaseSearchSimulator> {
         maxLines: 1,
         prefixIcon: Container(
           padding: EdgeInsets.all(10),
-          child: Image.asset(Images.search),
+          child: Image.asset(
+            Images.search,
+            color: ThemeColors.black,
+          ),
         ),
         suffixIcon: manager.isLoadingSearch
             ? Container(
-          width: 20,
-          height: 20,
-          margin: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
-          child: CircularProgressIndicator(
-            strokeWidth: 3,
-            color: ThemeColors.secondary100,
-          ),
-        )
-            :
-        _controller.text.isNotEmpty?
-        InkWell(
-          onTap: (){
-            setState(() {
-              _controller.clear();
-              _controller.text="";
-              widget.onSearchChanged("");
-            });
-          },
-          child: Container(
-            margin: EdgeInsets.all(Pad.pad10),
-            decoration: BoxDecoration(
-              color: ThemeColors.neutral5,
-              borderRadius: BorderRadius.circular(Pad.pad8),
-            ),
-            child:Icon(Icons.clear,color: ThemeColors.neutral60,size: 18),
-          ),
-        ):
-        null,
+                width: 20,
+                height: 20,
+                margin: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+                child: CircularProgressIndicator(
+                  strokeWidth: 3,
+                  color: ThemeColors.secondary100,
+                ),
+              )
+            : _controller.text.isNotEmpty
+                ? InkWell(
+                    onTap: () {
+                      setState(() {
+                        _controller.clear();
+                        _controller.text = "";
+                        widget.onSearchChanged("");
+                      });
+                    },
+                    child: Container(
+                      margin: EdgeInsets.all(Pad.pad10),
+                      decoration: BoxDecoration(
+                        color: ThemeColors.neutral5,
+                        borderRadius: BorderRadius.circular(Pad.pad8),
+                      ),
+                      child: Icon(Icons.clear,
+                          color: ThemeColors.neutral60, size: 18),
+                    ),
+                  )
+                : null,
       ),
     );
   }

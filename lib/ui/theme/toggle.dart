@@ -66,7 +66,8 @@ class _ThemeToggleSwitchState extends State<ThemeToggleSwitch> {
             activeFgColor: _selectedIndex == 0
                 ? ThemeColors.black
                 : _selectedIndex == 1
-                    ? ThemeColors.white
+                    // ? ThemeColors.white
+                    ? ThemeColors.black
                     : ThemeColors.white,
             inactiveBgColor: ThemeColors.neutral10,
             inactiveFgColor: Colors.black,

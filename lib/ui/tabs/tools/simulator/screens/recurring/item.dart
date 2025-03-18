@@ -300,10 +300,11 @@ class TsRecurringListItem extends StatelessWidget {
               child: Column(
                 children: [
                   item?.statusType == "RUNNING"
-                      ? const BaseListDivider(
-                          color: ThemeColors.success120, height: 5)
-                      : const BaseListDivider(
-                          color: ThemeColors.error120, height: 5),
+                      ? BaseListDivider(
+                          color: ThemeColors.success120,
+                          height: 5,
+                        )
+                      : BaseListDivider(color: ThemeColors.error120, height: 5),
                 ],
               ),
             ),

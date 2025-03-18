@@ -251,13 +251,11 @@ class _AccountLoginIndexState extends State<AccountLoginIndex> {
               Row(
                 children: [
                   Container(
-                    decoration: const BoxDecoration(
-                      border: Border(
-                        bottom: BorderSide(
-                          color: ThemeColors.white,
-                        ),
-                      ),
-                      color: ThemeColors.white,
+                    decoration: BoxDecoration(
+                      // border: Border(
+                      //   bottom: BorderSide(color: ThemeColors.white),
+                      // ),
+                      // color: ThemeColors.white,
                       borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(4),
                         bottomLeft: Radius.circular(4),

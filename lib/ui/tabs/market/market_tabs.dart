@@ -129,7 +129,7 @@ class TabItem extends StatelessWidget {
                   fit: BoxFit.contain,
                   width: 18,
                   height: 18,
-                  color: selected ? Colors.white : null,
+                  color: selected ? ThemeColors.white : null,
                 ),
               ),
             ),

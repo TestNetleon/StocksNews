@@ -29,7 +29,7 @@ final lightTheme = ThemeData(
     ),
   ),
   fontFamily: Fonts.roboto,
-  iconTheme: const IconThemeData(color: ThemeColors.black),
+  iconTheme: IconThemeData(color: ThemeColors.black),
   textTheme: getTextTheme(ThemeColors.black),
 );
 
@@ -44,7 +44,7 @@ final darkTheme = ThemeData(
   bottomNavigationBarTheme: BottomNavigationBarThemeData(
     selectedItemColor: ThemeColors.white,
   ),
-  drawerTheme: const DrawerThemeData(
+  drawerTheme: DrawerThemeData(
     backgroundColor: ThemeColors.black,
     width: double.infinity,
   ),
@@ -65,7 +65,7 @@ final darkTheme = ThemeData(
 
 //MARK:only below in use for new design
 TextStyle styleBaseBold({
-  color = ThemeColors.black,
+  color,
   double fontSize = 16,
   letterSpacing = 0.70,
   height = 0.0,
@@ -74,7 +74,7 @@ TextStyle styleBaseBold({
 }) {
   return TextStyle(
     fontSize: fontSize,
-    color: color,
+    color: color ?? ThemeColors.black,
     fontFamily: fontFamily ?? Fonts.roboto,
     fontWeight: FontWeight.w800,
     decoration: decoration,
@@ -84,7 +84,7 @@ TextStyle styleBaseBold({
 }
 
 TextStyle styleBaseRegular({
-  color = ThemeColors.black,
+  color,
   double fontSize = 16,
   letterSpacing = 0.70,
   height = 0.0,
@@ -93,7 +93,7 @@ TextStyle styleBaseRegular({
 }) {
   return TextStyle(
     fontSize: fontSize,
-    color: color,
+    color: color ?? ThemeColors.black,
     fontFamily: fontFamily ?? Fonts.roboto,
     fontWeight: FontWeight.w400,
     decoration: decoration,
@@ -103,7 +103,7 @@ TextStyle styleBaseRegular({
 }
 
 TextStyle styleBaseSemiBold({
-  color = ThemeColors.black,
+  color,
   double fontSize = 16,
   letterSpacing = 0.70,
   height = 0.0,
@@ -112,7 +112,7 @@ TextStyle styleBaseSemiBold({
 }) {
   return TextStyle(
     fontSize: fontSize,
-    color: color,
+    color: color ?? ThemeColors.black,
     fontFamily: fontFamily ?? Fonts.roboto,
     fontWeight: FontWeight.w600,
     decoration: decoration,

@@ -61,11 +61,7 @@ class _TabsState extends State<Tabs> {
     });
   }
 
-  BottomNavigationBarItem bottomTab({
-    icon,
-    label,
-    bool selected = false,
-  }) {
+  BottomNavigationBarItem bottomTab({icon, label, bool selected = false}) {
     return BottomNavigationBarItem(
       icon: Consumer<ThemeManager>(
         builder: (context, value, child) {
@@ -76,9 +72,7 @@ class _TabsState extends State<Tabs> {
               height: 27,
               width: 27,
               color: selected
-                  ? value.isDarkMode
-                      ? ThemeColors.white
-                      : ThemeColors.black
+                  ? ThemeColors.black
                   : selected
                       ? ThemeColors.black
                       : ThemeColors.neutral60,

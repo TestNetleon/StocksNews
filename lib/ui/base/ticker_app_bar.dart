@@ -139,9 +139,11 @@ class BaseTickerAppBar extends StatelessWidget implements PreferredSizeWidget {
                     children: [
                       ActionButton(
                         icon: Images.back,
-                        color: value.isDarkMode
-                            ? ThemeColors.white
-                            : ThemeColors.black,
+                        color:
+                            // value.isDarkMode
+                            //     ? ThemeColors.white
+                            //     :
+                            ThemeColors.black,
                         onTap: () {
                           if (popHome) {
                             if (CustomNavigatorObserver().stackCount >= 2 &&
@@ -264,9 +266,11 @@ class BaseTickerAppBar extends StatelessWidget implements PreferredSizeWidget {
                           onTap: onAddToAlertClick,
                           color: data?.isAlertAdded == 1
                               ? ThemeColors.primary120
-                              : value.isDarkMode
-                                  ? ThemeColors.white
-                                  : ThemeColors.black,
+                              :
+                              // value.isDarkMode
+                              //     ? ThemeColors.white
+                              //     :
+                              ThemeColors.black,
                         ),
                       ),
                     if (addToWatchlist != null)
@@ -279,9 +283,11 @@ class BaseTickerAppBar extends StatelessWidget implements PreferredSizeWidget {
                           onTap: onAddToWatchlistClick,
                           color: data?.isWatchlistAdded == 1
                               ? ThemeColors.primary120
-                              : value.isDarkMode
-                                  ? ThemeColors.white
-                                  : ThemeColors.black,
+                              :
+                              // value.isDarkMode
+                              //     ? ThemeColors.white
+                              //     :
+                              ThemeColors.black,
                         ),
                       ),
                     if (shareURL != null)
@@ -291,9 +297,11 @@ class BaseTickerAppBar extends StatelessWidget implements PreferredSizeWidget {
                           size: 35,
                           icon: Images.shareURL,
                           onTap: shareURL!,
-                          color: value.isDarkMode
-                              ? ThemeColors.white
-                              : ThemeColors.black,
+                          color:
+                              //  value.isDarkMode
+                              //     ? ThemeColors.white
+                              //     :
+                              ThemeColors.black,
                         ),
                       ),
                   ],

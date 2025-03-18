@@ -216,7 +216,7 @@ class _AllChatNewListingState extends State<AllChatNewListing> {
                                     _image = null;
                                     setState(() {});
                                   },
-                                  child: const CircleAvatar(
+                                  child: CircleAvatar(
                                     radius: 11,
                                     backgroundColor: ThemeColors.error120,
                                     child: Icon(

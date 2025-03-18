@@ -184,32 +184,30 @@ class _BaseStockItemState extends State<BaseStockItem> {
               ),
               Visibility(
                 visible: widget.expandable != null,
-                child: Consumer<ThemeManager>(
-                  builder: (context, value, child) {
-                    return Container(
-                      margin: EdgeInsets.only(left: 8),
-                      child: InkWell(
+                child: Container(
+                  margin: EdgeInsets.only(left: 8),
+                  child: InkWell(
+                    borderRadius: BorderRadius.circular(4),
+                    onTap: () => _toggleOpen(widget.index),
+                    child: Container(
+                      decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(4),
-                        onTap: () => _toggleOpen(widget.index),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(4),
-                            border: Border.all(color: ThemeColors.neutral5),
-                          ),
-                          child: Image.asset(
-                            _openIndex == widget.index
-                                ? Images.arrowUP
-                                : Images.arrowDOWN,
-                            height: 24,
-                            width: 24,
-                            color: value.isDarkMode
-                                ? ThemeColors.white
-                                : ThemeColors.black,
-                          ),
-                        ),
+                        border: Border.all(color: ThemeColors.neutral5),
                       ),
-                    );
-                  },
+                      child: Image.asset(
+                        _openIndex == widget.index
+                            ? Images.arrowUP
+                            : Images.arrowDOWN,
+                        height: 24,
+                        width: 24,
+                        color:
+                            // value.isDarkMode
+                            //     ? ThemeColors.white
+                            //     :
+                            ThemeColors.black,
+                      ),
+                    ),
+                  ),
                 ),
               ),
             ],

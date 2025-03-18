@@ -119,7 +119,7 @@ class SignalsSentimentGauge extends StatelessWidget {
                               needleStartWidth: 0,
                               needleEndWidth: 9,
                               needleLength: .7,
-                              knobStyle: const KnobStyle(
+                              knobStyle: KnobStyle(
                                 knobRadius: .06,
                                 color: ThemeColors.black,
                               ),

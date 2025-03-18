@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/theme_button_small.dart';
@@ -44,7 +45,10 @@ class LoginError extends StatelessWidget {
                     padding: const EdgeInsets.only(bottom: 5),
                     child: Text(
                       title ?? "",
-                      style: styleBaseBold(fontSize: 25),
+                      style: styleBaseBold(
+                        fontSize: 25,
+                        color: ThemeColors.black,
+                      ),
                       textAlign: TextAlign.center,
                     ),
                   ),

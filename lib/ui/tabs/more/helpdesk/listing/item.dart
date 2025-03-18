@@ -39,8 +39,10 @@ class HelpDeskItemNew extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
-                    decoration: const BoxDecoration(
-                        shape: BoxShape.circle, color: ThemeColors.splashBG),
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: ThemeColors.splashBG,
+                    ),
                     padding: const EdgeInsets.all(6),
                     child: Image.asset(
                       Images.ticket,

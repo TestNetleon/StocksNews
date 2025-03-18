@@ -41,7 +41,8 @@ class MoreItem extends StatelessWidget {
                   width: 32,
                   height: 32,
                   color:
-                      value.isDarkMode ? ThemeColors.white : ThemeColors.black,
+                      // value.isDarkMode ? ThemeColors.white :
+                      ThemeColors.black,
                 ),
                 SpacerHorizontal(width: Pad.pad8),
                 Expanded(
@@ -55,7 +56,8 @@ class MoreItem extends StatelessWidget {
                   Images.moreItem,
                   width: 24,
                   height: 24,
-                  color: value.isDarkMode ? ThemeColors.white : null,
+                  // color: value.isDarkMode ? ThemeColors.white : null,
+                  color: ThemeColors.black,
                 ),
               ],
             ),

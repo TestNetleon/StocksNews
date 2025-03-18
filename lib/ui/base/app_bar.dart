@@ -77,7 +77,7 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
                           if (showBack)
                             ActionButton(
                               icon: Images.back,
-                              color: darkTheme ? ThemeColors.white : null,
+                              // color: darkTheme ? ThemeColors.white : null,
                               onTap: () {
                                 if (popHome) {
                                   if (CustomNavigatorObserver().stackCount >=
@@ -133,6 +133,7 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
                             Consumer<UserManager>(
                               builder: (context, value, child) {
                                 UserRes? user = value.user;
+                                // Utils().showLog(" ==> ${user?.image}");
                                 return Padding(
                                   padding: const EdgeInsets.only(left: 5),
                                   child: GestureDetector(
@@ -147,11 +148,16 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
                                         height: 30,
                                         width: 30,
                                         decoration: BoxDecoration(
-                                            shape: BoxShape.circle),
+                                          shape: BoxShape.circle,
+                                          border: Border.all(
+                                            color: ThemeColors.black,
+                                          ),
+                                        ),
                                         child: user?.image == null ||
                                                 user?.image == ''
                                             ? Image.asset(
-                                                Images.userPlaceholderNew)
+                                                Images.userPlaceholderNew,
+                                              )
                                             : user?.image == 'svg'
                                                 ? SvgPicture.network(
                                                     user?.image ?? '',
@@ -176,11 +182,11 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
                           if (showNotification)
                             LeadingNotification(
                               showIndicator: true,
-                              color: darkTheme ? ThemeColors.white : null,
+                              // color: darkTheme ? ThemeColors.white : null,
                             ),
                           if (showSearch)
                             ActionButton(
-                              color: darkTheme ? ThemeColors.white : null,
+                              // color: darkTheme ? ThemeColors.white : null,
                               icon: Images.search,
                               onTap: () {
                                 Navigator.push(
@@ -341,7 +347,7 @@ class LeadingNotification extends StatelessWidget {
   const LeadingNotification({
     super.key,
     this.showIndicator = false,
-    this.color = ThemeColors.black,
+    this.color,
   });
 
   final bool showIndicator;
@@ -360,7 +366,7 @@ class LeadingNotification extends StatelessWidget {
           },
           child: Image.asset(
             Images.notification,
-            color: color,
+            color: color ?? ThemeColors.black,
             height: 35,
             width: 35,
           ),

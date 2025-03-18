@@ -178,7 +178,7 @@ class SDMorningStarView extends StatelessWidget {
                                       color: ThemeColors.error120,
                                       label: 'Low',
                                       sizeUnit: GaugeSizeUnit.factor,
-                                      labelStyle: const GaugeTextStyle(
+                                      labelStyle: GaugeTextStyle(
                                         fontFamily: Fonts.roboto,
                                         fontSize: 13,
                                         fontWeight: FontWeight.bold,
