@@ -1,9 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:provider/provider.dart';
 import 'package:stocks_news_new/models/market/industries_res.dart';
-import 'package:stocks_news_new/ui/theme/manager.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -44,24 +42,18 @@ class BaseSectorItem extends StatelessWidget {
                 width: titleSpace,
                 child: Row(
                   children: [
-                    Consumer<ThemeManager>(
-                      builder: (context, value, child) {
-                        return ClipRRect(
-                          borderRadius: BorderRadius.circular(Pad.pad5),
-                          child: Container(
-                            padding: EdgeInsets.all(3.sp),
-                            // color: ThemeColors.neutral5,
-                            child: CachedNetworkImagesWidget(
-                              data.image,
-                              height: 20,
-                              width: 20,
-                              color: value.isDarkMode
-                                  ? ThemeColors.white
-                                  : ThemeColors.black,
-                            ),
-                          ),
-                        );
-                      },
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(Pad.pad5),
+                      child: Container(
+                        padding: EdgeInsets.all(3.sp),
+                        // color: ThemeColors.neutral5,
+                        child: CachedNetworkImagesWidget(
+                          data.image,
+                          height: 20,
+                          width: 20,
+                          color: ThemeColors.black,
+                        ),
+                      ),
                     ),
                     const SpacerHorizontal(width: 16),
                     Flexible(

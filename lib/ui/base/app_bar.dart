@@ -46,114 +46,104 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<ThemeManager>(
-      builder: (context, value, child) {
-        bool darkTheme = value.isDarkMode;
-
-        return SafeArea(
-          child: Padding(
-            // padding: const EdgeInsets.symmetric(vertical: 8.0),
-            padding: const EdgeInsets.all(Pad.pad8),
-            child: Stack(
-              children: [
-                if (searchFieldWidget != null) searchFieldWidget ?? SizedBox(),
-                if ((title == null || title == '') &&
-                    searchFieldWidget == null &&
-                    showLogo)
-                  CenterLogo(isHome: isHome),
-                if (title != null && title != '') CenterTitle(title: title!),
-                Positioned(
-                  left: 0,
-                  right: 0,
-                  top: 0,
-                  bottom: 0,
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return SafeArea(
+      child: Padding(
+        // padding: const EdgeInsets.symmetric(vertical: 8.0),
+        padding: const EdgeInsets.all(Pad.pad8),
+        child: Stack(
+          children: [
+            if (searchFieldWidget != null) searchFieldWidget ?? SizedBox(),
+            if ((title == null || title == '') &&
+                searchFieldWidget == null &&
+                showLogo)
+              CenterLogo(isHome: isHome),
+            if (title != null && title != '') CenterTitle(title: title!),
+            Positioned(
+              left: 0,
+              right: 0,
+              top: 0,
+              bottom: 0,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  // Leading
+                  Row(
                     children: [
-                      // Leading
-                      Row(
-                        children: [
-                          if (showBack)
-                            ActionButton(
-                              icon: Images.back,
-                              // color: darkTheme ? ThemeColors.white : null,
-                              onTap: () {
-                                if (popHome) {
-                                  if (CustomNavigatorObserver().stackCount >=
-                                          2 &&
-                                      splashLoaded) {
-                                    Navigator.pop(navigatorKey.currentContext!);
-                                  } else {
-                                    Navigator.popUntil(
-                                        navigatorKey.currentContext!,
-                                        (route) => route.isFirst);
-                                    Navigator.pushReplacementNamed(
-                                        navigatorKey.currentContext!,
-                                        Tabs.path);
-                                    /* Navigator.pushReplacement(
+                      if (showBack)
+                        ActionButton(
+                          icon: Images.back,
+                          // color: darkTheme ? ThemeColors.white : null,
+                          onTap: () {
+                            if (popHome) {
+                              if (CustomNavigatorObserver().stackCount >= 2 &&
+                                  splashLoaded) {
+                                Navigator.pop(navigatorKey.currentContext!);
+                              } else {
+                                Navigator.popUntil(navigatorKey.currentContext!,
+                                    (route) => route.isFirst);
+                                Navigator.pushReplacementNamed(
+                                    navigatorKey.currentContext!, Tabs.path);
+                                /* Navigator.pushReplacement(
                                     navigatorKey.currentContext!,
                                     MaterialPageRoute(
                                         builder: (_) => const Tabs()),
                                   );*/
-                                    popHome = false;
-                                  }
-                                } else {
-                                  // Navigator.pop(navigatorKey.currentContext!);
-                                  if (CustomNavigatorObserver().stackCount >=
-                                          2 &&
-                                      splashLoaded) {
-                                    Navigator.pop(navigatorKey.currentContext!);
-                                  } else {
-                                    Navigator.popUntil(
-                                        navigatorKey.currentContext!,
-                                        (route) => route.isFirst);
-                                    Navigator.pushReplacementNamed(
-                                        navigatorKey.currentContext!,
-                                        Tabs.path);
-                                    /* Navigator.pushReplacement(
+                                popHome = false;
+                              }
+                            } else {
+                              // Navigator.pop(navigatorKey.currentContext!);
+                              if (CustomNavigatorObserver().stackCount >= 2 &&
+                                  splashLoaded) {
+                                Navigator.pop(navigatorKey.currentContext!);
+                              } else {
+                                Navigator.popUntil(navigatorKey.currentContext!,
+                                    (route) => route.isFirst);
+                                Navigator.pushReplacementNamed(
+                                    navigatorKey.currentContext!, Tabs.path);
+                                /* Navigator.pushReplacement(
                                     navigatorKey.currentContext!,
                                     MaterialPageRoute(
                                         builder: (_) => const Tabs()),
                                   );*/
-                                    popHome = false;
-                                  }
-                                }
-                              },
-                            ),
-                          if (leadingFilterClick != null)
-                            ActionButton(
-                              icon: Images.marketFilter,
-                              size: 22,
-                              padding: EdgeInsets.all(8),
-                              onTap: leadingFilterClick!,
-                            ),
-                          if (showDrawer && !showBack)
-                            Consumer<UserManager>(
-                              builder: (context, value, child) {
-                                UserRes? user = value.user;
-                                // Utils().showLog(" ==> ${user?.image}");
-                                return Padding(
-                                  padding: const EdgeInsets.only(left: 5),
-                                  child: GestureDetector(
-                                    onTap: () {
-                                      closeKeyboard();
-                                      Scaffold.of(context).openDrawer();
-                                    },
-                                    child: ClipRRect(
-                                      borderRadius:
-                                          BorderRadius.circular(Pad.pad999),
-                                      child: Container(
-                                        height: 30,
-                                        width: 30,
-                                        decoration: BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          border: Border.all(
-                                            color: ThemeColors.black,
-                                          ),
-                                        ),
-                                        child: user?.image == null ||
-                                                user?.image == ''
+                                popHome = false;
+                              }
+                            }
+                          },
+                        ),
+                      if (leadingFilterClick != null)
+                        ActionButton(
+                          icon: Images.marketFilter,
+                          size: 22,
+                          padding: EdgeInsets.all(8),
+                          onTap: leadingFilterClick!,
+                        ),
+                      if (showDrawer && !showBack)
+                        Consumer<UserManager>(
+                          builder: (context, value, child) {
+                            UserRes? user = value.user;
+                            // Utils().showLog(" ==> ${user?.image}");
+                            return Padding(
+                              padding: const EdgeInsets.only(left: 5),
+                              child: GestureDetector(
+                                onTap: () {
+                                  closeKeyboard();
+                                  Scaffold.of(context).openDrawer();
+                                },
+                                child: ClipRRect(
+                                  borderRadius:
+                                      BorderRadius.circular(Pad.pad999),
+                                  child: Container(
+                                    height: 30,
+                                    width: 30,
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      border: Border.all(
+                                        color: ThemeColors.black,
+                                      ),
+                                    ),
+                                    child:
+                                        user?.image == null || user?.image == ''
                                             ? Image.asset(
                                                 Images.userPlaceholderNew,
                                               )
@@ -167,79 +157,74 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
                                                     user?.image ?? '',
                                                     showLoading: true,
                                                   ),
-                                      ),
-                                    ),
                                   ),
-                                );
-                              },
-                            ),
-                        ],
-                      ),
-                      // Actions
-                      Row(
-                        children: [
-                          if (showNotification)
-                            LeadingNotification(
-                              showIndicator: true,
-                              // color: darkTheme ? ThemeColors.white : null,
-                            ),
-                          if (showSearch)
-                            ActionButton(
-                              // color: darkTheme ? ThemeColors.white : null,
-                              icon: Images.search,
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  createRoute(
-                                    BaseSearch(
-                                      stockClick: (p0) {
-                                        if (p0.symbol == null ||
-                                            p0.symbol == '') {
-                                          return;
-                                        }
-                                        Navigator.pushNamed(
-                                            context, SDIndex.path,
-                                            arguments: {
-                                              'symbol': p0.symbol,
-                                            });
-                                      },
-                                      newsClick: (data) {
-                                        if (data.slug == null ||
-                                            data.slug == '') {
-                                          return;
-                                        }
-                                        Navigator.pushNamed(
-                                            context, NewsDetailIndex.path,
-                                            arguments: {
-                                              'slug': data.slug,
-                                            });
-                                      },
-                                    ),
-                                  ),
-                                );
-                              },
-                            ),
-                          if (shareURL != null)
-                            Padding(
-                              padding: const EdgeInsets.only(left: 8),
-                              child: ActionButton(
-                                size: 38,
-                                icon: Images.shareURL,
-                                onTap: shareURL!,
+                                ),
                               ),
-                            ),
-                          if (onSaveClick != null)
-                            SaveAction(onSaveClick: onSaveClick!),
-                        ],
-                      ),
+                            );
+                          },
+                        ),
                     ],
                   ),
-                ),
-              ],
+                  // Actions
+                  Row(
+                    children: [
+                      if (showNotification)
+                        LeadingNotification(
+                          showIndicator: true,
+                          // color: darkTheme ? ThemeColors.white : null,
+                        ),
+                      if (showSearch)
+                        ActionButton(
+                          // color: darkTheme ? ThemeColors.white : null,
+                          icon: Images.search,
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              createRoute(
+                                BaseSearch(
+                                  stockClick: (p0) {
+                                    if (p0.symbol == null || p0.symbol == '') {
+                                      return;
+                                    }
+                                    Navigator.pushNamed(context, SDIndex.path,
+                                        arguments: {
+                                          'symbol': p0.symbol,
+                                        });
+                                  },
+                                  newsClick: (data) {
+                                    if (data.slug == null || data.slug == '') {
+                                      return;
+                                    }
+                                    Navigator.pushNamed(
+                                        context, NewsDetailIndex.path,
+                                        arguments: {
+                                          'slug': data.slug,
+                                        });
+                                  },
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      if (shareURL != null)
+                        Padding(
+                          padding: const EdgeInsets.only(left: 8),
+                          child: ActionButton(
+                            size: 38,
+                            icon: Images.shareURL,
+                            onTap: shareURL!,
+                          ),
+                        ),
+                      if (onSaveClick != null)
+                        SaveAction(onSaveClick: onSaveClick!),
+                    ],
+                  ),
+                ],
+              ),
             ),
-          ),
-        );
-      },
+          ],
+        ),
+      ),
     );
   }
 
@@ -327,19 +312,14 @@ class ActionButton extends StatelessWidget {
     return InkWell(
       borderRadius: BorderRadius.circular(Pad.pad999),
       onTap: onTap,
-      child: Consumer<ThemeManager>(
-        builder: (context, value, child) {
-          return Container(
-            padding: padding ?? EdgeInsets.zero,
-            child: Image.asset(
-              icon,
-              color: color ??
-                  (value.isDarkMode ? ThemeColors.white : ThemeColors.black),
-              width: size,
-              height: size,
-            ),
-          );
-        },
+      child: Container(
+        padding: padding ?? EdgeInsets.zero,
+        child: Image.asset(
+          icon,
+          color: color ?? ThemeColors.black,
+          width: size,
+          height: size,
+        ),
       ),
     );
   }

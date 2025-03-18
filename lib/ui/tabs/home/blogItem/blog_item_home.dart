@@ -43,7 +43,7 @@ class BlogHomeIndex extends StatelessWidget {
           child: Container(
             margin: EdgeInsets.symmetric(vertical: Pad.pad10),
             decoration: BoxDecoration(
-              color: darkTheme ? Colors.black : Colors.white,
+              color: darkTheme ? Colors.black : ThemeColors.white,
               borderRadius: BorderRadius.circular(8),
               boxShadow: [
                 BoxShadow(
@@ -57,9 +57,7 @@ class BlogHomeIndex extends StatelessWidget {
               children: [
                 Container(
                   decoration: BoxDecoration(
-                    color: darkTheme
-                        ? ThemeColors.neutral80
-                        : ThemeColors.neutral5,
+                    color: ThemeColors.neutral5,
                     borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(8),
                       topRight: Radius.circular(8),
@@ -73,9 +71,7 @@ class BlogHomeIndex extends StatelessWidget {
                       Icon(
                         Icons.notifications_active_outlined,
                         size: 22,
-                        color: darkTheme
-                            ? ThemeColors.white
-                            : ThemeColors.splashBG,
+                        color: ThemeColors.black,
                       ),
                       const SpacerHorizontal(width: 8),
                       Text(
