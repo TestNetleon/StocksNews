@@ -11,7 +11,7 @@ import '../../utils/colors.dart';
 void baseLogout() {
   showDialog(
     context: navigatorKey.currentContext!,
-    barrierColor: ThemeColors.transparentDark,
+    barrierColor: Colors.transparent,
     builder: (context) {
       return BaseLogoutPopUp();
     },
@@ -52,7 +52,7 @@ class BaseLogoutPopUp extends StatelessWidget {
                     Text(
                       "Sign Out",
                       style: styleBaseBold(
-                        color: ThemeColors.background,
+                        color: ThemeColors.black,
                         fontSize: 20,
                       ),
                     ),
@@ -60,7 +60,7 @@ class BaseLogoutPopUp extends StatelessWidget {
                     Text(
                       "Are you sure you want to sign out?",
                       textAlign: TextAlign.center,
-                      style: styleBaseRegular(color: ThemeColors.background),
+                      style: styleBaseRegular(color: ThemeColors.black),
                     ),
                     const SpacerVertical(height: 5),
                     Row(
@@ -72,7 +72,7 @@ class BaseLogoutPopUp extends StatelessWidget {
                           },
                           child: Text(
                             "CANCEL",
-                            style: styleBaseBold(color: ThemeColors.background),
+                            style: styleBaseBold(color: ThemeColors.black),
                           ),
                         ),
                         TextButton(
@@ -82,7 +82,7 @@ class BaseLogoutPopUp extends StatelessWidget {
                           },
                           child: Text(
                             "LOGOUT",
-                            style: styleBaseBold(color: ThemeColors.background),
+                            style: styleBaseBold(color: ThemeColors.black),
                           ),
                         ),
                       ],

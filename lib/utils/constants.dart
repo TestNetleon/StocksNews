@@ -190,8 +190,9 @@ Map<AdScreen, Map<AdPlaces, bool>> adVisibilityMap = {
 
 class Images {
   //MARK: New UI
-  static const String layout1 = 'assets/image/layout1.png';
   static const String base = 'assets/image/';
+  static const String referSuccess = "${base}success.gif";
+  static const String layout1 = '${base}layout1.png';
   static const String mainLogo = '${base}splashLogo.png';
   static const String mainBlackLogo = '${base}mainBlackLogo.png';
   static const String notification = '${base}notification.png';
@@ -351,7 +352,6 @@ class Images {
   static const String syncGIF = "assets/images/syncGIF.gif";
   static const String portfolioGIF = "assets/images/portfolio.gif";
   static const String otpVerify = "assets/images/otp1.gif";
-  static const String referSuccess = "assets/images/success.gif";
   static const String kingGIF = "assets/images/king.gif";
   static const String receiveGIF = "assets/images/receive.gif";
   static const String lockGIF = "assets/images/Lock.gif";

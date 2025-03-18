@@ -3,10 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stocks_news_new/models/ticker.dart';
 import 'package:stocks_news_new/ui/base/bottom_sheet.dart';
 import 'package:stocks_news_new/ui/tabs/home/scanner/extra/action_in_nbs.dart';
-import 'package:provider/provider.dart';
 import 'package:stocks_news_new/ui/base/base_list_divider.dart';
 import 'package:stocks_news_new/ui/tabs/tools/scanner/models/offline.dart';
-import 'package:stocks_news_new/ui/theme/manager.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -55,7 +53,7 @@ class ScannerBaseItem extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: Pad.pad16),
       child: InkWell(
-        onTap: (){
+        onTap: () {
           if (data?.identifier == null || data?.identifier == '') {
             return;
           }
@@ -68,8 +66,7 @@ class ScannerBaseItem extends StatelessWidget {
                     symbol: data?.identifier ?? '',
                     name: data?.name ?? '',
                     image: data?.image ?? '',
-                  ))
-          );
+                  )));
         },
         child: Column(
           children: [
@@ -182,9 +179,7 @@ class ScannerBaseItem extends StatelessWidget {
                         ),
                         Visibility(
                           visible: preMarket || postMarket,
-                          child: Consumer<ThemeManager>(
-                              builder: (context, value, child) {
-                            return Container(
+                          child: Container(
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(30),
                                 color: ThemeColors.neutral5,
@@ -198,13 +193,9 @@ class ScannerBaseItem extends StatelessWidget {
                                 'Last Trade',
                                 style: styleBaseSemiBold(
                                   fontSize: 13,
-                                  color: value.isDarkMode
-                                      ? ThemeColors.white
-                                      : ThemeColors.neutral40,
+                                  // color: ThemeColors.neutral40,
                                 ),
-                              ),
-                            );
-                          }),
+                              )),
                         ),
                       ],
                     )
@@ -286,55 +277,41 @@ class ScannerBaseItem extends StatelessWidget {
                 SpacerVertical(height: 8),
               ],
             ),
-            Consumer<ThemeManager>(builder: (context, value, child) {
-              return Container(
-                padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-                decoration: BoxDecoration(
-                  color:
-                      // value.isDarkMode
-                      //     ? ThemeColors.neutral80
-                      //     :
-                      ThemeColors.neutral5,
-                  borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(8),
-                    bottomRight: Radius.circular(8),
+            Container(
+              padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+              decoration: BoxDecoration(
+                color: ThemeColors.neutral5,
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(8),
+                  bottomRight: Radius.circular(8),
+                ),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Flexible(
+                    child: Visibility(
+                      visible: data?.bid != null,
+                      child: _widget(
+                        isBOLD: true,
+                        label: 'Bid: ',
+                        value: '\$${data?.bid}',
+                      ),
+                    ),
                   ),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Flexible(
-                      child: Visibility(
-                        visible: data?.bid != null,
-                        child: _widget(
-                          color: value.isDarkMode ? ThemeColors.neutral8 : null,
-                          valueColor: value.isDarkMode
-                              ? ThemeColors.white
-                              : ThemeColors.black,
-                          isBOLD: true,
-                          label: 'Bid: ',
-                          value: '\$${data?.bid}',
-                        ),
+                  Flexible(
+                    child: Visibility(
+                      visible: data?.ask != null,
+                      child: _widget(
+                        isBOLD: true,
+                        label: 'Ask: ',
+                        value: '\$${data?.ask}',
                       ),
                     ),
-                    Flexible(
-                      child: Visibility(
-                        visible: data?.ask != null,
-                        child: _widget(
-                          color: value.isDarkMode ? ThemeColors.neutral8 : null,
-                          valueColor: value.isDarkMode
-                              ? ThemeColors.white
-                              : ThemeColors.black,
-                          isBOLD: true,
-                          label: 'Ask: ',
-                          value: '\$${data?.ask}',
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              );
-            }),
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
       ),

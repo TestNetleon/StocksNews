@@ -158,7 +158,7 @@ class _PurchasedPlanItemState extends State<PurchasedPlanItem> {
                           builder: (context, value, child) {
                             return GestureDetector(
                               onTap: () {
-                                value.startProcess(viewPlans: true);
+                                value.startProcess();
                               },
                               child: Padding(
                                 padding: const EdgeInsets.only(left: 8),

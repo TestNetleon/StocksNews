@@ -53,6 +53,7 @@ import 'package:stocks_news_new/managers/watchlist.dart';
 import 'package:stocks_news_new/models/my_home.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
+import 'package:stocks_news_new/ui/subscription/action_required.dart';
 import 'package:stocks_news_new/ui/tabs/home/scanner/manager/gainers.dart';
 import 'package:stocks_news_new/ui/tabs/market/industries/industries_view.dart';
 import 'package:stocks_news_new/ui/tabs/market/sectors/sector_view.dart';
@@ -161,6 +162,8 @@ class Routes {
     JoinReferralIndex.path: (_) => const JoinReferralIndex(),
     NotificationIndex.path: (_) => const NotificationIndex(),
     MorningStarReportsIndex.path: (_) => const MorningStarReportsIndex(),
+    MembershipActionRequired.path: (_) => const MembershipActionRequired(),
+
     //--------------------------------------
   };
 
@@ -210,11 +213,16 @@ class Routes {
             String phone = arguments?['phone'];
             String verificationId = arguments?['verificationId'];
             bool? update = arguments?['update'];
+            String? name = arguments?['name'];
+            void Function()? callBack = arguments?['callBack'];
+
             return AccountVerificationIndex(
               countryCode: countryCode,
               phone: phone,
               verificationId: verificationId,
               update: update,
+              name: name,
+              callBack: callBack,
             );
           },
         );

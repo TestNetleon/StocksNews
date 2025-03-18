@@ -65,7 +65,7 @@ class LayoutOneItem extends StatelessWidget {
                           style: TextStyle(
                             fontFamily: 'Roboto',
                             fontSize: 14,
-                            color: ThemeColors.white,
+                            color: ThemeColors.black,
                             fontWeight: FontWeight.normal,
                           ),
                           children: [
@@ -74,7 +74,7 @@ class LayoutOneItem extends StatelessWidget {
                               style: styleBaseRegular(
                                   fontSize: 14,
                                   height: 1.6,
-                                  color: ThemeColors.greyText),
+                                  color: ThemeColors.neutral5),
                             ),
                           ],
                         ),
