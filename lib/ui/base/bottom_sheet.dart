@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
+import 'package:stocks_news_new/ui/theme/manager.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 
@@ -11,6 +13,9 @@ class BaseBottomSheet {
     Color? barrierColor,
     EdgeInsets? padding,
   }) {
+    ThemeManager manager = navigatorKey.currentContext!.read();
+    bool isDark = manager.isDarkMode;
+
     showModalBottomSheet(
       isScrollControlled: true,
       useSafeArea: true,
@@ -21,7 +26,10 @@ class BaseBottomSheet {
         ),
       ),
       enableDrag: true,
-      barrierColor: barrierColor ?? ThemeColors.black,
+      barrierColor: barrierColor ??
+          (isDark
+              ? ThemeColors.black.withValues(alpha: .3)
+              : ThemeColors.black),
       context: navigatorKey.currentContext!,
       backgroundColor: Colors.transparent,
       builder: (context) {
