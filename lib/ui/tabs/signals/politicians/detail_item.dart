@@ -123,6 +123,7 @@ class BasePoliticianDetailItem extends StatelessWidget {
                               isOpen ? Images.arrowUP : Images.arrowDOWN,
                               height: 24,
                               width: 24,
+                              color: ThemeColors.black,
                             ),
                           ),
                         ),
