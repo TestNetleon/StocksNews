@@ -15,6 +15,7 @@ import 'package:stocks_news_new/widgets/custom/base_loader_container.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 import '../../base/scaffold.dart';
 import 'home_premium.dart';
+import 'popularStocks/index.dart';
 import 'scanner/index.dart';
 
 class HomeIndex extends StatefulWidget {
@@ -67,6 +68,8 @@ class _HomeIndexState extends State<HomeIndex> {
                     ),
                   ),
                 ),
+
+                HomePopularStocks(),
                 HomeInsiderTradesIndex(
                   insiderData: manager.data?.insiderTrading,
                 ),

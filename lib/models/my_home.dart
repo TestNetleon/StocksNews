@@ -20,11 +20,13 @@ class MyHomeRes {
   final InsiderTradeListRes? insiderTrading;
   final ScannerPortRes? scannerPort;
   final List<BaseNewsRes>? recentNews;
+  final HomePopularRes? popular;
 
   MyHomeRes({
     this.tickers,
     this.loginBox,
     this.user,
+    this.popular,
     this.recentNews,
     this.bannerBlog,
     this.showCrypto,
@@ -33,6 +35,9 @@ class MyHomeRes {
   });
 
   factory MyHomeRes.fromJson(Map<String, dynamic> json) => MyHomeRes(
+        popular: json["popular"] == null
+            ? null
+            : HomePopularRes.fromJson(json["popular"]),
         recentNews: json["recent_news"] == null
             ? []
             : List<BaseNewsRes>.from(
@@ -58,6 +63,7 @@ class MyHomeRes {
       );
 
   Map<String, dynamic> toJson() => {
+        "popular": popular?.toJson(),
         "recent_news": recentNews == null
             ? []
             : List<dynamic>.from(recentNews!.map((x) => x.toJson())),
@@ -245,5 +251,30 @@ class InsiderTradeRes {
         "transactionType": transactionType,
         'securitiesOwned': securitiesOwned,
         'transactionDate': transactionDate,
+      };
+}
+
+class HomePopularRes {
+  final String? title;
+  final List<BaseTickerRes>? data;
+
+  HomePopularRes({
+    this.title,
+    this.data,
+  });
+
+  factory HomePopularRes.fromJson(Map<String, dynamic> json) => HomePopularRes(
+        title: json["title"],
+        data: json["data"] == null
+            ? []
+            : List<BaseTickerRes>.from(
+                json["data"]!.map((x) => BaseTickerRes.fromJson(x))),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "title": title,
+        "data": data == null
+            ? []
+            : List<dynamic>.from(data!.map((x) => x.toJson())),
       };
 }
