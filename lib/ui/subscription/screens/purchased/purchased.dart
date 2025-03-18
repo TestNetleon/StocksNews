@@ -44,7 +44,7 @@ class _PurchasedIndexState extends State<PurchasedIndex> {
       ),
       body: BaseLoaderContainer(
         hasData: manager.mySubscriptionData != null,
-        isLoading: manager.isLoading,
+        isLoading: manager.isLoadingPurchased,
         showPreparingText: true,
         error: manager.error,
         onRefresh: manager.getMyPurchasedData,
@@ -56,7 +56,7 @@ class _PurchasedIndexState extends State<PurchasedIndex> {
               if (activeMembership != null)
                 PurchasedPlanItem(data: activeMembership, index: 0),
               BaseHeading(
-                title: 'Payment History',
+                title: manager.mySubscriptionData?.paymentHistory?.title,
                 titleStyle: styleBaseBold(fontSize: 20),
                 margin: EdgeInsets.only(bottom: 10),
               ),

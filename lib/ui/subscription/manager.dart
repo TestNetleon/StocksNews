@@ -63,17 +63,15 @@ class SubscriptionManager extends ChangeNotifier {
       bool initialized = await instance.initialize(user: manager.user);
       Utils().showLog('Revenue Cat initialized $initialized');
       if (initialized) {
-        ApiResponse res = await getMembershipLayout();
-        if (res.status) {
+        await getMembershipLayout();
+        if (viewPlans) {
           if (_layoutData?.superWallLayout != null &&
               _layoutData?.superWallLayout != '') {
             SuperwallService.instance
                 .initializeSuperWall(value: _layoutData?.superWallLayout ?? '');
             return;
           }
-        }
 
-        if (viewPlans) {
           if (kDebugMode) {
             print('Goto - View Plans');
           }
@@ -82,10 +80,11 @@ class SubscriptionManager extends ChangeNotifier {
             SubscriptionPlansIndex.path,
           );
         } else {
-          List<String> actives =
-              await instance.getActiveMembership(normalActive: false);
+          // List<String> actives =
+          //     await instance.getActiveMembership(normalActive: false);
 
-          if (actives.isEmpty) {
+          // if (actives.isEmpty) {
+          if (_layoutData?.membershipPurchased != 1) {
             if (kDebugMode) {
               Utils().showLog('Goto - First Time Purchase');
             }
@@ -106,7 +105,8 @@ class SubscriptionManager extends ChangeNotifier {
           }
 
           if (kDebugMode) {
-            Utils().showLog('Actives $actives');
+            // Utils().showLog('Actives $actives');
+            Utils().showLog('PUrchased ${_layoutData?.membershipPurchased}');
           }
         }
       }
@@ -174,14 +174,24 @@ class SubscriptionManager extends ChangeNotifier {
   bool get canLoadMoreHistory =>
       _page <= (_mySubscriptionData?.paymentHistory?.totalPages ?? 1);
 
+  Status _statusPurchased = Status.ideal;
+  Status get statusPurchased => _statusPurchased;
+
+  bool get isLoadingPurchased => _statusPurchased == Status.loading;
+
+  setStatusPurchased(status) {
+    _statusPurchased = status;
+    notifyListeners();
+  }
+
   Future getMyPurchasedData({loadMore = false}) async {
     try {
       if (loadMore) {
         _page++;
-        setStatus(Status.loadingMore);
+        setStatusPurchased(Status.loadingMore);
       } else {
         _page = 1;
-        setStatus(Status.loading);
+        setStatusPurchased(Status.loading);
       }
 
       UserManager provider = navigatorKey.currentContext!.read<UserManager>();
@@ -220,8 +230,7 @@ class SubscriptionManager extends ChangeNotifier {
       }
       Utils().showLog("Error in ${Apis.mySubscription}: $e");
     } finally {
-      setStatus(Status.loaded);
-      notifyListeners();
+      setStatusPurchased(Status.loaded);
     }
   }
 

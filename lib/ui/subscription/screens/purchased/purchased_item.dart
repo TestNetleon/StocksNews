@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
+import 'package:provider/provider.dart';
+import 'package:stocks_news_new/ui/subscription/manager.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -113,39 +115,65 @@ class _PurchasedPlanItemState extends State<PurchasedPlanItem> {
                       ),
                     ),
                     SpacerVertical(height: Pad.pad16),
-                    InkWell(
-                      borderRadius: BorderRadius.circular(8),
-                      onTap: () {
-                        openBenefit(widget.index);
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.only(right: 3),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Image.asset(
-                              _openIndex == widget.index
-                                  ? Images.arrowUP
-                                  : Images.arrowDOWN,
-                              height: 24,
-                              width: 24,
-                              color: ThemeColors.secondary100,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Flexible(
+                          child: InkWell(
+                            borderRadius: BorderRadius.circular(8),
+                            onTap: () {
+                              openBenefit(widget.index);
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.only(right: 3),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Image.asset(
+                                    _openIndex == widget.index
+                                        ? Images.arrowUP
+                                        : Images.arrowDOWN,
+                                    height: 24,
+                                    width: 24,
+                                    color: ThemeColors.secondary100,
+                                  ),
+                                  Flexible(
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(left: 8),
+                                      child: Text(
+                                        'See Benefits',
+                                        style: styleBaseSemiBold(
+                                          fontSize: 14,
+                                          color: ThemeColors.secondary100,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
-                            Flexible(
+                          ),
+                        ),
+                        Consumer<SubscriptionManager>(
+                          builder: (context, value, child) {
+                            return GestureDetector(
+                              onTap: () {
+                                value.startProcess(viewPlans: true);
+                              },
                               child: Padding(
                                 padding: const EdgeInsets.only(left: 8),
                                 child: Text(
-                                  'See Benefits',
+                                  'See All Plans',
                                   style: styleBaseSemiBold(
                                     fontSize: 14,
-                                    color: ThemeColors.secondary100,
+                                    color: ThemeColors.sos,
                                   ),
                                 ),
                               ),
-                            ),
-                          ],
+                            );
+                          },
                         ),
-                      ),
+                      ],
                     ),
                     AnimatedSize(
                       duration: const Duration(milliseconds: 200),
