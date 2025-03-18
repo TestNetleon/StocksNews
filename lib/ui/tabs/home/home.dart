@@ -7,6 +7,7 @@ import 'package:stocks_news_new/ui/base/heading.dart';
 import 'package:stocks_news_new/ui/tabs/home/blogItem/blog_item_home.dart';
 import 'package:stocks_news_new/ui/tabs/home/insiderTrades/insider_trades.dart';
 import 'package:stocks_news_new/ui/tabs/home/slider/index.dart';
+import 'package:stocks_news_new/ui/tabs/home/trendingGainerLoser/index.dart';
 import 'package:stocks_news_new/ui/tabs/more/index.dart';
 import 'package:stocks_news_new/ui/theme/manager.dart';
 import 'package:stocks_news_new/utils/constants.dart';
@@ -50,6 +51,7 @@ class _HomeIndexState extends State<HomeIndex> {
               margin: EdgeInsets.zero,
               children: [
                 const BlogHomeIndex(),
+                TrendingGainerLoser(),
                 HomeTopNewsSlider(),
                 // HomeTrendingIndex(),
                 Visibility(

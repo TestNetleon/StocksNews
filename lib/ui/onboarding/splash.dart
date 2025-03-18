@@ -87,7 +87,7 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
     } catch (e) {
       //
     }
-    Timer(const Duration(seconds: 30), () {
+    Timer(const Duration(seconds: 3), () {
       if (popHome) return;
       if (onDeepLinking) {
         popHome = true;

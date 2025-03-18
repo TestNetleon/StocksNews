@@ -7,6 +7,7 @@ import 'package:stocks_news_new/modals/user_res.dart';
 import 'package:stocks_news_new/ui/base/button.dart';
 import 'package:stocks_news_new/ui/subscription/action_required.dart';
 import 'package:stocks_news_new/ui/subscription/manager.dart';
+import 'package:stocks_news_new/ui/theme/manager.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -55,6 +56,10 @@ class _BaseLockItemState extends State<BaseLockItem> {
     if (info == null) {
       return SizedBox();
     }
+
+    ThemeManager manager = context.read<ThemeManager>();
+    String? image = manager.isDarkMode ? info.imageDark : info.image;
+
     return PopScope(
       onPopInvokedWithResult: (didPop, result) {
         isVisible = false;
@@ -67,9 +72,9 @@ class _BaseLockItemState extends State<BaseLockItem> {
             children: [
               // Background Blur Effect
               Positioned.fill(
-                child: info.image != null && info.image != ''
+                child: image != null && image != ''
                     ? CachedNetworkImage(
-                        imageUrl: info.image ?? '',
+                        imageUrl: image,
                         fit: BoxFit.cover,
                         placeholder: (context, url) {
                           return Container(

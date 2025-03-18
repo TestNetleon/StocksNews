@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:stocks_news_new/database/preference.dart';
 import 'package:stocks_news_new/utils/colors.dart';
-import 'package:stocks_news_new/utils/utils.dart';
 
 class ThemeManager extends ChangeNotifier {
   ThemeMode _themeMode = ThemeMode.system;
@@ -31,7 +30,6 @@ class ThemeManager extends ChangeNotifier {
 
   void _loadTheme() async {
     _themeMode = await Preference.getTheme();
-    Utils().showLog("*** INITIAL THEME LOAD *** ==>  $_themeMode");
     notifyListeners();
     ThemeColors.updateTheme(!isDarkMode);
   }

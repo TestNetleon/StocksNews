@@ -6,6 +6,7 @@ class BaseLockInfoRes {
   final String? btn;
   final String? viewBtn;
   final String? image;
+  final String? imageDark;
 
   BaseLockInfoRes({
     this.title,
@@ -15,6 +16,7 @@ class BaseLockInfoRes {
     this.btn,
     this.viewBtn,
     this.image,
+    this.imageDark,
   });
 
   factory BaseLockInfoRes.fromJson(Map<String, dynamic> json) =>
@@ -28,6 +30,7 @@ class BaseLockInfoRes {
         btn: json["btn"],
         viewBtn: json["view_btn"],
         image: json["image"],
+        imageDark: json["image_dark"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -38,5 +41,6 @@ class BaseLockInfoRes {
         "btn": btn,
         "view_btn": viewBtn,
         "image": image,
+        "image_dark": imageDark,
       };
 }

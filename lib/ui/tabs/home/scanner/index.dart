@@ -7,6 +7,7 @@ import 'package:stocks_news_new/ui/base/button.dart';
 import 'package:stocks_news_new/ui/base/lock.dart';
 import 'package:stocks_news_new/ui/tabs/home/scanner/manager/gainers.dart';
 import 'package:stocks_news_new/ui/tabs/tools/scanner/models/scanner_port.dart';
+import 'package:stocks_news_new/ui/theme/manager.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
@@ -70,6 +71,8 @@ class _HomeScannerIndexState extends State<HomeScannerIndex> {
   }
 
   Widget _lock(BaseLockInfoRes lock) {
+    bool isDark = context.read<ThemeManager>().isDarkMode;
+
     return Consumer<MyHomeManager>(
       builder: (context, value, child) {
         return Positioned(
@@ -83,7 +86,7 @@ class _HomeScannerIndexState extends State<HomeScannerIndex> {
             children: [
               CachedNetworkImage(
                 fit: BoxFit.cover,
-                imageUrl: lock.image ?? '',
+                imageUrl: (isDark ? lock.imageDark : lock.image) ?? "",
                 errorWidget: (context, url, error) {
                   return Container(
                     color: Colors.white.withValues(alpha: 0.6),
