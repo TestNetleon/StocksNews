@@ -190,6 +190,7 @@ Map<AdScreen, Map<AdPlaces, bool>> adVisibilityMap = {
 
 class Images {
   //MARK: New UI
+  static const String layout1 = 'assets/image/layout1.png';
   static const String base = 'assets/image/';
   static const String mainLogo = '${base}splashLogo.png';
   static const String mainBlackLogo = '${base}mainBlackLogo.png';

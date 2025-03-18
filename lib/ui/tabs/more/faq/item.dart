@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:stocks_news_new/models/faq.dart';
+import 'package:stocks_news_new/ui/theme/manager.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -30,22 +32,27 @@ class FAQItem extends StatelessWidget {
                 Expanded(
                   child: Text(
                     faq.question ?? "",
-                    style: styleBaseBold(
-                        fontSize: 16, color: ThemeColors.splashBG),
+                    style: Theme.of(context).textTheme.displayLarge,
                   ),
                 ),
                 const SpacerHorizontal(width: 5),
-                Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(Pad.pad3),
-                    border: Border.all(color: ThemeColors.neutral5),
-                  ),
-                  child: Icon(
-                    isOpen
-                        ? Icons.keyboard_arrow_up
-                        : Icons.keyboard_arrow_down,
-                    color: ThemeColors.splashBG,
-                  ),
+                Consumer<ThemeManager>(
+                  builder: (context, value, child) {
+                    return Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(Pad.pad5),
+                        border: Border.all(color: ThemeColors.neutral5),
+                      ),
+                      child: Icon(
+                        isOpen
+                            ? Icons.keyboard_arrow_up
+                            : Icons.keyboard_arrow_down,
+                        color: value.isDarkMode
+                            ? ThemeColors.white
+                            : ThemeColors.splashBG,
+                      ),
+                    );
+                  },
                 ),
               ],
             ),
@@ -59,7 +66,7 @@ class FAQItem extends StatelessWidget {
               child: Text(
                 faq.answer ?? "",
                 style: styleBaseRegular(
-                    fontSize: 16, color: ThemeColors.neutral80, height: 1.3),
+                    fontSize: 16, color: ThemeColors.neutral20, height: 1.3),
               ),
             ),
           ),

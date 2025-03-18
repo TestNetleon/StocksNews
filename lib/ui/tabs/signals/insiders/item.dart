@@ -1,6 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:stocks_news_new/models/my_home.dart';
+import 'package:stocks_news_new/ui/base/app_bar.dart';
+import 'package:stocks_news_new/ui/theme/manager.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -57,7 +60,9 @@ class BaseInsiderItem extends StatelessWidget {
                           visible: namePresent,
                           child: Text(
                             data.reportingName ?? "",
-                            style: styleBaseBold(fontSize: 14),
+                            // style: styleBaseBold(
+                            //     fontSize: 14, color: Colors.white),
+                            style: Theme.of(context).textTheme.bodyLarge,
                           ),
                         ),
                         Visibility(
@@ -102,16 +107,27 @@ class BaseInsiderItem extends StatelessWidget {
                   InkWell(
                     borderRadius: BorderRadius.circular(4),
                     onTap: onTap,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(4),
-                        border: Border.all(color: ThemeColors.neutral5),
-                      ),
-                      child: Image.asset(
-                        isOpen ? Images.arrowUP : Images.arrowDOWN,
-                        height: 24,
-                        width: 24,
-                      ),
+                    child: Consumer<ThemeManager>(
+                      builder: (context, value, child) {
+                        return Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(4),
+                            border: Border.all(color: ThemeColors.neutral5),
+                          ),
+                          // child: Image.asset(
+                          //   isOpen ? Images.arrowUP : Images.arrowDOWN,
+                          //   height: 24,
+                          //   width: 24,
+                          //   color: value.isDarkMode
+                          //       ? ThemeColors.white
+                          //       : ThemeColors.black,
+                          // ),
+                          child: ActionButton(
+                            icon: isOpen ? Images.arrowUP : Images.arrowDOWN,
+                            size: 24,
+                          ),
+                        );
+                      },
                     ),
                   ),
                 ],

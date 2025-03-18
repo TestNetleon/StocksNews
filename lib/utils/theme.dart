@@ -136,7 +136,7 @@ TextTheme getTextTheme(Color color) {
     displaySmall: styleBaseRegular(color: color, fontSize: 16),
 
     // Small Fonts
-    bodyLarge: styleBaseRegular(color: color, fontSize: 14),
+    bodyLarge: styleBaseBold(color: color, fontSize: 14),
     bodyMedium: styleBaseSemiBold(color: color, fontSize: 14),
     bodySmall: styleBaseRegular(color: color, fontSize: 14),
 

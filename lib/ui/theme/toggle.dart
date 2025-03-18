@@ -29,7 +29,7 @@ class _ThemeToggleSwitchState extends State<ThemeToggleSwitch> {
           _selectedIndex = 1;
           break;
         case ThemeMode.system:
-          _selectedIndex = manager.isDarkMode ? 1 : 0;
+          _selectedIndex = 2;
           break;
       }
       setState(() {});
