@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/managers/home/trending_view_all.dart';
 import 'package:stocks_news_new/models/trending_by_cap_res.dart';
 import 'package:stocks_news_new/ui/base/base_list_divider.dart';
+import 'package:stocks_news_new/ui/base/load_more.dart';
 import 'package:stocks_news_new/ui/base/stock/add.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -26,7 +27,9 @@ class _TrendingByMarketCapState extends State<TrendingByMarketCap> {
 
   Future _callAPI() async {
     TrendingViewAllManager manager = context.read<TrendingViewAllManager>();
-    manager.getTrendingByMarketCap();
+    if (manager.dataByMarketCap != null) {
+      manager.getTrendingByMarketCap();
+    }
   }
 
   @override
@@ -38,28 +41,32 @@ class _TrendingByMarketCapState extends State<TrendingByMarketCap> {
       showPreparingText: true,
       error: manager.errorByMarketCap,
       onRefresh: _callAPI,
-      child: Stack(
-        children: [
-          (manager.dataByMarketCap == null ||
-                  manager.dataByMarketCap?.data == null)
-              ? const SizedBox()
-              : ListView.separated(
-                  shrinkWrap: true,
-                  itemBuilder: (context, index) {
-                    return MarketCapItem(
-                      data: manager.dataByMarketCap!.data[index],
-                      onRefresh: _callAPI,
-                    );
-                  },
-                  separatorBuilder: (context, index) {
-                    return Padding(
-                      padding: const EdgeInsets.only(bottom: 30),
-                      child: BaseListDivider(),
-                    );
-                  },
-                  itemCount: manager.dataByMarketCap?.data.length ?? 0,
-                ),
-        ],
+      child: BaseLoadMore(
+        onLoadMore: () async {},
+        onRefresh: _callAPI,
+        canLoadMore: false,
+        child: (manager.dataByMarketCap == null ||
+                manager.dataByMarketCap?.data == null)
+            ? const SizedBox()
+            : (manager.dataByMarketCap == null ||
+                    manager.dataByMarketCap?.data == null)
+                ? const SizedBox()
+                : ListView.separated(
+                    shrinkWrap: true,
+                    itemBuilder: (context, index) {
+                      return MarketCapItem(
+                        data: manager.dataByMarketCap!.data[index],
+                        onRefresh: _callAPI,
+                      );
+                    },
+                    separatorBuilder: (context, index) {
+                      return Padding(
+                        padding: const EdgeInsets.only(bottom: 30),
+                        child: BaseListDivider(),
+                      );
+                    },
+                    itemCount: manager.dataByMarketCap?.data.length ?? 0,
+                  ),
       ),
     );
   }
