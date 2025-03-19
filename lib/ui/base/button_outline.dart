@@ -8,7 +8,7 @@ class BaseButtonOutline extends StatelessWidget {
     this.onPressed,
     this.text = "Submit",
     this.borderColor = ThemeColors.accent,
-    this.disableTextColor = ThemeColors.primary100,
+    this.disableTextColor,
     this.textColor = Colors.white,
     this.textSize = 18,
     this.fullWidth = false,
@@ -25,7 +25,7 @@ class BaseButtonOutline extends StatelessWidget {
 
   final String text;
   final Color textColor;
-  final Color disableTextColor;
+  final Color? disableTextColor;
   final Color? borderColor;
   final Function()? onPressed;
   final double textSize;
@@ -63,11 +63,15 @@ class BaseButtonOutline extends StatelessWidget {
           style: fontBold
               ? styleBaseBold(
                   fontSize: textSize,
-                  color: onPressed == null ? disableTextColor : textColor,
+                  color: onPressed == null
+                      ? disableTextColor ?? ThemeColors.primary100
+                      : textColor,
                 )
               : styleBaseRegular(
                   fontSize: textSize,
-                  color: onPressed == null ? disableTextColor : textColor,
+                  color: onPressed == null
+                      ? disableTextColor ?? ThemeColors.primary100
+                      : textColor,
                 ),
         ),
       ),

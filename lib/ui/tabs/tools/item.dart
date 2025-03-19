@@ -1,9 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:stocks_news_new/models/tools.dart';
 import 'package:stocks_news_new/ui/base/button.dart';
-import 'package:stocks_news_new/ui/theme/manager.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -72,21 +70,23 @@ class ToolsItem extends StatelessWidget {
             ),
           ),
           SpacerVertical(height: 40),
-          Consumer<ThemeManager>(builder: (context, value, child) {
-            return BaseButton(
-              text: card?.buttonText ?? '',
-              onPressed: onTap,
-              color: ThemeColors.white,
-              textColor: value.isDarkMode
-                  ? ThemeColors.black
-                  : ThemeColors.secondary120,
-              side: BorderSide(
-                color: value.isDarkMode
-                    ? ThemeColors.black
-                    : ThemeColors.secondary120,
-              ),
-            );
-          }),
+          BaseButton(
+            text: card?.buttonText ?? '',
+            onPressed: onTap,
+            color: ThemeColors.white,
+            textColor:
+                // value.isDarkMode
+                //     ? ThemeColors.black
+                //     :
+                ThemeColors.secondary120,
+            side: BorderSide(
+              color:
+                  // value.isDarkMode
+                  //     ? ThemeColors.black
+                  //     :
+                  ThemeColors.secondary120,
+            ),
+          ),
         ],
       ),
     );

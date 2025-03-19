@@ -106,15 +106,15 @@ class ThemeColors {
 
   //PRIMARY
   static Color primary120 = Color(0xFF06C9BC);
-  static const primary100 = Color(0xFF17DBD1);
-  static const primary20 = Color(0xFF95E9E4);
+  static Color primary100 = Color(0xFF17DBD1);
+  static Color primary20 = Color(0xFF95E9E4);
   static const primary10 = Color(0xFFD7F6F5);
 
   //SECONDARY
   static Color secondary120 = Color(0xFF3240D1);
-  static const secondary100 = Color(0xFF555ED9);
-  static const secondary20 = Color(0xFFC5C6F1);
-  static const secondary10 = Color(0xFFE8E8FA);
+  static Color secondary100 = Color(0xFF555ED9);
+  static Color secondary20 = Color(0xFFC5C6F1);
+  static Color secondary10 = Color(0xFFE8E8FA);
 
   //Neutral
   static Color neutral80 = Color(0xFF465F8C);
@@ -135,6 +135,7 @@ class ThemeColors {
   //OTHER
   static Color black = Color(0xFF282B41);
   static Color white = Color(0xFFFFFFFF);
+  static Color itemBack = Color(0xFFFFFFFF);
   static const splashBackground = Color(0xFF012054);
   static Color splashBG = Color(0xFF012054);
   static Color colour66 = Color(0xFF666666);
@@ -180,13 +181,20 @@ class ThemeColors {
     //
     sliderDots = isLightTheme ? Colors.white : Color(0xFF181818);
 
-    // No changes in PRIMARY and SECONDARY
+    //  PRIMARY
+    primary120 = isLightTheme ? Color(0xFF06C9BC) : ThemeColors.accent;
+    primary100 = isLightTheme ? Color(0xFF17DBD1) : ThemeColors.accent;
+    primary20 = Color(0xFF95E9E4);
+
+    // SECONDARY
+    secondary120 = isLightTheme ? Color(0xFF3240D1) : ThemeColors.accent;
+    secondary100 = isLightTheme ? Color(0xFF555ED9) : ThemeColors.accent;
 
     // Neutral
     // neutral80 = isLightTheme ? Color(0xFF465F8C) : Color(0xFF98A7C2);
 
     navigationBar = isLightTheme ? Colors.black : ThemeColors.accent;
-    secondary120 = isLightTheme ? Color(0xFF3240D1) : primary120;
+    // secondary120 = isLightTheme ? Color(0xFF3240D1) : ThemeColors.accent;
 
     neutral80 = isLightTheme ? Color(0xFF465F8C) : Color(0xFFFFFFFF);
     neutral60 = isLightTheme ? Color(0xFF59719B) : Color(0xFFC0C9DB);
@@ -206,6 +214,7 @@ class ThemeColors {
     //OTHER
     black = isLightTheme ? Color(0xFF282B41) : Color(0xFFFFFFFF);
     white = isLightTheme ? Color(0xFFFFFFFF) : Color(0xFF000000);
+    itemBack = isLightTheme ? Color(0xFFFFFFFF) : Color(0xFF121212);
     // white = Color(0xFFFFFFFF);
     splashBG = isLightTheme ? Color(0xFF012054) : Color(0xFFFFFFFF);
     colour66 = Color(0xFF666666);
