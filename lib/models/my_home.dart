@@ -17,7 +17,7 @@ class MyHomeRes {
   final UserRes? user;
   final BaseNewsRes? bannerBlog;
   final bool? showCrypto;
-  final InsiderTradeListRes? insiderTrading;
+  // final InsiderTradeListRes? insiderTrading;
   final ScannerPortRes? scannerPort;
   final List<BaseNewsRes>? recentNews;
   final HomePopularRes? popular;
@@ -30,7 +30,7 @@ class MyHomeRes {
     this.recentNews,
     this.bannerBlog,
     this.showCrypto,
-    this.insiderTrading,
+    // this.insiderTrading,
     this.scannerPort,
   });
 
@@ -54,9 +54,9 @@ class MyHomeRes {
             ? null
             : BaseNewsRes.fromJson(json["banner_blog"]),
         showCrypto: json['show_crypto'],
-        insiderTrading: json["insider_trading"] == null
-            ? null
-            : InsiderTradeListRes.fromJson(json["insider_trading"]),
+        // insiderTrading: json["insider_trading"] == null
+        //     ? null
+        //     : InsiderTradeListRes.fromJson(json["insider_trading"]),
         scannerPort: json["home_scanner"] == null
             ? null
             : ScannerPortRes.fromJson(json["home_scanner"]),
@@ -74,7 +74,7 @@ class MyHomeRes {
             ? null
             : List<dynamic>.from(tickers!.map((x) => x.toJson())),
         "show_crypto": showCrypto,
-        "insider_trading": insiderTrading?.toJson(),
+        // "insider_trading": insiderTrading?.toJson(),
         "home_scanner": scannerPort?.toJson(),
       };
 }

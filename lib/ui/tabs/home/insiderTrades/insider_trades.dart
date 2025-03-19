@@ -23,10 +23,7 @@ class HomeInsiderTradesIndex extends StatelessWidget {
       children: [
         BaseHeading(
           title: insiderData?.title,
-          margin: EdgeInsets.only(
-            top: Pad.pad20,
-            bottom: Pad.pad16,
-          ),
+          margin: EdgeInsets.only(top: Pad.pad20, bottom: Pad.pad16),
         ),
         HomeLock(
           showButton: false,

@@ -106,9 +106,7 @@ class MyHomeManager extends ChangeNotifier {
         if (_data?.user != null) {
           provider.setUser(data?.user);
         }
-        if (_data?.insiderTrading != null) {
-          _lockStocksInsider = _data?.insiderTrading?.lockInfo;
-        }
+
         _error = null;
         bool firstTime = await Preference.isFirstOpen();
         if (_data?.loginBox != null && firstTime) {
@@ -178,9 +176,10 @@ class MyHomeManager extends ChangeNotifier {
         _homePremiumData = myHomePremiumResFromJson(jsonEncode(response.data));
         _errorHomePremium = null;
 
-        // if (_homePremiumData?.insiderTrading != null) {
-        //   _lockStocksInsider = _homePremiumData?.insiderTrading?.lockInfo;
-        // }
+        if (_homePremiumData?.insiderTrading != null) {
+          _lockStocksInsider = _homePremiumData?.insiderTrading?.lockInfo;
+        }
+
         if (_homePremiumData?.congressionalStocks != null) {
           _lockStocksPoliticians =
               _homePremiumData?.congressionalStocks?.lockInfo;

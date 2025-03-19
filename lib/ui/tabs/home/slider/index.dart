@@ -35,7 +35,6 @@ class _HomeTopNewsSliderState extends State<HomeTopNewsSlider> {
         context.watch<MyHomeManager>().data?.recentNews;
 
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: Pad.pad16),
       padding: EdgeInsets.only(top: Pad.pad16),
       child: LayoutBuilder(
         builder: (context, constraints) {
@@ -210,7 +209,7 @@ class _HomeTopNewsSliderState extends State<HomeTopNewsSlider> {
                                                     style: styleBaseRegular(
                                                       fontSize: 14,
                                                       color:
-                                                          ThemeColors.neutral5,
+                                                          ThemeColors.greyText,
                                                     ),
                                                   ),
                                                 if (showAuthor)
@@ -220,8 +219,7 @@ class _HomeTopNewsSliderState extends State<HomeTopNewsSlider> {
                                                             '',
                                                     style: styleBaseRegular(
                                                       fontSize: 14,
-                                                      color:
-                                                          ThemeColors.neutral5,
+                                                      color: Colors.white,
                                                     ),
                                                   ),
                                                 if (showAuthor && showDate)
@@ -237,7 +235,7 @@ class _HomeTopNewsSliderState extends State<HomeTopNewsSlider> {
                                                         Icons.circle,
                                                         size: 4,
                                                         color: ThemeColors
-                                                            .neutral10,
+                                                            .greyText,
                                                       ),
                                                     ),
                                                   ),
@@ -246,8 +244,7 @@ class _HomeTopNewsSliderState extends State<HomeTopNewsSlider> {
                                                     text: i.publishedDate ?? '',
                                                     style: styleBaseRegular(
                                                       fontSize: 14,
-                                                      color:
-                                                          ThemeColors.neutral5,
+                                                      color: Colors.white,
                                                     ),
                                                   ),
                                               ],
