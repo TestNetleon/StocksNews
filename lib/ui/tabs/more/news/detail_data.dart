@@ -6,6 +6,7 @@ import 'package:stocks_news_new/managers/user.dart';
 import 'package:stocks_news_new/models/news.dart';
 import 'package:stocks_news_new/models/news/detail.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
+import 'package:stocks_news_new/screens/AdManager/service.dart';
 import 'package:stocks_news_new/ui/base/base_scroll.dart';
 import 'package:stocks_news_new/ui/base/heading.dart';
 import 'package:stocks_news_new/ui/base/news_item.dart';
@@ -133,7 +134,9 @@ class NewsDetailData extends StatelessWidget {
             ],
           ),
         ),
-        TickersBoxIndex(tickers: manager.newsDetail?.postDetail?.tickers,simulatorLockInfoRes: manager.newsDetail?.simulatorLockInfo),
+        TickersBoxIndex(
+            tickers: manager.newsDetail?.postDetail?.tickers,
+            simulatorLockInfoRes: manager.newsDetail?.simulatorLockInfo),
         Padding(
           padding: const EdgeInsets.only(top: Pad.pad10),
           child: HtmlWidget(
@@ -144,6 +147,32 @@ class NewsDetailData extends StatelessWidget {
               height: 1.6,
             ),
             customWidgetBuilder: (element) {
+              if (element.innerHtml.contains('DISPLAY_AD_1')) {
+                return Visibility(
+                  visible:
+                      manager.newsDetail?.adManagers?.data?.newsPlace1 != null,
+                  child: AdManagerIndex(
+                    screen: AdScreen.newsDetail,
+                    places: AdPlaces.place1,
+                    margin: EdgeInsets.zero,
+                    data: manager.newsDetail?.adManagers?.data?.newsPlace1,
+                  ),
+                );
+              }
+
+              if (element.innerHtml.contains('DISPLAY_AD_2')) {
+                return Visibility(
+                  visible:
+                      manager.newsDetail?.adManagers?.data?.newsPlace2 != null,
+                  child: AdManagerIndex(
+                    screen: AdScreen.newsDetail,
+                    places: AdPlaces.place2,
+                    margin: EdgeInsets.zero,
+                    data: manager.newsDetail?.adManagers?.data?.newsPlace2,
+                  ),
+                );
+              }
+
               if (element.localName == 'img' &&
                   !(element.innerHtml.contains('DISPLAY_AD_1') ||
                       element.innerHtml.contains('DISPLAY_AD_2'))) {
@@ -174,6 +203,15 @@ class NewsDetailData extends StatelessWidget {
                 color: ThemeColors.accent,
               ),
             ),
+          ),
+        ),
+        Visibility(
+          visible: manager.newsDetail?.adManagers?.data?.newsPlace3 != null,
+          child: AdManagerIndex(
+            places: AdPlaces.place3,
+            screen: AdScreen.newsDetail,
+            margin: EdgeInsets.zero,
+            data: manager.newsDetail?.adManagers?.data?.newsPlace3,
           ),
         ),
         FeedbackIndexItem(

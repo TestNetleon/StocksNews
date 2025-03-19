@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/managers/home/home.dart';
 import 'package:stocks_news_new/managers/home/home_tabs.dart';
+import 'package:stocks_news_new/screens/AdManager/service.dart';
 import 'package:stocks_news_new/ui/tabs/home/plaid/index.dart';
 import 'package:stocks_news_new/ui/tabs/home/refer/index.dart';
 import 'package:stocks_news_new/utils/constants.dart';
@@ -36,6 +37,12 @@ class HomePremiumIndex extends StatelessWidget {
         ),
         HomeMostBoughtIndex(),
         PlaidHomeGetStarted(),
+        Visibility(
+          visible: manager.data?.adManagers?.data?.place2 != null,
+          child: AdManagerIndex(
+              places: AdPlaces.place2,
+              data: manager.data?.adManagers?.data?.place2),
+        ),
         VisibilityDetector(
           key: const Key('home_trending_visibility'),
           onVisibilityChanged: (VisibilityInfo info) {
@@ -65,7 +72,12 @@ class HomePremiumIndex extends StatelessWidget {
         HomePoliticianTradesIndex(
           politicianData: manager.homePremiumData?.congressionalStocks,
         ),
-
+        Visibility(
+          visible: manager.data?.adManagers?.data?.place3 != null,
+          child: AdManagerIndex(
+              places: AdPlaces.place3,
+              data: manager.data?.adManagers?.data?.place3),
+        ),
         // HomeNewsIndex(newsData: manager.homePremiumData?.financialNews),
         // HomeNewsIndex(newsData: manager.homePremiumData?.recentNews),
       ],

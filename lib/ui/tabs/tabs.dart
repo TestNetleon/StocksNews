@@ -9,6 +9,7 @@ import 'package:stocks_news_new/managers/signals.dart';
 import 'package:stocks_news_new/managers/tools.dart';
 import 'package:stocks_news_new/service/amplitude/service.dart';
 import 'package:stocks_news_new/socket/socket.dart';
+import 'package:stocks_news_new/ui/base/scaffold.dart';
 import 'package:stocks_news_new/ui/tabs/home/scanner/manager/gainers.dart';
 import 'package:stocks_news_new/ui/tabs/market/index.dart';
 import 'package:stocks_news_new/ui/tabs/tools/scanner/manager/gainers.dart';
@@ -73,11 +74,8 @@ class _TabsState extends State<Tabs> {
               icon,
               height: 27,
               width: 27,
-              color: selected
-                  ? ThemeColors.black
-                  : selected
-                      ? ThemeColors.black
-                      : ThemeColors.neutral60,
+              color:
+                  selected ? ThemeColors.navigationBar : ThemeColors.neutral60,
             ),
           );
         },
@@ -88,7 +86,7 @@ class _TabsState extends State<Tabs> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return BaseScaffold(
       body: Screens.screens(
               _selectedIndex, widget.childIndex, widget.innerChildIndex)
           .elementAt(_selectedIndex),
@@ -100,6 +98,7 @@ class _TabsState extends State<Tabs> {
         showSelectedLabels: true,
         currentIndex: _selectedIndex,
         type: BottomNavigationBarType.fixed,
+        fixedColor: ThemeColors.navigationBar,
         unselectedLabelStyle:
             styleBaseRegular(color: ThemeColors.white, fontSize: 14),
         selectedLabelStyle: styleBaseBold(fontSize: 14),

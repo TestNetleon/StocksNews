@@ -36,7 +36,10 @@ class ToolsItem extends StatelessWidget {
                 borderRadius: BorderRadius.circular(8),
               ),
               padding: EdgeInsets.all(12),
-              child: CachedNetworkImage(imageUrl: card?.image ?? ''),
+              child: CachedNetworkImage(
+                imageUrl: card?.image ?? '',
+                color: ThemeColors.black,
+              ),
             ),
           ),
           Visibility(
