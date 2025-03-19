@@ -6,6 +6,7 @@ import 'package:stocks_news_new/api/api_requester.dart';
 import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/api/apis.dart';
 import 'package:stocks_news_new/database/preference.dart';
+import 'package:stocks_news_new/managers/home/home_tabs.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import '../../models/lock.dart';
@@ -25,6 +26,7 @@ class MyHomeManager extends ChangeNotifier {
     //clear watchlist data
     _watchlist = null;
     _setNUm = -1;
+    navigatorKey.currentContext!.read<HomeTabsManager>().clearAllData();
     notifyListeners();
   }
 

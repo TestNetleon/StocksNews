@@ -29,12 +29,14 @@ class Tabs extends StatefulWidget {
   final int? index;
   final String? inAppMsgId;
   final int childIndex;
+  final int innerChildIndex;
 
   const Tabs({
     super.key,
     this.index = 0,
     this.inAppMsgId,
     this.childIndex = 0,
+    this.innerChildIndex = 0,
   });
 
   @override
@@ -87,7 +89,8 @@ class _TabsState extends State<Tabs> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Screens.screens(_selectedIndex, widget.childIndex)
+      body: Screens.screens(
+              _selectedIndex, widget.childIndex, widget.innerChildIndex)
           .elementAt(_selectedIndex),
       bottomNavigationBar: BottomNavigationBar(
         unselectedItemColor: ThemeColors.neutral60,
@@ -210,13 +213,18 @@ class _TabsState extends State<Tabs> {
 }
 
 class Screens {
-  static List<Widget> screens(int? trendingIndex, int? childIndex) {
+  static List<Widget> screens(
+    int? trendingIndex,
+    int? childIndex,
+    int? innerChildIndex,
+  ) {
     return <Widget>[
       HomeIndex(),
       ToolsScannerIndex(),
       MarketIndex(
         screenIndex: 0,
         marketIndex: childIndex ?? 0,
+        marketInnerIndex: innerChildIndex,
       ),
       SignalsIndex(),
       ToolsIndex(),

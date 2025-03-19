@@ -72,14 +72,12 @@ class _RefreshControlState extends State<BaseLoadMore> {
                     //   strokeWidth: 4,
                     //   color: ThemeColors.black,
                     // ),
-                    child: Consumer<ThemeManager>(
-                      builder: (context, value, child) {
-                        return CupertinoActivityIndicator(
-                            color: value.isDarkMode
-                                ? ThemeColors.white
-                                : ThemeColors.black);
-                      },
-                    ),
+                    child: CupertinoActivityIndicator(
+                        color:
+                            //  value.isDarkMode
+                            //     ? ThemeColors.white
+                            //     :
+                            ThemeColors.black),
                   );
                 }
                 return const SizedBox();

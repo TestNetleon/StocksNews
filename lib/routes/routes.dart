@@ -8,6 +8,7 @@ import 'package:stocks_news_new/managers/global.dart';
 import 'package:stocks_news_new/managers/helpdesk.dart';
 import 'package:stocks_news_new/managers/home/home.dart';
 import 'package:stocks_news_new/managers/home/home_tabs.dart';
+import 'package:stocks_news_new/managers/home/trending_view_all.dart';
 import 'package:stocks_news_new/managers/legal.dart';
 import 'package:stocks_news_new/managers/market/industries/industries.dart';
 import 'package:stocks_news_new/managers/market/sectors/sectors.dart';
@@ -56,6 +57,7 @@ import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 import 'package:stocks_news_new/ui/subscription/action_required.dart';
 import 'package:stocks_news_new/ui/tabs/home/scanner/manager/gainers.dart';
+import 'package:stocks_news_new/ui/tabs/home/viewMore/trending/index.dart';
 import 'package:stocks_news_new/ui/tabs/market/industries/industries_view.dart';
 import 'package:stocks_news_new/ui/tabs/market/sectors/sector_view.dart';
 import 'package:stocks_news_new/ui/tabs/more/alerts/index.dart';
@@ -164,6 +166,7 @@ class Routes {
     NotificationIndex.path: (_) => const NotificationIndex(),
     MorningStarReportsIndex.path: (_) => const MorningStarReportsIndex(),
     MembershipActionRequired.path: (_) => const MembershipActionRequired(),
+    TrendingViewAllIndex.path: (_) => const TrendingViewAllIndex(),
 
     //--------------------------------------
   };
@@ -196,10 +199,12 @@ class Routes {
             int? index = arguments?['index'];
             // int? trendingIndex = arguments?['trendingIndex'];
             int? childIndex = arguments?['childIndex'];
+            int? innerChildIndex = arguments?['innerChildIndex'];
             String? inAppMsgId = arguments?['inAppMsgId'];
             return Tabs(
               index: index ?? 0,
               childIndex: childIndex ?? 0,
+              innerChildIndex: innerChildIndex ?? 0,
               // trendingIndex: trendingIndex ?? 0,
               inAppMsgId: inAppMsgId,
             );
@@ -468,6 +473,7 @@ class Routes {
       ChangeNotifierProvider(create: (_) => OnboardingManager()),
       ChangeNotifierProvider(create: (_) => MyHomeManager()),
       ChangeNotifierProvider(create: (_) => HomeTabsManager()),
+      ChangeNotifierProvider(create: (_) => TrendingViewAllManager()),
       ChangeNotifierProvider(create: (_) => NotificationSettingsManager()),
       ChangeNotifierProvider(create: (_) => UserManager()),
       ChangeNotifierProvider(create: (_) => ToolsManager()),

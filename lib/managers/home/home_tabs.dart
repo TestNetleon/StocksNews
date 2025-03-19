@@ -12,7 +12,8 @@ class HomeTabsManager extends ChangeNotifier {
   //MARK: Clear Data
   void clearAllData() {
     _dataTrending = null;
-
+    _dataTopLosers = null;
+    _dataTopLosers = null;
     notifyListeners();
   }
 

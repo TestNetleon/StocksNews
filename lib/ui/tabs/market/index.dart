@@ -52,10 +52,12 @@ class MarketIndex extends StatefulWidget {
     super.key,
     this.screenIndex,
     this.marketIndex,
+    this.marketInnerIndex,
   });
 
   final int? screenIndex;
   final int? marketIndex;
+  final int? marketInnerIndex;
 
   @override
   State<MarketIndex> createState() => _MarketIndexState();
@@ -70,12 +72,16 @@ class _MarketIndexState extends State<MarketIndex> {
   void initState() {
     super.initState();
 
+    Utils().showLog("INDEX ==> ${widget.marketIndex}");
+
     if (widget.marketIndex != null) {
       _marketIndex = widget.marketIndex ?? 0;
-      // _changeMarketIndex(widget.marketIndex ?? 0);
     } else if (widget.screenIndex != null) {
       _screenIndex = widget.screenIndex ?? 0;
-      // _changeScreenIndex(widget.screenIndex ?? 0);
+    }
+
+    if (widget.marketInnerIndex != null) {
+      _marketInnerIndex = widget.marketInnerIndex ?? 0;
     }
 
     WidgetsBinding.instance.addPostFrameCallback((_) {

@@ -5,6 +5,7 @@ import 'package:stocks_news_new/ui/base/base_list_divider.dart';
 import 'package:stocks_news_new/ui/base/button.dart';
 import 'package:stocks_news_new/ui/base/stock/add.dart';
 import 'package:stocks_news_new/ui/stockDetail/index.dart';
+import 'package:stocks_news_new/ui/tabs/home/viewMore/trending/index.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -84,7 +85,12 @@ class _HomeTrendingState extends State<HomeTrending> {
                     ),
                     if (index == manager.dataTrending!.data!.length - 1)
                       BaseButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.pushNamed(
+                            context,
+                            TrendingViewAllIndex.path,
+                          );
+                        },
                         text: "View More Trending",
                         margin: EdgeInsets.all(Pad.pad16),
                       )
