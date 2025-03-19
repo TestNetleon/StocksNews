@@ -5,6 +5,7 @@ import 'package:stocks_news_new/ui/base/app_bar.dart';
 import 'package:stocks_news_new/ui/base/common_tab.dart';
 import 'package:stocks_news_new/ui/base/scaffold.dart';
 import 'package:stocks_news_new/ui/tabs/more/billionaires/cryptocurrencies/index.dart';
+import 'package:stocks_news_new/ui/tabs/more/billionaires/exchange/index.dart';
 import 'package:stocks_news_new/ui/tabs/more/billionaires/myWatchlist/index.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/custom/base_loader_container.dart';
@@ -39,7 +40,7 @@ class _BillionairesIndexState extends State<BillionairesIndex> {
     return BaseScaffold(
       appBar: BaseAppBar(
         showBack: true,
-        title: manager.categoriesData?.title ?? "Billionaires",
+        title: !manager.isLoading?manager.categoriesData?.title ?? "":"",
       ),
       body: BaseLoaderContainer(
           isLoading: manager.isLoading,
@@ -61,7 +62,7 @@ class _BillionairesIndexState extends State<BillionairesIndex> {
               SpacerVertical(height: Pad.pad10),
               if (manager.selectedScreen == 0) Expanded(child: Cryptocurrencies()),
               if (manager.selectedScreen == 1) Expanded(child: MyWatchListIndex()),
-              if (manager.selectedScreen == 2) SizedBox()
+              if (manager.selectedScreen == 2)  Expanded(child: ExchangeIndex())
             ],
           )),
     );

@@ -3,18 +3,18 @@
 import 'package:flutter/foundation.dart';
 
 class Apis {
-  // Main live server
-  // static const baseUrl = "https://app.stocks.news/api/v1";
+
 
   // maintenance
   static const baseUrlLocal = "https://notification.stocks.news/api/v1";
 
   // With Debug condition
-  static const baseUrl = kDebugMode
-      ? "https://dev.stocks.news/api/v2"
-      : "https://app.stocks.news/api/v2";
+  // static const baseUrl = kDebugMode
+  //     ? "https://dev.stocks.news/api/v2"
+  //     : "https://app.stocks.news/api/v2";
 
-  // static const baseUrl = "https://app.stocks.news/api/v2";
+  // Main live server
+   static const baseUrl = "https://app.stocks.news/api/v2";
 
   // MARK: New UI APIs
   static const onBoarding = '/onboarding';
@@ -69,6 +69,12 @@ class Apis {
   static const removeWatch = "/crypto/remove-crypto-watchlist";
   static const addFav = "/crypto/add-to-favorite-person";
   static const removeFav = "/crypto/remove-favorite-person";
+  static const billionaireTweets = "/crypto/billionaire-tweets";
+  static const viewAll = "/crypto/all-billionaires";
+  static const cryptoFiat = "/crypto/converter";
+  static const cryptoSearchSymbol = "/crypto/crypto-search-data";
+  static const cryptoSearchCurrency = "/crypto/currency-search-data";
+
 
   //MARK: Simulator API
   static const tsUserInfo = "/simulator/user-info";

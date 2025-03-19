@@ -58,6 +58,7 @@ import 'package:stocks_news_new/ui/tabs/home/scanner/manager/gainers.dart';
 import 'package:stocks_news_new/ui/tabs/market/industries/industries_view.dart';
 import 'package:stocks_news_new/ui/tabs/market/sectors/sector_view.dart';
 import 'package:stocks_news_new/ui/tabs/more/alerts/index.dart';
+import 'package:stocks_news_new/ui/tabs/more/billionaires/all_index.dart';
 import 'package:stocks_news_new/ui/tabs/more/billionaires/billionaires_index.dart';
 import 'package:stocks_news_new/ui/tabs/more/billionaires/crypto_index.dart';
 import 'package:stocks_news_new/ui/tabs/more/billionaires/index.dart';
@@ -157,6 +158,7 @@ class Routes {
     RequestNewIndex.path: (_) => const RequestNewIndex(),
     FeedbackIndex.path: (_) => const FeedbackIndex(),
     BillionairesIndex.path: (_) => const BillionairesIndex(),
+    AllBillionairesIndex.path: (_) => const AllBillionairesIndex(),
     ReferralIndex.path: (_) => const ReferralIndex(),
     RedeemPoints.path: (_) => const RedeemPoints(),
     JoinReferralIndex.path: (_) => const JoinReferralIndex(),
@@ -345,7 +347,8 @@ class Routes {
           builder: (context) {
             final arguments = settings.arguments as Map<String, dynamic>?;
             String symbol = arguments?['symbol'];
-            return CryptoIndex(symbol: symbol);
+            String? currency = arguments?['currency'];
+            return CryptoIndex(symbol: symbol,currency: currency);
           },
         );
 

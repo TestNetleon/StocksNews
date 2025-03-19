@@ -20,18 +20,18 @@ import 'package:stocks_news_new/utils/theme.dart';
 
 
 class ActionInNbs extends StatefulWidget {
-  final bool? isLocked;
   final String? symbol;
   final int? from;
   final BaseTickerRes? item;
   final BaseLockInfoRes? simulatorLockInfoRes;
-  const ActionInNbs({super.key, this.isLocked,this.symbol, this.from, this.item,this.simulatorLockInfoRes});
+  const ActionInNbs({super.key, this.symbol, this.from, this.item,this.simulatorLockInfoRes});
 
   @override
   State<ActionInNbs> createState() => _ActionInNbsState();
 }
 
 class _ActionInNbsState extends State<ActionInNbs> {
+  bool? isLocked=false;
   @override
   void initState() {
     super.initState();
@@ -42,7 +42,7 @@ class _ActionInNbsState extends State<ActionInNbs> {
 
   Future _getData() async {
     PortfolioManager manager = context.read<PortfolioManager>();
-    manager.getDashboardData();
+    manager.getDashboardData(showProgress: true);
   }
 
   Future _onTap({String? symbol, StockType? selectedStock}) async {
@@ -109,11 +109,12 @@ class _ActionInNbsState extends State<ActionInNbs> {
   Widget build(BuildContext context) {
     PortfolioManager portfolioManager = context.watch<PortfolioManager>();
     OrdersSubTitle? ordersSubTitle =portfolioManager.userData?.userDataRes?.ordersSubTitle;
+    BaseLockInfoRes? lockInfoRes =portfolioManager.userData?.lockInfo;
     UserConditionalOrderPermissionRes? userConditionalOrderPermissionRes =portfolioManager.userData?.userDataRes?.userConditionalOrderPermission;
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: Pad.pad5),
       child: Column(
-          mainAxisSize: MainAxisSize.min,
+         // mainAxisSize: MainAxisSize.max,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
@@ -178,214 +179,228 @@ class _ActionInNbsState extends State<ActionInNbs> {
               height: 20,
             ),
             SpacerVertical(height: Pad.pad5),
-            Text(
-              "Regular orders",
-              style: styleBaseBold(
-                fontSize: 18,
-                color: ThemeColors.black,
-              ),
-            ),
-            SpacerVertical(height: Pad.pad5),
-            BuyOrderItem(
-              title: "Buy Order",
-              subtitle: subtitleWithSymbol(
-                ordersSubTitle?.buyOrder, widget.symbol
-              ),
-              onTap: () {
-                BaseLockItem(
-                  manager: portfolioManager,
-                  callAPI: () async {
-                    await portfolioManager.getDashboardData(reset: true);
-                  },
-                );
-                var selectedStock = StockType.buy;
-                _onTap(symbol: widget.symbol, selectedStock: selectedStock);
+            Stack(
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Regular orders",
+                      style: styleBaseBold(
+                        fontSize: 18,
+                        color: ThemeColors.black,
+                      ),
+                    ),
+                    SpacerVertical(height: Pad.pad5),
+                    BuyOrderItem(
+                      title: "Buy Order",
+                      subtitle: subtitleWithSymbol(
+                          ordersSubTitle?.buyOrder, widget.symbol
+                      ),
+                      onTap: () {
+                        if(lockInfoRes!=null){
+                          isLocked=true;
+                          setState(() {});
+                        }
+                        else{
+                          var selectedStock = StockType.buy;
+                          _onTap(symbol: widget.symbol, selectedStock: selectedStock);
+                        }
+                      },
+                    ),
+                    BuyOrderItem(
+                      title: "Sell Order",
+                      subtitle: subtitleWithSymbol(ordersSubTitle?.sellOrder,
+                        widget.symbol,
+                      ),
+                      onTap: () {
+                        // if (isLocked){
+                        //   commonLockSheet(isLocked,havePermissions);
+                        // }
+                        // else {
+                        var selectedStock = StockType.sell;
+                        _onTap(symbol: widget.symbol, selectedStock: selectedStock);
+                        //  }
+                      },
+                    ),
+                    BuyOrderItem(
+                      title: "Short Order",
+                      subtitle: subtitleWithSymbol(
+                        ordersSubTitle?.shortOrder,
+                        widget.symbol,
+                      ),
+                      onTap: () {
+                        // if (isLocked){
+                        //   commonLockSheet(isLocked,havePermissions);
+                        // }
+                        // else{
+                        navigatorKey.currentContext!
+                            .read<TickerSearchManager>()
+                            .shortRedirection(widget.symbol ?? "");
+                        //}
 
-              },
-            ),
-            BuyOrderItem(
-              title: "Sell Order",
-              subtitle: subtitleWithSymbol(ordersSubTitle?.sellOrder,
-                widget.symbol,
-              ),
-              onTap: () {
-                // if (isLocked){
-                //   commonLockSheet(isLocked,havePermissions);
-                // }
-                // else {
-                  var selectedStock = StockType.sell;
-                  _onTap(symbol: widget.symbol, selectedStock: selectedStock);
-              //  }
-              },
-            ),
-            BuyOrderItem(
-              title: "Short Order",
-              subtitle: subtitleWithSymbol(
-                ordersSubTitle?.shortOrder,
-                widget.symbol,
-              ),
-              onTap: () {
-                // if (isLocked){
-                //   commonLockSheet(isLocked,havePermissions);
-                // }
-                // else{
-                  navigatorKey.currentContext!
-                      .read<TickerSearchManager>()
-                      .shortRedirection(widget.symbol ?? "");
-                //}
+                      },
+                    ),
+                    BuyOrderItem(
+                      title: "Buy to Cover Order",
+                      subtitle: subtitleWithSymbol(
+                        ordersSubTitle?.buyToCoverOrder,
+                        widget.symbol,
+                      ),
+                      onTap: () {
+                        // if (isLocked){
+                        //   commonLockSheet(isLocked,havePermissions);
+                        // }
+                        // else{
+                        var selectedStock = StockType.btc;
+                        _onTap(symbol: widget.symbol, selectedStock: selectedStock);
+                        // }
 
-              },
-            ),
-            BuyOrderItem(
-              title: "Buy to Cover Order",
-              subtitle: subtitleWithSymbol(
-                ordersSubTitle?.buyToCoverOrder,
-                widget.symbol,
-              ),
-              onTap: () {
-                // if (isLocked){
-                //   commonLockSheet(isLocked,havePermissions);
-                // }
-                // else{
-                  var selectedStock = StockType.btc;
-                  _onTap(symbol: widget.symbol, selectedStock: selectedStock);
-               // }
+                      },
+                    ),
+                    SpacerVertical(height: Pad.pad5),
+                    Visibility(
+                      visible:userConditionalOrderPermissionRes?.bracketOrder ==
+                          true,
+                      child: Text(
+                        "Conditional orders",
+                        style: styleBaseBold(
+                          fontSize: 18,
+                          color: ThemeColors.black,
+                        ),
+                      ),
+                    ),
+                    Visibility(
+                      visible: userConditionalOrderPermissionRes?.bracketOrder ==
+                          true,
+                      child: BuyOrderItem(
+                        title: "Bracket Order",
+                        subtitle: subtitleWithSymbol(
+                          ordersSubTitle?.bracketOrder,
+                          widget.symbol,
+                        ),
+                        onTap: () {
+                          // if (isLocked){
+                          //   commonLockSheet(isLocked,havePermissions);
+                          // }
+                          // else{
+                          openInfoSheet(cType: ConditionType.bracketOrder);
+                          // }
 
-              },
-            ),
-            SpacerVertical(height: Pad.pad5),
-            Visibility(
-              visible:userConditionalOrderPermissionRes?.bracketOrder ==
-                  true,
-              child: Text(
-                "Conditional orders",
-                style: styleBaseBold(
-                  fontSize: 18,
-                  color: ThemeColors.black,
+                        },
+                      ),
+                    ),
+                    Visibility(
+                      visible: userConditionalOrderPermissionRes?.limitOrder ==
+                          true,
+                      child: BuyOrderItem(
+                        title: "Limit Order",
+                        subtitle: subtitleWithSymbol(
+                          ordersSubTitle?.limitOrder,
+                          widget.symbol,
+                        ),
+                        onTap: () {
+                          // if (isLocked){
+                          //   commonLockSheet(isLocked,havePermissions);
+                          // }
+                          // else{
+
+                          openInfoSheet(cType: ConditionType.limitOrder);
+                          // }
+
+                        },
+                      ),
+                    ),
+                    Visibility(
+                      visible: userConditionalOrderPermissionRes?.stopOrder ==
+                          true,
+                      child: BuyOrderItem(
+                        title: "Stop Order",
+                        subtitle: subtitleWithSymbol(
+                          ordersSubTitle?.stopOrder,
+                          widget.symbol,
+                        ),
+                        onTap: () {
+                          // if (isLocked){
+                          //   commonLockSheet(isLocked,havePermissions);
+                          // }
+                          // else{
+                          openInfoSheet(cType: ConditionType.stopOrder);
+                          //  }
+
+                        },
+                      ),
+                    ),
+                    Visibility(
+                      visible: userConditionalOrderPermissionRes?.stopLimitOrder ==
+                          true,
+                      child: BuyOrderItem(
+                        title: "Stop Limit Order",
+                        subtitle: subtitleWithSymbol(
+                          ordersSubTitle?.stopLimitOrder,
+                          widget.symbol,
+                        ),
+                        onTap: () {
+
+                          // if (isLocked){
+                          //   commonLockSheet(isLocked,havePermissions);
+                          // }
+                          // else{
+                          openInfoSheet(cType: ConditionType.stopLimitOrder);
+                          // }
+
+                        },
+                      ),
+                    ),
+                    Visibility(
+                      visible: userConditionalOrderPermissionRes?.trailingOrder ==
+                          true,
+                      child: BuyOrderItem(
+                        title: "Trailing Order",
+                        subtitle: subtitleWithSymbol(
+                          ordersSubTitle?.trailingOrder,
+                          widget.symbol,
+                        ),
+                        onTap: () {
+                          // if (isLocked){
+                          //   commonLockSheet(isLocked,havePermissions);
+                          // }
+                          // else{
+                          openInfoSheet(cType: ConditionType.trailingOrder);
+                          //}
+                        },
+                      ),
+                    ),
+                    Visibility(
+                      visible: userConditionalOrderPermissionRes?.recurringOrder ==
+                          true,
+                      child: BuyOrderItem(
+                        title: "Recurring Order",
+                        subtitle: subtitleWithSymbol(
+                          ordersSubTitle?.recurringOrder,
+                          widget.symbol,
+                        ),
+                        onTap: () {
+                          // if (isLocked){
+                          //   commonLockSheet(isLocked,havePermissions);
+                          // }
+                          // else{
+                          openInfoSheet(cType: ConditionType.recurringOrder);
+                          // }
+
+                        },
+                      ),
+                    ),
+                  ],
                 ),
-              ),
-            ),
-            Visibility(
-              visible: userConditionalOrderPermissionRes?.bracketOrder ==
-                  true,
-              child: BuyOrderItem(
-                title: "Bracket Order",
-                subtitle: subtitleWithSymbol(
-                  ordersSubTitle?.bracketOrder,
-                  widget.symbol,
-                ),
-                onTap: () {
-                  // if (isLocked){
-                  //   commonLockSheet(isLocked,havePermissions);
-                  // }
-                  // else{
-                    openInfoSheet(cType: ConditionType.bracketOrder);
-                 // }
+                if(isLocked==true)
+                  BaseLockItem(
+                      manager: portfolioManager
+                  )
 
-                },
-              ),
+              ],
             ),
-            Visibility(
-              visible: userConditionalOrderPermissionRes?.limitOrder ==
-                  true,
-              child: BuyOrderItem(
-                title: "Limit Order",
-                subtitle: subtitleWithSymbol(
-                  ordersSubTitle?.limitOrder,
-                  widget.symbol,
-                ),
-                onTap: () {
-                  // if (isLocked){
-                  //   commonLockSheet(isLocked,havePermissions);
-                  // }
-                  // else{
 
-                    openInfoSheet(cType: ConditionType.limitOrder);
-                 // }
-
-                },
-              ),
-            ),
-            Visibility(
-              visible: userConditionalOrderPermissionRes?.stopOrder ==
-                  true,
-              child: BuyOrderItem(
-                title: "Stop Order",
-                subtitle: subtitleWithSymbol(
-                  ordersSubTitle?.stopOrder,
-                  widget.symbol,
-                ),
-                onTap: () {
-                  // if (isLocked){
-                  //   commonLockSheet(isLocked,havePermissions);
-                  // }
-                  // else{
-                    openInfoSheet(cType: ConditionType.stopOrder);
-                //  }
-
-                },
-              ),
-            ),
-            Visibility(
-              visible: userConditionalOrderPermissionRes?.stopLimitOrder ==
-                  true,
-              child: BuyOrderItem(
-                title: "Stop Limit Order",
-                subtitle: subtitleWithSymbol(
-                  ordersSubTitle?.stopLimitOrder,
-                  widget.symbol,
-                ),
-                onTap: () {
-
-                  // if (isLocked){
-                  //   commonLockSheet(isLocked,havePermissions);
-                  // }
-                  // else{
-                    openInfoSheet(cType: ConditionType.stopLimitOrder);
-                 // }
-
-                },
-              ),
-            ),
-            Visibility(
-              visible: userConditionalOrderPermissionRes?.trailingOrder ==
-                  true,
-              child: BuyOrderItem(
-                title: "Trailing Order",
-                subtitle: subtitleWithSymbol(
-                  ordersSubTitle?.trailingOrder,
-                  widget.symbol,
-                ),
-                onTap: () {
-                  // if (isLocked){
-                  //   commonLockSheet(isLocked,havePermissions);
-                  // }
-                  // else{
-                    openInfoSheet(cType: ConditionType.trailingOrder);
-                  //}
-                },
-              ),
-            ),
-            Visibility(
-              visible: userConditionalOrderPermissionRes?.recurringOrder ==
-                  true,
-              child: BuyOrderItem(
-                title: "Recurring Order",
-                subtitle: subtitleWithSymbol(
-                  ordersSubTitle?.recurringOrder,
-                  widget.symbol,
-                ),
-                onTap: () {
-                  // if (isLocked){
-                  //   commonLockSheet(isLocked,havePermissions);
-                  // }
-                  // else{
-                    openInfoSheet(cType: ConditionType.recurringOrder);
-                 // }
-
-                },
-              ),
-            ),
           ],
         ),
       );
