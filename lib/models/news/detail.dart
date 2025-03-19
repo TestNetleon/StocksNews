@@ -4,6 +4,7 @@
 
 import 'dart:convert';
 
+import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/models/market/market_res.dart';
 import 'package:stocks_news_new/models/news.dart';
 import 'package:stocks_news_new/models/ticker.dart';
@@ -21,16 +22,21 @@ class NewsDetailRes {
   final FeedbackRes? feedback;
   final BaseLockInfoRes? lockInfo;
   final BaseLockInfoRes? simulatorLockInfo;
+  final AdManagersRes? adManagers;
 
   NewsDetailRes({
     this.postDetail,
     this.moreNews,
     this.feedback,
+    this.adManagers,
     this.lockInfo,
     this.simulatorLockInfo,
   });
 
   factory NewsDetailRes.fromJson(Map<String, dynamic> json) => NewsDetailRes(
+        adManagers: json["ad_managers"] == null
+            ? null
+            : AdManagersRes.fromJson(json["ad_managers"]),
         lockInfo: json["lock_info"] == null
             ? null
             : BaseLockInfoRes.fromJson(json["lock_info"]),
@@ -43,13 +49,13 @@ class NewsDetailRes {
         moreNews: json["more_news"] == null
             ? null
             : MoreNewsRes.fromJson(json["more_news"]),
-      simulatorLockInfo: json["simulator_lock_info"] == null
-          ? null
-          : BaseLockInfoRes.fromJson(json["simulator_lock_info"]),
-
+        simulatorLockInfo: json["simulator_lock_info"] == null
+            ? null
+            : BaseLockInfoRes.fromJson(json["simulator_lock_info"]),
       );
 
   Map<String, dynamic> toJson() => {
+        "ad_managers": adManagers?.toJson(),
         "lock_info": lockInfo?.toJson(),
         "feedback": feedback?.toJson(),
         "post_detail": postDetail?.toJson(),

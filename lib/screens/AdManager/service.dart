@@ -27,32 +27,6 @@ class AdManagerIndex extends StatefulWidget {
 class _AdManagerIndexState extends State<AdManagerIndex> {
   bool _isVisible = false;
 
-  // void _visibilityCall() {
-  //   switch (widget.places) {
-  //     case AdPlaces.place1:
-  //       if (_isVisible && !firstCalled) {
-  //         Utils().showLog("Calling API For Place 1");
-  //         _callAPI();
-  //         firstCalled = true;
-  //       }
-  //       break;
-  //     case AdPlaces.place2:
-  //       if (_isVisible && !secondCalled) {
-  //         Utils().showLog("Calling API For Place 2");
-  //         _callAPI();
-  //         secondCalled = true;
-  //       }
-  //       break;
-  //     case AdPlaces.place3:
-  //       if (_isVisible && !thirdCalled) {
-  //         Utils().showLog("Calling API For Place 3");
-  //         _callAPI();
-  //         thirdCalled = true;
-  //       }
-  //     default:
-  //   }
-  // }
-
   void _visibilityCall(AdScreen screen) {
     try {
       if (!_isVisible) return;

@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/modals/user_res.dart';
 import 'package:stocks_news_new/models/lock.dart';
 
@@ -21,11 +22,13 @@ class MyHomeRes {
   final ScannerPortRes? scannerPort;
   final List<BaseNewsRes>? recentNews;
   final HomePopularRes? popular;
+  final AdManagersRes? adManagers;
 
   MyHomeRes({
     this.tickers,
     this.loginBox,
     this.user,
+    this.adManagers,
     this.popular,
     this.recentNews,
     this.bannerBlog,
@@ -35,6 +38,9 @@ class MyHomeRes {
   });
 
   factory MyHomeRes.fromJson(Map<String, dynamic> json) => MyHomeRes(
+        adManagers: json["ad_managers"] == null
+            ? null
+            : AdManagersRes.fromJson(json["ad_managers"]),
         popular: json["popular"] == null
             ? null
             : HomePopularRes.fromJson(json["popular"]),
@@ -63,6 +69,8 @@ class MyHomeRes {
       );
 
   Map<String, dynamic> toJson() => {
+        "ad_managers": adManagers?.toJson(),
+
         "popular": popular?.toJson(),
         "recent_news": recentNews == null
             ? []

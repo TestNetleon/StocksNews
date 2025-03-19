@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/managers/home/home.dart';
+import 'package:stocks_news_new/screens/AdManager/service.dart';
 import 'package:stocks_news_new/ui/base/app_bar.dart';
 import 'package:stocks_news_new/ui/base/base_scroll.dart';
 import 'package:stocks_news_new/ui/base/heading.dart';
@@ -77,8 +78,13 @@ class _HomeIndexState extends State<HomeIndex> {
                     ),
                   ),
                 ),
+                Visibility(
+                  visible: manager.data?.adManagers?.data?.place1 != null,
+                  child: AdManagerIndex(
+                      places: AdPlaces.place1,
+                      data: manager.data?.adManagers?.data?.place1),
+                ),
                 HomePopularStocks(),
-
                 VisibilityDetector(
                   key: const Key('home_premium_visibility'),
                   onVisibilityChanged: (VisibilityInfo info) {

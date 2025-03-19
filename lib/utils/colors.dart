@@ -174,6 +174,8 @@ class ThemeColors {
   static Color sliderDots = Color(0xFF181818);
   static Color boxShadow = Color(0x1C98A7C3);
 
+  static Color navigationBar = Colors.white;
+
   static void updateTheme(bool isLightTheme) {
     //
     sliderDots = isLightTheme ? Colors.white : Color(0xFF181818);
@@ -183,6 +185,7 @@ class ThemeColors {
     // Neutral
     // neutral80 = isLightTheme ? Color(0xFF465F8C) : Color(0xFF98A7C2);
 
+    navigationBar = isLightTheme ? Colors.black : ThemeColors.accent;
     secondary120 = isLightTheme ? Color(0xFF3240D1) : primary120;
 
     neutral80 = isLightTheme ? Color(0xFF465F8C) : Color(0xFFFFFFFF);
