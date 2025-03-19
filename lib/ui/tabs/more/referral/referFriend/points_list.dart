@@ -122,7 +122,7 @@ class PointsListItem extends StatelessWidget {
                     style: styleBaseBold(
                       fontSize: 14,
                       color:
-                          isDark ? ThemeColors.black : ThemeColors.secondary100,
+                          isDark ? ThemeColors.black : ThemeColors.secondary120,
                     ),
                   );
                 })

@@ -49,7 +49,7 @@ class _ViewPlanItemState extends State<ViewPlanItem> {
                 width: double.infinity,
                 padding: EdgeInsets.symmetric(vertical: 8),
                 decoration: BoxDecoration(
-                    color: ThemeColors.secondary100,
+                    color: ThemeColors.secondary120,
                     borderRadius: BorderRadius.circular(8)),
                 child: Text(
                   widget.data.popularBtn ?? '',
@@ -77,7 +77,7 @@ class _ViewPlanItemState extends State<ViewPlanItem> {
                   borderRadius: BorderRadius.circular(Pad.pad8),
                   border: Border.all(
                     color: manager.selectedPlan == widget.data
-                        ? ThemeColors.secondary100
+                        ? ThemeColors.secondary120
                         : ThemeColors.neutral10,
                     width: 2,
                   ),
@@ -141,7 +141,7 @@ class _ViewPlanItemState extends State<ViewPlanItem> {
                                       : Images.arrowDOWN,
                                   height: 24,
                                   width: 24,
-                                  color: ThemeColors.secondary100,
+                                  color: ThemeColors.secondary120,
                                 ),
                                 Flexible(
                                   child: Padding(
@@ -150,7 +150,7 @@ class _ViewPlanItemState extends State<ViewPlanItem> {
                                       widget.data.cardBtn ?? 'See Benefits',
                                       style: styleBaseSemiBold(
                                         fontSize: 14,
-                                        color: ThemeColors.secondary100,
+                                        color: ThemeColors.secondary120,
                                       ),
                                     ),
                                   ),
@@ -205,7 +205,7 @@ class _ViewPlanItemState extends State<ViewPlanItem> {
                                       Images.tickCircle,
                                       height: 22,
                                       width: 22,
-                                      color: ThemeColors.secondary100,
+                                      color: ThemeColors.secondary120,
                                     ),
                                     Flexible(
                                       child: Container(

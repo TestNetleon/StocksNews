@@ -84,6 +84,7 @@ class SDSecFiling extends StatelessWidget {
                                     Images.moreItem,
                                     height: 24,
                                     width: 24,
+                                    color: ThemeColors.black,
                                   ),
                                 ),
                               ),

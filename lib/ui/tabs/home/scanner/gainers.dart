@@ -29,7 +29,7 @@ class HomeScannerGainersIndex extends StatelessWidget {
 
           return HomeScannerBaseContainerOffline(dataList: list);
         } else {
-          return Loading();
+          return SizedBox(height: 300, child: Loading());
         }
       },
     );

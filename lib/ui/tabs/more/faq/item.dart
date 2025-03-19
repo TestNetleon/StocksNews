@@ -41,7 +41,7 @@ class FAQItem extends StatelessWidget {
                     return Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(Pad.pad5),
-                        border: Border.all(color: ThemeColors.neutral5),
+                        border: Border.all(color: ThemeColors.neutral40),
                       ),
                       child: Icon(
                         isOpen

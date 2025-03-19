@@ -20,80 +20,87 @@ class HomePopularStocks extends StatelessWidget {
       builder: (context, value, child) {
         HomePopularRes? popular = value.data?.popular;
         if (popular == null) return SizedBox();
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SpacerVertical(height: Pad.pad20),
-            BaseHeading(
-              title: popular.title ?? '',
-              titleStyle: styleBaseBold(fontSize: 20),
-            ),
-            SpacerVertical(height: Pad.pad14),
-            SingleChildScrollView(
-              physics: BouncingScrollPhysics(),
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                children: List.generate(
-                  popular.data?.length ?? 0,
-                  (index) {
-                    BaseTickerRes? ticker = popular.data?[index];
-                    return Stack(
-                      children: [
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.pushNamed(context, SDIndex.path,
-                                arguments: {
-                                  'symbol': ticker?.symbol,
-                                });
-                          },
-                          child: Container(
-                            height: 65,
-                            width: 65,
-                            decoration: BoxDecoration(
-                              border: Border.all(color: ThemeColors.neutral20),
-                              color: Colors.transparent,
-                              shape: BoxShape.circle,
-                            ),
-                            margin: EdgeInsets.only(right: 20),
+        return Container(
+          margin: EdgeInsets.symmetric(horizontal: Pad.pad16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SpacerVertical(height: Pad.pad20),
+              BaseHeading(
+                title: popular.title ?? '',
+                titleStyle: styleBaseBold(),
+                viewMore: () {},
+                viewMoreText: 'View All',
+              ),
+              SpacerVertical(height: Pad.pad14),
+              SingleChildScrollView(
+                physics: BouncingScrollPhysics(),
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children: List.generate(
+                    popular.data?.length ?? 0,
+                    (index) {
+                      BaseTickerRes? ticker = popular.data?[index];
+                      return Stack(
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.pushNamed(context, SDIndex.path,
+                                  arguments: {
+                                    'symbol': ticker?.symbol,
+                                  });
+                            },
                             child: Container(
-                              padding: const EdgeInsets.all(5),
+                              height: 65,
+                              width: 65,
+                              decoration: BoxDecoration(
+                                border:
+                                    Border.all(color: ThemeColors.neutral20),
+                                color: Colors.transparent,
+                                shape: BoxShape.circle,
+                              ),
+                              margin: EdgeInsets.only(right: 20),
                               child: Container(
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: ThemeColors.neutral5,
+                                padding: const EdgeInsets.all(5),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: ThemeColors.neutral5,
+                                  ),
+                                  padding: const EdgeInsets.all(10),
+                                  child:
+                                      CachedNetworkImagesWidget(ticker?.image),
                                 ),
-                                padding: const EdgeInsets.all(10),
-                                child: CachedNetworkImagesWidget(ticker?.image),
                               ),
                             ),
                           ),
-                        ),
-                        Positioned(
-                          top: 0,
-                          right: 15,
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: (ticker?.changesPercentage ?? 0) >= 0
-                                  ? ThemeColors.accent
-                                  : ThemeColors.sos,
-                              shape: BoxShape.circle,
-                            ),
-                            child: Icon(
-                              (ticker?.changesPercentage ?? 0) >= 0
-                                  ? Icons.arrow_drop_up
-                                  : Icons.arrow_drop_down,
-                              color: Colors.white,
-                              size: 18,
+                          Positioned(
+                            top: 0,
+                            right: 15,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: (ticker?.changesPercentage ?? 0) >= 0
+                                    ? ThemeColors.accent
+                                    : ThemeColors.sos,
+                                shape: BoxShape.circle,
+                              ),
+                              child: Icon(
+                                (ticker?.changesPercentage ?? 0) >= 0
+                                    ? Icons.arrow_drop_up
+                                    : Icons.arrow_drop_down,
+                                color: Colors.white,
+                                size: 18,
+                              ),
                             ),
                           ),
-                        ),
-                      ],
-                    );
-                  },
+                        ],
+                      );
+                    },
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         );
       },
     );

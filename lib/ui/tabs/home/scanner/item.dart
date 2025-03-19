@@ -67,6 +67,7 @@ class HomeScannerItem extends StatelessWidget {
                     )
                   : null,
               borderRadius: BorderRadius.circular(8),
+              border: isDark ? Border.all(color: ThemeColors.neutral5) : null,
               boxShadow: [
                 BoxShadow(
                   color: ThemeColors.boxShadow,

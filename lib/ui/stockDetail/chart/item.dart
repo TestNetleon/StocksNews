@@ -91,13 +91,13 @@ class ChartHistoryItem extends StatelessWidget {
                       child: Container(
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(4),
-                          border: Border.all(color: ThemeColors.neutral5),
+                          border: Border.all(color: ThemeColors.neutral40),
                         ),
                         child: Image.asset(
-
                           isOpen ? Images.arrowUP : Images.arrowDOWN,
                           height: 24,
                           width: 24,
+                          color: ThemeColors.black,
                         ),
                       ),
                     ),

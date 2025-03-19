@@ -25,10 +25,10 @@ class BaseColorContainer extends StatelessWidget {
       onTap: onTap,
       child: Container(
         decoration: BoxDecoration(
-          color: bgColor??ThemeColors.secondary100,
-          borderRadius: BorderRadius.circular(radius??Pad.pad8),
+          color: bgColor ?? ThemeColors.secondary120,
+          borderRadius: BorderRadius.circular(radius ?? Pad.pad8),
         ),
-        padding: padding??EdgeInsets.all(Pad.pad16),
+        padding: padding ?? EdgeInsets.all(Pad.pad16),
         child: child,
       ),
     );

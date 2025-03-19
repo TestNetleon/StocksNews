@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/models/market/market_res.dart';
 import 'package:stocks_news_new/ui/base/base_list_divider.dart';
 import 'package:stocks_news_new/ui/base/common_tab.dart';
-import 'package:stocks_news_new/ui/theme/manager.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/utils.dart';
@@ -41,21 +40,15 @@ class SDTabs extends StatelessWidget {
                 ),
               );
             },
-            child: Consumer<ThemeManager>(
-              builder: (context, value, child) {
-                return Container(
-                  color: Theme.of(context).scaffoldBackgroundColor,
-                  padding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-                  child: Image.asset(
-                    Images.menu,
-                    height: 18,
-                    width: 18,
-                    color: value.isDarkMode
-                        ? ThemeColors.white
-                        : ThemeColors.black,
-                  ),
-                );
-              },
+            child: Container(
+              color: Theme.of(context).scaffoldBackgroundColor,
+              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+              child: Image.asset(
+                Images.menu,
+                height: 18,
+                width: 18,
+                color: ThemeColors.black,
+              ),
             ),
           ),
           key: ValueKey(manager.selectedIndex),

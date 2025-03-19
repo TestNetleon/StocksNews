@@ -6,6 +6,7 @@ import 'package:stocks_news_new/api/api_requester.dart';
 import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/api/apis.dart';
 import 'package:stocks_news_new/database/preference.dart';
+import 'package:stocks_news_new/managers/home/home_tabs.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import '../../models/lock.dart';
@@ -82,6 +83,10 @@ class MyHomeManager extends ChangeNotifier {
 
   Future getHomeData() async {
     setPremiumLoaded(false);
+    navigatorKey.currentContext!
+        .read<HomeTabsManager>()
+        .setTrendingLoaded(false);
+
     try {
       UserManager provider = navigatorKey.currentContext!.read<UserManager>();
 

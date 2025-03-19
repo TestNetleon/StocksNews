@@ -65,7 +65,7 @@ class _ReferAFriendState extends State<ReferAFriend> {
           //       SpacerVertical(height: 24),
           //       BaseBorderContainer(
           //         padding: EdgeInsets.zero,
-          //         color: ThemeColors.secondary100,
+          //         color: ThemeColors.secondary120,
           //         child: Column(
           //           children: [
           //             Text(
@@ -107,7 +107,7 @@ class _ReferAFriendState extends State<ReferAFriend> {
           //               color: ThemeColors.white,
           //               textStyle: styleBaseBold(
           //                 fontSize: 16,
-          //                 color: ThemeColors.secondary100,
+          //                 color: ThemeColors.secondary120,
           //               ),
           //               padding: EdgeInsets.all(12),
           //             )

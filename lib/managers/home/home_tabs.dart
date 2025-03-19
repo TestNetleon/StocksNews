@@ -29,6 +29,19 @@ class HomeTabsManager extends ChangeNotifier {
   MarketDataRes? _dataTrending;
   MarketDataRes? get dataTrending => _dataTrending;
 
+  //home trending visibility
+  bool _homeTrendingLoaded = false;
+  bool get homeTrendingLoaded => _homeTrendingLoaded;
+
+  setTrendingLoaded(bool loaded) {
+    _homeTrendingLoaded = loaded;
+    if (!loaded) {
+      _dataTrending = null;
+      _errorTrending = null;
+    }
+    notifyListeners();
+  }
+
   setStatusTrending(status) {
     _statusTrending = status;
     notifyListeners();

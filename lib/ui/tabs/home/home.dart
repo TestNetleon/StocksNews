@@ -6,8 +6,8 @@ import 'package:stocks_news_new/ui/base/base_scroll.dart';
 import 'package:stocks_news_new/ui/base/heading.dart';
 import 'package:stocks_news_new/ui/tabs/home/blogItem/blog_item_home.dart';
 import 'package:stocks_news_new/ui/tabs/home/slider/index.dart';
-import 'package:stocks_news_new/ui/tabs/home/trendingGainerLoser/index.dart';
 import 'package:stocks_news_new/ui/tabs/more/index.dart';
+import 'package:stocks_news_new/ui/tabs/tabs.dart';
 import 'package:stocks_news_new/ui/theme/manager.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -49,21 +49,28 @@ class _HomeIndexState extends State<HomeIndex> {
             onRefresh: manager.getHomeData,
             child: BaseScroll(
               onRefresh: manager.getHomeData,
+              margin: EdgeInsets.zero,
               children: [
                 const BlogHomeIndex(),
                 HomeTopNewsSlider(),
-                TrendingGainerLoser(),
                 // HomeTrendingIndex(),
                 Visibility(
                   visible: manager.data?.scannerPort?.showOnHome == true,
                   child: Container(
                     padding: const EdgeInsets.only(top: Pad.pad14),
+                    margin: EdgeInsets.symmetric(horizontal: Pad.pad16),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         BaseHeading(
                           title: 'Market Scanner',
-                          titleStyle: styleBaseBold(fontSize: 20),
+                          titleStyle: styleBaseBold(),
+                          viewMore: () {
+                            Navigator.pushNamed(context, Tabs.path, arguments: {
+                              'index': 1,
+                            });
+                          },
+                          viewMoreText: 'View All',
                         ),
                         HomeScannerIndex(),
                       ],
@@ -91,7 +98,6 @@ class _HomeIndexState extends State<HomeIndex> {
                       padding: EdgeInsets.only(top: 20),
                       child: CircularProgressIndicator(),
                     ),
-                    onRefresh: () {},
                     child: HomePremiumIndex(),
                   ),
                 ),

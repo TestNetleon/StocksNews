@@ -18,56 +18,59 @@ class HomeInsiderTradesIndex extends StatelessWidget {
     if (insiderData == null) {
       return SizedBox();
     }
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        BaseHeading(
-          title: insiderData?.title,
-          margin: EdgeInsets.only(top: Pad.pad20, bottom: Pad.pad16),
-        ),
-        HomeLock(
-          showButton: false,
-          setNum: 1,
-          lockInfo: insiderData?.lockInfo,
-          childWidget: SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: IntrinsicWidth(
-              child: Row(
-                children: List.generate(
-                  insiderData?.data?.length ?? 0,
-                  (index) {
-                    InsiderTradeRes? data = insiderData?.data?[index];
-                    if (data == null) {
-                      return SizedBox();
-                    }
-                    return HomeInsiderTradeItem(data: data);
-                  },
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: Pad.pad16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          BaseHeading(
+            title: insiderData?.title,
+            margin: EdgeInsets.only(top: Pad.pad20, bottom: Pad.pad16),
+          ),
+          HomeLock(
+            showButton: false,
+            setNum: 1,
+            lockInfo: insiderData?.lockInfo,
+            childWidget: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: IntrinsicWidth(
+                child: Row(
+                  children: List.generate(
+                    insiderData?.data?.length ?? 0,
+                    (index) {
+                      InsiderTradeRes? data = insiderData?.data?[index];
+                      if (data == null) {
+                        return SizedBox();
+                      }
+                      return HomeInsiderTradeItem(data: data);
+                    },
+                  ),
                 ),
               ),
             ),
           ),
-        ),
-        Visibility(
-          visible: insiderData?.lockInfo != null,
-          child: Consumer<MyHomeManager>(
-            builder: (context, manager, child) {
-              return BaseButton(
-                text: insiderData?.lockInfo?.btn ?? '',
-                onPressed: () {
-                  manager.setNumValue(1);
-                  baseSUBSCRIBE(
-                    insiderData!.lockInfo!,
-                    manager: manager,
-                    callAPI: () async {
-                      await manager.getHomePremiumData();
-                    },
-                  );
-                },
-              );
-            },
+          Visibility(
+            visible: insiderData?.lockInfo != null,
+            child: Consumer<MyHomeManager>(
+              builder: (context, manager, child) {
+                return BaseButton(
+                  text: insiderData?.lockInfo?.btn ?? '',
+                  onPressed: () {
+                    manager.setNumValue(1);
+                    baseSUBSCRIBE(
+                      insiderData!.lockInfo!,
+                      manager: manager,
+                      callAPI: () async {
+                        await manager.getHomePremiumData();
+                      },
+                    );
+                  },
+                );
+              },
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
