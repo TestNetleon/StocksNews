@@ -6,7 +6,7 @@ import 'package:stocks_news_new/managers/faq.dart';
 import 'package:stocks_news_new/managers/feedback.dart';
 import 'package:stocks_news_new/managers/global.dart';
 import 'package:stocks_news_new/managers/helpdesk.dart';
-import 'package:stocks_news_new/managers/home.dart';
+import 'package:stocks_news_new/managers/home/home.dart';
 import 'package:stocks_news_new/managers/home/home_tabs.dart';
 import 'package:stocks_news_new/managers/legal.dart';
 import 'package:stocks_news_new/managers/market/industries/industries.dart';

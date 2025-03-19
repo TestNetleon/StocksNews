@@ -5,7 +5,7 @@ import 'package:stocks_news_new/ui/base/heading.dart';
 import 'package:stocks_news_new/ui/stockDetail/index.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
-import '../../../../managers/home.dart';
+import '../../../../managers/home/home.dart';
 import '../../../../models/ticker.dart';
 import 'watchlist_item.dart';
 

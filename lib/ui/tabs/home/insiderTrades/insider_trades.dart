@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/models/my_home.dart';
 import 'package:stocks_news_new/ui/tabs/home/extra/lock.dart';
-import '../../../../managers/home.dart';
+import '../../../../managers/home/home.dart';
 import '../../../../utils/constants.dart';
 import '../../../base/button.dart';
 import '../../../base/heading.dart';

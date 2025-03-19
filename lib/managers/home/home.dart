@@ -8,12 +8,12 @@ import 'package:stocks_news_new/api/apis.dart';
 import 'package:stocks_news_new/database/preference.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/utils/utils.dart';
-import '../models/lock.dart';
-import '../models/my_home.dart';
-import '../models/my_home_premium.dart';
-import '../utils/constants.dart';
-import '../models/home_watchlist.dart';
-import 'user.dart';
+import '../../models/lock.dart';
+import '../../models/my_home.dart';
+import '../../models/my_home_premium.dart';
+import '../../utils/constants.dart';
+import '../../models/home_watchlist.dart';
+import '../user.dart';
 
 class MyHomeManager extends ChangeNotifier {
   //MARK: Clear Data
