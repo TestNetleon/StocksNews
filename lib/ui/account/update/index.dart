@@ -275,7 +275,7 @@ class _UpdatePersonalDetailIndexState extends State<UpdatePersonalDetailIndex> {
                           manager.emailVerified ? 'Verified' : 'Update',
                           style: styleBaseBold(
                             fontSize: 14,
-                            color: ThemeColors.secondary100,
+                            color: ThemeColors.secondary120,
                           ),
                         ),
                       ),
@@ -335,7 +335,7 @@ class _UpdatePersonalDetailIndexState extends State<UpdatePersonalDetailIndex> {
                           manager.phoneVerified ? 'Verified' : 'Update',
                           style: styleBaseBold(
                             fontSize: 14,
-                            color: ThemeColors.secondary100,
+                            color: ThemeColors.secondary120,
                           ),
                         ),
                       ),

@@ -31,7 +31,7 @@ class _HomeTrendingState extends State<HomeTrending> {
   void _callAPI() {
     HomeTabsManager manager = context.read<HomeTabsManager>();
     if (manager.dataTrending == null) {
-      manager.getHomeTrending();
+      // manager.getHomeTrending();
     }
   }
 

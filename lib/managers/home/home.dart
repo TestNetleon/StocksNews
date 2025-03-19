@@ -84,6 +84,10 @@ class MyHomeManager extends ChangeNotifier {
 
   Future getHomeData() async {
     setPremiumLoaded(false);
+    navigatorKey.currentContext!
+        .read<HomeTabsManager>()
+        .setTrendingLoaded(false);
+
     try {
       UserManager provider = navigatorKey.currentContext!.read<UserManager>();
 

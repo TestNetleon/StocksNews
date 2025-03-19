@@ -1,4 +1,6 @@
 import 'dart:convert';
+import 'package:stocks_news_new/models/tools.dart';
+
 import 'lock.dart';
 import 'my_home.dart';
 import 'watchlist_res.dart';
@@ -15,13 +17,14 @@ class MyHomePremiumRes {
   final InsiderTradeListRes? insiderTrading;
   final WatchRes? watchList;
   final WatchRes? mostBought;
-
+  final ToolsRes? plaid;
   final HomeNewsRes? featuredNews;
   final HomeNewsRes? financialNews;
   // final HomeNewsRes? recentNews;
 
   MyHomePremiumRes({
     // this.recentNews,
+    this.plaid,
     this.watchList,
     this.mostBought,
     this.congressionalStocks,
@@ -32,6 +35,7 @@ class MyHomePremiumRes {
 
   factory MyHomePremiumRes.fromJson(Map<String, dynamic> json) =>
       MyHomePremiumRes(
+        plaid: json["plaid"] == null ? null : ToolsRes.fromJson(json["plaid"]),
         watchList: json["watchlist"] == null
             ? null
             : WatchRes.fromMap(json["watchlist"]),
@@ -59,6 +63,7 @@ class MyHomePremiumRes {
       );
 
   Map<String, dynamic> toJson() => {
+        "plaid": plaid?.toJson(),
         "watchlist": watchList?.toMap(),
         "most_bought": mostBought?.toMap(),
         "insider_trading": insiderTrading?.toJson(),

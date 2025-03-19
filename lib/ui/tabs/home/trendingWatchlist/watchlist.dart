@@ -25,44 +25,47 @@ class _HomeWatchlistContainerState extends State<HomeWatchlistContainer> {
     if (manager.homePremiumData?.watchList == null) {
       return SizedBox();
     }
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        BaseHeading(
-          title: manager.homePremiumData?.watchList?.title,
-          margin: EdgeInsets.only(top: Pad.pad24, bottom: Pad.pad14),
-          titleStyle: styleBaseBold(fontSize: 20),
-        ),
-        SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: IntrinsicHeight(
-            child: Row(
-              children: List.generate(
-                watchlist?.length ?? 0,
-                (index) {
-                  BaseTickerRes? data = watchlist?[index];
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: Pad.pad16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          BaseHeading(
+            title: manager.homePremiumData?.watchList?.title,
+            margin: EdgeInsets.only(top: Pad.pad24, bottom: Pad.pad14),
+            titleStyle: styleBaseBold(),
+          ),
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: IntrinsicHeight(
+              child: Row(
+                children: List.generate(
+                  watchlist?.length ?? 0,
+                  (index) {
+                    BaseTickerRes? data = watchlist?[index];
 
-                  if (data == null) {
-                    return SizedBox();
-                  }
-                  return Container(
-                    width: 180.sp,
-                    margin: const EdgeInsets.only(right: 16),
-                    child: TickerBoxWatchListItem(
-                        data: data,
-                        onTap: () {
-                          Navigator.pushNamed(context, SDIndex.path,
-                              arguments: {
-                                'symbol': data.symbol,
-                              });
-                        }),
-                  );
-                },
+                    if (data == null) {
+                      return SizedBox();
+                    }
+                    return Container(
+                      width: 180.sp,
+                      margin: const EdgeInsets.only(right: 16),
+                      child: TickerBoxWatchListItem(
+                          data: data,
+                          onTap: () {
+                            Navigator.pushNamed(context, SDIndex.path,
+                                arguments: {
+                                  'symbol': data.symbol,
+                                });
+                          }),
+                    );
+                  },
+                ),
               ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

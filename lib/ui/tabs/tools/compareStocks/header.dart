@@ -100,9 +100,9 @@ class ToolsCompareHeaderStocks extends StatelessWidget {
                         width: 2,
                       ),
                     ),
-                    child: const Icon(
+                    child: Icon(
                       Icons.add,
-                      color: ThemeColors.secondary100,
+                      color: ThemeColors.secondary120,
                       size: 35,
                     ),
                   ),

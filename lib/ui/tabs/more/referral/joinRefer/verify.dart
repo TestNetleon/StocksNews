@@ -254,7 +254,7 @@ class _JoinReferVerificationIndexState extends State<JoinReferVerificationIndex>
                             text: "Re-send Code",
                             style: styleBaseBold(
                               fontSize: 18,
-                              color: ThemeColors.secondary100,
+                              color: ThemeColors.secondary120,
                             ),
                           ),
                         ),
@@ -273,7 +273,7 @@ class _JoinReferVerificationIndexState extends State<JoinReferVerificationIndex>
                               text: "${startTiming}Sec",
                               style: styleBaseBold(
                                 fontSize: 18,
-                                color: ThemeColors.secondary100,
+                                color: ThemeColors.secondary120,
                               ),
                             ),
                           ],

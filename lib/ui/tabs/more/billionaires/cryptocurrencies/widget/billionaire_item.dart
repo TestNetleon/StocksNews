@@ -66,10 +66,10 @@ class BillionaireItem extends StatelessWidget {
             label: Text(
               "SEE ALL MENTIONS",
               style: styleBaseRegular(
-                  fontSize: 14, color: ThemeColors.secondary100),
+                  fontSize: 14, color: ThemeColors.secondary120),
             ),
             icon: Icon(Icons.arrow_right_alt_outlined,
-                color: ThemeColors.secondary100),
+                color: ThemeColors.secondary120),
             iconAlignment: IconAlignment.end,
           ),
           Visibility(

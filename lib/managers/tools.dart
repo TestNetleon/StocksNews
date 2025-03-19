@@ -62,13 +62,17 @@ class ToolsManager extends ChangeNotifier {
           Navigator.pushNamed(
               navigatorKey.currentContext!, ToolsPortfolioIndex.path);
         } else {
+          bool callAPI = false;
+          if (manager.user == null) {
+            callAPI = true;
+          }
           await manager.askLoginScreen();
+          if (callAPI) await getToolsData();
+
           if (manager.user == null) {
             return;
           }
           if (manager.user?.signupStatus != true) {
-            await getToolsData();
-
             if (data?.connected == true) {
               Navigator.pushNamed(
                   navigatorKey.currentContext!, ToolsPortfolioIndex.path);

@@ -105,13 +105,13 @@ class ThemeColors {
 //New UI
 
   //PRIMARY
-  static const primary120 = Color(0xFF06C9BC);
+  static Color primary120 = Color(0xFF06C9BC);
   static const primary100 = Color(0xFF17DBD1);
   static const primary20 = Color(0xFF95E9E4);
   static const primary10 = Color(0xFFD7F6F5);
 
   //SECONDARY
-  static const secondary120 = Color(0xFF3240D1);
+  static Color secondary120 = Color(0xFF3240D1);
   static const secondary100 = Color(0xFF555ED9);
   static const secondary20 = Color(0xFFC5C6F1);
   static const secondary10 = Color(0xFFE8E8FA);
@@ -182,6 +182,9 @@ class ThemeColors {
 
     // Neutral
     // neutral80 = isLightTheme ? Color(0xFF465F8C) : Color(0xFF98A7C2);
+
+    secondary120 = isLightTheme ? Color(0xFF3240D1) : primary120;
+
     neutral80 = isLightTheme ? Color(0xFF465F8C) : Color(0xFFFFFFFF);
     neutral60 = isLightTheme ? Color(0xFF59719B) : Color(0xFFC0C9DB);
     neutral40 = isLightTheme ? Color(0xFF6E85AE) : Color(0xFFC0C9DB);

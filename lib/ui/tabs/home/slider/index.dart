@@ -36,6 +36,7 @@ class _HomeTopNewsSliderState extends State<HomeTopNewsSlider> {
 
     return Container(
       padding: EdgeInsets.only(top: Pad.pad16),
+      margin: EdgeInsets.symmetric(horizontal: Pad.pad16),
       child: LayoutBuilder(
         builder: (context, constraints) {
           double imageHeight = constraints.maxWidth * 0.6;

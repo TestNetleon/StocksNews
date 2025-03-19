@@ -67,7 +67,7 @@ class NoSubscription extends StatelessWidget {
                             Images.tickCircle,
                             height: 32,
                             width: 32,
-                            color: ThemeColors.secondary100,
+                            color: ThemeColors.secondary120,
                           ),
                           Flexible(
                             child: Container(

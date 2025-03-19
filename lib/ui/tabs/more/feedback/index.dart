@@ -153,7 +153,7 @@ class _FeedbackIndexState extends State<FeedbackIndex> {
                                                   : ThemeColors.white,
                                               border: Border.all(
                                                   color: isOpen
-                                                      ? ThemeColors.secondary100
+                                                      ? ThemeColors.secondary120
                                                       : ThemeColors.neutral10),
                                               borderRadius:
                                                   BorderRadius.circular(
@@ -165,7 +165,7 @@ class _FeedbackIndexState extends State<FeedbackIndex> {
                                             height: 33,
                                             width: 33,
                                             color: isOpen
-                                                ? ThemeColors.secondary100
+                                                ? ThemeColors.secondary120
                                                 : ThemeColors.neutral10,
                                           ),
                                         ),

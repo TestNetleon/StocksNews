@@ -16,10 +16,8 @@ class BaseFaq extends StatefulWidget {
 }
 
 class _BaseFaqState extends State<BaseFaq> {
-
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       GlobalManager globalManager = context.read<GlobalManager>();
@@ -27,23 +25,20 @@ class _BaseFaqState extends State<BaseFaq> {
       globalManager.change(0);
     });
   }
+
   @override
   Widget build(BuildContext context) {
     GlobalManager globalManager = context.watch<GlobalManager>();
-
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Visibility(
-          visible: widget.faqs?.title!=null,
+          visible: widget.faqs?.title != null,
           child: BaseHeading(
             title: widget.faqs?.title,
             margin: EdgeInsets.only(
-                left: Pad.pad16,
-                right: Pad.pad16,
-                bottom: Pad.pad10
-            ),
+                left: Pad.pad16, right: Pad.pad16, bottom: Pad.pad10),
           ),
         ),
         ListView.separated(
@@ -71,4 +66,3 @@ class _BaseFaqState extends State<BaseFaq> {
     );
   }
 }
-

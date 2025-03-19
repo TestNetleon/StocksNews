@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/optional_parent.dart';
+import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 
 import '../../utils/colors.dart';
 
@@ -41,16 +42,25 @@ class BaseHeading extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Flexible(child: child),
+                  SpacerHorizontal(width: 10),
                   InkWell(
                     onTap: viewMore,
-                    child: Text(
-                      viewMoreText ?? 'View More',
-                      textAlign: textAlign,
-                      style: titleStyle ??
-                          styleBaseBold(
+                    child: Row(
+                      children: [
+                        Text(
+                          viewMoreText ?? 'View More',
+                          textAlign: textAlign,
+                          style: styleBaseRegular(
                             fontSize: 16,
                             color: ThemeColors.primary120,
                           ),
+                        ),
+                        Icon(
+                          Icons.arrow_forward_ios_outlined,
+                          size: 15,
+                          color: ThemeColors.primary120,
+                        ),
+                      ],
                     ),
                   ),
                 ],

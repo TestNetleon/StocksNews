@@ -12,12 +12,19 @@ class HomeNewsIndex extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (newsData == null) {
+      return SizedBox();
+    }
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         BaseHeading(
           title: newsData?.title,
-          margin: EdgeInsets.only(top: Pad.pad32),
+          margin: EdgeInsets.only(
+            top: Pad.pad32,
+            left: Pad.pad16,
+            right: Pad.pad16,
+          ),
         ),
         ListView.separated(
           shrinkWrap: true,
@@ -27,7 +34,9 @@ class HomeNewsIndex extends StatelessWidget {
             if (data == null) {
               return SizedBox();
             }
-            return HomeNewsItem(data: data);
+            return Container(
+                margin: EdgeInsets.symmetric(horizontal: Pad.pad16),
+                child: HomeNewsItem(data: data));
           },
           separatorBuilder: (context, index) {
             return BaseListDivider(

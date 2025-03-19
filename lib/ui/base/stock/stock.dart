@@ -190,7 +190,7 @@ class _BaseStockItemState extends State<BaseStockItem> {
                     child: Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(4),
-                        border: Border.all(color: ThemeColors.neutral5),
+                        border: Border.all(color: ThemeColors.neutral40),
                       ),
                       child: Image.asset(
                         _openIndex == widget.index

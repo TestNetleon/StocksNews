@@ -76,7 +76,7 @@ class ToolsItem extends StatelessWidget {
               color: ThemeColors.white,
               textColor: value.isDarkMode
                   ? ThemeColors.black
-                  : ThemeColors.secondary100,
+                  : ThemeColors.secondary120,
               side: BorderSide(
                 color: value.isDarkMode
                     ? ThemeColors.black

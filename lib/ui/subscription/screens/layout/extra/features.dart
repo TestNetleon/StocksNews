@@ -36,7 +36,8 @@ class MembershipFeatures extends StatelessWidget {
                       margin: EdgeInsets.only(left: 8),
                       child: HtmlWidget(
                         features?[index] ?? '',
-                        textStyle: styleBaseRegular(fontSize: 13),
+                        textStyle:
+                            styleBaseRegular(fontSize: 13, color: Colors.white),
                       ),
                     ),
                   ),

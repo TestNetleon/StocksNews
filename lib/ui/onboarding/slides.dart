@@ -58,7 +58,7 @@ class _OnboardingSlidesState extends State<OnboardingSlides> {
                 child: Text(
                   'Skip',
                   style: styleBaseRegular(
-                    color: ThemeColors.secondary100,
+                    color: ThemeColors.secondary120,
                     fontSize: 16,
                   ),
                 ),

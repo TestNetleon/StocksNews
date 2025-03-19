@@ -51,8 +51,7 @@ class SDTopCards extends StatelessWidget {
                     "${top.value ?? "N/A"}",
                     style: styleBaseBold(
                       fontSize: 16,
-                      color: valueColor ??
-                          (value.isDarkMode ? ThemeColors.white : Colors.black),
+                      color: valueColor ?? ThemeColors.black,
                     ),
                   ),
                 ),

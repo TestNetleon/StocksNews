@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:provider/provider.dart';
-import 'package:stocks_news_new/ui/theme/manager.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -60,9 +58,6 @@ class BaseTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ThemeManager themeManager = context.watch<ThemeManager>();
-    bool isDark = themeManager.isDarkMode;
-
     var outlineInputBorder = OutlineInputBorder(
       borderRadius: borderRadiusOnly ?? BorderRadius.circular(borderRadius),
       borderSide: BorderSide(color: ThemeColors.neutral80, width: 1),
@@ -85,6 +80,7 @@ class BaseTextField extends StatelessWidget {
       minLines: minLines,
       maxLines: maxLines,
       enabled: editable,
+      cursorColor: ThemeColors.black,
       textCapitalization: textCapitalization,
       inputFormatters: inputFormatters ?? [allSpecialSymbolsRemove],
       style: styleBaseRegular(fontSize: 16),
@@ -99,7 +95,7 @@ class BaseTextField extends StatelessWidget {
         contentPadding:
             contentPadding ?? EdgeInsets.symmetric(horizontal: Pad.pad16),
         filled: filled,
-        fillColor: fillColor ?? (isDark ? Colors.black : ThemeColors.white),
+        fillColor: fillColor ?? (ThemeColors.white),
         enabledBorder: enabledBorder,
         border: outlineInputBorder,
         focusedBorder: outlineInputBorder,

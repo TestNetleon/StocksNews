@@ -30,7 +30,10 @@ class BlogHomeIndex extends StatelessWidget {
       builder: (context, value, child) {
         bool isDark = value.isDarkMode;
         return Container(
-          margin: EdgeInsets.symmetric(vertical: Pad.pad10),
+          margin: EdgeInsets.symmetric(
+            vertical: Pad.pad10,
+            horizontal: Pad.pad16,
+          ),
           child: Stack(
             children: [
               GestureDetector(

@@ -26,7 +26,7 @@ class MentionItem extends StatelessWidget {
             child: Container(
               padding: EdgeInsets.all(Pad.pad5),
               decoration: BoxDecoration(
-                  border: Border.all(color: ThemeColors.secondary100, width: 1),
+                  border: Border.all(color: ThemeColors.secondary120, width: 1),
                   shape: BoxShape.circle),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(60),

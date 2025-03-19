@@ -174,11 +174,11 @@ class _AddToAlertSheetState extends State<AddToAlertSheet> {
             width: 32,
             height: 32,
             decoration: BoxDecoration(
-              color: isSelected ? ThemeColors.secondary100 : ThemeColors.white,
+              color: isSelected ? ThemeColors.secondary120 : ThemeColors.white,
               borderRadius: BorderRadius.circular(10),
               border: Border.all(
                 color:
-                    isSelected ? ThemeColors.secondary100 : ThemeColors.border,
+                    isSelected ? ThemeColors.secondary120 : ThemeColors.border,
                 width: 2,
               ),
             ),
