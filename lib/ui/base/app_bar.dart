@@ -375,9 +375,9 @@ class LeadingNotification extends StatelessWidget {
                   color: ThemeColors.black,
                   border: Border.all(color: Colors.white, width: 1)),
               padding: EdgeInsets.all(0.7),
-              child: const CircleAvatar(
+              child: CircleAvatar(
                 radius: 4,
-                backgroundColor: ThemeColors.secondary100,
+                backgroundColor: ThemeColors.secondary120,
               ),
             ),
           ),

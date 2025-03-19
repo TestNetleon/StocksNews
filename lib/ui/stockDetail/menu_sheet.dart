@@ -46,6 +46,7 @@ class SDMenuSheet extends StatelessWidget {
                       Images.tick,
                       height: 18,
                       width: 18,
+                      color: ThemeColors.secondary120,
                     ),
                 ],
               ),

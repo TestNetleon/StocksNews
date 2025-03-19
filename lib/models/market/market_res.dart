@@ -34,7 +34,8 @@ class MarketRes {
       };
 }
 
-MarketResData marketResDataFromJson(String str) => MarketResData.fromJson(json.decode(str));
+MarketResData marketResDataFromJson(String str) =>
+    MarketResData.fromJson(json.decode(str));
 
 String marketResDataToJson(MarketRes data) => json.encode(data.toJson());
 

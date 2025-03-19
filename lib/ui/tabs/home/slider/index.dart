@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:provider/provider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import 'package:stocks_news_new/managers/home.dart';
+import 'package:stocks_news_new/managers/home/home.dart';
 import 'package:stocks_news_new/models/news.dart';
 import 'package:stocks_news_new/ui/tabs/more/news/detail.dart';
 import 'package:stocks_news_new/utils/colors.dart';
@@ -35,8 +35,8 @@ class _HomeTopNewsSliderState extends State<HomeTopNewsSlider> {
         context.watch<MyHomeManager>().data?.recentNews;
 
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: Pad.pad16),
       padding: EdgeInsets.only(top: Pad.pad16),
+      margin: EdgeInsets.symmetric(horizontal: Pad.pad16),
       child: LayoutBuilder(
         builder: (context, constraints) {
           double imageHeight = constraints.maxWidth * 0.6;
@@ -210,7 +210,7 @@ class _HomeTopNewsSliderState extends State<HomeTopNewsSlider> {
                                                     style: styleBaseRegular(
                                                       fontSize: 14,
                                                       color:
-                                                          ThemeColors.neutral5,
+                                                          ThemeColors.greyText,
                                                     ),
                                                   ),
                                                 if (showAuthor)
@@ -220,8 +220,7 @@ class _HomeTopNewsSliderState extends State<HomeTopNewsSlider> {
                                                             '',
                                                     style: styleBaseRegular(
                                                       fontSize: 14,
-                                                      color:
-                                                          ThemeColors.neutral5,
+                                                      color: Colors.white,
                                                     ),
                                                   ),
                                                 if (showAuthor && showDate)
@@ -237,7 +236,7 @@ class _HomeTopNewsSliderState extends State<HomeTopNewsSlider> {
                                                         Icons.circle,
                                                         size: 4,
                                                         color: ThemeColors
-                                                            .neutral10,
+                                                            .greyText,
                                                       ),
                                                     ),
                                                   ),
@@ -246,8 +245,7 @@ class _HomeTopNewsSliderState extends State<HomeTopNewsSlider> {
                                                     text: i.publishedDate ?? '',
                                                     style: styleBaseRegular(
                                                       fontSize: 14,
-                                                      color:
-                                                          ThemeColors.neutral5,
+                                                      color: Colors.white,
                                                     ),
                                                   ),
                                               ],

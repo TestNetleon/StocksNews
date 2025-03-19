@@ -156,7 +156,7 @@ bool withLoginMembership = true;
 String? memCODE;
 String? appsFlyerUID;
 bool isOnTsScreen = false;
-bool isThemeLight = false;
+bool itemAutoSwipeAvailable = true;
 
 // bool memTrack = false;
 
@@ -191,6 +191,7 @@ Map<AdScreen, Map<AdPlaces, bool>> adVisibilityMap = {
 class Images {
   //MARK: New UI
   static const String base = 'assets/image/';
+  static const String appLogoIcon = "${base}stockNewsIcon.png";
   static const String referSuccess = "${base}success.gif";
   static const String layout1 = '${base}layout1.png';
   static const String mainLogo = '${base}splashLogo.png';

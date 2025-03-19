@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
-import 'package:stocks_news_new/managers/home.dart';
+import 'package:stocks_news_new/managers/home/home.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/ui/tabs/home/scanner/manager/gainers.dart';
 import 'package:stocks_news_new/ui/tabs/tools/scanner/data/client.dart';

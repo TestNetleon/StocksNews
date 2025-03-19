@@ -57,7 +57,7 @@ class ReferralHeader extends StatelessWidget {
             bool isDark = value.isDarkMode;
             return BaseBorderContainer(
               padding: EdgeInsets.zero,
-              color: ThemeColors.secondary100,
+              color: ThemeColors.secondary120,
               child: Column(
                 children: [
                   Text(
@@ -102,7 +102,7 @@ class ReferralHeader extends StatelessWidget {
                     textStyle: styleBaseBold(
                       fontSize: 16,
                       color:
-                          isDark ? ThemeColors.black : ThemeColors.secondary100,
+                          isDark ? ThemeColors.black : ThemeColors.secondary120,
                     ),
                     padding: EdgeInsets.all(12),
                   )

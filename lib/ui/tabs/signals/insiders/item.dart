@@ -112,7 +112,7 @@ class BaseInsiderItem extends StatelessWidget {
                         return Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(4),
-                            border: Border.all(color: ThemeColors.neutral5),
+                            border: Border.all(color: ThemeColors.neutral40),
                           ),
                           // child: Image.asset(
                           //   isOpen ? Images.arrowUP : Images.arrowDOWN,
@@ -125,6 +125,7 @@ class BaseInsiderItem extends StatelessWidget {
                           child: ActionButton(
                             icon: isOpen ? Images.arrowUP : Images.arrowDOWN,
                             size: 24,
+                            color: ThemeColors.black,
                           ),
                         );
                       },
@@ -264,7 +265,7 @@ class BaseInsiderItem extends StatelessWidget {
                       child: Text(
                         'View Details',
                         style: styleBaseSemiBold(
-                          color: ThemeColors.secondary100,
+                          color: ThemeColors.secondary120,
                           fontSize: 13,
                         ),
                       ),

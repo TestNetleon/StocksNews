@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:stocks_news_new/managers/home.dart';
+import 'package:stocks_news_new/managers/home/home.dart';
 import 'package:stocks_news_new/managers/user.dart';
 import 'package:stocks_news_new/modals/user_res.dart';
 import 'package:stocks_news_new/models/my_home.dart';
@@ -82,7 +82,9 @@ class MoreIndex extends StatelessWidget {
 
                   SpacerVertical(height: Pad.pad8),
                   Text(
-                    user?.name ?? 'Welcome Guest',
+                    user?.name != null && user?.name != ''
+                        ? user?.name ?? 'N/A'
+                        : 'Welcome Guest',
                     style: styleBaseBold(
                       fontSize: 25,
                       height: 1.5,

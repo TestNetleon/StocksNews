@@ -6,14 +6,15 @@ import 'package:stocks_news_new/api/api_requester.dart';
 import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/api/apis.dart';
 import 'package:stocks_news_new/database/preference.dart';
+import 'package:stocks_news_new/managers/home/home_tabs.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/utils/utils.dart';
-import '../models/lock.dart';
-import '../models/my_home.dart';
-import '../models/my_home_premium.dart';
-import '../utils/constants.dart';
-import '../models/home_watchlist.dart';
-import 'user.dart';
+import '../../models/lock.dart';
+import '../../models/my_home.dart';
+import '../../models/my_home_premium.dart';
+import '../../utils/constants.dart';
+import '../../models/home_watchlist.dart';
+import '../user.dart';
 
 class MyHomeManager extends ChangeNotifier {
   //MARK: Clear Data
@@ -25,6 +26,7 @@ class MyHomeManager extends ChangeNotifier {
     //clear watchlist data
     _watchlist = null;
     _setNUm = -1;
+    navigatorKey.currentContext!.read<HomeTabsManager>().clearAllData();
     notifyListeners();
   }
 
@@ -82,6 +84,10 @@ class MyHomeManager extends ChangeNotifier {
 
   Future getHomeData() async {
     setPremiumLoaded(false);
+    navigatorKey.currentContext!
+        .read<HomeTabsManager>()
+        .setTrendingLoaded(false);
+
     try {
       UserManager provider = navigatorKey.currentContext!.read<UserManager>();
 
@@ -106,9 +112,7 @@ class MyHomeManager extends ChangeNotifier {
         if (_data?.user != null) {
           provider.setUser(data?.user);
         }
-        if (_data?.insiderTrading != null) {
-          _lockStocksInsider = _data?.insiderTrading?.lockInfo;
-        }
+
         _error = null;
         bool firstTime = await Preference.isFirstOpen();
         if (_data?.loginBox != null && firstTime) {
@@ -178,9 +182,10 @@ class MyHomeManager extends ChangeNotifier {
         _homePremiumData = myHomePremiumResFromJson(jsonEncode(response.data));
         _errorHomePremium = null;
 
-        // if (_homePremiumData?.insiderTrading != null) {
-        //   _lockStocksInsider = _homePremiumData?.insiderTrading?.lockInfo;
-        // }
+        if (_homePremiumData?.insiderTrading != null) {
+          _lockStocksInsider = _homePremiumData?.insiderTrading?.lockInfo;
+        }
+
         if (_homePremiumData?.congressionalStocks != null) {
           _lockStocksPoliticians =
               _homePremiumData?.congressionalStocks?.lockInfo;

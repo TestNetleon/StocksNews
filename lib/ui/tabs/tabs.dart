@@ -4,11 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import 'package:stocks_news_new/managers/home.dart';
+import 'package:stocks_news_new/managers/home/home.dart';
 import 'package:stocks_news_new/managers/signals.dart';
 import 'package:stocks_news_new/managers/tools.dart';
 import 'package:stocks_news_new/service/amplitude/service.dart';
 import 'package:stocks_news_new/socket/socket.dart';
+import 'package:stocks_news_new/ui/base/scaffold.dart';
 import 'package:stocks_news_new/ui/tabs/home/scanner/manager/gainers.dart';
 import 'package:stocks_news_new/ui/tabs/market/index.dart';
 import 'package:stocks_news_new/ui/tabs/tools/scanner/manager/gainers.dart';
@@ -29,12 +30,14 @@ class Tabs extends StatefulWidget {
   final int? index;
   final String? inAppMsgId;
   final int childIndex;
+  final int innerChildIndex;
 
   const Tabs({
     super.key,
     this.index = 0,
     this.inAppMsgId,
     this.childIndex = 0,
+    this.innerChildIndex = 0,
   });
 
   @override
@@ -71,11 +74,8 @@ class _TabsState extends State<Tabs> {
               icon,
               height: 27,
               width: 27,
-              color: selected
-                  ? ThemeColors.black
-                  : selected
-                      ? ThemeColors.black
-                      : ThemeColors.neutral60,
+              color:
+                  selected ? ThemeColors.navigationBar : ThemeColors.neutral60,
             ),
           );
         },
@@ -86,8 +86,9 @@ class _TabsState extends State<Tabs> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Screens.screens(_selectedIndex, widget.childIndex)
+    return BaseScaffold(
+      body: Screens.screens(
+              _selectedIndex, widget.childIndex, widget.innerChildIndex)
           .elementAt(_selectedIndex),
       bottomNavigationBar: BottomNavigationBar(
         unselectedItemColor: ThemeColors.neutral60,
@@ -97,6 +98,7 @@ class _TabsState extends State<Tabs> {
         showSelectedLabels: true,
         currentIndex: _selectedIndex,
         type: BottomNavigationBarType.fixed,
+        fixedColor: ThemeColors.navigationBar,
         unselectedLabelStyle:
             styleBaseRegular(color: ThemeColors.white, fontSize: 14),
         selectedLabelStyle: styleBaseBold(fontSize: 14),
@@ -210,13 +212,18 @@ class _TabsState extends State<Tabs> {
 }
 
 class Screens {
-  static List<Widget> screens(int? trendingIndex, int? childIndex) {
+  static List<Widget> screens(
+    int? trendingIndex,
+    int? childIndex,
+    int? innerChildIndex,
+  ) {
     return <Widget>[
       HomeIndex(),
       ToolsScannerIndex(),
       MarketIndex(
         screenIndex: 0,
         marketIndex: childIndex ?? 0,
+        marketInnerIndex: innerChildIndex,
       ),
       SignalsIndex(),
       ToolsIndex(),

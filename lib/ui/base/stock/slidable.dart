@@ -46,7 +46,7 @@ class _BaseSlidableStockItemState extends State<BaseSlidableStockItem>
     super.initState();
     controller = SlidableController(this);
 
-    if ((widget.index ?? 1) == 0) {
+    if ((widget.index ?? 1) == 0 && itemAutoSwipeAvailable) {
       controller?.openTo(
         BorderSide.strokeAlignInside,
         curve: Curves.linear,
@@ -58,6 +58,7 @@ class _BaseSlidableStockItemState extends State<BaseSlidableStockItem>
             curve: Curves.linear,
             duration: const Duration(milliseconds: 2000),
           );
+          itemAutoSwipeAvailable = false;
         }
       });
     }
@@ -159,7 +160,7 @@ class BaseSlidableActionItem extends StatelessWidget {
       child: GestureDetector(
         onTap: onTap,
         child: Container(
-          color: bgColor ?? ThemeColors.secondary100,
+          color: bgColor ?? ThemeColors.secondary120,
           padding: const EdgeInsets.all(5),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,

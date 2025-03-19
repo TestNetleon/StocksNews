@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/managers/blogs.dart';
-import 'package:stocks_news_new/managers/home.dart';
+import 'package:stocks_news_new/managers/home/home.dart';
 import 'package:stocks_news_new/managers/news.dart';
 import 'package:stocks_news_new/managers/search.dart';
 import 'package:stocks_news_new/managers/signals.dart';

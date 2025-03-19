@@ -36,7 +36,10 @@ class ToolsItem extends StatelessWidget {
                 borderRadius: BorderRadius.circular(8),
               ),
               padding: EdgeInsets.all(12),
-              child: CachedNetworkImage(imageUrl: card?.image ?? ''),
+              child: CachedNetworkImage(
+                imageUrl: card?.image ?? '',
+                color: ThemeColors.black,
+              ),
             ),
           ),
           Visibility(
@@ -76,7 +79,7 @@ class ToolsItem extends StatelessWidget {
               color: ThemeColors.white,
               textColor: value.isDarkMode
                   ? ThemeColors.black
-                  : ThemeColors.secondary100,
+                  : ThemeColors.secondary120,
               side: BorderSide(
                 color: value.isDarkMode
                     ? ThemeColors.black

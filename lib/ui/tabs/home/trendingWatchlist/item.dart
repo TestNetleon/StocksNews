@@ -1,5 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:stocks_news_new/ui/theme/manager.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -8,28 +10,53 @@ import '../../../../models/ticker.dart';
 class TickerBoxItem extends StatelessWidget {
   final BaseTickerRes data;
   final Function()? onTap;
+
   const TickerBoxItem({super.key, required this.data, this.onTap});
 
   @override
   Widget build(BuildContext context) {
+    bool isDark = context.watch<ThemeManager>().isDarkMode;
     return GestureDetector(
       onTap: onTap,
       child: Container(
         margin: EdgeInsets.only(bottom: 10),
+        // decoration: BoxDecoration(
+        //   // color: Colors.white,
+        //   color: Theme.of(context).scaffoldBackgroundColor,
+        //   borderRadius: BorderRadius.circular(8),
+        //   boxShadow: [
+        //     BoxShadow(
+        //       color: Color(0x1C96ABD1),
+        //       blurRadius: 10,
+        //       offset: Offset(0, 10),
+        //     ),
+        //     BoxShadow(
+        //       color: Color(0x1C96ABD1),
+        //       blurRadius: 10,
+        //       offset: Offset(10, 10),
+        //     ),
+        //   ],
+        // ),
         decoration: BoxDecoration(
-          // color: Colors.white,
-          color: Theme.of(context).scaffoldBackgroundColor,
+          color: isDark ? null : ThemeColors.white,
+          gradient: isDark
+              ? LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    ThemeColors.gradientGreen,
+                    ThemeColors.blackShade,
+                  ],
+                  stops: [0.0025, 0.5518],
+                )
+              : null,
           borderRadius: BorderRadius.circular(8),
+          border: isDark ? Border.all(color: ThemeColors.neutral5) : null,
           boxShadow: [
             BoxShadow(
-              color: Color(0x1C96ABD1),
-              blurRadius: 10,
-              offset: Offset(0, 10),
-            ),
-            BoxShadow(
-              color: Color(0x1C96ABD1),
-              blurRadius: 10,
-              offset: Offset(10, 10),
+              color: ThemeColors.boxShadow,
+              blurRadius: 60,
+              offset: Offset(0, 20),
             ),
           ],
         ),
@@ -55,7 +82,6 @@ class TickerBoxItem extends StatelessWidget {
                         Visibility(
                           child: Text(
                             data.symbol ?? '',
-                            // style: styleBaseBold(),
                             style: Theme.of(context).textTheme.displayLarge,
                           ),
                         ),
@@ -79,7 +105,6 @@ class TickerBoxItem extends StatelessWidget {
                   padding: const EdgeInsets.only(top: 12, bottom: 3),
                   child: Text(
                     data.displayPrice ?? "",
-                    // style: styleBaseBold(fontSize: 19),
                     style: Theme.of(context).textTheme.displayLarge,
                   ),
                 ),

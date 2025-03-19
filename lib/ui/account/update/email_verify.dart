@@ -150,7 +150,7 @@ class _AccountEmailVerificationIndexState
                             text: "Re-send Code",
                             style: styleBaseBold(
                               fontSize: 18,
-                              color: ThemeColors.secondary100,
+                              color: ThemeColors.secondary120,
                             ),
                           ),
                         ),
@@ -169,7 +169,7 @@ class _AccountEmailVerificationIndexState
                               text: "${startTiming}Sec",
                               style: styleBaseBold(
                                 fontSize: 18,
-                                color: ThemeColors.secondary100,
+                                color: ThemeColors.secondary120,
                               ),
                             ),
                           ],

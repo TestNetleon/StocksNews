@@ -109,6 +109,27 @@ class _BaseStockItemState extends State<BaseStockItem> {
                         color: ThemeColors.neutral40,
                       ),
                     ),
+                    const SpacerVertical(height: 2),
+                    if (widget.data.mentions != null &&
+                        widget.data.rank != null)
+                      RichText(
+                        textAlign: TextAlign.center,
+                        text: TextSpan(
+                          style: styleBaseSemiBold(fontSize: 14),
+                          children: [
+                            TextSpan(text: "Mentions: ${widget.data.mentions}"),
+                            TextSpan(text: " ("),
+                            WidgetSpan(
+                              child: Icon(
+                                Icons.arrow_drop_up_rounded,
+                                size: 18,
+                                color: ThemeColors.accent,
+                              ),
+                            ),
+                            TextSpan(text: "${widget.data.rank} )"),
+                          ],
+                        ),
+                      )
                   ],
                 ),
               ),
@@ -190,7 +211,7 @@ class _BaseStockItemState extends State<BaseStockItem> {
                     child: Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(4),
-                        border: Border.all(color: ThemeColors.neutral5),
+                        border: Border.all(color: ThemeColors.neutral40),
                       ),
                       child: Image.asset(
                         _openIndex == widget.index
@@ -210,10 +231,7 @@ class _BaseStockItemState extends State<BaseStockItem> {
               ),
             ],
           ),
-          _bottomWidget(
-            label: 'QTY',
-            slug: widget.data.quantity,
-          ),
+          _bottomWidget(label: 'QTY', slug: widget.data.quantity),
           _bottomWidget(
             label: 'Current Value(QTY X Close price)',
             slug: widget.data.investmentValue,

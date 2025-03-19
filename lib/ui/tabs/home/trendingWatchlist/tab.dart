@@ -46,7 +46,7 @@ class HomeTopTabs extends StatelessWidget {
       labelColor: Colors.black,
       unselectedLabelColor: ThemeColors.neutral20,
       indicator: UnderlineTabIndicator(
-        borderSide: BorderSide(color: ThemeColors.secondary100, width: 4),
+        borderSide: BorderSide(color: ThemeColors.secondary120, width: 4),
         insets: EdgeInsets.symmetric(horizontal: Pad.pad32),
         borderRadius: BorderRadius.circular(5),
       ),

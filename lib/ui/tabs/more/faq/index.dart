@@ -125,7 +125,7 @@ class _FaqIndexState extends State<FaqIndex> {
                         onPressed: () {},
                         text: "Contact Us",
                         color: isDark ? ThemeColors.black : ThemeColors.white,
-                        textColor: ThemeColors.secondary100,
+                        textColor: ThemeColors.secondary120,
                         textSize: 16,
                       )
                     ],

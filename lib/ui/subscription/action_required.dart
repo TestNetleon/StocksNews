@@ -219,7 +219,7 @@ class _MembershipActionRequiredState extends State<MembershipActionRequired> {
   Widget build(BuildContext context) {
     // MyHomeManager manager = context.watch<MyHomeManager>();
     UserManager userManager = context.watch<UserManager>();
-    SubscriptionManager manager = context.read<SubscriptionManager>();
+    SubscriptionManager manager = context.watch<SubscriptionManager>();
 
     ReferLogin? labels = manager.layoutData?.actionRequired;
 

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:stocks_news_new/managers/home.dart';
+import 'package:stocks_news_new/managers/home/home.dart';
 import 'package:stocks_news_new/models/my_home.dart';
 import 'package:stocks_news_new/models/ticker.dart';
 import 'package:stocks_news_new/ui/base/heading.dart';
@@ -20,21 +20,22 @@ class HomePopularStocks extends StatelessWidget {
       builder: (context, value, child) {
         HomePopularRes? popular = value.data?.popular;
         if (popular == null) return SizedBox();
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SpacerVertical(height: Pad.pad20),
-            BaseHeading(
-              margin: EdgeInsets.symmetric(horizontal: Pad.pad16),
-              title: popular.title ?? '',
-              titleStyle: styleBaseBold(),
-            ),
-            SpacerVertical(height: Pad.pad14),
-            SingleChildScrollView(
-              physics: BouncingScrollPhysics(),
-              scrollDirection: Axis.horizontal,
-              child: Padding(
-                padding: const EdgeInsets.only(left: Pad.pad16),
+        return Container(
+          margin: EdgeInsets.symmetric(horizontal: Pad.pad16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SpacerVertical(height: Pad.pad20),
+              BaseHeading(
+                title: popular.title ?? '',
+                titleStyle: styleBaseBold(),
+                viewMore: () {},
+                viewMoreText: 'View All',
+              ),
+              SpacerVertical(height: Pad.pad14),
+              SingleChildScrollView(
+                physics: BouncingScrollPhysics(),
+                scrollDirection: Axis.horizontal,
                 child: Row(
                   children: List.generate(
                     popular.data?.length ?? 0,
@@ -98,8 +99,8 @@ class HomePopularStocks extends StatelessWidget {
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         );
       },
     );

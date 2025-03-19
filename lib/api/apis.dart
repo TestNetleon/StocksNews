@@ -19,12 +19,14 @@ class Apis {
   // MARK: New UI APIs
   static const onBoarding = '/onboarding';
   static const myHome = '/home-new';
+  static const homeTrendingGainerLoser = '/home-popular-gainer-loser';
   // static const myHome = '/home';
 
   static const compareStocks = '/compare';
   static const addCompareStock = '/add-compare';
   static const deleteCompareStock = '/delete-compare';
-  static const myHomePremium = '/home-premium';
+  // static const myHomePremium = '/home-premium';
+  static const myHomePremium = '/home-premium-new';
   static const tools = '/tools';
   static const savePlaid = '/save-plaid-portfolio';
   static const getPortfolio = '/plaid-portfolio';
@@ -304,6 +306,7 @@ class Apis {
   static const gainerLoser = "/gainer_loser";
   static const breakoutStocks = "/breakout-stocks";
   static const socialTrending = "/social-trending";
+  static const socialTrendingCap = "/social-trending-cap";
   static const featuredNews = "/featured-news";
   static const getOtherData = "/stock-other-details";
   static const newsTab = "/category-list";

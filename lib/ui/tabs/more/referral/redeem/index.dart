@@ -58,7 +58,7 @@ class _RedeemPointsState extends State<RedeemPoints> {
                     padding: const EdgeInsets.all(Pad.pad16),
                     child: Container(
                       decoration: BoxDecoration(
-                        color: ThemeColors.secondary100,
+                        color: ThemeColors.secondary120,
                         borderRadius: BorderRadius.circular(Pad.pad8),
                         boxShadow: [
                           BoxShadow(

@@ -58,6 +58,7 @@ class BaseSearchData extends StatelessWidget {
                     Images.search,
                     height: 56,
                     width: 56,
+                    color: ThemeColors.black,
                   ),
                 ),
                 BaseHeading(

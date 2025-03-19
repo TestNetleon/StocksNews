@@ -86,6 +86,8 @@ class BaseTickerRes {
   final List<BaseKeyValueRes>? extra;
   final String? pdfUrl;
   final String? purchaseDate;
+  dynamic mentions;
+  dynamic rank;
 
   BaseTickerRes({
     this.notAvailable,
@@ -154,6 +156,8 @@ class BaseTickerRes {
     this.extra,
     this.pdfUrl,
     this.purchaseDate,
+    this.mentions,
+    this.rank,
   });
 
   factory BaseTickerRes.fromJson(Map<String, dynamic> json) => BaseTickerRes(
@@ -231,6 +235,8 @@ class BaseTickerRes {
                 json["extra"]!.map((x) => BaseKeyValueRes.fromJson(x))),
         pdfUrl: json['pdf_url'],
         purchaseDate: json['purchase_date'],
+        mentions: json['mentions'],
+        rank: json['rank'],
       );
 
   Map<String, dynamic> toJson() => {
@@ -301,6 +307,8 @@ class BaseTickerRes {
             : List<dynamic>.from(extra!.map((x) => x.toJson())),
         'pdf_url': pdfUrl,
         'purchase_date': purchaseDate,
+        'mentions': mentions,
+        'rank': rank,
       };
 }
 

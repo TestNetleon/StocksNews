@@ -1,6 +1,9 @@
 import 'dart:convert';
+import 'package:stocks_news_new/models/tools.dart';
+
 import 'lock.dart';
 import 'my_home.dart';
+import 'watchlist_res.dart';
 
 MyHomePremiumRes myHomePremiumResFromJson(String str) =>
     MyHomePremiumRes.fromJson(json.decode(str));
@@ -11,19 +14,37 @@ String myHomePremiumResToJson(MyHomePremiumRes data) =>
 class MyHomePremiumRes {
   // final InsiderTradeListRes? insiderTrading;
   final PoliticianTradeListRes? congressionalStocks;
+  final InsiderTradeListRes? insiderTrading;
+  final WatchRes? watchList;
+  final WatchRes? mostBought;
+  final ToolsRes? plaid;
   final HomeNewsRes? featuredNews;
   final HomeNewsRes? financialNews;
   // final HomeNewsRes? recentNews;
 
   MyHomePremiumRes({
     // this.recentNews,
+    this.plaid,
+    this.watchList,
+    this.mostBought,
     this.congressionalStocks,
+    this.insiderTrading,
     this.featuredNews,
     this.financialNews,
   });
 
   factory MyHomePremiumRes.fromJson(Map<String, dynamic> json) =>
       MyHomePremiumRes(
+        plaid: json["plaid"] == null ? null : ToolsRes.fromJson(json["plaid"]),
+        watchList: json["watchlist"] == null
+            ? null
+            : WatchRes.fromMap(json["watchlist"]),
+        mostBought: json["most_bought"] == null
+            ? null
+            : WatchRes.fromMap(json["most_bought"]),
+        insiderTrading: json["insider_trading"] == null
+            ? null
+            : InsiderTradeListRes.fromJson(json["insider_trading"]),
         // recentNews: json["recent_news"] == null
         //     ? null
         //     : HomeNewsRes.fromJson(json["recent_news"]),
@@ -42,6 +63,10 @@ class MyHomePremiumRes {
       );
 
   Map<String, dynamic> toJson() => {
+        "plaid": plaid?.toJson(),
+        "watchlist": watchList?.toMap(),
+        "most_bought": mostBought?.toMap(),
+        "insider_trading": insiderTrading?.toJson(),
         "featured_news": featuredNews?.toJson(),
         "financial_news": financialNews?.toJson(),
         // "insider_trading": insiderTrading?.toJson(),

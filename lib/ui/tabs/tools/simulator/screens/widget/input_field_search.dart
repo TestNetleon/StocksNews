@@ -75,7 +75,7 @@ class _BaseSearchFieldState extends State<BaseSearchSimulator> {
                 margin: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
                 child: CircularProgressIndicator(
                   strokeWidth: 3,
-                  color: ThemeColors.secondary100,
+                  color: ThemeColors.secondary120,
                 ),
               )
             : _controller.text.isNotEmpty

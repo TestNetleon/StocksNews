@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:stocks_news_new/api/api_response.dart';
@@ -208,13 +207,12 @@ Future<ApiResponse> apiRequest({
         // TO show in app messages only, comment this if want to hide
         // OR
         // DO NOT REMOVE THIS
+
         if ((maintenanceDialog != null || maintenanceDialogNew != null) &&
             !isShowingError &&
             showErrorOnFull) {
           isShowingError = true;
-          if (!kDebugMode) {
-            //show maintenance
-          }
+          //TODO: show maintenance
         } else if (inAppMsg != null) {
           checkForInAppMessage(inAppMsg);
         }

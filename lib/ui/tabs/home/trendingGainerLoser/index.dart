@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:stocks_news_new/models/market/market_res.dart';
 import 'package:stocks_news_new/ui/base/common_tab.dart';
+import 'package:stocks_news_new/ui/tabs/home/trendingGainerLoser/home_top_gainers.dart';
+import 'package:stocks_news_new/ui/tabs/home/trendingGainerLoser/home_top_losers.dart';
+import 'package:stocks_news_new/ui/tabs/home/trendingGainerLoser/home_trending.dart';
+import 'package:stocks_news_new/utils/constants.dart';
 
 class TrendingGainerLoser extends StatefulWidget {
   const TrendingGainerLoser({super.key});
@@ -43,16 +47,19 @@ class _TrendingGainerLoserState extends State<TrendingGainerLoser> {
       return SizedBox();
     }
 
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        BaseTabs(data: _tabs!, onTap: _onTabChanged),
-        _screenIndex == 0
-            ? SizedBox()
-            : _screenIndex == 0
-                ? SizedBox()
-                : SizedBox(),
-      ],
+    return Container(
+      margin: EdgeInsets.only(top: Pad.pad20),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          BaseTabs(data: _tabs!, onTap: _onTabChanged),
+          _screenIndex == 0
+              ? HomeTrending()
+              : _screenIndex == 1
+                  ? HomeTopGainers()
+                  : HomeTopLosers(),
+        ],
+      ),
     );
   }
 }
