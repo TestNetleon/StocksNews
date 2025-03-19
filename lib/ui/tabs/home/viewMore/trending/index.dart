@@ -3,6 +3,7 @@ import 'package:stocks_news_new/models/market/market_res.dart';
 import 'package:stocks_news_new/ui/base/app_bar.dart';
 import 'package:stocks_news_new/ui/base/common_tab.dart';
 import 'package:stocks_news_new/ui/base/scaffold.dart';
+import 'package:stocks_news_new/ui/tabs/home/viewMore/trending/trending_by_market_cap.dart';
 import 'package:stocks_news_new/ui/tabs/home/viewMore/trending/trending_now.dart';
 import 'package:stocks_news_new/ui/tabs/home/viewMore/trending/trending_recently.dart';
 
@@ -53,15 +54,14 @@ class _TrendingViewAllIndexState extends State<TrendingViewAllIndex> {
       body: _tabs == null
           ? SizedBox()
           : Column(
-              mainAxisSize: MainAxisSize.min,
               children: [
                 BaseTabs(data: _tabs!, onTap: _onTabChanged),
-                Flexible(
+                Expanded(
                   child: _screenIndex == 0
                       ? TrendingNow()
                       : _screenIndex == 1
                           ? TrendingRecently()
-                          : Center(child: const Text("In Progress")),
+                          : TrendingByMarketCap(),
                 ),
               ],
             ),

@@ -44,7 +44,6 @@ class _TrendingRecentlyState extends State<TrendingRecently> {
             (manager.dataRecently == null || manager.dataRecently?.data == null)
                 ? const SizedBox()
                 : ListView.separated(
-                    shrinkWrap: true,
                     itemBuilder: (context, index) {
                       return BaseStockAddItem(
                         data: manager.dataRecently!.data![index],

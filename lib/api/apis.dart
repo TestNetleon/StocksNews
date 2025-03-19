@@ -10,11 +10,11 @@ class Apis {
   static const baseUrlLocal = "https://notification.stocks.news/api/v1";
 
   // With Debug condition
-  // static const baseUrl = kDebugMode
-  //     ? "https://dev.stocks.news/api/v2"
-  //     : "https://app.stocks.news/api/v2";
+  static const baseUrl = kDebugMode
+      ? "https://dev.stocks.news/api/v2"
+      : "https://app.stocks.news/api/v2";
 
-  static const baseUrl = "https://app.stocks.news/api/v2";
+  // static const baseUrl = "https://app.stocks.news/api/v2";
 
   // MARK: New UI APIs
   static const onBoarding = '/onboarding';
@@ -300,6 +300,7 @@ class Apis {
   static const gainerLoser = "/gainer_loser";
   static const breakoutStocks = "/breakout-stocks";
   static const socialTrending = "/social-trending";
+  static const socialTrendingCap = "/social-trending-cap";
   static const featuredNews = "/featured-news";
   static const getOtherData = "/stock-other-details";
   static const newsTab = "/category-list";

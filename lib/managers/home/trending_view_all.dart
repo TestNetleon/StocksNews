@@ -5,6 +5,7 @@ import 'package:stocks_news_new/api/api_requester.dart';
 import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/api/apis.dart';
 import 'package:stocks_news_new/models/market/most_bullish.dart';
+import 'package:stocks_news_new/models/trending_by_cap_res.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 
@@ -85,7 +86,8 @@ class TrendingViewAllManager extends ChangeNotifier {
   }
 
   int _pageRecently = 1;
-  bool get canLoadMoreRecently => (_dataNow?.totalPages ?? 0) >= _pageRecently;
+  bool get canLoadMoreRecently =>
+      (_dataRecently?.totalPages ?? 0) >= _pageRecently;
 
   Future getTrendingRecently({loadMore = false}) async {
     try {
@@ -132,8 +134,8 @@ class TrendingViewAllManager extends ChangeNotifier {
       _statusByMarketCap == Status.loading ||
       _statusByMarketCap == Status.ideal;
 
-  MarketDataRes? _dataByMarketCap;
-  MarketDataRes? get dataByMarketCap => _dataByMarketCap;
+  TrendingByCapRes? _dataByMarketCap;
+  TrendingByCapRes? get dataByMarketCap => _dataByMarketCap;
 
   setStatusByMarketCap(status) {
     _statusByMarketCap = status;
@@ -143,13 +145,13 @@ class TrendingViewAllManager extends ChangeNotifier {
   Future getTrendingByMarketCap() async {
     try {
       setStatusByMarketCap(Status.loading);
-      Map request = {"type": "losers"};
+      Map request = {};
       ApiResponse response = await apiRequest(
-        url: Apis.homeTrendingGainerLoser,
+        url: Apis.socialTrendingCap,
         request: request,
       );
       if (response.status) {
-        _dataByMarketCap = marketDataResFromJson(jsonEncode(response.data));
+        _dataByMarketCap = trendingByCapResFromJson(jsonEncode(response.data));
         _errorByMarketCap = null;
       } else {
         _dataByMarketCap = null;
@@ -193,16 +195,25 @@ class TrendingViewAllManager extends ChangeNotifier {
       }
     }
     if (_dataByMarketCap?.data != null) {
-      final index = _dataByMarketCap?.data
-          ?.indexWhere((element) => element.symbol == symbol);
-      if (index != null && index != -1) {
-        if (alertAdded != null) {
-          _dataByMarketCap?.data![index].isAlertAdded = alertAdded;
+      for (var i = 0; i < (_dataByMarketCap?.data.length ?? 0); i++) {
+        //
+        for (var j = 0;
+            j < (_dataByMarketCap?.data[i].data?.length ?? 0);
+            j++) {
+          //
+          final index = _dataByMarketCap?.data[i].data
+              ?.indexWhere((element) => element.symbol == symbol);
+          if (index != null && index != -1) {
+            if (alertAdded != null) {
+              _dataByMarketCap?.data[i].data?[index].isAlertAdded = alertAdded;
+            }
+            if (watchListAdded != null) {
+              _dataByMarketCap?.data[i].data?[index].isWatchlistAdded =
+                  watchListAdded;
+            }
+            notifyListeners();
+          }
         }
-        if (watchListAdded != null) {
-          _dataByMarketCap?.data![index].isWatchlistAdded = watchListAdded;
-        }
-        notifyListeners();
       }
     }
   }
