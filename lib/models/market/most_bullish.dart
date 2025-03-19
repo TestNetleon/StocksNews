@@ -12,11 +12,15 @@ class MarketDataRes {
   final List<BaseTickerRes>? data;
   final int? totalPages;
   final BaseLockInfoRes? lockInfo;
+  final String? title;
+  final String? subtitle;
 
   MarketDataRes({
     required this.data,
     this.totalPages,
     this.lockInfo,
+    this.title,
+    this.subtitle,
   });
 
   factory MarketDataRes.fromJson(Map<String, dynamic> json) => MarketDataRes(
@@ -29,6 +33,8 @@ class MarketDataRes {
         lockInfo: json["lock_info"] == null
             ? null
             : BaseLockInfoRes.fromJson(json["lock_info"]),
+        title: json["title"],
+        subtitle: json["subtitle"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -37,5 +43,7 @@ class MarketDataRes {
             : List<dynamic>.from(data!.map((x) => x.toJson())),
         "total_pages": totalPages,
         "lock_info": lockInfo?.toJson(),
+        "title": title,
+        "subtitle": subtitle,
       };
 }

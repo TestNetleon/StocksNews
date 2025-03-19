@@ -7,6 +7,7 @@ import 'package:stocks_news_new/managers/feedback.dart';
 import 'package:stocks_news_new/managers/global.dart';
 import 'package:stocks_news_new/managers/helpdesk.dart';
 import 'package:stocks_news_new/managers/home.dart';
+import 'package:stocks_news_new/managers/home/home_tabs.dart';
 import 'package:stocks_news_new/managers/legal.dart';
 import 'package:stocks_news_new/managers/market/industries/industries.dart';
 import 'package:stocks_news_new/managers/market/sectors/sectors.dart';
@@ -466,6 +467,7 @@ class Routes {
       //MARK: New UI providers
       ChangeNotifierProvider(create: (_) => OnboardingManager()),
       ChangeNotifierProvider(create: (_) => MyHomeManager()),
+      ChangeNotifierProvider(create: (_) => HomeTabsManager()),
       ChangeNotifierProvider(create: (_) => NotificationSettingsManager()),
       ChangeNotifierProvider(create: (_) => UserManager()),
       ChangeNotifierProvider(create: (_) => ToolsManager()),

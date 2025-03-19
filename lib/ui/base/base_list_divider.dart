@@ -15,7 +15,7 @@ class BaseListDivider extends StatelessWidget {
         return Divider(
           color: color ?? ThemeColors.neutral5,
           height: height,
-          thickness: value.isDarkMode ? 0 : 1,
+          thickness: value.isDarkMode ? 1 : 1,
         );
       },
     );
