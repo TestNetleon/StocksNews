@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:stocks_news_new/models/my_home_premium.dart';
 import 'package:stocks_news_new/ui/tabs/home/politiciansTrades/item.dart';
+import 'package:stocks_news_new/utils/constants.dart';
 import '../../../base/heading.dart';
 import '../extra/lock.dart';
 
@@ -13,7 +14,10 @@ class HomePoliticianTradesIndex extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        BaseHeading(title: politicianData?.title),
+        BaseHeading(
+          title: politicianData?.title,
+          margin: EdgeInsets.only(top: Pad.pad20, bottom: Pad.pad10),
+        ),
         HomeLock(
           setNum: 2,
           lockInfo: politicianData?.lockInfo,

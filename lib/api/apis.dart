@@ -24,7 +24,9 @@ class Apis {
   static const compareStocks = '/compare';
   static const addCompareStock = '/add-compare';
   static const deleteCompareStock = '/delete-compare';
-  static const myHomePremium = '/home-premium';
+  // static const myHomePremium = '/home-premium';
+  static const myHomePremium = '/home-premium-new';
+
   static const tools = '/tools';
   static const savePlaid = '/save-plaid-portfolio';
   static const getPortfolio = '/plaid-portfolio';

@@ -1,17 +1,21 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
+import 'package:stocks_news_new/ui/theme/manager.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
+import 'package:stocks_news_new/widgets/cache_network_image.dart';
 import '../../../../models/ticker.dart';
 
-class TickerBoxItem extends StatelessWidget {
+class TickerBoxWatchListItem extends StatelessWidget {
   final BaseTickerRes data;
   final Function()? onTap;
-  const TickerBoxItem({super.key, required this.data, this.onTap});
+  const TickerBoxWatchListItem({super.key, required this.data, this.onTap});
 
   @override
   Widget build(BuildContext context) {
+    bool isDark = context.watch<ThemeManager>().isDarkMode;
     return GestureDetector(
       onTap: onTap,
       child: Container(
@@ -20,6 +24,16 @@ class TickerBoxItem extends StatelessWidget {
           // color: Colors.white,
           color: Theme.of(context).scaffoldBackgroundColor,
           borderRadius: BorderRadius.circular(8),
+          gradient: isDark
+              ? LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    Color(0xFF1D1C1C),
+                    Color(0xFF5C5C5C),
+                  ],
+                )
+              : null,
           boxShadow: [
             BoxShadow(
               color: Color(0x1C96ABD1),
@@ -40,12 +54,21 @@ class TickerBoxItem extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  Container(
-                    margin: EdgeInsets.only(right: Pad.pad16),
-                    child: CachedNetworkImage(
-                      imageUrl: data.image ?? '',
-                      height: 30,
-                      width: 44,
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(Pad.pad5),
+                    child: Container(
+                      margin: EdgeInsets.only(right: Pad.pad16),
+                      padding: EdgeInsets.all(3.sp),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(Pad.pad5),
+                        color:
+                            isDark ? Colors.transparent : ThemeColors.neutral5,
+                      ),
+                      child: CachedNetworkImagesWidget(
+                        data.image,
+                        height: 41,
+                        width: 41,
+                      ),
                     ),
                   ),
                   Flexible(

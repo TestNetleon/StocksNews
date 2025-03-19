@@ -25,77 +25,71 @@ class HomePopularStocks extends StatelessWidget {
           children: [
             SpacerVertical(height: Pad.pad20),
             BaseHeading(
-              margin: EdgeInsets.symmetric(horizontal: Pad.pad16),
               title: popular.title ?? '',
-              titleStyle: styleBaseBold(),
+              titleStyle: styleBaseBold(fontSize: 20),
             ),
             SpacerVertical(height: Pad.pad14),
             SingleChildScrollView(
               physics: BouncingScrollPhysics(),
               scrollDirection: Axis.horizontal,
-              child: Padding(
-                padding: const EdgeInsets.only(left: Pad.pad16),
-                child: Row(
-                  children: List.generate(
-                    popular.data?.length ?? 0,
-                    (index) {
-                      BaseTickerRes? ticker = popular.data?[index];
-                      return Stack(
-                        children: [
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.pushNamed(context, SDIndex.path,
-                                  arguments: {
-                                    'symbol': ticker?.symbol,
-                                  });
-                            },
+              child: Row(
+                children: List.generate(
+                  popular.data?.length ?? 0,
+                  (index) {
+                    BaseTickerRes? ticker = popular.data?[index];
+                    return Stack(
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.pushNamed(context, SDIndex.path,
+                                arguments: {
+                                  'symbol': ticker?.symbol,
+                                });
+                          },
+                          child: Container(
+                            height: 65,
+                            width: 65,
+                            decoration: BoxDecoration(
+                              border: Border.all(color: ThemeColors.neutral20),
+                              color: Colors.transparent,
+                              shape: BoxShape.circle,
+                            ),
+                            margin: EdgeInsets.only(right: 20),
                             child: Container(
-                              height: 65,
-                              width: 65,
-                              decoration: BoxDecoration(
-                                border:
-                                    Border.all(color: ThemeColors.neutral20),
-                                color: Colors.transparent,
-                                shape: BoxShape.circle,
-                              ),
-                              margin: EdgeInsets.only(right: 20),
+                              padding: const EdgeInsets.all(5),
                               child: Container(
-                                padding: const EdgeInsets.all(5),
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: ThemeColors.neutral5,
-                                  ),
-                                  padding: const EdgeInsets.all(10),
-                                  child:
-                                      CachedNetworkImagesWidget(ticker?.image),
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: ThemeColors.neutral5,
                                 ),
+                                padding: const EdgeInsets.all(10),
+                                child: CachedNetworkImagesWidget(ticker?.image),
                               ),
                             ),
                           ),
-                          Positioned(
-                            top: 0,
-                            right: 15,
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: (ticker?.changesPercentage ?? 0) >= 0
-                                    ? ThemeColors.accent
-                                    : ThemeColors.sos,
-                                shape: BoxShape.circle,
-                              ),
-                              child: Icon(
-                                (ticker?.changesPercentage ?? 0) >= 0
-                                    ? Icons.arrow_drop_up
-                                    : Icons.arrow_drop_down,
-                                color: Colors.white,
-                                size: 18,
-                              ),
+                        ),
+                        Positioned(
+                          top: 0,
+                          right: 15,
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: (ticker?.changesPercentage ?? 0) >= 0
+                                  ? ThemeColors.accent
+                                  : ThemeColors.sos,
+                              shape: BoxShape.circle,
+                            ),
+                            child: Icon(
+                              (ticker?.changesPercentage ?? 0) >= 0
+                                  ? Icons.arrow_drop_up
+                                  : Icons.arrow_drop_down,
+                              color: Colors.white,
+                              size: 18,
                             ),
                           ),
-                        ],
-                      );
-                    },
-                  ),
+                        ),
+                      ],
+                    );
+                  },
                 ),
               ),
             ),
