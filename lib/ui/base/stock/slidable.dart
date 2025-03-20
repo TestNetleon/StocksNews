@@ -122,6 +122,7 @@ class _BaseSlidableStockItemState extends State<BaseSlidableStockItem>
               image: Images.delete,
               onTap: widget.delete,
               bgColor: ThemeColors.error120,
+              textColor: Colors.white,
             ),
           ],
         ],
