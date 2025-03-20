@@ -62,7 +62,7 @@ class StockDeleteItem extends StatelessWidget {
           BaseButton(
             onPressed: onTapRemove,
             text: deleteDataRes?.btnConfirmText ?? "",
-            textColor: ThemeColors.white,
+            textColor: Colors.white,
             color: ThemeColors.error120,
             textSize: 16,
           ),

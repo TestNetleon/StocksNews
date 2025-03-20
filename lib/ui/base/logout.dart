@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
+import 'package:stocks_news_new/ui/theme/manager.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:provider/provider.dart';
@@ -11,7 +12,7 @@ import '../../utils/colors.dart';
 void baseLogout() {
   showDialog(
     context: navigatorKey.currentContext!,
-    barrierColor: Colors.transparent,
+    barrierColor: ThemeColors.white.withValues(alpha: .8),
     builder: (context) {
       return BaseLogoutPopUp();
     },
@@ -25,8 +26,10 @@ class BaseLogoutPopUp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isDark = context.watch<ThemeManager>().isDarkMode;
     return Dialog(
-      backgroundColor: ThemeColors.transparent,
+      // backgroundColor: ThemeColors.transparent,
+      backgroundColor: ThemeColors.white,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.sp)),
       child: Stack(
         alignment: Alignment.bottomCenter,
@@ -37,6 +40,8 @@ class BaseLogoutPopUp extends StatelessWidget {
               decoration: BoxDecoration(
                 color: ThemeColors.white,
                 borderRadius: BorderRadius.circular(10.sp),
+                border:
+                    isDark ? Border.all(color: ThemeColors.neutral20) : null,
               ),
               child: Padding(
                 padding: EdgeInsets.fromLTRB(10.sp, 0, 10.sp, 0),

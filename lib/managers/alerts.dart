@@ -1,4 +1,3 @@
-
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -14,16 +13,15 @@ import 'package:stocks_news_new/ui/tabs/tabs.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 
-class AlertsM extends ChangeNotifier{
+class AlertsM extends ChangeNotifier {
   AlertRes? _data;
-  AlertRes? get alertData=> _data;
+  AlertRes? get alertData => _data;
   String? _error;
   Status _status = Status.ideal;
   int _page = 1;
 
   bool get canLoadMore => _page < (_data?.totalPages ?? 1);
   String? get error => _error ?? Const.errSomethingWrong;
-
 
   Extra? _extra;
   Extra? get extra => _extra;
@@ -50,10 +48,7 @@ class AlertsM extends ChangeNotifier{
     }
     try {
       UserManager provider = navigatorKey.currentContext!.read<UserManager>();
-      Map request = {
-        "token": provider.user?.token ?? "",
-        "page": "$_page"
-      };
+      Map request = {"token": provider.user?.token ?? "", "page": "$_page"};
       ApiResponse response = await apiRequest(
         url: Apis.alerts,
         request: request,
@@ -65,9 +60,9 @@ class AlertsM extends ChangeNotifier{
         _error = null;
         if (_page == 1) {
           _data = alertResFromJson(jsonEncode(response.data));
-        }
-        else {
-          _data?.alerts?.addAll(alertResFromJson(jsonEncode(response.data)).alerts ?? []);
+        } else {
+          _data?.alerts?.addAll(
+              alertResFromJson(jsonEncode(response.data)).alerts ?? []);
         }
       } else {
         if (_page == 1) {
@@ -91,10 +86,7 @@ class AlertsM extends ChangeNotifier{
     setStatus(Status.loading);
     try {
       UserManager provider = navigatorKey.currentContext!.read<UserManager>();
-      Map request = {
-        "token":  provider.user?.token ?? "",
-        "symbol": symbol
-      };
+      Map request = {"token": provider.user?.token ?? "", "symbol": symbol};
 
       ApiResponse response = await apiRequest(
         url: Apis.deleteAlert,
@@ -106,7 +98,6 @@ class AlertsM extends ChangeNotifier{
       if (response.status) {
         getAlerts(showProgress: false);
         Navigator.pop(navigatorKey.currentContext!);
-
       } else {
         _error = response.message;
       }
@@ -125,12 +116,10 @@ class AlertsM extends ChangeNotifier{
     }
   }
 
-  void redirectToMarket(){
-    Navigator.popUntil(
-        navigatorKey.currentContext!, (route) => route.isFirst);
-    Navigator.pushNamed(navigatorKey.currentContext!, Tabs.path,
-        arguments: {
-          'index': 1,
-        });
+  void redirectToMarket() {
+    Navigator.popUntil(navigatorKey.currentContext!, (route) => route.isFirst);
+    Navigator.pushNamed(navigatorKey.currentContext!, Tabs.path, arguments: {
+      'index': 2,
+    });
   }
 }

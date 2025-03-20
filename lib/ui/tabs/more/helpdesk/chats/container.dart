@@ -132,7 +132,7 @@ class _AllChatNewListingState extends State<AllChatNewListing> {
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(30),
                               // color: ThemeColors.splashBG,
-                              color: ThemeColors.splashBG,
+                              color: ThemeColors.selectedBG,
                             ),
                             padding: const EdgeInsets.symmetric(
                               vertical: 10,
@@ -141,7 +141,7 @@ class _AllChatNewListingState extends State<AllChatNewListing> {
                             child: Text(
                               manager.chatData?.chatRes?.subject ?? "",
                               style: styleBaseBold(
-                                color: ThemeColors.white,
+                                color: Colors.white,
                                 fontSize: 18,
                               ),
                             ),

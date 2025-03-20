@@ -175,9 +175,9 @@ flutter:
           weight: 600
           style: italic
         - asset: assets/fonts/roboto/Roboto-Bold.ttf
-          weight: 800
+          weight: 700
         - asset: assets/fonts/roboto/Roboto-BoldItalic.ttf
-          weight: 800
+          weight: 700
           style: italic
 
     - family: Georgia

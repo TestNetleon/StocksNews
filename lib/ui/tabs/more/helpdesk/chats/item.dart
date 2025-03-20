@@ -30,7 +30,7 @@ class HelpDeskAllChatsItemNew extends StatelessWidget {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
             color: logs.replyFrom == 1
-                ? ThemeColors.neutral5
+                ? ThemeColors.neutral80
                 : ThemeColors.secondary10,
             // logs.replyFrom == 1
             //     ? ThemeColors.neutral5

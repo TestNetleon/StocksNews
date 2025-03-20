@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:stocks_news_new/models/referral/referral_points_res.dart';
 import 'package:stocks_news_new/ui/base/border_container.dart';
+import 'package:stocks_news_new/ui/theme/manager.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -13,6 +15,8 @@ class ReferPointTransactionItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isDark = context.read<ThemeManager>().isDarkMode;
+
     return Container(
       decoration: BoxDecoration(
         color: ThemeColors.white,
@@ -21,14 +25,16 @@ class ReferPointTransactionItem extends StatelessWidget {
           color: Color(0xFFEFEFEF).withValues(alpha: .5),
         ),
         borderRadius: BorderRadius.circular(Dimen.radius),
-        boxShadow: [
-          BoxShadow(
-            color: ThemeColors.lightGrey.withValues(alpha: 1),
-            offset: Offset(10, 10),
-            blurRadius: 50.0,
-            spreadRadius: 2.0,
-          ),
-        ],
+        boxShadow: isDark
+            ? null
+            : [
+                BoxShadow(
+                  color: ThemeColors.lightGrey.withValues(alpha: 1),
+                  offset: Offset(10, 10),
+                  blurRadius: 50.0,
+                  spreadRadius: 2.0,
+                ),
+              ],
       ),
       padding: EdgeInsets.all(Dimen.padding),
       child: Column(
@@ -39,14 +45,18 @@ class ReferPointTransactionItem extends StatelessWidget {
               SizedBox(
                 width: 32,
                 height: 32,
-                child: BaseBorderContainer(
-                  padding: EdgeInsets.zero,
-                  innerPadding: EdgeInsets.all(0),
-                  child: Image.asset(
-                    Images.bottomSignals,
-                    color: ThemeColors.neutral20,
-                  ),
-                ),
+                child: Consumer<ThemeManager>(builder: (context, value, child) {
+                  bool isDark = value.isDarkMode;
+                  return BaseBorderContainer(
+                    padding: EdgeInsets.zero,
+                    innerPadding: EdgeInsets.all(0),
+                    borderColor: isDark ? ThemeColors.black : null,
+                    child: Image.asset(
+                      Images.bottomSignals,
+                      color: ThemeColors.neutral20,
+                    ),
+                  );
+                }),
               ),
               SpacerHorizontal(width: 8),
               Expanded(

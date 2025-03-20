@@ -64,7 +64,7 @@ class ReferralHeader extends StatelessWidget {
                     "Your Referral Code",
                     style: styleBaseRegular(
                       fontSize: 14,
-                      color: ThemeColors.gray2,
+                      color: isDark ? ThemeColors.black : ThemeColors.gray2,
                     ),
                   ),
                   SpacerVertical(height: 8),
@@ -86,7 +86,7 @@ class ReferralHeader extends StatelessWidget {
                   ),
                   SpacerVertical(height: 8),
                   Text(
-                    "$shareUrl",
+                    shareUrl ?? "",
                     style: styleBaseRegular(
                       fontSize: 14,
                       color: isDark ? ThemeColors.black : ThemeColors.white,

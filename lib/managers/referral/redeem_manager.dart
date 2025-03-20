@@ -54,36 +54,36 @@ class RedeemManager extends ChangeNotifier {
 
   Future requestClaimReward({type = ""}) async {
     try {
-      // setStatus(Status.loading);
+      setStatus(Status.loading);
 
-      // ApiResponse response = await apiRequest(
-      //   url: Apis.pointClaim,
-      //   request: {"type": type},
-      // );
-
-      // if (response.status) {
-      showDialog(
-        barrierDismissible: false,
-        barrierColor: ThemeColors.background.withValues(alpha: 0.6),
-        useSafeArea: true,
-        context: navigatorKey.currentContext!,
-        builder: (context) {
-          return CoinAnimationWidget(
-            data: CongoClaimRes(
-              points: 0,
-              subtitle: "response.message",
-            ),
-          );
-        },
+      ApiResponse response = await apiRequest(
+        url: Apis.pointClaim,
+        request: {"type": type},
       );
-      getData();
-      // } else {
-      //   TopSnackbar.show(
-      //     message: response.message ?? '',
-      //     type: response.status ? ToasterEnum.success : ToasterEnum.error,
-      //   );
-      // }
-      // setStatus(Status.loaded);
+
+      if (response.status) {
+        showDialog(
+          barrierDismissible: false,
+          barrierColor: ThemeColors.background.withValues(alpha: 0.6),
+          useSafeArea: true,
+          context: navigatorKey.currentContext!,
+          builder: (context) {
+            return CoinAnimationWidget(
+              data: CongoClaimRes(
+                points: 0,
+                subtitle: "response.message",
+              ),
+            );
+          },
+        );
+        getData();
+      } else {
+        TopSnackbar.show(
+          message: response.message ?? '',
+          type: response.status ? ToasterEnum.success : ToasterEnum.error,
+        );
+      }
+      setStatus(Status.loaded);
     } catch (e) {
       Utils().showLog("Error => $e");
       TopSnackbar.show(

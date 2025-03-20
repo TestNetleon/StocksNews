@@ -704,6 +704,7 @@ class UserManager extends ChangeNotifier {
     // }
 
     _user = null;
+    shareUrl = null;
     notifyListeners();
     MyHomeManager homeManager =
         navigatorKey.currentContext!.read<MyHomeManager>();

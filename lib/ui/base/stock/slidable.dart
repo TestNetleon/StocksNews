@@ -127,6 +127,7 @@ class _BaseSlidableStockItemState extends State<BaseSlidableStockItem>
                     image: Images.delete,
                     onTap: widget.delete,
                     bgColor: ThemeColors.error120,
+                    textColor: Colors.white,
                   ),
                 ],
               ],
@@ -145,6 +146,7 @@ class BaseSlidableActionItem extends StatelessWidget {
   final String image;
   final VoidCallback? onTap;
   final Color? bgColor;
+  final Color? textColor;
 
   const BaseSlidableActionItem({
     super.key,
@@ -152,6 +154,7 @@ class BaseSlidableActionItem extends StatelessWidget {
     required this.image,
     required this.onTap,
     this.bgColor,
+    this.textColor,
   });
 
   @override
@@ -170,13 +173,14 @@ class BaseSlidableActionItem extends StatelessWidget {
                 image,
                 width: 24,
                 height: 24,
-                color: ThemeColors.white,
+                color: textColor ?? ThemeColors.white,
               ),
               const SpacerVertical(height: 8),
               Text(
                 label,
                 textAlign: TextAlign.center,
-                style: styleBaseBold(fontSize: 14, color: ThemeColors.white),
+                style: styleBaseBold(
+                    fontSize: 14, color: textColor ?? ThemeColors.white),
               ),
             ],
           ),

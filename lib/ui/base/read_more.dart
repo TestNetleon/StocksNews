@@ -37,7 +37,8 @@ class BaseReadMore extends StatelessWidget {
           moreStyle: styleBaseRegular(color: ThemeColors.primary120),
           style: styleBaseRegular(
             height: 1.4,
-            color: value.isDarkMode ? ThemeColors.white : ThemeColors.black,
+            color: //value.isDarkMode ? ThemeColors.white :
+                ThemeColors.black,
           ),
         );
       },

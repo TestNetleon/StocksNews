@@ -42,8 +42,12 @@ class AIPerformanceToday extends StatelessWidget {
           child: Stack(
             children: [
               Container(
-                margin:
-                    EdgeInsets.only(left: 30, right: 30, top: 28, bottom: 10),
+                margin: EdgeInsets.only(
+                  left: 30,
+                  right: 30,
+                  top: 28,
+                  bottom: 10,
+                ),
                 child: LinearProgressIndicator(
                   borderRadius: BorderRadius.circular(30),
                   minHeight: 8,
@@ -59,8 +63,7 @@ class AIPerformanceToday extends StatelessWidget {
                 left: (pricePosition * (msWidthPadding - 60) / 100) + 10,
                 child: AIPointerContainer(
                   isDownwards: true,
-                  style: styleBaseBold(
-                      color: ThemeColors.background, fontSize: 12),
+                  style: styleBaseBold(color: ThemeColors.black, fontSize: 12),
                   title: price,
                 ),
               ),

@@ -78,6 +78,7 @@ class _DeletePersonalDetailState extends State<DeletePersonalDetail> {
                           imageUrl: delete?.icon ?? '',
                           height: 33,
                           width: 33,
+                          color: ThemeColors.neutral60,
                         ),
                       ),
                     ),

@@ -6,6 +6,7 @@ import 'package:stocks_news_new/models/referral/redeem_list_res.dart';
 import 'package:stocks_news_new/ui/base/border_container.dart';
 import 'package:stocks_news_new/ui/base/button_small.dart';
 import 'package:stocks_news_new/ui/tabs/more/referral/redeem/redeem_points_progress.dart';
+import 'package:stocks_news_new/ui/theme/manager.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -23,6 +24,7 @@ class RedeemPointsItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isDark = context.watch<ThemeManager>().isDarkMode;
     return Container(
       decoration: BoxDecoration(
         color: ThemeColors.white,
@@ -31,14 +33,16 @@ class RedeemPointsItem extends StatelessWidget {
           color: Color(0xFFEFEFEF).withValues(alpha: .5),
         ),
         borderRadius: BorderRadius.circular(Dimen.radius),
-        boxShadow: [
-          BoxShadow(
-            color: ThemeColors.lightGrey.withValues(alpha: 1),
-            offset: Offset(10, 10),
-            blurRadius: 50.0,
-            spreadRadius: 2.0,
-          ),
-        ],
+        boxShadow: isDark
+            ? null
+            : [
+                BoxShadow(
+                  color: ThemeColors.lightGrey.withValues(alpha: 1),
+                  offset: Offset(10, 10),
+                  blurRadius: 50.0,
+                  spreadRadius: 2.0,
+                ),
+              ],
       ),
       padding: EdgeInsets.all(Dimen.padding),
       child: Column(
@@ -52,6 +56,7 @@ class RedeemPointsItem extends StatelessWidget {
                 child: BaseBorderContainer(
                   padding: EdgeInsets.zero,
                   innerPadding: EdgeInsets.all(0),
+                  borderColor: isDark ? Colors.white : null,
                   child: Image.asset(
                     Images.bottomSignals,
                     color: ThemeColors.neutral20,
@@ -90,19 +95,16 @@ class RedeemPointsItem extends StatelessWidget {
               ),
               SpacerHorizontal(width: 8),
               BaseButtonSmall(
-                // onPressed: () {
-                //   _claimPoints(context);
-                // },
                 onPressed: data.status == true
                     ? () {
                         _claimPoints(context);
                       }
                     : null,
                 text: "Claim",
-                disabledBackgroundColor: ThemeColors.disabledBtn.withValues(
-                  alpha: .29,
-                ),
-                disableTextColor: ThemeColors.white,
+                disabledBackgroundColor: isDark
+                    ? ThemeColors.disabledBtn
+                    : ThemeColors.disabledBtn.withValues(alpha: .29),
+                disableTextColor: Colors.white,
               ),
             ],
           ),
@@ -111,7 +113,7 @@ class RedeemPointsItem extends StatelessWidget {
             data.text ?? "",
             textStyle: styleBaseRegular(
               fontSize: 12,
-              color: ThemeColors.neutral40,
+              color: isDark ? Colors.white : ThemeColors.neutral40,
               height: 1.4,
             ),
           ),

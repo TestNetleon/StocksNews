@@ -44,6 +44,7 @@ class _ReferralIndexState extends State<ReferralIndex> {
             },
             isScrollable: false,
             showDivider: true,
+            unselectedBold: true,
           ),
           SpacerVertical(height: Pad.pad10),
           Expanded(

@@ -62,7 +62,7 @@ class _LegalInfoIndexState extends State<LegalInfoIndex> {
             isScrollable: false,
             data: _tabs,
             onTap: _onChange,
-            selectedIndex: widget.slug=='terms-of-service'?1:0,
+            selectedIndex: widget.slug == 'terms-of-service' ? 1 : 0,
           ),
           Expanded(
             child: BaseLoaderContainer(

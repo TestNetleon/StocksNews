@@ -1,9 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:stocks_news_new/models/feedback_send_res.dart';
 import 'package:stocks_news_new/ui/base/button.dart';
 import 'package:stocks_news_new/ui/base/button_outline.dart';
 import 'package:stocks_news_new/ui/base/heading.dart';
+import 'package:stocks_news_new/ui/theme/manager.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -18,6 +20,7 @@ class FeedbackShowSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isDark = context.watch<ThemeManager>().isDarkMode;
     return Padding(
       padding:
           const EdgeInsets.symmetric(horizontal: Pad.pad8, vertical: Pad.pad16),
@@ -28,14 +31,14 @@ class FeedbackShowSheet extends StatelessWidget {
             child: Container(
               padding: EdgeInsets.all(Pad.pad32),
               decoration: BoxDecoration(
-                color: ThemeColors.success10,
-                borderRadius: BorderRadius.circular(Pad.pad16),
+                color: isDark ? ThemeColors.accent : ThemeColors.success10,
+                borderRadius: BorderRadius.circular(Pad.pad24),
               ),
               child: CachedNetworkImage(
                 imageUrl: feedbackSendRes?.image ?? '',
                 height: 33,
                 width: 33,
-                color: ThemeColors.success120,
+                color: isDark ? ThemeColors.black : ThemeColors.success120,
               ),
             ),
           ),

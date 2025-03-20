@@ -125,7 +125,7 @@ class WatchListManagers extends ChangeNotifier {
   void redirectToMarket() {
     Navigator.popUntil(navigatorKey.currentContext!, (route) => route.isFirst);
     Navigator.pushNamed(navigatorKey.currentContext!, Tabs.path, arguments: {
-      'index': 1,
+      'index': 2,
     });
   }
 }
