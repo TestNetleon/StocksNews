@@ -57,6 +57,7 @@ import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 import 'package:stocks_news_new/ui/subscription/action_required.dart';
 import 'package:stocks_news_new/ui/tabs/home/scanner/manager/gainers.dart';
+import 'package:stocks_news_new/ui/tabs/home/viewMore/PopularMostBought/index.dart';
 import 'package:stocks_news_new/ui/tabs/home/viewMore/trending/index.dart';
 import 'package:stocks_news_new/ui/tabs/market/industries/industries_view.dart';
 import 'package:stocks_news_new/ui/tabs/market/sectors/sector_view.dart';
@@ -426,6 +427,16 @@ class Routes {
             String symbol = arguments?['symbol'];
 
             return AIindex(symbol: symbol);
+          },
+        );
+
+      case HomeViewMoreTickersIndex.path:
+        return MaterialPageRoute(
+          builder: (context) {
+            final arguments = settings.arguments as Map<String, dynamic>?;
+            String apiUrl = arguments?['apiUrl'];
+
+            return HomeViewMoreTickersIndex(apiUrl: apiUrl);
           },
         );
 

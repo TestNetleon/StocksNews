@@ -348,7 +348,7 @@ class Images {
   // static const String otpSuccessGIT = "assets/images/otp_success.gif";
   static const String updateGIF = "assets/images/update.gif";
   // static const String serverErrorGIF = "assets/images/server_error.json";
-  // static const String connectionGIF = "assets/images/connection.gif";
+  static const String connectionGIF = "assets/images/connection.gif";
   // static const String noDataGIF = "assets/images/nodata_GIF.gif";
   // static const String syncGIF = "assets/images/syncGIF.gif";
   // static const String portfolioGIF = "assets/images/portfolio.gif";

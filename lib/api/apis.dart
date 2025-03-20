@@ -19,6 +19,8 @@ class Apis {
   static const myHome = '/home-new';
   static const homeTrendingGainerLoser = '/home-popular-gainer-loser';
   // static const myHome = '/home';
+  static const myHomePopular = '/todays-popular';
+  static const myHomeMostBought = '/most-purchased-stocks';
 
   static const compareStocks = '/compare';
   static const addCompareStock = '/add-compare';

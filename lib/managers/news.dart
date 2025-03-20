@@ -306,6 +306,7 @@ class NewsManager extends ChangeNotifier {
       );
       if (response.status) {
         _newsDetail?.feedback?.existMessage = response.message;
+        notifyListeners();
       }
       TopSnackbar.show(
         message: response.message ?? '',

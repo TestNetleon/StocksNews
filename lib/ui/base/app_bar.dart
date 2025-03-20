@@ -299,7 +299,7 @@ class CenterTitle extends StatelessWidget {
     return Align(
       alignment: Alignment.center,
       child: Text(
-        title,
+        title.length > 25 ? '${title.substring(0, 25)}...' : title,
         style: styleBaseBold(fontSize: 18),
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
