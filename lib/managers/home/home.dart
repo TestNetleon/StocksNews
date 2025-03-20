@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/api/api_requester.dart';
 import 'package:stocks_news_new/api/api_response.dart';
@@ -8,6 +10,7 @@ import 'package:stocks_news_new/api/apis.dart';
 import 'package:stocks_news_new/database/preference.dart';
 import 'package:stocks_news_new/managers/home/home_tabs.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
+import 'package:stocks_news_new/service/braze/service.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import '../../models/lock.dart';
 import '../../models/my_home.dart';
@@ -82,17 +85,25 @@ class MyHomeManager extends ChangeNotifier {
     return info;
   }
 
-  Future getHomeData() async {
+  Future getHomeData({bool fromAdvertiserID = false}) async {
     setPremiumLoaded(false);
     navigatorKey.currentContext!
         .read<HomeTabsManager>()
         .setTrendingLoaded(false);
 
     try {
+      String? fcmToken = await Preference.getFcmToken();
+      String? address = await Preference.getLocation();
+      PackageInfo packageInfo = await PackageInfo.fromPlatform();
+      String versionName = packageInfo.version;
+      String buildNumber = packageInfo.buildNumber;
       UserManager provider = navigatorKey.currentContext!.read<UserManager>();
 
       Map request = {
         'token': provider.user?.token ?? '',
+        "platform": Platform.operatingSystem,
+        "build_version": versionName,
+        "build_code": buildNumber,
       };
 
       if (appsFlyerUID != null && appsFlyerUID != '') {
@@ -100,6 +111,17 @@ class MyHomeManager extends ChangeNotifier {
       }
       if (memCODE != null && memCODE != '') {
         request['distributor_code'] = memCODE;
+      }
+      if (fromAdvertiserID) {
+        request['advertiser_id'] = _data?.loginBox?.id ?? '';
+      }
+
+      if (address != null && address != '') {
+        request['address'] = address;
+      }
+
+      if (fcmToken != null && fcmToken != '') {
+        request['fcm_token'] = fcmToken;
       }
 
       setStatus(Status.loading);
@@ -111,6 +133,7 @@ class MyHomeManager extends ChangeNotifier {
         _data = myHomeResFromJson(jsonEncode(response.data));
         if (_data?.user != null) {
           provider.setUser(data?.user);
+          BrazeService.brazeUserEvent();
         }
 
         _error = null;

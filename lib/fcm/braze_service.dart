@@ -26,7 +26,7 @@ import '../api/apis.dart';
 
 import '../ui/tabs/tabs.dart';
 import '../utils/utils.dart';
-import 'package:stocks_news_new/screens/landing/page.dart';
+import 'package:stocks_news_new/ui/landing/page.dart';
 
 class BrazeNotificationService {
   BrazeNotificationService._internal();

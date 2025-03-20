@@ -40,7 +40,6 @@ class HomeScannerItem extends StatelessWidget {
           child: ActionInNbs(
             symbol: data.identifier ?? '',
             item: BaseTickerRes(
-              id: data.bid.toString(),
               symbol: data.identifier ?? '',
               name: data.name ?? '',
               image: data.image ?? '',

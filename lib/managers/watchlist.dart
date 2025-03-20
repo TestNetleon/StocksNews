@@ -97,10 +97,7 @@ class WatchListManagers extends ChangeNotifier {
       );
 
       if (response.status) {
-        BrazeService.eventADWatchlist(
-          symbol: symbol,
-          add: false,
-        );
+        BrazeService.eventADWatchlist(symbol: symbol, add: false);
 
         getWatchList(showProgress: false);
         Navigator.pop(navigatorKey.currentContext!);

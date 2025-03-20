@@ -54,7 +54,8 @@ class _LegalInfoIndexState extends State<LegalInfoIndex> {
     return BaseScaffold(
       appBar: BaseAppBar(
         showBack: true,
-        title: manager.data?.title,
+        title: manager.isLoading ? '' : manager.data?.title,
+        showLogo: false,
       ),
       body: Column(
         children: [

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/managers/home/home.dart';
 import 'package:stocks_news_new/managers/home/home_tabs.dart';
-import 'package:stocks_news_new/screens/AdManager/service.dart';
+import 'package:stocks_news_new/ui/AdManager/service.dart';
 import 'package:stocks_news_new/ui/tabs/home/plaid/index.dart';
 import 'package:stocks_news_new/ui/tabs/home/refer/index.dart';
 import 'package:stocks_news_new/utils/constants.dart';

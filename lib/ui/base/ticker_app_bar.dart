@@ -127,6 +127,7 @@ class BaseTickerAppBar extends StatelessWidget implements PreferredSizeWidget {
     return SafeArea(
       child: Container(
         padding: const EdgeInsets.all(Pad.pad8),
+        color: ThemeColors.white,
         child: Consumer<ThemeManager>(
           builder: (context, value, child) {
             return Row(

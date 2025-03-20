@@ -34,14 +34,14 @@ class UpdateImageType extends StatelessWidget {
                 ),
                 const SpacerHorizontal(width: 10),
                 Text(
-                  "Camera",
+                  "Photo Library",
                   style: styleBaseRegular(fontSize: 16),
                 ),
               ],
             ),
           ),
         ),
-        BaseListDivider(),
+        BaseListDivider(height: 30),
         InkWell(
           onTap: onGallery,
           child: Container(

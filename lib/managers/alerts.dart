@@ -8,6 +8,7 @@ import 'package:stocks_news_new/api/apis.dart';
 import 'package:stocks_news_new/managers/user.dart';
 import 'package:stocks_news_new/models/alert_res.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
+import 'package:stocks_news_new/service/braze/service.dart';
 import 'package:stocks_news_new/ui/base/toaster.dart';
 import 'package:stocks_news_new/ui/tabs/tabs.dart';
 import 'package:stocks_news_new/utils/constants.dart';
@@ -96,6 +97,8 @@ class AlertsM extends ChangeNotifier {
       );
 
       if (response.status) {
+        BrazeService.eventADAlert(symbol: symbol, add: false);
+
         getAlerts(showProgress: false);
         Navigator.pop(navigatorKey.currentContext!);
       } else {
