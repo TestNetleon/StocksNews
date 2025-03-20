@@ -109,7 +109,7 @@ class TabItem extends StatelessWidget {
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               border: Border.all(
-                color: selected ? ThemeColors.secondary120 : Colors.white,
+                color: selected ? ThemeColors.secondary120 : ThemeColors.white,
                 width: 2,
               ),
             ),
@@ -119,7 +119,7 @@ class TabItem extends StatelessWidget {
             child: Container(
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: selected ? ThemeColors.black : ThemeColors.neutral5,
+                color: selected ? ThemeColors.selectedBG : ThemeColors.neutral5,
               ),
               width: 56,
               height: 56,
@@ -129,7 +129,7 @@ class TabItem extends StatelessWidget {
                   fit: BoxFit.contain,
                   width: 18,
                   height: 18,
-                  color: selected ? ThemeColors.white : null,
+                  color: selected ? Colors.white : ThemeColors.neutral60,
                 ),
               ),
             ),
@@ -139,7 +139,7 @@ class TabItem extends StatelessWidget {
             data.title ?? "",
             style: selected
                 // ? styleBaseBold(fontSize: 12)
-                ? Theme.of(context).textTheme.labelLarge
+                ? styleBaseBold(fontSize: 12, color: ThemeColors.selectedBG)
                 : styleBaseRegular(fontSize: 12, color: ThemeColors.neutral40),
           ),
         ],

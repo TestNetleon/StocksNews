@@ -138,6 +138,7 @@ class ThemeColors {
   static Color itemBack = Color(0xFFFFFFFF);
   static const splashBackground = Color(0xFF012054);
   static Color splashBG = Color(0xFF012054);
+  static Color selectedBG = Color(0xFF012054);
   static Color colour66 = Color(0xFF666666);
   static Color colourBA = Color(0xFFBABABA);
   static Color disabledBtn = Color(0xFF3C3C43);
@@ -197,9 +198,15 @@ class ThemeColors {
     // secondary120 = isLightTheme ? Color(0xFF3240D1) : ThemeColors.accent;
 
     neutral80 = isLightTheme ? Color(0xFF465F8C) : Color(0xFFFFFFFF);
-    neutral60 = isLightTheme ? Color(0xFF59719B) : Color(0xFFC0C9DB);
-    neutral40 = isLightTheme ? Color(0xFF6E85AE) : Color(0xFFC0C9DB);
-    neutral20 = Color(0xFF98A7C2);
+    neutral60 = isLightTheme
+        ? Color(0xFF59719B)
+        : Color(0xFFFFFFFF).withValues(alpha: .8);
+    neutral40 = isLightTheme
+        ? Color(0xFF6E85AE)
+        : Color(0xFFFFFFFF).withValues(alpha: .8);
+    neutral20 = isLightTheme
+        ? Color(0xFF98A7C2)
+        : Color(0xFFFFFFFF).withValues(alpha: .8);
     neutral10 = Color(0xFFC0C9DB);
     neutral5 = isLightTheme ? Color(0xFFF0F2F6) : Color(0x66626262);
     neutral6 = Color(0xFFCCCCCC);
@@ -217,6 +224,7 @@ class ThemeColors {
     itemBack = isLightTheme ? Color(0xFFFFFFFF) : Color(0xFF121212);
     // white = Color(0xFFFFFFFF);
     splashBG = isLightTheme ? Color(0xFF012054) : Color(0xFFFFFFFF);
+    selectedBG = isLightTheme ? Color(0xFF012054) : ThemeColors.accent;
     colour66 = Color(0xFF666666);
     colourBA = Color(0xFFBABABA);
     disabledBtn = Color(0xFF3C3C43);

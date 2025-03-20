@@ -345,7 +345,7 @@ class _MarketIndexState extends State<MarketIndex> {
                                     height: 24,
                                     color: provider.filterParams != null
                                         ? ThemeColors.success
-                                        : null,
+                                        : ThemeColors.black,
                                   ),
                                 ),
                               ),

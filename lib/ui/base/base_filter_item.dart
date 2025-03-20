@@ -18,24 +18,27 @@ class BaseFilterItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: selected ? ThemeColors.black : ThemeColors.white,
+        color: selected ? ThemeColors.selectedBG : ThemeColors.white,
         border: Border.all(color: ThemeColors.neutral10, width: 1),
         borderRadius: BorderRadius.circular(8),
       ),
       padding: EdgeInsets.symmetric(vertical: 0, horizontal: 16),
       alignment: Alignment.center,
-      child:
-          // isRankFilter
-          //     ? StarRating(rating: int.parse(data.value ?? '0'), selected: selected)
-          //     :
-          child ??
-              Text(
-                value,
-                style: styleBaseRegular(
-                  fontSize: 14,
-                  color: selected ? ThemeColors.white : ThemeColors.black,
-                ),
-              ),
+      child: child ??
+          Text(
+            value,
+            style: selected
+                ? styleBaseSemiBold(
+                    fontSize: 14,
+                    color: //selected ? ThemeColors.white :
+                        ThemeColors.black,
+                  )
+                : styleBaseRegular(
+                    fontSize: 14,
+                    color: //selected ? ThemeColors.white :
+                        ThemeColors.black,
+                  ),
+          ),
     );
   }
 }
