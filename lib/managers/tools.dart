@@ -7,6 +7,7 @@ import 'package:stocks_news_new/models/tools.dart';
 import 'package:stocks_news_new/ui/base/toaster.dart';
 import 'package:stocks_news_new/ui/tabs/tools/scanner/index.dart';
 import 'package:stocks_news_new/ui/tabs/tools/simulator/screens/index.dart';
+import 'package:stocks_news_new/ui/tabs/tools/tradingLeague/screens/index.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import '../api/api_requester.dart';
 import '../api/api_response.dart';
@@ -99,6 +100,10 @@ class ToolsManager extends ChangeNotifier {
         break;
 
       case ToolsEnum.league:
+        Navigator.pushNamed(
+          navigatorKey.currentContext!,
+          TradingLeagueIndex.path,
+        );
         break;
     }
   }

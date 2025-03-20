@@ -95,6 +95,7 @@ import 'package:stocks_news_new/ui/tabs/tools/simulator/screens/conditionalOrder
 import 'package:stocks_news_new/ui/tabs/tools/simulator/screens/index.dart';
 import 'package:stocks_news_new/ui/tabs/tools/simulator/screens/tickerSearch/index.dart';
 import 'package:stocks_news_new/ui/tabs/tools/simulator/screens/tradeBuySell/index.dart';
+import 'package:stocks_news_new/ui/tabs/tools/tradingLeague/screens/index.dart';
 import 'package:stocks_news_new/ui/theme/manager.dart';
 
 import 'package:stocks_news_new/utils/constants.dart';
@@ -169,6 +170,8 @@ class Routes {
     MorningStarReportsIndex.path: (_) => const MorningStarReportsIndex(),
     MembershipActionRequired.path: (_) => const MembershipActionRequired(),
     TrendingViewAllIndex.path: (_) => const TrendingViewAllIndex(),
+
+    TradingLeagueIndex.path: (_) => const TradingLeagueIndex(),
 
     //--------------------------------------
   };

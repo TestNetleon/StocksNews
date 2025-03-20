@@ -9,12 +9,12 @@ class Apis {
   static const baseUrlLocal = "https://notification.stocks.news/api/v1";
 
   // With Debug condition
-  // static const baseUrl = kDebugMode
-  //     ? "https://dev.stocks.news/api/v2"
-  //     : "https://app.stocks.news/api/v2";
+  static const baseUrl = kDebugMode
+      ? "https://dev.stocks.news/api/v2"
+      : "https://app.stocks.news/api/v2";
 
   // Main live server
-   static const baseUrl = "https://app.stocks.news/api/v2";
+  // static const baseUrl = "https://app.stocks.news/api/v2";
 
   // MARK: New UI APIs
   static const onBoarding = '/onboarding';
@@ -100,6 +100,27 @@ class Apis {
   static const updateOrder = '/simulator/trade/update/';
   static const orderTypeInfo = '/simulator/trade/order-type-definition';
   static const squareOff = '/simulator/trade/close-conditional-trade';
+
+
+  //MARK: TOURNAMENT API
+  static const t = '/tournaments';
+  static const tLeaderboard = '/tournament/leaderboard/by-date';
+  static const tTradeList = '/tournament/trade-list';
+  static const tDetail = '/tournament/detail';
+  static const tJoin = '/tournament/join';
+  static const tTickerList = '/tournament/ticker-list';
+  static const tTickerSearch = '/tournament/ticker-search';
+  static const tTickerDetail = '/tournament/ticker-detail';
+  static const tBuyOrSell = '/tournament/trade-action';
+  static const tCancle = '/tournament/trade-close';
+  static const tPointsPaid = '/tournament/points-paid';
+  static const tPlayTraders = '/tournament/titans';
+  static const tTopTitans = '/tournament/top-titans';
+  static const tTradingTotal = '/tournament/all';
+  static const tUser = '/tournament/user-profile';
+  static const tShowLeaderboard = '/tournament/show-today-leaderboard';
+  static const tTradeAll = '/tournament/league-date/trade-list';
+
 
   //Search---
   static const recentSearch = '/recent-search';
@@ -377,30 +398,7 @@ class Apis {
   // static const notificationSettings = "/notification-settings";
   static const updateNotificationSettings = "/update-notification-setting";
 
-  //MARK: Simulator API
 
-  /*static const tsUserInfo = "/simulator/user-info";
-  static const tsTopBar = "/simulator/trade/stock-detail-topbar";
-  static const tsStreamData = '/simulator/trade/stream-init-variables';
-  // static const tsPortfolio = "/simulator/portfolio";
-  static const tsOrderList = "/simulator/holding-list";
-  static const tsPendingList = "/simulator/pending-list";
-  static const tsTransaction = '/simulator/trade/history';
-  static const tradingMostSearch = "/simulator/most-search-symbol";
-  static const tsRequestTrade = "/simulator/trade/store";
-  static const tsAddConditional = "/simulator/trade/add-conditional-order/";
-  static const tsSearchSymbol = "/simulator/trade/search-symbol";
-  static const tsOpenList = "/simulator/list-purchased-shares";
-  static const stockHoldings = '/simulator/stock-holdings-new';
-  static const cancleOrder = '/simulator/trade/cancel/';
-  static const updateOrder = '/simulator/trade/update/';
-  static const squareOff = '/simulator/trade/close-conditional-trade';*/
-  // static const tsOrderList = "/simulator/order-list";
-  // static const tsRequestSell = "/simulator/sell";
-  // static const tsRequestBuy = "/simulator/buy-share";
-  // static const tsRequestSell = "/simulator/sell-share";
-
-  // ---------   Trading Simulator End --------------
   static const loginNew = "/check-user";
 
   // ---------   STock Analysis Screen --------------
@@ -429,29 +427,6 @@ class Apis {
   static const pointClaimLog = "/point-claim-log";
   static const claimPointLog = "/referrals/claim-point-log";
 
-  //
-  static const myTickers = "/my-tickers-list";
-
-  //MARK: TOURNAMENT API
-  static const t = '/tournaments';
-  static const tLeaderboard = '/tournament/leaderboard/by-date';
-  static const tTradeList = '/tournament/trade-list';
-  static const tDetail = '/tournament/detail';
-  static const tJoin = '/tournament/join';
-  static const tTickerList = '/tournament/ticker-list';
-  static const tTickerSearch = '/tournament/ticker-search';
-  static const tTickerDetail = '/tournament/ticker-detail';
-  static const tBuyOrSell = '/tournament/trade-action';
-  static const tCancle = '/tournament/trade-close';
-  static const tPointsPaid = '/tournament/points-paid';
-  static const tPlayTraders = '/tournament/titans';
-  static const tTopTitans = '/tournament/top-titans';
-  static const tTradingTotal = '/tournament/all';
-  static const tUser = '/tournament/user-profile';
-  static const tShowLeaderboard = '/tournament/show-today-leaderboard';
-  static const tTradeAll = '/tournament/league-date/trade-list';
-  // static const tShow = '/tournament/trade-show';
-  //
   static const appsflyerUsers = '/appsflyer-users';
   static const trendingSectors = '/trending-sectors';
   static const stockScannerChange = '/stockScannerChange';
