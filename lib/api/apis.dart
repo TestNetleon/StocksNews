@@ -10,9 +10,6 @@ class Apis {
   // static const baseUrl = kDebugMode
   //     ? "https://dev.stocks.news/api/v2"
   //     : "https://app.stocks.news/api/v2";
-  // static const baseUrl = kDebugMode
-  //     ? "https://dev.stocks.news/api/v2"
-  //     : "https://app.stocks.news/api/v2";
 
   static const baseUrl = "https://app.stocks.news/api/v2";
 

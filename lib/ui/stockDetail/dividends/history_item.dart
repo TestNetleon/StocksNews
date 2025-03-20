@@ -62,15 +62,13 @@ class DividendHistoryItem extends StatelessWidget {
                           return Container(
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(4),
-                              border: Border.all(color: ThemeColors.neutral5),
+                              border: Border.all(color: ThemeColors.neutral40),
                             ),
                             child: Image.asset(
                               isOpen ? Images.arrowUP : Images.arrowDOWN,
                               height: 24,
                               width: 24,
-                              color: value.isDarkMode
-                                  ? ThemeColors.white
-                                  : ThemeColors.black,
+                              color: ThemeColors.black,
                             ),
                           );
                         },
