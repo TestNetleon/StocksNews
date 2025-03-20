@@ -248,6 +248,7 @@ class Images {
   static const String filter = '${base}filter.png';
   static const String msReport = '${base}ms_report.png';
   static const String theme = '${base}theme.png';
+  static const String x = '${base}x.png';
 
   //MARK: New UI END
   //-------------------------------------------------------------------------------

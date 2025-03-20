@@ -52,6 +52,7 @@ class HistoricalChartRes {
   // final num high;
   // final num volume;
   final num close;
+  final String? currencySymbol;
 
   HistoricalChartRes({
     required this.date,
@@ -60,6 +61,7 @@ class HistoricalChartRes {
     // required this.high,
     // required this.volume,
     required this.close,
+    this.currencySymbol,
   });
 
   factory HistoricalChartRes.fromJson(Map<String, dynamic> json) =>
@@ -70,6 +72,7 @@ class HistoricalChartRes {
         // high: json["high"],
         // volume: json["volume"],
         close: json["close"],
+        currencySymbol: json["symbol"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -79,5 +82,7 @@ class HistoricalChartRes {
         // "high": high,
         // "volume": volume,
         "close": close,
+    "symbol": currencySymbol,
       };
+
 }

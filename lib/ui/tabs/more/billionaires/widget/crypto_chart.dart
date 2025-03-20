@@ -81,7 +81,7 @@ class _CryptoChartState extends State<CryptoChart> {
                     : Center(
                   child: Text(
                     widget.error ?? '',
-                    style: styleBaseBold(color: ThemeColors.black),
+                    style: styleBaseBold(),
                   ),
                 ),
               ],

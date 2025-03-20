@@ -9,8 +9,8 @@ class BaseButton extends StatelessWidget {
   const BaseButton({
     this.onPressed,
     this.text = "Submit",
-    this.color = ThemeColors.primary100,
-    this.disableTextColor = ThemeColors.primary100,
+    this.color,
+    this.disableTextColor,
     this.textColor,
     this.iconColor,
     this.textSize = 18,
@@ -33,7 +33,7 @@ class BaseButton extends StatelessWidget {
   final Color? color;
   final Color? textColor;
   final Color? iconColor;
-  final Color disableTextColor;
+  final Color? disableTextColor;
 
   final Function()? onPressed;
   final double textSize;
@@ -58,7 +58,7 @@ class BaseButton extends StatelessWidget {
         style: ElevatedButton.styleFrom(
           disabledBackgroundColor:
               disabledBackgroundColor ?? ThemeColors.primary10,
-          backgroundColor: color,
+          backgroundColor: color ?? ThemeColors.primary100,
           shadowColor: Colors.transparent,
           elevation: 0,
           minimumSize: const Size.fromHeight(45),
@@ -93,13 +93,13 @@ class BaseButton extends StatelessWidget {
                     ? styleBaseBold(
                         fontSize: textSize,
                         color: onPressed == null
-                            ? disableTextColor
+                            ? disableTextColor ?? ThemeColors.primary100
                             : textColor ?? ThemeColors.black,
                       )
                     : styleBaseSemiBold(
                         fontSize: textSize,
                         color: onPressed == null
-                            ? disableTextColor
+                            ? disableTextColor ?? ThemeColors.primary100
                             : textColor ?? ThemeColors.black,
                       )),
           ),

@@ -39,6 +39,7 @@ class _BaseStockItemState extends State<BaseStockItem> {
     bool isOpen = _openIndex == widget.index;
     return Container(
       padding: EdgeInsets.all(Pad.pad16),
+      color: ThemeColors.itemBack,
       child: Column(
         children: [
           Row(

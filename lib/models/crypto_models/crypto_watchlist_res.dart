@@ -1,7 +1,7 @@
 
 import 'dart:convert';
 
-import 'package:stocks_news_new/models/billionaires_res.dart';
+import 'package:stocks_news_new/models/crypto_models/billionaires_res.dart';
 
 CryptoWatchRes cryptoWatchlistResFromJson(String str) => CryptoWatchRes.fromMap(json.decode(str));
 

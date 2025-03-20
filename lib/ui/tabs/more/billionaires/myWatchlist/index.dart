@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/managers/billionaires.dart';
-import 'package:stocks_news_new/models/billionaires_res.dart';
+import 'package:stocks_news_new/models/crypto_models/billionaires_res.dart';
 import 'package:stocks_news_new/ui/base/base_scroll.dart';
 import 'package:stocks_news_new/ui/base/heading.dart';
+import 'package:stocks_news_new/ui/tabs/more/billionaires/billionaires_index.dart';
 import 'package:stocks_news_new/ui/tabs/more/billionaires/cryptocurrencies/widget/crypto_item.dart';
-import 'package:stocks_news_new/ui/tabs/more/billionaires/cryptocurrencies/widget/crypto_table.dart';
 import 'package:stocks_news_new/ui/tabs/more/billionaires/myWatchlist/widget/fav_item.dart';
-import 'package:stocks_news_new/utils/colors.dart';
-import 'package:stocks_news_new/utils/constants.dart';
+import 'package:stocks_news_new/ui/tabs/more/billionaires/widget/mention_list.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/custom/base_loader_container.dart';
+import 'package:stocks_news_new/widgets/custom_gridview.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 class MyWatchListIndex extends StatelessWidget {
@@ -19,6 +19,8 @@ class MyWatchListIndex extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     BillionairesManager manager = context.watch<BillionairesManager>();
+    SymbolMentionList? symbolMentionRes =  manager.cryptoWatchRes?.watchlistData;
+
     return BaseLoaderContainer(
       hasData: manager.cryptoWatchRes != null,
       isLoading: manager.isLoadingCrypto,
@@ -28,81 +30,84 @@ class MyWatchListIndex extends StatelessWidget {
           onRefresh: manager.getWatchList,
           margin: EdgeInsets.zero,
           children: [
-            SpacerVertical(height: Pad.pad20),
+            Visibility(visible:symbolMentionRes!=null,child: MentionsListIndex(symbolMentionRes: symbolMentionRes)),
+            SpacerVertical(height: 20),
             Visibility(
-                visible: manager.cryptoWatchRes?.watchlistData?.data != null &&
-                    (manager.cryptoWatchRes?.watchlistData?.data?.isNotEmpty ==
-                        true),
-                child: CryptoTable(
-                    symbolMentionRes: manager.cryptoWatchRes?.watchlistData)),
-            SpacerVertical(height: Pad.pad16),
-            Visibility(
-                visible:
-                    manager.cryptoWatchRes?.favoritePerson?.title != null &&
-                        manager.cryptoWatchRes?.favoritePerson?.title != '',
+                visible: manager.cryptoWatchRes?.favoritePerson?.title != null && manager.cryptoWatchRes?.favoritePerson?.title!= '',
                 child: BaseHeading(
-                  title: manager.cryptoWatchRes?.favoritePerson?.title ?? "",
-                  titleStyle:
-                      styleBaseBold(fontSize: 24, color: ThemeColors.splashBG),
-                  margin: EdgeInsets.symmetric(
-                      horizontal: Pad.pad16, vertical: Pad.pad5),
-                )),
-            SpacerVertical(height: Pad.pad5),
+                  margin: const EdgeInsets.symmetric(horizontal: 16.0),
+                  title: manager.cryptoWatchRes?.favoritePerson?.title??"",
+                  titleStyle: styleBaseBold(),
+                )
+            ),
+            Visibility(visible: manager.cryptoWatchRes?.favoritePerson?.title != null && manager.cryptoWatchRes?.favoritePerson?.title!= '',
+                child: SpacerVertical(height:10)
+            ),
+
             Visibility(
               visible: manager.cryptoWatchRes?.favoritePerson?.data != null,
-              child: ListView.separated(
-                physics: NeverScrollableScrollPhysics(),
-                padding: EdgeInsets.symmetric(horizontal: Pad.pad8),
-                shrinkWrap: true,
-                itemBuilder: (context, index) {
-                  CryptoTweetPost? item =
-                      manager.cryptoWatchRes?.favoritePerson?.data?[index];
-                  return FavItem(
-                    item: item,
-                    onTap: () {},
-                  );
-                },
-                separatorBuilder: (context, index) {
-                  return SpacerVertical(height: Pad.pad3);
-                },
-                itemCount:
-                    manager.cryptoWatchRes?.favoritePerson?.data?.length ?? 0,
+              child: Padding(
+                padding: const EdgeInsets.only(right: 8.0),
+                child: CustomGridViewPerChild(
+                  paddingHorizontal:8,
+                  paddingVertical: 8,
+                  length: manager.cryptoWatchRes?.favoritePerson?.data?.length ?? 0,
+                  getChild: (index) {
+                    CryptoTweetPost? item = manager.cryptoWatchRes?.favoritePerson?.data?[index];
+                    bool? isEven= index%2==0;
+                    if (item == null) {
+                      return const SizedBox();
+                    }
+                    return Padding(
+                      padding: EdgeInsets.symmetric(horizontal: isEven?8:0.0),
+                      child: FavItem(
+                        item: item,
+                        onTap: () {
+                          Navigator.pushNamed(context, BillionairesDetailIndex.path,
+                              arguments: {'slug': item.slug ?? ""});
+
+                        },
+                      ),
+                    );
+                  },
+                ),
               ),
             ),
-            SpacerVertical(height: Pad.pad5),
+            Visibility(visible: manager.cryptoWatchRes?.favoritePerson?.data != null,child: SpacerVertical(height:20)),
             Visibility(
-                visible:
-                    manager.cryptoWatchRes?.recentTweetPost?.title != null &&
-                        manager.cryptoWatchRes?.recentTweetPost?.title != '',
+                visible: manager.cryptoWatchRes?.recentTweetPost?.title != null && manager.cryptoWatchRes?.recentTweetPost?.title!= '',
                 child: BaseHeading(
-                  title: manager.cryptoWatchRes?.recentTweetPost?.title ?? "",
-                  titleStyle:
-                      styleBaseBold(fontSize: 24, color: ThemeColors.splashBG),
-                  margin: EdgeInsets.symmetric(
-                      horizontal: Pad.pad16, vertical: Pad.pad5),
-                )),
-            SpacerVertical(height: Pad.pad5),
+                  margin: const EdgeInsets.symmetric(horizontal: 16.0),
+                  title: manager.cryptoWatchRes?.recentTweetPost?.title??"",
+                  titleStyle: styleBaseBold(),
+                )
+            ),
+            Visibility(visible: manager.cryptoWatchRes?.recentTweetPost?.title != null && manager.cryptoWatchRes?.recentTweetPost?.title!= '',
+                child: SpacerVertical(height:10)
+            ),
             Visibility(
               visible: manager.cryptoWatchRes?.recentTweetPost?.data != null,
               child: ListView.separated(
                 physics: NeverScrollableScrollPhysics(),
-                padding: EdgeInsets.symmetric(horizontal: Pad.pad8),
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 shrinkWrap: true,
                 itemBuilder: (context, index) {
-                  CryptoTweetPost? item =
-                      manager.cryptoWatchRes?.recentTweetPost?.data?[index];
+                  CryptoTweetPost? item = manager.cryptoWatchRes?.recentTweetPost?.data?[index];
                   return CryptoItem(
                     item: item,
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.pushNamed(context, BillionairesDetailIndex.path,
+                          arguments: {'slug': item?.slug ?? ""});
+                    },
                   );
                 },
                 separatorBuilder: (context, index) {
-                  return SpacerVertical(height: Pad.pad3);
+                  return SpacerVertical(height:20);
                 },
-                itemCount:
-                    manager.billionairesRes?.cryptoTweetPost?.length ?? 0,
+                itemCount: manager.cryptoWatchRes?.recentTweetPost?.data?.length ?? 0,
               ),
             ),
+            SpacerVertical(height:10),
           ]),
     );
   }

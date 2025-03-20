@@ -79,6 +79,11 @@ class SDStockScoreRes {
       };
 }
 
+BaseKeyValueRes baseResDataFromJson(String str) =>
+    BaseKeyValueRes.fromJson(json.decode(str));
+
+String baseResDataToJson(BaseKeyValueRes data) => json.encode(data.toJson());
+
 class BaseKeyValueRes {
   final String? title;
   final String? subTitle;
@@ -96,6 +101,7 @@ class BaseKeyValueRes {
   final String? date;
   final String? action;
   bool? selected;
+  final List<BaseKeyValueRes>? data;
 
   BaseKeyValueRes({
     this.title,
@@ -114,6 +120,7 @@ class BaseKeyValueRes {
     this.date,
     this.action,
     this.selected,
+    this.data,
   });
 
   factory BaseKeyValueRes.fromJson(Map<String, dynamic> json) =>
@@ -134,6 +141,11 @@ class BaseKeyValueRes {
         date: json["date"],
         action: json["action"],
         selected: json["selected"],
+        data: json["data"] == null
+            ? null
+            : List<BaseKeyValueRes>.from(
+          json["data"].map((x) => BaseKeyValueRes.fromJson(x)),
+        ),
       );
 
   Map<String, dynamic> toJson() => {
@@ -153,6 +165,10 @@ class BaseKeyValueRes {
         "date": date,
         "action": action,
         "selected": selected,
+    "data": data == null
+        ? null
+        : List<dynamic>.from(data!.map((x) => x.toJson())),
+
       };
 }
 

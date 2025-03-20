@@ -1,6 +1,7 @@
 import 'dart:convert';
 
-import 'package:stocks_news_new/models/billionaires_res.dart';
+import 'package:stocks_news_new/models/crypto_models/billionaires_res.dart';
+
 
 BillionairesDetailRes billionairesDetailResFromJson(String str) => BillionairesDetailRes.fromMap(json.decode(str));
 
@@ -8,7 +9,7 @@ String billionairesDetailResToMap(BillionairesDetailRes data) => json.encode(dat
 
 class BillionairesDetailRes {
   final String? title;
-  final BillionaireInfo? billionaireInfo;
+  final CryptoTweetPost? billionaireInfo;
   final RecentTweet? recentTweet;
   final SymbolMentionList? symbolMentionList;
 
@@ -21,7 +22,7 @@ class BillionairesDetailRes {
 
   factory BillionairesDetailRes.fromMap(Map<String, dynamic> json) => BillionairesDetailRes(
     title: json["title"],
-    billionaireInfo: json["billionaire_info"] == null ? null : BillionaireInfo.fromMap(json["billionaire_info"]),
+    billionaireInfo: json["billionaire_info"] == null ? null : CryptoTweetPost.fromMap(json["billionaire_info"]),
     recentTweet: json["recent_tweet"] == null ? null : RecentTweet.fromMap(json["recent_tweet"]),
     symbolMentionList: json["symbol_Mention_list"] == null ? null : SymbolMentionList.fromMap(json["symbol_Mention_list"]),
   );
@@ -31,42 +32,6 @@ class BillionairesDetailRes {
     "billionaire_info": billionaireInfo?.toMap(),
     "recent_tweet": recentTweet?.toMap(),
     "symbol_Mention_list": symbolMentionList?.toMap(),
-  };
-}
-
-class BillionaireInfo {
-  final String? name;
-  final String? designation;
-  final String? image;
-  final String? description;
-  final String? twitterName;
-  int? isFavoritePersonAdded;
-
-  BillionaireInfo({
-    this.name,
-    this.designation,
-    this.image,
-    this.description,
-    this.twitterName,
-    this.isFavoritePersonAdded,
-  });
-
-  factory BillionaireInfo.fromMap(Map<String, dynamic> json) => BillionaireInfo(
-    name: json["name"],
-    designation: json["designation"],
-    image: json["image"],
-    description: json["description"],
-    twitterName: json["twitter_name"],
-    isFavoritePersonAdded: json["is_favorite_person_added"],
-  );
-
-  Map<String, dynamic> toMap() => {
-    "name": name,
-    "designation": designation,
-    "image": image,
-    "description": description,
-    "twitter_name": twitterName,
-    "is_favorite_person_added": isFavoritePersonAdded,
   };
 }
 

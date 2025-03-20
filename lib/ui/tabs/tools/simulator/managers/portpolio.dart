@@ -66,7 +66,7 @@ class PortfolioManager extends ChangeNotifier {
     return info;
   }
 
-  Future getDashboardData({bool reset = false}) async {
+  Future getDashboardData({bool reset = false,bool showProgress= false}) async {
     if (reset) {
       _userData = null;
       _error = null;
@@ -75,7 +75,7 @@ class PortfolioManager extends ChangeNotifier {
     try {
       ApiResponse response = await apiRequest(
         url: Apis.tsUserInfo,
-        showProgress: false,
+        showProgress: showProgress,
         request: {},
       );
       if (response.status) {

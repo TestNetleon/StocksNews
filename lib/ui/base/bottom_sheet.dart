@@ -4,12 +4,14 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/ui/theme/manager.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
+import 'package:stocks_news_new/widgets/optional_parent.dart';
 
 import '../../routes/my_app.dart';
 
 class BaseBottomSheet {
   bottomSheet({
     required Widget child,
+    bool isScrollable=true,
     Color? barrierColor,
     EdgeInsets? padding,
   }) {
@@ -17,7 +19,7 @@ class BaseBottomSheet {
     bool isDark = manager.isDarkMode;
 
     showModalBottomSheet(
-      isScrollControlled: true,
+      isScrollControlled: isScrollable,
       useSafeArea: true,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
@@ -46,12 +48,18 @@ class BaseBottomSheet {
                   topRight: Radius.circular(Pad.pad24),
                 ),
               ),
-              child: SingleChildScrollView(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    child,
-                  ],
+              child: OptionalParent(
+                addParent: !isScrollable,
+                parentBuilder: (ch) {
+                  return child;
+                },
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      child,
+                    ],
+                  ),
                 ),
               ),
             ),

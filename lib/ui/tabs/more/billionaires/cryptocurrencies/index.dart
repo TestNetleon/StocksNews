@@ -1,290 +1,192 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/managers/billionaires.dart';
-import 'package:stocks_news_new/models/billionaires_res.dart';
+import 'package:stocks_news_new/models/crypto_models/billionaires_res.dart';
 import 'package:stocks_news_new/ui/base/base_scroll.dart';
-import 'package:stocks_news_new/ui/base/common_tab.dart';
-import 'package:stocks_news_new/ui/base/heading.dart';
-import 'package:stocks_news_new/ui/tabs/more/billionaires/billionaires_index.dart';
+import 'package:stocks_news_new/ui/base/button.dart';
+import 'package:stocks_news_new/ui/tabs/more/billionaires/all_index.dart';
 import 'package:stocks_news_new/ui/tabs/more/billionaires/cryptocurrencies/top_index.dart';
-import 'package:stocks_news_new/ui/tabs/more/billionaires/cryptocurrencies/widget/crypto_item.dart';
-import 'package:stocks_news_new/ui/tabs/more/billionaires/cryptocurrencies/widget/crypto_table.dart';
-import 'package:stocks_news_new/ui/tabs/more/billionaires/cryptocurrencies/widget/mention_item.dart';
+import 'package:stocks_news_new/ui/tabs/more/billionaires/widget/mention_list.dart';
+import 'package:stocks_news_new/ui/tabs/more/billionaires/widget/recent_tweet_sheet.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
+import 'package:stocks_news_new/widgets/cache_network_image.dart';
 import 'package:stocks_news_new/widgets/custom/base_loader_container.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
-class Cryptocurrencies extends StatelessWidget {
+
+class Cryptocurrencies extends StatefulWidget {
   const Cryptocurrencies({super.key});
+
+  @override
+  State<Cryptocurrencies> createState() => _CryptocurrenciesState();
+}
+
+class _CryptocurrenciesState extends State<Cryptocurrencies>
+    with SingleTickerProviderStateMixin {
+  late ScrollController _scrollController;
+  @override
+  void initState() {
+    super.initState();
+
+    _scrollController = ScrollController();
+  }
+
+
+  void _scrollToSelectedIndex(int index) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double itemWidth = 50.0;
+    double scrollOffset =
+        index * itemWidth - (screenWidth / 2) + (itemWidth / 2);
+
+    _scrollController.animateTo(
+      scrollOffset,
+      duration: Duration(milliseconds: 300),
+      curve: Curves.easeInOut,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     BillionairesManager manager = context.watch<BillionairesManager>();
+    SymbolMentionList? symbolMentionRes = manager.billionairesRes?.symbolMentionList;
+    /* if(manager.billionairesRes?.topTab?.data!=null && manager.billionairesRes?.topTab?.data?.isNotEmpty ==true){
+      manager.titleArray = manager.billionairesRes!.topTab!.data!.map((item) => item.title!).toList();
+    }*/
     return BaseLoaderContainer(
       hasData: manager.billionairesRes != null,
       isLoading: manager.isLoadingCrypto,
       error: manager.error,
       showPreparingText: true,
       child: BaseScroll(
-          onRefresh: manager.getCryptoCurrencies,
-          margin: EdgeInsets.zero,
-          children: [
-            Visibility(
-              visible: manager.billionairesRes?.cryptoTweetPost != null,
-              child: ListView.separated(
-                physics: NeverScrollableScrollPhysics(),
-                padding: EdgeInsets.symmetric(horizontal: Pad.pad10),
-                shrinkWrap: true,
-                itemBuilder: (context, index) {
-                  CryptoTweetPost? item =
-                      manager.billionairesRes?.cryptoTweetPost?[index];
-                  return CryptoItem(
-                    item: item,
-                    onTap: () {
-                      Navigator.pushNamed(context, BillionairesDetailIndex.path,
-                          arguments: {'slug': item?.slug ?? ""});
-                    },
-                  );
-                },
-                separatorBuilder: (context, index) {
-                  return SpacerVertical(height: Pad.pad3);
-                },
-                itemCount:
-                    manager.billionairesRes?.cryptoTweetPost?.length ?? 0,
-              ),
-            ),
-            Visibility(
-                visible: manager.billionairesRes?.topTab != null,
-                child: SpacerVertical(height: Pad.pad5)),
-            Visibility(
-              visible: manager.billionairesRes?.topTab != null,
-              child: Column(
+        onRefresh: manager.getCryptoCurrencies,
+        margin: EdgeInsets.zero,
+        children: [
+          Container(
+            margin:const EdgeInsets.symmetric(horizontal: 16.0),
+            alignment: Alignment.centerLeft,
+            child: RichText(
+              text: TextSpan(
                 children: [
-                  BaseTabs(
-                    data: manager.billionairesRes?.topTab?.data ?? [],
-                    onTap: manager.onScreenChangeInner,
+                  TextSpan(
+                    text: "Billionaires –\n",
+                    style: styleBaseBold(fontSize: 30),
                   ),
-                  SpacerVertical(height: Pad.pad10),
-                  if (manager.selectedInnerScreen == 0)
-                    TopBilIndex(
-                      topTabs: manager.billionairesRes?.topTab,
-                    ),
-                  if (manager.selectedInnerScreen == 1) SizedBox(),
+                  TextSpan(
+                    text: "Track ",
+                    style: styleBaseRegular(fontSize: 30),
+                  ),
+                  TextSpan(
+                    text: "Moves, ",
+                    style: styleBaseBold(fontSize: 30),
+                  ),
+                  TextSpan(
+                    text: "Stay ",
+                    style: styleBaseRegular(fontSize: 30),
+                  ),
+                  TextSpan(
+                    text: "Ahead!",
+                    style: styleBaseBold(fontSize: 30),
+                  ),
                 ],
+                text: "Invest Like ",
+                style: styleBaseRegular(fontSize: 30),
               ),
             ),
-            SpacerVertical(height: Pad.pad5),
-            Visibility(
-                visible:
-                    manager.billionairesRes?.recentMentions?.title != null &&
-                        manager.billionairesRes?.recentMentions?.title != '',
-                child: BaseHeading(
-                  title: manager.billionairesRes?.recentMentions?.title ?? "",
-                  titleStyle:
-                      styleBaseBold(fontSize: 24, color: ThemeColors.splashBG),
-                  margin: EdgeInsets.symmetric(horizontal: Pad.pad16),
-                )),
-            SpacerVertical(height: Pad.pad10),
-            Visibility(
+          ),
+          Visibility(
               visible: manager.billionairesRes?.recentMentions != null &&
-                  (manager.billionairesRes?.recentMentions?.data?.isNotEmpty ==
+                  (manager.billionairesRes?.recentMentions?.data
+                      ?.isNotEmpty ==
                       true),
-              child: ListView.separated(
-                physics: NeverScrollableScrollPhysics(),
-                padding: EdgeInsets.symmetric(horizontal: Pad.pad16),
-                shrinkWrap: true,
-                itemBuilder: (context, index) {
-                  CryptoTweetPost? item =
-                      manager.billionairesRes?.recentMentions?.data?[index];
-                  return MentionItem(
-                    item: item,
-                    onTap: () {
-                      Navigator.pushNamed(context, BillionairesDetailIndex.path,
-                          arguments: {'slug': item?.slug ?? ""});
-                    },
-                  );
-                },
-                separatorBuilder: (context, index) {
-                  return SpacerVertical(height: Pad.pad16);
-                },
-                itemCount:
-                    manager.billionairesRes?.recentMentions?.data?.length ?? 0,
-              ),
-            ),
-
-            /*SpacerVertical(height: Pad.pad10),
-            Visibility(
-              visible: true,
-                child: BaseHeading(
-                  title: "Top 360 Mentions",
-                  titleStyle: styleBaseBold(fontSize: 24,color: ThemeColors.splashBG),
-                  margin: EdgeInsets.symmetric(horizontal: Pad.pad16,vertical: Pad.pad5),
-
-                )
-            ),
-            SpacerVertical(height: Pad.pad10),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: Pad.pad16),
-              child: Image.asset(Images.btc),
-            ),
-            SpacerVertical(height: Pad.pad10),
-            Visibility(
-                visible: manager.billionairesRes?.symbolMentionList?.title != null && manager.billionairesRes?.symbolMentionList?.title!= '',
-                child: BaseHeading(
-                  title: manager.billionairesRes?.symbolMentionList?.title??"",
-                  titleStyle: styleBaseBold(fontSize: 24,color: ThemeColors.splashBG),
-                  margin: EdgeInsets.symmetric(horizontal: Pad.pad16,vertical: Pad.pad5),
-
-                )
-            ),
-            SpacerVertical(height: Pad.pad16),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: Pad.pad16),
-              child: Row(
-                children: [
-                  Expanded(child: BaseColorContainer(
-                    bgColor: ThemeColors.neutral5.withValues(alpha: 0.2),
-                    child: Column(
-                      children: [
-                        Text(
-                          "Market Cap",
-                          style: styleBaseRegular(fontSize: 18,color: ThemeColors.neutral7),
-                        ),
-                        SpacerVertical(height: Pad.pad5),
-                        Text(
-                          "\$3.37 T",
-                          style: styleBaseBold(fontSize: 30,color: ThemeColors.splashBG),
-                        ),
-                        SpacerVertical(height: Pad.pad5),
-                        Visibility(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(
-                                2 >= 0
-                                    ? Icons.arrow_drop_up
-                                    : Icons.arrow_drop_down,
-                                color: 2>= 0
-                                    ? ThemeColors.success120
-                                    : ThemeColors.error120,
-                                size: 18,
-                              ),
-                              Text(
-                                "\$3.37 (0.02%)",
-                                style: styleBaseBold(
-                                  fontSize: 12,
-                                  color: 2 >= 0
-                                      ? ThemeColors.success120
-                                      : ThemeColors.error120,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  )),
-                  SpacerHorizontal(width: Pad.pad10),
-                  Expanded(child: BaseColorContainer(
-                    bgColor: ThemeColors.neutral5.withValues(alpha: 0.2),
-                    child: Column(
-                      children: [
-                        Text(
-                          "Total Volume",
-                          style: styleBaseRegular(fontSize: 18,color: ThemeColors.neutral7),
-                        ),
-                        SpacerVertical(height: Pad.pad5),
-                        Text(
-                          "\$152.1B",
-                          style: styleBaseBold(fontSize: 30,color: ThemeColors.splashBG),
-                        ),
-                        SpacerVertical(height: Pad.pad5),
-                        Visibility(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-
-                            children: [
-                              Icon(
-                                2 >= 0
-                                    ? Icons.arrow_drop_up
-                                    : Icons.arrow_drop_down,
-                                color: 2>= 0
-                                    ? ThemeColors.success120
-                                    : ThemeColors.error120,
-                                size: 18,
-                              ),
-                              Text(
-                                "\$3.37 (0.02%)",
-                                style: styleBaseBold(
-                                  fontSize: 12,
-                                  color: 2 >= 0
-                                      ? ThemeColors.success120
-                                      : ThemeColors.error120,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  )),
-
-                ],
-              ),
-            ),
-            SpacerVertical(height: Pad.pad10),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: Pad.pad16,vertical: Pad.pad5),
-
-              child: BaseColorContainer(
-                bgColor: ThemeColors.neutral5.withValues(alpha: 0.2),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Dominance",
-                      style: styleBaseRegular(fontSize: 18,color: ThemeColors.neutral7),
-                    ),
-                    SpacerVertical(height: Pad.pad5),
-                    Row(
+              child: SpacerVertical(height: 10)
+          ),
+          Visibility(
+            visible: manager.billionairesRes?.recentMentions != null &&
+                (manager.billionairesRes?.recentMentions?.data?.isNotEmpty ==
+                    true),
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                controller: _scrollController,
+                child: Padding(
+                    padding: EdgeInsets.only(left: 16, right: 16),
+                    child: Row(
                       children: List.generate(
-                        3,(index) {
-                          //Symbols items= item!.symbols![index];
-                          return Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Row(
-                                  children: [
-                                    Icon(Icons.circle,color: ThemeColors.warning120,size: 10),
-                                    SpacerHorizontal(width: Pad.pad3),
-                                    BaseHeading(
-                                      title: "Bitcoin",
-                                      titleStyle: styleBaseBold(fontSize: 12,color: ThemeColors.black),
-                                    )
+                        manager.billionairesRes?.recentMentions?.data
+                            ?.length ??
+                            0,
+                            (index) {
+                          CryptoTweetPost? data = manager
+                              .billionairesRes?.recentMentions?.data?[index];
+                          return InkWell(
+                            onTap: () {
+                              _scrollToSelectedIndex(index);
+                              recentTweetSheet(
+                                mentions: data,
+                              );
+                            },
+                            child: Container(
+                              margin: EdgeInsets.only(right: 8),
+                              padding: const EdgeInsets.all(2),
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                gradient: const LinearGradient(
+                                  begin: Alignment.bottomLeft,
+                                  end: Alignment.topRight,
+                                  colors: [
+                                    ThemeColors.accent,
+                                    Color.fromARGB(255, 222, 215, 7),
                                   ],
                                 ),
-                                Text(
-                                  "58.3%",
-                                  style: styleBaseBold(fontSize: 26,color: ThemeColors.splashBG),
+                              ),
+                              child: Container(
+                                padding: EdgeInsets.all(3),
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: ThemeColors.background,
                                 ),
-                              ],
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(60),
+                                  child: CachedNetworkImagesWidget(
+                                    data?.image ?? '',
+                                    height: 60,
+                                    width: 60,
+                                    showLoading: true,
+                                    fit: BoxFit.contain,
+                                  ),
+                                ),
+                              ),
                             ),
                           );
                         },
                       ),
-                    ),
-                  ],
+                    )
                 ),
               ),
-            ),*/
+            ),
+          ),
+          SpacerVertical(height: 10),
+          MentionsListIndex(symbolMentionRes: symbolMentionRes),
 
-            SpacerVertical(height: Pad.pad10),
-            CryptoTable(
-                symbolMentionRes: manager.billionairesRes?.symbolMentionList)
-          ]),
+          SpacerVertical(height: 20),
+          TopBilIndex(
+            topTabs: manager.billionairesRes?.topTab,
+          ),
+          SpacerVertical(height: 20),
+          BaseButton(
+            textSize: 16,
+            onPressed: () {
+              Navigator.pushNamed(context, AllBillionairesIndex.path);
+            },
+            text: "View all Billionaires",
+            margin: EdgeInsets.symmetric(horizontal: Pad.pad16),
+          ),
+          SpacerVertical(height: 20),
+        ],
+      ),
     );
   }
 }
