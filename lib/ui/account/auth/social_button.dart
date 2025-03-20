@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
-
 import '../../../utils/theme.dart';
 
 class AccountSocialButton extends StatelessWidget {
@@ -20,13 +18,13 @@ class AccountSocialButton extends StatelessWidget {
     return ElevatedButton(
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
-        backgroundColor: ThemeColors.white,
+        backgroundColor: Colors.white,
         elevation: 0,
         minimumSize: const Size.fromHeight(45),
         padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8),
-          side: BorderSide(color: ThemeColors.black),
+          side: BorderSide(color: Colors.black),
         ),
       ),
       child: Row(
@@ -43,7 +41,10 @@ class AccountSocialButton extends StatelessWidget {
           Flexible(
             child: Text(
               text,
-              style: styleBaseBold(fontSize: 16),
+              style: styleBaseBold(
+                fontSize: 16,
+                color: Colors.black,
+              ),
             ),
           ),
         ],

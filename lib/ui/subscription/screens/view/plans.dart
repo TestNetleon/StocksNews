@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:stocks_news_new/service/braze/service.dart';
 import 'package:stocks_news_new/ui/base/app_bar.dart';
 import 'package:stocks_news_new/ui/base/scaffold.dart';
 import 'package:stocks_news_new/ui/subscription/screens/layout/one/layout_one.dart';
@@ -24,6 +25,7 @@ class _SubscriptionPlansIndexState extends State<SubscriptionPlansIndex> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<SubscriptionManager>().getSubscriptionData();
+      BrazeService.membershipVisit();
     });
   }
 

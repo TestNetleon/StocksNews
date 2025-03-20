@@ -178,7 +178,15 @@ class ThemeColors {
 
   static Color navigationBar = Colors.white;
 
+  static Color drawerMemDark = const Color(0xFF014680);
+  static Color drawerMemLight = Color(0xFF358CBA);
+  static Color drawerMemBtn = const Color(0xFF002053);
+
   static void updateTheme(bool isLightTheme) {
+    drawerMemDark = isLightTheme ? const Color(0xFF014680) : gradientGreen;
+    drawerMemLight = isLightTheme ? Color(0xFF358CBA) : const Color(0xFF35BA46);
+    drawerMemBtn =
+        isLightTheme ? const Color(0xFF002053) : const Color(0xFF035F00);
     //
     sliderDots = isLightTheme ? Colors.white : Color(0xFF181818);
 
@@ -189,7 +197,8 @@ class ThemeColors {
 
     // SECONDARY
     secondary120 = isLightTheme ? Color(0xFF3240D1) : ThemeColors.accent;
-    secondary100 = isLightTheme ? Color(0xFF555ED9) : ThemeColors.accent;
+    secondary100 =
+        isLightTheme ? Color.fromARGB(255, 126, 135, 255) : ThemeColors.accent;
 
     // Neutral
     // neutral80 = isLightTheme ? Color(0xFF465F8C) : Color(0xFF98A7C2);

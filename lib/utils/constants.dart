@@ -433,7 +433,7 @@ class Images {
 }
 
 class AudioFiles {
-  static const alertWeathlist = "audios/alert_watchlist.mp3";
+  static const alertWatchlist = "audios/alert_watchlist.mp3";
   static const coinWinAudio = "audios/coin_win.wav";
   static const successCoin = "audios/success_coin.mp3";
   static const refresh = "audios/refresh.wav";

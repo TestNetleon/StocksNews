@@ -11,7 +11,7 @@ import '../../routes/my_app.dart';
 class BaseBottomSheet {
   bottomSheet({
     required Widget child,
-    bool isScrollable=true,
+    bool isScrollable = true,
     Color? barrierColor,
     EdgeInsets? padding,
   }) {
@@ -35,43 +35,49 @@ class BaseBottomSheet {
       context: navigatorKey.currentContext!,
       backgroundColor: Colors.transparent,
       builder: (context) {
-        return Stack(
-          alignment: Alignment.topCenter,
-          children: [
-            Container(
-              margin: EdgeInsets.only(top: 14),
-              padding: padding ?? EdgeInsets.all(Pad.pad16),
-              decoration: BoxDecoration(
-                color: ThemeColors.white,
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(Pad.pad24),
-                  topRight: Radius.circular(Pad.pad24),
+        return Padding(
+          padding: EdgeInsets.only(
+            bottom:
+                MediaQuery.of(navigatorKey.currentContext!).viewInsets.bottom,
+          ),
+          child: Stack(
+            alignment: Alignment.topCenter,
+            children: [
+              Container(
+                margin: EdgeInsets.only(top: 14),
+                padding: padding ?? EdgeInsets.all(Pad.pad16),
+                decoration: BoxDecoration(
+                  color: ThemeColors.white,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(Pad.pad24),
+                    topRight: Radius.circular(Pad.pad24),
+                  ),
                 ),
-              ),
-              child: OptionalParent(
-                addParent: !isScrollable,
-                parentBuilder: (ch) {
-                  return child;
-                },
-                child: SingleChildScrollView(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      child,
-                    ],
+                child: OptionalParent(
+                  addParent: !isScrollable,
+                  parentBuilder: (ch) {
+                    return child;
+                  },
+                  child: SingleChildScrollView(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        child,
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-            Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(30),
-                color: ThemeColors.white,
+              Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(30),
+                  color: ThemeColors.white,
+                ),
+                height: 6,
+                width: 48.sp,
               ),
-              height: 6,
-              width: 48.sp,
-            ),
-          ],
+            ],
+          ),
         );
       },
     );

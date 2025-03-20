@@ -134,6 +134,7 @@ class _PersonalDetailUpdatePicState extends State<PersonalDetailUpdatePic> {
                   Images.write,
                   height: 14,
                   width: 14,
+                  color: ThemeColors.black,
                 ),
               ),
             ),

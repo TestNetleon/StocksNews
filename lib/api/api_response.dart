@@ -144,7 +144,6 @@ class Extra {
   final bool? showStockScanner;
   final bool? showStockScannerApp;
 
-  final BlackFridayRes? blackFriday;
   final List<MembershipRes>? activeMembership;
 
   // final num? isRegistered;
@@ -155,7 +154,6 @@ class Extra {
     this.executable,
     this.reponseTime,
     this.activeMembership,
-    this.blackFriday,
     this.showBlackFriday,
     this.christmasMembership,
     this.newYearMembership,
@@ -266,9 +264,6 @@ class Extra {
         christmasMembership: json['christmas_membership'],
         newYearMembership: json['new_year_membership'],
 
-        blackFriday: json["black_friday"] == null
-            ? null
-            : BlackFridayRes.fromJson(json["black_friday"]),
         showArena: json['show_arena'],
         showTradingSimulator: json['show_trading_simulator'],
         // isRegistered: json['is_registered'],
@@ -450,7 +445,6 @@ class Extra {
         'black_friday_membership': showBlackFriday,
         'christmas_membership': christmasMembership,
         'new_year_membership': newYearMembership,
-        "black_friday": blackFriday?.toJson(),
         "ad_managers": adManagers?.toJson(),
         "phone_code_error": phoneCodeError,
         'show_trading_simulator': showTradingSimulator,

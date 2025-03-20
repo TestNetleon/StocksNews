@@ -31,7 +31,7 @@ class AlertsWatchlistManager extends ChangeNotifier {
       if (response.status) {
         BrazeService.eventADAlert(symbol: symbol);
         await _player.play(
-          AssetSource(AudioFiles.alertWeathlist),
+          AssetSource(AudioFiles.alertWatchlist),
         );
       }
       TopSnackbar.show(
@@ -63,7 +63,7 @@ class AlertsWatchlistManager extends ChangeNotifier {
 
       if (response.status) {
         BrazeService.eventADWatchlist(symbol: symbol);
-        await _player.play(AssetSource(AudioFiles.alertWeathlist));
+        await _player.play(AssetSource(AudioFiles.alertWatchlist));
       }
       TopSnackbar.show(
         message: response.message ?? "",

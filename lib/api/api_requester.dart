@@ -23,7 +23,7 @@ import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
-import '../screens/AdManager/item.dart';
+import '../ui/AdManager/item.dart';
 import '../ui/tabs/tabs.dart';
 
 String? validAuthToken;

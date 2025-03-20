@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stocks_news_new/ui/base/base_list_divider.dart';
+import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
@@ -29,17 +30,18 @@ class UpdateImageType extends StatelessWidget {
                   Images.photo,
                   height: 24,
                   width: 24,
+                  color: ThemeColors.black,
                 ),
                 const SpacerHorizontal(width: 10),
                 Text(
-                  "Camera",
+                  "Photo Library",
                   style: styleBaseRegular(fontSize: 16),
                 ),
               ],
             ),
           ),
         ),
-        BaseListDivider(),
+        BaseListDivider(height: 30),
         InkWell(
           onTap: onGallery,
           child: Container(
@@ -51,6 +53,7 @@ class UpdateImageType extends StatelessWidget {
                   Images.photo,
                   height: 24,
                   width: 24,
+                  color: ThemeColors.black,
                 ),
                 const SpacerHorizontal(width: 10),
                 Text(

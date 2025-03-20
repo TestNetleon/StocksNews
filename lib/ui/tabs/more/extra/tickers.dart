@@ -37,19 +37,21 @@ class TickersBoxIndex extends StatelessWidget {
               return Container(
                 width: 180.sp,
                 margin: const EdgeInsets.only(right: 16),
-                child: TickerBoxItem(data: data,onTap: (){
-                  BaseBottomSheet().bottomSheet(
-                      barrierColor: ThemeColors.neutral5.withValues(alpha: 0.7),
-                      child: ActionInNbs(
-                          symbol: data.symbol ?? '',
-                          item: BaseTickerRes(
-                            id: data.id.toString(),
-                            symbol: data.symbol ?? '',
-                            name: data.name ?? '',
-                            image: data.image ?? '',
-                          ))
-                  );
-                }),
+                child: TickerBoxItem(
+                    data: data,
+                    onTap: () {
+                      BaseBottomSheet().bottomSheet(
+                          barrierColor:
+                              ThemeColors.neutral5.withValues(alpha: 0.7),
+                          child: ActionInNbs(
+                              symbol: data.symbol ?? '',
+                              item: BaseTickerRes(
+                                id: data.id.toString(),
+                                symbol: data.symbol ?? '',
+                                name: data.name ?? '',
+                                image: data.image ?? '',
+                              )));
+                    }),
               );
             },
           ),

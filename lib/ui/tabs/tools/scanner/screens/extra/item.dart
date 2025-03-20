@@ -58,15 +58,16 @@ class ScannerBaseItem extends StatelessWidget {
             return;
           }
           BaseBottomSheet().bottomSheet(
-              barrierColor: ThemeColors.neutral5.withValues(alpha: 0.7),
-              child: ActionInNbs(
-                  symbol: data?.identifier ?? '',
-                  item: BaseTickerRes(
-                    id: data?.bid.toString(),
-                    symbol: data?.identifier ?? '',
-                    name: data?.name ?? '',
-                    image: data?.image ?? '',
-                  )));
+            barrierColor: ThemeColors.neutral5.withValues(alpha: 0.7),
+            child: ActionInNbs(
+              symbol: data?.identifier ?? '',
+              item: BaseTickerRes(
+                symbol: data?.identifier ?? '',
+                name: data?.name ?? '',
+                image: data?.image ?? '',
+              ),
+            ),
+          );
         },
         child: Column(
           children: [

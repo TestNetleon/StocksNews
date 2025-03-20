@@ -109,7 +109,7 @@ import '../managers/tools.dart';
 import '../managers/user.dart';
 import '../models/my_home_premium.dart';
 
-import '../screens/AdManager/manager.dart';
+import '../ui/AdManager/manager.dart';
 import '../ui/account/auth/login.dart';
 import '../ui/account/auth/verify.dart';
 import '../ui/account/update/delete.dart';
@@ -357,7 +357,7 @@ class Routes {
             final arguments = settings.arguments as Map<String, dynamic>?;
             String symbol = arguments?['symbol'];
             String? currency = arguments?['currency'];
-            return CryptoIndex(symbol: symbol,currency: currency);
+            return CryptoIndex(symbol: symbol, currency: currency);
           },
         );
 
