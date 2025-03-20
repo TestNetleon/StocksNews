@@ -92,6 +92,7 @@ class ToolsManager extends ChangeNotifier {
         }
 
         break;
+
       case ToolsEnum.compare:
         Navigator.pushNamed(
           navigatorKey.currentContext!,

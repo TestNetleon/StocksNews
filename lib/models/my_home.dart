@@ -15,6 +15,7 @@ String myHomeResToJson(MyHomeRes data) => json.encode(data.toJson());
 class MyHomeRes {
   final List<BaseTickerRes>? tickers;
   final HomeLoginBoxRes? loginBox;
+  final HomeLoginBoxRes? loginBoxDrawer;
   final UserRes? user;
   final BaseNewsRes? bannerBlog;
   final bool? showCrypto;
@@ -27,6 +28,7 @@ class MyHomeRes {
   MyHomeRes({
     this.tickers,
     this.loginBox,
+    this.loginBoxDrawer,
     this.user,
     this.adManagers,
     this.popular,
@@ -52,6 +54,11 @@ class MyHomeRes {
         loginBox: json["login_box"] == null
             ? null
             : HomeLoginBoxRes.fromJson(json["login_box"]),
+
+        loginBoxDrawer: json["login_box_drawer"] == null
+            ? null
+            : HomeLoginBoxRes.fromJson(json["login_box_drawer"]),
+
         tickers: json["trending"] == null
             ? null
             : List<BaseTickerRes>.from(
@@ -76,6 +83,9 @@ class MyHomeRes {
             ? []
             : List<dynamic>.from(recentNews!.map((x) => x.toJson())),
         "login_box": loginBox?.toJson(),
+
+        "login_box_drawer": loginBoxDrawer?.toJson(),
+
         "banner_blog": bannerBlog?.toJson(),
         "user": user?.toJson(),
         "trending": tickers == null
@@ -89,6 +99,8 @@ class MyHomeRes {
 
 class HomeLoginBoxRes {
   final String? id;
+  final String? title;
+  final String? subtitle;
   final String? agreeUrl;
   final String? buttonText;
   final String? verifyButtonText;
@@ -96,6 +108,8 @@ class HomeLoginBoxRes {
   HomeLoginBoxRes({
     this.id,
     this.agreeUrl,
+    this.title,
+    this.subtitle,
     this.buttonText,
     this.verifyButtonText,
   });
@@ -103,6 +117,8 @@ class HomeLoginBoxRes {
   factory HomeLoginBoxRes.fromJson(Map<String, dynamic> json) =>
       HomeLoginBoxRes(
         id: json["id"],
+        title: json['title'],
+        subtitle: json['subtitle'],
         agreeUrl: json["agree_url"],
         buttonText: json['btn_text'],
         verifyButtonText: json['verify_btn_text'],
@@ -110,6 +126,8 @@ class HomeLoginBoxRes {
 
   Map<String, dynamic> toJson() => {
         "id": id,
+        'title': title,
+        'subtitle': subtitle,
         "agree_url": agreeUrl,
         "btn_text": buttonText,
         'verify_btn_text': verifyButtonText,

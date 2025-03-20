@@ -77,7 +77,6 @@ class Apis {
   static const cryptoSearchSymbol = "/crypto/crypto-search-data";
   static const cryptoSearchCurrency = "/crypto/currency-search-data";
 
-
   //MARK: Simulator API
   static const tsUserInfo = "/simulator/user-info";
   static const tsTopBar = "/simulator/trade/stock-detail-topbar";

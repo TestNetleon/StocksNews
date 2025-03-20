@@ -225,7 +225,8 @@ class _FilterTypeState extends State<FilterType> {
                           ? StarRating(
                               rating:
                                   int.parse(widget.data![index].value ?? '0'),
-                              selected: selected)
+                              selected: selected,
+                            )
                           : null),
                 );
               },
@@ -298,7 +299,7 @@ class StarRating extends StatelessWidget {
             Images.starSelected,
             width: 15,
             height: 15,
-            color: selected ? ThemeColors.white : null,
+            color: selected ? ThemeColors.white : ThemeColors.selectedBG,
           ),
         );
       } else {
@@ -307,6 +308,7 @@ class StarRating extends StatelessWidget {
             Images.starUnselected,
             width: 15,
             height: 15,
+            color: selected ? ThemeColors.white : ThemeColors.neutral40,
           ),
         );
       }

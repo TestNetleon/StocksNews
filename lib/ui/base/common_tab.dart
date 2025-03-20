@@ -79,7 +79,11 @@ class _CommonTabsState extends State<BaseTabs>
                     label: e.title,
                     textStyle: isSelected
                         // ? styleBaseSemiBold(fontSize: widget.fontSize ?? 16)
-                        ? Theme.of(context).textTheme.displayLarge
+                        ? styleBaseBold(
+                            fontSize: widget.fontSize ?? 16,
+                            color: ThemeColors.selectedBG,
+                          )
+                        // Theme.of(context).textTheme.displayLarge
                         : widget.unselectedBold
                             ? styleBaseSemiBold(
                                 color: ThemeColors.neutral20,

@@ -6,8 +6,8 @@ class BaseButtonSmall extends StatelessWidget {
   const BaseButtonSmall({
     this.onPressed,
     this.text = "Submit",
-    this.color = ThemeColors.primary100,
-    this.disableTextColor = ThemeColors.primary100,
+    this.color,
+    this.disableTextColor,
     this.textColor,
     this.textSize = 14,
     this.fullWidth = false,
@@ -28,7 +28,7 @@ class BaseButtonSmall extends StatelessWidget {
   final String text;
   final Color? color;
   final Color? textColor;
-  final Color disableTextColor;
+  final Color? disableTextColor;
 
   final Function()? onPressed;
   final double textSize;
@@ -51,7 +51,7 @@ class BaseButtonSmall extends StatelessWidget {
         style: ElevatedButton.styleFrom(
           disabledBackgroundColor:
               disabledBackgroundColor ?? ThemeColors.primary10,
-          backgroundColor: color,
+          backgroundColor: color ?? ThemeColors.primary100,
           shadowColor: Colors.transparent,
           elevation: 0,
           minimumSize: const Size.fromHeight(32),
@@ -68,7 +68,7 @@ class BaseButtonSmall extends StatelessWidget {
               styleBaseSemiBold(
                 fontSize: textSize,
                 color: onPressed == null
-                    ? disableTextColor
+                    ? disableTextColor ?? ThemeColors.primary100
                     : textColor ?? ThemeColors.black,
               ),
         ),

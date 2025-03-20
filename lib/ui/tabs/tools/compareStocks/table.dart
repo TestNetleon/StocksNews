@@ -145,7 +145,7 @@ class ToolsCompareTable extends StatelessWidget {
                         return _cell(
                           cellValue,
                           style: styleBaseRegular(
-                            fontSize: 13,
+                            fontSize: 14,
                             color: ThemeColors.black,
                           ),
                         );

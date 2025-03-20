@@ -27,9 +27,7 @@ class _TrendingByMarketCapState extends State<TrendingByMarketCap> {
 
   Future _callAPI() async {
     TrendingViewAllManager manager = context.read<TrendingViewAllManager>();
-    if (manager.dataByMarketCap != null) {
-      manager.getTrendingByMarketCap();
-    }
+    manager.getTrendingByMarketCap();
   }
 
   @override
