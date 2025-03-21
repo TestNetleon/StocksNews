@@ -61,7 +61,7 @@ class _AIindexState extends State<AIindex> {
 
     return PopScope(
       onPopInvokedWithResult: (didPop, result) {
-        SSEManager.instance.disconnectScreen(SimulatorEnum.stockDetail);
+        SSEManager.instance.disconnectScreen(SimulatorEnum.aiAnalysis);
       },
       child: BaseScaffold(
         appBar: BaseTickerAppBar(
@@ -83,7 +83,10 @@ class _AIindexState extends State<AIindex> {
                 margin: EdgeInsets.zero,
                 children: [
                   if (tickerDetail != null)
-                    BaseStockDetailHeader(data: tickerDetail),
+                    BaseStockDetailHeader(
+                      data: tickerDetail,
+                      type: SimulatorEnum.aiAnalysis,
+                    ),
                   AIChart(aiAnalysis: aiAnalysis),
                   AIOurTake(ourTake: ourTake),
                   AIHighlights(),

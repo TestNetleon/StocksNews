@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:stocks_news_new/ui/base/app_bar.dart';
 import 'package:stocks_news_new/ui/base/button.dart';
 import 'package:stocks_news_new/ui/base/common_tab.dart';
 import 'package:stocks_news_new/ui/base/scaffold.dart';
@@ -63,10 +62,10 @@ class _SimulatorIndexState extends State<SimulatorIndex> {
         SSEManager.instance.disconnectAllScreens();
       },
       child: BaseScaffold(
-        appBar: BaseAppBar(
-          showBack: true,
-          title: "Trading Simulator",
-        ),
+        // appBar: BaseAppBar(
+        //   showBack: true,
+        //   title: "Trading Simulator",
+        // ),
         body: Stack(
           children: [
             BaseLoaderContainer(
