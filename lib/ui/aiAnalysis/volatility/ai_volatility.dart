@@ -58,20 +58,24 @@ class AiVolatility extends StatelessWidget {
               Positioned(
                 top: 60,
                 left: 0,
-                child: Text("Low",
-                    style: styleBaseRegular(
-                      fontSize: 13,
-                      color: ThemeColors.neutral80,
-                    )),
+                child: Text(
+                  "Low",
+                  style: styleBaseRegular(
+                    fontSize: 13,
+                    color: ThemeColors.neutral80,
+                  ),
+                ),
               ),
               Positioned(
                 top: 60,
                 right: 0,
-                child: Text("High",
-                    style: styleBaseRegular(
-                      fontSize: 13,
-                      color: ThemeColors.neutral80,
-                    )),
+                child: Text(
+                  "High",
+                  style: styleBaseRegular(
+                    fontSize: 13,
+                    color: ThemeColors.neutral80,
+                  ),
+                ),
               ),
               Positioned(
                 left: (ScreenUtil().screenWidth - 30) / 2,

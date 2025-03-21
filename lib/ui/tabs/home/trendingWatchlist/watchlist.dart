@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/ui/base/heading.dart';
 import 'package:stocks_news_new/ui/stockDetail/index.dart';
+import 'package:stocks_news_new/ui/tabs/more/watchlist/index.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import '../../../../managers/home/home.dart';
@@ -32,8 +33,12 @@ class _HomeWatchlistContainerState extends State<HomeWatchlistContainer> {
         children: [
           BaseHeading(
             title: manager.homePremiumData?.watchList?.title,
-            margin: EdgeInsets.only(top: Pad.pad24, bottom: Pad.pad14),
+            margin: EdgeInsets.only(top: Pad.pad14, bottom: Pad.pad14),
             titleStyle: styleBaseBold(),
+            viewMore: () {
+              Navigator.pushNamed(context, WatchListIndex.path);
+            },
+            viewMoreText: 'View All',
           ),
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,

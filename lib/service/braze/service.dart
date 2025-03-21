@@ -122,6 +122,7 @@ class BrazeService {
   }
 
   static Future<void> eventContentView({
+    //EVENT done
     required String screenType,
     String? source,
     List<String>? featuredStocks,

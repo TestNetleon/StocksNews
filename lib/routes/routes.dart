@@ -57,6 +57,7 @@ import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 import 'package:stocks_news_new/ui/subscription/action_required.dart';
 import 'package:stocks_news_new/ui/tabs/home/scanner/manager/gainers.dart';
+import 'package:stocks_news_new/ui/tabs/home/viewMore/PopularMostBought/index.dart';
 import 'package:stocks_news_new/ui/tabs/home/viewMore/trending/index.dart';
 import 'package:stocks_news_new/ui/tabs/market/industries/industries_view.dart';
 import 'package:stocks_news_new/ui/tabs/market/sectors/sector_view.dart';
@@ -112,7 +113,7 @@ import '../managers/tools.dart';
 import '../managers/user.dart';
 import '../models/my_home_premium.dart';
 
-import '../screens/AdManager/manager.dart';
+import '../ui/AdManager/manager.dart';
 import '../ui/account/auth/login.dart';
 import '../ui/account/auth/verify.dart';
 import '../ui/account/update/delete.dart';
@@ -382,7 +383,7 @@ class Routes {
             final arguments = settings.arguments as Map<String, dynamic>?;
             String symbol = arguments?['symbol'];
             String? currency = arguments?['currency'];
-            return CryptoIndex(symbol: symbol,currency: currency);
+            return CryptoIndex(symbol: symbol, currency: currency);
           },
         );
 
@@ -451,6 +452,16 @@ class Routes {
             String symbol = arguments?['symbol'];
 
             return AIindex(symbol: symbol);
+          },
+        );
+
+      case HomeViewMoreTickersIndex.path:
+        return MaterialPageRoute(
+          builder: (context) {
+            final arguments = settings.arguments as Map<String, dynamic>?;
+            String apiUrl = arguments?['apiUrl'];
+
+            return HomeViewMoreTickersIndex(apiUrl: apiUrl);
           },
         );
 

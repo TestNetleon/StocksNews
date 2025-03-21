@@ -26,11 +26,14 @@ class ErrorDisplayNewWidget extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           const SpacerVertical(),
-          HtmlWidget(
-           // textAlign: TextAlign.center,
-            error ?? Const.errSomethingWrong,
-            // style: styleBaseBold(color: ThemeColors.black),
-            textStyle: Theme.of(context).textTheme.displayLarge,
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: Pad.pad16),
+            child: Text(
+              textAlign: TextAlign.center,
+              error ?? Const.errSomethingWrong,
+              // style: styleBaseBold(color: ThemeColors.black),
+              style: Theme.of(context).textTheme.displayLarge,
+            ),
           ),
           const SpacerVertical(),
           Visibility(

@@ -195,7 +195,7 @@ class AppsFlyerService {
   Future createUserInvitationLink() async {
     UserManager manager = navigatorKey.currentContext!.read<UserManager>();
 
-    if (manager.user == null || shareUrl == null) {
+    if (manager.user == null) {
       return;
     }
 

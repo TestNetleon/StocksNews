@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
+import 'package:stocks_news_new/ui/theme/manager.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
@@ -24,6 +26,8 @@ class SDRange extends StatelessWidget {
   Widget build(BuildContext context) {
     double barHeight = 5.sp;
     double triangleSize = 10.sp;
+
+    bool isDark = context.watch<ThemeManager>().isDarkMode;
 
     return Container(
       decoration: BoxDecoration(
@@ -75,8 +79,11 @@ class SDRange extends StatelessWidget {
                           top: -(triangleSize - barHeight) / 1.2,
                           child: CustomPaint(
                             size: Size(triangleSize, triangleSize),
-                            painter:
-                                TrianglePainter(color: ThemeColors.neutral80),
+                            painter: TrianglePainter(
+                              color: isDark
+                                  ? ThemeColors.selectedBG
+                                  : ThemeColors.neutral80,
+                            ),
                           ),
                         ),
                       ],

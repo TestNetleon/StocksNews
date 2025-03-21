@@ -28,10 +28,11 @@ class _PersonalDetailUpdatePicState extends State<PersonalDetailUpdatePic> {
 
   void _selectOption() {
     BaseBottomSheet().bottomSheet(
-        child: UpdateImageType(
-      onCamera: () => _pickImage(source: ImageSource.camera),
-      onGallery: () => _pickImage(),
-    ));
+      child: UpdateImageType(
+        onCamera: () => _pickImage(source: ImageSource.camera),
+        onGallery: () => _pickImage(),
+      ),
+    );
   }
 
   Future<void> _pickImage({ImageSource? source}) async {
@@ -134,6 +135,7 @@ class _PersonalDetailUpdatePicState extends State<PersonalDetailUpdatePic> {
                   Images.write,
                   height: 14,
                   width: 14,
+                  color: ThemeColors.black,
                 ),
               ),
             ),

@@ -336,10 +336,9 @@ Future openUrl(String? url,
 
 commonShare({String? url, String? title}) {
   if (url == null || url == '') {
-    // showErrorMessage(message: "No url found.");
   } else {
     Share.share(
-      "$title $url",
+      url,
       subject: title,
     );
   }
@@ -885,7 +884,7 @@ void handleNavigation({
         });
   } else if (type == DeeplinkEnum.stocksDetail) {
     Navigator.pushNamed(navigatorKey.currentContext!, SDIndex.path, arguments: {
-      'slug': slug,
+      'symbol': slug,
     });
   } else if (type == DeeplinkEnum.login) {
     if (userPresent) {

@@ -76,7 +76,7 @@ TextStyle styleBaseBold({
     fontSize: fontSize,
     color: color ?? ThemeColors.black,
     fontFamily: fontFamily ?? Fonts.roboto,
-    fontWeight: FontWeight.w800,
+    fontWeight: FontWeight.w700,
     decoration: decoration,
     decorationColor: color,
     height: height,

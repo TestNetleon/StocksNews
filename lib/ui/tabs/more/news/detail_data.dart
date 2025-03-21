@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:provider/provider.dart';
@@ -6,7 +8,8 @@ import 'package:stocks_news_new/managers/user.dart';
 import 'package:stocks_news_new/models/news.dart';
 import 'package:stocks_news_new/models/news/detail.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
-import 'package:stocks_news_new/screens/AdManager/service.dart';
+import 'package:stocks_news_new/ui/AdManager/item.dart';
+import 'package:stocks_news_new/ui/AdManager/service.dart';
 import 'package:stocks_news_new/ui/base/base_scroll.dart';
 import 'package:stocks_news_new/ui/base/heading.dart';
 import 'package:stocks_news_new/ui/base/news_item.dart';
@@ -146,6 +149,17 @@ class NewsDetailData extends StatelessWidget {
               fontSize: 18,
               height: 1.6,
             ),
+            onTapUrl: (url) async {
+              bool a = false;
+              if (Platform.isAndroid) {
+                a = await openUrl(url);
+              } else {
+                a = true;
+                Uri uri = Uri.parse(url);
+                iOSNavigate(uri);
+              }
+              return a;
+            },
             customWidgetBuilder: (element) {
               if (element.innerHtml.contains('DISPLAY_AD_1')) {
                 return Visibility(

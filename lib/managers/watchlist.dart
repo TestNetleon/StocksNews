@@ -97,10 +97,7 @@ class WatchListManagers extends ChangeNotifier {
       );
 
       if (response.status) {
-        BrazeService.eventADWatchlist(
-          symbol: symbol,
-          add: false,
-        );
+        BrazeService.eventADWatchlist(symbol: symbol, add: false);
 
         getWatchList(showProgress: false);
         Navigator.pop(navigatorKey.currentContext!);
@@ -125,7 +122,7 @@ class WatchListManagers extends ChangeNotifier {
   void redirectToMarket() {
     Navigator.popUntil(navigatorKey.currentContext!, (route) => route.isFirst);
     Navigator.pushNamed(navigatorKey.currentContext!, Tabs.path, arguments: {
-      'index': 1,
+      'index': 2,
     });
   }
 }

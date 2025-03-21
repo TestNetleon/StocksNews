@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/managers/tools.dart';
 import 'package:stocks_news_new/models/tools.dart';
+import 'package:stocks_news_new/ui/base/app_bar.dart';
 import 'package:stocks_news_new/ui/base/base_scroll.dart';
+import 'package:stocks_news_new/ui/tabs/more/index.dart';
 import 'package:stocks_news_new/ui/tabs/tools/item.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/custom/base_loader_container.dart';
@@ -16,6 +18,8 @@ class ToolsIndex extends StatelessWidget {
     ToolsManager manager = context.watch<ToolsManager>();
 
     return BaseScaffold(
+      appBar: BaseAppBar(),
+      drawer: MoreIndex(),
       body: BaseLoaderContainer(
         isLoading: manager.isLoading,
         hasData: manager.data != null && !manager.isLoading,

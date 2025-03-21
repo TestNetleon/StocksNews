@@ -10,6 +10,7 @@ import 'package:stocks_news_new/ui/base/heading.dart';
 import 'package:stocks_news_new/ui/base/scaffold.dart';
 import 'package:stocks_news_new/ui/base/text_field.dart';
 import 'package:stocks_news_new/ui/tabs/more/feedback/widget/feedback_responce.dart';
+import 'package:stocks_news_new/ui/theme/manager.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -128,54 +129,17 @@ class _FeedbackIndexState extends State<FeedbackIndex> {
                               manager.feedbackData?.type?.length ?? 0,
                               (index) {
                                 bool isOpen = selectedIndex == index;
-                                return Expanded(
-                                  child: Column(
-                                    children: [
-                                      InkWell(
-                                        borderRadius:
-                                            BorderRadius.circular(Pad.pad16),
-                                        onTap: () {
-                                          setState(() {
-                                            selectedIndex = index;
-                                            selectType = manager.feedbackData!
-                                                    .type![index].title ??
-                                                "";
-                                          });
-                                        },
-                                        child: Container(
-                                          padding: EdgeInsets.symmetric(
-                                            horizontal: 35,
-                                            vertical: 27,
-                                          ),
-                                          decoration: BoxDecoration(
-                                              color: isOpen
-                                                  ? ThemeColors.secondary10
-                                                  : ThemeColors.white,
-                                              border: Border.all(
-                                                  color: isOpen
-                                                      ? ThemeColors.secondary120
-                                                      : ThemeColors.neutral10),
-                                              borderRadius:
-                                                  BorderRadius.circular(
-                                                      Pad.pad16)),
-                                          child: CachedNetworkImage(
-                                            imageUrl: manager.feedbackData!
-                                                    .type![index].icon ??
-                                                '',
-                                            height: 33,
-                                            width: 33,
-                                            color: isOpen
-                                                ? ThemeColors.secondary120
-                                                : ThemeColors.neutral10,
-                                          ),
-                                        ),
-                                      )
-                                      /* Text(
-                                          manager.feedbackData!.type![index].title ?? '',
-                                          style: styleBaseRegular(),
-                                        ),*/
-                                    ],
-                                  ),
+                                return FeedbackItem(
+                                  index: index,
+                                  isOpen: isOpen,
+                                  onTap: () {
+                                    setState(() {
+                                      selectedIndex = index;
+                                      selectType = manager.feedbackData!
+                                              .type![index].title ??
+                                          "";
+                                    });
+                                  },
                                 );
                               },
                             ),
@@ -201,13 +165,70 @@ class _FeedbackIndexState extends State<FeedbackIndex> {
               ),
               BaseButton(
                 text: "Submit",
-                color: ThemeColors.primary10,
-                textColor: ThemeColors.primary100,
+                // color: ThemeColors.primary10,
+                // textColor: ThemeColors.primary100,
                 onPressed: _onSubmitClick,
               ),
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+class FeedbackItem extends StatelessWidget {
+  const FeedbackItem({
+    super.key,
+    required this.isOpen,
+    required this.index,
+    required this.onTap,
+  });
+
+  final bool isOpen;
+  final int index;
+  final Function() onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    FeedbackManager manager = context.watch<FeedbackManager>();
+    bool isDark = context.watch<ThemeManager>().isDarkMode;
+
+    return Expanded(
+      child: Column(
+        children: [
+          InkWell(
+            borderRadius: BorderRadius.circular(Pad.pad16),
+            onTap: onTap,
+            child: Container(
+              padding: EdgeInsets.symmetric(
+                horizontal: 35,
+                vertical: 27,
+              ),
+              decoration: BoxDecoration(
+                  color: isOpen ? ThemeColors.secondary10 : ThemeColors.white,
+                  border: Border.all(
+                      color: isOpen
+                          ? ThemeColors.secondary120
+                          : ThemeColors.neutral10),
+                  borderRadius: BorderRadius.circular(Pad.pad16)),
+              child: CachedNetworkImage(
+                imageUrl: manager.feedbackData!.type![index].icon ?? '',
+                height: 33,
+                width: 33,
+                color: isOpen
+                    ? ThemeColors.secondary120
+                    : isDark
+                        ? ThemeColors.golden
+                        : ThemeColors.neutral10,
+              ),
+            ),
+          )
+          /* Text(
+                                          manager.feedbackData!.type![index].title ?? '',
+                                          style: styleBaseRegular(),
+                                        ),*/
+        ],
       ),
     );
   }

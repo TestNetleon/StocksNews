@@ -21,8 +21,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
 
-class NewHelpDeskManager extends ChangeNotifier{
-
+class NewHelpDeskManager extends ChangeNotifier {
 // Get Chats
   Status _status = Status.ideal;
   bool get isLoading => _status == Status.loading || _status == Status.ideal;
@@ -117,7 +116,6 @@ class NewHelpDeskManager extends ChangeNotifier{
 
       if (image != null) {
         result = await testCompressAndGetFile(image);
-
         if (result != null) {
           multipartFile = MultipartFile.fromBytes(
             result,
@@ -128,20 +126,24 @@ class NewHelpDeskManager extends ChangeNotifier{
         Utils().showLog("null image");
       }
 
-      final request = FormData.fromMap({
+      final requestMap = {
         "token":
-        navigatorKey.currentContext!.read<UserManager>().user?.token ?? "",
+            navigatorKey.currentContext!.read<UserManager>().user?.token ?? "",
         "ticket_id": ticketId,
         "message": mainFormattedMsg,
         "image": multipartFile,
-      });
+      };
+
+      Utils().showLog("REQUEST => $requestMap");
+
+      final request = FormData.fromMap(requestMap);
       Response response = await dio.post((baseUrl + url),
           data: request, options: Options(headers: headers));
+      Utils().showLog("RESPONSE **  => ${response.data}");
       closeGlobalProgressDialog();
       if (response.statusCode == 200) {
         if (response.data != null) {
           notifyListeners();
-
           getAllChats(
             ticketId: ticketId,
             showProgress: true,
@@ -150,7 +152,6 @@ class NewHelpDeskManager extends ChangeNotifier{
         } else {
           //
           Utils().showLog("dio e2 ${response.statusMessage}");
-
         }
         return ApiResponse(status: true);
       } else {
@@ -227,8 +228,6 @@ class NewHelpDeskManager extends ChangeNotifier{
   bool get isLoadingSubject =>
       _statusSubject == Status.loading || _statusSubject == Status.ideal;
 
-
-
   String? _errorSubject;
   String? get errorSubject => _errorSubject ?? Const.errSomethingWrong;
 
@@ -265,9 +264,9 @@ class NewHelpDeskManager extends ChangeNotifier{
             title: "Alert",
           );
         }
-        Navigator.pushReplacementNamed(navigatorKey.currentContext!, HelpDeskAllChatsIndex.path,arguments: {
-          "ticketId":response.data['ticket_id']
-        });
+        Navigator.pushReplacementNamed(
+            navigatorKey.currentContext!, HelpDeskAllChatsIndex.path,
+            arguments: {"ticketId": response.data['ticket_id']});
       } else {
         _errorSubject = null;
         popUpAlert(
@@ -323,5 +322,4 @@ class NewHelpDeskManager extends ChangeNotifier{
 
     return "";
   }
-
 }

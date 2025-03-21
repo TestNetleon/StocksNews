@@ -81,57 +81,50 @@ class _BaseSlidableStockItemState extends State<BaseSlidableStockItem>
       key: const ValueKey(0),
       endActionPane: ActionPane(
         motion: const ScrollMotion(),
-        extentRatio: 0.75,
+        extentRatio: widget.delete != null ? 0.44 : 0.75,
         children: [
-          Expanded(
-            child: Row(
-              children: [
-                if (widget.addToAlert != null)
-                  BaseSlidableActionItem(
-                    label: widget.isAlertAdded == 1
-                        ? 'Alert Added'
-                        : 'Add to Alerts',
-                    image: Images.alerts,
-                    onTap: () {
-                      controller?.close();
-                      widget.addToAlert!();
-                    },
-                    bgColor: isDark ? ThemeColors.warning : null,
-                  ),
-                if (widget.addToWatchlist != null) ...[
-                  const SpacerHorizontal(width: 1),
-                  BaseSlidableActionItem(
-                    label: widget.isWatchlistAdded == 1
-                        ? 'Watchlist Added'
-                        : 'Add to Watchlist',
-                    image: Images.watchlist,
-                    onTap: () {
-                      controller?.close();
-                      widget.addToWatchlist!();
-                    },
-                    bgColor: isDark ? ThemeColors.accent : null,
-                  ),
-                ],
-                if (widget.edit != null) ...[
-                  const SpacerHorizontal(width: 1),
-                  BaseSlidableActionItem(
-                    label: 'Edit',
-                    image: Images.write,
-                    onTap: widget.edit,
-                  ),
-                ],
-                if (widget.delete != null) ...[
-                  const SpacerHorizontal(width: 1),
-                  BaseSlidableActionItem(
-                    label: widget.deleteLabel ?? 'Stop Alert',
-                    image: Images.delete,
-                    onTap: widget.delete,
-                    bgColor: ThemeColors.error120,
-                  ),
-                ],
-              ],
+          if (widget.addToAlert != null)
+            BaseSlidableActionItem(
+              label: widget.isAlertAdded == 1 ? 'Alert Added' : 'Add to Alerts',
+              image: Images.alerts,
+              onTap: () {
+                controller?.close();
+                widget.addToAlert!();
+              },
+              bgColor: isDark ? ThemeColors.warning : null,
             ),
-          ),
+          if (widget.addToWatchlist != null) ...[
+            const SpacerHorizontal(width: 1),
+            BaseSlidableActionItem(
+              label: widget.isWatchlistAdded == 1
+                  ? 'Watchlist Added'
+                  : 'Add to Watchlist',
+              image: Images.watchlist,
+              onTap: () {
+                controller?.close();
+                widget.addToWatchlist!();
+              },
+              bgColor: isDark ? ThemeColors.accent : null,
+            ),
+          ],
+          if (widget.edit != null) ...[
+            const SpacerHorizontal(width: 1),
+            BaseSlidableActionItem(
+              label: 'Edit',
+              image: Images.write,
+              onTap: widget.edit,
+            ),
+          ],
+          if (widget.delete != null) ...[
+            const SpacerHorizontal(width: 1),
+            BaseSlidableActionItem(
+              label: widget.deleteLabel ?? 'Stop Alert',
+              image: Images.delete,
+              onTap: widget.delete,
+              bgColor: ThemeColors.error120,
+              textColor: Colors.white,
+            ),
+          ],
         ],
       ),
       child: widget.child,
@@ -145,6 +138,7 @@ class BaseSlidableActionItem extends StatelessWidget {
   final String image;
   final VoidCallback? onTap;
   final Color? bgColor;
+  final Color? textColor;
 
   const BaseSlidableActionItem({
     super.key,
@@ -152,6 +146,7 @@ class BaseSlidableActionItem extends StatelessWidget {
     required this.image,
     required this.onTap,
     this.bgColor,
+    this.textColor,
   });
 
   @override
@@ -170,13 +165,14 @@ class BaseSlidableActionItem extends StatelessWidget {
                 image,
                 width: 24,
                 height: 24,
-                color: ThemeColors.white,
+                color: textColor ?? ThemeColors.white,
               ),
               const SpacerVertical(height: 8),
               Text(
                 label,
                 textAlign: TextAlign.center,
-                style: styleBaseBold(fontSize: 14, color: ThemeColors.white),
+                style: styleBaseBold(
+                    fontSize: 14, color: textColor ?? ThemeColors.white),
               ),
             ],
           ),

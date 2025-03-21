@@ -54,7 +54,8 @@ class _LegalInfoIndexState extends State<LegalInfoIndex> {
     return BaseScaffold(
       appBar: BaseAppBar(
         showBack: true,
-        title: manager.data?.title,
+        title: manager.isLoading ? '' : manager.data?.title,
+        showLogo: false,
       ),
       body: Column(
         children: [
@@ -62,7 +63,7 @@ class _LegalInfoIndexState extends State<LegalInfoIndex> {
             isScrollable: false,
             data: _tabs,
             onTap: _onChange,
-            selectedIndex: widget.slug=='terms-of-service'?1:0,
+            selectedIndex: widget.slug == 'terms-of-service' ? 1 : 0,
           ),
           Expanded(
             child: BaseLoaderContainer(

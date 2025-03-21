@@ -82,7 +82,7 @@ class _RedeemPointsState extends State<RedeemPoints> {
                                   manager.data?.box?.title ?? "",
                                   style: styleBaseBold(
                                     fontSize: 24,
-                                    color: ThemeColors.white,
+                                    color: Colors.white,
                                   ),
                                 ),
                                 SpacerVertical(height: Pad.pad3),
@@ -90,7 +90,7 @@ class _RedeemPointsState extends State<RedeemPoints> {
                                   manager.data?.box?.subTitle ?? "",
                                   style: styleBaseRegular(
                                     fontSize: 12,
-                                    color: ThemeColors.white,
+                                    color: Colors.white,
                                   ),
                                 ),
                               ],
@@ -101,7 +101,7 @@ class _RedeemPointsState extends State<RedeemPoints> {
                             "${manager.data?.box?.balance}",
                             style: styleBaseBold(
                               fontSize: 32,
-                              color: ThemeColors.white,
+                              color: Colors.white,
                             ),
                           ),
                         ],

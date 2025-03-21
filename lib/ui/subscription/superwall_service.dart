@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/managers/user.dart';
 import 'package:stocks_news_new/modals/user_res.dart';
@@ -6,6 +7,7 @@ import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:superwallkit_flutter/superwallkit_flutter.dart' as superwall;
 
+import 'screens/purchased/success.dart';
 import 'screens/rc_controller.dart';
 
 class SuperwallService {
@@ -68,7 +70,10 @@ class SWDelegate extends superwall.SuperwallDelegate {
       case superwall.EventType.transactionComplete:
         superwall.Superwall.shared
             .setSubscriptionStatus(superwall.SubscriptionStatus.active);
-
+        Navigator.push(
+          navigatorKey.currentContext!,
+          createRoute(SubscriptionSuccessIndex()),
+        );
         break;
 
       case superwall.EventType.transactionRestore:

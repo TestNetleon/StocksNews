@@ -179,7 +179,15 @@ class ThemeColors {
 
   static Color navigationBar = Colors.white;
 
+  static Color drawerMemDark = const Color(0xFF014680);
+  static Color drawerMemLight = Color(0xFF358CBA);
+  static Color drawerMemBtn = const Color(0xFF002053);
+
   static void updateTheme(bool isLightTheme) {
+    drawerMemDark = isLightTheme ? const Color(0xFF014680) : gradientGreen;
+    drawerMemLight = isLightTheme ? Color(0xFF358CBA) : const Color(0xFF35BA46);
+    drawerMemBtn =
+        isLightTheme ? const Color(0xFF002053) : const Color(0xFF035F00);
     //
     sliderDots = isLightTheme ? Colors.white : Color(0xFF181818);
 
@@ -191,7 +199,7 @@ class ThemeColors {
     // SECONDARY
     secondary120 = isLightTheme ? Color(0xFF3240D1) : ThemeColors.accent;
     secondary100 = isLightTheme ? Color(0xFF555ED9) : ThemeColors.accent;
-
+    // secondary10 = isLightTheme ? Color(0xFFE8E8FA) : Color(0xFF333333);
     // Neutral
     // neutral80 = isLightTheme ? Color(0xFF465F8C) : Color(0xFF98A7C2);
 
@@ -209,7 +217,7 @@ class ThemeColors {
         ? Color(0xFF98A7C2)
         : Color(0xFFFFFFFF).withValues(alpha: .8);
     neutral10 = Color(0xFFC0C9DB);
-    neutral5 = isLightTheme ? Color(0xFFF0F2F6) : Color(0x66626262);
+    neutral5 = isLightTheme ? Color(0xFFF0F2F6) : Color(0xFF333333);
     neutral6 = Color(0xFFCCCCCC);
     // neutral7 = Color(0xFF243D4C);
     neutral8 = Color(0xFF34373C);
@@ -228,7 +236,7 @@ class ThemeColors {
     selectedBG = isLightTheme ? Color(0xFF012054) : ThemeColors.accent;
     colour66 = Color(0xFF666666);
     colourBA = Color(0xFFBABABA);
-    disabledBtn = Color(0xFF3C3C43);
+    disabledBtn = isLightTheme ? Color(0xFF3C3C43) : Color(0xFF262626);
     colour8d = Color(0xFF34928d);
 
     //CATEGORY

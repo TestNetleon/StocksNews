@@ -3,15 +3,13 @@
 import 'package:flutter/foundation.dart';
 
 class Apis {
-
-
   // maintenance
   static const baseUrlLocal = "https://notification.stocks.news/api/v1";
 
   // With Debug condition
-  // static const baseUrl = kDebugMode
-  //     ? "https://dev.stocks.news/api/v2"
-  //     : "https://app.stocks.news/api/v2";
+  static const baseUrl = kDebugMode
+      ? "https://dev.stocks.news/api/v2"
+      : "https://app.stocks.news/api/v2";
 
   // Main live server
    static const baseUrl = "https://app.stocks.news/api/v2";
@@ -21,6 +19,8 @@ class Apis {
   static const myHome = '/home-new';
   static const homeTrendingGainerLoser = '/home-popular-gainer-loser';
   // static const myHome = '/home';
+  static const myHomePopular = '/todays-popular';
+  static const myHomeMostBought = '/most-purchased-stocks';
 
   static const compareStocks = '/compare';
   static const addCompareStock = '/add-compare';
@@ -397,7 +397,6 @@ class Apis {
   static const aiNewsList = "/latest-news-v2";
   // static const notificationSettings = "/notification-settings";
   static const updateNotificationSettings = "/update-notification-setting";
-
 
   static const loginNew = "/check-user";
 

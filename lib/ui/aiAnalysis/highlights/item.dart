@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:stocks_news_new/ui/base/border_container.dart';
+import 'package:stocks_news_new/ui/theme/manager.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -14,11 +16,13 @@ class AIHighlightsItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isDark = context.watch<ThemeManager>().isDarkMode;
     return Container(
       margin: EdgeInsets.only(bottom: 10),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: ThemeColors.white,
         borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: ThemeColors.neutral5),
         boxShadow: [
           BoxShadow(
             color: Color.fromARGB(28, 150, 171, 209),
@@ -36,12 +40,13 @@ class AIHighlightsItem extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Visibility(
-                  visible: data.icon!=null,
+                  visible: data.icon != null,
                   child: BaseBorderContainer(
                     padding: EdgeInsets.zero,
+                    borderColor: isDark ? ThemeColors.black : null,
                     innerPadding: EdgeInsets.all(Pad.pad5),
-                    child:CachedNetworkImagesWidget(
-                      data.icon?? '',
+                    child: CachedNetworkImagesWidget(
+                      data.icon ?? '',
                       height: 24,
                       width: 24,
                       placeHolder: Images.userPlaceholderNew,

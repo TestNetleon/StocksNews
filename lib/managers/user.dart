@@ -16,7 +16,9 @@ import 'package:stocks_news_new/modals/user_res.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/service/appsFlyer/service.dart';
 import 'package:stocks_news_new/ui/account/auth/login.dart';
+import 'package:stocks_news_new/ui/account/error/apple_login.dart';
 import 'package:stocks_news_new/ui/account/update/index.dart';
+import 'package:stocks_news_new/ui/base/bottom_sheet.dart';
 import 'package:stocks_news_new/ui/base/toaster.dart';
 import 'package:stocks_news_new/ui/subscription/manager.dart';
 import 'package:stocks_news_new/ui/tabs/more/alerts/index.dart';
@@ -139,13 +141,12 @@ class UserManager extends ChangeNotifier {
     );
   }
 
-  void navigateToMySubscription({bool viewPlans = true}) async {
+  Future navigateToMySubscription({bool viewPlans = true}) async {
     await askLoginScreen();
     if (_user == null) return;
-    Navigator.pop(navigatorKey.currentContext!);
     SubscriptionManager manager =
         navigatorKey.currentContext!.read<SubscriptionManager>();
-    manager.startProcess(viewPlans: viewPlans);
+    await manager.startProcess(viewPlans: viewPlans);
   }
 
   void navigateToReferral() async {
@@ -270,6 +271,12 @@ class UserManager extends ChangeNotifier {
           Utils().showLog('popping back');
           Navigator.pop(navigatorKey.currentContext!);
         }
+      } else {
+        if (response.message?.contains('Invalid Apple ID.') ?? false) {
+          BaseBottomSheet().bottomSheet(
+            child: AppleLoginErrorIndex(),
+          );
+        }
       }
 
       return ApiResponse(status: response.status);
@@ -331,40 +338,38 @@ class UserManager extends ChangeNotifier {
         Preference.clearReferral();
         BrazeService.brazeUserEvent();
 
-        //creating share link
-        // shareUri = await DynamicLinkService.instance.getDynamicLink();
         shareUrl = _user?.referralUrl;
-
-        if (_user?.membership?.purchased != 1) {
-          if (kDebugMode) {
-            print('Calling membership page');
-          }
-          // subscribe();
-        }
 
         if (_user?.signupStatus != null) {
           AmplitudeService.logLoginSignUpEvent(
             isRegistered: (_user?.signupStatus ?? false) ? 1 : 0,
           );
         }
+
+        navigatorKey.currentContext!
+            .read<MyHomeManager>()
+            .getHomeData(fromAdvertiserID: true);
       }
       TopSnackbar.show(
         message: response.message ?? '',
         type: response.status ? ToasterEnum.success : ToasterEnum.error,
       );
 
-      if (_user?.signupStatus != true) {
-        navigatorKey.currentContext!.read<MyHomeManager>().getHomeData();
-      }
-
-      return ApiResponse(status: response.status, data: response.data);
+      return ApiResponse(
+        status: response.status,
+        data: response.data,
+        message: response.message,
+      );
     } catch (e) {
       Utils().showLog('Error in $url');
       TopSnackbar.show(
         message: Const.errSomethingWrong,
         type: ToasterEnum.error,
       );
-      return ApiResponse(status: false);
+      return ApiResponse(
+        status: false,
+        message: Const.errSomethingWrong,
+      );
     } finally {
       setStatus(Status.loaded);
     }
@@ -704,6 +709,7 @@ class UserManager extends ChangeNotifier {
     // }
 
     _user = null;
+    shareUrl = null;
     notifyListeners();
     MyHomeManager homeManager =
         navigatorKey.currentContext!.read<MyHomeManager>();

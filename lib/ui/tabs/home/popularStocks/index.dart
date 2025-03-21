@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:stocks_news_new/api/apis.dart';
 import 'package:stocks_news_new/managers/home/home.dart';
 import 'package:stocks_news_new/models/my_home.dart';
 import 'package:stocks_news_new/models/ticker.dart';
 import 'package:stocks_news_new/ui/base/heading.dart';
 import 'package:stocks_news_new/ui/stockDetail/index.dart';
+import 'package:stocks_news_new/ui/tabs/home/viewMore/PopularMostBought/index.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -29,7 +31,13 @@ class HomePopularStocks extends StatelessWidget {
               BaseHeading(
                 title: popular.title ?? '',
                 titleStyle: styleBaseBold(),
-                viewMore: () {},
+                viewMore: () {
+                  Navigator.pushNamed(
+                    context,
+                    HomeViewMoreTickersIndex.path,
+                    arguments: {'apiUrl': Apis.myHomePopular},
+                  );
+                },
                 viewMoreText: 'View All',
               ),
               SpacerVertical(height: Pad.pad14),

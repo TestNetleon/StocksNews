@@ -116,20 +116,33 @@ class BasePoliticianItem extends StatelessWidget {
                     ),
                   ),
                   InkWell(
-                    borderRadius: BorderRadius.circular(4),
-                    onTap: onTap,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(4),
-                        border: Border.all(color: ThemeColors.neutral5),
+                      borderRadius: BorderRadius.circular(4),
+                      onTap: onTap,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(4),
+                          border: Border.all(color: ThemeColors.neutral40),
+                        ),
+                        child: Image.asset(
+                          isOpen ? Images.arrowUP : Images.arrowDOWN,
+                          height: 24,
+                          width: 24,
+                          color: ThemeColors.black,
+                        ),
+                      )
+
+                      // Container(
+                      //   decoration: BoxDecoration(
+                      //     borderRadius: BorderRadius.circular(4),
+                      //     border: Border.all(color: ThemeColors.neutral5),
+                      //   ),
+                      //   child: Image.asset(
+                      //     isOpen ? Images.arrowUP : Images.arrowDOWN,
+                      //     height: 24,
+                      //     width: 24,
+                      //   ),
+                      // ),
                       ),
-                      child: Image.asset(
-                        isOpen ? Images.arrowUP : Images.arrowDOWN,
-                        height: 24,
-                        width: 24,
-                      ),
-                    ),
-                  ),
                 ],
               )
             ],

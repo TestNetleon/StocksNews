@@ -40,6 +40,7 @@ class SDManager extends ChangeNotifier {
     _selectedIndex = -1;
     _selectedStock = null;
     _dataOverview = null;
+    _lockInfoOverview = null;
     _dataHistoricalC = null;
     _dataKeyStats = null;
     _dataTechnicalAnalysis = null;
@@ -90,8 +91,11 @@ class SDManager extends ChangeNotifier {
   String? _selectedStock;
   String? get selectedStock => _selectedStock;
 
+  BaseLockInfoRes? _lockInfoOverview;
+  BaseLockInfoRes? get lockInfoOverview => _lockInfoOverview;
+
   BaseLockInfoRes? getLockINFO() {
-    BaseLockInfoRes? info = _dataOverview?.aiAnalysis?.lockInfo;
+    BaseLockInfoRes? info = _lockInfoOverview;
     return info;
   }
 
@@ -352,6 +356,8 @@ class SDManager extends ChangeNotifier {
       if (response.status) {
         _dataOverview =
             stocksDetailOverviewResFromJson(jsonEncode(response.data));
+        _lockInfoOverview = _dataOverview?.aiAnalysis?.lockInfo;
+        notifyListeners();
         _errorOverview = null;
       } else {
         _dataOverview = null;

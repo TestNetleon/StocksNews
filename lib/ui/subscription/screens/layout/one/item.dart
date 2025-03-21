@@ -74,7 +74,7 @@ class LayoutOneItem extends StatelessWidget {
                               style: styleBaseRegular(
                                   fontSize: 14,
                                   height: 1.6,
-                                  color: ThemeColors.neutral5),
+                                  color: ThemeColors.greyText),
                             ),
                           ],
                         ),

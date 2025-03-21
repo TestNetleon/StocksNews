@@ -220,11 +220,7 @@ class _BaseStockItemState extends State<BaseStockItem> {
                             : Images.arrowDOWN,
                         height: 24,
                         width: 24,
-                        color:
-                            // value.isDarkMode
-                            //     ? ThemeColors.white
-                            //     :
-                            ThemeColors.black,
+                        color: ThemeColors.black,
                       ),
                     ),
                   ),
