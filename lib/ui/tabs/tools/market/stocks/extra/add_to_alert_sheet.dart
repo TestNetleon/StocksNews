@@ -8,7 +8,7 @@ import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
-import '../../../../../utils/constants.dart';
+import '../../../../../../utils/constants.dart';
 
 class AddToAlertSheet extends StatefulWidget {
   final String symbol;

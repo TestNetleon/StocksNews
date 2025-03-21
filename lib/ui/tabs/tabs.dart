@@ -11,7 +11,7 @@ import 'package:stocks_news_new/service/amplitude/service.dart';
 import 'package:stocks_news_new/socket/socket.dart';
 import 'package:stocks_news_new/ui/base/scaffold.dart';
 import 'package:stocks_news_new/ui/tabs/home/scanner/manager/gainers.dart';
-import 'package:stocks_news_new/ui/tabs/market/index.dart';
+import 'package:stocks_news_new/ui/tabs/tools/market/index.dart';
 import 'package:stocks_news_new/ui/tabs/tools/scanner/manager/gainers.dart';
 import 'package:stocks_news_new/ui/tabs/tools/scanner/manager/losers.dart';
 import 'package:stocks_news_new/ui/tabs/tools/scanner/manager/scanner.dart';

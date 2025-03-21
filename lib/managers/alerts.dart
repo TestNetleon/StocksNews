@@ -10,7 +10,7 @@ import 'package:stocks_news_new/models/alert_res.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/service/braze/service.dart';
 import 'package:stocks_news_new/ui/base/toaster.dart';
-import 'package:stocks_news_new/ui/tabs/tabs.dart';
+import 'package:stocks_news_new/ui/tabs/tools/market/index.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 
@@ -121,8 +121,9 @@ class AlertsM extends ChangeNotifier {
 
   void redirectToMarket() {
     Navigator.popUntil(navigatorKey.currentContext!, (route) => route.isFirst);
-    Navigator.pushNamed(navigatorKey.currentContext!, Tabs.path, arguments: {
-      'index': 2,
-    });
+    // Navigator.pushNamed(navigatorKey.currentContext!, Tabs.path, arguments: {
+    //   'index': 2,
+    // });
+    Navigator.pushNamed(navigatorKey.currentContext!, MarketIndex.path);
   }
 }

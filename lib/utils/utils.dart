@@ -12,6 +12,7 @@ import 'package:stocks_news_new/ui/stockDetail/index.dart';
 import 'package:stocks_news_new/ui/subscription/manager.dart';
 import 'package:stocks_news_new/ui/tabs/more/articles/detail.dart';
 import 'package:stocks_news_new/ui/tabs/more/news/detail.dart';
+import 'package:stocks_news_new/ui/tabs/tools/market/index.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:intl/intl.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -960,143 +961,173 @@ void handleNavigation({
     // *********** Market data Pages from Here ********
   } else if (type == DeeplinkEnum.gainerLoser) {
     Navigator.popUntil(navigatorKey.currentContext!, (route) => route.isFirst);
-    Navigator.pushReplacementNamed(
+    // Navigator.pushReplacementNamed(
+    //   navigatorKey.currentContext!,
+    //   Tabs.path,
+    //   arguments: {
+    //     "index": 2,
+    //     "childIndex": 1,
+    //   },
+    // );
+    Navigator.pushNamed(
       navigatorKey.currentContext!,
-      Tabs.path,
+      MarketIndex.path,
       arguments: {
-        "index": 2,
-        "childIndex": 1,
+        'screenIndex': 0,
+        "marketIndex": 1,
+        "marketInnerIndex": 0,
       },
     );
-    // Navigator.push(
-    //   navigatorKey.currentContext!,
-    //   MaterialPageRoute(
-    //     builder: (context) => const GainersLosersIndex(
-    //       type: StocksType.gainers,
-    //     ),
-    //   ),
-    // );
   } else if (type == DeeplinkEnum.gapUpDown) {
     Navigator.popUntil(navigatorKey.currentContext!, (route) => route.isFirst);
-    Navigator.pushReplacementNamed(
+    // Navigator.pushReplacementNamed(
+    //   navigatorKey.currentContext!,
+    //   Tabs.path,
+    //   arguments: {
+    //     "index": 2,
+    //     "childIndex": 2,
+    //   },
+    // );
+    Navigator.pushNamed(
       navigatorKey.currentContext!,
-      Tabs.path,
+      MarketIndex.path,
       arguments: {
-        "index": 2,
-        "childIndex": 2,
+        'screenIndex': 0,
+        "marketIndex": 2,
+        "marketInnerIndex": 0,
       },
     );
-    // Navigator.push(
-    //   navigatorKey.currentContext!,
-    //   MaterialPageRoute(
-    //     builder: (context) => const GapUpDownStocks(type: StocksType.gapUp),
-    //   ),
-    // );
   } else if (type == DeeplinkEnum.highLowPE) {
     Navigator.popUntil(navigatorKey.currentContext!, (route) => route.isFirst);
-    Navigator.pushReplacementNamed(
+    // Navigator.pushReplacementNamed(
+    //   navigatorKey.currentContext!,
+    //   Tabs.path,
+    //   arguments: {
+    //     "index": 2,
+    //     "childIndex": 3,
+    //   },
+    // );
+    Navigator.pushNamed(
       navigatorKey.currentContext!,
-      Tabs.path,
+      MarketIndex.path,
       arguments: {
-        "index": 2,
-        "childIndex": 3,
+        'screenIndex': 0,
+        "marketIndex": 3,
+        "marketInnerIndex": 0,
       },
     );
-    // Navigator.push(
-    //   navigatorKey.currentContext!,
-    //   MaterialPageRoute(
-    //     builder: (context) => const HighLowPEIndex(),
-    //   ),
-    // );
   } else if (type == DeeplinkEnum.fiftyTwoWeeks) {
     Navigator.popUntil(navigatorKey.currentContext!, (route) => route.isFirst);
-    Navigator.pushReplacementNamed(
+    // Navigator.pushReplacementNamed(
+    //   navigatorKey.currentContext!,
+    //   Tabs.path,
+    //   arguments: {
+    //     "index": 2,
+    //     "childIndex": 4,
+    //   },
+    // );
+    Navigator.pushNamed(
       navigatorKey.currentContext!,
-      Tabs.path,
+      MarketIndex.path,
       arguments: {
-        "index": 2,
-        "childIndex": 4,
+        'screenIndex': 0,
+        "marketIndex": 4,
+        "marketInnerIndex": 0,
       },
     );
-    // Navigator.push(
-    //   navigatorKey.currentContext!,
-    //   MaterialPageRoute(
-    //     builder: (context) => const FiftyTwoWeeksIndex(),
-    //   ),
-    // );
   } else if (type == DeeplinkEnum.highLowBeta) {
     Navigator.popUntil(navigatorKey.currentContext!, (route) => route.isFirst);
-    Navigator.pushReplacementNamed(
+    // Navigator.pushReplacementNamed(
+    //   navigatorKey.currentContext!,
+    //   Tabs.path,
+    //   arguments: {
+    //     "index": 2,
+    //     "childIndex": 5,
+    //   },
+    // );
+    Navigator.pushNamed(
       navigatorKey.currentContext!,
-      Tabs.path,
+      MarketIndex.path,
       arguments: {
-        "index": 2,
-        "childIndex": 5,
+        'screenIndex': 0,
+        "marketIndex": 5,
+        "marketInnerIndex": 0,
       },
     );
-    // Navigator.push(
-    //   navigatorKey.currentContext!,
-    //   MaterialPageRoute(
-    //     builder: (context) => const HighLowsBetaStocksIndex(),
-    //   ),
-    // );
   } else if (type == DeeplinkEnum.indices) {
     Navigator.popUntil(navigatorKey.currentContext!, (route) => route.isFirst);
-    Navigator.pushReplacementNamed(
+    // Navigator.pushReplacementNamed(
+    //   navigatorKey.currentContext!,
+    //   Tabs.path,
+    //   arguments: {
+    //     "index": 2,
+    //     "childIndex": 6,
+    //   },
+    // );
+    Navigator.pushNamed(
       navigatorKey.currentContext!,
-      Tabs.path,
+      MarketIndex.path,
       arguments: {
-        "index": 2,
-        "childIndex": 6,
+        'screenIndex': 0,
+        "marketIndex": 6,
+        "marketInnerIndex": 0,
       },
     );
-    // Navigator.push(
-    //   navigatorKey.currentContext!,
-    //   MaterialPageRoute(
-    //     builder: (context) => const IndicesIndex(),
-    //   ),
-    // );
   } else if (type == DeeplinkEnum.lowPriceStocks) {
     Navigator.popUntil(navigatorKey.currentContext!, (route) => route.isFirst);
-    Navigator.pushReplacementNamed(
+    // Navigator.pushReplacementNamed(
+    //   navigatorKey.currentContext!,
+    //   Tabs.path,
+    //   arguments: {
+    //     "index": 2,
+    //     "childIndex": 7,
+    //   },
+    // );
+    Navigator.pushNamed(
       navigatorKey.currentContext!,
-      Tabs.path,
+      MarketIndex.path,
       arguments: {
-        "index": 2,
-        "childIndex": 7,
+        'screenIndex': 0,
+        "marketIndex": 7,
+        "marketInnerIndex": 0,
       },
     );
-    // Navigator.push(
-    //   navigatorKey.currentContext!,
-    //   MaterialPageRoute(
-    //     builder: (context) => const LowPriceStocksIndex(),
-    //   ),
-    // );
   } else if (type == DeeplinkEnum.mostActive) {
     Navigator.popUntil(navigatorKey.currentContext!, (route) => route.isFirst);
-    Navigator.pushReplacementNamed(
+    // Navigator.pushReplacementNamed(
+    //   navigatorKey.currentContext!,
+    //   Tabs.path,
+    //   arguments: {
+    //     "index": 2,
+    //     "childIndex": 8,
+    //   },
+    // );
+    Navigator.pushNamed(
       navigatorKey.currentContext!,
-      Tabs.path,
+      MarketIndex.path,
       arguments: {
-        "index": 2,
-        "childIndex": 8,
+        'screenIndex': 0,
+        "marketIndex": 8,
+        "marketInnerIndex": 0,
       },
     );
-
-    // Navigator.push(
-    //   navigatorKey.currentContext!,
-    //   MaterialPageRoute(
-    //     builder: (context) => const MostActiveIndex(),
-    //   ),
-    // );
   } else if (type == DeeplinkEnum.pennyStocks) {
     Navigator.popUntil(navigatorKey.currentContext!, (route) => route.isFirst);
-    Navigator.pushReplacementNamed(
+    // Navigator.pushReplacementNamed(
+    //   navigatorKey.currentContext!,
+    //   Tabs.path,
+    //   arguments: {
+    //     "index": 2,
+    //     "childIndex": 9,
+    //   },
+    // );
+    Navigator.pushNamed(
       navigatorKey.currentContext!,
-      Tabs.path,
+      MarketIndex.path,
       arguments: {
-        "index": 2,
-        "childIndex": 9,
+        'screenIndex': 0,
+        "marketIndex": 9,
+        "marketInnerIndex": 0,
       },
     );
 
@@ -1114,14 +1145,25 @@ void handleNavigation({
     //     ),
     //   );
   } else if (type == DeeplinkEnum.dividents) {
-    Navigator.pushReplacementNamed(
+    Navigator.popUntil(navigatorKey.currentContext!, (route) => route.isFirst);
+    // Navigator.pushReplacementNamed(
+    //   navigatorKey.currentContext!,
+    //   Tabs.path,
+    //   arguments: {
+    //     "index": 2,
+    //     "childIndex": 10,
+    //   },
+    // );
+    Navigator.pushNamed(
       navigatorKey.currentContext!,
-      Tabs.path,
+      MarketIndex.path,
       arguments: {
-        "index": 2,
-        "childIndex": 10,
+        'screenIndex': 0,
+        "marketIndex": 10,
+        "marketInnerIndex": 0,
       },
     );
+
     // Navigator.push(
     //   navigatorKey.currentContext!,
     //   MaterialPageRoute(
@@ -1130,20 +1172,23 @@ void handleNavigation({
     // );
   } else if (type == DeeplinkEnum.earnings) {
     Navigator.popUntil(navigatorKey.currentContext!, (route) => route.isFirst);
-    Navigator.pushReplacementNamed(
+    // Navigator.pushReplacementNamed(
+    //   navigatorKey.currentContext!,
+    //   Tabs.path,
+    //   arguments: {
+    //     "index": 2,
+    //     "childIndex": 11,
+    //   },
+    // );
+    Navigator.pushNamed(
       navigatorKey.currentContext!,
-      Tabs.path,
+      MarketIndex.path,
       arguments: {
-        "index": 2,
-        "childIndex": 11,
+        'screenIndex': 0,
+        "marketIndex": 11,
+        "marketInnerIndex": 0,
       },
     );
-    // Navigator.push(
-    //   navigatorKey.currentContext!,
-    //   MaterialPageRoute(
-    //     builder: (context) => const EarningsScreen(),
-    //   ),
-    // );
   } else if (type == DeeplinkEnum.stocks) {
     Navigator.popUntil(navigatorKey.currentContext!, (route) => route.isFirst);
     Navigator.pushReplacementNamed(navigatorKey.currentContext!, Tabs.path);

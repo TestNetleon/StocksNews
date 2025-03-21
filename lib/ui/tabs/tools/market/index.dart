@@ -6,40 +6,40 @@ import 'package:stocks_news_new/ui/base/common_tab.dart';
 import 'package:stocks_news_new/ui/base/scaffold.dart';
 import 'package:stocks_news_new/ui/base/search/base_search.dart';
 import 'package:stocks_news_new/ui/stockDetail/index.dart';
-import 'package:stocks_news_new/ui/tabs/market/industries/industries.dart';
-import 'package:stocks_news_new/ui/tabs/market/sectors/sectors.dart';
-import 'package:stocks_news_new/ui/tabs/market/stocks/52Weeks/fifty_two_weeks_high.dart';
-import 'package:stocks_news_new/ui/tabs/market/stocks/52Weeks/fifty_two_weeks_low.dart';
-import 'package:stocks_news_new/ui/tabs/market/stocks/dividends/dividends.dart';
-import 'package:stocks_news_new/ui/tabs/market/stocks/earnings/earnings.dart';
-import 'package:stocks_news_new/ui/tabs/market/stocks/extra/filter.dart';
-import 'package:stocks_news_new/ui/tabs/market/stocks/gainer&Losers/todays_gainers.dart';
-import 'package:stocks_news_new/ui/tabs/market/stocks/gainer&Losers/todays_breakout.dart';
-import 'package:stocks_news_new/ui/tabs/market/stocks/gainer&Losers/todays_losers.dart';
-import 'package:stocks_news_new/ui/tabs/market/stocks/gapUpDown/gap_down.dart';
-import 'package:stocks_news_new/ui/tabs/market/stocks/gapUpDown/gap_up.dart';
-import 'package:stocks_news_new/ui/tabs/market/stocks/highLowBeta/high_beta.dart';
-import 'package:stocks_news_new/ui/tabs/market/stocks/highLowBeta/low_beta.dart';
-import 'package:stocks_news_new/ui/tabs/market/stocks/highLowBeta/negative_beta.dart';
-import 'package:stocks_news_new/ui/tabs/market/stocks/highLowPe/high_pe.dart';
-import 'package:stocks_news_new/ui/tabs/market/stocks/highLowPe/high_pe_growth.dart';
-import 'package:stocks_news_new/ui/tabs/market/stocks/highLowPe/low_pe.dart';
-import 'package:stocks_news_new/ui/tabs/market/stocks/highLowPe/low_pe_growth.dart';
-import 'package:stocks_news_new/ui/tabs/market/stocks/indices/amex/amex.dart';
-import 'package:stocks_news_new/ui/tabs/market/stocks/indices/dow30/dow_30.dart';
-import 'package:stocks_news_new/ui/tabs/market/stocks/indices/nasdaq/nasdaq.dart';
-import 'package:stocks_news_new/ui/tabs/market/stocks/indices/nyse/nyse.dart';
-import 'package:stocks_news_new/ui/tabs/market/stocks/indices/s&p500/snp_500.dart';
-import 'package:stocks_news_new/ui/tabs/market/stocks/lowPrice/stocks_under.dart';
-import 'package:stocks_news_new/ui/tabs/market/market_tabs.dart';
-import 'package:stocks_news_new/ui/tabs/market/stocks/mostActive/mostActive/most_active.dart';
-import 'package:stocks_news_new/ui/tabs/market/stocks/mostActive/mostVolatile/most_volatile.dart';
-import 'package:stocks_news_new/ui/tabs/market/stocks/mostActive/unusualTrading/unusual_trading.dart';
-import 'package:stocks_news_new/ui/tabs/market/stocks/pennyStocks/mostActive/most_active.dart';
-import 'package:stocks_news_new/ui/tabs/market/stocks/pennyStocks/mostPopular/most_popular.dart';
-import 'package:stocks_news_new/ui/tabs/market/stocks/pennyStocks/topTodays/top_todays.dart';
-import 'package:stocks_news_new/ui/tabs/market/stocks/trending/most_bearish.dart';
-import 'package:stocks_news_new/ui/tabs/market/stocks/trending/most_bullish.dart';
+import 'package:stocks_news_new/ui/tabs/tools/market/industries/industries.dart';
+import 'package:stocks_news_new/ui/tabs/tools/market/sectors/sectors.dart';
+import 'package:stocks_news_new/ui/tabs/tools/market/stocks/52Weeks/fifty_two_weeks_high.dart';
+import 'package:stocks_news_new/ui/tabs/tools/market/stocks/52Weeks/fifty_two_weeks_low.dart';
+import 'package:stocks_news_new/ui/tabs/tools/market/stocks/dividends/dividends.dart';
+import 'package:stocks_news_new/ui/tabs/tools/market/stocks/earnings/earnings.dart';
+import 'package:stocks_news_new/ui/tabs/tools/market/stocks/extra/filter.dart';
+import 'package:stocks_news_new/ui/tabs/tools/market/stocks/gainer&Losers/todays_gainers.dart';
+import 'package:stocks_news_new/ui/tabs/tools/market/stocks/gainer&Losers/todays_breakout.dart';
+import 'package:stocks_news_new/ui/tabs/tools/market/stocks/gainer&Losers/todays_losers.dart';
+import 'package:stocks_news_new/ui/tabs/tools/market/stocks/gapUpDown/gap_down.dart';
+import 'package:stocks_news_new/ui/tabs/tools/market/stocks/gapUpDown/gap_up.dart';
+import 'package:stocks_news_new/ui/tabs/tools/market/stocks/highLowBeta/high_beta.dart';
+import 'package:stocks_news_new/ui/tabs/tools/market/stocks/highLowBeta/low_beta.dart';
+import 'package:stocks_news_new/ui/tabs/tools/market/stocks/highLowBeta/negative_beta.dart';
+import 'package:stocks_news_new/ui/tabs/tools/market/stocks/highLowPe/high_pe.dart';
+import 'package:stocks_news_new/ui/tabs/tools/market/stocks/highLowPe/high_pe_growth.dart';
+import 'package:stocks_news_new/ui/tabs/tools/market/stocks/highLowPe/low_pe.dart';
+import 'package:stocks_news_new/ui/tabs/tools/market/stocks/highLowPe/low_pe_growth.dart';
+import 'package:stocks_news_new/ui/tabs/tools/market/stocks/indices/amex/amex.dart';
+import 'package:stocks_news_new/ui/tabs/tools/market/stocks/indices/dow30/dow_30.dart';
+import 'package:stocks_news_new/ui/tabs/tools/market/stocks/indices/nasdaq/nasdaq.dart';
+import 'package:stocks_news_new/ui/tabs/tools/market/stocks/indices/nyse/nyse.dart';
+import 'package:stocks_news_new/ui/tabs/tools/market/stocks/indices/s&p500/snp_500.dart';
+import 'package:stocks_news_new/ui/tabs/tools/market/stocks/lowPrice/stocks_under.dart';
+import 'package:stocks_news_new/ui/tabs/tools/market/market_tabs.dart';
+import 'package:stocks_news_new/ui/tabs/tools/market/stocks/mostActive/mostActive/most_active.dart';
+import 'package:stocks_news_new/ui/tabs/tools/market/stocks/mostActive/mostVolatile/most_volatile.dart';
+import 'package:stocks_news_new/ui/tabs/tools/market/stocks/mostActive/unusualTrading/unusual_trading.dart';
+import 'package:stocks_news_new/ui/tabs/tools/market/stocks/pennyStocks/mostActive/most_active.dart';
+import 'package:stocks_news_new/ui/tabs/tools/market/stocks/pennyStocks/mostPopular/most_popular.dart';
+import 'package:stocks_news_new/ui/tabs/tools/market/stocks/pennyStocks/topTodays/top_todays.dart';
+import 'package:stocks_news_new/ui/tabs/tools/market/stocks/trending/most_bearish.dart';
+import 'package:stocks_news_new/ui/tabs/tools/market/stocks/trending/most_bullish.dart';
 import 'package:stocks_news_new/ui/tabs/more/news/detail.dart';
 import 'package:stocks_news_new/ui/theme/manager.dart';
 import 'package:stocks_news_new/utils/colors.dart';
@@ -48,6 +48,7 @@ import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/custom/base_loader_container.dart';
 
 class MarketIndex extends StatefulWidget {
+  static const String path = "MarketIndex";
   const MarketIndex({
     super.key,
     this.screenIndex,
@@ -227,6 +228,9 @@ class _MarketIndexState extends State<MarketIndex> {
   Widget build(BuildContext context) {
     MarketManager provider = context.watch<MarketManager>();
     return BaseScaffold(
+      appBar: BaseAppBar(
+        showBack: true,
+      ),
       body: BaseLoaderContainer(
         isLoading: provider.isLoading,
         hasData: provider.data != null && !provider.isLoading,
@@ -267,7 +271,7 @@ class _MarketIndexState extends State<MarketIndex> {
                             return ActionButton(
                               icon: Images.search,
                               color:
-                                  value.isDarkMode ? ThemeColors.white : null,
+                                  value.isDarkMode ? ThemeColors.black : null,
                               onTap: () {
                                 Navigator.push(
                                   context,
