@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
@@ -28,11 +27,11 @@ class ErrorDisplayNewWidget extends StatelessWidget {
           const SpacerVertical(),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: Pad.pad16),
-            child: HtmlWidget(
-              //textAlign: TextAlign.center,
+            child: Text(
+              textAlign: TextAlign.center,
               error ?? Const.errSomethingWrong,
               // style: styleBaseBold(color: ThemeColors.black),
-              textStyle: Theme.of(context).textTheme.displayLarge,
+              style: Theme.of(context).textTheme.displayLarge,
             ),
           ),
           const SpacerVertical(),
