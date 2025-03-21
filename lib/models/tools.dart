@@ -7,6 +7,7 @@ enum ToolsEnum {
   compare,
   league,
   market,
+  signals,
 }
 
 ToolsEnum? toolsEnumFromString(String? value) {

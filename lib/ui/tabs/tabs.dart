@@ -21,7 +21,7 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:vibration/vibration.dart';
 import 'home/home.dart';
-import 'signals/signals.dart';
+import 'more/news/index.dart';
 import 'tools/scanner/index.dart';
 import 'tools/simulator/screens/index.dart';
 import 'tools/tools.dart';
@@ -130,7 +130,7 @@ class _TabsState extends State<Tabs> {
           ),
           bottomTab(
             icon: Images.bottomSignals,
-            label: "Signals",
+            label: "News",
             selected: _selectedIndex == 3,
           ),
           bottomTab(
@@ -232,7 +232,7 @@ class Screens {
       //   marketInnerIndex: innerChildIndex,
       // ),
       SimulatorIndex(initialIndex: childIndex ?? 0),
-      SignalsIndex(),
+      CategoriesNewsIndex(),
       ToolsIndex(),
       // MoreIndex(),
     ];

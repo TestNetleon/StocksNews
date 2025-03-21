@@ -63,6 +63,7 @@ class SubscriptionManager extends ChangeNotifier {
     if (manager.user == null) return;
     if (manager.user?.phone == null || manager.user?.phone == '') {
       Utils().showLog("Ask phone for membership-----");
+      await getMembershipLayout();
       await Navigator.push(
         navigatorKey.currentContext!,
         createRoute(

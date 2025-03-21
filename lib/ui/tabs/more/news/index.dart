@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/managers/news.dart';
 import 'package:stocks_news_new/ui/base/app_bar.dart';
 import 'package:stocks_news_new/ui/base/scaffold.dart';
+import 'package:stocks_news_new/ui/tabs/more/index.dart';
 import 'package:stocks_news_new/widgets/custom/base_loader_container.dart';
 import '../../../base/common_tab.dart';
 import 'news.dart';
@@ -32,7 +33,8 @@ class _CategoriesNewsIndexState extends State<CategoriesNewsIndex> {
     NewsManager manager = context.watch<NewsManager>();
 
     return BaseScaffold(
-      appBar: BaseAppBar(showBack: true),
+      appBar: BaseAppBar(showDrawer: true),
+      drawer: MoreIndex(),
       body: BaseLoaderContainer(
         hasData: manager.categoriesData?.data != null &&
             manager.categoriesData?.data?.isNotEmpty == true &&
