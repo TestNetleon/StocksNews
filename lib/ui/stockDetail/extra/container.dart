@@ -94,9 +94,7 @@ class SDRowContainer extends StatelessWidget {
                       child: Padding(
                         padding: const EdgeInsets.only(left: 8),
                         child: Image.asset(
-                          color: value.isDarkMode
-                              ? ThemeColors.white
-                              : ThemeColors.black,
+                          color: ThemeColors.black,
                           Images.moreItem,
                           height: 24,
                           width: 24,
