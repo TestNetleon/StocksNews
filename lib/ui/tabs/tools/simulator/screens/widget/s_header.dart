@@ -106,11 +106,10 @@ class _SHeaderState extends State<SHeader> {
                       '${manager.userData?.userDataRes?.totalReturn?.toFormattedPrice() ?? 0}',
                       style: styleBaseBold(
                           fontSize: 18,
-                          color: (manager.userData?.userDataRes?.totalReturn ??
-                                      0) >=
-                                  0
-                              ? ThemeColors.error120
-                              : ThemeColors.success120),
+                          color: (manager.userData?.userDataRes?.totalReturn ?? 0) >= 0
+                              ? ThemeColors.success120
+                              : ThemeColors.error120
+                      ),
                     ),
                   ],
                 ),
@@ -137,8 +136,8 @@ class _SHeaderState extends State<SHeader> {
                           color: (manager.userData?.userDataRes?.todayReturn ??
                                       0) >=
                                   0
-                              ? ThemeColors.error120
-                              : ThemeColors.success120),
+                              ? ThemeColors.success120
+                              : ThemeColors.error120),
                     ),
                   ],
                 ),

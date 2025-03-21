@@ -11,6 +11,7 @@ import 'package:stocks_news_new/models/crypto_models/billionaires_res.dart';
 import 'package:stocks_news_new/models/crypto_models/crypto_detail_res.dart';
 import 'package:stocks_news_new/models/crypto_models/crypto_fiat_res.dart';
 import 'package:stocks_news_new/models/crypto_models/crypto_watchlist_res.dart';
+import 'package:stocks_news_new/models/crypto_models/exchange_res.dart';
 import 'package:stocks_news_new/models/crypto_models/recent_tweet_res.dart';
 import 'package:stocks_news_new/models/stockDetail/historical_chart.dart';
 import 'package:stocks_news_new/models/stockDetail/overview.dart';
@@ -643,6 +644,72 @@ class BillionairesManager extends ChangeNotifier {
       setStatusFiat(Status.loaded);
     }
   }
+
+
+  // Spot
+
+  ExchangeRes? _cryptoExchangeRes;
+  ExchangeRes? get cryptoExchangeRes => _cryptoExchangeRes;
+
+  Status _statusExchange = Status.ideal;
+  Status get statusExchange => _statusExchange;
+
+  bool get isLoadingExchange =>
+      _statusExchange == Status.loading || _statusExchange == Status.ideal;
+
+  int _page = 1;
+  bool get canLoadMore => _page < (cryptoExchangeRes?.totalPages ?? 1);
+
+  setStatusExchange(status) {
+    _statusExchange = status;
+    notifyListeners();
+  }
+
+  Future getCryptoExchange({String? type,bool loadMore = false}) async {
+    if (loadMore) {
+      _page++;
+      setStatusExchange(Status.loadingMore);
+    } else {
+      _page = 1;
+      setStatusExchange(Status.loading);
+    }
+    try {
+      Map request = {
+        'type':type??'',
+        'page':'$_page'
+      };
+      ApiResponse response = await apiRequest(
+        url: Apis.cryptoExchange,
+        showProgress: false,
+        request: request,
+      );
+
+      if (response.status) {
+        if (_page == 1) {
+          _cryptoExchangeRes = exchangeResFromJson(jsonEncode(response.data));
+          _error = null;
+        } else {
+          _cryptoExchangeRes?.data?.addAll(
+              exchangeResFromJson(jsonEncode(response.data)).data ?? []);
+        }
+      } else {
+        if (_page == 1) {
+          _cryptoExchangeRes = null;
+          _error = response.message;
+        }
+      }
+
+    } catch (e) {
+      _page = 1;
+      _cryptoExchangeRes = null;
+      _error = Const.errSomethingWrong;
+      Utils().showLog('Error in ${Apis.cryptoExchange}: $e');
+    }
+    finally{
+      setStatusExchange(Status.loaded);
+    }
+  }
+
 
   List<Rate> searchSymbol = [];
   List<Rate> searchCurrency = [];

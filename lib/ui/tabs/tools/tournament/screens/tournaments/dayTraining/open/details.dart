@@ -19,7 +19,7 @@ class TournamentOpenDetail extends StatelessWidget {
     return Column(
       children: [
         Container(
-          margin: EdgeInsets.only(top: 10),
+          margin: EdgeInsets.only(top: 10,left: Pad.pad16,right: Pad.pad16),
           child: Row(
             children: [
               Container(
@@ -48,7 +48,6 @@ class TournamentOpenDetail extends StatelessWidget {
                         child: Text(
                           data?.name ?? '',
                           style: styleBaseRegular(
-                            color: ThemeColors.greyText,
                             fontSize: 12,
                           ),
                           maxLines: 2,
@@ -61,6 +60,7 @@ class TournamentOpenDetail extends StatelessWidget {
               ),
               SpacerHorizontal(width: 10),
               Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Visibility(
                     visible: data?.price != null,
@@ -76,7 +76,7 @@ class TournamentOpenDetail extends StatelessWidget {
                         visible: data?.change != null,
                         child: Text(
                           " ${data?.change?.toFormattedPrice()}",
-                          style: styleBaseRegular(
+                          style: styleBaseBold(
                             color: (data?.change ?? 0) >= 0
                                 ? ThemeColors.success120
                                 : ThemeColors.error120,
@@ -88,7 +88,7 @@ class TournamentOpenDetail extends StatelessWidget {
                         visible: data?.changesPercentage != null,
                         child: Text(
                           " (${data?.changesPercentage?.toCurrency()}%)",
-                          style: styleBaseRegular(
+                          style: styleBaseBold(
                             color: (data?.changesPercentage ?? 0) >= 0
                                 ? ThemeColors.success120
                                 : ThemeColors.error120,

@@ -54,8 +54,7 @@ class TopNoItem extends StatelessWidget {
                     child: Center(
                       child: Text(
                         "No Leaders",
-                        style: styleBaseRegular(
-                            color: ThemeColors.primary, fontSize: 12),
+                        style: styleBaseRegular(fontSize: 12),
                       ),
                     ),
                   )),
@@ -68,7 +67,7 @@ class TopNoItem extends StatelessWidget {
                         : ThemeColors.gold,
                 child: Text(
                   "${index + 1}",
-                  style: styleBaseBold(color: ThemeColors.primary),
+                  style: styleBaseBold(),
                 ),
               ),
             ],

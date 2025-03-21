@@ -27,6 +27,7 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
   final double toolbarHeight;
   final bool showLogo;
   final Function()? leadingFilterClick;
+  final Function()? onFilterClick;
   final void Function()? onTradeClick;
   const BaseAppBar({
     super.key,
@@ -43,6 +44,7 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.showLogo = true,
     this.showTrade = false,
     this.leadingFilterClick,
+    this.onFilterClick,
     this.onTradeClick,
   });
 
@@ -230,6 +232,13 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
                             onPressed: onTradeClick,
                             icon: Icon(
                               Icons.bar_chart,
+                            ),
+                          ),
+                        if(onFilterClick!= null)
+                          IconButton(
+                            onPressed: onFilterClick,
+                            icon: Icon(
+                              Icons.filter_alt,
                             ),
                           ),
                         if (shareURL != null)

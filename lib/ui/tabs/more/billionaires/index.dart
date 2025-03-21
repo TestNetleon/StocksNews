@@ -4,6 +4,7 @@ import 'package:stocks_news_new/managers/billionaires.dart';
 import 'package:stocks_news_new/ui/base/app_bar.dart';
 import 'package:stocks_news_new/ui/base/common_tab.dart';
 import 'package:stocks_news_new/ui/base/scaffold.dart';
+import 'package:stocks_news_new/ui/tabs/more/billionaires/converter/index.dart';
 import 'package:stocks_news_new/ui/tabs/more/billionaires/cryptocurrencies/index.dart';
 import 'package:stocks_news_new/ui/tabs/more/billionaires/exchange/index.dart';
 import 'package:stocks_news_new/ui/tabs/more/billionaires/myWatchlist/index.dart';
@@ -62,7 +63,8 @@ class _BillionairesIndexState extends State<BillionairesIndex> {
               SpacerVertical(height: Pad.pad10),
               if (manager.selectedScreen == 0) Expanded(child: Cryptocurrencies()),
               if (manager.selectedScreen == 1) Expanded(child: MyWatchListIndex()),
-              if (manager.selectedScreen == 2)  Expanded(child: ExchangeIndex())
+              if (manager.selectedScreen == 2) Expanded(child:ConverterIndex()),
+              if (manager.selectedScreen == 3)  Expanded(child: ExchangeIndex())
             ],
           )),
     );

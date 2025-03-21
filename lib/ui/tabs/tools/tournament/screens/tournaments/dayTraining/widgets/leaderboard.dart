@@ -4,6 +4,8 @@ import 'package:stocks_news_new/ui/base/heading.dart';
 import 'package:stocks_news_new/ui/tabs/tools/tournament/models/leaderboard.dart';
 import 'package:stocks_news_new/ui/tabs/tools/tournament/provider/tournament.dart';
 import 'package:stocks_news_new/ui/tabs/tools/tournament/screens/tournaments/leaderboard/item.dart';
+import 'package:stocks_news_new/utils/colors.dart';
+import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 
@@ -23,6 +25,8 @@ class DayTrainingLeaderboard extends StatelessWidget {
               context.read<TournamentProvider>().leagueToLeaderboard();
             },
             subtitle: provider.detailRes?.leaderboardSubTitle ?? "",
+            titleStyle: styleBaseBold(fontSize: 24),
+            subtitleStyle: styleBaseRegular(fontSize: 16,color: ThemeColors.neutral80),
           ),
 
           ListView.separated(
