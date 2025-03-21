@@ -512,7 +512,9 @@ class TournamentTradesProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  LineChartData avgData({bool showDate = true}) {
+  LineChartData avgData({
+    bool showDate = true,
+  }) {
     List<SdOverviewGraphRes> reversedData =
         _graphChart?.reversed.toList() ?? [];
 
@@ -522,7 +524,9 @@ class TournamentTradesProvider extends ChangeNotifier {
       spots.add(FlSpot(i.toDouble(), reversedData[i].close.toDouble()));
     }
 
+
     return LineChartData(
+      borderData: FlBorderData(show: false),
       lineTouchData: LineTouchData(
         getTouchLineEnd: (barData, spotIndex) {
           return double.infinity;
@@ -534,10 +538,9 @@ class TournamentTradesProvider extends ChangeNotifier {
           return spotIndexes.map((spotIndex) {
             return TouchedSpotIndicatorData(
               FlLine(
-                // color: Colors.grey[400],
                 color: spots.first.y > spots.last.y
-                    ? ThemeColors.error120
-                    : ThemeColors.success120,
+                    ? ThemeColors.sos
+                    : ThemeColors.accent,
                 strokeWidth: 1,
                 dashArray: [5, 0],
               ),
@@ -558,101 +561,65 @@ class TournamentTradesProvider extends ChangeNotifier {
           fitInsideHorizontally: true,
           fitInsideVertically: true,
           maxContentWidth: 300,
-          tooltipPadding:
-              const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-          tooltipMargin: 1,
           getTooltipItems: (touchedSpots) {
             return touchedSpots.map(
-              (LineBarSpot touchedSpot) {
+                  (LineBarSpot touchedSpot) {
                 return LineTooltipItem(
                   children: [
                     TextSpan(
-                      text: "\$${touchedSpot.y.toStringAsFixed(2)}\n",
-                      style: styleBaseRegular(
-                        color: ThemeColors.white,
-                        fontSize: 18,
-                      ),
+                      text: "${touchedSpot.y.toStringAsFixed(2)}\n",
+                      style: styleBaseBold(fontSize: 18, fontFamily: 'Roboto'),
                     ),
                     TextSpan(
                       text: !showDate
                           ? DateFormat('dd MMM, yyyy')
-                              .format(reversedData[touchedSpot.x.toInt()].date)
+                          .format(reversedData[touchedSpot.x.toInt()].date)
                           : '${DateFormat('dd MMM').format(reversedData[touchedSpot.x.toInt()].date)}, ${DateFormat('h:mm a').format(reversedData[touchedSpot.x.toInt()].date)}',
-                      style: styleBaseRegular(
+                      style: styleBaseBold(
                           height: 1.5,
-                          color: ThemeColors.greyText,
+                          //  color: ThemeColors.primary,
                           fontSize: 13),
                     ),
                   ],
                   '',
-                  styleBaseBold(color: ThemeColors.white, fontSize: 10),
+                  styleBaseBold(fontSize: 10),
                 );
               },
             ).toList();
           },
           getTooltipColor: (touchedSpot) {
-            return const Color.fromARGB(255, 25, 25, 25);
+            return ThemeColors.greyText;
           },
         ),
       ),
       titlesData: FlTitlesData(
         leftTitles: const AxisTitles(
             sideTitles: SideTitles(
-          showTitles: false,
-        )),
+              showTitles: false,
+            )),
         topTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
         bottomTitles: AxisTitles(
-
-            // axisNameWidget: Text(
-            //   "Time",
-            //   style: stylePTSansRegular(fontSize: 15),
-            // ),
             sideTitles: SideTitles(
-          showTitles: false,
-          getTitlesWidget: (value, meta) {
-            int index = value.toInt();
-            if (index >= 0 && index < (spots.length)) {
-              return Padding(
-                padding: const EdgeInsets.only(top: 8, left: 5),
-                child: Text(
-                  DateFormat('HH:mm').format(reversedData[index].date),
-                  style: styleBaseRegular(fontSize: 8),
-                ),
-              );
-            }
-            return Text(
-              "-",
-              style: styleBaseRegular(fontSize: 10),
-            );
-          },
-        )),
+              showTitles: false,
+            )),
         rightTitles: AxisTitles(
           sideTitles: SideTitles(
             reservedSize: 32,
             showTitles: false,
-            getTitlesWidget: (double value, TitleMeta meta) {
-              return Padding(
-                padding: const EdgeInsets.only(bottom: 8, left: 5),
-                child: Text(
-                  value.toStringAsFixed(2),
-                  style: styleBaseRegular(fontSize: 8),
-                ),
-              );
-            },
           ),
         ),
       ),
       gridData: FlGridData(
-        show: true,
+        show: false,
         getDrawingHorizontalLine: (value) {
           return FlLine(
-            color: ThemeColors.white.withValues(alpha: 0.16),
+            color: ThemeColors.black,
             strokeWidth: 1,
           );
         },
         getDrawingVerticalLine: (value) {
           return FlLine(
-            color: ThemeColors.white.withValues(alpha: 0.16),
+            color: ThemeColors.black,
             strokeWidth: 1,
           );
         },
@@ -668,35 +635,30 @@ class TournamentTradesProvider extends ChangeNotifier {
       lineBarsData: [
         LineChartBarData(
           preventCurveOverShooting: true,
-
           spots: spots,
-          // color: (_data?.keyStats?.previousCloseNUM ?? 0) > spots.last.y
-          //     ? ThemeColors.sos
-          //     : ThemeColors.accent,
           color: spots.first.y > spots.last.y
               ? ThemeColors.sos
               : ThemeColors.accent,
-
-          // color: ThemeColors.accent,
           isCurved: true,
-          barWidth: 1.5,
+          barWidth: 2,
           dotData: const FlDotData(show: false),
           belowBarData: BarAreaData(
             show: true,
             gradient: LinearGradient(
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
-              colors: [
-                // (_data?.keyStats?.previousCloseNUM ?? 0) > spots.last.y
-                //     ? ThemeColors.sos.withOpacity(0.1)
-                //     : ThemeColors.accent.withOpacity(0.1),
-                spots.first.y > spots.last.y
-                    ? ThemeColors.sos.withValues(alpha: 0.1)
-                    : ThemeColors.accent.withValues(alpha: 0.1),
-
-                // ThemeColors.accent.withOpacity(0.1),
-                ThemeColors.background,
+              colors: spots.first.y > spots.last.y
+                  ? [
+                const Color.fromRGBO(255, 99, 99, 0.18),
+                const Color.fromRGBO(255, 150, 150, 0.15),
+                const Color.fromRGBO(255, 255, 255, 0.0),
+              ]
+                  : [
+                const Color.fromRGBO(71, 193, 137, 0.18),
+                const Color.fromRGBO(171, 227, 201, 0.15),
+                const Color.fromRGBO(255, 255, 255, 0.0),
               ],
+              stops: [0.0, 0.6, 4],
             ),
           ),
         ),

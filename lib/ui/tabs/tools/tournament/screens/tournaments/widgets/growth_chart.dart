@@ -159,27 +159,18 @@ class GrowthChart extends StatelessWidget {
       );
 
   LinearGradient get _greenGradient => LinearGradient(
-        colors: const [
-          Color.fromARGB(255, 0, 103, 22),
-          Color.fromARGB(255, 123, 255, 0),
-        ],
-        begin: Alignment.bottomCenter,
-        end: Alignment.topCenter,
-      );
-
-  LinearGradient get _blueGradient => LinearGradient(
-        colors: const [
-          Color.fromARGB(255, 23, 131, 238),
-          Color.fromARGB(255, 15, 236, 243),
+        colors:  [
+          ThemeColors.success120,
+          ThemeColors.success120,
         ],
         begin: Alignment.bottomCenter,
         end: Alignment.topCenter,
       );
 
   LinearGradient get _redGradient => LinearGradient(
-        colors: const [
-          Color.fromARGB(255, 121, 1, 1),
-          Colors.red,
+        colors: [
+          ThemeColors.error120,
+          ThemeColors.error120,
         ],
         begin: Alignment.bottomCenter,
         end: Alignment.topCenter,
@@ -209,8 +200,8 @@ class GrowthChart extends StatelessWidget {
               toY: currentValue,
               width: 7,
               borderRadius: BorderRadius.vertical(
-                top: Radius.circular(7),
-                bottom: Radius.circular(7),
+                top: Radius.circular(0),
+                bottom: Radius.circular(0),
               ),
               gradient: barGradient,
             ),

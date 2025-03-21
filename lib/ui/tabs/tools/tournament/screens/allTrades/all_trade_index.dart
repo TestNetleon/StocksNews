@@ -97,14 +97,15 @@ class _TournamentAllTradeIndexState extends State<TournamentAllTradeIndex> {
                           EdgeInsets.symmetric(horizontal: 15, vertical: 6),
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(8),
-                          color: ThemeColors.greyBorder.withValues(alpha:0.5),
-                          border: provider.selectedOverview?.key ==
-                                  provider.myTrades?.overview?[index].key
-                              ? Border.all(color: ThemeColors.success120)
-                              : null),
+                          color: provider.selectedOverview?.key ==
+                              provider.myTrades?.overview?[index].key
+                              ? ThemeColors.black:null,
+                          border:  Border.all(color: ThemeColors.black)),
                       child: Text(
                         '${provider.myTrades?.overview?[index].key} ${provider.myTrades?.overview?[index].value}',
-                        style: styleBaseBold(),
+                        style: styleBaseBold(color:  provider.selectedOverview?.key ==
+                            provider.myTrades?.overview?[index].key
+                            ?ThemeColors.white:null),
                       ),
                     ),
                   );
@@ -164,16 +165,15 @@ class _TournamentAllTradeIndexState extends State<TournamentAllTradeIndex> {
                   visible: provider.selectedOverview?.key != "Closed",
                   child: Expanded(
                     child: BaseButton(
-                     // color: Colors.white,
+                      color: ThemeColors.black,
                       radius: 10,
                       onPressed: () => _close(cancelAll: true),
-                     // textColor: Colors.black,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
                             'Close All',
-                            style: styleBaseBold(),
+                            style: styleBaseBold(color: ThemeColors.white),
                           ),
                           const SpacerHorizontal(width: 5),
                           Visibility(
@@ -185,7 +185,7 @@ class _TournamentAllTradeIndexState extends State<TournamentAllTradeIndex> {
                                     color: (sumOfAll ?? 0) > 0
                                         ? ThemeColors.success120
                                         : (sumOfAll ?? 0) == 0
-                                            ? ThemeColors.black
+                                            ? ThemeColors.white
                                             : ThemeColors.error120),
                               ),
                             ),

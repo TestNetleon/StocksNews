@@ -67,8 +67,45 @@ class _TradingViewChartState extends State<TradingViewChart> {
                 curve: Curves.linear,
               ),
             ),
-            const SpacerVertical(height: 5),
-            CupertinoSlidingSegmentedControl<int>(
+            const SpacerVertical(height: 20),
+            SingleChildScrollView(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: List.generate(
+                  range.length,
+                      (index) {
+                    return Padding(
+                      padding: EdgeInsets.only(
+                          right: index == range.length - 1 ? 0 : 32),
+                      child: GestureDetector(
+                        onTap: () {
+                          if (_selectedIndex != index) {
+                            setState(() {
+                              _selectedIndex = index;
+                            });
+                            provider.getOverviewGraphData(
+                              showProgress: true,
+                              symbol: widget.symbol,
+                              range: range[_selectedIndex],
+                            );
+
+                          }
+                        },
+                        child: Text(
+                          range[index],
+                          style: _selectedIndex == index
+                              ? styleBaseBold(color: ThemeColors.secondary120)
+                              : styleBaseRegular(
+                            color: ThemeColors.neutral20,
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ),
+            /*CupertinoSlidingSegmentedControl<int>(
               groupValue: _selectedIndex,
               thumbColor: ThemeColors.greyBorder.withValues(alpha: 0.4),
               padding: const EdgeInsets.all(4),
@@ -100,7 +137,7 @@ class _TradingViewChartState extends State<TradingViewChart> {
                     ),
                   ),
               },
-            ),
+            ),*/
             const SpacerVertical(height: 20),
           ],
         );

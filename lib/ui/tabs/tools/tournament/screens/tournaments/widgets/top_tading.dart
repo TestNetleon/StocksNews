@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/ui/base/app_bar.dart';
+import 'package:stocks_news_new/ui/base/base_list_divider.dart';
 import 'package:stocks_news_new/ui/base/bottom_sheet.dart';
 import 'package:stocks_news_new/ui/base/load_more.dart';
 import 'package:stocks_news_new/ui/base/scaffold.dart';
@@ -10,7 +11,6 @@ import 'package:stocks_news_new/ui/tabs/tools/tournament/screens/tournaments/poi
 import 'package:stocks_news_new/ui/tabs/tools/tournament/screens/tournaments/pointsPaid/play_trader_item.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/custom/base_loader_container.dart';
-import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 
 class TopTading extends StatefulWidget {
@@ -40,10 +40,7 @@ class _TournamentPointsPaidIndexState extends State<TopTading> {
     BaseBottomSheet().bottomSheet(
       child: LeagueFilter(selectedTournament: widget.selectedTournament),
     );
-    /*BaseBottomSheets().gradientBottomSheet(
-      title: "Filter ${provider.extraOfPointPaid?.title ??"Trading Leagues"}",
-      child: LeagueFilter(selectedTournament: widget.selectedTournament),
-    );*/
+
   }
 
 
@@ -55,7 +52,7 @@ class _TournamentPointsPaidIndexState extends State<TopTading> {
       appBar: BaseAppBar(
         showBack: true,
         title: provider.extraOfPointPaid?.title ?? '',
-        leadingFilterClick:_filterClick,
+        onFilterClick:_filterClick,
       ),
 
       body: BaseLoaderContainer(
@@ -70,7 +67,6 @@ class _TournamentPointsPaidIndexState extends State<TopTading> {
           onLoadMore: () => provider.pointsPaidAPI(selectedTournament: widget.selectedTournament,loadMore: true, clear: false),
           canLoadMore: provider.canLoadMore,
           child: ListView.separated(
-            padding: EdgeInsets.symmetric(horizontal: 10),
             itemBuilder: (context, index) {
               LeaderboardByDateRes? data =
               provider.tradesExecuted?[index];
@@ -83,7 +79,7 @@ class _TournamentPointsPaidIndexState extends State<TopTading> {
             },
             itemCount: provider.tradesExecuted?.length ?? 0,
             separatorBuilder: (context, index) {
-              return SpacerVertical(height: 10);
+              return BaseListDivider(height: 10);
             },
           ),
         ),

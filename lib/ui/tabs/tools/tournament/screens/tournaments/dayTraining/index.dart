@@ -8,12 +8,12 @@ import 'package:stocks_news_new/ui/tabs/tools/tournament/provider/tournament.dar
 import 'package:stocks_news_new/ui/tabs/tools/tournament/screens/tournaments/dayTraining/widgets/leaderboard.dart';
 import 'package:stocks_news_new/ui/tabs/tools/tournament/screens/tournaments/dayTraining/widgets/rules.dart';
 import 'package:stocks_news_new/ui/tabs/tools/tournament/screens/tournaments/dayTraining/widgets/timer.dart';
-import 'package:stocks_news_new/ui/tabs/tools/tournament/widgets/card.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/custom/base_loader_container.dart';
+import 'package:stocks_news_new/widgets/custom/card.dart';
 import 'package:stocks_news_new/widgets/custom/refresh_indicator.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
@@ -81,10 +81,8 @@ class _TournamentDayTrainingIndexState
                       return Column(
                         children: [
                           DayTrainingTitle(),
-                          TournamentThemeCard(
-                            onTap: _tournamentRuleDetails,
-                            padding: EdgeInsets.symmetric(
-                                vertical: 5, horizontal: 10),
+                          CommonCard(
+                            padding: EdgeInsets.symmetric(vertical: 0, horizontal: 0),
                             child: ListTile(
                               leading: Container(
                                 padding: EdgeInsets.all(3),
@@ -119,6 +117,7 @@ class _TournamentDayTrainingIndexState
                                 color: ThemeColors.greyBorder,
                                 size: 20,
                               ),
+                              onTap: _tournamentRuleDetails,
                             ),
                           ),
                           // DayTrainingSimilar(),

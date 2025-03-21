@@ -84,7 +84,7 @@ class TournamentLeaderboardTopItem extends StatelessWidget {
                         ? ThemeColors.silver
                         : ThemeColors.gold,
                 child: Text("${index + 1}",
-                    style: styleBaseBold(color: ThemeColors.primary)),
+                    style: styleBaseBold()),
               ),
             ],
           ),

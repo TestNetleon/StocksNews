@@ -82,7 +82,7 @@ class _OpenTopStockState extends State<OpenTopStock>
             scrollDirection: Axis.horizontal,
             controller: _scrollController,
             child: Padding(
-              padding: EdgeInsets.only(right:50),
+              padding: EdgeInsets.only(right:60,left: 16),
               child: TabBar(
                 indicator: null,
                 indicatorColor: Colors.transparent,
@@ -105,7 +105,7 @@ class _OpenTopStockState extends State<OpenTopStock>
                       padding: EdgeInsets.all(9),
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        color: const Color.fromARGB(255, 64, 64, 64),
+                        color:ThemeColors.neutral5,
                         border: selectedIndex == index
                             ? Border.all(
                           color: ThemeColors.success120,
@@ -125,7 +125,7 @@ class _OpenTopStockState extends State<OpenTopStock>
             ),
           ),
           Positioned(
-            right: 0,
+            right: 16,
             child: GestureDetector(
               onTap: () {
                 Navigator.push(
@@ -139,9 +139,9 @@ class _OpenTopStockState extends State<OpenTopStock>
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: const Color.fromARGB(255, 37, 37, 37),
+                  color: ThemeColors.black,
                 ),
-                child: Icon(Icons.search),
+                child: Icon(Icons.search,color: ThemeColors.white),
               ),
             ),
           ),

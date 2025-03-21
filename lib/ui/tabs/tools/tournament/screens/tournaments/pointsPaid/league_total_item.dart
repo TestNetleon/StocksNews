@@ -16,94 +16,94 @@ class LeagueTotalItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {
-        context
-            .read<TournamentProvider>()
-            .leagueToLeaderboard(selectedDate: data?.date ?? "");
-      },
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-        decoration: BoxDecoration(
-          color: ThemeColors.background,
-          borderRadius: BorderRadius.circular(5),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(40),
-                  child: Container(
-                    width: 40.sp,
-                    height: 40.sp,
-                    decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        border: Border.all(color: ThemeColors.secondary100)),
-                    child: CachedNetworkImagesWidget(
-                      data?.tournamentImage,
+        onTap: () {
+          context
+              .read<TournamentProvider>().leagueToLeaderboard(selectedDate: data?.date ?? "");
+        },
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+          // decoration: BoxDecoration(
+          //   color: isDark ? null : ThemeColors.white,
+          //   borderRadius: BorderRadius.circular(5),
+          // ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(40),
+                    child: Container(
+                      width: 40.sp,
+                      height: 40.sp,
+                      decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          border: Border.all(color: ThemeColors.secondary100)),
+                      child: CachedNetworkImagesWidget(
+                        data?.tournamentImage,
+                      ),
                     ),
                   ),
-                ),
-                const SpacerHorizontal(width: 10),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        data?.tournamentName ?? '',
-                        style: styleBaseBold(),
+                  const SpacerHorizontal(width: 10),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          data?.tournamentName ?? '',
+                          style: styleBaseBold(),
+                        ),
+                        _richPrices(
+                            label: "User Joined: ",
+                            value: '${data?.joinUsers ?? 0}'
+                        ),
+                        Visibility(
+                          visible: data?.date != null,
+                          child: Text(
+                            data?.date ?? "",
+                            style: styleBaseRegular(
+                                fontSize: 12
+                            ),
+                          ),
+                        ),
+
+                      ],
+                    ),
+                  ),
+                  Visibility(
+                    visible: data?.status != null,
+                    child: Container(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 15,
+                        vertical: 2,
                       ),
-                      _richPrices(
-                        label: "User Joined: ",
-                        value: '${data?.joinUsers ?? 0}'
-                      ),
-                      Visibility(
-                        visible: data?.date != null,
-                        child: Text(
-                          data?.date ?? "",
-                          style: styleBaseRegular(
-                              fontSize: 12, color: ThemeColors.greyText),
+                      decoration: BoxDecoration(
+                          border: Border.all(
+                            color: data?.status == 1
+                                ? ThemeColors.themeGreen
+                                : ThemeColors.darkRed,
+                          ),
+                          borderRadius:
+                          BorderRadius.circular(20)),
+                      child: Text(
+                        data?.status == 1 ? "Live" : "Closed",
+                        style: styleBaseBold(
+                          fontSize: 10,
+                          color:data?.status == 1
+                              ? ThemeColors.success120
+                              : ThemeColors.error120,
                         ),
                       ),
-
-                    ],
-                  ),
-                ),
-                Visibility(
-                  visible: data?.status != null,
-                  child: Container(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 15,
-                      vertical: 2,
-                    ),
-                    decoration: BoxDecoration(
-                        border: Border.all(
-                          color: data?.status == 1
-                              ? ThemeColors.themeGreen
-                              : ThemeColors.darkRed,
-                        ),
-                        borderRadius:
-                        BorderRadius.circular(20)),
-                    child: Text(
-                      data?.status == 1 ? "Live" : "Closed",
-                      style: styleBaseBold(
-                        fontSize: 10,
-                        color:data?.status == 1
-                            ? ThemeColors.success120
-                            : ThemeColors.error120,
-                      ),
                     ),
                   ),
-                ),
 
-              ],
-            ),
+                ],
+              ),
 
-          ],
+            ],
+          ),
         ),
-      ),
-    );
+      );
   }
 
   Widget _richPrices ({String? label,String? value}) {
@@ -113,13 +113,12 @@ class LeagueTotalItem extends StatelessWidget {
             text: label,
             style: styleBaseBold(
               fontSize: 14,
-              color:ThemeColors.greyText,
             ),
             children: [
               TextSpan(
                 text: value,
                 style: styleBaseRegular(
-                    fontSize: 14, color: ThemeColors.white
+                    fontSize: 14
                 ),
               )
             ]

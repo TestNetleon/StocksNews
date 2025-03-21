@@ -6,6 +6,7 @@ import 'package:stocks_news_new/managers/user.dart';
 import 'package:stocks_news_new/modals/search_res.dart';
 import 'package:stocks_news_new/models/ticker.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
+import 'package:stocks_news_new/ui/base/base_list_divider.dart';
 import 'package:stocks_news_new/ui/base/search/base_search.dart';
 import 'package:stocks_news_new/ui/tabs/tools/simulator/services/sse.dart';
 import 'package:stocks_news_new/ui/tabs/tools/tournament/provider/search.dart';
@@ -126,7 +127,7 @@ class _TournamentInputFieldSearchCommonState
               Stack(
                 children: [
                   TextField(
-                    cursorColor: ThemeColors.white,
+                    cursorColor: ThemeColors.black,
                     autocorrect: false,
                     controller: controller,
                     maxLength: widget.maxLength,
@@ -140,7 +141,7 @@ class _TournamentInputFieldSearchCommonState
                       hintText: widget.hintText,
                       hintStyle: styleBaseRegular(
                         fontSize: 14,
-                        color: ThemeColors.greyText,
+                        color: ThemeColors.black,
                       ),
                       constraints: widget.openConstraints
                           ? BoxConstraints(
@@ -156,7 +157,7 @@ class _TournamentInputFieldSearchCommonState
                             10.sp,
                           ),
                       filled: true,
-                      fillColor: ThemeColors.primaryLight,
+                      fillColor: ThemeColors.white,
                       enabledBorder: outlineInputBorder,
                       border: outlineInputBorder,
                       focusedBorder: outlineInputBorder,
@@ -164,7 +165,7 @@ class _TournamentInputFieldSearchCommonState
                       prefixIcon: Icon(
                         Icons.search,
                         size: isPhone ? 22 : 16.sp,
-                        color: ThemeColors.greyText,
+                        color: ThemeColors.black,
                       ),
                     ),
                     onChanged: (value) {
@@ -189,7 +190,7 @@ class _TournamentInputFieldSearchCommonState
                         height: 20,
                         child: CircularProgressIndicator(
                           strokeWidth: 3.sp,
-                          color: Colors.white,
+                          color: ThemeColors.black,
                         ),
                       ),
                     ),
@@ -202,7 +203,7 @@ class _TournamentInputFieldSearchCommonState
                   padding: EdgeInsets.all(Dimen.padding.sp),
                   margin: EdgeInsets.only(top: 5.sp),
                   decoration: BoxDecoration(
-                    color: ThemeColors.primaryLight,
+                    color: ThemeColors.white,
                     borderRadius: BorderRadius.only(
                       bottomLeft: Radius.circular(Dimen.radius.r),
                       bottomRight: Radius.circular(Dimen.radius.r),
@@ -217,7 +218,7 @@ class _TournamentInputFieldSearchCommonState
                           padding: EdgeInsets.only(bottom: 10.sp),
                           child: Text(
                             "Symbols",
-                            style: styleBaseBold(color: ThemeColors.accent),
+                            style: styleBaseBold(color: ThemeColors.black),
                           ),
                         ),
                       ),
@@ -253,18 +254,26 @@ class _TournamentInputFieldSearchCommonState
                                 );
                               },
                               child: Padding(
-                                padding: EdgeInsets.symmetric(vertical: 6.sp),
+                                padding: EdgeInsets.symmetric(vertical:5.sp),
                                 child: Row(
                                   children: [
                                     Container(
-                                      width: 43.sp,
-                                      height: 43.sp,
-                                      padding: EdgeInsets.all(5.sp),
-                                      child: CachedNetworkImagesWidget(
-                                        data?.image ?? "",
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color:ThemeColors.neutral5,
+                                      ),
+                                      padding: EdgeInsets.all(3),
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(40.sp),
+
+                                        child: CachedNetworkImagesWidget(
+                                          data?.image ?? '',
+                                          width: 40.sp,
+                                          height: 40.sp,
+                                        ),
                                       ),
                                     ),
-                                    const SpacerHorizontal(width: 6),
+                                    const SpacerHorizontal(width: Pad.pad10),
                                     Expanded(
                                       child: Column(
                                         crossAxisAlignment:
@@ -272,14 +281,14 @@ class _TournamentInputFieldSearchCommonState
                                         children: [
                                           Text(
                                             data?.symbol ?? "",
-                                            style: styleBaseRegular(
-                                                fontSize: 14),
+                                            style: styleBaseBold(fontSize: 14,color: ThemeColors.black),
                                           ),
                                           Text(
                                             data?.name ?? "",
                                             style: styleBaseRegular(
                                                 fontSize: 12,
-                                                color: ThemeColors.greyText),
+                                                color: ThemeColors.black
+                                            ),
                                           ),
                                         ],
                                       ),
@@ -290,8 +299,7 @@ class _TournamentInputFieldSearchCommonState
                             );
                           },
                           separatorBuilder: (BuildContext context, int index) {
-                            return const Divider(
-                                color: ThemeColors.dividerDark);
+                            return const BaseListDivider(height: 20);
                           },
                           itemCount: provider.dataNew?.length ?? 0,
                         ),

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/ui/base/app_bar.dart';
+import 'package:stocks_news_new/ui/base/base_list_divider.dart';
+import 'package:stocks_news_new/ui/base/bottom_sheet.dart';
 import 'package:stocks_news_new/ui/base/load_more.dart';
 import 'package:stocks_news_new/ui/base/scaffold.dart';
 import 'package:stocks_news_new/ui/tabs/tools/tournament/models/leaderboard.dart';
@@ -9,10 +11,8 @@ import 'package:stocks_news_new/ui/tabs/tools/tournament/screens/tournaments/poi
 import 'package:stocks_news_new/ui/tabs/tools/tournament/screens/tournaments/pointsPaid/item.dart';
 import 'package:stocks_news_new/ui/tabs/tools/tournament/screens/tournaments/pointsPaid/league_total_item.dart';
 import 'package:stocks_news_new/ui/tabs/tools/tournament/screens/tournaments/pointsPaid/play_trader_item.dart';
-import 'package:stocks_news_new/utils/bottom_sheets.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/custom/base_loader_container.dart';
-import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 
 class TournamentPointsPaidIndex extends StatefulWidget {
@@ -40,9 +40,7 @@ class _TournamentPointsPaidIndexState extends State<TournamentPointsPaidIndex> {
   }
 
   void _filterClick() {
-    TournamentProvider provider = context.read<TournamentProvider>();
-    BaseBottomSheets().gradientBottomSheet(
-      title: "Filter ${provider.extraOfPointPaid?.title ??"Trading Leagues"}",
+    BaseBottomSheet().bottomSheet(
       child: LeagueFilter(selectedTournament: widget.selectedTournament),
     );
   }
@@ -56,8 +54,7 @@ class _TournamentPointsPaidIndexState extends State<TournamentPointsPaidIndex> {
       appBar: BaseAppBar(
         showBack: true,
         title: provider.extraOfPointPaid?.title ?? '',
-      //  subTitle: provider.extraOfPointPaid?.subTitle,
-        leadingFilterClick: _filterClick
+        onFilterClick:_filterClick,
       ),
       body: BaseLoaderContainer(
         hasData: provider.tradesExecuted != null &&
@@ -72,7 +69,6 @@ class _TournamentPointsPaidIndexState extends State<TournamentPointsPaidIndex> {
           canLoadMore: provider.canLoadMore,
           child: widget.selectedTournament == TournamentsHead.tradTotal
               ? ListView.separated(
-                  padding: EdgeInsets.symmetric(horizontal: 10),
                   itemBuilder: (context, index) {
                     LeaderboardByDateRes? data =
                         provider.tradesExecuted?[index];
@@ -85,12 +81,11 @@ class _TournamentPointsPaidIndexState extends State<TournamentPointsPaidIndex> {
                   },
                   itemCount: provider.tradesExecuted?.length ?? 0,
                   separatorBuilder: (context, index) {
-                    return SpacerVertical(height: 10);
+                    return BaseListDivider(height: 10);
                   },
                 )
               : widget.selectedTournament == TournamentsHead.pPaid
                   ? ListView.separated(
-                      padding: EdgeInsets.symmetric(horizontal: 10),
                       itemBuilder: (context, index) {
                         LeaderboardByDateRes? data =
                             provider.tradesExecuted?[index];
@@ -104,11 +99,10 @@ class _TournamentPointsPaidIndexState extends State<TournamentPointsPaidIndex> {
                       },
                       itemCount: provider.tradesExecuted?.length ?? 0,
                       separatorBuilder: (context, index) {
-                        return SpacerVertical(height: 10);
+                        return BaseListDivider(height: 10);
                       },
                     )
                   : ListView.separated(
-                      padding: EdgeInsets.symmetric(horizontal: 10),
                       itemBuilder: (context, index) {
                         LeaderboardByDateRes? data =
                             provider.tradesExecuted?[index];
@@ -122,7 +116,7 @@ class _TournamentPointsPaidIndexState extends State<TournamentPointsPaidIndex> {
                       },
                       itemCount: provider.tradesExecuted?.length ?? 0,
                       separatorBuilder: (context, index) {
-                        return SpacerVertical(height: 10);
+                        return BaseListDivider(height: 10);
                       },
                     ),
         ),

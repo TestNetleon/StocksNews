@@ -5,6 +5,7 @@ import 'package:stocks_news_new/models/ticker.dart';
 import 'package:stocks_news_new/ui/tabs/tools/simulator/services/sse.dart';
 import 'package:stocks_news_new/ui/tabs/tools/tournament/provider/search.dart';
 import 'package:stocks_news_new/ui/tabs/tools/tournament/screens/tournaments/widgets/tour_trade_sheet.dart';
+import 'package:stocks_news_new/ui/theme/manager.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -22,7 +23,10 @@ class TournamentDefaultItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return
+      Consumer<ThemeManager>(builder: (context, value, child) {
+      bool isDark = value.isDarkMode;
+      return InkWell(
       onTap: () {
         TournamentSearchProvider provider = context.read<TournamentSearchProvider>();
         provider.setTappedStock(
@@ -46,18 +50,31 @@ class TournamentDefaultItem extends StatelessWidget {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
             decoration: BoxDecoration(
-              color: ThemeColors.background,
-              borderRadius: BorderRadius.circular(5),
+              color: isDark ? null : ThemeColors.white,
+              borderRadius: BorderRadius.circular(8),
+              boxShadow: [
+                BoxShadow(
+                  color: ThemeColors.boxShadow,
+                  blurRadius: 60,
+                  offset: Offset(0, 20),
+                ),
+              ],
             ),
             child: Row(
               children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(0.sp),
-                  child: Container(
-                    padding: const EdgeInsets.all(5),
-                    width: 48,
-                    height: 48,
-                    child: CachedNetworkImagesWidget(data.image ?? ""),
+                Container(
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color:ThemeColors.neutral5,
+                  ),
+                  padding: EdgeInsets.all(3),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(40.sp),
+                    child: CachedNetworkImagesWidget(
+                      data.image ?? '',
+                      width: 40.sp,
+                      height: 40.sp,
+                    ),
                   ),
                 ),
                 const SpacerHorizontal(width: 12),
@@ -67,21 +84,18 @@ class TournamentDefaultItem extends StatelessWidget {
                     children: [
                       Text(
                         data.symbol ?? "",
-                        style: styleBaseBold(fontSize: 18),
+                        style: styleBaseBold(fontSize: 14),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
-                      const SpacerVertical(height: 5),
                       Text(
                         data.name ?? "",
                         style: styleBaseRegular(
-                          color: ThemeColors.greyText,
                           fontSize: 12,
                         ),
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                       ),
-                      const SpacerVertical(height: 5),
 
                     ],
                   ),
@@ -101,7 +115,7 @@ class TournamentDefaultItem extends StatelessWidget {
                           TextSpan(
                             text:
                                 "${data.change?.toFormattedPrice()} (${data.changesPercentage}%)",
-                            style: styleBaseRegular(
+                            style: styleBaseBold(
                               fontSize: 14,
                               color: (data.changesPercentage ?? 0) >= 0
                                   ? ThemeColors.success120
@@ -119,5 +133,6 @@ class TournamentDefaultItem extends StatelessWidget {
         ],
       ),
     );
+      });
   }
 }
