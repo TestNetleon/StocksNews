@@ -59,8 +59,9 @@ import 'package:stocks_news_new/ui/subscription/action_required.dart';
 import 'package:stocks_news_new/ui/tabs/home/scanner/manager/gainers.dart';
 import 'package:stocks_news_new/ui/tabs/home/viewMore/PopularMostBought/index.dart';
 import 'package:stocks_news_new/ui/tabs/home/viewMore/trending/index.dart';
-import 'package:stocks_news_new/ui/tabs/market/industries/industries_view.dart';
-import 'package:stocks_news_new/ui/tabs/market/sectors/sector_view.dart';
+import 'package:stocks_news_new/ui/tabs/tools/market/index.dart';
+import 'package:stocks_news_new/ui/tabs/tools/market/industries/industries_view.dart';
+import 'package:stocks_news_new/ui/tabs/tools/market/sectors/sector_view.dart';
 import 'package:stocks_news_new/ui/tabs/more/alerts/index.dart';
 import 'package:stocks_news_new/ui/tabs/more/billionaires/all_index.dart';
 import 'package:stocks_news_new/ui/tabs/more/billionaires/billionaires_index.dart';
@@ -175,7 +176,6 @@ class Routes {
     MembershipActionRequired.path: (_) => const MembershipActionRequired(),
     TrendingViewAllIndex.path: (_) => const TrendingViewAllIndex(),
 
-
     //--------------------------------------
   };
 
@@ -215,6 +215,20 @@ class Routes {
               innerChildIndex: innerChildIndex ?? 0,
               // trendingIndex: trendingIndex ?? 0,
               inAppMsgId: inAppMsgId,
+            );
+          },
+        );
+      case MarketIndex.path:
+        return MaterialPageRoute(
+          builder: (context) {
+            final arguments = settings.arguments as Map<String, dynamic>?;
+            int? screenIndex = arguments?['screenIndex'];
+            int? marketIndex = arguments?['marketIndex'];
+            int? marketInnerIndex = arguments?['marketInnerIndex'];
+            return MarketIndex(
+              screenIndex: screenIndex ?? 0,
+              marketIndex: marketIndex ?? 0,
+              marketInnerIndex: marketInnerIndex ?? 0,
             );
           },
         );
@@ -321,8 +335,7 @@ class Routes {
           },
         );*/
 
-
-    case SearchTickerIndex.path:
+      case SearchTickerIndex.path:
         return MaterialPageRoute(
           builder: (context) {
             final arguments = settings.arguments as Map<String, dynamic>?;

@@ -218,7 +218,7 @@ class _JoinReferralIndexState extends State<JoinReferralIndex> {
   Widget build(BuildContext context) {
     // MyHomeManager manager = context.watch<MyHomeManager>();
     UserManager userManager = context.watch<UserManager>();
-    ReferralManager manager = context.read<ReferralManager>();
+    ReferralManager manager = context.watch<ReferralManager>();
 
     ReferLogin? labels = manager.data?.referLogin;
 
@@ -269,7 +269,7 @@ class _JoinReferralIndexState extends State<JoinReferralIndex> {
               BaseTextField(
                 placeholder: 'Name',
                 controller: _name,
-                keyboardType: TextInputType.phone,
+                keyboardType: TextInputType.name,
                 onChanged: (text) {
                   _name.text = text;
                   if (mounted) {
@@ -281,7 +281,7 @@ class _JoinReferralIndexState extends State<JoinReferralIndex> {
               BaseTextField(
                 placeholder: 'Display name',
                 controller: _displayName,
-                keyboardType: TextInputType.phone,
+                keyboardType: TextInputType.name,
                 onChanged: (text) {
                   _displayName.text = text;
                   if (mounted) {

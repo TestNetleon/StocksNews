@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/models/ticker.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/ui/base/base_list_divider.dart';
+import 'package:stocks_news_new/ui/tabs/tabs.dart';
 import 'package:stocks_news_new/ui/tabs/tools/simulator/managers/portpolio.dart';
 import 'package:stocks_news_new/ui/tabs/tools/simulator/managers/s_open.dart';
 import 'package:stocks_news_new/ui/tabs/tools/simulator/managers/ticker_search.dart';
@@ -437,8 +438,13 @@ class _OpenOrderScreenState extends State<OpenOrderScreen> {
                           .read<SOpenManager>()
                           .squareOffRequest(widget.tickerID?.toString());
                       if (result == true) {
+                        // Navigator.pushNamed(
+                        //     navigatorKey.currentContext!, SimulatorIndex.path);
                         Navigator.pushNamed(
-                            navigatorKey.currentContext!, SimulatorIndex.path);
+                            navigatorKey.currentContext!, Tabs.path,
+                            arguments: {
+                              'index': 2,
+                            });
                       }
                     },
                   );

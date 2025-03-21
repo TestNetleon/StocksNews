@@ -17,6 +17,8 @@ class UserRes {
   String? name;
   String? referralCode;
   String? referralUrl;
+  String? shareText;
+
   String? displayName;
   bool? signupStatus;
   final UserMembershipRes? membership;
@@ -29,6 +31,7 @@ class UserRes {
   UserRes({
     this.imageType,
     this.email,
+    this.shareText,
     this.membership,
     this.phone,
     this.roleId,
@@ -51,6 +54,7 @@ class UserRes {
         imageType: json['image_type'],
         email: json["email"],
         userId: json['_id'],
+        shareText: json['share_text'],
         phone: json["phone"],
         roleId: json["role_id"],
         membership: json["membership"] == null
@@ -73,6 +77,7 @@ class UserRes {
         'image_type': imageType,
         "email": email,
         "phone": phone,
+        'share_text': shareText,
         "_id": userId,
         "role_id": roleId,
         "token": token,
@@ -92,12 +97,14 @@ class UserRes {
 
 class UserMembershipRes {
   int? purchased;
+  final bool? isElitePlan;
   final String? displayName;
   final String? productID;
   final HomeLoginBoxRes? upgradeText;
 
   UserMembershipRes({
     this.purchased,
+    this.isElitePlan,
     this.displayName,
     this.productID,
     this.upgradeText,
@@ -105,6 +112,7 @@ class UserMembershipRes {
 
   factory UserMembershipRes.fromJson(Map<String, dynamic> json) =>
       UserMembershipRes(
+        isElitePlan: json['is_elite_plan'],
         purchased: json["purchased"],
         displayName: json["display_name"],
         productID: json['product_id'],
@@ -115,6 +123,7 @@ class UserMembershipRes {
 
   Map<String, dynamic> toJson() => {
         "purchased": purchased,
+        'is_elite_plan': isElitePlan,
         "display_name": displayName,
         'product_id': productID,
         "upgrade_text": upgradeText?.toJson(),

@@ -84,8 +84,6 @@ class _FeedbackIndexState extends State<FeedbackIndex> {
   Widget build(BuildContext context) {
     FeedbackManager manager = context.watch<FeedbackManager>();
 
-    Utils().showLog("SELECTED ==> $selectType");
-
     return BaseScaffold(
       //resizeToAvoidBottomInset: false,
       appBar: BaseAppBar(showBack: true, title: "Feedback"),

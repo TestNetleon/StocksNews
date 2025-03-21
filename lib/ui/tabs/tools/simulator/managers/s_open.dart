@@ -71,7 +71,8 @@ class SOpenManager extends ChangeNotifier {
     }
 
     notifyListeners();
-    PortfolioManager manager = navigatorKey.currentContext!.read<PortfolioManager>();
+    PortfolioManager manager =
+        navigatorKey.currentContext!.read<PortfolioManager>();
 
     num totalMarketValue = 0;
     num todaysReturn = 0;
@@ -117,16 +118,16 @@ class SOpenManager extends ChangeNotifier {
     );
   }
 
-  Map<String, num> _calculateTodaysReturn(
-      TsOpenListRes stock) {
+  Map<String, num> _calculateTodaysReturn(TsOpenListRes stock) {
     num todaysReturn = 0;
     num todaysReturnPercentage = 0;
     num price = stock.currentPrice ?? 0;
-    PortfolioManager manager = navigatorKey.currentContext!.read<PortfolioManager>();
-    bool boughtToday = _isStockBoughtToday(stock, manager.userData!.reponseTime!);
-    num referencePrice = boughtToday
-        ? (stock.avgPrice ?? 0)
-        : (stock.previousClose ?? 0);
+    PortfolioManager manager =
+        navigatorKey.currentContext!.read<PortfolioManager>();
+    bool boughtToday =
+        _isStockBoughtToday(stock, manager.userData!.reponseTime!);
+    num referencePrice =
+        boughtToday ? (stock.avgPrice ?? 0) : (stock.previousClose ?? 0);
     if (referencePrice > 0) {
       if (stock.tradeType == 'Short') {
         todaysReturn = (referencePrice - price) * stock.quantity!;
@@ -229,12 +230,12 @@ class SOpenManager extends ChangeNotifier {
 
 // MARK: SSE Manager
   void _connectSSEForSymbols(List<String> symbols) {
-    PortfolioManager manager = navigatorKey.currentContext!.read<PortfolioManager>();
+    PortfolioManager manager =
+        navigatorKey.currentContext!.read<PortfolioManager>();
     if (_data != null &&
         _data?.isNotEmpty == true &&
         (manager.userData?.userDataRes?.executable == true)) {
       for (var data in _data!) {
-
         if (data.id == null) return;
         _updateStockData(
           data,
@@ -258,6 +259,8 @@ class SOpenManager extends ChangeNotifier {
               // Utils().showLog("Listening for = > ${data.id}");
               if (data.id == null) return;
               _updateStockData(data, stockData);
+
+              Utils().showLog('${stockData.toMap()}');
             },
             SimulatorEnum.open,
           );

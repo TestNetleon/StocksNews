@@ -334,8 +334,12 @@ class BrazeNotificationService {
           type == NotificationType.simulator.name) {
         if (whenAppKilled || !isOnTsScreen) {
           /// done
-          Navigator.pushNamed(
-              navigatorKey.currentContext!, SimulatorIndex.path);
+          // Navigator.pushNamed(
+          //     navigatorKey.currentContext!, SimulatorIndex.path);
+
+          Navigator.pushNamed(navigatorKey.currentContext!, Tabs.path,
+              arguments: {'index': 2});
+
           // Navigator.push(
           //   navigatorKey.currentContext!,
           //   MaterialPageRoute(builder: (_) => TsDashboard()),

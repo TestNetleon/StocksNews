@@ -5,7 +5,7 @@ import 'package:stocks_news_new/ui/base/base_list_divider.dart';
 import 'package:stocks_news_new/ui/base/button.dart';
 import 'package:stocks_news_new/ui/base/stock/add.dart';
 import 'package:stocks_news_new/ui/stockDetail/index.dart';
-import 'package:stocks_news_new/ui/tabs/tabs.dart';
+import 'package:stocks_news_new/ui/tabs/tools/market/index.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -85,13 +85,23 @@ class _HomeTopGainersState extends State<HomeTopGainers> {
                     if (index == manager.dataTopGainers!.data!.length - 1)
                       BaseButton(
                         onPressed: () {
-                          Navigator.pushReplacementNamed(
+                          // Navigator.pushReplacementNamed(
+                          //   context,
+                          //   Tabs.path,
+                          //   arguments: {
+                          //     'index': 2,
+                          //     "childIndex": 1,
+                          //     "innerChildIndex": 0,
+                          //   },
+                          // );
+
+                          Navigator.pushNamed(
                             context,
-                            Tabs.path,
+                            MarketIndex.path,
                             arguments: {
-                              'index': 2,
-                              "childIndex": 1,
-                              "innerChildIndex": 0,
+                              'screenIndex': 0,
+                              "marketIndex": 1,
+                              "marketInnerIndex": 0,
                             },
                           );
                         },

@@ -1,22 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:stocks_news_new/managers/market/sectors/sectors.dart';
+import 'package:stocks_news_new/managers/market/industries/industries.dart';
 import 'package:stocks_news_new/ui/base/base_list_divider.dart';
-import 'package:stocks_news_new/ui/base/base_sector_header.dart';
-import 'package:stocks_news_new/ui/base/base_sector_item.dart';
 import 'package:stocks_news_new/ui/base/load_more.dart';
 import 'package:stocks_news_new/ui/base/lock.dart';
-import 'package:stocks_news_new/ui/tabs/market/sectors/sector_view.dart';
+import 'package:stocks_news_new/ui/tabs/tools/market/industries/industries_view.dart';
+import 'package:stocks_news_new/ui/tabs/tools/market/industries/widget/mention_chart.dart';
 import 'package:stocks_news_new/widgets/custom/base_loader_container.dart';
+import 'package:stocks_news_new/ui/base/base_sector_header.dart';
+import 'package:stocks_news_new/ui/base/base_sector_item.dart';
 
-class Sectors extends StatefulWidget {
-  const Sectors({super.key});
+class Industries extends StatefulWidget {
+  const Industries({super.key});
 
   @override
-  State<Sectors> createState() => _SectorsState();
+  State<Industries> createState() => _IndustriesState();
 }
 
-class _SectorsState extends State<Sectors> {
+class _IndustriesState extends State<Industries> {
   @override
   void initState() {
     super.initState();
@@ -26,13 +27,13 @@ class _SectorsState extends State<Sectors> {
   }
 
   Future _callAPI({loadMore = false}) async {
-    SectorsManager manager = context.read<SectorsManager>();
+    IndustriesManager manager = context.read<IndustriesManager>();
     await manager.getData(loadMore: loadMore);
   }
 
   @override
   Widget build(BuildContext context) {
-    SectorsManager manager = context.watch<SectorsManager>();
+    IndustriesManager manager = context.watch<IndustriesManager>();
     return BaseLoaderContainer(
       isLoading: manager.isLoading,
       hasData: manager.data != null && !manager.isLoading,
@@ -52,13 +53,19 @@ class _SectorsState extends State<Sectors> {
                     itemBuilder: (context, index) {
                       return Column(
                         children: [
-                          if (index == 0)BaseSectorHeader(title: manager.data?.heading),
+                          if (index == 0) MentionChart(),
+                          if (index == 0)
+                            BaseSectorHeader(title: manager.data?.heading),
                           if (index == 0) BaseListDivider(),
                           BaseSectorItem(
                             data: manager.data!.data![index],
                             index: index,
-                            onTap: (value){
-                              Navigator.pushNamed(context, SectorViewIndex.path,arguments: {'slug':value?.industrySlug??""});
+                            onTap: (value) {
+                              Navigator.pushNamed(
+                                  context, IndustriesViewIndex.path,
+                                  arguments: {
+                                    'slug': value?.industrySlug ?? ""
+                                  });
                             },
                           ),
                         ],
@@ -74,8 +81,8 @@ class _SectorsState extends State<Sectors> {
                     separatorBuilder: (context, index) {
                       return BaseListDivider();
                     },
-                    // itemCount: manager.data!.data?.length ?? 0,
-                    itemCount: 4,
+                    itemCount: manager.data!.data?.length ?? 0,
+                    // itemCount: 4,
                   ),
           ),
           BaseLockItem(manager: manager, callAPI: _callAPI),

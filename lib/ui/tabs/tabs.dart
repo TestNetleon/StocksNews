@@ -11,10 +11,10 @@ import 'package:stocks_news_new/service/amplitude/service.dart';
 import 'package:stocks_news_new/socket/socket.dart';
 import 'package:stocks_news_new/ui/base/scaffold.dart';
 import 'package:stocks_news_new/ui/tabs/home/scanner/manager/gainers.dart';
-import 'package:stocks_news_new/ui/tabs/market/index.dart';
 import 'package:stocks_news_new/ui/tabs/tools/scanner/manager/gainers.dart';
 import 'package:stocks_news_new/ui/tabs/tools/scanner/manager/losers.dart';
 import 'package:stocks_news_new/ui/tabs/tools/scanner/manager/scanner.dart';
+import 'package:stocks_news_new/ui/tabs/tools/simulator/services/sse.dart';
 import 'package:stocks_news_new/ui/theme/manager.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
@@ -23,6 +23,7 @@ import 'package:vibration/vibration.dart';
 import 'home/home.dart';
 import 'signals/signals.dart';
 import 'tools/scanner/index.dart';
+import 'tools/simulator/screens/index.dart';
 import 'tools/tools.dart';
 
 class Tabs extends StatefulWidget {
@@ -64,7 +65,8 @@ class _TabsState extends State<Tabs> {
     });
   }
 
-  BottomNavigationBarItem bottomTab({icon, label, bool selected = false}) {
+  BottomNavigationBarItem bottomTab(
+      {icon, label, bool selected = false, double size = 27}) {
     return BottomNavigationBarItem(
       icon: Consumer<ThemeManager>(
         builder: (context, value, child) {
@@ -72,8 +74,8 @@ class _TabsState extends State<Tabs> {
             padding: EdgeInsets.only(bottom: 3.sp),
             child: Image.asset(
               icon,
-              height: 27,
-              width: 27,
+              height: size,
+              width: size,
               color:
                   selected ? ThemeColors.navigationBar : ThemeColors.neutral60,
             ),
@@ -117,13 +119,13 @@ class _TabsState extends State<Tabs> {
             selected: _selectedIndex == 0,
           ),
           bottomTab(
-            icon: Images.bottomHome,
+            icon: Images.bottomScanner,
             label: "Scanner",
             selected: _selectedIndex == 1,
           ),
           bottomTab(
             icon: Images.bottomMarket,
-            label: "Market",
+            label: "Simulator",
             selected: _selectedIndex == 2,
           ),
           bottomTab(
@@ -162,6 +164,10 @@ class _TabsState extends State<Tabs> {
       scannerManager.stopListeningPorts();
       gainersManager.stopListeningPorts();
       losersManager.stopListeningPorts();
+    }
+
+    if (currentIndex != 2) {
+      SSEManager.instance.disconnectAllScreens();
     }
 
     try {
@@ -220,11 +226,12 @@ class Screens {
     return <Widget>[
       HomeIndex(),
       ToolsScannerIndex(),
-      MarketIndex(
-        screenIndex: 0,
-        marketIndex: childIndex ?? 0,
-        marketInnerIndex: innerChildIndex,
-      ),
+      // MarketIndex(
+      //   screenIndex: 0,
+      //   marketIndex: childIndex ?? 0,
+      //   marketInnerIndex: innerChildIndex,
+      // ),
+      SimulatorIndex(initialIndex: childIndex ?? 0),
       SignalsIndex(),
       ToolsIndex(),
       // MoreIndex(),

@@ -24,6 +24,11 @@ class BaseTickerRes {
   num? changesPercentage;
   num? price;
   num? change;
+// for Pre Post Stream
+  num? changesPercentageEXT;
+  num? priceEXT;
+  num? changeEXT;
+
   final String? image;
   final String? name;
   final String? type;
@@ -99,6 +104,10 @@ class BaseTickerRes {
     this.changesPercentage,
     this.price,
     this.change,
+    // for Pre Post Stream
+    this.changesPercentageEXT,
+    this.priceEXT,
+    this.changeEXT,
     this.image,
     this.investmentValue,
     this.type,
@@ -183,7 +192,7 @@ class BaseTickerRes {
         //extra
         isCryptoAdded: json['is_crypto_added'],
         brief: json['brief'],
-    status: json['status'],
+        status: json['status'],
         notAvailable: json['not_available'],
         marketCap: json['marketCap'],
         marketTime: json['market_time'],

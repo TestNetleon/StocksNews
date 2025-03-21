@@ -6,7 +6,7 @@ import 'package:stocks_news_new/ui/base/base_list_divider.dart';
 import 'package:stocks_news_new/ui/base/load_more.dart';
 import 'package:stocks_news_new/ui/base/scaffold.dart';
 import 'package:stocks_news_new/ui/base/stock/add.dart';
-import 'package:stocks_news_new/ui/tabs/market/industries/widget/header_item.dart';
+import 'package:stocks_news_new/ui/tabs/tools/market/industries/widget/header_item.dart';
 import 'package:stocks_news_new/widgets/custom/base_loader_container.dart';
 
 class IndustriesViewIndex extends StatefulWidget {
@@ -30,15 +30,16 @@ class _IndustriesViewIndexState extends State<IndustriesViewIndex> {
 
   Future _callAPI({loadMore = false}) async {
     IndustriesManager manager = context.read<IndustriesManager>();
-    await manager.getViewData(widget.slug,loadMore: loadMore);
+    await manager.getViewData(widget.slug, loadMore: loadMore);
   }
+
   @override
   Widget build(BuildContext context) {
     IndustriesManager manager = context.watch<IndustriesManager>();
     return BaseScaffold(
         appBar: BaseAppBar(
           showBack: true,
-          title: manager.isLoadingView?"":manager.dataView?.title ?? "",
+          title: manager.isLoadingView ? "" : manager.dataView?.title ?? "",
           showSearch: true,
         ),
         body: BaseLoaderContainer(
@@ -54,27 +55,27 @@ class _IndustriesViewIndexState extends State<IndustriesViewIndex> {
             child: (manager.dataView == null || manager.dataView?.data == null)
                 ? const SizedBox()
                 : ListView.separated(
-              shrinkWrap: true,
-              itemBuilder: (context, index) {
-                return Column(
-                  children: [
-                    if (index == 0) HeaderItem(header: manager.dataView?.header),
-                    BaseStockAddItem(
-                      onTap: (value){},
-                      data: manager.dataView!.data![index],
-                      index: index,
-                      slidable: false,
-                    )
-                  ],
-                );
-              },
-              separatorBuilder: (context, index) {
-                return BaseListDivider();
-              },
-               itemCount: manager.dataView?.data?.length ?? 0,
-            ),
+                    shrinkWrap: true,
+                    itemBuilder: (context, index) {
+                      return Column(
+                        children: [
+                          if (index == 0)
+                            HeaderItem(header: manager.dataView?.header),
+                          BaseStockAddItem(
+                            onTap: (value) {},
+                            data: manager.dataView!.data![index],
+                            index: index,
+                            slidable: false,
+                          )
+                        ],
+                      );
+                    },
+                    separatorBuilder: (context, index) {
+                      return BaseListDivider();
+                    },
+                    itemCount: manager.dataView?.data?.length ?? 0,
+                  ),
           ),
-        )
-    );
+        ));
   }
 }

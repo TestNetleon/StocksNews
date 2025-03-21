@@ -6,6 +6,8 @@ import 'package:stocks_news_new/ui/base/lock.dart';
 import 'package:stocks_news_new/ui/base/scaffold.dart';
 import 'package:stocks_news_new/ui/stockDetail/competitors/index.dart';
 import 'package:stocks_news_new/ui/stockDetail/ownership/index.dart';
+import 'package:stocks_news_new/ui/tabs/tools/simulator/services/sse.dart';
+import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/custom/base_loader_container.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
@@ -52,108 +54,112 @@ class _SDIndexState extends State<SDIndex> {
   Widget build(BuildContext context) {
     SDManager manager = context.watch<SDManager>();
     BaseTickerRes? tickerDetail = manager.data?.tickerDetail;
-    print('SELECTED ${manager.selectedIndex}');
-    return BaseScaffold(
-      appBar: BaseTickerAppBar(
-        data: tickerDetail,
-        manager: manager,
-        shareURL: () {
-          commonShare(
-              url: tickerDetail?.shareUrl ?? '',
-              title:
-                  '${tickerDetail?.symbol ?? '-'} (${tickerDetail?.name ?? '-'})');
-          // openUrl(tickerDetail?.shareUrl);
-          Share.share(tickerDetail?.shareUrl ?? '');
-        },
-        addToAlert: () {},
-        addToWatchlist: () {},
-        onRefresh: () {
-          manager.getSDTab(widget.symbol);
-        },
-      ),
-      body: BaseLoaderContainer(
-        hasData: manager.data != null,
-        isLoading: manager.isLoading,
-        error: manager.error,
-        showPreparingText: true,
-        onRefresh: () {
-          manager.getSDTab(widget.symbol);
-        },
-        child: Column(
-          children: [
-            SpacerVertical(height: 16),
-            if (manager.data?.tickerDetail != null)
-              BaseStockDetailHeader(data: manager.data!.tickerDetail!),
-            SDTabs(tabs: manager.data?.tabs),
-            if (manager.selectedIndex == 0)
-              Expanded(
-                child: SDOverview(),
-              ),
-            if (manager.selectedIndex == 1)
-              Expanded(
-                child: SDKeyStats(),
-              ),
-            if (manager.selectedIndex == 2)
-              Expanded(
-                child: SDStocksAnalysis(),
-              ),
-            if (manager.selectedIndex == 3)
-              Expanded(
-                child: SDTechnicalAnalysis(),
-              ),
-            if (manager.selectedIndex == 4)
-              Expanded(
-                child: SDAnalystForecast(),
-              ),
-            if (manager.selectedIndex == 5)
-              Expanded(
-                child: SDLatestNews(),
-              ),
-            if (manager.selectedIndex == 6)
-              Expanded(
-                child: SDEarnings(),
-              ),
-            if (manager.selectedIndex == 7)
-              Expanded(
-                child: SDDividends(),
-              ),
-            if (manager.selectedIndex == 8)
-              Expanded(
-                child: SDInsiderTrades(),
-              ),
-            if (manager.selectedIndex == 9)
-              Expanded(
-                child: SDCompetitors(),
-              ),
-            if (manager.selectedIndex == 10)
-              Expanded(
-                child: SDOwnership(),
-              ),
-            if (manager.selectedIndex == 11)
-              Expanded(
-                child: SDChart(),
-              ),
-            if (manager.selectedIndex == 12)
-              Expanded(
-                child: SDFinancials(),
-              ),
-            if (manager.selectedIndex == 13)
-              Expanded(
-                child: SDSecFiling(),
-              ),
-            if (manager.selectedIndex == 14)
-              Expanded(
-                child: SDMergers(),
-              ),
-            if (manager.selectedIndex == 0)
-              BaseLockItem(
-                manager: manager,
-                lockWithImage: false,
-                callAPI: () async {
-                  await manager.getSDOverview(reset: true);
-                },
-              ),
-          ],
+    return PopScope(
+      onPopInvokedWithResult: (didPop, result) {
+        SSEManager.instance.disconnectScreen(SimulatorEnum.stockDetail);
+      },
+      child: BaseScaffold(
+        appBar: BaseTickerAppBar(
+          data: tickerDetail,
+          manager: manager,
+          shareURL: () {
+            commonShare(
+                url: tickerDetail?.shareUrl ?? '',
+                title:
+                    '${tickerDetail?.symbol ?? '-'} (${tickerDetail?.name ?? '-'})');
+            // openUrl(tickerDetail?.shareUrl);
+            Share.share(tickerDetail?.shareUrl ?? '');
+          },
+          addToAlert: () {},
+          addToWatchlist: () {},
+          onRefresh: () {
+            manager.getSDTab(widget.symbol);
+          },
+        ),
+        body: BaseLoaderContainer(
+          hasData: manager.data != null,
+          isLoading: manager.isLoading,
+          error: manager.error,
+          showPreparingText: true,
+          onRefresh: () {
+            manager.getSDTab(widget.symbol);
+          },
+          child: Column(
+            children: [
+              SpacerVertical(height: 16),
+              if (manager.data?.tickerDetail != null)
+                BaseStockDetailHeader(data: manager.data!.tickerDetail!),
+              SDTabs(tabs: manager.data?.tabs),
+              if (manager.selectedIndex == 0)
+                Expanded(
+                  child: SDOverview(),
+                ),
+              if (manager.selectedIndex == 1)
+                Expanded(
+                  child: SDKeyStats(),
+                ),
+              if (manager.selectedIndex == 2)
+                Expanded(
+                  child: SDStocksAnalysis(),
+                ),
+              if (manager.selectedIndex == 3)
+                Expanded(
+                  child: SDTechnicalAnalysis(),
+                ),
+              if (manager.selectedIndex == 4)
+                Expanded(
+                  child: SDAnalystForecast(),
+                ),
+              if (manager.selectedIndex == 5)
+                Expanded(
+                  child: SDLatestNews(),
+                ),
+              if (manager.selectedIndex == 6)
+                Expanded(
+                  child: SDEarnings(),
+                ),
+              if (manager.selectedIndex == 7)
+                Expanded(
+                  child: SDDividends(),
+                ),
+              if (manager.selectedIndex == 8)
+                Expanded(
+                  child: SDInsiderTrades(),
+                ),
+              if (manager.selectedIndex == 9)
+                Expanded(
+                  child: SDCompetitors(),
+                ),
+              if (manager.selectedIndex == 10)
+                Expanded(
+                  child: SDOwnership(),
+                ),
+              if (manager.selectedIndex == 11)
+                Expanded(
+                  child: SDChart(),
+                ),
+              if (manager.selectedIndex == 12)
+                Expanded(
+                  child: SDFinancials(),
+                ),
+              if (manager.selectedIndex == 13)
+                Expanded(
+                  child: SDSecFiling(),
+                ),
+              if (manager.selectedIndex == 14)
+                Expanded(
+                  child: SDMergers(),
+                ),
+              if (manager.selectedIndex == 0)
+                BaseLockItem(
+                  manager: manager,
+                  lockWithImage: false,
+                  callAPI: () async {
+                    await manager.getSDOverview(reset: true);
+                  },
+                ),
+            ],
+          ),
         ),
       ),
     );
