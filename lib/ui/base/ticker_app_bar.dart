@@ -9,7 +9,7 @@ import 'package:stocks_news_new/routes/navigation_observer.dart';
 import 'package:stocks_news_new/ui/base/bottom_sheet.dart';
 import 'package:stocks_news_new/ui/base/toaster.dart';
 import 'package:stocks_news_new/ui/subscription/manager.dart';
-import 'package:stocks_news_new/ui/tabs/market/stocks/extra/add_to_alert_sheet.dart';
+import 'package:stocks_news_new/ui/tabs/tools/market/stocks/extra/add_to_alert_sheet.dart';
 import 'package:stocks_news_new/ui/tabs/more/alerts/index.dart';
 import 'package:stocks_news_new/ui/tabs/more/watchlist/index.dart';
 import 'package:stocks_news_new/ui/tabs/tabs.dart';

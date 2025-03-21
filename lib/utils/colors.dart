@@ -224,10 +224,9 @@ class ThemeColors {
     neutral9 = Color(0xFFF9FDFB);
 
     // Category
-
     category100 = Color(0xFF2784E1);
 
-    //OTHER
+    // OTHER
     black = isLightTheme ? Color(0xFF282B41) : Color(0xFFFFFFFF);
     white = isLightTheme ? Color(0xFFFFFFFF) : Color(0xFF000000);
     itemBack = isLightTheme ? Color(0xFFFFFFFF) : Color(0xFF121212);
