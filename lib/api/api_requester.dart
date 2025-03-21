@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/api/apis.dart';
+import 'package:stocks_news_new/maintenance/box.dart';
 import 'package:stocks_news_new/managers/user.dart';
 import 'package:stocks_news_new/modals/in_app_msg_res.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
@@ -213,6 +214,11 @@ Future<ApiResponse> apiRequest({
             showErrorOnFull) {
           isShowingError = true;
           //TODO: show maintenance
+          showMaintenanceDialog(
+            title: maintenanceDialog?.title ?? maintenanceDialogNew?.title,
+            description: maintenanceDialog?.description ??
+                maintenanceDialogNew?.description,
+          );
         } else if (inAppMsg != null) {
           checkForInAppMessage(inAppMsg);
         }
@@ -240,7 +246,11 @@ Future<ApiResponse> apiRequest({
         }
         if (maintenanceDialog != null && !isShowingError && showErrorOnFull) {
           isShowingError = true;
-          //show maintenance
+          //TODO: show maintenance
+          showMaintenanceDialog(
+            title: maintenanceDialog.title,
+            description: maintenanceDialog.description,
+          );
         }
       }
 

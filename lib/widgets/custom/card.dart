@@ -17,7 +17,7 @@ class CommonCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(Pad.pad16),
+      padding: padding ?? const EdgeInsets.all(Pad.pad16),
       margin: margin,
       decoration: BoxDecoration(
         border: Border.all(color: ThemeColors.neutral5),

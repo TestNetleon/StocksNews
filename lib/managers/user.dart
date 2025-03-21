@@ -141,13 +141,12 @@ class UserManager extends ChangeNotifier {
     );
   }
 
-  void navigateToMySubscription({bool viewPlans = true}) async {
+  Future navigateToMySubscription({bool viewPlans = true}) async {
     await askLoginScreen();
     if (_user == null) return;
-    Navigator.pop(navigatorKey.currentContext!);
     SubscriptionManager manager =
         navigatorKey.currentContext!.read<SubscriptionManager>();
-    manager.startProcess(viewPlans: viewPlans);
+    await manager.startProcess(viewPlans: viewPlans);
   }
 
   void navigateToReferral() async {

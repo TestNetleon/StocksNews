@@ -9,6 +9,7 @@ import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/api/apis.dart';
 import 'package:stocks_news_new/database/preference.dart';
 import 'package:stocks_news_new/managers/home/home_tabs.dart';
+import 'package:stocks_news_new/models/home_view_more.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/service/braze/service.dart';
 import 'package:stocks_news_new/utils/utils.dart';
@@ -269,6 +270,106 @@ class MyHomeManager extends ChangeNotifier {
       Utils().showLog('Error in ${Apis.myHome}: $e');
     } finally {
       setStatusWatchlist(Status.loaded);
+    }
+  }
+
+//MARK: View More
+  String? _errorViewMore;
+  String? get errorViewMore => _errorViewMore;
+
+  Status _statusViewMore = Status.ideal;
+  Status get statusViewMore => _statusViewMore;
+
+  bool get isLoadingViewMore =>
+      _statusViewMore == Status.loading || _statusViewMore == Status.ideal;
+
+  HomeViewMoreTickersRes? _homeViewMore;
+  HomeViewMoreTickersRes? get homeViewMore => _homeViewMore;
+
+  int _page = 1;
+  bool get canLoadMoreViewMore => _page <= (_homeViewMore?.totalPages ?? 1);
+
+  setStatusViewMore(status) {
+    _statusViewMore = status;
+    notifyListeners();
+  }
+
+  Future getViewMoreData({
+    required String apiUrl,
+    bool loadMore = false,
+  }) async {
+    if (loadMore) {
+      _page++;
+      setStatusViewMore(Status.loadingMore);
+    } else {
+      _page = 1;
+      setStatusViewMore(Status.loading);
+    }
+    try {
+      UserManager provider = navigatorKey.currentContext!.read<UserManager>();
+      Map request = {
+        'token': provider.user?.token ?? '',
+        'page': '$_page',
+      };
+
+      ApiResponse response = await apiRequest(
+        url: apiUrl,
+        request: request,
+      );
+      if (response.status) {
+        if (_page == 1) {
+          _homeViewMore =
+              homeViewMoreTickersResFromJson(jsonEncode(response.data));
+          _errorViewMore = null;
+        } else {
+          _homeViewMore?.data?.addAll(
+              homeViewMoreTickersResFromJson(jsonEncode(response.data)).data ??
+                  []);
+        }
+      } else {
+        if (_page == 1) {
+          _homeViewMore = null;
+          _errorViewMore = response.message;
+        }
+      }
+    } catch (e) {
+      _homeViewMore = null;
+      _errorViewMore = Const.errSomethingWrong;
+    } finally {
+      setStatusViewMore(Status.loaded);
+    }
+  }
+
+  Future checkMaintenanceMode() async {
+    notifyListeners();
+
+    try {
+      ApiResponse response = await apiRequest(
+        url: Apis.checkServer,
+        baseUrl: Apis.baseUrlLocal,
+        showProgress: false,
+      );
+
+      if (response.status) {
+        Extra? newExtra =
+            (response.extra is Extra ? response.extra as Extra : null);
+
+        if (newExtra?.messageObject != null) {
+          Preference.saveLocalDataBase(newExtra?.messageObject);
+        }
+        if (newExtra?.messageObject?.error != null) {
+          Const.errSomethingWrong = newExtra?.messageObject?.error ?? "";
+          Const.loadingMessage = newExtra?.messageObject?.loading ?? "";
+        }
+        MessageRes? localDataBase = await Preference.getLocalDataBase();
+        Utils().showLog("localDataBase  =========${localDataBase?.error}");
+        notifyListeners();
+      }
+
+      return response.status ? false : true;
+    } catch (e) {
+      notifyListeners();
+      return false;
     }
   }
 }

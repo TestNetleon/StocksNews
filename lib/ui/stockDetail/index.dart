@@ -6,6 +6,7 @@ import 'package:stocks_news_new/ui/base/lock.dart';
 import 'package:stocks_news_new/ui/base/scaffold.dart';
 import 'package:stocks_news_new/ui/stockDetail/competitors/index.dart';
 import 'package:stocks_news_new/ui/stockDetail/ownership/index.dart';
+import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/custom/base_loader_container.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import '../../models/ticker.dart';
@@ -51,12 +52,16 @@ class _SDIndexState extends State<SDIndex> {
   Widget build(BuildContext context) {
     SDManager manager = context.watch<SDManager>();
     BaseTickerRes? tickerDetail = manager.data?.tickerDetail;
-
+    print('SELECTED ${manager.selectedIndex}');
     return BaseScaffold(
       appBar: BaseTickerAppBar(
         data: tickerDetail,
         manager: manager,
         shareURL: () {
+          commonShare(
+              url: tickerDetail?.shareUrl ?? '',
+              title:
+                  '${tickerDetail?.symbol ?? '-'} (${tickerDetail?.name ?? '-'})');
           // openUrl(tickerDetail?.shareUrl);
           Share.share(tickerDetail?.shareUrl ?? '');
         },

@@ -102,7 +102,7 @@ class CryptoItem extends StatelessWidget {
                         item?.image ?? '',
                         height: 40,
                         width: 40,
-                        placeHolder: Images.placeholder,
+                        placeHolder: Images.userPlaceholderNew,
                         showLoading: true,
                         fit: BoxFit.contain,
                       ),

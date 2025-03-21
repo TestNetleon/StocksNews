@@ -5,6 +5,7 @@ import 'package:stocks_news_new/managers/home/home_tabs.dart';
 import 'package:stocks_news_new/ui/AdManager/service.dart';
 import 'package:stocks_news_new/ui/tabs/home/plaid/index.dart';
 import 'package:stocks_news_new/ui/tabs/home/refer/index.dart';
+import 'package:stocks_news_new/ui/theme/manager.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/custom/base_loader_container.dart';
 import 'package:visibility_detector/visibility_detector.dart';
@@ -26,7 +27,30 @@ class HomePremiumIndex extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        HomeWatchlistContainer(),
+        Visibility(
+          visible: manager.homePremiumData?.watchList != null,
+          child: Consumer<ThemeManager>(
+            builder: (context, value, child) {
+              bool isDark = value.isDarkMode;
+              return Container(
+                margin: EdgeInsets.only(top: Pad.pad20),
+                decoration: isDark
+                    ? BoxDecoration(
+                        gradient: const LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          colors: [
+                            Color(0xFF0E2900),
+                            Color(0x00000000),
+                          ],
+                        ),
+                      )
+                    : null,
+                child: HomeWatchlistContainer(),
+              );
+            },
+          ),
+        ),
         Container(
           margin: EdgeInsets.only(
             left: Pad.pad16,

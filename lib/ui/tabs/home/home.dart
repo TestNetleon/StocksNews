@@ -81,8 +81,9 @@ class _HomeIndexState extends State<HomeIndex> {
                 Visibility(
                   visible: manager.data?.adManagers?.data?.place1 != null,
                   child: AdManagerIndex(
-                      places: AdPlaces.place1,
-                      data: manager.data?.adManagers?.data?.place1),
+                    places: AdPlaces.place1,
+                    data: manager.data?.adManagers?.data?.place1,
+                  ),
                 ),
                 HomePopularStocks(),
                 VisibilityDetector(

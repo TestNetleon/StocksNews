@@ -1,5 +1,8 @@
 import 'dart:convert';
 
+import 'package:stocks_news_new/ui/tabs/tools/simulator/models/show_button_res.dart';
+
+
 List<SearchRes> searchResFromJson(String str) =>
     List<SearchRes>.from(json.decode(str).map((x) => SearchRes.fromJson(x)));
 
@@ -13,7 +16,7 @@ class SearchRes {
   final num? currentPrice;
   final num? change;
   final num? changesPercentage;
-  // final ShowButtonRes? showButton;
+   final ShowButtonRes? showButton;
 //
   SearchRes({
     required this.symbol,
@@ -22,7 +25,7 @@ class SearchRes {
     this.currentPrice,
     this.change,
     this.changesPercentage,
-    // this.showButton,
+     this.showButton,
   });
 
   factory SearchRes.fromJson(Map<String, dynamic> json) => SearchRes(
@@ -32,9 +35,9 @@ class SearchRes {
         currentPrice: json['current_price'],
         change: json['change'],
         changesPercentage: json['changesPercentage'],
-        // showButton: json["show_button"] == null
-        //     ? null
-        //     : ShowButtonRes.fromJson(json["show_button"]),
+        showButton: json["show_button"] == null
+            ? null
+            : ShowButtonRes.fromJson(json["show_button"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -44,6 +47,6 @@ class SearchRes {
         'current_price': currentPrice,
         "change": change,
         "changesPercentage": changesPercentage,
-        // "show_button": showButton?.toJson(),
+         "show_button": showButton?.toJson(),
       };
 }

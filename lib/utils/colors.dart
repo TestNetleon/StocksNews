@@ -113,6 +113,7 @@ class ThemeColors {
   //SECONDARY
   static Color secondary120 = Color(0xFF3240D1);
   static Color secondary100 = Color(0xFF555ED9);
+  static Color secondaryD6 = Color(0xFF5856D6);
   static Color secondary20 = Color(0xFFC5C6F1);
   static Color secondary10 = Color(0xFFE8E8FA);
 

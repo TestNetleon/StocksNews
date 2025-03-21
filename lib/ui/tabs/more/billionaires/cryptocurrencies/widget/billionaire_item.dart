@@ -107,7 +107,7 @@ class BillionaireItem extends StatelessWidget {
                     item?.image ?? '',
                     height: 140,
                     width: 140,
-                    placeHolder: Images.placeholder,
+                    placeHolder: Images.userPlaceholderNew,
                     showLoading: true,
                     fit: BoxFit.contain,
                   ),

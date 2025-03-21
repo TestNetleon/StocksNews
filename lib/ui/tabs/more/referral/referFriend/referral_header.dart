@@ -72,7 +72,7 @@ class ReferralHeader extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        "${userManager.user?.referralCode}",
+                        userManager.user?.referralCode ?? '',
                         style: styleBaseBold(
                           fontSize: 20,
                           color: isDark ? ThemeColors.black : ThemeColors.white,

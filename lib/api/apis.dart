@@ -12,13 +12,15 @@ class Apis {
   //     : "https://app.stocks.news/api/v2";
 
   // Main live server
-  static const baseUrl = "https://app.stocks.news/api/v2";
+   static const baseUrl = "https://app.stocks.news/api/v2";
 
   // MARK: New UI APIs
   static const onBoarding = '/onboarding';
   static const myHome = '/home-new';
   static const homeTrendingGainerLoser = '/home-popular-gainer-loser';
   // static const myHome = '/home';
+  static const myHomePopular = '/todays-popular';
+  static const myHomeMostBought = '/most-purchased-stocks';
 
   static const compareStocks = '/compare';
   static const addCompareStock = '/add-compare';
@@ -98,7 +100,9 @@ class Apis {
   static const orderTypeInfo = '/simulator/trade/order-type-definition';
   static const squareOff = '/simulator/trade/close-conditional-trade';
 
+
   //MARK: TOURNAMENT API
+  static const lTabs = '/home-tab';
   static const t = '/tournaments';
   static const tLeaderboard = '/tournament/leaderboard/by-date';
   static const tTradeList = '/tournament/trade-list';
@@ -116,6 +120,7 @@ class Apis {
   static const tUser = '/tournament/user-profile';
   static const tShowLeaderboard = '/tournament/show-today-leaderboard';
   static const tTradeAll = '/tournament/league-date/trade-list';
+
 
   //Search---
   static const recentSearch = '/recent-search';

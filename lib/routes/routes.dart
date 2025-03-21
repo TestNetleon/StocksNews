@@ -57,6 +57,7 @@ import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 import 'package:stocks_news_new/ui/subscription/action_required.dart';
 import 'package:stocks_news_new/ui/tabs/home/scanner/manager/gainers.dart';
+import 'package:stocks_news_new/ui/tabs/home/viewMore/PopularMostBought/index.dart';
 import 'package:stocks_news_new/ui/tabs/home/viewMore/trending/index.dart';
 import 'package:stocks_news_new/ui/tabs/market/industries/industries_view.dart';
 import 'package:stocks_news_new/ui/tabs/market/sectors/sector_view.dart';
@@ -95,7 +96,10 @@ import 'package:stocks_news_new/ui/tabs/tools/simulator/screens/conditionalOrder
 import 'package:stocks_news_new/ui/tabs/tools/simulator/screens/index.dart';
 import 'package:stocks_news_new/ui/tabs/tools/simulator/screens/tickerSearch/index.dart';
 import 'package:stocks_news_new/ui/tabs/tools/simulator/screens/tradeBuySell/index.dart';
-import 'package:stocks_news_new/ui/tabs/tools/tradingLeague/screens/index.dart';
+import 'package:stocks_news_new/ui/tabs/tools/tournament/provider/leaderboard.dart';
+import 'package:stocks_news_new/ui/tabs/tools/tournament/provider/search.dart';
+import 'package:stocks_news_new/ui/tabs/tools/tournament/provider/tournament.dart';
+import 'package:stocks_news_new/ui/tabs/tools/tournament/provider/trades.dart';
 import 'package:stocks_news_new/ui/theme/manager.dart';
 
 import 'package:stocks_news_new/utils/constants.dart';
@@ -171,7 +175,6 @@ class Routes {
     MembershipActionRequired.path: (_) => const MembershipActionRequired(),
     TrendingViewAllIndex.path: (_) => const TrendingViewAllIndex(),
 
-    TradingLeagueIndex.path: (_) => const TradingLeagueIndex(),
 
     //--------------------------------------
   };
@@ -296,7 +299,30 @@ class Routes {
             return SimulatorIndex(initialIndex: initialIndex ?? 0);
           },
         );
-      case SearchTickerIndex.path:
+      /*case TradingLeagueIndex.path:
+        return MaterialPageRoute(
+          builder: (context) {
+            final arguments = settings.arguments as Map<String, dynamic>?;
+            int? initialIndex = arguments?['initialIndex'];
+
+            return TradingLeagueIndex(initialIndex: initialIndex ?? 0);
+          },
+        );
+      case AllTopTtIndex.path:
+        return MaterialPageRoute(
+          builder: (context) {
+            final arguments = settings.arguments as Map<String, dynamic>?;
+            TournamentsHead selectedTournament = arguments?['selectedTournament'];
+            String? title = arguments?['title'];
+            return AllTopTtIndex(
+              selectedTournament: selectedTournament,
+              title: title,
+            );
+          },
+        );*/
+
+
+    case SearchTickerIndex.path:
         return MaterialPageRoute(
           builder: (context) {
             final arguments = settings.arguments as Map<String, dynamic>?;
@@ -429,6 +455,16 @@ class Routes {
           },
         );
 
+      case HomeViewMoreTickersIndex.path:
+        return MaterialPageRoute(
+          builder: (context) {
+            final arguments = settings.arguments as Map<String, dynamic>?;
+            String apiUrl = arguments?['apiUrl'];
+
+            return HomeViewMoreTickersIndex(apiUrl: apiUrl);
+          },
+        );
+
       case ToolsScannerIndex.path:
         return MaterialPageRoute(
           builder: (context) {
@@ -558,6 +594,14 @@ class Routes {
       ChangeNotifierProvider(create: (_) => IndustriesManager()),
       ChangeNotifierProvider(create: (_) => SectorsManager()),
       ChangeNotifierProvider(create: (_) => ThemeManager()),
+      //ChangeNotifierProvider(create: (_) => LeagueManager()),
+
+      // old providers
+
+      ChangeNotifierProvider(create: (_) => TournamentProvider()),
+      ChangeNotifierProvider(create: (_) => TournamentTradesProvider()),
+      ChangeNotifierProvider(create: (_) => TournamentSearchProvider()),
+      ChangeNotifierProvider(create: (_) => TournamentLeaderboardProvider()),
 
       // MARKET DATA End ---------------
     ];

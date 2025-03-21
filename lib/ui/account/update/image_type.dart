@@ -34,7 +34,7 @@ class UpdateImageType extends StatelessWidget {
                 ),
                 const SpacerHorizontal(width: 10),
                 Text(
-                  "Photo Library",
+                  "Take Photo",
                   style: styleBaseRegular(fontSize: 16),
                 ),
               ],
@@ -57,7 +57,7 @@ class UpdateImageType extends StatelessWidget {
                 ),
                 const SpacerHorizontal(width: 10),
                 Text(
-                  "Take Photo",
+                  "Photo Library",
                   style: styleBaseRegular(fontSize: 16),
                 ),
               ],

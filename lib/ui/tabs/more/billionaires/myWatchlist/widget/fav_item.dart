@@ -34,7 +34,7 @@ class FavItem extends StatelessWidget {
               child: CachedNetworkImagesWidget(
                 item?.image ?? '',
                 height: 200,
-                placeHolder: Images.userPlaceholder,
+                placeHolder: Images.userPlaceholderNew,
                 showLoading: true,
                 fit: BoxFit.contain,
               ),

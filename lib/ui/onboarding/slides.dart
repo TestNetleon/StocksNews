@@ -5,6 +5,7 @@ import 'package:stocks_news_new/database/preference.dart';
 import 'package:stocks_news_new/managers/user.dart';
 import 'package:stocks_news_new/models/onboarding.dart';
 import 'package:stocks_news_new/managers/onboarding.dart';
+import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -30,7 +31,7 @@ class _OnboardingSlidesState extends State<OnboardingSlides> {
   _navigateToHome() {
     Preference.setShowIntro(false);
     Navigator.pushAndRemoveUntil(
-      context,
+      navigatorKey.currentContext!,
       MaterialPageRoute(
         builder: (context) {
           return Tabs();
@@ -101,8 +102,13 @@ class _OnboardingSlidesState extends State<OnboardingSlides> {
               child: BaseButton(
                 radius: 8,
                 onPressed: () {
-                  UserManager manager = context.read<UserManager>();
-                  manager.navigateToMySubscription();
+                  _navigateToHome();
+
+                  Future.delayed(Duration(milliseconds: 200), () async {
+                    UserManager manager =
+                        navigatorKey.currentContext!.read<UserManager>();
+                    await manager.navigateToMySubscription();
+                  });
                 },
                 color: ThemeColors.primary100,
                 textColor: ThemeColors.black,

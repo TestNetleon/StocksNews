@@ -19,7 +19,7 @@ import '../tabs/more/news/detail.dart';
 import 'search/base_search.dart';
 
 class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
-  final bool isHome, showBack, showSearch, showNotification, showDrawer;
+  final bool isHome, showBack, showSearch, showNotification, showDrawer,showTrade;
   final Widget? searchFieldWidget;
   final String? title;
   final Function()? onSaveClick;
@@ -27,7 +27,7 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
   final double toolbarHeight;
   final bool showLogo;
   final Function()? leadingFilterClick;
-
+  final void Function()? onTradeClick;
   const BaseAppBar({
     super.key,
     this.showDrawer = true,
@@ -41,7 +41,9 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.onSaveClick,
     this.shareURL,
     this.showLogo = true,
+    this.showTrade = false,
     this.leadingFilterClick,
+    this.onTradeClick,
   });
 
   @override
@@ -223,6 +225,13 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
                               );
                             },
                           ),
+                        if(showTrade)
+                          IconButton(
+                            onPressed: onTradeClick,
+                            icon: Icon(
+                              Icons.bar_chart,
+                            ),
+                          ),
                         if (shareURL != null)
                           Padding(
                             padding: const EdgeInsets.only(left: 8),
@@ -299,7 +308,7 @@ class CenterTitle extends StatelessWidget {
     return Align(
       alignment: Alignment.center,
       child: Text(
-        title,
+        title.length > 25 ? '${title.substring(0, 25)}...' : title,
         style: styleBaseBold(fontSize: 18),
         maxLines: 1,
         overflow: TextOverflow.ellipsis,

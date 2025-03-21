@@ -208,6 +208,7 @@ class BlogsManager extends ChangeNotifier {
       );
       if (response.status) {
         _blogsDetail?.feedback?.existMessage = response.message;
+        notifyListeners();
       }
       TopSnackbar.show(
         message: response.message ?? '',

@@ -232,7 +232,7 @@ class _MarketIndexState extends State<MarketIndex> {
         hasData: provider.data != null && !provider.isLoading,
         showPreparingText: true,
         error: provider.error,
-        onRefresh: () async {},
+        onRefresh: _callAPI,
         child: provider.data == null
             ? const SizedBox()
             : Column(
