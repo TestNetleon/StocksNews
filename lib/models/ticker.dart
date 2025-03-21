@@ -52,6 +52,7 @@ class BaseTickerRes {
 
   //extra
   int? isCryptoAdded;
+  final int? status;
   final String? brief;
   final String? notAvailable;
   final String? revenue;
@@ -123,6 +124,7 @@ class BaseTickerRes {
 
     //extra
     this.revenue,
+    this.status,
     this.brief,
     this.isCryptoAdded,
     this.employeeCount,
@@ -181,6 +183,7 @@ class BaseTickerRes {
         //extra
         isCryptoAdded: json['is_crypto_added'],
         brief: json['brief'],
+    status: json['status'],
         notAvailable: json['not_available'],
         marketCap: json['marketCap'],
         marketTime: json['market_time'],
@@ -260,6 +263,7 @@ class BaseTickerRes {
         //extra
         'is_crypto_added': isCryptoAdded,
         'brief': brief,
+        'status': status,
         'not_available': notAvailable,
         'marketCap': marketCap,
         'market_time': marketTime,

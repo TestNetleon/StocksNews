@@ -27,6 +27,7 @@ class BaseButton extends StatelessWidget {
     this.side = BorderSide.none,
     this.textStyle,
     this.icon,
+    this.child,
   });
 
   final String text;
@@ -47,6 +48,7 @@ class BaseButton extends StatelessWidget {
   final BorderSide side;
   final TextStyle? textStyle;
   final String? icon;
+  final Widget? child;
 
   @override
   Widget build(BuildContext context) {
@@ -68,7 +70,7 @@ class BaseButton extends StatelessWidget {
             side: side,
           ),
         ),
-        child: OptionalParent(
+        child: child ?? OptionalParent(
           addParent: icon != null,
           parentBuilder: (child) {
             return Row(
