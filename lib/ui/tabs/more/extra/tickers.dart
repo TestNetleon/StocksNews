@@ -22,38 +22,41 @@ class TickersBoxIndex extends StatelessWidget {
       return SizedBox();
     }
 
-    return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      child: IntrinsicHeight(
-        child: Row(
-          children: List.generate(
-            tickers?.length ?? 0,
-            (index) {
-              BaseTickerRes? data = tickers?[index];
+    return Container(
+      margin: EdgeInsets.only(top: 15),
+      child: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: IntrinsicHeight(
+          child: Row(
+            children: List.generate(
+              tickers?.length ?? 0,
+              (index) {
+                BaseTickerRes? data = tickers?[index];
 
-              if (data == null) {
-                return SizedBox();
-              }
-              return Container(
-                width: 180.sp,
-                margin: const EdgeInsets.only(right: 16),
-                child: TickerBoxItem(
-                    data: data,
-                    onTap: () {
-                      BaseBottomSheet().bottomSheet(
-                          barrierColor:
-                              ThemeColors.neutral5.withValues(alpha: 0.7),
-                          child: ActionInNbs(
-                              symbol: data.symbol ?? '',
-                              item: BaseTickerRes(
-                                id: data.id.toString(),
+                if (data == null) {
+                  return SizedBox();
+                }
+                return Container(
+                  width: 180.sp,
+                  margin: const EdgeInsets.only(right: 16),
+                  child: TickerBoxItem(
+                      data: data,
+                      onTap: () {
+                        BaseBottomSheet().bottomSheet(
+                            barrierColor:
+                                ThemeColors.neutral5.withValues(alpha: 0.7),
+                            child: ActionInNbs(
                                 symbol: data.symbol ?? '',
-                                name: data.name ?? '',
-                                image: data.image ?? '',
-                              )));
-                    }),
-              );
-            },
+                                item: BaseTickerRes(
+                                  id: data.id.toString(),
+                                  symbol: data.symbol ?? '',
+                                  name: data.name ?? '',
+                                  image: data.image ?? '',
+                                )));
+                      }),
+                );
+              },
+            ),
           ),
         ),
       ),

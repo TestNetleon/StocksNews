@@ -41,7 +41,6 @@ class _NewsDetailIndexState extends State<NewsDetailIndex> {
     return BaseScaffold(
       appBar: BaseAppBar(
         showBack: true,
-        showLogo: true,
         showSearch: true,
         shareURL: postDetail?.shareUrl == null || postDetail?.shareUrl == ''
             ? null

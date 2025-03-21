@@ -6,6 +6,7 @@ import 'package:stocks_news_new/managers/stockDetail/stock.detail.dart';
 import 'package:stocks_news_new/models/ai_analysis.dart';
 import 'package:stocks_news_new/ui/aiAnalysis/index.dart';
 import 'package:stocks_news_new/ui/base/base_scroll.dart';
+import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/custom/base_loader_container.dart';
 import 'package:stocks_news_new/widgets/optional_parent.dart';
@@ -118,7 +119,10 @@ class SDOverview extends StatelessWidget {
                   return Stack(
                     children: [
                       child,
-                      Blur(child: child),
+                      Blur(
+                        blurColor: ThemeColors.white,
+                        child: child,
+                      ),
                     ],
                   );
                 },

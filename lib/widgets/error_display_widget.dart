@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
@@ -18,6 +19,15 @@ class ErrorDisplayNewWidget extends StatelessWidget {
   final Function()? onRefresh;
   final Function()? onNavigate;
 
+  bool isHtml(String? text) {
+    if (text == null) return false;
+    // Check for common HTML tags
+    final htmlPattern = RegExp(
+        r'<(br|p|div|span|a|img|b|i|u|strong|em|h1|h2|h3|h4|h5|h6)[^>]*>',
+        caseSensitive: false);
+    return htmlPattern.hasMatch(text);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -26,13 +36,16 @@ class ErrorDisplayNewWidget extends StatelessWidget {
         children: [
           const SpacerVertical(),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: Pad.pad16),
-            child: Text(
-              textAlign: TextAlign.center,
-              error ?? Const.errSomethingWrong,
-              // style: styleBaseBold(color: ThemeColors.black),
-              style: Theme.of(context).textTheme.displayLarge,
-            ),
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: isHtml(error)
+                ? HtmlWidget(
+                    error ?? Const.errSomethingWrong,
+                    textStyle: Theme.of(context).textTheme.displayLarge,
+                  )
+                : Text(
+                    error ?? Const.errSomethingWrong,
+                    style: Theme.of(context).textTheme.displayLarge,
+                  ),
           ),
           const SpacerVertical(),
           Visibility(

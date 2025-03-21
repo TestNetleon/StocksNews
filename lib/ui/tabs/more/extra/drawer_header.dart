@@ -246,11 +246,11 @@ class MoreDrawerHeader extends StatelessWidget {
                           ),
                           backgroundColor: ThemeColors.drawerMemBtn,
                         ),
-                        onPressed: () {
+                        onPressed: () async {
                           Scaffold.of(context).closeDrawer();
                           SubscriptionManager manager =
                               context.read<SubscriptionManager>();
-                          manager.startProcess();
+                          await manager.startProcess();
                         },
                         child: Text(
                           value.user?.membership?.upgradeText?.buttonText ??

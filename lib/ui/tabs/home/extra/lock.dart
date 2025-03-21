@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/managers/home/home.dart';
 import 'package:stocks_news_new/ui/base/lock.dart';
+import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/widgets/optional_parent.dart';
 
 import '../../../../models/lock.dart';
@@ -32,6 +33,7 @@ class HomeLock extends StatelessWidget {
         return Stack(
           children: [
             Blur(
+              blurColor: ThemeColors.white,
               blur: blur,
               child: child,
             ),

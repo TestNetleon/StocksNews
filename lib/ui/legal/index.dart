@@ -27,6 +27,7 @@ class _LegalInfoIndexState extends State<LegalInfoIndex> {
   final List<MarketResData> _tabs = [
     MarketResData(title: 'Privacy Policy', slug: 'privacy-policy'),
     MarketResData(title: 'Terms of Service', slug: 'terms-of-service'),
+    MarketResData(title: 'Disclaimer', slug: 'disclaimer'),
   ];
 
   @override
@@ -60,10 +61,14 @@ class _LegalInfoIndexState extends State<LegalInfoIndex> {
       body: Column(
         children: [
           BaseTabs(
-            isScrollable: false,
             data: _tabs,
+            labelPadding: EdgeInsets.symmetric(horizontal: 15),
             onTap: _onChange,
-            selectedIndex: widget.slug == 'terms-of-service' ? 1 : 0,
+            selectedIndex: widget.slug == 'terms-of-service'
+                ? 1
+                : widget.slug == 'disclaimer'
+                    ? 2
+                    : 0,
           ),
           Expanded(
             child: BaseLoaderContainer(

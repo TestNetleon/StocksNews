@@ -44,7 +44,6 @@ class _BlogsDetailIndexState extends State<BlogsDetailIndex> {
     return BaseScaffold(
       appBar: BaseAppBar(
         showBack: true,
-        showLogo: false,
         showSearch: true,
         shareURL: postDetail?.shareUrl == null || postDetail?.shareUrl == ''
             ? null

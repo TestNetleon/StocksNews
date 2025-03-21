@@ -415,7 +415,9 @@ class AccountAgreeTextMembership extends StatelessWidget {
           Navigator.pushNamed(context, LegalInfoIndex.path, arguments: {
             'slug': url == "terms-of-service"
                 ? "terms-of-service"
-                : "privacy-policy",
+                : url == "disclaimer"
+                    ? "disclaimer"
+                    : "privacy-policy",
           });
         } else {
           openUrl(url);
