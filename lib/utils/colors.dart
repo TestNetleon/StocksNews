@@ -223,7 +223,6 @@ class ThemeColors {
     neutral9 = Color(0xFFF9FDFB);
 
     // Category
-
     category100 = Color(0xFF2784E1);
 
     //OTHER
