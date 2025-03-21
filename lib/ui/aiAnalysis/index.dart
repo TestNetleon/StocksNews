@@ -8,6 +8,7 @@ import 'package:stocks_news_new/ui/aiAnalysis/volatility/volatility.dart';
 import 'package:stocks_news_new/ui/base/base_faq.dart';
 import 'package:stocks_news_new/ui/base/base_scroll.dart';
 import 'package:stocks_news_new/ui/base/scaffold.dart';
+import 'package:stocks_news_new/ui/tabs/tools/simulator/services/sse.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -58,55 +59,60 @@ class _AIindexState extends State<AIindex> {
     AIswotRes? swot = manager.data?.swot;
     BaseFaqRes? faqs = manager.data?.faqs;
 
-    return BaseScaffold(
-      appBar: BaseTickerAppBar(
-        data: tickerDetail,
-        /* shareURL: () {
-          openUrl(tickerDetail?.shareUrl);
-        },*/
-      ),
-      body: Stack(
-        children: [
-          BaseLoaderContainer(
-            hasData: manager.data != null,
-            isLoading: manager.isLoading,
-            error: manager.error,
-            showPreparingText: true,
-            onRefresh: _callAPI,
-            child: BaseScroll(
+    return PopScope(
+      onPopInvokedWithResult: (didPop, result) {
+        SSEManager.instance.disconnectScreen(SimulatorEnum.stockDetail);
+      },
+      child: BaseScaffold(
+        appBar: BaseTickerAppBar(
+          data: tickerDetail,
+          /* shareURL: () {
+            openUrl(tickerDetail?.shareUrl);
+          },*/
+        ),
+        body: Stack(
+          children: [
+            BaseLoaderContainer(
+              hasData: manager.data != null,
+              isLoading: manager.isLoading,
+              error: manager.error,
+              showPreparingText: true,
               onRefresh: _callAPI,
-              margin: EdgeInsets.zero,
-              children: [
-                if (tickerDetail != null)
-                  BaseStockDetailHeader(data: tickerDetail),
-                AIChart(aiAnalysis: aiAnalysis),
-                AIOurTake(ourTake: ourTake),
-                AIHighlights(),
-                AISwot(swot: swot),
-                PriceVolatility(),
-                AITabs(),
-                AIPeerComparison(),
-                Container(
-                  margin: EdgeInsets.symmetric(
-                    horizontal: Pad.pad16,
-                    vertical: Pad.pad20,
+              child: BaseScroll(
+                onRefresh: _callAPI,
+                margin: EdgeInsets.zero,
+                children: [
+                  if (tickerDetail != null)
+                    BaseStockDetailHeader(data: tickerDetail),
+                  AIChart(aiAnalysis: aiAnalysis),
+                  AIOurTake(ourTake: ourTake),
+                  AIHighlights(),
+                  AISwot(swot: swot),
+                  PriceVolatility(),
+                  AITabs(),
+                  AIPeerComparison(),
+                  Container(
+                    margin: EdgeInsets.symmetric(
+                      horizontal: Pad.pad16,
+                      vertical: Pad.pad20,
+                    ),
+                    width: double.infinity,
+                    padding: EdgeInsets.symmetric(horizontal: 8, vertical: 5),
+                    decoration: BoxDecoration(
+                        color: ThemeColors.neutral5,
+                        borderRadius: BorderRadius.circular(8)),
+                    child: Text(
+                      manager.data?.lastUpdateDate ?? '',
+                      style: styleBaseRegular(fontSize: 12),
+                    ),
                   ),
-                  width: double.infinity,
-                  padding: EdgeInsets.symmetric(horizontal: 8, vertical: 5),
-                  decoration: BoxDecoration(
-                      color: ThemeColors.neutral5,
-                      borderRadius: BorderRadius.circular(8)),
-                  child: Text(
-                    manager.data?.lastUpdateDate ?? '',
-                    style: styleBaseRegular(fontSize: 12),
-                  ),
-                ),
-                BaseFaq(faqs: faqs),
-              ],
+                  BaseFaq(faqs: faqs),
+                ],
+              ),
             ),
-          ),
-          BaseLockItem(manager: manager, callAPI: _callAPI),
-        ],
+            BaseLockItem(manager: manager, callAPI: _callAPI),
+          ],
+        ),
       ),
     );
   }

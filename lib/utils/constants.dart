@@ -781,7 +781,9 @@ enum SimulatorEnum {
   tradeSheet,
   tournament,
   tournamentTrade,
-  recurring
+  recurring,
+  stockDetail,
+  aiAnalysis,
 }
 
 DeeplinkEnum containsSpecificPath(Uri uri) {

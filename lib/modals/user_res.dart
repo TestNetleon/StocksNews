@@ -92,12 +92,14 @@ class UserRes {
 
 class UserMembershipRes {
   int? purchased;
+  final bool? isElitePlan;
   final String? displayName;
   final String? productID;
   final HomeLoginBoxRes? upgradeText;
 
   UserMembershipRes({
     this.purchased,
+    this.isElitePlan,
     this.displayName,
     this.productID,
     this.upgradeText,
@@ -105,6 +107,7 @@ class UserMembershipRes {
 
   factory UserMembershipRes.fromJson(Map<String, dynamic> json) =>
       UserMembershipRes(
+        isElitePlan: json['is_elite_plan'],
         purchased: json["purchased"],
         displayName: json["display_name"],
         productID: json['product_id'],
@@ -115,6 +118,7 @@ class UserMembershipRes {
 
   Map<String, dynamic> toJson() => {
         "purchased": purchased,
+        'is_elite_plan': isElitePlan,
         "display_name": displayName,
         'product_id': productID,
         "upgrade_text": upgradeText?.toJson(),
