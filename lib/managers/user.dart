@@ -173,8 +173,11 @@ class UserManager extends ChangeNotifier {
   }
 
   void navigateToNews() {
-    Navigator.pop(navigatorKey.currentContext!);
-    Navigator.pushNamed(navigatorKey.currentContext!, CategoriesNewsIndex.path);
+    // Navigator.pop(navigatorKey.currentContext!);
+    // Navigator.pushNamed(navigatorKey.currentContext!, CategoriesNewsIndex.path);
+    Navigator.pushNamed(navigatorKey.currentContext!, Tabs.path, arguments: {
+      'index': 3,
+    });
   }
 
   void navigateToBlogs() {

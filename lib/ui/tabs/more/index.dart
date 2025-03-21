@@ -97,13 +97,13 @@ class MoreIndex extends StatelessWidget {
                   .displayLarge
                   ?.copyWith(fontSize: 20),
             ),
-            MoreItem(
-              icon: Images.watchlist,
-              label: "News",
-              onTap: () {
-                manager.navigateToNews();
-              },
-            ),
+            // MoreItem(
+            //   icon: Images.watchlist,
+            //   label: "News",
+            //   onTap: () {
+            //     manager.navigateToNews();
+            //   },
+            // ),
             MoreItem(
               icon: Images.watchlist,
               label: "Blogs",
