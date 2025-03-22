@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/ui/base/app_bar.dart';
+import 'package:stocks_news_new/ui/base/base_list_divider.dart';
 import 'package:stocks_news_new/ui/base/button.dart';
 import 'package:stocks_news_new/ui/base/scaffold.dart';
 import 'package:stocks_news_new/ui/tabs/tools/simulator/services/sse.dart';
@@ -99,6 +100,7 @@ class _TournamentOpenIndexState extends State<TournamentOpenIndex>
             onTradeClick: () {
               _navigateToAllTrades();
             },
+
           ),
           body: BaseLoaderContainer(
             hasData: searchProvider.topSearch != null &&
@@ -119,51 +121,47 @@ class _TournamentOpenIndexState extends State<TournamentOpenIndex>
                 splashColor: Colors.transparent,
                 splashFactory: NoSplash.splashFactory,
               ),
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(
-                  Dimen.padding,
-                  Dimen.padding,
-                  Dimen.padding,
-                  0,
-                ),
-                child: Column(
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
+              child: Column(
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      OpenTopStock(),
+                    ],
+                  ),
+                  Expanded(
+                    child: Consumer<TournamentTradesProvider>(
+                      builder: (context, provider, child) {
+                        TournamentTickerHolder? detailHolder =
+                            provider.detail[provider.selectedStock?.symbol];
 
-                        OpenTopStock(),
-                      ],
-                    ),
-                    Expanded(
-                      child: Consumer<TournamentTradesProvider>(
-                        builder: (context, provider, child) {
-                          TournamentTickerHolder? detailHolder =
-                              provider.detail[provider.selectedStock?.symbol];
-
-                          return BaseLoaderContainer(
-                            hasData: detailHolder?.data != null,
-                            isLoading: detailHolder?.loading == true,
-                            error: detailHolder?.error,
-                            showPreparingText: true,
-                            child: Column(
-                              children: [
-                                SpacerVertical(height: 15),
-                                SingleChildScrollView(
-                                  child: TournamentOpenDetail(
-                                    data: detailHolder?.data?.ticker,
-                                  ),
+                        return BaseLoaderContainer(
+                          hasData: detailHolder?.data != null,
+                          isLoading: detailHolder?.loading == true,
+                          error: detailHolder?.error,
+                          showPreparingText: true,
+                          child: Column(
+                            children: [
+                              SpacerVertical(height:15),
+                              BaseListDivider(height: 20),
+                              SingleChildScrollView(
+                                child: TournamentOpenDetail(
+                                  data: detailHolder?.data?.ticker,
                                 ),
-                                Expanded(
-                                    child: TradingViewChart(
-                                        symbol: detailHolder
-                                                ?.data?.ticker?.symbol ??
-                                            "")
-                                ),
-                                if (detailHolder
-                                        ?.data?.showButton?.alreadyTraded ==
-                                    false)
-                                  Row(
+                              ),
+                              BaseListDivider(height: 20),
+                              Expanded(
+                                  child: TradingViewChart(
+                                      symbol: detailHolder
+                                              ?.data?.ticker?.symbol ??
+                                          "")
+                              ),
+                              if (detailHolder
+                                      ?.data?.showButton?.alreadyTraded ==
+                                  false)
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(horizontal:Pad.pad16),
+                                  child: Row(
                                     children: [
                                       Expanded(
                                         child: BaseButton(
@@ -171,14 +169,15 @@ class _TournamentOpenIndexState extends State<TournamentOpenIndex>
                                           text: 'Sell',
                                           onPressed: () =>
                                               _trade(type: StockType.sell),
-                                          //color: ThemeColors.sos,
+                                          color: ThemeColors.error120,
+
                                           child: Row(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.center,
                                             children: [
                                               Text(
                                                 'Sell At',
-                                                style: styleBaseBold(),
+                                                style: styleBaseBold(color: ThemeColors.white),
                                               ),
                                               SpacerHorizontal(width: 10),
                                               Visibility(
@@ -190,7 +189,7 @@ class _TournamentOpenIndexState extends State<TournamentOpenIndex>
                                                 child: Flexible(
                                                   child: Text(
                                                     "${detailHolder?.data?.ticker?.price?.toFormattedPrice()}",
-                                                    style: styleBaseBold(),
+                                                    style: styleBaseBold(color: ThemeColors.white),
                                                   ),
                                                 ),
                                               )
@@ -232,10 +231,13 @@ class _TournamentOpenIndexState extends State<TournamentOpenIndex>
                                       ),
                                     ],
                                   ),
-                                if (detailHolder
-                                        ?.data?.showButton?.alreadyTraded ==
-                                    true)
-                                  Row(
+                                ),
+                              if (detailHolder
+                                      ?.data?.showButton?.alreadyTraded ==
+                                  true)
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(horizontal:Pad.pad16),
+                                  child: Row(
                                     children: [
                                       Expanded(
                                         child: BaseButton(
@@ -253,15 +255,14 @@ class _TournamentOpenIndexState extends State<TournamentOpenIndex>
                                           radius: 10,
                                           text: 'Close',
                                           onPressed: _close,
-                                          color: ThemeColors.white,
-                                          textColor: Colors.black,
+                                          color: ThemeColors.black,
                                           child: Row(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.center,
                                             children: [
                                               Text(
                                                 'Close',
-                                                style: styleBaseBold(),
+                                                style: styleBaseBold(color: ThemeColors.white),
                                               ),
                                               SpacerHorizontal(width: 10),
                                               Flexible(
@@ -281,9 +282,9 @@ class _TournamentOpenIndexState extends State<TournamentOpenIndex>
                                                                       ?.orderChange ==
                                                                   0
                                                               ? ThemeColors
-                                                                  .black
-                                                              : ThemeColors
-                                                                  .error120),
+                                                                  .white
+                                                              : ThemeColors.error120
+                                                  ),
                                                 ),
                                               )
                                             ],
@@ -292,15 +293,15 @@ class _TournamentOpenIndexState extends State<TournamentOpenIndex>
                                       ),
                                     ],
                                   ),
-                                SpacerVertical(height: 10),
-                              ],
-                            ),
-                          );
-                        },
-                      ),
+                                ),
+                              SpacerVertical(height: 10),
+                            ],
+                          ),
+                        );
+                      },
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
           ),

@@ -12,11 +12,11 @@ import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/cache_network_image.dart';
 import 'package:stocks_news_new/widgets/custom/base_loader_container.dart';
+import 'package:stocks_news_new/widgets/custom/card.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:svg_flutter/svg_flutter.dart';
 
-import '../../../widgets/card.dart';
 
 
 class TournamentLeaderboard extends StatefulWidget {
@@ -152,15 +152,15 @@ class _TournamentLeaderboardState extends State<TournamentLeaderboard> {
                     Visibility(
                       visible:
                           provider.leaderboardRes?.loginUserPosition != null,
-                      child: TournamentThemeCard(
-                        onTap: () async {
-                          context.read<TournamentProvider>().profileRedirection(
-                              userId:
-                                  "${provider.leaderboardRes?.loginUserPosition?.userId ?? ""}");
-                        },
+                      child: CommonCard(
                         padding: EdgeInsets.zero,
                         margin: EdgeInsets.only(top: 16, bottom: 8),
                         child: ListTile(
+                          onTap: () async {
+                            context.read<TournamentProvider>().profileRedirection(
+                                userId:
+                                "${provider.leaderboardRes?.loginUserPosition?.userId ?? ""}");
+                          },
                           contentPadding: EdgeInsets.symmetric(horizontal: 10),
                           minTileHeight: 60,
                           leading: ClipRRect(

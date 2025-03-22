@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
+import 'package:stocks_news_new/ui/base/base_list_divider.dart';
 import 'package:stocks_news_new/ui/tabs/tools/tournament/models/tour_user_detail.dart';
 import 'package:stocks_news_new/ui/tabs/tools/tournament/screens/tournaments/tournament_user/widget/my_trades_sheet.dart';
+import 'package:stocks_news_new/ui/theme/manager.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -18,21 +21,23 @@ class TickerItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return
+      Consumer<ThemeManager>(builder: (context, value, child) {
+        bool isDark = value.isDarkMode;
+        return InkWell(
       onTap : data?.status==0?() {
         myTradeSheet(
           symbol:data?.symbol,
           data:data,
             fromTO:fromTO
         );
-         //context.read<TournamentProvider>().tickerDetailRedirection(data?.symbol ?? "");
       }:null,
       child: Column(
         children: [
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
             decoration: BoxDecoration(
-                color: ThemeColors.black,
+                color: isDark ? null : ThemeColors.white,
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(5),
                   topRight: Radius.circular(5),
@@ -46,7 +51,8 @@ class TickerItem extends StatelessWidget {
                         width: 43.sp,
                         height: 43.sp,
                         padding: EdgeInsets.all(5.sp),
-                        child: CachedNetworkImagesWidget(data?.image)),
+                        child: CachedNetworkImagesWidget(data?.image)
+                    ),
                     const SpacerHorizontal(width: 10),
                     Expanded(
                       child: Column(
@@ -64,7 +70,7 @@ class TickerItem extends StatelessWidget {
                                     children: [
                                       Text(
                                         data?.symbol ?? '',
-                                        style: styleBaseBold(fontSize: 17),
+                                        style: styleBaseBold(fontSize: 16),
                                       ),
                                       Visibility(visible: data?.status == 0,child: const SpacerHorizontal(width: 5)),
                                       Visibility(
@@ -87,24 +93,21 @@ class TickerItem extends StatelessWidget {
                                     visible: data?.type != null,
                                     child: Container(
                                       padding: EdgeInsets.symmetric(
-                                        horizontal: 15,
-                                        vertical: 2,
+                                        horizontal: 12,
+                                        vertical: 4,
                                       ),
                                       decoration: BoxDecoration(
-                                          border: Border.all(
-                                            color: data?.type != "sell"
-                                                ? ThemeColors.success120
-                                                : ThemeColors.error120,
-                                          ),
+                                        color:data?.type != "sell"
+                                            ? ThemeColors.success120
+                                            : ThemeColors.error120,
+
                                           borderRadius:
                                               BorderRadius.circular(20)),
                                       child: Text(
                                         data?.type != "sell" ? "BUY" : "SELL",
                                         style: styleBaseBold(
                                           fontSize: 10,
-                                          color: data?.type != "sell"
-                                              ? ThemeColors.success120
-                                              : ThemeColors.error120,
+                                          color:ThemeColors.white,
                                         ),
                                       ),
                                     ),
@@ -115,7 +118,6 @@ class TickerItem extends StatelessWidget {
                               Text(
                                 data?.name ?? "",
                                 style: styleBaseRegular(
-                                  color: ThemeColors.greyText,
                                   fontSize: 12,
                                 ),
                                 maxLines: 2,
@@ -129,10 +131,7 @@ class TickerItem extends StatelessWidget {
 
                   ],
                 ),
-                Divider(
-                  // thickness: 1,
-                  color: ThemeColors.greyBorder,
-                ),
+                BaseListDivider(height: 20),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -146,17 +145,20 @@ class TickerItem extends StatelessWidget {
                             label: "Close price: ", value: data?.closePrice?.toFormattedPrice() ?? '\$0')),
                   ],
                 ),
+                SpacerVertical(height: Pad.pad10),
+                BaseListDivider(),
               ],
             ),
           ),
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
             decoration: BoxDecoration(
-                color: ThemeColors.primaryLight,
+              color: isDark? ThemeColors.white:ThemeColors.lightGrey,
                 borderRadius: BorderRadius.only(
                   bottomLeft: Radius.circular(5),
                   bottomRight: Radius.circular(5),
-                )),
+                )
+            ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -175,21 +177,22 @@ class TickerItem extends StatelessWidget {
             ),
           ),
           Container(
-            height: 2,
-            margin: EdgeInsets.symmetric(horizontal: 10),
+            height: 1,
+            margin: EdgeInsets.symmetric(horizontal: 3),
             decoration: BoxDecoration(
               color: data?.status == 0
                   ? ThemeColors.success120
                   : ThemeColors.error120,
               borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(8),
-                bottomRight: Radius.circular(8),
+                bottomLeft: Radius.circular(5),
+                bottomRight: Radius.circular(5),
               ),
             ),
           ),
         ],
       ),
     );
+      });
   }
 
   Widget _richPrices({String? label, String? value}) {
@@ -199,14 +202,12 @@ class TickerItem extends StatelessWidget {
             text: label,
             style: styleBaseRegular(
               fontSize: 14,
-              color: ThemeColors.greyText,
             ),
             children: [
           TextSpan(
             text: value,
             style: styleBaseBold(
               fontSize: 14,
-              color: ThemeColors.white,
             ),
           )
         ]));
@@ -219,7 +220,6 @@ class TickerItem extends StatelessWidget {
             text: label,
             style: styleBaseRegular(
               fontSize: 14,
-              color: ThemeColors.greyText,
             ),
             children: [
           TextSpan(
@@ -229,7 +229,7 @@ class TickerItem extends StatelessWidget {
                 color: (values ?? 0) > 0
                     ? ThemeColors.success120
                     : (values ?? 0) == 0
-                        ? ThemeColors.white
+                        ? ThemeColors.black
                         : ThemeColors.error120),
           )
         ]));

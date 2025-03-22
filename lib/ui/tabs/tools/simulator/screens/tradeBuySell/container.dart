@@ -5,6 +5,7 @@ import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/models/ticker.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/ui/base/button.dart';
+import 'package:stocks_news_new/ui/tabs/tabs.dart';
 import 'package:stocks_news_new/ui/tabs/tools/simulator/managers/portpolio.dart';
 import 'package:stocks_news_new/ui/tabs/tools/simulator/managers/trade.dart';
 import 'package:stocks_news_new/ui/tabs/tools/simulator/screens/index.dart';
@@ -134,8 +135,14 @@ class _BuySellContainerState extends State<BuySellContainer> {
         );
         Navigator.popUntil(
             navigatorKey.currentContext!, (route) => route.isFirst);
-        Navigator.pushNamed(navigatorKey.currentContext!, SimulatorIndex.path,
-            arguments: {"initialIndex": 1});
+        // Navigator.pushNamed(navigatorKey.currentContext!, SimulatorIndex.path,
+        //     arguments: {"initialIndex": 1});
+
+        Navigator.pushNamed(navigatorKey.currentContext!, Tabs.path,
+            arguments: {
+              'index': 2,
+              'childIndex': 1,
+            });
 
         _clear();
         await showTsOrderSuccessSheet(order, widget.selectedStock);
@@ -203,9 +210,14 @@ class _BuySellContainerState extends State<BuySellContainer> {
           );
           Navigator.popUntil(
               navigatorKey.currentContext!, (route) => route.isFirst);
-          Navigator.pushNamed(navigatorKey.currentContext!, SimulatorIndex.path,
-              arguments: {"initialIndex": isPending ? 1 : 0});
+          // Navigator.pushNamed(navigatorKey.currentContext!, SimulatorIndex.path,
+          //     arguments: {"initialIndex": isPending ? 1 : 0});
 
+          Navigator.pushNamed(navigatorKey.currentContext!, Tabs.path,
+              arguments: {
+                'index': 2,
+                'childIndex': isPending ? 1 : 0,
+              });
           _clear();
           await showTsOrderSuccessSheet(order, widget.selectedStock);
         } else {
@@ -273,8 +285,14 @@ class _BuySellContainerState extends State<BuySellContainer> {
 
         Navigator.popUntil(
             navigatorKey.currentContext!, (route) => route.isFirst);
-        Navigator.pushNamed(navigatorKey.currentContext!, SimulatorIndex.path,
-            arguments: {"initialIndex": isPending ? 1 : 0});
+        // Navigator.pushNamed(navigatorKey.currentContext!, SimulatorIndex.path,
+        //     arguments: {"initialIndex": isPending ? 1 : 0});
+
+        Navigator.pushNamed(navigatorKey.currentContext!, Tabs.path,
+            arguments: {
+              'index': 2,
+              'childIndex': isPending ? 1 : 0,
+            });
 
         await showTsOrderSuccessSheet(order, widget.selectedStock);
       } else {

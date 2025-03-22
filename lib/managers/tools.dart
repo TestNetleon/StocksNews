@@ -5,6 +5,9 @@ import 'package:stocks_news_new/managers/user.dart';
 import 'package:stocks_news_new/models/ticker.dart';
 import 'package:stocks_news_new/models/tools.dart';
 import 'package:stocks_news_new/ui/base/toaster.dart';
+import 'package:stocks_news_new/ui/tabs/signals/signals.dart';
+import 'package:stocks_news_new/ui/tabs/tabs.dart';
+import 'package:stocks_news_new/ui/tabs/tools/market/index.dart';
 import 'package:stocks_news_new/ui/tabs/tools/scanner/index.dart';
 import 'package:stocks_news_new/ui/tabs/tools/simulator/screens/index.dart';
 import 'package:stocks_news_new/ui/tabs/tools/tournament/screens/game_tournament_index.dart';
@@ -48,11 +51,32 @@ class ToolsManager extends ChangeNotifier {
         );
         break;
 
-      case ToolsEnum.simulator:
-        Navigator.pushNamed(
+      case ToolsEnum.signals:
+        Navigator.push(
           navigatorKey.currentContext!,
-          SimulatorIndex.path,
+          MaterialPageRoute(
+            builder: (context) => SignalsIndex(),
+          ),
         );
+        break;
+
+      case ToolsEnum.market:
+        // Navigator.pushNamed(
+        //   navigatorKey.currentContext!,
+        //   SimulatorIndex.path,
+        // );
+
+        Navigator.pushNamed(navigatorKey.currentContext!, MarketIndex.path);
+        break;
+
+      case ToolsEnum.simulator:
+        // Navigator.pushNamed(
+        //   navigatorKey.currentContext!,
+        //   SimulatorIndex.path,
+        // );
+
+        Navigator.pushNamed(navigatorKey.currentContext!, Tabs.path,
+            arguments: {'index': 2});
         break;
 
       case ToolsEnum.portfolio:
@@ -106,7 +130,7 @@ class ToolsManager extends ChangeNotifier {
             MaterialPageRoute(
               builder: (context) => GameTournamentIndex(setIndex: 0),
             ));
-      /*  Navigator.pushNamed(
+        /*  Navigator.pushNamed(
           navigatorKey.currentContext!,
           TradingLeagueIndex.path,
         );*/

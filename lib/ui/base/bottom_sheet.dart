@@ -52,6 +52,14 @@ class BaseBottomSheet {
                     topLeft: Radius.circular(Pad.pad24),
                     topRight: Radius.circular(Pad.pad24),
                   ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: ThemeColors.black.withValues(alpha: 0.2),
+                      blurRadius: 24,
+                      spreadRadius: 5,
+                      offset: Offset(0, 20),
+                    ),
+                  ],
                 ),
                 child: OptionalParent(
                   addParent: !isScrollable,

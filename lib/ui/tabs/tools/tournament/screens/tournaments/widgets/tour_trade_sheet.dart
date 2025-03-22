@@ -4,6 +4,7 @@ import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/models/ticker.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/ui/base/base_list_divider.dart';
+import 'package:stocks_news_new/ui/base/bottom_sheet.dart';
 import 'package:stocks_news_new/ui/base/button.dart';
 import 'package:stocks_news_new/ui/tabs/tools/simulator/services/sse.dart';
 import 'package:stocks_news_new/ui/tabs/tools/tournament/provider/search.dart';
@@ -23,23 +24,13 @@ tournamentSheet({
   bool doPop = true,
   BaseTickerRes? data,
 }) {
-  showModalBottomSheet(
-    useSafeArea: true,
-    backgroundColor: Colors.transparent,
-    context: navigatorKey.currentContext!,
-    shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.only(
-        topLeft: Radius.circular(10),
-        topRight: Radius.circular(10),
-      ),
+
+  BaseBottomSheet().bottomSheet(
+    child: TournamentTicker(
+      symbol: symbol,
+      doPop: doPop,
+      data: data,
     ),
-    builder: (context) {
-      return TournamentTicker(
-        symbol: symbol,
-        doPop: doPop,
-        data: data,
-      );
-    },
   );
 }
 
@@ -116,120 +107,111 @@ class _TournamentTickerState extends State<TournamentTicker> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Container(
-            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-            child: Column(
-              children: [
-                Row(
-                  children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(80),
-                      child: Container(
-                        padding: const EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                          color: const Color.fromARGB(255, 224, 225, 227),
-                          shape: BoxShape.circle,
-                        ),
-                        width: 60,
-                        height: 60,
-                        child:
-                        CachedNetworkImagesWidget(widget.data?.image ?? ""),
+          Column(
+            children: [
+              Row(
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(50),
+                    child: Container(
+                      padding: const EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color:ThemeColors.neutral5,
                       ),
+                      width: 50,
+                      height: 50,
+                      child:
+                      CachedNetworkImagesWidget(widget.data?.image ?? ""),
                     ),
-                    const SpacerHorizontal(width: 12),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            '${widget.data?.symbol}',
-                            style: styleBaseBold(
-                                color: ThemeColors.black, fontSize: 22),
-                          ),
-                          Text(
-                            '${widget.data?.name}',
-                            style: styleBaseBold(
-                                color: ThemeColors.black, fontSize: 18),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SpacerHorizontal(width: 12),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
+                  ),
+                  const SpacerHorizontal(width: 12),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Visibility(
-                          visible: stock?.price != null,
-                          child: Text(
-                            '${stock?.price?.toFormattedPrice()}',
-                            //'${stock?.price?.toFormattedPrice()}',
-                            style: styleBaseBold(
-                                color: ThemeColors.black, fontSize: 22),
-                          ),
+                        Text(
+                          '${widget.data?.symbol}',
+                          style: styleBaseBold(fontSize:16),
                         ),
-                        Visibility(
-                          visible: stock?.change != null &&
-                              stock?.changePercentage != null,
-                          child: Text(
-                            '${stock?.change?.toFormattedPrice()} (${stock?.changePercentage?.toCurrency()}%)',
-                            style: styleBaseRegular(
-                              color: (stock?.change ?? 0) >= 0
-                                  ? ThemeColors.success120
-                                  : ThemeColors.error120,
-                              fontSize: 13,
-                            ),
-                          ),
+                        Text(
+                          '${widget.data?.name}',
+                          style: styleBaseRegular(fontSize: 14),
                         ),
                       ],
                     ),
-                  ],
-                ),
-                SpacerVertical(height: 20),
-                Visibility(
-                  visible: widget.data?.showButton?.alreadyTraded == false,
-                  child: RichText(
-                    textAlign: TextAlign.center,
-                    text: TextSpan(
-                        text: 'Kindly select ',
-                        style: styleBaseBold(
-                          color: ThemeColors.black,
-                          fontSize: 16,
-                        ),
-                        children: [
-                          TextSpan(
-                            text: '"Buy"',
-                            style: styleBaseBold(
-                              color: ThemeColors.success120,
-                              fontSize: 16,
-                            ),
-                          ),
-                          TextSpan(
-                            text: ' or ',
-                            style: styleBaseBold(
-                              color: ThemeColors.black,
-                              fontSize: 16,
-                            ),
-                          ),
-                          TextSpan(
-                            text: '"Sell"',
-                            style: styleBaseBold(
-                              color: ThemeColors.error120,
-                              fontSize: 16,
-                            ),
-                          ),
-                          TextSpan(
-                            text: ' to place your desired order.',
-                            style: styleBaseBold(
-                              color: ThemeColors.black,
-                              fontSize: 16,
-                            ),
-                          ),
-                        ]),
                   ),
+                  const SpacerHorizontal(width: 12),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Visibility(
+                        visible: stock?.price != null,
+                        child: Text(
+                          '${stock?.price?.toFormattedPrice()}',
+                          style: styleBaseBold( fontSize: 22),
+                        ),
+                      ),
+                      Visibility(
+                        visible: stock?.change != null &&
+                            stock?.changePercentage != null,
+                        child: Text(
+                          '${stock?.change?.toFormattedPrice()} (${stock?.changePercentage?.toCurrency()}%)',
+                          style: styleBaseBold(
+                            color: (stock?.change ?? 0) >= 0
+                                ? ThemeColors.success120
+                                : ThemeColors.error120,
+                            fontSize: 13,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+              SpacerVertical(height: 20),
+              Visibility(
+                visible: widget.data?.showButton?.alreadyTraded == false,
+                child: RichText(
+                  textAlign: TextAlign.center,
+                  text: TextSpan(
+                      text: 'Kindly select ',
+                      style: styleBaseBold(
+                        fontSize: 16,
+                      ),
+                      children: [
+                        TextSpan(
+                          text: '"Buy"',
+                          style: styleBaseBold(
+                            color: ThemeColors.success120,
+                            fontSize: 16,
+                          ),
+                        ),
+                        TextSpan(
+                          text: ' or ',
+                          style: styleBaseBold(
+                            color: ThemeColors.black,
+                            fontSize: 16,
+                          ),
+                        ),
+                        TextSpan(
+                          text: '"Sell"',
+                          style: styleBaseBold(
+                            color: ThemeColors.error120,
+                            fontSize: 16,
+                          ),
+                        ),
+                        TextSpan(
+                          text: ' to place your desired order.',
+                          style: styleBaseBold(
+                            fontSize: 16,
+                          ),
+                        ),
+                      ]),
                 ),
+              ),
 
-              ],
-            ),
+            ],
           ),
           BaseListDivider(
             height: 20,
@@ -288,16 +270,14 @@ class _TournamentTickerState extends State<TournamentTicker> {
                   ticker: widget.data?.symbol,
                 );
               },
-              // color: ThemeColors.primary,
-              // textColor: ThemeColors.white,
+              color: ThemeColors.black,
               child: Row(
                 mainAxisAlignment:
                 MainAxisAlignment.center,
                 children: [
                   Text(
                     'Close',
-                    style: styleBaseBold(
-                        color: ThemeColors.white),
+                    style: styleBaseBold(color: ThemeColors.white),
                   ),
                   SpacerHorizontal(width: 10),
                   Flexible(
@@ -347,7 +327,6 @@ class _TournamentTickerState extends State<TournamentTicker> {
       },
       child: Container(
         padding: const EdgeInsets.symmetric(
-          /// changed the hor pad 50 to 40
           horizontal: 40,
           vertical: 11,
         ),

@@ -25,7 +25,7 @@ class ReferralHeader extends StatelessWidget {
       await userManager.referJoinScreen();
     } else {
       await Share.share(
-        "${"shareText"}${"\n\n"}${shareUrl.toString()}",
+        "${userManager.user?.shareText ?? ''}${"\n\n"}${shareUrl.toString()}",
       );
     }
   }

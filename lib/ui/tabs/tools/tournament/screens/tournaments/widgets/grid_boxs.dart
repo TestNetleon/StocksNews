@@ -4,6 +4,7 @@ import 'package:stocks_news_new/ui/tabs/tools/tournament/models/tour_user_detail
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
+import 'package:stocks_news_new/widgets/custom/card.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 
@@ -23,54 +24,45 @@ class GridBoxs extends StatelessWidget {
           type: ToasterEnum.info,
         );
       },
-      child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [
-                Color.fromARGB(255, 46, 46, 46),
-                ThemeColors.black,
-              ],
-            ),
-            //color: ThemeColors.gradientLight
-          ),
+      child: CommonCard(
+          padding:  EdgeInsets.symmetric(horizontal: 5, vertical: 5),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             mainAxisSize: MainAxisSize.min,
             children: [
+              Visibility(
+                visible: info?.title != null,
+                child: Flexible(
+                  child: Text(
+                    formatText(info?.title ?? ""),
+                    style: styleBaseRegular(fontSize: 12,color: ThemeColors.neutral80),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ),
+              const SpacerVertical(height: Pad.pad10),
               Visibility(
                 visible: info?.value != null,
                 child: Text(
                   info?.value ?? "",
                   style: isNegative!
                       ? styleBaseBold(
-                      fontSize: 18, color: ThemeColors.error120)
+                      fontSize: 22, color: ThemeColors.error120)
                       : styleBaseBold(
-                          fontSize: 18,
+                          fontSize: 22,
                           color: (valueWithOutSymbol ?? 0) > 0
                               ? ThemeColors.success120
-                              : ThemeColors.white),
+                              : ThemeColors.black),
                   maxLines: 1,
                   textAlign: TextAlign.center,
                   overflow: TextOverflow.ellipsis,
                 ),
               ),
-              const SpacerVertical(height: 5),
-              Visibility(
-                visible: info?.title != null,
-                child: Flexible(
-                  child: Text(
-                    formatText(info?.title ?? ""),
-                    style: styleBaseRegular(fontSize: 12),
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-              ),
+
+
             ],
-          )),
+          )
+      ),
     );
   }
 

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
+import 'package:stocks_news_new/ui/base/base_list_divider.dart';
+import 'package:stocks_news_new/ui/base/bottom_sheet.dart';
 import 'package:stocks_news_new/ui/base/button.dart';
 import 'package:stocks_news_new/ui/tabs/tools/simulator/services/sse.dart';
 import 'package:stocks_news_new/ui/tabs/tools/tournament/models/tour_user_detail.dart';
@@ -20,7 +22,14 @@ myTradeSheet({
   RecentTradeRes? data,
   int? fromTO,
 }) {
-  showModalBottomSheet(
+  BaseBottomSheet().bottomSheet(
+    child: TradeTicker(
+        symbol: symbol,
+        data: data,
+        fromTO:fromTO
+    ),
+  );
+ /* showModalBottomSheet(
     useSafeArea: true,
     backgroundColor: Colors.transparent,
     context: navigatorKey.currentContext!,
@@ -37,7 +46,7 @@ myTradeSheet({
         fromTO:fromTO
       );
     },
-  );
+  );*/
 }
 
 class TradeTicker extends StatefulWidget {
@@ -93,86 +102,80 @@ class _TradeTickerState extends State<TradeTicker> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Container(
-            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-            child: Column(
-              children: [
-                Row(
-                  children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(80),
-                      child: Container(
-                        padding: const EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                          color: const Color.fromARGB(255, 224, 225, 227),
-                          shape: BoxShape.circle,
-                        ),
-                        width: 60,
-                        height: 60,
-                        child:
-                        CachedNetworkImagesWidget(widget.data?.image ?? ""),
+          Column(
+            children: [
+              Row(
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(80),
+                    child: Container(
+                      padding: const EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                        color: const Color.fromARGB(255, 224, 225, 227),
+                        shape: BoxShape.circle,
                       ),
+                      width: 60,
+                      height: 60,
+                      child:
+                      CachedNetworkImagesWidget(widget.data?.image ?? ""),
                     ),
-                    const SpacerHorizontal(width: 12),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            '${widget.data?.symbol}',
-                            style: styleBaseBold(
-                                color: ThemeColors.black, fontSize: 22),
-                          ),
-                          Text(
-                            '${widget.data?.name}',
-                            style: styleBaseRegular(
-                                color: ThemeColors.black, fontSize: 18),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SpacerHorizontal(width: 12),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
+                  ),
+                  const SpacerHorizontal(width: 12),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Visibility(
-                          visible: widget.data?.currentPrice != null,
-                          child: Text(
-                            '${widget.data?.currentPrice?.toFormattedPrice()}',
-                            style: styleBaseBold(
-                                fontSize: 14,
-                                color: (widget.data?.currentPrice ?? 0) > 0
-                                    ? ThemeColors.success120
-                                    : (widget.data?.currentPrice ?? 0) == 0
-                                    ? ThemeColors.white
-                                    : ThemeColors.error120
-                            ),
-                          ),
+                        Text(
+                          '${widget.data?.symbol}',
+                          style: styleBaseBold( fontSize: 22),
                         ),
-                        Visibility(
-                          visible:widget.data?.performance != null,
-                          child: Text(
-                            '${widget.data?.performance?.toCurrency()}%',
-                            style: styleBaseRegular(
-                              color:(widget.data?.performance ?? 0) > 0
-                                  ? ThemeColors.success120:
-                              (widget.data?.performance ?? 0) == 0
-                                  ? ThemeColors.black
-                                  : ThemeColors.error120,
-                              fontSize: 13,
-                            ),
-                          ),
+                        Text(
+                          '${widget.data?.name}',
+                          style: styleBaseRegular(fontSize: 18),
                         ),
                       ],
                     ),
-                  ],
-                ),
-                SpacerVertical(height: 20),
-              ],
-            ),
+                  ),
+                  const SpacerHorizontal(width: 12),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Visibility(
+                        visible: widget.data?.currentPrice != null,
+                        child: Text(
+                          '${widget.data?.currentPrice?.toFormattedPrice()}',
+                          style: styleBaseBold(
+                              fontSize: 14,
+                              color: (widget.data?.currentPrice ?? 0) > 0
+                                  ? ThemeColors.success120
+                                  : (widget.data?.currentPrice ?? 0) == 0
+                                  ? ThemeColors.white
+                                  : ThemeColors.error120
+                          ),
+                        ),
+                      ),
+                      Visibility(
+                        visible:widget.data?.performance != null,
+                        child: Text(
+                          '${widget.data?.performance?.toCurrency()}%',
+                          style: styleBaseRegular(
+                            color:(widget.data?.performance ?? 0) > 0
+                                ? ThemeColors.success120:
+                            (widget.data?.performance ?? 0) == 0
+                                ? ThemeColors.white
+                                : ThemeColors.error120,
+                            fontSize: 13,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+              SpacerVertical(height: 10),
+            ],
           ),
-          Divider(
-            color: ThemeColors.greyBorder,
+          BaseListDivider(
             height: 20,
           ),
             BaseButton(
@@ -186,15 +189,13 @@ class _TradeTickerState extends State<TradeTicker> {
                   tournamentBattleId:  widget.data?.tournamentBattleId
                 );
               },
-             /// color: ThemeColors.primary,
-             // textColor: ThemeColors.white,
               child: Row(
                 mainAxisAlignment:
                 MainAxisAlignment.center,
                 children: [
                   Text(
                     'Close',
-                    style: styleBaseBold(color: ThemeColors.white),
+                    style: styleBaseBold(),
                   ),
                   SpacerHorizontal(width: 10),
                   Flexible(
@@ -202,8 +203,7 @@ class _TradeTickerState extends State<TradeTicker> {
                       padding: EdgeInsets.symmetric(
                           horizontal: 15),
                       decoration: BoxDecoration(
-                        borderRadius:
-                        BorderRadius.circular(20),
+                        borderRadius: BorderRadius.circular(20),
                         color: (widget.data?.performance ?? 0) > 0
                             ? ThemeColors.success120:
                           (widget.data?.performance ?? 0) == 0
@@ -212,8 +212,7 @@ class _TradeTickerState extends State<TradeTicker> {
                       ),
                       child: Text(
                         '${widget.data?.performance?.toCurrency()}%',
-                        style: styleBaseBold(color: ThemeColors.black
-                        ),
+                        style: styleBaseBold(),
                       ),
                     ),
                   )

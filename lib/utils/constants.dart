@@ -207,6 +207,7 @@ class Images {
   static const String closeCircle = '${base}close-circle.png';
   static const String shareURL = '${base}share.png';
   static const String bottomHome = '${base}bottom_home.png';
+  static const String bottomScanner = '${base}market-scanner.png';
   static const String bottomMarket = '${base}bottom_market.png';
   static const String bottomMore = '${base}bottom_more.png';
   static const String bottomSignals = '${base}bottom_signals.png';
@@ -238,6 +239,8 @@ class Images {
   static const String check = '${base}check.png';
   static const String marketFilter = '${base}market_filter.png';
   static const String progressGIF = "${base}progress.gif";
+  static const String progressGIFDark = "assets/images/progress.gif";
+
   static const String trades = '${base}trades.png';
   static const String btc = '${base}btc.png';
   static const String starSelected = '${base}star_selected.png';
@@ -782,7 +785,9 @@ enum SimulatorEnum {
   tradeSheet,
   tournament,
   tournamentTrade,
-  recurring
+  recurring,
+  stockDetail,
+  aiAnalysis,
 }
 
 DeeplinkEnum containsSpecificPath(Uri uri) {

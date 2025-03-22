@@ -60,7 +60,6 @@ class AppsFlyerService {
       Utils().showLog("UID => $appsFlyerId");
 
       appsFlyerUID = appsFlyerId;
-
       try {
         _appsFlyerSdk?.setOneLinkCustomDomain(['pagelink.stocks.news']);
       } catch (e) {

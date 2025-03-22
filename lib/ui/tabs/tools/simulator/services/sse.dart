@@ -37,13 +37,16 @@ class SSEManager {
     }
   }
 
-  void connectStock({required String symbol, required SimulatorEnum screen}) {
-    ScannerManager manager = navigatorKey.currentContext!.read<ScannerManager>();
+  void connectStock(
+      {required String symbol, required SimulatorEnum screen, int? sendPort}) {
+    ScannerManager manager =
+        navigatorKey.currentContext!.read<ScannerManager>();
 
     int? port = manager.portData?.port?.other?.simulator ?? 8052;
     //int? port = 8030;
 
-    final url = 'https://dev.stocks.news:$port/symbolData?symbol=$symbol';
+    final url =
+        'https://dev.stocks.news:${sendPort ?? port}/symbolData?symbol=$symbol';
 
     if (_isStreamConnected(screen, symbol)) {
       if (kDebugMode) {
@@ -98,7 +101,8 @@ class SSEManager {
         }
         return;
       }
-      ScannerManager manager = navigatorKey.currentContext!.read<ScannerManager>();
+      ScannerManager manager =
+          navigatorKey.currentContext!.read<ScannerManager>();
 
       int? port = manager.portData?.port?.other?.simulator ?? 8052;
       final url =

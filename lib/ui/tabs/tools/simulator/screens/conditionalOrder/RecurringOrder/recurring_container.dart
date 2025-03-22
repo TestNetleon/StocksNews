@@ -7,6 +7,7 @@ import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/models/ticker.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/ui/base/button.dart';
+import 'package:stocks_news_new/ui/tabs/tabs.dart';
 import 'package:stocks_news_new/ui/tabs/tools/simulator/managers/portpolio.dart';
 import 'package:stocks_news_new/ui/tabs/tools/simulator/managers/s_open.dart';
 import 'package:stocks_news_new/ui/tabs/tools/simulator/managers/s_recurring.dart';
@@ -207,8 +208,14 @@ class _RecurringContainerState extends State<RecurringContainer> {
 
         Navigator.popUntil(
             navigatorKey.currentContext!, (route) => route.isFirst);
-        Navigator.pushNamed(navigatorKey.currentContext!, SimulatorIndex.path,
-            arguments: {"initialIndex": 3});
+        // Navigator.pushNamed(navigatorKey.currentContext!, SimulatorIndex.path,
+        //     arguments: {"initialIndex": 3});
+
+        Navigator.pushNamed(navigatorKey.currentContext!, Tabs.path,
+            arguments: {
+              'index': 2,
+              'childIndex': 3,
+            });
 
         _clear();
         await showCOrderSuccessSheet(order, ConditionType.recurringOrder);
@@ -269,8 +276,14 @@ class _RecurringContainerState extends State<RecurringContainer> {
 
         Navigator.popUntil(
             navigatorKey.currentContext!, (route) => route.isFirst);
-        Navigator.pushNamed(navigatorKey.currentContext!, SimulatorIndex.path,
-            arguments: {"initialIndex": 3});
+        // Navigator.pushNamed(navigatorKey.currentContext!, SimulatorIndex.path,
+        //     arguments: {"initialIndex": 3});
+
+        Navigator.pushNamed(navigatorKey.currentContext!, Tabs.path,
+            arguments: {
+              'index': 2,
+              'childIndex': 3,
+            });
 
         _clear();
 

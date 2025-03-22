@@ -89,23 +89,21 @@ class CryptoItem extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Visibility(
-                  child: Container(
-                    padding: EdgeInsets.all(8),
-                    decoration: BoxDecoration(
-                        border:
-                        Border.all(color: ThemeColors.primary120, width: 1),
-                        shape: BoxShape.circle),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(40),
-                      child: CachedNetworkImagesWidget(
-                        item?.image ?? '',
-                        height: 40,
-                        width: 40,
-                        placeHolder: Images.userPlaceholderNew,
-                        showLoading: true,
-                        fit: BoxFit.contain,
-                      ),
+                Container(
+                  padding: EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                      border:
+                      Border.all(color: ThemeColors.primary120, width: 1),
+                      shape: BoxShape.circle),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(40),
+                    child: CachedNetworkImagesWidget(
+                      item?.image ?? '',
+                      height: 40,
+                      width: 40,
+                      placeHolder: Images.userPlaceholderNew,
+                      showLoading: true,
+                      fit: BoxFit.contain,
                     ),
                   ),
                 ),

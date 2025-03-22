@@ -43,8 +43,8 @@ class _GameTournamentIndexState extends State<GameTournamentIndex> {
   @override
   void initState() {
     super.initState();
+    onTabChange(widget.setIndex??0);
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      onTabChange(widget.setIndex??0);
       context.read<ScannerManager>().getScannerPorts(reset: false);
     });
   }

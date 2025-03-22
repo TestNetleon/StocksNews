@@ -1,6 +1,14 @@
 import 'dart:convert';
 
-enum ToolsEnum { scanner, simulator, portfolio, compare, league }
+enum ToolsEnum {
+  scanner,
+  simulator,
+  portfolio,
+  compare,
+  league,
+  market,
+  signals,
+}
 
 ToolsEnum? toolsEnumFromString(String? value) {
   if (value == null) return null;

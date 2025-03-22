@@ -36,7 +36,7 @@ Future openInfoSheet(ConditionType? cType, StockType? selectedStock) async {
             height: 35,
             margin: EdgeInsets.only(right: 10, top: 10),
             decoration: BoxDecoration(
-                shape: BoxShape.circle, color: ThemeColors.primary),
+                shape: BoxShape.circle, color: ThemeColors.black),
             child: IconButton(
                 onPressed: () {
                   Navigator.pop(navigatorKey.currentContext!);

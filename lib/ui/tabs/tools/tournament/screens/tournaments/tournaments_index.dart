@@ -6,6 +6,7 @@ import 'package:stocks_news_new/ui/tabs/tools/tournament/screens/tournaments/wid
 import 'package:stocks_news_new/ui/tabs/tools/tournament/screens/tournaments/widgets/header.dart';
 import 'package:stocks_news_new/ui/tabs/tools/tournament/screens/tournaments/widgets/top_tading.dart';
 import 'package:stocks_news_new/ui/tabs/tools/tournament/screens/tournaments/widgets/top_traders.dart';
+import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/custom/base_loader_container.dart';
@@ -101,6 +102,8 @@ class _TournamentsIndexState extends State<TournamentsIndex> {
                       BaseHeading(
                         title: provider.data?.topTradingTitans?.title,
                         subtitle: provider.data?.topTradingTitans?.subTitle,
+                        titleStyle: styleBaseBold(fontSize: 24),
+                        subtitleStyle: styleBaseRegular(fontSize: 16,color: ThemeColors.neutral80),
                         viewMore: () {
                           var selectedTournament = TournamentsHead.topTitan;
                           Navigator.push(context, MaterialPageRoute(
@@ -112,6 +115,7 @@ class _TournamentsIndexState extends State<TournamentsIndex> {
                           ));
                         },
                       ),
+
 
                       const SpacerVertical(height: 10),
                       TopTraders(

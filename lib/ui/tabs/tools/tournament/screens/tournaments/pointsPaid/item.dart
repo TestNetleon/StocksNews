@@ -20,10 +20,6 @@ class PointsPaidItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-      decoration: BoxDecoration(
-        color: ThemeColors.background,
-        borderRadius: BorderRadius.circular(5),
-      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -59,11 +55,11 @@ class PointsPaidItem extends StatelessWidget {
                     padding: EdgeInsets.all(4),
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: ThemeColors.greyBorder,
+                      color: ThemeColors.black,
                     ),
                     child: Text(
                       '${data?.position}',
-                      style: styleBaseBold(fontSize: 11),
+                      style: styleBaseBold(fontSize: 11,color: ThemeColors.white),
                     ),
                   ),
                 ),
@@ -82,8 +78,8 @@ class PointsPaidItem extends StatelessWidget {
                             placeholderBuilder: (BuildContext context) =>
                                 Container(
                               padding: const EdgeInsets.all(30.0),
-                              child: const CircularProgressIndicator(
-                                color: ThemeColors.accent,
+                              child:  CircularProgressIndicator(
+                                color: ThemeColors.black,
                               ),
                             ),
                           )
@@ -110,7 +106,7 @@ class PointsPaidItem extends StatelessWidget {
                         child:Text(
                           data?.date ?? "",
                           style: styleBaseRegular(
-                              fontSize: 12, color: ThemeColors.greyText),
+                              fontSize: 12),
                         ),
                       ),
                     ],
@@ -130,7 +126,6 @@ class PointsPaidItem extends StatelessWidget {
                         'Reward Points',
                         style: styleBaseBold(
                             fontSize: 14,
-                            color:ThemeColors.greyText
                         ),
                       ),
                     ],
@@ -139,7 +134,7 @@ class PointsPaidItem extends StatelessWidget {
               ],
             ),
           ),
-          BaseListDivider(),
+          BaseListDivider(height: 20),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -172,13 +167,12 @@ class PointsPaidItem extends StatelessWidget {
             text: label,
             style: styleBaseBold(
               fontSize: 14,
-              color:ThemeColors.greyText,
             ),
             children: [
               TextSpan(
                   text: value,
                   style: label=="Pref. Points: "?styleBaseRegular(fontSize: 14):
-                  styleBaseBold(fontSize: 14, color: (data?.performance ?? 0) > 0 ? ThemeColors.success120:data?.performance==0?ThemeColors.white:ThemeColors.error120)
+                  styleBaseBold(fontSize: 14, color: (data?.performance ?? 0) > 0 ? ThemeColors.success120:data?.performance==0?ThemeColors.black:ThemeColors.error120)
               )
             ]
         )
