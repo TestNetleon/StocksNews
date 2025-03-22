@@ -56,12 +56,15 @@ class ToolsItem extends StatelessWidget {
                   ),
                   Visibility(
                     visible: card?.subTitle != null && card?.subTitle != '',
-                    child: Text(
-                      card?.subTitle ?? '',
-                      style: styleBaseRegular(
-                        fontSize: 12,
-                        color: ThemeColors.neutral80,
-                        height: 1.2,
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 7),
+                      child: Text(
+                        card?.subTitle ?? '',
+                        style: styleBaseRegular(
+                          fontSize: 12,
+                          color: ThemeColors.neutral80,
+                          height: 1.3,
+                        ),
                       ),
                     ),
                   ),

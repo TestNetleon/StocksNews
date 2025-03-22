@@ -275,9 +275,11 @@ class UserManager extends ChangeNotifier {
         }
       } else {
         if (response.message?.contains('Invalid Apple ID.') ?? false) {
-          BaseBottomSheet().bottomSheet(
-            child: AppleLoginErrorIndex(),
-          );
+          if (kDebugMode) {
+            BaseBottomSheet().bottomSheet(
+              child: AppleLoginErrorIndex(),
+            );
+          }
         }
       }
 

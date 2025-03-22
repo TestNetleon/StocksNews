@@ -16,16 +16,16 @@ class SignalPoliticiansIndex extends StatelessWidget {
   Widget build(BuildContext context) {
     SignalsManager manager = context.watch<SignalsManager>();
 
-    return BaseLoaderContainer(
-      isLoading: manager.isLoadingPolitician,
-      hasData: manager.signalPoliticianData?.data != null &&
-          manager.signalPoliticianData?.data?.isNotEmpty == true,
-      showPreparingText: true,
-      error: manager.errorPolitician,
-      onRefresh: manager.getPoliticianData,
-      child: Stack(
-        children: [
-          BaseLoadMore(
+    return Stack(
+      children: [
+        BaseLoaderContainer(
+          isLoading: manager.isLoadingPolitician,
+          hasData: manager.signalPoliticianData?.data != null &&
+              manager.signalPoliticianData?.data?.isNotEmpty == true,
+          showPreparingText: true,
+          error: manager.errorPolitician,
+          onRefresh: manager.getPoliticianData,
+          child: BaseLoadMore(
             onRefresh: manager.getPoliticianData,
             onLoadMore: () async => manager.getPoliticianData(loadMore: true),
             canLoadMore: manager.canLoadMorePolitician,
@@ -49,12 +49,12 @@ class SignalPoliticiansIndex extends StatelessWidget {
               itemCount: manager.signalPoliticianData?.data?.length ?? 0,
             ),
           ),
-          BaseLockItem(
-            manager: manager,
-            callAPI: manager.getPoliticianData,
-          ),
-        ],
-      ),
+        ),
+        BaseLockItem(
+          manager: manager,
+          callAPI: manager.getPoliticianData,
+        ),
+      ],
     );
   }
 }

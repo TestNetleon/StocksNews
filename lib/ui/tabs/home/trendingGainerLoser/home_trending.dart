@@ -73,6 +73,7 @@ class _HomeTrendingState extends State<HomeTrending> {
                         ],
                       ),
                     BaseStockAddItem(
+                      size: 30,
                       onTap: (value) {
                         Navigator.pushNamed(context, SDIndex.path, arguments: {
                           'symbol': value.symbol,

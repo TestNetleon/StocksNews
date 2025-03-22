@@ -16,15 +16,15 @@ class SignalStocksIndex extends StatelessWidget {
   Widget build(BuildContext context) {
     SignalsManager manager = context.watch<SignalsManager>();
 
-    return BaseLoaderContainer(
-      isLoading: manager.isLoadingStocks,
-      hasData: manager.signalSocksData?.data != null,
-      showPreparingText: true,
-      error: manager.errorStocks,
-      onRefresh: manager.getStocksData,
-      child: Stack(
-        children: [
-          BaseLoadMore(
+    return Stack(
+      children: [
+        BaseLoaderContainer(
+          isLoading: manager.isLoadingStocks,
+          hasData: manager.signalSocksData?.data != null,
+          showPreparingText: true,
+          error: manager.errorStocks,
+          onRefresh: manager.getStocksData,
+          child: BaseLoadMore(
             onRefresh: manager.getStocksData,
             onLoadMore: () async => manager.getStocksData(loadMore: true),
             canLoadMore: manager.canLoadMoreStocks,
@@ -52,12 +52,12 @@ class SignalStocksIndex extends StatelessWidget {
               itemCount: manager.signalSocksData?.data?.length ?? 0,
             ),
           ),
-          BaseLockItem(
-            manager: manager,
-            callAPI: manager.getStocksData,
-          ),
-        ],
-      ),
+        ),
+        BaseLockItem(
+          manager: manager,
+          callAPI: manager.getStocksData,
+        ),
+      ],
     );
   }
 }

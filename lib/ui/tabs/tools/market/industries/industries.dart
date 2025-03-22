@@ -34,15 +34,15 @@ class _IndustriesState extends State<Industries> {
   @override
   Widget build(BuildContext context) {
     IndustriesManager manager = context.watch<IndustriesManager>();
-    return BaseLoaderContainer(
-      isLoading: manager.isLoading,
-      hasData: manager.data != null && !manager.isLoading,
-      showPreparingText: true,
-      error: manager.error,
-      onRefresh: _callAPI,
-      child: Stack(
-        children: [
-          BaseLoadMore(
+    return Stack(
+      children: [
+        BaseLoaderContainer(
+          isLoading: manager.isLoading,
+          hasData: manager.data != null && !manager.isLoading,
+          showPreparingText: true,
+          error: manager.error,
+          onRefresh: _callAPI,
+          child: BaseLoadMore(
             onLoadMore: () => _callAPI(loadMore: true),
             onRefresh: _callAPI,
             canLoadMore: manager.canLoadMore,
@@ -85,9 +85,9 @@ class _IndustriesState extends State<Industries> {
                     // itemCount: 4,
                   ),
           ),
-          BaseLockItem(manager: manager, callAPI: _callAPI),
-        ],
-      ),
+        ),
+        BaseLockItem(manager: manager, callAPI: _callAPI),
+      ],
     );
   }
 }
