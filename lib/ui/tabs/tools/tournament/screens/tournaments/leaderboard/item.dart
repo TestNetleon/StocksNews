@@ -96,7 +96,7 @@ class TournamentLeaderboardItem extends StatelessWidget {
                                     ),
                                     SpacerVertical(height: Pad.pad3),
                                     Visibility(
-                                      visible: from == 3 ? false : true,
+                                      visible:data.rank!=null,
                                       child: Text(
                                         data.rank ?? 'N/A',
                                         style: styleBaseRegular(

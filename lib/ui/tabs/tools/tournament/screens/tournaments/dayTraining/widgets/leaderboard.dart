@@ -18,41 +18,40 @@ class DayTrainingLeaderboard extends StatelessWidget {
   Widget build(BuildContext context) {
     LeagueManager manager = context.watch<LeagueManager>();
     LeagueDetailRes? leagueDetailRes= manager.detailRes;
-    return Container(
-      margin: EdgeInsets.symmetric(horizontal: Pad.pad16),
-      child: Column(
-        children: [
-          BaseHeading(
-            title: leagueDetailRes?.leaderboardTitle ?? "",
-            viewMore: () {
-              manager.leagueToLeaderboard();
-            },
-            subtitle: leagueDetailRes?.leaderboardSubTitle ?? "",
-            titleStyle: styleBaseBold(fontSize: 24),
-            subtitleStyle: styleBaseRegular(fontSize: 16,color: ThemeColors.neutral80),
-          ),
+    return Column(
+      children: [
+        BaseHeading(
+          title: leagueDetailRes?.leaderboardTitle ?? "",
+          viewMore: () {
+            manager.leagueToLeaderboard();
+          },
+          subtitle: leagueDetailRes?.leaderboardSubTitle ?? "",
+          titleStyle: styleBaseBold(fontSize: 24),
+          subtitleStyle: styleBaseRegular(fontSize: 16,color: ThemeColors.neutral80),
+          margin: EdgeInsets.symmetric(horizontal: Pad.pad16,vertical: Pad.pad10),
 
-          ListView.separated(
-            shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
-            itemBuilder: (context, index) {
-              TradingRes? data = leagueDetailRes?.todayLeaderboard?[index];
-              if (data == null) {
-                return SizedBox();
-              }
+        ),
 
-              return TournamentLeaderboardItem(
-                data: data,
-                from: 3,
-              );
-            },
-            separatorBuilder: (context, index) {
-              return BaseListDivider(height: 10);
-            },
-            itemCount: leagueDetailRes?.todayLeaderboard?.length ?? 0,
-          )
-        ],
-      ),
+        ListView.separated(
+          shrinkWrap: true,
+          physics: NeverScrollableScrollPhysics(),
+          itemBuilder: (context, index) {
+            TradingRes? data = leagueDetailRes?.todayLeaderboard?[index];
+            if (data == null) {
+              return SizedBox();
+            }
+
+            return TournamentLeaderboardItem(
+              data: data,
+              from: 3,
+            );
+          },
+          separatorBuilder: (context, index) {
+            return BaseListDivider(height: 10);
+          },
+          itemCount: leagueDetailRes?.todayLeaderboard?.length ?? 0,
+        )
+      ],
     );
   }
 }
