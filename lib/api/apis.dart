@@ -12,7 +12,7 @@ class Apis {
       : "https://app.stocks.news/api/v2";
 
   // Main live server
-  // static const baseUrl = "https://app.stocks.news/api/v2";
+  static const baseUrl = "https://app.stocks.news/api/v2";
 
   // MARK: New UI APIs
   static const onBoarding = '/onboarding';
@@ -352,7 +352,6 @@ class Apis {
   static const blogCategory = "/blog-category-list";
   static const sendAppleOtp = "/signup-apple-email";
   static const disconnectPlaid = "/remove-plaid-portfolio";
-  static const referralList = "/referrals/list";
   static const referralLeaderBoard = "/referrals/leaderboard";
   static const affiliateTnx = "/referrals/txn-report";
   static const affiliateTnxList = "/referrals/txn-report-list";
