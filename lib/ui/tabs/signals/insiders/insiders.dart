@@ -16,16 +16,16 @@ class SignalInsidersIndex extends StatelessWidget {
   Widget build(BuildContext context) {
     SignalsManager manager = context.watch<SignalsManager>();
 
-    return BaseLoaderContainer(
-      isLoading: manager.isLoadingInsiders,
-      hasData: manager.signalInsidersData?.data != null &&
-          manager.signalInsidersData?.data?.isNotEmpty == true,
-      showPreparingText: true,
-      error: manager.errorInsiders,
-      onRefresh: manager.getInsidersData,
-      child: Stack(
-        children: [
-          BaseLoadMore(
+    return Stack(
+      children: [
+        BaseLoaderContainer(
+          isLoading: manager.isLoadingInsiders,
+          hasData: manager.signalInsidersData?.data != null &&
+              manager.signalInsidersData?.data?.isNotEmpty == true,
+          showPreparingText: true,
+          error: manager.errorInsiders,
+          onRefresh: manager.getInsidersData,
+          child: BaseLoadMore(
             onRefresh: manager.getInsidersData,
             onLoadMore: () async => manager.getInsidersData(loadMore: true),
             canLoadMore: manager.canLoadMoreInsiders,
@@ -49,12 +49,12 @@ class SignalInsidersIndex extends StatelessWidget {
               itemCount: manager.signalInsidersData?.data?.length ?? 0,
             ),
           ),
-          BaseLockItem(
-            manager: manager,
-            callAPI: manager.getInsidersData,
-          ),
-        ],
-      ),
+        ),
+        BaseLockItem(
+          manager: manager,
+          callAPI: manager.getInsidersData,
+        ),
+      ],
     );
   }
 }
