@@ -276,7 +276,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/managers/home/home.dart';
-import 'package:stocks_news_new/managers/user.dart';
 import 'package:stocks_news_new/models/ticker.dart';
 import 'package:stocks_news_new/ui/base/base_list_divider.dart';
 import 'package:stocks_news_new/ui/tabs/tools/simulator/services/sse.dart';
@@ -311,12 +310,9 @@ class _BaseStockDetailHeaderState extends State<BaseStockDetailHeader> {
 
   void _startStreaming() {
     final homeManager = context.read<MyHomeManager>();
-    final userManager = context.read<UserManager>();
+    // final userManager = context.read<UserManager>();
 
-    if (userManager.user?.membership?.isElitePlan == true &&
-        homeManager
-                .data?.scannerPort?.port?.checkMarketOpenApi?.startStreaming ==
-            true) {
+    if (homeManager.isElitePlan == true && homeManager.shouldStream == true) {
       try {
         SSEManager.instance.disconnectScreen(widget.type);
         SSEManager.instance.connectStock(
@@ -350,123 +346,134 @@ class _BaseStockDetailHeaderState extends State<BaseStockDetailHeader> {
     }
   }
 
-  bool get _isElitePlan {
-    final userManager = context.read<UserManager>();
-    return userManager.user?.membership?.isElitePlan ?? false;
-  }
+  // bool get _isElitePlan {
+  //   final userManager = context.read<UserManager>();
+  //   return userManager.user?.membership?.isElitePlan ?? false;
+  // }
 
-  bool get _shouldStream {
-    final homeManager = context.read<MyHomeManager>();
-    final checkMarketOpenApi =
-        homeManager.data?.scannerPort?.port?.checkMarketOpenApi;
-    return checkMarketOpenApi?.startStreaming == true &&
-        (showPrePost == null || showPrePost!.isEmpty) &&
-        _isElitePlan;
-  }
+  // bool get _shouldStream {
+  //   final homeManager = context.read<MyHomeManager>();
+  //   final checkMarketOpenApi =
+  //       homeManager.data?.scannerPort?.port?.checkMarketOpenApi;
+  //   return checkMarketOpenApi?.startStreaming == true &&
+  //       (showPrePost == null || showPrePost!.isEmpty) &&
+  //       _isElitePlan;
+  // }
 
   String get _formattedPrePost => (showPrePost ?? '')
       .replaceAll('PreMarket', 'Pre-Market')
       .replaceAll('PostMarket', 'Post-Market');
 
   Widget _buildPriceChangeSection() {
-    return RichText(
-      text: TextSpan(
-        children: [
-          if (widget.data.changesPercentage != null)
-            WidgetSpan(
-              alignment: PlaceholderAlignment.middle,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 4),
-                child: Image.asset(
-                  (widget.data.changesPercentage ?? 0) >= 0
-                      ? Images.trendingUP
-                      : Images.trendingDOWN,
-                  height: 18,
-                  width: 18,
+    return Consumer<MyHomeManager>(
+      builder: (context, value, child) {
+        return RichText(
+          text: TextSpan(
+            children: [
+              if (widget.data.changesPercentage != null)
+                WidgetSpan(
+                  alignment: PlaceholderAlignment.middle,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 4),
+                    child: Image.asset(
+                      (widget.data.changesPercentage ?? 0) >= 0
+                          ? Images.trendingUP
+                          : Images.trendingDOWN,
+                      height: 18,
+                      width: 18,
+                      color: (widget.data.changesPercentage ?? 0) >= 0
+                          ? ThemeColors.accent
+                          : ThemeColors.sos,
+                    ),
+                  ),
+                ),
+              TextSpan(
+                text: value.shouldStream
+                    ? change?.toFormattedPrice() ??
+                        widget.data.displayChange ??
+                        ''
+                    : widget.data.displayChange ?? '',
+                style: styleBaseSemiBold(
+                  fontSize: 13,
                   color: (widget.data.changesPercentage ?? 0) >= 0
                       ? ThemeColors.accent
                       : ThemeColors.sos,
                 ),
               ),
-            ),
-          TextSpan(
-            text: _shouldStream
-                ? change?.toFormattedPrice() ?? widget.data.displayChange ?? ''
-                : widget.data.displayChange ?? '',
-            style: styleBaseSemiBold(
-              fontSize: 13,
-              color: (widget.data.changesPercentage ?? 0) >= 0
-                  ? ThemeColors.accent
-                  : ThemeColors.sos,
-            ),
+              if (widget.data.changesPercentage != null)
+                TextSpan(
+                  text: value.shouldStream
+                      ? ' (${changePercentage ?? widget.data.changesPercentage ?? ''}%)'
+                      : ' (${widget.data.changesPercentage ?? ''}%)',
+                  style: styleBaseSemiBold(
+                    fontSize: 13,
+                    color: (widget.data.changesPercentage ?? 0) >= 0
+                        ? ThemeColors.accent
+                        : ThemeColors.sos,
+                  ),
+                ),
+            ],
           ),
-          if (widget.data.changesPercentage != null)
-            TextSpan(
-              text: _shouldStream
-                  ? ' (${changePercentage ?? widget.data.changesPercentage ?? ''}%)'
-                  : ' (${widget.data.changesPercentage ?? ''}%)',
-              style: styleBaseSemiBold(
-                fontSize: 13,
-                color: (widget.data.changesPercentage ?? 0) >= 0
-                    ? ThemeColors.accent
-                    : ThemeColors.sos,
-              ),
-            ),
-        ],
-      ),
+        );
+      },
     );
   }
 
   Widget _buildMainPriceSection() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Flexible(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                _shouldStream
-                    ? price?.toFormattedPrice() ??
-                        widget.data.displayPrice ??
-                        '\$0'
-                    : widget.data.displayPrice ?? '\$0',
-                style: Theme.of(context).textTheme.titleLarge,
+    return Consumer<MyHomeManager>(
+      builder: (context, value, child) {
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Flexible(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    value.shouldStream
+                        ? price?.toFormattedPrice() ??
+                            widget.data.displayPrice ??
+                            '\$0'
+                        : widget.data.displayPrice ?? '\$0',
+                    style: Theme.of(context).textTheme.titleLarge,
+                  ),
+                  Visibility(
+                    visible: widget.data.displayChange != null,
+                    child: _buildPriceChangeSection(),
+                  ),
+                  Text(
+                    'Closed ${widget.data.closeDate ?? ''}',
+                    style: styleBaseRegular(
+                        fontSize: 13, color: ThemeColors.neutral40),
+                  ),
+                ],
               ),
-              Visibility(
-                visible: widget.data.displayChange != null,
-                child: _buildPriceChangeSection(),
+            ),
+            Flexible(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Text(
+                    widget.data.mktCap ?? '',
+                    style: Theme.of(context).textTheme.titleLarge,
+                  ),
+                  Text(
+                    'MKT Cap',
+                    style: styleBaseRegular(
+                        fontSize: 14, color: ThemeColors.neutral40),
+                  ),
+                ],
               ),
-              Text(
-                'Closed ${widget.data.closeDate ?? ''}',
-                style: styleBaseRegular(
-                    fontSize: 13, color: ThemeColors.neutral40),
-              ),
-            ],
-          ),
-        ),
-        Flexible(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              Text(
-                widget.data.mktCap ?? '',
-                style: Theme.of(context).textTheme.titleLarge,
-              ),
-              Text(
-                'MKT Cap',
-                style: styleBaseRegular(
-                    fontSize: 14, color: ThemeColors.neutral40),
-              ),
-            ],
-          ),
-        ),
-      ],
+            ),
+          ],
+        );
+      },
     );
   }
 
   Widget _buildPrePostSection() {
-    if (showPrePost == null || showPrePost!.isEmpty || !_isElitePlan) {
+    MyHomeManager manager = context.watch<MyHomeManager>();
+    if (showPrePost == null || showPrePost!.isEmpty || !manager.isElitePlan) {
       return SizedBox.shrink();
     }
 

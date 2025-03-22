@@ -67,7 +67,9 @@ class _SignalsMostMentionsState extends State<SignalMostMentions> {
                             child: Text(
                               innerTabs[index].label,
                               style: selectedInnerTab == index
-                                  ? styleBaseBold()
+                                  ? styleBaseBold(
+                                      color: ThemeColors.secondary120,
+                                    )
                                   : styleBaseRegular(
                                       color: ThemeColors.neutral20,
                                     ),

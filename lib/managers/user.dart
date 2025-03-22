@@ -27,7 +27,6 @@ import 'package:stocks_news_new/ui/tabs/more/billionaires/index.dart';
 import 'package:stocks_news_new/ui/tabs/more/faq/index.dart';
 import 'package:stocks_news_new/ui/tabs/more/feedback/index.dart';
 import 'package:stocks_news_new/ui/tabs/more/helpdesk/front/index.dart';
-import 'package:stocks_news_new/ui/tabs/more/news/index.dart';
 import 'package:stocks_news_new/ui/tabs/more/notificationSettings/index.dart';
 import 'package:stocks_news_new/ui/tabs/more/referral/index.dart';
 import 'package:stocks_news_new/ui/tabs/more/referral/joinRefer/index.dart';

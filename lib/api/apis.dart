@@ -7,12 +7,12 @@ class Apis {
   static const baseUrlLocal = "https://notification.stocks.news/api/v1";
 
   // With Debug condition
-  // static const baseUrl = kDebugMode
-  //     ? "https://dev.stocks.news/api/v2"
-  //     : "https://app.stocks.news/api/v2";
+  static const baseUrl = kDebugMode
+      ? "https://dev.stocks.news/api/v2"
+      : "https://app.stocks.news/api/v2";
 
   // Main live server
-   static const baseUrl = "https://app.stocks.news/api/v2";
+  // static const baseUrl = "https://app.stocks.news/api/v2";
 
   // MARK: New UI APIs
   static const onBoarding = '/onboarding';
@@ -78,7 +78,6 @@ class Apis {
   static const cryptoSearchCurrency = "/crypto/currency-search-data";
   static const cryptoExchange = "/crypto/exchange";
 
-
   //MARK: Simulator API
   static const tsUserInfo = "/simulator/user-info";
   static const tsTopBar = "/simulator/trade/stock-detail-topbar";
@@ -102,7 +101,6 @@ class Apis {
   static const orderTypeInfo = '/simulator/trade/order-type-definition';
   static const squareOff = '/simulator/trade/close-conditional-trade';
 
-
   //MARK: TOURNAMENT API
   static const lTabs = '/home-tab';
   static const t = '/tournaments';
@@ -122,7 +120,6 @@ class Apis {
   static const tUser = '/tournament/user-profile';
   static const tShowLeaderboard = '/tournament/show-today-leaderboard';
   static const tTradeAll = '/tournament/league-date/trade-list';
-
 
   //Search---
   static const recentSearch = '/recent-search';

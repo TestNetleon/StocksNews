@@ -9,7 +9,6 @@ import 'package:stocks_news_new/ui/tabs/signals/signals.dart';
 import 'package:stocks_news_new/ui/tabs/tabs.dart';
 import 'package:stocks_news_new/ui/tabs/tools/market/index.dart';
 import 'package:stocks_news_new/ui/tabs/tools/scanner/index.dart';
-import 'package:stocks_news_new/ui/tabs/tools/simulator/screens/index.dart';
 import 'package:stocks_news_new/ui/tabs/tools/tournament/screens/game_tournament_index.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import '../api/api_requester.dart';

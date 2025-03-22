@@ -14,7 +14,6 @@ import 'package:stocks_news_new/ui/tabs/tools/simulator/models/ts_open_list_res.
 import 'package:stocks_news_new/ui/tabs/tools/simulator/models/ts_pending_list_res.dart';
 import 'package:stocks_news_new/ui/tabs/tools/simulator/screens/ConditionalOrder/show_conditional_sheet.dart';
 import 'package:stocks_news_new/ui/tabs/tools/simulator/screens/ConditionalOrder/widgert/trade_custome_sliding.dart';
-import 'package:stocks_news_new/ui/tabs/tools/simulator/screens/index.dart';
 import 'package:stocks_news_new/ui/tabs/tools/simulator/screens/tradeBuySell/text_field.dart';
 import 'package:stocks_news_new/ui/tabs/tools/simulator/screens/tradingWithTypes/order_info_sheet.dart';
 import 'package:stocks_news_new/ui/tabs/tools/simulator/screens/widget/s_top.dart';
