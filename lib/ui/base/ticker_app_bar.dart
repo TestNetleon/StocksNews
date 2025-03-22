@@ -243,6 +243,7 @@ class BaseTickerAppBar extends StatelessWidget implements PreferredSizeWidget {
                                       style: styleBaseRegular(
                                         fontSize: 14,
                                         color: ThemeColors.neutral40,
+                                        height: 1.4,
                                       ),
                                     ),
                                   ),
