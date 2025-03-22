@@ -23,6 +23,7 @@ class BaseStockAddItem extends StatelessWidget {
   final Function(BaseTickerRes)? onTap;
   final Function()? onRefresh;
   final dynamic manager;
+  final double size;
   final List<BaseKeyValueRes>? expandable;
 
   const BaseStockAddItem({
@@ -34,6 +35,7 @@ class BaseStockAddItem extends StatelessWidget {
     this.onRefresh,
     this.manager,
     this.expandable,
+    this.size = 24,
   });
 
   Future<void> _onAddToAlertClick(BuildContext context) async {
@@ -121,6 +123,7 @@ class BaseStockAddItem extends StatelessWidget {
       addParent: slidable,
       parentBuilder: (child) {
         return BaseSlidableStockItem(
+          size: size,
           index: index,
           addToAlert: () => _onAddToAlertClick(context),
           addToWatchlist: () => _onAddToWatchlistClick(context),

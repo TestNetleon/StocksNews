@@ -31,15 +31,15 @@ class _Snp500State extends State<Snp500> {
   @override
   Widget build(BuildContext context) {
     Snp500Manager manager = context.watch<Snp500Manager>();
-    return BaseLoaderContainer(
-      isLoading: manager.isLoading,
-      hasData: manager.data != null && !manager.isLoading,
-      showPreparingText: true,
-      error: manager.error,
-      onRefresh: _callAPI,
-      child: Stack(
-        children: [
-          BaseLoadMore(
+    return Stack(
+      children: [
+        BaseLoaderContainer(
+          isLoading: manager.isLoading,
+          hasData: manager.data != null && !manager.isLoading,
+          showPreparingText: true,
+          error: manager.error,
+          onRefresh: _callAPI,
+          child: BaseLoadMore(
             onLoadMore: () => _callAPI(loadMore: true),
             onRefresh: _callAPI,
             canLoadMore: manager.canLoadMore,
@@ -62,9 +62,9 @@ class _Snp500State extends State<Snp500> {
                     itemCount: manager.data!.data?.length ?? 0,
                   ),
           ),
-          BaseLockItem(manager: manager, callAPI: _callAPI),
-        ],
-      ),
+        ),
+        BaseLockItem(manager: manager, callAPI: _callAPI),
+      ],
     );
   }
 }
