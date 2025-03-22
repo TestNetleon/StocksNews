@@ -249,6 +249,7 @@ class Images {
   static const String msReport = '${base}ms_report.png';
   static const String theme = '${base}theme.png';
   static const String x = '${base}x.png';
+  static const String nudge = '${base}nudge.png';
 
   //MARK: New UI END
   //-------------------------------------------------------------------------------

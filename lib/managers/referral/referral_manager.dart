@@ -1,12 +1,16 @@
 import 'dart:convert';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:stocks_news_new/api/api_requester.dart';
 import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/api/apis.dart';
 import 'package:stocks_news_new/models/referral/referral_response.dart';
+import 'package:stocks_news_new/routes/my_app.dart';
+import 'package:stocks_news_new/ui/base/toaster.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/utils.dart';
+import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
 
 class ReferralManager extends ChangeNotifier {
   //
@@ -53,6 +57,47 @@ class ReferralManager extends ChangeNotifier {
       _error = Const.errSomethingWrong;
     } finally {
       setStatus(Status.loaded);
+    }
+  }
+
+  Future nudgeAPI({String? email, required int dbId}) async {
+    try {
+      final request = {
+        "email": email,
+        "db_id": "$dbId",
+      };
+
+      ApiResponse response = await apiRequest(
+        url: Apis.nudgeFriend,
+        request: request,
+        showProgress: true,
+      );
+
+      TopSnackbar.show(
+        message: response.message ?? '',
+        type: response.status ? ToasterEnum.success : ToasterEnum.error,
+      );
+
+      // if (response.status) {
+      //   popUpAlert(
+      //       message: response.message ?? "",
+      //       title: "Success",
+      //       icon: Images.otpSuccessGIT,
+      //       padding: EdgeInsets.fromLTRB(10, 10, 10, 0));
+      // } else {
+      //   popUpAlert(
+      //       message: response.message ?? "",
+      //       title: "Alert",
+      //       icon: Images.alertPopGIF,
+      //       padding: EdgeInsets.fromLTRB(10, 10, 10, 0));
+      // }
+    } catch (e) {
+      Utils().showLog("$e");
+      popUpAlert(
+          message: Const.errSomethingWrong,
+          title: "Alert",
+          icon: Images.alertPopGIF,
+          padding: EdgeInsets.fromLTRB(10, 10, 10, 0));
     }
   }
 }
