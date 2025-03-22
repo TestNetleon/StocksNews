@@ -12,7 +12,8 @@ import 'sentiment/sentiment.dart';
 import 'stocks.dart';
 
 class SignalsIndex extends StatefulWidget {
-  const SignalsIndex({super.key});
+  final int? index;
+  const SignalsIndex({super.key, this.index = 0});
 
   @override
   State<SignalsIndex> createState() => _SignalsIndexState();
@@ -24,7 +25,7 @@ class _SignalsIndexState extends State<SignalsIndex> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       SignalsManager manager = context.read<SignalsManager>();
-      manager.onScreenChange(0);
+      manager.onScreenChange(widget.index);
     });
   }
 
@@ -53,6 +54,7 @@ class _SignalsIndexState extends State<SignalsIndex> {
           BaseTabs(
             data: manager.tabs,
             onTap: manager.onScreenChange,
+            selectedIndex: widget.index ?? 0,
           ),
           if (manager.selectedScreen == 0)
             Expanded(
