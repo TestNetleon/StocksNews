@@ -9,8 +9,8 @@ import 'package:stocks_news_new/ui/tabs/signals/signals.dart';
 import 'package:stocks_news_new/ui/tabs/tabs.dart';
 import 'package:stocks_news_new/ui/tabs/tools/market/index.dart';
 import 'package:stocks_news_new/ui/tabs/tools/scanner/index.dart';
-import 'package:stocks_news_new/ui/tabs/tools/simulator/screens/index.dart';
 import 'package:stocks_news_new/ui/tabs/tools/tournament/screens/game_tournament_index.dart';
+
 import 'package:stocks_news_new/utils/utils.dart';
 import '../api/api_requester.dart';
 import '../api/api_response.dart';
@@ -125,15 +125,11 @@ class ToolsManager extends ChangeNotifier {
         break;
 
       case ToolsEnum.league:
-        Navigator.push(
-            navigatorKey.currentContext!,
-            MaterialPageRoute(
-              builder: (context) => GameTournamentIndex(setIndex: 0),
-            ));
-        /*  Navigator.pushNamed(
+          Navigator.pushNamed(
           navigatorKey.currentContext!,
           TradingLeagueIndex.path,
-        );*/
+            arguments: {'initialIndex':0}
+        );
         break;
     }
   }

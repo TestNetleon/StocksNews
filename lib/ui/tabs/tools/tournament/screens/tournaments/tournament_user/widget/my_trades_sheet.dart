@@ -75,11 +75,11 @@ class _TradeTickerState extends State<TradeTicker> {
     ApiResponse res = await provider.tradeCancle(ticker: ticker,tradeId: id,tournamentBattleId: tournamentBattleId,callTickerDetail: false);
     if (res.status) {
       if(widget.fromTO==1){
-        TournamentProvider provider = navigatorKey.currentContext!.read<TournamentProvider>();
-        provider.getUserDetail(userID: provider.userData?.userStats?.userId??"");
+        LeagueManager manager = navigatorKey.currentContext!.read<LeagueManager>();
+        manager.getUserDetail(userID: manager.userData?.userStats?.userId??"");
       }
       else if (widget.fromTO==2){
-        context.read<TournamentProvider>().tradeWithDateAll(loadMore: false,selectedBattleID: "$tournamentBattleId");
+        context.read<LeagueManager>().tradeWithDateAll(loadMore: false,selectedBattleID: "$tournamentBattleId");
       }
       else{
         SSEManager.instance.disconnectScreen(SimulatorEnum.tournament);

@@ -30,8 +30,8 @@ class _TradesWithDateState extends State<TradesWithDate> {
     });
   }
   Future _callAPI({loadMore = false}) async {
-    TournamentProvider provider = context.read<TournamentProvider>();
-    provider.tradeWithDateAll(loadMore: loadMore,selectedBattleID: widget.selectedBattleID);
+    LeagueManager manager = context.read<LeagueManager>();
+    manager.tradeWithDateAll(loadMore: loadMore,selectedBattleID: widget.selectedBattleID);
   }
 
   @override
@@ -41,28 +41,28 @@ class _TradesWithDateState extends State<TradesWithDate> {
   }
   @override
   Widget build(BuildContext context) {
-    TournamentProvider provider = context.watch<TournamentProvider>();
+    LeagueManager manager = context.watch<LeagueManager>();
     return BaseScaffold(
       appBar: BaseAppBar(
           showBack: true,
-          title: provider.extraOfTrade?.title ?? '',
+          title: manager.extraOfTrade?.title ?? '',
 
       ),
       body: BaseLoaderContainer(
-        hasData: provider.allTrades != null &&
-            provider.allTrades?.isNotEmpty == true,
-        isLoading: provider.isLoadingTradeList,
-        error: provider.errorTradeList,
+        hasData: manager.allTrades != null &&
+            manager.allTrades?.isNotEmpty == true,
+        isLoading: manager.isLoadingTradeList,
+        error: manager.errorTradeList,
         showPreparingText: true,
         onRefresh: _callAPI,
         child: BaseLoadMore(
           onRefresh: _callAPI,
-          onLoadMore: () => provider.tradeWithDateAll(loadMore: true,selectedBattleID: widget.selectedBattleID),
-          canLoadMore: provider.canLoadMoreTrade,
+          onLoadMore: () => manager.tradeWithDateAll(loadMore: true,selectedBattleID: widget.selectedBattleID),
+          canLoadMore: manager.canLoadMoreTrade,
           child: ListView.separated(
             padding: EdgeInsets.symmetric(horizontal: 10),
             itemBuilder: (context, index) {
-              RecentTradeRes? data = provider.allTrades?[index];
+              RecentTradeRes? data = manager.allTrades?[index];
               if (data == null) {
                 return SizedBox();
               }
@@ -71,7 +71,7 @@ class _TradesWithDateState extends State<TradesWithDate> {
                 fromTO: 2,
               );
             },
-            itemCount: provider.allTrades?.length ?? 0,
+            itemCount: manager.allTrades?.length ?? 0,
             separatorBuilder: (context, index) {
               return SpacerVertical(height: 10);
             },

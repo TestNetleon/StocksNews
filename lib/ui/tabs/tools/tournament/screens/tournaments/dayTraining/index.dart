@@ -2,19 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/ui/base/app_bar.dart';
+import 'package:stocks_news_new/ui/base/base_scroll.dart';
 import 'package:stocks_news_new/ui/base/bottom_sheet.dart';
 import 'package:stocks_news_new/ui/base/scaffold.dart';
+import 'package:stocks_news_new/ui/tabs/tools/tournament/models/tournament_detail.dart';
 import 'package:stocks_news_new/ui/tabs/tools/tournament/provider/tournament.dart';
 import 'package:stocks_news_new/ui/tabs/tools/tournament/screens/tournaments/dayTraining/widgets/leaderboard.dart';
 import 'package:stocks_news_new/ui/tabs/tools/tournament/screens/tournaments/dayTraining/widgets/rules.dart';
 import 'package:stocks_news_new/ui/tabs/tools/tournament/screens/tournaments/dayTraining/widgets/timer.dart';
-import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/custom/base_loader_container.dart';
 import 'package:stocks_news_new/widgets/custom/card.dart';
-import 'package:stocks_news_new/widgets/custom/refresh_indicator.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 
@@ -33,7 +33,7 @@ class _TournamentDayTrainingIndexState
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      context.read<TournamentProvider>().tournamentDetail(widget.tournamentId);
+      context.read<LeagueManager>().tournamentDetail(widget.tournamentId);
     });
   }
 
@@ -46,98 +46,70 @@ class _TournamentDayTrainingIndexState
   @override
   void dispose() {
     Utils().showLog('DISPOSING TOURNAMENT');
-    navigatorKey.currentContext!.read<TournamentProvider>().stopCountdown();
+    navigatorKey.currentContext!.read<LeagueManager>().stopCountdown();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    TournamentProvider provider = context.watch<TournamentProvider>();
+    LeagueManager manager = context.watch<LeagueManager>();
+    LeagueDetailRes? leagueDetailRes= manager.detailRes;
     return BaseScaffold(
-      appBar: const BaseAppBar(
+      appBar:  BaseAppBar(
         showBack: true,
-        title: 'Day Training',
+        title: manager.isLoadingDetail
+            ? ""
+            : leagueDetailRes?.title ?? "",
+        showSearch: true,
+        showNotification: true,
       ),
       body: BaseLoaderContainer(
-        hasData: provider.detailRes != null,
-        isLoading: provider.isLoadingDetail,
-        error: provider.errorDetail,
+        hasData: manager.detailRes != null,
+        isLoading: manager.isLoadingDetail,
+        error: manager.errorDetail,
         showPreparingText: true,
         onRefresh: () {
-          provider.tournamentDetail(widget.tournamentId);
+          manager.tournamentDetail(widget.tournamentId);
         },
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: Dimen.padding),
-          child: CommonRefreshIndicator(
-            onRefresh: () async {
-              provider.tournamentDetail(widget.tournamentId);
-            },
-            child: CustomScrollView(
-              slivers: [
-                SliverList(
-                  delegate: SliverChildBuilderDelegate(
-                    childCount: 1,
-                    (context, index) {
-                      return Column(
-                        children: [
-                          DayTrainingTitle(),
-                          CommonCard(
-                            padding: EdgeInsets.symmetric(vertical: 0, horizontal: 0),
-                            child: ListTile(
-                              leading: Container(
-                                padding: EdgeInsets.all(3),
-                                decoration: BoxDecoration(
-                                  border: Border.all(
-                                    width: 4,
-                                    color: ThemeColors.white,
-                                  ),
-                                  gradient:  LinearGradient(
-                                    begin: Alignment.centerLeft,
-                                    end: Alignment.centerRight,
-                                    transform: GradientRotation(1),
-                                    colors: [
-                                      ThemeColors.white,
-                                      Color.fromARGB(255, 215, 215, 215),
-                                    ],
-                                  ),
-                                  shape: BoxShape.circle,
-                                ),
-                                child: Icon(
-                                  Icons.star,
-                                  color: ThemeColors.accent,
-                                  size: 26,
-                                ),
-                              ),
-                              title: Text(
-                                'Tournament Rules',
-                                style: styleBaseBold(),
-                              ),
-                              trailing: Icon(
-                                Icons.arrow_forward_ios_sharp,
-                                color: ThemeColors.greyBorder,
-                                size: 20,
-                              ),
-                              onTap: _tournamentRuleDetails,
-                            ),
-                          ),
-                          // DayTrainingSimilar(),
-                          Visibility(
-                              visible: provider.detailRes?.todayLeaderboard !=
-                                      null &&
-                                  provider.detailRes?.todayLeaderboard
-                                          ?.isNotEmpty ==
-                                      true,
-                              child: DayTrainingLeaderboard()
-                          ),
-                          SpacerVertical(),
-                        ],
-                      );
-                    },
-                  ),
+        child: BaseScroll(
+          onRefresh: () async {
+            manager.tournamentDetail(widget.tournamentId);
+          },
+          margin: EdgeInsets.zero,
+          children: [
+            DayTrainingTitle(),
+            SpacerVertical(),
+            CommonCard(
+              margin: EdgeInsets.symmetric(horizontal: Pad.pad16),
+              padding: EdgeInsets.symmetric(vertical: 0, horizontal: 0),
+              child: ListTile(
+                leading:
+                Icon(
+                  Icons.star_outline_sharp,
+                  size: 26,
                 ),
-              ],
+                title: Text(
+                  'Tournament Rules',
+                  style: styleBaseBold(),
+                ),
+                trailing: Icon(
+                  Icons.arrow_forward_ios_sharp,
+                  size: 20,
+                ),
+                onTap: _tournamentRuleDetails,
+              ),
             ),
-          ),
+            SpacerVertical(),
+            Visibility(
+                visible: leagueDetailRes?.todayLeaderboard !=
+                    null &&
+                    leagueDetailRes?.todayLeaderboard
+                        ?.isNotEmpty ==
+                        true,
+                child: DayTrainingLeaderboard()
+            ),
+            SpacerVertical(),
+          ],
         ),
       ),
     );

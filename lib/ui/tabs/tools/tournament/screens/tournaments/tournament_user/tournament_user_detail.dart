@@ -42,8 +42,8 @@ class _TournamentUserDetailState extends State<TournamentUserDetail> {
   }
 
   Future _getData() async {
-    TournamentProvider provider = context.read<TournamentProvider>();
-    await provider.getUserDetail(userID: widget.userId);
+    LeagueManager manager = context.read<LeagueManager>();
+    await manager.getUserDetail(userID: widget.userId);
   }
 
   @override
@@ -55,20 +55,22 @@ class _TournamentUserDetailState extends State<TournamentUserDetail> {
 
   @override
   Widget build(BuildContext context) {
-    TournamentProvider provider = context.watch<TournamentProvider>();
+    LeagueManager manager = context.watch<LeagueManager>();
+    LeagueUserDetailRes? leagueUserDetailRes= manager.userData;
+
     return BaseScaffold(
         appBar: BaseAppBar(
           showBack: true,
-          title: provider.isLoadingUserData
+          title: manager.isLoadingUserData
               ? ""
-              : provider.extraOfUserData?.title ?? "",
+              : leagueUserDetailRes?.title ?? "",
           showSearch: true,
           showNotification: true,
         ),
         body: BaseLoaderContainer(
-            hasData: provider.userData != null,
-            isLoading: provider.isLoadingUserData,
-            error: provider.errorUserData,
+            hasData: manager.userData != null,
+            isLoading: manager.isLoadingUserData,
+            error: manager.errorUserData,
             showPreparingText: true,
             onRefresh: () {
               _getData();
@@ -76,68 +78,67 @@ class _TournamentUserDetailState extends State<TournamentUserDetail> {
             child: BaseLoadMore(
               onRefresh: _getData,
               onLoadMore: () =>
-                  provider.getUserDetail(loadMore: true, userID: widget.userId,clear: false),
-              canLoadMore: provider.canLoadMoreProfile,
+                  manager.getUserDetail(loadMore: true, userID: widget.userId,clear: false),
+              canLoadMore: manager.canLoadMoreProfile,
               child: SingleChildScrollView(
-                child: Padding(
-                  padding:
-                  EdgeInsets.fromLTRB(Dimen.padding, 0, Dimen.padding, 0),
-                  child: Column(
-                    children: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(12),
-                        child: provider.userData?.userStats?.imageType ==
-                            "svg"
-                            ? SvgPicture.network(
-                          height: 100,
-                          width: 100,
-                          provider.userData?.userStats?.image ?? "",
-                          placeholderBuilder: (BuildContext context) =>
-                              Container(
-                                padding: const EdgeInsets.all(30.0),
-                                child: const CircularProgressIndicator(),
-                              ),
-                        )
-                            : CachedNetworkImagesWidget(
-                          provider.userData?.userStats?.image ?? "",
-                          height:100,
-                          width: 100,
-                          showLoading: true,
-                          placeHolder: Images.userPlaceholder,
+                child: Column(
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(12),
+                      child: leagueUserDetailRes?.userStats?.imageType ==
+                          "svg"
+                          ? SvgPicture.network(
+                        height: 100,
+                        width: 100,
+                        leagueUserDetailRes?.userStats?.image ?? "",
+                        placeholderBuilder: (BuildContext context) =>
+                            Container(
+                              padding: const EdgeInsets.all(30.0),
+                              child: const CircularProgressIndicator(),
+                            ),
+                      )
+                          : CachedNetworkImagesWidget(
+                        leagueUserDetailRes?.userStats?.image ?? "",
+                        height:100,
+                        width: 100,
+                        showLoading: true,
+                        placeHolder: Images.userPlaceholder,
+                      ),
+                    ),
+                    const SpacerVertical(height: Pad.pad10),
+                    Visibility(
+                      visible: leagueUserDetailRes?.userStats?.name != null,
+                      child: Text(
+                        leagueUserDetailRes?.userStats?.name ?? "",
+                        textAlign: TextAlign.center,
+                        style: styleBaseBold(
+                          fontSize: 28,
                         ),
                       ),
-                      const SpacerVertical(height: Pad.pad10),
-                      Visibility(
-                        visible: provider.userData?.userStats?.name != null,
-                        child: Text(
-                          provider.userData?.userStats?.name ?? "",
-                          textAlign: TextAlign.center,
-                          style: styleBaseBold(
-                            fontSize: 28,
-                          ),
-                        ),
+                    ),
+                    const SpacerVertical(height: Pad.pad10),
+                    Visibility(
+                      visible: leagueUserDetailRes?.userStats?.rank != null,
+                      child: Text(
+                        leagueUserDetailRes?.userStats?.rank ?? "",
+                        textAlign: TextAlign.center,
+                        style: styleBaseRegular(
+                            fontSize: 14, color: ThemeColors.neutral40),
                       ),
-                      const SpacerVertical(height: Pad.pad10),
-                      Visibility(
-                        visible: provider.userData?.userStats?.rank != null,
-                        child: Text(
-                          provider.userData?.userStats?.rank ?? "",
-                          textAlign: TextAlign.center,
-                          style: styleBaseRegular(
-                              fontSize: 14, color: ThemeColors.neutral40),
-                        ),
-                      ),
-                      const SpacerVertical(height:  Pad.pad10),
-                      Row(
+                    ),
+                    const SpacerVertical(height:  Pad.pad10),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: Pad.pad16),
+                      child: Row(
                           children: [
                             Expanded(
                               child: CommonCard(
                                 child:InfoBox(
                                   label: 'Performance',
                                   value:
-                                  "${provider.userData?.userStats?.performance ?? ""}%",
+                                  "${leagueUserDetailRes?.userStats?.performance ?? ""}%",
                                   values:
-                                  provider.userData?.userStats?.performance ?? 0,
+                                  leagueUserDetailRes?.userStats?.performance ?? 0,
                                 ),
                               ),
                             ),
@@ -146,27 +147,31 @@ class _TournamentUserDetailState extends State<TournamentUserDetail> {
                               child: CommonCard(
                                 child: InfoBox(
                                     label: 'Exp.',
-                                    value: provider.userData?.userStats?.exp ?? "",
+                                    value: leagueUserDetailRes?.userStats?.exp ?? "",
                                     values:
-                                    provider.userData?.userStats?.performance ??
+                                    leagueUserDetailRes?.userStats?.performance ??
                                         0),
                               ),
                             ),
 
                           ]),
-                      const SpacerVertical(height:  Pad.pad14),
-                      GridView.builder(
+                    ),
+                    const SpacerVertical(height:  Pad.pad14),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: Pad.pad16),
+
+                      child: GridView.builder(
                         physics: NeverScrollableScrollPhysics(),
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 3,
                             mainAxisSpacing: 8.0,
                             crossAxisSpacing: 8.0),
                         itemCount:
-                            provider.userData?.userStats?.info?.length ?? 0,
+                            leagueUserDetailRes?.userStats?.info?.length ?? 0,
                         shrinkWrap: true,
                         itemBuilder: (context, index) {
                           Info? info =
-                              provider.userData?.userStats?.info?[index];
+                              leagueUserDetailRes?.userStats?.info?[index];
                           String valueString = info?.value ?? "";
                           bool isNegative = valueString.contains('-');
                           num valueWithOutSymbol = valueString.contains('%')
@@ -181,128 +186,127 @@ class _TournamentUserDetailState extends State<TournamentUserDetail> {
                               valueWithOutSymbol: valueWithOutSymbol);
                         },
                       ),
-                      const SpacerVertical(height: 20),
+                    ),
+                    const SpacerVertical(height: 20),
 
-                      Visibility(
-                        visible:
-                            (provider.userData?.recentTrades?.status != false),
+                    Visibility(
+                      visible:
+                          (leagueUserDetailRes?.recentTrades?.status != false),
+                      child: BaseHeading(
+                        title: leagueUserDetailRes?.recentTrades?.title ?? "",
+                        subtitle: leagueUserDetailRes?.recentTrades?.status ==
+                            true
+                            ? leagueUserDetailRes?.recentTrades?.subTitle ?? ""
+                            : leagueUserDetailRes?.recentTrades?.message ?? "",
+                        titleStyle: styleBaseBold(fontSize: 24),
+                        subtitleStyle: styleBaseRegular(fontSize: 16,color: ThemeColors.neutral80),
+                        margin: const EdgeInsets.symmetric(horizontal: Pad.pad16),
+                      viewMore: () {
+                          manager.tradesRedirection(
+                              "${leagueUserDetailRes?.recentTrades?.tournamentBattleId ?? ""}");
+                        },
+                      ),
+                    ),
+
+                    Visibility(
+                        visible: (leagueUserDetailRes?.recentTrades?.status !=
+                            false),
+                        child: const SpacerVertical(height: 20)
+                    ),
+                    ListView.separated(
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      padding: const EdgeInsets.symmetric(horizontal: Pad.pad16),
+                      itemBuilder: (context, index) {
+                        RecentTradeRes? data = manager
+                            .userData?.recentTrades?.dataTrade?[index];
+                        if (data == null) {
+                          return SizedBox();
+                        }
+                        return TickerItem(data: data, fromTO: 1);
+                      },
+                      itemCount: manager
+                              .userData?.recentTrades?.dataTrade?.length ??
+                          0,
+                      separatorBuilder: (context, index) {
+                        return SpacerVertical(height: 10);
+                      },
+                    ),
+                    const SpacerVertical(height: 15),
+                    Visibility(
+                      visible: (leagueUserDetailRes?.chart?.title != null),
+                      child: Align(
+                        alignment: Alignment.centerLeft,
                         child: BaseHeading(
-                          title: provider.userData?.recentTrades?.title ?? "",
-                          subtitle: provider.userData?.recentTrades?.status ==
-                              true
-                              ? provider.userData?.recentTrades?.subTitle ?? ""
-                              : provider.userData?.recentTrades?.message ?? "",
+                          title: leagueUserDetailRes?.chart?.title ?? "",
+                          subtitle: leagueUserDetailRes?.chart?.subTitle ?? "",
                           titleStyle: styleBaseBold(fontSize: 24),
                           subtitleStyle: styleBaseRegular(fontSize: 16,color: ThemeColors.neutral80),
-                          margin: EdgeInsets.zero,
-                          viewMore: () {
-                            provider.tradesRedirection(
-                                "${provider.userData?.recentTrades?.tournamentBattleId ?? ""}");
-                          },
+                          margin:  const EdgeInsets.symmetric(horizontal: Pad.pad16),
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                          textAlign: TextAlign.start,
                         ),
                       ),
-
-                      Visibility(
-                          visible: (provider.userData?.recentTrades?.status !=
-                              false),
-                          child: const SpacerVertical(height: 20)
-                      ),
-                      ListView.separated(
-                        shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
-                        itemBuilder: (context, index) {
-                          RecentTradeRes? data = provider
-                              .userData?.recentTrades?.dataTrade?[index];
-                          if (data == null) {
-                            return SizedBox();
-                          }
-                          return TickerItem(data: data, fromTO: 1);
-                        },
-                        itemCount: provider
-                                .userData?.recentTrades?.dataTrade?.length ??
-                            0,
-                        separatorBuilder: (context, index) {
-                          return SpacerVertical(height: 10);
-                        },
-                      ),
-                      const SpacerVertical(height: 15),
-                      Visibility(
-                        visible: (provider.userData?.chart?.title != null),
-                        child: Align(
-                          alignment: Alignment.centerLeft,
-                          child: BaseHeading(
-                            title: provider.userData?.chart?.title ?? "",
-                            subtitle: provider.userData?.chart?.subTitle ?? "",
+                    ),
+                    const SpacerVertical(),
+                    Visibility(
+                      visible: leagueUserDetailRes?.chart != null,
+                      child: GrowthChart(
+                          chart: leagueUserDetailRes?.chart?.gChart?.toList()),
+                    ),
+                    Visibility(
+                      visible: (leagueUserDetailRes?.recentBattles?.status != false),
+                      child: Stack(
+                        alignment: Alignment.topRight,
+                        children: [
+                          BaseHeading(
+                            title: leagueUserDetailRes?.recentBattles?.title ?? "",
+                            subtitle: leagueUserDetailRes?.recentBattles?.status ==
+                                true
+                                ? leagueUserDetailRes?.recentBattles?.subTitle ?? ""
+                                : leagueUserDetailRes?.recentBattles?.message ?? "",
                             titleStyle: styleBaseBold(fontSize: 24),
                             subtitleStyle: styleBaseRegular(fontSize: 16,color: ThemeColors.neutral80),
-
-                            margin: EdgeInsets.zero,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            textAlign: TextAlign.start,
+                            margin:  const EdgeInsets.symmetric(horizontal: Pad.pad16),
                           ),
-                        ),
-                      ),
-                      const SpacerVertical(),
-                      Visibility(
-                        visible: provider.userData?.chart != null,
-                        child: GrowthChart(
-                            chart: provider.userData?.chart?.gChart?.toList()),
-                      ),
-                      Visibility(
-                        visible: (provider.userData?.recentBattles?.status != false),
-                        child: Stack(
-                          alignment: Alignment.topRight,
-                          children: [
-                            BaseHeading(
-                              title: provider.userData?.recentBattles?.title ?? "",
-                              subtitle: provider.userData?.recentBattles?.status ==
-                                  true
-                                  ? provider.userData?.recentBattles?.subTitle ?? ""
-                                  : provider.userData?.recentBattles?.message ?? "",
-                              titleStyle: styleBaseBold(fontSize: 24),
-                              subtitleStyle: styleBaseRegular(fontSize: 16,color: ThemeColors.neutral80),
-
-                              margin: EdgeInsets.zero,
+                          IconButton(
+                            onPressed: (){
+                              manager.pickTradingDate(userID: widget.userId);
+                            },
+                            icon:Image.asset(
+                              Images.bottomTools,
+                              color: ThemeColors.neutral60,
                             ),
-                            InkWell(
-                              onTap: (){
-                                provider.pickTradingDate(userID: widget.userId);
-                              },
-                              child:const Icon(
-                                Icons.filter_alt,
-                                color: ThemeColors.accent,
-                              ),
-                            )
-                          ],
-                        ),
+                          )
+                        ],
                       ),
-                      Visibility(
-                          visible:
-                              provider.userData?.recentBattles?.status != false,
-                          child: const SpacerVertical(height: 13)
-                      ),
-                      ListView.separated(
-                        shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
-                        itemBuilder: (context, index) {
-                          RecentBattlesRes? data =
-                              provider.userData?.recentBattles?.data?[index];
-                          if (data == null) {
-                            return SizedBox();
-                          }
-                          return TlItem(
-                            data: data,
-                          );
-                        },
-                        itemCount:
-                            provider.userData?.recentBattles?.data?.length ?? 0,
-                        separatorBuilder: (context, index) {
-                          return BaseListDivider(height:20);
-                        },
-                      ),
-                      const SpacerVertical(height: 10)
-                    ],
-                  ),
+                    ),
+                    Visibility(
+                        visible:
+                            leagueUserDetailRes?.recentBattles?.status != false,
+                        child: const SpacerVertical(height: 13)
+                    ),
+                    ListView.separated(
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      itemBuilder: (context, index) {
+                        RecentBattlesRes? data =
+                            leagueUserDetailRes?.recentBattles?.data?[index];
+                        if (data == null) {
+                          return SizedBox();
+                        }
+                        return TlItem(
+                          data: data,
+                        );
+                      },
+                      itemCount:
+                          leagueUserDetailRes?.recentBattles?.data?.length ?? 0,
+                      separatorBuilder: (context, index) {
+                        return BaseListDivider(height:20);
+                      },
+                    ),
+                    const SpacerVertical(height: 10)
+                  ],
                 ),
               ),
             )));

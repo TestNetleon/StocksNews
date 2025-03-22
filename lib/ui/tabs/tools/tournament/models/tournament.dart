@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:stocks_news_new/ui/tabs/tools/tournament/models/leaderboard.dart';
 import 'package:stocks_news_new/ui/tabs/tools/tournament/models/tournament_detail.dart';
+import 'package:stocks_news_new/ui/tabs/tools/tournament/models/trading_res.dart';
 
 
 TournamentRes tournamentResFromJson(String str) =>
@@ -10,13 +11,12 @@ TournamentRes tournamentResFromJson(String str) =>
 String tournamentResToJson(TournamentRes data) => json.encode(data.toJson());
 
 class TournamentRes {
-  final List<TournamentHeaderRes>? tournamentHeader;
-  final List<TournamentDataRes>? tournaments;
-  final List<TournamentPointRes>? tournamentPoints;
+  final List<LeagueHeaderRes>? tournamentHeader;
+  final List<LeagueHeaderResDataRes>? tournaments;
+  final List<LeaguePointRes>? tournamentPoints;
   final TopTradingTitans? topTradingTitans;
   final String? heading;
   final String? subHeading;
-  final LoginUserPositionRes? loginUserPosition;
 
   TournamentRes({
     this.tournamentHeader,
@@ -25,18 +25,17 @@ class TournamentRes {
     this.subHeading,
     this.topTradingTitans,
     this.tournamentPoints,
-    this.loginUserPosition,
   });
 
   factory TournamentRes.fromJson(Map<String, dynamic> json) => TournamentRes(
         tournamentHeader: json["tournament_header"] == null
             ? []
-            : List<TournamentHeaderRes>.from(json["tournament_header"]!
-                .map((x) => TournamentHeaderRes.fromJson(x))),
+            : List<LeagueHeaderRes>.from(json["tournament_header"]!
+                .map((x) => LeagueHeaderRes.fromJson(x))),
         tournaments: json["tournaments"] == null
             ? []
-            : List<TournamentDataRes>.from(
-                json["tournaments"]!.map((x) => TournamentDataRes.fromJson(x))),
+            : List<LeagueHeaderResDataRes>.from(
+                json["tournaments"]!.map((x) => LeagueHeaderResDataRes.fromJson(x))),
         heading: json['heading'],
         subHeading: json['sub_heading'],
         topTradingTitans: json["top_trading_titans"] == null
@@ -44,11 +43,9 @@ class TournamentRes {
             : TopTradingTitans.fromJson(json["top_trading_titans"]),
         tournamentPoints: json["tournament_points"] == null
             ? []
-            : List<TournamentPointRes>.from(json["tournament_points"]!
-                .map((x) => TournamentPointRes.fromJson(x))),
-        loginUserPosition: json["my_position"] == null
-            ? null
-            : LoginUserPositionRes.fromJson(json["my_position"]),
+            : List<LeaguePointRes>.from(json["tournament_points"]!
+                .map((x) => LeaguePointRes.fromJson(x))),
+
       );
 
   Map<String, dynamic> toJson() => {
@@ -64,14 +61,14 @@ class TournamentRes {
         "tournament_points": tournamentPoints == null
             ? []
             : List<dynamic>.from(tournamentPoints!.map((x) => x.toJson())),
-        "my_position": loginUserPosition?.toJson(),
+
       };
 }
 
 class TopTradingTitans {
   final String? title;
   final String? subTitle;
-  final List<LeaderboardByDateRes>? data;
+  final List<TradingRes>? data;
 
   TopTradingTitans({
     this.title,
@@ -85,8 +82,8 @@ class TopTradingTitans {
         subTitle: json["sub_title"],
         data: json["data"] == null
             ? []
-            : List<LeaderboardByDateRes>.from(
-                json["data"]!.map((x) => LeaderboardByDateRes.fromJson(x))),
+            : List<TradingRes>.from(
+                json["data"]!.map((x) => TradingRes.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -98,17 +95,17 @@ class TopTradingTitans {
       };
 }
 
-class TournamentHeaderRes {
+class LeagueHeaderRes {
   final String? label;
   final String? value;
 
-  TournamentHeaderRes({
+  LeagueHeaderRes({
     this.label,
     this.value,
   });
 
-  factory TournamentHeaderRes.fromJson(Map<String, dynamic> json) =>
-      TournamentHeaderRes(
+  factory LeagueHeaderRes.fromJson(Map<String, dynamic> json) =>
+      LeagueHeaderRes(
         label: json["label"],
         value: json["value"],
       );
@@ -119,7 +116,7 @@ class TournamentHeaderRes {
       };
 }
 
-class TournamentDataRes {
+class LeagueHeaderResDataRes {
   final String? name;
   final String? slug;
   final String? time;
@@ -129,7 +126,7 @@ class TournamentDataRes {
   final int? tournamentId;
   final String? description;
 
-  TournamentDataRes({
+  LeagueHeaderResDataRes({
     this.name,
     this.slug,
     this.time,
@@ -140,8 +137,8 @@ class TournamentDataRes {
     this.description,
   });
 
-  factory TournamentDataRes.fromJson(Map<String, dynamic> json) =>
-      TournamentDataRes(
+  factory LeagueHeaderResDataRes.fromJson(Map<String, dynamic> json) =>
+      LeagueHeaderResDataRes(
         name: json["name"],
         tournamentId: json['id'],
         slug: json["slug"],

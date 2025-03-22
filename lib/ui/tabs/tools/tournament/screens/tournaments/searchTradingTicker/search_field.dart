@@ -79,15 +79,14 @@ class _TournamentInputFieldSearchCommonState
     if (text.isEmpty) {
       context.read<TournamentSearchProvider>().clearSearch();
     } else {
-      TournamentProvider provider =
-          navigatorKey.currentContext!.read<TournamentProvider>();
+      LeagueManager manager =
+          navigatorKey.currentContext!.read<LeagueManager>();
       TournamentTradesProvider tradesProvider =
           navigatorKey.currentContext!.read<TournamentTradesProvider>();
       Map request = {
         "term": text,
-        "token": context.read<UserManager>().user?.token ?? "",
         "tournament_battle_id":
-            '${tradesProvider.myTrades?.tournamentBattleId ?? provider.detailRes?.tournamentBattleId ?? ''}',
+            '${tradesProvider.myTrades?.tournamentBattleId ?? manager.detailRes?.tournamentBattleId ?? ''}',
       };
       context.read<TournamentSearchProvider>().searchSymbols(request);
     }

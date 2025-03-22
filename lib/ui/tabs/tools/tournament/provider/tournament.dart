@@ -13,10 +13,12 @@ import 'package:stocks_news_new/modals/user_res.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/ui/base/toaster.dart';
 import 'package:stocks_news_new/ui/tabs/tools/simulator/services/sse.dart';
-import 'package:stocks_news_new/ui/tabs/tools/tournament/models/leaderboard.dart';
+import 'package:stocks_news_new/ui/tabs/tools/tournament/models/league_titan_res.dart';
+import 'package:stocks_news_new/ui/tabs/tools/tournament/models/tab_res.dart';
 import 'package:stocks_news_new/ui/tabs/tools/tournament/models/tour_user_detail.dart';
 import 'package:stocks_news_new/ui/tabs/tools/tournament/models/tournament.dart';
 import 'package:stocks_news_new/ui/tabs/tools/tournament/models/tournament_detail.dart';
+import 'package:stocks_news_new/ui/tabs/tools/tournament/models/trading_res.dart';
 import 'package:stocks_news_new/ui/tabs/tools/tournament/provider/leaderboard.dart';
 import 'package:stocks_news_new/ui/tabs/tools/tournament/screens/game_tournament_index.dart';
 import 'package:stocks_news_new/ui/tabs/tools/tournament/screens/tournaments/dayTraining/open/index.dart';
@@ -28,13 +30,11 @@ import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
 
 
-class TournamentProvider extends ChangeNotifier {
+class LeagueManager extends ChangeNotifier {
 
   double progress = 0.0;
   late Duration? _totalDuration;
   Color progressColor = ThemeColors.success120;
-
-
 
   num hours = 00;
   num minutes = 00;
@@ -58,10 +58,7 @@ class TournamentProvider extends ChangeNotifier {
   void startCountdown() async {
     DateTime? start = _detailRes?.battleTime?.startTime;
     DateTime? end = _detailRes?.battleTime?.endTime;
-
     DateTime? serverTime = _detailRes?.battleTime?.currentTime;
-    // DateTime mockTime = DateTime(2025, 01, 09, 15, 59, 55);
-    // serverTime = mockTime;
     if (start == null || end == null || serverTime == null) {
       return;
     }
@@ -118,11 +115,11 @@ class TournamentProvider extends ChangeNotifier {
             onTap: () {
               Navigator.popUntil(
                   navigatorKey.currentContext!, (route) => route.isFirst);
-              Navigator.push(
+              Navigator.pushNamed(
                   navigatorKey.currentContext!,
-                  MaterialPageRoute(
-                    builder: (context) => GameTournamentIndex(setIndex: 1),
-                  ));
+                  TradingLeagueIndex.path,
+                  arguments: {'initialIndex':1}
+              );
             },
           );
         }
@@ -157,15 +154,6 @@ class TournamentProvider extends ChangeNotifier {
     });
   }
 
-  Color _getProgressColor(double progress) {
-    if (progress <= 0.3) {
-      return Colors.greenAccent;
-    } else if (progress <= 0.7) {
-      return Colors.yellowAccent;
-    } else {
-      return Colors.redAccent;
-    }
-  }
 
   void stopCountdown() {
     _timer?.cancel();
@@ -178,6 +166,69 @@ class TournamentProvider extends ChangeNotifier {
       'seconds': seconds.toString().padLeft(2, '0'),
     };
   }
+
+
+  LeagueTabRes? _tabData;
+  LeagueTabRes? get tabData => _tabData;
+
+  Status _status = Status.ideal;
+  bool get isLoading => _status == Status.loading || _status == Status.ideal;
+
+  void setStatus(status) {
+    _status = status;
+    notifyListeners();
+  }
+
+  Future<void> getTabs({int? initialIndex}) async {
+    try {
+      setStatus(Status.loading);
+      Map request = {};
+      ApiResponse response = await apiRequest(
+        url: Apis.lTabs,
+        request: request,
+      );
+
+      if (response.status) {
+        _tabData = leagueTabResFromMap(jsonEncode(response.data));
+        _error = null;
+        onScreenChange(initialIndex??0);
+      } else {
+        _tabData = null;
+        _error = response.message;
+      }
+    } catch (e) {
+      _tabData = null;
+      _error = Const.errSomethingWrong;
+      Utils().showLog('Error on ${Apis.cryptoTabs}: $e');
+
+    } finally {
+      setStatus(Status.loaded);
+    }
+  }
+
+
+  int? selectedScreen=-1;
+  onScreenChange(index) {
+    if (selectedScreen != index) {
+      selectedScreen = index;
+      notifyListeners();
+      switch (selectedScreen) {
+        case 0:
+          tournament();
+          break;
+        case 1:
+          navigatorKey.currentContext!.read<TournamentLeaderboardProvider>().showLeaderboard();
+          break;
+
+        case 2:
+
+        // getCryptoFiat();
+          break;
+        default:
+      }
+    }
+  }
+
 
 // TOURNAMENT
   Status _statusTournament = Status.ideal;
@@ -195,25 +246,17 @@ class TournamentProvider extends ChangeNotifier {
   Extra? _extra;
   Extra? get extra => _extra;
 
-  /// extra for point_paid
-  Extra? _extraOfPointPaid;
-  Extra? get extraOfPointPaid => _extraOfPointPaid;
 
   void setStatusTournament(status) {
     _statusTournament = status;
     notifyListeners();
   }
 
-// MARK: TOURNAMENT
   Future tournament() async {
     _data = null;
     setStatusTournament(Status.loading);
-
     try {
-      Map request = {
-        "token":
-            navigatorKey.currentContext!.read<UserManager>().user?.token ?? ""
-      };
+      Map request = {};
       ApiResponse response = await apiRequest(
         url: Apis.t,
         request: request,
@@ -225,8 +268,6 @@ class TournamentProvider extends ChangeNotifier {
         _data = null;
         _error = response.message ?? Const.errSomethingWrong;
       }
-      _extra = (response.extra is Extra ? response.extra as Extra : null);
-
       setStatusTournament(Status.loaded);
     } catch (e) {
       _data = null;
@@ -246,8 +287,8 @@ class TournamentProvider extends ChangeNotifier {
   String? _errorDetail;
   String? get errorDetail => _errorDetail ?? Const.errSomethingWrong;
 
-  TournamentDetailRes? _detailRes;
-  TournamentDetailRes? get detailRes => _detailRes;
+  LeagueDetailRes? _detailRes;
+  LeagueDetailRes? get detailRes => _detailRes;
 
   void setStatusDetail(status) {
     _statusDetail = status;
@@ -255,17 +296,13 @@ class TournamentProvider extends ChangeNotifier {
   }
 
   int? _id;
-// MARK: DETAIL
   Future tournamentDetail(int? id, {bool timerSet = true}) async {
     _id = id;
     setStatusDetail(Status.loading);
     try {
-      UserRes? user = navigatorKey.currentContext!.read<UserManager>().user;
       Map request = {
-        'token': user?.token ?? '',
         'tournament_id': '${id ?? ''}',
       };
-
       ApiResponse response = await apiRequest(
         url: Apis.tDetail,
         request: request,
@@ -278,11 +315,12 @@ class TournamentProvider extends ChangeNotifier {
         _detailRes = null;
         _error = response.message;
       }
-      setStatusDetail(Status.loaded);
     } catch (e) {
       Utils().showLog('error in detail $e');
       _error = Const.errSomethingWrong;
       _detailRes = null;
+    }
+    finally{
       setStatusDetail(Status.loaded);
     }
   }
@@ -340,25 +378,19 @@ class TournamentProvider extends ChangeNotifier {
   Extra? _extraCommonList;
   Extra? get extraCommonList => _extraCommonList;
 
-  List<LeaderboardByDateRes>? _pointsPaid;
-  List<LeaderboardByDateRes>? get tradesExecuted => _pointsPaid;
+
 
   /// value as per _playTraders
 
-  List<LeaderboardByDateRes>? _playTraders;
-  List<LeaderboardByDateRes>? get playTraders => _playTraders;
+  List<TradingRes>? _playTraders;
+  List<TradingRes>? get playTraders => _playTraders;
 
   int _page = 1;
-
-  /// value as per _extraOfPointPaid
-  bool get canLoadMore => _page <= (_extraOfPointPaid?.totalPages ?? 1);
 
   TextEditingController date = TextEditingController();
   TextEditingController searchController = TextEditingController();
   TextEditingController txnSizeController = TextEditingController();
 
-  List<KeyValueElement>? _ranks;
-  List<KeyValueElement>? get ranks => _ranks;
 
   void setStatusTradeExecuted(status) {
     _statusCommonList = status;
@@ -432,9 +464,13 @@ class TournamentProvider extends ChangeNotifier {
     }
   }
 
-  Future pointsPaidAPI(
-      {loadMore = false,
-      bool clear = true,
+  LeagueTitanRes? _leagueTitanRes;
+  LeagueTitanRes? get leagueTitanRes => _leagueTitanRes;
+
+  bool get canLoadMore => _page <= (_leagueTitanRes?.totalPages ?? 1);
+
+  Future getAllTitans(
+      {loadMore = false, bool clear = true,
       required TournamentsHead selectedTournament}) async {
     if (loadMore) {
       _page++;
@@ -446,45 +482,43 @@ class TournamentProvider extends ChangeNotifier {
 
     if (clear) _clearVariables();
     try {
-      UserManager provider = navigatorKey.currentContext!.read<UserManager>();
-      Map requst = {
-        'token': provider.user?.token ?? '',
+      Map request = {
         'page': '$_page',
       };
       ApiResponse response = await apiRequest(
         url: getApiUrl(selectedTournament),
         showProgress: false,
-        request: requst,
+        request: request,
       );
       if (response.status) {
         if (_page == 1) {
-          _pointsPaid = leaderboardByDateResFromJson(jsonEncode(response.data));
-          _errorCommonList = null;
-        } else {
-          var newEntries =
-              leaderboardByDateResFromJson(jsonEncode(response.data));
-          _pointsPaid?.addAll(newEntries);
+          _leagueTitanRes = leagueTitanResFromMap(jsonEncode(response.data));
+          if(_leagueTitanRes?.data==null){
+            _errorCommonList = response.message;
+          }
         }
+        else {
+          _leagueTitanRes?.data?.addAll(leagueTitanResFromMap(jsonEncode(response.data)).data ?? []);
+        }
+
       } else {
         if (_page == 1) {
-          _pointsPaid = null;
+          _leagueTitanRes = null;
           _errorCommonList = response.message;
         }
       }
-      _extraOfPointPaid =
-          (response.extra is Extra ? response.extra as Extra : null);
+     /* _extraOfPointPaid = (response.extra is Extra ? response.extra as Extra : null);
 
-      if (selectedTournament == TournamentsHead.playTraders ||
-          selectedTournament == TournamentsHead.topTitan) {
+      if (selectedTournament == TournamentsHead.playTraders || selectedTournament == TournamentsHead.topTitan) {
         _ranks = response.extra.ranks;
-      }
+      }*/
 
-      setStatusTradeExecuted(Status.loaded);
     } catch (e) {
-      _pointsPaid = null;
+      _leagueTitanRes = null;
       _errorCommonList = Const.errSomethingWrong;
-
       Utils().showLog('join error $e');
+    }
+    finally {
       setStatusTradeExecuted(Status.loaded);
     }
   }
@@ -504,19 +538,20 @@ class TournamentProvider extends ChangeNotifier {
       provider.getEditedDate(dateTime1);
       Navigator.popUntil(
           navigatorKey.currentContext!, (route) => route.isFirst);
-      Navigator.push(
+      Navigator.pushNamed(
           navigatorKey.currentContext!,
-          MaterialPageRoute(
-            builder: (context) => GameTournamentIndex(setIndex: 1),
-          ));
+          TradingLeagueIndex.path,
+          arguments: {'initialIndex':1}
+      );
+
     } else {
       Navigator.popUntil(
           navigatorKey.currentContext!, (route) => route.isFirst);
-      Navigator.push(
+      Navigator.pushNamed(
           navigatorKey.currentContext!,
-          MaterialPageRoute(
-            builder: (context) => GameTournamentIndex(setIndex: 1),
-          ));
+          TradingLeagueIndex.path,
+          arguments: {'initialIndex':1}
+      );
     }
   }
 
@@ -529,20 +564,8 @@ class TournamentProvider extends ChangeNotifier {
         ));
   }
 
-  Status _statusUserData = Status.ideal;
-  Status get statusUserData => _statusUserData;
 
-  bool get isLoadingUserData =>
-      _statusUserData == Status.loading || _statusUserData == Status.ideal;
 
-  String? _errorUserData;
-  String? get errorUserData => _errorUserData ?? Const.errSomethingWrong;
-
-  TournamentUserDetailRes? _userData;
-  TournamentUserDetailRes? get userData => _userData;
-
-  Extra? _extraOfUserData;
-  Extra? get extraOfUserData => _extraOfUserData;
 
   List<RecentTradeRes>? _allTrades;
   List<RecentTradeRes>? get allTrades => _allTrades;
@@ -558,11 +581,8 @@ class TournamentProvider extends ChangeNotifier {
 
   Status _statusTradeList = Status.ideal;
   Status get statusTradeList => _statusTradeList;
-  int _pageProfile = 1;
   bool get isLoadingTradeList => _statusTradeList == Status.loading;
   bool get canLoadMoreTrade => _page <= (_extraOfTrade?.totalPages ?? 1);
-  bool get canLoadMoreProfile =>
-      _pageProfile <= (_extraOfUserData?.totalPages ?? 1);
 
   void setStatusUserData(status) {
     _statusUserData = status;
@@ -573,6 +593,21 @@ class TournamentProvider extends ChangeNotifier {
     _statusTradeList = status;
     notifyListeners();
   }
+
+  int _pageProfile = 1;
+  Status _statusUserData = Status.ideal;
+  Status get statusUserData => _statusUserData;
+
+  bool get isLoadingUserData =>
+      _statusUserData == Status.loading || _statusUserData == Status.ideal;
+
+  String? _errorUserData;
+  String? get errorUserData => _errorUserData ?? Const.errSomethingWrong;
+
+  LeagueUserDetailRes? _userData;
+  LeagueUserDetailRes? get userData => _userData;
+  bool get canLoadMoreProfile => _pageProfile <= (_userData?.totalPages ?? 1);
+
 
   Future getUserDetail(
       {loadMore = false, bool clear = true, String? userID}) async {
@@ -600,7 +635,7 @@ class TournamentProvider extends ChangeNotifier {
       );
       if (response.status) {
         if (_pageProfile == 1) {
-          _userData = tournamentUserDetailResFromMap(jsonEncode(response.data));
+          _userData = leagueUserDetailResFromJson(jsonEncode(response.data));
           if (_userData?.recentTrades?.dataTrade != null &&
               _userData?.recentTrades?.dataTrade!.isNotEmpty == true) {
             _startSseTrades();
@@ -608,7 +643,7 @@ class TournamentProvider extends ChangeNotifier {
           _errorUserData = null;
         } else {
           var newEntries =
-              tournamentUserDetailResFromMap(jsonEncode(response.data));
+          leagueUserDetailResFromJson(jsonEncode(response.data));
           _userData?.recentBattles?.data
               ?.addAll(newEntries.recentBattles?.data ?? []);
         }
@@ -618,8 +653,6 @@ class TournamentProvider extends ChangeNotifier {
         }
         _errorUserData = response.message ?? Const.errSomethingWrong;
       }
-      _extraOfUserData =
-          (response.extra is Extra ? response.extra as Extra : null);
       setStatusUserData(Status.loaded);
     } catch (e) {
       _userData = null;

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import 'package:stocks_news_new/ui/tabs/tools/tournament/models/leaderboard.dart';
+import 'package:stocks_news_new/ui/tabs/tools/tournament/models/trading_res.dart';
 import 'package:stocks_news_new/ui/tabs/tools/tournament/provider/leaderboard.dart';
 import 'package:stocks_news_new/ui/tabs/tools/tournament/provider/tournament.dart';
 import 'package:stocks_news_new/utils/colors.dart';
@@ -20,7 +20,7 @@ class TournamentLeaderboardTopItem extends StatelessWidget {
   Widget build(BuildContext context) {
     TournamentLeaderboardProvider provider =
         context.watch<TournamentLeaderboardProvider>();
-    List<LeaderboardByDateRes?> data = provider.topPerformers;
+    List<TradingRes?> data = provider.topPerformers;
 
     if (data.isEmpty == true) {
       return const SizedBox();
@@ -41,7 +41,7 @@ class TournamentLeaderboardTopItem extends StatelessWidget {
             children: [
               InkWell(
                 onTap: () {
-                  context.read<TournamentProvider>().profileRedirection(
+                  context.read<LeagueManager>().profileRedirection(
                       userId: "${data[index]?.userId ?? ""}");
                 },
                 child: Container(

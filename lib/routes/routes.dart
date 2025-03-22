@@ -101,6 +101,9 @@ import 'package:stocks_news_new/ui/tabs/tools/tournament/provider/leaderboard.da
 import 'package:stocks_news_new/ui/tabs/tools/tournament/provider/search.dart';
 import 'package:stocks_news_new/ui/tabs/tools/tournament/provider/tournament.dart';
 import 'package:stocks_news_new/ui/tabs/tools/tournament/provider/trades.dart';
+import 'package:stocks_news_new/ui/tabs/tools/tournament/screens/game_tournament_index.dart';
+import 'package:stocks_news_new/ui/tabs/tools/tournament/screens/tournaments/pointsPaid/index.dart';
+import 'package:stocks_news_new/ui/tabs/tools/tournament/screens/tournaments/widgets/top_tading.dart';
 import 'package:stocks_news_new/ui/theme/manager.dart';
 
 import 'package:stocks_news_new/utils/constants.dart';
@@ -313,7 +316,7 @@ class Routes {
             return SimulatorIndex(initialIndex: initialIndex ?? 0);
           },
         );
-      /*case TradingLeagueIndex.path:
+      case TradingLeagueIndex.path:
         return MaterialPageRoute(
           builder: (context) {
             final arguments = settings.arguments as Map<String, dynamic>?;
@@ -333,7 +336,18 @@ class Routes {
               title: title,
             );
           },
-        );*/
+        );
+      case LeagueTitansIndex.path:
+        return MaterialPageRoute(
+          builder: (context) {
+            final arguments = settings.arguments as Map<String, dynamic>?;
+            TournamentsHead selectedTournament = arguments?['selectedTournament'];
+            return LeagueTitansIndex(
+              selectedTournament: selectedTournament,
+            );
+          },
+        );
+
 
       case SearchTickerIndex.path:
         return MaterialPageRoute(
@@ -607,11 +621,9 @@ class Routes {
       ChangeNotifierProvider(create: (_) => IndustriesManager()),
       ChangeNotifierProvider(create: (_) => SectorsManager()),
       ChangeNotifierProvider(create: (_) => ThemeManager()),
-      //ChangeNotifierProvider(create: (_) => LeagueManager()),
+      ChangeNotifierProvider(create: (_) => LeagueManager()),
 
       // old providers
-
-      ChangeNotifierProvider(create: (_) => TournamentProvider()),
       ChangeNotifierProvider(create: (_) => TournamentTradesProvider()),
       ChangeNotifierProvider(create: (_) => TournamentSearchProvider()),
       ChangeNotifierProvider(create: (_) => TournamentLeaderboardProvider()),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/ui/base/load_more.dart';
 import 'package:stocks_news_new/ui/tabs/tools/tournament/models/leaderboard.dart';
+import 'package:stocks_news_new/ui/tabs/tools/tournament/models/trading_res.dart';
 import 'package:stocks_news_new/ui/tabs/tools/tournament/provider/leaderboard.dart';
 import 'package:stocks_news_new/ui/tabs/tools/tournament/provider/tournament.dart';
 import 'package:stocks_news_new/ui/tabs/tools/tournament/screens/tournaments/leaderboard/item.dart';
@@ -33,13 +34,12 @@ class _TournamentLeaderboardState extends State<TournamentLeaderboard> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      _callAPI();
+     // _callAPI();
     });
   }
 
   Future _callAPI() async {
-    TournamentLeaderboardProvider provider =
-        context.read<TournamentLeaderboardProvider>();
+    TournamentLeaderboardProvider provider = context.read<TournamentLeaderboardProvider>();
     provider.showLeaderboard();
   }
 
@@ -157,7 +157,7 @@ class _TournamentLeaderboardState extends State<TournamentLeaderboard> {
                         margin: EdgeInsets.only(top: 16, bottom: 8),
                         child: ListTile(
                           onTap: () async {
-                            context.read<TournamentProvider>().profileRedirection(
+                            context.read<LeagueManager>().profileRedirection(
                                 userId:
                                 "${provider.leaderboardRes?.loginUserPosition?.userId ?? ""}");
                           },
@@ -229,7 +229,7 @@ class _TournamentLeaderboardState extends State<TournamentLeaderboard> {
                           padding: EdgeInsets.only(top: 10, bottom: 10),
                           shrinkWrap: true,
                           itemBuilder: (context, index) {
-                            LeaderboardByDateRes? data = provider
+                            TradingRes? data = provider
                                 .leaderboardRes?.leaderboardByDate?[index];
                             if (data == null) return SizedBox();
                             return TournamentLeaderboardItem(

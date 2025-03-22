@@ -9,6 +9,7 @@ import 'package:stocks_news_new/ui/tabs/tools/simulator/managers/portpolio.dart'
 import 'package:stocks_news_new/ui/tabs/tools/simulator/managers/s_open.dart';
 import 'package:stocks_news_new/ui/tabs/tools/simulator/managers/ticker_search.dart';
 import 'package:stocks_news_new/ui/tabs/tools/simulator/managers/trade.dart';
+import 'package:stocks_news_new/ui/tabs/tools/simulator/models/ts_user_res.dart';
 import 'package:stocks_news_new/ui/tabs/tools/simulator/screens/TradingWithTypes/widgets/buy_order_item.dart';
 import 'package:stocks_news_new/ui/tabs/tools/simulator/services/sse.dart';
 import 'package:stocks_news_new/utils/colors.dart';
@@ -98,6 +99,7 @@ class _OpenOrderScreenState extends State<OpenOrderScreen> {
     TradeManager manager = context.watch<TradeManager>();
     PortfolioManager portfolioManager = context.watch<PortfolioManager>();
     StockDataManagerRes? stock = manager.tappedStock;
+    TsUserDataRes? userDataRes = portfolioManager.userData?.userDataRes;
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -187,115 +189,95 @@ class _OpenOrderScreenState extends State<OpenOrderScreen> {
                 child: BuyOrderItem(
                   title: "Buy More Shares",
                   subtitle: subtitleWithSymbol(
-                    portfolioManager
-                        .userData?.userDataRes?.ordersSubTitle?.buyOrder,
+                    userDataRes?.ordersSubTitle?.buyOrder,
                     widget.symbol,
                   ),
                   onTap: () {
                     var selectedStock = StockType.buy;
-                    if (widget.symbol != null) {
-                      _onTap(
-                          symbol: widget.symbol, selectedStock: selectedStock);
-                    } else {
-                      // Navigator.pushNamed(context, SearchTickerIndex.path,arguments: {"stockType":selectedStock});
-                    }
+                      _onTap(symbol: widget.symbol, selectedStock: selectedStock);
                   },
                 ),
               ),
+              Visibility(visible: widget.portfolioTradeType == 1,child: BaseListDivider()),
               Visibility(
                 visible: widget.portfolioTradeType == 1,
                 child: BuyOrderItem(
                   title: "Sell Shares",
                   subtitle: subtitleWithSymbol(
-                    portfolioManager
-                        .userData?.userDataRes?.ordersSubTitle?.sellOrder,
+                    userDataRes?.ordersSubTitle?.sellOrder,
                     widget.symbol,
                   ),
                   onTap: () {
                     var selectedStock = StockType.sell;
-                    if (widget.symbol != null) {
-                      _onTap(
-                          symbol: widget.symbol, selectedStock: selectedStock);
-                    } else {
-                      //Navigator.pushNamed(context, SearchTickerIndex.path,arguments: {"stockType":selectedStock});
-                    }
+                      _onTap(symbol: widget.symbol, selectedStock: selectedStock);
+
                   },
                 ),
               ),
+              Visibility(visible: widget.portfolioTradeType == 1,child: BaseListDivider()),
               Visibility(
                 visible: widget.portfolioTradeType == 2,
                 child: BuyOrderItem(
                   title: "Increase Short Shares",
                   subtitle: subtitleWithSymbol(
-                    portfolioManager
-                        .userData?.userDataRes?.ordersSubTitle?.shortOrder,
+                    userDataRes?.ordersSubTitle?.shortOrder,
                     widget.symbol,
                   ),
                   onTap: () {
-                    if (widget.symbol != null) {
                       context
                           .read<TickerSearchManager>()
                           .shortRedirection(widget.symbol ?? "");
-                    } else {
-                      // Navigator.pushNamed(context, SearchTickerIndex.path,arguments: {"stockType":selectedStock});
-                    }
                   },
                 ),
               ),
+              Visibility(visible: widget.portfolioTradeType == 2,child: BaseListDivider()),
               Visibility(
                 visible: widget.portfolioTradeType == 2,
                 child: BuyOrderItem(
                   title: "Buy to Cover Shares",
                   subtitle: subtitleWithSymbol(
-                    portfolioManager
-                        .userData?.userDataRes?.ordersSubTitle?.buyToCoverOrder,
+                    userDataRes?.ordersSubTitle?.buyToCoverOrder,
                     widget.symbol,
                   ),
                   onTap: () {
                     var selectedStock = StockType.btc;
-                    if (widget.symbol != null) {
-                      _onTap(
-                          symbol: widget.symbol, selectedStock: selectedStock);
-                    } else {
-                      // Navigator.pushNamed(context, SearchTickerIndex.path,arguments: {"stockType":selectedStock});
-                    }
+                      _onTap(symbol: widget.symbol, selectedStock: selectedStock);
+
                   },
                 ),
               ),
+              Visibility(visible: widget.portfolioTradeType == 2,child: BaseListDivider()),
             ],
           ),
         ),
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            if (widget.portfolioTradeType == 1 ||
-                widget.portfolioTradeType == 2)
+            if (widget.portfolioTradeType == 1 || widget.portfolioTradeType == 2)
               Visibility(
-                visible: portfolioManager.userData?.userDataRes
-                        ?.userConditionalOrderPermission?.bracketOrder ==
+                visible: userDataRes?.userConditionalOrderPermission?.bracketOrder ==
                     true,
                 child: BuyOrderItem(
                   title: "Stop Loss and Target",
                   subtitle: subtitleWithSymbol(
-                    portfolioManager
-                        .userData?.userDataRes?.ordersSubTitle?.bracketOrder,
+                    userDataRes?.ordersSubTitle?.bracketOrder,
                     widget.symbol,
                   ),
                   onTap: () {
                     var conditionalType = ConditionType.bracketOrder;
-                    if (widget.symbol != null) {
                       context
                           .read<TickerSearchManager>()
                           .conditionalRedirection(widget.symbol ?? "",
                               tickerID: widget.tickerID,
                               qty: widget.qty,
                               conditionalType: conditionalType);
-                    } else {
-                      // Navigator.pushNamed(context, SearchTickerIndex.path);
-                    }
                   },
                 ),
               ),
+
+            if (widget.portfolioTradeType == 1 || widget.portfolioTradeType == 2)
+            Visibility(visible: userDataRes?.userConditionalOrderPermission?.bracketOrder == true,child: BaseListDivider()),
+
             if (widget.portfolioTradeType == 3 &&
                 widget.allTradType?['order_type_original'] != "BRACKET_ORDER")
               Column(
@@ -305,8 +287,7 @@ class _OpenOrderScreenState extends State<OpenOrderScreen> {
                     child: BuyOrderItem(
                       title: "Buy More Shares",
                       subtitle: subtitleWithSymbol(
-                        portfolioManager
-                            .userData?.userDataRes?.ordersSubTitle?.buyOrder,
+                        userDataRes?.ordersSubTitle?.buyOrder,
                         widget.symbol,
                       ),
                       onTap: () {
@@ -329,13 +310,14 @@ class _OpenOrderScreenState extends State<OpenOrderScreen> {
                       },
                     ),
                   ),
+                  Visibility(visible: widget.allTradType?['trade_type'] == "Buy",child: BaseListDivider()),
+
                   Visibility(
                     visible: widget.allTradType?['trade_type'] == "Buy",
                     child: BuyOrderItem(
                       title: "Sell Shares",
                       subtitle: subtitleWithSymbol(
-                        portfolioManager
-                            .userData?.userDataRes?.ordersSubTitle?.sellOrder,
+                        userDataRes?.ordersSubTitle?.sellOrder,
                         widget.symbol,
                       ),
                       onTap: () {
@@ -357,13 +339,13 @@ class _OpenOrderScreenState extends State<OpenOrderScreen> {
                       },
                     ),
                   ),
+                  Visibility(visible: widget.allTradType?['trade_type'] == "Buy",child: BaseListDivider()),
                   Visibility(
                     visible: widget.allTradType?['trade_type'] == "Short",
                     child: BuyOrderItem(
                       title: "Short More Shares",
                       subtitle: subtitleWithSymbol(
-                        portfolioManager
-                            .userData?.userDataRes?.ordersSubTitle?.buyOrder,
+                        userDataRes?.ordersSubTitle?.buyOrder,
                         widget.symbol,
                       ),
                       onTap: () {
@@ -385,13 +367,13 @@ class _OpenOrderScreenState extends State<OpenOrderScreen> {
                       },
                     ),
                   ),
+                  Visibility(visible: widget.allTradType?['trade_type'] == "Short",child: BaseListDivider()),
                   Visibility(
                     visible: widget.allTradType?['trade_type'] == "Short",
                     child: BuyOrderItem(
                       title: "Buy to Cover Shares",
                       subtitle: subtitleWithSymbol(
-                        portfolioManager
-                            .userData?.userDataRes?.ordersSubTitle?.sellOrder,
+                        userDataRes?.ordersSubTitle?.sellOrder,
                         widget.symbol,
                       ),
                       onTap: () {
@@ -413,6 +395,7 @@ class _OpenOrderScreenState extends State<OpenOrderScreen> {
                       },
                     ),
                   ),
+                  Visibility(visible: widget.allTradType?['trade_type'] == "Short",child: BaseListDivider()),
                 ],
               ),
             Visibility(
@@ -420,8 +403,7 @@ class _OpenOrderScreenState extends State<OpenOrderScreen> {
               child: BuyOrderItem(
                 title: "Square Off Order",
                 subtitle: subtitleWithSymbol(
-                    portfolioManager
-                        .userData?.userDataRes?.ordersSubTitle?.sellOrder,
+                    userDataRes?.ordersSubTitle?.sellOrder,
                     widget.symbol),
                 onTap: () {
                   popUpAlert(
@@ -450,6 +432,7 @@ class _OpenOrderScreenState extends State<OpenOrderScreen> {
                 },
               ),
             ),
+            Visibility(visible:widget.portfolioTradeType == 3,child: BaseListDivider()),
           ],
         )
       ],

@@ -1,19 +1,19 @@
 import 'dart:convert';
 
-import 'leaderboard.dart';
+import 'package:stocks_news_new/ui/tabs/tools/tournament/models/trading_res.dart';
 
-TournamentDetailRes tournamentDetailResFromJson(String str) =>
-    TournamentDetailRes.fromJson(json.decode(str));
+LeagueDetailRes tournamentDetailResFromJson(String str) =>
+    LeagueDetailRes.fromJson(json.decode(str));
 
-String tournamentDetailResToJson(TournamentDetailRes data) =>
+String tournamentDetailResToJson(LeagueDetailRes data) =>
     json.encode(data.toJson());
 
-class TournamentDetailRes {
+class LeagueDetailRes {
+  final String? title;
+  final String? subTitle;
   final List<String>? tournamentRules;
-  // final LoginUserPositionRes? loginUserPosition;
-  final List<TournamentPointRes>? tournamentPoints;
-  final List<LeaderboardByDateRes>? todayLeaderboard;
-
+  final List<LeaguePointRes>? tournamentPoints;
+  final List<TradingRes>? todayLeaderboard;
   final String? showButton;
   final String? tournamentStartTime;
   final String? tournamentEndTime;
@@ -31,12 +31,13 @@ class TournamentDetailRes {
   final String? tournamentLastDate;
   final String? tournamentNextDate;
 
-  TournamentDetailRes({
+  LeagueDetailRes({
+    this.title,
+    this.subTitle,
     this.tournamentRules,
     this.todayLeaderboard,
     this.tournamentPoints,
     this.showButton,
-    // this.loginUserPosition,
     this.tournamentStartTime,
     this.tournamentEndTime,
     this.battleTime,
@@ -54,15 +55,14 @@ class TournamentDetailRes {
     this.tournamentNextDate,
   });
 
-  factory TournamentDetailRes.fromJson(Map<String, dynamic> json) =>
-      TournamentDetailRes(
-        // loginUserPosition: json["login_user_position"] == null
-        //     ? null
-        //     : LoginUserPositionRes.fromJson(json["login_user_position"]),
+  factory LeagueDetailRes.fromJson(Map<String, dynamic> json) =>
+      LeagueDetailRes(
+        title: json["title"],
+      subTitle: json["sub_title"],
         todayLeaderboard: json["today_leaderboard"] == null
             ? []
-            : List<LeaderboardByDateRes>.from(json["today_leaderboard"]!
-                .map((x) => LeaderboardByDateRes.fromJson(x))),
+            : List<TradingRes>.from(json["today_leaderboard"]!
+                .map((x) => TradingRes.fromJson(x))),
         joined: json['tournament_battle_joined'],
 
         image: json['image'],
@@ -71,8 +71,8 @@ class TournamentDetailRes {
             : List<String>.from(json["tournament_rules"]!.map((x) => x)),
         tournamentPoints: json["tournament_points"] == null
             ? []
-            : List<TournamentPointRes>.from(json["tournament_points"]!
-                .map((x) => TournamentPointRes.fromJson(x))),
+            : List<LeaguePointRes>.from(json["tournament_points"]!
+                .map((x) => LeaguePointRes.fromJson(x))),
         showButton: json["show_button"],
         tournamentStartTime: json["tournament_start_time"],
         tournamentEndTime: json["tournament_end_time"],
@@ -92,8 +92,9 @@ class TournamentDetailRes {
       );
 
   Map<String, dynamic> toJson() => {
+    "title": title,
+    "sub_title": subTitle,
         'tournament_battle_joined': joined,
-        // "login_user_position": loginUserPosition?.toJson(),
         "tournament_rules": tournamentRules == null
             ? []
             : List<dynamic>.from(tournamentRules!.map((x) => x)),
@@ -118,63 +119,6 @@ class TournamentDetailRes {
         "isMarketOpen": isMarketOpen,
         "tournament_last_date": tournamentLastDate,
         "tournament_next_date": tournamentNextDate,
-      };
-}
-
-class LoginUserPositionRes {
-  final num? position;
-  final int? userId;
-  final num? performance;
-  final String? imageType;
-  final String? userImage;
-  final String? userName;
-  final String? rank;
-  final num? totalPoints;
-  final num? totalTrades;
-  final num? winRatio;
-  final num? performancePoint;
-
-  LoginUserPositionRes({
-    this.userId,
-    this.position,
-    this.performance,
-    this.imageType,
-    this.userImage,
-    this.userName,
-    this.rank,
-    this.totalPoints,
-    this.totalTrades,
-    this.winRatio,
-    this.performancePoint,
-  });
-
-  factory LoginUserPositionRes.fromJson(Map<String, dynamic> json) =>
-      LoginUserPositionRes(
-        userId: json["user_id"],
-        position: json["position"],
-        performance: json["performance"],
-        imageType: json["image_type"],
-        userImage: json["user_image"],
-        userName: json["user_name"],
-        rank: json["rank"],
-        totalPoints: json["total_points"],
-        totalTrades: json["total_trades"],
-        performancePoint: json["performance_point"],
-        winRatio: json["win_ratio"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "user_id": userId,
-        "position": position,
-        "performance": performance,
-        "image_type": imageType,
-        "user_image": userImage,
-        "user_name": userName,
-        "rank": rank,
-        "total_points": totalPoints,
-        "total_trades": totalTrades,
-        "performance_point": performancePoint,
-        "win_ratio": winRatio,
       };
 }
 
@@ -207,19 +151,19 @@ class BattleTimeRes {
       };
 }
 
-class TournamentPointRes {
+class LeaguePointRes {
   final String? image;
   final String? positionText;
   final int? points;
 
-  TournamentPointRes({
+  LeaguePointRes({
     this.image,
     this.positionText,
     this.points,
   });
 
-  factory TournamentPointRes.fromJson(Map<String, dynamic> json) =>
-      TournamentPointRes(
+  factory LeaguePointRes.fromJson(Map<String, dynamic> json) =>
+      LeaguePointRes(
         image: json["image"],
         positionText: json["position_text"],
         points: json["points"],

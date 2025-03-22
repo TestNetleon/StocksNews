@@ -144,6 +144,8 @@ class ThemeColors {
   static Color colourBA = Color(0xFFBABABA);
   static Color disabledBtn = Color(0xFF3C3C43);
   static Color colour8d = Color(0xFF34928d);
+  static Color colour29 = Color(0xEADDFF29);
+  static Color colour37 = Color(0xFFEC8F37);
 
   //CATEGORY
   static Color lightGrey = Color(0xFFF0F2F6);
@@ -168,9 +170,11 @@ class ThemeColors {
   static Color orange10 = Color(0xFFFFF4E5);
 
 // Ranking
-  static Color gold = Color(0xffe5a000);
+  static Color gold = Color(0xFFFFD65B);
   static Color silver = Color(0xffe6eaf0);
   static Color bronze = Color(0xffdeae80);
+  static Color brown = Color(0xff5e3309);
+  static Color darkGold = Color(0xFFCC9A03);
 
 //Gradient
   static Color gradientGreen = Color(0xFF0E2900);
@@ -261,7 +265,7 @@ class ThemeColors {
     orange10 = Color(0xFFFFF4E5);
 
     // Ranking
-    gold = Color(0xffe5a000);
+    gold = Color(0xFFFFD65B);
     silver = Color(0xffe6eaf0);
     bronze = Color(0xffdeae80);
   }

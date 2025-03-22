@@ -7,6 +7,7 @@ import 'package:stocks_news_new/ui/base/bottom_sheet.dart';
 import 'package:stocks_news_new/ui/base/button.dart';
 import 'package:stocks_news_new/ui/base/heading.dart';
 import 'package:stocks_news_new/ui/base/text_field.dart';
+import 'package:stocks_news_new/ui/tabs/tools/tournament/models/league_titan_res.dart';
 import 'package:stocks_news_new/ui/tabs/tools/tournament/provider/tournament.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -21,18 +22,18 @@ class LeagueFilter extends StatelessWidget {
 
 
   void showTransactionSizePicker(BuildContext context) {
-    TournamentProvider provider = context.read<TournamentProvider>();
-
+    LeagueManager manager = context.read<LeagueManager>();
+    LeagueTitanRes? leagueTitanRes= manager.leagueTitanRes;
     BaseBottomSheet().bottomSheet(
       child: FilterListing(
-        items: List.generate(provider.ranks?.length ?? 0, (index) {
+        items: List.generate(leagueTitanRes?.ranks?.length ?? 0, (index) {
           return KeyValueElement(
-              key: provider.ranks?[index].key,
-              value: provider.ranks?[index].value);
+              key: leagueTitanRes?.ranks?[index].key,
+              value: leagueTitanRes?.ranks?[index].value);
         }),
         onSelected: (index) {
-          provider.onChangeTransactionSize(
-            selectedItem: provider.ranks?[index],
+          manager.onChangeTransactionSize(
+            selectedItem: leagueTitanRes?.ranks?[index],
           );
         },
       ),
@@ -49,7 +50,8 @@ class LeagueFilter extends StatelessWidget {
   }
   @override
   Widget build(BuildContext context) {
-    TournamentProvider provider = context.watch<TournamentProvider>();
+    LeagueManager manager = context.watch<LeagueManager>();
+    LeagueTitanRes? leagueTitanRes= manager.leagueTitanRes;
     return Padding(
       padding: EdgeInsets.only(bottom: ScreenUtil().bottomBarHeight),
       child: Column(
@@ -57,7 +59,7 @@ class LeagueFilter extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           BaseHeading(
-            title: "Filter ${provider.extraOfPointPaid?.title ??"Trading Leagues"}",
+            title: "Filter ${leagueTitanRes?.title ??"Trading Leagues"}",
           ),
           Visibility(
             visible: (selectedTournament==TournamentsHead.playTraders|| selectedTournament==TournamentsHead.topTitan),
@@ -73,11 +75,11 @@ class LeagueFilter extends StatelessWidget {
                   hintText: "Search Name",
                   contentPadding: const EdgeInsets.symmetric(horizontal: 12),
                   onChanged: (text) {
-                    provider.valueSearch=text;
+                    manager.valueSearch=text;
                   },
                   editable: true,
                   suffixIcon: const Icon(Icons.search, size: 23),
-                  controller: provider.searchController,
+                  controller: manager.searchController,
                 ),
               ],
             ),
@@ -87,8 +89,10 @@ class LeagueFilter extends StatelessWidget {
               child: const SpacerVertical(height: 20)
           ),
 
+          //if((selectedTournament!=TournamentsHead.tradTotal) || (selectedTournament!=TournamentsHead.pPaid))
           Visibility(
-            visible: (selectedTournament==TournamentsHead.playTraders|| selectedTournament==TournamentsHead.topTitan),
+           // visible: (selectedTournament==TournamentsHead.playTraders|| selectedTournament==TournamentsHead.topTitan),
+            visible: leagueTitanRes?.ranks!=null && leagueTitanRes?.ranks?.isNotEmpty==true,
             child: GestureDetector(
               onTap: () => showTransactionSizePicker(context),
               child: Column(
@@ -97,14 +101,14 @@ class LeagueFilter extends StatelessWidget {
                   Text("Rank", style: styleBaseRegular()),
                   const SpacerVertical(height: 5),
                   BaseTextField(
-                    hintText: provider.ranks?[0].value,
+                    hintText: leagueTitanRes?.ranks?[0].value,
                     suffixIcon: const Icon(
                       Icons.arrow_drop_down,
                       size: 23,
                     ),
                     editable: false,
                     contentPadding: const EdgeInsets.symmetric(horizontal: 12),
-                    controller: provider.txnSizeController,
+                    controller: manager.txnSizeController,
                   ),
                 ],
               ),
@@ -113,7 +117,7 @@ class LeagueFilter extends StatelessWidget {
           Visibility(
             visible:!(selectedTournament==TournamentsHead.playTraders||selectedTournament==TournamentsHead.topTitan),
             child: GestureDetector(
-              onTap: provider.pickDate,
+              onTap: manager.pickDate,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -127,7 +131,7 @@ class LeagueFilter extends StatelessWidget {
                     hintText: "MM DD, YYYY",
                     editable: false,
                     contentPadding: const EdgeInsets.symmetric(horizontal: 12),
-                    controller: provider.date,
+                    controller: manager.date,
                   ),
                 ],
               ),
@@ -142,7 +146,7 @@ class LeagueFilter extends StatelessWidget {
                   onPressed: () {
                     Navigator.pop(context);
                     closeKeyboard();
-                    provider.pointsPaidAPI(
+                    manager.getAllTitans(
                       clear: true,
                       selectedTournament:selectedTournament!,
                       //isFilter: false
@@ -159,7 +163,7 @@ class LeagueFilter extends StatelessWidget {
                   onPressed: () {
                     Navigator.pop(context);
                     closeKeyboard();
-                    provider.pointsPaidAPI(
+                    manager.getAllTitans(
                       clear: false,
                       selectedTournament:selectedTournament!,
                       //isFilter: true

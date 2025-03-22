@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/models/lock.dart';
 import 'package:stocks_news_new/models/ticker.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
+import 'package:stocks_news_new/ui/base/base_list_divider.dart';
 import 'package:stocks_news_new/ui/base/bottom_sheet.dart';
 import 'package:stocks_news_new/ui/base/lock.dart';
 import 'package:stocks_news_new/ui/stockDetail/index.dart';
@@ -214,6 +215,7 @@ class _ActionInNbsState extends State<ActionInNbs> {
               }
             },
           ),
+          BaseListDivider(),
           BuyOrderItem(
             title: "Sell Order",
             subtitle: subtitleWithSymbol(
@@ -234,6 +236,7 @@ class _ActionInNbsState extends State<ActionInNbs> {
               }
             },
           ),
+          BaseListDivider(),
           BuyOrderItem(
             title: "Short Order",
             subtitle: subtitleWithSymbol(
@@ -255,6 +258,7 @@ class _ActionInNbsState extends State<ActionInNbs> {
               }
             },
           ),
+          BaseListDivider(),
           BuyOrderItem(
             title: "Buy to Cover Order",
             subtitle: subtitleWithSymbol(
@@ -308,6 +312,7 @@ class _ActionInNbsState extends State<ActionInNbs> {
               },
             ),
           ),
+          Visibility(visible: userConditionalOrderPermissionRes?.bracketOrder == true,child: BaseListDivider()),
           Visibility(
             visible: userConditionalOrderPermissionRes?.limitOrder == true,
             child: BuyOrderItem(
@@ -330,6 +335,7 @@ class _ActionInNbsState extends State<ActionInNbs> {
               },
             ),
           ),
+          Visibility(visible: userConditionalOrderPermissionRes?.limitOrder == true,child: BaseListDivider()),
           Visibility(
             visible: userConditionalOrderPermissionRes?.stopOrder == true,
             child: BuyOrderItem(
@@ -352,6 +358,7 @@ class _ActionInNbsState extends State<ActionInNbs> {
               },
             ),
           ),
+          Visibility(visible: userConditionalOrderPermissionRes?.stopOrder == true,child: BaseListDivider()),
           Visibility(
             visible: userConditionalOrderPermissionRes?.stopLimitOrder == true,
             child: BuyOrderItem(
@@ -374,6 +381,7 @@ class _ActionInNbsState extends State<ActionInNbs> {
               },
             ),
           ),
+          Visibility(visible: userConditionalOrderPermissionRes?.stopLimitOrder == true,child: BaseListDivider()),
           Visibility(
             visible: userConditionalOrderPermissionRes?.trailingOrder == true,
             child: BuyOrderItem(
@@ -396,6 +404,7 @@ class _ActionInNbsState extends State<ActionInNbs> {
               },
             ),
           ),
+          Visibility(visible: userConditionalOrderPermissionRes?.trailingOrder == true,child: BaseListDivider()),
           Visibility(
             visible: userConditionalOrderPermissionRes?.recurringOrder == true,
             child: BuyOrderItem(
@@ -418,6 +427,8 @@ class _ActionInNbsState extends State<ActionInNbs> {
               },
             ),
           ),
+          Visibility(visible: userConditionalOrderPermissionRes?.recurringOrder == true,child: BaseListDivider()),
+
         ],
       ),
     );

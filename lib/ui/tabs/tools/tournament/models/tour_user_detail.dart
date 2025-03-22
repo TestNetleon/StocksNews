@@ -1,33 +1,36 @@
-// ignore_for_file: equal_keys_in_map
 
 import 'dart:convert';
-
 import 'package:intl/intl.dart';
 
-TournamentUserDetailRes tournamentUserDetailResFromMap(String str) =>
-    TournamentUserDetailRes.fromMap(json.decode(str));
+LeagueUserDetailRes leagueUserDetailResFromJson(String str) => LeagueUserDetailRes.fromMap(json.decode(str));
 
-String tournamentUserDetailResToMap(TournamentUserDetailRes data) =>
+String leagueUserDetailResToJson(LeagueUserDetailRes data) =>
     json.encode(data.toMap());
 
-class TournamentUserDetailRes {
+class LeagueUserDetailRes {
   final String? title;
+  final String? subTitle;
+  final int? totalPages;
   final UserStats? userStats;
   final RecentTrades? recentTrades;
   RecentBattles? recentBattles;
   final Chart? chart;
 
-  TournamentUserDetailRes({
+  LeagueUserDetailRes({
     this.title,
+    this.subTitle,
+    this.totalPages,
     this.userStats,
     this.recentTrades,
     this.recentBattles,
     this.chart,
   });
 
-  factory TournamentUserDetailRes.fromMap(Map<String, dynamic> json) =>
-      TournamentUserDetailRes(
+  factory LeagueUserDetailRes.fromMap(Map<String, dynamic> json) =>
+      LeagueUserDetailRes(
         title: json["title"],
+        subTitle: json["sub_title"],
+        totalPages: json["total_pages"],
         userStats:
             json["user"] == null ? null : UserStats.fromMap(json["user"]),
         recentTrades: json["recent_trades"] == null
@@ -41,6 +44,8 @@ class TournamentUserDetailRes {
 
   Map<String, dynamic> toMap() => {
         "title": title,
+        "sub_title": subTitle,
+        "total_pages": totalPages,
         "user": userStats?.toMap(),
         "recent_trades": recentTrades?.toMap(),
         "recent_battles": recentBattles?.toMap(),
@@ -78,27 +83,23 @@ class Chart {
 
 class GChart {
   final num? performance;
-  final String? battleDate1;
   final DateTime? battleDate;
   final String? formatPerformance;
 
   GChart({
     this.performance,
-    this.battleDate1,
     this.battleDate,
     this.formatPerformance,
   });
 
   factory GChart.fromMap(Map<String, dynamic> json) => GChart(
         performance: json["performance"],
-        battleDate1: json["battle_date"],
         battleDate: DateFormat("MM/dd/yyyy").parse(json["battle_date"]),
         formatPerformance: json["format_performance"],
       );
 
   Map<String, dynamic> toMap() => {
         "performance": performance,
-        "battle_date": battleDate1,
         "battle_date": battleDate,
         "format_performance": formatPerformance,
       };

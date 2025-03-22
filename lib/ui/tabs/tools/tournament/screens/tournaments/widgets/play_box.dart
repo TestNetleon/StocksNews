@@ -11,7 +11,7 @@ import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 
-class PlayBoxTournament extends StatelessWidget {
+class PlayBoxLeague extends StatelessWidget {
   final String title;
   final String? imageUrl;
   final String? description;
@@ -23,9 +23,9 @@ class PlayBoxTournament extends StatelessWidget {
   final Color gradientEndColor;
   final Color? buttonColor;
   final bool buttonVisibility;
-  final List<TournamentPointRes>? tournamentPoints;
+  final List<LeaguePointRes>? tournamentPoints;
 
-  const PlayBoxTournament({
+  const PlayBoxLeague({
     super.key,
     required this.title,
     this.imageUrl,
@@ -44,193 +44,170 @@ class PlayBoxTournament extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      padding: const EdgeInsets.symmetric(horizontal: Pad.pad16, vertical: Pad.pad20),
+      margin: const EdgeInsets.symmetric(horizontal: Pad.pad16),
       decoration: BoxDecoration(
+        color: ThemeColors.colour29.withValues(alpha: 0.06),
         borderRadius: BorderRadius.circular(8),
-        gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: [
-            gradientStartColor,
-            gradientEndColor,
-          ],
-        ),
+        border: Border.all(color: ThemeColors.neutral5)
       ),
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-        margin: const EdgeInsets.all(8),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8),
-          color: ThemeColors.white,
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Stack(
-              alignment: Alignment.bottomCenter,
-              children: [
-                if (imageUrl != null)
-                  Opacity(
-                    opacity: 0.8,
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(8),
-                      child: SizedBox(
-                        // height: 140.sp,
-                        child: CachedNetworkImagesWidget(
-                          imageUrl,
-                          fit: BoxFit.cover,
-                        ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              if (pointText != null)
+                Text(
+                  pointText ?? '',
+                  textAlign: TextAlign.start,
+                  style: styleBaseRegular(
+                      fontSize: 16,
+                      color: ThemeColors.neutral80
+                  ),
+                ),
+              SpacerHorizontal(width: Pad.pad10),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal:Pad.pad10, vertical:Pad.pad5),
+                decoration: BoxDecoration(
+                  color: ThemeColors.colour37.withValues(alpha: 0.2),
+                  border: Border.all(color: ThemeColors.colour37),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Image.asset(
+                      Images.pointIcon2,
+                      height: 25,
+                      width: 25,
+                    ),
+                    SpacerHorizontal(width: Pad.pad5),
+                    Text(
+                      points,
+                      textAlign: TextAlign.start,
+                      style: styleBaseBold(
+                          fontSize: 22,
+                          color: ThemeColors.colour37
                       ),
                     ),
-                  ),
-                Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
+                  ],
+                ),
+              ),
+            ],
+          ),
+          SpacerVertical(),
+          if (imageUrl != null)
+            ClipRRect(
+              borderRadius: BorderRadius.circular(Pad.pad16),
+              child: SizedBox(
+                child: CachedNetworkImagesWidget(
+                  imageUrl,
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+          SpacerVertical(),
+          BaseHeading(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            textAlign: TextAlign.start,
+            title: title,
+            titleStyle:  styleBaseBold(
+              fontSize: 25,
+              color: ThemeColors.black
+            ),
+            margin: EdgeInsets.zero,
+          ),
+          SpacerVertical(height: 5),
+          Visibility(
+            visible: description != null && description != '',
+            child: HtmlWidget(
+              description ?? '',
+              textStyle: styleBaseRegular(
+                fontSize: 14,
+                  color: ThemeColors.black
+              ),
+            ),
+          ),
+          SpacerVertical(height:10),
+          Visibility(
+            visible: tournamentPoints!=null,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.max,
+                children: List.generate(tournamentPoints?.length??0, (index) {
+                  final price = tournamentPoints![index];
+                  Color bgColor;
+                  if (price.points == 500) {
+                    bgColor = ThemeColors.gold;
+                  } else if (price.points == 300) {
+                    bgColor = ThemeColors.silver;
+                  } else {
+                    bgColor = ThemeColors.bronze;
+                  }
+
+                  Color bgInnerColor;
+                  if (price.points == 500) {
+                    bgInnerColor = ThemeColors.darkGold;
+                  } else if (price.points == 300) {
+                    bgInnerColor = ThemeColors.greyBorder;
+                  } else {
+                    bgInnerColor = ThemeColors.brown;
+                  }
+
+                  return Row(
                     children: [
                       Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 10, vertical: 4),
+                        padding: EdgeInsets.symmetric(horizontal:Pad.pad24,vertical:8),
                         decoration: BoxDecoration(
-                          color: ThemeColors.black,
-                          border: Border.all(color: ThemeColors.primary, width: 1),
-                          borderRadius: BorderRadius.circular(8),
+                          color: bgColor,
                         ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            if (pointText != null)
-                              Text(
-                                pointText ?? '',
-                                textAlign: TextAlign.start,
-                                style: styleBaseBold(
-                                  fontSize: 13,
-                                  color: ThemeColors.white
+                            Container(
+                              padding: EdgeInsets.all(Pad.pad5),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(Pad.pad5),
+                                color:bgInnerColor,
+                              ),
+                              child: Text(
+                                '#${index + 1}',
+                                style:styleBaseBold(
+                                  fontSize:10,
+                                    color: ThemeColors.white
                                 ),
                               ),
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Image.asset(
-                                  Images.pointIcon2,
-                                  height: 25,
-                                  width: 25,
-                                ),
-                                SpacerHorizontal(width: 5),
-                                Text(
-                                  points,
-                                  textAlign: TextAlign.start,
-                                  style: styleBaseBold(
-                                    fontSize: 25,
-                                      color: ThemeColors.white
-                                  ),
-                                ),
-                              ],
+                            ),
+                            const SpacerHorizontal(width: Pad.pad5),
+                            Text(
+                              '${price.points??""}',
+                              style: styleBaseBold(
+                                fontSize:18,
+                                  color: ThemeColors.black
+                              ),
                             ),
                           ],
                         ),
                       ),
                     ],
-                  ),
-                )
-              ],
+                  );
+                }),
+          )
+          ),
+          SpacerVertical(),
+          Visibility(
+            visible: buttonVisibility,
+            child: BaseButton(
+              color: buttonColor,
+              text: buttonText,
+              fontBold: true,
+              onPressed: onButtonTap,
+              textColor: ThemeColors.black,
             ),
-            SpacerVertical(height: 5),
-            BaseHeading(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              textAlign: TextAlign.start,
-              title: title,
-              titleStyle:  styleBaseBold(
-                fontSize: 25,
-                color: ThemeColors.black
-              ),
-              margin: EdgeInsets.zero,
-            ),
-            SpacerVertical(height: 5),
-            Visibility(
-              visible: description != null && description != '',
-              child: HtmlWidget(
-                description ?? '',
-                textStyle: styleBaseRegular(
-                  fontSize: 14,
-                    color: ThemeColors.black
-                ),
-              ),
-            ),
-            SpacerVertical(height:10),
-            Visibility(
-              visible: tournamentPoints!=null,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.max,
-                  children: List.generate(tournamentPoints?.length??0, (index) {
-                    final price = tournamentPoints![index];
-                    Color bgColor;
-                    if (price.points == 500) {
-                      bgColor = ThemeColors.gold;
-                    } else if (price.points == 300) {
-                      bgColor = ThemeColors.silver;
-                    } else {
-                      bgColor = ThemeColors.bronze;
-                    }
-
-                    return Row(
-                      children: [
-                        Container(
-                          padding: EdgeInsets.symmetric(horizontal:20,vertical:8),
-                          decoration: BoxDecoration(
-                            color: bgColor,
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Container(
-                                padding: EdgeInsets.all(5),
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: ThemeColors.black,
-                                ),
-                                child: Text(
-                                  '#${index + 1}',
-                                  style:styleBaseBold(
-                                    fontSize:14,
-                                      color: ThemeColors.white
-                                  ),
-                                ),
-                              ),
-                              const SpacerHorizontal(width: 5),
-                              Text(
-                                '${price.points??""}',
-                                style: styleBaseBold(
-                                  fontSize:18,
-                                    color: ThemeColors.white
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    );
-                  }),
-            )
-            ),
-            SpacerVertical(height:10),
-            Visibility(
-              visible: buttonVisibility,
-              child: Align(
-                alignment: Alignment.centerRight,
-                child: BaseButton(
-                  radius: 30,
-                  color: buttonColor,
-                  text: buttonText,
-                  fontBold: true,
-                  onPressed: onButtonTap,
-                ),
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

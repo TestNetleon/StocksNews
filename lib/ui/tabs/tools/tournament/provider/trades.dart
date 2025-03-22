@@ -78,11 +78,11 @@ class TournamentTradesProvider extends ChangeNotifier {
     } else {
       Navigator.popUntil(
           navigatorKey.currentContext!, (route) => route.isFirst);
-      Navigator.push(
+      Navigator.pushNamed(
           navigatorKey.currentContext!,
-          MaterialPageRoute(
-            builder: (context) => GameTournamentIndex(),
-          ));
+          TradingLeagueIndex.path
+      );
+
     }
   }
 
@@ -106,13 +106,11 @@ class TournamentTradesProvider extends ChangeNotifier {
     setStatusTrades(Status.loading);
 
     try {
-      TournamentProvider provider =
-          navigatorKey.currentContext!.read<TournamentProvider>();
+      LeagueManager manager = navigatorKey.currentContext!.read<LeagueManager>();
+
       Map request = {
-        "token":
-            navigatorKey.currentContext!.read<UserManager>().user?.token ?? "",
         'tournament_battle_id':
-            '${provider.detailRes?.tournamentBattleId ?? ''}',
+            '${manager.detailRes?.tournamentBattleId ?? ''}',
         'type': typeOfTrade ??
             _selectedOverview?.key?.toString().toLowerCase() ??
             'all',
@@ -229,14 +227,12 @@ class TournamentTradesProvider extends ChangeNotifier {
 //MARK: BUY/SELL
   Future tradeBuySell({StockType type = StockType.buy, String? symbol}) async {
     try {
-      TournamentProvider provider =
-          navigatorKey.currentContext!.read<TournamentProvider>();
+      LeagueManager manager = navigatorKey.currentContext!.read<LeagueManager>();
+
       Map request = {
-        'token':
-            navigatorKey.currentContext!.read<UserManager>().user?.token ?? "",
         'symbol': symbol ?? _selectedStock?.symbol,
         'tournament_battle_id':
-            '${_myTrades?.tournamentBattleId ?? provider.detailRes?.tournamentBattleId ?? ''}',
+            '${_myTrades?.tournamentBattleId ?? manager.detailRes?.tournamentBattleId ?? ''}',
         'trade_type': type.name,
       };
 
@@ -276,15 +272,13 @@ class TournamentTradesProvider extends ChangeNotifier {
     bool callTickerDetail = true,
   }) async {
     try {
-      TournamentProvider provider =
-          navigatorKey.currentContext!.read<TournamentProvider>();
+      LeagueManager manager = navigatorKey.currentContext!.read<LeagueManager>();
+
       Map request = {
-        'token':
-            navigatorKey.currentContext!.read<UserManager>().user?.token ?? "",
         'ticker_symbol': ticker ?? _selectedStock?.symbol ?? '',
         'tournament_battle_id': (tournamentBattleId != null
             ? tournamentBattleId.toString()
-            : '${_myTrades?.tournamentBattleId ?? provider.detailRes?.tournamentBattleId ?? ''}'),
+            : '${_myTrades?.tournamentBattleId ?? manager.detailRes?.tournamentBattleId ?? ''}'),
         'trade_id': tradeId != null
             ? '$tradeId'
             : cancleAll
@@ -374,15 +368,12 @@ class TournamentTradesProvider extends ChangeNotifier {
     setStatus(Status.loading);
 
     try {
-      // Prepare the API request
-      TournamentProvider provider =
-          navigatorKey.currentContext!.read<TournamentProvider>();
+      LeagueManager manager = navigatorKey.currentContext!.read<LeagueManager>();
+
       Map request = {
-        "token":
-            navigatorKey.currentContext!.read<UserManager>().user?.token ?? "",
         "symbol": symbol,
         'tournament_battle_id':
-            '${_myTrades?.tournamentBattleId ?? provider.detailRes?.tournamentBattleId ?? ''}',
+            '${_myTrades?.tournamentBattleId ?? manager.detailRes?.tournamentBattleId ?? ''}',
       };
 
       // Fetch ticker details via API

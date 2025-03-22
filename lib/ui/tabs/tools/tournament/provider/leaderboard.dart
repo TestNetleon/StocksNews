@@ -10,6 +10,7 @@ import 'package:stocks_news_new/managers/user.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/ui/tabs/tools/tournament/models/battle_res.dart';
 import 'package:stocks_news_new/ui/tabs/tools/tournament/models/leaderboard.dart';
+import 'package:stocks_news_new/ui/tabs/tools/tournament/models/trading_res.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 
@@ -70,8 +71,8 @@ class TournamentLeaderboardProvider extends ChangeNotifier {
     editedDate = null;
   }
 
-  List<LeaderboardByDateRes?> topPerformers = [];
-  List<LeaderboardByDateRes?> allData=[];
+  List<TradingRes?> topPerformers = [];
+  List<TradingRes?> allData=[];
   bool isTopPerformer=false;
   Future leaderboard({loadMore = false}) async {
     if (loadMore) {

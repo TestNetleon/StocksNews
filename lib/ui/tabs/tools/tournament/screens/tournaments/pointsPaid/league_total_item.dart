@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/ui/tabs/tools/tournament/models/leaderboard.dart';
+import 'package:stocks_news_new/ui/tabs/tools/tournament/models/trading_res.dart';
 import 'package:stocks_news_new/ui/tabs/tools/tournament/provider/tournament.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -10,22 +11,17 @@ import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 
 
 class LeagueTotalItem extends StatelessWidget {
-  final LeaderboardByDateRes? data;
+  final TradingRes? data;
   const LeagueTotalItem({super.key, this.data});
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
         onTap: () {
-          context
-              .read<TournamentProvider>().leagueToLeaderboard(selectedDate: data?.date ?? "");
+          context.read<LeagueManager>().leagueToLeaderboard(selectedDate: data?.date ?? "");
         },
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-          // decoration: BoxDecoration(
-          //   color: isDark ? null : ThemeColors.white,
-          //   borderRadius: BorderRadius.circular(5),
-          // ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

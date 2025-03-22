@@ -1,25 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import 'package:stocks_news_new/ui/base/base_list_divider.dart';
-import 'package:stocks_news_new/ui/tabs/tools/tournament/models/leaderboard.dart';
+import 'package:stocks_news_new/ui/tabs/tools/tournament/models/trading_res.dart';
 import 'package:stocks_news_new/ui/tabs/tools/tournament/provider/tournament.dart';
 import 'package:stocks_news_new/utils/colors.dart';
+import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/cache_network_image.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
-import 'package:svg_flutter/svg_flutter.dart';
 
 
 class PointsPaidItem extends StatelessWidget {
-  final LeaderboardByDateRes? data;
+  final TradingRes? data;
   const PointsPaidItem({super.key, this.data});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+      padding: const EdgeInsets.symmetric(horizontal: Pad.pad16, vertical: 10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -28,41 +27,27 @@ class PointsPaidItem extends StatelessWidget {
             child: InkWell(
               onTap: () {
                 context
-                    .read<TournamentProvider>()
+                    .read<LeagueManager>()
                     .leagueToLeaderboard(selectedDate: data?.date ?? "");
               },
               child: Text(
                 data?.tournamentName ?? '',
-                style: styleBaseBold(),
+                style: styleBaseRegular(),
               ),
             ),
           ),
           Visibility(
               visible: data?.tournamentName != null,
-              child: const SpacerVertical(height: 3)),
+              child: const SpacerVertical(height: Pad.pad5)
+          ),
           InkWell(
             onTap: () {
               context
-                  .read<TournamentProvider>()
+                  .read<LeagueManager>()
                   .profileRedirection(userId:"${ data?.userId ?? ""}");
             },
             child: Row(
               children: [
-                Visibility(
-                  visible: data?.position != null,
-                  child: Container(
-                    margin: EdgeInsets.only(right: 5),
-                    padding: EdgeInsets.all(4),
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: ThemeColors.black,
-                    ),
-                    child: Text(
-                      '${data?.position}',
-                      style: styleBaseBold(fontSize: 11,color: ThemeColors.white),
-                    ),
-                  ),
-                ),
                 ClipRRect(
                   borderRadius: BorderRadius.circular(40),
                   child: Container(
@@ -70,25 +55,30 @@ class PointsPaidItem extends StatelessWidget {
                     height: 40.sp,
                     decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        border: Border.all(color: ThemeColors.greyBorder)),
-                    child: data?.imageType == "svg"
-                        ? SvgPicture.network(
-                            fit: BoxFit.cover,
-                            data?.userImage ?? "",
-                            placeholderBuilder: (BuildContext context) =>
-                                Container(
-                              padding: const EdgeInsets.all(30.0),
-                              child:  CircularProgressIndicator(
-                                color: ThemeColors.black,
-                              ),
-                            ),
-                          )
-                        : CachedNetworkImagesWidget(
-                            data?.userImage,
-                          ),
+                        border: Border.all(color: ThemeColors.secondary100)),
+                    child: CachedNetworkImagesWidget(
+                      data?.tournamentImage,
+                    ),
                   ),
                 ),
-                const SpacerHorizontal(width: 10),
+                SpacerHorizontal(width: Pad.pad8),
+                Visibility(
+                  visible: data?.position!=null,
+                  child: Container(
+                    margin: EdgeInsets.only(right:Pad.pad5),
+                    padding: EdgeInsets.all(Pad.pad5),
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: ThemeColors.neutral5,
+                    ),
+                    child: Text(
+                      '${data?.position}',
+                      style: styleBaseSemiBold(
+                          fontSize: 11, color: ThemeColors.black),
+                    ),
+                  ),
+                ),
+                SpacerHorizontal(width: Pad.pad5),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -97,7 +87,7 @@ class PointsPaidItem extends StatelessWidget {
                         visible: data?.userName != null,
                         child: Text(
                           data?.userName ?? "",
-                          style: styleBaseRegular(fontSize: 14),
+                          style: styleBaseBold(fontSize: 14),
                         ),
                       ),
 
@@ -120,7 +110,7 @@ class PointsPaidItem extends StatelessWidget {
                       const SpacerVertical(height:5),
                       Text(
                         '${data?.totalPoints}',
-                        style: styleBaseBold(),
+                        style: styleBaseRegular(),
                       ),
                       Text(
                         'Reward Points',
@@ -134,25 +124,30 @@ class PointsPaidItem extends StatelessWidget {
               ],
             ),
           ),
-          BaseListDivider(height: 20),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Visibility(
-                visible: data?.performance!=null,
-                child: Flexible(
-                    child: _richPrices1(label: "Performance: ",value: "${data?.performance??"0"}%")
+          SpacerVertical(),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+            decoration: BoxDecoration(
+                color: ThemeColors.neutral5,
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(Pad.pad10),
+                  bottomRight: Radius.circular(Pad.pad10),
+                )),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Flexible(
+                    child: _richPrices1(
+                        label: "Performance: ",
+                        value: "${data?.performance ?? "0"}%")
                 ),
-              ),
-              Visibility(
-                visible: data?.performancePoint != null,
-                child: Flexible(
-                  child:
-                  _richPrices1(label: "Pref. Points: ",value: "${data?.performancePoint}"),
+                Flexible(
+                  child: _richPrices1(
+                      label: "Pref. Points: ",
+                      value: "${(data?.performancePoint ?? 0)}"),
                 ),
-              ),
-
-            ],
+              ],
+            ),
           ),
 
         ],

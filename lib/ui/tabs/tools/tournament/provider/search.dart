@@ -35,16 +35,11 @@ class TournamentSearchProvider extends ChangeNotifier {
   Future getSearchDefaults() async {
     setStatus(Status.loading);
     try {
-      TournamentProvider provider =
-          navigatorKey.currentContext!.read<TournamentProvider>();
-      TournamentTradesProvider tradesProvider =
-          navigatorKey.currentContext!.read<TournamentTradesProvider>();
+      LeagueManager manager = navigatorKey.currentContext!.read<LeagueManager>();
+      TournamentTradesProvider tradesProvider = navigatorKey.currentContext!.read<TournamentTradesProvider>();
       Map request = {
-        "token": navigatorKey.currentContext!.read<UserManager>().user?.token ?? "",
-        "tournament_battle_id":
-            '${tradesProvider.myTrades?.tournamentBattleId ?? provider.detailRes?.tournamentBattleId ?? ''}',
+        "tournament_battle_id": '${tradesProvider.myTrades?.tournamentBattleId ?? manager.detailRes?.tournamentBattleId ?? ''}',
       };
-
       ApiResponse response = await apiRequest(
         url: Apis.tTickerList,
         request: request,
@@ -76,12 +71,11 @@ class TournamentSearchProvider extends ChangeNotifier {
     Utils().showLog('called');
     setStatus(Status.loading);
     try {
-      TournamentProvider provider =
-          navigatorKey.currentContext!.read<TournamentProvider>();
+      LeagueManager manager = navigatorKey.currentContext!.read<LeagueManager>();
       Map request = {
         "token": navigatorKey.currentContext!.read<UserManager>().user?.token ?? "",
         "tournament_battle_id":
-            '${provider.detailRes?.tournamentBattleId ?? ''}',
+            '${manager.detailRes?.tournamentBattleId ?? ''}',
       };
 
       ApiResponse response = await apiRequest(

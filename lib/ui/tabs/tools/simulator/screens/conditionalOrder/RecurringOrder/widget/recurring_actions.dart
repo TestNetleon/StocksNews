@@ -65,42 +65,6 @@ class _RecurringActionsState extends State<RecurringActions> {
     BaseBottomSheet().bottomSheet(
         barrierColor: ThemeColors.neutral5.withValues(alpha: 0.7),
         child: RecurringDetail(widget.item));
-    /*showModalBottomSheet(
-      enableDrag: true,
-      isDismissible: true,
-      context: navigatorKey.currentContext!,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(10),
-          topRight: Radius.circular(10),
-        ),
-      ),
-      isScrollControlled: false,
-      builder: (context) {
-        return Stack(
-          alignment: Alignment.topRight,
-          children: [
-            OrderInfoSheet(
-              cType: cType,
-              selectedStock: selectedStock,
-              buttonVisible: false,
-            ),
-            Container(
-              width: 35,
-              height: 35,
-              margin: EdgeInsets.only(right: 10, top: 10),
-              decoration: BoxDecoration(
-                  shape: BoxShape.circle, color: ThemeColors.primary),
-              child: IconButton(
-                  onPressed: () {
-                    Navigator.pop(navigatorKey.currentContext!);
-                  },
-                  icon: Icon(Icons.clear, color: ThemeColors.white, size: 18)),
-            ),
-          ],
-        );
-      },
-    );*/
   }
 
   @override

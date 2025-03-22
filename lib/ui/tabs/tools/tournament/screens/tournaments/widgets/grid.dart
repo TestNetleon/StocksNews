@@ -5,32 +5,29 @@ import 'package:stocks_news_new/ui/tabs/tools/tournament/models/tournament.dart'
 import 'package:stocks_news_new/ui/tabs/tools/tournament/provider/tournament.dart';
 import 'package:stocks_news_new/ui/tabs/tools/tournament/screens/tournaments/dayTraining/index.dart';
 import 'package:stocks_news_new/ui/tabs/tools/tournament/screens/tournaments/widgets/play_box.dart';
+import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 
-class TournamentGrids extends StatelessWidget {
-  const TournamentGrids({super.key});
+class LeagueGrids extends StatelessWidget {
+  const LeagueGrids({super.key});
 
 
   @override
   Widget build(BuildContext context) {
-    TournamentProvider provider = context.watch<TournamentProvider>();
-
+    LeagueManager manager = context.watch<LeagueManager>();
     return ListView.separated(
-      padding: EdgeInsets.only(top: 12),
       shrinkWrap: true,
       physics: NeverScrollableScrollPhysics(),
       itemBuilder: (context, index) {
-        TournamentDataRes? data = provider.data?.tournaments?[index];
-
-        return PlayBoxTournament(
+        LeagueHeaderResDataRes? data = manager.data?.tournaments?[index];
+        return PlayBoxLeague(
             title: data?.name ?? '',
             imageUrl: data?.image,
             description: data?.description ?? '',
             pointText: data?.pointText ?? '',
             points: data?.point ?? "0",
-            //buttonColor: ThemeColors.black,
-            tournamentPoints: provider.data?.tournamentPoints ?? [],
+            tournamentPoints: manager.data?.tournamentPoints ?? [],
             onButtonTap: () {
               if (index == 0) {
                 Navigator.push(
@@ -43,12 +40,14 @@ class TournamentGrids extends StatelessWidget {
                 );
               }
             },
-            buttonText: "Play Game");
+            buttonText: "Play Game",
+          buttonColor: ThemeColors.error120,
+        );
       },
       separatorBuilder: (context, index) {
         return SpacerVertical(height: 10);
       },
-      itemCount: provider.data?.tournaments?.length ?? 0,
+      itemCount: manager.data?.tournaments?.length ?? 0,
     );
   }
 }

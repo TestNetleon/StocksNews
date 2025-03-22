@@ -76,129 +76,132 @@ class _TournamentAllTradeIndexState extends State<TournamentAllTradeIndex> {
       error: provider.errorTrades,
       showPreparingText: true,
       onRefresh: () => provider.getTradesList(refresh: true),
-      child: Column(
-        children: [
-          Align(
-            alignment: Alignment.centerLeft,
-            child: Wrap(
-              direction: Axis.horizontal,
-              spacing: 10.0,
-              runSpacing: 10.0,
-              children: List.generate(
-                provider.myTrades?.overview?.length ?? 0,
-                (index) {
-                  return GestureDetector(
-                    onTap: () => provider.setSelectedOverview(
-                      provider.myTrades?.overview?[index],
-                      showProgress: true,
-                    ),
-                    child: Container(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 15, vertical: 6),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8),
-                          color: provider.selectedOverview?.key ==
-                              provider.myTrades?.overview?[index].key
-                              ? ThemeColors.black:null,
-                          border:  Border.all(color: ThemeColors.black)),
-                      child: Text(
-                        '${provider.myTrades?.overview?[index].key} ${provider.myTrades?.overview?[index].value}',
-                        style: styleBaseBold(color:  provider.selectedOverview?.key ==
-                            provider.myTrades?.overview?[index].key
-                            ?ThemeColors.white:null),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: Pad.pad16),
+        child: Column(
+          children: [
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Wrap(
+                direction: Axis.horizontal,
+                spacing: 10.0,
+                runSpacing: 10.0,
+                children: List.generate(
+                  provider.myTrades?.overview?.length ?? 0,
+                  (index) {
+                    return GestureDetector(
+                      onTap: () => provider.setSelectedOverview(
+                        provider.myTrades?.overview?[index],
+                        showProgress: true,
                       ),
-                    ),
-                  );
-                },
-              ),
-            ),
-          ),
-          Expanded(
-            child: BaseLoaderContainer(
-              hasData: provider.myTrades != null &&
-                  (provider.myTrades?.data?.isNotEmpty ?? false),
-              isLoading: provider.isLoadingTrades && provider.myTrades == null,
-              error: provider.errorTrades,
-              onRefresh: () => provider.getTradesList(refresh: true),
-              child: CommonRefreshIndicator(
-                onRefresh: () async {
-                  provider.getTradesList();
-                },
-                child: ListView.separated(
-                  padding: EdgeInsets.only(top: 10, bottom: 10),
-                  itemBuilder: (context, index) {
-                    return TournamentTradeItem(
-                      data: provider.myTrades?.data?[index],
+                      child: Container(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 15, vertical: 6),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8),
+                            color: provider.selectedOverview?.key ==
+                                provider.myTrades?.overview?[index].key
+                                ? ThemeColors.black:null,
+                            border:  Border.all(color: ThemeColors.black)),
+                        child: Text(
+                          '${provider.myTrades?.overview?[index].key} ${provider.myTrades?.overview?[index].value}',
+                          style: styleBaseBold(color:  provider.selectedOverview?.key ==
+                              provider.myTrades?.overview?[index].key
+                              ?ThemeColors.white:null),
+                        ),
+                      ),
                     );
                   },
-                  separatorBuilder: (context, index) {
-                    return SpacerVertical(height: 15);
-                  },
-                  itemCount: provider.myTrades?.data?.length ?? 0,
                 ),
               ),
             ),
-          ),
-
-          Row(
-            children: [
-              Visibility(
-                //visible:provider.myTrades?.data?.isEmpty ?? false,
-                child: Expanded(
-                  child: BaseButton(
-                    radius: 10,
-                    text: 'Place New Trade',
-                    onPressed: () {
-                      provider.redirectToTrade();
+            Expanded(
+              child: BaseLoaderContainer(
+                hasData: provider.myTrades != null &&
+                    (provider.myTrades?.data?.isNotEmpty ?? false),
+                isLoading: provider.isLoadingTrades && provider.myTrades == null,
+                error: provider.errorTrades,
+                onRefresh: () => provider.getTradesList(refresh: true),
+                child: CommonRefreshIndicator(
+                  onRefresh: () async {
+                    provider.getTradesList();
+                  },
+                  child: ListView.separated(
+                    padding: EdgeInsets.only(top: 10, bottom: 10),
+                    itemBuilder: (context, index) {
+                      return TournamentTradeItem(
+                        data: provider.myTrades?.data?[index],
+                      );
                     },
-
-                    textSize: 16,
+                    separatorBuilder: (context, index) {
+                      return SpacerVertical(height: 15);
+                    },
+                    itemCount: provider.myTrades?.data?.length ?? 0,
                   ),
                 ),
               ),
-              if (provider.myTrades?.overview?[1].value != 0)
+            ),
+
+            Row(
+              children: [
                 Visibility(
-                    visible: provider.selectedOverview?.key != "Closed",
-                    child: const SpacerHorizontal(width: 10)),
-              if (provider.myTrades?.overview?[1].value != 0)
-                Visibility(
-                  visible: provider.selectedOverview?.key != "Closed",
+                  //visible:provider.myTrades?.data?.isEmpty ?? false,
                   child: Expanded(
                     child: BaseButton(
-                      color: ThemeColors.black,
                       radius: 10,
-                      onPressed: () => _close(cancelAll: true),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            'Close All',
-                            style: styleBaseBold(color: ThemeColors.white),
-                          ),
-                          const SpacerHorizontal(width: 5),
-                          Visibility(
-                            visible: sumOfAll != null,
-                            child: Flexible(
-                              child: Text(
-                                '${sumOfAll?.toCurrency()}%',
-                                style: styleBaseBold(
-                                    color: (sumOfAll ?? 0) > 0
-                                        ? ThemeColors.success120
-                                        : (sumOfAll ?? 0) == 0
-                                            ? ThemeColors.white
-                                            : ThemeColors.error120),
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
+                      text: 'Place New Trade',
+                      onPressed: () {
+                        provider.redirectToTrade();
+                      },
+
+                      textSize: 16,
                     ),
                   ),
                 ),
-            ],
-          ),
-          SpacerVertical(height: 10),
-        ],
+                if (provider.myTrades?.overview?[1].value != 0)
+                  Visibility(
+                      visible: provider.selectedOverview?.key != "Closed",
+                      child: const SpacerHorizontal(width: 10)),
+                if (provider.myTrades?.overview?[1].value != 0)
+                  Visibility(
+                    visible: provider.selectedOverview?.key != "Closed",
+                    child: Expanded(
+                      child: BaseButton(
+                        color: ThemeColors.black,
+                        radius: 10,
+                        onPressed: () => _close(cancelAll: true),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              'Close All',
+                              style: styleBaseBold(color: ThemeColors.white),
+                            ),
+                            const SpacerHorizontal(width: 5),
+                            Visibility(
+                              visible: sumOfAll != null,
+                              child: Flexible(
+                                child: Text(
+                                  '${sumOfAll?.toCurrency()}%',
+                                  style: styleBaseBold(
+                                      color: (sumOfAll ?? 0) > 0
+                                          ? ThemeColors.success120
+                                          : (sumOfAll ?? 0) == 0
+                                              ? ThemeColors.white
+                                              : ThemeColors.error120),
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+              ],
+            ),
+            SpacerVertical(height: 10),
+          ],
+        ),
       ),
     );
   }
