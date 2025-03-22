@@ -54,18 +54,18 @@ class _BlogsDetailIndexState extends State<BlogsDetailIndex> {
                 );
               },
       ),
-      body: BaseLoaderContainer(
-        hasData: manager.blogsDetail != null,
-        isLoading: manager.isLoadingDetail,
-        error: manager.errorDetail,
-        showPreparingText: true,
-        onRefresh: _callAPI,
-        child: Stack(
-          children: [
-            BlogDetailData(slug: widget.slug),
-            BaseLockItem(manager: manager, callAPI: _callAPI),
-          ],
-        ),
+      body: Stack(
+        children: [
+          BaseLoaderContainer(
+            hasData: manager.blogsDetail != null,
+            isLoading: manager.isLoadingDetail,
+            error: manager.errorDetail,
+            showPreparingText: true,
+            onRefresh: _callAPI,
+            child: BlogDetailData(slug: widget.slug),
+          ),
+          BaseLockItem(manager: manager, callAPI: _callAPI),
+        ],
       ),
     );
   }

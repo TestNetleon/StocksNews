@@ -48,6 +48,7 @@ import 'package:stocks_news_new/managers/morningstar_report.dart';
 import 'package:stocks_news_new/managers/notification/most_bullish.dart';
 import 'package:stocks_news_new/managers/notification/notifications.dart';
 import 'package:stocks_news_new/managers/referral/leader_board_manager.dart';
+import 'package:stocks_news_new/managers/referral/points_claim_manager.dart';
 import 'package:stocks_news_new/managers/referral/redeem_manager.dart';
 import 'package:stocks_news_new/managers/referral/referral_manager.dart';
 import 'package:stocks_news_new/managers/referral/referral_points_manager.dart';
@@ -59,6 +60,7 @@ import 'package:stocks_news_new/ui/subscription/action_required.dart';
 import 'package:stocks_news_new/ui/tabs/home/scanner/manager/gainers.dart';
 import 'package:stocks_news_new/ui/tabs/home/viewMore/PopularMostBought/index.dart';
 import 'package:stocks_news_new/ui/tabs/home/viewMore/trending/index.dart';
+import 'package:stocks_news_new/ui/tabs/more/referral/pointClaimLog/index.dart';
 import 'package:stocks_news_new/ui/tabs/tools/market/index.dart';
 import 'package:stocks_news_new/ui/tabs/tools/market/industries/industries_view.dart';
 import 'package:stocks_news_new/ui/tabs/tools/market/sectors/sector_view.dart';
@@ -235,7 +237,6 @@ class Routes {
             );
           },
         );
-
       case AccountVerificationIndex.path:
         return MaterialPageRoute(
           builder: (context) {
@@ -257,7 +258,6 @@ class Routes {
             );
           },
         );
-
       case SignalInsidersCompanyIndex.path:
         return MaterialPageRoute(
           builder: (context) {
@@ -267,7 +267,6 @@ class Routes {
             return SignalInsidersCompanyIndex(data: data);
           },
         );
-
       case SignalInsidersReportingIndex.path:
         return MaterialPageRoute(
           builder: (context) {
@@ -277,7 +276,6 @@ class Routes {
             return SignalInsidersReportingIndex(data: data);
           },
         );
-
       case SignalPoliticianDetailIndex.path:
         return MaterialPageRoute(
           builder: (context) {
@@ -287,7 +285,6 @@ class Routes {
             return SignalPoliticianDetailIndex(data: data);
           },
         );
-
       case NewsDetailIndex.path:
         return MaterialPageRoute(
           builder: (context) {
@@ -297,7 +294,6 @@ class Routes {
             return NewsDetailIndex(slug: slug);
           },
         );
-
       case HelpDeskAllChatsIndex.path:
         return MaterialPageRoute(
           builder: (context) {
@@ -384,7 +380,6 @@ class Routes {
             );
           },
         );
-
       case RecurringIndex.path:
         return MaterialPageRoute(
           builder: (context) {
@@ -395,7 +390,6 @@ class Routes {
             );
           },
         );
-
       case BillionairesDetailIndex.path:
         return MaterialPageRoute(
           builder: (context) {
@@ -413,7 +407,6 @@ class Routes {
             return CryptoIndex(symbol: symbol, currency: currency);
           },
         );
-
       case IndustriesViewIndex.path:
         return MaterialPageRoute(
           builder: (context) {
@@ -432,7 +425,6 @@ class Routes {
             return SectorViewIndex(slug: slug);
           },
         );
-
       case BlogsDetailIndex.path:
         return MaterialPageRoute(
           builder: (context) {
@@ -442,7 +434,6 @@ class Routes {
             return BlogsDetailIndex(slug: slug);
           },
         );
-
       case LegalInfoIndex.path:
         return MaterialPageRoute(
           builder: (context) {
@@ -452,7 +443,6 @@ class Routes {
             return LegalInfoIndex(slug: slug);
           },
         );
-
       case AccountEmailVerificationIndex.path:
         return MaterialPageRoute(
           builder: (context) {
@@ -471,7 +461,6 @@ class Routes {
             return SDIndex(symbol: symbol);
           },
         );
-
       case AIindex.path:
         return MaterialPageRoute(
           builder: (context) {
@@ -481,7 +470,6 @@ class Routes {
             return AIindex(symbol: symbol);
           },
         );
-
       case HomeViewMoreTickersIndex.path:
         return MaterialPageRoute(
           builder: (context) {
@@ -491,7 +479,6 @@ class Routes {
             return HomeViewMoreTickersIndex(apiUrl: apiUrl);
           },
         );
-
       case ToolsScannerIndex.path:
         return MaterialPageRoute(
           builder: (context) {
@@ -511,7 +498,6 @@ class Routes {
             );
           },
         );
-
       case JoinReferVerificationIndex.path:
         return MaterialPageRoute(
           builder: (context) {
@@ -525,7 +511,22 @@ class Routes {
             );
           },
         );
-
+      case PointsClaimLogs.path:
+        return MaterialPageRoute(
+          builder: (context) {
+            final arguments = settings.arguments as Map<String, dynamic>?;
+            return PointsClaimLogs(
+              title: arguments?['title'],
+              type: arguments?['type'],
+              id: arguments?['id'],
+              // name: arguments?['name'],
+              // displayName: arguments?['displayName'],
+              // countryCode: arguments?['countryCode'],
+              // phone: arguments?['phone'],
+              // verificationId: arguments?['verificationId'],
+            );
+          },
+        );
       default:
     }
 
@@ -575,6 +576,7 @@ class Routes {
       ChangeNotifierProvider(create: (_) => RedeemManager()),
       ChangeNotifierProvider(create: (_) => NotificationsManager()),
       ChangeNotifierProvider(create: (_) => MorningStarReportsManager()),
+      ChangeNotifierProvider(create: (_) => PointsClaimManager()),
 
       //SCANNER Start---------------
       ChangeNotifierProvider(create: (_) => ScannerManager()),

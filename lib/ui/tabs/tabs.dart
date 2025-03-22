@@ -8,6 +8,7 @@ import 'package:stocks_news_new/managers/home/home.dart';
 import 'package:stocks_news_new/managers/signals.dart';
 import 'package:stocks_news_new/managers/tools.dart';
 import 'package:stocks_news_new/service/amplitude/service.dart';
+import 'package:stocks_news_new/service/transparency.dart';
 import 'package:stocks_news_new/socket/socket.dart';
 import 'package:stocks_news_new/ui/base/scaffold.dart';
 import 'package:stocks_news_new/ui/tabs/home/scanner/manager/gainers.dart';
@@ -62,6 +63,7 @@ class _TabsState extends State<Tabs> {
       });
 
       AmplitudeService.logFirstOpenEvent();
+      requestATT();
     });
   }
 

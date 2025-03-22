@@ -5,6 +5,7 @@ import 'package:stocks_news_new/managers/referral/redeem_manager.dart';
 import 'package:stocks_news_new/models/referral/redeem_list_res.dart';
 import 'package:stocks_news_new/ui/base/border_container.dart';
 import 'package:stocks_news_new/ui/base/button_small.dart';
+import 'package:stocks_news_new/ui/tabs/more/referral/pointClaimLog/index.dart';
 import 'package:stocks_news_new/ui/tabs/more/referral/redeem/redeem_points_progress.dart';
 import 'package:stocks_news_new/ui/theme/manager.dart';
 import 'package:stocks_news_new/utils/colors.dart';
@@ -50,50 +51,71 @@ class RedeemPointsItem extends StatelessWidget {
         children: [
           Row(
             children: [
-              SizedBox(
-                width: 32,
-                height: 32,
-                child: BaseBorderContainer(
-                  padding: EdgeInsets.zero,
-                  innerPadding: EdgeInsets.all(0),
-                  borderColor: isDark ? Colors.white : null,
-                  child: Image.asset(
-                    Images.bottomSignals,
-                    color: ThemeColors.neutral20,
+              Expanded(
+                child: GestureDetector(
+                  onTap: () {
+                    if (data.claimPoints > 0) {
+                      Navigator.pushNamed(
+                        context,
+                        PointsClaimLogs.path,
+                        arguments: {
+                          "title": "${data.title} - ${data.claimPoints}",
+                          "type": data.type ?? "",
+                        },
+                      );
+                    }
+                  },
+                  behavior: HitTestBehavior.translucent,
+                  child: Row(
+                    children: [
+                      SizedBox(
+                        width: 32,
+                        height: 32,
+                        child: BaseBorderContainer(
+                          padding: EdgeInsets.zero,
+                          innerPadding: EdgeInsets.all(0),
+                          borderColor: isDark ? Colors.white : null,
+                          child: Image.asset(
+                            Images.bottomSignals,
+                            color: ThemeColors.neutral20,
+                          ),
+                        ),
+                      ),
+                      SpacerHorizontal(width: 8),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              data.title ?? "",
+                              style: styleBaseBold(
+                                fontSize: 14,
+                                color: ThemeColors.black,
+                                height: 1.4,
+                              ),
+                            ),
+                            SpacerVertical(height: Pad.pad3),
+                            Text(
+                              "${data.claimPoints}/${data.targetPoints}",
+                              style: styleBaseRegular(
+                                fontSize: 12,
+                                color: ThemeColors.neutral40,
+                                height: 1.4,
+                              ),
+                            ),
+                            SpacerVertical(height: Pad.pad3),
+                            RedeemPointsProgress(
+                              total: data.targetPoints,
+                              claimed: data.claimPoints,
+                            ),
+                          ],
+                        ),
+                      ),
+                      SpacerHorizontal(width: 8),
+                    ],
                   ),
                 ),
               ),
-              SpacerHorizontal(width: 8),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      data.title ?? "",
-                      style: styleBaseBold(
-                        fontSize: 14,
-                        color: ThemeColors.black,
-                        height: 1.4,
-                      ),
-                    ),
-                    SpacerVertical(height: Pad.pad3),
-                    Text(
-                      "${data.claimPoints}/${data.targetPoints}",
-                      style: styleBaseRegular(
-                        fontSize: 12,
-                        color: ThemeColors.neutral40,
-                        height: 1.4,
-                      ),
-                    ),
-                    SpacerVertical(height: Pad.pad3),
-                    RedeemPointsProgress(
-                      total: data.targetPoints,
-                      claimed: data.claimPoints,
-                    ),
-                  ],
-                ),
-              ),
-              SpacerHorizontal(width: 8),
               BaseButtonSmall(
                 onPressed: data.status == true
                     ? () {

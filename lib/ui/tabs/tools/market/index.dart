@@ -4,8 +4,6 @@ import 'package:stocks_news_new/managers/market/market.dart';
 import 'package:stocks_news_new/ui/base/app_bar.dart';
 import 'package:stocks_news_new/ui/base/common_tab.dart';
 import 'package:stocks_news_new/ui/base/scaffold.dart';
-import 'package:stocks_news_new/ui/base/search/base_search.dart';
-import 'package:stocks_news_new/ui/stockDetail/index.dart';
 import 'package:stocks_news_new/ui/tabs/tools/market/industries/industries.dart';
 import 'package:stocks_news_new/ui/tabs/tools/market/sectors/sectors.dart';
 import 'package:stocks_news_new/ui/tabs/tools/market/stocks/52Weeks/fifty_two_weeks_high.dart';
@@ -40,8 +38,6 @@ import 'package:stocks_news_new/ui/tabs/tools/market/stocks/pennyStocks/mostPopu
 import 'package:stocks_news_new/ui/tabs/tools/market/stocks/pennyStocks/topTodays/top_todays.dart';
 import 'package:stocks_news_new/ui/tabs/tools/market/stocks/trending/most_bearish.dart';
 import 'package:stocks_news_new/ui/tabs/tools/market/stocks/trending/most_bullish.dart';
-import 'package:stocks_news_new/ui/tabs/more/news/detail.dart';
-import 'package:stocks_news_new/ui/theme/manager.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/utils.dart';
@@ -230,6 +226,7 @@ class _MarketIndexState extends State<MarketIndex> {
     return BaseScaffold(
       appBar: BaseAppBar(
         showBack: true,
+        showSearch: true,
       ),
       body: BaseLoaderContainer(
         isLoading: provider.isLoading,
@@ -245,73 +242,73 @@ class _MarketIndexState extends State<MarketIndex> {
                     data: provider.data!.data!,
                     // textStyle: styleBaseBold(fontSize: 16),
                     onTap: _changeScreenIndex,
-                    rightChild: InkWell(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          createRoute(
-                            BaseSearch(
-                              callRecent: false,
-                              stockClick: (stock) {
-                                if (stock.symbol == null ||
-                                    stock.symbol == '') {
-                                  return;
-                                }
-                                // Navigator.pop(context);
-                                // manager.addToCompare(stock.symbol ?? '');
-                              },
-                            ),
-                          ),
-                        );
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.only(right: 12),
-                        child: Consumer<ThemeManager>(
-                          builder: (context, value, child) {
-                            return ActionButton(
-                              icon: Images.search,
-                              color:
-                                  value.isDarkMode ? ThemeColors.black : null,
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  createRoute(
-                                    BaseSearch(
-                                      stockClick: (p0) {
-                                        if (p0.symbol == null ||
-                                            p0.symbol == '') {
-                                          return;
-                                        }
-                                        Navigator.pushNamed(
-                                          context,
-                                          SDIndex.path,
-                                          arguments: {
-                                            'symbol': p0.symbol,
-                                          },
-                                        );
-                                      },
-                                      newsClick: (data) {
-                                        if (data.slug == null ||
-                                            data.slug == '') {
-                                          return;
-                                        }
-                                        Navigator.pushNamed(
-                                          context,
-                                          NewsDetailIndex.path,
-                                          arguments: {
-                                            'slug': data.slug,
-                                          },
-                                        );
-                                      },
-                                    ),
-                                  ),
-                                );
-                              },
-                            );
-                          },
-                        ),
-                      ),
-                    ),
+                    // rightChild: InkWell(
+                    //   onTap: () {
+                    //     Navigator.push(
+                    //       context,
+                    //       createRoute(
+                    //         BaseSearch(
+                    //           callRecent: false,
+                    //           stockClick: (stock) {
+                    //             if (stock.symbol == null ||
+                    //                 stock.symbol == '') {
+                    //               return;
+                    //             }
+                    //             // Navigator.pop(context);
+                    //             // manager.addToCompare(stock.symbol ?? '');
+                    //           },
+                    //         ),
+                    //       ),
+                    //     );
+                    //   },
+                    //   child: Padding(
+                    //     padding: const EdgeInsets.only(right: 12),
+                    //     child: Consumer<ThemeManager>(
+                    //       builder: (context, value, child) {
+                    //         return ActionButton(
+                    //           icon: Images.search,
+                    //           color:
+                    //               value.isDarkMode ? ThemeColors.black : null,
+                    //           onTap: () {
+                    //             Navigator.push(
+                    //               context,
+                    //               createRoute(
+                    //                 BaseSearch(
+                    //                   stockClick: (p0) {
+                    //                     if (p0.symbol == null ||
+                    //                         p0.symbol == '') {
+                    //                       return;
+                    //                     }
+                    //                     Navigator.pushNamed(
+                    //                       context,
+                    //                       SDIndex.path,
+                    //                       arguments: {
+                    //                         'symbol': p0.symbol,
+                    //                       },
+                    //                     );
+                    //                   },
+                    //                   newsClick: (data) {
+                    //                     if (data.slug == null ||
+                    //                         data.slug == '') {
+                    //                       return;
+                    //                     }
+                    //                     Navigator.pushNamed(
+                    //                       context,
+                    //                       NewsDetailIndex.path,
+                    //                       arguments: {
+                    //                         'slug': data.slug,
+                    //                       },
+                    //                     );
+                    //                   },
+                    //                 ),
+                    //               ),
+                    //             );
+                    //           },
+                    //         );
+                    //       },
+                    //     ),
+                    //   ),
+                    // ),
                   ),
                   if (_screenIndex == 0)
                     MarketTabs(

@@ -71,8 +71,8 @@ class BaseHeading extends StatelessWidget {
               child: Text(
                 title ?? '',
                 textAlign: textAlign,
-                // style: titleStyle ?? styleBaseBold(fontSize: 28),
-                style: titleStyle ?? Theme.of(context).textTheme.titleLarge,
+                style: titleStyle ?? styleBaseBold(fontSize: 28),
+                // style: titleStyle ?? Theme.of(context).textTheme.titleLarge,
               ),
             ),
           ),
@@ -82,8 +82,9 @@ class BaseHeading extends StatelessWidget {
               margin: EdgeInsets.only(top: 8),
               child: Text(
                 subtitle ?? '',
-                // style: subtitleStyle ?? styleBaseRegular(fontSize: 14),
-                style: subtitleStyle ?? Theme.of(context).textTheme.labelSmall,
+                style: subtitleStyle ??
+                    styleBaseRegular(fontSize: 14, height: 1.3),
+                // style: subtitleStyle ?? Theme.of(context).textTheme.labelSmall,
                 textAlign: textAlign,
               ),
             ),

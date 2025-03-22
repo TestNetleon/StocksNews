@@ -8,7 +8,6 @@ import 'package:stocks_news_new/ui/tabs/more/index.dart';
 import 'package:stocks_news_new/ui/tabs/tools/item.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/custom/base_loader_container.dart';
-import 'package:stocks_news_new/widgets/custom_gridview.dart';
 import '../../base/scaffold.dart';
 
 class ToolsIndex extends StatelessWidget {
@@ -29,50 +28,50 @@ class ToolsIndex extends StatelessWidget {
         onRefresh: manager.getToolsData,
         child: BaseScroll(
           onRefresh: manager.getToolsData,
-          // children: List.generate(
-          //   manager.data?.tools?.length ?? 0,
-          //   (index) {
-          //     ToolsCardsRes? data = manager.data?.tools?[index];
-          //     if (data == null) {
-          //       return SizedBox();
-          //     }
-          //     return Container(
-          //       margin: EdgeInsets.only(bottom: Pad.pad16),
-          //       child: ToolsItem(
-          //         card: data,
-          //         onTap: () {
-          //           if (data.slug == null || data.slug == null) return;
-          //           manager.startNavigation(data.slug ?? ToolsEnum.scanner);
-          //         },
-          //       ),
-          //     );
-          //   },
-          // ),
+          children: List.generate(
+            manager.data?.tools?.length ?? 0,
+            (index) {
+              ToolsCardsRes? data = manager.data?.tools?[index];
+              if (data == null) {
+                return SizedBox();
+              }
+              return Container(
+                margin: EdgeInsets.only(bottom: Pad.pad16),
+                child: ToolsItem(
+                  card: data,
+                  onTap: () {
+                    if (data.slug == null || data.slug == null) return;
+                    manager.startNavigation(data.slug ?? ToolsEnum.scanner);
+                  },
+                ),
+              );
+            },
+          ),
 
-          children: [
-            CustomGridView(
-              paddingVertical: 0,
-              paddingHorizontal: 0,
-              itemSpace: 10,
-              length: manager.data?.tools?.length ?? 0,
-              getChild: (index) {
-                ToolsCardsRes? data = manager.data?.tools?[index];
-                if (data == null) {
-                  return SizedBox();
-                }
-                return Container(
-                  margin: EdgeInsets.only(bottom: Pad.pad16),
-                  child: ToolsItem(
-                    card: data,
-                    onTap: () {
-                      if (data.slug == null || data.slug == null) return;
-                      manager.startNavigation(data.slug ?? ToolsEnum.scanner);
-                    },
-                  ),
-                );
-              },
-            ),
-          ],
+          // children: [
+          //   CustomGridView(
+          //     paddingVertical: 0,
+          //     paddingHorizontal: 0,
+          //     itemSpace: 10,
+          //     length: manager.data?.tools?.length ?? 0,
+          //     getChild: (index) {
+          //       ToolsCardsRes? data = manager.data?.tools?[index];
+          //       if (data == null) {
+          //         return SizedBox();
+          //       }
+          //       return Container(
+          //         margin: EdgeInsets.only(bottom: Pad.pad16),
+          //         child: ToolsItem(
+          //           card: data,
+          //           onTap: () {
+          //             if (data.slug == null || data.slug == null) return;
+          //             manager.startNavigation(data.slug ?? ToolsEnum.scanner);
+          //           },
+          //         ),
+          //       );
+          //     },
+          //   ),
+          // ],
         ),
       ),
     );

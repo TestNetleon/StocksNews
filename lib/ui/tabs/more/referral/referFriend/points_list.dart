@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:stocks_news_new/managers/referral/referral_manager.dart';
 import 'package:stocks_news_new/models/referral/referral_response.dart';
 import 'package:stocks_news_new/ui/base/base_list_divider.dart';
 import 'package:stocks_news_new/ui/base/button.dart';
+import 'package:stocks_news_new/ui/base/heading.dart';
 import 'package:stocks_news_new/ui/tabs/more/referral/pointsTransaction/index.dart';
 import 'package:stocks_news_new/ui/tabs/more/referral/redeem/index.dart';
+import 'package:stocks_news_new/ui/tabs/more/referral/referFriend/pending_friend_item.dart';
 import 'package:stocks_news_new/ui/theme/manager.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
@@ -38,6 +41,8 @@ class PointsList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ReferralManager manager = context.watch<ReferralManager>();
+
     return Visibility(
       visible: data != null,
       child: Column(
@@ -78,6 +83,32 @@ class PointsList extends StatelessWidget {
             text: "Claim Your Rewards",
           ),
           SpacerVertical(height: Dimen.padding),
+          Visibility(
+            visible: (manager.data?.pendingFriends?.data?.length ?? 0) > 0,
+            child: Column(
+              children: [
+                BaseHeading(
+                  title: manager.data?.pendingFriends?.title ?? "",
+                  subtitle: manager.data?.pendingFriends?.subTitle ?? "",
+                ),
+                SpacerVertical(height: Dimen.padding),
+                ListView.separated(
+                  padding: EdgeInsets.zero,
+                  physics: NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  itemBuilder: (context, index) {
+                    PendingFriendData item =
+                        manager.data!.pendingFriends!.data![index];
+                    return PendingFriendItem(data: item);
+                  },
+                  separatorBuilder: (context, index) {
+                    return SpacerVertical(height: Pad.pad16);
+                  },
+                  itemCount: manager.data?.pendingFriends?.data?.length ?? 0,
+                ),
+              ],
+            ),
+          ),
         ],
       ),
     );

@@ -50,7 +50,7 @@ class TextfieldTrade extends StatelessWidget {
           ),
           style: const TextStyle(fontSize: 80, color: Colors.transparent),
           cursorColor: ThemeColors.neutral6,
-          cursorHeight: 50,
+          cursorHeight: 65,
           cursorWidth: 1,
           readOnly: readOnly,
         ),

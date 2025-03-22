@@ -8,7 +8,6 @@ import 'package:stocks_news_new/ui/base/button.dart';
 import 'package:stocks_news_new/ui/tabs/tabs.dart';
 import 'package:stocks_news_new/ui/tabs/tools/simulator/managers/portpolio.dart';
 import 'package:stocks_news_new/ui/tabs/tools/simulator/managers/trade.dart';
-import 'package:stocks_news_new/ui/tabs/tools/simulator/screens/index.dart';
 import 'package:stocks_news_new/ui/tabs/tools/simulator/screens/tradeBuySell/sheet/sucess_sheet.dart';
 import 'package:stocks_news_new/ui/tabs/tools/simulator/screens/tradeBuySell/text_field.dart';
 import 'package:stocks_news_new/ui/tabs/tools/simulator/screens/widget/s_top.dart';

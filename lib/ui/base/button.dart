@@ -54,7 +54,6 @@ class BaseButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: margin,
-      // width: fullWidth ? double.infinity : null,
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
@@ -70,42 +69,43 @@ class BaseButton extends StatelessWidget {
             side: side,
           ),
         ),
-        child: child ?? OptionalParent(
-          addParent: icon != null,
-          parentBuilder: (child) {
-            return Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Image.asset(
-                  icon ?? '',
-                  color: iconColor ?? ThemeColors.neutral60,
-                  height: 17,
-                  width: 17,
-                ),
-                SpacerHorizontal(width: 8),
-                child,
-              ],
-            );
-          },
-          child: Text(
-            textAlign: textAlign,
-            textUppercase ? text.toUpperCase() : text,
-            style: textStyle ??
-                (fontBold
-                    ? styleBaseBold(
-                        fontSize: textSize,
-                        color: onPressed == null
-                            ? disableTextColor ?? ThemeColors.primary100
-                            : textColor ?? ThemeColors.black,
-                      )
-                    : styleBaseSemiBold(
-                        fontSize: textSize,
-                        color: onPressed == null
-                            ? disableTextColor ?? ThemeColors.primary100
-                            : textColor ?? ThemeColors.black,
-                      )),
-          ),
-        ),
+        child: child ??
+            OptionalParent(
+              addParent: icon != null,
+              parentBuilder: (child) {
+                return Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset(
+                      icon ?? '',
+                      color: iconColor ?? ThemeColors.neutral60,
+                      height: 17,
+                      width: 17,
+                    ),
+                    SpacerHorizontal(width: 8),
+                    child,
+                  ],
+                );
+              },
+              child: Text(
+                textAlign: textAlign,
+                textUppercase ? text.toUpperCase() : text,
+                style: textStyle ??
+                    (fontBold
+                        ? styleBaseBold(
+                            fontSize: textSize,
+                            color: onPressed == null
+                                ? disableTextColor ?? ThemeColors.primary100
+                                : textColor ?? ThemeColors.black,
+                          )
+                        : styleBaseSemiBold(
+                            fontSize: textSize,
+                            color: onPressed == null
+                                ? disableTextColor ?? ThemeColors.primary100
+                                : textColor ?? ThemeColors.black,
+                          )),
+              ),
+            ),
       ),
     );
   }

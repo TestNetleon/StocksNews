@@ -21,14 +21,14 @@ class _SignalSentimentState extends State<SignalSentimentIndex> {
   Widget build(BuildContext context) {
     SignalsManager manager = context.watch<SignalsManager>();
 
-    return BaseLoaderContainer(
-      isLoading: manager.isLoadingSentiment,
-      hasData: manager.signalSentimentData != null,
-      showPreparingText: true,
-      error: manager.errorSentiment,
-      child: Stack(
-        children: [
-          BaseScroll(
+    return Stack(
+      children: [
+        BaseLoaderContainer(
+          isLoading: manager.isLoadingSentiment,
+          hasData: manager.signalSentimentData != null,
+          showPreparingText: true,
+          error: manager.errorSentiment,
+          child: BaseScroll(
             margin: EdgeInsets.zero,
             onRefresh: manager.getSignalSentimentData,
             children: [
@@ -40,12 +40,12 @@ class _SignalSentimentState extends State<SignalSentimentIndex> {
               SignalRecentMentions(),
             ],
           ),
-          BaseLockItem(
-            manager: manager,
-            callAPI: manager.getSignalSentimentData,
-          ),
-        ],
-      ),
+        ),
+        BaseLockItem(
+          manager: manager,
+          callAPI: manager.getSignalSentimentData,
+        ),
+      ],
     );
   }
 }

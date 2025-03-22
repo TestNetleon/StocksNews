@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/managers/signals.dart';
 import 'package:stocks_news_new/ui/base/app_bar.dart';
 import 'package:stocks_news_new/ui/base/scaffold.dart';
-import 'package:stocks_news_new/ui/tabs/more/index.dart';
 import 'package:stocks_news_new/ui/tabs/signals/insiders/filter/filter.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import '../../base/common_tab.dart';
@@ -13,7 +12,8 @@ import 'sentiment/sentiment.dart';
 import 'stocks.dart';
 
 class SignalsIndex extends StatefulWidget {
-  const SignalsIndex({super.key});
+  final int? index;
+  const SignalsIndex({super.key, this.index = 0});
 
   @override
   State<SignalsIndex> createState() => _SignalsIndexState();
@@ -25,7 +25,7 @@ class _SignalsIndexState extends State<SignalsIndex> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       SignalsManager manager = context.read<SignalsManager>();
-      manager.onScreenChange(0);
+      manager.onScreenChange(widget.index);
     });
   }
 
@@ -54,6 +54,7 @@ class _SignalsIndexState extends State<SignalsIndex> {
           BaseTabs(
             data: manager.tabs,
             onTap: manager.onScreenChange,
+            selectedIndex: widget.index ?? 0,
           ),
           if (manager.selectedScreen == 0)
             Expanded(

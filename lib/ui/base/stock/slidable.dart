@@ -12,6 +12,8 @@ import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 class BaseSlidableStockItem extends StatefulWidget {
   final Widget child;
   final int? index;
+  final double size;
+
   final VoidCallback? addToAlert;
   final VoidCallback? addToWatchlist;
   final VoidCallback? edit;
@@ -31,6 +33,7 @@ class BaseSlidableStockItem extends StatefulWidget {
     this.isAlertAdded,
     this.isWatchlistAdded,
     this.deleteLabel,
+    this.size = 24,
   });
 
   @override
@@ -85,6 +88,7 @@ class _BaseSlidableStockItemState extends State<BaseSlidableStockItem>
         children: [
           if (widget.addToAlert != null)
             BaseSlidableActionItem(
+              size: widget.size,
               label: widget.isAlertAdded == 1 ? 'Alert Added' : 'Add to Alerts',
               image: Images.alerts,
               onTap: () {
@@ -96,6 +100,7 @@ class _BaseSlidableStockItemState extends State<BaseSlidableStockItem>
           if (widget.addToWatchlist != null) ...[
             const SpacerHorizontal(width: 1),
             BaseSlidableActionItem(
+              size: widget.size,
               label: widget.isWatchlistAdded == 1
                   ? 'Watchlist Added'
                   : 'Add to Watchlist',
@@ -118,6 +123,7 @@ class _BaseSlidableStockItemState extends State<BaseSlidableStockItem>
           if (widget.delete != null) ...[
             const SpacerHorizontal(width: 1),
             BaseSlidableActionItem(
+              size: widget.size,
               label: widget.deleteLabel ?? 'Stop Alert',
               image: Images.delete,
               onTap: widget.delete,
@@ -139,6 +145,7 @@ class BaseSlidableActionItem extends StatelessWidget {
   final VoidCallback? onTap;
   final Color? bgColor;
   final Color? textColor;
+  final double size;
 
   const BaseSlidableActionItem({
     super.key,
@@ -147,6 +154,7 @@ class BaseSlidableActionItem extends StatelessWidget {
     required this.onTap,
     this.bgColor,
     this.textColor,
+    this.size = 24,
   });
 
   @override
@@ -163,8 +171,8 @@ class BaseSlidableActionItem extends StatelessWidget {
             children: [
               Image.asset(
                 image,
-                width: 24,
-                height: 24,
+                width: size,
+                height: size,
                 color: textColor ?? ThemeColors.white,
               ),
               const SpacerVertical(height: 8),

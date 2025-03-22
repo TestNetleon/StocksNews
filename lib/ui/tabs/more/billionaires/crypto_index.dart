@@ -32,7 +32,7 @@ class CryptoIndex extends StatefulWidget {
   final String? currency;
 
   static const path = 'CryptoIndex';
-  const CryptoIndex({super.key, required this.symbol,this.currency});
+  const CryptoIndex({super.key, required this.symbol, this.currency});
 
   @override
   State<CryptoIndex> createState() => _CryptoIndexState();
@@ -54,9 +54,11 @@ class _CryptoIndexState extends State<CryptoIndex> {
   void _callAPI() {
     BillionairesManager manager = context.read<BillionairesManager>();
     manager.clearValues();
-    manager.getCryptoDetail(widget.symbol,currency: widget.currency);
-    manager.getCrHistoricalC(symbol: widget.symbol,reset: true,currency: widget.currency);
+    manager.getCryptoDetail(widget.symbol, currency: widget.currency);
+    manager.getCrHistoricalC(
+        symbol: widget.symbol, reset: true, currency: widget.currency);
   }
+
   @override
   void dispose() {
     _timer?.cancel();
@@ -89,21 +91,24 @@ class _CryptoIndexState extends State<CryptoIndex> {
           },
           child: BaseScroll(
               onRefresh: () async {
-                manager.getCryptoDetail(widget.symbol,currency: widget.currency);
-                manager.getCrHistoricalC(symbol: widget.symbol,currency: widget.currency);
+                manager.getCryptoDetail(widget.symbol,
+                    currency: widget.currency);
+                manager.getCrHistoricalC(
+                    symbol: widget.symbol, currency: widget.currency);
               },
               margin: EdgeInsets.zero,
               children: [
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: Pad.pad16,vertical: Pad.pad10),
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: Pad.pad16, vertical: Pad.pad10),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Row(
                         children: [
                           Text(
-                            tickerDetail?.displayPrice?? '',
-                            style: styleBaseBold(fontSize: 28, fontFamily: "Roboto"),
+                            tickerDetail?.displayPrice ?? '',
+                            style: styleBaseBold(fontSize: 28),
                           ),
                           SpacerHorizontal(width: Pad.pad10),
                           Expanded(
@@ -138,14 +143,14 @@ class _CryptoIndexState extends State<CryptoIndex> {
                                     TextSpan(
                                       text: tickerDetail?.displayChange,
                                       style: styleBaseSemiBold(
-                                        fontSize: 13,
-                                        color: (tickerDetail?.changesPercentage ??
-                                                    0) >=
-                                                0
-                                            ? ThemeColors.accent
-                                            : ThemeColors.sos,
-                                          fontFamily: "Roboto"
-                                      ),
+                                          fontSize: 13,
+                                          color: (tickerDetail
+                                                          ?.changesPercentage ??
+                                                      0) >=
+                                                  0
+                                              ? ThemeColors.accent
+                                              : ThemeColors.sos,
+                                          fontFamily: "Roboto"),
                                     ),
                                     if (tickerDetail?.changesPercentage != null)
                                       TextSpan(
@@ -153,12 +158,12 @@ class _CryptoIndexState extends State<CryptoIndex> {
                                             ' (${tickerDetail?.changesPercentage}%)',
                                         style: styleBaseSemiBold(
                                           fontSize: 13,
-                                          color:
-                                              (tickerDetail?.changesPercentage ??
-                                                          0) >=
-                                                      0
-                                                  ? ThemeColors.accent
-                                                  : ThemeColors.sos,
+                                          color: (tickerDetail
+                                                          ?.changesPercentage ??
+                                                      0) >=
+                                                  0
+                                              ? ThemeColors.accent
+                                              : ThemeColors.sos,
                                         ),
                                       ),
                                   ],
@@ -169,18 +174,23 @@ class _CryptoIndexState extends State<CryptoIndex> {
                           IntrinsicWidth(
                             child: BaseButton(
                               fullWidth: false,
-                              color: tickerDetail?.isCryptoAdded==0?ThemeColors.transparentGreen:ThemeColors.transparentRed,
-                              onPressed: (){
-                                if(tickerDetail?.isCryptoAdded==0){
-                                  manager.requestAddToWatch(widget.symbol,cryptos: tickerDetail);
-                                }
-                                else{
-                                  manager.requestRemoveToWatch(widget.symbol,cryptos: tickerDetail);
+                              color: tickerDetail?.isCryptoAdded == 0
+                                  ? ThemeColors.transparentGreen
+                                  : ThemeColors.transparentRed,
+                              onPressed: () {
+                                if (tickerDetail?.isCryptoAdded == 0) {
+                                  manager.requestAddToWatch(widget.symbol,
+                                      cryptos: tickerDetail);
+                                } else {
+                                  manager.requestRemoveToWatch(widget.symbol,
+                                      cryptos: tickerDetail);
                                 }
                               },
-                              text: tickerDetail?.isCryptoAdded==0?"FOLLOW":"UNFOLLOW",
+                              text: tickerDetail?.isCryptoAdded == 0
+                                  ? "FOLLOW"
+                                  : "UNFOLLOW",
                               textSize: 14,
-                              padding: EdgeInsets.symmetric(horizontal:10),
+                              padding: EdgeInsets.symmetric(horizontal: 10),
                             ),
                           ),
                         ],
@@ -191,7 +201,6 @@ class _CryptoIndexState extends State<CryptoIndex> {
                         textStyle: styleBaseRegular(height: 1.6, fontSize: 14),
                       ),
                       SpacerVertical(height: Pad.pad16),
-
                     ],
                   ),
                 ),
@@ -204,11 +213,10 @@ class _CryptoIndexState extends State<CryptoIndex> {
                     manager.getCrHistoricalC(range: p0, symbol: widget.symbol);
                   },
                 ),
-
                 SpacerVertical(height: Pad.pad20),
                 Visibility(
                   visible:
-                  cryptoRates?.title != null && cryptoRates?.title != '',
+                      cryptoRates?.title != null && cryptoRates?.title != '',
                   child: BaseHeading(
                     margin: const EdgeInsets.symmetric(horizontal: 16.0),
                     title: cryptoRates?.title ?? "",
@@ -222,7 +230,7 @@ class _CryptoIndexState extends State<CryptoIndex> {
                   children: [
                     IconButton(
                       icon:
-                      Icon(Icons.swap_horizontal_circle_rounded, size: 24),
+                          Icon(Icons.swap_horizontal_circle_rounded, size: 24),
                       onPressed: () {
                         manager.swapUI();
                       },
@@ -238,8 +246,13 @@ class _CryptoIndexState extends State<CryptoIndex> {
                 BaseButton(
                   margin: const EdgeInsets.symmetric(horizontal: 16.0),
                   onPressed: () {
-                    manager.getCrHistoricalC(symbol: manager.selectedSymbol?.symbol ?? "",reset: true,currency: manager.selectedItem?.currency ?? "");
-                    manager.getCryptoDetail(manager.selectedSymbol?.symbol ?? "",currency: manager.selectedItem?.currency ?? "");
+                    manager.getCrHistoricalC(
+                        symbol: manager.selectedSymbol?.symbol ?? "",
+                        reset: true,
+                        currency: manager.selectedItem?.currency ?? "");
+                    manager.getCryptoDetail(
+                        manager.selectedSymbol?.symbol ?? "",
+                        currency: manager.selectedItem?.currency ?? "");
                   },
                   text: "Converter",
                   textSize: 16,
@@ -248,44 +261,41 @@ class _CryptoIndexState extends State<CryptoIndex> {
                 ),
                 SpacerVertical(height: Pad.pad10),
                 Visibility(
-                  visible: pricePerformance!=null,
-                  child: CryptoInfoItem(
-                      dataRes:pricePerformance
-                  ),
+                  visible: pricePerformance != null,
+                  child: CryptoInfoItem(dataRes: pricePerformance),
                 ),
                 Visibility(
-                  visible: marketCap!=null,
-                  child: CryptoInfoItem(
-                      dataRes:marketCap
-                  ),
+                  visible: marketCap != null,
+                  child: CryptoInfoItem(dataRes: marketCap),
                 ),
                 Visibility(
-                  visible: tradingVolume!=null,
-                  child: CryptoInfoItem(
-                      dataRes:tradingVolume
-                  ),
+                  visible: tradingVolume != null,
+                  child: CryptoInfoItem(dataRes: tradingVolume),
                 ),
                 Visibility(
-                  visible: supply!=null,
-                  child: CryptoInfoItem(
-                      dataRes:supply
-                  ),
+                  visible: supply != null,
+                  child: CryptoInfoItem(dataRes: supply),
                 ),
-                Visibility(visible: recentTweetPost?.title != null && recentTweetPost?.title!= '',child: SpacerVertical(height:20)),
                 Visibility(
-                    visible: recentTweetPost?.title != null && recentTweetPost?.title!= '',
+                    visible: recentTweetPost?.title != null &&
+                        recentTweetPost?.title != '',
+                    child: SpacerVertical(height: 20)),
+                Visibility(
+                    visible: recentTweetPost?.title != null &&
+                        recentTweetPost?.title != '',
                     child: BaseHeading(
-                      margin:  const EdgeInsets.symmetric(horizontal: 16.0),
-                      title: recentTweetPost?.title??"",
+                      margin: const EdgeInsets.symmetric(horizontal: 16.0),
+                      title: recentTweetPost?.title ?? "",
                       titleStyle: styleBaseBold(),
-                    )
-                ),
-                Visibility(visible: recentTweetPost?.data != null,child: SpacerVertical(height:10)),
+                    )),
+                Visibility(
+                    visible: recentTweetPost?.data != null,
+                    child: SpacerVertical(height: 10)),
                 Visibility(
                   visible: recentTweetPost?.data != null,
                   child: ListView.separated(
                     physics: NeverScrollableScrollPhysics(),
-                    padding: EdgeInsets.symmetric(horizontal:16),
+                    padding: EdgeInsets.symmetric(horizontal: 16),
                     shrinkWrap: true,
                     itemBuilder: (context, index) {
                       CryptoTweetPost? item = recentTweetPost?.data?[index];
@@ -300,10 +310,13 @@ class _CryptoIndexState extends State<CryptoIndex> {
                     itemCount: recentTweetPost?.data?.length ?? 0,
                   ),
                 ),
-                Visibility(visible: recentTweetPost?.data != null,child: SpacerVertical(height: Pad.pad10)),
-                Visibility(visible:bitcoinRes!=null,child: MentionsListIndex(symbolMentionRes: bitcoinRes)),
+                Visibility(
+                    visible: recentTweetPost?.data != null,
+                    child: SpacerVertical(height: Pad.pad10)),
+                Visibility(
+                    visible: bitcoinRes != null,
+                    child: MentionsListIndex(symbolMentionRes: bitcoinRes)),
                 SpacerVertical(height: Pad.pad10),
-
               ]),
         ));
   }
@@ -312,9 +325,10 @@ class _CryptoIndexState extends State<CryptoIndex> {
     BillionairesManager manager = context.watch<BillionairesManager>();
     CryptoData? cryptoRates = manager.cryptoDetailRes?.cryptoData;
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 3, vertical:3),
+      padding: EdgeInsets.symmetric(horizontal: 3, vertical: 3),
       margin: const EdgeInsets.symmetric(horizontal: 16.0),
-      decoration: BoxDecoration(borderRadius: BorderRadius.circular(4),color: ThemeColors.neutral5),
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(4), color: ThemeColors.neutral5),
       child: Row(
         children: [
           Expanded(
@@ -335,22 +349,26 @@ class _CryptoIndexState extends State<CryptoIndex> {
                       manager.usdController.text = "0.00";
                       setState(() {});
                     },
-                    child: Image.asset(Images.x, width: 14, height: 14,color: ThemeColors.black))
-            ),
+                    child: Image.asset(Images.x,
+                        width: 14, height: 14, color: ThemeColors.black))),
           ),
           SpacerHorizontal(width: Pad.pad5),
           Expanded(
             child: InkWell(
-              onTap: (){
-                manager.searchSymbol=[];
+              onTap: () {
+                manager.searchSymbol = [];
                 showSymbol(context);
               },
               child: AbsorbPointer(
-                child:
-                ThemeInputField(
-                  placeholder: cryptoRates?.cryptoSymbol?.contains(manager.selectedSymbol) == true
+                child: ThemeInputField(
+                  placeholder: cryptoRates?.cryptoSymbol
+                              ?.contains(manager.selectedSymbol) ==
+                          true
                       ? manager.selectedSymbol?.symbol
-                      :manager.searchSymbol.contains(manager.selectedSymbol) == true?manager.selectedSymbol?.symbol: "",
+                      : manager.searchSymbol.contains(manager.selectedSymbol) ==
+                              true
+                          ? manager.selectedSymbol?.symbol
+                          : "",
                   suffixIcon: Icon(
                     Icons.arrow_drop_down,
                     size: 23,
@@ -358,11 +376,11 @@ class _CryptoIndexState extends State<CryptoIndex> {
                   ),
                   hintStyle: styleBaseRegular(color: ThemeColors.black),
                   editable: false,
-                  contentPadding: EdgeInsets.only(left:10,top:12.sp),
+                  contentPadding: EdgeInsets.only(left: 10, top: 12.sp),
                   cursorColor: ThemeColors.black,
                   fillColor: ThemeColors.white,
                   borderColor: ThemeColors.white,
-                  controller:symbolController,
+                  controller: symbolController,
                 ),
               ),
             ),
@@ -371,13 +389,15 @@ class _CryptoIndexState extends State<CryptoIndex> {
       ),
     );
   }
+
   Widget currencySection() {
     BillionairesManager manager = context.watch<BillionairesManager>();
     CryptoData? cryptoRates = manager.cryptoDetailRes?.cryptoData;
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 16.0),
-      padding: EdgeInsets.symmetric(horizontal: 3, vertical:3),
-      decoration: BoxDecoration(borderRadius: BorderRadius.circular(4),color: ThemeColors.neutral5),
+      padding: EdgeInsets.symmetric(horizontal: 3, vertical: 3),
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(4), color: ThemeColors.neutral5),
       child: Row(
         children: [
           Expanded(
@@ -398,22 +418,27 @@ class _CryptoIndexState extends State<CryptoIndex> {
                     manager.usdController.text = "0.00";
                     setState(() {});
                   },
-                  child: Image.asset(Images.x, width: 14, height: 14,color: ThemeColors.black)),
+                  child: Image.asset(Images.x,
+                      width: 14, height: 14, color: ThemeColors.black)),
             ),
           ),
           SpacerHorizontal(width: Pad.pad5),
           Expanded(
             child: InkWell(
-              onTap: (){
-                manager.searchCurrency=[];
+              onTap: () {
+                manager.searchCurrency = [];
                 showCurrency(context);
               },
               child: AbsorbPointer(
-                child:
-                ThemeInputField(
-                  placeholder: cryptoRates?.rates?.contains(manager.selectedItem) == true
-                      ? manager.selectedItem?.currency
-                      :manager.searchCurrency.contains(manager.selectedItem) == true?manager.selectedItem?.currency: "",
+                child: ThemeInputField(
+                  placeholder:
+                      cryptoRates?.rates?.contains(manager.selectedItem) == true
+                          ? manager.selectedItem?.currency
+                          : manager.searchCurrency
+                                      .contains(manager.selectedItem) ==
+                                  true
+                              ? manager.selectedItem?.currency
+                              : "",
                   suffixIcon: Icon(
                     Icons.arrow_drop_down,
                     size: 23,
@@ -421,11 +446,11 @@ class _CryptoIndexState extends State<CryptoIndex> {
                   ),
                   hintStyle: styleBaseRegular(color: ThemeColors.black),
                   editable: false,
-                  contentPadding: EdgeInsets.only(left:10,top:12.sp),
+                  contentPadding: EdgeInsets.only(left: 10, top: 12.sp),
                   cursorColor: ThemeColors.black,
                   fillColor: ThemeColors.white,
                   borderColor: ThemeColors.white,
-                  controller:searchController,
+                  controller: searchController,
                 ),
               ),
             ),
@@ -438,185 +463,170 @@ class _CryptoIndexState extends State<CryptoIndex> {
   void showSymbol(BuildContext context) {
     BaseBottomSheet().bottomSheet(
         barrierColor: ThemeColors.neutral5.withValues(alpha: 0.7),
-        child:Builder(
-          builder: (context) {
-            BillionairesManager manager = context.watch<BillionairesManager>();
-            CryptoData? cryptoRates = manager.cryptoDetailRes?.cryptoData;
-            TextEditingController searchController = TextEditingController();
-            return SizedBox(
-              height: MediaQuery.of(context).size.height * 0.6,
-              child: Column(
-                children: [
-                  BaseHeading(
-                    title: "Select Symbol",
-                    titleStyle: styleBaseBold(),
-                  ),
-                  SpacerVertical(height: 10),
-                  BaseTextField(
-                    placeholder: "Search",
-                    controller: searchController,
-                    textCapitalization: TextCapitalization.words,
-                    keyboardType: TextInputType.name,
-                    onChanged: (values){
-                      if (_timer != null) {
-                        _timer!.cancel();
-                      }
-                      _timer = Timer(
-                        const Duration(milliseconds: 1000),
-                            () {
-                          manager.getSearchOfSymbol(values);
-
-                        },
-                      );
-                    },
-                  ),
-                  SpacerVertical(height: Pad.pad10),
-                  Expanded(
-                    child: manager.searchSymbol.isNotEmpty
-                        ? ListView.builder(
-                      itemCount: manager.searchSymbol.length,
-                      itemBuilder: (context, index) {
-                        Rate item = manager.searchSymbol[index];
-                        return SearchTiles(
-                          item: item,
-                          onTap: () {
-                            setState(() {
-                              manager.selectedSymbol = item;
-                            });
-                            Navigator.pop(context);
-                            if (manager.isActiveField == 1) {
-                              manager.calculateConversion();
-                            } else {
-                              manager.calculateWithPriceChange();
-                            }
-                          },
-                          fromTo: 1,
-                        );
+        child: Builder(builder: (context) {
+          BillionairesManager manager = context.watch<BillionairesManager>();
+          CryptoData? cryptoRates = manager.cryptoDetailRes?.cryptoData;
+          TextEditingController searchController = TextEditingController();
+          return SizedBox(
+            height: MediaQuery.of(context).size.height * 0.6,
+            child: Column(
+              children: [
+                BaseHeading(
+                  title: "Select Symbol",
+                  titleStyle: styleBaseBold(),
+                ),
+                SpacerVertical(height: 10),
+                BaseTextField(
+                  placeholder: "Search",
+                  controller: searchController,
+                  textCapitalization: TextCapitalization.words,
+                  keyboardType: TextInputType.name,
+                  onChanged: (values) {
+                    if (_timer != null) {
+                      _timer!.cancel();
+                    }
+                    _timer = Timer(
+                      const Duration(milliseconds: 1000),
+                      () {
+                        manager.getSearchOfSymbol(values);
                       },
-                    ):
-                    ListView.builder(
-                      itemCount: cryptoRates?.cryptoSymbol?.length,
-                      itemBuilder: (context, index) {
-                        Rate? item = cryptoRates?.cryptoSymbol?[index];
-                        return SearchTiles(
-                          item: item,
-                          onTap: () {
-                            setState(() {
-                              manager.selectedSymbol = item;
-                            });
-                            Navigator.pop(context);
-                            if (manager.isActiveField == 1) {
-                              manager.calculateConversion();
-                            } else {
-                              manager.calculateWithPriceChange();
-                            }
-                          },
-                          fromTo: 1,
-                        );
-                      },
-                    ),
-                  ),
-                ],
-              ),
-            );
-          }
-        )
-    );
-  }
-  void showCurrency(BuildContext context) {
-
-    BaseBottomSheet().bottomSheet(
-        barrierColor: ThemeColors.neutral5.withValues(alpha: 0.7),
-    child:Builder(
-      builder: (context) {
-        BillionairesManager manager = context.watch<BillionairesManager>();
-        CryptoData? cryptoRates = manager.cryptoDetailRes?.cryptoData;
-        TextEditingController searchController = TextEditingController();
-        return SizedBox(
-          height: MediaQuery.of(context).size.height * 0.6,
-          child: Column(
-            children: [
-              BaseHeading(
-                title: "Select Currency",
-                titleStyle: styleBaseBold(),
-              ),
-              SpacerVertical(height: 10),
-              BaseTextField(
-                placeholder: "Search",
-                controller: searchController,
-                textCapitalization: TextCapitalization.words,
-                keyboardType: TextInputType.name,
-                onChanged: (values){
-                  if (_timer != null) {
-                    _timer!.cancel();
-                  }
-                  _timer = Timer(
-                    const Duration(milliseconds: 1000),
-                        () {
-                      manager.getSearchOfCurrency(values);
-
-                    },
-                  );
-                },
-              ),
-              SpacerVertical(height: Pad.pad10),
-              Expanded(
-                child: manager.searchCurrency.isNotEmpty
-                    ? ListView.builder(
-                  itemCount: manager.searchCurrency.length,
-                  itemBuilder: (context, index) {
-                    Rate item = manager.searchCurrency[index];
-                    return
-                      SearchTiles(
-                        item: item,
-                        onTap: () {
-                          setState(() {
-                            manager.selectedItem = item;
-                          });
-                          Navigator.pop(context);
-                          if (manager.isActiveField == 1) {
-                            manager.calculateConversion();
-                          } else {
-                            manager.calculateWithPriceChange();
-                          }
-                        },
-                        fromTo: 2,
-                      );
-                  },
-                ):
-                ListView.builder(
-                  itemCount: cryptoRates?.rates?.length,
-                  itemBuilder: (context, index) {
-                    Rate? item = cryptoRates?.rates?[index];
-                    return
-                      SearchTiles(
-                        item: item,
-                        onTap: () {
-                          setState(() {
-                            manager.selectedItem = item;
-                          });
-                          Navigator.pop(context);
-                          if (manager.isActiveField == 1) {
-                            manager.calculateConversion();
-                          } else {
-                            manager.calculateWithPriceChange();
-                          }
-                        },
-                        fromTo:2,
-                      );
-
+                    );
                   },
                 ),
-              ),
-            ],
-          ),
-        );
-      }
-    )
-
-    );
-
+                SpacerVertical(height: Pad.pad10),
+                Expanded(
+                  child: manager.searchSymbol.isNotEmpty
+                      ? ListView.builder(
+                          itemCount: manager.searchSymbol.length,
+                          itemBuilder: (context, index) {
+                            Rate item = manager.searchSymbol[index];
+                            return SearchTiles(
+                              item: item,
+                              onTap: () {
+                                setState(() {
+                                  manager.selectedSymbol = item;
+                                });
+                                Navigator.pop(context);
+                                if (manager.isActiveField == 1) {
+                                  manager.calculateConversion();
+                                } else {
+                                  manager.calculateWithPriceChange();
+                                }
+                              },
+                              fromTo: 1,
+                            );
+                          },
+                        )
+                      : ListView.builder(
+                          itemCount: cryptoRates?.cryptoSymbol?.length,
+                          itemBuilder: (context, index) {
+                            Rate? item = cryptoRates?.cryptoSymbol?[index];
+                            return SearchTiles(
+                              item: item,
+                              onTap: () {
+                                setState(() {
+                                  manager.selectedSymbol = item;
+                                });
+                                Navigator.pop(context);
+                                if (manager.isActiveField == 1) {
+                                  manager.calculateConversion();
+                                } else {
+                                  manager.calculateWithPriceChange();
+                                }
+                              },
+                              fromTo: 1,
+                            );
+                          },
+                        ),
+                ),
+              ],
+            ),
+          );
+        }));
   }
 
-
+  void showCurrency(BuildContext context) {
+    BaseBottomSheet().bottomSheet(
+        barrierColor: ThemeColors.neutral5.withValues(alpha: 0.7),
+        child: Builder(builder: (context) {
+          BillionairesManager manager = context.watch<BillionairesManager>();
+          CryptoData? cryptoRates = manager.cryptoDetailRes?.cryptoData;
+          TextEditingController searchController = TextEditingController();
+          return SizedBox(
+            height: MediaQuery.of(context).size.height * 0.6,
+            child: Column(
+              children: [
+                BaseHeading(
+                  title: "Select Currency",
+                  titleStyle: styleBaseBold(),
+                ),
+                SpacerVertical(height: 10),
+                BaseTextField(
+                  placeholder: "Search",
+                  controller: searchController,
+                  textCapitalization: TextCapitalization.words,
+                  keyboardType: TextInputType.name,
+                  onChanged: (values) {
+                    if (_timer != null) {
+                      _timer!.cancel();
+                    }
+                    _timer = Timer(
+                      const Duration(milliseconds: 1000),
+                      () {
+                        manager.getSearchOfCurrency(values);
+                      },
+                    );
+                  },
+                ),
+                SpacerVertical(height: Pad.pad10),
+                Expanded(
+                  child: manager.searchCurrency.isNotEmpty
+                      ? ListView.builder(
+                          itemCount: manager.searchCurrency.length,
+                          itemBuilder: (context, index) {
+                            Rate item = manager.searchCurrency[index];
+                            return SearchTiles(
+                              item: item,
+                              onTap: () {
+                                setState(() {
+                                  manager.selectedItem = item;
+                                });
+                                Navigator.pop(context);
+                                if (manager.isActiveField == 1) {
+                                  manager.calculateConversion();
+                                } else {
+                                  manager.calculateWithPriceChange();
+                                }
+                              },
+                              fromTo: 2,
+                            );
+                          },
+                        )
+                      : ListView.builder(
+                          itemCount: cryptoRates?.rates?.length,
+                          itemBuilder: (context, index) {
+                            Rate? item = cryptoRates?.rates?[index];
+                            return SearchTiles(
+                              item: item,
+                              onTap: () {
+                                setState(() {
+                                  manager.selectedItem = item;
+                                });
+                                Navigator.pop(context);
+                                if (manager.isActiveField == 1) {
+                                  manager.calculateConversion();
+                                } else {
+                                  manager.calculateWithPriceChange();
+                                }
+                              },
+                              fromTo: 2,
+                            );
+                          },
+                        ),
+                ),
+              ],
+            ),
+          );
+        }));
+  }
 }

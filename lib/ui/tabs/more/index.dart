@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/managers/home/home.dart';
@@ -66,7 +67,7 @@ class MoreIndex extends StatelessWidget {
                 manager.navigateToMySubscription(viewPlans: false);
               },
             ),
-            if (homeRes?.showCrypto == true)
+            if (homeRes?.showCrypto == true || kDebugMode)
               MoreItem(
                 icon: Images.bitcoin,
                 label: "Cryptocurrencies",

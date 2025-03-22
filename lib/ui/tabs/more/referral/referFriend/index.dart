@@ -30,7 +30,7 @@ class _ReferAFriendState extends State<ReferAFriend> {
     manager.getData();
     Utils().showLog("SHRE URL ***** => $shareUrl  => ${shareUrl == null}");
 
-    if (shareUrl == null) {
+    if (shareUrl == null || shareUrl == "") {
       AppsFlyerService.instance.createUserInvitationLink();
     }
   }

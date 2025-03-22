@@ -36,7 +36,7 @@ class ToolsManager extends ChangeNotifier {
   }
 
 //MARK: Navigate
-  Future startNavigation(ToolsEnum type) async {
+  Future startNavigation(ToolsEnum type, {int? index}) async {
     UserManager manager = navigatorKey.currentContext!.read<UserManager>();
     // await manager.askLoginScreen();
     // if (manager.user == null) {
@@ -55,7 +55,7 @@ class ToolsManager extends ChangeNotifier {
         Navigator.push(
           navigatorKey.currentContext!,
           MaterialPageRoute(
-            builder: (context) => SignalsIndex(),
+            builder: (context) => SignalsIndex(index: index),
           ),
         );
         break;

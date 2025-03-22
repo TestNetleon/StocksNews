@@ -52,6 +52,15 @@ class _HomeIndexState extends State<HomeIndex> {
               onRefresh: manager.getHomeData,
               margin: EdgeInsets.zero,
               children: [
+                // BaseButton(
+                //   onPressed: () {
+                //     Navigator.push(
+                //         context,
+                //         MaterialPageRoute(
+                //           builder: (context) => TabScrollDemo(),
+                //         ));
+                //   },
+                // ),
                 const BlogHomeIndex(),
                 HomeTopNewsSlider(),
                 // HomeTrendingIndex(),

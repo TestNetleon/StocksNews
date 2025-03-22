@@ -51,21 +51,21 @@ class _NewsDetailIndexState extends State<NewsDetailIndex> {
                 );
               },
       ),
-      body: BaseLoaderContainer(
-        hasData: manager.newsDetail != null && !manager.isLoadingDetail,
-        isLoading: manager.isLoadingDetail,
-        error: manager.errorDetail,
-        showPreparingText: true,
-        onRefresh: _callAPI,
-        child: Stack(
-          children: [
-            NewsDetailData(slug: widget.slug),
-            BaseLockItem(
-              manager: manager,
-              callAPI: _callAPI,
-            ),
-          ],
-        ),
+      body: Stack(
+        children: [
+          BaseLoaderContainer(
+            hasData: manager.newsDetail != null && !manager.isLoadingDetail,
+            isLoading: manager.isLoadingDetail,
+            error: manager.errorDetail,
+            showPreparingText: true,
+            onRefresh: _callAPI,
+            child: NewsDetailData(slug: widget.slug),
+          ),
+          BaseLockItem(
+            manager: manager,
+            callAPI: _callAPI,
+          ),
+        ],
       ),
     );
   }

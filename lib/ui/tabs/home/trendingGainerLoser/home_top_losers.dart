@@ -71,6 +71,7 @@ class _HomeTopLosersState extends State<HomeTopLosers> {
                         ],
                       ),
                     BaseStockAddItem(
+                      size: 30,
                       onTap: (value) {
                         Navigator.pushNamed(context, SDIndex.path, arguments: {
                           'symbol': value.symbol,

@@ -18,7 +18,6 @@ import 'package:stocks_news_new/ui/tabs/more/helpdesk/chats/index.dart';
 import 'package:stocks_news_new/ui/tabs/more/news/detail.dart';
 import 'package:stocks_news_new/ui/tabs/more/referral/index.dart';
 import 'package:stocks_news_new/ui/tabs/tools/simulator/managers/s_pending.dart';
-import 'package:stocks_news_new/ui/tabs/tools/simulator/screens/index.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import '../api/api_requester.dart';
 import '../api/api_response.dart';
