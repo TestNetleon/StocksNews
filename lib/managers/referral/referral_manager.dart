@@ -1,12 +1,10 @@
 import 'dart:convert';
 
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:stocks_news_new/api/api_requester.dart';
 import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/api/apis.dart';
 import 'package:stocks_news_new/models/referral/referral_response.dart';
-import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/ui/base/toaster.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/utils.dart';
