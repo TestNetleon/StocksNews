@@ -58,6 +58,7 @@ class Apis {
   static const leaderboard = "/referrals/leaderboard";
   static const redeemList = "/point-claim-list";
   static const pointClaim = "/point-claim";
+  static const pointClaimLog = "/referrals/claim-point-log";
 
   //MARK: Crypto API
   static const cryptoTabs = "/crypto/tab";
@@ -421,8 +422,8 @@ class Apis {
   static const pointClaimList = "/point-claim-list";
   static const pointsClaim = "/point-claim";
 
-  static const pointClaimLog = "/point-claim-log";
-  static const claimPointLog = "/referrals/claim-point-log";
+  // static const pointClaimLog = "/point-claim-log";
+  // static const claimPointLog = "/referrals/claim-point-log";
 
   static const appsflyerUsers = '/appsflyer-users';
   static const trendingSectors = '/trending-sectors';
