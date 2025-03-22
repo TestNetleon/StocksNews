@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/ui/base/load_more.dart';
-import 'package:stocks_news_new/ui/tabs/tools/tournament/models/leaderboard.dart';
 import 'package:stocks_news_new/ui/tabs/tools/tournament/models/trading_res.dart';
 import 'package:stocks_news_new/ui/tabs/tools/tournament/provider/leaderboard.dart';
 import 'package:stocks_news_new/ui/tabs/tools/tournament/provider/tournament.dart';

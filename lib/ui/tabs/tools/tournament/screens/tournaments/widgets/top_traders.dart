@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:stocks_news_new/ui/base/base_list_divider.dart';
-import 'package:stocks_news_new/ui/tabs/tools/tournament/models/leaderboard.dart';
 import 'package:stocks_news_new/ui/tabs/tools/tournament/models/trading_res.dart';
 import 'package:stocks_news_new/ui/tabs/tools/tournament/screens/tournaments/leaderboard/item.dart';
-import 'package:stocks_news_new/utils/constants.dart';
-import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 
 class TopTraders extends StatelessWidget {

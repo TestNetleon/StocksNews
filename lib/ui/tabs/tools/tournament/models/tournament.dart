@@ -1,6 +1,4 @@
 import 'dart:convert';
-
-import 'package:stocks_news_new/ui/tabs/tools/tournament/models/leaderboard.dart';
 import 'package:stocks_news_new/ui/tabs/tools/tournament/models/tournament_detail.dart';
 import 'package:stocks_news_new/ui/tabs/tools/tournament/models/trading_res.dart';
 

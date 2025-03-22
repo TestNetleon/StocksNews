@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:stocks_news_new/ui/base/base_list_divider.dart';
 import 'package:stocks_news_new/ui/tabs/tools/tournament/models/tournament_detail.dart';
 import 'package:stocks_news_new/ui/tabs/tools/tournament/provider/tournament.dart';
 import 'package:stocks_news_new/utils/colors.dart';

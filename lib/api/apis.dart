@@ -103,7 +103,7 @@ class Apis {
   static const squareOff = '/simulator/trade/close-conditional-trade';
 
   //MARK: TOURNAMENT API
-  static const lTabs = '/home-tab';
+  static const lTabs = '/tournaments/home-tab';
   static const t = '/tournaments';
   static const tLeaderboard = '/tournament/leaderboard/by-date';
   static const tTradeList = '/tournament/trade-list';

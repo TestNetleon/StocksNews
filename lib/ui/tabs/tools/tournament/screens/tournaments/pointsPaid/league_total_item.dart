@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import 'package:stocks_news_new/ui/tabs/tools/tournament/models/leaderboard.dart';
 import 'package:stocks_news_new/ui/tabs/tools/tournament/models/trading_res.dart';
 import 'package:stocks_news_new/ui/tabs/tools/tournament/provider/tournament.dart';
 import 'package:stocks_news_new/utils/colors.dart';
