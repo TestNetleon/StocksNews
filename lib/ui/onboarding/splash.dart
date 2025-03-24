@@ -13,6 +13,7 @@ import 'package:stocks_news_new/ui/onboarding/default_home.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/database/preference.dart';
+import 'package:stocks_news_new/utils/utils.dart';
 import '../base/scaffold.dart';
 import '../../managers/onboarding.dart';
 
@@ -101,6 +102,7 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
 
   void _callAPI() async {
     bool firstTime = await Preference.getShowIntro();
+    Utils().showLog('FIRST TIME $firstTime');
     if (firstTime) {
       OnboardingManager provider = context.read<OnboardingManager>();
       provider.getOnBoardingData();

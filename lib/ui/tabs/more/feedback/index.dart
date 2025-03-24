@@ -86,7 +86,12 @@ class _FeedbackIndexState extends State<FeedbackIndex> {
 
     return BaseScaffold(
       //resizeToAvoidBottomInset: false,
-      appBar: BaseAppBar(showBack: true, title: "Feedback"),
+      appBar: BaseAppBar(
+        showBack: true,
+        title: "Feedback",
+        showSearch: true,
+        showNotification: true,
+      ),
       body: BaseLoaderContainer(
         isLoading: manager.isLoading,
         hasData: manager.feedbackData != null && !manager.isLoading,

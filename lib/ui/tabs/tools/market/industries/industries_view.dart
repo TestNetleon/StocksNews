@@ -41,6 +41,7 @@ class _IndustriesViewIndexState extends State<IndustriesViewIndex> {
           showBack: true,
           title: manager.isLoadingView ? "" : manager.dataView?.title ?? "",
           showSearch: true,
+          showNotification: true,
         ),
         body: BaseLoaderContainer(
           isLoading: manager.isLoadingView,

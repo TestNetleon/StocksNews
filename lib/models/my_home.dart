@@ -104,9 +104,13 @@ class HomeLoginBoxRes {
   final String? agreeUrl;
   final String? buttonText;
   final String? verifyButtonText;
+  final num? androidBuildCode;
+  final num? iosBuildCode;
 
   HomeLoginBoxRes({
     this.id,
+    this.androidBuildCode,
+    this.iosBuildCode,
     this.agreeUrl,
     this.title,
     this.subtitle,
@@ -121,6 +125,8 @@ class HomeLoginBoxRes {
         subtitle: json['subtitle'],
         agreeUrl: json["agree_url"],
         buttonText: json['btn_text'],
+        androidBuildCode: json["android_build_code"],
+        iosBuildCode: json["ios_build_code"],
         verifyButtonText: json['verify_btn_text'],
       );
 
@@ -128,6 +134,8 @@ class HomeLoginBoxRes {
         "id": id,
         'title': title,
         'subtitle': subtitle,
+        "android_build_code": androidBuildCode,
+        "ios_build_code": iosBuildCode,
         "agree_url": agreeUrl,
         "btn_text": buttonText,
         'verify_btn_text': verifyButtonText,

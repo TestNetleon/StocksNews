@@ -33,7 +33,11 @@ class _CategoriesNewsIndexState extends State<CategoriesNewsIndex> {
     NewsManager manager = context.watch<NewsManager>();
 
     return BaseScaffold(
-      appBar: BaseAppBar(showDrawer: true, showSearch: true),
+      appBar: BaseAppBar(
+        showDrawer: true,
+        showSearch: true,
+        showNotification: true,
+      ),
       drawer: MoreIndex(),
       body: BaseLoaderContainer(
         hasData: manager.categoriesData?.data != null &&

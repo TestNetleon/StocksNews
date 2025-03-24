@@ -34,6 +34,17 @@ class MoreDrawerHeader extends StatelessWidget {
             child: Consumer<UserManager>(
               builder: (context, value, child) {
                 UserRes? user = value.user;
+                bool phonePresent = user?.phone != null && user?.phone != '';
+                bool emailPresent = user?.email != null && user?.email != '';
+                bool namePresent = user?.name != null && user?.name != '';
+                bool displayNamePresent =
+                    user?.displayName != null && user?.displayName != '';
+
+                bool verified = phonePresent &&
+                    emailPresent &&
+                    namePresent &&
+                    displayNamePresent;
+
                 if (user == null) {
                   return Consumer<MyHomeManager>(
                     builder: (context, homeManager, child) {
@@ -124,6 +135,51 @@ class MoreDrawerHeader extends StatelessWidget {
                             .displaySmall
                             ?.copyWith(height: 1.5),
                       ),
+                    ),
+                    SpacerVertical(height: 15),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Flexible(
+                          child: Column(
+                            children: [
+                              Icon(
+                                Icons.verified,
+                                color: verified
+                                    ? ThemeColors.secondary120
+                                    : ThemeColors.sos,
+                                size: 25,
+                              ),
+                              Text(
+                                verified ? 'Verified' : 'Unverified',
+                                style: styleBaseSemiBold(
+                                  height: 1.5,
+                                  fontSize: 14,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        SpacerHorizontal(width: 40),
+                        Flexible(
+                          child: Column(
+                            children: [
+                              Image.asset(
+                                Images.pointIcon2,
+                                height: 25,
+                                width: 25,
+                              ),
+                              Text(
+                                '${user.pointEarn ?? 0} Points',
+                                style: styleBaseSemiBold(
+                                  height: 1.5,
+                                  fontSize: 14,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
                     ),
                     BaseListDivider(height: 30),
                     InkWell(

@@ -45,6 +45,7 @@ class _BlogsDetailIndexState extends State<BlogsDetailIndex> {
       appBar: BaseAppBar(
         showBack: true,
         showSearch: true,
+        showNotification: true,
         shareURL: postDetail?.shareUrl == null || postDetail?.shareUrl == ''
             ? null
             : () {

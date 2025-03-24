@@ -69,6 +69,8 @@ class _FaqIndexState extends State<FaqIndex> {
       appBar: BaseAppBar(
         showBack: true,
         title: manager.faqData?.title ?? "FAQ’s",
+        showSearch: true,
+        showNotification: true,
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(

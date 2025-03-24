@@ -53,7 +53,9 @@ class HelpDeskAllChatsItemNew extends StatelessWidget {
                           context,
                           MaterialPageRoute(
                             builder: (_) => BaseScaffold(
-                              appBar: const BaseAppBar(showBack: true),
+                              appBar: const BaseAppBar(
+                                showBack: true,
+                              ),
                               body: Center(
                                 child: PhotoView(
                                   imageProvider: NetworkImage(imageUrl),

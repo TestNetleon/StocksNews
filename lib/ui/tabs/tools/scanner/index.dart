@@ -1,10 +1,14 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/models/market/market_res.dart';
+import 'package:stocks_news_new/routes/my_app.dart';
+import 'package:stocks_news_new/ui/base/app_bar.dart';
 import 'package:stocks_news_new/ui/base/button.dart';
 import 'package:stocks_news_new/ui/base/lock.dart';
 import 'package:stocks_news_new/ui/base/scaffold.dart';
+import 'package:stocks_news_new/ui/tabs/more/index.dart';
 import 'package:stocks_news_new/ui/tabs/tools/scanner/manager/gainers.dart';
 import 'package:stocks_news_new/ui/tabs/tools/scanner/manager/losers.dart';
 import 'package:stocks_news_new/ui/tabs/tools/scanner/manager/scanner.dart';
@@ -14,6 +18,7 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/custom/base_loader_container.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
+import 'package:visibility_detector/visibility_detector.dart';
 import '../../../base/common_tab.dart';
 import 'models/scanner_port.dart';
 import 'screens/extra/header.dart';
@@ -33,6 +38,16 @@ class ToolsScannerIndex extends StatefulWidget {
 
 class _ToolsScannerIndexState extends State<ToolsScannerIndex>
     with WidgetsBindingObserver {
+  void _startStream() {
+    print('Stream started');
+    // Start your stream here
+  }
+
+  void _stopStream() {
+    print('Stream stopped');
+    // Stop your stream here
+  }
+
   List<MarketResData> tabs = [
     MarketResData(title: 'SCANNER', slug: 'slug'),
     MarketResData(title: 'GAINERS', slug: 'gainers'),
@@ -42,12 +57,11 @@ class _ToolsScannerIndexState extends State<ToolsScannerIndex>
   @override
   void initState() {
     super.initState();
-    setState(() {});
 
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      WidgetsBinding.instance.addObserver(this);
-      context.read<ScannerManager>().getScannerPorts(reset: true);
-    });
+    // WidgetsBinding.instance.addPostFrameCallback((_) {
+    //   WidgetsBinding.instance.addObserver(this);
+    //   context.read<ScannerManager>().getScannerPorts(reset: true);
+    // });
   }
 
   @override
@@ -68,6 +82,18 @@ class _ToolsScannerIndexState extends State<ToolsScannerIndex>
     super.dispose();
   }
 
+  _stopAllStreams() {
+    ScannerManager manager =
+        navigatorKey.currentContext!.read<ScannerManager>();
+    ScannerGainersManager gainersManager =
+        navigatorKey.currentContext!.read<ScannerGainersManager>();
+    ScannerLosersManager losersManager =
+        navigatorKey.currentContext!.read<ScannerLosersManager>();
+    manager.stopListeningPorts();
+    gainersManager.stopListeningPorts();
+    losersManager.stopListeningPorts();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Consumer<ScannerManager>(
@@ -77,75 +103,92 @@ class _ToolsScannerIndexState extends State<ToolsScannerIndex>
         CheckMarketOpenRes? checkMarketOpenApi =
             value.portData?.port?.checkMarketOpenApi;
 
-        return PopScope(
-          onPopInvokedWithResult: (didPop, result) {
-            ScannerGainersManager gainersManager =
-                context.read<ScannerGainersManager>();
-            ScannerLosersManager losersManager =
-                context.read<ScannerLosersManager>();
-
-            value.stopListeningPorts();
-            gainersManager.stopListeningPorts();
-            losersManager.stopListeningPorts();
+        return VisibilityDetector(
+          key: const Key('scanner-screen'),
+          onVisibilityChanged: (info) {
+            bool currentlyVisible = info.visibleFraction > 0;
+            if (kDebugMode) {
+              print('Scanner Visibility $currentlyVisible');
+            }
+            if (currentlyVisible) {
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                WidgetsBinding.instance.addObserver(this);
+                navigatorKey.currentContext!
+                    .read<ScannerManager>()
+                    .getScannerPorts(reset: true);
+              });
+            } else {
+              _stopAllStreams();
+            }
           },
-          child: BaseScaffold(
-            body: Stack(
-              children: [
-                BaseLoaderContainer(
-                  hasData: value.portData != null,
-                  isLoading:
-                      value.isLoadingPort && value.portData?.port == null,
-                  error: value.errorPort,
-                  showPreparingText: true,
-                  child: Column(
-                    children: [
-                      BaseTabs(
-                        selectedIndex: 1,
-                        data: tabs,
-                        isScrollable: false,
-                        onTap: value.onTabChange,
-                      ),
-                      Expanded(
-                        child: Stack(
-                          fit: StackFit.expand,
-                          children: [
-                            Column(
-                              children: [
-                                MarketScannerHeader(isOnline: startStream),
-                                if (value.selectedIndex != 0)
-                                  ScannerSubHeaderTab(
-                                    key: ValueKey(value.selectedSubIndex),
-                                  ),
-                                MarketSortingHeader(),
-                                if (value.selectedIndex == 0) ScannerIndex(),
-                                if (value.selectedIndex == 1)
-                                  ScannerGainersIndex(),
-                                if (value.selectedIndex == 2)
-                                  ScannerLosersIndex(),
-                              ],
-                            ),
-                            if (value.selectedIndex == 0 &&
-                                checkMarketOpenApi?.scannerStatus == 1)
-                              _showBanner(),
-                            if (value.selectedIndex == 1 &&
-                                checkMarketOpenApi?.gainerStatus == 1)
-                              _showBanner(),
-                            if (value.selectedIndex == 2 &&
-                                checkMarketOpenApi?.loserStatus == 1)
-                              _showBanner(),
-                          ],
+          child: PopScope(
+            onPopInvokedWithResult: (didPop, result) {
+              _stopAllStreams();
+            },
+            child: BaseScaffold(
+              appBar: BaseAppBar(
+                showSearch: true,
+                showNotification: true,
+              ),
+              drawer: MoreIndex(),
+              body: Stack(
+                children: [
+                  BaseLoaderContainer(
+                    hasData: value.portData != null,
+                    isLoading:
+                        value.isLoadingPort && value.portData?.port == null,
+                    error: value.errorPort,
+                    showPreparingText: true,
+                    child: Column(
+                      children: [
+                        BaseTabs(
+                          selectedIndex: 1,
+                          data: tabs,
+                          isScrollable: false,
+                          onTap: value.onTabChange,
                         ),
-                      )
-                    ],
+                        Expanded(
+                          child: Stack(
+                            fit: StackFit.expand,
+                            children: [
+                              Column(
+                                children: [
+                                  MarketScannerHeader(isOnline: startStream),
+                                  if (value.selectedIndex != 0)
+                                    ScannerSubHeaderTab(
+                                      key: ValueKey(value.selectedSubIndex),
+                                    ),
+                                  MarketSortingHeader(),
+                                  if (value.selectedIndex == 0) ScannerIndex(),
+                                  if (value.selectedIndex == 1)
+                                    ScannerGainersIndex(),
+                                  if (value.selectedIndex == 2)
+                                    ScannerLosersIndex(),
+                                ],
+                              ),
+                              if (value.selectedIndex == 0 &&
+                                  checkMarketOpenApi?.scannerStatus == 1)
+                                _showBanner(),
+                              if (value.selectedIndex == 1 &&
+                                  checkMarketOpenApi?.gainerStatus == 1)
+                                _showBanner(),
+                              if (value.selectedIndex == 2 &&
+                                  checkMarketOpenApi?.loserStatus == 1)
+                                _showBanner(),
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
                   ),
-                ),
-                BaseLockItem(
-                  manager: value,
-                  callAPI: () async {
-                    await value.getScannerPorts(reset: true);
-                  },
-                ),
-              ],
+                  BaseLockItem(
+                    manager: value,
+                    callAPI: () async {
+                      await value.getScannerPorts(reset: true);
+                    },
+                  ),
+                ],
+              ),
             ),
           ),
         );

@@ -149,6 +149,10 @@ class AppsFlyerService {
             getReferralCodeIfAny(result.deepLink?.deepLinkValue);
             return;
           }
+          if (!(deepLinkUrl.startsWith('http') ||
+              deepLinkUrl.startsWith('https'))) {
+            return;
+          }
           getDistributorCodeIfAny(deepLinkUrl);
           handleDeepLinkNavigation(uri: Uri.tryParse(deepLinkUrl));
         }

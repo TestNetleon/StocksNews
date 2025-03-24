@@ -36,6 +36,8 @@ class _NotificationSettingsState extends State<NotificationSettings> {
       appBar: BaseAppBar(
         title: "Notification Settings",
         showBack: true,
+        showSearch: true,
+        showNotification: true,
         onSaveClick: () {},
       ),
       body: BaseLoaderContainer(

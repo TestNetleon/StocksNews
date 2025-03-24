@@ -11,6 +11,7 @@ import 'package:stocks_news_new/maintenance/box.dart';
 import 'package:stocks_news_new/managers/user.dart';
 import 'package:stocks_news_new/modals/in_app_msg_res.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
+import 'package:stocks_news_new/ui/base/app_update.dart';
 import 'package:stocks_news_new/ui/stockDetail/index.dart';
 import 'package:stocks_news_new/ui/tabs/more/articles/detail.dart';
 import 'package:stocks_news_new/ui/tabs/more/articles/index.dart';
@@ -277,16 +278,25 @@ Future<ApiResponse> apiRequest({
 void _checkForNewVersion(Extra extra, {removeForceLogin = false}) async {
   PackageInfo packageInfo = await PackageInfo.fromPlatform();
   String buildCode = packageInfo.buildNumber;
+
   if ((Platform.isAndroid &&
-          (extra.androidBuildCode ?? 0) > int.parse(buildCode)) &&
+          (extra.updateApp?.androidBuildCode ?? 0) > int.parse(buildCode)) &&
       !isAppUpdating) {
     isAppUpdating = true;
     //app update
+    Navigator.push(
+      navigatorKey.currentContext!,
+      createRoute(BaseAppUpdate(data: extra.updateApp)),
+    );
   } else if ((Platform.isIOS &&
-          (extra.iOSBuildCode ?? 0) > int.parse(buildCode)) &&
+          (extra.updateApp?.iosBuildCode ?? 0) > int.parse(buildCode)) &&
       !isAppUpdating) {
     isAppUpdating = true;
     //app update
+    Navigator.push(
+      navigatorKey.currentContext!,
+      createRoute(BaseAppUpdate(data: extra.updateApp)),
+    );
   }
 }
 

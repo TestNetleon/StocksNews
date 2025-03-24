@@ -33,6 +33,8 @@ class _HelpDeskAllChatsIndexState extends State<HelpDeskAllChatsIndex> {
       appBar: BaseAppBar(
         showBack: true,
         title: "Ticket Number: ${manager.chatData?.chatRes?.ticketNo ?? ""}",
+        showSearch: true,
+        showNotification: true,
       ),
       body: AllChatNewListing(
         ticketId: widget.ticketId,

@@ -41,7 +41,9 @@ class _BillionairesIndexState extends State<BillionairesIndex> {
     return BaseScaffold(
       appBar: BaseAppBar(
         showBack: true,
-        title: !manager.isLoading?manager.categoriesData?.title ?? "":"",
+        title: !manager.isLoading ? manager.categoriesData?.title ?? "" : "",
+        showSearch: true,
+        showNotification: true,
       ),
       body: BaseLoaderContainer(
           isLoading: manager.isLoading,
@@ -61,10 +63,13 @@ class _BillionairesIndexState extends State<BillionairesIndex> {
                 showDivider: false,
               ),
               SpacerVertical(height: Pad.pad10),
-              if (manager.selectedScreen == 0) Expanded(child: Cryptocurrencies()),
-              if (manager.selectedScreen == 1) Expanded(child: MyWatchListIndex()),
-              if (manager.selectedScreen == 2) Expanded(child:ConverterIndex()),
-              if (manager.selectedScreen == 3)  Expanded(child: ExchangeIndex())
+              if (manager.selectedScreen == 0)
+                Expanded(child: Cryptocurrencies()),
+              if (manager.selectedScreen == 1)
+                Expanded(child: MyWatchListIndex()),
+              if (manager.selectedScreen == 2)
+                Expanded(child: ConverterIndex()),
+              if (manager.selectedScreen == 3) Expanded(child: ExchangeIndex())
             ],
           )),
     );

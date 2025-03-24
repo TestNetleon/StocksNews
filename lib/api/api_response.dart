@@ -4,6 +4,7 @@ import 'package:stocks_news_new/modals/home_trending_res.dart';
 import 'package:stocks_news_new/modals/in_app_msg_res.dart';
 import 'package:stocks_news_new/modals/referral_res.dart';
 import 'package:stocks_news_new/modals/user_res.dart';
+import 'package:stocks_news_new/models/my_home.dart';
 
 import '../modals/membership.dart';
 import '../modals/stockDetailRes/earnings.dart';
@@ -44,6 +45,8 @@ class ApiResponse {
 }
 
 class Extra {
+  final HomeLoginBoxRes? updateApp;
+
   final DateTime? reponseTime;
   final List<String>? feebackType;
   final String? search;
@@ -61,10 +64,10 @@ class Extra {
   final int? userAlert;
   final InAppNotification? inAppMsg;
   final MaintenanceDialog? maintenance;
-  final String? androidBuildVersion;
-  final int? androidBuildCode;
-  final String? iOSBuildVersion;
-  final int? iOSBuildCode;
+  // final String? androidBuildVersion;
+  // final int? androidBuildCode;
+  // final String? iOSBuildVersion;
+  // final int? iOSBuildCode;
   final String? appUpdateTitle;
   final String? appUpdateMsg;
   final String? title;
@@ -149,6 +152,7 @@ class Extra {
   // final num? isRegistered;
 
   Extra({
+    this.updateApp,
     this.showStockScanner,
     this.showStockScannerApp,
     this.executable,
@@ -224,10 +228,10 @@ class Extra {
     this.subTitle,
     this.inAppMsg,
     this.maintenance,
-    this.androidBuildVersion,
-    this.androidBuildCode,
-    this.iOSBuildVersion,
-    this.iOSBuildCode,
+    // this.androidBuildVersion,
+    // this.androidBuildCode,
+    // this.iOSBuildVersion,
+    // this.iOSBuildCode,
     this.appUpdateTitle,
     this.appUpdateMsg,
     this.apiKeyFMP,
@@ -251,6 +255,9 @@ class Extra {
 
   factory Extra.fromJson(Map<String, dynamic> json) => Extra(
         search: json["search"],
+        updateApp: json["app_update"] == null
+            ? null
+            : HomeLoginBoxRes.fromJson(json["app_update"]),
         showStockScanner: json['show_stock_scanner'],
         showStockScannerApp: json['show_stock_scanner_app'],
         executable: json['is_trade_executable'],
@@ -403,10 +410,10 @@ class Extra {
         maintenance: json["maintenance"] == null
             ? null
             : MaintenanceDialog.fromJson(json["maintenance"]),
-        androidBuildVersion: json["android_build_version"],
-        androidBuildCode: json["android_build_code"],
-        iOSBuildVersion: json["ios_build_version"],
-        iOSBuildCode: json["ios_build_code"],
+        // androidBuildVersion: json["android_build_version"],
+        // androidBuildCode: json["android_build_code"],
+        // iOSBuildVersion: json["ios_build_version"],
+        // iOSBuildCode: json["ios_build_code"],
         appUpdateTitle: json["app_update_title"],
         appUpdateMsg: json["app_update_msg"],
         apiKeyFMP: json["api_key"],
@@ -439,6 +446,7 @@ class Extra {
       );
 
   Map<String, dynamic> toJson() => {
+        'app_update': updateApp?.toJson(),
         'showStockScanner': showStockScanner,
         'show_stock_scanner_app': showStockScannerApp,
         'is_trade_executable': executable,
@@ -526,19 +534,19 @@ class Extra {
         "text": text?.toJson(),
         "in_app_notification": inAppMsg?.toJson(),
         "maintenance": maintenance?.toJson(),
-        "android_build_version": androidBuildVersion,
+        // "android_build_version": androidBuildVersion,
         "period":
             period == null ? [] : List<dynamic>.from(period!.map((x) => x)),
         "type": type == null ? [] : List<dynamic>.from(type!.map((x) => x)),
-        "android_build_code": androidBuildCode,
+        // "android_build_code": androidBuildCode,
         "login_text": loginText,
         "signup_text": signUpText,
-        "ios_build_version": iOSBuildVersion,
+        // "ios_build_version": iOSBuildVersion,
         "points_summary": pointsSummary == null
             ? []
             : List<dynamic>.from(pointsSummary!.map((x) => x.toJson())),
 
-        "ios_build_code": iOSBuildCode,
+        // "ios_build_code": iOSBuildCode,
         "app_update_title": appUpdateTitle,
         "app_update_msg": appUpdateMsg,
         "api_key": apiKeyFMP,

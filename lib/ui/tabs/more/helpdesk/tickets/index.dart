@@ -21,6 +21,8 @@ class HelpDeskCreateIndex extends StatelessWidget {
       appBar: BaseAppBar(
         showBack: true,
         title: manager.data?.title,
+        showSearch: true,
+        showNotification: true,
       ),
       body: Column(
         children: [

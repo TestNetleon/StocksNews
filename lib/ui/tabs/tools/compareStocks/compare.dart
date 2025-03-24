@@ -36,7 +36,8 @@ class _ToolsCompareIndexState extends State<ToolsCompareIndex> {
     return BaseScaffold(
       appBar: BaseAppBar(
         showBack: true,
-        showSearch: false,
+        showSearch: true,
+        showNotification: true,
         title: manager.compareData?.title,
       ),
       body: loginRequired != null && !manager.isLoadingCompare

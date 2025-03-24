@@ -41,6 +41,8 @@ class _MorningStarReportsIndexState extends State<MorningStarReportsIndex> {
           appBar: BaseAppBar(
             showBack: true,
             title: value.data?.title ?? '',
+            showSearch: true,
+            showNotification: true,
           ),
           body: loginRequired != null && !value.isLoading
               ? BaseLoginRequired(

@@ -48,6 +48,8 @@ class _SignalInsidersCompanyIndexState
     return BaseScaffold(
       appBar: BaseAppBar(
         showBack: true,
+        showSearch: true,
+        showNotification: true,
         title: manager.signalInsidersCompanyData?.title,
       ),
       body: BaseLoaderContainer(

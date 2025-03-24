@@ -18,7 +18,7 @@ class ToolsIndex extends StatelessWidget {
     ToolsManager manager = context.watch<ToolsManager>();
 
     return BaseScaffold(
-      appBar: BaseAppBar(),
+      appBar: BaseAppBar(showNotification: true, showSearch: true),
       drawer: MoreIndex(),
       body: BaseLoaderContainer(
         isLoading: manager.isLoading,

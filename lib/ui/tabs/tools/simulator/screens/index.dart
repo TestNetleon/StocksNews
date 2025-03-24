@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:stocks_news_new/ui/base/app_bar.dart';
 import 'package:stocks_news_new/ui/base/button.dart';
 import 'package:stocks_news_new/ui/base/common_tab.dart';
 import 'package:stocks_news_new/ui/base/scaffold.dart';
+import 'package:stocks_news_new/ui/tabs/more/index.dart';
 import 'package:stocks_news_new/ui/tabs/tools/scanner/manager/scanner.dart';
 import 'package:stocks_news_new/ui/tabs/tools/simulator/managers/portpolio.dart';
 import 'package:stocks_news_new/ui/tabs/tools/simulator/screens/open/index.dart';
@@ -62,10 +64,11 @@ class _SimulatorIndexState extends State<SimulatorIndex> {
         SSEManager.instance.disconnectAllScreens();
       },
       child: BaseScaffold(
-        // appBar: BaseAppBar(
-        //   showBack: true,
-        //   title: "Trading Simulator",
-        // ),
+        appBar: BaseAppBar(
+          showSearch: true,
+          showNotification: true,
+        ),
+        drawer: MoreIndex(),
         body: Stack(
           children: [
             BaseLoaderContainer(

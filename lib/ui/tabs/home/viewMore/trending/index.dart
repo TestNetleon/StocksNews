@@ -50,7 +50,11 @@ class _TrendingViewAllIndexState extends State<TrendingViewAllIndex> {
     }
 
     return BaseScaffold(
-      appBar: BaseAppBar(showBack: true),
+      appBar: BaseAppBar(
+        showBack: true,
+        showSearch: true,
+        showNotification: true,
+      ),
       body: _tabs == null
           ? SizedBox()
           : Column(

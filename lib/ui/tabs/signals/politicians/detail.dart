@@ -48,6 +48,8 @@ class _SignalPoliticianDetailIndexState
       appBar: BaseAppBar(
         showBack: true,
         title: manager.signalPoliticianDetailData?.title,
+        showSearch: true,
+        showNotification: true,
       ),
       body: BaseLoaderContainer(
         isLoading: manager.isLoadingPoliticianDetail,

@@ -38,7 +38,11 @@ class _BlogsIndexState extends State<BlogsIndex> {
     BlogsManager manager = context.watch<BlogsManager>();
 
     return BaseScaffold(
-      appBar: BaseAppBar(showBack: true),
+      appBar: BaseAppBar(
+        showBack: true,
+        showSearch: true,
+        showNotification: true,
+      ),
       body: BaseLoaderContainer(
         hasData: manager.blogs != null,
         isLoading: manager.isLoading,

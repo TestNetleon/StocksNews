@@ -44,9 +44,9 @@ class _SignalsIndexState extends State<SignalsIndex> {
     return BaseScaffold(
       appBar: BaseAppBar(
         showSearch: true,
-        // showDrawer: true,
+        showNotification: true,
         showBack: true,
-        leadingFilterClick: manager.selectedScreen == 2 ? _onFilterClick : null,
+        // leadingFilterClick: manager.selectedScreen == 2 ? _onFilterClick : null,
       ),
       // drawer: MoreIndex(),
       body: Column(
