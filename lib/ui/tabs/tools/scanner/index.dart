@@ -58,10 +58,10 @@ class _ToolsScannerIndexState extends State<ToolsScannerIndex>
   void initState() {
     super.initState();
 
-    // WidgetsBinding.instance.addPostFrameCallback((_) {
-    //   WidgetsBinding.instance.addObserver(this);
-    //   context.read<ScannerManager>().getScannerPorts(reset: true);
-    // });
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      WidgetsBinding.instance.addObserver(this);
+      context.read<ScannerManager>().setUsingFilter(false);
+    });
   }
 
   @override
@@ -111,6 +111,7 @@ class _ToolsScannerIndexState extends State<ToolsScannerIndex>
               print('Scanner Visibility $currentlyVisible');
             }
             if (currentlyVisible) {
+              if (value.usingFilter) return;
               WidgetsBinding.instance.addPostFrameCallback((_) {
                 WidgetsBinding.instance.addObserver(this);
                 navigatorKey.currentContext!
@@ -118,6 +119,7 @@ class _ToolsScannerIndexState extends State<ToolsScannerIndex>
                     .getScannerPorts(reset: true);
               });
             } else {
+              if (value.usingFilter) return;
               _stopAllStreams();
             }
           },

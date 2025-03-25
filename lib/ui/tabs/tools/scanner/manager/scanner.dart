@@ -40,6 +40,14 @@ class ScannerManager extends ChangeNotifier {
 //MARK: Call API
   int selectedIndex = -1;
 
+  bool _usingFilter = false;
+  bool get usingFilter => _usingFilter;
+
+  setUsingFilter(value) {
+    _usingFilter = value;
+    notifyListeners();
+  }
+
   onTabChange(index) {
     if (selectedIndex != index) {
       selectedIndex = index;
@@ -54,7 +62,7 @@ class ScannerManager extends ChangeNotifier {
       await getScannerPorts(showProgress: true);
     }
     if (_portData?.lockInfo != null) return;
-
+    setUsingFilter(false);
     ScannerGainersManager gainersManager =
         navigatorKey.currentContext!.read<ScannerGainersManager>();
     ScannerLosersManager losersManager =

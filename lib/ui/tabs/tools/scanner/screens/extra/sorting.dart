@@ -69,6 +69,7 @@ class _MarketSortingHeaderState extends State<MarketSortingHeader> {
                         visible: value.selectedIndex == 0,
                         child: InkWell(
                           onTap: () {
+                            value.setUsingFilter(true);
                             Navigator.push(
                                 context, createRoute(ScannerFilters()));
                           },

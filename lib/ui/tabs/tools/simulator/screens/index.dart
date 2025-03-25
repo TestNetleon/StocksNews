@@ -200,30 +200,6 @@ class _SimulatorIndexState extends State<SimulatorIndex> {
                       ],
                     ),
                   ),
-                  //  Expanded(
-                  //   child:
-                  //   CommonTabContainer(
-                  //     initialIndex: widget.initialIndex,
-                  //     scrollable: false,
-                  //     tabPaddingNew: false,
-                  //     //tabLabelPadding: true,
-                  //     physics: const NeverScrollableScrollPhysics(),
-                  //     tabs: manager.userData?.userDataRes?.userConditionalOrderPermission?.recurringOrder == true? ["Open","Pending","Transactions","Recurring"]:["Open","Pending","Transactions"],
-                  //     widgets:
-                  //     manager.userData?.userDataRes?.userConditionalOrderPermission?.recurringOrder == true?
-                  //     [
-                  //       SOpenList(),
-                  //       SPendingList(),
-                  //       STransactionList(),
-                  //       SRecurringList(),
-                  //     ]:
-                  //     [
-                  //       SOpenList(),
-                  //       SPendingList(),
-                  //       STransactionList(),
-                  //     ],
-                  //   ),
-                  // ),
                   BaseButton(
                     textSize: 16,
                     onPressed: () {
