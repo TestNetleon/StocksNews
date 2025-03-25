@@ -42,7 +42,7 @@ class _NewsDetailIndexState extends State<NewsDetailIndex> {
       appBar: BaseAppBar(
         showBack: true,
         showSearch: true,
-        showNotification: true,
+        // showNotification: true,
         shareURL: postDetail?.shareUrl == null || postDetail?.shareUrl == ''
             ? null
             : () {

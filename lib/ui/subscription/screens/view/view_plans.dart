@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:stocks_news_new/models/market/market_res.dart';
 import 'package:stocks_news_new/ui/base/button.dart';
 import 'package:stocks_news_new/ui/base/common_tab.dart';
+import 'package:stocks_news_new/ui/legal/index.dart';
 import 'package:stocks_news_new/ui/subscription/screens/view/annual.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -92,7 +93,16 @@ class _ViewAllPlansState extends State<ViewAllPlans> {
                   ),
                   Flexible(
                     child: GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          createRoute(
+                            LegalInfoIndex(
+                              slug: 'privacy-policy',
+                            ),
+                          ),
+                        );
+                      },
                       child: Text(
                         'Privacy Policy',
                         style: styleBaseRegular(color: ThemeColors.neutral40),

@@ -227,7 +227,6 @@ class _MarketIndexState extends State<MarketIndex> {
       appBar: BaseAppBar(
         showBack: true,
         showSearch: true,
-        showNotification: true,
       ),
       body: BaseLoaderContainer(
         isLoading: provider.isLoading,
