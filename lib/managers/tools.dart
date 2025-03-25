@@ -7,9 +7,9 @@ import 'package:stocks_news_new/models/tools.dart';
 import 'package:stocks_news_new/ui/base/toaster.dart';
 import 'package:stocks_news_new/ui/tabs/signals/signals.dart';
 import 'package:stocks_news_new/ui/tabs/tabs.dart';
+import 'package:stocks_news_new/ui/tabs/tools/league/screens/game_tournament_index.dart';
 import 'package:stocks_news_new/ui/tabs/tools/market/index.dart';
 import 'package:stocks_news_new/ui/tabs/tools/scanner/index.dart';
-import 'package:stocks_news_new/ui/tabs/tools/tournament/screens/game_tournament_index.dart';
 
 import 'package:stocks_news_new/utils/utils.dart';
 import '../api/api_requester.dart';

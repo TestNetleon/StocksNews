@@ -61,6 +61,18 @@ import 'package:stocks_news_new/ui/tabs/home/scanner/manager/gainers.dart';
 import 'package:stocks_news_new/ui/tabs/home/viewMore/PopularMostBought/index.dart';
 import 'package:stocks_news_new/ui/tabs/home/viewMore/trending/index.dart';
 import 'package:stocks_news_new/ui/tabs/more/referral/pointClaimLog/index.dart';
+import 'package:stocks_news_new/ui/tabs/tools/league/managers/leaderboard.dart';
+import 'package:stocks_news_new/ui/tabs/tools/league/managers/search.dart';
+import 'package:stocks_news_new/ui/tabs/tools/league/managers/tournament.dart';
+import 'package:stocks_news_new/ui/tabs/tools/league/managers/trades.dart';
+import 'package:stocks_news_new/ui/tabs/tools/league/screens/game_tournament_index.dart';
+import 'package:stocks_news_new/ui/tabs/tools/league/screens/myTrades/all_index.dart';
+import 'package:stocks_news_new/ui/tabs/tools/league/screens/tournaments/dayTraining/index.dart';
+import 'package:stocks_news_new/ui/tabs/tools/league/screens/tournaments/dayTraining/open/index.dart';
+import 'package:stocks_news_new/ui/tabs/tools/league/screens/tournaments/pointsPaid/index.dart';
+import 'package:stocks_news_new/ui/tabs/tools/league/screens/tournaments/tournament_user/tournament_user_detail.dart';
+import 'package:stocks_news_new/ui/tabs/tools/league/screens/tournaments/tournament_user/trades_with_date.dart';
+import 'package:stocks_news_new/ui/tabs/tools/league/screens/tournaments/widgets/top_tading.dart';
 import 'package:stocks_news_new/ui/tabs/tools/market/index.dart';
 import 'package:stocks_news_new/ui/tabs/tools/market/industries/industries_view.dart';
 import 'package:stocks_news_new/ui/tabs/tools/market/sectors/sector_view.dart';
@@ -99,13 +111,6 @@ import 'package:stocks_news_new/ui/tabs/tools/simulator/screens/conditionalOrder
 import 'package:stocks_news_new/ui/tabs/tools/simulator/screens/index.dart';
 import 'package:stocks_news_new/ui/tabs/tools/simulator/screens/tickerSearch/index.dart';
 import 'package:stocks_news_new/ui/tabs/tools/simulator/screens/tradeBuySell/index.dart';
-import 'package:stocks_news_new/ui/tabs/tools/tournament/provider/leaderboard.dart';
-import 'package:stocks_news_new/ui/tabs/tools/tournament/provider/search.dart';
-import 'package:stocks_news_new/ui/tabs/tools/tournament/provider/tournament.dart';
-import 'package:stocks_news_new/ui/tabs/tools/tournament/provider/trades.dart';
-import 'package:stocks_news_new/ui/tabs/tools/tournament/screens/game_tournament_index.dart';
-import 'package:stocks_news_new/ui/tabs/tools/tournament/screens/tournaments/pointsPaid/index.dart';
-import 'package:stocks_news_new/ui/tabs/tools/tournament/screens/tournaments/widgets/top_tading.dart';
 import 'package:stocks_news_new/ui/theme/manager.dart';
 
 import 'package:stocks_news_new/utils/constants.dart';
@@ -180,6 +185,7 @@ class Routes {
     MorningStarReportsIndex.path: (_) => const MorningStarReportsIndex(),
     MembershipActionRequired.path: (_) => const MembershipActionRequired(),
     TrendingViewAllIndex.path: (_) => const TrendingViewAllIndex(),
+    LeagueTickersIndex.path: (_) => const LeagueTickersIndex(),
 
     //--------------------------------------
   };
@@ -343,6 +349,47 @@ class Routes {
             );
           },
         );
+      case LeagueUserDetail.path:
+        return MaterialPageRoute(
+          builder: (context) {
+            final arguments = settings.arguments as Map<String, dynamic>?;
+            String? userId = arguments?['userId'];
+            return LeagueUserDetail(
+              userId: userId,
+            );
+          },
+        );
+      case TradesWithDate.path:
+        return MaterialPageRoute(
+          builder: (context) {
+            final arguments = settings.arguments as Map<String, dynamic>?;
+            String? selectedBattleID = arguments?['selectedBattleID'];
+            return TradesWithDate(
+              selectedBattleID: selectedBattleID,
+            );
+          },
+        );
+      case LeagueDayTrainingIndex.path:
+        return MaterialPageRoute(
+          builder: (context) {
+            final arguments = settings.arguments as Map<String, dynamic>?;
+            int? tournamentId = arguments?['tournamentId'];
+            return LeagueDayTrainingIndex(
+              tournamentId: tournamentId,
+            );
+          },
+        );
+      case AllTradesIndex.path:
+        return MaterialPageRoute(
+          builder: (context) {
+            final arguments = settings.arguments as Map<String, dynamic>?;
+            String? typeOfTrade = arguments?['typeOfTrade'];
+            return AllTradesIndex(
+              typeOfTrade: typeOfTrade,
+            );
+          },
+        );
+
 
 
       case SearchTickerIndex.path:
@@ -624,11 +671,9 @@ class Routes {
       ChangeNotifierProvider(create: (_) => SectorsManager()),
       ChangeNotifierProvider(create: (_) => ThemeManager()),
       ChangeNotifierProvider(create: (_) => LeagueManager()),
-
-      // old providers
-      ChangeNotifierProvider(create: (_) => TournamentTradesProvider()),
-      ChangeNotifierProvider(create: (_) => TournamentSearchProvider()),
-      ChangeNotifierProvider(create: (_) => TournamentLeaderboardProvider()),
+      ChangeNotifierProvider(create: (_) => LeaderboardManager()),
+      ChangeNotifierProvider(create: (_) => LeagueSearchManager()),
+      ChangeNotifierProvider(create: (_) => TradesManger()),
 
       // MARKET DATA End ---------------
     ];

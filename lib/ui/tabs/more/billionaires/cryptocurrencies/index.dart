@@ -29,7 +29,6 @@ class _CryptocurrenciesState extends State<Cryptocurrencies>
   @override
   void initState() {
     super.initState();
-
     _scrollController = ScrollController();
   }
 

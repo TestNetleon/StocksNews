@@ -20,6 +20,7 @@ class BaseButtonOutline extends StatelessWidget {
     this.textAlign = TextAlign.center,
     this.textUppercase = false,
     this.borderWidth = 2,
+    this.child,
     super.key,
   });
 
@@ -36,6 +37,7 @@ class BaseButtonOutline extends StatelessWidget {
   final TextAlign? textAlign;
   final bool textUppercase;
   final double borderWidth;
+  final Widget? child;
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +59,9 @@ class BaseButtonOutline extends StatelessWidget {
             ),
           ),
         ),
-        child: Text(
+        child:
+        child ??
+        Text(
           textAlign: textAlign,
           textUppercase ? text.toUpperCase() : text,
           style: fontBold

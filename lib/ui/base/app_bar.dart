@@ -19,7 +19,7 @@ import '../tabs/more/news/detail.dart';
 import 'search/base_search.dart';
 
 class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
-  final bool isHome, showBack, showSearch, showNotification, showDrawer,showTrade;
+  final bool isHome, showBack, showSearch, showNotification, showDrawer,showTrade,searchLeague;
   final Widget? searchFieldWidget;
   final String? title;
   final Function()? onSaveClick;
@@ -28,6 +28,7 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
   final bool showLogo;
   final Function()? leadingFilterClick;
   final Function()? onFilterClick;
+  final Function()? onLSearchClick;
   final void Function()? onTradeClick;
   const BaseAppBar({
     super.key,
@@ -39,6 +40,7 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.title,
     this.showSearch = false,
     this.showNotification = false,
+    this.searchLeague = false,
     this.onSaveClick,
     this.shareURL,
     this.showLogo = true,
@@ -46,6 +48,7 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.leadingFilterClick,
     this.onFilterClick,
     this.onTradeClick,
+    this.onLSearchClick,
   });
 
   @override
@@ -233,6 +236,11 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
                             icon: Icon(
                               Icons.bar_chart,
                             ),
+                          ),
+                        if (searchLeague)
+                          ActionButton(
+                            icon: Images.search,
+                            onTap:onLSearchClick,
                           ),
                         if(onFilterClick!= null)
                           IconButton(

@@ -23,6 +23,7 @@ class BaseTickerRes {
   final String? displayChange;
   num? changesPercentage;
   num? price;
+
   num? change;
 // for Pre Post Stream
   num? changesPercentageEXT;
@@ -57,6 +58,7 @@ class BaseTickerRes {
 
   //extra
   int? isCryptoAdded;
+  num? performance;
   final int? status;
   final String? brief;
   final String? notAvailable;
@@ -132,6 +134,7 @@ class BaseTickerRes {
     this.sType,
 
     //extra
+    this.performance,
     this.revenue,
     this.status,
     this.brief,
@@ -190,6 +193,8 @@ class BaseTickerRes {
         mentionDate: json["mention_date"],
 
         //extra
+    performance: json['performance'],
+    tournamentBattleId: json['tournament_battle_id'],
         isCryptoAdded: json['is_crypto_added'],
         brief: json['brief'],
         status: json['status'],
@@ -270,6 +275,8 @@ class BaseTickerRes {
         "mention_date": mentionDate,
 
         //extra
+        'performance': performance,
+        'tournament_battle_id': tournamentBattleId,
         'is_crypto_added': isCryptoAdded,
         'brief': brief,
         'status': status,

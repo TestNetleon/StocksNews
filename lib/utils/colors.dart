@@ -145,7 +145,6 @@ class ThemeColors {
   static Color disabledBtn = Color(0xFF3C3C43);
   static Color colour8d = Color(0xFF34928d);
   static Color colour29 = Color(0xEADDFF29);
-  static Color colour37 = Color(0xFFEC8F37);
 
   //CATEGORY
   static Color lightGrey = Color(0xFFF0F2F6);
@@ -175,6 +174,9 @@ class ThemeColors {
   static Color bronze = Color(0xffdeae80);
   static Color brown = Color(0xff5e3309);
   static Color darkGold = Color(0xFFCC9A03);
+  //static Color darkPurple = Color(0xFFAF52DE);
+  static Color colour37 = Color(0xFFEC8F37);
+
 
 //Gradient
   static Color gradientGreen = Color(0xFF0E2900);
@@ -204,10 +206,13 @@ class ThemeColors {
     secondary120 = isLightTheme ? Color(0xFF3240D1) : ThemeColors.accent;
     secondary100 = isLightTheme ? Color(0xFF555ED9) : ThemeColors.accent;
     // secondary10 = isLightTheme ? Color(0xFFE8E8FA) : Color(0xFF333333);
+    // secondary10 = isLightTheme ? Color(0xFFE8E8FA) : Color(0xFF333333);
     // Neutral
     // neutral80 = isLightTheme ? Color(0xFF465F8C) : Color(0xFF98A7C2);
 
     navigationBar = isLightTheme ? Colors.black : ThemeColors.accent;
+    //darkPurple = isLightTheme ? Color(0xFFAF52DE) : ThemeColors.accent;
+    colour37 = isLightTheme ? Color(0xFFEC8F37) : ThemeColors.accent;
     // secondary120 = isLightTheme ? Color(0xFF3240D1) : ThemeColors.accent;
 
     neutral80 = isLightTheme ? Color(0xFF465F8C) : Color(0xFFFFFFFF);
