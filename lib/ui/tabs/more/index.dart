@@ -34,7 +34,6 @@ class MoreIndex extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             MoreDrawerHeader(),
-
             BaseHeading(
               margin: EdgeInsets.only(left: Pad.pad16, top: Pad.pad8),
               title: "My Account",

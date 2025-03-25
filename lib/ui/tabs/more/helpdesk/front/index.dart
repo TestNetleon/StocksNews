@@ -49,6 +49,8 @@ class _HelpDeskIndexState extends State<HelpDeskIndex> {
       appBar: BaseAppBar(
         showBack: true,
         title: manager.data?.title ?? "",
+        showSearch: true,
+        showNotification: true,
       ),
       body: BaseLoaderContainer(
         isLoading: manager.isLoadingTickets,

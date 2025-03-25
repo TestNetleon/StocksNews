@@ -33,7 +33,10 @@ class NewsIndex extends StatelessWidget {
         onRefresh: manager.onRefresh,
         canLoadMore: canLoadMore,
         child: ListView.separated(
-            padding: EdgeInsets.symmetric(horizontal: Pad.pad16),
+            padding: EdgeInsets.symmetric(
+              horizontal: Pad.pad16,
+              vertical: Pad.pad16,
+            ),
             itemBuilder: (context, index) {
               BaseNewsRes? data = holdingNews.data?.data?[index];
               if (data == null) {

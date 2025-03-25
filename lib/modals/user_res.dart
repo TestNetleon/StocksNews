@@ -24,7 +24,7 @@ class UserRes {
   final UserMembershipRes? membership;
   int? affiliateStatus;
   String? phoneCode;
-  dynamic pointEarn;
+  num? pointEarn;
   num? selfRank;
   final String? imageType;
 

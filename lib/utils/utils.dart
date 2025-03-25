@@ -15,7 +15,6 @@ import 'package:stocks_news_new/ui/tabs/more/news/detail.dart';
 import 'package:stocks_news_new/ui/tabs/tools/market/index.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:intl/intl.dart';
-import 'package:stocks_news_new/utils/theme.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../routes/my_app.dart';
 import '../ui/tabs/more/helpdesk/front/index.dart';
@@ -216,20 +215,20 @@ String convertToReadableValue(double value) {
 //   }
 // }
 
-void showSnackbar({
-  required context,
-  required message,
-  type = SnackbarType.error,
-}) {
-  final snackBar = SnackBar(
-    backgroundColor: type == SnackbarType.error ? Colors.red : Colors.green,
-    content: Text(
-      message ?? '',
-      style: styleBaseRegular().copyWith(color: Colors.white),
-    ),
-  );
-  ScaffoldMessenger.of(context).showSnackBar(snackBar);
-}
+// void showSnackbar({
+//   required context,
+//   required message,
+//   type = SnackbarType.error,
+// }) {
+//   final snackBar = SnackBar(
+//     backgroundColor: type == SnackbarType.error ? Colors.red : Colors.green,
+//     content: Text(
+//       message ?? '',
+//       style: styleBaseRegular().copyWith(color: Colors.white),
+//     ),
+//   );
+//   ScaffoldMessenger.of(context).showSnackBar(snackBar);
+// }
 
 Route createRoute(Widget widget) {
   return PageRouteBuilder(

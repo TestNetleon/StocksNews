@@ -1,4 +1,3 @@
-
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -64,12 +63,10 @@ class SPendingManager extends ChangeNotifier {
           _extra = (response.extra is Extra ? response.extra as Extra : null);
           _error = null;
 
-          if (_data?.length != null && _data?.isNotEmpty == true) {
-            BrazeService.brazeBaseEvents(
-              attributionKey: 'has_pending_trades',
-              attributeValue: true,
-            );
-          }
+          BrazeService.brazeBaseEvents(
+            attributionKey: 'has_pending_trades',
+            attributeValue: _data?.length != null && _data?.isNotEmpty == true,
+          );
         } else {
           _data?.addAll(
             tsPendingListResFromJson(jsonEncode(response.data)),
@@ -138,8 +135,8 @@ class SPendingManager extends ChangeNotifier {
                 ? "BUY"
                 : "BUY_TO_COVER",
         'edit': '1',
-        'order_type':"MARKET_ORDER",
-        'trade_id':"${_data?[index].id ?? ''}",
+        'order_type': "MARKET_ORDER",
+        'trade_id': "${_data?[index].id ?? ''}",
       };
 
       ApiResponse res = await apiRequest(
@@ -162,17 +159,17 @@ class SPendingManager extends ChangeNotifier {
           showProgress: true,
         );
         if (response.status) {
-          Navigator.pushReplacementNamed(navigatorKey.currentContext!, TradeBuySellIndex.path,
+          Navigator.pushReplacementNamed(
+              navigatorKey.currentContext!, TradeBuySellIndex.path,
               arguments: {
-            "stockType":_data?[index].tradeType == "Buy"
-                ? StockType.buy
-                : _data?[index].tradeType == "Sell"
-                ? StockType.sell
-                : StockType.btc,
-            "qty":res.data['quantity'],
-            "editTradeID": _data?[index].id,
-          }
-          );
+                "stockType": _data?[index].tradeType == "Buy"
+                    ? StockType.buy
+                    : _data?[index].tradeType == "Sell"
+                        ? StockType.sell
+                        : StockType.btc,
+                "qty": res.data['quantity'],
+                "editTradeID": _data?[index].id,
+              });
           /*Navigator.pushReplacement(
             navigatorKey.currentContext!,
             MaterialPageRoute(
@@ -200,25 +197,24 @@ class SPendingManager extends ChangeNotifier {
 
   Future shortRedirection({required int index}) async {
     try {
-      TradeManager manager =
-      navigatorKey.currentContext!.read<TradeManager>();
+      TradeManager manager = navigatorKey.currentContext!.read<TradeManager>();
 
       ApiResponse response = await manager.getDetailTopData(
         symbol: _data?[index].symbol ?? '',
         showProgress: true,
       );
       if (response.status) {
-        Navigator.pushReplacementNamed(navigatorKey.currentContext!, TradeBuySellIndex.path,
+        Navigator.pushReplacementNamed(
+            navigatorKey.currentContext!, TradeBuySellIndex.path,
             arguments: {
-              "stockType":_data?[index].tradeType == "Buy"
+              "stockType": _data?[index].tradeType == "Buy"
                   ? StockType.buy
                   : _data?[index].tradeType == "Sell"
-                  ? StockType.sell
-                  : StockType.btc,
-              "qty":0,
+                      ? StockType.sell
+                      : StockType.btc,
+              "qty": 0,
               "editTradeID": _data?[index].id,
-            }
-        );
+            });
       }
       return ApiResponse(status: response.status);
     } catch (e) {
@@ -233,39 +229,49 @@ class SPendingManager extends ChangeNotifier {
       Map request = {
         'token': manager.user?.token ?? '',
         'symbol': _data?[index].symbol ?? '',
-        'action':_data?[index].tradeType=="Buy To Cover"?"BUY_TO_COVER":_data?[index].tradeType?.toUpperCase()??'',
-        'order_type': _data?[index].orderTypeOriginal??"",
-        'trade_id':"${_data?[index].id ?? ''}",
+        'action': _data?[index].tradeType == "Buy To Cover"
+            ? "BUY_TO_COVER"
+            : _data?[index].tradeType?.toUpperCase() ?? '',
+        'order_type': _data?[index].orderTypeOriginal ?? "",
+        'trade_id': "${_data?[index].id ?? ''}",
         'edit': '1',
       };
       ApiResponse res = await apiRequest(
           url: Apis.stockHoldings, request: request, showProgress: true);
       if (res.status) {
-        if ((_data?[index].tradeType == "Sell"||
-            _data?[index].tradeType == "But To Cover") && res.data['quantity'] <= 0) {
+        if ((_data?[index].tradeType == "Sell" ||
+                _data?[index].tradeType == "But To Cover") &&
+            res.data['quantity'] <= 0) {
           popUpAlert(
               title: 'Alert',
               message: "You don't own the shares of this stock");
           return;
         }
         TradeManager manager =
-        navigatorKey.currentContext!.read<TradeManager>();
+            navigatorKey.currentContext!.read<TradeManager>();
 
         ApiResponse response = await manager.getDetailTopData(
           symbol: _data?[index].symbol ?? '',
           showProgress: true,
         );
         if (response.status) {
-          Navigator.pushReplacementNamed(navigatorKey.currentContext!, ConditionalTradesIndex.path,
+          Navigator.pushReplacementNamed(
+              navigatorKey.currentContext!, ConditionalTradesIndex.path,
               arguments: {
-                "conditionType": _data?[index].orderTypeOriginal == "BRACKET_ORDER"?ConditionType.bracketOrder:
-                _data?[index].orderTypeOriginal == "LIMIT_ORDER"?ConditionType.limitOrder:
-                _data?[index].orderTypeOriginal == "STOP_ORDER"?ConditionType.stopOrder:
-                _data?[index].orderTypeOriginal == "STOP_LIMIT_ORDER"?ConditionType.stopLimitOrder:ConditionType.trailingOrder,
-                "qty":res.data['quantity'],
-                "editTradeID":_data?[index].id,
-              }
-          );
+                "conditionType":
+                    _data?[index].orderTypeOriginal == "BRACKET_ORDER"
+                        ? ConditionType.bracketOrder
+                        : _data?[index].orderTypeOriginal == "LIMIT_ORDER"
+                            ? ConditionType.limitOrder
+                            : _data?[index].orderTypeOriginal == "STOP_ORDER"
+                                ? ConditionType.stopOrder
+                                : _data?[index].orderTypeOriginal ==
+                                        "STOP_LIMIT_ORDER"
+                                    ? ConditionType.stopLimitOrder
+                                    : ConditionType.trailingOrder,
+                "qty": res.data['quantity'],
+                "editTradeID": _data?[index].id,
+              });
         }
       } else {
         //

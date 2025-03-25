@@ -41,6 +41,7 @@ class _ToolsPortfolioIndexState extends State<ToolsPortfolioIndex> {
       appBar: BaseAppBar(
         showBack: true,
         showSearch: true,
+        showNotification: true,
         title: manager.portfolioData?.title,
       ),
       body: BaseLoaderContainer(

@@ -53,7 +53,7 @@ class _BaseLockItemState extends State<BaseLockItem> {
   @override
   Widget build(BuildContext context) {
     BaseLockInfoRes? info = widget.manager.getLockINFO();
-    print('----$info');
+    // print('----$info');
     if (info == null) {
       return SizedBox();
     }

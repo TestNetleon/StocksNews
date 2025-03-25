@@ -48,6 +48,8 @@ class _SignalInsidersReportingIndexState
       appBar: BaseAppBar(
         showBack: true,
         title: manager.signalInsidersReportingData?.title,
+        showSearch: true,
+        showNotification: true,
       ),
       body: BaseLoaderContainer(
         isLoading: manager.isLoadingInsidersReporting,

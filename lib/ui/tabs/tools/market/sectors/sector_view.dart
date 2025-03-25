@@ -41,6 +41,7 @@ class _SectorViewIndexState extends State<SectorViewIndex> {
           showBack: true,
           title: manager.isLoadingView ? "" : manager.dataView?.title ?? "",
           showSearch: true,
+          showNotification: true,
         ),
         body: BaseLoaderContainer(
           isLoading: manager.isLoadingView,

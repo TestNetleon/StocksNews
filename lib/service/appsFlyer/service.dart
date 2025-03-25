@@ -136,9 +136,11 @@ class AppsFlyerService {
         };
         Utils().showLog('AppsFlyer Deep Link Data ${jsonEncode(data)}');
 
-        debugPrint(
-          "C = ${result.deepLink?.campaign}\nMT = ${result.deepLink?.matchType}\nCode = ${result.deepLink?.deepLinkValue}\nLink = $deepLinkUrl",
-        );
+        if (kDebugMode) {
+          print(
+            "C = ${result.deepLink?.campaign}\nMT = ${result.deepLink?.matchType}\nCode = ${result.deepLink?.deepLinkValue}\nLink = $deepLinkUrl",
+          );
+        }
 
         if (result.deepLink?.campaign == "Referral" ||
             result.deepLink?.matchType == "referrer") {
@@ -147,6 +149,10 @@ class AppsFlyerService {
           if (result.deepLink?.campaign == "Referral" ||
               result.deepLink?.matchType == "referrer") {
             getReferralCodeIfAny(result.deepLink?.deepLinkValue);
+            return;
+          }
+          if (!(deepLinkUrl.startsWith('http') ||
+              deepLinkUrl.startsWith('https'))) {
             return;
           }
           getDistributorCodeIfAny(deepLinkUrl);

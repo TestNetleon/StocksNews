@@ -45,6 +45,8 @@ class _AlertIndexState extends State<AlertIndex> {
       appBar: BaseAppBar(
         showBack: true,
         title: manager.alertData?.title ?? "Stock Alert",
+        showSearch: true,
+        showNotification: true,
       ),
       body: BaseLoaderContainer(
           isLoading: manager.isLoading,

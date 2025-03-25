@@ -5,6 +5,7 @@ import 'package:stocks_news_new/managers/home/home.dart';
 import 'package:stocks_news_new/models/ticker.dart';
 import 'package:stocks_news_new/models/watchlist_res.dart';
 import 'package:stocks_news_new/ui/base/heading.dart';
+import 'package:stocks_news_new/ui/stockDetail/index.dart';
 import 'package:stocks_news_new/ui/tabs/home/trendingWatchlist/item.dart';
 import 'package:stocks_news_new/ui/tabs/home/viewMore/PopularMostBought/index.dart';
 import 'package:stocks_news_new/utils/constants.dart';
@@ -47,7 +48,14 @@ class HomeMostBoughtIndex extends StatelessWidget {
               if (data == null) {
                 return SizedBox();
               }
-              return TickerBoxItem(data: data);
+              return TickerBoxItem(
+                data: data,
+                onTap: () {
+                  Navigator.pushNamed(context, SDIndex.path, arguments: {
+                    'symbol': data.symbol,
+                  });
+                },
+              );
             },
           ),
         ],

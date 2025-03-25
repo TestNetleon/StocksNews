@@ -38,7 +38,11 @@ class _BlogsIndexState extends State<BlogsIndex> {
     BlogsManager manager = context.watch<BlogsManager>();
 
     return BaseScaffold(
-      appBar: BaseAppBar(showBack: true),
+      appBar: BaseAppBar(
+        showBack: true,
+        showSearch: true,
+        showNotification: true,
+      ),
       body: BaseLoaderContainer(
         hasData: manager.blogs != null,
         isLoading: manager.isLoading,
@@ -49,7 +53,10 @@ class _BlogsIndexState extends State<BlogsIndex> {
           onRefresh: _callAPI,
           canLoadMore: manager.canLoadMoreStocks,
           child: ListView.separated(
-            padding: EdgeInsets.symmetric(horizontal: Pad.pad16),
+            padding: EdgeInsets.symmetric(
+              horizontal: Pad.pad16,
+              vertical: Pad.pad16,
+            ),
             itemBuilder: (context, index) {
               BaseNewsRes? data = manager.blogs?.data?[index];
               if (data == null) {
