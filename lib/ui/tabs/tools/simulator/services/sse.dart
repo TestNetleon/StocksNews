@@ -70,10 +70,10 @@ class SSEManager {
   }
 
   // Connect multiple stock streams to a specific screen
-  void connectMultipleStocks({
-    required List<String> symbols,
-    required SimulatorEnum screen,
-  }) {
+  void connectMultipleStocks(
+      {required List<String> symbols,
+      required SimulatorEnum screen,
+      int? sendPort}) {
     try {
       _screenStreams.putIfAbsent(screen, () => {});
 
@@ -106,7 +106,7 @@ class SSEManager {
 
       int? port = manager.portData?.port?.other?.simulator ?? 8052;
       final url =
-          'https://dev.stocks.news:$port/symbolsData?symbol=${symbols.join(',')}';
+          'https://dev.stocks.news:${sendPort ?? port}/symbolsData?symbol=${symbols.join(',')}';
 
       _connectToStream(
         url,

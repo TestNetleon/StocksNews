@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/managers/user.dart';
 import 'package:stocks_news_new/modals/user_res.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
+import 'package:stocks_news_new/ui/theme/manager.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:superwallkit_flutter/superwallkit_flutter.dart' as superwall;
 
@@ -43,6 +44,7 @@ class SuperwallService {
       purchaseController.syncSubscriptionStatus();
       Utils().showLog('SuperWall initialized successfully');
 
+      ThemeManager manager = navigatorKey.currentContext!.read<ThemeManager>();
       superwall.Superwall.shared.registerEvent(
         value,
         // value != null && value != ''
@@ -50,7 +52,10 @@ class SuperwallService {
         //     : Platform.isAndroid
         //         ? 'stocks_news_plans_same_group_android'
         //         : 'stocks_news_plans_same_group_ios',
-        params: {"ignore_subscription_status": true},
+        params: {
+          "ignore_subscription_status": true,
+          "theme": manager.isDarkMode ? 'dark' : 'light',
+        },
         handler: superwall.PaywallPresentationHandler(),
       );
       superwall.Superwall.shared.setDelegate(SWDelegate());

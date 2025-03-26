@@ -1,10 +1,13 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:stocks_news_new/api/api_requester.dart';
 import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/api/apis.dart';
+import 'package:stocks_news_new/managers/scripts/script.dart';
 import 'package:stocks_news_new/models/market/most_bullish.dart';
+import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 
@@ -59,6 +62,16 @@ class HomeTabsManager extends ChangeNotifier {
       if (response.status) {
         _dataTrending = marketDataResFromJson(jsonEncode(response.data));
         _errorTrending = null;
+
+        ScriptsManager scriptsManager =
+            navigatorKey.currentContext!.read<ScriptsManager>();
+        List<String> symbols = _dataTrending?.data
+                ?.map((item) => item.symbol)
+                .whereType<String>()
+                .toList() ??
+            [];
+
+        scriptsManager.runSymbolScripts(symbols: symbols, reset: true);
       } else {
         _dataTrending = null;
         _errorTrending = response.message;

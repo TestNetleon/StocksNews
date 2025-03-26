@@ -789,6 +789,7 @@ enum SimulatorEnum {
   recurring,
   stockDetail,
   aiAnalysis,
+  script,
 }
 
 DeeplinkEnum containsSpecificPath(Uri uri) {

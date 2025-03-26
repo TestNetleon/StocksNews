@@ -52,6 +52,7 @@ import 'package:stocks_news_new/managers/referral/points_claim_manager.dart';
 import 'package:stocks_news_new/managers/referral/redeem_manager.dart';
 import 'package:stocks_news_new/managers/referral/referral_manager.dart';
 import 'package:stocks_news_new/managers/referral/referral_points_manager.dart';
+import 'package:stocks_news_new/managers/scripts/script.dart';
 import 'package:stocks_news_new/managers/watchlist.dart';
 import 'package:stocks_news_new/models/my_home.dart';
 import 'package:provider/provider.dart';
@@ -693,6 +694,7 @@ class Routes {
       ChangeNotifierProvider(create: (_) => TradesManger()),
 
       // MARKET DATA End ---------------
+      ChangeNotifierProvider(create: (_) => ScriptsManager()),
     ];
   }
 }

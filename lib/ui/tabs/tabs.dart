@@ -169,7 +169,7 @@ class _TabsState extends State<Tabs> {
     }
 
     if (currentIndex != 2) {
-      SSEManager.instance.disconnectAllScreens();
+      SSEManager.instance.disconnectScreen(SimulatorEnum.open);
     }
 
     try {

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
+import 'package:stocks_news_new/managers/home/home.dart';
+import 'package:stocks_news_new/managers/scripts/script.dart';
 import 'package:stocks_news_new/models/stockDetail/overview.dart';
 import 'package:stocks_news_new/models/ticker.dart';
 import 'package:stocks_news_new/utils/colors.dart';
@@ -135,72 +138,99 @@ class _BaseStockItemState extends State<BaseStockItem> {
                 ),
               ),
               const SpacerHorizontal(width: 16),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Visibility(
-                    visible: widget.data.displayPrice != null &&
-                        widget.data.displayPrice != '',
-                    child: Text(
-                      widget.data.displayPrice ?? '',
-                      // style: styleBaseBold(fontSize: 16),
-                      style: Theme.of(context).textTheme.displayLarge,
-                    ),
-                  ),
-                  Visibility(
-                    visible: widget.data.mentionCount != null,
-                    child: Text(
-                      '${widget.data.mentionCount}',
-                      style: styleBaseBold(fontSize: 16),
-                    ),
-                  ),
-                  Visibility(
-                    visible: widget.data.mentionDate != null,
-                    child: Text(
-                      widget.data.mentionDate ?? '',
-                      style: styleBaseRegular(
-                        fontSize: 13,
-                        color: ThemeColors.neutral40,
-                      ),
-                    ),
-                  ),
-                  Visibility(
-                    visible: widget.data.displayChange != null &&
-                        widget.data.displayChange != '',
-                    child: Container(
-                      margin: EdgeInsets.only(top: 2),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
+              Consumer<MyHomeManager>(
+                builder: (context, homeManger, child) {
+                  bool startStream = homeManger.shouldStream;
+
+                  return Consumer<ScriptsManager>(
+                    builder: (context, scriptManager, child) {
+                      BaseTickerRes? tickerData;
+
+                      if (startStream) {
+                        tickerData = scriptManager
+                            .getStockData(widget.data.symbol ?? '');
+                      }
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
-                          Text(
-                            widget.data.displayChange ?? '',
-                            style: styleBaseSemiBold(
-                              fontSize: 13,
-                              color: (widget.data.changesPercentage ?? 0) < 0
-                                  ? ThemeColors.darkRed
-                                  : ThemeColors.darkGreen,
+                          Visibility(
+                            visible: widget.data.displayPrice != null &&
+                                widget.data.displayPrice != '',
+                            child: Text(
+                              startStream
+                                  ? '${tickerData?.price ?? widget.data.displayPrice ?? '\$0'}'
+                                  : widget.data.displayPrice ?? '\$0',
+                              style: styleBaseBold(fontSize: 16),
                             ),
                           ),
-                          const SpacerHorizontal(width: 5),
                           Visibility(
-                            visible: widget.data.changesPercentage != null,
+                            visible: widget.data.mentionCount != null,
                             child: Text(
-                              "(${widget.data.changesPercentage ?? ''}%)",
-                              style: styleBaseSemiBold(
+                              '${widget.data.mentionCount}',
+                              style: styleBaseBold(fontSize: 16),
+                            ),
+                          ),
+                          Visibility(
+                            visible: widget.data.mentionDate != null,
+                            child: Text(
+                              widget.data.mentionDate ?? '',
+                              style: styleBaseRegular(
                                 fontSize: 13,
-                                color: num.parse(
-                                            "${widget.data.changesPercentage ?? 0}") <
-                                        0
-                                    ? ThemeColors.darkRed
-                                    : ThemeColors.darkGreen,
+                                color: ThemeColors.neutral40,
+                              ),
+                            ),
+                          ),
+                          Visibility(
+                            visible: widget.data.displayChange != null &&
+                                widget.data.displayChange != '',
+                            child: Container(
+                              margin: EdgeInsets.only(top: 2),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    // widget.data.displayChange ?? '',
+                                    startStream
+                                        ? '${tickerData?.change ?? widget.data.change ?? '\$0'}'
+                                        : widget.data.displayChange ?? '\$0',
+                                    style: styleBaseSemiBold(
+                                      fontSize: 13,
+                                      color:
+                                          (widget.data.changesPercentage ?? 0) <
+                                                  0
+                                              ? ThemeColors.darkRed
+                                              : ThemeColors.darkGreen,
+                                    ),
+                                  ),
+                                  const SpacerHorizontal(width: 5),
+                                  Visibility(
+                                    visible:
+                                        widget.data.changesPercentage != null,
+                                    child: Text(
+                                      // "(${widget.data.changesPercentage ?? ''}%)",
+
+                                      startStream
+                                          ? '(${tickerData?.changesPercentage ?? widget.data.changesPercentage ?? '0'}%)'
+                                          : "(${widget.data.changesPercentage ?? '0'}%)",
+                                      style: styleBaseSemiBold(
+                                        fontSize: 13,
+                                        color: num.parse(
+                                                    "${widget.data.changesPercentage ?? 0}") <
+                                                0
+                                            ? ThemeColors.darkRed
+                                            : ThemeColors.darkGreen,
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
                           ),
                         ],
-                      ),
-                    ),
-                  ),
-                ],
+                      );
+                    },
+                  );
+                },
               ),
               Visibility(
                 visible: widget.expandable != null,
