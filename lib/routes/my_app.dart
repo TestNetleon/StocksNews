@@ -2,8 +2,7 @@ import 'dart:async';
 import 'dart:io';
 import 'package:app_links/app_links.dart';
 import 'package:country_code_picker/country_code_picker.dart';
-import 'package:firebase_analytics/firebase_analytics.dart';
-import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
+// import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -11,7 +10,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stocks_news_new/fcm/braze_notification_handler.dart';
 import 'package:stocks_news_new/fcm/braze_service.dart';
-import 'package:stocks_news_new/managers/user.dart';
 import 'package:stocks_news_new/modals/user_res.dart';
 import 'package:stocks_news_new/routes/navigation_observer.dart';
 import 'package:stocks_news_new/routes/routes.dart';
@@ -38,7 +36,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
-  bool _initialDeepLinks = false;
+  // bool _initialDeepLinks = false;
   bool connection = true;
   static const deeplinkPlatform = MethodChannel('deepLinkChannel');
   @override
@@ -113,6 +111,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
         },
       );
     }
+    pingApi(user);
 
     // await Preference.setAmplitudeFirstOpen(true);
   }
@@ -135,225 +134,225 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   }
 
   // -------- Initial Deeplinks For Referral STARTED ---------------
-  void getInitialReferralsIfAny() async {
-    try {
-      final PendingDynamicLinkData? initialLink =
-          await FirebaseDynamicLinks.instance.getInitialLink();
-      Utils().showLog(" FirebaseDynamicLinks.instance.getInitialLink CALLED");
-      if (initialLink != null) {
-        final Uri deepLink = initialLink.link;
+  // void getInitialReferralsIfAny() async {
+  //   try {
+  //     final PendingDynamicLinkData? initialLink =
+  //         await FirebaseDynamicLinks.instance.getInitialLink();
+  //     Utils().showLog(" FirebaseDynamicLinks.instance.getInitialLink CALLED");
+  //     if (initialLink != null) {
+  //       final Uri deepLink = initialLink.link;
 
-        extractCodeFromMEM(deepLink, "1");
-        Utils().showLog("MEM CODE get initial referrals => $memCODE");
+  //       extractCodeFromMEM(deepLink, "1");
+  //       Utils().showLog("MEM CODE get initial referrals => $memCODE");
 
-        if (deepLink.path.contains("page.link") ||
-            deepLink.path.contains("/install") ||
-            deepLink.path.contains("?code=") ||
-            deepLink.path.contains("?referrer=") ||
-            deepLink.path.contains("?ref=") ||
-            deepLink.path.contains("?referral_code=")) {
-          _initialDeepLinks = true;
-          await _handleReferralLink(deepLink);
-          Timer(const Duration(seconds: 2), () {
-            _initialDeepLinks = false;
-          });
-        } else {
-          // if (deepLink.path.contains('MEM')) {
-          //   memTrack = true;
-          // }
-        }
-      } else {
-        // bool isFirstOpen = await Preference.isFirstOpen();
-        // if (isFirstOpen) {
-        //   Timer(const Duration(seconds: 8), () {
-        //     if (navigatorKey.currentContext!.read<UserProvider>().user ==
-        //             null &&
-        //         !signUpVisible) {
-        //       // signupSheet();
-        //       loginFirstSheet();
-        //     }
-        //   });
-        // }
-      }
+  //       if (deepLink.path.contains("page.link") ||
+  //           deepLink.path.contains("/install") ||
+  //           deepLink.path.contains("?code=") ||
+  //           deepLink.path.contains("?referrer=") ||
+  //           deepLink.path.contains("?ref=") ||
+  //           deepLink.path.contains("?referral_code=")) {
+  //         _initialDeepLinks = true;
+  //         await _handleReferralLink(deepLink);
+  //         Timer(const Duration(seconds: 2), () {
+  //           _initialDeepLinks = false;
+  //         });
+  //       } else {
+  //         // if (deepLink.path.contains('MEM')) {
+  //         //   memTrack = true;
+  //         // }
+  //       }
+  //     } else {
+  //       // bool isFirstOpen = await Preference.isFirstOpen();
+  //       // if (isFirstOpen) {
+  //       //   Timer(const Duration(seconds: 8), () {
+  //       //     if (navigatorKey.currentContext!.read<UserProvider>().user ==
+  //       //             null &&
+  //       //         !signUpVisible) {
+  //       //       // signupSheet();
+  //       //       loginFirstSheet();
+  //       //     }
+  //       //   });
+  //       // }
+  //     }
 
-      FirebaseDynamicLinks.instance.onLink.listen(
-        (pendingDynamicLinkData) {
-          if (!_initialDeepLinks) {
-            final Uri deepLink = pendingDynamicLinkData.link;
-            extractCodeFromMEM(deepLink, "2");
-            Utils().showLog("MEM CODE get initial referrals 1=> $memCODE");
-            // if (deepLink != null) {
-            if (deepLink.path.contains("page.link") ||
-                deepLink.path.contains("/install") ||
-                deepLink.path.contains("?code=") ||
-                deepLink.path.contains("?referrer=") ||
-                deepLink.path.contains("?ref=") ||
-                deepLink.path.contains("?referral_code=")) {
-              _initialDeepLinks = true;
-              _handleReferralLink(deepLink);
-              Timer(const Duration(seconds: 2), () {
-                _initialDeepLinks = false;
-              });
-            } else {
-              // if (deepLink.path.contains('MEM')) {
-              //   memTrack = true;
-              // }
-            }
-          }
-        },
-      );
-    } catch (e) {
-      //
-    }
-  }
+  //     FirebaseDynamicLinks.instance.onLink.listen(
+  //       (pendingDynamicLinkData) {
+  //         if (!_initialDeepLinks) {
+  //           final Uri deepLink = pendingDynamicLinkData.link;
+  //           extractCodeFromMEM(deepLink, "2");
+  //           Utils().showLog("MEM CODE get initial referrals 1=> $memCODE");
+  //           // if (deepLink != null) {
+  //           if (deepLink.path.contains("page.link") ||
+  //               deepLink.path.contains("/install") ||
+  //               deepLink.path.contains("?code=") ||
+  //               deepLink.path.contains("?referrer=") ||
+  //               deepLink.path.contains("?ref=") ||
+  //               deepLink.path.contains("?referral_code=")) {
+  //             _initialDeepLinks = true;
+  //             _handleReferralLink(deepLink);
+  //             Timer(const Duration(seconds: 2), () {
+  //               _initialDeepLinks = false;
+  //             });
+  //           } else {
+  //             // if (deepLink.path.contains('MEM')) {
+  //             //   memTrack = true;
+  //             // }
+  //           }
+  //         }
+  //       },
+  //     );
+  //   } catch (e) {
+  //     //
+  //   }
+  // }
 
-  Future<void> _handleReferralLink(Uri deepLink) async {
-    try {
-      // Preference.saveDataList(
-      //   DeeplinkData(
-      //     from: "** _handleReferralLink " "\n" " ${deepLink.toString()} ",
-      //   ),
-      // );
+  // Future<void> _handleReferralLink(Uri deepLink) async {
+  //   try {
+  //     // Preference.saveDataList(
+  //     //   DeeplinkData(
+  //     //     from: "** _handleReferralLink " "\n" " ${deepLink.toString()} ",
+  //     //   ),
+  //     // );
 
-      String? referralCode = deepLink.queryParameters['code'];
-      if (referralCode == null || referralCode == '') {
-        referralCode = deepLink.queryParameters['referrer'];
-      }
-      if (referralCode == null || referralCode == '') {
-        referralCode = deepLink.queryParameters['ref'];
-      }
-      if (referralCode == null || referralCode == '') {
-        referralCode = deepLink.queryParameters['referral_code'];
-      }
+  //     String? referralCode = deepLink.queryParameters['code'];
+  //     if (referralCode == null || referralCode == '') {
+  //       referralCode = deepLink.queryParameters['referrer'];
+  //     }
+  //     if (referralCode == null || referralCode == '') {
+  //       referralCode = deepLink.queryParameters['ref'];
+  //     }
+  //     if (referralCode == null || referralCode == '') {
+  //       referralCode = deepLink.queryParameters['referral_code'];
+  //     }
 
-      bool isFirstOpen = await Preference.isFirstOpen();
-      String? code = await Preference.getReferral();
+  //     bool isFirstOpen = await Preference.isFirstOpen();
+  //     String? code = await Preference.getReferral();
 
-      Utils().showLog("referralCode = $referralCode && "
-          "\n"
-          " code = $code &&  "
-          "\n"
-          " isFirstOpen = $isFirstOpen  "
-          "\n"
-          " deepLink = $deepLink");
+  //     Utils().showLog("referralCode = $referralCode && "
+  //         "\n"
+  //         " code = $code &&  "
+  //         "\n"
+  //         " isFirstOpen = $isFirstOpen  "
+  //         "\n"
+  //         " deepLink = $deepLink");
 
-      if (referralCode != null &&
-          referralCode != "" &&
-          code == null &&
-          isFirstOpen) {
-        Preference.saveReferral(referralCode);
-        Timer(const Duration(seconds: 4), () {
-          UserManager manager =
-              navigatorKey.currentContext!.read<UserManager>();
+  //     if (referralCode != null &&
+  //         referralCode != "" &&
+  //         code == null &&
+  //         isFirstOpen) {
+  //       Preference.saveReferral(referralCode);
+  //       Timer(const Duration(seconds: 4), () {
+  //         UserManager manager =
+  //             navigatorKey.currentContext!.read<UserManager>();
 
-          if (manager.user == null && !signUpVisible) {
-            manager.askLoginScreen();
-          }
-        });
-        FirebaseAnalytics.instance.logEvent(
-          name: 'referrals',
-          parameters: {'referral_code': referralCode},
-        );
-      }
-      onDeepLinking = false;
-    } catch (e) {
-      //
-    }
-  }
-  // -------- Initial Deeplinks For Referral Ended ---------------
+  //         if (manager.user == null && !signUpVisible) {
+  //           manager.askLoginScreen();
+  //         }
+  //       });
+  //       FirebaseAnalytics.instance.logEvent(
+  //         name: 'referrals',
+  //         parameters: {'referral_code': referralCode},
+  //       );
+  //     }
+  //     onDeepLinking = false;
+  //   } catch (e) {
+  //     //
+  //   }
+  // }
+  // // -------- Initial Deeplinks For Referral Ended ---------------
 
-  // -------- Initial Deeplinks when App Opened Started ---------------
-  void getInitialDeeplinkWhenAppOpen() async {
-    try {
-      Uri? initialUri = await _appLinks.getInitialLink();
-      Utils().showLog(" _appLinks.getInitialLink CALLED");
+  // // -------- Initial Deeplinks when App Opened Started ---------------
+  // void getInitialDeeplinkWhenAppOpen() async {
+  //   try {
+  //     Uri? initialUri = await _appLinks.getInitialLink();
+  //     Utils().showLog(" _appLinks.getInitialLink CALLED");
 
-      if (initialUri != null) {
-        final Uri deepLink = initialUri;
-        extractCodeFromMEM(deepLink, "3");
-        Utils().showLog("MEM CODE get initial deep link => $memCODE");
-        if (deepLink.path.contains("page.link") ||
-            deepLink.path.contains("/install") ||
-            deepLink.path.contains("?code=") ||
-            deepLink.path.contains("?referrer=") ||
-            deepLink.path.contains("?ref=") ||
-            deepLink.path.contains("?referral_code=")) {
-          // onDeepLinking = true;
-          await _handleReferralLink(deepLink);
-          return;
-        } else {
-          // if (deepLink.path.contains('MEM')) {
-          //   memTrack = true;
-          // }
-        }
-      }
+  //     if (initialUri != null) {
+  //       final Uri deepLink = initialUri;
+  //       extractCodeFromMEM(deepLink, "3");
+  //       Utils().showLog("MEM CODE get initial deep link => $memCODE");
+  //       if (deepLink.path.contains("page.link") ||
+  //           deepLink.path.contains("/install") ||
+  //           deepLink.path.contains("?code=") ||
+  //           deepLink.path.contains("?referrer=") ||
+  //           deepLink.path.contains("?ref=") ||
+  //           deepLink.path.contains("?referral_code=")) {
+  //         // onDeepLinking = true;
+  //         await _handleReferralLink(deepLink);
+  //         return;
+  //       } else {
+  //         // if (deepLink.path.contains('MEM')) {
+  //         //   memTrack = true;
+  //         // }
+  //       }
+  //     }
 
-      if (initialUri != null) {
-        final Uri deepLink = initialUri;
-        DeeplinkEnum type = containsSpecificPath(initialUri);
-        _initialDeepLinks = true;
-        onDeepLinking =
-            (type == DeeplinkEnum.login || type == DeeplinkEnum.signup)
-                ? false
-                : true;
+  //     if (initialUri != null) {
+  //       final Uri deepLink = initialUri;
+  //       DeeplinkEnum type = containsSpecificPath(initialUri);
+  //       _initialDeepLinks = true;
+  //       onDeepLinking =
+  //           (type == DeeplinkEnum.login || type == DeeplinkEnum.signup)
+  //               ? false
+  //               : true;
 
-        if (deepLink.path.contains("MEM")) {
-          onDeepLinking = false;
-        }
-        // popUpAlert(
-        //     message:
-        //         "2nd FUNCTION going for navigation: $onDeepLinking, $type, $popHome");
-        handleDeepLinkNavigation(uri: initialUri, duration: 5);
-        Timer(const Duration(milliseconds: 200), () {
-          _initialDeepLinks = false;
-        });
-      }
-    } catch (e) {
-      //
-    }
-  }
-  // -------- Initial Deeplinks when App Opened Ended ---------------
+  //       if (deepLink.path.contains("MEM")) {
+  //         onDeepLinking = false;
+  //       }
+  //       // popUpAlert(
+  //       //     message:
+  //       //         "2nd FUNCTION going for navigation: $onDeepLinking, $type, $popHome");
+  //       handleDeepLinkNavigation(uri: initialUri, duration: 5);
+  //       Timer(const Duration(milliseconds: 200), () {
+  //         _initialDeepLinks = false;
+  //       });
+  //     }
+  //   } catch (e) {
+  //     //
+  //   }
+  // }
+  // // -------- Initial Deeplinks when App Opened Ended ---------------
 
-  // -------- Listen for incoming deeplinks Started ---------------
-  void startListeningForDeepLinks() {
-    try {
-      _appLinks.uriLinkStream.listen((event) async {
-        if (onDeepLinking || _initialDeepLinks) return;
+  // // -------- Listen for incoming deeplinks Started ---------------
+  // void startListeningForDeepLinks() {
+  //   try {
+  //     _appLinks.uriLinkStream.listen((event) async {
+  //       if (onDeepLinking || _initialDeepLinks) return;
 
-        final Uri deepLink = event;
-        if (deepLink.path.contains("page.link") ||
-            deepLink.path.contains("/install") ||
-            deepLink.path.contains("?code=") ||
-            deepLink.path.contains("?referrer=") ||
-            deepLink.path.contains("?ref=") ||
-            deepLink.path.contains("?referral_code=")) {
-          await _handleReferralLink(deepLink);
-          return;
-        }
-        if (event.toString().contains("com.googleusercontent.apps") ||
-            event.toString().contains("app.stocks.news://google/link")) {
-          return;
-        }
+  //       final Uri deepLink = event;
+  //       if (deepLink.path.contains("page.link") ||
+  //           deepLink.path.contains("/install") ||
+  //           deepLink.path.contains("?code=") ||
+  //           deepLink.path.contains("?referrer=") ||
+  //           deepLink.path.contains("?ref=") ||
+  //           deepLink.path.contains("?referral_code=")) {
+  //         await _handleReferralLink(deepLink);
+  //         return;
+  //       }
+  //       if (event.toString().contains("com.googleusercontent.apps") ||
+  //           event.toString().contains("app.stocks.news://google/link")) {
+  //         return;
+  //       }
 
-        DeeplinkEnum type = containsSpecificPath(event);
+  //       DeeplinkEnum type = containsSpecificPath(event);
 
-        onDeepLinking =
-            (type == DeeplinkEnum.login || type == DeeplinkEnum.signup)
-                ? false
-                : true;
-        if (deepLink.path.contains("MEM")) {
-          onDeepLinking = false;
-        }
-        // popUpAlert(
-        //     message:
-        //         "3rd FUNCTION going for navigation: $onDeepLinking, $type, $popHome, ${deepLink.path}, $deepLink");
-        handleDeepLinkNavigation(uri: event);
-      });
-    } catch (e) {
-      //
-    }
-  }
-  // -------- Listen for incoming deeplinks Ended ---------------
+  //       onDeepLinking =
+  //           (type == DeeplinkEnum.login || type == DeeplinkEnum.signup)
+  //               ? false
+  //               : true;
+  //       if (deepLink.path.contains("MEM")) {
+  //         onDeepLinking = false;
+  //       }
+  //       // popUpAlert(
+  //       //     message:
+  //       //         "3rd FUNCTION going for navigation: $onDeepLinking, $type, $popHome, ${deepLink.path}, $deepLink");
+  //       handleDeepLinkNavigation(uri: event);
+  //     });
+  //   } catch (e) {
+  //     //
+  //   }
+  // }
+  // // -------- Listen for incoming deeplinks Ended ---------------
 
   @override
   Widget build(BuildContext context) {
@@ -364,6 +363,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
           child: Consumer<ThemeManager>(
             builder: (context, value, child) {
               return MaterialApp(
+                // initialRoute: '/',
                 supportedLocales: const [Locale("en")],
                 localizationsDelegates: const [CountryLocalizations.delegate],
                 navigatorObservers: [CustomNavigatorObserver()],

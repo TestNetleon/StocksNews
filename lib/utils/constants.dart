@@ -493,8 +493,8 @@ class Const {
   static const String iosAppUrl =
       "https://apps.apple.com/us/app/stocks-news/id6476615803";
 
-  static const String membershipLink =
-      "https://stocksnews.page.link/membership";
+  // static const String membershipLink =
+  //     "https://stocksnews.page.link/membership";
 
   // static const String errParse =
   //     "Unable to parse data, please check your response.";

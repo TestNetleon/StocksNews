@@ -44,7 +44,7 @@ class SuperwallService {
       Utils().showLog('SuperWall initialized successfully');
 
       superwall.Superwall.shared.registerEvent(
-        'stocks_news_paywall',
+        value,
         // value != null && value != ''
         //     ? value
         //     : Platform.isAndroid

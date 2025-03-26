@@ -36,12 +36,15 @@ class SubscriptionService {
         String apiKey = Platform.isAndroid
             ? ApiKeys.superWallAndroid
             : ApiKeys.superWallIOS;
+
         superwall.Superwall.configure(
           apiKey,
           purchaseController: purchaseController,
         );
+
+        await superwall.Superwall.shared.reset();
       } catch (e) {
-        //
+        print('$e');
       }
 
       try {

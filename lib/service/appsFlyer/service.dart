@@ -151,8 +151,10 @@ class AppsFlyerService {
             getReferralCodeIfAny(result.deepLink?.deepLinkValue);
             return;
           }
-          if (!(deepLinkUrl.startsWith('http') ||
-              deepLinkUrl.startsWith('https'))) {
+          if ((!(deepLinkUrl.startsWith('http') ||
+                  deepLinkUrl.startsWith('https')) ||
+              deepLinkUrl.contains(
+                  'app.stocks.news://google/link/?request_ip_version='))) {
             return;
           }
           getDistributorCodeIfAny(deepLinkUrl);

@@ -13,7 +13,6 @@ import 'package:stocks_news_new/managers/home/home_tabs.dart';
 import 'package:stocks_news_new/models/home_view_more.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/service/braze/service.dart';
-import 'package:stocks_news_new/ui/tabs/tools/scanner/models/scanner_port.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import '../../models/lock.dart';
 import '../../models/my_home.dart';
@@ -66,25 +65,20 @@ class MyHomeManager extends ChangeNotifier {
     notifyListeners();
   }
 
-  bool get isElitePlan {
-    final userManager = navigatorKey.currentContext!.read<UserManager>();
-    if (kDebugMode) {
-      print('IS ELITE PLAN ${userManager.user?.membership?.isElitePlan}');
-    }
-    return userManager.user?.membership?.isElitePlan ?? false;
-  }
+  bool get isElitePlan => data?.user?.membership?.isElitePlan ?? false;
 
-  bool get shouldStream {
-    CheckMarketOpenRes? checkMarketOpenApi =
-        _data?.scannerPort?.port?.checkMarketOpenApi;
-    bool prePost = checkMarketOpenApi?.checkPreMarket == true ||
-        checkMarketOpenApi?.checkPostMarket == true;
+  bool get shouldStream =>
+      _data?.scannerPort?.port?.checkMarketOpenApi?.startStreaming == true &&
+      isElitePlan;
 
-    if (kDebugMode) {
-      print(
-          'START STREAM ${checkMarketOpenApi?.startStreaming == true && prePost && isElitePlan}');
-    }
-    return checkMarketOpenApi?.startStreaming == true && prePost && isElitePlan;
+  bool get showLiveStreaming {
+    final checkMarketOpenApi = _data?.scannerPort?.port?.checkMarketOpenApi;
+    if (checkMarketOpenApi == null) return false;
+
+    final prePost = checkMarketOpenApi.checkPreMarket == true ||
+        checkMarketOpenApi.checkPostMarket == true;
+
+    return checkMarketOpenApi.startStreaming == true && isElitePlan && !prePost;
   }
 
   BaseLockInfoRes? getLockINFO() {

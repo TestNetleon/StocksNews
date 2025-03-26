@@ -37,8 +37,10 @@ class MarketScannerStream {
 
     ScannerManager provider =
         navigatorKey.currentContext!.read<ScannerManager>();
-    final startingPort = provider.portData?.port?.scanner?.start ?? 8021;
-    final endingPort = provider.portData?.port?.scanner?.end ?? 8040;
+    // final startingPort = provider.portData?.port?.scanner?.start ?? 8021;
+    // final endingPort = provider.portData?.port?.scanner?.end ?? 8040;
+    final startingPort = 8012;
+    final endingPort = 8012;
 
     final checkPostMarket =
         provider.portData?.port?.checkMarketOpenApi?.checkPostMarket == true;
@@ -56,7 +58,7 @@ class MarketScannerStream {
 
     final urls = List.generate(
       endingPort - startingPort + 1,
-      (index) => "https://dev.stocks.news:${startingPort + index}/sse",
+      (index) => "https://dev.stocks.news:${startingPort + index}/scanner",
     );
 
     // Set offline data timer

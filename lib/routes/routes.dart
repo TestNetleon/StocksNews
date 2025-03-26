@@ -155,6 +155,9 @@ import '../ui/tabs/tools/scanner/manager/scanner.dart';
 class Routes {
   static var routes = {
     //NEW routes
+    // Splash.path: (_) => const Splash(),
+
+    // '/': (_) => const Splash(from: 'routeName1'),
     Splash.path: (_) => const Splash(),
     DefaultHome.path: (_) => const DefaultHome(),
     OnboardingSlides.path: (_) => const OnboardingSlides(),
@@ -210,6 +213,14 @@ class Routes {
 
   static Route getRouteGenerate(RouteSettings settings) {
     var routingData = settings.name;
+    // saveSource('routingData $routingData');
+
+    // Explicitly handle `/` route
+    if (routingData == '/') {
+      return MaterialPageRoute(
+        builder: (context) => const Splash(),
+      );
+    }
     switch (routingData) {
       case Tabs.path:
         return MaterialPageRoute(
@@ -300,6 +311,7 @@ class Routes {
             return NewsDetailIndex(slug: slug);
           },
         );
+
       case HelpDeskAllChatsIndex.path:
         return MaterialPageRoute(
           builder: (context) {
@@ -331,7 +343,8 @@ class Routes {
         return MaterialPageRoute(
           builder: (context) {
             final arguments = settings.arguments as Map<String, dynamic>?;
-            TournamentsHead selectedTournament = arguments?['selectedTournament'];
+            TournamentsHead selectedTournament =
+                arguments?['selectedTournament'];
             String? title = arguments?['title'];
             return AllTopTtIndex(
               selectedTournament: selectedTournament,
@@ -343,7 +356,8 @@ class Routes {
         return MaterialPageRoute(
           builder: (context) {
             final arguments = settings.arguments as Map<String, dynamic>?;
-            TournamentsHead selectedTournament = arguments?['selectedTournament'];
+            TournamentsHead selectedTournament =
+                arguments?['selectedTournament'];
             return LeagueTitansIndex(
               selectedTournament: selectedTournament,
             );
@@ -389,8 +403,6 @@ class Routes {
             );
           },
         );
-
-
 
       case SearchTickerIndex.path:
         return MaterialPageRoute(
@@ -575,13 +587,18 @@ class Routes {
           },
         );
       default:
+        return MaterialPageRoute(
+          builder: (context) {
+            return const Splash();
+          },
+        );
     }
 
-    return MaterialPageRoute(
-      builder: (context) {
-        return const Splash();
-      },
-    );
+    // return MaterialPageRoute(
+    //   builder: (context) {
+    //     return const Splash(from: 'getRouteGenerate');
+    //   },
+    // );
   }
 
   static List<SingleChildWidget> get providers {

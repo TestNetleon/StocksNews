@@ -11,7 +11,6 @@
 	<key>com.apple.developer.associated-domains</key>
 	<array>
 		<string>applinks:app.stocks.news</string>
-		<string>applinks:stocksnews.page.link</string>
 		<string>applinks:stocksnews.onelink.me</string>
 		<string>applinks:pagelink.stocks.news</string>
 	</array>

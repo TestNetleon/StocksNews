@@ -16,7 +16,7 @@ class Apis {
 
   // MARK: New UI APIs
   static const onBoarding = '/onboarding';
-  static const myHome = '/home-new';
+  static const myHome = '/home';
   static const homeTrendingGainerLoser = '/home-popular-gainer-loser';
   // static const myHome = '/home';
   static const myHomePopular = '/todays-popular';
@@ -26,7 +26,7 @@ class Apis {
   static const addCompareStock = '/add-compare';
   static const deleteCompareStock = '/delete-compare';
   // static const myHomePremium = '/home-premium';
-  static const myHomePremium = '/home-premium-new';
+  static const myHomePremium = '/home-premium';
   static const tools = '/tools';
   static const savePlaid = '/save-plaid-portfolio';
   static const getPortfolio = '/plaid-portfolio';
