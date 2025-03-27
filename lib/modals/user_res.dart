@@ -129,3 +129,57 @@ class UserMembershipRes {
         "upgrade_text": upgradeText?.toJson(),
       };
 }
+
+class UserOrdersCheck {
+  bool buyOrder;
+  bool sellOrder;
+  bool shortOrder;
+  bool btcOrder;
+  bool limitOrder;
+  bool bracketOrder;
+  bool stopOrder;
+  bool trailingOrder;
+  bool stopLimitOrder;
+  bool recurringOrder;
+
+  UserOrdersCheck({
+    this.buyOrder = false,
+    this.sellOrder = false,
+    this.shortOrder = false,
+    this.btcOrder = false,
+    this.limitOrder = false,
+    this.bracketOrder = false,
+    this.stopOrder = false,
+    this.trailingOrder = false,
+    this.stopLimitOrder = false,
+    this.recurringOrder = false,
+  });
+
+  factory UserOrdersCheck.fromJson(Map<String, dynamic> json) => UserOrdersCheck(
+    buyOrder: json['buyOrder'] ?? false,
+    sellOrder: json["sellOrder"] ?? false,
+    shortOrder: json["shortOrder"] ?? false,
+    btcOrder: json['btcOrder'] ?? false,
+    limitOrder: json['limitOrder'] ?? false,
+    bracketOrder: json['bracketOrder'] ?? false,
+    stopOrder: json['stopOrder'] ?? false,
+    trailingOrder: json['trailingOrder'] ?? false,
+    stopLimitOrder: json['stopLimitOrder'] ?? false,
+    recurringOrder: json['recurringOrder'] ?? false,
+  );
+
+  Map<String, dynamic> toJson() => {
+    "buyOrder": buyOrder,
+    'sellOrder': sellOrder,
+    "shortOrder": shortOrder,
+    'btcOrder': btcOrder,
+    'limitOrder': limitOrder,
+    'bracketOrder': bracketOrder,
+    'stopOrder': stopOrder,
+    'trailingOrder': trailingOrder,
+    'stopLimitOrder': stopLimitOrder,
+    'recurringOrder': recurringOrder,
+  };
+}
+
+

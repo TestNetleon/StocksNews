@@ -45,6 +45,7 @@ class ErrorDisplayNewWidget extends StatelessWidget {
                 : Text(
                     error ?? Const.errSomethingWrong,
                     style: Theme.of(context).textTheme.displayLarge,
+              textAlign: TextAlign.center,
                   ),
           ),
           const SpacerVertical(),

@@ -74,6 +74,7 @@ class UserManager extends ChangeNotifier {
     // shareUri ??= await DynamicLinkService.instance.getDynamicLink();
   }
 
+
   Future<bool> checkForUser() async {
     _user = null;
     final UserRes? tempUser = await Preference.getUser();
@@ -706,6 +707,7 @@ class UserManager extends ChangeNotifier {
   //MARK: Clear User
   clearUser({bool gotoOverview = false}) {
     Preference.logout();
+    Preference.clearChecks();
     // try {
     //   Purchases.logOut();
     // } catch (e) {

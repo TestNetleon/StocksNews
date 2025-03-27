@@ -431,12 +431,14 @@ class Routes {
             ConditionType? conditionType = arguments?['conditionType'];
             num? qty = arguments?['qty'];
             num? editTradeID = arguments?['editTradeID'];
+            int? tickerID = arguments?['tickerID'];
             String? tradeType = arguments?['tradeType'];
             return ConditionalTradesIndex(
               qty: qty,
               editTradeID: editTradeID,
               conditionalType: conditionType,
               tradeType: tradeType,
+              tickerID: tickerID,
             );
           },
         );

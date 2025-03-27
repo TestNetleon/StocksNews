@@ -81,6 +81,7 @@ class Apis {
 
   //MARK: Simulator API
   static const tsUserInfo = "/simulator/user-info";
+  static const tsInfoDisable = "/simulator/user-info";
   static const tsTopBar = "/simulator/trade/stock-detail-topbar";
   static const tsStreamData = '/simulator/trade/stream-init-variables';
   static const tsOrderList = "/simulator/holding-list";

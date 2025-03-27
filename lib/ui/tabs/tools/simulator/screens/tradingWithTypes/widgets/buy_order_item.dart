@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
+import 'package:stocks_news_new/widgets/cache_network_image.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 
 class BuyOrderItem extends StatelessWidget {
@@ -24,10 +26,21 @@ class BuyOrderItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       contentPadding: EdgeInsets.zero,
-      //minTileHeight: 60,
-      horizontalTitleGap: 0,
-      visualDensity: VisualDensity(vertical: -3, horizontal: -3),
-      leading: Image.asset(Images.trades, width: 26, height: 26),
+      horizontalTitleGap: Pad.pad5,
+      //visualDensity: VisualDensity(vertical: 0, horizontal: 0),
+      leading:
+      ClipRRect(
+        borderRadius: BorderRadius.circular(Pad.pad5),
+        child: Container(
+          padding: EdgeInsets.all(5.sp),
+          color: ThemeColors.neutral5,
+          child: CachedNetworkImagesWidget(
+            icon ?? "",
+            height: 28,
+            width: 28,
+          ),
+        ),
+      ),
       title: Row(
         children: [
           Text(

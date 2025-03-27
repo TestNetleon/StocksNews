@@ -89,6 +89,9 @@ class TsUserDataRes {
   final OrdersSubTitle? ordersSubTitle;
   final LabelInfoStrings? labelInfoStrings;
   final bool? executable;
+  final TermsTexts? strings;
+  final OrderIcons? icons;
+
 
   TsUserDataRes({
     required this.tradeBalance,
@@ -102,6 +105,8 @@ class TsUserDataRes {
     this.ordersSubTitle,
     this.labelInfoStrings,
     this.executable,
+    this.strings,
+    this.icons,
 
     // this.staticTotalReturn,s
   });
@@ -127,6 +132,8 @@ class TsUserDataRes {
             ? null
             : LabelInfoStrings.fromMap(json["label_info_strings"]),
         executable: json['is_trade_executable'],
+    strings: json["strings"] == null ? null : TermsTexts.fromJson(json["strings"]),
+    icons: json["images"] == null ? null : OrderIcons.fromJson(json["images"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -142,7 +149,77 @@ class TsUserDataRes {
         "orders_sub_title": ordersSubTitle?.toJson(),
         "label_info_strings": labelInfoStrings?.toMap(),
         'is_trade_executable': executable,
+    "strings": strings?.toJson(),
+    "images": icons?.toJson(),
       };
+}
+
+class TermsTexts {
+  final String? defPrevConcernLbl;
+
+  TermsTexts({
+    this.defPrevConcernLbl,
+  });
+
+  factory TermsTexts.fromJson(Map<String, dynamic> json) => TermsTexts(
+    defPrevConcernLbl: json["def_prev_concern_lbl"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "def_prev_concern_lbl": defPrevConcernLbl,
+  };
+}
+
+class OrderIcons {
+  final String? buyIcon;
+  final String? sellOrderIcon;
+  final String? stopOrderIcon;
+  final String? buyToCoverIcon;
+  final String? limitOrderIcon;
+  final String? shortOrderIcon;
+  final String? stopLimitIcon;
+  final String? bracketOrderIcon;
+  final String? trailingOrderIcon;
+  final String? recurringOrderIcon;
+
+  OrderIcons({
+    this.buyIcon,
+    this.sellOrderIcon,
+    this.stopOrderIcon,
+    this.buyToCoverIcon,
+    this.limitOrderIcon,
+    this.shortOrderIcon,
+    this.stopLimitIcon,
+    this.bracketOrderIcon,
+    this.trailingOrderIcon,
+    this.recurringOrderIcon,
+  });
+
+  factory OrderIcons.fromJson(Map<String, dynamic> json) => OrderIcons(
+    buyIcon: json["buy_icon"],
+    sellOrderIcon: json["sell_order_icon"],
+    stopOrderIcon: json["stop_order_icon"],
+    buyToCoverIcon: json["buy_to_cover_icon"],
+    limitOrderIcon: json["limit_order_icon"],
+    shortOrderIcon: json["short_order_icon"],
+    stopLimitIcon: json["stop_limit_icon"],
+    bracketOrderIcon: json["bracket_order_icon"],
+    trailingOrderIcon: json["trailing_order_icon"],
+    recurringOrderIcon: json["recurring_order_icon"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "buy_icon": buyIcon,
+    "sell_order_icon": sellOrderIcon,
+    "stop_order_icon": stopOrderIcon,
+    "buy_to_cover_icon": buyToCoverIcon,
+    "limit_order_icon": limitOrderIcon,
+    "short_order_icon": shortOrderIcon,
+    "stop_limit_icon": stopLimitIcon,
+    "bracket_order_icon": bracketOrderIcon,
+    "trailing_order_icon": trailingOrderIcon,
+    "recurring_order_icon": recurringOrderIcon,
+  };
 }
 
 class UserConditionalOrderPermissionRes {

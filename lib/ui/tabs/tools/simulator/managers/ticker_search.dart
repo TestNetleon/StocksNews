@@ -257,7 +257,7 @@ class TickerSearchManager extends ChangeNotifier {
         showProgress: true,
       );
       if (response.status) {
-        Navigator.pushReplacement(
+       /* Navigator.pushReplacement(
           navigatorKey.currentContext!,
           MaterialPageRoute(
             builder: (context) => ConditionalTradesIndex(
@@ -266,7 +266,14 @@ class TickerSearchManager extends ChangeNotifier {
               qty: qty,
             ),
           ),
-        );
+        );*/
+        Navigator.pushReplacementNamed(
+            navigatorKey.currentContext!, ConditionalTradesIndex.path,
+            arguments: {
+              "conditionType": conditionalType,
+              "qty": qty,
+              "tickerID": tickerID,
+            });
       }
       return ApiResponse(status: response.status);
     } catch (e) {
@@ -313,6 +320,31 @@ class TickerSearchManager extends ChangeNotifier {
       return ApiResponse(status: false);
     }
   }
+
+  /*Future infoDisable({bool enableDisable = false}) async {
+    try {
+      Map request = {
+        '': enableDisable,
+      };
+      ApiResponse response = await apiRequest(
+        url: Apis.tsInfoDisable,
+        request: request,
+      );
+      if (response.status) {
+        PortfolioManager portfolioManager = navigatorKey.currentContext!.read<PortfolioManager>();
+        TsUserDataRes? userDataRes = portfolioManager.userData?.userDataRes;
+
+       // _userData = tsUserResFromJson(jsonEncode(response.data));
+        _error = null;
+      }
+      else {
+        _error = response.message ?? Const.errSomethingWrong;
+      }
+    } catch (e) {
+      _error = Const.errSomethingWrong;
+      Utils().showLog('Error getDashboardData $e');
+    }
+  }*/
 
   Status _infoStatus = Status.ideal;
   Status get infoStatus => _infoStatus;
