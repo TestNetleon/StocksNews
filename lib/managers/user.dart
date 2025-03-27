@@ -13,8 +13,10 @@ import 'package:stocks_news_new/managers/signals.dart';
 import 'package:stocks_news_new/managers/stockDetail/stock.detail.dart';
 import 'package:stocks_news_new/managers/tools.dart';
 import 'package:stocks_news_new/modals/user_res.dart';
+import 'package:stocks_news_new/models/referral/referral_response.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/service/appsFlyer/service.dart';
+import 'package:stocks_news_new/socket/socket.dart';
 import 'package:stocks_news_new/ui/account/auth/login.dart';
 import 'package:stocks_news_new/ui/account/error/apple_login.dart';
 import 'package:stocks_news_new/ui/account/update/index.dart';
@@ -42,6 +44,7 @@ import '../models/delete.dart';
 import '../service/amplitude/service.dart';
 import '../service/braze/service.dart';
 import '../utils/constants.dart';
+import 'package:http/http.dart' as http;
 
 class UserManager extends ChangeNotifier {
   String? _error;
@@ -223,7 +226,6 @@ class UserManager extends ChangeNotifier {
           Navigator.pop(navigatorKey.currentContext!);
         }
       }
-
       return ApiResponse(status: response.status);
     } catch (e) {
       return ApiResponse(status: false);
@@ -275,16 +277,21 @@ class UserManager extends ChangeNotifier {
           Navigator.pop(navigatorKey.currentContext!);
         }
       } else {
-        if (response.message?.contains('Invalid Apple ID.') ?? false) {
-          if (kDebugMode) {
-            BaseBottomSheet().bottomSheet(
-              child: AppleLoginErrorIndex(),
-            );
-          }
+        ReferLogin? data = ReferLogin.fromJson(response.data);
+
+        if (data.title != null && data.title != '') {
+          BaseBottomSheet().bottomSheet(
+            child: AppleLoginErrorIndex(
+              extraRequest: extraRequest,
+              data: data,
+            ),
+          );
         }
       }
 
-      return ApiResponse(status: response.status);
+      return ApiResponse(
+        status: response.status,
+      );
     } catch (e) {
       return ApiResponse(status: false);
     }
@@ -754,5 +761,43 @@ class UserManager extends ChangeNotifier {
         MaterialPageRoute(builder: (_) => const Tabs()),
       );
     }
+  }
+}
+
+//MARK: Ping
+Future<void> pingApi(SocketEnum type) async {
+  const url = 'https://api.stocks.news/v1/ping';
+  UserRes? user = await Preference.getUser();
+  String apiToken = '${user?.userId ?? ''}:${user?.token ?? ''}';
+  String? fcmToken = await Preference.getFcmToken();
+  final headers = {
+    'Content-Type': 'application/json',
+    'Authorization': 'X-API-Token $apiToken',
+  };
+
+  final body = jsonEncode({
+    'fcm_token': fcmToken ?? '',
+    'page': type.name,
+  });
+  Utils().showLog('PING->  Headers: $headers');
+  Utils().showLog('PING->  Body: $body');
+
+  try {
+    final response = await http
+        .post(
+          Uri.parse(url),
+          headers: headers,
+          body: body,
+        )
+        .timeout(const Duration(seconds: 3));
+
+    if (response.statusCode == 200) {
+      Utils().showLog('PING->  Success: ${response.body}');
+    } else {
+      Utils()
+          .showLog('PING->  Error: ${response.statusCode} - ${response.body}');
+    }
+  } catch (e) {
+    Utils().showLog('PING->  Exception: $e');
   }
 }

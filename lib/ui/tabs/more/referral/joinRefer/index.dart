@@ -12,12 +12,12 @@ import 'package:stocks_news_new/managers/referral/referral_manager.dart';
 import 'package:stocks_news_new/managers/user.dart';
 import 'package:stocks_news_new/modals/user_res.dart';
 import 'package:stocks_news_new/models/referral/referral_response.dart';
-import 'package:stocks_news_new/ui/account/auth/agree_text.dart';
 import 'package:stocks_news_new/ui/base/app_bar.dart';
 import 'package:stocks_news_new/ui/base/button.dart';
 import 'package:stocks_news_new/ui/base/country_code.dart';
 import 'package:stocks_news_new/ui/base/scaffold.dart';
 import 'package:stocks_news_new/ui/base/text_field.dart';
+import 'package:stocks_news_new/ui/subscription/action_required.dart';
 import 'package:stocks_news_new/ui/tabs/more/referral/joinRefer/verify.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
@@ -371,7 +371,9 @@ class _JoinReferralIndexState extends State<JoinReferralIndex> {
                   Flexible(
                     child: Padding(
                       padding: const EdgeInsets.only(left: Pad.pad10),
-                      child: AccountAgreeText(),
+                      child: AccountAgreeTextMembership(
+                        text: labels?.agreeUrl ?? '',
+                      ),
                     ),
                   ),
                 ],

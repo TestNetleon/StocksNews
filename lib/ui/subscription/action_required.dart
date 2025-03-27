@@ -413,11 +413,8 @@ class AccountAgreeTextMembership extends StatelessWidget {
       onTapUrl: (url) async {
         if (!(url.startsWith('https:') || url.startsWith('http:'))) {
           Navigator.pushNamed(context, LegalInfoIndex.path, arguments: {
-            'slug': url == "terms-of-service"
-                ? "terms-of-service"
-                : url == "disclaimer"
-                    ? "disclaimer"
-                    : "privacy-policy",
+            'slug': url,
+            'soloScreen': url == 'referral-terms',
           });
         } else {
           openUrl(url);

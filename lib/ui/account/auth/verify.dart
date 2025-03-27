@@ -24,7 +24,9 @@ import 'sent_code_text.dart';
 class AccountVerificationIndex extends StatefulWidget {
   static const path = 'AccountVerificationIndex';
   final String phone, countryCode, verificationId;
-  final bool? update;
+  final bool? update, fromAppleVerify;
+  final Map? extraRequest;
+
   final void Function()? callBack;
   final String? name;
 
@@ -36,6 +38,8 @@ class AccountVerificationIndex extends StatefulWidget {
     this.update,
     this.name,
     this.callBack,
+    this.fromAppleVerify,
+    this.extraRequest,
   });
 
   @override
@@ -107,7 +111,16 @@ class _AccountVerificationIndexState extends State<AccountVerificationIndex>
       'phone_code': widget.countryCode,
     };
 
-    if (widget.update == true) {
+    if (widget.fromAppleVerify == true) {
+      Map<String, dynamic> mergedRequest = {
+        ...request,
+        ...?widget.extraRequest,
+      };
+
+      await manager.appleVerification(
+        extraRequest: mergedRequest,
+      );
+    } else if (widget.update == true) {
       ApiResponse response = await manager.updatePersonalDetails(
         phone: widget.phone,
         name: widget.name,

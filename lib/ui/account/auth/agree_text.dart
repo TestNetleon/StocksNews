@@ -36,7 +36,9 @@ class _AccountAgreeTextState extends State<AccountAgreeText> {
       loginBox = onBoardingManager.data?.loginBox;
     }
 
-    String content = loginBox?.agreeUrl ?? _agreeUrl;
+    String content = loginBox?.agreeUrl != null && loginBox?.agreeUrl != ''
+        ? loginBox?.agreeUrl ?? ''
+        : _agreeUrl;
 
     return content.length > widget.defaultLength
         ? '${content.substring(0, widget.defaultLength)}...'

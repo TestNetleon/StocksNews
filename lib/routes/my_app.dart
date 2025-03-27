@@ -10,10 +10,12 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stocks_news_new/fcm/braze_notification_handler.dart';
 import 'package:stocks_news_new/fcm/braze_service.dart';
+import 'package:stocks_news_new/managers/user.dart';
 import 'package:stocks_news_new/modals/user_res.dart';
 import 'package:stocks_news_new/routes/navigation_observer.dart';
 import 'package:stocks_news_new/routes/routes.dart';
 import 'package:stocks_news_new/service/braze/service.dart';
+import 'package:stocks_news_new/socket/socket.dart';
 import 'package:stocks_news_new/ui/subscription/service.dart';
 import 'package:stocks_news_new/ui/theme/manager.dart';
 import 'package:stocks_news_new/utils/constants.dart';
@@ -44,6 +46,8 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      pingApi(SocketEnum.open);
+
       // getInitialReferralsIfAny();
       // getInitialDeeplinkWhenAppOpen();
       // startListeningForDeepLinks();
@@ -111,14 +115,15 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
         },
       );
     }
-    pingApi(user);
-
     // await Preference.setAmplitudeFirstOpen(true);
   }
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     isAppInForeground = state == AppLifecycleState.resumed;
+    if (state == AppLifecycleState.resumed) {
+      pingApi(SocketEnum.active);
+    }
   }
 
   @override

@@ -14,9 +14,11 @@ import 'package:stocks_news_new/widgets/custom/base_loader_container.dart';
 class LegalInfoIndex extends StatefulWidget {
   final String? slug;
   static const path = 'LegalInfoIndex';
+  final bool? soloScreen;
   const LegalInfoIndex({
     super.key,
     this.slug,
+    this.soloScreen,
   });
 
   @override
@@ -60,16 +62,17 @@ class _LegalInfoIndexState extends State<LegalInfoIndex> {
       ),
       body: Column(
         children: [
-          BaseTabs(
-            data: _tabs,
-            labelPadding: EdgeInsets.symmetric(horizontal: 15),
-            onTap: _onChange,
-            selectedIndex: widget.slug == 'terms-of-service'
-                ? 1
-                : widget.slug == 'disclaimer'
-                    ? 2
-                    : 0,
-          ),
+          if (widget.soloScreen != true)
+            BaseTabs(
+              data: _tabs,
+              labelPadding: EdgeInsets.symmetric(horizontal: 15),
+              onTap: _onChange,
+              selectedIndex: widget.slug == 'terms-of-service'
+                  ? 1
+                  : widget.slug == 'disclaimer'
+                      ? 2
+                      : 0,
+            ),
           Expanded(
             child: BaseLoaderContainer(
               hasData: manager.data != null,

@@ -6,7 +6,18 @@
 import 'package:flutter/foundation.dart';
 import 'package:socket_io_client/socket_io_client.dart' as socket;
 
-enum SocketEnum { home, newDetail, blogDetail, tickerDetail, tools }
+enum SocketEnum {
+  home,
+  scanner,
+  simulator,
+  news,
+  tools,
+  open,
+  active,
+  newDetail,
+  blogDetail,
+  tickerDetail,
+}
 
 SocketEnum? socketPage;
 

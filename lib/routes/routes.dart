@@ -264,6 +264,9 @@ class Routes {
             String verificationId = arguments?['verificationId'];
             bool? update = arguments?['update'];
             String? name = arguments?['name'];
+            bool? fromAppleVerify = arguments?['fromAppleVerify'];
+            Map? extraRequest = arguments?['extraRequest'];
+
             void Function()? callBack = arguments?['callBack'];
 
             return AccountVerificationIndex(
@@ -273,6 +276,8 @@ class Routes {
               update: update,
               name: name,
               callBack: callBack,
+              extraRequest: extraRequest,
+              fromAppleVerify: fromAppleVerify,
             );
           },
         );
@@ -501,8 +506,12 @@ class Routes {
           builder: (context) {
             final arguments = settings.arguments as Map<String, dynamic>?;
             String? slug = arguments?['slug'];
+            bool? soloScreen = arguments?['soloScreen'];
 
-            return LegalInfoIndex(slug: slug);
+            return LegalInfoIndex(
+              slug: slug,
+              soloScreen: soloScreen,
+            );
           },
         );
       case AccountEmailVerificationIndex.path:

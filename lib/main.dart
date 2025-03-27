@@ -61,6 +61,10 @@ void main() async {
     } catch (e) {
       //
     }
+
+    try {} catch (e) {
+      //
+    }
   } catch (e) {
     Utils().showLog('Error initializing Firebase: $e');
   }
