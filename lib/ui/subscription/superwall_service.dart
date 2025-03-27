@@ -45,8 +45,8 @@ class SuperwallService {
       Utils().showLog('SuperWall initialized successfully');
 
       ThemeManager manager = navigatorKey.currentContext!.read<ThemeManager>();
-      superwall.Superwall.shared.registerEvent(
-        value,
+      superwall.Superwall.shared.registerPlacement(
+        kDebugMode ? 'stocks_news_paywall' : value,
         // value != null && value != ''
         //     ? value
         //     : Platform.isAndroid
@@ -73,8 +73,8 @@ class SWDelegate extends superwall.SuperwallDelegate {
     Utils().showLog('Event Type => ${eventInfo.event.type}');
     switch (eventInfo.event.type) {
       case superwall.EventType.transactionComplete:
-        superwall.Superwall.shared
-            .setSubscriptionStatus(superwall.SubscriptionStatus.active);
+        // superwall.Superwall.shared
+        //     .setSubscriptionStatus(superwall.SubscriptionStatus.unknown);
         Navigator.push(
           navigatorKey.currentContext!,
           createRoute(SubscriptionSuccessIndex()),
@@ -85,8 +85,8 @@ class SWDelegate extends superwall.SuperwallDelegate {
         if (kDebugMode) {
           print('Restore => transactionRestore');
         }
-        superwall.Superwall.shared
-            .setSubscriptionStatus(superwall.SubscriptionStatus.active);
+        // superwall.Superwall.shared
+        //     .setSubscriptionStatus(superwall.SubscriptionStatus.unknown);
         break;
 
       case superwall.EventType.transactionFail:
