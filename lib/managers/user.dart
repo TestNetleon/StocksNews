@@ -276,9 +276,9 @@ class UserManager extends ChangeNotifier {
           Navigator.pop(navigatorKey.currentContext!);
         }
       } else {
-        ReferLogin data = ReferLogin.fromJson(response.data);
+        ReferLogin? data = ReferLogin.fromJson(response.data);
 
-        if (response.message?.contains('Invalid Email Address') ?? false) {
+        if (data.title != null && data.title != '') {
           BaseBottomSheet().bottomSheet(
             child: AppleLoginErrorIndex(
               extraRequest: extraRequest,
@@ -288,7 +288,9 @@ class UserManager extends ChangeNotifier {
         }
       }
 
-      return ApiResponse(status: response.status);
+      return ApiResponse(
+        status: response.status,
+      );
     } catch (e) {
       return ApiResponse(status: false);
     }

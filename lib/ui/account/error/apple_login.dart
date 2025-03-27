@@ -105,8 +105,7 @@ class _AppleLoginErrorIndexState extends State<AppleLoginErrorIndex> {
         if (!gotoVerify) return;
         Navigator.pop(navigatorKey.currentContext!);
 
-        Navigator.pushNamed(
-            navigatorKey.currentContext!, AccountVerificationIndex.path,
+        await Navigator.pushNamed(context, AccountVerificationIndex.path,
             arguments: {
               'phone': _phone.text,
               'countryCode': countryCode,
@@ -148,8 +147,7 @@ class _AppleLoginErrorIndexState extends State<AppleLoginErrorIndex> {
             if (!gotoVerify) return;
             Navigator.pop(navigatorKey.currentContext!);
 
-            Navigator.pushNamed(
-                navigatorKey.currentContext!, AccountVerificationIndex.path,
+            await Navigator.pushNamed(context, AccountVerificationIndex.path,
                 arguments: {
                   'phone': _phone.text,
                   'countryCode': countryCode,

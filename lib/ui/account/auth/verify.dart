@@ -117,15 +117,9 @@ class _AccountVerificationIndexState extends State<AccountVerificationIndex>
         ...?widget.extraRequest,
       };
 
-      ApiResponse response = await manager.appleVerification(
+      await manager.appleVerification(
         extraRequest: mergedRequest,
       );
-      if (response.status) {
-        Navigator.pop(navigatorKey.currentContext!);
-        if (widget.callBack != null) {
-          widget.callBack!();
-        }
-      }
     } else if (widget.update == true) {
       ApiResponse response = await manager.updatePersonalDetails(
         phone: widget.phone,
