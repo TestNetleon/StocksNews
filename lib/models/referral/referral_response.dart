@@ -117,10 +117,12 @@ class ReferLogin {
   final String? btnText;
   final String? verifyBtnText;
   final String? text;
+  final String? agreeUrl;
 
   ReferLogin({
     this.note,
     this.text,
+    this.agreeUrl,
     this.title,
     this.subTitle,
     this.btnText,
@@ -130,6 +132,7 @@ class ReferLogin {
   factory ReferLogin.fromJson(Map<String, dynamic> json) => ReferLogin(
         title: json["title"],
         note: json['note'],
+        agreeUrl: json['agree_url'],
         text: json['text'],
         subTitle: json["sub_title"],
         btnText: json["btn_text"],
@@ -140,6 +143,7 @@ class ReferLogin {
         "title": title,
         'note': note,
         'text': text,
+        'agree_url': agreeUrl,
         "sub_title": subTitle,
         "btn_text": btnText,
         "verify_btn_text": verifyBtnText,

@@ -97,51 +97,52 @@ class _AccountLoginIndexState extends State<AccountLoginIndex> {
         });
         return;
       }
-    }
-    setLoading(true);
 
-    try {
-      await FirebaseAuth.instance.verifyPhoneNumber(
-        phoneNumber: '${countryCode ?? '+1'} ${_phone.text}',
-        verificationCompleted: (PhoneAuthCredential credential) async {
-          await FirebaseAuth.instance.signInWithCredential(credential);
+      setLoading(true);
 
-          setLoading(false);
-        },
-        verificationFailed: (FirebaseAuthException e) {
-          popUpAlert(
-            message: e.code == "invalid-phone-number"
-                ? "The format of the phone number provided is incorrect."
-                : e.code == "too-many-requests"
-                    ? "We have blocked all requests from this device due to unusual activity. Try again after 24 hours."
-                    : e.code == "internal-error"
-                        ? "The phone number you entered is either incorrect or not currently in use."
-                        : e.message ?? Const.errSomethingWrong,
-            title: "Alert",
-            icon: Images.alertPopGIF,
-          );
-          setLoading(false);
-          Utils().showLog('$e');
-        },
-        codeSent: (String verificationId, int? resendToken) {
-          setLoading(false);
+      try {
+        await FirebaseAuth.instance.verifyPhoneNumber(
+          phoneNumber: '${countryCode ?? '+1'} ${_phone.text}',
+          verificationCompleted: (PhoneAuthCredential credential) async {
+            await FirebaseAuth.instance.signInWithCredential(credential);
 
-          Navigator.pushNamed(context, AccountVerificationIndex.path,
-              arguments: {
-                'phone': _phone.text,
-                'countryCode': countryCode,
-                'verificationId': verificationId,
-              });
-          Utils().showLog('Verification code sent.');
-        },
-        codeAutoRetrievalTimeout: (String verificationId) {
-          Utils().showLog('Time Out');
-          setLoading(false);
-        },
-        timeout: const Duration(seconds: 60),
-      );
-    } catch (e) {
-      Utils().showLog('Firebase error $e');
+            setLoading(false);
+          },
+          verificationFailed: (FirebaseAuthException e) {
+            popUpAlert(
+              message: e.code == "invalid-phone-number"
+                  ? "The format of the phone number provided is incorrect."
+                  : e.code == "too-many-requests"
+                      ? "We have blocked all requests from this device due to unusual activity. Try again after 24 hours."
+                      : e.code == "internal-error"
+                          ? "The phone number you entered is either incorrect or not currently in use."
+                          : e.message ?? Const.errSomethingWrong,
+              title: "Alert",
+              icon: Images.alertPopGIF,
+            );
+            setLoading(false);
+            Utils().showLog('$e');
+          },
+          codeSent: (String verificationId, int? resendToken) {
+            setLoading(false);
+
+            Navigator.pushNamed(context, AccountVerificationIndex.path,
+                arguments: {
+                  'phone': _phone.text,
+                  'countryCode': countryCode,
+                  'verificationId': verificationId,
+                });
+            Utils().showLog('Verification code sent.');
+          },
+          codeAutoRetrievalTimeout: (String verificationId) {
+            Utils().showLog('Time Out');
+            setLoading(false);
+          },
+          timeout: const Duration(seconds: 60),
+        );
+      } catch (e) {
+        Utils().showLog('Firebase error $e');
+      }
     }
   }
 

@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -17,7 +16,6 @@ import 'package:stocks_news_new/database/preference.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import '../base/scaffold.dart';
 import '../../managers/onboarding.dart';
-import 'package:http/http.dart' as http;
 
 //MARK: Splash
 class Splash extends StatefulWidget {
@@ -122,41 +120,6 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
         child: Image.asset(Images.mainLogo),
       ),
     );
-  }
-}
-
-//MARK: Ping
-Future<void> pingApi(UserRes? user) async {
-  const String url = 'https://api.stocks.news/v1/ping';
-  String? fcmToken = await Preference.getFcmToken();
-  final Map<String, String> headers = {
-    'Content-Type': 'application/json',
-    'Authorization': 'X-API-Token ${user?.token ?? ''}:${fcmToken ?? ''}',
-    'Cache-Control': 'no-cache'
-  };
-
-  try {
-    if (kDebugMode) {
-      print('Header: $headers');
-    }
-    final response = await http.post(
-      Uri.parse(url),
-      headers: headers,
-    );
-
-    if (response.statusCode == 200) {
-      if (kDebugMode) {
-        print('Success: ${response.body}');
-      }
-    } else {
-      if (kDebugMode) {
-        print('Error: ${response.statusCode} - ${response.body}');
-      }
-    }
-  } catch (e) {
-    if (kDebugMode) {
-      print('Exception: $e');
-    }
   }
 }
 
