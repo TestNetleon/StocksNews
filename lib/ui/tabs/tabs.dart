@@ -205,10 +205,10 @@ class _TabsState extends State<Tabs> {
 
       case 3:
         pingApi(SocketEnum.news);
-        signalsManager.onScreenChange(-1);
         break;
 
       case 4:
+        signalsManager.onScreenChange(-1);
         pingApi(SocketEnum.tools);
         SocketService.instance.emitUpdateUser(SocketEnum.tools);
         if (toolsManager.data == null) {

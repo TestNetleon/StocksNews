@@ -781,11 +781,13 @@ Future<void> pingApi(SocketEnum type) async {
   Utils().showLog('PING->  Body: $body');
 
   try {
-    final response = await http.post(
-      Uri.parse(url),
-      headers: headers,
-      body: body,
-    );
+    final response = await http
+        .post(
+          Uri.parse(url),
+          headers: headers,
+          body: body,
+        )
+        .timeout(const Duration(seconds: 3));
 
     if (response.statusCode == 200) {
       Utils().showLog('PING->  Success: ${response.body}');

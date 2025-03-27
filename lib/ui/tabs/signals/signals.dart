@@ -25,7 +25,7 @@ class _SignalsIndexState extends State<SignalsIndex> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       SignalsManager manager = context.read<SignalsManager>();
-      manager.onScreenChange(widget.index);
+      manager.onScreenChange(widget.index ?? 0);
     });
   }
 
@@ -46,7 +46,7 @@ class _SignalsIndexState extends State<SignalsIndex> {
         showSearch: true,
         showNotification: true,
         showBack: true,
-        // leadingFilterClick: manager.selectedScreen == 2 ? _onFilterClick : null,
+        leadingFilterClick: manager.selectedScreen == 2 ? _onFilterClick : null,
       ),
       // drawer: MoreIndex(),
       body: Column(
