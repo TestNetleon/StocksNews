@@ -398,8 +398,6 @@ class LeadingNotification extends StatelessWidget {
         InkWell(
           borderRadius: BorderRadius.circular(Pad.pad999),
           onTap: () {
-            UserManager manager = context.read<UserManager>();
-            manager.notificationSaw(0);
             closeKeyboard();
             GlobalManager globalManager = context.read<GlobalManager>();
             globalManager.navigateToNotification();
