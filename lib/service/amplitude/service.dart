@@ -9,22 +9,17 @@ import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/service/appsFlyer/service.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/utils.dart';
-import '../../utils/dialogs.dart';
 import '../firebase/service.dart';
 
 class AmplitudeService {
   static final Amplitude _amplitude = Amplitude.getInstance();
-  // Initialize AppsFlyerService instance
-  // static final AppsFlyerService _appsFlyerService = AppsFlyerService(
-  //   ApiKeys.appsFlyerKey,
-  //   ApiKeys.iosAppID,
-  // );
-  // static final AppsFlyerService _appsFlyerService = AppsFlyerService();
 
-  static final FirebaseService _firebaseService = FirebaseService();
+  AmplitudeService._internal();
+  static final AmplitudeService _instance = AmplitudeService._internal();
+  static AmplitudeService get instance => _instance;
 
   //INITIALIZE
-  static Future<void> initialize() async {
+  Future<void> initialize() async {
     try {
       await _amplitude.init(ApiKeys.amplitudeKey);
       Utils().showLog('Amplitude Initialized Successfully');
@@ -33,7 +28,7 @@ class AmplitudeService {
     }
   }
 
-  //FIRST OPEN
+  //MARK:FIRST OPEN
   static void logFirstOpenEvent() async {
     // if (kDebugMode) return;
     try {
@@ -43,7 +38,7 @@ class AmplitudeService {
       String versionName = packageInfo.version;
       String buildNumber = packageInfo.buildNumber;
       if (getFirstTime) {
-        _logEvent(
+        logEvent(
           EventAmplitude.amp_firstopen.name,
           eventProperties: fcmToken != null
               ? {
@@ -65,7 +60,7 @@ class AmplitudeService {
               : null,
         );
 
-        _firebaseService.firebaseLogEvent(
+        FirebaseService.instance.firebaseLogEvent(
           EventFirebase.f_firstopen.name,
           eventProperties: fcmToken != null
               ? {
@@ -76,17 +71,6 @@ class AmplitudeService {
               : null,
         );
 
-        // _brazeService.logEvent(
-        //   EventBraze.b_firstopen.name,
-        //   eventProperties: fcmToken != null
-        //       ? {
-        //           'FCM': fcmToken,
-        //           "build_version": versionName,
-        //           "build_code": buildNumber,
-        //         }
-        //       : null,
-        // );
-
         await Preference.setAmplitudeFirstOpen(false);
       }
     } catch (e) {
@@ -94,8 +78,8 @@ class AmplitudeService {
     }
   }
 
-  //LOG IN / SIGN UP
-  static void logLoginSignUpEvent({
+  //MARK:LOG IN / SIGN UP
+  void logLoginSignUpEvent({
     required num isRegistered,
   }) async {
     // if (kDebugMode) return;
@@ -149,7 +133,7 @@ class AmplitudeService {
       }
 
       if (isRegistered == 1) {
-        _logEvent(
+        logEvent(
           EventAmplitude.amp_signup.name,
           eventProperties: request,
         );
@@ -159,7 +143,7 @@ class AmplitudeService {
           userId: provider.user?.userId,
         );
 
-        _firebaseService.firebaseLogEvent(
+        FirebaseService.instance.firebaseLogEvent(
           EventFirebase.f_signup.name,
           eventProperties: request,
           userId: provider.user?.userId,
@@ -175,186 +159,7 @@ class AmplitudeService {
     }
   }
 
-  //NOTIFICATION ENABLED
-  static void logPushNotificationEnabledEvent(
-    Map<String, dynamic>? request,
-    String? userId,
-  ) async {
-    try {
-      bool notReceived = await openNotificationsSettings();
-      // Utils().showLog('Logging event: got permission ${!notReceived}');
-      if (!notReceived) {
-        _logEvent(
-          'Push Notification Enabled',
-          eventProperties: request,
-        );
-        AppsFlyerService.instance.appsFlyerLogEvent(
-          'Push Notification Enabled',
-          eventProperties: request,
-          userId: userId,
-        );
-      }
-    } catch (e) {
-      //
-    }
-  }
-
-  //WATCHLIST UPDATED
-  static void logWatchlistUpdateEvent({
-    required bool added,
-    required String symbol,
-    required String companyName,
-  }) async {
-    try {
-      UserManager provider = navigatorKey.currentContext!.read<UserManager>();
-      PackageInfo packageInfo = await PackageInfo.fromPlatform();
-      String versionName = packageInfo.version;
-      String buildNumber = packageInfo.buildNumber;
-      Map<String, dynamic> request = {
-        "build_version": versionName,
-        "build_code": buildNumber,
-        "ticker_symbol": symbol,
-        "company_name": companyName,
-      };
-      if (provider.user?.phone != null && provider.user?.phone != '') {
-        request['phone'] = provider.user?.phone;
-      }
-      if (provider.user?.name != null && provider.user?.name != '') {
-        request['user_name'] = provider.user?.name;
-      }
-      if (provider.user?.phoneCode != null && provider.user?.phoneCode != '') {
-        request['country_code'] = provider.user?.phoneCode;
-      }
-      if (provider.user?.email != null && provider.user?.email != '') {
-        request['email'] = provider.user?.email;
-      }
-      if (provider.user != null) {
-        request['membership'] = provider.user?.membership?.purchased == 1
-            ? 'Purchased'
-            : 'Not Purchased';
-      }
-      if (provider.user?.userId != null && provider.user?.userId != '') {
-        _amplitude.setUserId(provider.user?.userId ?? '');
-      }
-      _logEvent(
-        added ? 'Added in Watchlist' : 'Removed from Watchlist',
-        eventProperties: request,
-      );
-      AppsFlyerService.instance.appsFlyerLogEvent(
-        added ? 'Added in Watchlist' : 'Removed from Watchlist',
-        eventProperties: request,
-        userId: provider.user?.userId,
-      );
-    } catch (e) {
-      //
-    }
-  }
-
-  //ALERT UPDATED
-  static void logAlertUpdateEvent({
-    required bool added,
-    required String symbol,
-    required String companyName,
-  }) async {
-    try {
-      UserManager provider = navigatorKey.currentContext!.read<UserManager>();
-      PackageInfo packageInfo = await PackageInfo.fromPlatform();
-      String versionName = packageInfo.version;
-      String buildNumber = packageInfo.buildNumber;
-      Map<String, dynamic> request = {
-        "build_version": versionName,
-        "build_code": buildNumber,
-        "ticker_symbol": symbol,
-        "company_name": companyName,
-      };
-      if (provider.user?.phone != null && provider.user?.phone != '') {
-        request['phone'] = provider.user?.phone;
-      }
-      if (provider.user?.name != null && provider.user?.name != '') {
-        request['user_name'] = provider.user?.name;
-      }
-      if (provider.user?.phoneCode != null && provider.user?.phoneCode != '') {
-        request['country_code'] = provider.user?.phoneCode;
-      }
-      if (provider.user?.email != null && provider.user?.email != '') {
-        request['email'] = provider.user?.email;
-      }
-      if (provider.user != null) {
-        request['membership'] = provider.user?.membership?.purchased == 1
-            ? 'Purchased'
-            : 'Not Purchased';
-      }
-      if (provider.user?.userId != null && provider.user?.userId != '') {
-        _amplitude.setUserId(provider.user?.userId ?? '');
-      }
-      _logEvent(
-        added ? 'Added $symbol in Alerts' : 'Removed $symbol from Alerts',
-        eventProperties: request,
-      );
-      AppsFlyerService.instance.appsFlyerLogEvent(
-        added ? 'Added $symbol in Alerts' : 'Removed $symbol from Alerts',
-        eventProperties: request,
-        userId: provider.user?.userId,
-      );
-    } catch (e) {
-      //
-    }
-  }
-
-  //USER INTERACTION
-  static void logUserInteractionEvent({
-    required String type,
-    String? selfText,
-  }) async {
-    try {
-      UserManager provider = navigatorKey.currentContext!.read<UserManager>();
-      PackageInfo packageInfo = await PackageInfo.fromPlatform();
-      String versionName = packageInfo.version;
-      String buildNumber = packageInfo.buildNumber;
-      Map<String, dynamic> request = {
-        "build_version": versionName,
-        "build_code": buildNumber,
-      };
-      if (selfText != null && selfText != '') {
-        request['landed_on'] = selfText;
-      }
-
-      if (provider.user?.phone != null && provider.user?.phone != '') {
-        request['phone'] = provider.user?.phone;
-      }
-      if (provider.user?.name != null && provider.user?.name != '') {
-        request['user_name'] = provider.user?.name;
-      }
-      if (provider.user?.phoneCode != null && provider.user?.phoneCode != '') {
-        request['country_code'] = provider.user?.phoneCode;
-      }
-      if (provider.user?.email != null && provider.user?.email != '') {
-        request['email'] = provider.user?.email;
-      }
-      if (provider.user != null) {
-        request['membership'] = provider.user?.membership?.purchased == 1
-            ? 'Purchased'
-            : 'Not Purchased';
-      }
-      if (provider.user?.userId != null && provider.user?.userId != '') {
-        _amplitude.setUserId(provider.user?.userId ?? '');
-      }
-
-      _logEvent(
-        type,
-        eventProperties: request,
-      );
-      AppsFlyerService.instance.appsFlyerLogEvent(
-        type,
-        eventProperties: request,
-        userId: provider.user?.userId,
-      );
-    } catch (e) {
-      //
-    }
-  }
-
-  static void _logEvent(
+  static void logEvent(
     String eventName, {
     Map<String, dynamic>? eventProperties,
   }) {

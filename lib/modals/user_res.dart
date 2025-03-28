@@ -8,11 +8,11 @@ String userResToJson(UserRes data) => json.encode(data.toJson());
 
 class UserRes {
   String? userId;
+  int? seenNotification;
   String? email;
   String? phone;
   final String? roleId;
   final String? token;
-  bool notificationSeen;
   String? image;
   String? name;
   String? referralCode;
@@ -31,13 +31,13 @@ class UserRes {
   UserRes({
     this.imageType,
     this.email,
+    this.seenNotification,
     this.shareText,
     this.membership,
     this.phone,
     this.roleId,
     this.token,
     this.userId,
-    this.notificationSeen = false,
     this.image,
     this.name,
     this.referralCode,
@@ -53,6 +53,7 @@ class UserRes {
   factory UserRes.fromJson(Map<String, dynamic> json) => UserRes(
         imageType: json['image_type'],
         email: json["email"],
+        seenNotification: json['seen_notification'],
         userId: json['_id'],
         shareText: json['share_text'],
         phone: json["phone"],
@@ -77,6 +78,7 @@ class UserRes {
         'image_type': imageType,
         "email": email,
         "phone": phone,
+        'seen_notification': seenNotification,
         'share_text': shareText,
         "_id": userId,
         "role_id": roleId,
@@ -155,31 +157,30 @@ class UserOrdersCheck {
     this.recurringOrder = false,
   });
 
-  factory UserOrdersCheck.fromJson(Map<String, dynamic> json) => UserOrdersCheck(
-    buyOrder: json['buyOrder'] ?? false,
-    sellOrder: json["sellOrder"] ?? false,
-    shortOrder: json["shortOrder"] ?? false,
-    btcOrder: json['btcOrder'] ?? false,
-    limitOrder: json['limitOrder'] ?? false,
-    bracketOrder: json['bracketOrder'] ?? false,
-    stopOrder: json['stopOrder'] ?? false,
-    trailingOrder: json['trailingOrder'] ?? false,
-    stopLimitOrder: json['stopLimitOrder'] ?? false,
-    recurringOrder: json['recurringOrder'] ?? false,
-  );
+  factory UserOrdersCheck.fromJson(Map<String, dynamic> json) =>
+      UserOrdersCheck(
+        buyOrder: json['buyOrder'] ?? false,
+        sellOrder: json["sellOrder"] ?? false,
+        shortOrder: json["shortOrder"] ?? false,
+        btcOrder: json['btcOrder'] ?? false,
+        limitOrder: json['limitOrder'] ?? false,
+        bracketOrder: json['bracketOrder'] ?? false,
+        stopOrder: json['stopOrder'] ?? false,
+        trailingOrder: json['trailingOrder'] ?? false,
+        stopLimitOrder: json['stopLimitOrder'] ?? false,
+        recurringOrder: json['recurringOrder'] ?? false,
+      );
 
   Map<String, dynamic> toJson() => {
-    "buyOrder": buyOrder,
-    'sellOrder': sellOrder,
-    "shortOrder": shortOrder,
-    'btcOrder': btcOrder,
-    'limitOrder': limitOrder,
-    'bracketOrder': bracketOrder,
-    'stopOrder': stopOrder,
-    'trailingOrder': trailingOrder,
-    'stopLimitOrder': stopLimitOrder,
-    'recurringOrder': recurringOrder,
-  };
+        "buyOrder": buyOrder,
+        'sellOrder': sellOrder,
+        "shortOrder": shortOrder,
+        'btcOrder': btcOrder,
+        'limitOrder': limitOrder,
+        'bracketOrder': bracketOrder,
+        'stopOrder': stopOrder,
+        'trailingOrder': trailingOrder,
+        'stopLimitOrder': stopLimitOrder,
+        'recurringOrder': recurringOrder,
+      };
 }
-
-

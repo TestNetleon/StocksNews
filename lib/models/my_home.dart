@@ -210,6 +210,7 @@ class InsiderTradeListRes {
 class InsiderTradeRes {
   final String? id;
   final String? reportingName;
+  final String? reportingImage;
   // final String? reportingSlug;
   final String? typeOfOwner;
   final String? symbol;
@@ -228,6 +229,7 @@ class InsiderTradeRes {
 
   InsiderTradeRes({
     this.id,
+    this.reportingImage,
     this.reportingName,
     this.reportingCik,
     // this.reportingSlug,
@@ -251,6 +253,7 @@ class InsiderTradeRes {
         id: json["_id"],
         price: json['price'],
         link: json['link'],
+        reportingImage: json['reportingImage'],
         reportingCik: json['reportingCik'],
         totalTransaction: json['totalTransaction'],
         reportingName: json["reportingName"],
@@ -271,6 +274,7 @@ class InsiderTradeRes {
         "_id": id,
         'price': price,
         'link': link,
+        'reportingImage': reportingImage,
         'reportingCik': reportingCik,
         "reportingName": reportingName,
         'totalTransaction': totalTransaction,

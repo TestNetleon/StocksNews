@@ -23,6 +23,19 @@ class HomeInsiderTradeItem extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          Padding(
+            padding: const EdgeInsets.only(bottom: Pad.pad10),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(8),
+              child: CachedNetworkImagesWidget(
+                data.reportingImage,
+                height: 250,
+                width: 250,
+                showLoading: true,
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
           Visibility(
             visible: namePresent || typeOwnerPresent,
             child: InkWell(
@@ -84,7 +97,7 @@ class HomeInsiderTradeItem extends StatelessWidget {
                           margin: EdgeInsets.only(right: Pad.pad8),
                           child: CachedNetworkImagesWidget(
                             data.image ?? '',
-                            height: 30,
+                            height: 44,
                             width: 44,
                           ),
                         ),

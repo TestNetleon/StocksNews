@@ -34,7 +34,7 @@ class _HomeWatchlistContainerState extends State<HomeWatchlistContainer> {
           BaseHeading(
             title: manager.homePremiumData?.watchList?.title,
             margin: EdgeInsets.only(top: Pad.pad14, bottom: Pad.pad14),
-            titleStyle: styleBaseBold(),
+            titleStyle: styleBaseBold(fontSize: 22),
             viewMore: () {
               Navigator.pushNamed(context, WatchListIndex.path);
             },

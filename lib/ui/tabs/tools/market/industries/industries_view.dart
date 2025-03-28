@@ -63,7 +63,6 @@ class _IndustriesViewIndexState extends State<IndustriesViewIndex> {
                           if (index == 0)
                             HeaderItem(header: manager.dataView?.header),
                           BaseStockAddItem(
-                            onTap: (value) {},
                             data: manager.dataView!.data![index],
                             index: index,
                             slidable: false,

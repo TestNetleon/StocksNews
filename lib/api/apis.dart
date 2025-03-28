@@ -239,7 +239,7 @@ class Apis {
   static const verifyLoginOtp = "/check-login-otp";
   static const home = "/home";
   static const homeNew = "/home-new";
-  static const saveFCM = "/save-fcm-token";
+  static const getTempUser = "/get-temp-user";
   static const ipoCalendar = "/ipo-calendar";
   static const welcome = "/welcome-screen";
   static const stockFocus = "/stock-in-focus";
