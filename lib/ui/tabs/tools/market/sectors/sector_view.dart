@@ -80,7 +80,6 @@ class _SectorViewIndexState extends State<SectorViewIndex> {
                                 child: HeaderChart()
                             ),
                           BaseStockAddItem(
-                            onTap: (value) {},
                             data: manager.dataView!.data![index],
                             index: index,
                             slidable: false,

@@ -70,13 +70,17 @@ class UserManager extends ChangeNotifier {
     notifyListeners();
   }
 
+  notificationSaw(value) {
+    _user?.seenNotification = value;
+    notifyListeners();
+  }
+
   Future updateShareUrl() async {
     if (shareUrl == null) {
       AppsFlyerService.instance.createUserInvitationLink();
     }
     // shareUri ??= await DynamicLinkService.instance.getDynamicLink();
   }
-
 
   Future<bool> checkForUser() async {
     _user = null;
@@ -353,7 +357,7 @@ class UserManager extends ChangeNotifier {
         shareUrl = _user?.referralUrl;
 
         if (_user?.signupStatus != null) {
-          AmplitudeService.logLoginSignUpEvent(
+          AmplitudeService.instance.logLoginSignUpEvent(
             isRegistered: (_user?.signupStatus ?? false) ? 1 : 0,
           );
         }

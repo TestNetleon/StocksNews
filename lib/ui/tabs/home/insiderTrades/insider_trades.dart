@@ -4,6 +4,7 @@ import 'package:stocks_news_new/managers/tools.dart';
 import 'package:stocks_news_new/models/my_home.dart';
 import 'package:stocks_news_new/models/tools.dart';
 import 'package:stocks_news_new/ui/tabs/home/extra/lock.dart';
+import 'package:stocks_news_new/utils/theme.dart';
 import '../../../../managers/home/home.dart';
 import '../../../../utils/constants.dart';
 import '../../../base/button.dart';
@@ -26,6 +27,7 @@ class HomeInsiderTradesIndex extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           BaseHeading(
+            titleStyle: styleBaseBold(fontSize: 22),
             title: insiderData?.title,
             margin: EdgeInsets.only(top: Pad.pad20, bottom: Pad.pad16),
             viewMore: () {
@@ -43,7 +45,7 @@ class HomeInsiderTradesIndex extends StatelessWidget {
             lockInfo: insiderData?.lockInfo,
             childWidget: SingleChildScrollView(
               scrollDirection: Axis.horizontal,
-              child: IntrinsicWidth(
+              child: IntrinsicHeight(
                 child: Row(
                   children: List.generate(
                     insiderData?.data?.length ?? 0,

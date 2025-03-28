@@ -60,7 +60,6 @@ class SDManager extends ChangeNotifier {
     _dataMergers = null;
     _openMergers = -1;
     _dataChart = null;
-    _dataCHistorical = null;
     _dataOwnership = null;
     notifyListeners();
   }
@@ -100,7 +99,7 @@ class SDManager extends ChangeNotifier {
   }
 
 //MARK: Common TabChange
-  onTabChange(int index) {
+  onTabChange(int index, {bool reset = false}) {
     Utils().showLog('--Index--$index');
     if (_selectedIndex != index) {
       _selectedIndex = index;
@@ -113,8 +112,9 @@ class SDManager extends ChangeNotifier {
             getSDOverview();
           }
           if (_dataHistoricalC == null) {
-            getSDHistoricalC();
+            getSDHistoricalC(reset: reset);
           }
+
           break;
 
         case 1:
@@ -181,9 +181,10 @@ class SDManager extends ChangeNotifier {
           if (_dataChart == null) {
             getSDChart();
           }
-          if (_dataCHistorical == null) {
-            getSDCHistorical();
+          if (_dataHistoricalC == null) {
+            getSDHistoricalC(reset: reset);
           }
+
           break;
 
         case 12:
@@ -259,7 +260,8 @@ class SDManager extends ChangeNotifier {
 
       case 11:
         getSDChart(reset: true);
-        getSDCHistorical(reset: true);
+        getSDHistoricalC(reset: true);
+
         break;
 
       case 12:
@@ -296,7 +298,7 @@ class SDManager extends ChangeNotifier {
       );
       if (response.status) {
         _data = stocksDetailResFromJson(jsonEncode(response.data));
-        onTabChange(0);
+        onTabChange(0, reset: true);
         BrazeService.eventContentView(
           screenType: 'stock_analysis',
           source: _data?.tickerDetail?.shareUrl ?? '',
@@ -313,6 +315,40 @@ class SDManager extends ChangeNotifier {
       Utils().showLog('Error in ${Apis.sdTab}: $e');
     } finally {
       setStatus(Status.loaded);
+    }
+  }
+
+  final List<MarketResData> ranges = [
+    MarketResData(
+      title: '1H',
+      slug: '1hour',
+    ),
+    MarketResData(
+      title: '1D',
+      slug: '1day',
+    ),
+    MarketResData(
+      title: '1W',
+      slug: '1week',
+    ),
+    MarketResData(
+      title: '1M',
+      slug: '1month',
+    ),
+    MarketResData(
+      title: '1Y',
+      slug: '1year',
+    ),
+  ];
+
+  int _selectedChartIndex = 0;
+  int get selectedChartIndex => _selectedChartIndex;
+
+  changeChartIndex(index) {
+    if (_selectedChartIndex != index) {
+      _selectedChartIndex = index;
+      notifyListeners();
+      getSDHistoricalC(range: ranges[index].slug ?? '');
     }
   }
 
@@ -545,7 +581,10 @@ class SDManager extends ChangeNotifier {
 
   Future getSDHistoricalC({String range = '1hour', bool reset = false}) async {
     if (_selectedStock == '') return;
-    if (reset) _dataHistoricalC = null;
+    if (reset) {
+      _dataHistoricalC = null;
+      _selectedChartIndex = 0;
+    }
 
     try {
       setStatusHistoricalC(Status.loading);
@@ -569,6 +608,9 @@ class SDManager extends ChangeNotifier {
       } else {
         _dataHistoricalC = null;
         _errorHistoricalC = response.message;
+        if (reset && range == '1hour') {
+          changeChartIndex(2);
+        }
       }
     } catch (e) {
       _dataHistoricalC = null;
@@ -1168,47 +1210,47 @@ class SDManager extends ChangeNotifier {
   }
 
   //MARK: Chart Historical
-  String? _errorCHistorical;
-  String? get errorCHistorical => _errorCHistorical ?? Const.errSomethingWrong;
+  // String? _errorCHistorical;
+  // String? get errorCHistorical => _errorCHistorical ?? Const.errSomethingWrong;
 
-  SDHistoricalChartRes? _dataCHistorical;
-  SDHistoricalChartRes? get dataCHistorical => _dataCHistorical;
+  // SDHistoricalChartRes? _dataCHistorical;
+  // SDHistoricalChartRes? get dataCHistorical => _dataCHistorical;
 
-  Future getSDCHistorical({String range = '1hour', bool reset = false}) async {
-    if (_selectedStock == '') return;
-    if (reset) _dataCHistorical = null;
+  // Future getSDCHistorical({String range = '1hour', bool reset = false}) async {
+  //   if (_selectedStock == '') return;
+  //   if (reset) _dataCHistorical = null;
 
-    try {
-      setStatusHistoricalC(Status.loading);
+  //   try {
+  //     setStatusHistoricalC(Status.loading);
 
-      UserManager provider = navigatorKey.currentContext!.read<UserManager>();
-      Map request = {
-        'token': provider.user?.token ?? '',
-        'symbol': _selectedStock,
-        'range': range,
-      };
+  //     UserManager provider = navigatorKey.currentContext!.read<UserManager>();
+  //     Map request = {
+  //       'token': provider.user?.token ?? '',
+  //       'symbol': _selectedStock,
+  //       'range': range,
+  //     };
 
-      ApiResponse response = await apiRequest(
-        url: Apis.sdHistoricalC,
-        request: request,
-        showProgress: _dataCHistorical != null,
-      );
-      if (response.status) {
-        _dataCHistorical =
-            stocksDetailHistoricalChartResFromJson(jsonEncode(response.data));
-        _errorCHistorical = null;
-      } else {
-        _dataCHistorical = null;
-        _errorCHistorical = response.message;
-      }
-    } catch (e) {
-      _dataCHistorical = null;
-      _errorCHistorical = Const.errSomethingWrong;
-      Utils().showLog('Error in ${Apis.sdHistoricalC}: $e');
-    } finally {
-      setStatusHistoricalC(Status.loaded);
-    }
-  }
+  //     ApiResponse response = await apiRequest(
+  //       url: Apis.sdHistoricalC,
+  //       request: request,
+  //       showProgress: _dataCHistorical != null,
+  //     );
+  //     if (response.status) {
+  //       _dataCHistorical =
+  //           stocksDetailHistoricalChartResFromJson(jsonEncode(response.data));
+  //       _errorCHistorical = null;
+  //     } else {
+  //       _dataCHistorical = null;
+  //       _errorCHistorical = response.message;
+  //     }
+  //   } catch (e) {
+  //     _dataCHistorical = null;
+  //     _errorCHistorical = Const.errSomethingWrong;
+  //     Utils().showLog('Error in ${Apis.sdHistoricalC}: $e');
+  //   } finally {
+  //     setStatusHistoricalC(Status.loaded);
+  //   }
+  // }
 
   //MARK: Chart
   String? _errorChart;

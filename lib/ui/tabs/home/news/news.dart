@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:stocks_news_new/ui/base/base_list_divider.dart';
 import 'package:stocks_news_new/utils/constants.dart';
+import 'package:stocks_news_new/utils/theme.dart';
 import '../../../../models/my_home.dart';
 import '../../../../models/news.dart';
 import '../../../base/heading.dart';
@@ -20,6 +21,7 @@ class HomeNewsIndex extends StatelessWidget {
       children: [
         BaseHeading(
           title: newsData?.title,
+          titleStyle: styleBaseBold(fontSize: 22),
           margin: EdgeInsets.only(
             top: Pad.pad32,
             left: Pad.pad16,

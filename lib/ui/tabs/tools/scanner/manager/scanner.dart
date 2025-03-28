@@ -58,11 +58,13 @@ class ScannerManager extends ChangeNotifier {
   }
 
   onRefresh({bool withPortRefresh = true}) async {
+    setTotalResults(0);
+    setUsingFilter(false);
+
     if (withPortRefresh) {
       await getScannerPorts(showProgress: true);
     }
     if (_portData?.lockInfo != null) return;
-    setUsingFilter(false);
     ScannerGainersManager gainersManager =
         navigatorKey.currentContext!.read<ScannerGainersManager>();
     ScannerLosersManager losersManager =
@@ -70,7 +72,6 @@ class ScannerManager extends ChangeNotifier {
     stopListeningPorts();
     gainersManager.stopListeningPorts();
     losersManager.stopListeningPorts();
-    setTotalResults(0);
     switch (selectedIndex) {
       case 0:
         setSortingApplied(false);
@@ -271,6 +272,11 @@ class ScannerManager extends ChangeNotifier {
       _statusPort == Status.loading || _statusPort == Status.ideal;
 
 //MARK: setting up lock
+
+  setDataEmpty() {
+    _portData = null;
+    notifyListeners();
+  }
 
   BaseLockInfoRes? getLockINFO() {
     BaseLockInfoRes? info = _portData?.lockInfo;

@@ -36,8 +36,8 @@ class HomePoliticianTradeItem extends StatelessWidget {
             ClipRRect(
               borderRadius: BorderRadius.circular(8),
               child: CachedNetworkImagesWidget(
-                height: 224.sp,
-                width: 224.sp,
+                height: 250,
+                width: 250,
                 data.userImage,
                 fit: BoxFit.cover,
               ),
@@ -72,7 +72,7 @@ class HomePoliticianTradeItem extends StatelessWidget {
                           margin: EdgeInsets.only(right: Pad.pad8),
                           child: CachedNetworkImage(
                             imageUrl: data.image ?? '',
-                            height: 30,
+                            height: 44,
                             width: 44,
                           ),
                         ),

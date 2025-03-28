@@ -38,16 +38,6 @@ class ToolsScannerIndex extends StatefulWidget {
 
 class _ToolsScannerIndexState extends State<ToolsScannerIndex>
     with WidgetsBindingObserver {
-  void _startStream() {
-    print('Stream started');
-    // Start your stream here
-  }
-
-  void _stopStream() {
-    print('Stream stopped');
-    // Stop your stream here
-  }
-
   List<MarketResData> tabs = [
     MarketResData(title: 'SCANNER', slug: 'slug'),
     MarketResData(title: 'GAINERS', slug: 'gainers'),
@@ -60,8 +50,15 @@ class _ToolsScannerIndexState extends State<ToolsScannerIndex>
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       WidgetsBinding.instance.addObserver(this);
-      context.read<ScannerManager>().setUsingFilter(false);
+      _callAPI();
     });
+  }
+
+  Future _callAPI() async {
+    ScannerManager manager = context.read<ScannerManager>();
+    manager.setUsingFilter(false);
+    manager.setTotalResults(0);
+    // await manager.getScannerPorts(reset: true);
   }
 
   @override

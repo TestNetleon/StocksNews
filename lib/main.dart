@@ -46,7 +46,7 @@ void main() async {
       Utils().showLog('Firebase catch: $e');
     }
 
-    AmplitudeService.initialize();
+    AmplitudeService.instance.initialize();
     Timer(const Duration(seconds: 8), () {
       Preference.setIsFirstOpen(false);
     });

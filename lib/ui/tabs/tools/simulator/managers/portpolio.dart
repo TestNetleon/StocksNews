@@ -50,7 +50,8 @@ class PortfolioManager extends ChangeNotifier {
     return info;
   }
 
-  Future getDashboardData({bool reset = false,bool showProgress= false}) async {
+  Future getDashboardData(
+      {bool reset = false, bool showProgress = false}) async {
     if (reset) {
       _userData = null;
       _error = null;

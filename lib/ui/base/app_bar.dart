@@ -19,7 +19,13 @@ import '../tabs/more/news/detail.dart';
 import 'search/base_search.dart';
 
 class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
-  final bool isHome, showBack, showSearch, showNotification, showDrawer,showTrade,searchLeague;
+  final bool isHome,
+      showBack,
+      showSearch,
+      showNotification,
+      showDrawer,
+      showTrade,
+      searchLeague;
   final Widget? searchFieldWidget;
   final String? title;
   final Function()? onSaveClick;
@@ -191,9 +197,14 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
                     Row(
                       children: [
                         if (showNotification)
-                          LeadingNotification(
-                            showIndicator: true,
-                            // color: darkTheme ? ThemeColors.white : null,
+                          Consumer<UserManager>(
+                            builder: (context, value, child) {
+                              return LeadingNotification(
+                                showIndicator:
+                                    value.user?.seenNotification == 0,
+                                // color: darkTheme ? ThemeColors.white : null,
+                              );
+                            },
                           ),
                         if (showSearch)
                           ActionButton(
@@ -230,7 +241,7 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
                               );
                             },
                           ),
-                        if(showTrade)
+                        if (showTrade)
                           IconButton(
                             onPressed: onTradeClick,
                             icon: Icon(
@@ -240,9 +251,9 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
                         if (searchLeague)
                           ActionButton(
                             icon: Images.search,
-                            onTap:onLSearchClick,
+                            onTap: onLSearchClick,
                           ),
-                        if(onFilterClick!= null)
+                        if (onFilterClick != null)
                           IconButton(
                             onPressed: onFilterClick,
                             icon: Icon(
@@ -387,6 +398,8 @@ class LeadingNotification extends StatelessWidget {
         InkWell(
           borderRadius: BorderRadius.circular(Pad.pad999),
           onTap: () {
+            UserManager manager = context.read<UserManager>();
+            manager.notificationSaw(0);
             closeKeyboard();
             GlobalManager globalManager = context.read<GlobalManager>();
             globalManager.navigateToNotification();

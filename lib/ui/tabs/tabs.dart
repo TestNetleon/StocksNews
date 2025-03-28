@@ -196,6 +196,7 @@ class _TabsState extends State<Tabs> {
         break;
 
       case 1:
+        // scannerManager.setDataEmpty();
         pingApi(SocketEnum.scanner);
         break;
 

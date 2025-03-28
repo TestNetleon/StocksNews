@@ -11,7 +11,6 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/custom/base_loader_container.dart';
 import 'package:stocks_news_new/widgets/optional_parent.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
-import '../../../models/stockDetail/historical_chart.dart';
 import '../../../models/stockDetail/overview.dart';
 import '../../../widgets/spacer_vertical.dart';
 import '../../aiAnalysis/radar.dart';
@@ -32,8 +31,8 @@ class SDOverview extends StatelessWidget {
     SDStockScoreRes? stockScore = manager.dataOverview?.stockScore;
     AIradarChartRes? aiAnalysis = manager.dataOverview?.aiAnalysis;
     MorningStarRes? morningStar = manager.dataOverview?.morningStar;
-    SDHistoricalChartRes? chart = manager.dataHistoricalC;
-    bool hasData = manager.dataHistoricalC != null;
+    // SDHistoricalChartRes? chart = manager.dataHistoricalC;
+    // bool hasData = manager.dataHistoricalC != null;
 
     bool hideRange = companyInfo?.dayHigh == null ||
         companyInfo?.dayLow == null ||
@@ -86,14 +85,8 @@ class SDOverview extends StatelessWidget {
           ),
           SDMorningStarView(data: morningStar),
           //Historical Chart
-          SDHistoricalChart(
-            hasData: hasData,
-            chart: chart,
-            error: manager.errorHistoricalC,
-            onTap: (p0) {
-              manager.getSDHistoricalC(range: p0);
-            },
-          ),
+          SDHistoricalChart(),
+
           SDCompanyBrief(companyInfo: companyInfo),
           Column(
             children: [

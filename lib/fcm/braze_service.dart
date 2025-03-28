@@ -1,13 +1,12 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:package_info_plus/package_info_plus.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/database/preference.dart';
-import 'package:stocks_news_new/managers/user.dart';
+import 'package:stocks_news_new/modals/user_res.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/service/braze/service.dart';
 import 'package:stocks_news_new/ui/account/auth/login.dart';
@@ -60,26 +59,14 @@ class BrazeNotificationService {
     }
   }
 
-  Future saveFCMApi({String? value, String? address}) async {
-    PackageInfo packageInfo = await PackageInfo.fromPlatform();
-    String versionName = packageInfo.version;
-    String buildNumber = packageInfo.buildNumber;
-    bool granted = await Permission.notification.isGranted;
-
+  Future getTemUser({String? value}) async {
     try {
       Map request = {
-        "token":
-            navigatorKey.currentContext!.read<UserManager>().user?.token ?? "",
-        "fcm_token": value ?? "",
-        "platform": Platform.operatingSystem,
-        "address": address ?? "",
-        "build_version": versionName,
-        "build_code": buildNumber,
-        "fcm_permission": "$granted",
+        'fcm_token': value,
       };
 
       ApiResponse response = await apiRequest(
-        url: Apis.saveFCM,
+        url: Apis.getTempUser,
         request: request,
         showProgress: false,
         showErrorOnFull: false,
@@ -87,13 +74,10 @@ class BrazeNotificationService {
         removeForceLogin: true,
       );
 
-      Extra? extra = response.extra is Extra ? response.extra : null;
-
       if (response.status) {
-        //
-        if (extra?.tempUser != null) {
-          BrazeService.brazeUserEvent(randomID: extra?.tempUser?.userId);
-        }
+        UserRes? tempUser;
+        tempUser = userResFromJson(jsonEncode(response.data));
+        BrazeService.brazeUserEvent(randomID: tempUser.userId);
       } else {
         //
       }
