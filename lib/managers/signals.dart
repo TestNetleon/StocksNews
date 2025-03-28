@@ -54,7 +54,6 @@ class SignalsManager extends ChangeNotifier {
 
   int? selectedScreen;
   onScreenChange(index) {
-    print('Screen $index');
     if (selectedScreen != index) {
       selectedScreen = index;
       notifyListeners();

@@ -153,7 +153,7 @@ import 'package:stocks_news_new/utils/utils.dart';
       num orderPrice = data.orderPrice ?? 0;
       if (data.status == 0) {
         if (symbols != null && symbols.isNotEmpty == true) {
-          if (data.sType == StockType.buy) {
+          if (data.tradeType == StockType.buy) {
             data.orderChange = orderPrice == 0 || currentPrice == 0
                 ? 0
                 : (((currentPrice - orderPrice) / orderPrice) * 100);
@@ -177,7 +177,7 @@ import 'package:stocks_news_new/utils/utils.dart';
               num? newPrice = stockData.price;
 
               if (newPrice != null) {
-                if (data.sType == StockType.buy) {
+                if (data.tradeType == StockType.buy) {
                   data.orderChange =
                       (((newPrice - orderPrice) / orderPrice) * 100);
                   data.gainLoss = (newPrice - orderPrice);

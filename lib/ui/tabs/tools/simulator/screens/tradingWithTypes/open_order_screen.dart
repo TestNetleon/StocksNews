@@ -158,8 +158,8 @@ class _OpenOrderScreenState extends State<OpenOrderScreen> {
                       '${stock?.change?.toFormattedPrice()} (${stock?.changePercentage?.toCurrency()}%)',
                       style: styleBaseRegular(
                         color: (stock?.change ?? 0) >= 0
-                            ? ThemeColors.success120
-                            : ThemeColors.error120,
+                            ? ThemeColors.accent
+                            : ThemeColors.sos,
                         fontSize: 12,
                       ),
                     ),

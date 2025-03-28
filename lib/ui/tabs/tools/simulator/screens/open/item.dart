@@ -92,8 +92,8 @@ class TsOpenListItem extends StatelessWidget {
                                     "  ${item?.change?.toFormattedPriceForSim()}",
                                     style: styleBaseRegular(
                                       color: (item?.change ?? 0) < 0
-                                          ? ThemeColors.error120
-                                          : ThemeColors.success120,
+                                          ? ThemeColors.sos
+                                          : ThemeColors.accent,
                                       fontSize: 14,
                                     ),
                                     // maxLines: 2,
@@ -206,8 +206,8 @@ class TsOpenListItem extends StatelessWidget {
                                 : "${item?.investedChange?.toFormattedPriceForSim() ?? 0} (${item?.investedChangePercentage?.toCurrencyForSim() ?? 0}%)",
                             style: styleBaseBold(
                               color: (item?.investedChange ?? 0) < 0
-                                  ? ThemeColors.error120
-                                  : ThemeColors.success120,
+                                  ? ThemeColors.sos
+                                  : ThemeColors.accent,
                               fontSize: 12,
                             ),
                           ),

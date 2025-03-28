@@ -107,8 +107,8 @@ class _SHeaderState extends State<SHeader> {
                       style: styleBaseBold(
                           fontSize: 18,
                           color: (manager.userData?.userDataRes?.totalReturn ?? 0) >= 0
-                              ? ThemeColors.success120
-                              : ThemeColors.error120
+                              ? ThemeColors.accent
+                              : ThemeColors.sos
                       ),
                     ),
                   ],
@@ -136,8 +136,8 @@ class _SHeaderState extends State<SHeader> {
                           color: (manager.userData?.userDataRes?.todayReturn ??
                                       0) >=
                                   0
-                              ? ThemeColors.success120
-                              : ThemeColors.error120),
+                              ? ThemeColors.accent
+                              : ThemeColors.sos),
                     ),
                   ],
                 ),

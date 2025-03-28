@@ -209,8 +209,8 @@ class _TradOrderScreenState extends State<TradOrderScreen> {
                       '${stock?.change?.toFormattedPrice()} (${stock?.changePercentage?.toCurrency()}%)',
                       style: styleBaseRegular(
                         color: (stock?.change ?? 0) >= 0
-                            ? ThemeColors.success120
-                            : ThemeColors.error120,
+                            ? ThemeColors.accent
+                            : ThemeColors.sos,
                         fontSize: 12,
                       ),
                     ),
@@ -238,7 +238,12 @@ class _TradOrderScreenState extends State<TradOrderScreen> {
             ),
             onTap: () {
               var selectedStock = StockType.buy;
-              _onTap(symbol: widget.symbol, selectedStock: selectedStock);
+              if(_userOrdersCheck?.buyOrder==true){
+                _onTap(symbol: widget.symbol, selectedStock: selectedStock);
+              }else{
+                openInfoSheet(selectedStock: selectedStock);
+              }
+
 
             },
           ),
@@ -251,7 +256,12 @@ class _TradOrderScreenState extends State<TradOrderScreen> {
             ),
             onTap: () {
               var selectedStock = StockType.sell;
-              _onTap(symbol: widget.symbol, selectedStock: selectedStock);
+              if(_userOrdersCheck?.sellOrder==true){
+                _onTap(symbol: widget.symbol, selectedStock: selectedStock);
+              }else{
+                openInfoSheet(selectedStock: selectedStock);
+              }
+
             },
           ),
           BaseListDivider(),
@@ -263,9 +273,14 @@ class _TradOrderScreenState extends State<TradOrderScreen> {
               widget.symbol,
             ),
             onTap: () {
+              var selectedStock = StockType.short;
+              if(_userOrdersCheck?.shortOrder==true){
                 navigatorKey.currentContext!
                     .read<TickerSearchManager>()
                     .shortRedirection(widget.symbol ?? "");
+              }else{
+                openInfoSheet(selectedStock: selectedStock);
+              }
             },
           ),
           BaseListDivider(),
@@ -278,8 +293,11 @@ class _TradOrderScreenState extends State<TradOrderScreen> {
             ),
             onTap: () {
               var selectedStock = StockType.btc;
-             _onTap(symbol: widget.symbol, selectedStock: selectedStock);
-
+              if(_userOrdersCheck?.btcOrder==true){
+                _onTap(symbol: widget.symbol, selectedStock: selectedStock);
+              }else{
+                openInfoSheet(selectedStock: selectedStock);
+              }
             },
           ),
           SpacerVertical(height: Pad.pad5),

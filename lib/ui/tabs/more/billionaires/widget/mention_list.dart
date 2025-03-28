@@ -73,16 +73,13 @@ class _MentionsListIndexState extends State<MentionsListIndex> {
                           Visibility(
                             visible:
                                 cryptos?.image != null && cryptos?.image != '',
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(43),
-                              child: CachedNetworkImagesWidget(
-                                cryptos?.image ?? '',
-                                placeHolder: Images.userPlaceholderNew,
-                                showLoading: true,
-                                fit: BoxFit.cover,
-                                height: 43,
-                                width: 43,
-                              ),
+                            child:CachedNetworkImagesWidget(
+                              cryptos?.image ?? '',
+                              placeHolder: Images.userPlaceholderNew,
+                              showLoading: true,
+                              fit: BoxFit.contain,
+                              height: 40,
+                              width: 40,
                             ),
                           ),
                           const SpacerHorizontal(width: 12),

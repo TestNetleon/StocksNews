@@ -154,6 +154,7 @@ class _OrderInfoSheetState extends State<OrderInfoSheet> {
     await Preference.saveUserCheck(userOrdersCheck);
     setState(() {});
   }
+
   void onProceed() {
     if(widget.selectedStock==StockType.buy){
       _userOrdersCheck?.buyOrder=boxChecked;
@@ -188,23 +189,46 @@ class _OrderInfoSheetState extends State<OrderInfoSheet> {
     setState(() {});
     setUser(_userOrdersCheck);
     if (widget.symbol != null) {
-      if(widget.cType==ConditionType.recurringOrder){
-        context.read<TickerSearchManager>().stockHoldingOfRecurringCondition(widget.symbol ?? "");
+      if(widget.selectedStock!=null){
+        _onTap();
       }
       else{
-        context
-            .read<TickerSearchManager>()
-            .conditionalRedirection(widget.symbol ?? "",
-            tickerID: widget.tickerID,
-            qty: widget.qty,
-            conditionalType: widget.cType);
+        if(widget.cType==ConditionType.recurringOrder){
+          context.read<TickerSearchManager>().stockHoldingOfRecurringCondition(widget.symbol ?? "");
+        }
+        else{
+          context
+              .read<TickerSearchManager>()
+              .conditionalRedirection(widget.symbol ?? "",
+              tickerID: widget.tickerID,
+              qty: widget.qty,
+              conditionalType: widget.cType);
+        }
       }
+
     }
   }
   _changeBox() {
     boxChecked = !boxChecked;
     if (mounted) {
       setState(() {});
+    }
+  }
+
+  Future _onTap() async {
+    try {
+      TickerSearchManager manager = context.read<TickerSearchManager>();
+      if (widget.symbol != null && widget.symbol != '') {
+        if(widget.selectedStock==StockType.short){
+          manager.shortRedirection(widget.symbol ?? "");
+        }
+        else{
+          manager.stockHolding(widget.symbol??"", selectedStock: widget.selectedStock);
+        }
+      }
+
+    } catch (e) {
+      //
     }
   }
 

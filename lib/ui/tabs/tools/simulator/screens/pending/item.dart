@@ -176,8 +176,8 @@ class TsPendingListItem extends StatelessWidget {
               margin: EdgeInsets.symmetric(horizontal: 10),
               decoration: BoxDecoration(
                 color: item?.tradeType == "Buy"
-                    ? ThemeColors.success120
-                    : ThemeColors.error120,
+                    ? ThemeColors.accent
+                    : ThemeColors.sos,
                 borderRadius: BorderRadius.only(
                   bottomLeft: Radius.circular(8),
                   bottomRight: Radius.circular(8),

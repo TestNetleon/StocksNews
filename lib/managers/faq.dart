@@ -58,7 +58,6 @@ class FaqManager extends ChangeNotifier {
         _data = baseFaqResFromJson(jsonEncode(response.data));
         if (isRest == true) {
           _errorSearch = response.message;
-          print(_errorSearch);
         }
       } else {
         _data = null;

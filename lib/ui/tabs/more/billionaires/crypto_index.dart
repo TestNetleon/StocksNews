@@ -79,7 +79,29 @@ class _CryptoIndexState extends State<CryptoIndex> {
     bool hasData = manager.dataHistoricalC != null;
     return BaseScaffold(
         appBar: BaseTickerAppBar(
-          data: tickerDetail,
+          data: manager.isLoadingCDetail?null:tickerDetail,
+          extraWidget:manager.isLoadingCDetail?null:IntrinsicWidth(
+            child: BaseButton(
+              fullWidth: false,
+              color: tickerDetail?.isCryptoAdded == 0
+                  ? ThemeColors.transparentGreen
+                  : ThemeColors.transparentRed,
+              onPressed: () {
+                if (tickerDetail?.isCryptoAdded == 0) {
+                  manager.requestAddToWatch(widget.symbol,
+                      cryptos: tickerDetail);
+                } else {
+                  manager.requestRemoveToWatch(widget.symbol,
+                      cryptos: tickerDetail);
+                }
+              },
+              text: tickerDetail?.isCryptoAdded == 0
+                  ? "FOLLOW"
+                  : "UNFOLLOW",
+              textSize: 14,
+              padding: EdgeInsets.symmetric(horizontal: 10),
+            ),
+          ),
         ),
         body: BaseLoaderContainer(
           isLoading: manager.isLoadingCDetail,
@@ -171,28 +193,7 @@ class _CryptoIndexState extends State<CryptoIndex> {
                               ),
                             ),
                           ),
-                          IntrinsicWidth(
-                            child: BaseButton(
-                              fullWidth: false,
-                              color: tickerDetail?.isCryptoAdded == 0
-                                  ? ThemeColors.transparentGreen
-                                  : ThemeColors.transparentRed,
-                              onPressed: () {
-                                if (tickerDetail?.isCryptoAdded == 0) {
-                                  manager.requestAddToWatch(widget.symbol,
-                                      cryptos: tickerDetail);
-                                } else {
-                                  manager.requestRemoveToWatch(widget.symbol,
-                                      cryptos: tickerDetail);
-                                }
-                              },
-                              text: tickerDetail?.isCryptoAdded == 0
-                                  ? "FOLLOW"
-                                  : "UNFOLLOW",
-                              textSize: 14,
-                              padding: EdgeInsets.symmetric(horizontal: 10),
-                            ),
-                          ),
+
                         ],
                       ),
                       SpacerVertical(height: Pad.pad10),
