@@ -63,7 +63,7 @@ class _TabsState extends State<Tabs> {
         activeContainerApiCalls(currentIndex: _selectedIndex);
       });
 
-      AmplitudeService.logFirstOpenEvent();
+      AmplitudeService.instance.logFirstOpenEvent();
       requestATT();
     });
   }

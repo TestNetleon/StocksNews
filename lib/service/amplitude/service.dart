@@ -29,7 +29,7 @@ class AmplitudeService {
   }
 
   //MARK:FIRST OPEN
-  static void logFirstOpenEvent() async {
+  void logFirstOpenEvent() async {
     // if (kDebugMode) return;
     try {
       String? fcmToken = await Preference.getFcmToken();
@@ -159,7 +159,7 @@ class AmplitudeService {
     }
   }
 
-  static void logEvent(
+  void logEvent(
     String eventName, {
     Map<String, dynamic>? eventProperties,
   }) {
