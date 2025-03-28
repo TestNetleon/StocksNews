@@ -383,7 +383,9 @@ class TickerSearchManager extends ChangeNotifier {
                         ? "STOP_LIMIT_ORDER"
                         : conditionalType == ConditionType.trailingOrder
                             ? "TRAILING_ORDER"
-                            : "RECURRING_ORDER"
+                            :
+        conditionalType == ConditionType.recurringOrder
+            ? "RECURRING_ORDER":"MARKET_ORDER"
       };
       ApiResponse res = await apiRequest(
           url: Apis.orderTypeInfo, request: request, showProgress: false);

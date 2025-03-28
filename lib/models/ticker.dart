@@ -47,7 +47,7 @@ class BaseTickerRes {
   String? marketTime;
   final bool? executable;
   final String? marketCap;
-  final StockType? sType;
+  final StockType? tradeType;
   final ShowButtonRes? showButton;
   final num? tournamentBattleId;
   num? orderPrice;
@@ -134,7 +134,7 @@ class BaseTickerRes {
     this.closePrice,
     this.orderChange,
     this.gainLoss,
-    this.sType,
+    this.tradeType,
 
     //extra
     this.performance,
@@ -209,8 +209,8 @@ class BaseTickerRes {
         showButton: json["show_button"] == null
             ? null
             : ShowButtonRes.fromJson(json["show_button"]),
-        sType: json['type_s'] != null
-            ? StockTypeExtension.fromJson(json['type_s'])
+    tradeType: json['trade_type'] != null
+            ? StockTypeExtension.fromJson(json['trade_type'])
             : null,
 
         orderPrice: json['order_price'],
@@ -289,7 +289,7 @@ class BaseTickerRes {
         'marketType': marketType,
         'is_trade_executable': executable,
         "show_button": showButton?.toJson(),
-        'type_s': sType?.toJson(),
+        'trade_type': tradeType?.toJson(),
         'order_price': orderPrice,
         'order_change': orderChange,
         'close_price': closePrice,

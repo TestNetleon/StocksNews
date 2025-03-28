@@ -240,7 +240,12 @@ class _ActionInNbsState extends State<ActionInNbs> {
                     ));
               } else {
                 var selectedStock = StockType.buy;
-                _onTap(symbol: widget.symbol, selectedStock: selectedStock);
+                if(_userOrdersCheck?.buyOrder==true){
+                  _onTap(symbol: widget.symbol, selectedStock: selectedStock);
+                }else{
+                  openInfoSheet(selectedStock: selectedStock);
+                }
+
               }
             },
           ),
@@ -262,7 +267,11 @@ class _ActionInNbsState extends State<ActionInNbs> {
                     ));
               } else {
                 var selectedStock = StockType.sell;
-                _onTap(symbol: widget.symbol, selectedStock: selectedStock);
+                if(_userOrdersCheck?.sellOrder==true){
+                  _onTap(symbol: widget.symbol, selectedStock: selectedStock);
+                }else{
+                  openInfoSheet(selectedStock: selectedStock);
+                }
               }
             },
           ),
@@ -283,9 +292,16 @@ class _ActionInNbsState extends State<ActionInNbs> {
                       lockWithImage: false,
                     ));
               } else {
-                navigatorKey.currentContext!
-                    .read<TickerSearchManager>()
-                    .shortRedirection(widget.symbol ?? "");
+                var selectedStock = StockType.short;
+                if(_userOrdersCheck?.shortOrder==true){
+                  navigatorKey.currentContext!
+                      .read<TickerSearchManager>()
+                      .shortRedirection(widget.symbol ?? "");
+                }
+                else{
+                  openInfoSheet(selectedStock: selectedStock);
+                }
+
               }
             },
           ),
@@ -307,7 +323,12 @@ class _ActionInNbsState extends State<ActionInNbs> {
                     ));
               } else {
                 var selectedStock = StockType.btc;
-                _onTap(symbol: widget.symbol, selectedStock: selectedStock);
+                if(_userOrdersCheck?.btcOrder==true){
+                  _onTap(symbol: widget.symbol, selectedStock: selectedStock);
+                }else{
+                  openInfoSheet(selectedStock: selectedStock);
+                }
+
               }
             },
           ),

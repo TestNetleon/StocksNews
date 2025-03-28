@@ -158,17 +158,13 @@ class _ConverterIndexState extends State<ConverterIndex> {
                                 crossAxisAlignment:
                                 CrossAxisAlignment.center,
                                 children: [
-                                  ClipRRect(
-                                    borderRadius:
-                                    BorderRadius.circular(22),
-                                    child: CachedNetworkImagesWidget(
-                                      header.info?.image ?? '',
-                                      height: 22,
-                                      width: 22,
-                                      placeHolder: Images.placeholder,
-                                      showLoading: true,
-                                      fit: BoxFit.cover,
-                                    ),
+                                  CachedNetworkImagesWidget(
+                                    header.info?.image ?? '',
+                                    height: 22,
+                                    width: 22,
+                                    placeHolder: Images.placeholder,
+                                    showLoading: true,
+                                    fit: BoxFit.contain,
                                   ),
                                   SpacerHorizontal(width: Pad.pad10),
                                   Expanded(

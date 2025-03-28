@@ -97,7 +97,7 @@ class TournamentTradeItem extends StatelessWidget {
                                         borderRadius:
                                         BorderRadius.circular(20)),
                                     child: Text(
-                                      data?.sType?.name != "sell"
+                                      data?.tradeType?.name != "sell"
                                           ? "BUY"
                                           : "SELL",
                                       style: styleBaseBold(

@@ -88,8 +88,8 @@ class TsRecurringListItem extends StatelessWidget {
                                 "  ${item?.change?.toFormattedPriceForSim()}",
                                 style: styleBaseRegular(
                                   color: (item?.change ?? 0) < 0
-                                      ? ThemeColors.error120
-                                      : ThemeColors.success120,
+                                      ? ThemeColors.sos
+                                      : ThemeColors.accent,
                                   fontSize: 14,
                                 ),
                                 // maxLines: 2,
@@ -201,8 +201,8 @@ class TsRecurringListItem extends StatelessWidget {
                               : "${item?.investedChange?.toFormattedPriceForSim() ?? 0} (${item?.investedChangePercentage?.toCurrencyForSim() ?? 0}%)",
                           style: styleBaseBold(
                             color: (item?.investedChange ?? 0) < 0
-                                ? ThemeColors.error120
-                                : ThemeColors.success120,
+                                ? ThemeColors.sos
+                                : ThemeColors.accent,
                             fontSize: 12,
                           ),
                         ),
@@ -301,10 +301,10 @@ class TsRecurringListItem extends StatelessWidget {
                 children: [
                   item?.statusType == "RUNNING"
                       ? BaseListDivider(
-                          color: ThemeColors.success120,
+                          color: ThemeColors.accent,
                           height: 5,
                         )
-                      : BaseListDivider(color: ThemeColors.error120, height: 5),
+                      : BaseListDivider(color: ThemeColors.sos, height: 5),
                 ],
               ),
             ),
