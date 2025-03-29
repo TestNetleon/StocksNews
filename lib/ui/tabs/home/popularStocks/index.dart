@@ -30,7 +30,7 @@ class HomePopularStocks extends StatelessWidget {
               SpacerVertical(height: Pad.pad20),
               BaseHeading(
                 title: popular.title ?? '',
-                titleStyle: styleBaseBold(),
+                titleStyle: styleBaseBold(fontSize: 22),
                 viewMore: () {
                   Navigator.pushNamed(
                     context,

@@ -62,7 +62,7 @@ class _TabsState extends State<Tabs> {
         activeContainerApiCalls(currentIndex: _selectedIndex);
       });
 
-      AmplitudeService.logFirstOpenEvent();
+      AmplitudeService.instance.logFirstOpenEvent();
       requestATT();
     });
   }
@@ -196,6 +196,7 @@ class _TabsState extends State<Tabs> {
         break;
 
       case 1:
+        // scannerManager.setDataEmpty();
         pingApi(SocketEnum.scanner);
         break;
 

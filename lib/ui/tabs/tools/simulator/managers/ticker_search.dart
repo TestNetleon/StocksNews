@@ -257,7 +257,7 @@ class TickerSearchManager extends ChangeNotifier {
         showProgress: true,
       );
       if (response.status) {
-        Navigator.pushReplacement(
+       /* Navigator.pushReplacement(
           navigatorKey.currentContext!,
           MaterialPageRoute(
             builder: (context) => ConditionalTradesIndex(
@@ -266,7 +266,14 @@ class TickerSearchManager extends ChangeNotifier {
               qty: qty,
             ),
           ),
-        );
+        );*/
+        Navigator.pushReplacementNamed(
+            navigatorKey.currentContext!, ConditionalTradesIndex.path,
+            arguments: {
+              "conditionType": conditionalType,
+              "qty": qty,
+              "tickerID": tickerID,
+            });
       }
       return ApiResponse(status: response.status);
     } catch (e) {
@@ -314,6 +321,31 @@ class TickerSearchManager extends ChangeNotifier {
     }
   }
 
+  /*Future infoDisable({bool enableDisable = false}) async {
+    try {
+      Map request = {
+        '': enableDisable,
+      };
+      ApiResponse response = await apiRequest(
+        url: Apis.tsInfoDisable,
+        request: request,
+      );
+      if (response.status) {
+        PortfolioManager portfolioManager = navigatorKey.currentContext!.read<PortfolioManager>();
+        TsUserDataRes? userDataRes = portfolioManager.userData?.userDataRes;
+
+       // _userData = tsUserResFromJson(jsonEncode(response.data));
+        _error = null;
+      }
+      else {
+        _error = response.message ?? Const.errSomethingWrong;
+      }
+    } catch (e) {
+      _error = Const.errSomethingWrong;
+      Utils().showLog('Error getDashboardData $e');
+    }
+  }*/
+
   Status _infoStatus = Status.ideal;
   Status get infoStatus => _infoStatus;
   bool get isInfoLoading =>
@@ -351,7 +383,9 @@ class TickerSearchManager extends ChangeNotifier {
                         ? "STOP_LIMIT_ORDER"
                         : conditionalType == ConditionType.trailingOrder
                             ? "TRAILING_ORDER"
-                            : "RECURRING_ORDER"
+                            :
+        conditionalType == ConditionType.recurringOrder
+            ? "RECURRING_ORDER":"MARKET_ORDER"
       };
       ApiResponse res = await apiRequest(
           url: Apis.orderTypeInfo, request: request, showProgress: false);

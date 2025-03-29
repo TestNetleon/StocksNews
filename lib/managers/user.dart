@@ -70,6 +70,11 @@ class UserManager extends ChangeNotifier {
     notifyListeners();
   }
 
+  notificationSaw(value) {
+    _user?.seenNotification = value;
+    notifyListeners();
+  }
+
   Future updateShareUrl() async {
     if (shareUrl == null) {
       AppsFlyerService.instance.createUserInvitationLink();
@@ -352,7 +357,7 @@ class UserManager extends ChangeNotifier {
         shareUrl = _user?.referralUrl;
 
         if (_user?.signupStatus != null) {
-          AmplitudeService.logLoginSignUpEvent(
+          AmplitudeService.instance.logLoginSignUpEvent(
             isRegistered: (_user?.signupStatus ?? false) ? 1 : 0,
           );
         }
@@ -713,6 +718,7 @@ class UserManager extends ChangeNotifier {
   //MARK: Clear User
   clearUser({bool gotoOverview = false}) {
     Preference.logout();
+    Preference.clearChecks();
     // try {
     //   Purchases.logOut();
     // } catch (e) {

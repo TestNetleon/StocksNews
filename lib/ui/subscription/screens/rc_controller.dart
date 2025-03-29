@@ -190,7 +190,7 @@ class RCPurchaseController extends PurchaseController {
             latestTransactionPurchaseDate?.isBefore(purchaseDate) ?? false;
 
         if (!isNewPurchase && purchaseHappenedInThePast) {
-          return PurchaseResult.restored;
+          return PurchaseResult.purchased;
         } else {
           return PurchaseResult.purchased;
         }

@@ -74,7 +74,7 @@ class _HomeIndexState extends State<HomeIndex> {
                       children: [
                         BaseHeading(
                           title: 'Market Scanner',
-                          titleStyle: styleBaseBold(),
+                          titleStyle: styleBaseBold(fontSize: 22),
                           viewMore: () {
                             Navigator.pushNamed(context, Tabs.path, arguments: {
                               'index': 1,

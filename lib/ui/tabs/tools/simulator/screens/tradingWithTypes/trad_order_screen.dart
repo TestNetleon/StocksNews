@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:stocks_news_new/database/preference.dart';
+import 'package:stocks_news_new/modals/user_res.dart';
 import 'package:stocks_news_new/models/ticker.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/ui/base/base_list_divider.dart';
@@ -38,10 +40,14 @@ class TradOrderScreen extends StatefulWidget {
 
 class _TradOrderScreenState extends State<TradOrderScreen> {
   bool disposeSheet = true;
-
+  UserOrdersCheck? _userOrdersCheck;
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      getForUser();
+    });
+
   }
 
   Future _onTap({String? symbol, StockType? selectedStock}) async {
@@ -72,31 +78,6 @@ class _TradOrderScreenState extends State<TradOrderScreen> {
   }
 
   Future openInfoSheet({ConditionType? cType, StockType? selectedStock}) async {
-    /*BaseBottomSheet().bottomSheet(
-        child:Stack(
-          alignment: Alignment.topRight,
-          children: [
-            OrderInfoSheet(
-                symbol: widget.symbol,
-                qty: widget.qty,
-                tickerID: widget.tickerID,
-                cType: cType,
-                selectedStock: selectedStock),
-            Container(
-              width: 35,
-              height: 35,
-              margin: EdgeInsets.only(right: 10, top: 10),
-              decoration: BoxDecoration(
-                  shape: BoxShape.circle, color: ThemeColors.primary),
-              child: IconButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  icon: Icon(Icons.clear, color: ThemeColors.white, size: 18)),
-            ),
-          ],
-        )
-    );*/
     showModalBottomSheet(
       enableDrag: true,
       isDismissible: true,
@@ -117,7 +98,8 @@ class _TradOrderScreenState extends State<TradOrderScreen> {
                 qty: widget.qty,
                 tickerID: widget.tickerID,
                 cType: cType,
-                selectedStock: selectedStock),
+                selectedStock: selectedStock
+            ),
             Container(
               width: 35,
               height: 35,
@@ -133,7 +115,34 @@ class _TradOrderScreenState extends State<TradOrderScreen> {
           ],
         );
       },
-    );
+    ).whenComplete(getForUser);
+  }
+
+  Future _onTapConditions({ConditionType? cType}) async {
+    try {
+      TickerSearchManager manager = context.read<TickerSearchManager>();
+      if(cType==ConditionType.recurringOrder){
+        context.read<PortfolioManager>().getHolidays();
+        manager.stockHoldingOfRecurringCondition(widget.symbol ?? "");
+      }
+      else{
+        manager.conditionalRedirection(
+            widget.symbol ?? "",
+            tickerID: widget.tickerID,
+            qty: widget.qty,
+            conditionalType: cType
+        );
+      }
+
+
+    } catch (e) {
+      //
+    }
+  }
+
+  Future getForUser() async {
+    _userOrdersCheck = await Preference.getUserCheck();
+    setState(() {});
   }
 
   @override
@@ -142,6 +151,7 @@ class _TradOrderScreenState extends State<TradOrderScreen> {
     PortfolioManager portfolioManager = context.watch<PortfolioManager>();
     StockDataManagerRes? stock = manager.tappedStock;
     TsUserDataRes? userDataRes = portfolioManager.userData?.userDataRes;
+    OrderIcons? orderIcons = portfolioManager.userData?.userDataRes?.icons;
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: Pad.pad5),
       child: Column(
@@ -199,8 +209,8 @@ class _TradOrderScreenState extends State<TradOrderScreen> {
                       '${stock?.change?.toFormattedPrice()} (${stock?.changePercentage?.toCurrency()}%)',
                       style: styleBaseRegular(
                         color: (stock?.change ?? 0) >= 0
-                            ? ThemeColors.success120
-                            : ThemeColors.error120,
+                            ? ThemeColors.accent
+                            : ThemeColors.sos,
                         fontSize: 12,
                       ),
                     ),
@@ -222,41 +232,60 @@ class _TradOrderScreenState extends State<TradOrderScreen> {
           SpacerVertical(height: Pad.pad5),
           BuyOrderItem(
             title: "Buy Order",
+            icon: orderIcons?.buyIcon??"",
             subtitle: subtitleWithSymbol(userDataRes?.ordersSubTitle?.buyOrder,
               widget.symbol,
             ),
             onTap: () {
               var selectedStock = StockType.buy;
-              _onTap(symbol: widget.symbol, selectedStock: selectedStock);
+              if(_userOrdersCheck?.buyOrder==true){
+                _onTap(symbol: widget.symbol, selectedStock: selectedStock);
+              }else{
+                openInfoSheet(selectedStock: selectedStock);
+              }
+
 
             },
           ),
           BaseListDivider(),
           BuyOrderItem(
+            icon: orderIcons?.sellOrderIcon??"",
             title: "Sell Order",
             subtitle: subtitleWithSymbol(userDataRes?.ordersSubTitle?.sellOrder,
               widget.symbol,
             ),
             onTap: () {
               var selectedStock = StockType.sell;
-              _onTap(symbol: widget.symbol, selectedStock: selectedStock);
+              if(_userOrdersCheck?.sellOrder==true){
+                _onTap(symbol: widget.symbol, selectedStock: selectedStock);
+              }else{
+                openInfoSheet(selectedStock: selectedStock);
+              }
+
             },
           ),
           BaseListDivider(),
           BuyOrderItem(
+            icon: orderIcons?.shortOrderIcon??"",
             title: "Short Order",
             subtitle: subtitleWithSymbol(
               userDataRes?.ordersSubTitle?.shortOrder,
               widget.symbol,
             ),
             onTap: () {
+              var selectedStock = StockType.short;
+              if(_userOrdersCheck?.shortOrder==true){
                 navigatorKey.currentContext!
                     .read<TickerSearchManager>()
                     .shortRedirection(widget.symbol ?? "");
+              }else{
+                openInfoSheet(selectedStock: selectedStock);
+              }
             },
           ),
           BaseListDivider(),
           BuyOrderItem(
+            icon: orderIcons?.buyToCoverIcon??"",
             title: "Buy to Cover Order",
             subtitle: subtitleWithSymbol(
               userDataRes?.ordersSubTitle?.buyToCoverOrder,
@@ -264,8 +293,11 @@ class _TradOrderScreenState extends State<TradOrderScreen> {
             ),
             onTap: () {
               var selectedStock = StockType.btc;
-             _onTap(symbol: widget.symbol, selectedStock: selectedStock);
-
+              if(_userOrdersCheck?.btcOrder==true){
+                _onTap(symbol: widget.symbol, selectedStock: selectedStock);
+              }else{
+                openInfoSheet(selectedStock: selectedStock);
+              }
             },
           ),
           SpacerVertical(height: Pad.pad5),
@@ -284,13 +316,20 @@ class _TradOrderScreenState extends State<TradOrderScreen> {
             visible: userDataRes?.userConditionalOrderPermission?.bracketOrder ==
                 true,
             child: BuyOrderItem(
+              icon: orderIcons?.bracketOrderIcon??"",
               title: "Bracket Order",
               subtitle: subtitleWithSymbol(
                 userDataRes?.ordersSubTitle?.bracketOrder,
                 widget.symbol,
               ),
               onTap: () {
-                openInfoSheet(cType: ConditionType.bracketOrder);
+                var selectedType = ConditionType.bracketOrder;
+                if(_userOrdersCheck?.bracketOrder==true){
+                  _onTapConditions(cType: selectedType);
+                }else{
+                  openInfoSheet(cType: selectedType);
+                }
+
               },
             ),
           ),
@@ -299,13 +338,20 @@ class _TradOrderScreenState extends State<TradOrderScreen> {
             visible: userDataRes?.userConditionalOrderPermission?.limitOrder ==
                 true,
             child: BuyOrderItem(
+              icon: orderIcons?.limitOrderIcon??"",
               title: "Limit Order",
               subtitle: subtitleWithSymbol(
                 userDataRes?.ordersSubTitle?.limitOrder,
                 widget.symbol,
               ),
               onTap: () {
-                openInfoSheet(cType: ConditionType.limitOrder);
+                var selectedType = ConditionType.limitOrder;
+                if(_userOrdersCheck?.limitOrder==true){
+                  _onTapConditions(cType: selectedType);
+                }else{
+                  openInfoSheet(cType: selectedType);
+                }
+
               },
             ),
           ),
@@ -314,29 +360,40 @@ class _TradOrderScreenState extends State<TradOrderScreen> {
             visible: userDataRes?.userConditionalOrderPermission?.stopOrder ==
                 true,
             child: BuyOrderItem(
+              icon: orderIcons?.stopOrderIcon??"",
               title: "Stop Order",
               subtitle: subtitleWithSymbol(
                 userDataRes?.ordersSubTitle?.stopOrder,
                 widget.symbol,
               ),
               onTap: () {
-                openInfoSheet(cType: ConditionType.stopOrder);
+                var selectedType = ConditionType.stopOrder;
+                if(_userOrdersCheck?.stopOrder==true){
+                  _onTapConditions(cType: selectedType);
+                }else{
+                  openInfoSheet(cType: selectedType);
+                }
               },
             ),
           ),
           Visibility(visible: userDataRes?.userConditionalOrderPermission?.stopOrder == true,child: BaseListDivider()),
-
           Visibility(
             visible: userDataRes?.userConditionalOrderPermission?.stopLimitOrder ==
                 true,
             child: BuyOrderItem(
+              icon: orderIcons?.stopLimitIcon??"",
               title: "Stop Limit Order",
               subtitle: subtitleWithSymbol(
                 userDataRes?.ordersSubTitle?.stopLimitOrder,
                 widget.symbol,
               ),
               onTap: () {
-                openInfoSheet(cType: ConditionType.stopLimitOrder);
+                var selectedType = ConditionType.stopLimitOrder;
+                if(_userOrdersCheck?.stopLimitOrder==true){
+                  _onTapConditions(cType: selectedType);
+                }else{
+                  openInfoSheet(cType: selectedType);
+                }
               },
             ),
           ),
@@ -346,13 +403,19 @@ class _TradOrderScreenState extends State<TradOrderScreen> {
             visible: userDataRes?.userConditionalOrderPermission?.trailingOrder ==
                 true,
             child: BuyOrderItem(
+              icon: orderIcons?.trailingOrderIcon??"",
               title: "Trailing Order",
               subtitle: subtitleWithSymbol(
                 userDataRes?.ordersSubTitle?.trailingOrder,
                 widget.symbol,
               ),
               onTap: () {
-                openInfoSheet(cType: ConditionType.trailingOrder);
+                var selectedType = ConditionType.trailingOrder;
+                if(_userOrdersCheck?.trailingOrder==true){
+                  _onTapConditions(cType: selectedType);
+                }else{
+                  openInfoSheet(cType: selectedType);
+                }
               },
             ),
           ),
@@ -362,13 +425,22 @@ class _TradOrderScreenState extends State<TradOrderScreen> {
             visible: userDataRes?.userConditionalOrderPermission?.recurringOrder ==
                 true,
             child: BuyOrderItem(
+              icon: orderIcons?.recurringOrderIcon??"",
               title: "Recurring Order",
               subtitle: subtitleWithSymbol(
                 userDataRes?.ordersSubTitle?.recurringOrder,
                 widget.symbol,
               ),
               onTap: () {
-                  openInfoSheet(cType: ConditionType.recurringOrder);
+
+                var selectedType = ConditionType.recurringOrder;
+                if(_userOrdersCheck?.recurringOrder==true){
+                  _onTapConditions(cType: selectedType);
+
+                }else{
+                  openInfoSheet(cType: selectedType);
+                }
+
               },
             ),
           ),

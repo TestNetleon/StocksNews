@@ -39,15 +39,15 @@ class _BaseLockItemState extends State<BaseLockItem> {
   bool isVisible = true;
   bool showPoints = true;
 
+  void _toggleSheet(value) {
+    showPoints = value;
+    setState(() {});
+  }
+
   @override
   void dispose() {
     isVisible = false;
     super.dispose();
-  }
-
-  void _toggleSheet(value) {
-    showPoints = value;
-    setState(() {});
   }
 
   @override

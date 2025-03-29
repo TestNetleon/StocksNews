@@ -28,7 +28,7 @@ class HomeMostBoughtIndex extends StatelessWidget {
           BaseHeading(
             title: manager.homePremiumData?.mostBought?.title,
             margin: EdgeInsets.only(top: Pad.pad24, bottom: Pad.pad14),
-            titleStyle: styleBaseBold(),
+            titleStyle: styleBaseBold(fontSize: 22),
             viewMore: () {
               Navigator.pushNamed(
                 context,

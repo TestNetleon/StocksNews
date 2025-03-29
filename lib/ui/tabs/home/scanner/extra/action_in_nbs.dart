@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:stocks_news_new/database/preference.dart';
+import 'package:stocks_news_new/modals/user_res.dart';
 import 'package:stocks_news_new/models/lock.dart';
 import 'package:stocks_news_new/models/ticker.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
@@ -38,11 +40,13 @@ class ActionInNbs extends StatefulWidget {
 
 class _ActionInNbsState extends State<ActionInNbs> {
   bool? isLocked = false;
+  UserOrdersCheck? _userOrdersCheck;
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _getData();
+      getForUser();
     });
   }
 
@@ -73,7 +77,30 @@ class _ActionInNbsState extends State<ActionInNbs> {
     if (text == null && text == "") return "";
     return text?.replaceFirst("<symbol>", "$symbol");
   }
+  Future getForUser() async {
+    _userOrdersCheck = await Preference.getUserCheck();
+    setState(() {});
+  }
 
+  Future _onTapConditions({ConditionType? cType}) async {
+    try {
+      TickerSearchManager manager = context.read<TickerSearchManager>();
+      if(cType==ConditionType.recurringOrder){
+        manager.stockHoldingOfRecurringCondition(widget.symbol ?? "");
+      }
+      else{
+        manager.conditionalRedirection(
+            widget.symbol ?? "",
+            conditionalType: cType
+        );
+      }
+
+
+    }
+    catch (e) {
+      //
+    }
+  }
   Future openInfoSheet({ConditionType? cType, StockType? selectedStock}) async {
     showModalBottomSheet(
       enableDrag: true,
@@ -109,7 +136,7 @@ class _ActionInNbsState extends State<ActionInNbs> {
           ],
         );
       },
-    );
+    ).whenComplete(getForUser);
   }
 
   @override
@@ -120,6 +147,7 @@ class _ActionInNbsState extends State<ActionInNbs> {
     BaseLockInfoRes? lockInfoRes = portfolioManager.userData?.lockInfo;
     UserConditionalOrderPermissionRes? userConditionalOrderPermissionRes =
         portfolioManager.userData?.userDataRes?.userConditionalOrderPermission;
+    OrderIcons? orderIcons = portfolioManager.userData?.userDataRes?.icons;
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: Pad.pad5),
       child: Column(
@@ -198,6 +226,7 @@ class _ActionInNbsState extends State<ActionInNbs> {
           ),
           SpacerVertical(height: Pad.pad5),
           BuyOrderItem(
+            icon: orderIcons?.buyIcon??"",
             title: "Buy Order",
             subtitle:
                 subtitleWithSymbol(ordersSubTitle?.buyOrder, widget.symbol),
@@ -211,12 +240,18 @@ class _ActionInNbsState extends State<ActionInNbs> {
                     ));
               } else {
                 var selectedStock = StockType.buy;
-                _onTap(symbol: widget.symbol, selectedStock: selectedStock);
+                if(_userOrdersCheck?.buyOrder==true){
+                  _onTap(symbol: widget.symbol, selectedStock: selectedStock);
+                }else{
+                  openInfoSheet(selectedStock: selectedStock);
+                }
+
               }
             },
           ),
           BaseListDivider(),
           BuyOrderItem(
+            icon: orderIcons?.sellOrderIcon??"",
             title: "Sell Order",
             subtitle: subtitleWithSymbol(
               ordersSubTitle?.sellOrder,
@@ -232,12 +267,17 @@ class _ActionInNbsState extends State<ActionInNbs> {
                     ));
               } else {
                 var selectedStock = StockType.sell;
-                _onTap(symbol: widget.symbol, selectedStock: selectedStock);
+                if(_userOrdersCheck?.sellOrder==true){
+                  _onTap(symbol: widget.symbol, selectedStock: selectedStock);
+                }else{
+                  openInfoSheet(selectedStock: selectedStock);
+                }
               }
             },
           ),
           BaseListDivider(),
           BuyOrderItem(
+            icon: orderIcons?.shortOrderIcon??"",
             title: "Short Order",
             subtitle: subtitleWithSymbol(
               ordersSubTitle?.shortOrder,
@@ -252,14 +292,22 @@ class _ActionInNbsState extends State<ActionInNbs> {
                       lockWithImage: false,
                     ));
               } else {
-                navigatorKey.currentContext!
-                    .read<TickerSearchManager>()
-                    .shortRedirection(widget.symbol ?? "");
+                var selectedStock = StockType.short;
+                if(_userOrdersCheck?.shortOrder==true){
+                  navigatorKey.currentContext!
+                      .read<TickerSearchManager>()
+                      .shortRedirection(widget.symbol ?? "");
+                }
+                else{
+                  openInfoSheet(selectedStock: selectedStock);
+                }
+
               }
             },
           ),
           BaseListDivider(),
           BuyOrderItem(
+            icon: orderIcons?.buyToCoverIcon??"",
             title: "Buy to Cover Order",
             subtitle: subtitleWithSymbol(
               ordersSubTitle?.buyToCoverOrder,
@@ -275,7 +323,12 @@ class _ActionInNbsState extends State<ActionInNbs> {
                     ));
               } else {
                 var selectedStock = StockType.btc;
-                _onTap(symbol: widget.symbol, selectedStock: selectedStock);
+                if(_userOrdersCheck?.btcOrder==true){
+                  _onTap(symbol: widget.symbol, selectedStock: selectedStock);
+                }else{
+                  openInfoSheet(selectedStock: selectedStock);
+                }
+
               }
             },
           ),
@@ -293,12 +346,14 @@ class _ActionInNbsState extends State<ActionInNbs> {
           Visibility(
             visible: userConditionalOrderPermissionRes?.bracketOrder == true,
             child: BuyOrderItem(
+              icon: orderIcons?.bracketOrderIcon??"",
               title: "Bracket Order",
               subtitle: subtitleWithSymbol(
                 ordersSubTitle?.bracketOrder,
                 widget.symbol,
               ),
               onTap: () {
+                var selectedType = ConditionType.bracketOrder;
                 if (lockInfoRes != null) {
                   BaseBottomSheet().bottomSheet(
                       isScrollable: false,
@@ -307,7 +362,12 @@ class _ActionInNbsState extends State<ActionInNbs> {
                         lockWithImage: false,
                       ));
                 } else {
-                  openInfoSheet(cType: ConditionType.bracketOrder);
+                  if(_userOrdersCheck?.bracketOrder==true){
+                    _onTapConditions(cType: selectedType);
+                  }else{
+                    openInfoSheet(cType: selectedType);
+                  }
+                  //openInfoSheet(cType: ConditionType.bracketOrder);
                 }
               },
             ),
@@ -316,12 +376,14 @@ class _ActionInNbsState extends State<ActionInNbs> {
           Visibility(
             visible: userConditionalOrderPermissionRes?.limitOrder == true,
             child: BuyOrderItem(
+              icon: orderIcons?.limitOrderIcon??"",
               title: "Limit Order",
               subtitle: subtitleWithSymbol(
                 ordersSubTitle?.limitOrder,
                 widget.symbol,
               ),
               onTap: () {
+                var selectedType = ConditionType.limitOrder;
                 if (lockInfoRes != null) {
                   BaseBottomSheet().bottomSheet(
                       isScrollable: false,
@@ -330,7 +392,12 @@ class _ActionInNbsState extends State<ActionInNbs> {
                         lockWithImage: false,
                       ));
                 } else {
-                  openInfoSheet(cType: ConditionType.limitOrder);
+                  if(_userOrdersCheck?.limitOrder==true){
+                    _onTapConditions(cType: selectedType);
+                  }else{
+                    openInfoSheet(cType: selectedType);
+                  }
+                //  openInfoSheet(cType: ConditionType.limitOrder);
                 }
               },
             ),
@@ -339,12 +406,14 @@ class _ActionInNbsState extends State<ActionInNbs> {
           Visibility(
             visible: userConditionalOrderPermissionRes?.stopOrder == true,
             child: BuyOrderItem(
+              icon: orderIcons?.stopOrderIcon??"",
               title: "Stop Order",
               subtitle: subtitleWithSymbol(
                 ordersSubTitle?.stopOrder,
                 widget.symbol,
               ),
               onTap: () {
+                var selectedType = ConditionType.stopOrder;
                 if (lockInfoRes != null) {
                   BaseBottomSheet().bottomSheet(
                       isScrollable: false,
@@ -353,7 +422,12 @@ class _ActionInNbsState extends State<ActionInNbs> {
                         lockWithImage: false,
                       ));
                 } else {
-                  openInfoSheet(cType: ConditionType.stopOrder);
+                  if(_userOrdersCheck?.stopOrder==true){
+                    _onTapConditions(cType: selectedType);
+                  }else{
+                    openInfoSheet(cType: selectedType);
+                  }
+                  //openInfoSheet(cType: ConditionType.stopOrder);
                 }
               },
             ),
@@ -362,12 +436,14 @@ class _ActionInNbsState extends State<ActionInNbs> {
           Visibility(
             visible: userConditionalOrderPermissionRes?.stopLimitOrder == true,
             child: BuyOrderItem(
+              icon: orderIcons?.stopLimitIcon??"",
               title: "Stop Limit Order",
               subtitle: subtitleWithSymbol(
                 ordersSubTitle?.stopLimitOrder,
                 widget.symbol,
               ),
               onTap: () {
+                var selectedType = ConditionType.stopLimitOrder;
                 if (lockInfoRes != null) {
                   BaseBottomSheet().bottomSheet(
                       isScrollable: false,
@@ -376,7 +452,12 @@ class _ActionInNbsState extends State<ActionInNbs> {
                         lockWithImage: false,
                       ));
                 } else {
-                  openInfoSheet(cType: ConditionType.stopLimitOrder);
+                  if(_userOrdersCheck?.stopLimitOrder==true){
+                    _onTapConditions(cType: selectedType);
+                  }else{
+                    openInfoSheet(cType: selectedType);
+                  }
+                  //openInfoSheet(cType: ConditionType.stopLimitOrder);
                 }
               },
             ),
@@ -385,12 +466,14 @@ class _ActionInNbsState extends State<ActionInNbs> {
           Visibility(
             visible: userConditionalOrderPermissionRes?.trailingOrder == true,
             child: BuyOrderItem(
+              icon: orderIcons?.trailingOrderIcon??"",
               title: "Trailing Order",
               subtitle: subtitleWithSymbol(
                 ordersSubTitle?.trailingOrder,
                 widget.symbol,
               ),
               onTap: () {
+                var selectedType = ConditionType.trailingOrder;
                 if (lockInfoRes != null) {
                   BaseBottomSheet().bottomSheet(
                       isScrollable: false,
@@ -399,7 +482,12 @@ class _ActionInNbsState extends State<ActionInNbs> {
                         lockWithImage: false,
                       ));
                 } else {
-                  openInfoSheet(cType: ConditionType.trailingOrder);
+                  if(_userOrdersCheck?.trailingOrder==true){
+                    _onTapConditions(cType: selectedType);
+                  }else{
+                    openInfoSheet(cType: selectedType);
+                  }
+                //  openInfoSheet(cType: ConditionType.trailingOrder);
                 }
               },
             ),
@@ -408,12 +496,14 @@ class _ActionInNbsState extends State<ActionInNbs> {
           Visibility(
             visible: userConditionalOrderPermissionRes?.recurringOrder == true,
             child: BuyOrderItem(
+              icon: orderIcons?.recurringOrderIcon??"",
               title: "Recurring Order",
               subtitle: subtitleWithSymbol(
                 ordersSubTitle?.recurringOrder,
                 widget.symbol,
               ),
               onTap: () {
+                var selectedType = ConditionType.recurringOrder;
                 if (lockInfoRes != null) {
                   BaseBottomSheet().bottomSheet(
                       isScrollable: false,
@@ -422,7 +512,12 @@ class _ActionInNbsState extends State<ActionInNbs> {
                         lockWithImage: false,
                       ));
                 } else {
-                  openInfoSheet(cType: ConditionType.recurringOrder);
+                  if(_userOrdersCheck?.recurringOrder==true){
+                    _onTapConditions(cType: selectedType);
+                  }else{
+                    openInfoSheet(cType: selectedType);
+                  }
+                 // openInfoSheet(cType: ConditionType.recurringOrder);
                 }
               },
             ),

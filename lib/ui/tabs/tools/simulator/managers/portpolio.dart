@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:stocks_news_new/api/api_requester.dart';
 import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/api/apis.dart';
-import 'package:stocks_news_new/models/market/market_res.dart';
 import 'package:stocks_news_new/ui/tabs/tools/simulator/models/stream_data.dart';
 import 'package:stocks_news_new/ui/tabs/tools/simulator/models/ts_holidays_list_res.dart';
 import 'package:stocks_news_new/ui/tabs/tools/simulator/models/ts_user_res.dart';
@@ -46,27 +45,13 @@ class PortfolioManager extends ChangeNotifier {
     notifyListeners();
   }
 
-  List<MarketResData> tabs = [
-    MarketResData(title: 'OPEN'),
-    MarketResData(title: 'PENDING'),
-    MarketResData(title: 'TRANSACTIONS'),
-    MarketResData(title: 'RECURRING'),
-  ];
-
-  int? selectedScreen = 0;
-  onScreenChange(index) {
-    if (selectedScreen != index) {
-      selectedScreen = index;
-      notifyListeners();
-    }
-  }
-
   BaseLockInfoRes? getLockINFO() {
     BaseLockInfoRes? info = _userData?.lockInfo;
     return info;
   }
 
-  Future getDashboardData({bool reset = false,bool showProgress= false}) async {
+  Future getDashboardData(
+      {bool reset = false, bool showProgress = false}) async {
     if (reset) {
       _userData = null;
       _error = null;

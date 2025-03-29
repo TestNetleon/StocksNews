@@ -5,6 +5,7 @@ import 'package:stocks_news_new/models/my_home_premium.dart';
 import 'package:stocks_news_new/models/tools.dart';
 import 'package:stocks_news_new/ui/tabs/home/politiciansTrades/item.dart';
 import 'package:stocks_news_new/utils/constants.dart';
+import 'package:stocks_news_new/utils/theme.dart';
 import '../../../base/heading.dart';
 import '../extra/lock.dart';
 
@@ -23,6 +24,7 @@ class HomePoliticianTradesIndex extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           BaseHeading(
+            titleStyle: styleBaseBold(fontSize: 22),
             title: politicianData?.title,
             margin: EdgeInsets.only(top: Pad.pad20, bottom: Pad.pad10),
             viewMore: () {
@@ -40,7 +42,7 @@ class HomePoliticianTradesIndex extends StatelessWidget {
             blur: 5,
             childWidget: SingleChildScrollView(
               scrollDirection: Axis.horizontal,
-              child: IntrinsicWidth(
+              child: IntrinsicHeight(
                 child: Row(
                   children: List.generate(
                     politicianData?.data?.length ?? 0,

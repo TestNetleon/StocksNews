@@ -201,9 +201,14 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
                     Row(
                       children: [
                         if (showNotification)
-                          LeadingNotification(
-                            showIndicator: true,
-                            // color: darkTheme ? ThemeColors.white : null,
+                          Consumer<UserManager>(
+                            builder: (context, value, child) {
+                              return LeadingNotification(
+                                showIndicator:
+                                    value.user?.seenNotification == 0,
+                                // color: darkTheme ? ThemeColors.white : null,
+                              );
+                            },
                           ),
                         if (showSearch)
                           ActionButton(

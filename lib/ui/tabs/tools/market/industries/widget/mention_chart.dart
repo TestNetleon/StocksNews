@@ -120,22 +120,9 @@ class MentionChart extends StatelessWidget {
                         sideTitles: SideTitles(
                       showTitles: true,
                       reservedSize: 40,
-                      interval: 1000,
-                      getTitlesWidget: (value, meta) {
-                        if (value % 1000 == 0) {
-                          return SideTitleWidget(
-                            space: 5,
-                            axisSide: AxisSide.left,
-                            child: Text(meta.formattedValue,
-                                style: TextStyle(
-                                  fontWeight: FontWeight.w400,
-                                  fontSize: 12,
-                                )),
-                          );
-                        }
-                        return Container();
-                      },
-                      //  getTitlesWidget: (value, meta) => leftTitleWidgets(value, meta),
+                      maxIncluded: true,
+                      minIncluded: true,
+                        getTitlesWidget: (value, meta) => leftTitleWidgets(value, meta),
                     )),
                     bottomTitles: AxisTitles(
                       sideTitles: SideTitles(
@@ -161,7 +148,9 @@ class MentionChart extends StatelessWidget {
                   gridData: FlGridData(
                     show: false,
                   ),
-                  barTouchData: BarTouchData(handleBuiltInTouches: false)),
+                  barTouchData: BarTouchData(handleBuiltInTouches: false),
+              ),
+
             ),
 
             /* BarChart(
@@ -202,7 +191,7 @@ class MentionChart extends StatelessWidget {
       fontSize: 12,
     );
     return SideTitleWidget(
-      space: 5,
+      space: 0,
       axisSide: AxisSide.left,
       child: Text(meta.formattedValue, style: style),
     );

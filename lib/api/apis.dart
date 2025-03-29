@@ -81,6 +81,7 @@ class Apis {
 
   //MARK: Simulator API
   static const tsUserInfo = "/simulator/user-info";
+  static const tsInfoDisable = "/simulator/user-info";
   static const tsTopBar = "/simulator/trade/stock-detail-topbar";
   static const tsStreamData = '/simulator/trade/stream-init-variables';
   static const tsOrderList = "/simulator/holding-list";
@@ -239,7 +240,7 @@ class Apis {
   static const verifyLoginOtp = "/check-login-otp";
   static const home = "/home";
   static const homeNew = "/home-new";
-  static const saveFCM = "/save-fcm-token";
+  static const getTempUser = "/get-temp-user";
   static const ipoCalendar = "/ipo-calendar";
   static const welcome = "/welcome-screen";
   static const stockFocus = "/stock-in-focus";

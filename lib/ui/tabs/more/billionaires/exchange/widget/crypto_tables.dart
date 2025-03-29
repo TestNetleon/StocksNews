@@ -78,16 +78,13 @@ class CryptoTables extends StatelessWidget {
                             crossAxisAlignment:
                             CrossAxisAlignment.center,
                             children: [
-                              ClipRRect(
-                                borderRadius: BorderRadius.circular(22),
-                                child: CachedNetworkImagesWidget(
-                                  company.image ?? '',
-                                  height: 22,
-                                  width: 22,
-                                  placeHolder: Images.placeholder,
-                                  showLoading: true,
-                                  fit: BoxFit.contain,
-                                ),
+                              CachedNetworkImagesWidget(
+                                company.image ?? '',
+                                height: 22,
+                                width: 22,
+                                placeHolder: Images.placeholder,
+                                showLoading: true,
+                                fit: BoxFit.contain,
                               ),
                               SpacerHorizontal(width:10),
                               Expanded(

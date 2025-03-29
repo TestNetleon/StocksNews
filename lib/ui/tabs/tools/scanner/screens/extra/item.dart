@@ -130,7 +130,7 @@ class ScannerBaseItem extends StatelessWidget {
                                   text: 'Sector: ',
                                   style: styleBaseSemiBold(
                                     fontSize: 13,
-                                    color: ThemeColors.neutral40,
+                                    color: ThemeColors.neutral80,
                                   ),
                                   children: [
                                     TextSpan(
@@ -208,7 +208,7 @@ class ScannerBaseItem extends StatelessWidget {
                   visible: prePost != null && prePost != '',
                   child: Column(
                     children: [
-                      BaseListDivider(height: 10),
+                      BaseListDivider(height: 20),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -249,7 +249,7 @@ class ScannerBaseItem extends StatelessWidget {
                     ],
                   ),
                 ),
-                BaseListDivider(height: 10),
+                BaseListDivider(height: 20),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -337,11 +337,11 @@ class ScannerBaseItem extends StatelessWidget {
       text: TextSpan(
         text: label,
         style: isBOLD
-            ? styleBaseSemiBold(
+            ? styleBaseBold(
                 fontSize: fontSize,
                 color: color ?? ThemeColors.neutral80,
               )
-            : styleBaseRegular(
+            : styleBaseSemiBold(
                 fontSize: fontSize,
                 color: color ?? ThemeColors.neutral80,
               ),
@@ -349,7 +349,7 @@ class ScannerBaseItem extends StatelessWidget {
           TextSpan(
               text: value,
               style: isBOLD
-                  ? styleBaseBold(
+                  ? styleBaseSemiBold(
                       fontSize: fontSize,
                       color: valueColor ?? ThemeColors.neutral80,
                     )
@@ -357,7 +357,7 @@ class ScannerBaseItem extends StatelessWidget {
                   //     .textTheme
                   //     .displayLarge
                   //     ?.copyWith(fontSize: fontSize)
-                  : styleBaseSemiBold(
+                  : styleBaseRegular(
                       fontSize: fontSize,
                       color: valueColor ?? ThemeColors.neutral80,
                     )

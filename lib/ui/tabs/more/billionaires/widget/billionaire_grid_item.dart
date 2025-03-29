@@ -41,7 +41,6 @@ class BillionaireGridItem extends StatelessWidget {
                     height: 200,
                     placeHolder: Images.userPlaceholderNew,
                     showLoading: true,
-                    fit: BoxFit.contain,
                   ),
                 ),
                 Container(

@@ -2,6 +2,10 @@ import 'package:firebase_analytics/firebase_analytics.dart';
 import '../../utils/utils.dart';
 
 class FirebaseService {
+  FirebaseService._internal();
+  static final FirebaseService _instance = FirebaseService._internal();
+  static FirebaseService get instance => _instance;
+
   void firebaseLogEvent(
     String eventName, {
     Map<String, dynamic>? eventProperties,

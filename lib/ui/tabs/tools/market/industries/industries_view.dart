@@ -3,10 +3,13 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/managers/market/industries/industries.dart';
 import 'package:stocks_news_new/ui/base/app_bar.dart';
 import 'package:stocks_news_new/ui/base/base_list_divider.dart';
+import 'package:stocks_news_new/ui/base/heading.dart';
 import 'package:stocks_news_new/ui/base/load_more.dart';
 import 'package:stocks_news_new/ui/base/scaffold.dart';
 import 'package:stocks_news_new/ui/base/stock/add.dart';
 import 'package:stocks_news_new/ui/tabs/tools/market/industries/widget/header_item.dart';
+import 'package:stocks_news_new/utils/constants.dart';
+import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/custom/base_loader_container.dart';
 
 class IndustriesViewIndex extends StatefulWidget {
@@ -39,7 +42,7 @@ class _IndustriesViewIndexState extends State<IndustriesViewIndex> {
     return BaseScaffold(
         appBar: BaseAppBar(
           showBack: true,
-          title: manager.isLoadingView ? "" : manager.dataView?.title ?? "",
+          //title: manager.isLoadingView ? "" : manager.dataView?.title ?? "",
           showSearch: true,
           showNotification: true,
         ),
@@ -59,11 +62,21 @@ class _IndustriesViewIndexState extends State<IndustriesViewIndex> {
                     shrinkWrap: true,
                     itemBuilder: (context, index) {
                       return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          if (index == 0)
+                            Visibility(
+                                visible: manager.dataView?.title != null,
+                                child: BaseHeading(
+                                  textAlign: TextAlign.start,
+                                  margin: const EdgeInsets.symmetric(horizontal:Pad.pad16,vertical: Pad.pad5),
+                                  title: manager.dataView?.title??"",
+                                  titleStyle: styleBaseBold(),
+                                )
+                            ),
                           if (index == 0)
                             HeaderItem(header: manager.dataView?.header),
                           BaseStockAddItem(
-                            onTap: (value) {},
                             data: manager.dataView!.data![index],
                             index: index,
                             slidable: false,

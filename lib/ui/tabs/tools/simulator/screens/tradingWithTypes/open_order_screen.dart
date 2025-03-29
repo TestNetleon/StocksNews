@@ -100,6 +100,7 @@ class _OpenOrderScreenState extends State<OpenOrderScreen> {
     PortfolioManager portfolioManager = context.watch<PortfolioManager>();
     StockDataManagerRes? stock = manager.tappedStock;
     TsUserDataRes? userDataRes = portfolioManager.userData?.userDataRes;
+    OrderIcons? orderIcons = portfolioManager.userData?.userDataRes?.icons;
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -157,8 +158,8 @@ class _OpenOrderScreenState extends State<OpenOrderScreen> {
                       '${stock?.change?.toFormattedPrice()} (${stock?.changePercentage?.toCurrency()}%)',
                       style: styleBaseRegular(
                         color: (stock?.change ?? 0) >= 0
-                            ? ThemeColors.success120
-                            : ThemeColors.error120,
+                            ? ThemeColors.accent
+                            : ThemeColors.sos,
                         fontSize: 12,
                       ),
                     ),
@@ -187,6 +188,7 @@ class _OpenOrderScreenState extends State<OpenOrderScreen> {
               Visibility(
                 visible: widget.portfolioTradeType == 1,
                 child: BuyOrderItem(
+                  icon: orderIcons?.buyIcon??"",
                   title: "Buy More Shares",
                   subtitle: subtitleWithSymbol(
                     userDataRes?.ordersSubTitle?.buyOrder,
@@ -202,6 +204,7 @@ class _OpenOrderScreenState extends State<OpenOrderScreen> {
               Visibility(
                 visible: widget.portfolioTradeType == 1,
                 child: BuyOrderItem(
+                  icon: orderIcons?.sellOrderIcon??"",
                   title: "Sell Shares",
                   subtitle: subtitleWithSymbol(
                     userDataRes?.ordersSubTitle?.sellOrder,
@@ -218,6 +221,7 @@ class _OpenOrderScreenState extends State<OpenOrderScreen> {
               Visibility(
                 visible: widget.portfolioTradeType == 2,
                 child: BuyOrderItem(
+                  icon: orderIcons?.shortOrderIcon??"",
                   title: "Increase Short Shares",
                   subtitle: subtitleWithSymbol(
                     userDataRes?.ordersSubTitle?.shortOrder,
@@ -234,6 +238,7 @@ class _OpenOrderScreenState extends State<OpenOrderScreen> {
               Visibility(
                 visible: widget.portfolioTradeType == 2,
                 child: BuyOrderItem(
+                  icon: orderIcons?.buyToCoverIcon??"",
                   title: "Buy to Cover Shares",
                   subtitle: subtitleWithSymbol(
                     userDataRes?.ordersSubTitle?.buyToCoverOrder,
@@ -258,6 +263,7 @@ class _OpenOrderScreenState extends State<OpenOrderScreen> {
                 visible: userDataRes?.userConditionalOrderPermission?.bracketOrder ==
                     true,
                 child: BuyOrderItem(
+                  icon: orderIcons?.bracketOrderIcon??"",
                   title: "Stop Loss and Target",
                   subtitle: subtitleWithSymbol(
                     userDataRes?.ordersSubTitle?.bracketOrder,
@@ -285,6 +291,7 @@ class _OpenOrderScreenState extends State<OpenOrderScreen> {
                   Visibility(
                     visible: widget.allTradType?['trade_type'] == "Buy",
                     child: BuyOrderItem(
+                      icon: orderIcons?.buyIcon??"",
                       title: "Buy More Shares",
                       subtitle: subtitleWithSymbol(
                         userDataRes?.ordersSubTitle?.buyOrder,
@@ -315,6 +322,7 @@ class _OpenOrderScreenState extends State<OpenOrderScreen> {
                   Visibility(
                     visible: widget.allTradType?['trade_type'] == "Buy",
                     child: BuyOrderItem(
+                      icon: orderIcons?.sellOrderIcon??"",
                       title: "Sell Shares",
                       subtitle: subtitleWithSymbol(
                         userDataRes?.ordersSubTitle?.sellOrder,
@@ -343,6 +351,7 @@ class _OpenOrderScreenState extends State<OpenOrderScreen> {
                   Visibility(
                     visible: widget.allTradType?['trade_type'] == "Short",
                     child: BuyOrderItem(
+                      icon: orderIcons?.shortOrderIcon??"",
                       title: "Short More Shares",
                       subtitle: subtitleWithSymbol(
                         userDataRes?.ordersSubTitle?.buyOrder,
@@ -371,6 +380,7 @@ class _OpenOrderScreenState extends State<OpenOrderScreen> {
                   Visibility(
                     visible: widget.allTradType?['trade_type'] == "Short",
                     child: BuyOrderItem(
+                      icon: orderIcons?.buyToCoverIcon??"",
                       title: "Buy to Cover Shares",
                       subtitle: subtitleWithSymbol(
                         userDataRes?.ordersSubTitle?.sellOrder,
@@ -401,6 +411,7 @@ class _OpenOrderScreenState extends State<OpenOrderScreen> {
             Visibility(
               visible: (widget.portfolioTradeType == 3),
               child: BuyOrderItem(
+                icon: orderIcons?.bracketOrderIcon??"",
                 title: "Square Off Order",
                 subtitle: subtitleWithSymbol(
                     userDataRes?.ordersSubTitle?.sellOrder,

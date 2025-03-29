@@ -49,9 +49,49 @@ class Preference {
     // return userString == null ? null : UserRes.fromJson(jsonDecode(userString));
   } //
 
+/*  static void saveUserCheck(response) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    print(jsonEncode(response));
+    preferences.setString("@userCheck", jsonEncode(response));
+  }*/
+
+  static Future<void> saveUserCheck(UserOrdersCheck userOrdersCheck) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    String userJson = jsonEncode(userOrdersCheck.toJson());
+    await preferences.setString("@userCheck", userJson);
+  }
+
+  static Future<UserOrdersCheck> getUserCheck() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    final userString = preferences.getString("@userCheck");
+    if (userString == null) return UserOrdersCheck();
+    try {
+      return UserOrdersCheck.fromJson(jsonDecode(userString));
+    } catch (e) {
+      return UserOrdersCheck();
+    }
+  }
+
+  /*static Future<UserOrdersCheck?> getUserCheck() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    final userString = preferences.getString("@userCheck");
+    if (userString == null) return null;
+    try {
+      UserOrdersCheck? userOrdersCheck = UserOrdersCheck.fromJson(jsonDecode(userString));
+      return userOrdersCheck;
+    } catch (e) {
+      return null;
+    }
+  }*/
+
   static void logout() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     preferences.remove("@userLogin");
+  }
+
+  static void clearChecks() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    preferences.remove("@userCheck");
   }
 
   static Future<String?> getFcmToken() async {

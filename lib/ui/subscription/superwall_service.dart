@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/managers/user.dart';
 import 'package:stocks_news_new/modals/user_res.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
-import 'package:stocks_news_new/ui/theme/manager.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:superwallkit_flutter/superwallkit_flutter.dart' as superwall;
 
@@ -41,12 +40,14 @@ class SuperwallService {
       superwall.Superwall.shared.setUserAttributes(attributes);
       //------------------------
 
+      bool isDarkMode =
+          PlatformDispatcher.instance.platformBrightness == Brightness.dark;
+
       purchaseController.syncSubscriptionStatus();
       Utils().showLog('SuperWall initialized successfully');
 
-      ThemeManager manager = navigatorKey.currentContext!.read<ThemeManager>();
-      superwall.Superwall.shared.registerEvent(
-        value,
+      superwall.Superwall.shared.registerPlacement(
+        kDebugMode ? 'stocks_news_paywall' : value,
         // value != null && value != ''
         //     ? value
         //     : Platform.isAndroid
@@ -54,7 +55,7 @@ class SuperwallService {
         //         : 'stocks_news_plans_same_group_ios',
         params: {
           "ignore_subscription_status": true,
-          "theme": manager.isDarkMode ? 'dark' : 'light',
+          "theme": isDarkMode ? 'dark' : 'light',
         },
         handler: superwall.PaywallPresentationHandler(),
       );
@@ -73,8 +74,8 @@ class SWDelegate extends superwall.SuperwallDelegate {
     Utils().showLog('Event Type => ${eventInfo.event.type}');
     switch (eventInfo.event.type) {
       case superwall.EventType.transactionComplete:
-        superwall.Superwall.shared
-            .setSubscriptionStatus(superwall.SubscriptionStatus.active);
+        // superwall.Superwall.shared
+        //     .setSubscriptionStatus(superwall.SubscriptionStatus.unknown);
         Navigator.push(
           navigatorKey.currentContext!,
           createRoute(SubscriptionSuccessIndex()),
@@ -85,8 +86,8 @@ class SWDelegate extends superwall.SuperwallDelegate {
         if (kDebugMode) {
           print('Restore => transactionRestore');
         }
-        superwall.Superwall.shared
-            .setSubscriptionStatus(superwall.SubscriptionStatus.active);
+        // superwall.Superwall.shared
+        //     .setSubscriptionStatus(superwall.SubscriptionStatus.unknown);
         break;
 
       case superwall.EventType.transactionFail:

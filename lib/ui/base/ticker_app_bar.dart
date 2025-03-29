@@ -22,7 +22,7 @@ import '../../widgets/spacer_horizontal.dart';
 import 'app_bar.dart';
 
 class BaseTickerAppBar extends StatelessWidget implements PreferredSizeWidget {
-  final Widget? searchFieldWidget;
+  final Widget? extraWidget;
   final BaseTickerRes? data;
   final Function()? shareURL, addToAlert, addToWatchlist, onRefresh;
   final double toolbarHeight;
@@ -31,7 +31,7 @@ class BaseTickerAppBar extends StatelessWidget implements PreferredSizeWidget {
   const BaseTickerAppBar({
     super.key,
     this.toolbarHeight = 60,
-    this.searchFieldWidget,
+    this.extraWidget,
     this.data,
     this.shareURL,
     this.addToAlert,
@@ -306,6 +306,14 @@ class BaseTickerAppBar extends StatelessWidget implements PreferredSizeWidget {
                               ThemeColors.black,
                         ),
                       ),
+                    if (extraWidget != null)
+                      SizedBox(
+                        child: extraWidget,
+                      )
+
+
+
+
                   ],
                 ),
               ],

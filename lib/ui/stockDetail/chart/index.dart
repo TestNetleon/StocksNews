@@ -4,7 +4,6 @@ import 'package:stocks_news_new/managers/stockDetail/stock.detail.dart';
 import 'package:stocks_news_new/ui/base/base_scroll.dart';
 import 'package:stocks_news_new/widgets/custom/base_loader_container.dart';
 import '../../../models/stockDetail/chart.dart';
-import '../../../models/stockDetail/historical_chart.dart';
 import '../../../models/stockDetail/overview.dart';
 import '../../../utils/constants.dart';
 import '../../../widgets/custom_gridview.dart';
@@ -18,8 +17,6 @@ class SDChart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SDManager manager = context.watch<SDManager>();
-    SDHistoricalChartRes? chart = manager.dataHistoricalC;
-    bool hasData = manager.dataCHistorical != null;
     List<BaseKeyValueRes>? top = manager.dataChart?.top;
     ChartPriceHistoryRes? chartHistory = manager.dataChart?.priceHistory;
 
@@ -56,13 +53,7 @@ class SDChart extends StatelessWidget {
               },
             ),
           ),
-          SDHistoricalChart(
-            hasData: hasData,
-            chart: chart,
-            onTap: (p0) {
-              manager.getSDHistoricalC(range: p0);
-            },
-          ),
+          SDHistoricalChart(),
           SDChartHistory(chartHistory: chartHistory),
         ],
       ),
