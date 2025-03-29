@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:stocks_news_new/managers/signals.dart';
+import 'package:stocks_news_new/managers/signals/insiders.dart';
 import 'package:stocks_news_new/models/my_home.dart';
 import 'package:stocks_news_new/ui/base/load_more.dart';
 import 'package:stocks_news_new/ui/base/scaffold.dart';
@@ -35,7 +35,7 @@ class _SignalInsidersCompanyIndexState
   }
 
   Future _callAPI({loadMore = false}) async {
-    await context.read<SignalsManager>().getInsidersCompanyData(
+    await context.read<SignalsInsiderManager>().getInsidersCompanyData(
           cik: widget.data.companyCik ?? '',
           loadMore: loadMore,
         );
@@ -43,7 +43,7 @@ class _SignalInsidersCompanyIndexState
 
   @override
   Widget build(BuildContext context) {
-    SignalsManager manager = context.watch<SignalsManager>();
+    SignalsInsiderManager manager = context.watch<SignalsInsiderManager>();
 
     return BaseScaffold(
       appBar: BaseAppBar(

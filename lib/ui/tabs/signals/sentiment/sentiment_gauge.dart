@@ -1,25 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:stocks_news_new/managers/signals/sentiment.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
-
-import '../../../../managers/signals.dart';
 
 class SignalsSentimentGauge extends StatelessWidget {
   const SignalsSentimentGauge({super.key});
 
   @override
   Widget build(BuildContext context) {
-    SignalsManager manager = context.watch<SignalsManager>();
+    SignalsSentimentManager manager = context.watch<SignalsSentimentManager>();
 
-    num? cVol = manager.signalSentimentData?.sentiment?.commentVolume ?? 0;
-    num? sTrend =
-        manager.signalSentimentData?.sentiment?.sentimentTrending ?? 0;
-
-    num? avgSent = manager.signalSentimentData?.sentiment?.avgSentiment ?? 0;
+    num? cVol = manager.data?.sentiment?.commentVolume ?? 0;
+    num? sTrend = manager.data?.sentiment?.sentimentTrending ?? 0;
+    num? avgSent = manager.data?.sentiment?.avgSentiment ?? 0;
 
     return Container(
       margin: EdgeInsets.only(top: isPhone ? 0.sp : 10.sp),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:stocks_news_new/managers/signals.dart';
+import 'package:stocks_news_new/managers/signals/sentiment.dart';
 import 'package:stocks_news_new/ui/base/heading.dart';
 import 'package:stocks_news_new/ui/stockDetail/index.dart';
 import 'package:stocks_news_new/utils/colors.dart';
@@ -30,8 +30,8 @@ class _SignalsMostMentionsState extends State<SignalMostMentions> {
   int selectedInnerTab = 0;
   @override
   Widget build(BuildContext context) {
-    SignalsManager manager = context.watch<SignalsManager>();
-    SignalMentionsRes? mostMentions = manager.signalSentimentData?.mostMentions;
+    SignalsSentimentManager manager = context.watch<SignalsSentimentManager>();
+    SignalMentionsRes? mostMentions = manager.data?.mostMentions;
     return Column(
       children: [
         Visibility(
@@ -53,11 +53,11 @@ class _SignalsMostMentionsState extends State<SignalMostMentions> {
                           child: InkWell(
                             onTap: () {
                               if (selectedInnerTab != index &&
-                                  !manager.isLoadingSentiment) {
+                                  !manager.isLoading) {
                                 selectedInnerTab = index;
                                 setState(() {});
 
-                                manager.getSignalSentimentData(
+                                manager.getData(
                                   dataAll: 0,
                                   days: innerTabs[index].value,
                                   loadFull: false,

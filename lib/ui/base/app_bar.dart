@@ -19,7 +19,13 @@ import '../tabs/more/news/detail.dart';
 import 'search/base_search.dart';
 
 class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
-  final bool isHome, showBack, showSearch, showNotification, showDrawer,showTrade,searchLeague;
+  final bool isHome,
+      showBack,
+      showSearch,
+      showNotification,
+      showDrawer,
+      showTrade,
+      searchLeague;
   final Widget? searchFieldWidget;
   final String? title;
   final Function()? onSaveClick;
@@ -30,6 +36,8 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
   final Function()? onFilterClick;
   final Function()? onLSearchClick;
   final void Function()? onTradeClick;
+  final bool isFiltered;
+
   const BaseAppBar({
     super.key,
     this.showDrawer = true,
@@ -49,6 +57,7 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.onFilterClick,
     this.onTradeClick,
     this.onLSearchClick,
+    this.isFiltered = false,
   });
 
   @override
@@ -128,6 +137,7 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
                             size: 22,
                             padding: EdgeInsets.all(8),
                             onTap: leadingFilterClick!,
+                            color: isFiltered ? ThemeColors.accent : null,
                           ),
                         if (showDrawer && !showBack)
                           Consumer<UserManager>(
@@ -230,7 +240,7 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
                               );
                             },
                           ),
-                        if(showTrade)
+                        if (showTrade)
                           IconButton(
                             onPressed: onTradeClick,
                             icon: Icon(
@@ -240,14 +250,12 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
                         if (searchLeague)
                           ActionButton(
                             icon: Images.search,
-                            onTap:onLSearchClick,
+                            onTap: onLSearchClick,
                           ),
-                        if(onFilterClick!= null)
+                        if (onFilterClick != null)
                           IconButton(
                             onPressed: onFilterClick,
-                            icon: Icon(
-                              Icons.filter_alt,
-                            ),
+                            icon: Icon(Icons.filter_alt),
                           ),
                         if (shareURL != null)
                           Padding(

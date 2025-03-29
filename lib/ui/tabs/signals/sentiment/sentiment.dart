@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:stocks_news_new/managers/signals.dart';
+import 'package:stocks_news_new/managers/signals/sentiment.dart';
+import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/ui/base/base_scroll.dart';
 import 'package:stocks_news_new/ui/tabs/signals/sentiment/most_mentions.dart';
 import 'package:stocks_news_new/utils/constants.dart';
@@ -18,19 +19,42 @@ class SignalSentimentIndex extends StatefulWidget {
 
 class _SignalSentimentState extends State<SignalSentimentIndex> {
   @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _callAPI();
+    });
+  }
+
+  void _callAPI() {
+    SignalsSentimentManager manager = context.read<SignalsSentimentManager>();
+    manager.getData();
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      navigatorKey.currentContext!
+          .read<SignalsSentimentManager>()
+          .clearAllData();
+    });
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    SignalsManager manager = context.watch<SignalsManager>();
+    SignalsSentimentManager manager = context.watch<SignalsSentimentManager>();
 
     return Stack(
       children: [
         BaseLoaderContainer(
-          isLoading: manager.isLoadingSentiment,
-          hasData: manager.signalSentimentData != null,
+          isLoading: manager.isLoading,
+          hasData: manager.data != null,
           showPreparingText: true,
-          error: manager.errorSentiment,
+          error: manager.error,
           child: BaseScroll(
             margin: EdgeInsets.zero,
-            onRefresh: manager.getSignalSentimentData,
+            onRefresh: manager.getData,
             children: [
               Container(
                 margin: EdgeInsets.symmetric(horizontal: Pad.pad16),
@@ -41,10 +65,7 @@ class _SignalSentimentState extends State<SignalSentimentIndex> {
             ],
           ),
         ),
-        BaseLockItem(
-          manager: manager,
-          callAPI: manager.getSignalSentimentData,
-        ),
+        BaseLockItem(manager: manager, callAPI: manager.getData),
       ],
     );
   }

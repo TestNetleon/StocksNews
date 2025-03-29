@@ -1,25 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:stocks_news_new/managers/signals/insiders.dart';
+import 'package:stocks_news_new/managers/signals/stocks.dart';
 import 'package:stocks_news_new/models/stockDetail/overview.dart';
 import 'package:stocks_news_new/ui/base/app_bar.dart';
 import 'package:stocks_news_new/ui/base/base_filter_item.dart';
 import 'package:stocks_news_new/ui/base/button.dart';
 import 'package:stocks_news_new/ui/base/scaffold.dart';
+import 'package:stocks_news_new/ui/tabs/signals/stocks/filter/text_field.dart';
+import 'package:stocks_news_new/ui/tabs/tools/market/stocks/extra/filter.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
+import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/custom/base_loader_container.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 
-class InsiderFilter extends StatefulWidget {
-  const InsiderFilter({super.key});
+class StocksFilter extends StatefulWidget {
+  const StocksFilter({super.key});
 
   @override
-  State<InsiderFilter> createState() => _InsiderFilterState();
+  State<StocksFilter> createState() => _StocksFilterState();
 }
 
-class _InsiderFilterState extends State<InsiderFilter> {
+class _StocksFilterState extends State<StocksFilter> {
   @override
   void initState() {
     super.initState();
@@ -29,7 +32,7 @@ class _InsiderFilterState extends State<InsiderFilter> {
   }
 
   void _callAPI() {
-    SignalsInsiderManager manager = context.read<SignalsInsiderManager>();
+    SignalsStocksManager manager = context.read<SignalsStocksManager>();
     if (manager.filter == null) {
       manager.getFilterData();
     }
@@ -37,7 +40,7 @@ class _InsiderFilterState extends State<InsiderFilter> {
 
   @override
   Widget build(BuildContext context) {
-    SignalsInsiderManager manager = context.watch<SignalsInsiderManager>();
+    SignalsStocksManager manager = context.watch<SignalsStocksManager>();
     return BaseScaffold(
       appBar: BaseAppBar(title: "Filter", showBack: true),
       body: BaseLoaderContainer(
@@ -51,27 +54,6 @@ class _InsiderFilterState extends State<InsiderFilter> {
             Expanded(
               child: ListView(
                 children: [
-                  if (manager.filter?.txnType != null)
-                    FilterType(
-                      title: "Transaction Type",
-                      data: manager.filter?.txnType,
-                      onItemClick: manager.selectTxnType,
-                      filterParam: manager.filterParams?.txnType,
-                    ),
-                  if (manager.filter?.marketCap != null)
-                    FilterType(
-                      title: "Market Cap",
-                      data: manager.filter?.marketCap,
-                      onItemClick: manager.selectMarketCap,
-                      filterParam: manager.filterParams?.marketCap,
-                    ),
-                  if (manager.filter?.sector != null)
-                    FilterType(
-                      title: "Sector",
-                      data: manager.filter?.sector,
-                      onItemClick: manager.selectSector,
-                      filterParam: manager.filterParams?.sector,
-                    ),
                   if (manager.filter?.exchange != null)
                     FilterType(
                       title: "Exchange",
@@ -79,20 +61,27 @@ class _InsiderFilterState extends State<InsiderFilter> {
                       onItemClick: manager.selectExchange,
                       filterParam: manager.filterParams?.exchange,
                     ),
-                  if (manager.filter?.txnSize != null)
+                  if (manager.filter?.priceRange != null)
                     FilterType(
-                      title: "Transaction Size",
-                      data: manager.filter?.txnSize,
-                      onItemClick: manager.selectTxnSize,
-                      filterParam: manager.filterParams?.txnSize,
+                      title: "Price",
+                      data: manager.filter?.priceRange,
+                      onItemClick: manager.selectPriceRange,
+                      filterParam: manager.filterParams?.priceRange,
                     ),
-                  // if (manager.filter?.exchange != null)
-                  //   FilterType(
-                  //     title: "Exchange",
-                  //     data: manager.filter?.exchange,
-                  //     onItemClick: manager.selectExchange,
-                  //     filterParam: manager.filterParams?.exchange,
+                  // if (manager.filter?.changePercentage != null)
+                  //   FilterInputType(
+                  //     title: "Percentage",
                   //   ),
+                  // Column(
+                  //   children: [
+                  //     Text("data", style: styleBaseBold()),
+                  //     TextFieldChangePercentage(
+                  //       onChanged: (p0) {},
+                  //       onIncrement: () {},
+                  //       onDecrement: () {},
+                  //     ),
+                  //   ],
+                  // ),
                 ],
               ),
             ),
@@ -219,12 +208,17 @@ class _FilterTypeState extends State<FilterType> {
                             ? (widget.filterParam as List<String>)
                                 .contains(widget.data![index].value)
                             : false;
-
                 return GestureDetector(
                   onTap: () => widget.onItemClick(index),
                   child: BaseFilterItem(
                     value: widget.data?[index].title ?? "",
                     selected: selected,
+                    child: widget.isRankFilter
+                        ? StarRating(
+                            rating: int.parse(widget.data![index].value ?? '0'),
+                            selected: selected,
+                          )
+                        : null,
                   ),
                 );
               },
@@ -232,6 +226,103 @@ class _FilterTypeState extends State<FilterType> {
                 return const SpacerHorizontal(width: Dimen.padding);
               },
               itemCount: widget.data?.length ?? 0,
+            ),
+          ),
+        ),
+        Divider(color: ThemeColors.neutral5, height: 1, thickness: 1)
+      ],
+    );
+  }
+}
+
+class FilterInputType extends StatefulWidget {
+  // final List<BaseKeyValueRes>? data;
+  final String title;
+  // final Function(int index) onItemClick;
+  // final dynamic filterParam;
+  // final bool isRankFilter;
+
+  const FilterInputType({
+    super.key,
+    required this.title,
+    // required this.data,
+    // required this.onItemClick,
+    // required this.filterParam,
+    // this.isRankFilter = false,
+  });
+
+  @override
+  State<FilterInputType> createState() => _FilterInputTypeState();
+}
+
+class _FilterInputTypeState extends State<FilterInputType> {
+  bool _isOpen = true;
+
+  void _toggleOpen() {
+    setState(() {
+      _isOpen = !_isOpen;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    SignalsStocksManager manager = context.watch<SignalsStocksManager>();
+    return Column(
+      children: [
+        InkWell(
+          borderRadius: BorderRadius.circular(4),
+          onTap: () => _toggleOpen(),
+          child: Padding(
+            padding: EdgeInsets.all(16),
+            child: Row(
+              children: [
+                Text(
+                  widget.title,
+                  style: styleBaseBold(fontSize: 20, color: ThemeColors.black),
+                ),
+                Spacer(),
+                InkWell(
+                  borderRadius: BorderRadius.circular(4),
+                  onTap: () => _toggleOpen(),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(4),
+                      border: Border.all(color: ThemeColors.neutral40),
+                    ),
+                    child: Image.asset(
+                      _isOpen ? Images.arrowDOWN : Images.arrowUP,
+                      height: 24,
+                      width: 24,
+                      color: ThemeColors.black,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        AnimatedSize(
+          duration: const Duration(milliseconds: 150),
+          child: Container(
+            height: _isOpen ? null : 0,
+            margin: EdgeInsets.only(
+              top: _isOpen ? 5 : 0,
+              bottom: _isOpen ? 16 : 0,
+            ),
+            padding: EdgeInsets.symmetric(horizontal: 16),
+            child: TextFieldChangePercentage(
+              // controller: manager.controller,
+              onChanged: (value) {
+                Utils().showLog("--- $value");
+                manager.selectPercentage(value: value);
+              },
+              onIncrement: () {
+                Utils().showLog("---");
+                manager.selectPercentage(increment: true);
+              },
+              onDecrement: () {
+                manager.selectPercentage(decrement: true);
+              },
             ),
           ),
         ),

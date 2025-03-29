@@ -53,6 +53,10 @@ import 'package:stocks_news_new/managers/referral/redeem_manager.dart';
 import 'package:stocks_news_new/managers/referral/referral_manager.dart';
 import 'package:stocks_news_new/managers/referral/referral_points_manager.dart';
 import 'package:stocks_news_new/managers/scripts/script.dart';
+import 'package:stocks_news_new/managers/signals/insiders.dart';
+import 'package:stocks_news_new/managers/signals/politicians.dart';
+import 'package:stocks_news_new/managers/signals/sentiment.dart';
+import 'package:stocks_news_new/managers/signals/stocks.dart';
 import 'package:stocks_news_new/managers/watchlist.dart';
 import 'package:stocks_news_new/models/my_home.dart';
 import 'package:provider/provider.dart';
@@ -119,7 +123,6 @@ import '../managers/aiAnalysis/ai.dart';
 import '../managers/news.dart';
 import '../managers/onboarding.dart';
 import '../managers/search.dart';
-import '../managers/signals.dart';
 import '../managers/stockDetail/stock.detail.dart';
 import '../managers/tools.dart';
 import '../managers/user.dart';
@@ -621,7 +624,7 @@ class Routes {
       ChangeNotifierProvider(create: (_) => NotificationSettingsManager()),
       ChangeNotifierProvider(create: (_) => UserManager()),
       ChangeNotifierProvider(create: (_) => ToolsManager()),
-      ChangeNotifierProvider(create: (_) => SignalsManager()),
+      // ChangeNotifierProvider(create: (_) => SignalsManager()),
       ChangeNotifierProvider(create: (_) => SearchManager()),
       ChangeNotifierProvider(create: (_) => NewsManager()),
       ChangeNotifierProvider(create: (_) => BlogsManager()),
@@ -704,6 +707,12 @@ class Routes {
 
       // MARKET DATA End ---------------
       ChangeNotifierProvider(create: (_) => ScriptsManager()),
+
+      // Signals -------------
+      ChangeNotifierProvider(create: (_) => SignalsStocksManager()),
+      ChangeNotifierProvider(create: (_) => SignalsSentimentManager()),
+      ChangeNotifierProvider(create: (_) => SignalsInsiderManager()),
+      ChangeNotifierProvider(create: (_) => SignalsPoliticianManager()),
     ];
   }
 }

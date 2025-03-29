@@ -9,7 +9,7 @@ import 'package:stocks_news_new/managers/blogs.dart';
 import 'package:stocks_news_new/managers/home/home.dart';
 import 'package:stocks_news_new/managers/news.dart';
 import 'package:stocks_news_new/managers/search.dart';
-import 'package:stocks_news_new/managers/signals.dart';
+import 'package:stocks_news_new/managers/signals/signals.dart';
 import 'package:stocks_news_new/managers/stockDetail/stock.detail.dart';
 import 'package:stocks_news_new/managers/tools.dart';
 import 'package:stocks_news_new/modals/user_res.dart';
@@ -725,8 +725,9 @@ class UserManager extends ChangeNotifier {
     MyHomeManager homeManager =
         navigatorKey.currentContext!.read<MyHomeManager>();
 
-    SignalsManager signalsManager =
-        navigatorKey.currentContext!.read<SignalsManager>();
+    // TODO:
+    // SignalsManager signalsManager =
+    //     navigatorKey.currentContext!.read<SignalsManager>();
 
     ToolsManager toolsManager =
         navigatorKey.currentContext!.read<ToolsManager>();
@@ -742,7 +743,7 @@ class UserManager extends ChangeNotifier {
     SDManager sdManager = navigatorKey.currentContext!.read<SDManager>();
 
     homeManager.clearAllData();
-    signalsManager.clearAllData();
+    // signalsManager.clearAllData();
     toolsManager.clearAllData();
     searchManager.clearAllData();
     newsManager.clearAllData();

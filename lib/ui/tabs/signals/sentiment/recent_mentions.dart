@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:stocks_news_new/managers/signals.dart';
+import 'package:stocks_news_new/managers/signals/sentiment.dart';
 import 'package:stocks_news_new/ui/base/heading.dart';
 import 'package:stocks_news_new/ui/stockDetail/index.dart';
 import 'package:stocks_news_new/utils/constants.dart';
@@ -14,9 +14,8 @@ class SignalRecentMentions extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SignalsManager manager = context.watch<SignalsManager>();
-    SignalMentionsRes? recentMentions =
-        manager.signalSentimentData?.recentMentions;
+    SignalsSentimentManager manager = context.watch<SignalsSentimentManager>();
+    SignalMentionsRes? recentMentions = manager.data?.recentMentions;
 
     if (recentMentions?.data == null || recentMentions?.data?.isEmpty == true) {
       return SizedBox();

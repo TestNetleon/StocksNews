@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:stocks_news_new/managers/signals.dart';
+import 'package:stocks_news_new/managers/signals/politicians.dart';
 import 'package:stocks_news_new/models/my_home_premium.dart';
 import 'package:stocks_news_new/ui/base/app_bar.dart';
 import 'package:stocks_news_new/ui/base/load_more.dart';
@@ -34,7 +34,7 @@ class _SignalPoliticianDetailIndexState
   }
 
   Future _callAPI({loadMore = false}) async {
-    await context.read<SignalsManager>().getPoliticianDetailData(
+    await context.read<SignalsPoliticianManager>().getPoliticianDetailData(
           userSlug: widget.data.userSlug ?? '',
           loadMore: loadMore,
         );
@@ -42,7 +42,8 @@ class _SignalPoliticianDetailIndexState
 
   @override
   Widget build(BuildContext context) {
-    SignalsManager manager = context.watch<SignalsManager>();
+    SignalsPoliticianManager manager =
+        context.watch<SignalsPoliticianManager>();
 
     return BaseScaffold(
       appBar: BaseAppBar(

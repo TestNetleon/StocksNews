@@ -182,12 +182,13 @@ class _FilterTypeState extends State<FilterType> {
                   child: Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(4),
-                      border: Border.all(color: ThemeColors.neutral5),
+                      border: Border.all(color: ThemeColors.neutral40),
                     ),
                     child: Image.asset(
                       _isOpen ? Images.arrowDOWN : Images.arrowUP,
                       height: 24,
                       width: 24,
+                      color: ThemeColors.black,
                     ),
                   ),
                 ),
