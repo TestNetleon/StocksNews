@@ -157,23 +157,86 @@ class AppsFlyerService {
                   'app.stocks.news://google/link/?request_ip_version='))) {
             return;
           }
-          getDistributorCodeIfAny(deepLinkUrl);
+
+          final clickEventMap = result.deepLink?.clickEvent;
+          if (clickEventMap != null) {
+            getDistributorCode(clickEventMap);
+          }
+          // getDistributorCodeIfAny(deepLinkUrl);
           handleDeepLinkNavigation(uri: Uri.tryParse(deepLinkUrl));
         }
       },
     );
   }
 
-  getDistributorCodeIfAny(url) {
-    Uri? uri = Uri.tryParse(url);
-    if (uri != null && uri.queryParameters.containsKey('distributor_code')) {
-      String fullQuery = uri.query;
-      int index = fullQuery.indexOf('distributor_code=');
-      if (index != -1) {
-        String result = fullQuery.substring(index + 'distributor_code='.length);
-        memCODE = result;
-        Utils().showLog(memCODE);
+  // getDistributorCodeIfAny(url) {
+  //   Uri? uri = Uri.tryParse(url);
+  //   if (uri != null && uri.queryParameters.containsKey('distributor_code')) {
+  //     String fullQuery = uri.query;
+  //     int index = fullQuery.indexOf('distributor_code=');
+  //     if (index != -1) {
+  //       String result = fullQuery.substring(index + 'distributor_code='.length);
+  //       memCODE = result;
+  //       Utils().showLog(memCODE);
+  //     }
+  //   }
+  // }
+
+  String getDistributorCode(Map<String, dynamic>? clickEvent) {
+    try {
+      if (clickEvent == null || clickEvent.isEmpty) {
+        if (kDebugMode) {
+          print('No click event data found.');
+        }
+        return '';
       }
+
+      // Convert MapEntries to key-value pairs
+      Map<String, String> queryParams = {};
+
+      // Iterate over the map and add all entries to queryParams
+      clickEvent.forEach((key, value) {
+        queryParams[key] = value.toString();
+        if (kDebugMode) {
+          print('Key: $key, Value: $value');
+        }
+      });
+
+      // Check if distributor_code is present
+      if (!queryParams.containsKey('distributor_code')) {
+        if (kDebugMode) {
+          print('No distributor_code found.');
+        }
+        return '';
+      }
+
+      // Prepare the list of key-value pairs
+      List<String> keyValuePairs = [];
+
+      // Add distributor_code first
+      String distributorCode = queryParams['distributor_code'] ?? '';
+      keyValuePairs.add(distributorCode);
+      if (kDebugMode) {
+        print('Distributor Code: $distributorCode');
+      }
+
+      // Add other query parameters
+      queryParams.forEach((key, value) {
+        if (key != 'distributor_code') {
+          keyValuePairs.add('$key=$value');
+          if (kDebugMode) {
+            print('Added: $key=$value');
+          }
+        }
+      });
+
+      // Combine into a single string
+      String result = keyValuePairs.join('&');
+      memCODE = result;
+      Utils().showLog('Final Combined String: $result');
+      return result;
+    } catch (e) {
+      return '';
     }
   }
 

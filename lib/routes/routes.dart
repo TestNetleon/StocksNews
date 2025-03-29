@@ -119,6 +119,7 @@ import 'package:stocks_news_new/ui/tabs/tools/simulator/screens/tradeBuySell/ind
 import 'package:stocks_news_new/ui/theme/manager.dart';
 
 import 'package:stocks_news_new/utils/constants.dart';
+import 'package:stocks_news_new/utils/utils.dart';
 import '../managers/aiAnalysis/ai.dart';
 import '../managers/news.dart';
 import '../managers/onboarding.dart';
@@ -217,14 +218,17 @@ class Routes {
 
   static Route getRouteGenerate(RouteSettings settings) {
     var routingData = settings.name;
-    // saveSource('routingData $routingData');
+    Utils().showLog('routingData $routingData');
 
-    // Explicitly handle `/` route
-    if (routingData == '/') {
+    // Explicitly handle only the `/` route
+    if (routingData == '/' && routingData?.length == 1) {
+      Utils().showLog('HI ROUTING DATA');
+
       return MaterialPageRoute(
         builder: (context) => const Splash(),
       );
     }
+
     switch (routingData) {
       case Tabs.path:
         return MaterialPageRoute(

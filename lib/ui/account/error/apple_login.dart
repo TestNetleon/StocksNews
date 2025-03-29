@@ -7,6 +7,7 @@ import 'package:stocks_news_new/managers/user.dart';
 import 'package:stocks_news_new/modals/user_res.dart';
 import 'package:stocks_news_new/models/referral/referral_response.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
+import 'package:stocks_news_new/ui/account/auth/agree_text.dart';
 import 'package:stocks_news_new/ui/account/auth/verify.dart';
 import 'package:stocks_news_new/ui/base/button.dart';
 import 'package:stocks_news_new/ui/base/country_code.dart';
@@ -265,12 +266,50 @@ class _AppleLoginErrorIndexState extends State<AppleLoginErrorIndex> {
             ),
           ],
         ),
-        const SpacerVertical(height: 20),
+        SpacerVertical(height: 24),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: EdgeInsets.only(top: Pad.pad5),
+              child: InkWell(
+                onTap: _changeBox,
+                child: Container(
+                  height: 20,
+                  width: 20,
+                  decoration: BoxDecoration(
+                    color:
+                        boxChecked ? ThemeColors.primary120 : ThemeColors.white,
+                    border: Border.all(
+                      color: boxChecked
+                          ? ThemeColors.white
+                          : ThemeColors.primary120,
+                    ),
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                  child: Icon(
+                    Icons.check,
+                    size: 14,
+                    color: boxChecked ? ThemeColors.black : ThemeColors.white,
+                  ),
+                ),
+              ),
+            ),
+            Flexible(
+              child: Padding(
+                padding: const EdgeInsets.only(left: Pad.pad10),
+                child: AccountAgreeText(),
+              ),
+            ),
+          ],
+        ),
+        SpacerVertical(height: 24),
+
         BaseButton(
           text: isLoading
               ? widget.data?.verifyBtnText ?? 'Verifying'
               : widget.data?.btnText ?? 'Continue',
-          onPressed: _phone.text.isEmpty ? null : _verification,
+          onPressed: _phone.text.isEmpty || !boxChecked ? null : _verification,
         ),
         const SpacerVertical(height: 20),
       ],
