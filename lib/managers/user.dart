@@ -9,7 +9,6 @@ import 'package:stocks_news_new/managers/blogs.dart';
 import 'package:stocks_news_new/managers/home/home.dart';
 import 'package:stocks_news_new/managers/news.dart';
 import 'package:stocks_news_new/managers/search.dart';
-import 'package:stocks_news_new/managers/signals/signals.dart';
 import 'package:stocks_news_new/managers/stockDetail/stock.detail.dart';
 import 'package:stocks_news_new/managers/tools.dart';
 import 'package:stocks_news_new/modals/user_res.dart';

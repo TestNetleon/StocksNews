@@ -11,7 +11,6 @@ import 'package:stocks_news_new/ui/tabs/tools/market/stocks/extra/filter.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
-import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/custom/base_loader_container.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 
@@ -68,10 +67,10 @@ class _StocksFilterState extends State<StocksFilter> {
                       onItemClick: manager.selectPriceRange,
                       filterParam: manager.filterParams?.priceRange,
                     ),
-                  // if (manager.filter?.changePercentage != null)
-                  //   FilterInputType(
-                  //     title: "Percentage",
-                  //   ),
+                  if (manager.filter?.changePercentage != null)
+                    FilterInputType(
+                      title: "Percentage",
+                    ),
                   // Column(
                   //   children: [
                   //     Text("data", style: styleBaseBold()),
@@ -310,19 +309,19 @@ class _FilterInputTypeState extends State<FilterInputType> {
               bottom: _isOpen ? 16 : 0,
             ),
             padding: EdgeInsets.symmetric(horizontal: 16),
-            child: TextFieldChangePercentage(
-              // controller: manager.controller,
-              onChanged: (value) {
-                Utils().showLog("--- $value");
-                manager.selectPercentage(value: value);
-              },
-              onIncrement: () {
-                Utils().showLog("---");
-                manager.selectPercentage(increment: true);
-              },
-              onDecrement: () {
-                manager.selectPercentage(decrement: true);
-              },
+            child: Visibility(
+              visible: _isOpen,
+              child: TextFieldChangePercentage(
+                onChanged: (value) {
+                  manager.selectPercentage(value: value);
+                },
+                onIncrement: () {
+                  manager.selectPercentage(increment: true);
+                },
+                onDecrement: () {
+                  manager.selectPercentage(decrement: true);
+                },
+              ),
             ),
           ),
         ),

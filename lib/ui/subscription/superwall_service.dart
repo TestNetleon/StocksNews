@@ -4,6 +4,8 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/managers/user.dart';
 import 'package:stocks_news_new/modals/user_res.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
+import 'package:stocks_news_new/ui/base/toaster.dart';
+import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:superwallkit_flutter/superwallkit_flutter.dart' as superwall;
 
@@ -74,6 +76,10 @@ class SWDelegate extends superwall.SuperwallDelegate {
     Utils().showLog('Event Type => ${eventInfo.event.type}');
     switch (eventInfo.event.type) {
       case superwall.EventType.transactionComplete:
+        TopSnackbar.show(
+          message: 'You’re All Set! Start enjoying',
+          type: ToasterEnum.success,
+        );
         // superwall.Superwall.shared
         //     .setSubscriptionStatus(superwall.SubscriptionStatus.unknown);
         Navigator.push(
