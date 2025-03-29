@@ -195,23 +195,39 @@ class BillionairesManager extends ChangeNotifier {
     _statusBDetail = status;
     notifyListeners();
   }
+  int _pageBDetail = 1;
+  bool get canLoadMoreDetail => _pageBDetail <= (_billionairesDetailRes?.totalPages ?? 1);
 
-  Future getBilDetail(String slug) async {
-    setStatusBDetail(Status.loading);
+  Future getBilDetail(String slug,{loadMore = false}) async {
+    if (loadMore) {
+      _pageBDetail++;
+      setStatusBDetail(Status.loadingMore);
+    } else {
+      _pageBDetail = 1;
+      setStatusBDetail(Status.loading);
+    }
+
     try {
-      Map request = {'slug': slug};
+      Map request = {'slug': slug,'page': '$_pageBDetail'};
       ApiResponse response = await apiRequest(
         url: Apis.cryptoBillionaireDetails,
         showProgress: false,
         request: request,
       );
-
       if (response.status) {
-        _billionairesDetailRes =
-            billionairesDetailResFromJson(jsonEncode(response.data));
-      } else {
-        _billionairesDetailRes = null;
-        _error = response.message;
+        if (_pageBDetail == 1) {
+          _billionairesDetailRes = billionairesDetailResFromJson(jsonEncode(response.data));
+          _error = null;
+        } else {
+          var newEntries = billionairesDetailResFromJson(jsonEncode(response.data));
+          _billionairesDetailRes?.recentTweet?.data?.addAll(newEntries.recentTweet?.data ?? []);
+        }
+      }
+      else {
+        if (_pageBDetail == 1) {
+          _billionairesDetailRes = null;
+        }
+        _error = response.message?? Const.errSomethingWrong;
       }
       setStatusBDetail(Status.loaded);
     } catch (e) {

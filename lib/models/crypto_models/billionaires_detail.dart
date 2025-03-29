@@ -12,12 +12,13 @@ class BillionairesDetailRes {
   final CryptoTweetPost? billionaireInfo;
   final RecentTweet? recentTweet;
   final SymbolMentionList? symbolMentionList;
-
+  final int? totalPages;
   BillionairesDetailRes({
     this.title,
     this.billionaireInfo,
     this.recentTweet,
     this.symbolMentionList,
+    this.totalPages,
   });
 
   factory BillionairesDetailRes.fromMap(Map<String, dynamic> json) => BillionairesDetailRes(
@@ -25,6 +26,7 @@ class BillionairesDetailRes {
     billionaireInfo: json["billionaire_info"] == null ? null : CryptoTweetPost.fromMap(json["billionaire_info"]),
     recentTweet: json["recent_tweet"] == null ? null : RecentTweet.fromMap(json["recent_tweet"]),
     symbolMentionList: json["symbol_Mention_list"] == null ? null : SymbolMentionList.fromMap(json["symbol_Mention_list"]),
+    totalPages: json["total_pages"],
   );
 
   Map<String, dynamic> toMap() => {
@@ -32,6 +34,7 @@ class BillionairesDetailRes {
     "billionaire_info": billionaireInfo?.toMap(),
     "recent_tweet": recentTweet?.toMap(),
     "symbol_Mention_list": symbolMentionList?.toMap(),
+    "total_pages": totalPages,
   };
 }
 

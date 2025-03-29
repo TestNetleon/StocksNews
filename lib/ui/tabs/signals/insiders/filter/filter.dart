@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/managers/signals/insiders.dart';
 import 'package:stocks_news_new/models/stockDetail/overview.dart';
@@ -11,6 +12,7 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/custom/base_loader_container.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
+import 'package:table_calendar/table_calendar.dart';
 
 class InsiderFilter extends StatefulWidget {
   const InsiderFilter({super.key});
@@ -93,6 +95,13 @@ class _InsiderFilterState extends State<InsiderFilter> {
                   //     onItemClick: manager.selectExchange,
                   //     filterParam: manager.filterParams?.exchange,
                   //   ),
+
+
+                  FilterDate(
+                    title: "Transaction Date",
+                    onItemClick: manager.selectTxnDate,
+                  ),
+
                 ],
               ),
             ),
@@ -140,6 +149,7 @@ class FilterType extends StatefulWidget {
   final Function(int index) onItemClick;
   final dynamic filterParam;
   final bool isRankFilter;
+  final bool isDateFilter;
 
   const FilterType({
     super.key,
@@ -148,6 +158,7 @@ class FilterType extends StatefulWidget {
     required this.onItemClick,
     required this.filterParam,
     this.isRankFilter = false,
+    this.isDateFilter = false,
   });
 
   @override
@@ -156,7 +167,6 @@ class FilterType extends StatefulWidget {
 
 class _FilterTypeState extends State<FilterType> {
   bool _isOpen = true;
-
   void _toggleOpen() {
     setState(() {
       _isOpen = !_isOpen;
@@ -240,3 +250,157 @@ class _FilterTypeState extends State<FilterType> {
     );
   }
 }
+
+class FilterDate extends StatefulWidget {
+  final String title;
+  final Function(String date) onItemClick;
+
+  const FilterDate({
+    super.key,
+    required this.title,
+    required this.onItemClick,
+  });
+
+  @override
+  State<FilterDate> createState() => _FilterDateState();
+}
+
+class _FilterDateState extends State<FilterDate> {
+  bool _isOpen = true;
+
+  DateTime _focusedDay = DateTime.now();
+  DateTime? _selectedDay;
+
+  void _toggleOpen() {
+    setState(() {
+      _isOpen = !_isOpen;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        InkWell(
+          borderRadius: BorderRadius.circular(4),
+          onTap: () => _toggleOpen(),
+          child: Padding(
+            padding: EdgeInsets.all(16),
+            child: Row(
+              children: [
+                Text(
+                  widget.title,
+                  style: styleBaseBold(fontSize: 20, color: ThemeColors.black),
+                ),
+                Spacer(),
+                InkWell(
+                  borderRadius: BorderRadius.circular(4),
+                  onTap: () => _toggleOpen(),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(4),
+                      border: Border.all(color: ThemeColors.neutral40),
+                    ),
+                    child: Image.asset(
+                      _isOpen ? Images.arrowDOWN : Images.arrowUP,
+                      height: 24,
+                      width: 24,
+                      color: ThemeColors.black,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        AnimatedSize(
+          duration: const Duration(milliseconds: 150),
+          child: Container(
+            height: _isOpen ? null : 0,
+            margin: EdgeInsets.only(
+              top: _isOpen ? 5 : 0,
+              bottom: _isOpen ? 16 : 0,
+            ),
+            child: Center(
+                child: TableCalendar(
+                  firstDay: DateTime.utc(2020, 1, 1),
+                  lastDay: DateTime.now(),
+                  focusedDay: _focusedDay,
+                  selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
+                  onDaySelected: (selectedDay, focusedDay) {
+                    setState(() {
+                      _selectedDay = selectedDay;
+                      _focusedDay = focusedDay;
+                      String formattedDate = DateFormat('yyyy-MM-dd').format(_selectedDay??DateTime.now());
+                      widget.onItemClick(formattedDate);
+                    });
+                  },
+                  calendarFormat: CalendarFormat.month,
+                  daysOfWeekHeight: 40,
+                  headerStyle: HeaderStyle(
+                    formatButtonVisible: false,
+                    titleCentered: true,
+                    titleTextStyle: styleBaseSemiBold(
+                      fontSize: 16,
+                      color:
+                      ThemeColors.black,
+                    ),
+                    leftChevronIcon: Container(
+                        padding: EdgeInsets.all(Pad.pad5),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8),
+                          border: Border.all(color: ThemeColors.neutral10),
+                        ),
+                        child: Icon(Icons.chevron_left, color: ThemeColors.black)),
+                    rightChevronIcon: Container(
+                      padding: EdgeInsets.all(Pad.pad5),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8),
+                          border: Border.all(color: ThemeColors.neutral10),
+                        ),
+                        child: Icon(Icons.chevron_right, color: ThemeColors.black)),
+                  ),
+                  daysOfWeekStyle: DaysOfWeekStyle(
+                    weekdayStyle:styleBaseRegular(
+                      fontSize: 14,
+                      color: ThemeColors.black,
+                    ),
+                    weekendStyle:styleBaseRegular(
+                      fontSize: 14,
+                      color: ThemeColors.neutral10,
+                    ),
+                  ),
+                  calendarStyle: CalendarStyle(
+                    cellPadding: EdgeInsets.zero,
+                    todayDecoration: BoxDecoration(
+                      color: ThemeColors.black,
+                        shape: BoxShape.rectangle,
+                    ),
+                    selectedDecoration: BoxDecoration(
+                        color: ThemeColors.black,
+                        shape: BoxShape.rectangle,
+                    ),
+                    todayTextStyle: styleBaseBold(
+                      fontSize: 14,
+                      color: ThemeColors.white,
+                    ),
+                    selectedTextStyle: styleBaseBold(
+                    fontSize: 14,
+                    color: ThemeColors.white,
+                    ),
+                    outsideDaysVisible: true,
+                    outsideTextStyle: styleBaseBold(
+                      fontSize: 14,
+                      color: ThemeColors.neutral10,
+                    ),
+                  ),
+                )),
+          ),
+        ),
+
+        Divider(color: ThemeColors.neutral5, height: 1, thickness: 1)
+      ],
+    );
+  }
+}
+

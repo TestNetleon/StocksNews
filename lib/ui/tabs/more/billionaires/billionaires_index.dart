@@ -4,9 +4,9 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/managers/billionaires.dart';
 import 'package:stocks_news_new/models/crypto_models/billionaires_res.dart';
 import 'package:stocks_news_new/ui/base/app_bar.dart';
-import 'package:stocks_news_new/ui/base/base_scroll.dart';
 import 'package:stocks_news_new/ui/base/button.dart';
 import 'package:stocks_news_new/ui/base/heading.dart';
+import 'package:stocks_news_new/ui/base/load_more.dart';
 import 'package:stocks_news_new/ui/base/scaffold.dart';
 import 'package:stocks_news_new/ui/tabs/more/billionaires/cryptocurrencies/widget/crypto_item.dart';
 import 'package:stocks_news_new/ui/tabs/more/billionaires/widget/mention_list.dart';
@@ -39,9 +39,9 @@ class _BillionairesDetailIndexState extends State<BillionairesDetailIndex> {
     });
   }
 
-  void _callAPI() {
+  Future _callAPI() async {
     BillionairesManager manager = context.read<BillionairesManager>();
-    manager.getBilDetail(widget.slug);
+    await manager.getBilDetail(widget.slug);
   }
 
   @override
@@ -65,130 +65,137 @@ class _BillionairesDetailIndexState extends State<BillionairesDetailIndex> {
         onRefresh: () {
           _callAPI();
         },
-        child: BaseScroll(
-          onRefresh: () async {
-            manager.getBilDetail(widget.slug);
-          },
-          margin: EdgeInsets.zero,
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                  horizontal: Pad.pad16, vertical: Pad.pad10),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      Visibility(
-                        visible: billionaireInfo?.image != null,
-                        child: Container(
-                          padding: EdgeInsets.all(5),
-                          decoration: BoxDecoration(
-                              border: Border.all(
-                                  color: ThemeColors.white, width: 1),
-                              shape: BoxShape.circle),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(60),
-                            child: CachedNetworkImagesWidget(
-                              billionaireInfo?.image ?? '',
-                              height: 55,
-                              width: 55,
-                              placeHolder: Images.placeholder,
-                              showLoading: true,
-                              fit: BoxFit.contain,
+        child: BaseLoadMore(
+          onRefresh: _callAPI,
+          onLoadMore: () => manager.getBilDetail(widget.slug, loadMore: true),
+          canLoadMore: manager.canLoadMoreDetail,
+          child: SingleChildScrollView(
+              child:Column(
+                children:  [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: Pad.pad16, vertical: Pad.pad10),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            Visibility(
+                              visible: billionaireInfo?.image != null,
+                              child: Container(
+                                padding: EdgeInsets.all(5),
+                                decoration: BoxDecoration(
+                                    border: Border.all(
+                                        color: ThemeColors.white, width: 1),
+                                    shape: BoxShape.circle),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(60),
+                                  child: CachedNetworkImagesWidget(
+                                    billionaireInfo?.image ?? '',
+                                    height: 55,
+                                    width: 55,
+                                    placeHolder: Images.placeholder,
+                                    showLoading: true,
+                                    fit: BoxFit.contain,
+                                  ),
+                                ),
+                              ),
                             ),
-                          ),
+                            SpacerHorizontal(width: Pad.pad16),
+                            Expanded(
+                              child: Visibility(
+                                visible: billionaireInfo?.name != null &&
+                                    billionaireInfo?.name != '',
+                                child: BaseHeading(
+                                  title: "${billionaireInfo?.name}",
+                                  titleStyle: styleBaseBold(fontSize: 20),
+                                  subtitle: billionaireInfo?.designation ?? "",
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                ),
+                              ),
+                            ),
+                            IntrinsicWidth(
+                              child: BaseButton(
+                                fullWidth: false,
+                                color: billionaireInfo?.isFavoritePersonAdded == 0
+                                    ? ThemeColors.transparentGreen
+                                    : ThemeColors.transparentRed,
+                                onPressed: () {
+                                  if (billionaireInfo?.isFavoritePersonAdded == 0) {
+                                    manager.requestAddToFav(
+                                        billionaireInfo?.twitterName ?? "",
+                                        profiles: billionaireInfo);
+                                  } else {
+                                    manager.requestRemoveToFav(
+                                        billionaireInfo?.twitterName ?? "",
+                                        profiles: billionaireInfo);
+                                  }
+                                },
+                                text: billionaireInfo?.isFavoritePersonAdded == 0
+                                    ? "FOLLOW"
+                                    : "UNFOLLOW",
+                                textSize: 14,
+                                padding: EdgeInsets.symmetric(horizontal: 10),
+                              ),
+                            ),
+                          ],
                         ),
-                      ),
-                      SpacerHorizontal(width: Pad.pad16),
-                      Expanded(
-                        child: Visibility(
-                          visible: billionaireInfo?.name != null &&
-                              billionaireInfo?.name != '',
-                          child: BaseHeading(
-                            title: "${billionaireInfo?.name}",
-                            titleStyle: styleBaseBold(fontSize: 20),
-                            subtitle: billionaireInfo?.designation ?? "",
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                          ),
+                        SpacerVertical(height: Pad.pad10),
+                        HtmlWidget(
+                          billionaireInfo?.description ?? "",
+                          textStyle: styleBaseRegular(height: 1.6, fontSize: 14),
                         ),
-                      ),
-                      IntrinsicWidth(
-                        child: BaseButton(
-                          fullWidth: false,
-                          color: billionaireInfo?.isFavoritePersonAdded == 0
-                              ? ThemeColors.transparentGreen
-                              : ThemeColors.transparentRed,
-                          onPressed: () {
-                            if (billionaireInfo?.isFavoritePersonAdded == 0) {
-                              manager.requestAddToFav(
-                                  billionaireInfo?.twitterName ?? "",
-                                  profiles: billionaireInfo);
-                            } else {
-                              manager.requestRemoveToFav(
-                                  billionaireInfo?.twitterName ?? "",
-                                  profiles: billionaireInfo);
-                            }
-                          },
-                          text: billionaireInfo?.isFavoritePersonAdded == 0
-                              ? "FOLLOW"
-                              : "UNFOLLOW",
-                          textSize: 14,
-                          padding: EdgeInsets.symmetric(horizontal: 10),
-                        ),
-                      ),
-                    ],
+                      ],
+                    ),
+                  ),
+                  SpacerVertical(height: Pad.pad8),
+                  Visibility(
+                      visible:
+                      manager.billionairesDetailRes?.symbolMentionList != null,
+                      child: MentionsListIndex(
+                          symbolMentionRes:
+                          manager.billionairesDetailRes?.symbolMentionList)),
+                  Visibility(
+                      visible:
+                      manager.billionairesDetailRes?.symbolMentionList != null,
+                      child: SpacerVertical(height: Pad.pad10)),
+                  Visibility(
+                      visible:
+                      manager.billionairesDetailRes?.recentTweet?.title != null &&
+                          manager.billionairesDetailRes?.recentTweet?.title != '',
+                      child: BaseHeading(
+                        margin: const EdgeInsets.symmetric(horizontal: Pad.pad16),
+                        title:
+                        manager.billionairesDetailRes?.recentTweet?.title ?? "",
+                        titleStyle: styleBaseBold(),
+                      )),
+                  SpacerVertical(height: Pad.pad10),
+                  Visibility(
+                    visible: manager.billionairesDetailRes?.recentTweet?.data != null,
+                    child: ListView.separated(
+                      physics: NeverScrollableScrollPhysics(),
+                      padding: EdgeInsets.symmetric(horizontal: 16),
+                      shrinkWrap: true,
+                      itemBuilder: (context, index) {
+                        CryptoTweetPost? item =
+                        manager.billionairesDetailRes?.recentTweet?.data?[index];
+                        return CryptoItem(
+                          item: item,
+                          onTap: () {},
+                        );
+                      },
+                      separatorBuilder: (context, index) {
+                        return SpacerVertical(height: Pad.pad20);
+                      },
+                      itemCount:
+                      manager.billionairesDetailRes?.recentTweet?.data?.length ??
+                          0,
+                    ),
                   ),
                   SpacerVertical(height: Pad.pad10),
-                  HtmlWidget(
-                    billionaireInfo?.description ?? "",
-                    textStyle: styleBaseRegular(height: 1.6, fontSize: 14),
-                  ),
                 ],
-              ),
-            ),
-            SpacerVertical(height: Pad.pad8),
-            Visibility(
-                visible:
-                    manager.billionairesDetailRes?.recentTweet?.title != null &&
-                        manager.billionairesDetailRes?.recentTweet?.title != '',
-                child: BaseHeading(
-                  margin: const EdgeInsets.symmetric(horizontal: Pad.pad16),
-                  title:
-                      manager.billionairesDetailRes?.recentTweet?.title ?? "",
-                  titleStyle: styleBaseBold(),
-                )),
-            SpacerVertical(height: Pad.pad10),
-            Visibility(
-              visible: manager.billionairesDetailRes?.recentTweet?.data != null,
-              child: ListView.separated(
-                physics: NeverScrollableScrollPhysics(),
-                padding: EdgeInsets.symmetric(horizontal: 16),
-                shrinkWrap: true,
-                itemBuilder: (context, index) {
-                  CryptoTweetPost? item =
-                      manager.billionairesDetailRes?.recentTweet?.data?[index];
-                  return CryptoItem(
-                    item: item,
-                    onTap: () {},
-                  );
-                },
-                separatorBuilder: (context, index) {
-                  return SpacerVertical(height: Pad.pad20);
-                },
-                itemCount:
-                    manager.billionairesDetailRes?.recentTweet?.data?.length ??
-                        0,
-              ),
-            ),
-            Visibility(
-                visible:
-                    manager.billionairesDetailRes?.symbolMentionList != null,
-                child: MentionsListIndex(
-                    symbolMentionRes:
-                        manager.billionairesDetailRes?.symbolMentionList)),
-            SpacerVertical(height: Pad.pad10),
-          ],
+              )
+          ),
         ),
       ),
     );
