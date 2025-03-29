@@ -29,71 +29,68 @@ class BaseLogoutPopUp extends StatelessWidget {
     bool isDark = context.watch<ThemeManager>().isDarkMode;
     return Dialog(
       // backgroundColor: ThemeColors.transparent,
-      backgroundColor: ThemeColors.white,
+      backgroundColor: Colors.transparent,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.sp)),
-      child: Stack(
-        alignment: Alignment.bottomCenter,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        // alignment: Alignment.bottomCenter,
         children: [
           Container(
-            padding: EdgeInsets.only(bottom: 5.sp),
-            child: Container(
-              decoration: BoxDecoration(
-                color: ThemeColors.white,
-                borderRadius: BorderRadius.circular(10.sp),
-                border:
-                    isDark ? Border.all(color: ThemeColors.neutral20) : null,
-              ),
-              child: Padding(
-                padding: EdgeInsets.fromLTRB(10.sp, 0, 10.sp, 0),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Image.asset(
-                      Images.alertPopGIF,
-                      height: 80.sp,
-                      width: 80.sp,
+            decoration: BoxDecoration(
+              color: ThemeColors.white,
+              borderRadius: BorderRadius.circular(10.sp),
+              border: isDark ? Border.all(color: ThemeColors.neutral20) : null,
+            ),
+            child: Padding(
+              padding: EdgeInsets.fromLTRB(10.sp, 0, 10.sp, 0),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Image.asset(
+                    Images.alertPopGIF,
+                    height: 80.sp,
+                    width: 80.sp,
+                  ),
+                  // const SpacerVertical(height: 5),
+                  Text(
+                    "Sign Out",
+                    style: styleBaseBold(
+                      color: ThemeColors.black,
+                      fontSize: 20,
                     ),
-                    // const SpacerVertical(height: 5),
-                    Text(
-                      "Sign Out",
-                      style: styleBaseBold(
-                        color: ThemeColors.black,
-                        fontSize: 20,
+                  ),
+                  const SpacerVertical(height: 8),
+                  Text(
+                    "Are you sure you want to sign out?",
+                    textAlign: TextAlign.center,
+                    style: styleBaseRegular(color: ThemeColors.black),
+                  ),
+                  const SpacerVertical(height: 5),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: Text(
+                          "CANCEL",
+                          style: styleBaseBold(color: ThemeColors.black),
+                        ),
                       ),
-                    ),
-                    const SpacerVertical(height: 8),
-                    Text(
-                      "Are you sure you want to sign out?",
-                      textAlign: TextAlign.center,
-                      style: styleBaseRegular(color: ThemeColors.black),
-                    ),
-                    const SpacerVertical(height: 5),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        TextButton(
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                          },
-                          child: Text(
-                            "CANCEL",
-                            style: styleBaseBold(color: ThemeColors.black),
-                          ),
+                      TextButton(
+                        onPressed: () async {
+                          UserManager manager = context.read<UserManager>();
+                          manager.logoutUser();
+                        },
+                        child: Text(
+                          "LOGOUT",
+                          style: styleBaseBold(color: ThemeColors.black),
                         ),
-                        TextButton(
-                          onPressed: () async {
-                            UserManager manager = context.read<UserManager>();
-                            manager.logoutUser();
-                          },
-                          child: Text(
-                            "LOGOUT",
-                            style: styleBaseBold(color: ThemeColors.black),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
+                      ),
+                    ],
+                  ),
+                ],
               ),
             ),
           ),

@@ -1,17 +1,13 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:stocks_news_new/models/signals/filter.dart';
-import 'package:stocks_news_new/utils/utils.dart';
 import '../../api/api_requester.dart';
 import '../../api/api_response.dart';
 import '../../api/apis.dart';
 import '../../models/lock.dart';
 import '../../models/signals/stock.dart';
-import '../../routes/my_app.dart';
 import '../../utils/constants.dart';
-import '../user.dart';
 
 class SignalsStocksManager extends ChangeNotifier {
   String? _error;
@@ -175,32 +171,39 @@ class SignalsStocksManager extends ChangeNotifier {
     notifyListeners();
   }
 
-  void selectPercentage({value, increment = false, decrement = false}) {
-    _filterParams = _filterParams ?? FilterParamsStocks();
+  void selectPercentage({
+    String? value,
+    bool increment = false,
+    bool decrement = false,
+  }) {
+    _filterParams ??= FilterParamsStocks();
+
     if (value != null) {
       _filterParams?.changePercentage = value;
-    } else if (increment) {
-      if (_filterParams?.changePercentage == null) {
-        _filterParams?.changePercentage = "0";
-      } else {
-        value = num.tryParse(_filterParams?.changePercentage ?? '0');
-        _filterParams?.changePercentage = "${value + 1}";
+    } else {
+      int currentValue =
+          int.tryParse(_filterParams?.changePercentage ?? "0") ?? 0;
+
+      if (increment) {
+        currentValue += 1;
+      } else if (decrement) {
+        int lowerLimit = -999;
+        if (currentValue > lowerLimit) {
+          currentValue -= 1;
+        }
       }
-    } else if (decrement) {
-      if (_filterParams?.changePercentage == null) {
-        _filterParams?.changePercentage = "0";
-      } else {
-        value = num.tryParse(_filterParams?.changePercentage ?? '0');
-        _filterParams?.changePercentage = "${value - 1}";
-      }
+
+      _filterParams?.changePercentage = currentValue.toString();
     }
-    controller.text = _filterParams?.changePercentage ?? "";
+
+    controller.text = _filterParams?.changePercentage ?? "0";
     notifyListeners();
   }
 
   void resetFilter({apiCallNeeded = true}) {
     _filterRequest = null;
     _filterParams = null;
+    controller.clear();
     notifyListeners();
     if (apiCallNeeded) {
       getData();

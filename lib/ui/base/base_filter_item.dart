@@ -31,7 +31,7 @@ class BaseFilterItem extends StatelessWidget {
                 ? styleBaseSemiBold(
                     fontSize: 14,
                     color: //selected ? ThemeColors.white :
-                        ThemeColors.black,
+                        Colors.white,
                   )
                 : styleBaseRegular(
                     fontSize: 14,
