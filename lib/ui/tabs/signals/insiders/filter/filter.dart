@@ -97,9 +97,11 @@ class _InsiderFilterState extends State<InsiderFilter> {
                   //   ),
 
 
+                  if (manager.filter?.txnDate != null)
                   FilterDate(
                     title: "Transaction Date",
                     onItemClick: manager.selectTxnDate,
+                    filterParam: manager.filterParams?.txnDate,
                   ),
 
                 ],
@@ -254,11 +256,13 @@ class _FilterTypeState extends State<FilterType> {
 class FilterDate extends StatefulWidget {
   final String title;
   final Function(String date) onItemClick;
+  final dynamic filterParam;
 
   const FilterDate({
     super.key,
     required this.title,
     required this.onItemClick,
+    required this.filterParam,
   });
 
   @override
@@ -268,9 +272,6 @@ class FilterDate extends StatefulWidget {
 class _FilterDateState extends State<FilterDate> {
   bool _isOpen = true;
 
-  DateTime _focusedDay = DateTime.now();
-  DateTime? _selectedDay;
-
   void _toggleOpen() {
     setState(() {
       _isOpen = !_isOpen;
@@ -279,6 +280,7 @@ class _FilterDateState extends State<FilterDate> {
 
   @override
   Widget build(BuildContext context) {
+    SignalsInsiderManager manager = context.watch<SignalsInsiderManager>();
     return Column(
       children: [
         InkWell(
@@ -325,13 +327,14 @@ class _FilterDateState extends State<FilterDate> {
                 child: TableCalendar(
                   firstDay: DateTime.utc(2020, 1, 1),
                   lastDay: DateTime.now(),
-                  focusedDay: _focusedDay,
-                  selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
+                  focusedDay: manager.selectedDay??DateTime.now(),
+                  selectedDayPredicate: (day) => isSameDay( manager.selectedDay, day),
                   onDaySelected: (selectedDay, focusedDay) {
                     setState(() {
-                      _selectedDay = selectedDay;
-                      _focusedDay = focusedDay;
-                      String formattedDate = DateFormat('yyyy-MM-dd').format(_selectedDay??DateTime.now());
+                      //_selectedDay = selectedDay;
+                      manager.selectDate(selectedDay);
+                     // manager.selectedDay = selectedDay;
+                      String formattedDate = DateFormat('yyyy-MM-dd').format(manager.selectedDay??DateTime.now());
                       widget.onItemClick(formattedDate);
                     });
                   },
@@ -377,7 +380,7 @@ class _FilterDateState extends State<FilterDate> {
                         shape: BoxShape.rectangle,
                     ),
                     selectedDecoration: BoxDecoration(
-                        color: ThemeColors.black,
+                        color: ThemeColors.primary120,
                         shape: BoxShape.rectangle,
                     ),
                     todayTextStyle: styleBaseBold(

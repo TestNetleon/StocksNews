@@ -118,6 +118,12 @@ class SignalsInsiderManager extends ChangeNotifier {
 
   String? errorFilter;
   String? get filterError => errorFilter;
+  DateTime _selectedDay = DateTime.now();
+  DateTime? get selectedDay => _selectedDay;
+  void selectDate(selectedDate) {
+    _selectedDay=selectedDate;
+    notifyListeners();
+  }
 
   Future getFilterData({bool loadMore = false}) async {
     setStatus(Status.loading);
@@ -211,6 +217,7 @@ class SignalsInsiderManager extends ChangeNotifier {
   void resetFilter({apiCallNeeded = true}) {
     _filterRequest = null;
     _filterParams = null;
+    _selectedDay= DateTime.now();
     notifyListeners();
     if (apiCallNeeded) {
       getData();
