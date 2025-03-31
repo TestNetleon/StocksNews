@@ -129,7 +129,8 @@ class ScannerManager extends ChangeNotifier {
 
   int selectedSubIndex = -0;
   onSubTabChange(index) {
-    if (selectedIndex == 0) return;
+    print('Selected Sub INDEX =>$selectedSubIndex');
+    // if (selectedIndex == 0) return;
 
     selectedSubIndex = index;
     notifyListeners();

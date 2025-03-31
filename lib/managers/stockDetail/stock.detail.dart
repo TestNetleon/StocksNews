@@ -608,9 +608,9 @@ class SDManager extends ChangeNotifier {
       } else {
         _dataHistoricalC = null;
         _errorHistoricalC = response.message;
-        if (reset && range == '1hour') {
-          changeChartIndex(2);
-        }
+        // if (reset && range == '1hour') {
+        //   changeChartIndex(2);
+        // }
       }
     } catch (e) {
       _dataHistoricalC = null;

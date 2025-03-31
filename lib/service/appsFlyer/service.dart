@@ -262,12 +262,63 @@ class AppsFlyerService {
     onDeepLinking = false;
   }
 
-  Future createUserInvitationLink() async {
+  // Future createUserInvitationLink() async {
+  //   UserManager manager = navigatorKey.currentContext!.read<UserManager>();
+
+  //   if (manager.user == null) {
+  //     return;
+  //   }
+
+  //   AppsFlyerInviteLinkParams params = AppsFlyerInviteLinkParams(
+  //     brandDomain: 'pagelink.stocks.news',
+  //     referrerName: 'User Invitation',
+  //     campaign: 'Referral',
+  //     customerID: manager.user?.userId ?? '',
+  //     channel: "referral",
+  //     customParams: {
+  //       "deep_link_value": manager.user?.referralCode,
+  //       "type": 'referral',
+  //     },
+  //   );
+
+  //   await _appsFlyerSdk?.setAppInviteOneLinkID("Zsdh", (dynamic) {
+  //     if (kDebugMode) {
+  //       print('generateInviteLink SUCCESS $dynamic');
+  //     }
+  //   });
+
+  //   _appsFlyerSdk?.generateInviteLink(params, (data) {
+  //     if (kDebugMode) {
+  //       print('generateInviteLink SUCCESS $data');
+  //       try {
+  //         final inviteLink = data["payload"]["userInviteURL"];
+  //         if (isURL(inviteLink)) {
+  //           print(' *** THIS IS A VALID URL *** ');
+  //           manager.updatePersonalDetails(
+  //             referralUrl: inviteLink,
+  //             showProgress: false,
+  //             showSuccess: false,
+  //           );
+  //         }
+  //       } catch (e) {
+  //         Utils().showLog(data);
+  //       }
+  //     }
+  //   }, (data) {
+  //     if (kDebugMode) {
+  //       print('generateInviteLink ERROR $data');
+  //     }
+  //   });
+  // }
+
+  Future<String?> createUserInvitationLink() async {
     UserManager manager = navigatorKey.currentContext!.read<UserManager>();
 
     if (manager.user == null) {
-      return;
+      return null;
     }
+
+    Completer<String?> completer = Completer<String?>();
 
     AppsFlyerInviteLinkParams params = AppsFlyerInviteLinkParams(
       brandDomain: 'pagelink.stocks.news',
@@ -287,27 +338,40 @@ class AppsFlyerService {
       }
     });
 
-    _appsFlyerSdk?.generateInviteLink(params, (data) {
+    _appsFlyerSdk?.generateInviteLink(params, (data) async {
       if (kDebugMode) {
         print('generateInviteLink SUCCESS $data');
-        try {
-          final inviteLink = data["payload"]["userInviteURL"];
-          if (isURL(inviteLink)) {
-            print(' *** THIS IS A VALID URL *** ');
-            manager.updatePersonalDetails(
-              referralUrl: inviteLink,
-              showProgress: false,
-              showSuccess: false,
-            );
-          }
-        } catch (e) {
-          Utils().showLog(data);
+      }
+
+      try {
+        final inviteLink = data["payload"]["userInviteURL"];
+        if (isURL(inviteLink)) {
+          shareUrl = inviteLink;
+          print(' *** THIS IS A VALID URL *** ');
+
+          // Update manager with the invite link
+          await manager.updatePersonalDetails(
+            referralUrl: inviteLink,
+            showProgress: false,
+            showSuccess: false,
+          );
+
+          // Complete with the invite link
+          completer.complete(inviteLink);
+        } else {
+          completer.complete(null);
         }
+      } catch (e) {
+        Utils().showLog(data);
+        completer.complete(null);
       }
-    }, (data) {
+    }, (error) {
       if (kDebugMode) {
-        print('generateInviteLink ERROR $data');
+        print('generateInviteLink ERROR $error');
       }
+      completer.complete(null);
     });
+
+    return completer.future;
   }
 }
