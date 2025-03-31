@@ -12,6 +12,7 @@ import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/utils/utils.dart';
+import 'package:stocks_news_new/widgets/custom/confirmation_point_popup.dart';
 import 'package:stocks_news_new/widgets/optional_parent.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import '../../managers/user.dart';
@@ -21,7 +22,7 @@ import '../../routes/my_app.dart';
 class BaseLockItem extends StatefulWidget {
   final dynamic manager;
   final bool lockWithImage;
-
+  final Future Function()? onViewClick;
   final Future Function()? callAPI;
 
   const BaseLockItem({
@@ -29,6 +30,7 @@ class BaseLockItem extends StatefulWidget {
     this.callAPI,
     this.lockWithImage = true,
     required this.manager,
+    this.onViewClick,
   });
 
   @override
@@ -183,6 +185,23 @@ class _BaseLockItemState extends State<BaseLockItem> {
                     ),
                   ),
                 ),
+                Visibility(
+                  visible: info.viewBtn != null && info.viewBtn != '',
+                  child: Padding(
+                    padding: const EdgeInsets.only(bottom: 10),
+                    child: BaseButton(
+                      text: info.viewBtn ?? '',
+                      onPressed: () {
+                        confirmationPopUp(
+                          points: info.pointsRequired,
+                          message: info.popUpMessage,
+                          buttonText: info.popUpButton,
+                          onTap: widget.onViewClick,
+                        );
+                      },
+                    ),
+                  ),
+                ),
                 BaseButton(
                   text: info.btn ?? 'Purchase Membership',
                   onPressed: () {
@@ -201,82 +220,6 @@ class _BaseLockItemState extends State<BaseLockItem> {
     );
   }
 }
-
-// Future baseSUBSCRIBE(
-//   BaseLockInfoRes info, {
-//   Future Function()? callAPI,
-//   required dynamic manager,
-// }) async {
-//   UserManager userManager = navigatorKey.currentContext!.read<UserManager>();
-//   UserRes? user = userManager.user;
-
-//   if (user == null) {
-//     if (kDebugMode) {
-//       print("🛑 User is not logged in. Asking for login screen...");
-//     }
-//     await userManager.askLoginScreen();
-
-//     user = userManager.user;
-//     if (user == null) {
-//       if (kDebugMode) {
-//         print("🛑 User did not log in. Exiting...");
-//       }
-//       return;
-//     }
-
-//     if (user.signupStatus == true) {
-//       if (kDebugMode) {
-//         print("🛑 User signup. Exiting...");
-//       }
-//       return;
-//     }
-
-//     if (user.phone == null || user.phone?.isEmpty == true) {
-//       if (kDebugMode) {
-//         print("User has no phone number. Skipping API call...");
-//       }
-//       return;
-//     }
-
-//     if (callAPI != null) await callAPI();
-//   }
-
-//   if (user.phone == null || user.phone!.isEmpty) {
-//     if (kDebugMode) {
-//       print("User phone number is missing. Prompting for update...");
-//     }
-//     SubscriptionManager manager =
-//         navigatorKey.currentContext!.read<SubscriptionManager>();
-//     await manager.getMembershipLayout();
-//     await Navigator.push(
-//       navigatorKey.currentContext!,
-//       createRoute(
-//         MembershipActionRequired(),
-//       ),
-//     );
-//   }
-
-//   if (user.phone == null || user.phone!.isEmpty) return;
-
-//   BaseLockInfoRes? lockInfo = manager.getLockINFO();
-//   if (lockInfo == null) {
-//     if (kDebugMode) {
-//       print("🛑 Lock info is null. Exiting...");
-//     }
-//     return;
-//   }
-
-//   if (kDebugMode) {
-//     print("User has a valid phone number and lock info is available.");
-//   }
-//   if (kDebugMode) {
-//     print("🚀 Initializing RevenueCat subscription...");
-//   }
-
-//   SubscriptionManager subscriptionManager =
-//       navigatorKey.currentContext!.read<SubscriptionManager>();
-//   subscriptionManager.startProcess();
-// }
 
 Future baseSUBSCRIBE(
   BaseLockInfoRes info, {

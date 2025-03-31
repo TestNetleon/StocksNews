@@ -227,7 +227,12 @@ class NewsManager extends ChangeNotifier {
     return info;
   }
 
-  Future<void> getNewsDetailData(String slug, {reset = true}) async {
+  Future<void> getNewsDetailData(
+    String slug, {
+    reset = true,
+    bool pointsDeducted = false,
+    showProgress = false,
+  }) async {
     setStatusDetail(Status.loading);
 
     if (reset) {
@@ -240,11 +245,13 @@ class NewsManager extends ChangeNotifier {
       Map request = {
         'token': provider.user?.token ?? '',
         'slug': slug,
+        'point_deduction': '$pointsDeducted',
       };
 
       ApiResponse response = await apiRequest(
         url: Apis.newsDetail,
         request: request,
+        showProgress: showProgress,
       );
 
       if (response.status) {

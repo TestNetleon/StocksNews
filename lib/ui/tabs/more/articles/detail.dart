@@ -27,10 +27,16 @@ class _BlogsDetailIndexState extends State<BlogsDetailIndex> {
     });
   }
 
-  Future _callAPI({reset = true}) async {
+  Future _callAPI({
+    reset = true,
+    bool pointsDeducted = false,
+    showProgress = false,
+  }) async {
     await context.read<BlogsManager>().getBlogsDetailData(
           widget.slug,
           reset: reset,
+          pointsDeducted: pointsDeducted,
+          showProgress: showProgress,
         );
   }
 
@@ -65,7 +71,16 @@ class _BlogsDetailIndexState extends State<BlogsDetailIndex> {
             onRefresh: _callAPI,
             child: BlogDetailData(slug: widget.slug),
           ),
-          BaseLockItem(manager: manager, callAPI: _callAPI),
+          BaseLockItem(
+            manager: manager,
+            callAPI: _callAPI,
+            onViewClick: () async {
+              _callAPI(
+                pointsDeducted: true,
+                showProgress: true,
+              );
+            },
+          ),
         ],
       ),
     );

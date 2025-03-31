@@ -13,10 +13,35 @@ class EventsService {
     BrazeLogger(),
     AppsFlyerLogger(),
   ];
-
+//MARK: Notification
   void notificationPopUp({bool allow = false}) {
     final eventName =
         allow ? 'dont_allow_notifications' : 'allow_notifications';
+
+    for (final service in _services) {
+      try {
+        service.logEvent(eventName);
+      } catch (e) {
+        Utils().showLog('Failed to log event with ${service.runtimeType}: $e');
+      }
+    }
+  }
+
+  //MARK: On Boarding
+  void onBoardingSKIP({bool allow = false}) {
+    final eventName = 'click_skip_onboarding_page';
+
+    for (final service in _services) {
+      try {
+        service.logEvent(eventName);
+      } catch (e) {
+        Utils().showLog('Failed to log event with ${service.runtimeType}: $e');
+      }
+    }
+  }
+
+  void onBoardingGOTO_7DAY({bool allow = false}) {
+    final eventName = 'click_try_premium_7days_for_free_onboarding_page';
 
     for (final service in _services) {
       try {

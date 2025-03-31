@@ -7,6 +7,9 @@ class BaseLockInfoRes {
   final String? viewBtn;
   final String? image;
   final String? imageDark;
+  final num? pointsRequired;
+  final String? popUpMessage;
+  final String? popUpButton;
 
   BaseLockInfoRes({
     this.title,
@@ -17,10 +20,16 @@ class BaseLockInfoRes {
     this.viewBtn,
     this.image,
     this.imageDark,
+    this.pointsRequired,
+    this.popUpMessage,
+    this.popUpButton,
   });
 
   factory BaseLockInfoRes.fromJson(Map<String, dynamic> json) =>
       BaseLockInfoRes(
+        pointsRequired: json['point_required'],
+        popUpButton: json['popup_button'],
+        popUpMessage: json['popup_message'],
         subTitle: json['subtitle'],
         other: json['other'],
         title: json["title"],
@@ -34,6 +43,9 @@ class BaseLockInfoRes {
       );
 
   Map<String, dynamic> toJson() => {
+        'point_required': pointsRequired,
+        'popup_message': popUpMessage,
+        'popup_button': popUpButton,
         'subtitle': subTitle,
         'other': other,
         "title": title,

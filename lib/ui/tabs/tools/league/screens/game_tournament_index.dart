@@ -60,7 +60,8 @@ class _TradingLeagueIndexState extends State<TradingLeagueIndex> {
                 Visibility(
                   visible: lManager.tabData?.myPosition != null,
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16,vertical: Pad.pad10),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 16, vertical: Pad.pad10),
                     child: Row(
                       children: [
                         Expanded(
@@ -114,31 +115,34 @@ class _TradingLeagueIndexState extends State<TradingLeagueIndex> {
                                           ),
                                   ),
                                   SpacerHorizontal(width: Pad.pad8),
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        "Welcome",
-                                        style: styleBaseRegular(
-                                            fontSize: 10,
-                                            color: ThemeColors.secondary120),
-                                      ),
-                                      SpacerVertical(height: Pad.pad5),
-                                      Text(
-                                        lManager.tabData?.myPosition
-                                                ?.userName ??
-                                            "",
-                                        style: styleBaseBold(fontSize: 16),
-                                      ),
-                                      SpacerVertical(height: Pad.pad5),
-                                      Text(
-                                          lManager.tabData?.myPosition?.rank ??
-                                              "",
+                                  Flexible(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          "Welcome",
                                           style: styleBaseRegular(
-                                              fontSize: 14,
-                                              color: ThemeColors.neutral40))
-                                    ],
+                                              fontSize: 10,
+                                              color: ThemeColors.secondary120),
+                                        ),
+                                        SpacerVertical(height: Pad.pad5),
+                                        Text(
+                                          lManager.tabData?.myPosition
+                                                  ?.userName ??
+                                              "",
+                                          style: styleBaseBold(fontSize: 16),
+                                        ),
+                                        SpacerVertical(height: Pad.pad5),
+                                        Text(
+                                            lManager.tabData?.myPosition
+                                                    ?.rank ??
+                                                "",
+                                            style: styleBaseRegular(
+                                                fontSize: 14,
+                                                color: ThemeColors.neutral40))
+                                      ],
+                                    ),
                                   )
                                 ],
                               )),
@@ -215,12 +219,10 @@ class _TradingLeagueIndexState extends State<TradingLeagueIndex> {
                 selectedIndex: widget.initialIndex ?? 0,
               ),
               SpacerVertical(height: Pad.pad10),
-              if (lManager.selectedScreen == 0)
-                Expanded(child: LeagueIndex()),
+              if (lManager.selectedScreen == 0) Expanded(child: LeagueIndex()),
               if (lManager.selectedScreen == 1)
                 Expanded(child: LeagueLeaderboard()),
-              if (lManager.selectedScreen == 2)
-                Expanded(child: LeagueTrades())
+              if (lManager.selectedScreen == 2) Expanded(child: LeagueTrades())
             ],
           ),
         ),

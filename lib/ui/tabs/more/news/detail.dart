@@ -27,10 +27,15 @@ class _NewsDetailIndexState extends State<NewsDetailIndex> {
     });
   }
 
-  Future _callAPI({reset = true}) async {
-    await context
-        .read<NewsManager>()
-        .getNewsDetailData(widget.slug, reset: reset);
+  Future _callAPI({
+    reset = true,
+    bool pointsDeducted = false,
+    bool showProgress = false,
+  }) async {
+    await context.read<NewsManager>().getNewsDetailData(widget.slug,
+        reset: reset,
+        pointsDeducted: pointsDeducted,
+        showProgress: showProgress);
   }
 
   @override
@@ -65,6 +70,12 @@ class _NewsDetailIndexState extends State<NewsDetailIndex> {
           BaseLockItem(
             manager: manager,
             callAPI: _callAPI,
+            onViewClick: () async {
+              _callAPI(
+                pointsDeducted: true,
+                showProgress: true,
+              );
+            },
           ),
         ],
       ),

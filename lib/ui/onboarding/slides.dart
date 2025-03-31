@@ -28,7 +28,7 @@ class OnboardingSlides extends StatefulWidget {
 class _OnboardingSlidesState extends State<OnboardingSlides> {
   final PageController _pageController = PageController();
 
-  _navigateToHome() {
+  _navigateToHome({skipped = true}) {
     Preference.setShowIntro(false);
     Navigator.pushAndRemoveUntil(
       navigatorKey.currentContext!,
@@ -39,6 +39,12 @@ class _OnboardingSlidesState extends State<OnboardingSlides> {
       ),
       (route) => false,
     );
+
+    // if (skipped) {
+    //   EventsService.instance.onBoardingSKIP();
+    // } else {
+    //   EventsService.instance.onBoardingGOTO_7DAY();
+    // }
   }
 
   @override
@@ -102,7 +108,7 @@ class _OnboardingSlidesState extends State<OnboardingSlides> {
               child: BaseButton(
                 radius: 8,
                 onPressed: () {
-                  _navigateToHome();
+                  _navigateToHome(skipped: false);
 
                   Future.delayed(Duration(milliseconds: 200), () async {
                     UserManager manager =
