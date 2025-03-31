@@ -156,38 +156,42 @@ class _OrderInfoSheetState extends State<OrderInfoSheet> {
   }
 
   void onProceed() {
-    if(widget.selectedStock==StockType.buy){
-      _userOrdersCheck?.buyOrder=boxChecked;
+    if(boxChecked==true){
+      print('enter');
+      if(widget.selectedStock==StockType.buy){
+        _userOrdersCheck?.buyOrder=boxChecked;
+      }
+      if(widget.selectedStock==StockType.sell){
+        _userOrdersCheck?.sellOrder=boxChecked;
+      }
+      if(widget.selectedStock==StockType.short){
+        _userOrdersCheck?.shortOrder=boxChecked;
+      }
+      if(widget.selectedStock==StockType.btc){
+        _userOrdersCheck?.btcOrder=boxChecked;
+      }
+      if(widget.cType==ConditionType.bracketOrder){
+        _userOrdersCheck?.bracketOrder=boxChecked;
+      }
+      if(widget.cType==ConditionType.limitOrder){
+        _userOrdersCheck?.limitOrder=boxChecked;
+      }
+      if(widget.cType==ConditionType.stopOrder){
+        _userOrdersCheck?.stopOrder=boxChecked;
+      }
+      if(widget.cType==ConditionType.stopLimitOrder){
+        _userOrdersCheck?.stopLimitOrder=boxChecked;
+      }
+      if(widget.cType==ConditionType.trailingOrder){
+        _userOrdersCheck?.trailingOrder=boxChecked;
+      }
+      if(widget.cType==ConditionType.recurringOrder){
+        _userOrdersCheck?.recurringOrder=boxChecked;
+      }
+      setState(() {});
+      setUser(_userOrdersCheck);
     }
-    if(widget.selectedStock==StockType.sell){
-      _userOrdersCheck?.sellOrder=boxChecked;
-    }
-    if(widget.selectedStock==StockType.short){
-      _userOrdersCheck?.shortOrder=boxChecked;
-    }
-    if(widget.selectedStock==StockType.btc){
-      _userOrdersCheck?.btcOrder=boxChecked;
-    }
-    if(widget.cType==ConditionType.bracketOrder){
-      _userOrdersCheck?.bracketOrder=boxChecked;
-    }
-    if(widget.cType==ConditionType.limitOrder){
-      _userOrdersCheck?.limitOrder=boxChecked;
-    }
-    if(widget.cType==ConditionType.stopOrder){
-      _userOrdersCheck?.stopOrder=boxChecked;
-    }
-    if(widget.cType==ConditionType.stopLimitOrder){
-      _userOrdersCheck?.stopLimitOrder=boxChecked;
-    }
-    if(widget.cType==ConditionType.trailingOrder){
-      _userOrdersCheck?.trailingOrder=boxChecked;
-    }
-    if(widget.cType==ConditionType.recurringOrder){
-      _userOrdersCheck?.recurringOrder=boxChecked;
-    }
-    setState(() {});
-    setUser(_userOrdersCheck);
+
     if (widget.symbol != null) {
       if(widget.selectedStock!=null){
         _onTap();
@@ -312,7 +316,8 @@ class _OrderInfoSheetState extends State<OrderInfoSheet> {
               text: "Proceed Order",
               color: ThemeColors.splashBG,
               textColor: ThemeColors.white,
-              onPressed:!boxChecked?null:onProceed,
+              onPressed:onProceed,
+              //onPressed:!boxChecked?null:onProceed,
             ),
           )
         ],

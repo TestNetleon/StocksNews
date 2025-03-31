@@ -124,9 +124,10 @@ class TsPendingListItem extends StatelessWidget {
                                 ? Alignment.center
                                 : Alignment.centerLeft,
                             label: item?.orderTypeOriginal == "TRAILING_ORDER"
-                                ? "Trail Price"
+                                ? "Trailing Stop Loss"
                                 : "Stop Price",
-                            prices: item?.stopPrice)),
+                            prices: item?.stopPrice)
+                    ),
                     Visibility(
                         visible:
                             item?.limitPrice != null && item?.limitPrice != 0,

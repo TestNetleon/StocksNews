@@ -1326,7 +1326,7 @@ class _ConditionalContainerState extends State<ConditionalContainer> {
                     child: Column(
                       children: [
                         ScreenTitle(
-                          title: "Trail Price",
+                          title: "Trailing Stop Loss",
                           style: styleBaseBold(color: ThemeColors.splashBG),
                           subTitle: selectedIndex == 0
                               ? portfolioManager
@@ -1373,7 +1373,7 @@ class _ConditionalContainerState extends State<ConditionalContainer> {
                           hintStyle:
                               styleBaseRegular(color: ThemeColors.splashBG),
                           controller: stopPriceController,
-                          placeholder: "Trail Price",
+                          placeholder: "Trailing Stop Loss",
                           keyboardType:
                               TextInputType.numberWithOptions(decimal: true),
                         ),
