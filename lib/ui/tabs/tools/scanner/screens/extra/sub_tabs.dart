@@ -19,18 +19,13 @@ class _ScannerSubHeaderTabState extends State<ScannerSubHeaderTab> {
     MarketResData(title: 'Volume'),
   ];
 
-  int _selectedIndex = 0;
   @override
   void initState() {
     super.initState();
   }
 
   onTab(index) {
-    if (_selectedIndex != index) {
-      _selectedIndex = index;
-      setState(() {});
-      context.read<ScannerManager>().onSubTabChange(index);
-    }
+    context.read<ScannerManager>().onSubTabChange(index);
   }
 
   @override

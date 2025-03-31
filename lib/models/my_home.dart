@@ -16,6 +16,7 @@ class MyHomeRes {
   final List<BaseTickerRes>? tickers;
   final HomeLoginBoxRes? loginBox;
   final HomeLoginBoxRes? loginBoxDrawer;
+  final HomeLoginBoxRes? affiliateBox;
   final UserRes? user;
   final BaseNewsRes? bannerBlog;
   final bool? showCrypto;
@@ -30,6 +31,7 @@ class MyHomeRes {
     this.loginBox,
     this.loginBoxDrawer,
     this.user,
+    this.affiliateBox,
     this.adManagers,
     this.popular,
     this.recentNews,
@@ -54,6 +56,10 @@ class MyHomeRes {
         loginBox: json["login_box"] == null
             ? null
             : HomeLoginBoxRes.fromJson(json["login_box"]),
+
+        affiliateBox: json["affiliate_change_box"] == null
+            ? null
+            : HomeLoginBoxRes.fromJson(json["affiliate_change_box"]),
 
         loginBoxDrawer: json["login_box_drawer"] == null
             ? null
@@ -86,6 +92,8 @@ class MyHomeRes {
 
         "login_box_drawer": loginBoxDrawer?.toJson(),
 
+        "affiliate_change_box": affiliateBox?.toJson(),
+
         "banner_blog": bannerBlog?.toJson(),
         "user": user?.toJson(),
         "trending": tickers == null
@@ -101,6 +109,7 @@ class HomeLoginBoxRes {
   final String? id;
   final String? title;
   final String? subtitle;
+  final String? link;
   final String? agreeUrl;
   final String? buttonText;
   final String? verifyButtonText;
@@ -113,6 +122,7 @@ class HomeLoginBoxRes {
     this.iosBuildCode,
     this.agreeUrl,
     this.title,
+    this.link,
     this.subtitle,
     this.buttonText,
     this.verifyButtonText,
@@ -123,6 +133,7 @@ class HomeLoginBoxRes {
         id: json["id"],
         title: json['title'],
         subtitle: json['subtitle'],
+        link: json['link'],
         agreeUrl: json["agree_url"],
         buttonText: json['btn_text'],
         androidBuildCode: json["android_build_code"],
@@ -134,6 +145,7 @@ class HomeLoginBoxRes {
         "id": id,
         'title': title,
         'subtitle': subtitle,
+        'link': link,
         "android_build_code": androidBuildCode,
         "ios_build_code": iosBuildCode,
         "agree_url": agreeUrl,

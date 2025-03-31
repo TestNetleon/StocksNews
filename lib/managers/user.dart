@@ -22,6 +22,7 @@ import 'package:stocks_news_new/ui/account/update/index.dart';
 import 'package:stocks_news_new/ui/base/bottom_sheet.dart';
 import 'package:stocks_news_new/ui/base/toaster.dart';
 import 'package:stocks_news_new/ui/subscription/manager.dart';
+import 'package:stocks_news_new/ui/tabs/home/extra/affiliate_box.dart';
 import 'package:stocks_news_new/ui/tabs/more/alerts/index.dart';
 import 'package:stocks_news_new/ui/tabs/more/articles/index.dart';
 import 'package:stocks_news_new/ui/tabs/more/billionaires/index.dart';
@@ -726,13 +727,10 @@ class UserManager extends ChangeNotifier {
 
     _user = null;
     shareUrl = null;
+    affiliateClosed = false;
     notifyListeners();
     MyHomeManager homeManager =
         navigatorKey.currentContext!.read<MyHomeManager>();
-
-    // TODO:
-    // SignalsManager signalsManager =
-    //     navigatorKey.currentContext!.read<SignalsManager>();
 
     ToolsManager toolsManager =
         navigatorKey.currentContext!.read<ToolsManager>();

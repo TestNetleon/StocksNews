@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/managers/home/home.dart';
+import 'package:stocks_news_new/models/my_home.dart';
 import 'package:stocks_news_new/ui/AdManager/service.dart';
 import 'package:stocks_news_new/ui/base/app_bar.dart';
 import 'package:stocks_news_new/ui/base/base_scroll.dart';
@@ -9,12 +10,12 @@ import 'package:stocks_news_new/ui/tabs/home/blogItem/blog_item_home.dart';
 import 'package:stocks_news_new/ui/tabs/home/slider/index.dart';
 import 'package:stocks_news_new/ui/tabs/more/index.dart';
 import 'package:stocks_news_new/ui/tabs/tabs.dart';
-import 'package:stocks_news_new/ui/theme/manager.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/custom/base_loader_container.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 import '../../base/scaffold.dart';
+import 'extra/affiliate_box.dart';
 import 'home_premium.dart';
 import 'popularStocks/index.dart';
 import 'scanner/index.dart';
@@ -29,14 +30,11 @@ class HomeIndex extends StatefulWidget {
 class _HomeIndexState extends State<HomeIndex> {
   @override
   Widget build(BuildContext context) {
-    MyHomeManager manager = context.watch<MyHomeManager>();
-
-    return Consumer<ThemeManager>(
-      builder: (context, value, child) {
-        bool darkTheme = value.isDarkMode;
-
+    return Consumer<MyHomeManager>(
+      builder: (context, manager, child) {
+        HomeLoginBoxRes? affiliateBox = manager.data?.affiliateBox;
+        // affiliateClosed = false;
         return BaseScaffold(
-          bgColor: darkTheme ? Colors.black : null,
           drawer: MoreIndex(),
           appBar: BaseAppBar(
             showNotification: true,
@@ -61,9 +59,11 @@ class _HomeIndexState extends State<HomeIndex> {
                 //         ));
                 //   },
                 // ),
+
+                HomeAffiliateBox(),
+
                 const BlogHomeIndex(),
                 HomeTopNewsSlider(),
-                // HomeTrendingIndex(),
                 Visibility(
                   visible: manager.data?.scannerPort?.showOnHome == true,
                   child: Container(
