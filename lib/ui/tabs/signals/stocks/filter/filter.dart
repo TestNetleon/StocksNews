@@ -8,6 +8,7 @@ import 'package:stocks_news_new/ui/base/button.dart';
 import 'package:stocks_news_new/ui/base/scaffold.dart';
 import 'package:stocks_news_new/ui/tabs/signals/stocks/filter/text_field.dart';
 import 'package:stocks_news_new/ui/tabs/tools/market/stocks/extra/filter.dart';
+import 'package:stocks_news_new/ui/theme/manager.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -153,83 +154,89 @@ class _FilterTypeState extends State<FilterType> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        InkWell(
-          borderRadius: BorderRadius.circular(4),
-          onTap: () => _toggleOpen(),
-          child: Padding(
-            padding: EdgeInsets.all(16),
-            child: Row(
-              children: [
-                Text(
-                  widget.title,
-                  style: styleBaseBold(fontSize: 20, color: ThemeColors.black),
-                ),
-                Spacer(),
-                InkWell(
-                  borderRadius: BorderRadius.circular(4),
-                  onTap: () => _toggleOpen(),
-                  child: Container(
-                    decoration: BoxDecoration(
+    return Consumer<ThemeManager>(
+      builder: (context, value, child) {
+        return Column(
+          children: [
+            InkWell(
+              borderRadius: BorderRadius.circular(4),
+              onTap: () => _toggleOpen(),
+              child: Padding(
+                padding: EdgeInsets.all(16),
+                child: Row(
+                  children: [
+                    Text(
+                      widget.title,
+                      style:
+                          styleBaseBold(fontSize: 20, color: ThemeColors.black),
+                    ),
+                    Spacer(),
+                    InkWell(
                       borderRadius: BorderRadius.circular(4),
-                      border: Border.all(color: ThemeColors.neutral40),
+                      onTap: () => _toggleOpen(),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(4),
+                          border: Border.all(color: ThemeColors.neutral40),
+                        ),
+                        child: Image.asset(
+                          _isOpen ? Images.arrowDOWN : Images.arrowUP,
+                          height: 24,
+                          width: 24,
+                          color: ThemeColors.black,
+                        ),
+                      ),
                     ),
-                    child: Image.asset(
-                      _isOpen ? Images.arrowDOWN : Images.arrowUP,
-                      height: 24,
-                      width: 24,
-                      color: ThemeColors.black,
-                    ),
-                  ),
+                  ],
                 ),
-              ],
+              ),
             ),
-          ),
-        ),
-        AnimatedSize(
-          duration: const Duration(milliseconds: 150),
-          child: Container(
-            height: _isOpen ? 36 : 0,
-            margin: EdgeInsets.only(
-              top: _isOpen ? 5 : 0,
-              bottom: _isOpen ? 16 : 0,
+            AnimatedSize(
+              duration: const Duration(milliseconds: 150),
+              child: Container(
+                height: _isOpen ? 36 : 0,
+                margin: EdgeInsets.only(
+                  top: _isOpen ? 5 : 0,
+                  bottom: _isOpen ? 16 : 0,
+                ),
+                child: ListView.separated(
+                  scrollDirection: Axis.horizontal,
+                  padding: EdgeInsets.only(left: Dimen.padding),
+                  itemBuilder: (context, index) {
+                    bool selected = widget.filterParam == null
+                        ? false
+                        : (widget.filterParam is String)
+                            ? widget.filterParam == widget.data![index].value
+                            : (widget.filterParam is List<String>)
+                                ? (widget.filterParam as List<String>)
+                                    .contains(widget.data![index].value)
+                                : false;
+                    return GestureDetector(
+                      onTap: () => widget.onItemClick(index),
+                      child: BaseFilterItem(
+                        value: widget.data?[index].title ?? "",
+                        selected: selected,
+                        child: widget.isRankFilter
+                            ? StarRating(
+                                rating:
+                                    int.parse(widget.data![index].value ?? '0'),
+                                selected: selected,
+                              )
+                            : null,
+                      ),
+                    );
+                  },
+                  separatorBuilder: (context, index) {
+                    return const SpacerHorizontal(width: Dimen.padding);
+                  },
+                  itemCount: widget.data?.length ?? 0,
+                ),
+              ),
             ),
-            child: ListView.separated(
-              scrollDirection: Axis.horizontal,
-              padding: EdgeInsets.only(left: Dimen.padding),
-              itemBuilder: (context, index) {
-                bool selected = widget.filterParam == null
-                    ? false
-                    : (widget.filterParam is String)
-                        ? widget.filterParam == widget.data![index].value
-                        : (widget.filterParam is List<String>)
-                            ? (widget.filterParam as List<String>)
-                                .contains(widget.data![index].value)
-                            : false;
-                return GestureDetector(
-                  onTap: () => widget.onItemClick(index),
-                  child: BaseFilterItem(
-                    value: widget.data?[index].title ?? "",
-                    selected: selected,
-                    child: widget.isRankFilter
-                        ? StarRating(
-                            rating: int.parse(widget.data![index].value ?? '0'),
-                            selected: selected,
-                          )
-                        : null,
-                  ),
-                );
-              },
-              separatorBuilder: (context, index) {
-                return const SpacerHorizontal(width: Dimen.padding);
-              },
-              itemCount: widget.data?.length ?? 0,
-            ),
-          ),
-        ),
-        Divider(color: ThemeColors.neutral5, height: 1, thickness: 1)
-      ],
+            Divider(color: ThemeColors.neutral5, height: 1, thickness: 1)
+          ],
+        );
+      },
     );
   }
 }
@@ -266,67 +273,72 @@ class _FilterInputTypeState extends State<FilterInputType> {
   @override
   Widget build(BuildContext context) {
     SignalsStocksManager manager = context.watch<SignalsStocksManager>();
-    return Column(
-      children: [
-        InkWell(
-          borderRadius: BorderRadius.circular(4),
-          onTap: () => _toggleOpen(),
-          child: Padding(
-            padding: EdgeInsets.all(16),
-            child: Row(
-              children: [
-                Text(
-                  widget.title,
-                  style: styleBaseBold(fontSize: 20, color: ThemeColors.black),
-                ),
-                Spacer(),
-                InkWell(
-                  borderRadius: BorderRadius.circular(4),
-                  onTap: () => _toggleOpen(),
-                  child: Container(
-                    decoration: BoxDecoration(
+    return Consumer<ThemeManager>(
+      builder: (context, value, child) {
+        return Column(
+          children: [
+            InkWell(
+              borderRadius: BorderRadius.circular(4),
+              onTap: () => _toggleOpen(),
+              child: Padding(
+                padding: EdgeInsets.all(16),
+                child: Row(
+                  children: [
+                    Text(
+                      widget.title,
+                      style:
+                          styleBaseBold(fontSize: 20, color: ThemeColors.black),
+                    ),
+                    Spacer(),
+                    InkWell(
                       borderRadius: BorderRadius.circular(4),
-                      border: Border.all(color: ThemeColors.neutral40),
+                      onTap: () => _toggleOpen(),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(4),
+                          border: Border.all(color: ThemeColors.neutral40),
+                        ),
+                        child: Image.asset(
+                          _isOpen ? Images.arrowDOWN : Images.arrowUP,
+                          height: 24,
+                          width: 24,
+                          color: ThemeColors.black,
+                        ),
+                      ),
                     ),
-                    child: Image.asset(
-                      _isOpen ? Images.arrowDOWN : Images.arrowUP,
-                      height: 24,
-                      width: 24,
-                      color: ThemeColors.black,
-                    ),
-                  ),
+                  ],
                 ),
-              ],
-            ),
-          ),
-        ),
-        AnimatedSize(
-          duration: const Duration(milliseconds: 150),
-          child: Container(
-            height: _isOpen ? null : 0,
-            margin: EdgeInsets.only(
-              top: _isOpen ? 5 : 0,
-              bottom: _isOpen ? 16 : 0,
-            ),
-            padding: EdgeInsets.symmetric(horizontal: 16),
-            child: Visibility(
-              visible: _isOpen,
-              child: TextFieldChangePercentage(
-                onChanged: (value) {
-                  manager.selectPercentage(value: value);
-                },
-                onIncrement: () {
-                  manager.selectPercentage(increment: true);
-                },
-                onDecrement: () {
-                  manager.selectPercentage(decrement: true);
-                },
               ),
             ),
-          ),
-        ),
-        Divider(color: ThemeColors.neutral5, height: 1, thickness: 1)
-      ],
+            AnimatedSize(
+              duration: const Duration(milliseconds: 150),
+              child: Container(
+                height: _isOpen ? null : 0,
+                margin: EdgeInsets.only(
+                  top: _isOpen ? 5 : 0,
+                  bottom: _isOpen ? 16 : 0,
+                ),
+                padding: EdgeInsets.symmetric(horizontal: 16),
+                child: Visibility(
+                  visible: _isOpen,
+                  child: TextFieldChangePercentage(
+                    onChanged: (value) {
+                      manager.selectPercentage(value: value);
+                    },
+                    onIncrement: () {
+                      manager.selectPercentage(increment: true);
+                    },
+                    onDecrement: () {
+                      manager.selectPercentage(decrement: true);
+                    },
+                  ),
+                ),
+              ),
+            ),
+            Divider(color: ThemeColors.neutral5, height: 1, thickness: 1)
+          ],
+        );
+      },
     );
   }
 }

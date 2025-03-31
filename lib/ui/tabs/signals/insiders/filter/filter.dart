@@ -7,6 +7,7 @@ import 'package:stocks_news_new/ui/base/app_bar.dart';
 import 'package:stocks_news_new/ui/base/base_filter_item.dart';
 import 'package:stocks_news_new/ui/base/button.dart';
 import 'package:stocks_news_new/ui/base/scaffold.dart';
+import 'package:stocks_news_new/ui/theme/manager.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -96,14 +97,12 @@ class _InsiderFilterState extends State<InsiderFilter> {
                   //     filterParam: manager.filterParams?.exchange,
                   //   ),
 
-
                   if (manager.filter?.txnDate != null)
-                  FilterDate(
-                    title: "Transaction Date",
-                    onItemClick: manager.selectTxnDate,
-                    filterParam: manager.filterParams?.txnDate,
-                  ),
-
+                    FilterDate(
+                      title: "Transaction Date",
+                      onItemClick: manager.selectTxnDate,
+                      filterParam: manager.filterParams?.txnDate,
+                    ),
                 ],
               ),
             ),
@@ -177,78 +176,83 @@ class _FilterTypeState extends State<FilterType> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        InkWell(
-          borderRadius: BorderRadius.circular(4),
-          onTap: () => _toggleOpen(),
-          child: Padding(
-            padding: EdgeInsets.all(16),
-            child: Row(
-              children: [
-                Text(
-                  widget.title,
-                  style: styleBaseBold(fontSize: 20, color: ThemeColors.black),
-                ),
-                Spacer(),
-                InkWell(
-                  borderRadius: BorderRadius.circular(4),
-                  onTap: () => _toggleOpen(),
-                  child: Container(
-                    decoration: BoxDecoration(
+    return Consumer<ThemeManager>(
+      builder: (context, value, child) {
+        return Column(
+          children: [
+            InkWell(
+              borderRadius: BorderRadius.circular(4),
+              onTap: () => _toggleOpen(),
+              child: Padding(
+                padding: EdgeInsets.all(16),
+                child: Row(
+                  children: [
+                    Text(
+                      widget.title,
+                      style:
+                          styleBaseBold(fontSize: 20, color: ThemeColors.black),
+                    ),
+                    Spacer(),
+                    InkWell(
                       borderRadius: BorderRadius.circular(4),
-                      border: Border.all(color: ThemeColors.neutral40),
+                      onTap: () => _toggleOpen(),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(4),
+                          border: Border.all(color: ThemeColors.neutral40),
+                        ),
+                        child: Image.asset(
+                          _isOpen ? Images.arrowDOWN : Images.arrowUP,
+                          height: 24,
+                          width: 24,
+                          color: ThemeColors.black,
+                        ),
+                      ),
                     ),
-                    child: Image.asset(
-                      _isOpen ? Images.arrowDOWN : Images.arrowUP,
-                      height: 24,
-                      width: 24,
-                      color: ThemeColors.black,
-                    ),
-                  ),
+                  ],
                 ),
-              ],
+              ),
             ),
-          ),
-        ),
-        AnimatedSize(
-          duration: const Duration(milliseconds: 150),
-          child: Container(
-            height: _isOpen ? 36 : 0,
-            margin: EdgeInsets.only(
-              top: _isOpen ? 5 : 0,
-              bottom: _isOpen ? 16 : 0,
-            ),
-            child: ListView.separated(
-              scrollDirection: Axis.horizontal,
-              padding: EdgeInsets.only(left: Dimen.padding),
-              itemBuilder: (context, index) {
-                bool selected = widget.filterParam == null
-                    ? false
-                    : (widget.filterParam is String)
-                        ? widget.filterParam == widget.data![index].value
-                        : (widget.filterParam is List<String>)
-                            ? (widget.filterParam as List<String>)
-                                .contains(widget.data![index].value)
-                            : false;
+            AnimatedSize(
+              duration: const Duration(milliseconds: 150),
+              child: Container(
+                height: _isOpen ? 36 : 0,
+                margin: EdgeInsets.only(
+                  top: _isOpen ? 5 : 0,
+                  bottom: _isOpen ? 16 : 0,
+                ),
+                child: ListView.separated(
+                  scrollDirection: Axis.horizontal,
+                  padding: EdgeInsets.only(left: Dimen.padding),
+                  itemBuilder: (context, index) {
+                    bool selected = widget.filterParam == null
+                        ? false
+                        : (widget.filterParam is String)
+                            ? widget.filterParam == widget.data![index].value
+                            : (widget.filterParam is List<String>)
+                                ? (widget.filterParam as List<String>)
+                                    .contains(widget.data![index].value)
+                                : false;
 
-                return GestureDetector(
-                  onTap: () => widget.onItemClick(index),
-                  child: BaseFilterItem(
-                    value: widget.data?[index].title ?? "",
-                    selected: selected,
-                  ),
-                );
-              },
-              separatorBuilder: (context, index) {
-                return const SpacerHorizontal(width: Dimen.padding);
-              },
-              itemCount: widget.data?.length ?? 0,
+                    return GestureDetector(
+                      onTap: () => widget.onItemClick(index),
+                      child: BaseFilterItem(
+                        value: widget.data?[index].title ?? "",
+                        selected: selected,
+                      ),
+                    );
+                  },
+                  separatorBuilder: (context, index) {
+                    return const SpacerHorizontal(width: Dimen.padding);
+                  },
+                  itemCount: widget.data?.length ?? 0,
+                ),
+              ),
             ),
-          ),
-        ),
-        Divider(color: ThemeColors.neutral5, height: 1, thickness: 1)
-      ],
+            Divider(color: ThemeColors.neutral5, height: 1, thickness: 1)
+          ],
+        );
+      },
     );
   }
 }
@@ -325,85 +329,84 @@ class _FilterDateState extends State<FilterDate> {
             ),
             child: Center(
                 child: TableCalendar(
-                  firstDay: DateTime.utc(2020, 1, 1),
-                  lastDay: DateTime.now(),
-                  focusedDay: manager.selectedDay??DateTime.now(),
-                  selectedDayPredicate: (day) => isSameDay( manager.selectedDay, day),
-                  onDaySelected: (selectedDay, focusedDay) {
-                    setState(() {
-                      //_selectedDay = selectedDay;
-                      manager.selectDate(selectedDay);
-                     // manager.selectedDay = selectedDay;
-                      String formattedDate = DateFormat('yyyy-MM-dd').format(manager.selectedDay??DateTime.now());
-                      widget.onItemClick(formattedDate);
-                    });
-                  },
-                  calendarFormat: CalendarFormat.month,
-                  daysOfWeekHeight: 40,
-                  headerStyle: HeaderStyle(
-                    formatButtonVisible: false,
-                    titleCentered: true,
-                    titleTextStyle: styleBaseSemiBold(
-                      fontSize: 16,
-                      color:
-                      ThemeColors.black,
+              firstDay: DateTime.utc(2020, 1, 1),
+              lastDay: DateTime.now(),
+              focusedDay: manager.selectedDay ?? DateTime.now(),
+              selectedDayPredicate: (day) =>
+                  isSameDay(manager.selectedDay, day),
+              onDaySelected: (selectedDay, focusedDay) {
+                setState(() {
+                  //_selectedDay = selectedDay;
+                  manager.selectDate(selectedDay);
+                  // manager.selectedDay = selectedDay;
+                  String formattedDate = DateFormat('yyyy-MM-dd')
+                      .format(manager.selectedDay ?? DateTime.now());
+                  widget.onItemClick(formattedDate);
+                });
+              },
+              calendarFormat: CalendarFormat.month,
+              daysOfWeekHeight: 40,
+              headerStyle: HeaderStyle(
+                formatButtonVisible: false,
+                titleCentered: true,
+                titleTextStyle: styleBaseSemiBold(
+                  fontSize: 16,
+                  color: ThemeColors.black,
+                ),
+                leftChevronIcon: Container(
+                    padding: EdgeInsets.all(Pad.pad5),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8),
+                      border: Border.all(color: ThemeColors.neutral10),
                     ),
-                    leftChevronIcon: Container(
-                        padding: EdgeInsets.all(Pad.pad5),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8),
-                          border: Border.all(color: ThemeColors.neutral10),
-                        ),
-                        child: Icon(Icons.chevron_left, color: ThemeColors.black)),
-                    rightChevronIcon: Container(
-                      padding: EdgeInsets.all(Pad.pad5),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8),
-                          border: Border.all(color: ThemeColors.neutral10),
-                        ),
-                        child: Icon(Icons.chevron_right, color: ThemeColors.black)),
-                  ),
-                  daysOfWeekStyle: DaysOfWeekStyle(
-                    weekdayStyle:styleBaseRegular(
-                      fontSize: 14,
-                      color: ThemeColors.black,
+                    child: Icon(Icons.chevron_left, color: ThemeColors.black)),
+                rightChevronIcon: Container(
+                    padding: EdgeInsets.all(Pad.pad5),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8),
+                      border: Border.all(color: ThemeColors.neutral10),
                     ),
-                    weekendStyle:styleBaseRegular(
-                      fontSize: 14,
-                      color: ThemeColors.neutral10,
-                    ),
-                  ),
-                  calendarStyle: CalendarStyle(
-                    cellPadding: EdgeInsets.zero,
-                    todayDecoration: BoxDecoration(
-                      color: ThemeColors.black,
-                        shape: BoxShape.rectangle,
-                    ),
-                    selectedDecoration: BoxDecoration(
-                        color: ThemeColors.primary120,
-                        shape: BoxShape.rectangle,
-                    ),
-                    todayTextStyle: styleBaseBold(
-                      fontSize: 14,
-                      color: ThemeColors.white,
-                    ),
-                    selectedTextStyle: styleBaseBold(
-                    fontSize: 14,
-                    color: ThemeColors.white,
-                    ),
-                    outsideDaysVisible: true,
-                    outsideTextStyle: styleBaseBold(
-                      fontSize: 14,
-                      color: ThemeColors.neutral10,
-                    ),
-                  ),
-                )),
+                    child: Icon(Icons.chevron_right, color: ThemeColors.black)),
+              ),
+              daysOfWeekStyle: DaysOfWeekStyle(
+                weekdayStyle: styleBaseRegular(
+                  fontSize: 14,
+                  color: ThemeColors.black,
+                ),
+                weekendStyle: styleBaseRegular(
+                  fontSize: 14,
+                  color: ThemeColors.neutral10,
+                ),
+              ),
+              calendarStyle: CalendarStyle(
+                cellPadding: EdgeInsets.zero,
+                todayDecoration: BoxDecoration(
+                  color: ThemeColors.black,
+                  shape: BoxShape.rectangle,
+                ),
+                selectedDecoration: BoxDecoration(
+                  color: ThemeColors.primary120,
+                  shape: BoxShape.rectangle,
+                ),
+                todayTextStyle: styleBaseBold(
+                  fontSize: 14,
+                  color: ThemeColors.white,
+                ),
+                selectedTextStyle: styleBaseBold(
+                  fontSize: 14,
+                  color: ThemeColors.white,
+                ),
+                outsideDaysVisible: true,
+                outsideTextStyle: styleBaseBold(
+                  fontSize: 14,
+                  color: ThemeColors.neutral10,
+                ),
+              ),
+            )),
           ),
         ),
-
         Divider(color: ThemeColors.neutral5, height: 1, thickness: 1)
       ],
     );
   }
 }
-

@@ -7,6 +7,7 @@ import 'package:stocks_news_new/ui/base/base_filter_item.dart';
 import 'package:stocks_news_new/ui/base/button.dart';
 import 'package:stocks_news_new/ui/base/scaffold.dart';
 import 'package:stocks_news_new/ui/tabs/tools/market/stocks/extra/filter.dart';
+import 'package:stocks_news_new/ui/theme/manager.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -42,96 +43,101 @@ class _PoliticianFilterState extends State<PoliticianFilter> {
         context.watch<SignalsPoliticianManager>();
     return BaseScaffold(
       appBar: BaseAppBar(title: "Filter", showBack: true),
-      body: BaseLoaderContainer(
-        hasData: manager.filter != null,
-        isLoading: manager.isLoading,
-        error: manager.errorFilter,
-        onRefresh: _callAPI,
-        showPreparingText: true,
-        child: Column(
-          children: [
-            Expanded(
-              child: ListView(
-                children: [
-                  if (manager.filter?.exchange != null)
-                    FilterType(
-                      title: "Exchange",
-                      data: manager.filter?.exchange,
-                      onItemClick: manager.selectExchange,
-                      filterParam: manager.filterParams?.exchange,
-                    ),
-                  if (manager.filter?.sector != null)
-                    FilterType(
-                      title: "Sector",
-                      data: manager.filter?.sector,
-                      onItemClick: manager.selectSectors,
-                      filterParam: manager.filterParams?.sectors,
-                    ),
-                  if (manager.filter?.sector != null)
-                    FilterType(
-                      title: "Industry",
-                      data: manager.filter?.industry,
-                      onItemClick: manager.selectIndustry,
-                      filterParam: manager.filterParams?.industry,
-                    ),
-                  if (manager.filter?.marketCap != null)
-                    FilterType(
-                      title: "Market Cap",
-                      data: manager.filter?.marketCap,
-                      onItemClick: manager.selectMarketCap,
-                      filterParam: manager.filterParams?.marketCap,
-                    ),
-                  if (manager.filter?.marketRank != null)
-                    FilterType(
-                      title: "Market Rank",
-                      data: manager.filter?.marketRank,
-                      onItemClick: manager.selectMarketRank,
-                      filterParam: manager.filterParams?.marketRank,
-                      isRankFilter: true,
-                    ),
-                  if (manager.filter?.marketRank != null)
-                    FilterType(
-                      title: "Analyst Consensus",
-                      data: manager.filter?.analystConsensus,
-                      onItemClick: manager.selectAnalystConsensus,
-                      filterParam: manager.filterParams?.analystConsensus,
-                    ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(16),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: BaseButton(
-                      text: 'Reset',
-                      onPressed: () {
-                        manager.resetFilter();
-                        Navigator.pop(context);
-                      },
-                      color: ThemeColors.white,
-                      side: BorderSide(color: ThemeColors.neutral20, width: 1),
-                      textStyle: styleBaseSemiBold(
-                        color: ThemeColors.neutral40,
+      body: Consumer<ThemeManager>(
+        builder: (context, value, child) {
+          return BaseLoaderContainer(
+            hasData: manager.filter != null,
+            isLoading: manager.isLoading,
+            error: manager.errorFilter,
+            onRefresh: _callAPI,
+            showPreparingText: true,
+            child: Column(
+              children: [
+                Expanded(
+                  child: ListView(
+                    children: [
+                      if (manager.filter?.exchange != null)
+                        FilterType(
+                          title: "Exchange",
+                          data: manager.filter?.exchange,
+                          onItemClick: manager.selectExchange,
+                          filterParam: manager.filterParams?.exchange,
+                        ),
+                      if (manager.filter?.sector != null)
+                        FilterType(
+                          title: "Sector",
+                          data: manager.filter?.sector,
+                          onItemClick: manager.selectSectors,
+                          filterParam: manager.filterParams?.sectors,
+                        ),
+                      if (manager.filter?.sector != null)
+                        FilterType(
+                          title: "Industry",
+                          data: manager.filter?.industry,
+                          onItemClick: manager.selectIndustry,
+                          filterParam: manager.filterParams?.industry,
+                        ),
+                      if (manager.filter?.marketCap != null)
+                        FilterType(
+                          title: "Market Cap",
+                          data: manager.filter?.marketCap,
+                          onItemClick: manager.selectMarketCap,
+                          filterParam: manager.filterParams?.marketCap,
+                        ),
+                      if (manager.filter?.marketRank != null)
+                        FilterType(
+                          title: "Market Rank",
+                          data: manager.filter?.marketRank,
+                          onItemClick: manager.selectMarketRank,
+                          filterParam: manager.filterParams?.marketRank,
+                          isRankFilter: true,
+                        ),
+                      if (manager.filter?.marketRank != null)
+                        FilterType(
+                          title: "Analyst Consensus",
+                          data: manager.filter?.analystConsensus,
+                          onItemClick: manager.selectAnalystConsensus,
+                          filterParam: manager.filterParams?.analystConsensus,
+                        ),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: BaseButton(
+                          text: 'Reset',
+                          onPressed: () {
+                            manager.resetFilter();
+                            Navigator.pop(context);
+                          },
+                          color: ThemeColors.white,
+                          side: BorderSide(
+                              color: ThemeColors.neutral20, width: 1),
+                          textStyle: styleBaseSemiBold(
+                            color: ThemeColors.neutral40,
+                          ),
+                        ),
                       ),
-                    ),
+                      const SpacerHorizontal(width: 16),
+                      Expanded(
+                        child: BaseButton(
+                          text: "Apply",
+                          onPressed: () {
+                            manager.applyFilter();
+                            Navigator.pop(context);
+                          },
+                        ),
+                      ),
+                    ],
                   ),
-                  const SpacerHorizontal(width: 16),
-                  Expanded(
-                    child: BaseButton(
-                      text: "Apply",
-                      onPressed: () {
-                        manager.applyFilter();
-                        Navigator.pop(context);
-                      },
-                    ),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
-          ],
-        ),
+          );
+        },
       ),
     );
   }
