@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:stocks_news_new/models/stockDetail/overview.dart';
 import 'package:stocks_news_new/ui/base/app_bar.dart';
 import 'package:stocks_news_new/ui/base/common_tab.dart';
 import 'package:stocks_news_new/ui/base/scaffold.dart';
 import 'package:stocks_news_new/ui/tabs/more/referral/leaderboard/index.dart';
 import 'package:stocks_news_new/ui/tabs/more/referral/referFriend/index.dart';
+import 'package:stocks_news_new/ui/theme/manager.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
@@ -33,24 +35,28 @@ class _ReferralIndexState extends State<ReferralIndex> {
         showSearch: true,
         showNotification: true,
       ),
-      body: Column(
-        children: [
-          BaseTabs(
-            data: tabs,
-            onTap: (index) {
-              setState(() {
-                _selectedScreen = index;
-              });
-            },
-            isScrollable: false,
-            showDivider: true,
-            unselectedBold: true,
-          ),
-          SpacerVertical(height: Pad.pad10),
-          Expanded(
-            child: _selectedScreen == 0 ? ReferAFriend() : LeaderBoard(),
-          ),
-        ],
+      body: Consumer<ThemeManager>(
+        builder: (context, value, child) {
+          return Column(
+            children: [
+              BaseTabs(
+                data: tabs,
+                onTap: (index) {
+                  setState(() {
+                    _selectedScreen = index;
+                  });
+                },
+                isScrollable: false,
+                showDivider: true,
+                unselectedBold: true,
+              ),
+              SpacerVertical(height: Pad.pad10),
+              Expanded(
+                child: _selectedScreen == 0 ? ReferAFriend() : LeaderBoard(),
+              ),
+            ],
+          );
+        },
       ),
     );
   }

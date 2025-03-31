@@ -88,55 +88,61 @@ class SDOverview extends StatelessWidget {
           SDHistoricalChart(),
 
           SDCompanyBrief(companyInfo: companyInfo),
-          Column(
-            children: [
-              SpacerVertical(height: Pad.pad24),
-              BaseHeading(
-                title: aiAnalysis?.title,
-                margin: EdgeInsets.symmetric(horizontal: Pad.pad16),
-                viewMore: () {
-                  AIManager aiManager = context.read<AIManager>();
-                  aiManager.setFromSD(true);
-                  if (manager.selectedStock == null ||
-                      manager.selectedStock == '') {
-                    return;
-                  }
-                  Navigator.pushNamed(context, AIindex.path, arguments: {
-                    'symbol': manager.selectedStock,
-                  });
-                },
-              ),
-              OptionalParent(
-                addParent: aiAnalysis?.lockInfo != null,
-                parentBuilder: (child) {
-                  return Stack(
-                    children: [
-                      child,
-                      Blur(
-                        blurColor: ThemeColors.white,
-                        child: child,
-                      ),
-                    ],
-                  );
-                },
-                child: AIChart(aiAnalysis: aiAnalysis),
-              ),
-              // Stack(
-              //   children: [
-              //     AIChart(aiAnalysis: aiAnalysis),
-              //     if (aiAnalysis?.lockInfo != null)
-              //       Positioned(
-              //         top: 0,
-              //         right: 0,
-              //         left: 0,
-              //         bottom: 0,
-              //         child: Container(
-              //           color: Colors.white.withValues(alpha: 0.87),
-              //         ),
-              //       ),
-              //   ],
-              // ),
-            ],
+          Visibility(
+            visible: aiAnalysis != null,
+            child: Column(
+              children: [
+                SpacerVertical(height: Pad.pad24),
+                BaseHeading(
+                  title: aiAnalysis?.title,
+                  margin: EdgeInsets.symmetric(horizontal: Pad.pad16),
+                  viewMore: () {
+                    AIManager aiManager = context.read<AIManager>();
+                    aiManager.setFromSD(true);
+                    if (manager.selectedStock == null ||
+                        manager.selectedStock == '') {
+                      return;
+                    }
+                    Navigator.pushNamed(context, AIindex.path, arguments: {
+                      'symbol': manager.selectedStock,
+                    });
+                  },
+                ),
+                SpacerVertical(height: 8),
+                Visibility(
+                  child: OptionalParent(
+                    addParent: aiAnalysis?.lockInfo != null,
+                    parentBuilder: (child) {
+                      return Stack(
+                        children: [
+                          child,
+                          Blur(
+                            blurColor: ThemeColors.white,
+                            child: child,
+                          ),
+                        ],
+                      );
+                    },
+                    child: AIChart(aiAnalysis: aiAnalysis),
+                  ),
+                ),
+                // Stack(
+                //   children: [
+                //     AIChart(aiAnalysis: aiAnalysis),
+                //     if (aiAnalysis?.lockInfo != null)
+                //       Positioned(
+                //         top: 0,
+                //         right: 0,
+                //         left: 0,
+                //         bottom: 0,
+                //         child: Container(
+                //           color: Colors.white.withValues(alpha: 0.87),
+                //         ),
+                //       ),
+                //   ],
+                // ),
+              ],
+            ),
           ),
           SDStocksScore(stockScore: stockScore),
         ],

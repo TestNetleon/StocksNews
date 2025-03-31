@@ -1,36 +1,68 @@
 import 'package:stocks_news_new/service/amplitude/service.dart';
+import 'package:stocks_news_new/service/appsFlyer/service.dart';
 import 'package:stocks_news_new/service/braze/service.dart';
+import 'package:stocks_news_new/utils/utils.dart';
 
 class EventsService {
   EventsService._internal();
   static final EventsService _instance = EventsService._internal();
   static EventsService get instance => _instance;
 
+  final List<EventLogger> _services = [
+    AmplitudeLogger(),
+    BrazeLogger(),
+    AppsFlyerLogger(),
+  ];
+
   void notificationPopUp({bool allow = false}) {
-    try {
-      AmplitudeService.instance.logEvent(
-        allow ? 'dont_allow_notifications' : 'allow_notifications',
-      );
-    } catch (e) {
-      //
-    }
-    try {
-      BrazeService.brazeBaseEvents(
-        eventName: allow ? 'dont_allow_notifications' : 'allow_notifications',
-      );
-    } catch (e) {
-      //
+    final eventName =
+        allow ? 'dont_allow_notifications' : 'allow_notifications';
+
+    for (final service in _services) {
+      try {
+        service.logEvent(eventName);
+      } catch (e) {
+        Utils().showLog('Failed to log event with ${service.runtimeType}: $e');
+      }
     }
   }
 }
+
+abstract class EventLogger {
+  void logEvent(String eventName);
+}
+
+class AmplitudeLogger implements EventLogger {
+  @override
+  void logEvent(String eventName) {
+    AmplitudeService.instance.logEvent(eventName);
+  }
+}
+
+class BrazeLogger implements EventLogger {
+  @override
+  void logEvent(String eventName) {
+    BrazeService.brazeBaseEvents(eventName: eventName);
+  }
+}
+
+class AppsFlyerLogger implements EventLogger {
+  @override
+  void logEvent(String eventName) {
+    AppsFlyerService.instance.appsFlyerLogEvent(eventName);
+  }
+}
+
 
 
 ///Events
 ///allow_notifications
 ///dont_allow_notifications
+///
 ///allow_once_to_use_your_location
 ///allow_while_using_app_to_use_your_location
 ///dont_allow_to_use_your_location
+///
 ///click_skip_onboarding_page
 ///click_try_premium_7days_for_free_onboarding_page
 ///ask_app_not_to_track_track_activity_across_other_companies

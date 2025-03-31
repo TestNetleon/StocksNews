@@ -7,6 +7,7 @@ import 'package:stocks_news_new/ui/base/scaffold.dart';
 import 'package:stocks_news_new/ui/tabs/tools/simulator/managers/ticker_search.dart';
 import 'package:stocks_news_new/ui/tabs/tools/simulator/screens/tickerSearch/search_ticker.dart';
 import 'package:stocks_news_new/ui/tabs/tools/simulator/screens/widget/input_field_search.dart';
+import 'package:stocks_news_new/ui/theme/manager.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/custom/base_loader_container.dart';
 
@@ -61,31 +62,35 @@ class _SearchTickerIndexState extends State<SearchTickerIndex> {
   @override
   Widget build(BuildContext context) {
     TickerSearchManager manager = context.watch<TickerSearchManager>();
-    return BaseScaffold(
-      appBar: BaseAppBar(
-        toolbarHeight: 70,
-        searchFieldWidget:
-            BaseSearchSimulator(onSearchChanged: _onSearchChanged),
-        showBack: true,
-      ),
-      body: (manager.searchData == null && manager.errorSearch == null) &&
-              !manager.isLoadingSearch
-          ? BaseLoaderContainer(
-              hasData: manager.recentSearchData != null,
-              isLoading: manager.isLoadingRecentSearch,
-              error: manager.errorRecentSearch,
-              showPreparingText: true,
-              child: SearchTicker(
-                //stockClick: widget.stockClick,
-                symbolRes: manager.recentSearchData?.symbols,
-                onRefresh: manager.getRecentSearchData,
-              ),
-            )
-          : SearchTicker(
-              symbolRes: manager.searchData?.symbols,
-              fromSearch: true,
-              //stockClick: widget.stockClick,
-            ),
+    return Consumer<ThemeManager>(
+      builder: (context, value, child) {
+        return BaseScaffold(
+          appBar: BaseAppBar(
+            toolbarHeight: 70,
+            searchFieldWidget:
+                BaseSearchSimulator(onSearchChanged: _onSearchChanged),
+            showBack: true,
+          ),
+          body: (manager.searchData == null && manager.errorSearch == null) &&
+                  !manager.isLoadingSearch
+              ? BaseLoaderContainer(
+                  hasData: manager.recentSearchData != null,
+                  isLoading: manager.isLoadingRecentSearch,
+                  error: manager.errorRecentSearch,
+                  showPreparingText: true,
+                  child: SearchTicker(
+                    //stockClick: widget.stockClick,
+                    symbolRes: manager.recentSearchData?.symbols,
+                    onRefresh: manager.getRecentSearchData,
+                  ),
+                )
+              : SearchTicker(
+                  symbolRes: manager.searchData?.symbols,
+                  fromSearch: true,
+                  //stockClick: widget.stockClick,
+                ),
+        );
+      },
     );
   }
 }

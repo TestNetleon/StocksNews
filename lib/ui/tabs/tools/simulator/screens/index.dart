@@ -59,30 +59,25 @@ class _SimulatorIndexState extends State<SimulatorIndex>
     }
   }
 
-
   @override
   void initState() {
     isOnTsScreen = true;
     super.initState();
-    selectedScreen=widget.initialIndex;
+    selectedScreen = widget.initialIndex;
     WidgetsBinding.instance.addPostFrameCallback((_) {
       PortfolioManager manager = context.read<PortfolioManager>();
       context.read<ScannerManager>().getScannerPorts();
-      manager.getDashboardData(reset: true).then((value){
+      manager.getDashboardData(reset: true).then((value) {
         _tabController = TabController(
-          length:manager
-              .userData
-              ?.userDataRes
-              ?.userConditionalOrderPermission
-              ?.recurringOrder ==
-              true
+          length: manager.userData?.userDataRes?.userConditionalOrderPermission
+                      ?.recurringOrder ==
+                  true
               ? 4
-              :3,
+              : 3,
           vsync: this,
           initialIndex: widget.initialIndex,
         );
       });
-
     });
   }
 
@@ -93,17 +88,14 @@ class _SimulatorIndexState extends State<SimulatorIndex>
     super.dispose();
   }
 
-
   @override
   Widget build(BuildContext context) {
     PortfolioManager manager = context.watch<PortfolioManager>();
-    num profitLoss = manager.userData?.userDataRes?.totalPortfolioStateAmount ?? 0;
-    List<MarketResData> tabs = manager
-        .userData
-        ?.userDataRes
-        ?.userConditionalOrderPermission
-        ?.recurringOrder ==
-        true
+    num profitLoss =
+        manager.userData?.userDataRes?.totalPortfolioStateAmount ?? 0;
+    List<MarketResData> tabs = manager.userData?.userDataRes
+                ?.userConditionalOrderPermission?.recurringOrder ==
+            true
         ? initialTabs
         : initialTabs.sublist(0, initialTabs.length - 1);
 
@@ -131,13 +123,15 @@ class _SimulatorIndexState extends State<SimulatorIndex>
           child: Stack(
             alignment: Alignment.bottomCenter,
             children: [
-              DefaultTabController(
-                length:tabs.length,
-                child: NestedScrollView(
-                  headerSliverBuilder:
-                      (BuildContext context, bool innerBoxIsScrolled) {
-                    return <Widget>[
-                      SliverAppBar(
+              Padding(
+                padding: const EdgeInsets.only(bottom: 70),
+                child: DefaultTabController(
+                  length: tabs.length,
+                  child: NestedScrollView(
+                    headerSliverBuilder:
+                        (BuildContext context, bool innerBoxIsScrolled) {
+                      return <Widget>[
+                        SliverAppBar(
                           expandedHeight: 300.0,
                           floating: false,
                           pinned: false,
@@ -175,7 +169,8 @@ class _SimulatorIndexState extends State<SimulatorIndex>
                                                     : '\$0',
                                                 style: styleBaseBold(
                                                     fontSize: 16,
-                                                    color: ThemeColors.splashBG),
+                                                    color:
+                                                        ThemeColors.splashBG),
                                               ),
                                             ],
                                           ),
@@ -220,72 +215,73 @@ class _SimulatorIndexState extends State<SimulatorIndex>
                             ),
                             centerTitle: false,
                           ),
-                        automaticallyImplyLeading: false,
-                      ),
-                      SliverPersistentHeader(
-                        delegate: _SliverAppBarDelegate(
-                          TabBar(
-                            controller: _tabController,
-                            isScrollable: false,
-                            labelPadding: EdgeInsets.zero,
-                            indicator: CustomTabIndicator(),
-                            labelColor: Colors.black87,
-                            unselectedLabelColor: Colors.grey,
-                            onTap: onScreenChange,
-                            tabs: (tabs.map((e) {
-                              int index =tabs.indexOf(e);
-                              bool isSelected = index == _tabController?.index;
-                              return Consumer<ThemeManager>(
-                                  builder: (context, value, child) => Tab(
-                                          child: Text(
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis,
-                                        e.title ?? "",
-                                        style: isSelected
-                                            ? styleBaseBold(
-                                                fontSize: 11,
-                                                color: ThemeColors.selectedBG,
-                                              )
-                                            : styleBaseSemiBold(
-                                                color: ThemeColors.neutral20,
-                                                fontSize: 11,
-                                              ),
-                                      )));
-                            })).toList(),
+                          automaticallyImplyLeading: false,
+                        ),
+                        SliverPersistentHeader(
+                          delegate: _SliverAppBarDelegate(
+                            TabBar(
+                              controller: _tabController,
+                              isScrollable: false,
+                              labelPadding: EdgeInsets.zero,
+                              indicator: CustomTabIndicator(),
+                              labelColor: Colors.black87,
+                              unselectedLabelColor: Colors.grey,
+                              onTap: onScreenChange,
+                              tabs: (tabs.map((e) {
+                                int index = tabs.indexOf(e);
+                                bool isSelected =
+                                    index == _tabController?.index;
+                                return Consumer<ThemeManager>(
+                                    builder: (context, value, child) => Tab(
+                                            child: Text(
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                          e.title ?? "",
+                                          style: isSelected
+                                              ? styleBaseBold(
+                                                  fontSize: 11,
+                                                  color: ThemeColors.selectedBG,
+                                                )
+                                              : styleBaseSemiBold(
+                                                  color: ThemeColors.neutral20,
+                                                  fontSize: 11,
+                                                ),
+                                        )));
+                              })).toList(),
+                            ),
                           ),
+                          pinned: true,
                         ),
-                        pinned: true,
-                      ),
-                    ];
-                  },
-                  body: Column(
-                    children: [
-                      BaseListDivider(),
-                      SpacerVertical(height: Pad.pad8),
-                      if (selectedScreen == 0)
-                        Expanded(
-                          child: SOpenList(),
-                        ),
-                      if (selectedScreen == 1)
-                        Expanded(
-                          child: SPendingList(),
-                        ),
-                      if (selectedScreen == 2)
-                        Expanded(
-                          child: STransactionList(),
-                        ),
-                      if (selectedScreen == 3 &&
-                          manager
-                                  .userData
-                                  ?.userDataRes
-                                  ?.userConditionalOrderPermission
-                                  ?.recurringOrder ==
-                              true
-                      )
-                        Expanded(
-                          child: SRecurringList(),
-                        ),
-                    ],
+                      ];
+                    },
+                    body: Column(
+                      children: [
+                        BaseListDivider(),
+                        SpacerVertical(height: Pad.pad8),
+                        if (selectedScreen == 0)
+                          Expanded(
+                            child: SOpenList(),
+                          ),
+                        if (selectedScreen == 1)
+                          Expanded(
+                            child: SPendingList(),
+                          ),
+                        if (selectedScreen == 2)
+                          Expanded(
+                            child: STransactionList(),
+                          ),
+                        if (selectedScreen == 3 &&
+                            manager
+                                    .userData
+                                    ?.userDataRes
+                                    ?.userConditionalOrderPermission
+                                    ?.recurringOrder ==
+                                true)
+                          Expanded(
+                            child: SRecurringList(),
+                          ),
+                      ],
+                    ),
                   ),
                 ),
               ),

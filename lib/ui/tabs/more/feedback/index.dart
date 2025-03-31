@@ -92,89 +92,94 @@ class _FeedbackIndexState extends State<FeedbackIndex> {
         showSearch: true,
         showNotification: true,
       ),
-      body: BaseLoaderContainer(
-        isLoading: manager.isLoading,
-        hasData: manager.feedbackData != null && !manager.isLoading,
-        showPreparingText: true,
-        error: manager.error,
-        onRefresh: () {
-          _callAPI();
-        },
-        child: Padding(
-          padding: const EdgeInsets.symmetric(
-              horizontal: Pad.pad16, vertical: Pad.pad8),
-          child: Column(
-            children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      Visibility(
-                        visible: manager.feedbackData?.title != '',
-                        child: BaseHeading(
-                          textAlign: TextAlign.center,
-                          title: manager.feedbackData?.title ?? "",
-                          titleStyle: styleBaseBold(
-                              fontSize: 32, color: ThemeColors.splashBG),
-                          subtitle: manager.feedbackData?.existMessage ?? "",
-                          subtitleStyle: styleBaseRegular(
-                              fontSize: 16, color: ThemeColors.neutral80),
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                        ),
-                      ),
-                      SpacerVertical(height: Pad.pad16),
-                      Visibility(
-                        visible: manager.feedbackData?.type != null ||
-                            manager.feedbackData?.type?.isNotEmpty == true,
-                        child: SingleChildScrollView(
-                          child: Row(
-                            children: List.generate(
-                              manager.feedbackData?.type?.length ?? 0,
-                              (index) {
-                                bool isOpen = selectedIndex == index;
-                                return FeedbackItem(
-                                  index: index,
-                                  isOpen: isOpen,
-                                  onTap: () {
-                                    setState(() {
-                                      selectedIndex = index;
-                                      selectType = manager.feedbackData!
-                                              .type![index].title ??
-                                          "";
-                                    });
-                                  },
-                                );
-                              },
+      body: Consumer<ThemeManager>(
+        builder: (context, value, child) {
+          return BaseLoaderContainer(
+            isLoading: manager.isLoading,
+            hasData: manager.feedbackData != null && !manager.isLoading,
+            showPreparingText: true,
+            error: manager.error,
+            onRefresh: () {
+              _callAPI();
+            },
+            child: Padding(
+              padding: const EdgeInsets.symmetric(
+                  horizontal: Pad.pad16, vertical: Pad.pad8),
+              child: Column(
+                children: [
+                  Expanded(
+                    child: SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          Visibility(
+                            visible: manager.feedbackData?.title != '',
+                            child: BaseHeading(
+                              textAlign: TextAlign.center,
+                              title: manager.feedbackData?.title ?? "",
+                              titleStyle: styleBaseBold(
+                                  fontSize: 32, color: ThemeColors.splashBG),
+                              subtitle:
+                                  manager.feedbackData?.existMessage ?? "",
+                              subtitleStyle: styleBaseRegular(
+                                  fontSize: 16, color: ThemeColors.neutral80),
+                              crossAxisAlignment: CrossAxisAlignment.center,
                             ),
                           ),
-                        ),
+                          SpacerVertical(height: Pad.pad16),
+                          Visibility(
+                            visible: manager.feedbackData?.type != null ||
+                                manager.feedbackData?.type?.isNotEmpty == true,
+                            child: SingleChildScrollView(
+                              child: Row(
+                                children: List.generate(
+                                  manager.feedbackData?.type?.length ?? 0,
+                                  (index) {
+                                    bool isOpen = selectedIndex == index;
+                                    return FeedbackItem(
+                                      index: index,
+                                      isOpen: isOpen,
+                                      onTap: () {
+                                        setState(() {
+                                          selectedIndex = index;
+                                          selectType = manager.feedbackData!
+                                                  .type![index].title ??
+                                              "";
+                                        });
+                                      },
+                                    );
+                                  },
+                                ),
+                              ),
+                            ),
+                          ),
+                          SpacerVertical(height: Pad.pad24),
+                          BaseTextField(
+                            placeholder:
+                                manager.feedbackData?.placeholderText ?? "",
+                            controller: comment,
+                            textCapitalization: TextCapitalization.words,
+                            keyboardType: TextInputType.name,
+                            minLines: 10,
+                            contentPadding: EdgeInsets.symmetric(
+                              vertical: Pad.pad10,
+                              horizontal: Pad.pad10,
+                            ),
+                          ),
+                        ],
                       ),
-                      SpacerVertical(height: Pad.pad24),
-                      BaseTextField(
-                        placeholder:
-                            manager.feedbackData?.placeholderText ?? "",
-                        controller: comment,
-                        textCapitalization: TextCapitalization.words,
-                        keyboardType: TextInputType.name,
-                        minLines: 10,
-                        contentPadding: EdgeInsets.symmetric(
-                          vertical: Pad.pad10,
-                          horizontal: Pad.pad10,
-                        ),
-                      ),
-                    ],
+                    ),
                   ),
-                ),
+                  BaseButton(
+                    text: "Submit",
+                    // color: ThemeColors.primary10,
+                    // textColor: ThemeColors.primary100,
+                    onPressed: _onSubmitClick,
+                  ),
+                ],
               ),
-              BaseButton(
-                text: "Submit",
-                // color: ThemeColors.primary10,
-                // textColor: ThemeColors.primary100,
-                onPressed: _onSubmitClick,
-              ),
-            ],
-          ),
-        ),
+            ),
+          );
+        },
       ),
     );
   }

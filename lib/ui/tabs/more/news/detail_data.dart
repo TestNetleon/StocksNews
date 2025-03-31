@@ -13,6 +13,7 @@ import 'package:stocks_news_new/ui/AdManager/service.dart';
 import 'package:stocks_news_new/ui/base/base_scroll.dart';
 import 'package:stocks_news_new/ui/base/heading.dart';
 import 'package:stocks_news_new/ui/base/news_item.dart';
+import 'package:stocks_news_new/ui/tabs/tabs.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/cache_network_image.dart';
@@ -264,11 +265,18 @@ class NewsDetailData extends StatelessWidget {
                         // Navigator.pushReplacementNamed(
                         //     context, NewsDetailIndex.path,
                         //     arguments: {'slug': news.slug});
-
-                        Navigator.pushReplacement(context,
-                            MaterialPageRoute(builder: (context) {
-                          return NewsDetailIndex(slug: news.slug ?? '');
-                        }));
+                        Navigator.pushNamedAndRemoveUntil(context, Tabs.path,
+                            (route) {
+                          return false;
+                        }, arguments: {'index': 3});
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return NewsDetailIndex(slug: news.slug ?? '');
+                            },
+                          ),
+                        );
                       },
                     );
                   },

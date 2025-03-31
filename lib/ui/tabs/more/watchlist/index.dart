@@ -9,6 +9,7 @@ import 'package:stocks_news_new/ui/base/no_item.dart';
 import 'package:stocks_news_new/ui/base/scaffold.dart';
 import 'package:stocks_news_new/ui/base/stock/edit.dart';
 import 'package:stocks_news_new/ui/stockDetail/index.dart';
+import 'package:stocks_news_new/ui/theme/manager.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -44,73 +45,78 @@ class _WatchListIndexState extends State<WatchListIndex> {
     return BaseScaffold(
         appBar: BaseAppBar(
           showBack: true,
-          title: manager.watchData?.title ?? "Watchlist",
+          title: manager.watchData?.title ?? "",
         ),
-        body: BaseLoaderContainer(
-          isLoading: manager.isLoading,
-          hasData: manager.watchData != null && !manager.isLoading,
-          showPreparingText: true,
-          error: manager.error,
-          onRefresh: () {
-            _callAPI();
-          },
-          child: manager.watchData?.noData != null
-              ? BaseNoItem(
-                  noDataRes: manager.watchData?.noData,
-                  onTap: () {
-                    manager.redirectToMarket();
-                  })
-              : Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Visibility(
-                      visible: manager.watchData?.subTitle != '',
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: Pad.pad16, vertical: Pad.pad8),
-                        child: Text(
-                          textAlign: TextAlign.start,
-                          manager.watchData?.subTitle ?? "",
-                          style: styleBaseRegular(
-                              fontSize: 16, color: ThemeColors.neutral80),
+        body: Consumer<ThemeManager>(
+          builder: (context, value, child) {
+            return BaseLoaderContainer(
+              isLoading: manager.isLoading,
+              hasData: manager.watchData != null && !manager.isLoading,
+              showPreparingText: true,
+              error: manager.error,
+              onRefresh: () {
+                _callAPI();
+              },
+              child: manager.watchData?.noData != null
+                  ? BaseNoItem(
+                      noDataRes: manager.watchData?.noData,
+                      onTap: () {
+                        manager.redirectToMarket();
+                      })
+                  : Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Visibility(
+                          visible: manager.watchData?.subTitle != '',
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: Pad.pad16, vertical: Pad.pad8),
+                            child: Text(
+                              textAlign: TextAlign.start,
+                              manager.watchData?.subTitle ?? "",
+                              style: styleBaseRegular(
+                                  fontSize: 16, color: ThemeColors.neutral80),
+                            ),
+                          ),
                         ),
-                      ),
-                    ),
-                    SpacerVertical(height: 10),
-                    Expanded(
-                      child: BaseLoadMore(
-                        onRefresh: manager.getWatchList,
-                        onLoadMore: () async =>
-                            manager.getWatchList(loadMore: true),
-                        canLoadMore: manager.canLoadMore,
-                        child: ListView.separated(
-                          padding:
-                              const EdgeInsets.symmetric(horizontal: Pad.pad3),
-                          itemBuilder: (context, index) {
-                            BaseTickerRes? data =
-                                manager.watchData?.watches?[index];
-                            if (data == null) {
-                              return SizedBox();
-                            }
-                            return BaseStockEditItem(
-                              data: data,
-                              deleteDataRes: manager.watchData?.deleteBox,
-                              index: index,
-                              onTap: (p0) {
-                                Navigator.pushNamed(context, SDIndex.path,
-                                    arguments: {'symbol': p0.symbol});
+                        SpacerVertical(height: 10),
+                        Expanded(
+                          child: BaseLoadMore(
+                            onRefresh: manager.getWatchList,
+                            onLoadMore: () async =>
+                                manager.getWatchList(loadMore: true),
+                            canLoadMore: manager.canLoadMore,
+                            child: ListView.separated(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: Pad.pad3),
+                              itemBuilder: (context, index) {
+                                BaseTickerRes? data =
+                                    manager.watchData?.watches?[index];
+                                if (data == null) {
+                                  return SizedBox();
+                                }
+                                return BaseStockEditItem(
+                                  data: data,
+                                  deleteDataRes: manager.watchData?.deleteBox,
+                                  index: index,
+                                  onTap: (p0) {
+                                    Navigator.pushNamed(context, SDIndex.path,
+                                        arguments: {'symbol': p0.symbol});
+                                  },
+                                );
                               },
-                            );
-                          },
-                          separatorBuilder: (context, index) {
-                            return BaseListDivider();
-                          },
-                          itemCount: manager.watchData?.watches?.length ?? 0,
+                              separatorBuilder: (context, index) {
+                                return BaseListDivider();
+                              },
+                              itemCount:
+                                  manager.watchData?.watches?.length ?? 0,
+                            ),
+                          ),
                         ),
-                      ),
+                      ],
                     ),
-                  ],
-                ),
+            );
+          },
         ));
   }
 }

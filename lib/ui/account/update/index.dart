@@ -13,6 +13,7 @@ import 'package:stocks_news_new/ui/base/base_scroll.dart';
 import 'package:stocks_news_new/ui/base/scaffold.dart';
 import 'package:stocks_news_new/ui/base/text_field.dart';
 import 'package:stocks_news_new/ui/base/toaster.dart';
+import 'package:stocks_news_new/ui/theme/manager.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -221,148 +222,157 @@ class _UpdatePersonalDetailIndexState extends State<UpdatePersonalDetailIndex> {
   @override
   Widget build(BuildContext context) {
     UserManager manager = context.watch<UserManager>();
+    bool isKeyboardOpen = MediaQuery.of(context).viewInsets.bottom > 0;
     return BaseScaffold(
       appBar: BaseAppBar(
         showBack: true,
         title: 'Personal Details',
         onSaveClick: _update,
       ),
-      body: Column(
-        children: [
-          Expanded(
-            child: BaseScroll(
-              children: [
-                PersonalDetailUpdatePic(),
-                SpacerVertical(height: 25),
-                BaseTextField(
-                  placeholder: 'Name',
-                  controller: name,
-                  textCapitalization: TextCapitalization.words,
-                  keyboardType: TextInputType.name,
-                ),
-                SpacerVertical(height: 18),
-                BaseTextField(
-                  controller: displayName,
-                  placeholder: 'Display Name',
-                  textCapitalization: TextCapitalization.words,
-                ),
-                SpacerVertical(height: 18),
-                Stack(
-                  alignment: Alignment.centerRight,
+      body: Consumer<ThemeManager>(
+        builder: (context, value, child) {
+          return Column(
+            children: [
+              Expanded(
+                child: BaseScroll(
                   children: [
+                    PersonalDetailUpdatePic(),
+                    SpacerVertical(height: 25),
                     BaseTextField(
-                      controller: email,
-                      placeholder: 'Email',
-                      keyboardType: TextInputType.emailAddress,
-                      textCapitalization: TextCapitalization.none,
-                      onChanged: (p0) {
-                        // email.text = p0;
-                        // setState(() {});
-                        manager.onChangeEmail(p0);
-                      },
-                      contentPadding: EdgeInsets.only(
-                        top: Pad.pad16,
-                        bottom: Pad.pad16,
-                        left: Pad.pad16,
-                        right: 90,
-                      ),
+                      placeholder: 'Name',
+                      controller: name,
+                      textCapitalization: TextCapitalization.words,
+                      keyboardType: TextInputType.name,
                     ),
-                    Positioned(
-                      right: 10,
-                      child: GestureDetector(
-                        onTap: manager.emailVerified ? null : _verifyEmail,
-                        child: Text(
-                          manager.emailVerified ? 'Verified' : 'Update',
-                          style: styleBaseBold(
-                            fontSize: 14,
-                            color: ThemeColors.secondary120,
-                          ),
-                        ),
-                      ),
+                    SpacerVertical(height: 18),
+                    BaseTextField(
+                      controller: displayName,
+                      placeholder: 'Display Name',
+                      textCapitalization: TextCapitalization.words,
                     ),
-                  ],
-                ),
-                SpacerVertical(height: 18),
-                Stack(
-                  alignment: Alignment.centerRight,
-                  children: [
-                    Row(
+                    SpacerVertical(height: 18),
+                    Stack(
+                      alignment: Alignment.centerRight,
                       children: [
-                        Container(
-                          decoration: BoxDecoration(
-                            border: Border(
-                              bottom: BorderSide(color: ThemeColors.white),
-                            ),
-                            color: ThemeColors.white,
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(4),
-                              bottomLeft: Radius.circular(4),
-                            ),
-                          ),
-                          child: BaseCountryCode(
-                            onChanged: (CountryCode value) {
-                              countryCode = value.dialCode;
-                              setState(() {});
-                              manager.onChangePhone(
-                                phone: phone.text,
-                                countryCode: countryCode!,
-                              );
-                            },
+                        BaseTextField(
+                          controller: email,
+                          placeholder: 'Email',
+                          keyboardType: TextInputType.emailAddress,
+                          textCapitalization: TextCapitalization.none,
+                          onChanged: (p0) {
+                            // email.text = p0;
+                            // setState(() {});
+                            manager.onChangeEmail(p0);
+                          },
+                          contentPadding: EdgeInsets.only(
+                            top: Pad.pad16,
+                            bottom: Pad.pad16,
+                            left: Pad.pad16,
+                            right: 90,
                           ),
                         ),
-                        Expanded(
-                          child: BaseTextField(
-                            placeholder: 'Phone number',
-                            controller: phone,
-                            keyboardType: TextInputType.phone,
-                            onChanged: (p0) {
-                              phone.text = p0;
-                              setState(() {});
-                              manager.onChangePhone(
-                                phone: phone.text,
-                                countryCode: countryCode!,
-                              );
-                            },
+                        Positioned(
+                          right: 10,
+                          child: GestureDetector(
+                            onTap: manager.emailVerified ? null : _verifyEmail,
+                            child: Text(
+                              manager.emailVerified ? 'Verified' : 'Update',
+                              style: styleBaseBold(
+                                fontSize: 14,
+                                color: ThemeColors.secondary120,
+                              ),
+                            ),
                           ),
                         ),
                       ],
                     ),
-                    Positioned(
-                      right: 10,
-                      child: InkWell(
-                        onTap: manager.phoneVerified ? null : _verifyPhone,
-                        child: Text(
-                          manager.phoneVerified ? 'Verified' : 'Update',
-                          style: styleBaseBold(
-                            fontSize: 14,
-                            color: ThemeColors.secondary120,
+                    SpacerVertical(height: 18),
+                    Stack(
+                      alignment: Alignment.centerRight,
+                      children: [
+                        Row(
+                          children: [
+                            Container(
+                              decoration: BoxDecoration(
+                                border: Border(
+                                  bottom: BorderSide(color: ThemeColors.white),
+                                ),
+                                color: ThemeColors.white,
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(4),
+                                  bottomLeft: Radius.circular(4),
+                                ),
+                              ),
+                              child: BaseCountryCode(
+                                onChanged: (CountryCode value) {
+                                  countryCode = value.dialCode;
+                                  setState(() {});
+                                  manager.onChangePhone(
+                                    phone: phone.text,
+                                    countryCode: countryCode!,
+                                  );
+                                },
+                              ),
+                            ),
+                            Expanded(
+                              child: BaseTextField(
+                                placeholder: 'Phone number',
+                                controller: phone,
+                                keyboardType: TextInputType.phone,
+                                onChanged: (p0) {
+                                  phone.text = p0;
+                                  setState(() {});
+                                  manager.onChangePhone(
+                                    phone: phone.text,
+                                    countryCode: countryCode!,
+                                  );
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
+                        Positioned(
+                          right: 10,
+                          child: InkWell(
+                            onTap: manager.phoneVerified ? null : _verifyPhone,
+                            child: Text(
+                              manager.phoneVerified ? 'Verified' : 'Update',
+                              style: styleBaseBold(
+                                fontSize: 14,
+                                color: ThemeColors.secondary120,
+                              ),
+                            ),
                           ),
                         ),
-                      ),
+                      ],
                     ),
                   ],
                 ),
-              ],
-            ),
-          ),
-          Container(
-            padding: EdgeInsets.symmetric(horizontal: Pad.pad16, vertical: 10),
-            child: BaseButton(
-              fontBold: false,
-              icon: Images.delete,
-              text: 'Delete Account',
-              onPressed: () {
-                Navigator.pushNamed(context, DeletePersonalDetail.path);
-              },
-              color: ThemeColors.white,
-              textColor: ThemeColors.neutral40,
-              side: BorderSide(
-                color: ThemeColors.neutral20,
-                width: 2,
               ),
-            ),
-          ),
-        ],
+              Visibility(
+                visible: !isKeyboardOpen,
+                child: Container(
+                  padding:
+                      EdgeInsets.symmetric(horizontal: Pad.pad16, vertical: 10),
+                  child: BaseButton(
+                    fontBold: false,
+                    icon: Images.delete,
+                    text: 'Delete Account',
+                    onPressed: () {
+                      Navigator.pushNamed(context, DeletePersonalDetail.path);
+                    },
+                    color: ThemeColors.white,
+                    textColor: ThemeColors.neutral40,
+                    side: BorderSide(
+                      color: ThemeColors.neutral20,
+                      width: 2,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          );
+        },
       ),
     );
   }

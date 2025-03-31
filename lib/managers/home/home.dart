@@ -389,4 +389,22 @@ class MyHomeManager extends ChangeNotifier {
       return false;
     }
   }
+
+  void updateTickerInfo({required String symbol, alertAdded, watchListAdded}) {
+    if (_homeViewMore != null) {
+      final index = _homeViewMore?.data
+          ?.indexWhere((element) => element.symbol == symbol);
+      if (index != null && index != -1) {
+        if (alertAdded != null) {
+          _homeViewMore?.data![index].isAlertAdded = alertAdded;
+        }
+        if (watchListAdded != null) {
+          _homeViewMore?.data![index].isWatchlistAdded = watchListAdded;
+        }
+
+        Utils().showLog('ALERT? $alertAdded, Watchlist? $watchListAdded');
+        notifyListeners();
+      }
+    }
+  }
 }

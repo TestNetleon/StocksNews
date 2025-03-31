@@ -9,6 +9,7 @@ import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/ui/base/app_bar.dart';
 import 'package:stocks_news_new/ui/base/scaffold.dart';
 import 'package:stocks_news_new/ui/base/text_field.dart';
+import 'package:stocks_news_new/ui/theme/manager.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/custom/base_loader_container.dart';
@@ -76,37 +77,42 @@ class _BaseSearchState extends State<BaseSearch> {
   Widget build(BuildContext context) {
     SearchManager manager = context.watch<SearchManager>();
 
-    return BaseScaffold(
-      appBar: BaseAppBar(
-        toolbarHeight: 70,
-        searchFieldWidget: BaseSearchField(onSearchChanged: _onSearchChanged),
-        showBack: true,
-      ),
-      body: (manager.searchData == null && manager.errorSearch == null) &&
-              !manager.isLoadingSearch
-          ? Visibility(
-              visible: widget.callRecent,
-              child: BaseLoaderContainer(
-                hasData: manager.recentSearchData != null,
-                isLoading: manager.isLoadingRecentSearch,
-                error: manager.errorRecentSearch,
-                showPreparingText: true,
-                child: BaseSearchData(
+    return Consumer<ThemeManager>(
+      builder: (context, value, child) {
+        return BaseScaffold(
+          appBar: BaseAppBar(
+            toolbarHeight: 70,
+            searchFieldWidget:
+                BaseSearchField(onSearchChanged: _onSearchChanged),
+            showBack: true,
+          ),
+          body: (manager.searchData == null && manager.errorSearch == null) &&
+                  !manager.isLoadingSearch
+              ? Visibility(
+                  visible: widget.callRecent,
+                  child: BaseLoaderContainer(
+                    hasData: manager.recentSearchData != null,
+                    isLoading: manager.isLoadingRecentSearch,
+                    error: manager.errorRecentSearch,
+                    showPreparingText: true,
+                    child: BaseSearchData(
+                      stockClick: widget.stockClick,
+                      newsClick: widget.newsClick,
+                      symbolRes: manager.recentSearchData?.symbols,
+                      newsRes: manager.recentSearchData?.news,
+                      onRefresh: manager.getRecentSearchData,
+                    ),
+                  ),
+                )
+              : BaseSearchData(
+                  symbolRes: manager.searchData?.symbols,
+                  newsRes: manager.searchData?.news,
+                  fromSearch: true,
                   stockClick: widget.stockClick,
                   newsClick: widget.newsClick,
-                  symbolRes: manager.recentSearchData?.symbols,
-                  newsRes: manager.recentSearchData?.news,
-                  onRefresh: manager.getRecentSearchData,
                 ),
-              ),
-            )
-          : BaseSearchData(
-              symbolRes: manager.searchData?.symbols,
-              newsRes: manager.searchData?.news,
-              fromSearch: true,
-              stockClick: widget.stockClick,
-              newsClick: widget.newsClick,
-            ),
+        );
+      },
     );
   }
 }

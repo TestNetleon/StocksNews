@@ -62,226 +62,240 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: ThemeColors.white,
-      child: SafeArea(
-        child: Padding(
-          // padding: const EdgeInsets.symmetric(vertical: 8.0),
-          padding: const EdgeInsets.all(Pad.pad8),
-          child: Stack(
-            children: [
-              if (searchFieldWidget != null) searchFieldWidget ?? SizedBox(),
-              if ((title == null || title == '') &&
-                  searchFieldWidget == null &&
-                  showLogo)
-                CenterLogo(isHome: isHome),
-              if (title != null && title != '') CenterTitle(title: title!),
-              Positioned(
-                left: 0,
-                right: 0,
-                top: 0,
-                bottom: 0,
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    // Leading
-                    Row(
+    return Consumer<ThemeManager>(
+      builder: (context, value, child) {
+        return Container(
+          color: Colors.transparent,
+          child: SafeArea(
+            child: Padding(
+              // padding: const EdgeInsets.symmetric(vertical: 8.0),
+              padding: const EdgeInsets.all(Pad.pad8),
+              child: Stack(
+                children: [
+                  if (searchFieldWidget != null)
+                    searchFieldWidget ?? SizedBox(),
+                  if ((title == null || title == '') &&
+                      searchFieldWidget == null &&
+                      showLogo)
+                    CenterLogo(isHome: isHome),
+                  if (title != null && title != '') CenterTitle(title: title!),
+                  Positioned(
+                    left: 0,
+                    right: 0,
+                    top: 0,
+                    bottom: 0,
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        if (showBack)
-                          ActionButton(
-                            icon: Images.back,
-                            // color: darkTheme ? ThemeColors.white : null,
-                            onTap: () {
-                              if (popHome) {
-                                if (CustomNavigatorObserver().stackCount >= 2 &&
-                                    splashLoaded) {
-                                  Navigator.pop(navigatorKey.currentContext!);
-                                } else {
-                                  Navigator.popUntil(
-                                      navigatorKey.currentContext!,
-                                      (route) => route.isFirst);
-                                  Navigator.pushReplacementNamed(
-                                      navigatorKey.currentContext!, Tabs.path);
-                                  /* Navigator.pushReplacement(
-                                      navigatorKey.currentContext!,
-                                      MaterialPageRoute(
-                                          builder: (_) => const Tabs()),
-                                    );*/
-                                  popHome = false;
-                                }
-                              } else {
-                                // Navigator.pop(navigatorKey.currentContext!);
-                                if (CustomNavigatorObserver().stackCount >= 2 &&
-                                    splashLoaded) {
-                                  Navigator.pop(navigatorKey.currentContext!);
-                                } else {
-                                  Navigator.popUntil(
-                                      navigatorKey.currentContext!,
-                                      (route) => route.isFirst);
-                                  Navigator.pushReplacementNamed(
-                                      navigatorKey.currentContext!, Tabs.path);
-                                  /* Navigator.pushReplacement(
-                                      navigatorKey.currentContext!,
-                                      MaterialPageRoute(
-                                          builder: (_) => const Tabs()),
-                                    );*/
-                                  popHome = false;
-                                }
-                              }
-                            },
-                          ),
-                        if (leadingFilterClick != null)
-                          ActionButton(
-                            icon: Images.marketFilter,
-                            size: 22,
-                            padding: EdgeInsets.all(8),
-                            onTap: leadingFilterClick!,
-                            color: isFiltered ? ThemeColors.accent : null,
-                          ),
-                        if (showDrawer && !showBack)
-                          Consumer<UserManager>(
-                            builder: (context, value, child) {
-                              UserRes? user = value.user;
-                              return Padding(
-                                padding: const EdgeInsets.only(left: 5),
-                                child: GestureDetector(
-                                  onTap: () {
-                                    closeKeyboard();
-                                    Scaffold.of(context).openDrawer();
-                                  },
-                                  child: Container(
-                                    height: 30,
-                                    width: 30,
-                                    decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      border: Border.all(
-                                        color: ThemeColors.black,
-                                      ),
-                                    ),
-                                    child: user?.image == null ||
-                                            user?.image == ''
-                                        ? ClipRRect(
-                                            borderRadius: BorderRadius.circular(
-                                                Pad.pad999),
-                                            child: Image.asset(
-                                              Images.userPlaceholderNew,
-                                              fit: BoxFit.cover,
-                                            ),
-                                          )
-                                        : user?.imageType == 'svg'
+                        // Leading
+                        Row(
+                          children: [
+                            if (showBack)
+                              ActionButton(
+                                icon: Images.back,
+                                // color: darkTheme ? ThemeColors.white : null,
+                                onTap: () {
+                                  if (popHome) {
+                                    if (CustomNavigatorObserver().stackCount >=
+                                            2 &&
+                                        splashLoaded) {
+                                      Navigator.pop(
+                                          navigatorKey.currentContext!);
+                                    } else {
+                                      Navigator.popUntil(
+                                          navigatorKey.currentContext!,
+                                          (route) => route.isFirst);
+                                      Navigator.pushReplacementNamed(
+                                          navigatorKey.currentContext!,
+                                          Tabs.path);
+                                      /* Navigator.pushReplacement(
+                                        navigatorKey.currentContext!,
+                                        MaterialPageRoute(
+                                            builder: (_) => const Tabs()),
+                                      );*/
+                                      popHome = false;
+                                    }
+                                  } else {
+                                    // Navigator.pop(navigatorKey.currentContext!);
+                                    if (CustomNavigatorObserver().stackCount >=
+                                            2 &&
+                                        splashLoaded) {
+                                      Navigator.pop(
+                                          navigatorKey.currentContext!);
+                                    } else {
+                                      Navigator.popUntil(
+                                          navigatorKey.currentContext!,
+                                          (route) => route.isFirst);
+                                      Navigator.pushReplacementNamed(
+                                          navigatorKey.currentContext!,
+                                          Tabs.path);
+                                      /* Navigator.pushReplacement(
+                                        navigatorKey.currentContext!,
+                                        MaterialPageRoute(
+                                            builder: (_) => const Tabs()),
+                                      );*/
+                                      popHome = false;
+                                    }
+                                  }
+                                },
+                              ),
+                            if (leadingFilterClick != null)
+                              ActionButton(
+                                icon: Images.marketFilter,
+                                size: 22,
+                                padding: EdgeInsets.all(8),
+                                onTap: leadingFilterClick!,
+                                color: isFiltered ? ThemeColors.accent : null,
+                              ),
+                            if (showDrawer && !showBack)
+                              Consumer<UserManager>(
+                                builder: (context, value, child) {
+                                  UserRes? user = value.user;
+                                  return Padding(
+                                    padding: const EdgeInsets.only(left: 5),
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        closeKeyboard();
+                                        Scaffold.of(context).openDrawer();
+                                      },
+                                      child: Container(
+                                        height: 30,
+                                        width: 30,
+                                        decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          border: Border.all(
+                                            color: ThemeColors.black,
+                                          ),
+                                        ),
+                                        child: user?.image == null ||
+                                                user?.image == ''
                                             ? ClipRRect(
                                                 borderRadius:
                                                     BorderRadius.circular(
                                                         Pad.pad999),
-                                                child: SvgPicture.network(
-                                                  user?.image ?? '',
-                                                  placeholderBuilder: (context) =>
-                                                      CircularProgressIndicator(),
+                                                child: Image.asset(
+                                                  Images.userPlaceholderNew,
+                                                  fit: BoxFit.cover,
                                                 ),
                                               )
-                                            : ClipRRect(
-                                                borderRadius:
-                                                    BorderRadius.circular(
-                                                        Pad.pad999),
-                                                child:
-                                                    CachedNetworkImagesWidget(
-                                                  user?.image ?? '',
-                                                  showLoading: true,
-                                                ),
-                                              ),
-                                  ),
-                                ),
-                              );
-                            },
-                          ),
-                      ],
-                    ),
-                    // Actions
-                    Row(
-                      children: [
-                        if (showNotification)
-                          Consumer<UserManager>(
-                            builder: (context, value, child) {
-                              return LeadingNotification(
-                                showIndicator:
-                                    value.user?.seenNotification == 0,
+                                            : user?.imageType == 'svg'
+                                                ? ClipRRect(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            Pad.pad999),
+                                                    child: SvgPicture.network(
+                                                      user?.image ?? '',
+                                                      placeholderBuilder:
+                                                          (context) =>
+                                                              CircularProgressIndicator(),
+                                                    ),
+                                                  )
+                                                : ClipRRect(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            Pad.pad999),
+                                                    child:
+                                                        CachedNetworkImagesWidget(
+                                                      user?.image ?? '',
+                                                      showLoading: true,
+                                                    ),
+                                                  ),
+                                      ),
+                                    ),
+                                  );
+                                },
+                              ),
+                          ],
+                        ),
+                        // Actions
+                        Row(
+                          children: [
+                            if (showNotification)
+                              Consumer<UserManager>(
+                                builder: (context, value, child) {
+                                  return LeadingNotification(
+                                    showIndicator:
+                                        value.user?.seenNotification == 0,
+                                    // color: darkTheme ? ThemeColors.white : null,
+                                  );
+                                },
+                              ),
+                            if (showSearch)
+                              ActionButton(
                                 // color: darkTheme ? ThemeColors.white : null,
-                              );
-                            },
-                          ),
-                        if (showSearch)
-                          ActionButton(
-                            // color: darkTheme ? ThemeColors.white : null,
-                            icon: Images.search,
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                createRoute(
-                                  BaseSearch(
-                                    stockClick: (p0) {
-                                      if (p0.symbol == null ||
-                                          p0.symbol == '') {
-                                        return;
-                                      }
-                                      Navigator.pushNamed(context, SDIndex.path,
-                                          arguments: {
-                                            'symbol': p0.symbol,
-                                          });
-                                    },
-                                    newsClick: (data) {
-                                      if (data.slug == null ||
-                                          data.slug == '') {
-                                        return;
-                                      }
-                                      Navigator.pushNamed(
-                                          context, NewsDetailIndex.path,
-                                          arguments: {
-                                            'slug': data.slug,
-                                          });
-                                    },
-                                  ),
+                                icon: Images.search,
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    createRoute(
+                                      BaseSearch(
+                                        stockClick: (p0) {
+                                          if (p0.symbol == null ||
+                                              p0.symbol == '') {
+                                            return;
+                                          }
+                                          Navigator.pushNamed(
+                                              context, SDIndex.path,
+                                              arguments: {
+                                                'symbol': p0.symbol,
+                                              });
+                                        },
+                                        newsClick: (data) {
+                                          if (data.slug == null ||
+                                              data.slug == '') {
+                                            return;
+                                          }
+                                          Navigator.pushNamed(
+                                              context, NewsDetailIndex.path,
+                                              arguments: {
+                                                'slug': data.slug,
+                                              });
+                                        },
+                                      ),
+                                    ),
+                                  );
+                                },
+                              ),
+                            if (showTrade)
+                              IconButton(
+                                onPressed: onTradeClick,
+                                icon: Icon(
+                                  Icons.bar_chart,
                                 ),
-                              );
-                            },
-                          ),
-                        if (showTrade)
-                          IconButton(
-                            onPressed: onTradeClick,
-                            icon: Icon(
-                              Icons.bar_chart,
-                            ),
-                          ),
-                        if (searchLeague)
-                          ActionButton(
-                            icon: Images.search,
-                            onTap: onLSearchClick,
-                          ),
-                        if (onFilterClick != null)
-                          IconButton(
-                            onPressed: onFilterClick,
-                            icon: Icon(Icons.filter_alt),
-                          ),
-                        if (shareURL != null)
-                          Padding(
-                            padding: const EdgeInsets.only(left: 8),
-                            child: ActionButton(
-                              size: 38,
-                              icon: Images.shareURL,
-                              onTap: shareURL!,
-                            ),
-                          ),
-                        if (onSaveClick != null)
-                          SaveAction(onSaveClick: onSaveClick!),
+                              ),
+                            if (searchLeague)
+                              ActionButton(
+                                icon: Images.search,
+                                onTap: onLSearchClick,
+                              ),
+                            if (onFilterClick != null)
+                              IconButton(
+                                onPressed: onFilterClick,
+                                icon: Icon(Icons.filter_alt),
+                              ),
+                            if (shareURL != null)
+                              Padding(
+                                padding: const EdgeInsets.only(left: 8),
+                                child: ActionButton(
+                                  size: 38,
+                                  icon: Images.shareURL,
+                                  onTap: shareURL!,
+                                ),
+                              ),
+                            if (onSaveClick != null)
+                              SaveAction(onSaveClick: onSaveClick!),
+                          ],
+                        ),
                       ],
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 
