@@ -53,7 +53,10 @@ class _IndustriesState extends State<Industries> {
                     itemBuilder: (context, index) {
                       return Column(
                         children: [
-                          if (index == 0) manager.data?.chart!=null?MentionChart():SizedBox(),
+                          if (index == 0)
+                            manager.data?.chart != null
+                                ? MentionChart()
+                                : SizedBox(),
                           if (index == 0)
                             BaseSectorHeader(title: manager.data?.heading),
                           if (index == 0) BaseListDivider(),

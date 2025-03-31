@@ -50,7 +50,7 @@ class _HomeAffiliateBoxState extends State<HomeAffiliateBox> {
     return Consumer<MyHomeManager>(
       builder: (context, manager, child) {
         HomeLoginBoxRes? affiliateBox = manager.data?.affiliateBox;
-        affiliateClosed = false;
+        // affiliateClosed = false;
         return Visibility(
           visible: affiliateBox != null &&
               !affiliateClosed &&

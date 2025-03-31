@@ -24,9 +24,7 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 
-
-
-  class TradesManger extends ChangeNotifier {
+class TradesManger extends ChangeNotifier {
   KeyValueElementStockScreener? _selectedOverview;
   KeyValueElementStockScreener? get selectedOverview => _selectedOverview;
 
@@ -66,16 +64,13 @@ import 'package:stocks_news_new/utils/utils.dart';
     if (_myTrades?.tournamentBattleId != null) {
       Navigator.popUntil(
           navigatorKey.currentContext!, (route) => route.isFirst);
-      Navigator.pushNamed( navigatorKey.currentContext!, LeagueTickersIndex.path);
-
+      Navigator.pushNamed(
+          navigatorKey.currentContext!, LeagueTickersIndex.path);
     } else {
       Navigator.popUntil(
           navigatorKey.currentContext!, (route) => route.isFirst);
       Navigator.pushNamed(
-          navigatorKey.currentContext!,
-          TradingLeagueIndex.path
-      );
-
+          navigatorKey.currentContext!, TradingLeagueIndex.path);
     }
   }
 
@@ -92,7 +87,8 @@ import 'package:stocks_news_new/utils/utils.dart';
     setStatusTrades(Status.loading);
 
     try {
-      LeagueManager manager = navigatorKey.currentContext!.read<LeagueManager>();
+      LeagueManager manager =
+          navigatorKey.currentContext!.read<LeagueManager>();
 
       Map request = {
         'tournament_battle_id':
@@ -198,14 +194,14 @@ import 'package:stocks_news_new/utils/utils.dart';
         notifyListeners();
       } else {
         data.orderChange = data.changesPercentage;
-
       }
     }
   }
 
   Future tradeBuySell({StockType type = StockType.buy, String? symbol}) async {
     try {
-      LeagueManager manager = navigatorKey.currentContext!.read<LeagueManager>();
+      LeagueManager manager =
+          navigatorKey.currentContext!.read<LeagueManager>();
 
       Map request = {
         'symbol': symbol ?? _selectedStock?.symbol,
@@ -228,12 +224,12 @@ import 'package:stocks_news_new/utils/utils.dart';
       if (response.status) {
         getDetail(_selectedStock?.symbol ?? '', refresh: true);
         TopSnackbar.show(
-          message: response.message??"",
+          message: response.message ?? "",
           type: ToasterEnum.success,
         );
       } else {
         TopSnackbar.show(
-          message: response.message??"",
+          message: response.message ?? "",
           type: ToasterEnum.error,
         );
       }
@@ -253,7 +249,8 @@ import 'package:stocks_news_new/utils/utils.dart';
     bool callTickerDetail = true,
   }) async {
     try {
-      LeagueManager manager = navigatorKey.currentContext!.read<LeagueManager>();
+      LeagueManager manager =
+          navigatorKey.currentContext!.read<LeagueManager>();
 
       Map request = {
         'ticker_symbol': ticker ?? _selectedStock?.symbol ?? '',
@@ -276,12 +273,12 @@ import 'package:stocks_news_new/utils/utils.dart';
           getDetail(_selectedStock?.symbol ?? '', refresh: true);
         }
         TopSnackbar.show(
-          message: response.message??"",
+          message: response.message ?? "",
           type: ToasterEnum.success,
         );
       } else {
         TopSnackbar.show(
-          message: response.message??"",
+          message: response.message ?? "",
           type: ToasterEnum.error,
         );
       }
@@ -314,8 +311,8 @@ import 'package:stocks_news_new/utils/utils.dart';
       _selectedStock = stock;
       if (stock.symbol != null && stock.symbol != '') {
         getDetail(stock.symbol ?? '', refresh: refresh);
-        selectedIndex=0;
-        getOverviewGraphData(symbol: stock.symbol,initial: true);
+        selectedIndex = 0;
+        getOverviewGraphData(symbol: stock.symbol, initial: true);
       }
       notifyListeners();
     }
@@ -350,14 +347,14 @@ import 'package:stocks_news_new/utils/utils.dart';
     setStatus(Status.loading);
 
     try {
-      LeagueManager manager = navigatorKey.currentContext!.read<LeagueManager>();
+      LeagueManager manager =
+          navigatorKey.currentContext!.read<LeagueManager>();
 
       Map request = {
         "symbol": symbol,
         'tournament_battle_id':
             '${_myTrades?.tournamentBattleId ?? manager.detailRes?.tournamentBattleId ?? ''}',
       };
-
 
       ApiResponse response = await apiRequest(
         url: Apis.tTickerDetail,
@@ -421,7 +418,6 @@ import 'package:stocks_news_new/utils/utils.dart';
       SSEManager.instance.addListener(
         symbol,
         (stockData) {
-          Utils().showLog('Tournament: ${stockData.toMap()}');
           tickerData?.price = stockData.price;
           tickerData?.change = stockData.change;
           tickerData?.changesPercentage = stockData.changePercentage;
@@ -457,7 +453,6 @@ import 'package:stocks_news_new/utils/utils.dart';
     }
   }
 
-
   Status _statusGraph = Status.ideal;
   Status get statusGraph => _statusGraph;
 
@@ -468,7 +463,6 @@ import 'package:stocks_news_new/utils/utils.dart';
 
   String? _errorGraph;
   String? get errorGraph => _errorGraph ?? Const.errSomethingWrong;
-
 
   void clearAll() {
     _errorGraph = null;
@@ -482,14 +476,14 @@ import 'package:stocks_news_new/utils/utils.dart';
   LineChartData avgData({
     bool showDate = true,
   }) {
-    List<HistoricalChartRes> reversedData = _dataHistoricalC?.chartData?.reversed.toList() ?? [];
+    List<HistoricalChartRes> reversedData =
+        _dataHistoricalC?.chartData?.reversed.toList() ?? [];
 
     List<FlSpot> spots = [];
 
     for (int i = 0; i < reversedData.length; i++) {
       spots.add(FlSpot(i.toDouble(), reversedData[i].close.toDouble()));
     }
-
 
     return LineChartData(
       borderData: FlBorderData(show: false),
@@ -529,7 +523,7 @@ import 'package:stocks_news_new/utils/utils.dart';
           maxContentWidth: 300,
           getTooltipItems: (touchedSpots) {
             return touchedSpots.map(
-                  (LineBarSpot touchedSpot) {
+              (LineBarSpot touchedSpot) {
                 return LineTooltipItem(
                   children: [
                     TextSpan(
@@ -539,7 +533,7 @@ import 'package:stocks_news_new/utils/utils.dart';
                     TextSpan(
                       text: !showDate
                           ? DateFormat('dd MMM, yyyy')
-                          .format(reversedData[touchedSpot.x.toInt()].date)
+                              .format(reversedData[touchedSpot.x.toInt()].date)
                           : '${DateFormat('dd MMM').format(reversedData[touchedSpot.x.toInt()].date)}, ${DateFormat('h:mm a').format(reversedData[touchedSpot.x.toInt()].date)}',
                       style: styleBaseBold(
                           height: 1.5,
@@ -561,13 +555,13 @@ import 'package:stocks_news_new/utils/utils.dart';
       titlesData: FlTitlesData(
         leftTitles: const AxisTitles(
             sideTitles: SideTitles(
-              showTitles: false,
-            )),
+          showTitles: false,
+        )),
         topTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
         bottomTitles: AxisTitles(
             sideTitles: SideTitles(
-              showTitles: false,
-            )),
+          showTitles: false,
+        )),
         rightTitles: AxisTitles(
           sideTitles: SideTitles(
             reservedSize: 32,
@@ -615,15 +609,15 @@ import 'package:stocks_news_new/utils/utils.dart';
               end: Alignment.bottomCenter,
               colors: spots.first.y > spots.last.y
                   ? [
-                const Color.fromRGBO(255, 99, 99, 0.18),
-                const Color.fromRGBO(255, 150, 150, 0.15),
-                const Color.fromRGBO(255, 255, 255, 0.0),
-              ]
+                      const Color.fromRGBO(255, 99, 99, 0.18),
+                      const Color.fromRGBO(255, 150, 150, 0.15),
+                      const Color.fromRGBO(255, 255, 255, 0.0),
+                    ]
                   : [
-                const Color.fromRGBO(71, 193, 137, 0.18),
-                const Color.fromRGBO(171, 227, 201, 0.15),
-                const Color.fromRGBO(255, 255, 255, 0.0),
-              ],
+                      const Color.fromRGBO(71, 193, 137, 0.18),
+                      const Color.fromRGBO(171, 227, 201, 0.15),
+                      const Color.fromRGBO(255, 255, 255, 0.0),
+                    ],
               stops: [0.0, 0.6, 4],
             ),
           ),
@@ -632,15 +626,13 @@ import 'package:stocks_news_new/utils/utils.dart';
     );
   }
 
-
   List<String> range = ['1H', '1D', '1W', '1M', '1Y'];
   int selectedIndex = 0;
-  Future getOverviewGraphData({
-    String? symbol,
-    String range = '1H',
-    showProgress = false,
-    initial = false
-  }) async {
+  Future getOverviewGraphData(
+      {String? symbol,
+      String range = '1H',
+      showProgress = false,
+      initial = false}) async {
     setStatusOverviewG(Status.loading);
     try {
       String newRange = range == "1H"
@@ -670,19 +662,19 @@ import 'package:stocks_news_new/utils/utils.dart';
       );
 
       if (response.status) {
-        _dataHistoricalC = stocksDetailHistoricalChartResFromJson(jsonEncode(response.data));
+        _dataHistoricalC =
+            stocksDetailHistoricalChartResFromJson(jsonEncode(response.data));
         avgData(showDate: newRange != "1Y");
       } else {
         _dataHistoricalC = null;
         _errorGraph = response.message;
-        if(range=="1H" && initial){
-          selectedIndex=2;
+        if (range == "1H" && initial) {
+          selectedIndex = 2;
           getOverviewGraphData(
             showProgress: false,
             symbol: symbol,
             range: '1W',
           );
-
         }
       }
       setStatusOverviewG(Status.loaded);
@@ -706,5 +698,3 @@ class TournamentTickerHolder {
     this.error,
   });
 }
-
-

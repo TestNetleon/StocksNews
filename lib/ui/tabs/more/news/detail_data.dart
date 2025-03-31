@@ -261,9 +261,14 @@ class NewsDetailData extends StatelessWidget {
                         //         builder: (context) => NewsDetailIndex(
                         //               slug: data.slug ?? '',
                         //             )));
-                        Navigator.pushReplacementNamed(
-                            context, NewsDetailIndex.path,
-                            arguments: {'slug': news.slug});
+                        // Navigator.pushReplacementNamed(
+                        //     context, NewsDetailIndex.path,
+                        //     arguments: {'slug': news.slug});
+
+                        Navigator.pushReplacement(context,
+                            MaterialPageRoute(builder: (context) {
+                          return NewsDetailIndex(slug: news.slug ?? '');
+                        }));
                       },
                     );
                   },
@@ -271,7 +276,7 @@ class NewsDetailData extends StatelessWidget {
               )
             ],
           ),
-        )
+        ),
       ],
     );
   }

@@ -69,11 +69,12 @@ class _IndustriesViewIndexState extends State<IndustriesViewIndex> {
                                 visible: manager.dataView?.title != null,
                                 child: BaseHeading(
                                   textAlign: TextAlign.start,
-                                  margin: const EdgeInsets.symmetric(horizontal:Pad.pad16,vertical: Pad.pad5),
-                                  title: manager.dataView?.title??"",
+                                  margin: const EdgeInsets.symmetric(
+                                      horizontal: Pad.pad16,
+                                      vertical: Pad.pad5),
+                                  title: manager.dataView?.title ?? "",
                                   titleStyle: styleBaseBold(),
-                                )
-                            ),
+                                )),
                           if (index == 0)
                             HeaderItem(header: manager.dataView?.header),
                           BaseStockAddItem(

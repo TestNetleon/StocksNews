@@ -75,82 +75,82 @@ class MentionChart extends StatelessWidget {
             height: 300,
             child: BarChart(
               BarChartData(
-                  barGroups: List.generate(manager.data!.chart!.labels!.length,
-                      (index) {
-                    return BarChartGroupData(x: index, barRods: [
-                      BarChartRodData(
-                        toY: (manager.data!.chart!.positiveMentions![index] +
-                                manager.data!.chart!.negativeMentions![index] +
-                                manager.data!.chart!.neutralMentions![index])
-                            .toDouble(),
-                        rodStackItems: [
-                          BarChartRodStackItem(
-                              0,
-                              manager.data!.chart!.positiveMentions![index]
-                                  .toDouble(),
-                              ThemeColors.success),
-                          BarChartRodStackItem(
-                              manager.data!.chart!.positiveMentions![index]
-                                  .toDouble(),
-                              (manager.data!.chart!.positiveMentions![index] +
-                                      manager.data!.chart!
-                                          .negativeMentions![index])
-                                  .toDouble(),
-                              ThemeColors.error120),
-                          BarChartRodStackItem(
-                              (manager.data!.chart!.positiveMentions![index] +
-                                      manager.data!.chart!
-                                          .negativeMentions![index])
-                                  .toDouble(),
-                              (manager.data!.chart!.positiveMentions![index] +
-                                      manager.data!.chart!
-                                          .negativeMentions![index] +
-                                      manager
-                                          .data!.chart!.neutralMentions![index])
-                                  .toDouble(),
-                              ThemeColors.category100),
-                        ],
-                        width: 12,
-                        borderRadius: BorderRadius.zero,
-                      ),
-                    ]);
-                  }),
-                  titlesData: FlTitlesData(
-                    leftTitles: AxisTitles(
-                        sideTitles: SideTitles(
-                      showTitles: true,
-                      reservedSize: 40,
-                      maxIncluded: true,
-                      minIncluded: true,
-                        getTitlesWidget: (value, meta) => leftTitleWidgets(value, meta),
-                    )),
-                    bottomTitles: AxisTitles(
+                barGroups:
+                    List.generate(manager.data!.chart!.labels!.length, (index) {
+                  return BarChartGroupData(x: index, barRods: [
+                    BarChartRodData(
+                      toY: (manager.data!.chart!.positiveMentions![index] +
+                              manager.data!.chart!.negativeMentions![index] +
+                              manager.data!.chart!.neutralMentions![index])
+                          .toDouble(),
+                      rodStackItems: [
+                        BarChartRodStackItem(
+                            0,
+                            manager.data!.chart!.positiveMentions![index]
+                                .toDouble(),
+                            ThemeColors.success),
+                        BarChartRodStackItem(
+                            manager.data!.chart!.positiveMentions![index]
+                                .toDouble(),
+                            (manager.data!.chart!.positiveMentions![index] +
+                                    manager
+                                        .data!.chart!.negativeMentions![index])
+                                .toDouble(),
+                            ThemeColors.error120),
+                        BarChartRodStackItem(
+                            (manager.data!.chart!.positiveMentions![index] +
+                                    manager
+                                        .data!.chart!.negativeMentions![index])
+                                .toDouble(),
+                            (manager.data!.chart!.positiveMentions![index] +
+                                    manager
+                                        .data!.chart!.negativeMentions![index] +
+                                    manager
+                                        .data!.chart!.neutralMentions![index])
+                                .toDouble(),
+                            ThemeColors.category100),
+                      ],
+                      width: 12,
+                      borderRadius: BorderRadius.zero,
+                    ),
+                  ]);
+                }),
+                titlesData: FlTitlesData(
+                  leftTitles: AxisTitles(
                       sideTitles: SideTitles(
-                        showTitles: true,
-                        getTitlesWidget: (double value, TitleMeta meta) {
-                          return SideTitleWidget(
-                            axisSide: meta.axisSide,
-                            child: Text(
-                              "${manager.data!.chart!.labels![value.toInt()].substring(0, 3)}..",
-                            ),
-                          );
-                        },
-                      ),
-                    ),
-                    topTitles: const AxisTitles(
-                      sideTitles: SideTitles(showTitles: false),
-                    ),
-                    rightTitles: const AxisTitles(
-                      sideTitles: SideTitles(showTitles: false),
+                    showTitles: true,
+                    reservedSize: 40,
+                    maxIncluded: true,
+                    minIncluded: true,
+                    getTitlesWidget: (value, meta) =>
+                        leftTitleWidgets(value, meta),
+                  )),
+                  bottomTitles: AxisTitles(
+                    sideTitles: SideTitles(
+                      showTitles: true,
+                      getTitlesWidget: (double value, TitleMeta meta) {
+                        return SideTitleWidget(
+                          axisSide: meta.axisSide,
+                          child: Text(
+                            "${manager.data!.chart!.labels![value.toInt()].substring(0, 3)}..",
+                          ),
+                        );
+                      },
                     ),
                   ),
-                  borderData: FlBorderData(show: false),
-                  gridData: FlGridData(
-                    show: false,
+                  topTitles: const AxisTitles(
+                    sideTitles: SideTitles(showTitles: false),
                   ),
-                  barTouchData: BarTouchData(handleBuiltInTouches: false),
+                  rightTitles: const AxisTitles(
+                    sideTitles: SideTitles(showTitles: false),
+                  ),
+                ),
+                borderData: FlBorderData(show: false),
+                gridData: FlGridData(
+                  show: false,
+                ),
+                barTouchData: BarTouchData(handleBuiltInTouches: false),
               ),
-
             ),
 
             /* BarChart(
