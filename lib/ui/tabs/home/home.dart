@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/managers/home/home.dart';
-import 'package:stocks_news_new/models/my_home.dart';
 import 'package:stocks_news_new/ui/AdManager/service.dart';
 import 'package:stocks_news_new/ui/base/app_bar.dart';
 import 'package:stocks_news_new/ui/base/base_scroll.dart';
@@ -32,7 +31,6 @@ class _HomeIndexState extends State<HomeIndex> {
   Widget build(BuildContext context) {
     return Consumer<MyHomeManager>(
       builder: (context, manager, child) {
-        HomeLoginBoxRes? affiliateBox = manager.data?.affiliateBox;
         // affiliateClosed = false;
         return BaseScaffold(
           drawer: MoreIndex(),
