@@ -212,6 +212,30 @@ class _BaseLockItemState extends State<BaseLockItem> {
                     );
                   },
                 ),
+                Visibility(
+                  visible: info.warningText != null && info.warningText != '',
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8),
+                      border: Border.all(
+                        color: ThemeColors.neutral40,
+                        width: 1,
+                      ),
+                    ),
+                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                    margin: EdgeInsets.symmetric(vertical: Pad.pad16),
+                    child: HtmlWidget(
+                      info.warningText ?? '',
+                      textStyle: styleBaseRegular(
+                        fontSize: 12,
+                        color: ThemeColors.neutral40,
+                        height: 1.3,
+                      ),
+                    ),
+                  ),
+                ),
+                if (info.bottomHeight != null)
+                  SpacerVertical(height: info.bottomHeight?.toDouble() ?? 0),
               ],
             ),
           ),

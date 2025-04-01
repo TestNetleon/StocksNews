@@ -245,9 +245,12 @@ class NewsManager extends ChangeNotifier {
       Map request = {
         'token': provider.user?.token ?? '',
         'slug': slug,
-        'point_deduction': '$pointsDeducted',
+        // 'point_deduction': '$pointsDeducted',
       };
 
+      if (pointsDeducted) {
+        request['point_deduction'] = 'true';
+      }
       ApiResponse response = await apiRequest(
         url: Apis.newsDetail,
         request: request,

@@ -128,6 +128,8 @@ class ScannerGainersManager extends ChangeNotifier {
     List<LiveScannerRes> prChangeAr = data;
 
     Utils().showLog('SORT BY G: ${_filterParams?.sortBy}');
+    Utils().showLog('SORT BY Header: ${_filterParams?.sortByHeader}');
+
     if (_filterParams?.sortByHeader != null) {
       prChangeAr.sort((a, b) {
         return sortByCompare(

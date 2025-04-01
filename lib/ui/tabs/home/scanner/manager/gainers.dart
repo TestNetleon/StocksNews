@@ -1,13 +1,10 @@
 import 'dart:async';
 import 'package:flutter/foundation.dart';
-import 'package:provider/provider.dart';
 import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/ui/tabs/tools/scanner/models/live.dart';
 import 'package:stocks_news_new/ui/tabs/tools/scanner/models/offline.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/utils.dart';
-import '../../../../../routes/my_app.dart';
-import '../../../tools/scanner/manager/scanner.dart';
 import '../data/gainers.dart';
 
 class HomeGainersManager extends ChangeNotifier {
@@ -38,10 +35,6 @@ class HomeGainersManager extends ChangeNotifier {
     HomeGainersStream().initializePorts();
   }
 
-  setTotalResult(num total) {
-    navigatorKey.currentContext!.read<ScannerManager>().setTotalResults(total);
-  }
-
   void stopListeningPorts() {
     _offlineDataList = null;
     _dataList = null;
@@ -66,7 +59,6 @@ class HomeGainersManager extends ChangeNotifier {
     _offlineDataList = List.empty(growable: true);
     _offlineDataList?.addAll(data);
     notifyListeners();
-    setTotalResult(_offlineDataList?.length ?? 0);
   }
 
   Future updateData(List<LiveScannerRes>? data) async {
@@ -90,7 +82,5 @@ class HomeGainersManager extends ChangeNotifier {
 
     _dataList = prChangeAr;
     notifyListeners();
-
-    setTotalResult(_dataList?.length ?? 0);
   }
 }
