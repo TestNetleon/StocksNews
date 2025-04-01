@@ -1,10 +1,7 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:stocks_news_new/managers/home/home.dart';
 import 'package:stocks_news_new/managers/user.dart';
 import 'package:stocks_news_new/modals/user_res.dart';
-import 'package:stocks_news_new/models/my_home.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/ui/base/heading.dart';
 import 'package:stocks_news_new/ui/base/scaffold.dart';
@@ -25,9 +22,9 @@ class MoreIndex extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     UserManager manager = context.watch<UserManager>();
-    MyHomeManager homeManager = context.watch<MyHomeManager>();
+    // MyHomeManager homeManager = context.watch<MyHomeManager>();
     UserRes? user = manager.user;
-    MyHomeRes? homeRes = homeManager.data;
+    // MyHomeRes? homeRes = homeManager.data;
     return BaseScaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -66,14 +63,14 @@ class MoreIndex extends StatelessWidget {
                 manager.navigateToMySubscription(viewPlans: false);
               },
             ),
-            if (homeRes?.showCrypto == true || kDebugMode)
-              MoreItem(
-                icon: Images.bitcoin,
-                label: "Cryptocurrencies",
-                onTap: () {
-                  manager.navigateToBillionaires();
-                },
-              ),
+            // if (homeRes?.showCrypto == true || kDebugMode)
+            //   MoreItem(
+            //     icon: Images.bitcoin,
+            //     label: "Cryptocurrencies",
+            //     onTap: () {
+            //       manager.navigateToBillionaires();
+            //     },
+            //   ),
             MoreItem(
               icon: Images.msReport,
               label: "MORNINGSTAR Reports",

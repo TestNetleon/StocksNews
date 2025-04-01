@@ -25,7 +25,6 @@ import 'package:stocks_news_new/ui/subscription/manager.dart';
 import 'package:stocks_news_new/ui/tabs/home/extra/affiliate_box.dart';
 import 'package:stocks_news_new/ui/tabs/more/alerts/index.dart';
 import 'package:stocks_news_new/ui/tabs/more/articles/index.dart';
-import 'package:stocks_news_new/ui/tabs/more/billionaires/index.dart';
 import 'package:stocks_news_new/ui/tabs/more/faq/index.dart';
 import 'package:stocks_news_new/ui/tabs/more/feedback/index.dart';
 import 'package:stocks_news_new/ui/tabs/more/helpdesk/front/index.dart';
@@ -166,12 +165,12 @@ class UserManager extends ChangeNotifier {
     );
   }
 
-  void navigateToBillionaires() async {
-    await askLoginScreen();
-    if (_user == null) return;
-    Navigator.pop(navigatorKey.currentContext!);
-    Navigator.pushNamed(navigatorKey.currentContext!, BillionairesIndex.path);
-  }
+  // void navigateToBillionaires() async {
+  //   await askLoginScreen();
+  //   if (_user == null) return;
+  //   Navigator.pop(navigatorKey.currentContext!);
+  //   Navigator.pushNamed(navigatorKey.currentContext!, BillionairesIndex.path);
+  // }
 
   void navigateToNotificationSettings() {
     Navigator.pop(navigatorKey.currentContext!);

@@ -8,6 +8,7 @@ enum ToolsEnum {
   league,
   market,
   signals,
+  crypto,
 }
 
 ToolsEnum? toolsEnumFromString(String? value) {

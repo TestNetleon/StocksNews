@@ -5,6 +5,7 @@ import 'package:stocks_news_new/managers/user.dart';
 import 'package:stocks_news_new/models/ticker.dart';
 import 'package:stocks_news_new/models/tools.dart';
 import 'package:stocks_news_new/ui/base/toaster.dart';
+import 'package:stocks_news_new/ui/tabs/more/billionaires/index.dart';
 import 'package:stocks_news_new/ui/tabs/signals/signals.dart';
 import 'package:stocks_news_new/ui/tabs/tabs.dart';
 import 'package:stocks_news_new/ui/tabs/tools/league/screens/game_tournament_index.dart';
@@ -125,11 +126,16 @@ class ToolsManager extends ChangeNotifier {
         break;
 
       case ToolsEnum.league:
-          Navigator.pushNamed(
-          navigatorKey.currentContext!,
-          TradingLeagueIndex.path,
-            arguments: {'initialIndex':0}
-        );
+        Navigator.pushNamed(
+            navigatorKey.currentContext!, TradingLeagueIndex.path,
+            arguments: {'initialIndex': 0});
+        break;
+
+      case ToolsEnum.crypto:
+        await manager.askLoginScreen();
+        if (manager.user == null) return;
+        Navigator.pushNamed(
+            navigatorKey.currentContext!, BillionairesIndex.path);
         break;
     }
   }
