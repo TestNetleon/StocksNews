@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/managers/home/home.dart';
 import 'package:stocks_news_new/managers/onboarding.dart';
 import 'package:stocks_news_new/models/my_home.dart';
+import 'package:stocks_news_new/service/events/service.dart';
 import 'package:stocks_news_new/ui/legal/index.dart';
 import '../../../../utils/colors.dart';
 import '../../../../utils/theme.dart';
@@ -30,7 +31,6 @@ class _AccountAgreeTextState extends State<AccountAgreeText> {
     MyHomeManager provider = context.read<MyHomeManager>();
 
     HomeLoginBoxRes? loginBox = provider.data?.loginBox;
-    Utils().showLog("data => ${loginBox == null} ...");
     if (loginBox == null) {
       OnboardingManager onBoardingManager = context.watch<OnboardingManager>();
       loginBox = onBoardingManager.data?.loginBox;
@@ -53,7 +53,6 @@ class _AccountAgreeTextState extends State<AccountAgreeText> {
     MyHomeManager provider = context.watch<MyHomeManager>();
 
     HomeLoginBoxRes? loginBox = provider.data?.loginBox;
-    Utils().showLog("data => ${loginBox == null} ...");
     if (loginBox == null) {
       OnboardingManager onBoardingManager = context.watch<OnboardingManager>();
       loginBox = onBoardingManager.data?.loginBox;
@@ -100,6 +99,9 @@ class _AccountAgreeTextState extends State<AccountAgreeText> {
               setState(() {
                 _isExpanded = !_isExpanded;
               });
+              if (_isExpanded) {
+                EventsService.instance.selectReadMoreWelcome();
+              }
             },
             child: Text(
               _isExpanded ? 'Read Less' : 'Read More',

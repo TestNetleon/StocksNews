@@ -13,11 +13,8 @@ class EventsService {
     BrazeLogger(),
     AppsFlyerLogger(),
   ];
-//MARK: Notification
-  void notificationPopUp({bool allow = false}) {
-    final eventName =
-        allow ? 'dont_allow_notifications' : 'allow_notifications';
 
+  void _logEvent(String eventName) {
     for (final service in _services) {
       try {
         service.logEvent(eventName);
@@ -26,31 +23,50 @@ class EventsService {
       }
     }
   }
+
+//MARK: Notification
+  void notificationAllow() => _logEvent('allow_notifications');
+  void notificationDontAllow() => _logEvent('dont_allow_notifications');
 
   //MARK: On Boarding
-  void onBoardingSKIP({bool allow = false}) {
-    final eventName = 'click_skip_onboarding_page';
+  void onBoardingSKIP() => _logEvent('click_skip_onboarding_page');
+  void onBoardingGOTO_7DAY() =>
+      _logEvent('click_try_premium_7days_for_free_onboarding_page');
 
-    for (final service in _services) {
-      try {
-        service.logEvent(eventName);
-      } catch (e) {
-        Utils().showLog('Failed to log event with ${service.runtimeType}: $e');
-      }
-    }
-  }
+  //MARK: On ATT
+  void onATTpermissionAllow() =>
+      _logEvent('allow_track_activity_across_other_companies');
+  void onATTpermissionDontAllow() =>
+      _logEvent('ask_app_not_to_track_track_activity_across_other_companies');
 
-  void onBoardingGOTO_7DAY({bool allow = false}) {
-    final eventName = 'click_try_premium_7days_for_free_onboarding_page';
+//MARK: Welcome Screen
+  ///close_welcome_page
+  ///select_country_welcome_page
+  ///enter_phone_number_welcome_page
+  ///check_box_welcome_page
+  ///read_more_welcome_page
+  ///click_continue_welcome_page
+  ///continue_with_google_welcome_page
+  ///continue_with_apple_welcome_page
 
-    for (final service in _services) {
-      try {
-        service.logEvent(eventName);
-      } catch (e) {
-        Utils().showLog('Failed to log event with ${service.runtimeType}: $e');
-      }
-    }
-  }
+  void closeWelcome() => _logEvent('close_welcome_page');
+  void selectCountryCodeWelcome() => _logEvent('select_country_welcome_page');
+  void selectEnterPhoneNumberWelcome() =>
+      _logEvent('enter_phone_number_welcome_page');
+  void selectCheckBoxWelcome() => _logEvent('check_box_welcome_page');
+  void selectReadMoreWelcome() => _logEvent('read_more_welcome_page');
+  void selectContinueWelcome() => _logEvent('click_continue_welcome_page');
+  void selectContinueGoogleWelcome() =>
+      _logEvent('continue_with_google_welcome_page');
+  void selectContinueAppleWelcome() =>
+      _logEvent('continue_with_apple_welcome_page');
+
+//MARK: OTP Verification
+  ///enter_code_otp_verification
+  ///resend_code_otp_verification
+
+  void enterCodeOtpVerification() => _logEvent('enter_code_otp_verification');
+  void resendCodeOtpVerification() => _logEvent('resend_code_otp_verification');
 }
 
 abstract class EventLogger {
@@ -90,8 +106,10 @@ class AppsFlyerLogger implements EventLogger {
 ///
 ///click_skip_onboarding_page
 ///click_try_premium_7days_for_free_onboarding_page
+///
 ///ask_app_not_to_track_track_activity_across_other_companies
 ///allow_track_activity_across_other_companies
+///
 ///close_welcome_page
 ///select_country_welcome_page
 ///enter_phone_number_welcome_page
@@ -100,8 +118,10 @@ class AppsFlyerLogger implements EventLogger {
 ///click_continue_welcome_page
 ///continue_with_google_welcome_page
 ///continue_with_apple_welcome_page
+///
 ///enter_code_otp_verification
 ///resend_code_otp_verification
+///
 ///close_select_plan_page
 ///select_monthly_basic_plan_select_plan_page
 ///select_yearly_basic_plan_select_plan_page

@@ -37,6 +37,7 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
   final Function()? onLSearchClick;
   final void Function()? onTradeClick;
   final bool isFiltered;
+  final Function()? onBackEventCall;
 
   const BaseAppBar({
     super.key,
@@ -58,6 +59,7 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.onTradeClick,
     this.onLSearchClick,
     this.isFiltered = false,
+    this.onBackEventCall,
   });
 
   @override
@@ -96,6 +98,14 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
                                 icon: Images.back,
                                 // color: darkTheme ? ThemeColors.white : null,
                                 onTap: () {
+                                  try {
+                                    if (onBackEventCall != null) {
+                                      onBackEventCall!();
+                                    }
+                                  } catch (e) {
+                                    //
+                                  }
+
                                   if (popHome) {
                                     if (CustomNavigatorObserver().stackCount >=
                                             2 &&

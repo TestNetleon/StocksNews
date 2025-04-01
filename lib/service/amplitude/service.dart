@@ -1,5 +1,4 @@
 import 'package:amplitude_flutter/amplitude.dart';
-import 'package:flutter/foundation.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/api/apis.dart';
@@ -163,7 +162,6 @@ class AmplitudeService {
     String eventName, {
     Map<String, dynamic>? eventProperties,
   }) {
-    if (kDebugMode) return;
     try {
       Utils().showLog('Logging event:Amplitude $eventName');
       if (eventProperties != null) {

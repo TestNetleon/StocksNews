@@ -49,24 +49,14 @@ class _PlaidHomeGetStartedState extends State<PlaidHomeGetStarted> {
                         ),
                       ),
               ),
-              InkWell(
-                borderRadius: const BorderRadius.all(Radius.circular(8)),
+              GestureDetector(
                 onTap: () {
                   ToolsManager toolsManager = context.read<ToolsManager>();
                   toolsManager.startNavigation(ToolsEnum.portfolio);
                 },
-                child: Ink(
+                child: Container(
                   decoration: const BoxDecoration(
                     borderRadius: BorderRadius.all(Radius.circular(8)),
-                    gradient: LinearGradient(
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                      colors: [
-                        Color.fromARGB(255, 23, 23, 23),
-                        Color.fromARGB(255, 48, 48, 48),
-                      ],
-                    ),
-                    // color: Colors.black,
                   ),
                   padding:
                       const EdgeInsets.symmetric(horizontal: 10, vertical: 20),

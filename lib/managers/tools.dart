@@ -192,6 +192,7 @@ class ToolsManager extends ChangeNotifier {
     } catch (e) {
       _data = null;
       _error = Const.errSomethingWrong;
+      Utils().showLog('Error $e');
     } finally {
       setStatus(Status.loaded);
     }

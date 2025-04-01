@@ -6,6 +6,7 @@ import 'package:stocks_news_new/managers/user.dart';
 import 'package:stocks_news_new/models/onboarding.dart';
 import 'package:stocks_news_new/managers/onboarding.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
+import 'package:stocks_news_new/service/events/service.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -40,11 +41,11 @@ class _OnboardingSlidesState extends State<OnboardingSlides> {
       (route) => false,
     );
 
-    // if (skipped) {
-    //   EventsService.instance.onBoardingSKIP();
-    // } else {
-    //   EventsService.instance.onBoardingGOTO_7DAY();
-    // }
+    if (skipped) {
+      EventsService.instance.onBoardingSKIP();
+    } else {
+      EventsService.instance.onBoardingGOTO_7DAY();
+    }
   }
 
   @override

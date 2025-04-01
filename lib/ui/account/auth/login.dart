@@ -10,6 +10,7 @@ import 'package:stocks_news_new/managers/home/home.dart';
 import 'package:stocks_news_new/managers/onboarding.dart';
 import 'package:stocks_news_new/managers/user.dart';
 import 'package:stocks_news_new/modals/user_res.dart';
+import 'package:stocks_news_new/service/events/service.dart';
 import 'package:stocks_news_new/ui/base/base_list_divider.dart';
 import 'package:stocks_news_new/ui/base/scaffold.dart';
 import 'package:stocks_news_new/utils/colors.dart';
@@ -89,7 +90,12 @@ class _AccountLoginIndexState extends State<AccountLoginIndex> {
     if (isEmpty(_phone.text)) {
       //
     } else {
+      EventsService.instance.selectEnterPhoneNumberWelcome();
+      EventsService.instance.selectCheckBoxWelcome();
+
       if (kDebugMode) {
+        EventsService.instance.selectContinueWelcome();
+
         Navigator.pushNamed(context, AccountVerificationIndex.path, arguments: {
           'phone': _phone.text,
           'countryCode': countryCode,
@@ -125,6 +131,7 @@ class _AccountLoginIndexState extends State<AccountLoginIndex> {
           },
           codeSent: (String verificationId, int? resendToken) {
             setLoading(false);
+            EventsService.instance.selectContinueWelcome();
 
             Navigator.pushNamed(context, AccountVerificationIndex.path,
                 arguments: {
@@ -148,6 +155,7 @@ class _AccountLoginIndexState extends State<AccountLoginIndex> {
 
   void _googleVerification() async {
     closeKeyboard();
+    EventsService.instance.selectContinueGoogleWelcome();
 
     UserManager manager = context.read<UserManager>();
 
@@ -175,6 +183,7 @@ class _AccountLoginIndexState extends State<AccountLoginIndex> {
 
   void _appleVerification() async {
     closeKeyboard();
+    EventsService.instance.selectContinueAppleWelcome();
     try {
       credential = await SignInWithApple.getAppleIDCredential(
         scopes: [
@@ -210,7 +219,6 @@ class _AccountLoginIndexState extends State<AccountLoginIndex> {
     UserManager userManager = context.watch<UserManager>();
 
     HomeLoginBoxRes? loginBox = manager.data?.loginBox;
-    Utils().showLog("data => ${loginBox == null} ...");
     if (loginBox == null) {
       OnboardingManager onBoardingManager = context.watch<OnboardingManager>();
       loginBox = onBoardingManager.data?.loginBox;
@@ -230,7 +238,12 @@ class _AccountLoginIndexState extends State<AccountLoginIndex> {
     }
 
     return BaseScaffold(
-      appBar: BaseAppBar(showBack: true),
+      appBar: BaseAppBar(
+        showBack: true,
+        onBackEventCall: () {
+          EventsService.instance.closeWelcome();
+        },
+      ),
       body: Container(
         padding: EdgeInsets.symmetric(horizontal: Pad.pad16),
         child: SingleChildScrollView(
@@ -269,6 +282,7 @@ class _AccountLoginIndexState extends State<AccountLoginIndex> {
                         if (mounted) {
                           setState(() {});
                         }
+                        EventsService.instance.selectCountryCodeWelcome();
                       },
                     ),
                   ),
