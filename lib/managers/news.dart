@@ -43,6 +43,10 @@ class NewsManager extends ChangeNotifier {
   MarketRes? get categoriesData => _categoriesData;
 
   int selectedIndex = -1;
+  setSelectedIndex(index) {
+    selectedIndex = index;
+    notifyListeners();
+  }
 
   void onChangeTab(int index) {
     try {

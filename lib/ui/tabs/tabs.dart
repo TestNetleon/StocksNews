@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/managers/home/home.dart';
+import 'package:stocks_news_new/managers/news.dart';
 import 'package:stocks_news_new/managers/tools.dart';
 import 'package:stocks_news_new/managers/user.dart';
 import 'package:stocks_news_new/service/amplitude/service.dart';
@@ -153,9 +154,10 @@ class _TabsState extends State<Tabs> {
   void activeContainerApiCalls({required int currentIndex}) async {
     MyHomeManager manager = context.read<MyHomeManager>();
     ToolsManager toolsManager = context.read<ToolsManager>();
-    // TODO
-    // SignalsManager signalsManager = context.read<SignalsManager>();
+
     HomeGainersManager homeGainers = context.read<HomeGainersManager>();
+    NewsManager newsManager = context.read<NewsManager>();
+
     ScannerManager scannerManager = context.read<ScannerManager>();
     ScannerGainersManager gainersManager =
         context.read<ScannerGainersManager>();
@@ -205,6 +207,7 @@ class _TabsState extends State<Tabs> {
         break;
 
       case 3:
+        newsManager.setSelectedIndex(0);
         pingApi(SocketEnum.news);
         break;
 
