@@ -389,7 +389,7 @@ class Images {
   // static const telegram = "assets/images/telegram_share.png";
   // static const ratingIcon = "assets/images/rating_icon.png";
   // static const appRating = "assets/images/app_rating.png";
-  // static const tickFeedback = "assets/images/tick_feedback.png";
+  static const tickFeedback = "assets/images/tick_feedback.png";
   // static const String downloadFile = "assets/images/download_file.png";
   // static const refer = "assets/images/refer.png";
   // static const marketing = "assets/images/marketing.jpeg";

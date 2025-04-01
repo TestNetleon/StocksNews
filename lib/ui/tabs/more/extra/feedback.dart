@@ -25,7 +25,20 @@ class FeedbackIndexItem extends StatelessWidget {
       return SizedBox();
     }
     if (feedback?.existMessage != null && feedback?.existMessage != '') {
-      return SizedBox();
+      return Container(
+        margin: EdgeInsets.only(top: Pad.pad32),
+        child: Column(
+          children: [
+            Image.asset(Images.tickFeedback, width: 30),
+            const SpacerVertical(height: 5),
+            Text(
+              textAlign: TextAlign.center,
+              feedback?.existMessage ?? '',
+              style: styleBaseBold(),
+            ),
+          ],
+        ),
+      );
     }
 
     return Container(
