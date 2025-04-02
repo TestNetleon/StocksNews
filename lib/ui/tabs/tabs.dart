@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:stocks_news_new/database/preference.dart';
 import 'package:stocks_news_new/managers/home/home.dart';
 import 'package:stocks_news_new/managers/news.dart';
 import 'package:stocks_news_new/managers/tools.dart';
@@ -27,6 +28,8 @@ import 'more/news/index.dart';
 import 'tools/scanner/index.dart';
 import 'tools/simulator/screens/index.dart';
 import 'tools/tools.dart';
+
+bool affiliateClosed = false;
 
 class Tabs extends StatefulWidget {
   static const String path = "Tabs";
@@ -66,6 +69,10 @@ class _TabsState extends State<Tabs> {
       AmplitudeService.instance.logFirstOpenEvent();
       requestATT();
     });
+  }
+
+  _checkReferBox() async {
+    affiliateClosed = await Preference.getReferralBoxClosed();
   }
 
   BottomNavigationBarItem bottomTab(

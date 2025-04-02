@@ -5,6 +5,7 @@ import 'package:appsflyer_sdk/appsflyer_sdk.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/foundation.dart';
 import 'package:provider/provider.dart';
+import 'package:stocks_news_new/api/api_requester.dart';
 import 'package:stocks_news_new/database/preference.dart';
 import 'package:stocks_news_new/managers/user.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
@@ -12,6 +13,7 @@ import 'package:stocks_news_new/utils/utils.dart';
 import 'package:validators/validators.dart';
 import '../../api/apis.dart';
 import '../../utils/constants.dart';
+import 'package:http/http.dart' as http;
 
 class AppsFlyerService {
   AppsFlyerService._internal();
@@ -119,23 +121,23 @@ class AppsFlyerService {
 
         Utils().showLog('Deep Link URL: ${deepLinkUrl ?? "No link found"}');
 
-        Map data = {
-          'afSub1': result.deepLink?.afSub1 ?? 'N/A',
-          'afSub2': result.deepLink?.afSub2 ?? 'N/A',
-          'afSub3': result.deepLink?.afSub3 ?? 'N/A',
-          'afSub4': result.deepLink?.afSub4 ?? 'N/A',
-          'afSub5': result.deepLink?.afSub5 ?? 'N/A',
-          'campaign': result.deepLink?.campaign ?? 'N/A',
-          'campaignId': result.deepLink?.campaignId ?? 'N/A',
-          'clickEvent': '${result.deepLink?.clickEvent.entries}',
-          'clickHttpReferrer': '${result.deepLink?.clickHttpReferrer}',
-          'deepLinkValue': '${result.deepLink?.deepLinkValue}',
-          'isDeferred': '${result.deepLink?.isDeferred}',
-          'matchType': '${result.deepLink?.matchType}',
-          'mediaSource': '${result.deepLink?.mediaSource}',
-        };
-        Utils().showLog('AppsFlyer Deep Link Data ${jsonEncode(data)}');
-
+        // Map data = {
+        //   'afSub1': result.deepLink?.afSub1 ?? 'N/A',
+        //   'afSub2': result.deepLink?.afSub2 ?? 'N/A',
+        //   'afSub3': result.deepLink?.afSub3 ?? 'N/A',
+        //   'afSub4': result.deepLink?.afSub4 ?? 'N/A',
+        //   'afSub5': result.deepLink?.afSub5 ?? 'N/A',
+        //   'campaign': result.deepLink?.campaign ?? 'N/A',
+        //   'campaignId': result.deepLink?.campaignId ?? 'N/A',
+        //   'clickEvent': '${result.deepLink?.clickEvent.entries}',
+        //   'clickHttpReferrer': '${result.deepLink?.clickHttpReferrer}',
+        //   'deepLinkValue': '${result.deepLink?.deepLinkValue}',
+        //   'isDeferred': '${result.deepLink?.isDeferred}',
+        //   'matchType': '${result.deepLink?.matchType}',
+        //   'mediaSource': '${result.deepLink?.mediaSource}',
+        // };
+        // Utils().showLog('AppsFlyer Deep Link Data ${jsonEncode(data)}');
+        sendReferralData(jsonEncode(result));
         if (kDebugMode) {
           print(
             "C = ${result.deepLink?.campaign}\nMT = ${result.deepLink?.matchType}\nCode = ${result.deepLink?.deepLinkValue}\nLink = $deepLinkUrl",
@@ -144,8 +146,12 @@ class AppsFlyerService {
 
         if (result.deepLink?.campaign == "Referral" ||
             result.deepLink?.matchType == "referrer") {
+          Utils().showLog('HI IF');
           getReferralCodeIfAny(result.deepLink?.deepLinkValue);
+          return;
         } else if (deepLinkUrl != null && deepLinkUrl != '') {
+          Utils().showLog('HI ELSE IF');
+
           if (result.deepLink?.campaign == "Referral" ||
               result.deepLink?.matchType == "referrer") {
             getReferralCodeIfAny(result.deepLink?.deepLinkValue);
@@ -245,7 +251,7 @@ class AppsFlyerService {
     String? code = await Preference.getReferral();
     if (referralCode != null &&
         referralCode != "" &&
-        code == null &&
+        (code == null || code == '') &&
         isFirstOpen) {
       Preference.saveReferral(referralCode);
       Timer(const Duration(seconds: 4), () {
@@ -387,5 +393,48 @@ class AppsFlyerService {
     }
 
     return completer.future;
+  }
+}
+
+Future<void> sendReferralData(data, {fromLogin = false}) async {
+  const url = 'https://app.stocks.news/api/v2/store-request-all-data';
+  String? fcmToken = await Preference.getFcmToken();
+  Map<String, String> headers = getHeaders();
+
+  if (fcmToken != null) {
+    Map<String, String> fcmHeaders = {"fcmToken": fcmToken};
+    headers.addAll(fcmHeaders);
+  }
+
+  if (appVersion != null) {
+    Map<String, String> versionHeader = {
+      "appVersion": "$appVersion",
+      "platform": Platform.operatingSystem,
+    };
+    headers.addAll(versionHeader);
+  }
+
+  final body = jsonEncode({
+    'fcm_token': fcmToken ?? '',
+    'data': data,
+    'on_login': '$fromLogin',
+  });
+  Utils().showLog('REF->  REQUEST: $body');
+
+  try {
+    final response = await http.post(
+      Uri.parse(url),
+      headers: headers,
+      body: body,
+    );
+
+    if (response.statusCode == 200) {
+      Utils().showLog('REF->  Success: ${response.body}');
+    } else {
+      Utils()
+          .showLog('REF->  Error: ${response.statusCode} - ${response.body}');
+    }
+  } catch (e) {
+    Utils().showLog('REF->  Exception: $e');
   }
 }

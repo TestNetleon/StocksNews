@@ -726,8 +726,9 @@ class UserManager extends ChangeNotifier {
 
     _user = null;
     shareUrl = null;
-    affiliateClosed = false;
     notifyListeners();
+    Preference.setReferralBoxClosed(false);
+
     MyHomeManager homeManager =
         navigatorKey.currentContext!.read<MyHomeManager>();
 

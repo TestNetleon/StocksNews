@@ -6,10 +6,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:provider/provider.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
+import 'package:stocks_news_new/database/preference.dart';
 import 'package:stocks_news_new/managers/home/home.dart';
 import 'package:stocks_news_new/managers/onboarding.dart';
 import 'package:stocks_news_new/managers/user.dart';
 import 'package:stocks_news_new/modals/user_res.dart';
+import 'package:stocks_news_new/service/appsFlyer/service.dart';
 import 'package:stocks_news_new/service/events/service.dart';
 import 'package:stocks_news_new/ui/base/base_list_divider.dart';
 import 'package:stocks_news_new/ui/base/scaffold.dart';
@@ -50,7 +52,14 @@ class _AccountLoginIndexState extends State<AccountLoginIndex> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _setCountryCode();
+      _sendTestReferral();
     });
+  }
+
+  _sendTestReferral() async {
+    String? code = await Preference.getReferral();
+
+    sendReferralData('Code is $code', fromLogin: true);
   }
 
   _setCountryCode() {

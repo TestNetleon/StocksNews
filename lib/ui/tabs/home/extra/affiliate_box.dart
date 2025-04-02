@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:stocks_news_new/database/preference.dart';
 import 'package:stocks_news_new/managers/home/home.dart';
 import 'package:stocks_news_new/managers/user.dart';
 import 'package:stocks_news_new/models/my_home.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/service/appsFlyer/service.dart';
+import 'package:stocks_news_new/ui/tabs/tabs.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
-bool affiliateClosed = false;
+// bool affiliateClosed = false;
 
 class HomeAffiliateBox extends StatefulWidget {
   const HomeAffiliateBox({super.key});
@@ -55,6 +57,7 @@ class _HomeAffiliateBoxState extends State<HomeAffiliateBox> {
     return Consumer<MyHomeManager>(
       builder: (context, manager, child) {
         HomeLoginBoxRes? affiliateBox = manager.data?.affiliateBox;
+
         // affiliateClosed = false;
         return Visibility(
           visible: affiliateBox != null &&
@@ -96,6 +99,7 @@ class _HomeAffiliateBoxState extends State<HomeAffiliateBox> {
                               onTap: () {
                                 affiliateClosed = true;
                                 setState(() {});
+                                Preference.setReferralBoxClosed(true);
                               },
                               child: Container(
                                 decoration: BoxDecoration(

@@ -5,6 +5,16 @@ import 'package:stocks_news_new/modals/user_res.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Preference {
+  static Future<bool> setReferralBoxClosed(bool setClosed) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    return preferences.setBool("@boxClosed", setClosed);
+  }
+
+  static Future<bool> getReferralBoxClosed() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    return preferences.getBool("@boxClosed") ?? false;
+  }
+
   static Future<bool> setShowIntro(bool isFirstTime) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     return preferences.setBool("@firstTime", isFirstTime);
