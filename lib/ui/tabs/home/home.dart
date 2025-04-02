@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:stocks_news_new/database/preference.dart';
 import 'package:stocks_news_new/managers/home/home.dart';
 import 'package:stocks_news_new/service/events/service.dart';
 import 'package:stocks_news_new/ui/AdManager/service.dart';
@@ -13,7 +12,6 @@ import 'package:stocks_news_new/ui/tabs/more/index.dart';
 import 'package:stocks_news_new/ui/tabs/tabs.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
-import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/custom/base_loader_container.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 import '../../base/scaffold.dart';
@@ -30,11 +28,6 @@ class HomeIndex extends StatefulWidget {
 }
 
 class _HomeIndexState extends State<HomeIndex> {
-  @override
-  void initState() {
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Consumer<MyHomeManager>(
