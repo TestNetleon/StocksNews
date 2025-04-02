@@ -6,6 +6,7 @@ import 'package:stocks_news_new/managers/user.dart';
 import 'package:stocks_news_new/modals/user_res.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/routes/navigation_observer.dart';
+import 'package:stocks_news_new/service/events/service.dart';
 import 'package:stocks_news_new/ui/stockDetail/index.dart';
 import 'package:stocks_news_new/ui/theme/manager.dart';
 import 'package:stocks_news_new/utils/colors.dart';
@@ -38,6 +39,8 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
   final void Function()? onTradeClick;
   final bool isFiltered;
   final Function()? onBackEventCall;
+  final Function()? onSearchEventCall;
+  final Function()? onNotificationEventCall;
 
   const BaseAppBar({
     super.key,
@@ -60,6 +63,8 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.onLSearchClick,
     this.isFiltered = false,
     this.onBackEventCall,
+    this.onSearchEventCall,
+    this.onNotificationEventCall,
   });
 
   @override
@@ -167,6 +172,8 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
                                     child: GestureDetector(
                                       onTap: () {
                                         closeKeyboard();
+                                        EventsService.instance
+                                            .myAccountHomePage();
                                         Scaffold.of(context).openDrawer();
                                       },
                                       child: Container(
@@ -225,6 +232,8 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
                               Consumer<UserManager>(
                                 builder: (context, value, child) {
                                   return LeadingNotification(
+                                    onNotificationEventCall:
+                                        onNotificationEventCall,
                                     showIndicator:
                                         value.user?.seenNotification == 0,
                                     // color: darkTheme ? ThemeColors.white : null,
@@ -236,6 +245,13 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
                                 // color: darkTheme ? ThemeColors.white : null,
                                 icon: Images.search,
                                 onTap: () {
+                                  try {
+                                    if (onSearchEventCall != null) {
+                                      onSearchEventCall!();
+                                    }
+                                  } catch (e) {
+                                    //
+                                  }
                                   Navigator.push(
                                     context,
                                     createRoute(
@@ -408,10 +424,12 @@ class ActionButton extends StatelessWidget {
 
 class LeadingNotification extends StatelessWidget {
   final Color? color;
+  final Function()? onNotificationEventCall;
   const LeadingNotification({
     super.key,
     this.showIndicator = false,
     this.color,
+    this.onNotificationEventCall,
   });
 
   final bool showIndicator;
@@ -424,6 +442,13 @@ class LeadingNotification extends StatelessWidget {
         InkWell(
           borderRadius: BorderRadius.circular(Pad.pad999),
           onTap: () {
+            try {
+              if (onNotificationEventCall != null) {
+                onNotificationEventCall!();
+              }
+            } catch (e) {
+              //
+            }
             closeKeyboard();
             GlobalManager globalManager = context.read<GlobalManager>();
             globalManager.navigateToNotification();

@@ -9,13 +9,13 @@ import 'package:stocks_news_new/ui/base/button.dart';
 import 'package:stocks_news_new/ui/base/heading.dart';
 import 'package:stocks_news_new/ui/base/scaffold.dart';
 import 'package:stocks_news_new/ui/base/text_field.dart';
+import 'package:stocks_news_new/ui/base/toaster.dart';
 import 'package:stocks_news_new/ui/tabs/more/feedback/widget/feedback_responce.dart';
 import 'package:stocks_news_new/ui/theme/manager.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/utils/utils.dart';
-import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
 import 'package:stocks_news_new/widgets/custom/base_loader_container.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
@@ -48,12 +48,18 @@ class _FeedbackIndexState extends State<FeedbackIndex> {
   }
 
   void _onSubmitClick() async {
+    closeKeyboard();
+
     FeedbackManager manager = context.read<FeedbackManager>();
     if (comment.text.isEmpty) {
-      popUpAlert(
-        message: "Enter Your Opinion",
-        title: "Alert",
-        icon: Images.alertPopGIF,
+      // popUpAlert(
+      //   message: "Enter Your Opinion",
+      //   title: "Alert",
+      //   icon: Images.alertPopGIF,
+      // );
+      TopSnackbar.show(
+        message: 'Please enter your feedback before submitting.',
+        type: ToasterEnum.error,
       );
       return;
     } else {
@@ -62,8 +68,8 @@ class _FeedbackIndexState extends State<FeedbackIndex> {
         comment: comment.text,
       );
 
-      closeKeyboard();
       if (result == true) {
+        comment.clear();
         BaseBottomSheet().bottomSheet(
           barrierColor: ThemeColors.neutral5.withValues(alpha: 0.7),
           child: FeedbackShowSheet(

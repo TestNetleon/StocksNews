@@ -26,7 +26,7 @@ class FeedbackIndexItem extends StatelessWidget {
     }
     if (feedback?.existMessage != null && feedback?.existMessage != '') {
       return Container(
-        margin: EdgeInsets.only(top: Pad.pad32),
+        margin: EdgeInsets.symmetric(vertical: Pad.pad32),
         child: Column(
           children: [
             Image.asset(Images.tickFeedback, width: 30),
@@ -42,7 +42,7 @@ class FeedbackIndexItem extends StatelessWidget {
     }
 
     return Container(
-      margin: EdgeInsets.only(top: Pad.pad32),
+      margin: EdgeInsets.symmetric(vertical: Pad.pad32),
       alignment: Alignment.center,
       child:
           //  feedback?.existMessage != null && feedback?.existMessage != ''

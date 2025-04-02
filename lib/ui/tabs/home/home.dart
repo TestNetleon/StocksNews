@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/managers/home/home.dart';
+import 'package:stocks_news_new/service/events/service.dart';
 import 'package:stocks_news_new/ui/AdManager/service.dart';
 import 'package:stocks_news_new/ui/base/app_bar.dart';
 import 'package:stocks_news_new/ui/base/base_scroll.dart';
@@ -37,6 +38,9 @@ class _HomeIndexState extends State<HomeIndex> {
           appBar: BaseAppBar(
             showNotification: true,
             showSearch: true,
+            onNotificationEventCall:
+                EventsService.instance.notificationsHomePage,
+            onSearchEventCall: EventsService.instance.searchHomePage,
           ),
           body: BaseLoaderContainer(
             isLoading: manager.isLoading,
@@ -48,18 +52,17 @@ class _HomeIndexState extends State<HomeIndex> {
               onRefresh: manager.getHomeData,
               margin: EdgeInsets.zero,
               children: [
-                // BaseButton(
-                //   onPressed: () {
-                //     Navigator.push(
-                //         context,
-                //         MaterialPageRoute(
-                //           builder: (context) => TabScrollDemo(),
-                //         ));
-                //   },
+                // Visibility(
+                //   visible: kDebugMode,
+                //   child: BaseButton(
+                //     onPressed: () async {
+                //       String? url = await AppsFlyerService.instance
+                //           .createUserInvitationLink();
+                //       Utils().showLog('Share => $url');
+                //     },
+                //   ),
                 // ),
-
                 HomeAffiliateBox(),
-
                 const BlogHomeIndex(),
                 HomeTopNewsSlider(),
                 Visibility(

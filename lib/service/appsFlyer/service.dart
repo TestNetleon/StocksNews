@@ -264,7 +264,7 @@ class AppsFlyerService {
 
   // Future createUserInvitationLink() async {
   //   UserManager manager = navigatorKey.currentContext!.read<UserManager>();
-
+  //   Utils().showLog('HIIIII1');
   //   if (manager.user == null) {
   //     return;
   //   }
@@ -280,46 +280,55 @@ class AppsFlyerService {
   //       "type": 'referral',
   //     },
   //   );
+  //   Utils().showLog('HIIIII2');
 
-  //   await _appsFlyerSdk?.setAppInviteOneLinkID("Zsdh", (dynamic) {
+  //   _appsFlyerSdk?.setAppInviteOneLinkID("Zsdh", (dynamic) {
   //     if (kDebugMode) {
   //       print('generateInviteLink SUCCESS $dynamic');
   //     }
+  //     Utils().showLog('HIIIII3 $dynamic');
   //   });
+  //   Utils().showLog('HIIIII31');
 
-  //   _appsFlyerSdk?.generateInviteLink(params, (data) {
-  //     if (kDebugMode) {
-  //       print('generateInviteLink SUCCESS $data');
-  //       try {
-  //         final inviteLink = data["payload"]["userInviteURL"];
-  //         if (isURL(inviteLink)) {
-  //           print(' *** THIS IS A VALID URL *** ');
-  //           manager.updatePersonalDetails(
-  //             referralUrl: inviteLink,
-  //             showProgress: false,
-  //             showSuccess: false,
-  //           );
-  //         }
-  //       } catch (e) {
-  //         Utils().showLog(data);
-  //       }
-  //     }
-  //   }, (data) {
-  //     if (kDebugMode) {
-  //       print('generateInviteLink ERROR $data');
-  //     }
-  //   });
+  //   try {
+  //     Utils().showLog('HIIIII41');
+  //     Future.delayed(
+  //       Duration(milliseconds: 300),
+  //       () {
+  //         _appsFlyerSdk?.generateInviteLink(params, (data) {
+  //           Utils().showLog('HIIIII4');
+
+  //           Utils().showLog('generateInviteLink SUCCESS $data');
+  //           try {
+  //             final inviteLink = data["payload"]["userInviteURL"];
+  //             if (isURL(inviteLink)) {
+  //               Utils()
+  //                   .showLog('HIIIII4 *** THIS IS A VALID URL *** $inviteLink');
+  //               manager.updatePersonalDetails(
+  //                 referralUrl: inviteLink,
+  //                 showProgress: false,
+  //                 showSuccess: false,
+  //               );
+  //             }
+  //           } catch (e) {
+  //             Utils().showLog(data);
+  //           }
+  //         }, (data) {
+  //           Utils().showLog('generateInviteLink ERROR $data');
+  //         });
+  //       },
+  //     );
+  //   } catch (e) {
+  //     Utils().showLog('HIIIII4 $e');
+  //   }
   // }
 
   Future<String?> createUserInvitationLink() async {
     UserManager manager = navigatorKey.currentContext!.read<UserManager>();
-
     if (manager.user == null) {
       return null;
     }
-
     Completer<String?> completer = Completer<String?>();
-
     AppsFlyerInviteLinkParams params = AppsFlyerInviteLinkParams(
       brandDomain: 'pagelink.stocks.news',
       referrerName: 'User Invitation',
@@ -331,46 +340,51 @@ class AppsFlyerService {
         "type": 'referral',
       },
     );
-
-    await _appsFlyerSdk?.setAppInviteOneLinkID("Zsdh", (dynamic) {
+    _appsFlyerSdk?.setAppInviteOneLinkID("Zsdh", (dynamic) {
       if (kDebugMode) {
         print('generateInviteLink SUCCESS $dynamic');
       }
+      Utils().showLog('HIIIII3 $dynamic');
     });
-
-    _appsFlyerSdk?.generateInviteLink(params, (data) async {
-      if (kDebugMode) {
-        print('generateInviteLink SUCCESS $data');
-      }
-
-      try {
-        final inviteLink = data["payload"]["userInviteURL"];
-        if (isURL(inviteLink)) {
-          shareUrl = inviteLink;
-          print(' *** THIS IS A VALID URL *** ');
-
-          // Update manager with the invite link
-          await manager.updatePersonalDetails(
-            referralUrl: inviteLink,
-            showProgress: false,
-            showSuccess: false,
-          );
-
-          // Complete with the invite link
-          completer.complete(inviteLink);
-        } else {
-          completer.complete(null);
-        }
-      } catch (e) {
-        Utils().showLog(data);
-        completer.complete(null);
-      }
-    }, (error) {
-      if (kDebugMode) {
-        print('generateInviteLink ERROR $error');
-      }
-      completer.complete(null);
-    });
+    try {
+      Future.delayed(
+        Duration(milliseconds: 300),
+        () {
+          _appsFlyerSdk?.generateInviteLink(params, (data) async {
+            if (kDebugMode) {
+              print('generateInviteLink SUCCESS $data');
+            }
+            try {
+              final inviteLink = data["payload"]["userInviteURL"];
+              if (isURL(inviteLink)) {
+                shareUrl = inviteLink;
+                Utils().showLog(' *** THIS IS A VALID URL *** $inviteLink');
+                // Update manager with the invite link
+                await manager.updatePersonalDetails(
+                  referralUrl: inviteLink,
+                  showProgress: false,
+                  showSuccess: false,
+                );
+                // Complete with the invite link
+                completer.complete(inviteLink);
+              } else {
+                completer.complete(null);
+              }
+            } catch (e) {
+              Utils().showLog(data);
+              completer.complete(null);
+            }
+          }, (error) {
+            if (kDebugMode) {
+              print('generateInviteLink ERROR $error');
+            }
+            completer.complete(null);
+          });
+        },
+      );
+    } catch (e) {
+      Utils().showLog('HIIIII4 error $e');
+    }
 
     return completer.future;
   }

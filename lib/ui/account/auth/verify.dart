@@ -9,6 +9,7 @@ import 'package:sms_autofill/sms_autofill.dart';
 import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/managers/user.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
+import 'package:stocks_news_new/service/events/service.dart';
 import 'package:stocks_news_new/ui/account/extra/pinput.dart';
 import 'package:stocks_news_new/ui/base/app_bar.dart';
 import 'package:stocks_news_new/ui/base/scaffold.dart';
@@ -104,6 +105,7 @@ class _AccountVerificationIndexState extends State<AccountVerificationIndex>
   }
 
   _callVerifyAccount() async {
+    EventsService.instance.enterCodeOTPVerification();
     UserManager manager = context.read<UserManager>();
 
     Map request = {
@@ -193,6 +195,8 @@ class _AccountVerificationIndexState extends State<AccountVerificationIndex>
     _startTime();
     _controller.text = '';
     setState(() {});
+
+    EventsService.instance.resendCodeOTPVerification();
     if (kDebugMode) {
       return;
     }

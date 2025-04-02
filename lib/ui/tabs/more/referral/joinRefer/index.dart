@@ -185,9 +185,11 @@ class _JoinReferralIndexState extends State<JoinReferralIndex> {
 
           Navigator.pushNamed(context, JoinReferVerificationIndex.path,
               arguments: {
+                'name': _name.text,
+                'displayName': _displayName.text,
                 'phone': _phone.text,
                 'countryCode': countryCode,
-                'verificationId': verificationId,
+                'verificationId': '1',
               });
           Utils().showLog('Verification code sent.');
         },

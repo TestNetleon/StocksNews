@@ -238,7 +238,7 @@ class NewsDetailData extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SpacerVertical(height: 20),
+              // SpacerVertical(height: 20),
               BaseHeading(
                 title: manager.newsDetail?.moreNews?.title,
               ),

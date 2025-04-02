@@ -72,10 +72,22 @@ class PointsList extends StatelessWidget {
             itemCount: data?.length ?? 0,
           ),
           SpacerVertical(height: Dimen.padding),
-          BaseButton(
-            margin: EdgeInsets.all(16),
-            onPressed: () => _navigateToTransactions(context),
-            text: "View Points Transactions",
+          // BaseButton(
+          //   margin: EdgeInsets.all(16),
+          //   onPressed: () => _navigateToTransactions(context),
+          //   text: "View Points Transactions",
+          // ),
+          GestureDetector(
+            onTap: () => _navigateToTransactions(context),
+            child: Container(
+              margin: EdgeInsets.all(Pad.pad16),
+              child: Text(
+                "View Points Transactions",
+                style: styleBaseBold(
+                    color: ThemeColors.primary120,
+                    decoration: TextDecoration.underline),
+              ),
+            ),
           ),
           BaseButton(
             margin: EdgeInsets.symmetric(horizontal: 16),

@@ -25,17 +25,22 @@ class _HomeAffiliateBoxState extends State<HomeAffiliateBox> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _callAPI();
-    });
+    // WidgetsBinding.instance.addPostFrameCallback((_) {
+    //   _callAPI();
+    // });
+    _callAPI();
   }
 
   Future _callAPI() async {
-    if (shareUrl == null || shareUrl == "") {
-      shareUrl = await AppsFlyerService.instance.createUserInvitationLink();
-      setState(() {});
+    try {
+      if (shareUrl == null || shareUrl == "") {
+        shareUrl = await AppsFlyerService.instance.createUserInvitationLink();
+        setState(() {});
+      }
+      Utils().showLog('Share => $shareUrl');
+    } catch (e) {
+      Utils().showLog('Catch Share => $shareUrl');
     }
-    Utils().showLog('Share => $shareUrl');
   }
 
   void _shareApp() async {

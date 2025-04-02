@@ -10,6 +10,7 @@ import 'package:stocks_news_new/ui/base/scaffold.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/custom/base_loader_container.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 class LegalInfoIndex extends StatefulWidget {
   final String? slug;
@@ -98,6 +99,7 @@ class _LegalInfoIndexState extends State<LegalInfoIndex> {
               ),
             ),
           ),
+          SpacerVertical(height: Pad.pad32),
         ],
       ),
     );

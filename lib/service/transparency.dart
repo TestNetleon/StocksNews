@@ -17,13 +17,13 @@ Future requestATT() async {
         if (kDebugMode) {
           print('User granted permission to track.');
         }
-        EventsService.instance.onATTpermissionAllow();
+        EventsService.instance.onATTpermission(allow: true);
         break;
       case TrackingStatus.denied:
         if (kDebugMode) {
           print('User denied permission to track.');
         }
-        EventsService.instance.onATTpermissionDontAllow();
+        EventsService.instance.onATTpermission();
         break;
       case TrackingStatus.notDetermined:
         if (kDebugMode) {

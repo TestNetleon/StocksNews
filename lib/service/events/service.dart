@@ -25,30 +25,31 @@ class EventsService {
   }
 
 //MARK: Notification
-  void notificationAllow() => _logEvent('allow_notifications');
-  void notificationDontAllow() => _logEvent('dont_allow_notifications');
+  void notificationPopUp({bool allow = false}) =>
+      _logEvent(allow ? 'allow_notifications' : 'dont_allow_notifications');
+
+  //MARK: Location Permission Events
+  void locationPermission(String type) {
+    final Map<String, String> eventNames = {
+      'once': 'allow_once_to_use_your_location',
+      'always': 'allow_while_using_app_to_use_your_location',
+      'deny': 'dont_allow_to_use_your_location'
+    };
+    final eventName = eventNames[type] ?? 'unknown_location_permission';
+    _logEvent(eventName);
+  }
 
   //MARK: On Boarding
   void onBoardingSKIP() => _logEvent('click_skip_onboarding_page');
   void onBoardingGOTO_7DAY() =>
       _logEvent('click_try_premium_7days_for_free_onboarding_page');
 
-  //MARK: On ATT
-  void onATTpermissionAllow() =>
-      _logEvent('allow_track_activity_across_other_companies');
-  void onATTpermissionDontAllow() =>
-      _logEvent('ask_app_not_to_track_track_activity_across_other_companies');
+  //MARK: ATT Permission Events
+  void onATTpermission({bool allow = false}) => _logEvent(allow
+      ? 'allow_track_activity_across_other_companies'
+      : 'ask_app_not_to_track_track_activity_across_other_companies');
 
-//MARK: Welcome Screen
-  ///close_welcome_page
-  ///select_country_welcome_page
-  ///enter_phone_number_welcome_page
-  ///check_box_welcome_page
-  ///read_more_welcome_page
-  ///click_continue_welcome_page
-  ///continue_with_google_welcome_page
-  ///continue_with_apple_welcome_page
-
+  //MARK: Welcome Screen Events
   void closeWelcome() => _logEvent('close_welcome_page');
   void selectCountryCodeWelcome() => _logEvent('select_country_welcome_page');
   void selectEnterPhoneNumberWelcome() =>
@@ -61,12 +62,24 @@ class EventsService {
   void selectContinueAppleWelcome() =>
       _logEvent('continue_with_apple_welcome_page');
 
-//MARK: OTP Verification
-  ///enter_code_otp_verification
-  ///resend_code_otp_verification
+  // OTP Verification Events
+  void enterCodeOTPVerification() => _logEvent('enter_code_otp_verification');
+  void resendCodeOTPVerification() => _logEvent('resend_code_otp_verification');
 
-  void enterCodeOtpVerification() => _logEvent('enter_code_otp_verification');
-  void resendCodeOtpVerification() => _logEvent('resend_code_otp_verification');
+  // Home Page Events
+  void myAccountHomePage() => _logEvent('my_account_home_page');
+  void searchHomePage() => _logEvent('search_home_page');
+  void notificationsHomePage() => _logEvent('notifications_home_page');
+  void enterPostHomePage() => _logEvent('enter_post_home_page');
+  void joinEliteProgramHomePage() => _logEvent('join_elite_program_home_page');
+  void homeHomePage() => _logEvent('home_home_page');
+  void scannerHomePage() => _logEvent('scanner_home_page');
+  void simulatorHomePage() => _logEvent('simulator_home_page');
+  void newsHomePage() => _logEvent('news_home_page');
+  void toolsHomePage() => _logEvent('tools_home_page');
+  void selectMarketScannerHomePage() =>
+      _logEvent('select_market_scanner_home_page');
+  void clickHereTextHomePage() => _logEvent('click_here_text_stocks_home_page');
 }
 
 abstract class EventLogger {
