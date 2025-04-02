@@ -397,31 +397,31 @@ class AppsFlyerService {
 }
 
 Future<void> sendReferralData(data, {fromLogin = false}) async {
-  const url = 'https://app.stocks.news/api/v2/store-request-all-data';
-  String? fcmToken = await Preference.getFcmToken();
-  Map<String, String> headers = getHeaders();
-
-  if (fcmToken != null) {
-    Map<String, String> fcmHeaders = {"fcmToken": fcmToken};
-    headers.addAll(fcmHeaders);
-  }
-
-  if (appVersion != null) {
-    Map<String, String> versionHeader = {
-      "appVersion": "$appVersion",
-      "platform": Platform.operatingSystem,
-    };
-    headers.addAll(versionHeader);
-  }
-
-  final body = jsonEncode({
-    'fcm_token': fcmToken ?? '',
-    'data': data,
-    'on_login': '$fromLogin',
-  });
-  Utils().showLog('REF->  REQUEST: $body');
-
   try {
+    const url = 'https://app.stocks.news/api/v2/store-request-all-data';
+    String? fcmToken = await Preference.getFcmToken();
+    Map<String, String> headers = getHeaders();
+
+    if (fcmToken != null) {
+      Map<String, String> fcmHeaders = {"fcmToken": fcmToken};
+      headers.addAll(fcmHeaders);
+    }
+
+    if (appVersion != null) {
+      Map<String, String> versionHeader = {
+        "appVersion": "$appVersion",
+        "platform": Platform.operatingSystem,
+      };
+      headers.addAll(versionHeader);
+    }
+
+    final body = jsonEncode({
+      'fcm_token': fcmToken ?? '',
+      'data': data,
+      'on_login': '$fromLogin',
+    });
+    Utils().showLog('REF->  REQUEST: $body');
+
     final response = await http.post(
       Uri.parse(url),
       headers: headers,
@@ -435,6 +435,6 @@ Future<void> sendReferralData(data, {fromLogin = false}) async {
           .showLog('REF->  Error: ${response.statusCode} - ${response.body}');
     }
   } catch (e) {
-    Utils().showLog('REF->  Exception: $e');
+    Utils().showLog('REF->  Catch: $e');
   }
 }
