@@ -189,7 +189,7 @@ class _JoinReferralIndexState extends State<JoinReferralIndex> {
                 'displayName': _displayName.text,
                 'phone': _phone.text,
                 'countryCode': countryCode,
-                'verificationId': '1',
+                'verificationId': verificationId,
               });
           Utils().showLog('Verification code sent.');
         },
