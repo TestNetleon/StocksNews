@@ -60,7 +60,7 @@ class _TabsState extends State<Tabs> {
     splashLoaded = true;
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       SocketService.instance.connect();
-
+      _checkReferBox();
       setState(() {
         _selectedIndex = widget.index ?? 0;
         activeContainerApiCalls(currentIndex: _selectedIndex);
