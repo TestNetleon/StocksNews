@@ -6,7 +6,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:provider/provider.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
-import 'package:stocks_news_new/database/preference.dart';
 import 'package:stocks_news_new/managers/home/home.dart';
 import 'package:stocks_news_new/managers/onboarding.dart';
 import 'package:stocks_news_new/managers/user.dart';
@@ -57,9 +56,9 @@ class _AccountLoginIndexState extends State<AccountLoginIndex> {
   }
 
   _sendTestReferral() async {
-    String? code = await Preference.getReferral();
+    // String? code = await Preference.getReferral();
 
-    sendReferralData('Code is $code', fromLogin: true);
+    sendReferralData('Code is $referCODE', fromLogin: true);
   }
 
   _setCountryCode() {

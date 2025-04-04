@@ -12,6 +12,7 @@ import 'package:stocks_news_new/database/preference.dart';
 import 'package:stocks_news_new/managers/home/home_tabs.dart';
 import 'package:stocks_news_new/models/home_view_more.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
+import 'package:stocks_news_new/service/appsFlyer/service.dart';
 import 'package:stocks_news_new/service/braze/service.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import '../../models/lock.dart';
@@ -122,6 +123,7 @@ class MyHomeManager extends ChangeNotifier {
         "platform": Platform.operatingSystem,
         "build_version": versionName,
         "build_code": buildNumber,
+        'distributor_code_new': distributorCodeNew ?? ''
       };
 
       if (appsFlyerUID != null && appsFlyerUID != '') {
