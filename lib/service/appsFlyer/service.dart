@@ -710,6 +710,7 @@ class AppsFlyerService {
   }
 
   getReferralCodeIfAny(String referralCode) async {
+    Utils().showLog('REFER CODE =>$referralCode');
     try {
       bool isFirstOpen = await Preference.isFirstOpen();
       String? code = await Preference.getReferral();

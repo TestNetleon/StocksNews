@@ -187,17 +187,6 @@ class Preference {
   }
 
   //App Tracking
-  static const _trackingKey = 'app_tracking_allowed';
-
-  static Future<void> setTrackingPreference(bool isAllowed) async {
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-    await preferences.setBool(_trackingKey, isAllowed);
-  }
-
-  static Future<bool?> isTrackingAllowed() async {
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-    return preferences.getBool(_trackingKey);
-  }
 
   static Future<bool> setTheme(ThemeMode theme) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();

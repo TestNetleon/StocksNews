@@ -55,10 +55,13 @@ class _HomeIndexState extends State<HomeIndex> {
                 // Visibility(
                 //   visible: kDebugMode,
                 //   child: BaseButton(
-                //     onPressed: () async {
-                //       String? url = await AppsFlyerService.instance
-                //           .createUserInvitationLink();
-                //       Utils().showLog('Share => $url');
+                //     onPressed: () {
+                //       Navigator.push(
+                //         context,
+                //         MaterialPageRoute(
+                //           builder: (context) => SplashFirstTime(),
+                //         ),
+                //       );
                 //     },
                 //   ),
                 // ),

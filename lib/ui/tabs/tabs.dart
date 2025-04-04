@@ -59,8 +59,9 @@ class _TabsState extends State<Tabs> {
   void initState() {
     super.initState();
     splashLoaded = true;
+    Preference.setIsFirstOpen(false);
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      SocketService.instance.connect();
+      // SocketService.instance.connect();
       _checkReferBox();
       setState(() {
         _selectedIndex = widget.index ?? 0;

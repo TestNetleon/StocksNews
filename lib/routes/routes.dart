@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:stocks_news_new/main.dart';
 import 'package:stocks_news_new/managers/alerts.dart';
 import 'package:stocks_news_new/managers/billionaires.dart';
 import 'package:stocks_news_new/managers/blogs.dart';
@@ -61,6 +62,7 @@ import 'package:stocks_news_new/managers/watchlist.dart';
 import 'package:stocks_news_new/models/my_home.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
+import 'package:stocks_news_new/ui/onboarding/splash_loading.dart';
 import 'package:stocks_news_new/ui/subscription/action_required.dart';
 import 'package:stocks_news_new/ui/tabs/home/scanner/manager/gainers.dart';
 import 'package:stocks_news_new/ui/tabs/home/viewMore/PopularMostBought/index.dart';
@@ -164,6 +166,7 @@ class Routes {
 
     // '/': (_) => const Splash(from: 'routeName1'),
     Splash.path: (_) => const Splash(),
+    SplashFirstTime.path: (_) => const SplashFirstTime(),
     DefaultHome.path: (_) => const DefaultHome(),
     OnboardingSlides.path: (_) => const OnboardingSlides(),
     NotificationSettings.path: (_) => const NotificationSettings(),
@@ -223,6 +226,12 @@ class Routes {
     // Explicitly handle only the `/` route
     if (routingData == '/' && routingData?.length == 1) {
       Utils().showLog('HI ROUTING DATA');
+
+      if (isFIRSTopen) {
+        return MaterialPageRoute(
+          builder: (context) => const SplashFirstTime(),
+        );
+      }
 
       return MaterialPageRoute(
         builder: (context) => const Splash(),
@@ -606,6 +615,11 @@ class Routes {
           },
         );
       default:
+        if (isFIRSTopen) {
+          return MaterialPageRoute(
+            builder: (context) => const SplashFirstTime(),
+          );
+        }
         return MaterialPageRoute(
           builder: (context) {
             return const Splash();

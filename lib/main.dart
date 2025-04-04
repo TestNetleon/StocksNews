@@ -1,23 +1,30 @@
-import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:stocks_news_new/database/preference.dart';
 import 'package:stocks_news_new/fcm/braze_notification_handler.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/service/amplitude/service.dart';
 import 'package:stocks_news_new/utils/constants.dart';
-import 'package:stocks_news_new/database/preference.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:firebase_in_app_messaging/firebase_in_app_messaging.dart';
 import 'firebase_options.dart';
 import 'service/appsFlyer/service.dart';
+
+bool isFIRSTopen = true;
 
 void main() async {
   try {
     WidgetsFlutterBinding.ensureInitialized();
   } catch (e) {
     if (kDebugMode) print(e.toString());
+  }
+
+  try {
+    isFIRSTopen = await Preference.isFirstOpen();
+  } catch (e) {
+    //
   }
 
   // SystemChrome.setSystemUIOverlayStyle(
@@ -47,9 +54,9 @@ void main() async {
     }
 
     AmplitudeService.instance.initialize();
-    Timer(const Duration(seconds: 8), () {
-      Preference.setIsFirstOpen(false);
-    });
+    // Timer(const Duration(seconds: 8), () {
+    //   Preference.setIsFirstOpen(false);
+    // });
 
     try {
       NotificationHandler.instance.initialize();
