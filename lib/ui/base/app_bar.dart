@@ -296,10 +296,16 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
                                 onTap: onLSearchClick,
                               ),
                             if (onFilterClick != null)
-                              IconButton(
+                              ActionButton(
+                                size: 22,
+                                icon: Images.marketFilter,
+                                padding: const EdgeInsets.only(right: 8),
+                                onTap: onFilterClick,
+                              ),
+                             /* IconButton(
                                 onPressed: onFilterClick,
                                 icon: Icon(Icons.filter_alt),
-                              ),
+                              ),*/
                             if (shareURL != null)
                               Padding(
                                 padding: const EdgeInsets.only(left: 8),

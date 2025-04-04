@@ -14,6 +14,7 @@ import 'package:stocks_news_new/ui/tabs/tools/league/screens/tournaments/dayTrai
 import 'package:stocks_news_new/ui/tabs/tools/league/screens/tournaments/dayTraining/widgets/tradiding_view_chart.dart';
 import 'package:stocks_news_new/ui/tabs/tools/league/screens/tournaments/searchTicker/index.dart';
 import 'package:stocks_news_new/ui/tabs/tools/simulator/services/sse.dart';
+import 'package:stocks_news_new/ui/theme/manager.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -82,8 +83,8 @@ class _LeagueTickersIndexState extends State<LeagueTickersIndex>{
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<LeagueSearchManager>(
-      builder: (context, searchManager, child) {
+    return Consumer2<LeagueSearchManager,ThemeManager>(
+      builder: (context, searchManager,tm, child) {
         return BaseScaffold(
           appBar: BaseAppBar(
             showBack: true,

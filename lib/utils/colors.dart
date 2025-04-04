@@ -172,6 +172,11 @@ class ThemeColors {
   static Color gold = Color(0xFFFFD65B);
   static Color silver = Color(0xffe6eaf0);
   static Color bronze = Color(0xffdeae80);
+
+  static const gold1 = Color(0xfff8f0c0);
+  static const silver1 = Color(0xffedf1f4);
+  static const bronze1 = Color(0xffccb593);
+
   static Color brown = Color(0xff5e3309);
   static Color darkGold = Color(0xFFCC9A03);
   //static Color darkPurple = Color(0xFFAF52DE);

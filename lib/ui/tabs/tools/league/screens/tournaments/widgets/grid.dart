@@ -36,7 +36,6 @@ class LeagueGrids extends StatelessWidget {
               }
             },
             buttonText: "Play Game",
-          buttonColor: ThemeColors.error120,
         );
       },
       separatorBuilder: (context, index) {
