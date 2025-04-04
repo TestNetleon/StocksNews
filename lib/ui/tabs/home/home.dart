@@ -91,6 +91,7 @@ class _HomeIndexState extends State<HomeIndex> {
                     ),
                   ),
                 ),
+
                 Visibility(
                   visible: manager.data?.adManagers?.data?.place1 != null,
                   child: AdManagerIndex(

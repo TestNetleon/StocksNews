@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/api/api_requester.dart';
 import 'package:stocks_news_new/api/api_response.dart';
+import 'package:stocks_news_new/service/events/service.dart';
 import 'package:stocks_news_new/ui/base/bottom_sheet.dart';
 import 'package:stocks_news_new/ui/tabs/tools/scanner/manager/gainers.dart';
 import 'package:stocks_news_new/ui/tabs/tools/scanner/manager/losers.dart';
@@ -49,6 +50,7 @@ class ScannerManager extends ChangeNotifier {
   }
 
   onTabChange(index) {
+    EventsService.instance.scannerTabPage(index: index);
     if (selectedIndex != index) {
       selectedIndex = index;
       selectedSubIndex = 0;
@@ -230,6 +232,8 @@ class ScannerManager extends ChangeNotifier {
           switch (selectedIndex) {
             case 0:
               setSortingApplied(true);
+              EventsService.instance.symbolNameUpDownScannerTabPage(type: received.type.name);
+
               applySorting(
                 received.type.name,
                 received.ascending,
@@ -237,18 +241,20 @@ class ScannerManager extends ChangeNotifier {
               break;
 
             case 1:
+              EventsService.instance.symbolNameUpDownGainerTabPage(type: received.type.name);
               gainersManager.applySorting(
                 received.type.name,
                 received.ascending,
               );
-
               break;
 
             case 2:
+              EventsService.instance.symbolNameUpDownLoserTabPage(type: received.type.name);
               losersManager.applySorting(
                 received.type.name,
                 received.ascending,
               );
+
               break;
 
             default:

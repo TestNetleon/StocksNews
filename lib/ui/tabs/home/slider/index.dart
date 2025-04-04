@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:stocks_news_new/managers/home/home.dart';
 import 'package:stocks_news_new/models/news.dart';
+import 'package:stocks_news_new/service/events/service.dart';
 import 'package:stocks_news_new/ui/tabs/more/news/detail.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
@@ -24,6 +25,7 @@ class _HomeTopNewsSliderState extends State<HomeTopNewsSlider> {
 
   void _newsDetail({String? slug}) {
     closeKeyboard();
+    EventsService.instance.enterPostHomePage();
     Navigator.pushNamed(context, NewsDetailIndex.path, arguments: {
       'slug': slug,
     });

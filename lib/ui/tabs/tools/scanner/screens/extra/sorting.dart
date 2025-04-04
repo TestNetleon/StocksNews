@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:stocks_news_new/service/events/service.dart';
 import 'package:stocks_news_new/ui/base/base_list_divider.dart';
 import 'package:stocks_news_new/ui/tabs/tools/scanner/manager/scanner.dart';
 import 'package:stocks_news_new/utils/colors.dart';
@@ -69,6 +70,7 @@ class _MarketSortingHeaderState extends State<MarketSortingHeader> {
                         visible: value.selectedIndex == 0,
                         child: InkWell(
                           onTap: () {
+                            EventsService.instance.filterByScannerTabScannerPage();
                             value.setUsingFilter(true);
                             Navigator.push(
                                 context, createRoute(ScannerFilters()));
@@ -85,6 +87,11 @@ class _MarketSortingHeaderState extends State<MarketSortingHeader> {
                       SpacerHorizontal(width: 20),
                       InkWell(
                         onTap: () {
+                          value.selectedIndex==0?
+                          EventsService.instance.sortByScannerTabScannerPage():
+                          value.selectedIndex==1?
+                          EventsService.instance.sortByGainerTabChangePage(innerIndex: value.selectedSubIndex):
+                          EventsService.instance.sortByLoserTabChangePage(innerIndex: value.selectedSubIndex);
                           value.sorting();
                         },
                         child: Image.asset(

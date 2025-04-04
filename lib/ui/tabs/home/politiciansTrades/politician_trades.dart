@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/managers/tools.dart';
 import 'package:stocks_news_new/models/my_home_premium.dart';
 import 'package:stocks_news_new/models/tools.dart';
+import 'package:stocks_news_new/service/events/service.dart';
 import 'package:stocks_news_new/ui/tabs/home/politiciansTrades/item.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -28,6 +29,7 @@ class HomePoliticianTradesIndex extends StatelessWidget {
             title: politicianData?.title,
             margin: EdgeInsets.only(top: Pad.pad20, bottom: Pad.pad10),
             viewMore: () {
+              EventsService.instance.viewAllTopPoliticiansTradesHomePage();
               ToolsManager manager = context.read<ToolsManager>();
               manager.startNavigation(
                 ToolsEnum.signals,

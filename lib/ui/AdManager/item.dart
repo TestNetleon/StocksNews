@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:stocks_news_new/service/events/service.dart';
 
 import 'package:stocks_news_new/widgets/cache_network_image.dart';
 import 'package:visibility_detector/visibility_detector.dart';
@@ -23,7 +24,7 @@ class AdManagerItem extends StatelessWidget {
   });
   void _onTap() {
     closeKeyboard();
-
+    EventsService.instance.clickHereTextHomePage();
     if (Platform.isIOS) {
       iOSNavigate(Uri.parse(data?.url ?? "https://app.stocks.news"));
     } else {

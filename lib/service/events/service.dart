@@ -1,6 +1,7 @@
 import 'package:stocks_news_new/service/amplitude/service.dart';
 import 'package:stocks_news_new/service/appsFlyer/service.dart';
 import 'package:stocks_news_new/service/braze/service.dart';
+import 'package:stocks_news_new/ui/tabs/tools/scanner/manager/scanner.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 
 class EventsService {
@@ -80,6 +81,181 @@ class EventsService {
   void selectMarketScannerHomePage() =>
       _logEvent('select_market_scanner_home_page');
   void clickHereTextHomePage() => _logEvent('click_here_text_stocks_home_page');
+  void clickViewAllPopularStocksHomePage() => _logEvent('click_view_all_popular_stocks_home_page');
+  void selectStockPopularStocksHomePage() => _logEvent('select_stock_popular_stocks_home_page');
+  void clickViewAllMostBoughtMembersHomePage() => _logEvent('click_view_all_most_bought_members_home_page');
+  void selectAaplScannerHomePage() => _logEvent('select_aapl_scanner_home_page');
+  void clickSyncYourPortfolioHomePage() => _logEvent('click_sync_your_portfolio_home_page');
+  void clickTrendingHomePage() => _logEvent('click_trending_home_page');
+  void clickTopGainersHomePage() => _logEvent('click_top_gainers_home_page');
+  void clickTopLosersHomePage() => _logEvent('click_top_losers_home_page');
+  void viewAllTopInsiderTradesHomePage() => _logEvent('view_all_top_insider_trades_home_page');
+  void viewAllTopPoliticiansTradesHomePage() => _logEvent('view_all_top_politicians_trades_home_page');
+
+  // Scanner Page Events
+  void scannerTabPage({int? index=0}) => _logEvent(
+    index==0?'scanner_tab_scanner_page':index==1?'gainers_tab_scanner_page':'losers_tab_scanner_page'
+  );
+  void filterByScannerTabScannerPage() => _logEvent('filter_by_scanner_tab_scanner_page');
+  void sortByScannerTabScannerPage() => _logEvent('sort_by_scanner_tab_scanner_page');
+  void openHdScannerTabScannerPage() => _logEvent('open_hd_scanner_tab_scanner_page');
+
+  void sortByGainerTabChangePage({int? innerIndex=0}) => _logEvent(
+      innerIndex==0?'sort_by_gainers_tab_percent_change_tab_scanner_page':'sort_by_gainers_tab_volume_tab_scanner_page'
+  );
+  void sortByLoserTabChangePage({int? innerIndex=0}) => _logEvent(
+      innerIndex==0?'sort_by_losers_tab_percent_change_tab_scanner_page':'sort_by_losers_tab_volume_tab_scanner_page'
+  );
+
+  void openTnonGainersTabChangePage({int? innerIndex=0}) => _logEvent(
+      innerIndex==0?'open_tnon_gainers_tab_percent_change_tab_scanner_page':'open_tnon_gainers_tab_volume_tab_scanner_page'
+  );
+  void openTnonLosersTabChangePage({int? innerIndex=0}) => _logEvent(
+      innerIndex==0?'open_cnsp_losers_tab_percent_change_tab_scanner_page':'open_azo_losers_tab_volume_tab_scanner_page'
+  );
+
+  void backMarketScannerFilter() => _logEvent('back_market_scanner_filter');
+  void enterSymbolCompanyNamemarketScannerFilter() => _logEvent('enter_symbol_company_namemarket_scanner_filter');
+  void enterBidStartMarketScannerFilter() => _logEvent('enter_bid_start_market_scanner_filter');
+  void enterBidEndMarketScannerFilter() => _logEvent('enter_bid_end_market_scanner_filter');
+  void enterAskStartMarketScannerFilter() => _logEvent('enter_ask_start_market_scanner_filter');
+  void enterAskEndMarketScannerFilter() => _logEvent('enter_ask_end_market_scanner_filter');
+  void enterLastTradeStartMarketScannerFilter() => _logEvent('enter_last_trade_start_start_market_scanner_filter');
+  void enterLastTradeEndMarketScannerFilter() => _logEvent('enter_last_trade_end_market_scanner_filter');
+  void enterNetChangeStartMarketScannerFilter() => _logEvent('enter_net_change_start_market_scanner_filter');
+  void enterNetChangeEndMarketScannerFilter() => _logEvent('enter_net_change_end_market_scanner_filter');
+  void enterChangeStartMarketScannerFilter() => _logEvent('enter_%_change_start_market_scanner_filter');
+  void enterChangeEndMarketScannerFilter() => _logEvent('enter_%_change_end_market_scanner_filter');
+  void enterVolumeStartMarketScannerFilter() => _logEvent('enter_volume_start_market_scanner_filter');
+  void enterVolumeEndMarketScannerFilter() => _logEvent('enter_volume_end_market_scanner_filter');
+  void enterDVolumeStartMarketScannerFilter() => _logEvent('enter_\$_volume_start_market_scanner_filter');
+  void enterDVolumeEndMarketScannerFilter() => _logEvent('enter_\$_volume_end_market_scanner_filter');
+
+  void clickResetMarketScannerFilter() => _logEvent('click_reset_market_scanner_filter');
+  void clickApplyMarketScannerFilter() => _logEvent('click_apply_market_scanner_filter');
+  void symbolNameUpDownScannerTabPage({String? type}) => _logEvent(
+      type==SortByEnums.symbol.name?
+      'symbol_name_up/down_scanner_tab_scanner_page':
+      type==SortByEnums.company.name?
+      'company_name_up/down_scanner_tab_scanner_page':
+      type==SortByEnums.postMarket.name?
+      'pre_market_price_name_up/down_scanner_tab_scanner_page':
+      type==SortByEnums.postMarketNetChange.name?
+      'pre_market_net_change_name_up/down_scanner_tab_scanner_page':
+      type==SortByEnums.postMarketPerChange.name?
+      'pre_market_percentage_change_name_up/down_scanner_tab_scanner_page':
+      type==SortByEnums.lastTrade.name?
+      'last_trade_price_up/down_scanner_tab_scanner_page':
+      type==SortByEnums.netChange.name?
+      'net_change_up/down_scanner_tab_scanner_page':
+      type==SortByEnums.perChange.name?
+      'percentage_change_up/down_scanner_tab_scanner_page':
+      type==SortByEnums.volume.name?
+      'volume_up/down_scanner_tab_scanner_page':
+      type==SortByEnums.dollarVolume.name?
+      '\$volume_up/down_scanner_tab_scanner_page':
+      type==SortByEnums.bid.name?
+      'bid_price_up/down_scanner_tab_scanner_page':
+      'ask_price_up/down_scanner_tab_scanner_page'
+  );
+
+  void symbolNameUpDownGainerTabPage({String? type}) => _logEvent(
+      type==SortByEnums.symbol.name?
+      'symbol_name_up/down_gainers_tab_scanner_page':
+      type==SortByEnums.company.name?
+      'company_name_up/down_gainers_tab_scanner_page':
+      type==SortByEnums.postMarket.name?
+      'pre_market_price_name_up/down_gainers_tab_scanner_page':
+      type==SortByEnums.postMarketNetChange.name?
+      'pre_market_net_change_name_up/down_gainers_tab_scanner_page':
+      type==SortByEnums.postMarketPerChange.name?
+      'pre_market_percentage_change_name_up/down_gainers_tab_scanner_page':
+      type==SortByEnums.lastTrade.name?
+      'last_trade_price_up/down_gainers_tab_scanner_page':
+      type==SortByEnums.netChange.name?
+      'net_change_up/down_gainers_tab_scanner_page':
+      type==SortByEnums.perChange.name?
+      'percentage_change_up/down_gainers_tab_scanner_page':
+      type==SortByEnums.volume.name?
+      'volume_up/down_gainers_tab_scanner_page':
+      type==SortByEnums.dollarVolume.name?
+      '\$volume_up/down_gainers_tab_scanner_page':
+      type==SortByEnums.bid.name?
+      'bid_price_up/down_gainers_tab_scanner_page':
+      type==SortByEnums.ask.name?
+      'ask_price_up/down_gainers_tab_scanner_page':
+      'sector_wise_up/down_gainers_tab_scanner_page'
+  );
+
+  void symbolNameUpDownLoserTabPage({String? type}) => _logEvent(
+      type==SortByEnums.symbol.name?
+      'symbol_name_up/down_losers_tab_scanner_page':
+      type==SortByEnums.company.name?
+      'company_name_up/down_losers_tab_scanner_page':
+      type==SortByEnums.postMarket.name?
+      'pre_market_price_name_up/down_losers_tab_scanner_page':
+      type==SortByEnums.postMarketNetChange.name?
+      'pre_market_net_change_name_up/down_losers_tab_scanner_page':
+      type==SortByEnums.postMarketPerChange.name?
+      'pre_market_percentage_change_name_up/down_losers_tab_scanner_page':
+      type==SortByEnums.lastTrade.name?
+      'last_trade_price_up/down_losers_tab_scanner_page':
+      type==SortByEnums.netChange.name?
+      'net_change_up/down_losers_tab_scanner_page':
+      type==SortByEnums.perChange.name?
+      'percentage_change_up/down_losers_tab_scanner_page':
+      type==SortByEnums.volume.name?
+      'volume_up/down_losers_tab_scanner_page':
+      type==SortByEnums.dollarVolume.name?
+      '\$volume_up/down_losers_tab_scanner_page':
+      type==SortByEnums.bid.name?
+      'bid_price_up/down_losers_tab_scanner_page':
+      type==SortByEnums.ask.name?
+      'ask_price_up/down_losers_tab_scanner_page':
+      'sector_wise_up/down_losers_tab_scanner_page'
+  );
+
+  void clickStockScannerPage({String? type}) => _logEvent(
+      type=="overview"?
+      'click_stock_overview_scanner_tab_scanner_page':
+      type=="buy"?
+      'click_buy_order_scanner_tab_scanner_page':
+      type=="sell"?
+      'click_sell_order_scanner_tab_scanner_page':
+      type=="short"?
+      'click_short_order_order_scanner_tab_scanner_page':
+      type=="btc"?
+      'click_buy_to_cover_order_order_scanner_tab_scanner_page':
+      ''
+  );
+
+  void clickStockGainerPage({String? type}) => _logEvent(
+      type=="overview"?
+      'click_stock_overview_gainers_tab_percent_change_tab_scanner_page':
+      type=="buy"?
+      'click_buy_order_gainers_tab_percent_change_tab_scanner_page':
+      type=="sell"?
+      'click_sell_order_gainers_tab_percent_change_tab_scanner_page':
+      type=="short"?
+      'click_short_order_order_gainers_tab_percent_change_tab_scanner_page':
+      type=="btc"?
+      'click_buy_to_cover_order_order_gainers_tab_percent_change_tab_scanner_page':
+      ''
+  );
+  void clickStockLoserPage({String? type}) => _logEvent(
+      type=="overview"?
+      'click_stock_overview_losers_tab_percent_change_tab_scanner_page':
+      type=="buy"?
+      'click_buy_order_losers_tab_percent_change_tab_scanner_page':
+      type=="sell"?
+      'click_sell_order_losers_tab_percent_change_tab_scanner_page':
+      type=="short"?
+      'click_short_order_order_losers_tab_percent_change_tab_scanner_page':
+      type=="btc"?
+      'click_buy_to_cover_order_order_losers_tab_percent_change_tab_scanner_page':
+      ''
+  );
+
 }
 
 abstract class EventLogger {

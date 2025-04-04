@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/managers/home/home.dart';
 import 'package:stocks_news_new/managers/tools.dart';
 import 'package:stocks_news_new/models/tools.dart';
+import 'package:stocks_news_new/service/events/service.dart';
 import 'package:stocks_news_new/ui/theme/manager.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
@@ -51,6 +52,7 @@ class _PlaidHomeGetStartedState extends State<PlaidHomeGetStarted> {
               ),
               GestureDetector(
                 onTap: () {
+                  EventsService.instance.clickSyncYourPortfolioHomePage();
                   ToolsManager toolsManager = context.read<ToolsManager>();
                   toolsManager.startNavigation(ToolsEnum.portfolio);
                 },

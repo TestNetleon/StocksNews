@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/managers/home/home.dart';
 import 'package:stocks_news_new/models/lock.dart';
+import 'package:stocks_news_new/service/events/service.dart';
 import 'package:stocks_news_new/ui/base/button.dart';
 import 'package:stocks_news_new/ui/base/lock.dart';
 import 'package:stocks_news_new/ui/tabs/home/scanner/manager/gainers.dart';
@@ -124,6 +125,7 @@ class _HomeScannerIndexState extends State<HomeScannerIndex> {
                       text: lock.btn ?? '',
                       onPressed: () {
                         value.setNumValue(3);
+                        EventsService.instance.joinEliteProgramHomePage();
                         baseSUBSCRIBE(
                           lock,
                           manager: value,
