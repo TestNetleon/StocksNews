@@ -4,13 +4,13 @@ import 'package:app_links/app_links.dart';
 import 'package:country_code_picker/country_code_picker.dart';
 // import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stocks_news_new/fcm/braze_notification_handler.dart';
 import 'package:stocks_news_new/fcm/braze_service.dart';
+import 'package:stocks_news_new/main.dart';
 import 'package:stocks_news_new/managers/user.dart';
 import 'package:stocks_news_new/modals/user_res.dart';
 import 'package:stocks_news_new/routes/navigation_observer.dart';
@@ -24,7 +24,6 @@ import 'package:stocks_news_new/database/preference.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/utils/utils.dart';
-import '../ui/onboarding/splash.dart';
 
 final _appLinks = AppLinks();
 //
@@ -54,7 +53,10 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       // startListeningForDeepLinks();
 
       // oneSignalInitialized = true;
-      listenForPushToken();
+      Future.delayed(Duration(seconds: isFIRSTopen ? 6 : 0), () {
+        listenForPushToken();
+      });
+
       NotificationHandler.instance.setupNotificationListeners();
       // brazeDeepLink();
       _configureSubscriptionService();
@@ -86,7 +88,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   Future<void> listenForPushToken() async {
     FirebaseMessaging messaging = FirebaseMessaging.instance;
 
-    await messaging.requestPermission();
+    messaging.requestPermission();
 
     String? deviceToken = await messaging.getAPNSToken();
     String? fcmToken;
@@ -166,7 +168,6 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
           ),
         );
       },
-      child: const Splash(),
       // child: Scaffold(),
     );
   }

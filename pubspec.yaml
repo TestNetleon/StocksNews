@@ -126,6 +126,7 @@ dependencies:
   table_calendar: ^3.2.0
   blur: ^4.0.0
   toggle_switch: ^2.3.0
+  video_player: ^2.9.5
 
 
 dev_dependencies:
@@ -159,6 +160,7 @@ flutter:
     - assets/images/
     - assets/image/
     - assets/audios/
+    - assets/videos/
     - assets/audios/alert_watchlist.mp3
     - assets/audios/refresh.wav
     - assets/html/

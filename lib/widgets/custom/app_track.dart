@@ -1,26 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:stocks_news_new/database/preference.dart';
-import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/utils/constants.dart';
-import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import '../../../utils/theme.dart';
 import '../../utils/colors.dart';
 import '../spacer_horizontal.dart';
-
-void appTrack() async {
-  final value = await Preference.isTrackingAllowed();
-  Utils().showLog('ALLOWED APP TRACK $value');
-  if (value != null) return;
-  showDialog(
-    context: navigatorKey.currentContext!,
-    barrierColor: ThemeColors.transparentDark,
-    builder: (context) {
-      return LogoutPopUpCustom();
-    },
-  );
-}
 
 class LogoutPopUpCustom extends StatelessWidget {
   const LogoutPopUpCustom({
