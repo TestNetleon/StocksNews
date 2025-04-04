@@ -230,7 +230,7 @@ class _LeagueUserDetailState extends State<LeagueUserDetail> {
                         return BaseListDivider(height: Pad.pad24);
                       },
                     ),
-                    const SpacerVertical(height: Pad.pad24),
+                    const SpacerVertical(),
                     Visibility(
                       visible: (leagueUserDetailRes?.chart?.title != null),
                       child: Align(
@@ -252,56 +252,54 @@ class _LeagueUserDetailState extends State<LeagueUserDetail> {
                       child: GrowthChart(
                           chart: leagueUserDetailRes?.chart?.gChart?.toList()),
                     ),
-                    Visibility(
-                      visible: (leagueUserDetailRes?.recentBattles?.status != false),
-                      child: Stack(
-                        alignment: Alignment.topRight,
-                        children: [
-                          BaseHeading(
-                            title: leagueUserDetailRes?.recentBattles?.title ?? "",
-                            subtitle: leagueUserDetailRes?.recentBattles?.status ==
-                                true
-                                ? leagueUserDetailRes?.recentBattles?.subTitle ?? ""
-                                : leagueUserDetailRes?.recentBattles?.message ?? "",
-                            titleStyle: styleBaseBold(fontSize: 24),
-                            subtitleStyle: styleBaseRegular(fontSize: 16,color: ThemeColors.neutral80),
-                            margin:  const EdgeInsets.symmetric(horizontal: Pad.pad16),
+                    const SpacerVertical(),
+                    Stack(
+                      alignment: Alignment.topRight,
+                      children: [
+                        BaseHeading(
+                          title: leagueUserDetailRes?.recentBattles?.title ?? "",
+                          subtitle: leagueUserDetailRes?.recentBattles?.subTitle ?? "",
+                          titleStyle: styleBaseBold(fontSize: 24),
+                          subtitleStyle: styleBaseRegular(fontSize: 16,color: ThemeColors.neutral80),
+                          margin:const EdgeInsets.symmetric(horizontal: Pad.pad16),
+                        ),
+                        IconButton(
+                          onPressed: (){
+                            manager.pickTradingDate(userID: widget.userId);
+                          },
+                          icon:Image.asset(
+                            Images.bottomTools,
+                            color: ThemeColors.neutral60,
                           ),
-                          IconButton(
-                            onPressed: (){
-                              manager.pickTradingDate(userID: widget.userId);
-                            },
-                            icon:Image.asset(
-                              Images.bottomTools,
-                              color: ThemeColors.neutral60,
-                            ),
-                          )
-                        ],
+                        )
+                      ],
+                    ),
+                    const SpacerVertical(height: Pad.pad14),
+
+                    BaseLoaderContainer(
+                      hasData:leagueUserDetailRes?.recentBattles?.data!= null && leagueUserDetailRes?.recentBattles?.data?.isNotEmpty==true,
+                      isLoading: manager.isLoadingUserData,
+                      error:leagueUserDetailRes?.recentBattles?.message ?? "",
+                      showPreparingText: true,
+                      child: ListView.separated(
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
+                        itemBuilder: (context, index) {
+                          RecentBattlesRes? data =
+                              leagueUserDetailRes?.recentBattles?.data?[index];
+                          if (data == null) {
+                            return SizedBox();
+                          }
+                          return TlItem(
+                            data: data,
+                          );
+                        },
+                        itemCount:
+                            leagueUserDetailRes?.recentBattles?.data?.length ?? 0,
+                        separatorBuilder: (context, index) {
+                          return BaseListDivider(height:20);
+                        },
                       ),
-                    ),
-                    Visibility(
-                        visible:
-                            leagueUserDetailRes?.recentBattles?.status != false,
-                        child: const SpacerVertical(height: 13)
-                    ),
-                    ListView.separated(
-                      shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
-                      itemBuilder: (context, index) {
-                        RecentBattlesRes? data =
-                            leagueUserDetailRes?.recentBattles?.data?[index];
-                        if (data == null) {
-                          return SizedBox();
-                        }
-                        return TlItem(
-                          data: data,
-                        );
-                      },
-                      itemCount:
-                          leagueUserDetailRes?.recentBattles?.data?.length ?? 0,
-                      separatorBuilder: (context, index) {
-                        return BaseListDivider(height:20);
-                      },
                     ),
                     const SpacerVertical(height: 10)
                   ],

@@ -53,7 +53,7 @@ class _AllTopTtIndexState extends State<AllTopTtIndex> {
     return BaseScaffold(
       appBar: BaseAppBar(
         showBack: true,
-        title: leagueTitanRes?.title ?? '',
+        title: manager.isLoadingCommonList?"":leagueTitanRes?.title ?? '',
         onFilterClick: _filterClick,
       ),
       body: BaseLoaderContainer(

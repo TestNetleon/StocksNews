@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:stocks_news_new/ui/tabs/tools/league/models/tour_user_detail.dart';
 import 'package:stocks_news_new/utils/colors.dart';
+import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
+import 'package:stocks_news_new/widgets/custom/card.dart';
 
 
 class GrowthChart extends StatelessWidget {
@@ -29,24 +31,28 @@ class GrowthChart extends StatelessWidget {
   }
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 300,
-      child: BarChart(
-        BarChartData(
-          barTouchData: barTouchData,
-          titlesData: titlesData,
-          borderData: borderData,
-          barGroups: barGroups,
-          gridData: FlGridData(
-            show: true,
-            drawHorizontalLine: true,
-            drawVerticalLine: false,
-            horizontalInterval: 10,
-            verticalInterval: 5,
+    return CommonCard(
+      margin: const EdgeInsets.symmetric(horizontal:Pad.pad16),
+      padding: const EdgeInsets.symmetric(vertical:Pad.pad16,horizontal: Pad.pad16),
+      child: SizedBox(
+        height: 300,
+        child: BarChart(
+          BarChartData(
+            barTouchData: barTouchData,
+            titlesData: titlesData,
+            borderData: borderData,
+            barGroups: barGroups,
+            gridData: FlGridData(
+              show: true,
+              drawHorizontalLine: true,
+              drawVerticalLine: false,
+              horizontalInterval: 20,
+              verticalInterval: 20,
+            ),
+            alignment: BarChartAlignment.spaceAround,
+            maxY: _calculateMaxY(),
+            minY: _calculateMinY(),
           ),
-          alignment: BarChartAlignment.spaceAround,
-          maxY: _calculateMaxY(),
-          minY: _calculateMinY(),
         ),
       ),
     );
@@ -80,12 +86,6 @@ class GrowthChart extends StatelessWidget {
     DateTime minDate = chart!.first.battleDate!;
     DateTime currentDate = minDate.add(Duration(days: value.toInt()));
     String formattedDate = DateFormat('dd MMM').format(currentDate);
-
-    final style = TextStyle(
-      color: ThemeColors.white,
-      fontWeight: FontWeight.w400,
-      fontSize: 12,
-    );
     return SideTitleWidget(
       // meta: meta,
       space: 0,
@@ -93,21 +93,16 @@ class GrowthChart extends StatelessWidget {
       angle: 80.1,
       child: Padding(
         padding: const EdgeInsets.only(top: 4.0),
-        child: Text(formattedDate, style: style),
+        child: Text(formattedDate, style: styleBaseRegular(fontSize: 12),textAlign: TextAlign.center),
       ),
     );
   }
 
   Widget leftTitleWidgets(double value, TitleMeta meta) {
-    final style = TextStyle(
-      color: ThemeColors.white,
-      fontWeight: FontWeight.w400,
-      fontSize: 12,
-    );
     return SideTitleWidget(
       space: 5,
       axisSide: AxisSide.left,
-      child: Text(meta.formattedValue, style: style),
+      child: Text(meta.formattedValue,  style: styleBaseRegular(fontSize: 12),textAlign: TextAlign.center),
     );
   }
 
@@ -120,11 +115,8 @@ class GrowthChart extends StatelessWidget {
 
     int totalDays = maxDate == minDate ? 1 : maxDate.difference(minDate).inDays;
 
-    // Set a maximum number of labels you want to display
-    int maxLabels = 5; // For example, 5 labels
+    int maxLabels = 5;
     double interval = totalDays / maxLabels;
-
-    // Ensure the interval is at least 1 day to avoid zero or negative intervals
     return interval.ceilToDouble();
   }
 
@@ -142,7 +134,7 @@ class GrowthChart extends StatelessWidget {
           sideTitles: SideTitles(
             showTitles: true,
             getTitlesWidget: (value, meta) => leftTitleWidgets(value, meta),
-            reservedSize: 35
+            reservedSize: 30
           ),
           drawBelowEverything: false,
         ),
@@ -160,8 +152,8 @@ class GrowthChart extends StatelessWidget {
 
   LinearGradient get _greenGradient => LinearGradient(
         colors:  [
-          ThemeColors.success120,
-          ThemeColors.success120,
+          ThemeColors.accent,
+          ThemeColors.accent,
         ],
         begin: Alignment.bottomCenter,
         end: Alignment.topCenter,
@@ -169,8 +161,8 @@ class GrowthChart extends StatelessWidget {
 
   LinearGradient get _redGradient => LinearGradient(
         colors: [
-          ThemeColors.error120,
-          ThemeColors.error120,
+          ThemeColors.sos,
+          ThemeColors.sos,
         ],
         begin: Alignment.bottomCenter,
         end: Alignment.topCenter,
@@ -206,7 +198,7 @@ class GrowthChart extends StatelessWidget {
               gradient: barGradient,
             ),
           ],
-          showingTooltipIndicators: [0],
+          //showingTooltipIndicators: [0],
         ),
       );
     }

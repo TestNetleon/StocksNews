@@ -140,11 +140,11 @@ class PlayBoxLeague extends StatelessWidget {
                   final price = tournamentPoints![index];
                   Color bgColor;
                   if (price.points == 500) {
-                    bgColor = ThemeColors.gold;
+                    bgColor = ThemeColors.gold1;
                   } else if (price.points == 300) {
-                    bgColor = ThemeColors.silver;
+                    bgColor = ThemeColors.silver1;
                   } else {
-                    bgColor = ThemeColors.bronze;
+                    bgColor = ThemeColors.bronze1;
                   }
 
                   Color bgInnerColor;
@@ -185,7 +185,7 @@ class PlayBoxLeague extends StatelessWidget {
                               '${price.points??""}',
                               style: styleBaseBold(
                                 fontSize:18,
-                                  color: ThemeColors.black
+                                  color: ThemeColors.white
                               ),
                             ),
                           ],
@@ -204,7 +204,6 @@ class PlayBoxLeague extends StatelessWidget {
               text: buttonText,
               fontBold: true,
               onPressed: onButtonTap,
-              textColor: Colors.white,
             ),
           ),
         ],

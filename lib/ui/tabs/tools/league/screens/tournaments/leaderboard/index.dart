@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/ui/base/base_list_divider.dart';
+import 'package:stocks_news_new/ui/base/base_scroll.dart';
 import 'package:stocks_news_new/ui/base/heading.dart';
 import 'package:stocks_news_new/ui/base/load_more.dart';
 import 'package:stocks_news_new/ui/tabs/tools/league/managers/leaderboard.dart';
@@ -11,7 +12,6 @@ import 'package:stocks_news_new/ui/tabs/tools/league/screens/tournaments/leaderb
 import 'package:stocks_news_new/ui/tabs/tools/league/screens/tournaments/leaderboard/top_no_item.dart';
 import 'package:stocks_news_new/ui/tabs/tools/league/screens/tournaments/leaderboard/top_widget.dart';
 import 'package:stocks_news_new/ui/tabs/tools/league/screens/tournaments/widgets/dates.dart';
-import 'package:stocks_news_new/ui/tabs/tools/league/screens/tournaments/widgets/top_tading.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -52,33 +52,41 @@ class _LeagueLeaderboardState extends State<LeagueLeaderboard> {
       isLoading: manager.isLoadingBattle,
       error: manager.errorBattle,
       showPreparingText: true,
-      child: Column(
-        children: [
-          SpacerVertical(height: Pad.pad10),
-          CustomDateSelector(
-            editedDate: manager.editedDate,
-            gameValue: manager.battleRes?.battle,
-            onDateSelected: (date) {
-              manager.getSelectedDate(date);
-              WidgetsBinding.instance.addPostFrameCallback((_) {
-                manager.leaderboard();
-              });
-            },
-          ),
-          SpacerVertical(height: Pad.pad10),
-          Expanded(
-            child: BaseLoaderContainer(
+      child: BaseLoadMore(
+        canLoadMore: manager.canLoadMore,
+        onLoadMore: () async =>
+        await manager.leaderboard(loadMore: true),
+        onRefresh: () async => await manager.leaderboard(),
+        child: BaseScroll(
+          margin: EdgeInsets.zero,
+          onRefresh: () async => await manager.leaderboard(),
+          children: [
+            SpacerVertical(height: Pad.pad10),
+            CustomDateSelector(
+              editedDate: manager.editedDate,
+              gameValue: manager.battleRes?.battle,
+              onDateSelected: (date) {
+                manager.getSelectedDate(date);
+                WidgetsBinding.instance.addPostFrameCallback((_) {
+                  manager.leaderboard();
+                });
+              },
+            ),
+            if(leaderboardRes?.showLeaderboard == true)
+            SpacerVertical(height: Pad.pad10),
+            BaseLoaderContainer(
                 hasData: leaderboardRes != null,
                 isLoading: manager.isLoadingLeaderboard,
                 error: manager.errorLeaderboard,
                 showPreparingText: true,
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     if (leaderboardRes?.showLeaderboard == true)
                       manager.topPerformers.isNotEmpty
                           ?
                       Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: Pad.pad16),
+                        padding: const EdgeInsets.only(left: Pad.pad16,right: Pad.pad8),
                         child: LayoutBuilder(
                           builder: (context, constraints) {
                             return Row(
@@ -123,8 +131,8 @@ class _LeagueLeaderboardState extends State<LeagueLeaderboard> {
                           },
                         ),
                       )
-
-                          : Visibility(
+                          :
+                      Visibility(
                               visible: (manager.leaderboardRes?.showLeaderboard == true),
                               child:
                               Padding(
@@ -155,7 +163,7 @@ class _LeagueLeaderboardState extends State<LeagueLeaderboard> {
                               )
                       ),
 
-                    SpacerVertical(),
+                    Visibility(visible: leaderboardRes?.loginUserPosition != null,child: SpacerVertical()),
                     Visibility(
                       visible: leaderboardRes?.loginUserPosition != null,
                       child: CommonCard(
@@ -242,49 +250,68 @@ class _LeagueLeaderboardState extends State<LeagueLeaderboard> {
                       visible:leaderboardRes?.title!=null,
                       child: BaseHeading(
                         title: leaderboardRes?.title,
-                        viewMoreText: "View More",
-                        viewMore: () {
-                          var selectedTournament = TournamentsHead.topTitan;
-                          Navigator.pushNamed(context, AllTopTtIndex.path,
-                              arguments: {
-                                "selectedTournament": selectedTournament,
-                                "title": leaderboardRes?.title,
-                              });
-                        },
+                        //viewMoreText: "View More",
+                        // viewMore: () {
+                        //   var selectedTournament = TournamentsHead.topTitan;
+                        //   Navigator.pushNamed(context, AllTopTtIndex.path,
+                        //       arguments: {
+                        //         "selectedTournament": selectedTournament,
+                        //         "title": leaderboardRes?.title,
+                        //       });
+                        // },
                         margin: const EdgeInsets.symmetric(horizontal: Pad.pad16),
                       ),
                     ),
                     Visibility(visible:leaderboardRes?.title!=null,child: const SpacerVertical(height: Pad.pad10)),
-                    Expanded(
-                      child: BaseLoadMore(
-                        onRefresh: () async => await manager.leaderboard(),
-                        canLoadMore: manager.canLoadMore,
-                        onLoadMore: () async =>
-                            await manager.leaderboard(loadMore: true),
-                        child: ListView.separated(
-                          shrinkWrap: true,
-                          itemBuilder: (context, index) {
-                            TradingRes? data = manager
-                                .leaderboardRes?.leaderboardByDate?[index];
-                            if (data == null) return SizedBox();
-                            return LeaderboardItem(
-                              data: data,
-                              from: 2,
-                            );
-                          },
-                          itemCount: manager
-                                  .leaderboardRes?.leaderboardByDate?.length ??
-                              0,
-                          separatorBuilder: (context, index) {
-                            return BaseListDivider(height: Pad.pad20);
-                          },
-                        ),
+                    ListView.separated(
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      itemBuilder: (context, index) {
+                        TradingRes? data = manager
+                            .leaderboardRes?.leaderboardByDate?[index];
+                        if (data == null) return SizedBox();
+                        return LeaderboardItem(
+                          data: data,
+                          from: 2,
+                        );
+                      },
+                      itemCount: manager
+                          .leaderboardRes?.leaderboardByDate?.length ??
+                          0,
+                      separatorBuilder: (context, index) {
+                        return BaseListDivider(height: Pad.pad24);
+                      },
+                    ),
+                    /*BaseLoadMore(
+                      onRefresh: () async => await manager.leaderboard(),
+                      canLoadMore: manager.canLoadMore,
+                      onLoadMore: () async =>
+                          await manager.leaderboard(loadMore: true),
+                      child: ListView.separated(
+                        shrinkWrap: true,
+                        itemBuilder: (context, index) {
+                          TradingRes? data = manager
+                              .leaderboardRes?.leaderboardByDate?[index];
+                          if (data == null) return SizedBox();
+                          return LeaderboardItem(
+                            data: data,
+                            from: 2,
+                          );
+                        },
+                        itemCount: manager
+                                .leaderboardRes?.leaderboardByDate?.length ??
+                            0,
+                        separatorBuilder: (context, index) {
+                          return BaseListDivider(height: Pad.pad24);
+                        },
                       ),
-                    )
+                    ),*/
+                    SpacerVertical(height:Pad.pad20)
                   ],
-                )),
-          ),
-        ],
+                )
+            ),
+          ],
+        ),
       ),
     );
   }

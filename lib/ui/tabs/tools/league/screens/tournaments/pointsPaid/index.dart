@@ -55,7 +55,9 @@ class _LeagueTitansIndexState extends State<LeagueTitansIndex> {
     return BaseScaffold(
       appBar: BaseAppBar(
         showBack: true,
-        title: leagueTitanRes?.title ?? '',
+        title: manager.isLoadingCommonList
+            ? ""
+            :leagueTitanRes?.title ?? '',
         onFilterClick:_filterClick,
       ),
       body: BaseLoaderContainer(

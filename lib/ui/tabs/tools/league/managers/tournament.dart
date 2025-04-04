@@ -405,18 +405,30 @@ class LeagueManager extends ChangeNotifier {
   }
 
   Future<void> pickTradingDate({String? userID}) async {
+    DateTime selectedDate = DateTime.now();
+    if(dateSend!=""){
+      selectedDate= DateFormat("yyyy-MM-dd").parse(dateSend);
+    }
+
     final DateTime? picked = await showDatePicker(
       context: navigatorKey.currentContext!,
-      initialDate: DateTime.now(),
+      initialDate: selectedDate,
       firstDate: DateTime(2000),
       lastDate: DateTime.now(),
     );
     if (picked != null) {
       date.text = DateFormat("MMM dd, yyyy").format(picked);
       dateSend = DateFormat("yyyy-MM-dd").format(picked);
+      getUserDetail(userID: userID, clear: false);
+      notifyListeners();
     }
-    getUserDetail(userID: userID, clear: false);
-    notifyListeners();
+    else{
+      if(dateSend!=""){
+        getUserDetail(userID: userID, clear: true);
+        notifyListeners();
+      }
+    }
+
   }
 
   void _clearVariables() {

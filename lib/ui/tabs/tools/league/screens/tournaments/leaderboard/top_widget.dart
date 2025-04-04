@@ -46,7 +46,7 @@ class LeaderboardTopItem extends StatelessWidget {
               ? 60
               : 0,
         ),
-        padding: EdgeInsets.all(12),
+        padding: EdgeInsets.symmetric(horizontal:Pad.pad5,vertical: Pad.pad10),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(Pad.pad8),
           border: Border.all(color: ThemeColors.neutral5),
