@@ -442,6 +442,7 @@ import 'package:appsflyer_sdk/appsflyer_sdk.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/foundation.dart';
 import 'package:provider/provider.dart';
+import 'package:stocks_news_new/api/api_requester.dart';
 import 'package:stocks_news_new/database/preference.dart';
 import 'package:stocks_news_new/managers/user.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
@@ -449,6 +450,7 @@ import 'package:stocks_news_new/utils/utils.dart';
 import 'package:validators/validators.dart';
 import '../../api/apis.dart';
 import '../../utils/constants.dart';
+import 'package:http/http.dart' as http;
 
 class AppsFlyerService {
   AppsFlyerService._internal();
@@ -554,6 +556,33 @@ class AppsFlyerService {
         } catch (e) {
           //
         }
+        String? deepLinkSub1;
+        try {
+          if (result.deepLink != null) {
+            DeepLink deepLinkData = result.deepLink!;
+
+            deepLinkSub1 = deepLinkData.getStringValue("deep_link_sub1");
+            distributorCodeNew = deepLinkSub1;
+            if (deepLinkSub1 != null) {
+              Utils().showLog("Deep Link Sub1: $deepLinkSub1");
+              memCODE = getDistributorCode(deepLinkSub1);
+            } else {
+              Utils().showLog("deep_link_sub1 key not found!");
+              // memCODE = 'deep_link_sub1 key not found!';
+            }
+          } else {
+            // memCODE = 'ELSE of result.deepLink != null';
+          }
+        } catch (e) {
+          //
+        }
+
+        try {
+          sendReferralData('Data on handle Deep link',
+              distributorCodeNew: deepLinkSub1);
+        } catch (e) {
+          //
+        }
 
         if (kDebugMode) {
           print(
@@ -571,31 +600,15 @@ class AppsFlyerService {
             getReferralCodeIfAny(result.deepLink?.deepLinkValue ?? '');
             return;
           }
-          if ((!(deepLinkUrl.startsWith('http') ||
-                  deepLinkUrl.startsWith('https')) ||
-              deepLinkUrl.contains(
-                  'app.stocks.news://google/link/?request_ip_version='))) {
-            return;
-          }
 
           // final clickEventMap = result.deepLink?.clickEvent;
           // if (clickEventMap != null) {}
 
-          if (result.deepLink != null) {
-            DeepLink deepLinkData = result.deepLink!;
-
-            String? deepLinkSub1 =
-                deepLinkData.getStringValue("deep_link_sub1");
-
-            if (deepLinkSub1 != null) {
-              Utils().showLog("Deep Link Sub1: $deepLinkSub1");
-              memCODE = getDistributorCode(deepLinkSub1);
-            } else {
-              Utils().showLog("deep_link_sub1 key not found!");
-            }
-          }
-
           handleDeepLinkNavigation(uri: Uri.tryParse(deepLinkUrl));
+          if (deepLinkUrl
+              .contains('app.stocks.news://google/link/?request_ip_version=')) {
+            return;
+          }
         }
       },
     );
@@ -701,8 +714,9 @@ class AppsFlyerService {
       bool isFirstOpen = await Preference.isFirstOpen();
       String? code = await Preference.getReferral();
       if ((code == null || code == '') &&
-          isFirstOpen &&
-          referralCode.length == 6) {
+          referralCode.length == 6 &&
+          isFirstOpen) {
+        referCODE = referralCode;
         Preference.saveReferral(referralCode);
         Timer(const Duration(seconds: 4), () {
           UserManager manager =
@@ -849,48 +863,54 @@ class AppsFlyerService {
   }
 }
 
-// Future<void> sendReferralData(data, {fromLogin = false}) async {
-//   try {
-//     const url = 'https://app.stocks.news/api/v2/store-request-all-data';
-//     String? fcmToken = await Preference.getFcmToken();
-//     Map<String, String> headers = getHeaders();
+Future<void> sendReferralData(data,
+    {fromLogin = false, String? distributorCodeNew}) async {
+  try {
+    const url = 'https://app.stocks.news/api/v2/store-request-all-data';
+    String? fcmToken = await Preference.getFcmToken();
+    Map<String, String> headers = getHeaders();
 
-//     if (fcmToken != null) {
-//       Map<String, String> fcmHeaders = {"fcmToken": fcmToken};
-//       headers.addAll(fcmHeaders);
-//     }
+    if (fcmToken != null) {
+      Map<String, String> fcmHeaders = {"fcmToken": fcmToken};
+      headers.addAll(fcmHeaders);
+    }
 
-//     if (appVersion != null) {
-//       Map<String, String> versionHeader = {
-//         "appVersion": "$appVersion",
-//         "platform": Platform.operatingSystem,
-//       };
-//       headers.addAll(versionHeader);
-//     }
+    if (appVersion != null) {
+      Map<String, String> versionHeader = {
+        "appVersion": "$appVersion",
+        "platform": Platform.operatingSystem,
+      };
+      headers.addAll(versionHeader);
+    }
 
-//     final body = jsonEncode({
-//       'fcm_token': fcmToken ?? '',
-//       'data': data,
-//       'on_login': '$fromLogin',
-//     });
-//     Utils().showLog('REF->  REQUEST: $body');
+    final body = jsonEncode({
+      'fcm_token': fcmToken ?? '',
+      'data': data,
+      'on_login': '$fromLogin',
+      'appsflyerExtra': appsflyerExtra ?? 'N/A',
+      'appsflyerExtra1': appsflyerExtra1 ?? 'N/A',
+      'distributor_code_new': distributorCodeNew ?? 'N/A'
+    });
+    Utils().showLog('REF->  REQUEST: $body');
 
-//     final response = await http.post(
-//       Uri.parse(url),
-//       headers: headers,
-//       body: body,
-//     );
+    final response = await http.post(
+      Uri.parse(url),
+      headers: headers,
+      body: body,
+    );
 
-//     if (response.statusCode == 200) {
-//       Utils().showLog('REF->  Success: ${response.body}');
-//     } else {
-//       Utils()
-//           .showLog('REF->  Error: ${response.statusCode} - ${response.body}');
-//     }
-//   } catch (e) {
-//     Utils().showLog('REF->  Catch: $e');
-//   }
-// }
+    if (response.statusCode == 200) {
+      Utils().showLog('REF->  Success: ${response.body}');
+    } else {
+      Utils()
+          .showLog('REF->  Error: ${response.statusCode} - ${response.body}');
+    }
+  } catch (e) {
+    Utils().showLog('REF->  Catch: $e');
+  }
+}
 
 String? appsflyerExtra;
 String? appsflyerExtra1;
+String? referCODE;
+String? distributorCodeNew;

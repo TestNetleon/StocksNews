@@ -312,20 +312,22 @@ class UserManager extends ChangeNotifier {
       PackageInfo packageInfo = await PackageInfo.fromPlatform();
       String versionName = packageInfo.version;
       String buildNumber = packageInfo.buildNumber;
-      String? referralCode = await Preference.getReferral();
+      // String? referralCode = await Preference.getReferral();
 
       Map request = {
         "platform": Platform.operatingSystem,
         "build_version": versionName,
         "build_code": buildNumber,
+        'appsflyerExtra': appsflyerExtra ?? 'N/A',
+        'appsflyerExtra1': appsflyerExtra1 ?? 'N/A',
       };
 
       if (memCODE != null && memCODE != '') {
         request['distributor_code'] = memCODE;
       }
 
-      if (referralCode != null && referralCode != '') {
-        request['referral_code'] = referralCode;
+      if (referCODE != null && referCODE != '') {
+        request['referral_code'] = referCODE;
       }
 
       if (address != null && address != '') {

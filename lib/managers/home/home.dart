@@ -123,18 +123,8 @@ class MyHomeManager extends ChangeNotifier {
         "platform": Platform.operatingSystem,
         "build_version": versionName,
         "build_code": buildNumber,
+        'distributor_code_new': distributorCodeNew ?? ''
       };
-
-      try {
-        if (appsflyerExtra != null && appsflyerExtra != '') {
-          request['appsflyerExtra'] = appsflyerExtra;
-        }
-        if (appsflyerExtra1 != null && appsflyerExtra1 != '') {
-          request['appsflyerExtra1'] = appsflyerExtra1;
-        }
-      } catch (e) {
-        //
-      }
 
       if (appsFlyerUID != null && appsFlyerUID != '') {
         request['appsflyer_id'] = appsFlyerUID;
