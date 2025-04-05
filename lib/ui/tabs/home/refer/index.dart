@@ -1,7 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/ui/tabs/more/referral/index.dart';
 import 'package:stocks_news_new/ui/theme/manager.dart';
 import 'package:stocks_news_new/utils/constants.dart';
@@ -17,7 +16,9 @@ class ReferAndEarnBox extends StatelessWidget {
     bool isDark = context.watch<ThemeManager>().isDarkMode;
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(navigatorKey.currentContext!, ReferralIndex.path);
+        // Navigator.pushNamed(navigatorKey.currentContext!, ReferralIndex.path);
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => ReferralIndex()));
       },
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),

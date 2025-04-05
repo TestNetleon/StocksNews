@@ -1,4 +1,3 @@
-
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
@@ -55,9 +54,12 @@ class SRecurringManager extends ChangeNotifier {
         _data = tsRecurringListResFromJson(jsonEncode(response.data));
         _extra = response.extra is Extra ? response.extra as Extra : null;
         _error = null;
-        List<String>? symbols = _data?.where((trade) => trade.statusType != "CANCEL" && trade.symbol != null)
-            .map((trade) => trade.symbol!)
-            .toList()??[];
+        List<String>? symbols = _data
+                ?.where((trade) =>
+                    trade.statusType != "CANCEL" && trade.symbol != null)
+                .map((trade) => trade.symbol!)
+                .toList() ??
+            [];
 
         symbols = symbols.toSet().toList();
         _connectSSEForSymbols(symbols);
@@ -75,10 +77,10 @@ class SRecurringManager extends ChangeNotifier {
     }
   }
 
-
   Status _detailStatus = Status.ideal;
   Status get detailStatus => _detailStatus;
-  bool get isDetailLoading => _detailStatus == Status.loading || _detailStatus == Status.ideal;
+  bool get isDetailLoading =>
+      _detailStatus == Status.loading || _detailStatus == Status.ideal;
 
   void setDetailStatus(Status status) {
     _detailStatus = status;
@@ -91,11 +93,12 @@ class SRecurringManager extends ChangeNotifier {
     setDetailStatus(Status.loading);
     try {
       Map request = {
-        "token": navigatorKey.currentContext!.read<UserManager>().user?.token ?? "",
+        "token":
+            navigatorKey.currentContext!.read<UserManager>().user?.token ?? "",
       };
 
       ApiResponse response = await apiRequest(
-        url: Apis.recurringDetail+tradeID,
+        url: Apis.recurringDetail + tradeID,
         request: request,
         showProgress: false,
       );
@@ -103,7 +106,6 @@ class SRecurringManager extends ChangeNotifier {
       if (response.status) {
         _detailData = recurringDetailResFromMap(jsonEncode(response.data));
         _error = null;
-
       } else {
         _detailData = null;
         _error = response.message ?? Const.errSomethingWrong;
@@ -123,7 +125,7 @@ class SRecurringManager extends ChangeNotifier {
     try {
       Map request = {
         "token":
-        navigatorKey.currentContext!.read<UserManager>().user?.token ?? "",
+            navigatorKey.currentContext!.read<UserManager>().user?.token ?? "",
       };
       ApiResponse response = await apiRequest(
         url: '${Apis.recurringClose}$id',
@@ -149,7 +151,8 @@ class SRecurringManager extends ChangeNotifier {
       return ApiResponse(status: false);
     }
   }
-  Future recurringCondition(String symbol,{required int index}) async {
+
+  Future recurringCondition(String symbol, {required int index}) async {
     try {
       TradeManager manager = navigatorKey.currentContext!.read<TradeManager>();
       ApiResponse response = await manager.getDetailTopData(
@@ -157,14 +160,20 @@ class SRecurringManager extends ChangeNotifier {
         showProgress: true,
       );
       if (response.status) {
-        Navigator.pushReplacementNamed(navigatorKey.currentContext!, RecurringIndex.path,
-            arguments: {
-              "editTradeID":_data?[index].id,
-            }
+        // Navigator.pushReplacementNamed(navigatorKey.currentContext!, RecurringIndex.path,
+        //     arguments: {
+        //       "editTradeID":_data?[index].id,
+        //     }
+        // );
+        Navigator.pushReplacement(
+          navigatorKey.currentContext!,
+          MaterialPageRoute(
+            builder: (context) => RecurringIndex(
+              editTradeID: _data?[index].id,
+            ),
+          ),
         );
-      }
-
-      else {
+      } else {
         Utils().showLog('stock holding: ${response.message}');
       }
       return ApiResponse(status: response.status);
@@ -174,10 +183,10 @@ class SRecurringManager extends ChangeNotifier {
     }
   }
 
-
   final Map<int, Map<String, dynamic>> _dataMap = {};
 
-  void _updateStockData(TsRecurringListRes holdingStk, StockDataManagerRes stockData) {
+  void _updateStockData(
+      TsRecurringListRes holdingStk, StockDataManagerRes stockData) {
     if (_data == null) return;
 
     List<TsRecurringListRes>? tempData = _data!.where((stock) {
@@ -204,7 +213,8 @@ class SRecurringManager extends ChangeNotifier {
       stock.currentValuation = (stock.currentPrice ?? 0) * shares;
       num investedChange = (stock.currentValuation ?? 0) - invested;
       stock.investedChange = investedChange;
-      stock.investedChangePercentage = (invested > 0) ? (investedChange / invested) * 100 : 0;
+      stock.investedChangePercentage =
+          (invested > 0) ? (investedChange / invested) * 100 : 0;
 
       tempData[index] = stock;
     }
@@ -214,17 +224,15 @@ class SRecurringManager extends ChangeNotifier {
   Map<String, num> _calculateTodaysReturn(TsRecurringListRes stock) {
     num todaysReturn = 0;
     num todaysReturnPercentage = 0;
-    num price =
-    stock.currentPrice ?? 0;
+    num price = stock.currentPrice ?? 0;
     bool boughtToday = _isStockBoughtToday(stock, _extra!.reponseTime!);
-    num referencePrice = boughtToday
-        ? (stock.averagePrice ?? 0)
-        : (
-        stock.previousClose ?? 0);
+    num referencePrice =
+        boughtToday ? (stock.averagePrice ?? 0) : (stock.previousClose ?? 0);
 
     if (referencePrice > 0) {
       todaysReturn = (price - referencePrice) * stock.quantity!;
-         todaysReturnPercentage = ((price - referencePrice) / referencePrice) * 100;
+      todaysReturnPercentage =
+          ((price - referencePrice) / referencePrice) * 100;
     }
     _dataMap[stock.id!] = {
       'todaysReturn': todaysReturn,
@@ -237,7 +245,8 @@ class SRecurringManager extends ChangeNotifier {
   }
 
   bool _isStockBoughtToday(TsRecurringListRes stock, DateTime responseDate) {
-    String createdAtDate = DateFormat('yyyy-MM-dd').format(stock.createdAt ?? DateTime.now());
+    String createdAtDate =
+        DateFormat('yyyy-MM-dd').format(stock.createdAt ?? DateTime.now());
     String responseDateString = DateFormat('yyyy-MM-dd').format(responseDate);
     return createdAtDate == responseDateString;
   }
@@ -248,40 +257,37 @@ class SRecurringManager extends ChangeNotifier {
         _data?.isNotEmpty == true &&
         (_extra?.executable == true)) {
       for (var data in _data!) {
-
         if (data.id == null) return;
         if (data.statusType == "CANCEL") {
           Utils().showLog('CANCEL statusType: ${data.symbol}');
-        }
-        else{
-        _updateStockData(
-          data,
-          StockDataManagerRes(
-            symbol: data.symbol ?? "",
-            change: data.change,
-            changePercentage: data.changesPercentage,
-            price: data.currentPrice,
-            previousClose: data.previousClose,
-          ),
-        );
-        try {
-          SSEManager.instance.connectMultipleStocks(
-            screen: SimulatorEnum.recurring,
-            symbols: symbols,
+        } else {
+          _updateStockData(
+            data,
+            StockDataManagerRes(
+              symbol: data.symbol ?? "",
+              change: data.change,
+              changePercentage: data.changesPercentage,
+              price: data.currentPrice,
+              previousClose: data.previousClose,
+            ),
           );
+          try {
+            SSEManager.instance.connectMultipleStocks(
+              screen: SimulatorEnum.recurring,
+              symbols: symbols,
+            );
 
-          SSEManager.instance.addListener(
-            data.symbol ?? '',
-            (StockDataManagerRes stockData) {
-
-              if (data.id == null) return;
-              _updateStockData(data, stockData);
-            },
-            SimulatorEnum.recurring,
-          );
-        } catch (e) {
-          //
-        }
+            SSEManager.instance.addListener(
+              data.symbol ?? '',
+              (StockDataManagerRes stockData) {
+                if (data.id == null) return;
+                _updateStockData(data, stockData);
+              },
+              SimulatorEnum.recurring,
+            );
+          } catch (e) {
+            //
+          }
         }
       }
     } else {

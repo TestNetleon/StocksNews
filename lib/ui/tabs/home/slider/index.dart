@@ -26,9 +26,15 @@ class _HomeTopNewsSliderState extends State<HomeTopNewsSlider> {
   void _newsDetail({String? slug}) {
     closeKeyboard();
     EventsService.instance.enterPostHomePage();
-    Navigator.pushNamed(context, NewsDetailIndex.path, arguments: {
-      'slug': slug,
-    });
+    // Navigator.pushNamed(context, NewsDetailIndex.path, arguments: {
+    //   'slug': slug,
+    // });
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => NewsDetailIndex(
+                  slug: slug ?? "",
+                )));
   }
 
   @override

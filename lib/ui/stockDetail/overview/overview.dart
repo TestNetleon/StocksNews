@@ -103,9 +103,15 @@ class SDOverview extends StatelessWidget {
                         manager.selectedStock == '') {
                       return;
                     }
-                    Navigator.pushNamed(context, AIindex.path, arguments: {
-                      'symbol': manager.selectedStock,
-                    });
+                    // Navigator.pushNamed(context, AIindex.path, arguments: {
+                    //   'symbol': manager.selectedStock,
+                    // });
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => AIindex(
+                                  symbol: manager.selectedStock ?? "",
+                                )));
                   },
                 ),
                 SpacerVertical(height: 8),

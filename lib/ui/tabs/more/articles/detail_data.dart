@@ -253,9 +253,15 @@ class BlogDetailData extends StatelessWidget {
                       data: data,
                       onTap: (news) {
                         if (data.slug == null || data.slug == '') return;
-                        Navigator.pushReplacementNamed(
-                            context, BlogsDetailIndex.path,
-                            arguments: {'slug': data.slug});
+                        // Navigator.pushReplacementNamed(
+                        //     context, BlogsDetailIndex.path,
+                        //     arguments: {'slug': data.slug});
+
+                        Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    BlogsDetailIndex(slug: data.slug ?? '')));
                       },
                     );
                   },

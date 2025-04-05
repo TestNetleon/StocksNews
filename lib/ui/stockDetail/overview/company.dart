@@ -82,8 +82,14 @@ class SDCompanyBrief extends StatelessWidget {
             value: companyInfo?.sector?.value,
             padding: EdgeInsets.only(bottom: Pad.pad8),
             onTap: () {
-              Navigator.pushNamed(context, SectorViewIndex.path,
-                  arguments: {'slug': companyInfo?.sector?.slug ?? ""});
+              // Navigator.pushNamed(context, SectorViewIndex.path,
+              //     arguments: {'slug': companyInfo?.sector?.slug ?? ""});
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => SectorViewIndex(
+                            slug: companyInfo?.sector?.slug ?? "",
+                          )));
             },
           ),
           SDRowContainer(
@@ -91,8 +97,14 @@ class SDCompanyBrief extends StatelessWidget {
             value: companyInfo?.industry?.value,
             padding: EdgeInsets.only(bottom: Pad.pad8),
             onTap: () {
-              Navigator.pushNamed(context, IndustriesViewIndex.path,
-                  arguments: {'slug': companyInfo?.industry?.slug ?? ""});
+              // Navigator.pushNamed(context, IndustriesViewIndex.path,
+              //     arguments: {'slug': companyInfo?.industry?.slug ?? ""});
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => IndustriesViewIndex(
+                            slug: companyInfo?.industry?.slug ?? "",
+                          )));
             },
           ),
           SDRowContainer(

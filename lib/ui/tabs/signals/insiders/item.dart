@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/models/my_home.dart';
 import 'package:stocks_news_new/service/events/service.dart';
+import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/ui/base/app_bar.dart';
 import 'package:stocks_news_new/ui/theme/manager.dart';
 import 'package:stocks_news_new/utils/colors.dart';
@@ -50,9 +51,14 @@ class BaseInsiderItem extends StatelessWidget {
                         return;
                       }
 
-                      Navigator.pushNamed(
-                          context, SignalInsidersReportingIndex.path,
-                          arguments: {'data': data});
+                      // Navigator.pushNamed(
+                      //     context, SignalInsidersReportingIndex.path,
+                      //     arguments: {'data': data});
+                      Navigator.push(
+                          navigatorKey.currentContext!,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  SignalInsidersReportingIndex(data: data)));
                     },
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -140,8 +146,13 @@ class BaseInsiderItem extends StatelessWidget {
             child: GestureDetector(
               onTap: () {
                 if (data.companyCik == null || data.companyCik == '') return;
-                Navigator.pushNamed(context, SignalInsidersCompanyIndex.path,
-                    arguments: {'data': data});
+                // Navigator.pushNamed(context, SignalInsidersCompanyIndex.path,
+                //     arguments: {'data': data});
+                Navigator.push(
+                    navigatorKey.currentContext!,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            SignalInsidersCompanyIndex(data: data)));
               },
               child: Container(
                 margin: EdgeInsets.only(top: Pad.pad8),

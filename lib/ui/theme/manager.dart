@@ -8,7 +8,7 @@ class ThemeManager extends ChangeNotifier {
   ThemeMode get themeMode => _themeMode;
 
   ThemeManager() {
-    _loadTheme();
+    _loadTheme(reload: true);
   }
 
   void toggleTheme(ThemeMode mode) async {
@@ -28,7 +28,7 @@ class ThemeManager extends ChangeNotifier {
 
   // bool get isDarkMode => _themeMode == ThemeMode.dark;
 
-  void _loadTheme() async {
+  void _loadTheme({bool reload = false}) async {
     _themeMode = await Preference.getTheme();
     notifyListeners();
     ThemeColors.updateTheme(!isDarkMode);

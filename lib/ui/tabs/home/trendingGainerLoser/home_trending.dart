@@ -75,9 +75,15 @@ class _HomeTrendingState extends State<HomeTrending> {
                     BaseStockAddItem(
                       size: 30,
                       onTap: (value) {
-                        Navigator.pushNamed(context, SDIndex.path, arguments: {
-                          'symbol': value.symbol,
-                        });
+                        // Navigator.pushNamed(context, SDIndex.path, arguments: {
+                        //   'symbol': value.symbol,
+                        // });
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => SDIndex(
+                                      symbol: value.symbol ?? '',
+                                    )));
                       },
                       data: manager.dataTrending!.data![index],
                       index: index,
@@ -87,10 +93,15 @@ class _HomeTrendingState extends State<HomeTrending> {
                     if (index == manager.dataTrending!.data!.length - 1)
                       BaseButton(
                         onPressed: () {
-                          Navigator.pushNamed(
-                            context,
-                            TrendingViewAllIndex.path,
-                          );
+                          // Navigator.pushNamed(
+                          //   context,
+                          //   TrendingViewAllIndex.path,
+                          // );
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      TrendingViewAllIndex()));
                         },
                         text: "View More Trending",
                         margin: EdgeInsets.all(Pad.pad16),

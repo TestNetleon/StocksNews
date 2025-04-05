@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:stocks_news_new/models/my_home.dart';
+import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -33,9 +34,14 @@ class BaseInsiderReportingItem extends StatelessWidget {
           GestureDetector(
             onTap: () {
               if (data.companyCik == null || data.companyCik == '') return;
-              Navigator.pushReplacementNamed(
-                  context, SignalInsidersCompanyIndex.path,
-                  arguments: {'data': data});
+              // Navigator.pushReplacementNamed(
+              //     context, SignalInsidersCompanyIndex.path,
+              //     arguments: {'data': data});
+              Navigator.pushReplacement(
+                  navigatorKey.currentContext!,
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          SignalInsidersCompanyIndex(data: data)));
             },
             child: Container(
               margin: EdgeInsets.only(top: Pad.pad8),

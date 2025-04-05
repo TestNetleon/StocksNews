@@ -35,9 +35,15 @@ class HomeTrendingContainer extends StatelessWidget {
                 child: TickerBoxItem(
                     data: data,
                     onTap: () {
-                      Navigator.pushNamed(context, SDIndex.path, arguments: {
-                        'symbol': data.symbol,
-                      });
+                      // Navigator.pushNamed(context, SDIndex.path, arguments: {
+                      //   'symbol': data.symbol,
+                      // });
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => SDIndex(
+                                    symbol: data.symbol ?? '',
+                                  )));
                     }),
               );
             },

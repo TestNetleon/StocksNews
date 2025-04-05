@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/models/search.dart';
 import 'package:stocks_news_new/models/ticker.dart';
+import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/ui/base/base_list_divider.dart';
 import 'package:stocks_news_new/ui/base/base_scroll.dart';
 import 'package:stocks_news_new/ui/base/heading.dart';
@@ -160,10 +161,17 @@ class BaseSearchData extends StatelessWidget {
                   return GestureDetector(
                     onTap: () {
                       if (data.slug == null || data.slug == '') return;
-                      Navigator.pushNamed(context, NewsDetailIndex.path,
-                          arguments: {
-                            'slug': data.slug,
-                          });
+                      // Navigator.pushNamed(context, NewsDetailIndex.path,
+                      //     arguments: {
+                      //       'slug': data.slug,
+                      //     });
+                      Navigator.pushReplacement(
+                        navigatorKey.currentContext!,
+                        MaterialPageRoute(
+                            builder: (_) => NewsDetailIndex(
+                                  slug: data.slug ?? '',
+                                )),
+                      );
                     },
                     child: Container(
                       margin: EdgeInsets.symmetric(vertical: Pad.pad10),

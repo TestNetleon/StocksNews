@@ -379,8 +379,16 @@ class SuccessConditionalSheet extends StatelessWidget {
               if (!close) {
                 // Navigator.pushNamed(context, SimulatorIndex.path);
 
-                Navigator.pushNamed(navigatorKey.currentContext!, Tabs.path,
-                    arguments: {'index': 2});
+                // Navigator.pushNamed(navigatorKey.currentContext!, Tabs.path,
+                //     arguments: {'index': 2});
+                Navigator.push(
+                  navigatorKey.currentContext!,
+                  MaterialPageRoute(
+                    builder: (context) => Tabs(
+                      index: 2,
+                    ),
+                  ),
+                );
               }
             },
           ),

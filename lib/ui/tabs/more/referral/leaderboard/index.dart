@@ -34,11 +34,18 @@ class _LeaderBoardState extends State<LeaderBoard> {
   }
 
   void _navigateToTransactions() {
-    Navigator.pushNamed(
-      context,
-      ReferPointsTransaction.path,
-      arguments: {"type": "", "title": null},
-    );
+    // Navigator.pushNamed(
+    //   context,
+    //   ReferPointsTransaction.path,
+    //   arguments: {"type": "", "title": null},
+    // );
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => ReferPointsTransaction(
+                  title: null,
+                  type: '',
+                )));
   }
 
   @override

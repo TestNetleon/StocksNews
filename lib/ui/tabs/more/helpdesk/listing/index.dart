@@ -52,7 +52,9 @@ class _RequestNewIndexState extends State<RequestNewIndex> {
               manager.data?.helpDesk?.noTicketsMessage ?? manager.errorTickets,
           buttonText: "CREATE NEW TICKETS",
           onClick: () async {
-            Navigator.pushNamed(context, HelpDeskCreateIndex.path);
+            // Navigator.pushNamed(context, HelpDeskCreateIndex.path);
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => HelpDeskCreateIndex()));
           },
           child: BaseLoaderContainer(
             error: manager.data?.helpDesk?.noTicketsMessage ??

@@ -31,9 +31,7 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
 
-
 class LeagueManager extends ChangeNotifier {
-
   double progress = 0.0;
   late Duration? _totalDuration;
   Color progressColor = ThemeColors.success120;
@@ -117,11 +115,17 @@ class LeagueManager extends ChangeNotifier {
             onTap: () {
               Navigator.popUntil(
                   navigatorKey.currentContext!, (route) => route.isFirst);
-              Navigator.pushNamed(
+              // Navigator.pushNamed(
+              //     navigatorKey.currentContext!,
+              //     TradingLeagueIndex.path,
+              //     arguments: {'initialIndex':1}
+              // );
+
+              Navigator.push(
                   navigatorKey.currentContext!,
-                  TradingLeagueIndex.path,
-                  arguments: {'initialIndex':1}
-              );
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          TradingLeagueIndex(initialIndex: 1)));
             },
           );
         }
@@ -156,7 +160,6 @@ class LeagueManager extends ChangeNotifier {
     });
   }
 
-
   void stopCountdown() {
     _timer?.cancel();
   }
@@ -168,7 +171,6 @@ class LeagueManager extends ChangeNotifier {
       'seconds': seconds.toString().padLeft(2, '0'),
     };
   }
-
 
   LeagueTabRes? _tabData;
   LeagueTabRes? get tabData => _tabData;
@@ -193,7 +195,7 @@ class LeagueManager extends ChangeNotifier {
       if (response.status) {
         _tabData = leagueTabResFromMap(jsonEncode(response.data));
         _error = null;
-        onScreenChange(initialIndex??0);
+        onScreenChange(initialIndex ?? 0);
       } else {
         _tabData = null;
         _error = response.message;
@@ -202,14 +204,12 @@ class LeagueManager extends ChangeNotifier {
       _tabData = null;
       _error = Const.errSomethingWrong;
       Utils().showLog('Error on ${Apis.cryptoTabs}: $e');
-
     } finally {
       setStatus(Status.loaded);
     }
   }
 
-
-  int? selectedScreen=-1;
+  int? selectedScreen = -1;
   onScreenChange(index) {
     EventsService.instance.selectLeagueTradingLeagueToolPage(index: index);
     if (selectedScreen != index) {
@@ -220,7 +220,9 @@ class LeagueManager extends ChangeNotifier {
           tournament();
           break;
         case 1:
-          navigatorKey.currentContext!.read<LeaderboardManager>().showLeaderboard();
+          navigatorKey.currentContext!
+              .read<LeaderboardManager>()
+              .showLeaderboard();
           break;
 
         case 2:
@@ -229,7 +231,6 @@ class LeagueManager extends ChangeNotifier {
       }
     }
   }
-
 
 // TOURNAMENT
   Status _statusTournament = Status.ideal;
@@ -246,7 +247,6 @@ class LeagueManager extends ChangeNotifier {
 
   Extra? _extra;
   Extra? get extra => _extra;
-
 
   void setStatusTournament(status) {
     _statusTournament = status;
@@ -320,8 +320,7 @@ class LeagueManager extends ChangeNotifier {
       Utils().showLog('error in detail $e');
       _error = Const.errSomethingWrong;
       _detailRes = null;
-    }
-    finally{
+    } finally {
       setStatusDetail(Status.loaded);
     }
   }
@@ -345,10 +344,14 @@ class LeagueManager extends ChangeNotifier {
       );
       if (response.status) {
         tournamentDetail(_id);
-        Navigator.pushNamed( navigatorKey.currentContext!, LeagueTickersIndex.path);
+        // Navigator.pushNamed(
+        //     navigatorKey.currentContext!, LeagueTickersIndex.path);
+
+        Navigator.push(navigatorKey.currentContext!,
+            MaterialPageRoute(builder: (context) => LeagueTickersIndex()));
       } else {
         TopSnackbar.show(
-          message: response.message??"",
+          message: response.message ?? "",
           type: ToasterEnum.error,
         );
       }
@@ -370,7 +373,6 @@ class LeagueManager extends ChangeNotifier {
   Extra? _extraCommonList;
   Extra? get extraCommonList => _extraCommonList;
 
-
   List<TradingRes>? _playTraders;
   List<TradingRes>? get playTraders => _playTraders;
 
@@ -379,7 +381,6 @@ class LeagueManager extends ChangeNotifier {
   TextEditingController date = TextEditingController();
   TextEditingController searchController = TextEditingController();
   TextEditingController txnSizeController = TextEditingController();
-
 
   void setStatusTradeExecuted(status) {
     _statusCommonList = status;
@@ -408,8 +409,8 @@ class LeagueManager extends ChangeNotifier {
 
   Future<void> pickTradingDate({String? userID}) async {
     DateTime selectedDate = DateTime.now();
-    if(dateSend!=""){
-      selectedDate= DateFormat("yyyy-MM-dd").parse(dateSend);
+    if (dateSend != "") {
+      selectedDate = DateFormat("yyyy-MM-dd").parse(dateSend);
     }
 
     final DateTime? picked = await showDatePicker(
@@ -423,14 +424,12 @@ class LeagueManager extends ChangeNotifier {
       dateSend = DateFormat("yyyy-MM-dd").format(picked);
       getUserDetail(userID: userID, clear: false);
       notifyListeners();
-    }
-    else{
-      if(dateSend!=""){
+    } else {
+      if (dateSend != "") {
         getUserDetail(userID: userID, clear: true);
         notifyListeners();
       }
     }
-
   }
 
   void _clearVariables() {
@@ -471,7 +470,8 @@ class LeagueManager extends ChangeNotifier {
   bool get canLoadMore => _page <= (_leagueTitanRes?.totalPages ?? 1);
 
   Future getAllTitans(
-      {loadMore = false, bool clear = true,
+      {loadMore = false,
+      bool clear = true,
       required TournamentsHead selectedTournament}) async {
     if (loadMore) {
       _page++;
@@ -494,27 +494,24 @@ class LeagueManager extends ChangeNotifier {
       if (response.status) {
         if (_page == 1) {
           _leagueTitanRes = leagueTitanResFromMap(jsonEncode(response.data));
-          if(_leagueTitanRes?.data==null){
+          if (_leagueTitanRes?.data == null) {
             _errorCommonList = response.message;
           }
+        } else {
+          _leagueTitanRes?.data?.addAll(
+              leagueTitanResFromMap(jsonEncode(response.data)).data ?? []);
         }
-        else {
-          _leagueTitanRes?.data?.addAll(leagueTitanResFromMap(jsonEncode(response.data)).data ?? []);
-        }
-
       } else {
         if (_page == 1) {
           _leagueTitanRes = null;
           _errorCommonList = response.message;
         }
       }
-
     } catch (e) {
       _leagueTitanRes = null;
       _errorCommonList = Const.errSomethingWrong;
       Utils().showLog('join error $e');
-    }
-    finally {
+    } finally {
       setStatusTradeExecuted(Status.loaded);
     }
   }
@@ -529,38 +526,41 @@ class LeagueManager extends ChangeNotifier {
       String formattedDate = outputFormat.format(dateTime);
       DateTime dateTime1 = outputFormat.parse(formattedDate);
 
-      LeaderboardManager manager = navigatorKey.currentContext!.read<LeaderboardManager>();
+      LeaderboardManager manager =
+          navigatorKey.currentContext!.read<LeaderboardManager>();
       manager.getEditedDate(dateTime1);
       Navigator.popUntil(
           navigatorKey.currentContext!, (route) => route.isFirst);
-      Navigator.pushNamed(
-          navigatorKey.currentContext!,
-          TradingLeagueIndex.path,
-          arguments: {'initialIndex':1}
-      );
+      // Navigator.pushNamed(navigatorKey.currentContext!, TradingLeagueIndex.path,
+      //     arguments: {'initialIndex': 1});
 
+      Navigator.push(
+          navigatorKey.currentContext!,
+          MaterialPageRoute(
+              builder: (context) => TradingLeagueIndex(initialIndex: 1)));
     } else {
       Navigator.popUntil(
           navigatorKey.currentContext!, (route) => route.isFirst);
-      Navigator.pushNamed(
+      // Navigator.pushNamed(navigatorKey.currentContext!, TradingLeagueIndex.path,
+      //     arguments: {'initialIndex': 1});
+      Navigator.push(
           navigatorKey.currentContext!,
-          TradingLeagueIndex.path,
-          arguments: {'initialIndex':1}
-      );
+          MaterialPageRoute(
+              builder: (context) => TradingLeagueIndex(initialIndex: 1)));
     }
   }
 
   /// profile redirection
   void profileRedirection({String? userId}) {
-    Navigator.pushNamed(navigatorKey.currentContext!,
-        LeagueUserDetail.path,
-        arguments: {
-          "userId": userId,
-        });
+    // Navigator.pushNamed(navigatorKey.currentContext!, LeagueUserDetail.path,
+    //     arguments: {
+    //       "userId": userId,
+    //     });
+    Navigator.push(
+        navigatorKey.currentContext!,
+        MaterialPageRoute(
+            builder: (context) => LeagueUserDetail(userId: userId)));
   }
-
-
-
 
   AllTradesRes? _allTrades;
   AllTradesRes? get allTrades => _allTrades;
@@ -570,7 +570,6 @@ class LeagueManager extends ChangeNotifier {
 
   String? _errorTradeList;
   String? get errorTradeList => _errorTradeList ?? Const.errSomethingWrong;
-
 
   Status _statusTradeList = Status.ideal;
   Status get statusTradeList => _statusTradeList;
@@ -601,8 +600,8 @@ class LeagueManager extends ChangeNotifier {
   LeagueUserDetailRes? get userData => _userData;
   bool get canLoadMoreProfile => _pageProfile <= (_userData?.totalPages ?? 1);
 
-
-  Future getUserDetail({loadMore = false, bool clear = true, String? userID}) async {
+  Future getUserDetail(
+      {loadMore = false, bool clear = true, String? userID}) async {
     if (loadMore) {
       _pageProfile++;
       setStatusUserData(Status.loadingMore);
@@ -635,7 +634,7 @@ class LeagueManager extends ChangeNotifier {
           _errorUserData = null;
         } else {
           var newEntries =
-          leagueUserDetailResFromJson(jsonEncode(response.data));
+              leagueUserDetailResFromJson(jsonEncode(response.data));
           _userData?.recentBattles?.data
               ?.addAll(newEntries.recentBattles?.data ?? []);
         }
@@ -683,12 +682,12 @@ class LeagueManager extends ChangeNotifier {
           if (_allTrades != null && _allTrades!.data?.isNotEmpty == true) {
             _startSseTradesAll();
           }
-          if(_allTrades?.data==null){
+          if (_allTrades?.data == null) {
             _errorTradeList = response.message;
           }
-
         } else {
-          _allTrades?.data?.addAll(allTradesResFromJson(jsonEncode(response.data)).data ?? []);
+          _allTrades?.data?.addAll(
+              allTradesResFromJson(jsonEncode(response.data)).data ?? []);
         }
       } else {
         if (_page == 1) {
@@ -839,7 +838,7 @@ class LeagueManager extends ChangeNotifier {
     }
   }
 
- /* void tickerDetailRedirection(String symbol) {
+  /* void tickerDetailRedirection(String symbol) {
     Navigator.push(
       navigatorKey.currentContext!,
       MaterialPageRoute(builder: (_) => StockDetail(symbol: symbol)),
@@ -847,10 +846,14 @@ class LeagueManager extends ChangeNotifier {
   }*/
 
   void tradesRedirection(String selectedBattleID) {
-    Navigator.pushNamed(navigatorKey.currentContext!,
-        TradesWithDate.path,
-        arguments: {
-          "selectedBattleID": selectedBattleID,
-        });
+    // Navigator.pushNamed(navigatorKey.currentContext!, TradesWithDate.path,
+    //     arguments: {
+    //       "selectedBattleID": selectedBattleID,
+    //     });
+    Navigator.push(
+        navigatorKey.currentContext!,
+        MaterialPageRoute(
+            builder: (context) =>
+                TradesWithDate(selectedBattleID: selectedBattleID)));
   }
 }

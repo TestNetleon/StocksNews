@@ -19,7 +19,7 @@ class MyWatchListIndex extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     BillionairesManager manager = context.watch<BillionairesManager>();
-    SymbolMentionList? symbolMentionRes =  manager.cryptoWatchRes?.watchlistData;
+    SymbolMentionList? symbolMentionRes = manager.cryptoWatchRes?.watchlistData;
 
     return BaseLoaderContainer(
       hasData: manager.cryptoWatchRes != null,
@@ -30,42 +30,55 @@ class MyWatchListIndex extends StatelessWidget {
           onRefresh: manager.getWatchList,
           margin: EdgeInsets.zero,
           children: [
-            Visibility(visible:symbolMentionRes!=null,child: MentionsListIndex(symbolMentionRes: symbolMentionRes)),
+            Visibility(
+                visible: symbolMentionRes != null,
+                child: MentionsListIndex(symbolMentionRes: symbolMentionRes)),
             SpacerVertical(height: 20),
             Visibility(
-                visible: manager.cryptoWatchRes?.favoritePerson?.title != null && manager.cryptoWatchRes?.favoritePerson?.title!= '',
+                visible:
+                    manager.cryptoWatchRes?.favoritePerson?.title != null &&
+                        manager.cryptoWatchRes?.favoritePerson?.title != '',
                 child: BaseHeading(
                   margin: const EdgeInsets.symmetric(horizontal: 16.0),
-                  title: manager.cryptoWatchRes?.favoritePerson?.title??"",
+                  title: manager.cryptoWatchRes?.favoritePerson?.title ?? "",
                   titleStyle: styleBaseBold(),
-                )
-            ),
-            Visibility(visible: manager.cryptoWatchRes?.favoritePerson?.title != null && manager.cryptoWatchRes?.favoritePerson?.title!= '',
-                child: SpacerVertical(height:10)
-            ),
-
+                )),
+            Visibility(
+                visible:
+                    manager.cryptoWatchRes?.favoritePerson?.title != null &&
+                        manager.cryptoWatchRes?.favoritePerson?.title != '',
+                child: SpacerVertical(height: 10)),
             Visibility(
               visible: manager.cryptoWatchRes?.favoritePerson?.data != null,
               child: Padding(
                 padding: const EdgeInsets.only(right: 8.0),
                 child: CustomGridViewPerChild(
-                  paddingHorizontal:8,
+                  paddingHorizontal: 8,
                   paddingVertical: 8,
-                  length: manager.cryptoWatchRes?.favoritePerson?.data?.length ?? 0,
+                  length:
+                      manager.cryptoWatchRes?.favoritePerson?.data?.length ?? 0,
                   getChild: (index) {
-                    CryptoTweetPost? item = manager.cryptoWatchRes?.favoritePerson?.data?[index];
-                    bool? isEven= index%2==0;
+                    CryptoTweetPost? item =
+                        manager.cryptoWatchRes?.favoritePerson?.data?[index];
+                    bool? isEven = index % 2 == 0;
                     if (item == null) {
                       return const SizedBox();
                     }
                     return Padding(
-                      padding: EdgeInsets.symmetric(horizontal: isEven?8:0.0),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: isEven ? 8 : 0.0),
                       child: FavItem(
                         item: item,
                         onTap: () {
-                          Navigator.pushNamed(context, BillionairesDetailIndex.path,
-                              arguments: {'slug': item.slug ?? ""});
+                          // Navigator.pushNamed(context, BillionairesDetailIndex.path,
+                          //     arguments: {'slug': item.slug ?? ""});
 
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => BillionairesDetailIndex(
+                                        slug: item.slug ?? "",
+                                      )));
                         },
                       ),
                     );
@@ -73,18 +86,23 @@ class MyWatchListIndex extends StatelessWidget {
                 ),
               ),
             ),
-            Visibility(visible: manager.cryptoWatchRes?.favoritePerson?.data != null,child: SpacerVertical(height:20)),
             Visibility(
-                visible: manager.cryptoWatchRes?.recentTweetPost?.title != null && manager.cryptoWatchRes?.recentTweetPost?.title!= '',
+                visible: manager.cryptoWatchRes?.favoritePerson?.data != null,
+                child: SpacerVertical(height: 20)),
+            Visibility(
+                visible:
+                    manager.cryptoWatchRes?.recentTweetPost?.title != null &&
+                        manager.cryptoWatchRes?.recentTweetPost?.title != '',
                 child: BaseHeading(
                   margin: const EdgeInsets.symmetric(horizontal: 16.0),
-                  title: manager.cryptoWatchRes?.recentTweetPost?.title??"",
+                  title: manager.cryptoWatchRes?.recentTweetPost?.title ?? "",
                   titleStyle: styleBaseBold(),
-                )
-            ),
-            Visibility(visible: manager.cryptoWatchRes?.recentTweetPost?.title != null && manager.cryptoWatchRes?.recentTweetPost?.title!= '',
-                child: SpacerVertical(height:10)
-            ),
+                )),
+            Visibility(
+                visible:
+                    manager.cryptoWatchRes?.recentTweetPost?.title != null &&
+                        manager.cryptoWatchRes?.recentTweetPost?.title != '',
+                child: SpacerVertical(height: 10)),
             Visibility(
               visible: manager.cryptoWatchRes?.recentTweetPost?.data != null,
               child: ListView.separated(
@@ -92,22 +110,31 @@ class MyWatchListIndex extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 shrinkWrap: true,
                 itemBuilder: (context, index) {
-                  CryptoTweetPost? item = manager.cryptoWatchRes?.recentTweetPost?.data?[index];
+                  CryptoTweetPost? item =
+                      manager.cryptoWatchRes?.recentTweetPost?.data?[index];
                   return CryptoItem(
                     item: item,
                     onTap: () {
-                      Navigator.pushNamed(context, BillionairesDetailIndex.path,
-                          arguments: {'slug': item?.slug ?? ""});
+                      // Navigator.pushNamed(context, BillionairesDetailIndex.path,
+                      //     arguments: {'slug': item?.slug ?? ""});
+
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => BillionairesDetailIndex(
+                                    slug: item?.slug ?? "",
+                                  )));
                     },
                   );
                 },
                 separatorBuilder: (context, index) {
-                  return SpacerVertical(height:20);
+                  return SpacerVertical(height: 20);
                 },
-                itemCount: manager.cryptoWatchRes?.recentTweetPost?.data?.length ?? 0,
+                itemCount:
+                    manager.cryptoWatchRes?.recentTweetPost?.data?.length ?? 0,
               ),
             ),
-            SpacerVertical(height:10),
+            SpacerVertical(height: 10),
           ]),
     );
   }

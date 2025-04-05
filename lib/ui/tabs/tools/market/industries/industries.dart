@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/managers/market/industries/industries.dart';
+import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/ui/base/base_list_divider.dart';
 import 'package:stocks_news_new/ui/base/load_more.dart';
 import 'package:stocks_news_new/ui/base/lock.dart';
@@ -64,11 +65,17 @@ class _IndustriesState extends State<Industries> {
                             data: manager.data!.data![index],
                             index: index,
                             onTap: (value) {
-                              Navigator.pushNamed(
-                                  context, IndustriesViewIndex.path,
-                                  arguments: {
-                                    'slug': value?.industrySlug ?? ""
-                                  });
+                              // Navigator.pushNamed(
+                              //     context, IndustriesViewIndex.path,
+                              //     arguments: {
+                              //       'slug': value?.industrySlug ?? ""
+                              //     });
+                              Navigator.push(
+                                  navigatorKey.currentContext!,
+                                  MaterialPageRoute(
+                                      builder: (context) => IndustriesViewIndex(
+                                            slug: value?.industrySlug ?? '',
+                                          )));
                             },
                           ),
                         ],

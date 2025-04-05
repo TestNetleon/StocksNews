@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/ui/tabs/tools/league/managers/tournament.dart';
 import 'package:stocks_news_new/ui/tabs/tools/league/models/league_detail.dart';
 import 'package:stocks_news_new/ui/tabs/tools/league/screens/tournaments/dayTraining/open/index.dart';
@@ -25,7 +26,8 @@ class DayTrainingTitle extends StatelessWidget {
       children: [
         CommonCard(
           margin: EdgeInsets.symmetric(horizontal: Pad.pad16),
-          padding: EdgeInsets.symmetric(horizontal: Pad.pad14,vertical: Pad.pad16),
+          padding:
+              EdgeInsets.symmetric(horizontal: Pad.pad14, vertical: Pad.pad16),
           child: Column(
             children: [
               RichText(
@@ -104,13 +106,17 @@ class DayTrainingTitle extends StatelessWidget {
                     visible: detailRes?.tournamentLastDate != null,
                     child: Expanded(
                       child: CommonCard(
-                        padding: EdgeInsets.symmetric(horizontal: Pad.pad10,vertical: Pad.pad10),
+                        padding: EdgeInsets.symmetric(
+                            horizontal: Pad.pad10, vertical: Pad.pad10),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Text(
                               "Last League Ended On :",
-                              style: styleBaseRegular(fontSize: 12,color: ThemeColors.neutral80.withValues(alpha: 0.8)),
+                              style: styleBaseRegular(
+                                  fontSize: 12,
+                                  color: ThemeColors.neutral80
+                                      .withValues(alpha: 0.8)),
                               textAlign: TextAlign.center,
                             ),
                             SpacerVertical(height: Pad.pad14),
@@ -125,19 +131,21 @@ class DayTrainingTitle extends StatelessWidget {
                     ),
                   ),
                   SpacerHorizontal(width: Pad.pad10),
-
                   Visibility(
                     visible: manager.detailRes?.tournamentNextDate != null,
                     child: Expanded(
-                      child:
-                      CommonCard(
-                        padding: EdgeInsets.symmetric(horizontal: Pad.pad10,vertical: Pad.pad10),
+                      child: CommonCard(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: Pad.pad10, vertical: Pad.pad10),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Text(
                               "Upcoming League On:",
-                              style: styleBaseRegular(fontSize: 12,color: ThemeColors.neutral80.withValues(alpha: 0.8)),
+                              style: styleBaseRegular(
+                                  fontSize: 12,
+                                  color: ThemeColors.neutral80
+                                      .withValues(alpha: 0.8)),
                               textAlign: TextAlign.center,
                             ),
                             SpacerVertical(height: Pad.pad14),
@@ -158,16 +166,19 @@ class DayTrainingTitle extends StatelessWidget {
                 children: [
                   Expanded(
                     child: CommonCard(
-                      padding: EdgeInsets.symmetric(horizontal: Pad.pad10,vertical: Pad.pad10),
+                      padding: EdgeInsets.symmetric(
+                          horizontal: Pad.pad10, vertical: Pad.pad10),
                       child: RichText(
                         text: TextSpan(
                           text: 'Start Time: ',
-                          style: styleBaseRegular( color: ThemeColors.neutral80.withValues(alpha: 0.8),fontSize: 14),
+                          style: styleBaseRegular(
+                              color:
+                                  ThemeColors.neutral80.withValues(alpha: 0.8),
+                              fontSize: 14),
                           children: [
                             TextSpan(
                               style: styleBaseBold(fontSize: 14),
-                              text:
-                                  '${detailRes?.tournamentStartTime}',
+                              text: '${detailRes?.tournamentStartTime}',
                             ),
                           ],
                         ),
@@ -177,12 +188,15 @@ class DayTrainingTitle extends StatelessWidget {
                   SpacerHorizontal(width: Pad.pad10),
                   Expanded(
                     child: CommonCard(
-                      padding: EdgeInsets.symmetric(horizontal: Pad.pad10,vertical: Pad.pad10),
+                      padding: EdgeInsets.symmetric(
+                          horizontal: Pad.pad10, vertical: Pad.pad10),
                       child: RichText(
                         text: TextSpan(
                           text: 'End Time: ',
                           style: styleBaseRegular(
-                              color: ThemeColors.neutral80.withValues(alpha: 0.8), fontSize: 14),
+                              color:
+                                  ThemeColors.neutral80.withValues(alpha: 0.8),
+                              fontSize: 14),
                           children: [
                             TextSpan(
                               style: styleBaseBold(fontSize: 14),
@@ -210,7 +224,11 @@ class DayTrainingTitle extends StatelessWidget {
             if (detailRes?.joined == false) {
               manager.joinLeague(id: tournamentId);
             } else {
-              Navigator.pushNamed(context, LeagueTickersIndex.path);
+              // Navigator.pushNamed(context, LeagueTickersIndex.path);
+              Navigator.push(
+                  navigatorKey.currentContext!,
+                  MaterialPageRoute(
+                      builder: (context) => LeagueTickersIndex()));
             }
           },
           buttonText: detailRes?.showButton ?? 'Open',

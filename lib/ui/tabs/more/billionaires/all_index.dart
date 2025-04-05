@@ -10,7 +10,6 @@ import 'package:stocks_news_new/ui/tabs/more/billionaires/widget/billionaire_gri
 import 'package:stocks_news_new/widgets/custom/base_loader_container.dart';
 import 'package:stocks_news_new/widgets/custom_gridview.dart';
 
-
 class AllBillionairesIndex extends StatefulWidget {
   static const path = 'AllBillionairesIndex';
 
@@ -21,7 +20,6 @@ class AllBillionairesIndex extends StatefulWidget {
 }
 
 class _AllBillionairesIndexState extends State<AllBillionairesIndex> {
-
   @override
   void initState() {
     super.initState();
@@ -34,16 +32,17 @@ class _AllBillionairesIndexState extends State<AllBillionairesIndex> {
     BillionairesManager manager = context.read<BillionairesManager>();
     manager.getAllBills();
   }
+
   @override
   Widget build(BuildContext context) {
     BillionairesManager manager = context.watch<BillionairesManager>();
     TopTab? viewRes = manager.viewBillRes?.topTab;
 
     return BaseScaffold(
-        appBar:
-        BaseAppBar(
+        appBar: BaseAppBar(
           showBack: true,
-          title:  !manager.isViewLoading?viewRes?.billionaires?.title ?? "":"",
+          title:
+              !manager.isViewLoading ? viewRes?.billionaires?.title ?? "" : "",
           showSearch: true,
         ),
         body: BaseLoaderContainer(
@@ -57,38 +56,41 @@ class _AllBillionairesIndexState extends State<AllBillionairesIndex> {
           child: BaseScroll(
             onRefresh: manager.getAllBills,
             margin: EdgeInsets.zero,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(right: 8.0),
-                  child: CustomGridViewPerChild(
-                    paddingHorizontal:8,
-                    paddingVertical:18,
-                    length:viewRes?.billionaires?.data?.length ?? 0,
-                    getChild: (index) {
-                      CryptoTweetPost? item = viewRes?.billionaires?.data?[index];
-                      bool? isEven= index%2==0;
-                      if (item == null) {
-                        return const SizedBox();
-                      }
-                      return Padding(
-                        padding: EdgeInsets.symmetric(horizontal: isEven?8:0.0),
-                        child: BillionaireGridItem(
-                          item: item,
-                          onTap: () {
-                            Navigator.pushNamed(context, BillionairesDetailIndex.path,
-                                arguments: {'slug': item.slug ?? ""});
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(right: 8.0),
+                child: CustomGridViewPerChild(
+                  paddingHorizontal: 8,
+                  paddingVertical: 18,
+                  length: viewRes?.billionaires?.data?.length ?? 0,
+                  getChild: (index) {
+                    CryptoTweetPost? item = viewRes?.billionaires?.data?[index];
+                    bool? isEven = index % 2 == 0;
+                    if (item == null) {
+                      return const SizedBox();
+                    }
+                    return Padding(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: isEven ? 8 : 0.0),
+                      child: BillionaireGridItem(
+                        item: item,
+                        onTap: () {
+                          // Navigator.pushNamed(context, BillionairesDetailIndex.path,
+                          //     arguments: {'slug': item.slug ?? ""});
 
-                          },
-                        ),
-                      );
-                    },
-                  ),
-                )
-              ],
-
-
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => BillionairesDetailIndex(
+                                      slug: item.slug ?? '')));
+                        },
+                      ),
+                    );
+                  },
+                ),
+              )
+            ],
           ),
-        )
-    );
+        ));
   }
 }

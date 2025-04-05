@@ -97,7 +97,11 @@ class NoSubscription extends StatelessWidget {
                     value: manager.layoutData?.superWallLayout ?? '');
                 return;
               }
-              Navigator.pushNamed(context, SubscriptionPlansIndex.path);
+              // Navigator.pushNamed(context, SubscriptionPlansIndex.path);
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => SubscriptionPlansIndex()));
             },
             text: 'View Plans',
           ),

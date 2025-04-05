@@ -124,6 +124,9 @@ class AlertsM extends ChangeNotifier {
     // Navigator.pushNamed(navigatorKey.currentContext!, Tabs.path, arguments: {
     //   'index': 2,
     // });
-    Navigator.pushNamed(navigatorKey.currentContext!, MarketIndex.path);
+    // Navigator.pushNamed(navigatorKey.currentContext!, MarketIndex.path);
+
+    Navigator.push(navigatorKey.currentContext!,
+        MaterialPageRoute(builder: (context) => MarketIndex()));
   }
 }

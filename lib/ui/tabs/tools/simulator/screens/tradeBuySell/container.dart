@@ -137,11 +137,20 @@ class _BuySellContainerState extends State<BuySellContainer> {
         // Navigator.pushNamed(navigatorKey.currentContext!, SimulatorIndex.path,
         //     arguments: {"initialIndex": 1});
 
-        Navigator.pushNamed(navigatorKey.currentContext!, Tabs.path,
-            arguments: {
-              'index': 2,
-              'childIndex': 1,
-            });
+        // Navigator.pushNamed(navigatorKey.currentContext!, Tabs.path,
+        //     arguments: {
+        //       'index': 2,
+        //       'childIndex': 1,
+        //     });
+        Navigator.push(
+          navigatorKey.currentContext!,
+          MaterialPageRoute(
+            builder: (context) => Tabs(
+              index: 2,
+              childIndex: 1,
+            ),
+          ),
+        );
 
         _clear();
         await showTsOrderSuccessSheet(order, widget.selectedStock);
@@ -212,11 +221,21 @@ class _BuySellContainerState extends State<BuySellContainer> {
           // Navigator.pushNamed(navigatorKey.currentContext!, SimulatorIndex.path,
           //     arguments: {"initialIndex": isPending ? 1 : 0});
 
-          Navigator.pushNamed(navigatorKey.currentContext!, Tabs.path,
-              arguments: {
-                'index': 2,
-                'childIndex': isPending ? 1 : 0,
-              });
+          // Navigator.pushNamed(navigatorKey.currentContext!, Tabs.path,
+          //     arguments: {
+          //       'index': 2,
+          //       'childIndex': isPending ? 1 : 0,
+          //     });
+          Navigator.push(
+            navigatorKey.currentContext!,
+            MaterialPageRoute(
+              builder: (context) => Tabs(
+                index: 2,
+                childIndex: isPending ? 1 : 0,
+              ),
+            ),
+          );
+
           _clear();
           await showTsOrderSuccessSheet(order, widget.selectedStock);
         } else {
@@ -287,11 +306,20 @@ class _BuySellContainerState extends State<BuySellContainer> {
         // Navigator.pushNamed(navigatorKey.currentContext!, SimulatorIndex.path,
         //     arguments: {"initialIndex": isPending ? 1 : 0});
 
-        Navigator.pushNamed(navigatorKey.currentContext!, Tabs.path,
-            arguments: {
-              'index': 2,
-              'childIndex': isPending ? 1 : 0,
-            });
+        // Navigator.pushNamed(navigatorKey.currentContext!, Tabs.path,
+        //     arguments: {
+        //       'index': 2,
+        //       'childIndex': isPending ? 1 : 0,
+        //     });
+        Navigator.push(
+          navigatorKey.currentContext!,
+          MaterialPageRoute(
+            builder: (context) => Tabs(
+              index: 2,
+              childIndex: isPending ? 1 : 0,
+            ),
+          ),
+        );
 
         await showTsOrderSuccessSheet(order, widget.selectedStock);
       } else {

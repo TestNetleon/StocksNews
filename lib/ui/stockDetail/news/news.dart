@@ -29,9 +29,15 @@ class SDLatestNewsWidget extends StatelessWidget {
           data: data,
           onTap: (news) {
             if (data.slug == null || data.slug == '') return;
-            Navigator.pushNamed(context, NewsDetailIndex.path, arguments: {
-              'slug': data.slug,
-            });
+            // Navigator.pushNamed(context, NewsDetailIndex.path, arguments: {
+            //   'slug': data.slug,
+            // });
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => NewsDetailIndex(
+                          slug: data.slug ?? '',
+                        )));
           },
         );
       },

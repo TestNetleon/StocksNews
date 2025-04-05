@@ -38,11 +38,16 @@ class BasePoliticianItem extends StatelessWidget {
                   visible: namePresent || officePresent,
                   child: InkWell(
                     onTap: () {
-                      Navigator.pushNamed(
-                          context, SignalPoliticianDetailIndex.path,
-                          arguments: {
-                            'data': data,
-                          });
+                      // Navigator.pushNamed(
+                      //     context, SignalPoliticianDetailIndex.path,
+                      //     arguments: {
+                      //       'data': data,
+                      //     });
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  SignalPoliticianDetailIndex(data: data)));
                     },
                     child: Row(
                       children: [
@@ -150,9 +155,15 @@ class BasePoliticianItem extends StatelessWidget {
           Visibility(
             child: InkWell(
               onTap: () {
-                Navigator.pushNamed(context, SDIndex.path, arguments: {
-                  'symbol': data.symbol,
-                });
+                // Navigator.pushNamed(context, SDIndex.path, arguments: {
+                //   'symbol': data.symbol,
+                // });
+
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            SDIndex(symbol: data.symbol ?? '')));
               },
               child: Container(
                 margin: EdgeInsets.only(top: Pad.pad8),

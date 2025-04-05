@@ -69,8 +69,15 @@ class _SignalStocksIndexState extends State<SignalStocksIndex> {
                   index: index,
                   onTap: (p0) {
                     EventsService.instance.openStockSignalDataToolsPage();
-                    Navigator.pushNamed(context, SDIndex.path,
-                        arguments: {'symbol': p0.symbol});
+
+                    // Navigator.pushNamed(context, SDIndex.path,
+                    //     arguments: {'symbol': p0.symbol});
+
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                SDIndex(symbol: p0.symbol ?? '')));
                   },
                   manager: manager,
                 );

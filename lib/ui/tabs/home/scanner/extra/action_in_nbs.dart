@@ -80,6 +80,7 @@ class _ActionInNbsState extends State<ActionInNbs> {
     if (text == null && text == "") return "";
     return text?.replaceFirst("<symbol>", "$symbol");
   }
+
   Future getForUser() async {
     _userOrdersCheck = await Preference.getUserCheck();
     setState(() {});
@@ -88,22 +89,17 @@ class _ActionInNbsState extends State<ActionInNbs> {
   Future _onTapConditions({ConditionType? cType}) async {
     try {
       TickerSearchManager manager = context.read<TickerSearchManager>();
-      if(cType==ConditionType.recurringOrder){
+      if (cType == ConditionType.recurringOrder) {
         manager.stockHoldingOfRecurringCondition(widget.symbol ?? "");
+      } else {
+        manager.conditionalRedirection(widget.symbol ?? "",
+            conditionalType: cType);
       }
-      else{
-        manager.conditionalRedirection(
-            widget.symbol ?? "",
-            conditionalType: cType
-        );
-      }
-
-
-    }
-    catch (e) {
+    } catch (e) {
       //
     }
   }
+
   Future openInfoSheet({ConditionType? cType, StockType? selectedStock}) async {
     showModalBottomSheet(
       enableDrag: true,
@@ -199,22 +195,30 @@ class _ActionInNbsState extends State<ActionInNbs> {
                     borderRadius: BorderRadius.circular(8.0)),
                 child: TextButton(
                     onPressed: () {
-                      if(widget.fromWithSelectedIndex==0){
-                        EventsService.instance.clickStockScannerPage(type: "overview");
+                      if (widget.fromWithSelectedIndex == 0) {
+                        EventsService.instance
+                            .clickStockScannerPage(type: "overview");
                       }
-                      if(widget.fromWithSelectedIndex==1){
-                        EventsService.instance.clickStockGainerPage(type: "overview");
+                      if (widget.fromWithSelectedIndex == 1) {
+                        EventsService.instance
+                            .clickStockGainerPage(type: "overview");
                       }
-                      if(widget.fromWithSelectedIndex==2){
-                        EventsService.instance.clickStockLoserPage(type: "overview");
+                      if (widget.fromWithSelectedIndex == 2) {
+                        EventsService.instance
+                            .clickStockLoserPage(type: "overview");
                       }
 
-
-                      Navigator.pushNamed(
-                          navigatorKey.currentContext!, SDIndex.path,
-                          arguments: {
-                            'symbol': widget.symbol ?? "",
-                          });
+                      // Navigator.pushNamed(
+                      //     navigatorKey.currentContext!, SDIndex.path,
+                      //     arguments: {
+                      //       'symbol': widget.symbol ?? "",
+                      //     });
+                      Navigator.push(
+                          navigatorKey.currentContext!,
+                          MaterialPageRoute(
+                              builder: (context) => SDIndex(
+                                    symbol: widget.symbol ?? "",
+                                  )));
                     },
                     child: Text(
                       "Stock Overview",
@@ -240,22 +244,20 @@ class _ActionInNbsState extends State<ActionInNbs> {
           ),
           SpacerVertical(height: Pad.pad5),
           BuyOrderItem(
-            icon: orderIcons?.buyIcon??"",
+            icon: orderIcons?.buyIcon ?? "",
             title: "Buy Order",
             subtitle:
                 subtitleWithSymbol(ordersSubTitle?.buyOrder, widget.symbol),
             onTap: () {
-
-              if(widget.fromWithSelectedIndex==0){
+              if (widget.fromWithSelectedIndex == 0) {
                 EventsService.instance.clickStockScannerPage(type: "buy");
               }
-              if(widget.fromWithSelectedIndex==1){
+              if (widget.fromWithSelectedIndex == 1) {
                 EventsService.instance.clickStockGainerPage(type: "buy");
               }
-              if(widget.fromWithSelectedIndex==2){
+              if (widget.fromWithSelectedIndex == 2) {
                 EventsService.instance.clickStockLoserPage(type: "buy");
               }
-
 
               if (lockInfoRes != null) {
                 BaseBottomSheet().bottomSheet(
@@ -266,31 +268,30 @@ class _ActionInNbsState extends State<ActionInNbs> {
                     ));
               } else {
                 var selectedStock = StockType.buy;
-                if(_userOrdersCheck?.buyOrder==true){
+                if (_userOrdersCheck?.buyOrder == true) {
                   _onTap(symbol: widget.symbol, selectedStock: selectedStock);
-                }else{
+                } else {
                   openInfoSheet(selectedStock: selectedStock);
                 }
-
               }
             },
           ),
           BaseListDivider(),
           BuyOrderItem(
-            icon: orderIcons?.sellOrderIcon??"",
+            icon: orderIcons?.sellOrderIcon ?? "",
             title: "Sell Order",
             subtitle: subtitleWithSymbol(
               ordersSubTitle?.sellOrder,
               widget.symbol,
             ),
             onTap: () {
-              if(widget.fromWithSelectedIndex==0){
+              if (widget.fromWithSelectedIndex == 0) {
                 EventsService.instance.clickStockScannerPage(type: "sell");
               }
-              if(widget.fromWithSelectedIndex==1){
+              if (widget.fromWithSelectedIndex == 1) {
                 EventsService.instance.clickStockGainerPage(type: "sell");
               }
-              if(widget.fromWithSelectedIndex==2){
+              if (widget.fromWithSelectedIndex == 2) {
                 EventsService.instance.clickStockLoserPage(type: "sell");
               }
               if (lockInfoRes != null) {
@@ -302,9 +303,9 @@ class _ActionInNbsState extends State<ActionInNbs> {
                     ));
               } else {
                 var selectedStock = StockType.sell;
-                if(_userOrdersCheck?.sellOrder==true){
+                if (_userOrdersCheck?.sellOrder == true) {
                   _onTap(symbol: widget.symbol, selectedStock: selectedStock);
-                }else{
+                } else {
                   openInfoSheet(selectedStock: selectedStock);
                 }
               }
@@ -312,20 +313,20 @@ class _ActionInNbsState extends State<ActionInNbs> {
           ),
           BaseListDivider(),
           BuyOrderItem(
-            icon: orderIcons?.shortOrderIcon??"",
+            icon: orderIcons?.shortOrderIcon ?? "",
             title: "Short Order",
             subtitle: subtitleWithSymbol(
               ordersSubTitle?.shortOrder,
               widget.symbol,
             ),
             onTap: () {
-              if(widget.fromWithSelectedIndex==0){
+              if (widget.fromWithSelectedIndex == 0) {
                 EventsService.instance.clickStockScannerPage(type: "short");
               }
-              if(widget.fromWithSelectedIndex==1){
+              if (widget.fromWithSelectedIndex == 1) {
                 EventsService.instance.clickStockGainerPage(type: "short");
               }
-              if(widget.fromWithSelectedIndex==2){
+              if (widget.fromWithSelectedIndex == 2) {
                 EventsService.instance.clickStockLoserPage(type: "short");
               }
               if (lockInfoRes != null) {
@@ -337,34 +338,32 @@ class _ActionInNbsState extends State<ActionInNbs> {
                     ));
               } else {
                 var selectedStock = StockType.short;
-                if(_userOrdersCheck?.shortOrder==true){
+                if (_userOrdersCheck?.shortOrder == true) {
                   navigatorKey.currentContext!
                       .read<TickerSearchManager>()
                       .shortRedirection(widget.symbol ?? "");
-                }
-                else{
+                } else {
                   openInfoSheet(selectedStock: selectedStock);
                 }
-
               }
             },
           ),
           BaseListDivider(),
           BuyOrderItem(
-            icon: orderIcons?.buyToCoverIcon??"",
+            icon: orderIcons?.buyToCoverIcon ?? "",
             title: "Buy to Cover Order",
             subtitle: subtitleWithSymbol(
               ordersSubTitle?.buyToCoverOrder,
               widget.symbol,
             ),
             onTap: () {
-              if(widget.fromWithSelectedIndex==0){
+              if (widget.fromWithSelectedIndex == 0) {
                 EventsService.instance.clickStockScannerPage(type: "btc");
               }
-              if(widget.fromWithSelectedIndex==1){
+              if (widget.fromWithSelectedIndex == 1) {
                 EventsService.instance.clickStockGainerPage(type: "btc");
               }
-              if(widget.fromWithSelectedIndex==2){
+              if (widget.fromWithSelectedIndex == 2) {
                 EventsService.instance.clickStockLoserPage(type: "btc");
               }
               if (lockInfoRes != null) {
@@ -376,12 +375,11 @@ class _ActionInNbsState extends State<ActionInNbs> {
                     ));
               } else {
                 var selectedStock = StockType.btc;
-                if(_userOrdersCheck?.btcOrder==true){
+                if (_userOrdersCheck?.btcOrder == true) {
                   _onTap(symbol: widget.symbol, selectedStock: selectedStock);
-                }else{
+                } else {
                   openInfoSheet(selectedStock: selectedStock);
                 }
-
               }
             },
           ),
@@ -399,7 +397,7 @@ class _ActionInNbsState extends State<ActionInNbs> {
           Visibility(
             visible: userConditionalOrderPermissionRes?.bracketOrder == true,
             child: BuyOrderItem(
-              icon: orderIcons?.bracketOrderIcon??"",
+              icon: orderIcons?.bracketOrderIcon ?? "",
               title: "Bracket Order",
               subtitle: subtitleWithSymbol(
                 ordersSubTitle?.bracketOrder,
@@ -415,9 +413,9 @@ class _ActionInNbsState extends State<ActionInNbs> {
                         lockWithImage: false,
                       ));
                 } else {
-                  if(_userOrdersCheck?.bracketOrder==true){
+                  if (_userOrdersCheck?.bracketOrder == true) {
                     _onTapConditions(cType: selectedType);
-                  }else{
+                  } else {
                     openInfoSheet(cType: selectedType);
                   }
                   //openInfoSheet(cType: ConditionType.bracketOrder);
@@ -425,11 +423,13 @@ class _ActionInNbsState extends State<ActionInNbs> {
               },
             ),
           ),
-          Visibility(visible: userConditionalOrderPermissionRes?.bracketOrder == true,child: BaseListDivider()),
+          Visibility(
+              visible: userConditionalOrderPermissionRes?.bracketOrder == true,
+              child: BaseListDivider()),
           Visibility(
             visible: userConditionalOrderPermissionRes?.limitOrder == true,
             child: BuyOrderItem(
-              icon: orderIcons?.limitOrderIcon??"",
+              icon: orderIcons?.limitOrderIcon ?? "",
               title: "Limit Order",
               subtitle: subtitleWithSymbol(
                 ordersSubTitle?.limitOrder,
@@ -445,21 +445,23 @@ class _ActionInNbsState extends State<ActionInNbs> {
                         lockWithImage: false,
                       ));
                 } else {
-                  if(_userOrdersCheck?.limitOrder==true){
+                  if (_userOrdersCheck?.limitOrder == true) {
                     _onTapConditions(cType: selectedType);
-                  }else{
+                  } else {
                     openInfoSheet(cType: selectedType);
                   }
-                //  openInfoSheet(cType: ConditionType.limitOrder);
+                  //  openInfoSheet(cType: ConditionType.limitOrder);
                 }
               },
             ),
           ),
-          Visibility(visible: userConditionalOrderPermissionRes?.limitOrder == true,child: BaseListDivider()),
+          Visibility(
+              visible: userConditionalOrderPermissionRes?.limitOrder == true,
+              child: BaseListDivider()),
           Visibility(
             visible: userConditionalOrderPermissionRes?.stopOrder == true,
             child: BuyOrderItem(
-              icon: orderIcons?.stopOrderIcon??"",
+              icon: orderIcons?.stopOrderIcon ?? "",
               title: "Stop Order",
               subtitle: subtitleWithSymbol(
                 ordersSubTitle?.stopOrder,
@@ -475,9 +477,9 @@ class _ActionInNbsState extends State<ActionInNbs> {
                         lockWithImage: false,
                       ));
                 } else {
-                  if(_userOrdersCheck?.stopOrder==true){
+                  if (_userOrdersCheck?.stopOrder == true) {
                     _onTapConditions(cType: selectedType);
-                  }else{
+                  } else {
                     openInfoSheet(cType: selectedType);
                   }
                   //openInfoSheet(cType: ConditionType.stopOrder);
@@ -485,11 +487,13 @@ class _ActionInNbsState extends State<ActionInNbs> {
               },
             ),
           ),
-          Visibility(visible: userConditionalOrderPermissionRes?.stopOrder == true,child: BaseListDivider()),
+          Visibility(
+              visible: userConditionalOrderPermissionRes?.stopOrder == true,
+              child: BaseListDivider()),
           Visibility(
             visible: userConditionalOrderPermissionRes?.stopLimitOrder == true,
             child: BuyOrderItem(
-              icon: orderIcons?.stopLimitIcon??"",
+              icon: orderIcons?.stopLimitIcon ?? "",
               title: "Stop Limit Order",
               subtitle: subtitleWithSymbol(
                 ordersSubTitle?.stopLimitOrder,
@@ -505,9 +509,9 @@ class _ActionInNbsState extends State<ActionInNbs> {
                         lockWithImage: false,
                       ));
                 } else {
-                  if(_userOrdersCheck?.stopLimitOrder==true){
+                  if (_userOrdersCheck?.stopLimitOrder == true) {
                     _onTapConditions(cType: selectedType);
-                  }else{
+                  } else {
                     openInfoSheet(cType: selectedType);
                   }
                   //openInfoSheet(cType: ConditionType.stopLimitOrder);
@@ -515,11 +519,14 @@ class _ActionInNbsState extends State<ActionInNbs> {
               },
             ),
           ),
-          Visibility(visible: userConditionalOrderPermissionRes?.stopLimitOrder == true,child: BaseListDivider()),
+          Visibility(
+              visible:
+                  userConditionalOrderPermissionRes?.stopLimitOrder == true,
+              child: BaseListDivider()),
           Visibility(
             visible: userConditionalOrderPermissionRes?.trailingOrder == true,
             child: BuyOrderItem(
-              icon: orderIcons?.trailingOrderIcon??"",
+              icon: orderIcons?.trailingOrderIcon ?? "",
               title: "Trailing Order",
               subtitle: subtitleWithSymbol(
                 ordersSubTitle?.trailingOrder,
@@ -535,21 +542,23 @@ class _ActionInNbsState extends State<ActionInNbs> {
                         lockWithImage: false,
                       ));
                 } else {
-                  if(_userOrdersCheck?.trailingOrder==true){
+                  if (_userOrdersCheck?.trailingOrder == true) {
                     _onTapConditions(cType: selectedType);
-                  }else{
+                  } else {
                     openInfoSheet(cType: selectedType);
                   }
-                //  openInfoSheet(cType: ConditionType.trailingOrder);
+                  //  openInfoSheet(cType: ConditionType.trailingOrder);
                 }
               },
             ),
           ),
-          Visibility(visible: userConditionalOrderPermissionRes?.trailingOrder == true,child: BaseListDivider()),
+          Visibility(
+              visible: userConditionalOrderPermissionRes?.trailingOrder == true,
+              child: BaseListDivider()),
           Visibility(
             visible: userConditionalOrderPermissionRes?.recurringOrder == true,
             child: BuyOrderItem(
-              icon: orderIcons?.recurringOrderIcon??"",
+              icon: orderIcons?.recurringOrderIcon ?? "",
               title: "Recurring Order",
               subtitle: subtitleWithSymbol(
                 ordersSubTitle?.recurringOrder,
@@ -565,18 +574,20 @@ class _ActionInNbsState extends State<ActionInNbs> {
                         lockWithImage: false,
                       ));
                 } else {
-                  if(_userOrdersCheck?.recurringOrder==true){
+                  if (_userOrdersCheck?.recurringOrder == true) {
                     _onTapConditions(cType: selectedType);
-                  }else{
+                  } else {
                     openInfoSheet(cType: selectedType);
                   }
-                 // openInfoSheet(cType: ConditionType.recurringOrder);
+                  // openInfoSheet(cType: ConditionType.recurringOrder);
                 }
               },
             ),
           ),
-          Visibility(visible: userConditionalOrderPermissionRes?.recurringOrder == true,child: BaseListDivider()),
-
+          Visibility(
+              visible:
+                  userConditionalOrderPermissionRes?.recurringOrder == true,
+              child: BaseListDivider()),
         ],
       ),
     );

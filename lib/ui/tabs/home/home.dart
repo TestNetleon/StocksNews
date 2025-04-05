@@ -83,9 +83,13 @@ class _HomeIndexState extends State<HomeIndex> {
                           title: 'Market Scanner',
                           titleStyle: styleBaseBold(fontSize: 22),
                           viewMore: () {
-                            Navigator.pushNamed(context, Tabs.path, arguments: {
-                              'index': 1,
-                            });
+                            // Navigator.pushNamed(context, Tabs.path, arguments: {
+                            //   'index': 1,
+                            // });
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => Tabs(index: 1)));
                           },
                           viewMoreText: 'View All',
                         ),

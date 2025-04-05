@@ -22,10 +22,14 @@ class HomePoliticianTradeItem extends StatelessWidget {
 
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, SignalPoliticianDetailIndex.path,
-            arguments: {
-              'data': data,
-            });
+        // Navigator.pushNamed(context, SignalPoliticianDetailIndex.path,
+        //     arguments: {
+        //       'data': data,
+        //     });
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => SignalPoliticianDetailIndex(data: data)));
       },
       child: Container(
         width: 224.sp,

@@ -66,11 +66,16 @@ class _BlogsIndexState extends State<BlogsIndex> {
                 data: data,
                 onTap: (data) {
                   if (data.slug == null || data.slug == '') return;
-                  Navigator.pushNamed(
-                    context,
-                    BlogsDetailIndex.path,
-                    arguments: {'slug': data.slug},
-                  );
+                  // Navigator.pushNamed(
+                  //   context,
+                  //   BlogsDetailIndex.path,
+                  //   arguments: {'slug': data.slug},
+                  // );
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              BlogsDetailIndex(slug: data.slug ?? '')));
                 },
               );
             },

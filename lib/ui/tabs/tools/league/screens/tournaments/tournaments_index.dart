@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/service/events/service.dart';
+import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/ui/base/base_scroll.dart';
 import 'package:stocks_news_new/ui/base/heading.dart';
 import 'package:stocks_news_new/ui/tabs/tools/league/managers/tournament.dart';
@@ -96,11 +97,18 @@ class _LeagueIndexState extends State<LeagueIndex> {
                   viewMore: () {
                     EventsService.instance.viewMoreTopTradingTitansLeagueToolsPage();
                     var selectedTournament = TournamentsHead.topTitan;
-                    Navigator.pushNamed(context, AllTopTtIndex.path,
-                        arguments: {
-                          "selectedTournament": selectedTournament,
-                          "title": manager.data?.topTradingTitans?.title,
-                        });
+                    // Navigator.pushNamed(context, AllTopTtIndex.path,
+                    //     arguments: {
+                    //       "selectedTournament": selectedTournament,
+                    //       "title": manager.data?.topTradingTitans?.title,
+                    //     });
+                    Navigator.push(
+                        navigatorKey.currentContext!,
+                        MaterialPageRoute(
+                            builder: (context) => AllTopTtIndex(
+                                  selectedTournament: selectedTournament,
+                                  title: manager.data?.topTradingTitans?.title,
+                                )));
                   },
                   margin: const EdgeInsets.symmetric(horizontal: Pad.pad16),
                 ),

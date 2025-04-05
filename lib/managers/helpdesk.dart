@@ -264,9 +264,16 @@ class NewHelpDeskManager extends ChangeNotifier {
             title: "Alert",
           );
         }
-        Navigator.pushReplacementNamed(
-            navigatorKey.currentContext!, HelpDeskAllChatsIndex.path,
-            arguments: {"ticketId": response.data['ticket_id']});
+        // Navigator.pushReplacementNamed(
+        //     navigatorKey.currentContext!, HelpDeskAllChatsIndex.path,
+        //     arguments: {"ticketId": response.data['ticket_id']});
+
+        Navigator.pushReplacement(
+            navigatorKey.currentContext!,
+            MaterialPageRoute(
+                builder: (context) => HelpDeskAllChatsIndex(
+                      ticketId: response.data['ticket_id'],
+                    )));
       } else {
         _errorSubject = null;
         popUpAlert(

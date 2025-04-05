@@ -14,35 +14,30 @@ import 'package:stocks_news_new/widgets/custom/base_loader_container.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
-
-recentTweetSheet({
-  CryptoTweetPost? mentions})
-{
+recentTweetSheet({CryptoTweetPost? mentions}) {
   BaseBottomSheet().bottomSheet(
       isScrollable: false,
       barrierColor: ThemeColors.neutral5.withValues(alpha: 0.7),
       child: RecentTweet(
-        mentions:mentions,
-      )
-  );
+        mentions: mentions,
+      ));
 }
 
 class RecentTweet extends StatefulWidget {
   final CryptoTweetPost? mentions;
-  const RecentTweet({super.key,this.mentions});
+  const RecentTweet({super.key, this.mentions});
 
   @override
   State<RecentTweet> createState() => _RecentTweetState();
 }
 
 class _RecentTweetState extends State<RecentTweet> {
-
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       BillionairesManager manager = context.read<BillionairesManager>();
-      manager.getBillionaireTweets(tName:widget.mentions?.twitterName??"");
+      manager.getBillionaireTweets(tName: widget.mentions?.twitterName ?? "");
     });
   }
 
@@ -69,7 +64,7 @@ class _RecentTweetState extends State<RecentTweet> {
                   borderRadius: BorderRadius.circular(50),
                   child: CachedNetworkImagesWidget(
                     widget.mentions?.image ?? "",
-                    height:50,
+                    height: 50,
                     width: 50,
                     showLoading: true,
                     fit: BoxFit.contain,
@@ -87,7 +82,7 @@ class _RecentTweetState extends State<RecentTweet> {
                     ),
                     Text(
                       '${widget.mentions?.designation}',
-                      style: styleBaseRegular( fontSize: 14),
+                      style: styleBaseRegular(fontSize: 14),
                     ),
                   ],
                 ),
@@ -96,24 +91,29 @@ class _RecentTweetState extends State<RecentTweet> {
                 child: BaseButton(
                   fullWidth: false,
                   fontBold: true,
-                  color: widget.mentions?.isFavoritePersonAdded==0?ThemeColors.success:ThemeColors.error,
-                 // height: 35,
-                  onPressed: (){
-                    if(widget.mentions?.isFavoritePersonAdded==0){
-                      manager.requestAddToFav(widget.mentions?.twitterName??"",profiles: widget.mentions);
+                  color: widget.mentions?.isFavoritePersonAdded == 0
+                      ? ThemeColors.success
+                      : ThemeColors.error,
+                  // height: 35,
+                  onPressed: () {
+                    if (widget.mentions?.isFavoritePersonAdded == 0) {
+                      manager.requestAddToFav(
+                          widget.mentions?.twitterName ?? "",
+                          profiles: widget.mentions);
+                    } else {
+                      manager.requestRemoveToFav(
+                          widget.mentions?.twitterName ?? "",
+                          profiles: widget.mentions);
                     }
-                    else{
-                      manager.requestRemoveToFav(widget.mentions?.twitterName??"",profiles: widget.mentions);
-                    }
-
                   },
-                  text: widget.mentions?.isFavoritePersonAdded==0?"FOLLOW":"UNFOLLOW",
-                 // textColor:ThemeColors.white,
+                  text: widget.mentions?.isFavoritePersonAdded == 0
+                      ? "FOLLOW"
+                      : "UNFOLLOW",
+                  // textColor:ThemeColors.white,
                   textSize: 14,
-                  padding: EdgeInsets.symmetric(horizontal:20),
+                  padding: EdgeInsets.symmetric(horizontal: 20),
                 ),
               ),
-
             ],
           ),
           SpacerVertical(height: 10),
@@ -127,17 +127,24 @@ class _RecentTweetState extends State<RecentTweet> {
               child: ListView.separated(
                 shrinkWrap: true,
                 itemBuilder: (context, index) {
-                  CryptoTweetPost? item = manager.recentTweetRes?.tweets?[index];
+                  CryptoTweetPost? item =
+                      manager.recentTweetRes?.tweets?[index];
                   return CryptoItem(
                     item: item,
                     onTap: () {
-                      Navigator.pushNamed(context, BillionairesDetailIndex.path,
-                          arguments: {'slug': item?.slug ?? ""});
+                      // Navigator.pushNamed(context, BillionairesDetailIndex.path,
+                      //     arguments: {'slug': item?.slug ?? ""});
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => BillionairesDetailIndex(
+                                    slug: item?.slug ?? "",
+                                  )));
                     },
                   );
                 },
                 separatorBuilder: (context, index) {
-                  return SpacerVertical(height:10);
+                  return SpacerVertical(height: 10);
                 },
                 itemCount: manager.recentTweetRes?.tweets?.length ?? 0,
               ),
@@ -148,4 +155,3 @@ class _RecentTweetState extends State<RecentTweet> {
     );
   }
 }
-

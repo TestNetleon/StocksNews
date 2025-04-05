@@ -45,7 +45,11 @@ class BaseTickerAppBar extends StatelessWidget implements PreferredSizeWidget {
         navigatorKey.currentContext!.read<AlertsWatchlistManager>();
     UserManager userManager = navigatorKey.currentContext!.read<UserManager>();
     if (data?.isAlertAdded == 1) {
-      await Navigator.pushNamed(navigatorKey.currentContext!, AlertIndex.path);
+      // await Navigator.pushNamed(navigatorKey.currentContext!, AlertIndex.path);
+      await Navigator.push(
+        navigatorKey.currentContext!,
+        MaterialPageRoute(builder: (_) => AlertIndex()),
+      );
       if (onRefresh != null) onRefresh!();
     } else {
       if (userManager.user != null) {
@@ -80,8 +84,13 @@ class BaseTickerAppBar extends StatelessWidget implements PreferredSizeWidget {
         navigatorKey.currentContext!.read<AlertsWatchlistManager>();
     UserManager userManager = navigatorKey.currentContext!.read<UserManager>();
     if (data?.isWatchlistAdded == 1) {
-      await Navigator.pushNamed(
-          navigatorKey.currentContext!, WatchListIndex.path);
+      // await Navigator.pushNamed(
+      //     navigatorKey.currentContext!, WatchListIndex.path);
+
+      await Navigator.push(
+        navigatorKey.currentContext!,
+        MaterialPageRoute(builder: (_) => WatchListIndex()),
+      );
       if (onRefresh != null) onRefresh!();
     } else {
       if (userManager.user != null) {
@@ -153,8 +162,13 @@ class BaseTickerAppBar extends StatelessWidget implements PreferredSizeWidget {
                             } else {
                               Navigator.popUntil(navigatorKey.currentContext!,
                                   (route) => route.isFirst);
-                              Navigator.pushReplacementNamed(
-                                  navigatorKey.currentContext!, Tabs.path);
+                              // Navigator.pushReplacementNamed(
+                              //     navigatorKey.currentContext!, Tabs.path);
+
+                              Navigator.pushReplacement(
+                                navigatorKey.currentContext!,
+                                MaterialPageRoute(builder: (_) => Tabs()),
+                              );
                               popHome = false;
                             }
                           } else {
@@ -165,8 +179,12 @@ class BaseTickerAppBar extends StatelessWidget implements PreferredSizeWidget {
                             } else {
                               Navigator.popUntil(navigatorKey.currentContext!,
                                   (route) => route.isFirst);
-                              Navigator.pushReplacementNamed(
-                                  navigatorKey.currentContext!, Tabs.path);
+                              // Navigator.pushReplacementNamed(
+                              //     navigatorKey.currentContext!, Tabs.path);
+                              Navigator.pushReplacement(
+                                navigatorKey.currentContext!,
+                                MaterialPageRoute(builder: (_) => Tabs()),
+                              );
                               popHome = false;
                             }
                           }
@@ -310,10 +328,6 @@ class BaseTickerAppBar extends StatelessWidget implements PreferredSizeWidget {
                       SizedBox(
                         child: extraWidget,
                       )
-
-
-
-
                   ],
                 ),
               ],

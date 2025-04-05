@@ -36,8 +36,15 @@ class SDCompetitors extends StatelessWidget {
               index: index,
               onTap: (p0) {
                 Navigator.popUntil(context, (route) => route.isFirst);
-                Navigator.pushNamed(context, SDIndex.path,
-                    arguments: {'symbol': p0.symbol});
+                // Navigator.pushNamed(context, SDIndex.path,
+                //     arguments: {'symbol': p0.symbol});
+
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => SDIndex(
+                              symbol: p0.symbol ?? '',
+                            )));
               },
               slidable: false,
               expandable: data.extra,
