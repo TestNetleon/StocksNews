@@ -144,12 +144,21 @@ class TickerSearchManager extends ChangeNotifier {
           showProgress: true,
         );
         if (response.status) {
-          Navigator.pushReplacementNamed(
-              navigatorKey.currentContext!, TradeBuySellIndex.path,
-              arguments: {
-                "stockType": selectedStock,
-                "qty": res.data['quantity'],
-              });
+          // Navigator.pushReplacementNamed(
+          //     navigatorKey.currentContext!, TradeBuySellIndex.path,
+          //     arguments: {
+          //       "stockType": selectedStock,
+          //       "qty": res.data['quantity'],
+          //     });
+          Navigator.pushReplacement(
+            navigatorKey.currentContext!,
+            MaterialPageRoute(
+              builder: (context) => TradeBuySellIndex(
+                selectedStock: selectedStock,
+                qty: res.data['quantity'],
+              ),
+            ),
+          );
         }
       } else {
         //
@@ -169,12 +178,21 @@ class TickerSearchManager extends ChangeNotifier {
         showProgress: true,
       );
       if (response.status) {
-        Navigator.pushReplacementNamed(
-            navigatorKey.currentContext!, TradeBuySellIndex.path,
-            arguments: {
-              "stockType": StockType.short,
-              "qty": 0,
-            });
+        // Navigator.pushReplacementNamed(
+        //     navigatorKey.currentContext!, TradeBuySellIndex.path,
+        //     arguments: {
+        //       "stockType": StockType.short,
+        //       "qty": 0,
+        //     });
+        Navigator.pushReplacement(
+          navigatorKey.currentContext!,
+          MaterialPageRoute(
+            builder: (context) => TradeBuySellIndex(
+              selectedStock: StockType.short,
+              qty: 0,
+            ),
+          ),
+        );
       }
       return ApiResponse(status: response.status);
     } catch (e) {
@@ -186,8 +204,14 @@ class TickerSearchManager extends ChangeNotifier {
   Future stockHoldingOfCondition(String symbol,
       {String? selectedStock, ConditionType? conditionalType}) async {
     if (conditionalType == ConditionType.recurringOrder) {
-      return Navigator.pushReplacementNamed(
-          navigatorKey.currentContext!, RecurringIndex.path);
+      // return Navigator.pushReplacementNamed(
+      //     navigatorKey.currentContext!, RecurringIndex.path);
+      Navigator.pushReplacement(
+        navigatorKey.currentContext!,
+        MaterialPageRoute(
+          builder: (context) => RecurringIndex(),
+        ),
+      );
     }
     Utils().showLog('Checking holdings for ${conditionalType?.name}');
     try {
@@ -223,16 +247,32 @@ class TickerSearchManager extends ChangeNotifier {
         );
         if (response.status) {
           if (conditionalType == ConditionType.recurringOrder) {
-            Navigator.pushReplacementNamed(
-                navigatorKey.currentContext!, RecurringIndex.path);
+            // Navigator.pushReplacementNamed(
+            //     navigatorKey.currentContext!, RecurringIndex.path);
+            Navigator.pushReplacement(
+              navigatorKey.currentContext!,
+              MaterialPageRoute(
+                builder: (context) => RecurringIndex(),
+              ),
+            );
           } else {
-            Navigator.pushReplacementNamed(
-                navigatorKey.currentContext!, ConditionalTradesIndex.path,
-                arguments: {
-                  "conditionType": conditionalType,
-                  "qty": res.data['quantity'],
-                  "tradeType": selectedStock,
-                });
+            // Navigator.pushReplacementNamed(
+            //     navigatorKey.currentContext!, ConditionalTradesIndex.path,
+            //     arguments: {
+            //       "conditionType": conditionalType,
+            //       "qty": res.data['quantity'],
+            //       "tradeType": selectedStock,
+            //     });
+            Navigator.pushReplacement(
+              navigatorKey.currentContext!,
+              MaterialPageRoute(
+                builder: (context) => ConditionalTradesIndex(
+                  conditionalType: conditionalType,
+                  qty: res.data['quantity'],
+                  tradeType: selectedStock,
+                ),
+              ),
+            );
           }
         }
       } else {
@@ -257,7 +297,7 @@ class TickerSearchManager extends ChangeNotifier {
         showProgress: true,
       );
       if (response.status) {
-       /* Navigator.pushReplacement(
+        /* Navigator.pushReplacement(
           navigatorKey.currentContext!,
           MaterialPageRoute(
             builder: (context) => ConditionalTradesIndex(
@@ -267,13 +307,24 @@ class TickerSearchManager extends ChangeNotifier {
             ),
           ),
         );*/
-        Navigator.pushReplacementNamed(
-            navigatorKey.currentContext!, ConditionalTradesIndex.path,
-            arguments: {
-              "conditionType": conditionalType,
-              "qty": qty,
-              "tickerID": tickerID,
-            });
+        // Navigator.pushReplacementNamed(
+        //     navigatorKey.currentContext!, ConditionalTradesIndex.path,
+        //     arguments: {
+        //       "conditionType": conditionalType,
+        //       "qty": qty,
+        //       "tickerID": tickerID,
+        //     });
+
+        Navigator.pushReplacement(
+          navigatorKey.currentContext!,
+          MaterialPageRoute(
+            builder: (context) => ConditionalTradesIndex(
+              conditionalType: conditionalType,
+              qty: qty,
+              tickerID: tickerID,
+            ),
+          ),
+        );
       }
       return ApiResponse(status: response.status);
     } catch (e) {
@@ -383,9 +434,9 @@ class TickerSearchManager extends ChangeNotifier {
                         ? "STOP_LIMIT_ORDER"
                         : conditionalType == ConditionType.trailingOrder
                             ? "TRAILING_ORDER"
-                            :
-        conditionalType == ConditionType.recurringOrder
-            ? "RECURRING_ORDER":"MARKET_ORDER"
+                            : conditionalType == ConditionType.recurringOrder
+                                ? "RECURRING_ORDER"
+                                : "MARKET_ORDER"
       };
       ApiResponse res = await apiRequest(
           url: Apis.orderTypeInfo, request: request, showProgress: false);

@@ -24,7 +24,6 @@ import 'package:stocks_news_new/widgets/custom/base_loader_container.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
-
 class LeagueTickersIndex extends StatefulWidget {
   static const path = 'LeagueTickersIndex';
   const LeagueTickersIndex({super.key});
@@ -33,7 +32,7 @@ class LeagueTickersIndex extends StatefulWidget {
   State<LeagueTickersIndex> createState() => _LeagueTickersIndexState();
 }
 
-class _LeagueTickersIndexState extends State<LeagueTickersIndex>{
+class _LeagueTickersIndexState extends State<LeagueTickersIndex> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
@@ -45,11 +44,18 @@ class _LeagueTickersIndexState extends State<LeagueTickersIndex>{
 
   _navigateToAllTrades() async {
     SSEManager.instance.disconnectAllScreens();
-    await Navigator.pushNamed(navigatorKey.currentContext!,
-        AllTradesIndex.path,
-        arguments: {
-          "typeOfTrade":  "open",
-        });
+    // await Navigator.pushNamed(navigatorKey.currentContext!,
+    //     AllTradesIndex.path,
+    //     arguments: {
+    //       "typeOfTrade":  "open",
+    //     });
+
+    await Navigator.push(
+        navigatorKey.currentContext!,
+        MaterialPageRoute(
+            builder: (context) => AllTradesIndex(
+                  typeOfTrade: 'open',
+                )));
 
     TradesManger manger = context.read<TradesManger>();
     manger.setSelectedStock(
@@ -73,7 +79,6 @@ class _LeagueTickersIndexState extends State<LeagueTickersIndex>{
     manger.tradeCancel();
   }
 
-
   @override
   void dispose() {
     SSEManager.instance.disconnectAllScreens();
@@ -83,15 +88,15 @@ class _LeagueTickersIndexState extends State<LeagueTickersIndex>{
 
   @override
   Widget build(BuildContext context) {
-    return Consumer2<LeagueSearchManager,ThemeManager>(
-      builder: (context, searchManager,tm, child) {
+    return Consumer2<LeagueSearchManager, ThemeManager>(
+      builder: (context, searchManager, tm, child) {
         return BaseScaffold(
           appBar: BaseAppBar(
             showBack: true,
             title: 'Place New Trade',
             showTrade: true,
             searchLeague: true,
-            onLSearchClick: (){
+            onLSearchClick: () {
               Navigator.push(
                 context,
                 createRoute(TickerSearch()),
@@ -100,192 +105,190 @@ class _LeagueTickersIndexState extends State<LeagueTickersIndex>{
             onTradeClick: () {
               _navigateToAllTrades();
             },
-
           ),
           body: BaseLoaderContainer(
-            hasData: searchManager.tickersData?.symbols?.data != null &&
-                searchManager.tickersData?.symbols?.data?.isNotEmpty == true,
-            isLoading: searchManager.isLoading,
-            showPreparingText: true,
-            child:Column(
-              children: [
-                SpacerVertical(),
-                OpenTopStock(),
-                Expanded(
-                  child: Consumer<TradesManger>(
-                    builder: (context, manager, child) {
-                      TournamentTickerHolder? detailHolder =
-                      manager.detail[manager.selectedStock?.symbol];
+              hasData: searchManager.tickersData?.symbols?.data != null &&
+                  searchManager.tickersData?.symbols?.data?.isNotEmpty == true,
+              isLoading: searchManager.isLoading,
+              showPreparingText: true,
+              child: Column(
+                children: [
+                  SpacerVertical(),
+                  OpenTopStock(),
+                  Expanded(
+                    child: Consumer<TradesManger>(
+                      builder: (context, manager, child) {
+                        TournamentTickerHolder? detailHolder =
+                            manager.detail[manager.selectedStock?.symbol];
 
-                      return BaseLoaderContainer(
-                        hasData: detailHolder?.data != null,
-                        isLoading: detailHolder?.loading == true,
-                        error: detailHolder?.error,
-                        showPreparingText: true,
-                        child: Column(
-                          children: [
-                            SpacerVertical(height:15),
-                            BaseListDivider(height: 20),
-                            SingleChildScrollView(
-                              child: TournamentOpenDetail(
-                                data: detailHolder?.data?.ticker,
-                              ),
-                            ),
-                            BaseListDivider(height: 20),
-                            Expanded(
-                                child: TradingViewChart(
-                                    symbol: detailHolder
-                                        ?.data?.ticker?.symbol ??
-                                        "")
-                            ),
-                            if (detailHolder
-                                ?.data?.showButton?.alreadyTraded ==
-                                false)
-                              Padding(
-                                padding: const EdgeInsets.symmetric(horizontal:Pad.pad16),
-                                child: Row(
-                                  children: [
-                                    Expanded(
-                                      child: BaseButton(
-                                        radius: 10,
-                                        text: 'Sell',
-                                        onPressed: () =>
-                                            _trade(type: StockType.sell),
-                                        color: ThemeColors.error120,
-
-                                        child: Row(
-                                          mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                          children: [
-                                            Text(
-                                              'Sell At',
-                                              style: styleBaseBold(color: ThemeColors.white),
-                                            ),
-                                            SpacerHorizontal(width: 10),
-                                            Visibility(
-                                              visible: detailHolder
-                                                  ?.data
-                                                  ?.ticker
-                                                  ?.price !=
-                                                  null,
-                                              child: Flexible(
-                                                child: Text(
-                                                  "${detailHolder?.data?.ticker?.price?.toFormattedPrice()}",
-                                                  style: styleBaseBold(color: ThemeColors.white),
-                                                ),
-                                              ),
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                    SpacerHorizontal(width: 10),
-                                    Expanded(
-                                      child: BaseButton(
-                                        radius: 10,
-                                        text: 'Buy',
-                                        onPressed: _trade,
-                                        child: Row(
-                                          mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                          children: [
-                                            Text(
-                                              'Buy At',
-                                              style: styleBaseBold(),
-                                            ),
-                                            SpacerHorizontal(width: 10),
-                                            Visibility(
-                                              visible: detailHolder
-                                                  ?.data
-                                                  ?.ticker
-                                                  ?.price !=
-                                                  null,
-                                              child: Flexible(
-                                                child: Text(
-                                                  "${detailHolder?.data?.ticker?.price?.toFormattedPrice()}",
-                                                  style: styleBaseBold(),
-                                                ),
-                                              ),
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ],
+                        return BaseLoaderContainer(
+                          hasData: detailHolder?.data != null,
+                          isLoading: detailHolder?.loading == true,
+                          error: detailHolder?.error,
+                          showPreparingText: true,
+                          child: Column(
+                            children: [
+                              SpacerVertical(height: 15),
+                              BaseListDivider(height: 20),
+                              SingleChildScrollView(
+                                child: TournamentOpenDetail(
+                                  data: detailHolder?.data?.ticker,
                                 ),
                               ),
-                            if (detailHolder
-                                ?.data?.showButton?.alreadyTraded ==
-                                true)
-                              Padding(
-                                padding: const EdgeInsets.symmetric(horizontal:Pad.pad16),
-                                child: Row(
-                                  children: [
-                                    Expanded(
-                                      child: BaseButton(
-                                        radius: 10,
-                                        text: 'Open Trades',
-                                        onPressed: () {
-                                          _navigateToAllTrades();
-                                        },
-                                        // color: ThemeColors.themeGreen,
-                                      ),
-                                    ),
-                                    SpacerHorizontal(width: 10),
-                                    Expanded(
-                                      child: BaseButton(
-                                        radius: 10,
-                                        text: 'Close',
-                                        onPressed: _close,
-                                        color: ThemeColors.black,
-                                        child: Row(
-                                          mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                          children: [
-                                            Text(
-                                              'Close',
-                                              style: styleBaseBold(color: ThemeColors.white),
-                                            ),
-                                            SpacerHorizontal(width: 10),
-                                            Flexible(
-                                              child: Text(
-                                                '${detailHolder?.data?.showButton?.orderChange?.toCurrency()}%',
+                              BaseListDivider(height: 20),
+                              Expanded(
+                                  child: TradingViewChart(
+                                      symbol:
+                                          detailHolder?.data?.ticker?.symbol ??
+                                              "")),
+                              if (detailHolder
+                                      ?.data?.showButton?.alreadyTraded ==
+                                  false)
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: Pad.pad16),
+                                  child: Row(
+                                    children: [
+                                      Expanded(
+                                        child: BaseButton(
+                                          radius: 10,
+                                          text: 'Sell',
+                                          onPressed: () =>
+                                              _trade(type: StockType.sell),
+                                          color: ThemeColors.error120,
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Text(
+                                                'Sell At',
                                                 style: styleBaseBold(
-                                                    color: (detailHolder
-                                                        ?.data
-                                                        ?.showButton
-                                                        ?.orderChange ??
-                                                        0) >
-                                                        0
-                                                        ? ThemeColors.accent
-                                                        : detailHolder
-                                                        ?.data
-                                                        ?.showButton
-                                                        ?.orderChange ==
-                                                        0
-                                                        ? ThemeColors
-                                                        .white
-                                                        : ThemeColors.sos
-                                                ),
+                                                    color: ThemeColors.white),
                                               ),
-                                            )
-                                          ],
+                                              SpacerHorizontal(width: 10),
+                                              Visibility(
+                                                visible: detailHolder
+                                                        ?.data?.ticker?.price !=
+                                                    null,
+                                                child: Flexible(
+                                                  child: Text(
+                                                    "${detailHolder?.data?.ticker?.price?.toFormattedPrice()}",
+                                                    style: styleBaseBold(
+                                                        color:
+                                                            ThemeColors.white),
+                                                  ),
+                                                ),
+                                              )
+                                            ],
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                  ],
+                                      SpacerHorizontal(width: 10),
+                                      Expanded(
+                                        child: BaseButton(
+                                          radius: 10,
+                                          text: 'Buy',
+                                          onPressed: _trade,
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Text(
+                                                'Buy At',
+                                                style: styleBaseBold(),
+                                              ),
+                                              SpacerHorizontal(width: 10),
+                                              Visibility(
+                                                visible: detailHolder
+                                                        ?.data?.ticker?.price !=
+                                                    null,
+                                                child: Flexible(
+                                                  child: Text(
+                                                    "${detailHolder?.data?.ticker?.price?.toFormattedPrice()}",
+                                                    style: styleBaseBold(),
+                                                  ),
+                                                ),
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                              ),
-                            SpacerVertical(height: 10),
-                          ],
-                        ),
-                      );
-                    },
+                              if (detailHolder
+                                      ?.data?.showButton?.alreadyTraded ==
+                                  true)
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: Pad.pad16),
+                                  child: Row(
+                                    children: [
+                                      Expanded(
+                                        child: BaseButton(
+                                          radius: 10,
+                                          text: 'Open Trades',
+                                          onPressed: () {
+                                            _navigateToAllTrades();
+                                          },
+                                          // color: ThemeColors.themeGreen,
+                                        ),
+                                      ),
+                                      SpacerHorizontal(width: 10),
+                                      Expanded(
+                                        child: BaseButton(
+                                          radius: 10,
+                                          text: 'Close',
+                                          onPressed: _close,
+                                          color: ThemeColors.black,
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Text(
+                                                'Close',
+                                                style: styleBaseBold(
+                                                    color: ThemeColors.white),
+                                              ),
+                                              SpacerHorizontal(width: 10),
+                                              Flexible(
+                                                child: Text(
+                                                  '${detailHolder?.data?.showButton?.orderChange?.toCurrency()}%',
+                                                  style: styleBaseBold(
+                                                      color: (detailHolder
+                                                                      ?.data
+                                                                      ?.showButton
+                                                                      ?.orderChange ??
+                                                                  0) >
+                                                              0
+                                                          ? ThemeColors.accent
+                                                          : detailHolder
+                                                                      ?.data
+                                                                      ?.showButton
+                                                                      ?.orderChange ==
+                                                                  0
+                                                              ? ThemeColors
+                                                                  .white
+                                                              : ThemeColors
+                                                                  .sos),
+                                                ),
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              SpacerVertical(height: 10),
+                            ],
+                          ),
+                        );
+                      },
+                    ),
                   ),
-                ),
-              ],
-            )
-          ),
+                ],
+              )),
         );
       },
     );

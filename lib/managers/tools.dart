@@ -46,10 +46,12 @@ class ToolsManager extends ChangeNotifier {
 
     switch (type) {
       case ToolsEnum.scanner:
-        Navigator.pushNamed(
-          navigatorKey.currentContext!,
-          ToolsScannerIndex.path,
-        );
+        // Navigator.pushNamed(
+        //   navigatorKey.currentContext!,
+        //   ToolsScannerIndex.path,
+        // );
+        Navigator.push(navigatorKey.currentContext!,
+            MaterialPageRoute(builder: (context) => ToolsScannerIndex()));
         break;
 
       case ToolsEnum.signals:
@@ -67,7 +69,9 @@ class ToolsManager extends ChangeNotifier {
         //   SimulatorIndex.path,
         // );
 
-        Navigator.pushNamed(navigatorKey.currentContext!, MarketIndex.path);
+        // Navigator.pushNamed(navigatorKey.currentContext!, MarketIndex.path);
+        Navigator.push(navigatorKey.currentContext!,
+            MaterialPageRoute(builder: (context) => MarketIndex()));
         break;
 
       case ToolsEnum.simulator:
@@ -76,8 +80,12 @@ class ToolsManager extends ChangeNotifier {
         //   SimulatorIndex.path,
         // );
 
-        Navigator.pushNamed(navigatorKey.currentContext!, Tabs.path,
-            arguments: {'index': 2});
+        // Navigator.pushNamed(navigatorKey.currentContext!, Tabs.path,
+        //     arguments: {'index': 2});
+
+        Navigator.push(navigatorKey.currentContext!,
+            MaterialPageRoute(builder: (context) => Tabs(index: 2)));
+
         break;
 
       case ToolsEnum.portfolio:
@@ -85,8 +93,11 @@ class ToolsManager extends ChangeNotifier {
             ?.firstWhere((element) => element.slug == ToolsEnum.portfolio);
 
         if (data?.connected == true) {
-          Navigator.pushNamed(
-              navigatorKey.currentContext!, ToolsPortfolioIndex.path);
+          // Navigator.pushNamed(
+          //     navigatorKey.currentContext!, ToolsPortfolioIndex.path);
+
+          Navigator.push(navigatorKey.currentContext!,
+              MaterialPageRoute(builder: (context) => ToolsPortfolioIndex()));
         } else {
           bool callAPI = false;
           if (manager.user == null) {
@@ -100,8 +111,12 @@ class ToolsManager extends ChangeNotifier {
           }
           if (manager.user?.signupStatus != true) {
             if (data?.connected == true) {
-              Navigator.pushNamed(
-                  navigatorKey.currentContext!, ToolsPortfolioIndex.path);
+              // Navigator.pushNamed(
+              //     navigatorKey.currentContext!, ToolsPortfolioIndex.path);
+              Navigator.push(
+                  navigatorKey.currentContext!,
+                  MaterialPageRoute(
+                      builder: (context) => ToolsPortfolioIndex()));
             } else {
               try {
                 PlaidService.instance.init();
@@ -119,23 +134,33 @@ class ToolsManager extends ChangeNotifier {
         break;
 
       case ToolsEnum.compare:
-        Navigator.pushNamed(
-          navigatorKey.currentContext!,
-          ToolsCompareIndex.path,
-        );
+        // Navigator.pushNamed(
+        //   navigatorKey.currentContext!,
+        //   ToolsCompareIndex.path,
+        // );
+        Navigator.push(navigatorKey.currentContext!,
+            MaterialPageRoute(builder: (context) => ToolsCompareIndex()));
         break;
 
       case ToolsEnum.league:
-        Navigator.pushNamed(
-            navigatorKey.currentContext!, TradingLeagueIndex.path,
-            arguments: {'initialIndex': 0});
+        // Navigator.pushNamed(
+        //     navigatorKey.currentContext!, TradingLeagueIndex.path,
+        //     arguments: {'initialIndex': 0});
+
+        Navigator.push(
+            navigatorKey.currentContext!,
+            MaterialPageRoute(
+                builder: (context) => TradingLeagueIndex(initialIndex: 0)));
         break;
 
       case ToolsEnum.crypto:
         await manager.askLoginScreen();
         if (manager.user == null) return;
-        Navigator.pushNamed(
-            navigatorKey.currentContext!, BillionairesIndex.path);
+        // Navigator.pushNamed(
+        //     navigatorKey.currentContext!, BillionairesIndex.path);
+
+        Navigator.push(navigatorKey.currentContext!,
+            MaterialPageRoute(builder: (context) => BillionairesIndex()));
         break;
     }
   }
@@ -224,8 +249,11 @@ class ToolsManager extends ChangeNotifier {
         }
         _error = null;
         await getToolsData();
-        Navigator.pushNamed(
-            navigatorKey.currentContext!, ToolsPortfolioIndex.path);
+        // Navigator.pushNamed(
+        //     navigatorKey.currentContext!, ToolsPortfolioIndex.path);
+
+        Navigator.push(navigatorKey.currentContext!,
+            MaterialPageRoute(builder: (context) => ToolsPortfolioIndex()));
       } else {
         setSubmission(false);
 

@@ -59,7 +59,7 @@ class _TabsState extends State<Tabs> {
   void initState() {
     super.initState();
     splashLoaded = true;
-    Preference.setIsFirstOpen(false);
+    Preference.setIsFirstOpen(true);
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       // SocketService.instance.connect();
       _checkReferBox();

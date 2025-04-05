@@ -78,16 +78,28 @@ class _AIPeerComparisonState extends State<AIPeerComparison> {
                                     builder: (_) => Tabs(index: 0),
                                   ),
                                 );
-                                Navigator.pushNamed(
-                                    navigatorKey.currentContext!, SDIndex.path,
-                                    arguments: {
-                                      'symbol': company.symbol,
-                                    });
+                                // Navigator.pushNamed(
+                                //     navigatorKey.currentContext!, SDIndex.path,
+                                //     arguments: {
+                                //       'symbol': company.symbol,
+                                //     });
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => SDIndex(
+                                              symbol: company.symbol ?? '',
+                                            )));
                               } else {
-                                Navigator.pushNamed(context, SDIndex.path,
-                                    arguments: {
-                                      'symbol': company.symbol,
-                                    });
+                                // Navigator.pushNamed(context, SDIndex.path,
+                                //     arguments: {
+                                //       'symbol': company.symbol,
+                                //     });
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => SDIndex(
+                                              symbol: company.symbol ?? '',
+                                            )));
                               }
                             },
                             child: Container(

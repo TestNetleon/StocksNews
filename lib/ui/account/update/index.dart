@@ -103,11 +103,20 @@ class _UpdatePersonalDetailIndexState extends State<UpdatePersonalDetailIndex> {
       TopSnackbar.show(message: 'Enter valid phone number');
       return;
     }
-    Navigator.pushNamed(context, AccountVerificationIndex.path, arguments: {
-      'phone': phone.text,
-      'countryCode': countryCode,
-      'verificationId': '1',
-    });
+    // Navigator.pushNamed(context, AccountVerificationIndex.path, arguments: {
+    //   'phone': phone.text,
+    //   'countryCode': countryCode,
+    //   'verificationId': '1',
+    // });
+
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => AccountVerificationIndex(
+                  phone: phone.text,
+                  countryCode: countryCode ?? '',
+                  verificationId: '1',
+                )));
   }
 
   bool isLoading = false;
@@ -142,12 +151,22 @@ class _UpdatePersonalDetailIndexState extends State<UpdatePersonalDetailIndex> {
       bool gotoVerify = await _checkPhoneExist();
       if (!gotoVerify) return;
       if (kDebugMode) {
-        Navigator.pushNamed(context, AccountVerificationIndex.path, arguments: {
-          'phone': phone.text,
-          'countryCode': countryCode,
-          'verificationId': '1',
-          'update': true,
-        });
+        // Navigator.pushNamed(context, AccountVerificationIndex.path, arguments: {
+        //   'phone': phone.text,
+        //   'countryCode': countryCode,
+        //   'verificationId': '1',
+        //   'update': true,
+        // });
+
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => AccountVerificationIndex(
+                      phone: phone.text,
+                      countryCode: countryCode ?? '',
+                      verificationId: '1',
+                      update: true,
+                    )));
 
         return;
       }
@@ -178,13 +197,23 @@ class _UpdatePersonalDetailIndexState extends State<UpdatePersonalDetailIndex> {
           codeSent: (String verificationId, int? resendToken) {
             setLoading(false);
 
-            Navigator.pushNamed(context, AccountVerificationIndex.path,
-                arguments: {
-                  'phone': phone.text,
-                  'countryCode': countryCode,
-                  'verificationId': verificationId,
-                  'update': true,
-                });
+            // Navigator.pushNamed(context, AccountVerificationIndex.path,
+            //     arguments: {
+            //       'phone': phone.text,
+            //       'countryCode': countryCode,
+            //       'verificationId': verificationId,
+            //       'update': true,
+            //     });
+
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => AccountVerificationIndex(
+                          phone: phone.text,
+                          countryCode: countryCode ?? '',
+                          verificationId: verificationId,
+                          update: true,
+                        )));
             Utils().showLog('Verification code sent.');
           },
           codeAutoRetrievalTimeout: (String verificationId) {
@@ -212,10 +241,17 @@ class _UpdatePersonalDetailIndexState extends State<UpdatePersonalDetailIndex> {
 
     ApiResponse response = await manager.checkEmailExist(email.text);
     if (response.status) {
-      Navigator.pushNamed(context, AccountEmailVerificationIndex.path,
-          arguments: {
-            'email': email.text,
-          });
+      // Navigator.pushNamed(context, AccountEmailVerificationIndex.path,
+      //     arguments: {
+      //       'email': email.text,
+      //     });
+
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => AccountEmailVerificationIndex(
+                    email: email.text,
+                  )));
     }
   }
 
@@ -359,7 +395,11 @@ class _UpdatePersonalDetailIndexState extends State<UpdatePersonalDetailIndex> {
                     icon: Images.delete,
                     text: 'Delete Account',
                     onPressed: () {
-                      Navigator.pushNamed(context, DeletePersonalDetail.path);
+                      // Navigator.pushNamed(context, DeletePersonalDetail.path);
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => DeletePersonalDetail()));
                     },
                     color: ThemeColors.white,
                     textColor: ThemeColors.neutral40,

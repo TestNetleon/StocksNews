@@ -133,17 +133,30 @@ class _MembershipActionRequiredState extends State<MembershipActionRequired> {
       if (!gotoVerify) return;
 
       if (kDebugMode) {
-        await Navigator.pushNamed(context, AccountVerificationIndex.path,
-            arguments: {
-              'name': _name.text,
-              'phone': _phone.text,
-              'countryCode': countryCode,
-              'update': true,
-              'verificationId': '1',
-              'callBack': () {
-                Navigator.pop(navigatorKey.currentContext!);
-              }
-            });
+        // await Navigator.pushNamed(context, AccountVerificationIndex.path,
+        //     arguments: {
+        //       'name': _name.text,
+        //       'phone': _phone.text,
+        //       'countryCode': countryCode,
+        //       'update': true,
+        //       'verificationId': '1',
+        //       'callBack': () {
+        //         Navigator.pop(navigatorKey.currentContext!);
+        //       }
+        //     });
+
+        await Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => AccountVerificationIndex(
+                      name: _name.text,
+                      phone: _phone.text,
+                      countryCode: countryCode ?? '',
+                      verificationId: '1',
+                      callBack: () {
+                        Navigator.pop(navigatorKey.currentContext!);
+                      },
+                    )));
         return;
       }
 
@@ -175,17 +188,30 @@ class _MembershipActionRequiredState extends State<MembershipActionRequired> {
           codeSent: (String verificationId, int? resendToken) async {
             setLoading(false);
 
-            await Navigator.pushNamed(context, AccountVerificationIndex.path,
-                arguments: {
-                  'name': _name.text,
-                  'phone': _phone.text,
-                  'update': true,
-                  'countryCode': countryCode,
-                  'verificationId': verificationId,
-                  'callBack': () {
-                    Navigator.pop(navigatorKey.currentContext!);
-                  }
-                });
+            // await Navigator.pushNamed(context, AccountVerificationIndex.path,
+            //     arguments: {
+            //       'name': _name.text,
+            //       'phone': _phone.text,
+            //       'update': true,
+            //       'countryCode': countryCode,
+            //       'verificationId': verificationId,
+            //       'callBack': () {
+            //         Navigator.pop(navigatorKey.currentContext!);
+            //       }
+            //     });
+            await Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => AccountVerificationIndex(
+                          name: _name.text,
+                          update: true,
+                          phone: _phone.text,
+                          countryCode: countryCode ?? '',
+                          verificationId: verificationId,
+                          callBack: () {
+                            Navigator.pop(navigatorKey.currentContext!);
+                          },
+                        )));
 
             Utils().showLog('Verification code sent.');
           },
@@ -412,10 +438,17 @@ class AccountAgreeTextMembership extends StatelessWidget {
       },
       onTapUrl: (url) async {
         if (!(url.startsWith('https:') || url.startsWith('http:'))) {
-          Navigator.pushNamed(context, LegalInfoIndex.path, arguments: {
-            'slug': url,
-            'soloScreen': url == 'referral-terms',
-          });
+          // Navigator.pushNamed(context, LegalInfoIndex.path, arguments: {
+          //   'slug': url,
+          //   'soloScreen': url == 'referral-terms',
+          // });
+          await Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => LegalInfoIndex(
+                        slug: url,
+                        soloScreen: url == 'referral-terms',
+                      )));
         } else {
           openUrl(url);
         }

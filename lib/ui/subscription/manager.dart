@@ -11,12 +11,10 @@ import 'package:stocks_news_new/api/apis.dart';
 import 'package:stocks_news_new/ui/base/toaster.dart';
 import 'package:stocks_news_new/ui/subscription/model/layout.dart';
 import 'package:stocks_news_new/ui/subscription/screens/purchased/purchased.dart';
-import 'package:stocks_news_new/ui/subscription/screens/start/subscription.dart';
 import 'package:stocks_news_new/ui/subscription/service.dart';
 import 'package:stocks_news_new/ui/subscription/superwall_service.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/utils/utils.dart';
-
 import '../../managers/user.dart';
 import '../../routes/my_app.dart';
 import '../../utils/constants.dart';
@@ -92,10 +90,14 @@ class SubscriptionManager extends ChangeNotifier {
           if (kDebugMode) {
             print('Goto - View Plans');
           }
-          Navigator.pushNamed(
-            navigatorKey.currentContext!,
-            SubscriptionPlansIndex.path,
-          );
+          // Navigator.pushNamed(
+          //   navigatorKey.currentContext!,
+          //   SubscriptionPlansIndex.path,
+          // );
+          Navigator.push(
+              navigatorKey.currentContext!,
+              MaterialPageRoute(
+                  builder: (context) => SubscriptionPlansIndex()));
         } else {
           // List<String> actives =
           //     await instance.getActiveMembership(normalActive: false);
@@ -106,19 +108,25 @@ class SubscriptionManager extends ChangeNotifier {
               Utils().showLog('Goto - First Time Purchase');
             }
 
-            Navigator.pushNamed(
-              navigatorKey.currentContext!,
-              SubscriptionIndex.path,
-            );
+            // Navigator.pushNamed(
+            //   navigatorKey.currentContext!,
+            //   SubscriptionIndex.path,
+            // );
+            Navigator.push(
+                navigatorKey.currentContext!,
+                MaterialPageRoute(
+                    builder: (context) => SubscriptionPlansIndex()));
           } else {
             if (kDebugMode) {
               Utils().showLog('Goto - Already Purchased');
             }
 
-            Navigator.pushNamed(
-              navigatorKey.currentContext!,
-              PurchasedIndex.path,
-            );
+            // Navigator.pushNamed(
+            //   navigatorKey.currentContext!,
+            //   PurchasedIndex.path,
+            // );
+            Navigator.push(navigatorKey.currentContext!,
+                MaterialPageRoute(builder: (context) => PurchasedIndex()));
           }
 
           if (kDebugMode) {

@@ -79,9 +79,14 @@ class _SubscriptionSuccessIndexState extends State<SubscriptionSuccessIndex> {
                 BaseButton(
                   text: data?.btn ?? '',
                   onPressed: () {
-                    Navigator.pushNamedAndRemoveUntil(
+                    // Navigator.pushNamedAndRemoveUntil(
+                    //   context,
+                    //   Tabs.path,
+                    //   (route) => false,
+                    // );
+                    Navigator.pushAndRemoveUntil(
                       context,
-                      Tabs.path,
+                      MaterialPageRoute(builder: (context) => Tabs()),
                       (route) => false,
                     );
                   },

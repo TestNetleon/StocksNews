@@ -196,8 +196,17 @@ class _ContainerConditioalBuySellState
           // Navigator.pushNamed(navigatorKey.currentContext!, SimulatorIndex.path,
           //     arguments: {"initialIndex": isPending ? 1 : 0});
 
-          Navigator.pushNamed(navigatorKey.currentContext!, Tabs.path,
-              arguments: {'index': 2, 'childIndex': isPending ? 1 : 0});
+          // Navigator.pushNamed(navigatorKey.currentContext!, Tabs.path,
+          //     arguments: {'index': 2, 'childIndex': isPending ? 1 : 0});
+          Navigator.push(
+            navigatorKey.currentContext!,
+            MaterialPageRoute(
+              builder: (context) => Tabs(
+                index: 2,
+                childIndex: isPending ? 1 : 0,
+              ),
+            ),
+          );
           _clear();
 
           await showCOrderSuccessSheet(order, widget.conditionalType);
@@ -289,11 +298,20 @@ class _ContainerConditioalBuySellState
         // Navigator.pushNamed(navigatorKey.currentContext!, SimulatorIndex.path,
         //     arguments: {"initialIndex": isPending ? 1 : 0});
 
-        Navigator.pushNamed(navigatorKey.currentContext!, Tabs.path,
-            arguments: {
-              'index': 2,
-              'childIndex': isPending ? 1 : 0,
-            });
+        // Navigator.pushNamed(navigatorKey.currentContext!, Tabs.path,
+        //     arguments: {
+        //       'index': 2,
+        //       'childIndex': isPending ? 1 : 0,
+        //     });
+        Navigator.push(
+          navigatorKey.currentContext!,
+          MaterialPageRoute(
+            builder: (context) => Tabs(
+              index: 2,
+              childIndex: isPending ? 1 : 0,
+            ),
+          ),
+        );
         await showCOrderSuccessSheet(order, widget.conditionalType);
       } else {
         popUpAlert(message: "${response.message}", title: "Alert");

@@ -106,14 +106,24 @@ class _AppleLoginErrorIndexState extends State<AppleLoginErrorIndex> {
         if (!gotoVerify) return;
         Navigator.pop(navigatorKey.currentContext!);
 
-        await Navigator.pushNamed(context, AccountVerificationIndex.path,
-            arguments: {
-              'phone': _phone.text,
-              'countryCode': countryCode,
-              'verificationId': '1',
-              'fromAppleVerify': true,
-              'extraRequest': widget.extraRequest,
-            });
+        // await Navigator.pushNamed(context, AccountVerificationIndex.path,
+        //     arguments: {
+        //       'phone': _phone.text,
+        //       'countryCode': countryCode,
+        //       'verificationId': '1',
+        //       'fromAppleVerify': true,
+        //       'extraRequest': widget.extraRequest,
+        //     });
+        await Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => AccountVerificationIndex(
+                      phone: _phone.text,
+                      countryCode: countryCode ?? '',
+                      fromAppleVerify: true,
+                      verificationId: '1',
+                      extraRequest: widget.extraRequest,
+                    )));
         return;
       }
 
@@ -148,14 +158,25 @@ class _AppleLoginErrorIndexState extends State<AppleLoginErrorIndex> {
             if (!gotoVerify) return;
             Navigator.pop(navigatorKey.currentContext!);
 
-            await Navigator.pushNamed(context, AccountVerificationIndex.path,
-                arguments: {
-                  'phone': _phone.text,
-                  'countryCode': countryCode,
-                  'verificationId': verificationId,
-                  'fromAppleVerify': true,
-                  'extraRequest': widget.extraRequest,
-                });
+            // await Navigator.pushNamed(context, AccountVerificationIndex.path,
+            //     arguments: {
+            //       'phone': _phone.text,
+            //       'countryCode': countryCode,
+            //       'verificationId': verificationId,
+            //       'fromAppleVerify': true,
+            //       'extraRequest': widget.extraRequest,
+            //     });
+
+            await Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => AccountVerificationIndex(
+                          phone: _phone.text,
+                          countryCode: countryCode ?? '',
+                          fromAppleVerify: true,
+                          verificationId: verificationId,
+                          extraRequest: widget.extraRequest,
+                        )));
             Utils().showLog('Verification code sent.');
           },
           codeAutoRetrievalTimeout: (String verificationId) {

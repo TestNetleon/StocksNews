@@ -75,7 +75,11 @@ class MoreIndex extends StatelessWidget {
               icon: Images.msReport,
               label: "MORNINGSTAR Reports",
               onTap: () {
-                Navigator.pushNamed(context, MorningStarReportsIndex.path);
+                // Navigator.pushNamed(context, MorningStarReportsIndex.path);
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => MorningStarReportsIndex()));
               },
             ),
             MoreItem(
@@ -164,10 +168,12 @@ class MoreIndex extends StatelessWidget {
               icon: Images.moreLegal,
               label: "Legal",
               onTap: () {
-                Navigator.pushNamed(
-                  context,
-                  LegalInfoIndex.path,
-                );
+                // Navigator.pushNamed(
+                //   context,
+                //   LegalInfoIndex.path,
+                // );
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => LegalInfoIndex()));
               },
             ),
             Visibility(

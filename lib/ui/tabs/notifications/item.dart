@@ -37,16 +37,30 @@ class NotificationItem extends StatelessWidget {
       if (type == NotificationType.dashboard.name) {
         Navigator.popUntil(
             navigatorKey.currentContext!, (route) => route.isFirst);
-        Navigator.pushReplacementNamed(navigatorKey.currentContext!, Tabs.path);
+        // Navigator.pushReplacementNamed(navigatorKey.currentContext!, Tabs.path);
+        Navigator.pushReplacement(navigatorKey.currentContext!,
+            MaterialPageRoute(builder: (context) => Tabs()));
       } else if (slug != '' && type == NotificationType.ticketDetail.name) {
-        Navigator.pushReplacementNamed(
-            navigatorKey.currentContext!, HelpDeskAllChatsIndex.path,
-            arguments: {'ticketId': slug ?? "N/A"});
+        // Navigator.pushReplacementNamed(
+        //     navigatorKey.currentContext!, HelpDeskAllChatsIndex.path,
+        //     arguments: {'ticketId': slug ?? "N/A"});
+        Navigator.pushReplacement(
+            navigatorKey.currentContext!,
+            MaterialPageRoute(
+                builder: (context) => HelpDeskAllChatsIndex(
+                      ticketId: slug ?? '',
+                    )));
       } else if (slug != '' && type == NotificationType.newsDetail.name) {
-        Navigator.pushNamed(navigatorKey.currentContext!, NewsDetailIndex.path,
-            arguments: {
-              'slug': slug,
-            });
+        // Navigator.pushNamed(navigatorKey.currentContext!, NewsDetailIndex.path,
+        //     arguments: {
+        //       'slug': slug,
+        //     });
+        Navigator.push(
+            navigatorKey.currentContext!,
+            MaterialPageRoute(
+                builder: (context) => NewsDetailIndex(
+                      slug: slug ?? '',
+                    )));
       } else if (slug != '' && type == NotificationType.lpPage.name) {
         Navigator.push(
           navigatorKey.currentContext!,
@@ -57,18 +71,27 @@ class NotificationItem extends StatelessWidget {
           ),
         );
       } else if (slug != '' && type == NotificationType.blogDetail.name) {
-        Navigator.pushNamed(navigatorKey.currentContext!, BlogsDetailIndex.path,
-            arguments: {
-              'slug': slug ?? "",
-            });
+        // Navigator.pushNamed(navigatorKey.currentContext!, BlogsDetailIndex.path,
+        //     arguments: {
+        //       'slug': slug ?? "",
+        //     });
+
+        Navigator.push(
+            navigatorKey.currentContext!,
+            MaterialPageRoute(
+                builder: (context) => BlogsDetailIndex(
+                      slug: slug ?? '',
+                    )));
       } else if (slug != '' && type == NotificationType.review.name) {
         Utils().showLog("--navigate to blog detail---");
       } else if (slug != '' && type == NotificationType.register.name) {
         if (await Preference.isLoggedIn()) {
           Navigator.popUntil(
               navigatorKey.currentContext!, (route) => route.isFirst);
-          Navigator.pushReplacementNamed(
-              navigatorKey.currentContext!, Tabs.path);
+          // Navigator.pushReplacementNamed(
+          //     navigatorKey.currentContext!, Tabs.path);
+          Navigator.pushReplacement(navigatorKey.currentContext!,
+              MaterialPageRoute(builder: (context) => Tabs()));
 
           popUpAlert(
               message: "Welcome to the Home Screen!",
@@ -84,24 +107,39 @@ class NotificationItem extends StatelessWidget {
         );
       } else if (slug != '' && type == NotificationType.stockDetail.name ||
           isValidTickerSymbol(type ?? "")) {
-        Navigator.pushNamed(navigatorKey.currentContext!, SDIndex.path,
-            arguments: {
-              'symbol': slug,
-            });
+        // Navigator.pushNamed(navigatorKey.currentContext!, SDIndex.path,
+        //     arguments: {
+        //       'symbol': slug,
+        //     });
+
+        Navigator.push(
+            navigatorKey.currentContext!,
+            MaterialPageRoute(
+                builder: (context) => SDIndex(
+                      symbol: slug ?? '',
+                    )));
       } else if (type == NotificationType.referRegistration.name) {
-        Navigator.pushNamed(navigatorKey.currentContext!, ReferralIndex.path);
+        // Navigator.pushNamed(navigatorKey.currentContext!, ReferralIndex.path);
+
+        Navigator.push(navigatorKey.currentContext!,
+            MaterialPageRoute(builder: (context) => ReferralIndex()));
       } else if (slug != '' && type == NotificationType.nudgeFriend.name) {
         //referLogin();
       } else {
         Navigator.popUntil(
             navigatorKey.currentContext!, (route) => route.isFirst);
-        Navigator.pushReplacementNamed(navigatorKey.currentContext!, Tabs.path);
+        // Navigator.pushReplacementNamed(navigatorKey.currentContext!, Tabs.path);
+
+        Navigator.pushReplacement(navigatorKey.currentContext!,
+            MaterialPageRoute(builder: (context) => Tabs()));
       }
     } catch (e) {
       Utils().showLog("Exception ===>> $e");
       Navigator.popUntil(
           navigatorKey.currentContext!, (route) => route.isFirst);
-      Navigator.pushReplacementNamed(navigatorKey.currentContext!, Tabs.path);
+      // Navigator.pushReplacementNamed(navigatorKey.currentContext!, Tabs.path);
+      Navigator.pushReplacement(navigatorKey.currentContext!,
+          MaterialPageRoute(builder: (context) => Tabs()));
     }
   }
 

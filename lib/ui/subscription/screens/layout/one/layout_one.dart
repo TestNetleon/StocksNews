@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/ui/legal/index.dart';
 import 'package:stocks_news_new/ui/subscription/manager.dart';
 import 'package:stocks_news_new/ui/subscription/model/layout_one.dart';
@@ -159,10 +160,16 @@ class _SubscriptionLayoutOneState extends State<SubscriptionLayoutOne>
                         style: styleBaseRegular(color: ThemeColors.greyText),
                         recognizer: TapGestureRecognizer()
                           ..onTap = () {
-                            Navigator.pushNamed(context, LegalInfoIndex.path,
-                                arguments: {
-                                  'slug': "privacy-policy",
-                                });
+                            // Navigator.pushNamed(context, LegalInfoIndex.path,
+                            //     arguments: {
+                            //       'slug': "privacy-policy",
+                            //     });
+
+                            Navigator.push(
+                                navigatorKey.currentContext!,
+                                MaterialPageRoute(
+                                    builder: (context) => LegalInfoIndex(
+                                        slug: "privacy-policy")));
                           },
                       ),
                       if (value.subscriptionData?.showRestore == true)

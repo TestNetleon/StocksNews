@@ -159,18 +159,18 @@ class SPendingManager extends ChangeNotifier {
           showProgress: true,
         );
         if (response.status) {
-          Navigator.pushReplacementNamed(
-              navigatorKey.currentContext!, TradeBuySellIndex.path,
-              arguments: {
-                "stockType": _data?[index].tradeType == "Buy"
-                    ? StockType.buy
-                    : _data?[index].tradeType == "Sell"
-                        ? StockType.sell
-                        : StockType.btc,
-                "qty": res.data['quantity'],
-                "editTradeID": _data?[index].id,
-              });
-          /*Navigator.pushReplacement(
+          // Navigator.pushReplacementNamed(
+          //     navigatorKey.currentContext!, TradeBuySellIndex.path,
+          //     arguments: {
+          //       "stockType": _data?[index].tradeType == "Buy"
+          //           ? StockType.buy
+          //           : _data?[index].tradeType == "Sell"
+          //               ? StockType.sell
+          //               : StockType.btc,
+          //       "qty": res.data['quantity'],
+          //       "editTradeID": _data?[index].id,
+          //     });
+          Navigator.pushReplacement(
             navigatorKey.currentContext!,
             MaterialPageRoute(
               builder: (context) => TradeBuySellIndex(
@@ -183,7 +183,7 @@ class SPendingManager extends ChangeNotifier {
                 editTradeID: _data?[index].id,
               ),
             ),
-          );*/
+          );
         }
       } else {
         //
@@ -204,17 +204,31 @@ class SPendingManager extends ChangeNotifier {
         showProgress: true,
       );
       if (response.status) {
-        Navigator.pushReplacementNamed(
-            navigatorKey.currentContext!, TradeBuySellIndex.path,
-            arguments: {
-              "stockType": _data?[index].tradeType == "Buy"
+        // Navigator.pushReplacementNamed(
+        //     navigatorKey.currentContext!, TradeBuySellIndex.path,
+        //     arguments: {
+        //       "stockType": _data?[index].tradeType == "Buy"
+        //           ? StockType.buy
+        //           : _data?[index].tradeType == "Sell"
+        //               ? StockType.sell
+        //               : StockType.btc,
+        //       "qty": 0,
+        //       "editTradeID": _data?[index].id,
+        //     });
+        Navigator.pushReplacement(
+          navigatorKey.currentContext!,
+          MaterialPageRoute(
+            builder: (context) => TradeBuySellIndex(
+              selectedStock: _data?[index].tradeType == "Buy"
                   ? StockType.buy
                   : _data?[index].tradeType == "Sell"
                       ? StockType.sell
                       : StockType.btc,
-              "qty": 0,
-              "editTradeID": _data?[index].id,
-            });
+              qty: 0,
+              editTradeID: _data?[index].id,
+            ),
+          ),
+        );
       }
       return ApiResponse(status: response.status);
     } catch (e) {
@@ -255,10 +269,29 @@ class SPendingManager extends ChangeNotifier {
           showProgress: true,
         );
         if (response.status) {
-          Navigator.pushReplacementNamed(
-              navigatorKey.currentContext!, ConditionalTradesIndex.path,
-              arguments: {
-                "conditionType":
+          // Navigator.pushReplacementNamed(
+          //     navigatorKey.currentContext!, ConditionalTradesIndex.path,
+          //     arguments: {
+          //       "conditionType":
+          //           _data?[index].orderTypeOriginal == "BRACKET_ORDER"
+          //               ? ConditionType.bracketOrder
+          //               : _data?[index].orderTypeOriginal == "LIMIT_ORDER"
+          //                   ? ConditionType.limitOrder
+          //                   : _data?[index].orderTypeOriginal == "STOP_ORDER"
+          //                       ? ConditionType.stopOrder
+          //                       : _data?[index].orderTypeOriginal ==
+          //                               "STOP_LIMIT_ORDER"
+          //                           ? ConditionType.stopLimitOrder
+          //                           : ConditionType.trailingOrder,
+          //       "qty": res.data['quantity'],
+          //       "editTradeID": _data?[index].id,
+          //     });
+
+          Navigator.pushReplacement(
+            navigatorKey.currentContext!,
+            MaterialPageRoute(
+              builder: (context) => ConditionalTradesIndex(
+                conditionalType:
                     _data?[index].orderTypeOriginal == "BRACKET_ORDER"
                         ? ConditionType.bracketOrder
                         : _data?[index].orderTypeOriginal == "LIMIT_ORDER"
@@ -269,9 +302,11 @@ class SPendingManager extends ChangeNotifier {
                                         "STOP_LIMIT_ORDER"
                                     ? ConditionType.stopLimitOrder
                                     : ConditionType.trailingOrder,
-                "qty": res.data['quantity'],
-                "editTradeID": _data?[index].id,
-              });
+                qty: res.data['quantity'],
+                editTradeID: _data?[index].id,
+              ),
+            ),
+          );
         }
       } else {
         //

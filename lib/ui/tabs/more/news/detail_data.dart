@@ -265,10 +265,16 @@ class NewsDetailData extends StatelessWidget {
                         // Navigator.pushReplacementNamed(
                         //     context, NewsDetailIndex.path,
                         //     arguments: {'slug': news.slug});
-                        Navigator.pushNamedAndRemoveUntil(context, Tabs.path,
-                            (route) {
-                          return false;
-                        }, arguments: {'index': 3});
+                        // Navigator.pushNamedAndRemoveUntil(context, Tabs.path,
+                        //     (route) {
+                        //   return false;
+                        // }, arguments: {'index': 3});
+                        Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => Tabs(index: 3)),
+                          (route) => false,
+                        );
                         Navigator.push(
                           context,
                           MaterialPageRoute(

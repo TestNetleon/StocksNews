@@ -15,7 +15,6 @@ import 'package:stocks_news_new/widgets/cache_network_image.dart';
 import 'package:stocks_news_new/widgets/custom/base_loader_container.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
-
 class Cryptocurrencies extends StatefulWidget {
   const Cryptocurrencies({super.key});
 
@@ -31,7 +30,6 @@ class _CryptocurrenciesState extends State<Cryptocurrencies>
     super.initState();
     _scrollController = ScrollController();
   }
-
 
   void _scrollToSelectedIndex(int index) {
     double screenWidth = MediaQuery.of(context).size.width;
@@ -49,7 +47,8 @@ class _CryptocurrenciesState extends State<Cryptocurrencies>
   @override
   Widget build(BuildContext context) {
     BillionairesManager manager = context.watch<BillionairesManager>();
-    SymbolMentionList? symbolMentionRes = manager.billionairesRes?.symbolMentionList;
+    SymbolMentionList? symbolMentionRes =
+        manager.billionairesRes?.symbolMentionList;
     /* if(manager.billionairesRes?.topTab?.data!=null && manager.billionairesRes?.topTab?.data?.isNotEmpty ==true){
       manager.titleArray = manager.billionairesRes!.topTab!.data!.map((item) => item.title!).toList();
     }*/
@@ -63,7 +62,7 @@ class _CryptocurrenciesState extends State<Cryptocurrencies>
         margin: EdgeInsets.zero,
         children: [
           Container(
-            margin:const EdgeInsets.symmetric(horizontal: 16.0),
+            margin: const EdgeInsets.symmetric(horizontal: 16.0),
             alignment: Alignment.centerLeft,
             child: RichText(
               text: TextSpan(
@@ -96,11 +95,9 @@ class _CryptocurrenciesState extends State<Cryptocurrencies>
           ),
           Visibility(
               visible: manager.billionairesRes?.recentMentions != null &&
-                  (manager.billionairesRes?.recentMentions?.data
-                      ?.isNotEmpty ==
+                  (manager.billionairesRes?.recentMentions?.data?.isNotEmpty ==
                       true),
-              child: SpacerVertical(height: 10)
-          ),
+              child: SpacerVertical(height: 10)),
           Visibility(
             visible: manager.billionairesRes?.recentMentions != null &&
                 (manager.billionairesRes?.recentMentions?.data?.isNotEmpty ==
@@ -114,10 +111,9 @@ class _CryptocurrenciesState extends State<Cryptocurrencies>
                     padding: EdgeInsets.only(left: 16, right: 16),
                     child: Row(
                       children: List.generate(
-                        manager.billionairesRes?.recentMentions?.data
-                            ?.length ??
+                        manager.billionairesRes?.recentMentions?.data?.length ??
                             0,
-                            (index) {
+                        (index) {
                           CryptoTweetPost? data = manager
                               .billionairesRes?.recentMentions?.data?[index];
                           return InkWell(
@@ -162,14 +158,12 @@ class _CryptocurrenciesState extends State<Cryptocurrencies>
                           );
                         },
                       ),
-                    )
-                ),
+                    )),
               ),
             ),
           ),
           SpacerVertical(height: 10),
           MentionsListIndex(symbolMentionRes: symbolMentionRes),
-
           SpacerVertical(height: 20),
           TopBilIndex(
             topTabs: manager.billionairesRes?.topTab,
@@ -178,7 +172,11 @@ class _CryptocurrenciesState extends State<Cryptocurrencies>
           BaseButton(
             textSize: 16,
             onPressed: () {
-              Navigator.pushNamed(context, AllBillionairesIndex.path);
+              // Navigator.pushNamed(context, AllBillionairesIndex.path);
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => AllBillionairesIndex()));
             },
             text: "View all Billionaires",
             margin: EdgeInsets.symmetric(horizontal: Pad.pad16),

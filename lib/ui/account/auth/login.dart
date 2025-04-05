@@ -104,11 +104,21 @@ class _AccountLoginIndexState extends State<AccountLoginIndex> {
       if (kDebugMode) {
         EventsService.instance.selectContinueWelcome();
 
-        Navigator.pushNamed(context, AccountVerificationIndex.path, arguments: {
-          'phone': _phone.text,
-          'countryCode': countryCode,
-          'verificationId': '1',
-        });
+        // Navigator.pushNamed(context, AccountVerificationIndex.path, arguments: {
+        //   'phone': _phone.text,
+        //   'countryCode': countryCode,
+        //   'verificationId': '1',
+        // });
+
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => AccountVerificationIndex(
+                phone: _phone.text,
+                countryCode: countryCode ?? '',
+                verificationId: '1',
+              ),
+            ));
         return;
       }
 
@@ -141,12 +151,21 @@ class _AccountLoginIndexState extends State<AccountLoginIndex> {
             setLoading(false);
             EventsService.instance.selectContinueWelcome();
 
-            Navigator.pushNamed(context, AccountVerificationIndex.path,
-                arguments: {
-                  'phone': _phone.text,
-                  'countryCode': countryCode,
-                  'verificationId': verificationId,
-                });
+            // Navigator.pushNamed(context, AccountVerificationIndex.path,
+            //     arguments: {
+            //       'phone': _phone.text,
+            //       'countryCode': countryCode,
+            //       'verificationId': verificationId,
+            //     });
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => AccountVerificationIndex(
+                    phone: _phone.text,
+                    countryCode: countryCode ?? '',
+                    verificationId: verificationId,
+                  ),
+                ));
             Utils().showLog('Verification code sent.');
           },
           codeAutoRetrievalTimeout: (String verificationId) {

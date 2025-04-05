@@ -74,9 +74,15 @@ class _HomeTopGainersState extends State<HomeTopGainers> {
                     BaseStockAddItem(
                       size: 30,
                       onTap: (value) {
-                        Navigator.pushNamed(context, SDIndex.path, arguments: {
-                          'symbol': value.symbol,
-                        });
+                        // Navigator.pushNamed(context, SDIndex.path, arguments: {
+                        //   'symbol': value.symbol,
+                        // });
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => SDIndex(
+                                      symbol: value.symbol ?? "",
+                                    )));
                       },
                       data: manager.dataTopGainers!.data![index],
                       index: index,
@@ -96,15 +102,23 @@ class _HomeTopGainersState extends State<HomeTopGainers> {
                           //   },
                           // );
 
-                          Navigator.pushNamed(
-                            context,
-                            MarketIndex.path,
-                            arguments: {
-                              'screenIndex': 0,
-                              "marketIndex": 1,
-                              "marketInnerIndex": 0,
-                            },
-                          );
+                          // Navigator.pushNamed(
+                          //   context,
+                          //   MarketIndex.path,
+                          //   arguments: {
+                          //     'screenIndex': 0,
+                          //     "marketIndex": 1,
+                          //     "marketInnerIndex": 0,
+                          //   },
+                          // );
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => MarketIndex(
+                                        screenIndex: 0,
+                                        marketIndex: 1,
+                                        marketInnerIndex: 0,
+                                      )));
                         },
                         text: "View More Top Gainers",
                         margin: EdgeInsets.all(Pad.pad16),

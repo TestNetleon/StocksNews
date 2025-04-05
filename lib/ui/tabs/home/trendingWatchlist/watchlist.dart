@@ -36,7 +36,9 @@ class _HomeWatchlistContainerState extends State<HomeWatchlistContainer> {
             margin: EdgeInsets.only(top: Pad.pad14, bottom: Pad.pad14),
             titleStyle: styleBaseBold(fontSize: 22),
             viewMore: () {
-              Navigator.pushNamed(context, WatchListIndex.path);
+              // Navigator.pushNamed(context, WatchListIndex.path);
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => WatchListIndex()));
             },
             viewMoreText: 'View All',
           ),
@@ -58,10 +60,15 @@ class _HomeWatchlistContainerState extends State<HomeWatchlistContainer> {
                       child: TickerBoxWatchListItem(
                           data: data,
                           onTap: () {
-                            Navigator.pushNamed(context, SDIndex.path,
-                                arguments: {
-                                  'symbol': data.symbol,
-                                });
+                            // Navigator.pushNamed(context, SDIndex.path,
+                            //     arguments: {
+                            //       'symbol': data.symbol,
+                            //     });
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        SDIndex(symbol: data.symbol ?? '')));
                           }),
                     );
                   },

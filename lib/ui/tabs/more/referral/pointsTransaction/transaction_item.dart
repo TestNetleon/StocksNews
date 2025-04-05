@@ -21,10 +21,17 @@ class ReferPointTransactionItem extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         if (data.id != null) {
-          Navigator.pushNamed(context, PointsClaimLogs.path, arguments: {
-            "title": data.label ?? "",
-            "id": data.id,
-          });
+          // Navigator.pushNamed(context, PointsClaimLogs.path, arguments: {
+          //   "title": data.label ?? "",
+          //   "id": data.id,
+          // });
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => PointsClaimLogs(
+                        title: null,
+                        id: data.id,
+                      )));
         }
       },
       child: Container(

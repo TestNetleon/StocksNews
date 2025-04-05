@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/managers/market/sectors/sectors.dart';
+import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/ui/base/base_list_divider.dart';
 import 'package:stocks_news_new/ui/base/base_sector_header.dart';
 import 'package:stocks_news_new/ui/base/base_sector_item.dart';
@@ -59,10 +60,16 @@ class _SectorsState extends State<Sectors> {
                             data: manager.data!.data![index],
                             index: index,
                             onTap: (value) {
-                              Navigator.pushNamed(context, SectorViewIndex.path,
-                                  arguments: {
-                                    'slug': value?.industrySlug ?? ""
-                                  });
+                              // Navigator.pushNamed(context, SectorViewIndex.path,
+                              //     arguments: {
+                              //       'slug': value?.industrySlug ?? ""
+                              //     });
+                              Navigator.push(
+                                  navigatorKey.currentContext!,
+                                  MaterialPageRoute(
+                                      builder: (context) => SectorViewIndex(
+                                            slug: value?.industrySlug ?? '',
+                                          )));
                             },
                           ),
                         ],

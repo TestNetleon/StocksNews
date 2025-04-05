@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:stocks_news_new/main.dart';
 import 'package:stocks_news_new/managers/alerts.dart';
 import 'package:stocks_news_new/managers/billionaires.dart';
 import 'package:stocks_news_new/managers/blogs.dart';
@@ -59,51 +58,13 @@ import 'package:stocks_news_new/managers/signals/politicians.dart';
 import 'package:stocks_news_new/managers/signals/sentiment.dart';
 import 'package:stocks_news_new/managers/signals/stocks.dart';
 import 'package:stocks_news_new/managers/watchlist.dart';
-import 'package:stocks_news_new/models/my_home.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
-import 'package:stocks_news_new/ui/onboarding/splash_loading.dart';
-import 'package:stocks_news_new/ui/subscription/action_required.dart';
 import 'package:stocks_news_new/ui/tabs/home/scanner/manager/gainers.dart';
-import 'package:stocks_news_new/ui/tabs/home/viewMore/PopularMostBought/index.dart';
-import 'package:stocks_news_new/ui/tabs/home/viewMore/trending/index.dart';
-import 'package:stocks_news_new/ui/tabs/more/referral/pointClaimLog/index.dart';
 import 'package:stocks_news_new/ui/tabs/tools/league/managers/leaderboard.dart';
 import 'package:stocks_news_new/ui/tabs/tools/league/managers/search.dart';
 import 'package:stocks_news_new/ui/tabs/tools/league/managers/tournament.dart';
 import 'package:stocks_news_new/ui/tabs/tools/league/managers/trades.dart';
-import 'package:stocks_news_new/ui/tabs/tools/league/screens/game_tournament_index.dart';
-import 'package:stocks_news_new/ui/tabs/tools/league/screens/myTrades/all_index.dart';
-import 'package:stocks_news_new/ui/tabs/tools/league/screens/tournaments/dayTraining/index.dart';
-import 'package:stocks_news_new/ui/tabs/tools/league/screens/tournaments/dayTraining/open/index.dart';
-import 'package:stocks_news_new/ui/tabs/tools/league/screens/tournaments/pointsPaid/index.dart';
-import 'package:stocks_news_new/ui/tabs/tools/league/screens/tournaments/tournament_user/tournament_user_detail.dart';
-import 'package:stocks_news_new/ui/tabs/tools/league/screens/tournaments/tournament_user/trades_with_date.dart';
-import 'package:stocks_news_new/ui/tabs/tools/league/screens/tournaments/widgets/top_tading.dart';
-import 'package:stocks_news_new/ui/tabs/tools/market/index.dart';
-import 'package:stocks_news_new/ui/tabs/tools/market/industries/industries_view.dart';
-import 'package:stocks_news_new/ui/tabs/tools/market/sectors/sector_view.dart';
-import 'package:stocks_news_new/ui/tabs/more/alerts/index.dart';
-import 'package:stocks_news_new/ui/tabs/more/billionaires/all_index.dart';
-import 'package:stocks_news_new/ui/tabs/more/billionaires/billionaires_index.dart';
-import 'package:stocks_news_new/ui/tabs/more/billionaires/crypto_index.dart';
-import 'package:stocks_news_new/ui/tabs/more/billionaires/index.dart';
-import 'package:stocks_news_new/ui/tabs/more/faq/index.dart';
-import 'package:stocks_news_new/ui/tabs/more/feedback/index.dart';
-import 'package:stocks_news_new/ui/tabs/more/helpdesk/chats/index.dart';
-import 'package:stocks_news_new/ui/tabs/more/helpdesk/front/index.dart';
-import 'package:stocks_news_new/ui/tabs/more/helpdesk/listing/index.dart';
-import 'package:stocks_news_new/ui/tabs/more/helpdesk/tickets/index.dart';
-import 'package:stocks_news_new/ui/tabs/more/morningstarReport/index.dart';
-import 'package:stocks_news_new/ui/tabs/more/notificationSettings/index.dart';
-import 'package:stocks_news_new/ui/tabs/more/referral/index.dart';
-import 'package:stocks_news_new/ui/tabs/more/referral/joinRefer/index.dart';
-import 'package:stocks_news_new/ui/tabs/more/referral/joinRefer/verify.dart';
-import 'package:stocks_news_new/ui/tabs/more/referral/pointsTransaction/index.dart';
-import 'package:stocks_news_new/ui/tabs/more/referral/redeem/index.dart';
-import 'package:stocks_news_new/ui/tabs/more/watchlist/index.dart';
-import 'package:stocks_news_new/ui/tabs/notifications/index.dart';
-import 'package:stocks_news_new/ui/tabs/tools/compareStocks/compare.dart';
 import 'package:stocks_news_new/ui/tabs/tools/scanner/manager/gainers.dart';
 import 'package:stocks_news_new/ui/tabs/tools/scanner/manager/losers.dart';
 import 'package:stocks_news_new/ui/tabs/tools/simulator/managers/portpolio.dart';
@@ -113,15 +74,8 @@ import 'package:stocks_news_new/ui/tabs/tools/simulator/managers/s_recurring.dar
 import 'package:stocks_news_new/ui/tabs/tools/simulator/managers/s_transaction.dart';
 import 'package:stocks_news_new/ui/tabs/tools/simulator/managers/ticker_search.dart';
 import 'package:stocks_news_new/ui/tabs/tools/simulator/managers/trade.dart';
-import 'package:stocks_news_new/ui/tabs/tools/simulator/screens/conditionalOrder/ConditionalTrades.dart';
-import 'package:stocks_news_new/ui/tabs/tools/simulator/screens/conditionalOrder/RecurringOrder/recurring_index.dart';
-import 'package:stocks_news_new/ui/tabs/tools/simulator/screens/index.dart';
-import 'package:stocks_news_new/ui/tabs/tools/simulator/screens/tickerSearch/index.dart';
-import 'package:stocks_news_new/ui/tabs/tools/simulator/screens/tradeBuySell/index.dart';
 import 'package:stocks_news_new/ui/theme/manager.dart';
 
-import 'package:stocks_news_new/utils/constants.dart';
-import 'package:stocks_news_new/utils/utils.dart';
 import '../managers/aiAnalysis/ai.dart';
 import '../managers/news.dart';
 import '../managers/onboarding.dart';
@@ -129,77 +83,52 @@ import '../managers/search.dart';
 import '../managers/stockDetail/stock.detail.dart';
 import '../managers/tools.dart';
 import '../managers/user.dart';
-import '../models/my_home_premium.dart';
 
 import '../ui/AdManager/manager.dart';
-import '../ui/account/auth/login.dart';
-import '../ui/account/auth/verify.dart';
-import '../ui/account/update/delete.dart';
-import '../ui/account/update/email_verify.dart';
-import '../ui/account/update/index.dart';
-import '../ui/aiAnalysis/index.dart';
-import '../ui/legal/index.dart';
-import '../ui/onboarding/default_home.dart';
-import '../ui/onboarding/slides.dart';
-import '../ui/onboarding/splash.dart';
-import '../ui/stockDetail/index.dart';
 import '../ui/subscription/manager.dart';
-import '../ui/subscription/screens/purchased/purchased.dart';
-import '../ui/subscription/screens/view/plans.dart';
-import '../ui/subscription/screens/start/subscription.dart';
-import '../ui/tabs/more/articles/detail.dart';
-import '../ui/tabs/more/articles/index.dart';
-import '../ui/tabs/more/news/detail.dart';
-import '../ui/tabs/more/news/index.dart';
-import '../ui/tabs/signals/insiders/company/from_company.dart';
-import '../ui/tabs/signals/insiders/reporting/from_reporting.dart';
-import '../ui/tabs/signals/politicians/detail.dart';
-import '../ui/tabs/tabs.dart';
-import '../ui/tabs/tools/plaidConnect/portfolio.dart';
-import '../ui/tabs/tools/scanner/index.dart';
 import '../ui/tabs/tools/scanner/manager/scanner.dart';
 
 class Routes {
-  static var routes = {
-    //NEW routes
-    // Splash.path: (_) => const Splash(),
+  // static var routes = {
+  //   //NEW routes
+  //   // Splash.path: (_) => const Splash(),
 
-    // '/': (_) => const Splash(from: 'routeName1'),
-    Splash.path: (_) => const Splash(),
-    SplashFirstTime.path: (_) => const SplashFirstTime(),
-    DefaultHome.path: (_) => const DefaultHome(),
-    OnboardingSlides.path: (_) => const OnboardingSlides(),
-    NotificationSettings.path: (_) => const NotificationSettings(),
-    AccountLoginIndex.path: (_) => const AccountLoginIndex(),
-    ToolsPortfolioIndex.path: (_) => const ToolsPortfolioIndex(),
-    ToolsCompareIndex.path: (_) => const ToolsCompareIndex(),
-    CategoriesNewsIndex.path: (_) => const CategoriesNewsIndex(),
-    BlogsIndex.path: (_) => const BlogsIndex(),
-    SubscriptionIndex.path: (_) => const SubscriptionIndex(),
-    SubscriptionPlansIndex.path: (_) => const SubscriptionPlansIndex(),
-    PurchasedIndex.path: (_) => const PurchasedIndex(),
-    UpdatePersonalDetailIndex.path: (_) => const UpdatePersonalDetailIndex(),
-    AlertIndex.path: (_) => const AlertIndex(),
-    WatchListIndex.path: (_) => const WatchListIndex(),
-    FaqIndex.path: (_) => const FaqIndex(),
-    HelpDeskIndex.path: (_) => const HelpDeskIndex(),
-    DeletePersonalDetail.path: (_) => const DeletePersonalDetail(),
-    HelpDeskCreateIndex.path: (_) => const HelpDeskCreateIndex(),
-    RequestNewIndex.path: (_) => const RequestNewIndex(),
-    FeedbackIndex.path: (_) => const FeedbackIndex(),
-    BillionairesIndex.path: (_) => const BillionairesIndex(),
-    AllBillionairesIndex.path: (_) => const AllBillionairesIndex(),
-    ReferralIndex.path: (_) => const ReferralIndex(),
-    RedeemPoints.path: (_) => const RedeemPoints(),
-    JoinReferralIndex.path: (_) => const JoinReferralIndex(),
-    NotificationIndex.path: (_) => const NotificationIndex(),
-    MorningStarReportsIndex.path: (_) => const MorningStarReportsIndex(),
-    MembershipActionRequired.path: (_) => const MembershipActionRequired(),
-    TrendingViewAllIndex.path: (_) => const TrendingViewAllIndex(),
-    LeagueTickersIndex.path: (_) => const LeagueTickersIndex(),
+  //   // '/': (_) => const Splash(from: 'routeName1'),
+  //   Splash.path: (_) => const Splash(),
+  //   SplashFirstTime.path: (_) => const SplashFirstTime(),
+  //   DefaultHome.path: (_) => const DefaultHome(),
+  //   OnboardingSlides.path: (_) => const OnboardingSlides(),
+  //   NotificationSettings.path: (_) => const NotificationSettings(),
+  //   AccountLoginIndex.path: (_) => const AccountLoginIndex(),
+  //   ToolsPortfolioIndex.path: (_) => const ToolsPortfolioIndex(),
+  //   ToolsCompareIndex.path: (_) => const ToolsCompareIndex(),
+  //   CategoriesNewsIndex.path: (_) => const CategoriesNewsIndex(),
+  //   BlogsIndex.path: (_) => const BlogsIndex(),
+  //   SubscriptionIndex.path: (_) => const SubscriptionIndex(),
+  //   SubscriptionPlansIndex.path: (_) => const SubscriptionPlansIndex(),
+  //   PurchasedIndex.path: (_) => const PurchasedIndex(),
+  //   UpdatePersonalDetailIndex.path: (_) => const UpdatePersonalDetailIndex(),
+  //   AlertIndex.path: (_) => const AlertIndex(),
+  //   WatchListIndex.path: (_) => const WatchListIndex(),
+  //   FaqIndex.path: (_) => const FaqIndex(),
+  //   HelpDeskIndex.path: (_) => const HelpDeskIndex(),
+  //   DeletePersonalDetail.path: (_) => const DeletePersonalDetail(),
+  //   HelpDeskCreateIndex.path: (_) => const HelpDeskCreateIndex(),
+  //   RequestNewIndex.path: (_) => const RequestNewIndex(),
+  //   FeedbackIndex.path: (_) => const FeedbackIndex(),
+  //   BillionairesIndex.path: (_) => const BillionairesIndex(),
+  //   AllBillionairesIndex.path: (_) => const AllBillionairesIndex(),
+  //   ReferralIndex.path: (_) => const ReferralIndex(),
+  //   RedeemPoints.path: (_) => const RedeemPoints(),
+  //   JoinReferralIndex.path: (_) => const JoinReferralIndex(),
+  //   NotificationIndex.path: (_) => const NotificationIndex(),
+  //   MorningStarReportsIndex.path: (_) => const MorningStarReportsIndex(),
+  //   MembershipActionRequired.path: (_) => const MembershipActionRequired(),
+  //   TrendingViewAllIndex.path: (_) => const TrendingViewAllIndex(),
+  //   LeagueTickersIndex.path: (_) => const LeagueTickersIndex(),
 
-    //--------------------------------------
-  };
+  //   //--------------------------------------
+  // };
 
   static Route bottomToTopScreenRoute(widget) {
     return PageRouteBuilder(
@@ -219,420 +148,420 @@ class Routes {
     );
   }
 
-  static Route getRouteGenerate(RouteSettings settings) {
-    var routingData = settings.name;
-    Utils().showLog('routingData $routingData');
+  // static Route getRouteGenerate(RouteSettings settings) {
+  //   var routingData = settings.name;
+  //   Utils().showLog('routingData $routingData');
 
-    // Explicitly handle only the `/` route
-    if (routingData == '/' && routingData?.length == 1) {
-      Utils().showLog('HI ROUTING DATA');
+  //   // Explicitly handle only the `/` route
+  //   if (routingData == '/' && routingData?.length == 1) {
+  //     Utils().showLog('HI ROUTING DATA');
 
-      if (isFIRSTopen) {
-        return MaterialPageRoute(
-          builder: (context) => const SplashFirstTime(),
-        );
-      }
+  //     if (isFIRSTopen) {
+  //       return MaterialPageRoute(
+  //         builder: (context) => const SplashFirstTime(),
+  //       );
+  //     }
 
-      return MaterialPageRoute(
-        builder: (context) => const Splash(),
-      );
-    }
+  //     return MaterialPageRoute(
+  //       builder: (context) => const Splash(),
+  //     );
+  //   }
 
-    switch (routingData) {
-      case Tabs.path:
-        return MaterialPageRoute(
-          builder: (context) {
-            final arguments = settings.arguments as Map<String, dynamic>?;
-            int? index = arguments?['index'];
-            // int? trendingIndex = arguments?['trendingIndex'];
-            int? childIndex = arguments?['childIndex'];
-            int? innerChildIndex = arguments?['innerChildIndex'];
-            String? inAppMsgId = arguments?['inAppMsgId'];
-            return Tabs(
-              index: index ?? 0,
-              childIndex: childIndex ?? 0,
-              innerChildIndex: innerChildIndex ?? 0,
-              // trendingIndex: trendingIndex ?? 0,
-              inAppMsgId: inAppMsgId,
-            );
-          },
-        );
-      case MarketIndex.path:
-        return MaterialPageRoute(
-          builder: (context) {
-            final arguments = settings.arguments as Map<String, dynamic>?;
-            int? screenIndex = arguments?['screenIndex'];
-            int? marketIndex = arguments?['marketIndex'];
-            int? marketInnerIndex = arguments?['marketInnerIndex'];
-            return MarketIndex(
-              screenIndex: screenIndex ?? 0,
-              marketIndex: marketIndex ?? 0,
-              marketInnerIndex: marketInnerIndex ?? 0,
-            );
-          },
-        );
-      case AccountVerificationIndex.path:
-        return MaterialPageRoute(
-          builder: (context) {
-            final arguments = settings.arguments as Map<String, dynamic>?;
-            String countryCode = arguments?['countryCode'];
-            String phone = arguments?['phone'];
-            String verificationId = arguments?['verificationId'];
-            bool? update = arguments?['update'];
-            String? name = arguments?['name'];
-            bool? fromAppleVerify = arguments?['fromAppleVerify'];
-            Map? extraRequest = arguments?['extraRequest'];
+  //   switch (routingData) {
+  //     case Tabs.path:
+  //       return MaterialPageRoute(
+  //         builder: (context) {
+  //           final arguments = settings.arguments as Map<String, dynamic>?;
+  //           int? index = arguments?['index'];
+  //           // int? trendingIndex = arguments?['trendingIndex'];
+  //           int? childIndex = arguments?['childIndex'];
+  //           int? innerChildIndex = arguments?['innerChildIndex'];
+  //           String? inAppMsgId = arguments?['inAppMsgId'];
+  //           return Tabs(
+  //             index: index ?? 0,
+  //             childIndex: childIndex ?? 0,
+  //             innerChildIndex: innerChildIndex ?? 0,
+  //             // trendingIndex: trendingIndex ?? 0,
+  //             inAppMsgId: inAppMsgId,
+  //           );
+  //         },
+  //       );
+  //     case MarketIndex.path:
+  //       return MaterialPageRoute(
+  //         builder: (context) {
+  //           final arguments = settings.arguments as Map<String, dynamic>?;
+  //           int? screenIndex = arguments?['screenIndex'];
+  //           int? marketIndex = arguments?['marketIndex'];
+  //           int? marketInnerIndex = arguments?['marketInnerIndex'];
+  //           return MarketIndex(
+  //             screenIndex: screenIndex ?? 0,
+  //             marketIndex: marketIndex ?? 0,
+  //             marketInnerIndex: marketInnerIndex ?? 0,
+  //           );
+  //         },
+  //       );
+  //     case AccountVerificationIndex.path:
+  //       return MaterialPageRoute(
+  //         builder: (context) {
+  //           final arguments = settings.arguments as Map<String, dynamic>?;
+  //           String countryCode = arguments?['countryCode'];
+  //           String phone = arguments?['phone'];
+  //           String verificationId = arguments?['verificationId'];
+  //           bool? update = arguments?['update'];
+  //           String? name = arguments?['name'];
+  //           bool? fromAppleVerify = arguments?['fromAppleVerify'];
+  //           Map? extraRequest = arguments?['extraRequest'];
 
-            void Function()? callBack = arguments?['callBack'];
+  //           void Function()? callBack = arguments?['callBack'];
 
-            return AccountVerificationIndex(
-              countryCode: countryCode,
-              phone: phone,
-              verificationId: verificationId,
-              update: update,
-              name: name,
-              callBack: callBack,
-              extraRequest: extraRequest,
-              fromAppleVerify: fromAppleVerify,
-            );
-          },
-        );
-      case SignalInsidersCompanyIndex.path:
-        return MaterialPageRoute(
-          builder: (context) {
-            final arguments = settings.arguments as Map<String, dynamic>?;
-            InsiderTradeRes data = arguments?['data'];
+  //           return AccountVerificationIndex(
+  //             countryCode: countryCode,
+  //             phone: phone,
+  //             verificationId: verificationId,
+  //             update: update,
+  //             name: name,
+  //             callBack: callBack,
+  //             extraRequest: extraRequest,
+  //             fromAppleVerify: fromAppleVerify,
+  //           );
+  //         },
+  //       );
+  //     case SignalInsidersCompanyIndex.path:
+  //       return MaterialPageRoute(
+  //         builder: (context) {
+  //           final arguments = settings.arguments as Map<String, dynamic>?;
+  //           InsiderTradeRes data = arguments?['data'];
 
-            return SignalInsidersCompanyIndex(data: data);
-          },
-        );
-      case SignalInsidersReportingIndex.path:
-        return MaterialPageRoute(
-          builder: (context) {
-            final arguments = settings.arguments as Map<String, dynamic>?;
-            InsiderTradeRes data = arguments?['data'];
+  //           return SignalInsidersCompanyIndex(data: data);
+  //         },
+  //       );
+  //     case SignalInsidersReportingIndex.path:
+  //       return MaterialPageRoute(
+  //         builder: (context) {
+  //           final arguments = settings.arguments as Map<String, dynamic>?;
+  //           InsiderTradeRes data = arguments?['data'];
 
-            return SignalInsidersReportingIndex(data: data);
-          },
-        );
-      case SignalPoliticianDetailIndex.path:
-        return MaterialPageRoute(
-          builder: (context) {
-            final arguments = settings.arguments as Map<String, dynamic>?;
-            PoliticianTradeRes data = arguments?['data'];
+  //           return SignalInsidersReportingIndex(data: data);
+  //         },
+  //       );
+  //     case SignalPoliticianDetailIndex.path:
+  //       return MaterialPageRoute(
+  //         builder: (context) {
+  //           final arguments = settings.arguments as Map<String, dynamic>?;
+  //           PoliticianTradeRes data = arguments?['data'];
 
-            return SignalPoliticianDetailIndex(data: data);
-          },
-        );
-      case NewsDetailIndex.path:
-        return MaterialPageRoute(
-          builder: (context) {
-            final arguments = settings.arguments as Map<String, dynamic>?;
-            String slug = arguments?['slug'];
+  //           return SignalPoliticianDetailIndex(data: data);
+  //         },
+  //       );
+  //     case NewsDetailIndex.path:
+  //       return MaterialPageRoute(
+  //         builder: (context) {
+  //           final arguments = settings.arguments as Map<String, dynamic>?;
+  //           String slug = arguments?['slug'];
 
-            return NewsDetailIndex(slug: slug);
-          },
-        );
+  //           return NewsDetailIndex(slug: slug);
+  //         },
+  //       );
 
-      case HelpDeskAllChatsIndex.path:
-        return MaterialPageRoute(
-          builder: (context) {
-            final arguments = settings.arguments as Map<String, dynamic>?;
-            String ticketId = arguments?['ticketId'];
+  //     case HelpDeskAllChatsIndex.path:
+  //       return MaterialPageRoute(
+  //         builder: (context) {
+  //           final arguments = settings.arguments as Map<String, dynamic>?;
+  //           String ticketId = arguments?['ticketId'];
 
-            return HelpDeskAllChatsIndex(ticketId: ticketId);
-          },
-        );
-      case SimulatorIndex.path:
-        return MaterialPageRoute(
-          builder: (context) {
-            final arguments = settings.arguments as Map<String, dynamic>?;
-            int? initialIndex = arguments?['initialIndex'];
+  //           return HelpDeskAllChatsIndex(ticketId: ticketId);
+  //         },
+  //       );
+  //     case SimulatorIndex.path:
+  //       return MaterialPageRoute(
+  //         builder: (context) {
+  //           final arguments = settings.arguments as Map<String, dynamic>?;
+  //           int? initialIndex = arguments?['initialIndex'];
 
-            return SimulatorIndex(initialIndex: initialIndex ?? 0);
-          },
-        );
-      case TradingLeagueIndex.path:
-        return MaterialPageRoute(
-          builder: (context) {
-            final arguments = settings.arguments as Map<String, dynamic>?;
-            int? initialIndex = arguments?['initialIndex'];
+  //           return SimulatorIndex(initialIndex: initialIndex ?? 0);
+  //         },
+  //       );
+  //     case TradingLeagueIndex.path:
+  //       return MaterialPageRoute(
+  //         builder: (context) {
+  //           final arguments = settings.arguments as Map<String, dynamic>?;
+  //           int? initialIndex = arguments?['initialIndex'];
 
-            return TradingLeagueIndex(initialIndex: initialIndex ?? 0);
-          },
-        );
-      case AllTopTtIndex.path:
-        return MaterialPageRoute(
-          builder: (context) {
-            final arguments = settings.arguments as Map<String, dynamic>?;
-            TournamentsHead selectedTournament =
-                arguments?['selectedTournament'];
-            String? title = arguments?['title'];
-            return AllTopTtIndex(
-              selectedTournament: selectedTournament,
-              title: title,
-            );
-          },
-        );
-      case LeagueTitansIndex.path:
-        return MaterialPageRoute(
-          builder: (context) {
-            final arguments = settings.arguments as Map<String, dynamic>?;
-            TournamentsHead selectedTournament =
-                arguments?['selectedTournament'];
-            return LeagueTitansIndex(
-              selectedTournament: selectedTournament,
-            );
-          },
-        );
-      case LeagueUserDetail.path:
-        return MaterialPageRoute(
-          builder: (context) {
-            final arguments = settings.arguments as Map<String, dynamic>?;
-            String? userId = arguments?['userId'];
-            return LeagueUserDetail(
-              userId: userId,
-            );
-          },
-        );
-      case TradesWithDate.path:
-        return MaterialPageRoute(
-          builder: (context) {
-            final arguments = settings.arguments as Map<String, dynamic>?;
-            String? selectedBattleID = arguments?['selectedBattleID'];
-            return TradesWithDate(
-              selectedBattleID: selectedBattleID,
-            );
-          },
-        );
-      case LeagueDayTrainingIndex.path:
-        return MaterialPageRoute(
-          builder: (context) {
-            final arguments = settings.arguments as Map<String, dynamic>?;
-            int? tournamentId = arguments?['tournamentId'];
-            return LeagueDayTrainingIndex(
-              tournamentId: tournamentId,
-            );
-          },
-        );
-      case AllTradesIndex.path:
-        return MaterialPageRoute(
-          builder: (context) {
-            final arguments = settings.arguments as Map<String, dynamic>?;
-            String? typeOfTrade = arguments?['typeOfTrade'];
-            return AllTradesIndex(
-              typeOfTrade: typeOfTrade,
-            );
-          },
-        );
+  //           return TradingLeagueIndex(initialIndex: initialIndex ?? 0);
+  //         },
+  //       );
+  //     case AllTopTtIndex.path:
+  //       return MaterialPageRoute(
+  //         builder: (context) {
+  //           final arguments = settings.arguments as Map<String, dynamic>?;
+  //           TournamentsHead selectedTournament =
+  //               arguments?['selectedTournament'];
+  //           String? title = arguments?['title'];
+  //           return AllTopTtIndex(
+  //             selectedTournament: selectedTournament,
+  //             title: title,
+  //           );
+  //         },
+  //       );
+  //     case LeagueTitansIndex.path:
+  //       return MaterialPageRoute(
+  //         builder: (context) {
+  //           final arguments = settings.arguments as Map<String, dynamic>?;
+  //           TournamentsHead selectedTournament =
+  //               arguments?['selectedTournament'];
+  //           return LeagueTitansIndex(
+  //             selectedTournament: selectedTournament,
+  //           );
+  //         },
+  //       );
+  //     case LeagueUserDetail.path:
+  //       return MaterialPageRoute(
+  //         builder: (context) {
+  //           final arguments = settings.arguments as Map<String, dynamic>?;
+  //           String? userId = arguments?['userId'];
+  //           return LeagueUserDetail(
+  //             userId: userId,
+  //           );
+  //         },
+  //       );
+  //     case TradesWithDate.path:
+  //       return MaterialPageRoute(
+  //         builder: (context) {
+  //           final arguments = settings.arguments as Map<String, dynamic>?;
+  //           String? selectedBattleID = arguments?['selectedBattleID'];
+  //           return TradesWithDate(
+  //             selectedBattleID: selectedBattleID,
+  //           );
+  //         },
+  //       );
+  //     case LeagueDayTrainingIndex.path:
+  //       return MaterialPageRoute(
+  //         builder: (context) {
+  //           final arguments = settings.arguments as Map<String, dynamic>?;
+  //           int? tournamentId = arguments?['tournamentId'];
+  //           return LeagueDayTrainingIndex(
+  //             tournamentId: tournamentId,
+  //           );
+  //         },
+  //       );
+  //     case AllTradesIndex.path:
+  //       return MaterialPageRoute(
+  //         builder: (context) {
+  //           final arguments = settings.arguments as Map<String, dynamic>?;
+  //           String? typeOfTrade = arguments?['typeOfTrade'];
+  //           return AllTradesIndex(
+  //             typeOfTrade: typeOfTrade,
+  //           );
+  //         },
+  //       );
 
-      case SearchTickerIndex.path:
-        return MaterialPageRoute(
-          builder: (context) {
-            final arguments = settings.arguments as Map<String, dynamic>?;
-            StockType? stockType = arguments?['stockType'];
-            return SearchTickerIndex(selectedStock: stockType);
-          },
-        );
-      case TradeBuySellIndex.path:
-        return MaterialPageRoute(
-          builder: (context) {
-            final arguments = settings.arguments as Map<String, dynamic>?;
-            StockType? stockType = arguments?['stockType'];
-            num? qty = arguments?['qty'];
-            num? editTradeID = arguments?['editTradeID'];
-            return TradeBuySellIndex(
-                qty: qty, editTradeID: editTradeID, selectedStock: stockType);
-          },
-        );
-      case ConditionalTradesIndex.path:
-        return MaterialPageRoute(
-          builder: (context) {
-            final arguments = settings.arguments as Map<String, dynamic>?;
-            ConditionType? conditionType = arguments?['conditionType'];
-            num? qty = arguments?['qty'];
-            num? editTradeID = arguments?['editTradeID'];
-            int? tickerID = arguments?['tickerID'];
-            String? tradeType = arguments?['tradeType'];
-            return ConditionalTradesIndex(
-              qty: qty,
-              editTradeID: editTradeID,
-              conditionalType: conditionType,
-              tradeType: tradeType,
-              tickerID: tickerID,
-            );
-          },
-        );
-      case RecurringIndex.path:
-        return MaterialPageRoute(
-          builder: (context) {
-            final arguments = settings.arguments as Map<String, dynamic>?;
-            num? editTradeID = arguments?['editTradeID'];
-            return RecurringIndex(
-              editTradeID: editTradeID,
-            );
-          },
-        );
-      case BillionairesDetailIndex.path:
-        return MaterialPageRoute(
-          builder: (context) {
-            final arguments = settings.arguments as Map<String, dynamic>?;
-            String slug = arguments?['slug'];
-            return BillionairesDetailIndex(slug: slug);
-          },
-        );
-      case CryptoIndex.path:
-        return MaterialPageRoute(
-          builder: (context) {
-            final arguments = settings.arguments as Map<String, dynamic>?;
-            String symbol = arguments?['symbol'];
-            String? currency = arguments?['currency'];
-            return CryptoIndex(symbol: symbol, currency: currency);
-          },
-        );
-      case IndustriesViewIndex.path:
-        return MaterialPageRoute(
-          builder: (context) {
-            final arguments = settings.arguments as Map<String, dynamic>?;
-            String slug = arguments?['slug'];
+  //     case SearchTickerIndex.path:
+  //       return MaterialPageRoute(
+  //         builder: (context) {
+  //           final arguments = settings.arguments as Map<String, dynamic>?;
+  //           StockType? stockType = arguments?['stockType'];
+  //           return SearchTickerIndex(selectedStock: stockType);
+  //         },
+  //       );
+  //     case TradeBuySellIndex.path:
+  //       return MaterialPageRoute(
+  //         builder: (context) {
+  //           final arguments = settings.arguments as Map<String, dynamic>?;
+  //           StockType? stockType = arguments?['stockType'];
+  //           num? qty = arguments?['qty'];
+  //           num? editTradeID = arguments?['editTradeID'];
+  //           return TradeBuySellIndex(
+  //               qty: qty, editTradeID: editTradeID, selectedStock: stockType);
+  //         },
+  //       );
+  //     case ConditionalTradesIndex.path:
+  //       return MaterialPageRoute(
+  //         builder: (context) {
+  //           final arguments = settings.arguments as Map<String, dynamic>?;
+  //           ConditionType? conditionType = arguments?['conditionType'];
+  //           num? qty = arguments?['qty'];
+  //           num? editTradeID = arguments?['editTradeID'];
+  //           int? tickerID = arguments?['tickerID'];
+  //           String? tradeType = arguments?['tradeType'];
+  //           return ConditionalTradesIndex(
+  //             qty: qty,
+  //             editTradeID: editTradeID,
+  //             conditionalType: conditionType,
+  //             tradeType: tradeType,
+  //             tickerID: tickerID,
+  //           );
+  //         },
+  //       );
+  //     case RecurringIndex.path:
+  //       return MaterialPageRoute(
+  //         builder: (context) {
+  //           final arguments = settings.arguments as Map<String, dynamic>?;
+  //           num? editTradeID = arguments?['editTradeID'];
+  //           return RecurringIndex(
+  //             editTradeID: editTradeID,
+  //           );
+  //         },
+  //       );
+  //     case BillionairesDetailIndex.path:
+  //       return MaterialPageRoute(
+  //         builder: (context) {
+  //           final arguments = settings.arguments as Map<String, dynamic>?;
+  //           String slug = arguments?['slug'];
+  //           return BillionairesDetailIndex(slug: slug);
+  //         },
+  //       );
+  //     case CryptoIndex.path:
+  //       return MaterialPageRoute(
+  //         builder: (context) {
+  //           final arguments = settings.arguments as Map<String, dynamic>?;
+  //           String symbol = arguments?['symbol'];
+  //           String? currency = arguments?['currency'];
+  //           return CryptoIndex(symbol: symbol, currency: currency);
+  //         },
+  //       );
+  //     case IndustriesViewIndex.path:
+  //       return MaterialPageRoute(
+  //         builder: (context) {
+  //           final arguments = settings.arguments as Map<String, dynamic>?;
+  //           String slug = arguments?['slug'];
 
-            return IndustriesViewIndex(slug: slug);
-          },
-        );
-      case SectorViewIndex.path:
-        return MaterialPageRoute(
-          builder: (context) {
-            final arguments = settings.arguments as Map<String, dynamic>?;
-            String slug = arguments?['slug'];
+  //           return IndustriesViewIndex(slug: slug);
+  //         },
+  //       );
+  //     case SectorViewIndex.path:
+  //       return MaterialPageRoute(
+  //         builder: (context) {
+  //           final arguments = settings.arguments as Map<String, dynamic>?;
+  //           String slug = arguments?['slug'];
 
-            return SectorViewIndex(slug: slug);
-          },
-        );
-      case BlogsDetailIndex.path:
-        return MaterialPageRoute(
-          builder: (context) {
-            final arguments = settings.arguments as Map<String, dynamic>?;
-            String slug = arguments?['slug'];
+  //           return SectorViewIndex(slug: slug);
+  //         },
+  //       );
+  //     case BlogsDetailIndex.path:
+  //       return MaterialPageRoute(
+  //         builder: (context) {
+  //           final arguments = settings.arguments as Map<String, dynamic>?;
+  //           String slug = arguments?['slug'];
 
-            return BlogsDetailIndex(slug: slug);
-          },
-        );
-      case LegalInfoIndex.path:
-        return MaterialPageRoute(
-          builder: (context) {
-            final arguments = settings.arguments as Map<String, dynamic>?;
-            String? slug = arguments?['slug'];
-            bool? soloScreen = arguments?['soloScreen'];
+  //           return BlogsDetailIndex(slug: slug);
+  //         },
+  //       );
+  //     case LegalInfoIndex.path:
+  //       return MaterialPageRoute(
+  //         builder: (context) {
+  //           final arguments = settings.arguments as Map<String, dynamic>?;
+  //           String? slug = arguments?['slug'];
+  //           bool? soloScreen = arguments?['soloScreen'];
 
-            return LegalInfoIndex(
-              slug: slug,
-              soloScreen: soloScreen,
-            );
-          },
-        );
-      case AccountEmailVerificationIndex.path:
-        return MaterialPageRoute(
-          builder: (context) {
-            final arguments = settings.arguments as Map<String, dynamic>?;
-            String email = arguments?['email'];
+  //           return LegalInfoIndex(
+  //             slug: slug,
+  //             soloScreen: soloScreen,
+  //           );
+  //         },
+  //       );
+  //     case AccountEmailVerificationIndex.path:
+  //       return MaterialPageRoute(
+  //         builder: (context) {
+  //           final arguments = settings.arguments as Map<String, dynamic>?;
+  //           String email = arguments?['email'];
 
-            return AccountEmailVerificationIndex(email: email);
-          },
-        );
-      case SDIndex.path:
-        return MaterialPageRoute(
-          builder: (context) {
-            final arguments = settings.arguments as Map<String, dynamic>?;
-            String symbol = arguments?['symbol'];
+  //           return AccountEmailVerificationIndex(email: email);
+  //         },
+  //       );
+  //     case SDIndex.path:
+  //       return MaterialPageRoute(
+  //         builder: (context) {
+  //           final arguments = settings.arguments as Map<String, dynamic>?;
+  //           String symbol = arguments?['symbol'];
 
-            return SDIndex(symbol: symbol);
-          },
-        );
-      case AIindex.path:
-        return MaterialPageRoute(
-          builder: (context) {
-            final arguments = settings.arguments as Map<String, dynamic>?;
-            String symbol = arguments?['symbol'];
+  //           return SDIndex(symbol: symbol);
+  //         },
+  //       );
+  //     case AIindex.path:
+  //       return MaterialPageRoute(
+  //         builder: (context) {
+  //           final arguments = settings.arguments as Map<String, dynamic>?;
+  //           String symbol = arguments?['symbol'];
 
-            return AIindex(symbol: symbol);
-          },
-        );
-      case HomeViewMoreTickersIndex.path:
-        return MaterialPageRoute(
-          builder: (context) {
-            final arguments = settings.arguments as Map<String, dynamic>?;
-            String apiUrl = arguments?['apiUrl'];
+  //           return AIindex(symbol: symbol);
+  //         },
+  //       );
+  //     case HomeViewMoreTickersIndex.path:
+  //       return MaterialPageRoute(
+  //         builder: (context) {
+  //           final arguments = settings.arguments as Map<String, dynamic>?;
+  //           String apiUrl = arguments?['apiUrl'];
 
-            return HomeViewMoreTickersIndex(apiUrl: apiUrl);
-          },
-        );
-      case ToolsScannerIndex.path:
-        return MaterialPageRoute(
-          builder: (context) {
-            final arguments = settings.arguments as Map<String, dynamic>?;
-            int? index = arguments?['index'];
+  //           return HomeViewMoreTickersIndex(apiUrl: apiUrl);
+  //         },
+  //       );
+  //     case ToolsScannerIndex.path:
+  //       return MaterialPageRoute(
+  //         builder: (context) {
+  //           final arguments = settings.arguments as Map<String, dynamic>?;
+  //           int? index = arguments?['index'];
 
-            return ToolsScannerIndex(index: index);
-          },
-        );
-      case ReferPointsTransaction.path:
-        return MaterialPageRoute(
-          builder: (context) {
-            final arguments = settings.arguments as Map<String, dynamic>?;
-            return ReferPointsTransaction(
-              type: arguments?['type'],
-              title: arguments?['title'],
-            );
-          },
-        );
-      case JoinReferVerificationIndex.path:
-        return MaterialPageRoute(
-          builder: (context) {
-            final arguments = settings.arguments as Map<String, dynamic>?;
-            return JoinReferVerificationIndex(
-              name: arguments?['name'],
-              displayName: arguments?['displayName'],
-              countryCode: arguments?['countryCode'],
-              phone: arguments?['phone'],
-              verificationId: arguments?['verificationId'],
-            );
-          },
-        );
-      case PointsClaimLogs.path:
-        return MaterialPageRoute(
-          builder: (context) {
-            final arguments = settings.arguments as Map<String, dynamic>?;
-            return PointsClaimLogs(
-              title: arguments?['title'],
-              type: arguments?['type'],
-              id: arguments?['id'],
-              // name: arguments?['name'],
-              // displayName: arguments?['displayName'],
-              // countryCode: arguments?['countryCode'],
-              // phone: arguments?['phone'],
-              // verificationId: arguments?['verificationId'],
-            );
-          },
-        );
-      default:
-        if (isFIRSTopen) {
-          return MaterialPageRoute(
-            builder: (context) => const SplashFirstTime(),
-          );
-        }
-        return MaterialPageRoute(
-          builder: (context) {
-            return const Splash();
-          },
-        );
-    }
+  //           return ToolsScannerIndex(index: index);
+  //         },
+  //       );
+  //     case ReferPointsTransaction.path:
+  //       return MaterialPageRoute(
+  //         builder: (context) {
+  //           final arguments = settings.arguments as Map<String, dynamic>?;
+  //           return ReferPointsTransaction(
+  //             type: arguments?['type'],
+  //             title: arguments?['title'],
+  //           );
+  //         },
+  //       );
+  //     case JoinReferVerificationIndex.path:
+  //       return MaterialPageRoute(
+  //         builder: (context) {
+  //           final arguments = settings.arguments as Map<String, dynamic>?;
+  //           return JoinReferVerificationIndex(
+  //             name: arguments?['name'],
+  //             displayName: arguments?['displayName'],
+  //             countryCode: arguments?['countryCode'],
+  //             phone: arguments?['phone'],
+  //             verificationId: arguments?['verificationId'],
+  //           );
+  //         },
+  //       );
+  //     case PointsClaimLogs.path:
+  //       return MaterialPageRoute(
+  //         builder: (context) {
+  //           final arguments = settings.arguments as Map<String, dynamic>?;
+  //           return PointsClaimLogs(
+  //             title: arguments?['title'],
+  //             type: arguments?['type'],
+  //             id: arguments?['id'],
+  //             // name: arguments?['name'],
+  //             // displayName: arguments?['displayName'],
+  //             // countryCode: arguments?['countryCode'],
+  //             // phone: arguments?['phone'],
+  //             // verificationId: arguments?['verificationId'],
+  //           );
+  //         },
+  //       );
+  //     default:
+  //       if (isFIRSTopen) {
+  //         return MaterialPageRoute(
+  //           builder: (context) => const SplashFirstTime(),
+  //         );
+  //       }
+  //       return MaterialPageRoute(
+  //         builder: (context) {
+  //           return const Splash();
+  //         },
+  //       );
+  //   }
 
-    // return MaterialPageRoute(
-    //   builder: (context) {
-    //     return const Splash(from: 'getRouteGenerate');
-    //   },
-    // );
-  }
+  //   // return MaterialPageRoute(
+  //   //   builder: (context) {
+  //   //     return const Splash(from: 'getRouteGenerate');
+  //   //   },
+  //   // );
+  // }
 
   static List<SingleChildWidget> get providers {
     return [

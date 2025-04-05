@@ -188,7 +188,7 @@ class _OpenOrderScreenState extends State<OpenOrderScreen> {
               Visibility(
                 visible: widget.portfolioTradeType == 1,
                 child: BuyOrderItem(
-                  icon: orderIcons?.buyIcon??"",
+                  icon: orderIcons?.buyIcon ?? "",
                   title: "Buy More Shares",
                   subtitle: subtitleWithSymbol(
                     userDataRes?.ordersSubTitle?.buyOrder,
@@ -196,15 +196,17 @@ class _OpenOrderScreenState extends State<OpenOrderScreen> {
                   ),
                   onTap: () {
                     var selectedStock = StockType.buy;
-                      _onTap(symbol: widget.symbol, selectedStock: selectedStock);
+                    _onTap(symbol: widget.symbol, selectedStock: selectedStock);
                   },
                 ),
               ),
-              Visibility(visible: widget.portfolioTradeType == 1,child: BaseListDivider()),
+              Visibility(
+                  visible: widget.portfolioTradeType == 1,
+                  child: BaseListDivider()),
               Visibility(
                 visible: widget.portfolioTradeType == 1,
                 child: BuyOrderItem(
-                  icon: orderIcons?.sellOrderIcon??"",
+                  icon: orderIcons?.sellOrderIcon ?? "",
                   title: "Sell Shares",
                   subtitle: subtitleWithSymbol(
                     userDataRes?.ordersSubTitle?.sellOrder,
@@ -212,33 +214,36 @@ class _OpenOrderScreenState extends State<OpenOrderScreen> {
                   ),
                   onTap: () {
                     var selectedStock = StockType.sell;
-                      _onTap(symbol: widget.symbol, selectedStock: selectedStock);
-
+                    _onTap(symbol: widget.symbol, selectedStock: selectedStock);
                   },
                 ),
               ),
-              Visibility(visible: widget.portfolioTradeType == 1,child: BaseListDivider()),
+              Visibility(
+                  visible: widget.portfolioTradeType == 1,
+                  child: BaseListDivider()),
               Visibility(
                 visible: widget.portfolioTradeType == 2,
                 child: BuyOrderItem(
-                  icon: orderIcons?.shortOrderIcon??"",
+                  icon: orderIcons?.shortOrderIcon ?? "",
                   title: "Increase Short Shares",
                   subtitle: subtitleWithSymbol(
                     userDataRes?.ordersSubTitle?.shortOrder,
                     widget.symbol,
                   ),
                   onTap: () {
-                      context
-                          .read<TickerSearchManager>()
-                          .shortRedirection(widget.symbol ?? "");
+                    context
+                        .read<TickerSearchManager>()
+                        .shortRedirection(widget.symbol ?? "");
                   },
                 ),
               ),
-              Visibility(visible: widget.portfolioTradeType == 2,child: BaseListDivider()),
+              Visibility(
+                  visible: widget.portfolioTradeType == 2,
+                  child: BaseListDivider()),
               Visibility(
                 visible: widget.portfolioTradeType == 2,
                 child: BuyOrderItem(
-                  icon: orderIcons?.buyToCoverIcon??"",
+                  icon: orderIcons?.buyToCoverIcon ?? "",
                   title: "Buy to Cover Shares",
                   subtitle: subtitleWithSymbol(
                     userDataRes?.ordersSubTitle?.buyToCoverOrder,
@@ -246,24 +251,27 @@ class _OpenOrderScreenState extends State<OpenOrderScreen> {
                   ),
                   onTap: () {
                     var selectedStock = StockType.btc;
-                      _onTap(symbol: widget.symbol, selectedStock: selectedStock);
-
+                    _onTap(symbol: widget.symbol, selectedStock: selectedStock);
                   },
                 ),
               ),
-              Visibility(visible: widget.portfolioTradeType == 2,child: BaseListDivider()),
+              Visibility(
+                  visible: widget.portfolioTradeType == 2,
+                  child: BaseListDivider()),
             ],
           ),
         ),
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            if (widget.portfolioTradeType == 1 || widget.portfolioTradeType == 2)
+            if (widget.portfolioTradeType == 1 ||
+                widget.portfolioTradeType == 2)
               Visibility(
-                visible: userDataRes?.userConditionalOrderPermission?.bracketOrder ==
-                    true,
+                visible:
+                    userDataRes?.userConditionalOrderPermission?.bracketOrder ==
+                        true,
                 child: BuyOrderItem(
-                  icon: orderIcons?.bracketOrderIcon??"",
+                  icon: orderIcons?.bracketOrderIcon ?? "",
                   title: "Stop Loss and Target",
                   subtitle: subtitleWithSymbol(
                     userDataRes?.ordersSubTitle?.bracketOrder,
@@ -271,19 +279,21 @@ class _OpenOrderScreenState extends State<OpenOrderScreen> {
                   ),
                   onTap: () {
                     var conditionalType = ConditionType.bracketOrder;
-                      context
-                          .read<TickerSearchManager>()
-                          .conditionalRedirection(widget.symbol ?? "",
-                              tickerID: widget.tickerID,
-                              qty: widget.qty,
-                              conditionalType: conditionalType);
+                    context.read<TickerSearchManager>().conditionalRedirection(
+                        widget.symbol ?? "",
+                        tickerID: widget.tickerID,
+                        qty: widget.qty,
+                        conditionalType: conditionalType);
                   },
                 ),
               ),
-
-            if (widget.portfolioTradeType == 1 || widget.portfolioTradeType == 2)
-            Visibility(visible: userDataRes?.userConditionalOrderPermission?.bracketOrder == true,child: BaseListDivider()),
-
+            if (widget.portfolioTradeType == 1 ||
+                widget.portfolioTradeType == 2)
+              Visibility(
+                  visible: userDataRes
+                          ?.userConditionalOrderPermission?.bracketOrder ==
+                      true,
+                  child: BaseListDivider()),
             if (widget.portfolioTradeType == 3 &&
                 widget.allTradType?['order_type_original'] != "BRACKET_ORDER")
               Column(
@@ -291,7 +301,7 @@ class _OpenOrderScreenState extends State<OpenOrderScreen> {
                   Visibility(
                     visible: widget.allTradType?['trade_type'] == "Buy",
                     child: BuyOrderItem(
-                      icon: orderIcons?.buyIcon??"",
+                      icon: orderIcons?.buyIcon ?? "",
                       title: "Buy More Shares",
                       subtitle: subtitleWithSymbol(
                         userDataRes?.ordersSubTitle?.buyOrder,
@@ -317,12 +327,13 @@ class _OpenOrderScreenState extends State<OpenOrderScreen> {
                       },
                     ),
                   ),
-                  Visibility(visible: widget.allTradType?['trade_type'] == "Buy",child: BaseListDivider()),
-
+                  Visibility(
+                      visible: widget.allTradType?['trade_type'] == "Buy",
+                      child: BaseListDivider()),
                   Visibility(
                     visible: widget.allTradType?['trade_type'] == "Buy",
                     child: BuyOrderItem(
-                      icon: orderIcons?.sellOrderIcon??"",
+                      icon: orderIcons?.sellOrderIcon ?? "",
                       title: "Sell Shares",
                       subtitle: subtitleWithSymbol(
                         userDataRes?.ordersSubTitle?.sellOrder,
@@ -347,11 +358,13 @@ class _OpenOrderScreenState extends State<OpenOrderScreen> {
                       },
                     ),
                   ),
-                  Visibility(visible: widget.allTradType?['trade_type'] == "Buy",child: BaseListDivider()),
+                  Visibility(
+                      visible: widget.allTradType?['trade_type'] == "Buy",
+                      child: BaseListDivider()),
                   Visibility(
                     visible: widget.allTradType?['trade_type'] == "Short",
                     child: BuyOrderItem(
-                      icon: orderIcons?.shortOrderIcon??"",
+                      icon: orderIcons?.shortOrderIcon ?? "",
                       title: "Short More Shares",
                       subtitle: subtitleWithSymbol(
                         userDataRes?.ordersSubTitle?.buyOrder,
@@ -376,11 +389,13 @@ class _OpenOrderScreenState extends State<OpenOrderScreen> {
                       },
                     ),
                   ),
-                  Visibility(visible: widget.allTradType?['trade_type'] == "Short",child: BaseListDivider()),
+                  Visibility(
+                      visible: widget.allTradType?['trade_type'] == "Short",
+                      child: BaseListDivider()),
                   Visibility(
                     visible: widget.allTradType?['trade_type'] == "Short",
                     child: BuyOrderItem(
-                      icon: orderIcons?.buyToCoverIcon??"",
+                      icon: orderIcons?.buyToCoverIcon ?? "",
                       title: "Buy to Cover Shares",
                       subtitle: subtitleWithSymbol(
                         userDataRes?.ordersSubTitle?.sellOrder,
@@ -405,17 +420,18 @@ class _OpenOrderScreenState extends State<OpenOrderScreen> {
                       },
                     ),
                   ),
-                  Visibility(visible: widget.allTradType?['trade_type'] == "Short",child: BaseListDivider()),
+                  Visibility(
+                      visible: widget.allTradType?['trade_type'] == "Short",
+                      child: BaseListDivider()),
                 ],
               ),
             Visibility(
               visible: (widget.portfolioTradeType == 3),
               child: BuyOrderItem(
-                icon: orderIcons?.bracketOrderIcon??"",
+                icon: orderIcons?.bracketOrderIcon ?? "",
                 title: "Square Off Order",
                 subtitle: subtitleWithSymbol(
-                    userDataRes?.ordersSubTitle?.sellOrder,
-                    widget.symbol),
+                    userDataRes?.ordersSubTitle?.sellOrder, widget.symbol),
                 onTap: () {
                   popUpAlert(
                     cancel: true,
@@ -432,18 +448,28 @@ class _OpenOrderScreenState extends State<OpenOrderScreen> {
                       if (result == true) {
                         // Navigator.pushNamed(
                         //     navigatorKey.currentContext!, SimulatorIndex.path);
-                        Navigator.pushNamed(
-                            navigatorKey.currentContext!, Tabs.path,
-                            arguments: {
-                              'index': 2,
-                            });
+                        // Navigator.pushNamed(
+                        //     navigatorKey.currentContext!, Tabs.path,
+                        //     arguments: {
+                        //       'index': 2,
+                        //     });
+                        Navigator.push(
+                          navigatorKey.currentContext!,
+                          MaterialPageRoute(
+                            builder: (context) => Tabs(
+                              index: 2,
+                            ),
+                          ),
+                        );
                       }
                     },
                   );
                 },
               ),
             ),
-            Visibility(visible:widget.portfolioTradeType == 3,child: BaseListDivider()),
+            Visibility(
+                visible: widget.portfolioTradeType == 3,
+                child: BaseListDivider()),
           ],
         )
       ],
