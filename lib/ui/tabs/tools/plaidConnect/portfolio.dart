@@ -127,9 +127,16 @@ class _ToolsPortfolioIndexState extends State<ToolsPortfolioIndex> {
                       } else {
                         AIManager manager = context.read<AIManager>();
                         manager.setFromSD(false);
-                        Navigator.pushNamed(context, AIindex.path, arguments: {
-                          'symbol': p0.symbol,
-                        });
+                        // Navigator.pushNamed(context, AIindex.path, arguments: {
+                        //   'symbol': p0.symbol,
+                        // });
+
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => AIindex(
+                                      symbol: p0.symbol ?? '',
+                                    )));
                       }
                     },
                   );

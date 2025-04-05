@@ -34,11 +34,17 @@ class HomePopularStocks extends StatelessWidget {
                 titleStyle: styleBaseBold(fontSize: 22),
                 viewMore: () {
                   EventsService.instance.clickViewAllPopularStocksHomePage();
-                  Navigator.pushNamed(
-                    context,
-                    HomeViewMoreTickersIndex.path,
-                    arguments: {'apiUrl': Apis.myHomePopular},
-                  );
+                  // Navigator.pushNamed(
+                  //   context,
+                  //   HomeViewMoreTickersIndex.path,
+                  //   arguments: {'apiUrl': Apis.myHomePopular},
+                  // );
+
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => HomeViewMoreTickersIndex(
+                              apiUrl: Apis.myHomePopular)));
                 },
                 viewMoreText: 'View All',
               ),
@@ -55,11 +61,18 @@ class HomePopularStocks extends StatelessWidget {
                         children: [
                           GestureDetector(
                             onTap: () {
-                              EventsService.instance.selectStockPopularStocksHomePage();
-                              Navigator.pushNamed(context, SDIndex.path,
-                                  arguments: {
-                                    'symbol': ticker?.symbol,
-                                  });
+                              EventsService.instance
+                                  .selectStockPopularStocksHomePage();
+                              // Navigator.pushNamed(context, SDIndex.path,
+                              //     arguments: {
+                              //       'symbol': ticker?.symbol,
+                              //     });
+
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => SDIndex(
+                                          symbol: ticker?.symbol ?? "")));
                             },
                             child: Container(
                               height: 65,

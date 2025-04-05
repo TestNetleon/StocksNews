@@ -103,8 +103,13 @@ class _AlertIndexState extends State<AlertIndex> {
                                 deleteDataRes: manager.alertData?.deleteBox,
                                 index: index,
                                 onTap: (p0) {
-                                  Navigator.pushNamed(context, SDIndex.path,
-                                      arguments: {'symbol': p0.symbol});
+                                  // Navigator.pushNamed(context, SDIndex.path,
+                                  //     arguments: {'symbol': p0.symbol});
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => SDIndex(
+                                              symbol: p0.symbol ?? '')));
                                 },
                               );
                             },

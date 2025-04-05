@@ -18,13 +18,11 @@ import 'package:stocks_news_new/widgets/cache_network_image.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
-
 tournamentSheet({
   String? symbol,
   bool doPop = true,
   BaseTickerRes? data,
 }) {
-
   BaseBottomSheet().bottomSheet(
     child: TournamentTicker(
       symbol: symbol,
@@ -39,7 +37,7 @@ class TournamentTicker extends StatefulWidget {
   final bool doPop;
   final BaseTickerRes? data;
   const TournamentTicker(
-      {super.key, this.symbol, this.doPop = true,this.data});
+      {super.key, this.symbol, this.doPop = true, this.data});
 
   @override
   State<TournamentTicker> createState() => _TournamentTickerState();
@@ -57,26 +55,26 @@ class _TournamentTickerState extends State<TournamentTicker> {
     super.dispose();
   }
 
-  _trade({StockType type = StockType.buy,String? symbol}) async {
+  _trade({StockType type = StockType.buy, String? symbol}) async {
     TradesManger manger = context.read<TradesManger>();
-    ApiResponse res = await manger.tradeBuySell(type: type,symbol: symbol);
+    ApiResponse res = await manger.tradeBuySell(type: type, symbol: symbol);
     if (res.status) {
       SSEManager.instance.disconnectScreen(SimulatorEnum.tradeSheet);
       Navigator.pop(navigatorKey.currentContext!);
       Navigator.pop(navigatorKey.currentContext!);
-      await Navigator.pushNamed(navigatorKey.currentContext!, AllTradesIndex.path);
+      // await Navigator.pushNamed(navigatorKey.currentContext!, AllTradesIndex.path);
+      await Navigator.push(navigatorKey.currentContext!,
+          MaterialPageRoute(builder: (context) => AllTradesIndex()));
       manger.setSelectedStock(
         stock: manger.selectedStock,
         clearEverything: true,
       );
     }
   }
-  _close({
-    int? id,
-    String? ticker
-  }) async {
+
+  _close({int? id, String? ticker}) async {
     TradesManger manger = context.read<TradesManger>();
-    ApiResponse res = await manger.tradeCancel(ticker: ticker,tradeId: id);
+    ApiResponse res = await manger.tradeCancel(ticker: ticker, tradeId: id);
     if (res.status) {
       SSEManager.instance.disconnectScreen(SimulatorEnum.tradeSheet);
       Navigator.pop(navigatorKey.currentContext!);
@@ -84,7 +82,7 @@ class _TournamentTickerState extends State<TournamentTicker> {
     }
   }
 
-    @override
+  @override
   Widget build(BuildContext context) {
     LeagueSearchManager searchManager = context.watch<LeagueSearchManager>();
     StockDataManagerRes? stock = searchManager.tappedStock;
@@ -109,12 +107,12 @@ class _TournamentTickerState extends State<TournamentTicker> {
                       padding: const EdgeInsets.all(8),
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        color:ThemeColors.neutral5,
+                        color: ThemeColors.neutral5,
                       ),
                       width: 50,
                       height: 50,
                       child:
-                      CachedNetworkImagesWidget(widget.data?.image ?? ""),
+                          CachedNetworkImagesWidget(widget.data?.image ?? ""),
                     ),
                   ),
                   const SpacerHorizontal(width: 12),
@@ -124,7 +122,7 @@ class _TournamentTickerState extends State<TournamentTicker> {
                       children: [
                         Text(
                           '${widget.data?.symbol}',
-                          style: styleBaseBold(fontSize:20),
+                          style: styleBaseBold(fontSize: 20),
                         ),
                         Text(
                           '${widget.data?.name}',
@@ -141,14 +139,13 @@ class _TournamentTickerState extends State<TournamentTicker> {
                         visible: stock?.price != null,
                         child: Text(
                           '${stock?.price?.toFormattedPrice()}',
-                          style:  styleBaseBold(
+                          style: styleBaseBold(
                               fontSize: 16,
                               color: (stock?.price ?? 0) > 0
                                   ? ThemeColors.accent
                                   : (stock?.price ?? 0) == 0
-                                  ? ThemeColors.black
-                                  : ThemeColors.sos
-                          ),
+                                      ? ThemeColors.black
+                                      : ThemeColors.sos),
                         ),
                       ),
                       Visibility(
@@ -209,69 +206,68 @@ class _TournamentTickerState extends State<TournamentTicker> {
                       ]),
                 ),
               ),
-
             ],
           ),
           BaseListDivider(
             height: 20,
           ),
           if (widget.data?.showButton?.alreadyTraded == false)
-          Padding(
-            padding: const EdgeInsets.fromLTRB(10, 10, 10, 40),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Expanded(
-                  child: AnimatedContainer(
-                    width: double.infinity,
-                    duration: const Duration(milliseconds: 500),
-                    curve: Curves.easeIn,
-                    child: _card(
-                      symbol: widget.symbol,
-                      color: ThemeColors.sos,
-                      "Sell Order",
-                      onTap: () {
-                        _trade(type: StockType.sell,symbol: widget.data?.symbol);
-                      },
+            Padding(
+              padding: const EdgeInsets.fromLTRB(10, 10, 10, 40),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: AnimatedContainer(
+                      width: double.infinity,
+                      duration: const Duration(milliseconds: 500),
+                      curve: Curves.easeIn,
+                      child: _card(
+                        symbol: widget.symbol,
+                        color: ThemeColors.sos,
+                        "Sell Order",
+                        onTap: () {
+                          _trade(
+                              type: StockType.sell,
+                              symbol: widget.data?.symbol);
+                        },
+                      ),
                     ),
                   ),
-                ),
-                const SpacerHorizontal(
-                  width: 10,
-                ),
-                Expanded(
-                  child: AnimatedContainer(
-                    duration: const Duration(milliseconds: 500),
-                    width: double.infinity,
-                    curve: Curves.easeIn,
-                    child: _card(
-                      symbol: widget.symbol,
-                      color: ThemeColors.accent,
-                      "Buy Order",
-                      onTap: () {
-                        _trade(symbol: widget.data?.symbol);
-                      },
+                  const SpacerHorizontal(
+                    width: 10,
+                  ),
+                  Expanded(
+                    child: AnimatedContainer(
+                      duration: const Duration(milliseconds: 500),
+                      width: double.infinity,
+                      curve: Curves.easeIn,
+                      child: _card(
+                        symbol: widget.symbol,
+                        color: ThemeColors.accent,
+                        "Buy Order",
+                        onTap: () {
+                          _trade(symbol: widget.data?.symbol);
+                        },
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-          if (widget.data?.showButton?.alreadyTraded ==
-              true)
+          if (widget.data?.showButton?.alreadyTraded == true)
             BaseButton(
               radius: 10,
               text: 'Close',
-              margin: const EdgeInsets.fromLTRB(10, 10, 10,10),
-              onPressed: (){
+              margin: const EdgeInsets.fromLTRB(10, 10, 10, 10),
+              onPressed: () {
                 _close(
-                  id:  widget.data?.showButton?.tradeId?.toInt(),
+                  id: widget.data?.showButton?.tradeId?.toInt(),
                   ticker: widget.data?.symbol,
                 );
               },
               child: Row(
-                mainAxisAlignment:
-                MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
                     'Close',
@@ -280,26 +276,14 @@ class _TournamentTickerState extends State<TournamentTicker> {
                   SpacerHorizontal(width: 10),
                   Flexible(
                     child: Container(
-                      padding: EdgeInsets.symmetric(
-                          horizontal: 15),
+                      padding: EdgeInsets.symmetric(horizontal: 15),
                       decoration: BoxDecoration(
-                        borderRadius:
-                        BorderRadius.circular(20),
-                        color: (widget
-                            .data
-                            ?.showButton
-                            ?.orderChange ??
-                            0) >
-                            0
+                        borderRadius: BorderRadius.circular(20),
+                        color: (widget.data?.showButton?.orderChange ?? 0) > 0
                             ? ThemeColors.accent
-                            :
-                        (widget
-                            .data
-                            ?.showButton
-                            ?.orderChange ??
-                            0) == 0
-                            ? ThemeColors.white:
-                        ThemeColors.sos,
+                            : (widget.data?.showButton?.orderChange ?? 0) == 0
+                                ? ThemeColors.white
+                                : ThemeColors.sos,
                       ),
                       child: Text(
                         '${widget.data?.showButton?.orderChange?.toCurrency()}%',
@@ -316,14 +300,14 @@ class _TournamentTickerState extends State<TournamentTicker> {
   }
 
   Widget _card(
-      text, {
-        IconData? icon,
-        Color? color = const Color.fromARGB(255, 194, 216, 51),
-        Color? textColor,
-        EdgeInsetsGeometry? padding,
-        required void Function() onTap,
-        String? symbol,
-      }) {
+    text, {
+    IconData? icon,
+    Color? color = const Color.fromARGB(255, 194, 216, 51),
+    Color? textColor,
+    EdgeInsetsGeometry? padding,
+    required void Function() onTap,
+    String? symbol,
+  }) {
     return GestureDetector(
       onTap: () {
         if (symbol == null) Navigator.pop(navigatorKey.currentContext!);
@@ -341,7 +325,8 @@ class _TournamentTickerState extends State<TournamentTicker> {
         child: Text(
           "$text",
           textAlign: TextAlign.center,
-          style: styleBaseBold(color: textColor??ThemeColors.white, fontSize: 18),
+          style: styleBaseBold(
+              color: textColor ?? ThemeColors.white, fontSize: 18),
         ),
       ),
     );

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/managers/market/market.dart';
+import 'package:stocks_news_new/service/events/service.dart';
 import 'package:stocks_news_new/ui/base/app_bar.dart';
 import 'package:stocks_news_new/ui/base/common_tab.dart';
 import 'package:stocks_news_new/ui/base/scaffold.dart';
@@ -180,6 +181,7 @@ class _MarketIndexState extends State<MarketIndex> {
 
   void _changeScreenIndex(int index) {
     MarketManager manager = context.read<MarketManager>();
+    EventsService.instance.selectStocksMarketDataPage(index: index);
     manager.resetFilter(
       marketIndex: _marketIndex,
       marketInnerIndex: _marketInnerIndex,
@@ -208,7 +210,7 @@ class _MarketIndexState extends State<MarketIndex> {
 
   void _changeMarketInnerIndex(int index) {
     MarketManager manager = context.read<MarketManager>();
-
+    EventsService.instance.selectMostBullishBearishMarketDataPage(index: index);
     setState(() {
       _marketInnerIndex = index;
     });
@@ -227,6 +229,8 @@ class _MarketIndexState extends State<MarketIndex> {
       appBar: BaseAppBar(
         showBack: true,
         showSearch: true,
+        onBackEventCall: EventsService.instance.backMarketDataPageToolsPage,
+        onSearchEventCall: EventsService.instance.searchMarketDataToolsPage,
       ),
       body: BaseLoaderContainer(
         isLoading: provider.isLoading,

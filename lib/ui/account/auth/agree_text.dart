@@ -80,11 +80,21 @@ class _AccountAgreeTextState extends State<AccountAgreeText> {
           },
           onTapUrl: (url) async {
             if (!(url.startsWith('https:') || url.startsWith('http:'))) {
-              Navigator.pushNamed(context, LegalInfoIndex.path, arguments: {
-                'slug': url == "terms-of-service"
-                    ? "terms-of-service"
-                    : "privacy-policy",
-              });
+              // Navigator.pushNamed(context, LegalInfoIndex.path, arguments: {
+              //   'slug': url == "terms-of-service"
+              //       ? "terms-of-service"
+              //       : "privacy-policy",
+              // });
+
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => LegalInfoIndex(
+                      slug: url == "terms-of-service"
+                          ? "terms-of-service"
+                          : "privacy-policy",
+                    ),
+                  ));
             } else {
               openUrl(url);
             }

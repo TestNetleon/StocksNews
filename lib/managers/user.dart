@@ -120,30 +120,38 @@ class UserManager extends ChangeNotifier {
     await manager.askLoginScreen();
     if (manager.user == null) return;
     Navigator.pop(navigatorKey.currentContext!);
-    await Navigator.pushNamed(
-      navigatorKey.currentContext!,
-      UpdatePersonalDetailIndex.path,
-    );
+    // await Navigator.pushNamed(
+    //   navigatorKey.currentContext!,
+    //   UpdatePersonalDetailIndex.path,
+    // );
+    await Navigator.push(navigatorKey.currentContext!,
+        MaterialPageRoute(builder: (context) => UpdatePersonalDetailIndex()));
   }
 
   Future navigateToAlerts() async {
     await askLoginScreen();
     if (_user == null) return;
     Navigator.pop(navigatorKey.currentContext!);
-    await Navigator.pushNamed(
-      navigatorKey.currentContext!,
-      AlertIndex.path,
-    );
+    // await Navigator.pushNamed(
+    //   navigatorKey.currentContext!,
+    //   AlertIndex.path,
+    // );
+
+    await Navigator.push(navigatorKey.currentContext!,
+        MaterialPageRoute(builder: (context) => AlertIndex()));
   }
 
   Future navigateToWatchList() async {
     await askLoginScreen();
     if (_user == null) return;
     Navigator.pop(navigatorKey.currentContext!);
-    await Navigator.pushNamed(
-      navigatorKey.currentContext!,
-      WatchListIndex.path,
-    );
+    // await Navigator.pushNamed(
+    //   navigatorKey.currentContext!,
+    //   WatchListIndex.path,
+    // );
+
+    await Navigator.push(navigatorKey.currentContext!,
+        MaterialPageRoute(builder: (context) => WatchListIndex()));
   }
 
   Future navigateToMySubscription({bool viewPlans = true}) async {
@@ -158,10 +166,13 @@ class UserManager extends ChangeNotifier {
     await askLoginScreen();
     if (_user == null) return;
     Navigator.pop(navigatorKey.currentContext!);
-    await Navigator.pushNamed(
-      navigatorKey.currentContext!,
-      ReferralIndex.path,
-    );
+    // await Navigator.pushNamed(
+    //   navigatorKey.currentContext!,
+    //   ReferralIndex.path,
+    // );
+
+    await Navigator.push(navigatorKey.currentContext!,
+        MaterialPageRoute(builder: (context) => ReferralIndex()));
   }
 
   // void navigateToBillionaires() async {
@@ -173,40 +184,54 @@ class UserManager extends ChangeNotifier {
 
   void navigateToNotificationSettings() {
     Navigator.pop(navigatorKey.currentContext!);
-    Navigator.pushNamed(
-        navigatorKey.currentContext!, NotificationSettings.path);
+    // Navigator.pushNamed(
+    //     navigatorKey.currentContext!, NotificationSettings.path);
+
+    Navigator.push(navigatorKey.currentContext!,
+        MaterialPageRoute(builder: (context) => NotificationSettings()));
   }
 
   void navigateToNews() {
     // Navigator.pop(navigatorKey.currentContext!);
     // Navigator.pushNamed(navigatorKey.currentContext!, CategoriesNewsIndex.path);
-    Navigator.pushNamed(navigatorKey.currentContext!, Tabs.path, arguments: {
-      'index': 3,
-    });
+    // Navigator.pushNamed(navigatorKey.currentContext!, Tabs.path, arguments: {
+    //   'index': 3,
+    // });
+
+    Navigator.push(navigatorKey.currentContext!,
+        MaterialPageRoute(builder: (context) => Tabs(index: 3)));
   }
 
   void navigateToBlogs() {
     Navigator.pop(navigatorKey.currentContext!);
-    Navigator.pushNamed(navigatorKey.currentContext!, BlogsIndex.path);
+    // Navigator.pushNamed(navigatorKey.currentContext!, BlogsIndex.path);
+    Navigator.push(navigatorKey.currentContext!,
+        MaterialPageRoute(builder: (context) => BlogsIndex()));
   }
 
   void navigateToFaq() {
     Navigator.pop(navigatorKey.currentContext!);
-    Navigator.pushNamed(navigatorKey.currentContext!, FaqIndex.path);
+    // Navigator.pushNamed(navigatorKey.currentContext!, FaqIndex.path);
+    Navigator.push(navigatorKey.currentContext!,
+        MaterialPageRoute(builder: (context) => FaqIndex()));
   }
 
   Future navigateToHelpDesk() async {
     askLoginScreen();
     if (_user == null) return;
     Navigator.pop(navigatorKey.currentContext!);
-    Navigator.pushNamed(navigatorKey.currentContext!, HelpDeskIndex.path);
+    // Navigator.pushNamed(navigatorKey.currentContext!, HelpDeskIndex.path);
+    Navigator.push(navigatorKey.currentContext!,
+        MaterialPageRoute(builder: (context) => HelpDeskIndex()));
   }
 
   Future navigateToFeedback() async {
     askLoginScreen();
     if (_user == null) return;
     Navigator.pop(navigatorKey.currentContext!);
-    Navigator.pushNamed(navigatorKey.currentContext!, FeedbackIndex.path);
+    // Navigator.pushNamed(navigatorKey.currentContext!, FeedbackIndex.path);
+    Navigator.push(navigatorKey.currentContext!,
+        MaterialPageRoute(builder: (context) => FeedbackIndex()));
   }
 
 //MARK: Phone Login
@@ -220,8 +245,10 @@ class UserManager extends ChangeNotifier {
         if (_user?.signupStatus == true) {
           Navigator.popUntil(
               navigatorKey.currentContext!, (route) => route.isFirst);
-          Navigator.pushReplacementNamed(
-              navigatorKey.currentContext!, Tabs.path);
+          // Navigator.pushReplacementNamed(
+          //     navigatorKey.currentContext!, Tabs.path);
+          Navigator.pushReplacement(navigatorKey.currentContext!,
+              MaterialPageRoute(builder: (context) => Tabs()));
         } else {
           Utils().showLog('popping back');
           Navigator.pop(navigatorKey.currentContext!);
@@ -245,8 +272,10 @@ class UserManager extends ChangeNotifier {
         if (_user?.signupStatus == true) {
           Navigator.popUntil(
               navigatorKey.currentContext!, (route) => route.isFirst);
-          Navigator.pushReplacementNamed(
-              navigatorKey.currentContext!, Tabs.path);
+          // Navigator.pushReplacementNamed(
+          //     navigatorKey.currentContext!, Tabs.path);
+          Navigator.pushReplacement(navigatorKey.currentContext!,
+              MaterialPageRoute(builder: (context) => Tabs()));
         } else {
           Utils().showLog('popping back');
           Navigator.pop(navigatorKey.currentContext!);
@@ -270,10 +299,13 @@ class UserManager extends ChangeNotifier {
         if (_user?.signupStatus == true) {
           Navigator.popUntil(
               navigatorKey.currentContext!, (route) => route.isFirst);
-          Navigator.pushReplacementNamed(
-            navigatorKey.currentContext!,
-            Tabs.path,
-          );
+          // Navigator.pushReplacementNamed(
+          //   navigatorKey.currentContext!,
+          //   Tabs.path,
+          // );
+
+          Navigator.pushReplacement(navigatorKey.currentContext!,
+              MaterialPageRoute(builder: (context) => Tabs()));
         } else {
           Utils().showLog('popping back');
           Navigator.pop(navigatorKey.currentContext!);

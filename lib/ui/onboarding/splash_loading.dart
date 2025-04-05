@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -39,11 +41,18 @@ class _SplashFirstTimeState extends State<SplashFirstTime> {
         _controller.play();
       });
 
-    _controller.addListener(() {
-      if (_controller.value.isCompleted) {
+    // _controller.addListener(() {
+    //   if (_controller.value.isCompleted) {
+    //     navigateToNextScreen();
+    //   }
+    // });
+
+    Future.delayed(
+      Duration(seconds: 5),
+      () {
         navigateToNextScreen();
-      }
-    });
+      },
+    );
   }
 
   void navigateToNextScreen() async {
@@ -68,14 +77,18 @@ class _SplashFirstTimeState extends State<SplashFirstTime> {
       } catch (e) {
         //
       }
+      Utils().showLog('POP HOME1 $popHome, ON DEEP LINKING $onDeepLinking');
       if (popHome) return;
       if (onDeepLinking) {
         popHome = true;
         return;
       }
 
-      Navigator.pushReplacementNamed(
-          navigatorKey.currentContext!, DefaultHome.path);
+      // Navigator.pushReplacementNamed(
+      //     navigatorKey.currentContext!, DefaultHome.path);
+
+      Navigator.pushReplacement(navigatorKey.currentContext!,
+          MaterialPageRoute(builder: (context) => DefaultHome()));
     }
   }
 
@@ -110,7 +123,7 @@ class _SplashFirstTimeState extends State<SplashFirstTime> {
   }
 
   void _callAPI() async {
-    bool firstTime = await Preference.getShowIntro();
+    bool firstTime = await Preference.isFirstOpen();
     Utils().showLog('FIRST TIME $firstTime');
     if (firstTime) {
       OnboardingManager provider = context.read<OnboardingManager>();

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/api/api_response.dart';
+import 'package:stocks_news_new/service/events/service.dart';
 import 'package:stocks_news_new/ui/base/base_list_divider.dart';
 import 'package:stocks_news_new/ui/base/button.dart';
 import 'package:stocks_news_new/ui/base/button_outline.dart';
@@ -89,10 +90,13 @@ class _LeagueTradesState extends State<LeagueTrades> {
                   myTrades?.overview?.length ?? 0,
                   (index) {
                     return GestureDetector(
-                      onTap: () => tradesManger.setSelectedOverview(
-                        myTrades?.overview?[index],
-                        showProgress: true,
-                      ),
+                      onTap: (){
+                        EventsService.instance.clickTradesLeagueToolsPage(index: index);
+                        tradesManger.setSelectedOverview(
+                          myTrades?.overview?[index],
+                          showProgress: true,
+                        );
+                      },
                       child: Container(
                         padding:
                             EdgeInsets.symmetric(horizontal: Pad.pad16, vertical:Pad.pad8),
@@ -153,6 +157,7 @@ class _LeagueTradesState extends State<LeagueTrades> {
                       radius: 8,
                       text: 'Place New Order',
                       onPressed: () {
+                        EventsService.instance.clickPlaceNewTradeLeagueToolsPage();
                         tradesManger.redirectToTrade();
                       },
 

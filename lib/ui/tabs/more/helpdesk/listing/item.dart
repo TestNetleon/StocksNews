@@ -21,10 +21,18 @@ class HelpDeskItemNew extends StatelessWidget {
     int status = manager.data?.helpDesk?.ticketList?[index].status ?? 0;
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, HelpDeskAllChatsIndex.path, arguments: {
-          "ticketId":
-              manager.data?.helpDesk?.ticketList?[index].ticketId ?? "N/A"
-        });
+        // Navigator.pushNamed(context, HelpDeskAllChatsIndex.path, arguments: {
+        //   "ticketId":
+        //       manager.data?.helpDesk?.ticketList?[index].ticketId ?? "N/A"
+        // });
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => HelpDeskAllChatsIndex(
+                      ticketId:
+                          manager.data?.helpDesk?.ticketList?[index].ticketId ??
+                              "",
+                    )));
       },
       child: Container(
         decoration: BoxDecoration(

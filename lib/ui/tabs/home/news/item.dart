@@ -42,9 +42,13 @@ class HomeNewsItem extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         if (data.slug == null || data.slug == '') return;
-        Navigator.pushNamed(context, NewsDetailIndex.path, arguments: {
-          'slug': data.slug,
-        });
+        // Navigator.pushNamed(context, NewsDetailIndex.path, arguments: {
+        //   'slug': data.slug,
+        // });
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => NewsDetailIndex(slug: data.slug ?? "")));
       },
       child: Container(
         margin: EdgeInsets.symmetric(vertical: Pad.pad10),

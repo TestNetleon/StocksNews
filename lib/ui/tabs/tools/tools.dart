@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/managers/tools.dart';
 import 'package:stocks_news_new/models/tools.dart';
+import 'package:stocks_news_new/service/events/service.dart';
 import 'package:stocks_news_new/ui/base/app_bar.dart';
 import 'package:stocks_news_new/ui/base/base_scroll.dart';
 import 'package:stocks_news_new/ui/tabs/more/index.dart';
@@ -42,6 +43,7 @@ class ToolsIndex extends StatelessWidget {
                   onTap: () {
                     if (data.slug == null || data.slug == null) return;
                     manager.startNavigation(data.slug ?? ToolsEnum.scanner);
+                    EventsService.instance.clickToolsPage(type: data.slug);
                   },
                 ),
               );

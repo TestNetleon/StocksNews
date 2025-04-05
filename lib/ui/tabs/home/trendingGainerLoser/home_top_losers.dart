@@ -73,9 +73,16 @@ class _HomeTopLosersState extends State<HomeTopLosers> {
                     BaseStockAddItem(
                       size: 30,
                       onTap: (value) {
-                        Navigator.pushNamed(context, SDIndex.path, arguments: {
-                          'symbol': value.symbol,
-                        });
+                        // Navigator.pushNamed(context, SDIndex.path, arguments: {
+                        //   'symbol': value.symbol,
+                        // });
+
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => SDIndex(
+                                      symbol: value.symbol ?? '',
+                                    )));
                       },
                       data: manager.dataTopLosers!.data![index],
                       index: index,
@@ -94,15 +101,23 @@ class _HomeTopLosersState extends State<HomeTopLosers> {
                           //     "innerChildIndex": 1,
                           //   },
                           // );
-                          Navigator.pushNamed(
-                            context,
-                            MarketIndex.path,
-                            arguments: {
-                              'screenIndex': 0,
-                              "marketIndex": 1,
-                              "marketInnerIndex": 1,
-                            },
-                          );
+                          // Navigator.pushNamed(
+                          //   context,
+                          //   MarketIndex.path,
+                          //   arguments: {
+                          //     'screenIndex': 0,
+                          //     "marketIndex": 1,
+                          //     "marketInnerIndex": 1,
+                          //   },
+                          // );
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => MarketIndex(
+                                        screenIndex: 0,
+                                        marketIndex: 1,
+                                        marketInnerIndex: 1,
+                                      )));
                         },
                         text: "View More Top Losers",
                         margin: EdgeInsets.all(Pad.pad16),

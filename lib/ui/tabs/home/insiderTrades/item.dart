@@ -23,8 +23,13 @@ class HomeInsiderTradeItem extends StatelessWidget {
           return;
         }
 
-        Navigator.pushNamed(context, SignalInsidersReportingIndex.path,
-            arguments: {'data': data});
+        // Navigator.pushNamed(context, SignalInsidersReportingIndex.path,
+        //     arguments: {'data': data});
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) =>
+                    SignalInsidersReportingIndex(data: data)));
       },
       child: Container(
         width: 200.sp,
@@ -89,9 +94,14 @@ class HomeInsiderTradeItem extends StatelessWidget {
                         if (data.companyCik == null || data.companyCik == '') {
                           return;
                         }
-                        Navigator.pushNamed(
-                            context, SignalInsidersCompanyIndex.path,
-                            arguments: {'data': data});
+                        // Navigator.pushNamed(
+                        //     context, SignalInsidersCompanyIndex.path,
+                        //     arguments: {'data': data});
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    SignalInsidersCompanyIndex(data: data)));
                       },
                       child: Row(
                         children: [

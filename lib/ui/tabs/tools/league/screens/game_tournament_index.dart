@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:stocks_news_new/service/events/service.dart';
 import 'package:stocks_news_new/ui/base/app_bar.dart';
 import 'package:stocks_news_new/ui/base/common_tab.dart';
 import 'package:stocks_news_new/ui/base/scaffold.dart';
@@ -45,6 +46,7 @@ class _TradingLeagueIndexState extends State<TradingLeagueIndex> {
           showBack: true,
           title: !lManager.isLoading ? lManager.tabData?.title ?? "" : "",
           showNotification: true,
+          onBackEventCall:(){EventsService.instance.backLeagueToolsPage(index: lManager.selectedScreen);},
         ),
         body: BaseLoaderContainer(
           isLoading: lManager.isLoading,

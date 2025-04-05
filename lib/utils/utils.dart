@@ -873,19 +873,43 @@ void handleNavigation({
   Utils().showLog("----$userPresent---");
 
   if (type == DeeplinkEnum.blogDetail) {
-    Navigator.pushNamed(navigatorKey.currentContext!, BlogsDetailIndex.path,
-        arguments: {
-          'slug': slug,
-        });
+    // Navigator.pushNamed(navigatorKey.currentContext!, BlogsDetailIndex.path,
+    //     arguments: {
+    //       'slug': slug,
+    //     });
+    Navigator.push(
+      navigatorKey.currentContext!,
+      MaterialPageRoute(
+        builder: (context) => BlogsDetailIndex(
+          slug: slug ?? '',
+        ),
+      ),
+    );
   } else if (type == DeeplinkEnum.newsDetail) {
-    Navigator.pushNamed(navigatorKey.currentContext!, NewsDetailIndex.path,
-        arguments: {
-          'slug': slug,
-        });
+    // Navigator.pushNamed(navigatorKey.currentContext!, NewsDetailIndex.path,
+    //     arguments: {
+    //       'slug': slug,
+    //     });
+    Navigator.push(
+      navigatorKey.currentContext!,
+      MaterialPageRoute(
+        builder: (context) => NewsDetailIndex(
+          slug: slug ?? '',
+        ),
+      ),
+    );
   } else if (type == DeeplinkEnum.stocksDetail) {
-    Navigator.pushNamed(navigatorKey.currentContext!, SDIndex.path, arguments: {
-      'symbol': slug,
-    });
+    // Navigator.pushNamed(navigatorKey.currentContext!, SDIndex.path, arguments: {
+    //   'symbol': slug,
+    // });
+    Navigator.push(
+      navigatorKey.currentContext!,
+      MaterialPageRoute(
+        builder: (context) => SDIndex(
+          symbol: slug ?? '',
+        ),
+      ),
+    );
   } else if (type == DeeplinkEnum.login) {
     if (userPresent) {
       if (fromBackground) {
@@ -956,7 +980,13 @@ void handleNavigation({
       MaterialPageRoute(builder: (_) => const Tabs(index: 2)),
     );
   } else if (type == DeeplinkEnum.helpdesk) {
-    Navigator.pushNamed(navigatorKey.currentContext!, HelpDeskIndex.path);
+    // Navigator.pushNamed(navigatorKey.currentContext!, HelpDeskIndex.path);
+    Navigator.push(
+      navigatorKey.currentContext!,
+      MaterialPageRoute(
+        builder: (context) => HelpDeskIndex(),
+      ),
+    );
     // *********** Market data Pages from Here ********
   } else if (type == DeeplinkEnum.gainerLoser) {
     Navigator.popUntil(navigatorKey.currentContext!, (route) => route.isFirst);
@@ -968,14 +998,24 @@ void handleNavigation({
     //     "childIndex": 1,
     //   },
     // );
-    Navigator.pushNamed(
+    // Navigator.pushNamed(
+    //   navigatorKey.currentContext!,
+    //   MarketIndex.path,
+    //   arguments: {
+    //     'screenIndex': 0,
+    //     "marketIndex": 1,
+    //     "marketInnerIndex": 0,
+    //   },
+    // );
+    Navigator.push(
       navigatorKey.currentContext!,
-      MarketIndex.path,
-      arguments: {
-        'screenIndex': 0,
-        "marketIndex": 1,
-        "marketInnerIndex": 0,
-      },
+      MaterialPageRoute(
+        builder: (context) => MarketIndex(
+          screenIndex: 0,
+          marketIndex: 1,
+          marketInnerIndex: 0,
+        ),
+      ),
     );
   } else if (type == DeeplinkEnum.gapUpDown) {
     Navigator.popUntil(navigatorKey.currentContext!, (route) => route.isFirst);
@@ -987,14 +1027,24 @@ void handleNavigation({
     //     "childIndex": 2,
     //   },
     // );
-    Navigator.pushNamed(
+    // Navigator.pushNamed(
+    //   navigatorKey.currentContext!,
+    //   MarketIndex.path,
+    //   arguments: {
+    //     'screenIndex': 0,
+    //     "marketIndex": 2,
+    //     "marketInnerIndex": 0,
+    //   },
+    // );
+    Navigator.push(
       navigatorKey.currentContext!,
-      MarketIndex.path,
-      arguments: {
-        'screenIndex': 0,
-        "marketIndex": 2,
-        "marketInnerIndex": 0,
-      },
+      MaterialPageRoute(
+        builder: (context) => MarketIndex(
+          screenIndex: 0,
+          marketIndex: 2,
+          marketInnerIndex: 0,
+        ),
+      ),
     );
   } else if (type == DeeplinkEnum.highLowPE) {
     Navigator.popUntil(navigatorKey.currentContext!, (route) => route.isFirst);
@@ -1006,14 +1056,24 @@ void handleNavigation({
     //     "childIndex": 3,
     //   },
     // );
-    Navigator.pushNamed(
+    // Navigator.pushNamed(
+    //   navigatorKey.currentContext!,
+    //   MarketIndex.path,
+    //   arguments: {
+    //     'screenIndex': 0,
+    //     "marketIndex": 3,
+    //     "marketInnerIndex": 0,
+    //   },
+    // );
+    Navigator.push(
       navigatorKey.currentContext!,
-      MarketIndex.path,
-      arguments: {
-        'screenIndex': 0,
-        "marketIndex": 3,
-        "marketInnerIndex": 0,
-      },
+      MaterialPageRoute(
+        builder: (context) => MarketIndex(
+          screenIndex: 0,
+          marketIndex: 3,
+          marketInnerIndex: 0,
+        ),
+      ),
     );
   } else if (type == DeeplinkEnum.fiftyTwoWeeks) {
     Navigator.popUntil(navigatorKey.currentContext!, (route) => route.isFirst);
@@ -1025,14 +1085,24 @@ void handleNavigation({
     //     "childIndex": 4,
     //   },
     // );
-    Navigator.pushNamed(
+    // Navigator.pushNamed(
+    //   navigatorKey.currentContext!,
+    //   MarketIndex.path,
+    //   arguments: {
+    //     'screenIndex': 0,
+    //     "marketIndex": 4,
+    //     "marketInnerIndex": 0,
+    //   },
+    // );
+    Navigator.push(
       navigatorKey.currentContext!,
-      MarketIndex.path,
-      arguments: {
-        'screenIndex': 0,
-        "marketIndex": 4,
-        "marketInnerIndex": 0,
-      },
+      MaterialPageRoute(
+        builder: (context) => MarketIndex(
+          screenIndex: 0,
+          marketIndex: 4,
+          marketInnerIndex: 0,
+        ),
+      ),
     );
   } else if (type == DeeplinkEnum.highLowBeta) {
     Navigator.popUntil(navigatorKey.currentContext!, (route) => route.isFirst);
@@ -1044,14 +1114,24 @@ void handleNavigation({
     //     "childIndex": 5,
     //   },
     // );
-    Navigator.pushNamed(
+    // Navigator.pushNamed(
+    //   navigatorKey.currentContext!,
+    //   MarketIndex.path,
+    //   arguments: {
+    //     'screenIndex': 0,
+    //     "marketIndex": 5,
+    //     "marketInnerIndex": 0,
+    //   },
+    // );
+    Navigator.push(
       navigatorKey.currentContext!,
-      MarketIndex.path,
-      arguments: {
-        'screenIndex': 0,
-        "marketIndex": 5,
-        "marketInnerIndex": 0,
-      },
+      MaterialPageRoute(
+        builder: (context) => MarketIndex(
+          screenIndex: 0,
+          marketIndex: 5,
+          marketInnerIndex: 0,
+        ),
+      ),
     );
   } else if (type == DeeplinkEnum.indices) {
     Navigator.popUntil(navigatorKey.currentContext!, (route) => route.isFirst);
@@ -1063,14 +1143,24 @@ void handleNavigation({
     //     "childIndex": 6,
     //   },
     // );
-    Navigator.pushNamed(
+    // Navigator.pushNamed(
+    //   navigatorKey.currentContext!,
+    //   MarketIndex.path,
+    //   arguments: {
+    //     'screenIndex': 0,
+    //     "marketIndex": 6,
+    //     "marketInnerIndex": 0,
+    //   },
+    // );
+    Navigator.push(
       navigatorKey.currentContext!,
-      MarketIndex.path,
-      arguments: {
-        'screenIndex': 0,
-        "marketIndex": 6,
-        "marketInnerIndex": 0,
-      },
+      MaterialPageRoute(
+        builder: (context) => MarketIndex(
+          screenIndex: 0,
+          marketIndex: 6,
+          marketInnerIndex: 0,
+        ),
+      ),
     );
   } else if (type == DeeplinkEnum.lowPriceStocks) {
     Navigator.popUntil(navigatorKey.currentContext!, (route) => route.isFirst);
@@ -1082,14 +1172,24 @@ void handleNavigation({
     //     "childIndex": 7,
     //   },
     // );
-    Navigator.pushNamed(
+    // Navigator.pushNamed(
+    //   navigatorKey.currentContext!,
+    //   MarketIndex.path,
+    //   arguments: {
+    //     'screenIndex': 0,
+    //     "marketIndex": 7,
+    //     "marketInnerIndex": 0,
+    //   },
+    // );
+    Navigator.push(
       navigatorKey.currentContext!,
-      MarketIndex.path,
-      arguments: {
-        'screenIndex': 0,
-        "marketIndex": 7,
-        "marketInnerIndex": 0,
-      },
+      MaterialPageRoute(
+        builder: (context) => MarketIndex(
+          screenIndex: 0,
+          marketIndex: 7,
+          marketInnerIndex: 0,
+        ),
+      ),
     );
   } else if (type == DeeplinkEnum.mostActive) {
     Navigator.popUntil(navigatorKey.currentContext!, (route) => route.isFirst);
@@ -1101,14 +1201,24 @@ void handleNavigation({
     //     "childIndex": 8,
     //   },
     // );
-    Navigator.pushNamed(
+    // Navigator.pushNamed(
+    //   navigatorKey.currentContext!,
+    //   MarketIndex.path,
+    //   arguments: {
+    //     'screenIndex': 0,
+    //     "marketIndex": 8,
+    //     "marketInnerIndex": 0,
+    //   },
+    // );
+    Navigator.push(
       navigatorKey.currentContext!,
-      MarketIndex.path,
-      arguments: {
-        'screenIndex': 0,
-        "marketIndex": 8,
-        "marketInnerIndex": 0,
-      },
+      MaterialPageRoute(
+        builder: (context) => MarketIndex(
+          screenIndex: 0,
+          marketIndex: 8,
+          marketInnerIndex: 0,
+        ),
+      ),
     );
   } else if (type == DeeplinkEnum.pennyStocks) {
     Navigator.popUntil(navigatorKey.currentContext!, (route) => route.isFirst);
@@ -1120,16 +1230,26 @@ void handleNavigation({
     //     "childIndex": 9,
     //   },
     // );
-    Navigator.pushNamed(
-      navigatorKey.currentContext!,
-      MarketIndex.path,
-      arguments: {
-        'screenIndex': 0,
-        "marketIndex": 9,
-        "marketInnerIndex": 0,
-      },
-    );
+    // Navigator.pushNamed(
+    //   navigatorKey.currentContext!,
+    //   MarketIndex.path,
+    //   arguments: {
+    //     'screenIndex': 0,
+    //     "marketIndex": 9,
+    //     "marketInnerIndex": 0,
+    //   },
+    // );
 
+    Navigator.push(
+      navigatorKey.currentContext!,
+      MaterialPageRoute(
+        builder: (context) => MarketIndex(
+          screenIndex: 0,
+          marketIndex: 9,
+          marketInnerIndex: 0,
+        ),
+      ),
+    );
     // Navigator.push(
     //   navigatorKey.currentContext!,
     //   MaterialPageRoute(
@@ -1153,14 +1273,24 @@ void handleNavigation({
     //     "childIndex": 10,
     //   },
     // );
-    Navigator.pushNamed(
+    // Navigator.pushNamed(
+    //   navigatorKey.currentContext!,
+    //   MarketIndex.path,
+    //   arguments: {
+    //     'screenIndex': 0,
+    //     "marketIndex": 10,
+    //     "marketInnerIndex": 0,
+    //   },
+    // );
+    Navigator.push(
       navigatorKey.currentContext!,
-      MarketIndex.path,
-      arguments: {
-        'screenIndex': 0,
-        "marketIndex": 10,
-        "marketInnerIndex": 0,
-      },
+      MaterialPageRoute(
+        builder: (context) => MarketIndex(
+          screenIndex: 0,
+          marketIndex: 10,
+          marketInnerIndex: 0,
+        ),
+      ),
     );
 
     // Navigator.push(
@@ -1179,18 +1309,34 @@ void handleNavigation({
     //     "childIndex": 11,
     //   },
     // );
-    Navigator.pushNamed(
+    // Navigator.pushNamed(
+    //   navigatorKey.currentContext!,
+    //   MarketIndex.path,
+    //   arguments: {
+    //     'screenIndex': 0,
+    //     "marketIndex": 11,
+    //     "marketInnerIndex": 0,
+    //   },
+    // );
+    Navigator.push(
       navigatorKey.currentContext!,
-      MarketIndex.path,
-      arguments: {
-        'screenIndex': 0,
-        "marketIndex": 11,
-        "marketInnerIndex": 0,
-      },
+      MaterialPageRoute(
+        builder: (context) => MarketIndex(
+          screenIndex: 0,
+          marketIndex: 11,
+          marketInnerIndex: 0,
+        ),
+      ),
     );
   } else if (type == DeeplinkEnum.stocks) {
     Navigator.popUntil(navigatorKey.currentContext!, (route) => route.isFirst);
-    Navigator.pushReplacementNamed(navigatorKey.currentContext!, Tabs.path);
+    // Navigator.pushReplacementNamed(navigatorKey.currentContext!, Tabs.path);
+    Navigator.pushReplacement(
+      navigatorKey.currentContext!,
+      MaterialPageRoute(
+        builder: (context) => Tabs(),
+      ),
+    );
     // Navigator.push(
     //   navigatorKey.currentContext!,
     //   MaterialPageRoute(

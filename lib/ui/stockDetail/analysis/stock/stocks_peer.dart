@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/managers/stockDetail/stock.detail.dart';
 import 'package:stocks_news_new/models/ticker.dart';
+import 'package:stocks_news_new/routes/my_app.dart';
 import 'package:stocks_news_new/ui/base/base_list_divider.dart';
 import 'package:stocks_news_new/ui/base/heading.dart';
 import 'package:stocks_news_new/ui/base/stock/add.dart';
@@ -46,10 +47,17 @@ class SDStocksAnalysisPeer extends StatelessWidget {
               data: stockData!,
               index: index,
               onTap: (p0) {
-                Navigator.pushReplacementNamed(context, SDIndex.path,
-                    arguments: {
-                      'symbol': p0.symbol,
-                    });
+                // Navigator.pushReplacementNamed(context, SDIndex.path,
+                //     arguments: {
+                //       'symbol': p0.symbol,
+                //     });
+
+                Navigator.pushReplacement(
+                    navigatorKey.currentContext!,
+                    MaterialPageRoute(
+                        builder: (context) => SDIndex(
+                              symbol: p0.symbol ?? '',
+                            )));
               },
               manager: manager,
             );

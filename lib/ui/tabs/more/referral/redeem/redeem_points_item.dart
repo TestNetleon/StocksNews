@@ -55,14 +55,22 @@ class RedeemPointsItem extends StatelessWidget {
                 child: GestureDetector(
                   onTap: () {
                     if (data.claimPoints > 0) {
-                      Navigator.pushNamed(
-                        context,
-                        PointsClaimLogs.path,
-                        arguments: {
-                          "title": "${data.title} - ${data.claimPoints}",
-                          "type": data.type ?? "",
-                        },
-                      );
+                      // Navigator.pushNamed(
+                      //   context,
+                      //   PointsClaimLogs.path,
+                      //   arguments: {
+                      //     "title": "${data.title} - ${data.claimPoints}",
+                      //     "type": data.type ?? "",
+                      //   },
+                      // );
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => PointsClaimLogs(
+                                    title:
+                                        "${data.title} - ${data.claimPoints}",
+                                    type: data.type ?? "",
+                                  )));
                     }
                   },
                   behavior: HitTestBehavior.translucent,

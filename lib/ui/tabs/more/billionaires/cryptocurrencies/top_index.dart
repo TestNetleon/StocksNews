@@ -19,15 +19,24 @@ class TopBilIndex extends StatelessWidget {
           shrinkWrap: true,
           itemBuilder: (context, index) {
             CryptoTweetPost? item = topTabs?.billionaires?.data?[index];
-            return BillionaireItem(item: item, onTap: () {
-              Navigator.pushNamed(context, BillionairesDetailIndex.path,
-                  arguments: {'slug': item?.slug ?? ""});
-            });
+            return BillionaireItem(
+                item: item,
+                onTap: () {
+                  // Navigator.pushNamed(context, BillionairesDetailIndex.path,
+                  //     arguments: {'slug': item?.slug ?? ""});
+
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => BillionairesDetailIndex(
+                                slug: item?.slug ?? "",
+                              )));
+                });
           },
           separatorBuilder: (context, index) {
             return SpacerVertical(height: Pad.pad20);
           },
-          itemCount:topTabs?.billionaires?.data?.length ?? 0,
+          itemCount: topTabs?.billionaires?.data?.length ?? 0,
         ));
   }
 }

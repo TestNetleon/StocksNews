@@ -1,3 +1,4 @@
+import 'package:stocks_news_new/models/tools.dart';
 import 'package:stocks_news_new/service/amplitude/service.dart';
 import 'package:stocks_news_new/service/appsFlyer/service.dart';
 import 'package:stocks_news_new/service/braze/service.dart';
@@ -255,6 +256,98 @@ class EventsService {
       'click_buy_to_cover_order_order_losers_tab_percent_change_tab_scanner_page':
       ''
   );
+
+// Simulator Page Events
+
+  void placeNewOrderSimulatorPage({int? index=0}) => _logEvent(
+      index==0?'place_new_order_open_tab_simulator_page':index==1?'place_new_order_pending_tab_simulator_page':'place_new_order_transactions_tab_simulator_page'
+  );
+
+  // News Page Events
+  void openPostNewsPage({int? index=0}) => _logEvent(
+      index==0?'open_featured_post_news_page':'open_from_sources_post_news_page'
+  );
+
+  // Tools Page Events
+  void clickToolsPage({ToolsEnum? type}) => _logEvent(
+      type==ToolsEnum.market?'click_market_data_tools_page':type==ToolsEnum.signals?'click_signals_tools_page':
+      type==ToolsEnum.portfolio?'click_sync_your_portfolio_tools_page':
+      type==ToolsEnum.compare?'click_compare_stocks_tools_page':
+      type==ToolsEnum.league?'click_tranding_league_tools_page':''
+  );
+
+  // Market Page Events
+  void backMarketDataPageToolsPage() => _logEvent('back_market_data_page_tools_page');
+  void searchMarketDataToolsPage() => _logEvent('search_market_data_page_tools_page');
+  void selectStocksMarketDataPage({int? index=0}) => _logEvent(
+      index==0?'select_stocks_market_data_page_tools_page':index==1?'select_sectors_market_data_page_tools_page':'select_industries_market_data_page_tools_page'
+  );
+  void selectMostBullishBearishMarketDataPage({int? index=0}) => _logEvent(
+      index==0?'select_most_bullish_market_data_page_tools_page':'select_most_bearish_market_data_page_tools_page'
+  );
+
+  void clickMostBullishTabMarketToolsPage() => _logEvent('click_crox_most_bullish_tab_market_data_page_tools_page');
+  void clickSectorsMarketToolsPage({String? slug}) => _logEvent('click_${slug??""}_sectors_market_data_tools_page');
+
+  // Signals Page Events
+  void backSignalDataPageToolsPage({int? index=0}) => _logEvent(
+      index==0?'back_stocks_signals_tools_page':
+      index==1?'back_sentiment_signals_tools_page':
+      index==2?'back_insiders_signals_tools_page':'back_politicians_signals_tools_page'
+  );
+  void searchSignalDataToolsPage({int? index=0}) => _logEvent(
+      index==0?'search_stocks_signals_tools_page':
+      index==1?'search_sentiment_signals_tools_page':
+      index==2?'search_insiders_signals_tools_page':'search_politicians_signals_tools_page'
+  );
+  void selectStocksSignalDataPage({int? index=0}) => _logEvent(
+      index==0?'select_stocks_stocks_signals_tools_page':index==1?'select_sentiment_stocks_signals_tools_page':
+      index==2?'select_insiders_stocks_signals_tools_page':'select_politicial_stocks_signals_tools_page'
+  );
+  void openStockSignalDataToolsPage() => _logEvent('open_rnst_stocks_signals_tools_page');
+  void openStockSentimentSignalsDataToolsPage() => _logEvent('open_tsla_most_mentioned_stocks_sentiment_signals_tools_page');
+  void filtersSignalsToolsPage({int? index=0}) => _logEvent(
+      index==0?'':
+      index==2?'filters_insiders_signals_tools_page':''
+  );
+  void openCloseInsiderDataToolsPage() => _logEvent('open/close_drct_insiders_signal_tool_page');
+  void clickViewDetailsDrctInsidersSignalToolPage() => _logEvent('click_view_details_drct_insiders_signal_tool_page');
+  void openClosePoliticiansDataToolsPage() => _logEvent('open/close_cost_politicians_signal_tool_page');
+
+  // Compare Page Events
+
+  void backCompareToolsPage() => _logEvent('back_compare_stocks_tools_page');
+  void removeCompareToolsPage() => _logEvent('remove_brand_from_compare_list_tools_page');
+  void addCompareToolsPage() => _logEvent('add_brand_to_compare_list_tools_page');
+  void backAddNewBrandCompareToolsPage() => _logEvent('back_add_new_brand_compare_stocks_tools_page');
+
+ // League Page Events
+
+  void backLeagueToolsPage({int? index=0}) => _logEvent(index==0?'back_trading_league_tools_page':index==1?'back_leaderboard_trading_league_tools_page':'back_my_trades_trading_league_tools_page');
+  void selectLeagueTradingLeagueToolPage({int? index=0}) => _logEvent(
+      index==0?'select_league_trading_league_tools_page':
+      index==1?'select_leaderboard_trading_league_tools_page':'select_my_trades_trading_league_tools_page'
+  );
+  void tradingHeaderLeagueToolPage({int? index=0}) => _logEvent(
+      index==0?'trading_leagues_trading_league_tools_page':
+      index==1?'points_paid_trading_league_tools_page':'trading_titan_trading_league_tools_page'
+  );
+  void clickPlayGameLeagueToolsPage() => _logEvent('click_play_game_league_tools_page');
+  void viewMoreTopTradingTitansLeagueToolsPage() => _logEvent('view_more_top_trading_titans_league_tools_page');
+
+  // League Leaderboard Page Events
+  void clickBackwardCalendarLeagueToolsPage({int? index=0}) => _logEvent(
+      index==0?'click_backward_calendar_trading_league_tools_page':
+      index==1?'click_forward_calendar_trading_league_tools_page':'select_specific_day_trading_league_tools_page'
+  );
+
+  // League Trade Page Events
+  void clickTradesLeagueToolsPage({int? index=0}) => _logEvent(
+      index==0?'select_all_my_trades_trading_league_tools_page':
+      index==1?'select_open_my_trades_trading_league_tools_page':'select_close_my_trades_trading_league_tools_page'
+  );
+  void clickPlaceNewTradeLeagueToolsPage() => _logEvent('click_place_new_trade_my_trades_trading_league_tools_page');
+
 
 }
 

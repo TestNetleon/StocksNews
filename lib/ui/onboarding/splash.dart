@@ -89,19 +89,23 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
       //
     }
     Timer(const Duration(seconds: 3), () {
+      Utils().showLog('POP HOME2 $popHome, ON DEEP LINKING $onDeepLinking');
+
       if (popHome) return;
       if (onDeepLinking) {
         popHome = true;
         return;
       }
 
-      Navigator.pushReplacementNamed(
-          navigatorKey.currentContext!, DefaultHome.path);
+      // Navigator.pushReplacementNamed(
+      //     navigatorKey.currentContext!, DefaultHome.path);
+      Navigator.pushReplacement(navigatorKey.currentContext!,
+          MaterialPageRoute(builder: (context) => DefaultHome()));
     });
   }
 
   void _callAPI() async {
-    bool firstTime = await Preference.getShowIntro();
+    bool firstTime = await Preference.isFirstOpen();
     Utils().showLog('FIRST TIME $firstTime');
     if (firstTime) {
       OnboardingManager provider = context.read<OnboardingManager>();

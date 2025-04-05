@@ -210,12 +210,21 @@ class _RecurringContainerState extends State<RecurringContainer> {
         // Navigator.pushNamed(navigatorKey.currentContext!, SimulatorIndex.path,
         //     arguments: {"initialIndex": 3});
 
-        Navigator.pushNamed(navigatorKey.currentContext!, Tabs.path,
-            arguments: {
-              'index': 2,
-              'childIndex': 3,
-            });
+        // Navigator.pushNamed(navigatorKey.currentContext!, Tabs.path,
+        //     arguments: {
+        //       'index': 2,
+        //       'childIndex': 3,
+        //     });
 
+        Navigator.push(
+          navigatorKey.currentContext!,
+          MaterialPageRoute(
+            builder: (context) => Tabs(
+              index: 2,
+              childIndex: 3,
+            ),
+          ),
+        );
         _clear();
         await showCOrderSuccessSheet(order, ConditionType.recurringOrder);
       } else {
@@ -278,11 +287,20 @@ class _RecurringContainerState extends State<RecurringContainer> {
         // Navigator.pushNamed(navigatorKey.currentContext!, SimulatorIndex.path,
         //     arguments: {"initialIndex": 3});
 
-        Navigator.pushNamed(navigatorKey.currentContext!, Tabs.path,
-            arguments: {
-              'index': 2,
-              'childIndex': 3,
-            });
+        // Navigator.pushNamed(navigatorKey.currentContext!, Tabs.path,
+        //     arguments: {
+        //       'index': 2,
+        //       'childIndex': 3,
+        //     });
+        Navigator.push(
+          navigatorKey.currentContext!,
+          MaterialPageRoute(
+            builder: (context) => Tabs(
+              index: 2,
+              childIndex: 3,
+            ),
+          ),
+        );
 
         _clear();
 

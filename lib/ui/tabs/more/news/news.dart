@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/models/news.dart';
+import 'package:stocks_news_new/service/events/service.dart';
 import 'package:stocks_news_new/ui/base/load_more.dart';
 import 'package:stocks_news_new/ui/base/news_item.dart';
 import 'package:stocks_news_new/utils/constants.dart';
@@ -45,11 +46,18 @@ class NewsIndex extends StatelessWidget {
               return BaseNewsItem(
                 data: data,
                 onTap: (data) {
+                  EventsService.instance.openPostNewsPage(index: manager.selectedIndex);
                   if (data.slug == null || data.slug == '') return;
-                  Navigator.pushNamed(context, NewsDetailIndex.path,
-                      arguments: {
-                        'slug': data.slug,
-                      });
+                  // Navigator.pushNamed(context, NewsDetailIndex.path,
+                  //     arguments: {
+                  //       'slug': data.slug,
+                  //     });
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => NewsDetailIndex(
+                                slug: data.slug ?? "",
+                              )));
                 },
               );
             },

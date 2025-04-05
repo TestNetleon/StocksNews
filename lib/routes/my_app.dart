@@ -18,6 +18,8 @@ import 'package:stocks_news_new/routes/navigation_observer.dart';
 import 'package:stocks_news_new/routes/routes.dart';
 import 'package:stocks_news_new/service/braze/service.dart';
 import 'package:stocks_news_new/socket/socket.dart';
+import 'package:stocks_news_new/ui/onboarding/splash.dart';
+import 'package:stocks_news_new/ui/onboarding/splash_loading.dart';
 import 'package:stocks_news_new/ui/subscription/service.dart';
 import 'package:stocks_news_new/ui/theme/manager.dart';
 import 'package:stocks_news_new/utils/constants.dart';
@@ -232,12 +234,12 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
 
       if (initialUri != null) {
         final Uri deepLink = initialUri;
-        DeeplinkEnum type = containsSpecificPath(initialUri);
+        // DeeplinkEnum type = containsSpecificPath(initialUri);
         _initialDeepLinks = true;
-        onDeepLinking =
-            (type == DeeplinkEnum.login || type == DeeplinkEnum.signup)
-                ? false
-                : true;
+        // onDeepLinking =
+        //     (type == DeeplinkEnum.login || type == DeeplinkEnum.signup)
+        //         ? false
+        //         : true;
 
         if (deepLink.path.contains("MEM")) {
           onDeepLinking = false;
@@ -282,12 +284,12 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
           return;
         }
 
-        DeeplinkEnum type = containsSpecificPath(event);
+        // DeeplinkEnum type = containsSpecificPath(event);
 
-        onDeepLinking =
-            (type == DeeplinkEnum.login || type == DeeplinkEnum.signup)
-                ? false
-                : true;
+        // onDeepLinking =
+        //     (type == DeeplinkEnum.login || type == DeeplinkEnum.signup)
+        //         ? false
+        //         : true;
         if (deepLink.path.contains("MEM")) {
           onDeepLinking = false;
         }
@@ -322,12 +324,15 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
+    Utils().showLog('MY app Called..');
     return ScreenUtilInit(
       builder: (_, child) {
         return MultiProvider(
           providers: Routes.providers,
           child: Consumer<ThemeManager>(
             builder: (context, value, child) {
+              Utils().showLog('MY app Called..THEME');
+
               return MaterialApp(
                 // initialRoute: '/',
                 supportedLocales: const [Locale("en")],
@@ -339,15 +344,17 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
                 theme: lightTheme,
                 darkTheme: darkTheme,
                 themeMode: value.themeMode,
-                home: child,
-                routes: Routes.routes,
-                onGenerateRoute: Routes.getRouteGenerate,
+                // home: child,
+                home: isFIRSTopen ? SplashFirstTime() : Splash(),
+
+                // routes: Routes.routes,
+                // onGenerateRoute: Routes.getRouteGenerate,
               );
             },
           ),
         );
       },
-      // child: Scaffold(),
+      // child: isFIRSTopen ? SplashFirstTime() : Splash(),
     );
   }
 }

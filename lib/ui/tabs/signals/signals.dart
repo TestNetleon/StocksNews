@@ -4,6 +4,7 @@ import 'package:stocks_news_new/managers/signals/insiders.dart';
 import 'package:stocks_news_new/managers/signals/politicians.dart';
 import 'package:stocks_news_new/managers/signals/stocks.dart';
 import 'package:stocks_news_new/models/market/market_res.dart';
+import 'package:stocks_news_new/service/events/service.dart';
 import 'package:stocks_news_new/ui/base/app_bar.dart';
 import 'package:stocks_news_new/ui/base/scaffold.dart';
 import 'package:stocks_news_new/ui/tabs/signals/insiders/filter/filter.dart';
@@ -48,6 +49,7 @@ class _SignalsIndexState extends State<SignalsIndex> {
     if (_selectedScreen == 0) {
       Navigator.push(context, createRoute(StocksFilter()));
     } else if (_selectedScreen == 2) {
+      EventsService.instance.filtersSignalsToolsPage(index: _selectedScreen);
       Navigator.push(context, createRoute(InsiderFilter()));
     } else if (_selectedScreen == 3) {
       Navigator.push(context, createRoute(PoliticianFilter()));
@@ -73,11 +75,14 @@ class _SignalsIndexState extends State<SignalsIndex> {
         showSearch: true,
         showNotification: true,
         showBack: true,
+        onBackEventCall: (){EventsService.instance.backSignalDataPageToolsPage(index: _selectedScreen);},
+        onSearchEventCall: (){EventsService.instance.searchSignalDataToolsPage(index: _selectedScreen);},
         // leadingFilterClick: manager.selectedScreen == 2 ? _onFilterClick : null,
         leadingFilterClick: _selectedScreen == 1 ? null : _onFilterClick,
         isFiltered: (_selectedScreen == 0 && isFilteredStocks) ||
             (_selectedScreen == 2 && isFilteredInsider) ||
             (_selectedScreen == 3 && isFilteredPolitician),
+
       ),
       // drawer: MoreIndex(),
       body: Column(
@@ -86,6 +91,7 @@ class _SignalsIndexState extends State<SignalsIndex> {
             data: tabs,
             // onTap: manager.onScreenChange,
             onTap: (index) {
+              EventsService.instance.selectStocksSignalDataPage(index: index);
               setState(() {
                 _selectedScreen = index;
               });

@@ -24,19 +24,28 @@ class PointsList extends StatelessWidget {
   });
 
   void _navigateToTransactions(context) {
-    Navigator.pushNamed(
-      context,
-      ReferPointsTransaction.path,
-      arguments: {"type": "", "title": null},
-    );
+    // Navigator.pushNamed(
+    //   context,
+    //   ReferPointsTransaction.path,
+    //   arguments: {"type": "", "title": null},
+    // );
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => ReferPointsTransaction(
+                  title: null,
+                  type: '',
+                )));
   }
 
   void _navigateToRedeem(context) {
-    Navigator.pushNamed(
-      context,
-      RedeemPoints.path,
-      arguments: {"type": "", "title": null},
-    );
+    // Navigator.pushNamed(
+    //   context,
+    //   RedeemPoints.path,
+    //   arguments: {"type": "", "title": null},
+    // );
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => RedeemPoints()));
   }
 
   @override
@@ -57,11 +66,18 @@ class PointsList extends StatelessWidget {
                 data: item!,
                 onTap: () {
                   if (item.txnType != null && item.txnType != "") {
-                    Navigator.pushNamed(
-                      context,
-                      ReferPointsTransaction.path,
-                      arguments: {"type": item.txnType, "title": item.title},
-                    );
+                    // Navigator.pushNamed(
+                    //   context,
+                    //   ReferPointsTransaction.path,
+                    //   arguments: {"type": item.txnType, "title": item.title},
+                    // );
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ReferPointsTransaction(
+                                  title: item.title,
+                                  type: item.txnType,
+                                )));
                   }
                 },
               );

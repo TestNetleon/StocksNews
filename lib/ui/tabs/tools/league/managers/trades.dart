@@ -64,13 +64,17 @@ class TradesManger extends ChangeNotifier {
     if (_myTrades?.tournamentBattleId != null) {
       Navigator.popUntil(
           navigatorKey.currentContext!, (route) => route.isFirst);
-      Navigator.pushNamed(
-          navigatorKey.currentContext!, LeagueTickersIndex.path);
+      // Navigator.pushNamed(
+      //     navigatorKey.currentContext!, LeagueTickersIndex.path);
+      Navigator.push(navigatorKey.currentContext!,
+          MaterialPageRoute(builder: (context) => LeagueTickersIndex()));
     } else {
       Navigator.popUntil(
           navigatorKey.currentContext!, (route) => route.isFirst);
-      Navigator.pushNamed(
-          navigatorKey.currentContext!, TradingLeagueIndex.path);
+      // Navigator.pushNamed(
+      //     navigatorKey.currentContext!, TradingLeagueIndex.path);
+      Navigator.push(navigatorKey.currentContext!,
+          MaterialPageRoute(builder: (context) => TradingLeagueIndex()));
     }
   }
 

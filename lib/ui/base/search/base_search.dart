@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/managers/search.dart';
 import 'package:stocks_news_new/models/news.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
+import 'package:stocks_news_new/service/events/service.dart';
 import 'package:stocks_news_new/ui/base/app_bar.dart';
 import 'package:stocks_news_new/ui/base/scaffold.dart';
 import 'package:stocks_news_new/ui/base/text_field.dart';
@@ -85,6 +86,7 @@ class _BaseSearchState extends State<BaseSearch> {
             searchFieldWidget:
                 BaseSearchField(onSearchChanged: _onSearchChanged),
             showBack: true,
+            onBackEventCall: widget.callRecent==false?EventsService.instance.backAddNewBrandCompareToolsPage:null,
           ),
           body: (manager.searchData == null && manager.errorSearch == null) &&
                   !manager.isLoadingSearch

@@ -137,7 +137,11 @@ class _FaqIndexState extends State<FaqIndex> {
                               UserManager manager = context.read<UserManager>();
                               await manager.askLoginScreen();
                               if (manager.user == null) return;
-                              Navigator.pushNamed(context, HelpDeskIndex.path);
+                              // Navigator.pushNamed(context, HelpDeskIndex.path);
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => HelpDeskIndex()));
                             },
                             text: "Contact Us",
                             color:

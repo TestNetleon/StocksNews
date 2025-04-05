@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/managers/tools.dart';
+import 'package:stocks_news_new/service/events/service.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/utils.dart';
@@ -51,6 +52,7 @@ class ToolsCompareHeaderStocks extends StatelessWidget {
                         right: 0,
                         child: InkWell(
                           onTap: () {
+                            EventsService.instance.removeCompareToolsPage();
                             manager.deleteFromCompare(index);
                           },
                           child: Container(
@@ -80,6 +82,7 @@ class ToolsCompareHeaderStocks extends StatelessWidget {
                         BaseSearch(
                           callRecent: false,
                           stockClick: (stock) {
+                            EventsService.instance.addCompareToolsPage();
                             if (stock.symbol == null || stock.symbol == '') {
                               return;
                             }

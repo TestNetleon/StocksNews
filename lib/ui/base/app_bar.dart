@@ -121,14 +121,15 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
                                       Navigator.popUntil(
                                           navigatorKey.currentContext!,
                                           (route) => route.isFirst);
-                                      Navigator.pushReplacementNamed(
-                                          navigatorKey.currentContext!,
-                                          Tabs.path);
-                                      /* Navigator.pushReplacement(
+                                      // Navigator.pushReplacementNamed(
+                                      //     navigatorKey.currentContext!,
+                                      //     Tabs.path);
+
+                                      Navigator.pushReplacement(
                                         navigatorKey.currentContext!,
                                         MaterialPageRoute(
                                             builder: (_) => const Tabs()),
-                                      );*/
+                                      );
                                       popHome = false;
                                     }
                                   } else {
@@ -142,14 +143,14 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
                                       Navigator.popUntil(
                                           navigatorKey.currentContext!,
                                           (route) => route.isFirst);
-                                      Navigator.pushReplacementNamed(
-                                          navigatorKey.currentContext!,
-                                          Tabs.path);
-                                      /* Navigator.pushReplacement(
+                                      // Navigator.pushReplacementNamed(
+                                      //     navigatorKey.currentContext!,
+                                      //     Tabs.path);
+                                      Navigator.pushReplacement(
                                         navigatorKey.currentContext!,
                                         MaterialPageRoute(
                                             builder: (_) => const Tabs()),
-                                      );*/
+                                      );
                                       popHome = false;
                                     }
                                   }
@@ -261,22 +262,37 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
                                               p0.symbol == '') {
                                             return;
                                           }
-                                          Navigator.pushNamed(
-                                              context, SDIndex.path,
-                                              arguments: {
-                                                'symbol': p0.symbol,
-                                              });
+                                          // Navigator.pushNamed(
+                                          //     context, SDIndex.path,
+                                          //     arguments: {
+                                          //       'symbol': p0.symbol,
+                                          //     });
+                                          Navigator.push(
+                                            navigatorKey.currentContext!,
+                                            MaterialPageRoute(
+                                                builder: (_) => SDIndex(
+                                                      symbol: p0.symbol ?? "",
+                                                    )),
+                                          );
                                         },
                                         newsClick: (data) {
                                           if (data.slug == null ||
                                               data.slug == '') {
                                             return;
                                           }
-                                          Navigator.pushNamed(
-                                              context, NewsDetailIndex.path,
-                                              arguments: {
-                                                'slug': data.slug,
-                                              });
+                                          // Navigator.pushNamed(
+                                          //     context, NewsDetailIndex.path,
+                                          //     arguments: {
+                                          //       'slug': data.slug,
+                                          //     });
+
+                                          Navigator.push(
+                                            navigatorKey.currentContext!,
+                                            MaterialPageRoute(
+                                                builder: (_) => NewsDetailIndex(
+                                                      slug: data.slug ?? "",
+                                                    )),
+                                          );
                                         },
                                       ),
                                     ),
@@ -302,7 +318,7 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
                                 padding: const EdgeInsets.only(right: 8),
                                 onTap: onFilterClick,
                               ),
-                             /* IconButton(
+                            /* IconButton(
                                 onPressed: onFilterClick,
                                 icon: Icon(Icons.filter_alt),
                               ),*/
@@ -349,9 +365,14 @@ class CenterLogo extends StatelessWidget {
           if (isHome) return;
           Navigator.popUntil(
               navigatorKey.currentContext!, (route) => route.isFirst);
-          Navigator.pushReplacementNamed(
+          // Navigator.pushReplacementNamed(
+          //   navigatorKey.currentContext!,
+          //   Tabs.path,
+          // );
+
+          Navigator.pushReplacement(
             navigatorKey.currentContext!,
-            Tabs.path,
+            MaterialPageRoute(builder: (_) => const Tabs()),
           );
         },
         child: Consumer<ThemeManager>(

@@ -32,11 +32,16 @@ class HomeMostBoughtIndex extends StatelessWidget {
             titleStyle: styleBaseBold(fontSize: 22),
             viewMore: () {
               EventsService.instance.clickViewAllPopularStocksHomePage();
-              Navigator.pushNamed(
-                context,
-                HomeViewMoreTickersIndex.path,
-                arguments: {'apiUrl': Apis.myHomeMostBought},
-              );
+              // Navigator.pushNamed(
+              //   context,
+              //   HomeViewMoreTickersIndex.path,
+              //   arguments: {'apiUrl': Apis.myHomeMostBought},
+              // );
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => HomeViewMoreTickersIndex(
+                          apiUrl: Apis.myHomeMostBought)));
             },
             viewMoreText: 'View All',
           ),
@@ -54,9 +59,14 @@ class HomeMostBoughtIndex extends StatelessWidget {
                 data: data,
                 onTap: () {
                   EventsService.instance.selectAaplScannerHomePage();
-                  Navigator.pushNamed(context, SDIndex.path, arguments: {
-                    'symbol': data.symbol,
-                  });
+                  // Navigator.pushNamed(context, SDIndex.path, arguments: {
+                  //   'symbol': data.symbol,
+                  // });
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              SDIndex(symbol: data.symbol ?? "")));
                 },
               );
             },

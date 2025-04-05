@@ -58,8 +58,15 @@ class _MentionsListIndexState extends State<MentionsListIndex> {
                 return CryptoContainer(
                   isDark: isDark,
                   onTap: () {
-                    Navigator.pushNamed(context, CryptoIndex.path,
-                        arguments: {'symbol': cryptos?.symbol ?? ""});
+                    // Navigator.pushNamed(context, CryptoIndex.path,
+                    //     arguments: {'symbol': cryptos?.symbol ?? ""});
+
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => CryptoIndex(
+                                  symbol: cryptos?.symbol ?? "",
+                                )));
                   },
                   innerPadding:
                       EdgeInsets.symmetric(horizontal: 10, vertical: 10),
@@ -73,7 +80,7 @@ class _MentionsListIndexState extends State<MentionsListIndex> {
                           Visibility(
                             visible:
                                 cryptos?.image != null && cryptos?.image != '',
-                            child:CachedNetworkImagesWidget(
+                            child: CachedNetworkImagesWidget(
                               cryptos?.image ?? '',
                               placeHolder: Images.userPlaceholderNew,
                               showLoading: true,

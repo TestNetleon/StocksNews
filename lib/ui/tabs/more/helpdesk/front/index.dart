@@ -39,7 +39,9 @@ class _HelpDeskIndexState extends State<HelpDeskIndex> {
   }
 
   void _onViewAllRequestClick() {
-    Navigator.pushNamed(context, RequestNewIndex.path);
+    // Navigator.pushNamed(context, RequestNewIndex.path);
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => RequestNewIndex()));
   }
 
   @override
@@ -131,8 +133,13 @@ class _HelpDeskIndexState extends State<HelpDeskIndex> {
                                   manager.data?.helpDesk?.subjects != null),
                               child: InkWell(
                                 onTap: () {
-                                  Navigator.pushNamed(
-                                      context, HelpDeskCreateIndex.path);
+                                  // Navigator.pushNamed(
+                                  //     context, HelpDeskCreateIndex.path);
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              HelpDeskCreateIndex()));
                                 },
                                 child: Container(
                                   padding: EdgeInsets.symmetric(

@@ -141,17 +141,27 @@ class _JoinReferralIndexState extends State<JoinReferralIndex> {
       return;
     } else {
       if (kDebugMode) {
-        Navigator.pushNamed(
-          context,
-          JoinReferVerificationIndex.path,
-          arguments: {
-            'name': _name.text,
-            'displayName': _displayName.text,
-            'phone': _phone.text,
-            'countryCode': countryCode,
-            'verificationId': '1',
-          },
-        );
+        // Navigator.pushNamed(
+        //   context,
+        //   JoinReferVerificationIndex.path,
+        //   arguments: {
+        //     'name': _name.text,
+        //     'displayName': _displayName.text,
+        //     'phone': _phone.text,
+        //     'countryCode': countryCode,
+        //     'verificationId': '1',
+        //   },
+        // );
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => JoinReferVerificationIndex(
+                      name: _name.text,
+                      displayName: _displayName.text,
+                      phone: _phone.text,
+                      countryCode: countryCode ?? '',
+                      verificationId: '1',
+                    )));
         return;
       }
     }
@@ -183,14 +193,24 @@ class _JoinReferralIndexState extends State<JoinReferralIndex> {
         codeSent: (String verificationId, int? resendToken) {
           setLoading(false);
 
-          Navigator.pushNamed(context, JoinReferVerificationIndex.path,
-              arguments: {
-                'name': _name.text,
-                'displayName': _displayName.text,
-                'phone': _phone.text,
-                'countryCode': countryCode,
-                'verificationId': verificationId,
-              });
+          // Navigator.pushNamed(context, JoinReferVerificationIndex.path,
+          //     arguments: {
+          //       'name': _name.text,
+          //       'displayName': _displayName.text,
+          //       'phone': _phone.text,
+          //       'countryCode': countryCode,
+          //       'verificationId': verificationId,
+          //     });
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => JoinReferVerificationIndex(
+                        name: _name.text,
+                        displayName: _displayName.text,
+                        phone: _phone.text,
+                        countryCode: countryCode ?? '',
+                        verificationId: verificationId,
+                      )));
           Utils().showLog('Verification code sent.');
         },
         codeAutoRetrievalTimeout: (String verificationId) {

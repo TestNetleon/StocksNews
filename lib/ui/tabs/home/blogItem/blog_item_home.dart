@@ -39,11 +39,16 @@ class BlogHomeIndex extends StatelessWidget {
               GestureDetector(
                 onTap: () async {
                   closeKeyboard();
-                  Navigator.pushNamed(
-                    context,
-                    BlogsDetailIndex.path,
-                    arguments: {'slug': blogItem.slug},
-                  );
+                  // Navigator.pushNamed(
+                  //   context,
+                  //   BlogsDetailIndex.path,
+                  //   arguments: {'slug': blogItem.slug},
+                  // );
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              BlogsDetailIndex(slug: blogItem.slug ?? '')));
                 },
                 child: Container(
                   margin: EdgeInsets.only(top: 20),

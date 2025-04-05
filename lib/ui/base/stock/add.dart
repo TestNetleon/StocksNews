@@ -25,6 +25,7 @@ class BaseStockAddItem extends StatelessWidget {
   final dynamic manager;
   final double size;
   final List<BaseKeyValueRes>? expandable;
+  final Function()? onStockEventCall;
 
   const BaseStockAddItem({
     super.key,
@@ -32,6 +33,7 @@ class BaseStockAddItem extends StatelessWidget {
     required this.data,
     required this.index,
     this.onTap,
+    this.onStockEventCall,
     this.onRefresh,
     this.manager,
     this.expandable,
@@ -42,7 +44,11 @@ class BaseStockAddItem extends StatelessWidget {
     AlertsWatchlistManager manager = context.read<AlertsWatchlistManager>();
     UserManager userManager = context.read<UserManager>();
     if (data.isAlertAdded == 1) {
-      await Navigator.pushNamed(context, AlertIndex.path);
+      // await Navigator.pushNamed(context, AlertIndex.path);
+      await Navigator.push(
+        context,
+        MaterialPageRoute(builder: (_) => AlertIndex()),
+      );
       if (onRefresh != null) onRefresh!();
     } else {
       if (userManager.user != null) {
@@ -76,7 +82,11 @@ class BaseStockAddItem extends StatelessWidget {
     AlertsWatchlistManager manager = context.read<AlertsWatchlistManager>();
     UserManager userManager = context.read<UserManager>();
     if (data.isWatchlistAdded == 1) {
-      await Navigator.pushNamed(context, WatchListIndex.path);
+      // await Navigator.pushNamed(context, WatchListIndex.path);
+      await Navigator.push(
+        context,
+        MaterialPageRoute(builder: (_) => WatchListIndex()),
+      );
       if (onRefresh != null) onRefresh!();
     } else {
       if (userManager.user != null) {
@@ -138,9 +148,22 @@ class BaseStockAddItem extends StatelessWidget {
                 onTap!(data);
               }
             : () {
-                Navigator.pushNamed(context, SDIndex.path, arguments: {
-                  'symbol': data.symbol,
-                });
+          try {
+            if (onStockEventCall != null) {
+              onStockEventCall!();
+            }
+          } catch (e) {
+            //
+          }
+                // Navigator.pushNamed(context, SDIndex.path, arguments: {
+                //   'symbol': data.symbol,
+                // });
+
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (_) => SDIndex(symbol: data.symbol ?? '')),
+                );
               },
         child: BaseStockItem(data: data, index: index, expandable: expandable),
       ),
