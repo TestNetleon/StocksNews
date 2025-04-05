@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/api/api_response.dart';
+import 'package:stocks_news_new/service/events/service.dart';
 import 'package:stocks_news_new/ui/base/app_bar.dart';
 import 'package:stocks_news_new/ui/base/bottom_sheet.dart';
 import 'package:stocks_news_new/ui/base/button.dart';
@@ -128,6 +129,7 @@ class _ScannerFiltersState extends State<ScannerFilters> {
   }
 
   void _applyFilter() {
+    EventsService.instance.clickApplyMarketScannerFilter();
     ScannerManager provider = context.read<ScannerManager>();
     FilterParams params = FilterParams();
     if (_bidStart.text.isNotEmpty) {
@@ -216,6 +218,7 @@ class _ScannerFiltersState extends State<ScannerFilters> {
   }
 
   void _resetFilter() {
+    EventsService.instance.clickResetMarketScannerFilter();
     ScannerManager provider = context.read<ScannerManager>();
     provider.clearFilter();
     Navigator.pop(context);
@@ -227,6 +230,8 @@ class _ScannerFiltersState extends State<ScannerFilters> {
       appBar: BaseAppBar(
         showBack: true,
         title: "Market Scanner Filter",
+        onBackEventCall: EventsService.instance.backMarketScannerFilter,
+
       ),
       body: Padding(
         padding: const EdgeInsets.all(16),
@@ -242,6 +247,7 @@ class _ScannerFiltersState extends State<ScannerFilters> {
                     BaseTextField(
                       controller: _symbolCompany,
                       placeholder: "Symbol Name/Company Name",
+                      onTap: EventsService.instance.enterSymbolCompanyNamemarketScannerFilter,
                       // hintText: "Symbol Name",
                     ),
                     const SpacerVertical(height: 16),
@@ -249,50 +255,65 @@ class _ScannerFiltersState extends State<ScannerFilters> {
                       label: "Bid:",
                       startHint: "Bid Start",
                       startController: _bidStart,
+                      onTapStart: EventsService.instance.enterBidStartMarketScannerFilter,
                       endHint: "Bid End",
                       endController: _bidEnd,
+                      onTapEnd:  EventsService.instance.enterBidEndMarketScannerFilter,
                     ),
                     FilterRow(
                       label: "Ask:",
                       startHint: "Ask Start",
                       startController: _askStart,
+                      onTapStart: EventsService.instance.enterAskStartMarketScannerFilter,
                       endHint: "Ask End",
                       endController: _askEnd,
+                      onTapEnd:  EventsService.instance.enterAskEndMarketScannerFilter,
+
                     ),
                     FilterRow(
                       label: "Last Trade:",
                       startHint: "Last Trade Start",
                       startController: _lastTradeStart,
+                      onTapStart: EventsService.instance.enterLastTradeStartMarketScannerFilter,
                       endHint: "Last Trade End",
                       endController: _lastTradeEnd,
+                      onTapEnd:  EventsService.instance.enterLastTradeEndMarketScannerFilter,
                     ),
                     FilterRow(
                       label: "Net Change:",
                       startHint: "Net Change Start",
                       startController: _netChangeStart,
+                      onTapStart: EventsService.instance.enterNetChangeStartMarketScannerFilter,
                       endHint: "Net Change End",
                       endController: _netChangeEnd,
+                      onTapEnd:  EventsService.instance.enterNetChangeEndMarketScannerFilter,
                     ),
                     FilterRow(
                       label: "% Change:",
                       startHint: "% Change Start",
                       startController: _perChangeStart,
+                      onTapStart: EventsService.instance.enterChangeStartMarketScannerFilter,
                       endHint: "% Change End",
                       endController: _perChangeEnd,
+                      onTapEnd:  EventsService.instance.enterChangeEndMarketScannerFilter,
                     ),
                     FilterRow(
                       label: "Volume:",
                       startHint: "Volume Start",
                       startController: _volumeStart,
+                      onTapStart: EventsService.instance.enterVolumeStartMarketScannerFilter,
                       endHint: "Volume End",
                       endController: _volumeEnd,
+                      onTapEnd:  EventsService.instance.enterVolumeEndMarketScannerFilter,
                     ),
                     FilterRow(
                       label: "\$Volume:",
                       startHint: "\$ Volume Start",
                       startController: _dolorVolumeStart,
+                      onTapStart: EventsService.instance.enterDVolumeStartMarketScannerFilter,
                       endHint: "\$ Volume End",
                       endController: _dolorVolumeEnd,
+                      onTapEnd:  EventsService.instance.enterDVolumeEndMarketScannerFilter,
                     ),
                     const SpacerVertical(height: 5),
                     // TextInputField(
@@ -355,6 +376,8 @@ class FilterRow extends StatelessWidget {
   final TextEditingController startController;
   final TextEditingController endController;
   final String label, startHint, endHint;
+  final Function()? onTapStart;
+  final Function()? onTapEnd;
 
   const FilterRow({
     super.key,
@@ -363,6 +386,8 @@ class FilterRow extends StatelessWidget {
     required this.startController,
     required this.endHint,
     required this.endController,
+    this.onTapStart,
+    this.onTapEnd,
   });
 
   @override
@@ -387,6 +412,7 @@ class FilterRow extends StatelessWidget {
                     return newValue;
                   }),
                 ],
+                onTap: onTapStart,
               ),
             ),
             const SpacerHorizontal(width: 16),
@@ -406,6 +432,7 @@ class FilterRow extends StatelessWidget {
                     },
                   ),
                 ],
+                onTap: onTapEnd,
               ),
             ),
           ],

@@ -10,6 +10,7 @@ import 'package:stocks_news_new/managers/news.dart';
 import 'package:stocks_news_new/managers/tools.dart';
 import 'package:stocks_news_new/managers/user.dart';
 import 'package:stocks_news_new/service/amplitude/service.dart';
+import 'package:stocks_news_new/service/events/service.dart';
 import 'package:stocks_news_new/service/transparency.dart';
 import 'package:stocks_news_new/socket/socket.dart';
 import 'package:stocks_news_new/ui/base/scaffold.dart';
@@ -200,6 +201,7 @@ class _TabsState extends State<Tabs> {
       case 0:
         pingApi(SocketEnum.home);
         SocketService.instance.emitUpdateUser(SocketEnum.home);
+        EventsService.instance.homeHomePage();
         if (manager.data == null) {
           manager.getHomeData();
         }
@@ -207,20 +209,24 @@ class _TabsState extends State<Tabs> {
 
       case 1:
         // scannerManager.setDataEmpty();
+        EventsService.instance.scannerHomePage();
         pingApi(SocketEnum.scanner);
         break;
 
       case 2:
+        EventsService.instance.simulatorHomePage();
         pingApi(SocketEnum.simulator);
         break;
 
       case 3:
+        EventsService.instance.newsHomePage();
         newsManager.setSelectedIndex(0);
         pingApi(SocketEnum.news);
         break;
 
       case 4:
         // signalsManager.onScreenChange(-1);
+        EventsService.instance.toolsHomePage();
         pingApi(SocketEnum.tools);
         SocketService.instance.emitUpdateUser(SocketEnum.tools);
         if (toolsManager.data == null) {

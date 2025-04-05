@@ -4,6 +4,7 @@ import 'package:stocks_news_new/api/apis.dart';
 import 'package:stocks_news_new/managers/home/home.dart';
 import 'package:stocks_news_new/models/ticker.dart';
 import 'package:stocks_news_new/models/watchlist_res.dart';
+import 'package:stocks_news_new/service/events/service.dart';
 import 'package:stocks_news_new/ui/base/heading.dart';
 import 'package:stocks_news_new/ui/stockDetail/index.dart';
 import 'package:stocks_news_new/ui/tabs/home/trendingWatchlist/item.dart';
@@ -30,6 +31,7 @@ class HomeMostBoughtIndex extends StatelessWidget {
             margin: EdgeInsets.only(top: Pad.pad24, bottom: Pad.pad14),
             titleStyle: styleBaseBold(fontSize: 22),
             viewMore: () {
+              EventsService.instance.clickViewAllPopularStocksHomePage();
               Navigator.pushNamed(
                 context,
                 HomeViewMoreTickersIndex.path,
@@ -51,6 +53,7 @@ class HomeMostBoughtIndex extends StatelessWidget {
               return TickerBoxItem(
                 data: data,
                 onTap: () {
+                  EventsService.instance.selectAaplScannerHomePage();
                   Navigator.pushNamed(context, SDIndex.path, arguments: {
                     'symbol': data.symbol,
                   });

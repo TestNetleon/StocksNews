@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 import 'package:stocks_news_new/models/ticker.dart';
+import 'package:stocks_news_new/service/events/service.dart';
 import 'package:stocks_news_new/ui/base/bottom_sheet.dart';
 import 'package:stocks_news_new/ui/tabs/home/scanner/extra/action_in_nbs.dart';
 import 'package:stocks_news_new/ui/base/base_list_divider.dart';
+import 'package:stocks_news_new/ui/tabs/tools/scanner/manager/scanner.dart';
 import 'package:stocks_news_new/ui/tabs/tools/scanner/models/offline.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
@@ -22,6 +25,7 @@ class ScannerBaseItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final manager = Provider.of<ScannerManager>(context, listen: false);
     String dollarVolume =
         num.parse("${(data?.volume ?? 0) * (data?.price ?? 0)}").toUSDFormat();
 
@@ -50,10 +54,21 @@ class ScannerBaseItem extends StatelessWidget {
               "${(data?.volume ?? 0) * (data?.ext?.extendedHoursPrice ?? 0)}")
           .toUSDFormat();
     }
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: Pad.pad16),
       child: InkWell(
         onTap: () {
+          if(manager.selectedIndex==0){
+            EventsService.instance.openHdScannerTabScannerPage();
+          }
+          else if(manager.selectedIndex==1){
+            EventsService.instance.openTnonGainersTabChangePage(innerIndex: manager.selectedSubIndex);
+          }
+          else{
+            EventsService.instance.openTnonLosersTabChangePage(innerIndex: manager.selectedSubIndex);
+          }
+
           if (data?.identifier == null || data?.identifier == '') {
             return;
           }
@@ -66,6 +81,7 @@ class ScannerBaseItem extends StatelessWidget {
                 name: data?.name ?? '',
                 image: data?.image ?? '',
               ),
+              fromWithSelectedIndex: manager.selectedIndex,
             ),
           );
         },

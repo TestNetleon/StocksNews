@@ -23,6 +23,7 @@ class BaseTextField extends StatelessWidget {
     this.textCapitalization = TextCapitalization.sentences,
     this.textInputAction,
     this.onChanged,
+    this.onTap,
     this.contentPadding,
     this.focusNode,
     this.prefixIcon,
@@ -53,6 +54,7 @@ class BaseTextField extends StatelessWidget {
   final List<TextInputFormatter>? inputFormatters;
   final TextInputAction? textInputAction;
   final Function(String)? onChanged;
+  final Function()? onTap;
   final FocusNode? focusNode;
   final Color? fillColor;
 
@@ -73,6 +75,7 @@ class BaseTextField extends StatelessWidget {
     return TextField(
       focusNode: focusNode,
       onChanged: onChanged,
+      onTap: onTap,
       textInputAction: textInputAction,
       controller: controller,
       keyboardType: keyboardType,

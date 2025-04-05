@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/models/ticker.dart';
+import 'package:stocks_news_new/service/events/service.dart';
 import 'package:stocks_news_new/ui/base/bottom_sheet.dart';
 import 'package:stocks_news_new/ui/tabs/home/scanner/extra/action_in_nbs.dart';
 import 'package:stocks_news_new/ui/theme/manager.dart';
@@ -32,6 +33,7 @@ class HomeScannerItem extends StatelessWidget {
     num postMarketChangePer = data.ext?.extendedHoursPercentChange ?? 0;
     return InkWell(
       onTap: () {
+        EventsService.instance.selectMarketScannerHomePage();
         if (data.identifier == null || data.identifier == '') {
           return;
         }

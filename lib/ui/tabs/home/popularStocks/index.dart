@@ -4,6 +4,7 @@ import 'package:stocks_news_new/api/apis.dart';
 import 'package:stocks_news_new/managers/home/home.dart';
 import 'package:stocks_news_new/models/my_home.dart';
 import 'package:stocks_news_new/models/ticker.dart';
+import 'package:stocks_news_new/service/events/service.dart';
 import 'package:stocks_news_new/ui/base/heading.dart';
 import 'package:stocks_news_new/ui/stockDetail/index.dart';
 import 'package:stocks_news_new/ui/tabs/home/viewMore/PopularMostBought/index.dart';
@@ -32,6 +33,7 @@ class HomePopularStocks extends StatelessWidget {
                 title: popular.title ?? '',
                 titleStyle: styleBaseBold(fontSize: 22),
                 viewMore: () {
+                  EventsService.instance.clickViewAllPopularStocksHomePage();
                   Navigator.pushNamed(
                     context,
                     HomeViewMoreTickersIndex.path,
@@ -53,6 +55,7 @@ class HomePopularStocks extends StatelessWidget {
                         children: [
                           GestureDetector(
                             onTap: () {
+                              EventsService.instance.selectStockPopularStocksHomePage();
                               Navigator.pushNamed(context, SDIndex.path,
                                   arguments: {
                                     'symbol': ticker?.symbol,

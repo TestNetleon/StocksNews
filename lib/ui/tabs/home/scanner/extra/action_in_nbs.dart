@@ -6,6 +6,7 @@ import 'package:stocks_news_new/modals/user_res.dart';
 import 'package:stocks_news_new/models/lock.dart';
 import 'package:stocks_news_new/models/ticker.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
+import 'package:stocks_news_new/service/events/service.dart';
 import 'package:stocks_news_new/ui/base/base_list_divider.dart';
 import 'package:stocks_news_new/ui/base/bottom_sheet.dart';
 import 'package:stocks_news_new/ui/base/lock.dart';
@@ -25,12 +26,14 @@ import 'package:stocks_news_new/utils/theme.dart';
 class ActionInNbs extends StatefulWidget {
   final String? symbol;
   final int? from;
+  final int? fromWithSelectedIndex;
   final BaseTickerRes? item;
   final BaseLockInfoRes? simulatorLockInfoRes;
   const ActionInNbs(
       {super.key,
       this.symbol,
       this.from,
+      this.fromWithSelectedIndex,
       this.item,
       this.simulatorLockInfoRes});
 
@@ -196,6 +199,17 @@ class _ActionInNbsState extends State<ActionInNbs> {
                     borderRadius: BorderRadius.circular(8.0)),
                 child: TextButton(
                     onPressed: () {
+                      if(widget.fromWithSelectedIndex==0){
+                        EventsService.instance.clickStockScannerPage(type: "overview");
+                      }
+                      if(widget.fromWithSelectedIndex==1){
+                        EventsService.instance.clickStockGainerPage(type: "overview");
+                      }
+                      if(widget.fromWithSelectedIndex==2){
+                        EventsService.instance.clickStockLoserPage(type: "overview");
+                      }
+
+
                       Navigator.pushNamed(
                           navigatorKey.currentContext!, SDIndex.path,
                           arguments: {
@@ -231,6 +245,18 @@ class _ActionInNbsState extends State<ActionInNbs> {
             subtitle:
                 subtitleWithSymbol(ordersSubTitle?.buyOrder, widget.symbol),
             onTap: () {
+
+              if(widget.fromWithSelectedIndex==0){
+                EventsService.instance.clickStockScannerPage(type: "buy");
+              }
+              if(widget.fromWithSelectedIndex==1){
+                EventsService.instance.clickStockGainerPage(type: "buy");
+              }
+              if(widget.fromWithSelectedIndex==2){
+                EventsService.instance.clickStockLoserPage(type: "buy");
+              }
+
+
               if (lockInfoRes != null) {
                 BaseBottomSheet().bottomSheet(
                     isScrollable: false,
@@ -258,6 +284,15 @@ class _ActionInNbsState extends State<ActionInNbs> {
               widget.symbol,
             ),
             onTap: () {
+              if(widget.fromWithSelectedIndex==0){
+                EventsService.instance.clickStockScannerPage(type: "sell");
+              }
+              if(widget.fromWithSelectedIndex==1){
+                EventsService.instance.clickStockGainerPage(type: "sell");
+              }
+              if(widget.fromWithSelectedIndex==2){
+                EventsService.instance.clickStockLoserPage(type: "sell");
+              }
               if (lockInfoRes != null) {
                 BaseBottomSheet().bottomSheet(
                     isScrollable: false,
@@ -284,6 +319,15 @@ class _ActionInNbsState extends State<ActionInNbs> {
               widget.symbol,
             ),
             onTap: () {
+              if(widget.fromWithSelectedIndex==0){
+                EventsService.instance.clickStockScannerPage(type: "short");
+              }
+              if(widget.fromWithSelectedIndex==1){
+                EventsService.instance.clickStockGainerPage(type: "short");
+              }
+              if(widget.fromWithSelectedIndex==2){
+                EventsService.instance.clickStockLoserPage(type: "short");
+              }
               if (lockInfoRes != null) {
                 BaseBottomSheet().bottomSheet(
                     isScrollable: false,
@@ -314,6 +358,15 @@ class _ActionInNbsState extends State<ActionInNbs> {
               widget.symbol,
             ),
             onTap: () {
+              if(widget.fromWithSelectedIndex==0){
+                EventsService.instance.clickStockScannerPage(type: "btc");
+              }
+              if(widget.fromWithSelectedIndex==1){
+                EventsService.instance.clickStockGainerPage(type: "btc");
+              }
+              if(widget.fromWithSelectedIndex==2){
+                EventsService.instance.clickStockLoserPage(type: "btc");
+              }
               if (lockInfoRes != null) {
                 BaseBottomSheet().bottomSheet(
                     isScrollable: false,

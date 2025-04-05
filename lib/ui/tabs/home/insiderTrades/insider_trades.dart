@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/managers/tools.dart';
 import 'package:stocks_news_new/models/my_home.dart';
 import 'package:stocks_news_new/models/tools.dart';
+import 'package:stocks_news_new/service/events/service.dart';
 import 'package:stocks_news_new/ui/tabs/home/extra/lock.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import '../../../../managers/home/home.dart';
@@ -31,6 +32,7 @@ class HomeInsiderTradesIndex extends StatelessWidget {
             title: insiderData?.title,
             margin: EdgeInsets.only(top: Pad.pad20, bottom: Pad.pad16),
             viewMore: () {
+              EventsService.instance.viewAllTopInsiderTradesHomePage();
               ToolsManager manager = context.read<ToolsManager>();
               manager.startNavigation(
                 ToolsEnum.signals,

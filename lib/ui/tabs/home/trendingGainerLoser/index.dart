@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:stocks_news_new/models/market/market_res.dart';
+import 'package:stocks_news_new/service/events/service.dart';
 import 'package:stocks_news_new/ui/base/common_tab.dart';
 import 'package:stocks_news_new/ui/tabs/home/trendingGainerLoser/home_top_gainers.dart';
 import 'package:stocks_news_new/ui/tabs/home/trendingGainerLoser/home_top_losers.dart';
@@ -38,6 +39,15 @@ class _TrendingGainerLoserState extends State<TrendingGainerLoser> {
   void _onTabChanged(index) {
     setState(() {
       _screenIndex = index;
+      if(_screenIndex==0){
+        EventsService.instance.clickTrendingHomePage();
+      }
+      else if(_screenIndex==1){
+        EventsService.instance.clickTopGainersHomePage();
+      }
+      else {
+        EventsService.instance.clickTopLosersHomePage();
+      }
     });
   }
 
