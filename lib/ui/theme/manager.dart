@@ -30,7 +30,7 @@ class ThemeManager extends ChangeNotifier {
 
   void _loadTheme({bool reload = false}) async {
     _themeMode = await Preference.getTheme();
-    if (!reload) notifyListeners();
+    notifyListeners();
     ThemeColors.updateTheme(!isDarkMode);
   }
 }

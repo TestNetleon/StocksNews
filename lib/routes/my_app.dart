@@ -343,7 +343,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
                 title: Const.appName,
                 theme: lightTheme,
                 darkTheme: darkTheme,
-                // themeMode: value.themeMode,
+                themeMode: value.themeMode,
                 // home: child,
                 home: isFIRSTopen ? SplashFirstTime() : Splash(),
 

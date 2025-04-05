@@ -5,6 +5,7 @@ import 'package:stocks_news_new/ui/tabs/tabs.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import '../../database/preference.dart';
 import '../base/scaffold.dart';
+import 'slides.dart';
 
 //MARK: DefaultHome
 class DefaultHome extends StatefulWidget {
@@ -50,7 +51,7 @@ class _DefaultHomeState extends State<DefaultHome> {
       // );
       Navigator.pushAndRemoveUntil(
         context,
-        MaterialPageRoute(builder: (context) => Tabs()),
+        MaterialPageRoute(builder: (context) => OnboardingSlides()),
         (route) => false,
       );
     }
