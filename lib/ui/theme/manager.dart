@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:stocks_news_new/database/preference.dart';
-import 'package:stocks_news_new/main.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 
 class ThemeManager extends ChangeNotifier {
