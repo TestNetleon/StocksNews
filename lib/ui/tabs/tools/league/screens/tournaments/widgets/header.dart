@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:stocks_news_new/service/events/service.dart';
 import 'package:stocks_news_new/ui/tabs/tools/league/managers/tournament.dart';
 import 'package:stocks_news_new/ui/tabs/tools/league/screens/tournaments/pointsPaid/index.dart';
 import 'package:stocks_news_new/utils/colors.dart';
@@ -22,6 +23,7 @@ class LeagueHeader extends StatelessWidget {
           return Expanded(
             child: InkWell(
               onTap: () {
+                EventsService.instance.tradingHeaderLeagueToolPage(index: index);
                 if (index == 0) {
                   var selectedTournament = TournamentsHead.tradTotal;
                   Navigator.pushNamed(context, LeagueTitansIndex.path,

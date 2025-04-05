@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/managers/signals/sentiment.dart';
+import 'package:stocks_news_new/service/events/service.dart';
 import 'package:stocks_news_new/ui/base/heading.dart';
 import 'package:stocks_news_new/ui/stockDetail/index.dart';
 import 'package:stocks_news_new/utils/colors.dart';
@@ -104,6 +105,7 @@ class _SignalsMostMentionsState extends State<SignalMostMentions> {
                     index: index,
                     manager: manager,
                     onTap: (p0) {
+                      EventsService.instance.openStockSentimentSignalsDataToolsPage();
                       Navigator.pushNamed(context, SDIndex.path,
                           arguments: {'symbol': p0.symbol});
                     },

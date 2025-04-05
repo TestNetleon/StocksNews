@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/models/signals/filter.dart';
+import 'package:stocks_news_new/service/events/service.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import '../../api/api_requester.dart';
 import '../../api/api_response.dart';
@@ -55,6 +56,7 @@ class SignalsPoliticianManager extends ChangeNotifier {
   int get openIndexPolitician => _openIndexPolitician;
 
   void openMorePolitician(index) {
+    EventsService.instance.openClosePoliticiansDataToolsPage();
     _openIndexPolitician = index;
     notifyListeners();
   }

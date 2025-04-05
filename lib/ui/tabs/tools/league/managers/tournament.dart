@@ -11,6 +11,7 @@ import 'package:stocks_news_new/api/apis.dart';
 import 'package:stocks_news_new/managers/user.dart';
 import 'package:stocks_news_new/models/ticker.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
+import 'package:stocks_news_new/service/events/service.dart';
 import 'package:stocks_news_new/ui/base/toaster.dart';
 import 'package:stocks_news_new/ui/tabs/tools/league/managers/leaderboard.dart';
 import 'package:stocks_news_new/ui/tabs/tools/league/models/all_trades.dart';
@@ -210,6 +211,7 @@ class LeagueManager extends ChangeNotifier {
 
   int? selectedScreen=-1;
   onScreenChange(index) {
+    EventsService.instance.selectLeagueTradingLeagueToolPage(index: index);
     if (selectedScreen != index) {
       selectedScreen = index;
       notifyListeners();

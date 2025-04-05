@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/managers/signals/stocks.dart';
 import 'package:stocks_news_new/routes/my_app.dart';
+import 'package:stocks_news_new/service/events/service.dart';
 import 'package:stocks_news_new/ui/base/load_more.dart';
 import 'package:stocks_news_new/ui/stockDetail/index.dart';
 import '../../../../models/ticker.dart';
@@ -67,6 +68,7 @@ class _SignalStocksIndexState extends State<SignalStocksIndex> {
                   data: data,
                   index: index,
                   onTap: (p0) {
+                    EventsService.instance.openStockSignalDataToolsPage();
                     Navigator.pushNamed(context, SDIndex.path,
                         arguments: {'symbol': p0.symbol});
                   },

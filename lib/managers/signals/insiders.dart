@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/models/signals/filter.dart';
+import 'package:stocks_news_new/service/events/service.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import '../../api/api_requester.dart';
 import '../../api/api_response.dart';
@@ -50,6 +51,7 @@ class SignalsInsiderManager extends ChangeNotifier {
   int get openIndex => _openIndex;
 
   void openMore(index) {
+    EventsService.instance.openCloseInsiderDataToolsPage();
     _openIndex = index;
     notifyListeners();
   }

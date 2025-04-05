@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/models/market/market_res.dart';
+import 'package:stocks_news_new/service/events/service.dart';
 import 'package:stocks_news_new/ui/base/app_bar.dart';
 import 'package:stocks_news_new/ui/base/base_list_divider.dart';
 import 'package:stocks_news_new/ui/base/button.dart';
@@ -295,6 +296,7 @@ class _SimulatorIndexState extends State<SimulatorIndex>
                 BaseButton(
                   textSize: 16,
                   onPressed: () {
+                    EventsService.instance.placeNewOrderSimulatorPage(index: selectedScreen);
                     Navigator.push(
                       context,
                       createRoute(

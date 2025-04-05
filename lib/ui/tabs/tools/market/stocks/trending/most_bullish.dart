@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/managers/market/stocks/trending/most_bullish.dart';
+import 'package:stocks_news_new/service/events/service.dart';
 import 'package:stocks_news_new/ui/base/base_list_divider.dart';
 import 'package:stocks_news_new/ui/base/load_more.dart';
 import 'package:stocks_news_new/ui/base/stock/add.dart';
@@ -54,6 +55,7 @@ class _MostBullishState extends State<MostBullish> {
                     index: index,
                     onRefresh: _callAPI,
                     manager: manager,
+                    onStockEventCall: EventsService.instance.clickMostBullishTabMarketToolsPage,
                   );
                 },
                 separatorBuilder: (context, index) {

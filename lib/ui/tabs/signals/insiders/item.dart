@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/models/my_home.dart';
+import 'package:stocks_news_new/service/events/service.dart';
 import 'package:stocks_news_new/ui/base/app_bar.dart';
 import 'package:stocks_news_new/ui/theme/manager.dart';
 import 'package:stocks_news_new/utils/colors.dart';
@@ -260,6 +261,7 @@ class BaseInsiderItem extends StatelessWidget {
                     visible: data.link != null && data.link != '',
                     child: InkWell(
                       onTap: () {
+                        EventsService.instance.clickViewDetailsDrctInsidersSignalToolPage();
                         openUrl(data.link);
                       },
                       child: Text(

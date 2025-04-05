@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:stocks_news_new/service/events/service.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -60,6 +61,7 @@ class _CustomDateSelectorState extends State<CustomDateSelector> {
   }
 
   void shiftLeft() {
+    EventsService.instance.clickBackwardCalendarLeagueToolsPage(index: 0);
     setState(() {
       int currentIndex = fullDates.indexOf(selectedDate);
       if (currentIndex > 0) {
@@ -81,6 +83,7 @@ class _CustomDateSelectorState extends State<CustomDateSelector> {
   }
 
   void shiftRight() {
+    EventsService.instance.clickBackwardCalendarLeagueToolsPage(index: 1);
     setState(() {
       int currentIndex = fullDates.indexOf(selectedDate);
       if (currentIndex < fullDates.length - 1) {
@@ -140,6 +143,8 @@ class _CustomDateSelectorState extends State<CustomDateSelector> {
                     return Expanded(
                       child: GestureDetector(
                         onTap: () {
+
+                          EventsService.instance.clickBackwardCalendarLeagueToolsPage(index: 2);
                           setState(() {
                             selectedDate = date;
                           });

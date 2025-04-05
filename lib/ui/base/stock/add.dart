@@ -25,6 +25,7 @@ class BaseStockAddItem extends StatelessWidget {
   final dynamic manager;
   final double size;
   final List<BaseKeyValueRes>? expandable;
+  final Function()? onStockEventCall;
 
   const BaseStockAddItem({
     super.key,
@@ -32,6 +33,7 @@ class BaseStockAddItem extends StatelessWidget {
     required this.data,
     required this.index,
     this.onTap,
+    this.onStockEventCall,
     this.onRefresh,
     this.manager,
     this.expandable,
@@ -138,6 +140,13 @@ class BaseStockAddItem extends StatelessWidget {
                 onTap!(data);
               }
             : () {
+          try {
+            if (onStockEventCall != null) {
+              onStockEventCall!();
+            }
+          } catch (e) {
+            //
+          }
                 Navigator.pushNamed(context, SDIndex.path, arguments: {
                   'symbol': data.symbol,
                 });
