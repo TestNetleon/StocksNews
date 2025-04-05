@@ -546,6 +546,9 @@ class AppsFlyerService {
           final clickEventMap = result.deepLink?.clickEvent;
           deepLinkUrl = clickEventMap?['link'];
         }
+        if (deepLinkUrl?.contains('stocksnews.page.link') == true) {
+          return;
+        }
 
         Utils().showLog('Deep Link URL: ${deepLinkUrl ?? "No link found"}');
 
